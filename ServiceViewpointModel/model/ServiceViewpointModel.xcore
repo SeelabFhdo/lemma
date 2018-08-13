@@ -1,0 +1,659 @@
+package de.fhdo.ddmm.service
+
+import de.fhdo.ddmm.data.PrimitiveType
+import de.fhdo.ddmm.data.Type
+import de.fhdo.ddmm.technology.CommunicationType
+import de.fhdo.ddmm.technology.Protocol
+import de.fhdo.ddmm.technology.DataFormat
+import de.fhdo.ddmm.technology.TechnologySpecificPrimitiveType
+import de.fhdo.ddmm.data.ComplexType
+
+/**
+ * This metamodel represents the Service Modeling Viewpoint, which is used for defining services.
+ *
+ * @author <a href="mailto:florian.rademacher@fh-dortmund.de>Florian Rademacher</a>
+ */
+class ServiceModel {
+    contains Import[] imports opposite serviceModel
+    contains Microservice[1..*] microservices opposite serviceModel
+
+    /**
+     * Get all operations of all defined microservices
+     */
+    op Operation[] getContainedOperations() {
+        return microservices.map[it.containedOperations].flatten.toList.asEList
+    }
+
+    /**
+     * Get all interfaces of all defined microservices
+     */
+    op Interface[] getContainedInterfaces() {
+        return microservices.map[it.interfaces].flatten.toList.asEList
+    }
+}
+
+/**
+ * Determines the allowed types of imports
+ */
+enum ImportType {
+    DATATYPES
+    TECHNOLOGY
+    MICROSERVICES
+}
+
+/**
+ * Concept for importing data types, technology, and microservices into the metamodel
+ */
+class Import {
+    /**
+     * Implicit Constraints:
+     *     (C1) The import URI must point to a valid file.
+     *          Ensured by: DSL validator.
+     *     (C2) Imports must not be cyclic, i.e., the imported model must not directly or indirectly
+     *          import this model.
+     *          Ensured by: DSL validator.
+     */
+
+    String name
+    String importURI
+    ImportType importType
+
+    container ServiceModel serviceModel opposite imports
+}
+
+/**
+ * Type of a microservice
+ */
+enum MicroserviceType {
+    FUNCTIONAL
+    INFRASTRUCTURE
+}
+
+/**
+ * Concept to describe a microservices, its interfaces, and operations
+ */
+class Microservice {
+    /**
+     * Implicit Constraints:
+     *     (C1) Name of a microservices must be qualified with at least one level, e.g.,
+     *          "org.MyService".
+     *          Ensured by: DSL grammar.
+     *     (C2) No cyclic inheritance, i.e., within an inheritance hierarchy, a microservice must
+     *          not occur twice.
+     *          Ensured by: DSL validator.
+     *     (C3) There might be at most one protocol per type for a microservice.
+     *          Ensured by: DSL validator.
+     *     (C4) A microservice may not require itself and only non-internal microservices from
+     *          imported models.
+     *          Ensured by: DSL scope provider.
+     */
+
+    String name
+    String version
+    MicroserviceType ^type
+    boolean internal = "false"
+
+    refers Microservice[0..1] ^super
+    refers Import[0..1] technology
+    contains PossiblyImportedMicroservice[] requiredMicroservices opposite requiringMicroservice
+    contains PossiblyImportedInterface[] requiredInterfaces opposite requiringMicroservice
+    contains PossiblyImportedOperation[] requiredOperations opposite requiringMicroservice
+    contains ImportedProtocol[0..2] protocols
+    contains Interface[1..*] interfaces opposite microservice
+
+    container ServiceModel serviceModel opposite microservices
+
+    /**
+     * Get parts of the microservice for creating a qualified name
+     */
+    op String[] getQualifiedNameParts() {
+        if (name === null || name.empty)
+            return newArrayList.asEList
+
+        val nameParts = newArrayList
+        if (version !== null)
+            nameParts.add(version)
+
+        nameParts.addAll(name.split("\\."))
+        nameParts.asEList
+    }
+
+    /**
+     * Get all operations of all interfaces of the microservice
+     */
+    op Operation[] getContainedOperations() {
+        if (interfaces === null)
+            return newArrayList.asEList
+
+        return interfaces
+            .filter[it.operations !== null]
+            .map[it.operations]
+            .flatten
+            .toEList
+    }
+
+    /**
+     * Get all import descriptions from imported, required concepts
+     */
+    op Import[] getRequiredImports() {
+        val imports = <Import> newHashSet
+
+        if (requiredMicroservices !== null && !requiredMicroservices.empty)
+            imports.addAll(requiredMicroservices.filter[it.import !== null].map[it.import])
+
+        if (requiredInterfaces !== null && !requiredInterfaces.empty)
+            imports.addAll(requiredInterfaces.filter[it.import !== null].map[it.import])
+
+        if (requiredOperations !== null && !requiredOperations.empty)
+            imports.addAll(requiredOperations.filter[it.import !== null].map[it.import])
+
+        return imports.asEList
+    }
+
+    /**
+     * Get all all operations that are directly or indirectly (i.e., from required interfaces and
+     * microservices) required by this microservice from a given import
+     */
+    op Operation[] getAllRequiredOperations(Import fromImport) {
+        val operations = <Operation> newHashSet
+
+        if (requiredOperations !== null && !requiredOperations.empty)
+            operations.addAll(requiredOperations
+                .filter[
+                    it.import == fromImport &&
+                    it.operation !== null
+                ]
+                .map[it.operation]
+            )
+
+        if (requiredInterfaces !== null && !requiredInterfaces.empty)
+            operations.addAll(requiredInterfaces
+                .filter[
+                    it.import == fromImport &&
+                    it.interface !== null &&
+                    it.interface.operations !== null
+                ]
+                .map[it.interface.operations]
+                .flatten
+            )
+
+        if (requiredMicroservices !== null && !requiredMicroservices.empty)
+            operations.addAll(requiredMicroservices
+                .filter[
+                    it.import == fromImport &&
+                    it.microservice !== null
+                ]
+                .map[it.microservice.containedOperations]
+                .flatten
+            )
+
+        return operations.asEList
+    }
+
+    /**
+     * Check if microservice can require another microservice
+     */
+    op boolean canRequire(Microservice microservice, boolean isImportedService) {
+        if (microservice === null)
+            return false
+
+        // A microservice cannot require itself. It can furthermore only require internal
+        // microservices from the same model, but not from other, imported models. That is, internal
+        // microservices act like private elements of a Java class without getter and setter access.
+        return microservice !== this && (!isImportedService || !microservice.internal)
+    }
+
+    /**
+     * Check if microservice can require an interface
+     */
+    op boolean canRequire(Interface iface, boolean isImportedInterface) {
+        if (iface === null)
+            return false
+
+        // A microservice can require an interface if its not one of its own interfaces. Furthermore
+        // the the interface must be implemented and, if the interface is imported from another
+        // model, must not be internal.
+        var canRequire = !iface.notImplemented &&
+            (!isImportedInterface || !iface.effectivelyInternal)
+        if (interfaces !== null && !interfaces.empty)
+            canRequire = canRequire && !interfaces.contains(iface)
+
+        return canRequire
+    }
+
+    /**
+     * Check if microservice can require an operation
+     */
+    op boolean canRequire(Operation operation, boolean isImportedOperation) {
+        if (operation === null)
+            return false
+
+        // A microservice can require an operation if its not an operation from one of its own
+        // interfaces. Furthermore the operation must be implemented and, in case the operation is
+        // imported from another model, must not be internal.
+        var canRequire = !operation.effectivelyNotImplemented &&
+            (!isImportedOperation || !operation.effectivelyInternal)
+        if (containedOperations !== null && !containedOperations.empty)
+            canRequire = canRequire && !containedOperations.contains(operation)
+
+        return  canRequire
+    }
+
+    /**
+     * Check if microservice can extend another microservice as its super microservice
+     */
+    op boolean canExtend(Microservice microservice) {
+        if (microservice === null)
+            return false
+
+        // A microservice cannot extend itself and only microservices of the same type
+        return this !== microservice && ^type == microservice.^type
+    }
+}
+
+/**
+ * Represents the interface of a microservice
+ */
+class Interface {
+    /**
+     * Implicit Constraints:
+     *     (C1) Interface must define or refer to at least one operation.
+     *          Ensured by: DSL validator.
+     *     (C2) There might be at most one protocol per communication type assigned to an interface.
+     *          Ensured by: DSL validator.
+     */
+
+    String name
+    //String version
+    boolean notImplemented = "false"
+    boolean internal = "false"
+
+    //refers Interface[0..1] ^super
+    contains ImportedProtocol[0..2] protocols
+    contains Operation[] operations opposite ^interface
+    contains ReferredOperation[] referredOperations opposite ^interface
+
+    container Microservice microservice opposite interfaces
+
+    /**
+     * Get parts of the interface for creating a qualified name
+     */
+    op String[] getQualifiedNameParts() {
+        if (name === null || name.empty)
+            return newArrayList.asEList
+
+        val nameParts = microservice.qualifiedNameParts
+        nameParts.addAll(name)
+        nameParts.asEList
+    }
+
+    /**
+     * Check if the interface is indirectly internal, because its container, i.e., microservice, is
+     * already internal
+     */
+    derived boolean internalByContainer get {
+        if (microservice === null)
+            return false
+
+        return microservice.internal
+    }
+
+    /**
+     * Check, if an interface is effectively internal, either directly or indirectly, i.e., because
+     * its microservice is already internal
+     */
+    derived boolean effectivelyInternal get {
+        return internal || internalByContainer
+    }
+}
+
+/**
+ * Represents an operation within an interface of a microservice
+ */
+class Operation {
+    /**
+     * Implicit Constraints:
+     *     (C1) There might be at most one protocol per communication type assigned to an operation.
+     *          Ensured by: DSL validator.
+     */
+
+    String name
+    boolean notImplemented = "false"
+    boolean internal = "false"
+
+    contains ImportedProtocol[0..2] protocols
+    contains Parameter[] parameters opposite operation
+
+    container Interface ^interface opposite operations
+
+    /**
+     * Get parts of the operation for creating a qualified name
+     */
+    op String[] getQualifiedNameParts() {
+        if (name === null || name.empty)
+            return newArrayList.asEList
+
+        val nameParts = interface.qualifiedNameParts
+        nameParts.addAll(name)
+        nameParts.asEList
+    }
+
+    /**
+     * Check if the operation is indirectly not implemented, because its container, i.e., interface,
+     * is already marked as being not implemented
+     */
+    derived boolean notImplementedByContainer get {
+        if (interface === null)
+            return false
+
+        return interface.notImplemented
+    }
+
+    /**
+     * Check, if an operation is effectively not implemented, either directly or indirectly, i.e.,
+     * because its interface is already marked as being not implemented
+     */
+    derived boolean effectivelyNotImplemented get {
+        return notImplemented || notImplementedByContainer
+    }
+
+    /**
+     * Check if the operation is indirectly internal, because its containers, i.e., interface or
+     * microservice, is already internal
+     */
+    derived boolean internalByContainer get {
+        if (interface === null)
+            return false
+
+        if (!interface.internal && interface.microservice === null)
+            return false
+
+        return interface.internal || interface.microservice.internal
+    }
+
+    /**
+     * Check, if an operation is effectively internal, either directly or indirectly, i.e., because
+     * its interface or microservice is already internal
+     */
+    derived boolean effectivelyInternal get {
+        return internal || internalByContainer
+    }
+}
+
+/**
+ * Represents an operation to which an interface other than its defining interface refers. Used for
+ * interface mashups
+ */
+class ReferredOperation {
+    /**
+     * Implicit Constraints:
+     *     (C1) There might be at most one protocol per communication type assigned to a referred
+     *          operation.
+     *          Ensured by: DSL validator.
+     */
+
+    refers Operation operation
+    contains ImportedProtocol[0..2] protocols
+
+    container Interface ^interface opposite referredOperations
+}
+
+/**
+ * Exchange pattern for parameters
+ */
+enum ExchangePattern {
+    IN
+    OUT
+    INOUT
+}
+
+class Parameter {
+    /**
+     * Implicit Constraints:
+     *     (C1) Must have exactly one type, either imported or primitive.
+     *          Ensured by: DSL grammar.
+     *     (C2) Imported types may only come from a data or technology model.
+     *          Ensured by: DSL scope provider.
+     *     (C3) Import aliases for the initializing operation can only originate from imports of the
+     *          concepts required by the parameter operation's microservice.
+     *          Ensured by: DSL scope provider.
+     *     (C4) Initializing operations can only originate from the list of directly or indirectly
+     *          required operations of the microservice and they need to exhibit basic
+     *          "initializability" (see the checking operation below).
+     *          Ensured by: DSL scope provider.
+     */
+
+    String name
+    ExchangePattern exchangePattern = 'IN'
+    CommunicationType communicationType = 'SYNCHRONOUS'
+    boolean communicatesFault = "false"
+    boolean optional = "false"
+
+    //refers Import[0..1] initializedByImport
+    //refers Operation[0..1] initializedBy
+    contains PossiblyImportedOperation[0..1] initializedByOperation  opposite initializedParameter
+    contains ImportedType[0..1] importedType
+    contains PrimitiveType[0..1] primitiveType
+
+    container Operation operation opposite parameters
+
+    /**
+     * Check if a parameter is _basically_ initializable by a given operation. This basic check does
+     * not include the comparatively "expensive" type compatibility checking, but only those formal
+     * checks that are based on direct characteristics of the paramater and the initializing
+     * operation.
+     */
+    op boolean basicallyInitializableBy(Operation initializingOperation) {
+        if (operation === null ||
+            operation.interface === null ||
+            operation.interface.microservice === null)
+            return false
+
+        if (initializingOperation === null ||
+            initializingOperation.interface === null ||
+            initializingOperation.interface.microservice === null)
+            return false
+
+        // Parameter can only be initialized if it has an "incoming" exchange pattern
+        if (exchangePattern !== ExchangePattern.IN &&
+            exchangePattern !== ExchangePattern.INOUT)
+            return false
+
+        // Operation cannot initialize its own parameters
+        if (initializingOperation == operation)
+            return false
+
+        // An operation that is not implemented cannot initialize a parameter
+        if (initializingOperation.effectivelyNotImplemented)
+            return false
+
+        // Internal operations can only initialize a parameter if they are defined in the same
+        // microservice
+        val thisMicroservice = operation.interface.microservice
+        val initializingMicroservice = initializingOperation.interface.microservice
+        val initializingOperationFromSameMicroservice = thisMicroservice == initializingMicroservice
+
+        if (initializingOperation.effectivelyInternal && !initializingOperationFromSameMicroservice)
+            return false
+
+        // An operation to initialize a parameter must have at least one "outgoing" parameter
+        val operationHasOutgoingParameters = initializingOperation.parameters.exists[
+                exchangePattern === ExchangePattern.INOUT ||
+                exchangePattern === ExchangePattern.OUT
+            ]
+        if (!operationHasOutgoingParameters)
+            return false
+
+        return true
+    }
+
+    /**
+     * Get effective type of parameter, i.e., the primitive or imported type (null otherwise)
+     */
+    op Type getEffectiveType() {
+        if (primitiveType !== null)
+            return primitiveType
+        else if (importedType !== null && importedType.^type !== null)
+            return importedType.^type
+        else
+            return null
+    }
+
+    /**
+     * Get parts of the parameter for creating a qualified name depending on its effective type
+     */
+    op String[] getEffectiveTypeQualifiedNameParts() {
+        val effectiveType = effectiveType
+
+        if (effectiveType === null)
+            return null
+
+        // Technology-specific primitive type
+        else if (effectiveType instanceof TechnologySpecificPrimitiveType)
+            return effectiveType.qualifiedNameParts
+
+        // Primitive type
+        else if (effectiveType instanceof PrimitiveType) {
+            val qualifiedNameParts = <String> newArrayList
+            qualifiedNameParts.add(effectiveType.typeName)
+            return qualifiedNameParts.asEList
+        }
+
+        // Complex type
+        else if (effectiveType instanceof ComplexType)
+            return effectiveType.qualifiedNameParts
+
+        return null
+    }
+}
+
+/**
+ * A microservice possibly imported from another service model
+ */
+class PossiblyImportedMicroservice {
+    refers Import[0..1] ^import
+    refers Microservice microservice
+
+    container Microservice requiringMicroservice opposite requiredMicroservices
+}
+
+/**
+ * An interface possibly imported from another service model
+ */
+class PossiblyImportedInterface {
+    refers Import[0..1] ^import
+    refers Interface ^interface
+
+    container Microservice requiringMicroservice opposite requiredInterfaces
+
+    /**
+     * Flag to indicate if the interface is required by a microservice
+     */
+    derived boolean required get {
+        return requiringMicroservice !== null
+    }
+
+    /**
+     * Flag to indicate if the interface is already required, because its container, i.e., its
+     * containing microservice, is required
+     */
+    derived boolean requiredByContainer get {
+        if (interface === null || !required)
+            return false
+
+        // Check if the interface's microservice is in the list of the required microservices
+        if (requiringMicroservice.requiredMicroservices !== null &&
+            requiringMicroservice.requiredMicroservices.map[it.microservice]
+                .contains(interface.microservice))
+            return true
+
+        return false
+    }
+}
+
+/**
+ * An operation possibly imported from another service model
+ */
+class PossiblyImportedOperation {
+    refers Import[0..1] ^import
+    refers Operation operation
+
+    container Microservice requiringMicroservice opposite requiredOperations
+    container Parameter initializedParameter opposite initializedByOperation
+
+    /**
+     * Flag to indicate if the operation is required by a microservice
+     */
+    derived boolean required get {
+        return requiringMicroservice !== null
+    }
+
+    /**
+     * Flag to indicate if the operation is already required, because its interface is required
+     */
+    derived boolean requiredByInterface get {
+        if (operation === null ||
+            !required ||
+            requiringMicroservice.requiredInterfaces === null)
+            return false
+
+        // Check if the operation's interface is in the list of the required interfaces
+        if (requiringMicroservice.requiredInterfaces.map[it.interface]
+                .contains(operation.interface))
+            return true
+
+        return false
+    }
+
+    /**
+     * Flag to indicate if the operation is already required, because its microservice is required
+     */
+    derived boolean requiredByMicroservice get {
+        if (operation === null ||
+            !required ||
+            requiringMicroservice.requiredMicroservices === null ||
+            operation.interface === null)
+            return false
+
+        // Check if the operation interface's microservice is in the list of the required
+        // microservices
+        if (requiringMicroservice.requiredMicroservices.map[it.microservice]
+                .contains(operation.interface.microservice))
+            return true
+
+        return false
+    }
+
+    /**
+     * Flag to indicate if the operation is already required, because its containers, i.e., its
+     * interface or indirectly containing microservice, is required
+     */
+    derived boolean requiredByContainer get {
+        return requiredByInterface || requiredByMicroservice
+    }
+}
+
+/**
+ * Represents a type imported from a data or technology model
+ */
+class ImportedType {
+    refers Import ^import
+    refers Type ^type
+}
+
+/**
+ * Represents a protocol imported from a technology model
+ */
+class ImportedProtocol {
+    /**
+     * Implicit Constraints:
+     *     (C1) Data format must match protocol as specified in the technology model.
+     *          Ensured by: DSL scope provider.
+     */
+
+    CommunicationType communicationType = 'SYNCHRONOUS'
+
+    refers Import ^import
+    refers Protocol protocol
+    refers DataFormat[0..1] dataFormat
+}

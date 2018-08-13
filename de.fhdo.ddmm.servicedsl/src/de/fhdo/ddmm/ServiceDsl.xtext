@@ -1,0 +1,111 @@
+/**
+ * @author <a href="mailto:florian.rademacher@fh-dortmund.de>Florian Rademacher</a>
+ */
+grammar de.fhdo.ddmm.ServiceDsl with de.fhdo.ddmm.technology.TechnologyDsl
+
+import "de.fhdo.ddmm.service"
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+import "de.fhdo.ddmm.data" as data
+import "de.fhdo.ddmm.technology" as technology
+
+ServiceModel returns ServiceModel:
+    imports+=Import*
+    microservices+=Microservice+
+;
+
+Import returns Import:
+    'import' importType=ImportType 'from' importURI=STRING 'as' name=ID
+;
+
+enum ImportType returns ImportType:
+    DATATYPES='datatypes' | TECHNOLOGY='technology' | MICROSERVICES='microservices'
+;
+
+Microservice returns Microservice:
+    ('@' 'technology' '(' technology=[Import] ')')?
+    (protocols+=ImportedProtocol (protocols+=ImportedProtocol)?)?
+    (internal?='internal')?
+    type=MicroserviceType
+    'microservice' name=QualifiedNameWithAtLeastOneLevel ('version' version=ID)?
+    ('extends' super=[Microservice|QualifiedNameWithAtLeastOneLevel])? '{'
+        ('required' 'microservices' '{'
+            requiredMicroservices+=PossiblyImportedMicroservice
+            (',' requiredMicroservices+=PossiblyImportedMicroservice)*
+        '}')?
+        ('required' 'interfaces' '{'
+            requiredInterfaces+=PossiblyImportedInterface
+            (',' requiredInterfaces+=PossiblyImportedInterface)*
+        '}')?
+        ('required' 'operations' '{'
+            requiredOperations+=PossiblyImportedOperation
+            (',' requiredOperations+=PossiblyImportedOperation)*
+        '}')?
+        interfaces+=Interface+
+    '}'
+;
+
+PossiblyImportedMicroservice returns PossiblyImportedMicroservice:
+    (^import=[Import] '::')? microservice=[Microservice|QualifiedNameWithAtLeastOneLevel]
+;
+
+PossiblyImportedInterface returns PossiblyImportedInterface:
+    (^import=[Import] '::')? interface=[Interface|QualifiedName]
+;
+
+PossiblyImportedOperation returns PossiblyImportedOperation:
+    (^import=[Import] '::')? operation=[Operation|QualifiedName]
+;
+
+Interface returns Interface:
+    (protocols+=ImportedProtocol (protocols+=ImportedProtocol)?)?
+    (internal?='internal')? (notImplemented?='noimpl')? 'interface' name=ID '{'
+        referredOperations+=ReferredOperation*
+        operations+=Operation*
+    '}'
+;
+
+Operation returns Operation:
+    (protocols+=ImportedProtocol (protocols+=ImportedProtocol)?)?
+    (internal?='internal')? (notImplemented?='noimpl')? name=ID '('
+        parameters+=Parameter? (',' parameters+=Parameter+)?
+    ')' ';'
+;
+
+ReferredOperation returns ReferredOperation:
+    (protocols+=ImportedProtocol (protocols+=ImportedProtocol)?)?
+    'refers' operation=[Operation|QualifiedName] ';'
+;
+
+Parameter returns Parameter:
+    communicationType=CommunicationType?
+    exchangePattern=ExchangePattern?
+    (communicatesFault?='fault')?
+    name=ID
+    (optional?='?')?
+    ':'
+    (primitiveType=PrimitiveType | importedType=ImportedType)
+    ('=' initializedByOperation=PossiblyImportedOperation)?
+;
+
+ImportedType returns ImportedType:
+    ^import=[Import] '::' type=[data::Type|QualifiedName]
+;
+
+ImportedProtocol returns ImportedProtocol:
+    '@' communicationType=CommunicationType '('
+        ^import=[Import] '::' protocol=[technology::Protocol|QualifiedName]
+        ('/' dataFormat=[technology::DataFormat])?
+    ')'
+;
+
+enum ExchangePattern returns ExchangePattern:
+    IN='in' | OUT='out' | INOUT='inout'
+;
+
+enum MicroserviceType returns MicroserviceType:
+    FUNCTIONAL='functional' | INFRASTRUCTURE = 'infrastructure'
+;
+
+QualifiedNameWithAtLeastOneLevel:
+    ID '.' QualifiedName
+;

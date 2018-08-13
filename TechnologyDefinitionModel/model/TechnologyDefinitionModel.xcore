@@ -1,0 +1,159 @@
+package de.fhdo.ddmm.technology
+
+import de.fhdo.ddmm.data.DataStructure
+import de.fhdo.ddmm.data.ListType
+import de.fhdo.ddmm.data.PrimitiveType
+
+/**
+ * Root model concept, which represents all concept related to a certain technology that maps
+ * microservices to technology
+ *
+ * @author <a href="mailto:florian.rademacher@fh-dortmund.de>Florian Rademacher</a>
+ */
+class Technology {
+    /**
+     * Implicit Constraints:
+     *     (C1) A technology must define at least one default technology-specific primitive type for
+     *          each built-in primitive type. This ensures, that even if there is no mapping of a
+     *          built-in primitive type to a technology-specific one, we can deduce a
+     *          technology-specific type for it when code gets generated.
+     *          Ensured by: DSL validator.
+     *     (C2) A technology must define at least one default communication protocol for either type
+     *          of communication.
+     *          Ensured by: DSL validator.
+     */
+
+    String name
+
+    contains TechnologySpecificPrimitiveType[] primitiveTypes opposite technology
+    contains TechnologySpecificListType[] listTypes opposite technology
+    contains TechnologySpecificDataStructure[] dataStructures opposite technology
+    contains Protocol[] protocols opposite technology
+}
+
+/**
+ * Possible types of communication
+ */
+enum CommunicationType {
+    SYNCHRONOUS
+    ASYNCHRONOUS
+}
+
+/**
+ * Represents a data exchange protocol for microservice communications, e.g., AMQP
+ */
+class Protocol {
+    /**
+     * Implicit Constraints:
+     *     (C1) The default format must be one of the data formats assigned to the protocol.
+     *          Ensured by: DSL scope provider.
+     */
+
+    String name
+    CommunicationType communicationType = 'SYNCHRONOUS'
+    boolean ^default = "false"
+
+    refers DataFormat defaultFormat
+    contains DataFormat[1..*] dataFormats opposite protocol
+
+    container Technology technology opposite protocols
+
+    /**
+     * Get parts of the protocol for creating a qualified name
+     */
+    op String[] getQualifiedNameParts() {
+        if (name === null || name.empty)
+            return newArrayList.asEList
+
+        val nameParts = newArrayList
+        nameParts.add("protocols")
+        nameParts.add(name)
+        nameParts.asEList
+    }
+}
+
+/**
+ * Protocol-specific data format, e.g., XML for AMQP
+ */
+class DataFormat {
+    String name
+
+    container Protocol protocol opposite dataFormats
+}
+
+/**
+ * A primitive type that is specific to a certain technology, e.g., uint64 for Go
+ */
+class TechnologySpecificPrimitiveType extends PrimitiveType {
+    /**
+     * Implicit Constraints:
+     *     (C1) There might be no duplicates in the basic built-ins of a technology-specific
+     *          primitive type.
+     *          Ensured by: DSL validator.
+     *     (C2) There might be only one technology-specific primitive type that is marked as the
+     *          default for a built-in primitive type. Otherwise, the code generator could not
+     *          unambiguously decide which technology-specific primitive type to use, when no
+     *          explicit mapping of a built-in primitive types was specified.
+     *          Ensured by: DSL validator.
+     */
+
+    String name
+    boolean ^default = "false"
+
+    container Technology technology opposite primitiveTypes
+
+    contains PrimitiveType[] basicBuiltinPrimitiveTypes
+
+    /**
+     * Get parts of the type for creating a qualified name
+     */
+    op String[] getQualifiedNameParts() {
+        if (name === null || name.empty)
+            return newArrayList.asEList
+
+        val nameParts = newArrayList
+        nameParts.add("types")
+        nameParts.add(name)
+        nameParts.asEList
+    }
+}
+
+/**
+ * A list type that is specific to a certain technology, e.g., Queue for Java
+ */
+class TechnologySpecificListType extends ListType {
+    container Technology technology opposite listTypes
+
+    /**
+     * Get parts of the type for creating a qualified name
+     */
+    op String[] getQualifiedNameParts() {
+        if (name === null || name.empty)
+            return newArrayList.asEList
+
+        val nameParts = newArrayList
+        nameParts.add("types")
+        nameParts.add(name)
+        nameParts.asEList
+    }
+}
+
+/**
+ * A data structure type that is specific to a certain technology
+ */
+class TechnologySpecificDataStructure extends DataStructure {
+    container Technology technology opposite dataStructures
+
+    /**
+     * Get parts of the type for creating a qualified name
+     */
+    op String[] getQualifiedNameParts() {
+        if (name === null || name.empty)
+            return newArrayList.asEList
+
+        val nameParts = newArrayList
+        nameParts.add("types")
+        nameParts.add(name)
+        nameParts.asEList
+    }
+}

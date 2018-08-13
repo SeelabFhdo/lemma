@@ -1,0 +1,18 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: de.fhdo.ddmm.technology.technologydsl.ide
+Bundle-Vendor: My Company
+Bundle-Version: 1.0.0.qualifier
+Bundle-SymbolicName: de.fhdo.ddmm.technology.technologydsl.ide; singleton:=true
+Bundle-ActivationPolicy: lazy
+Require-Bundle: de.fhdo.ddmm.technology.technologydsl,
+ TechnologyDefinitionModel,
+ org.eclipse.xtext.ide,
+ org.eclipse.xtext.xbase.ide,
+ de.fhdo.ddmm.data.datadsl;bundle-version="1.0.0",
+ de.fhdo.ddmm.data.datadsl.ide;bundle-version="1.0.0",
+ org.antlr.runtime
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Export-Package: de.fhdo.ddmm.technology.ide.contentassist.antlr,
+ de.fhdo.ddmm.technology.ide.contentassist.antlr.internal
+
