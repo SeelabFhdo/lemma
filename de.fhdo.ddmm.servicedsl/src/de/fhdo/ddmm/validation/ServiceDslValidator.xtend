@@ -254,6 +254,12 @@ class ServiceDslValidator extends AbstractServiceDslValidator {
             return
         }
 
+        if (initializedParameter.exchangePattern === ExchangePattern.OUT) {
+            error("Outgoing parameters may not be initialized", initializedParameter,
+                ServicePackage::Literals.PARAMETER__EXCHANGE_PATTERN)
+            return
+        }
+
         val parameterType = initializedParameter.effectiveType
         if (parameterType === null) {
             return
