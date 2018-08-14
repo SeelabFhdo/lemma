@@ -20,8 +20,8 @@ import com.google.inject.Inject
 import de.fhdo.ddmm.service.PossiblyImportedOperation
 import de.fhdo.ddmm.service.PossiblyImportedInterface
 import de.fhdo.ddmm.service.ExchangePattern
-import de.fhdo.ddmm.data.typechecking.TypeChecker
-import de.fhdo.ddmm.data.typechecking.TypesNotCompatibleException
+import de.fhdo.ddmm.typechecking.TypeChecker
+import de.fhdo.ddmm.typechecking.TypesNotCompatibleException
 import org.eclipse.xtext.naming.QualifiedName
 import de.fhdo.ddmm.technology.TechnologySpecificPrimitiveType
 import de.fhdo.ddmm.data.Type

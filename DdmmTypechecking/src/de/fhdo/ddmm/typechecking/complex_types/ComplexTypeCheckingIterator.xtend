@@ -1,9 +1,9 @@
-package de.fhdo.ddmm.data.typechecking.complex_types
+package de.fhdo.ddmm.typechecking.complex_types
 
 import java.util.Iterator
-import de.fhdo.ddmm.data.typechecking.complex_types.data_structures.NodePair
+import de.fhdo.ddmm.typechecking.complex_types.data_structures.NodePair
 import java.util.NoSuchElementException
-import de.fhdo.ddmm.data.typechecking.complex_types.data_structures.NodeSeries
+import de.fhdo.ddmm.typechecking.complex_types.data_structures.NodeSeries
 import java.util.List
 
 /**

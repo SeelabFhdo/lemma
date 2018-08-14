@@ -1,4 +1,4 @@
-package de.fhdo.ddmm.data.typechecking.complex_types.data_structures
+package de.fhdo.ddmm.typechecking.complex_types.data_structures
 
 import de.fhdo.ddmm.data.ComplexType
 import java.util.Deque

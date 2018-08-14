@@ -1,4 +1,4 @@
-package de.fhdo.ddmm.data.typechecking.complex_types
+package de.fhdo.ddmm.typechecking.complex_types
 
 import de.fhdo.ddmm.data.ComplexType
 import java.util.List
@@ -6,12 +6,12 @@ import de.fhdo.ddmm.data.DataStructure
 import de.fhdo.ddmm.data.PrimitiveType
 import de.fhdo.ddmm.data.DataField
 import de.fhdo.ddmm.data.ListType
-import de.fhdo.ddmm.data.typechecking.TypeCheckerI
-import de.fhdo.ddmm.data.typechecking.complex_types.data_structures.NodeSeries
-import de.fhdo.ddmm.data.typechecking.complex_types.data_structures.TypeGraph
-import de.fhdo.ddmm.data.typechecking.complex_types.data_structures.NodePair
-import de.fhdo.ddmm.data.typechecking.complex_types.data_structures.DataFieldComparator
-import de.fhdo.ddmm.data.typechecking.complex_types.data_structures.DataFieldComparator.ORDERING
+import de.fhdo.ddmm.typechecking.TypeCheckerI
+import de.fhdo.ddmm.typechecking.complex_types.data_structures.NodeSeries
+import de.fhdo.ddmm.typechecking.complex_types.data_structures.TypeGraph
+import de.fhdo.ddmm.typechecking.complex_types.data_structures.NodePair
+import de.fhdo.ddmm.typechecking.complex_types.data_structures.DataFieldComparator
+import de.fhdo.ddmm.typechecking.complex_types.data_structures.DataFieldComparator.ORDERING
 
 /**
  * TypeChecker implementation for ComplexTypes.

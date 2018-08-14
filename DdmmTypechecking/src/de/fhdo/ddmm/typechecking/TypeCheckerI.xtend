@@ -1,4 +1,4 @@
-package de.fhdo.ddmm.data.typechecking
+package de.fhdo.ddmm.typechecking
 
 import de.fhdo.ddmm.data.Type
 
