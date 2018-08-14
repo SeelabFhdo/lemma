@@ -1,4 +1,4 @@
-package de.fhdo.ddmm.data.typechecking.complex_types.data_structures
+package de.fhdo.ddmm.utils.typechecking.complex_types.data_structures
 
 import org.eclipse.xtend.lib.annotations.Accessors
 
