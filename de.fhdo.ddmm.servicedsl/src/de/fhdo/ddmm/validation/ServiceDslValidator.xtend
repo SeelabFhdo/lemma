@@ -331,7 +331,6 @@ class ServiceDslValidator extends AbstractServiceDslValidator {
             return false
 
         /* Create warning */
-        val initializingOperation = initializedParameter.operation
         val qualifiedTypeName = new StringBuilder
         qualifiedTypeName.append(technologySpecificType.technology.name)
         qualifiedTypeName.append("::")
@@ -339,8 +338,8 @@ class ServiceDslValidator extends AbstractServiceDslValidator {
 
         warning('''Technology-specific primitive type «qualifiedTypeName» of parameter ''' +
             '''«initializedParameter.name» has no basic type. To initialize the parameter, an ''' +
-            '''additional type conversion would need to be implemented.''', initializingOperation,
-            ServicePackage::Literals.POSSIBLY_IMPORTED_OPERATION__OPERATION)
+            '''additional type conversion would need to be implemented.''', initializedParameter,
+            ServicePackage::Literals.PARAMETER__INITIALIZED_BY_OPERATION)
 
         return true
     }
