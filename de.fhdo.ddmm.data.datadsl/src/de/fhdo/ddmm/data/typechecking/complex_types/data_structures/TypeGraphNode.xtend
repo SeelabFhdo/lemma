@@ -1,4 +1,4 @@
-package de.fhdo.ddmm.utils.typechecking.complex_types.data_structures
+package de.fhdo.ddmm.data.typechecking.complex_types.data_structures
 
 import org.eclipse.xtend.lib.annotations.Accessors
 import de.fhdo.ddmm.data.ComplexType
@@ -8,7 +8,7 @@ import de.fhdo.ddmm.data.ListType
 import org.eclipse.emf.common.util.EList
 import de.fhdo.ddmm.data.DataStructure
 import de.fhdo.ddmm.data.DataField
-import de.fhdo.ddmm.utils.typechecking.complex_types.data_structures.DataFieldComparator.ORDERING
+import de.fhdo.ddmm.data.typechecking.complex_types.data_structures.DataFieldComparator.ORDERING
 
 /**
  * Represents a node of a TypeGraph.

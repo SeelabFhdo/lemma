@@ -1,7 +1,7 @@
-package de.fhdo.ddmm.utils.typechecking.primitive_types
+package de.fhdo.ddmm.data.typechecking.primitive_types
 
 import de.fhdo.ddmm.data.PrimitiveType
-import de.fhdo.ddmm.utils.typechecking.TypeCheckerI
+import de.fhdo.ddmm.data.typechecking.TypeCheckerI
 
 /**
  * Simple TypeChecker implementation for PrimitiveTypes that builds upon the metamodel's

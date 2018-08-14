@@ -23,5 +23,6 @@ Export-Package: de.fhdo.ddmm.data,
  de.fhdo.ddmm.data.scoping,
  de.fhdo.ddmm.data.serializer,
  de.fhdo.ddmm.data.services,
+ de.fhdo.ddmm.data.typechecking,
  de.fhdo.ddmm.data.validation
 Import-Package: org.apache.log4j

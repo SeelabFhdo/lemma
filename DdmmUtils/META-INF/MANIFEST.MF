@@ -10,6 +10,5 @@ Require-Bundle: org.eclipse.emf.ecore,
  org.eclipse.xtend.lib.macro,
  org.eclipse.xtext;bundle-version="2.12.0",
  DataViewpointModel;bundle-version="0.1.0"
-Export-Package: de.fhdo.ddmm.utils,
- de.fhdo.ddmm.utils.typechecking
+Export-Package: de.fhdo.ddmm.utils
 

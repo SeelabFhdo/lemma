@@ -1,10 +1,10 @@
-package de.fhdo.ddmm.utils.typechecking
+package de.fhdo.ddmm.data.typechecking
 
 import de.fhdo.ddmm.data.Type
+import de.fhdo.ddmm.data.typechecking.primitive_types.PrimitiveTypeChecker
 import de.fhdo.ddmm.data.PrimitiveType
 import de.fhdo.ddmm.data.ComplexType
-import de.fhdo.ddmm.utils.typechecking.complex_types.ComplexTypeChecker
-import de.fhdo.ddmm.utils.typechecking.primitive_types.PrimitiveTypeChecker
+import de.fhdo.ddmm.data.typechecking.complex_types.ComplexTypeChecker
 
 /**
  * Generic type checker that uses the corresponding TypeCheckers for the given Type instances to
