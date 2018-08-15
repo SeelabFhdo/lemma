@@ -35,6 +35,18 @@ class DataDslValidator extends AbstractDataDslValidator {
     }*/
 
     /**
+     * Check import aliases for uniqueness. Normally, this should be done by
+     * DataDslNamesAreUniqueValidationHelper, but it does not react to
+     */
+    @Check
+    def checkImportAlias(ComplexTypeImport ^import) {
+        val allImports = import.dataModel.complexTypeImports
+        if (allImports.exists[name == import.name])
+            error('''Duplicate import alias «import.name»''', import,
+                DataPackage::Literals.COMPLEX_TYPE_IMPORT__NAME)
+    }
+
+    /**
      * Perform checks on data fields
      */
     @Check

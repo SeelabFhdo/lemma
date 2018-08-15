@@ -5,6 +5,8 @@ package de.fhdo.ddmm.data
 
 import de.fhdo.ddmm.data.scoping.DataDslScopeProvider
 import org.eclipse.xtext.resource.IDefaultResourceDescriptionStrategy
+import de.fhdo.ddmm.data.validation.DataDslNamesAreUniqueValidationHelper
+import org.eclipse.xtext.validation.INamesAreUniqueValidationHelper
 
 /**
  * Use this class to register components to be used at runtime / without the Equinox extension
@@ -20,5 +22,10 @@ class DataDslRuntimeModule extends AbstractDataDslRuntimeModule {
     def Class<? extends IDefaultResourceDescriptionStrategy>
        bindIDefaultResourceDescriptionStrategy() {
         DataDslResourceDescriptionStrategy
+    }
+
+    def Class<? extends INamesAreUniqueValidationHelper>
+       bindINamesAreUniqueValidationHelper() {
+        DataDslNamesAreUniqueValidationHelper
     }
 }
