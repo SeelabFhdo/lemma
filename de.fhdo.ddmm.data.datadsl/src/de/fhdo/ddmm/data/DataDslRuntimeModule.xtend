@@ -24,8 +24,7 @@ class DataDslRuntimeModule extends AbstractDataDslRuntimeModule {
         DataDslResourceDescriptionStrategy
     }
 
-    def Class<? extends INamesAreUniqueValidationHelper>
-       bindINamesAreUniqueValidationHelper() {
+    def Class<? extends INamesAreUniqueValidationHelper> bindINamesAreUniqueValidationHelper() {
         DataDslNamesAreUniqueValidationHelper
     }
 }

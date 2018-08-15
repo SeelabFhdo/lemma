@@ -3,8 +3,17 @@
  */
 package de.fhdo.ddmm.technology
 
+import org.eclipse.xtext.validation.INamesAreUniqueValidationHelper
+import de.fhdo.ddmm.technology.validation.TechnologyDslNamesAreUniqueValidationHelper
+
 /**
- * Use this class to register components to be used at runtime / without the Equinox extension registry.
+ * Use this class to register components to be used at runtime / without the Equinox extension
+ * registry.
+ *
+ * @author <a href="mailto:florian.rademacher@fh-dortmund.de>Florian Rademacher</a>
  */
 class TechnologyDslRuntimeModule extends AbstractTechnologyDslRuntimeModule {
+    def Class<? extends INamesAreUniqueValidationHelper> bindINamesAreUniqueValidationHelper() {
+        TechnologyDslNamesAreUniqueValidationHelper
+    }
 }

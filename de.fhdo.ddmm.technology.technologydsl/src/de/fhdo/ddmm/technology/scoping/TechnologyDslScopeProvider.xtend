@@ -8,7 +8,8 @@ import org.eclipse.emf.ecore.EReference
 import de.fhdo.ddmm.technology.Protocol
 import de.fhdo.ddmm.technology.TechnologyPackage
 import org.eclipse.xtext.scoping.IScope
-import org.eclipse.xtext.scoping.Scopes
+import org.eclipse.xtext.scoping.impl.MapBasedScope
+import org.eclipse.xtext.resource.EObjectDescription
 
 /**
  * This class implements a custom scope provider for the Technology DSL.
@@ -35,6 +36,14 @@ class TechnologyDslScopeProvider extends AbstractTechnologyDslScopeProvider {
             return IScope.NULLSCOPE
 
         // Only a data format defined for the protocol can also be its default protocol
-        return Scopes::scopeFor(protocol.dataFormats)
+        val scopeElements = protocol.dataFormats.map[
+            EObjectDescription.create(it.formatName, it)
+        ]
+
+        // Note, that we use a map-based scope here, because the DataFormat metamodel element has
+        // no "name" attribute, but a "formatName" attribute, to exclude it from being automatically
+        // checked by the unique names validator. That is, because the name of a protocol must only
+        // be unique within its protocol, but not the overall model (i.e., over all protocols).
+        return MapBasedScope.createScope(IScope.NULLSCOPE, scopeElements)
     }
 }

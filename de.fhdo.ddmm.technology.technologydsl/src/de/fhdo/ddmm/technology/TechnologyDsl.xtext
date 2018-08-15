@@ -35,7 +35,7 @@ enum CommunicationType returns CommunicationType:
 ;
 
 DataFormat returns DataFormat:
-    name=ID
+    formatName=ID
 ;
 
 TechnologySpecificPrimitiveType returns TechnologySpecificPrimitiveType:

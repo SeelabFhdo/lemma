@@ -9,6 +9,7 @@ import de.fhdo.ddmm.technology.Technology
 import de.fhdo.ddmm.technology.CommunicationType
 import de.fhdo.ddmm.technology.TechnologySpecificPrimitiveType
 import de.fhdo.ddmm.data.PrimitiveType
+import de.fhdo.ddmm.technology.DataFormat
 
 /**
  * This class contains custom validation rules.
@@ -180,5 +181,28 @@ class TechnologyDslValidator extends AbstractTechnologyDslValidator {
             error('''Technology may not define more than one default «communicationTypeString» ''' +
                 '''protocol''', definedDefaultProtocols.get(1),
                 TechnologyPackage::Literals.PROTOCOL__NAME)
+    }
+
+    /**
+     * Check that data formats are unique _within_ a protocol (which is the reason why we do not
+     * consider data formats in the unique names validator, because we do not want them to be
+     * globally unique within the whole technology model)
+     */
+    @Check
+    def checkUniqueDataFormats(DataFormat dataFormat) {
+        val allDataFormats = dataFormat.protocol.dataFormats
+        var i = 0
+        var duplicateFound = false
+        var DataFormat currentFormat = null
+        do {
+            currentFormat = allDataFormats.get(i)
+            duplicateFound = currentFormat != dataFormat &&
+                currentFormat.formatName == dataFormat.formatName
+            i++
+        } while (currentFormat != dataFormat && !duplicateFound)
+
+        if(duplicateFound)
+            error ('''Duplicate data format «dataFormat.formatName»''', dataFormat,
+                TechnologyPackage::Literals.DATA_FORMAT__FORMAT_NAME)
     }
 }
