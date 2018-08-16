@@ -32,6 +32,7 @@ import de.fhdo.ddmm.service.PossiblyImportedOperation
 import de.fhdo.ddmm.service.PossiblyImportedMicroservice
 import de.fhdo.ddmm.service.Operation
 import com.google.common.base.Predicate
+import org.eclipse.xtext.resource.IEObjectDescription
 
 /**
  * This class implements a custom scope providerfor the Service DSL.
@@ -585,11 +586,13 @@ class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
      * Build scope for primitive and complex types imported from technology
      */
     private def getScopeForImportedTypes(Technology technology) {
+        val scopeElements = <IEObjectDescription> newArrayList
+
         // Technology-specific primitive types
-        val scopeElements = technology.primitiveTypes.map[
+        scopeElements.addAll(technology.primitiveTypes.map[
             val typeName = QualifiedName.create(it.qualifiedNameParts)
             EObjectDescription.create(typeName, it)
-        ]
+        ])
 
         // Technology-specific list types
         scopeElements.addAll(technology.listTypes.map[
