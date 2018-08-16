@@ -60,6 +60,8 @@ class ComplexTypeImport {
      *     (C2) Imports must not be cyclic, i.e., the imported model must not directly or indirectly
      *          import this model.
      *          Ensured by: DSL validator.
+     *     (C3) Name (= import alias) must be unique.
+     *          Ensured by: DSL validator.
      */
 
     String name
@@ -77,6 +79,8 @@ class Version {
      * Implicit Constraints:
      *     (C1) Either one (or none) of the lists complexTypes or contexts may have elements.
      *          Ensured by: DSL grammar.
+     *     (C2) Name must be unique.
+     *          Ensured by: DSL validator.
      */
 
     String name
@@ -118,6 +122,12 @@ class Version {
  * organize complex types
  */
 class Context {
+    /**
+     * Implicit Constraints:
+     *     (C1) Name must be unique.
+     *          Ensured by: DSL validator.
+     */
+
     String name
 
     contains ComplexType[1..*] complexTypes opposite context
@@ -332,6 +342,12 @@ class PrimitiveString extends PrimitiveType {}
  * Super-concept of complex types, i.e., lists and structures
  */
 abstract class ComplexType extends Type {
+    /**
+     * Implicit Constraints:
+     *     (C1) Name must be unique.
+     *          Ensured by: DSL validator.
+     */
+
     String name
 
     container DataModel dataModel opposite complexTypes
@@ -620,6 +636,8 @@ class DataField {
      *          Ensured by: DSL validator.
      *     (C3) If an eponymous super field exists that is not hidden, than this field must not have
      *          a type, i.e., a visible super field cannot be redefined in a sub-structure.
+     *          Ensured by: DSL validator.
+     *     (C4) Name must be unique within a data structure.
      *          Ensured by: DSL validator.
      */
 
