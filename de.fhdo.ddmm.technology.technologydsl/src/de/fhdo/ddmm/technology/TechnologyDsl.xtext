@@ -45,7 +45,7 @@ DataFormat returns DataFormat:
 TechnologySpecificPrimitiveType returns TechnologySpecificPrimitiveType:
     'primitive' 'type' name=ID
     (
-        'basic' 'type' basicBuiltinPrimitiveTypes+=PrimitiveType
+        'basic' 'types' basicBuiltinPrimitiveTypes+=PrimitiveType
             (',' basicBuiltinPrimitiveTypes+=PrimitiveType)*
         (default?='default')?
     )? ';'
