@@ -3,6 +3,7 @@ package de.fhdo.ddmm.typechecking.primitive_types
 import de.fhdo.ddmm.data.PrimitiveType
 import de.fhdo.ddmm.typechecking.TypeCheckerI
 import de.fhdo.ddmm.technology.TechnologySpecificPrimitiveType
+import de.fhdo.ddmm.typechecking.TypecheckingUtils
 
 /**
  * Simple TypeChecker implementation for PrimitiveTypes and TechnologySpecificPrimitiveTypes that
@@ -70,9 +71,6 @@ class PrimitiveTypeChecker implements TypeCheckerI<PrimitiveType> {
      * Get name of primitive or technology-specific primitive type
      */
     override typeName(PrimitiveType type) {
-        return if (type instanceof TechnologySpecificPrimitiveType)
-                type.name
-            else
-                type.typeName
+        return TypecheckingUtils.getTypeName(type)
     }
 }

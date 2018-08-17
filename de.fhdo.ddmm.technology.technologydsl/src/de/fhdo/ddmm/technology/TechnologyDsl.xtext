@@ -14,6 +14,10 @@ Technology returns Technology:
                 listTypes+=TechnologySpecificListType |
                 dataStructures+=TechnologySpecificDataStructure
             )+
+
+            'compatibility' 'matrix' '{'
+                compatibilityEntries+=CompatibilityMatrixEntry+
+            '}'
         '}'
 
         'protocols' '{'
@@ -53,4 +57,17 @@ TechnologySpecificListType returns TechnologySpecificListType:
 
 TechnologySpecificDataStructure returns TechnologySpecificDataStructure:
     'structure' 'type' name=ID ';'
+;
+
+enum CompatibilityDirection returns CompatibilityDirection:
+    MAPPING_TO_COMPATIBLE_TYPES='<-' |
+    COMPATIBLE_TYPES_TO_MAPPING='->' |
+    BIDIRECTIONAL='<->'
+;
+
+CompatibilityMatrixEntry returns CompatibilityMatrixEntry:
+    compatibleTypes+=[data::Type] (',' compatibleTypes+=[data::Type])*
+    direction=CompatibilityDirection
+    mappingType=[data::Type]
+     ';'
 ;

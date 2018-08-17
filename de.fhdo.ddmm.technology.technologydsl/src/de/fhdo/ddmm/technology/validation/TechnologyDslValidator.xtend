@@ -10,6 +10,10 @@ import de.fhdo.ddmm.technology.CommunicationType
 import de.fhdo.ddmm.technology.TechnologySpecificPrimitiveType
 import de.fhdo.ddmm.data.PrimitiveType
 import de.fhdo.ddmm.technology.DataFormat
+import de.fhdo.ddmm.typechecking.TypecheckingUtils
+import de.fhdo.ddmm.technology.CompatibilityMatrixEntry
+import de.fhdo.ddmm.technology.CompatibilityDirection
+import java.util.List
 
 /**
  * This class contains custom validation rules.
@@ -204,5 +208,205 @@ class TechnologyDslValidator extends AbstractTechnologyDslValidator {
         if(duplicateFound)
             error ('''Duplicate data format «dataFormat.formatName»''', dataFormat,
                 TechnologyPackage::Literals.DATA_FORMAT__FORMAT_NAME)
+    }
+
+    /**
+     * Check if compatibility entries exhibit ambiguous entries or duplicates
+     */
+    @Check
+    def checkCompatibilityMatrix(Technology technology) {
+        if (technology.compatibilityEntries.empty) {
+            return
+        }
+
+        val entrySet = <String> newHashSet
+        technology.compatibilityEntries.forEach[entry |
+            entry.compatibleTypes.forEach[compatibleType |
+                val mappingTypeName = TypecheckingUtils.getTypeName(entry.mappingType)
+                val compatibleTypeName = TypecheckingUtils.getTypeName(compatibleType)
+                var ambiguousEntry = false
+                var duplicateEntry = false
+
+                /*
+                 * The basic idea of the check is to first break down all entries to a consistent
+                 * form following the pattern: "type can be converted to other_type". This
+                 * corresponds to the semantics of the compatibility direction
+                 * MAPPING_TO_COMPATIBLE_TYPES (->). Next, we check if such an entry already exists
+                 * in an entry set. We have found an ambiguous entry if this is the case for
+                 * BIDIRECTIONAL entries. Otherwise it's a duplicate entry, if the entry could not
+                 * be added to the set.
+                 */
+                switch (entry.direction) {
+                    // Match BIDIRECTIONAL entries to both directions, i.e., mapping type -> current
+                    // compatible type and current compatible type -> mapping type.
+                    case BIDIRECTIONAL:
+                        ambiguousEntry = !entrySet.add(mappingTypeName + compatibleTypeName) ||
+                            !entrySet.add(compatibleTypeName + mappingTypeName)
+                    // COMPATIBLE_TYPES_TO_MAPPING entries become current compatible type ->
+                    // mapping type
+                    case COMPATIBLE_TYPES_TO_MAPPING:
+                        duplicateEntry = !entrySet.add(compatibleTypeName + mappingTypeName)
+                    // Default is MAPPING_TO_COMPATIBLE_TYPES: mapping type -> current compatible
+                    //                                         type
+                    default:
+                        duplicateEntry = !entrySet.add(mappingTypeName + compatibleTypeName)
+                }
+
+                val errorMessage = if (ambiguousEntry)
+                        "Ambiguous entry"
+                    else if (duplicateEntry)
+                        "Duplicate entry"
+                    else
+                        null
+
+                if (errorMessage !== null)
+                    error(errorMessage, entry,
+                        TechnologyPackage::Literals.COMPATIBILITY_MATRIX_ENTRY__TECHNOLOGY)
+            ]
+        ]
+    }
+
+    /**
+     * Warn, if an entry of the compatibility matrix, that maps two technology-specific primitive
+     * types with basic built-in types, overrides built-in type conversion rules
+     */
+    @Check
+    def checkCompatibilityEntryOverridesBuiltinCoompatibilityRules(CompatibilityMatrixEntry entry) {
+        /* Only accept technology-specific primitive types with basic built-in primitives */
+        if (!(entry.mappingType instanceof TechnologySpecificPrimitiveType)) {
+            return
+        }
+
+        val mappingPrimitiveType = entry.mappingType as TechnologySpecificPrimitiveType
+        if (mappingPrimitiveType.basicBuiltinPrimitiveTypes.empty) {
+            return
+        }
+
+        val compatiblePrimitiveTypes = entry.compatibleTypes.filter[
+            it instanceof TechnologySpecificPrimitiveType &&
+            !(it as TechnologySpecificPrimitiveType).basicBuiltinPrimitiveTypes.empty
+        ].map[it as TechnologySpecificPrimitiveType]
+        .toList
+
+        if (compatiblePrimitiveTypes.empty) {
+            return
+        }
+
+        /*
+         * The actual check consists of two steps:
+         *     (1) Convert mapping into a canonical form, that enables to consistently call
+         *         PrimitiveType.isCompatibleWith(). Therefore, the mapping entry is converted into
+         *         a map. Each key corresponds to a primitive basic type, i.e., the "left side" of
+         *         isCompatibleWith(). Each entry of the value list corresponds to a primitive type
+         *         to check, i.e., the "right side" of compatibleWith(). We need a value list,
+         *         because the mapping and compatible primitive types of the entry may exhibit more
+         *         more than one basic built-in primitive type. That is, entries like
+         *             primitive type DoubleFloat basic type double, float default;
+         *             primitive type LongInt basic type int, long default;
+         *             ...
+         *             LongInt -> DoubleFloat;
+         *         need to be converted (see the rules below) into a map
+         *             float: int, long
+         *             double: int, long
+         *         resulting in the calls
+         *             float.isCompatibleWith(int)
+         *             float.isCompatibleWith(long)
+         *             double.isCompatibleWith(int)
+         *             double.isCompatibleWith(long)
+         *         which all return true, making the compatibility entry obsolete because the
+         *         built-in primitive types are all compatible already.
+         *
+         *         For this to work, the following rules are applied based on the compatibility
+         *         entry's direction to convert a mapping entry into the described canonical
+         *         representation within the map:
+         *             - MAPPING_TO_COMPATIBLE_TYPES:
+         *                  The mapping direction is "compatible type (ct) <- mapping type (mt)",
+         *                  i.e., mapping can be converted into compatible type. Then, the canonical
+         *                  form is "ct.isCompatibleWith(mt)" with ct=key and mt=value.
+         *             - COMPATIBLE_TYPES_TO_MAPPING:
+         *                  The mapping direction is "ct -> mt", i.e., compatible can be converted
+         *                  into mapping type. Then, the canonical form is "mt.isCompatibleWith(ct)"
+         *                  with mt=key and ct=value.
+         *             - BIDIRECTIONAL:
+         *                  Both entries "ct <- mt" (ct=key, mt=value) and "ct -> mt" (mt=key,
+         *                  ct=value) are added to the map.
+         *
+         *     (2) Iterate over the map and call key.isCompatibleWith(current value from value
+         *         list). If this returns true, collect overridden buit-in rules into a message
+         *         string.
+         *
+         *     (3) Display warning that comprises all overridden built-in rules.
+         */
+        val overriddenDefaultsString = new StringBuilder
+        compatiblePrimitiveTypes.forEach[
+            // Build canonical representation map
+            val compatibilityChecksTodo = buildCanonicalCompatibilityCheckMap(
+                mappingPrimitiveType.basicBuiltinPrimitiveTypes, it.basicBuiltinPrimitiveTypes,
+                entry.direction
+            )
+
+            // Perform actual compatibility checks
+            compatibilityChecksTodo.forEach[basicType, typesToCheck | typesToCheck.forEach[
+                typeToCheck |
+                if (basicType.isCompatibleWith(typeToCheck))
+                    overriddenDefaultsString.append(
+                        '''«typeToCheck.typeName» to «basicType.typeName», '''
+                    )
+            ]]
+        ]
+
+        // Output message if overridden built-in rules were detected
+        val overriddenStringLength = overriddenDefaultsString.length
+        if (overriddenStringLength > 0) {
+            val message = "Entry corresponds to built-in primitive conversion rules " +
+                overriddenDefaultsString.toString.substring(0, overriddenStringLength-2)
+            warning(message, entry,
+                TechnologyPackage::Literals.COMPATIBILITY_MATRIX_ENTRY__TECHNOLOGY)
+        }
+    }
+
+    /**
+     * Helper method to build a map of a canonical representation for checking of a compatibility
+     * matrix entry overrides a built-in type conversion rule
+     */
+    def buildCanonicalCompatibilityCheckMap(List<PrimitiveType> mappingTypes,
+        List<PrimitiveType> compatibleTypes, CompatibilityDirection direction) {
+        val canonicalCheckMap = <PrimitiveType, List<PrimitiveType>> newHashMap
+
+        /*
+         * From the perspective of the compatibility matrix, the canonical form is "key <- value",
+         * i.e., can the value be converted into the key. This corresponds to the call
+         * key.isCompatibleWith(value).
+         * Therefore, the following rules are applied based on the compatibility entry's direction
+         * to convert a mapping entry into the described canonical representation within the map:
+         *     - MAPPING_TO_COMPATIBLE_TYPES:
+         *         The mapping direction is "compatible type (ct) <- mapping type (mt)",
+         *         i.e., mapping can be converted into compatible type. Then, the canonical
+         *         form is "ct.isCompatibleWith(mt)" with ct=key and mt=value.
+         *     - COMPATIBLE_TYPES_TO_MAPPING:
+         *         The mapping direction is "ct -> mt", i.e., compatible can be converted
+         *         into mapping type. Then, the canonical form is "mt.isCompatibleWith(ct)"
+         *         with mt=key and ct=value.
+         *     - BIDIRECTIONAL:
+         *         Both entries "ct <- mt" (ct=key, mt=value) and "ct -> mt" (mt=key,
+         *         ct=value) are added to the map.
+         */
+        mappingTypes.forEach[mappingType | compatibleTypes.forEach[compatibleType |
+            if (direction === CompatibilityDirection.MAPPING_TO_COMPATIBLE_TYPES) {
+                canonicalCheckMap.putIfAbsent(compatibleType, newArrayList)
+                canonicalCheckMap.get(compatibleType).add(mappingType)
+            } else if (direction === CompatibilityDirection.COMPATIBLE_TYPES_TO_MAPPING) {
+                canonicalCheckMap.putIfAbsent(mappingType, newArrayList)
+                canonicalCheckMap.get(mappingType).add(compatibleType)
+            } else if (direction === CompatibilityDirection.BIDIRECTIONAL) {
+                canonicalCheckMap.putIfAbsent(compatibleType, newArrayList)
+                canonicalCheckMap.get(compatibleType).add(mappingType)
+
+                canonicalCheckMap.putIfAbsent(mappingType, newArrayList)
+                canonicalCheckMap.get(mappingType).add(compatibleType)
+            }
+        ]]
+
+        return canonicalCheckMap
     }
 }

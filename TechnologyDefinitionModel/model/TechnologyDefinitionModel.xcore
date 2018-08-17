@@ -3,6 +3,7 @@ package de.fhdo.ddmm.technology
 import de.fhdo.ddmm.data.DataStructure
 import de.fhdo.ddmm.data.ListType
 import de.fhdo.ddmm.data.PrimitiveType
+import de.fhdo.ddmm.data.Type
 
 /**
  * Root model concept, which represents all concept related to a certain technology that maps
@@ -28,6 +29,7 @@ class Technology {
     contains TechnologySpecificPrimitiveType[] primitiveTypes opposite technology
     contains TechnologySpecificListType[] listTypes opposite technology
     contains TechnologySpecificDataStructure[] dataStructures opposite technology
+    contains CompatibilityMatrixEntry[] compatibilityEntries opposite technology
     contains Protocol[] protocols opposite technology
 }
 
@@ -178,4 +180,42 @@ class TechnologySpecificDataStructure extends DataStructure {
         nameParts.add(name)
         nameParts.asEList
     }
+}
+
+/**
+ * Represents the direction of compatibility in a compatibility matrix entry.
+ *
+ * Semantics:
+ *     - MAPPING_TO_COMPATIBLE_TYPES: The mapping type of the entry may be converted into instances
+ *                                    the compatible types.
+ *     - COMPATIBLE_TYPES_TO_MAPPING: The compatible types of the entry may be converted into an
+ *                                    instance of the mapping type.
+ *     - BIDIRECTONAL: Both conversion directions are possible.
+ */
+enum CompatibilityDirection {
+    MAPPING_TO_COMPATIBLE_TYPES,
+    COMPATIBLE_TYPES_TO_MAPPING,
+    BIDIRECTIONAL
+}
+
+/**
+ * Entry for declaring technology-specific compatibility between a mapping type and a set of other
+ * technology-specific types. The conversion direction is determined leveraging an
+ * CompatibilityDirection-typed field.
+ */
+class CompatibilityMatrixEntry {
+    /**
+     * Implicit Constraints:
+     *     (C1) No duplicate entries.
+     *          Ensured by: DSL validator.
+     *     (C2) No ambiguous entries in case of bidirectional compatibility, e.g., when comprising a
+     *          Boolean <-> Character mapping the matrix may not have any of the entries Boolean ->
+     *          Character or Character -> Boolean.
+     */
+
+    refers Type mappingType
+    refers Type[1..*] compatibleTypes
+    CompatibilityDirection direction
+
+    container Technology technology opposite compatibilityEntries
 }
