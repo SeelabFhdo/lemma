@@ -26,11 +26,35 @@ class Technology {
 
     String name
 
+    contains TechnologyImport[] imports opposite technology
     contains TechnologySpecificPrimitiveType[] primitiveTypes opposite technology
     contains TechnologySpecificListType[] listTypes opposite technology
     contains TechnologySpecificDataStructure[] dataStructures opposite technology
     contains CompatibilityMatrixEntry[] compatibilityEntries opposite technology
     contains Protocol[] protocols opposite technology
+}
+
+/**
+ * Concept for importing another technology
+ */
+class TechnologyImport {
+    /**
+     * Implicit Constraints:
+     *     (C1) The import URI must point to a valid file.
+     *          Ensured by: DSL validator.
+     *     (C2) Model may not import itself. However, cyclic imports are allowed, because otherwise
+     *          it would not be possible to declare that types of two different technologies are
+     *          bidirectionally compatible (see implicit constraints of CompatibilityMatrixEntry for
+     *          details on this).
+     *          Ensured by: DSL validator.
+     *     (C3) Import names, i.e., "aliases", must be unique.
+     *          Ensured by: DSL validator.
+     */
+
+    String name
+    String importURI
+
+    container Technology technology opposite imports
 }
 
 /**
@@ -211,11 +235,33 @@ class CompatibilityMatrixEntry {
      *     (C2) No ambiguous entries in case of bidirectional compatibility, e.g., when comprising a
      *          Boolean <-> Character mapping the matrix may not have any of the entries Boolean ->
      *          Character or Character -> Boolean.
+     *          Ensured by: DSL validator.
+     *     (C3) For imported types, only the forms "imported compatible types -> local mapping type"
+     *          or "local compatible types <- imported mapping type" is allowed. That is, the
+     *          compatibility matrix must declare which imported types may be converted _into_ its
+     *          types. A bidirectional compatibility direction is prevented, because then all
+     *          imported technology models must be traversed to decide whether a compatibility
+     *          entry exists. Furthermore, for an entry with imported types it must always be
+     *          declared that imported types are convertible into local types. This follows the
+     *          direction of an initialized parameter of a microservices that has a technology
+     *          assigned.
+     *          Ensured by: DSL validator.
      */
 
-    refers Type mappingType
-    refers Type[1..*] compatibleTypes
     CompatibilityDirection direction
+    contains PossiblyImportedTechnologySpecificType mappingType opposite mappingEntry
+    contains PossiblyImportedTechnologySpecificType[1..*] compatibleTypes opposite compatibleEntry
 
     container Technology technology opposite compatibilityEntries
+}
+
+/**
+ * A technology-specific type possibly imported from another technology model
+ */
+class PossiblyImportedTechnologySpecificType {
+    refers TechnologyImport[0..1] ^import
+    refers Type ^type
+
+    container CompatibilityMatrixEntry mappingEntry opposite mappingType
+    container CompatibilityMatrixEntry compatibleEntry opposite compatibleTypes
 }

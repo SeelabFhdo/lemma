@@ -6,6 +6,7 @@ import de.fhdo.ddmm.typechecking.TypecheckingUtils
 import org.eclipse.xtext.EcoreUtil2
 import de.fhdo.ddmm.technology.Technology
 import de.fhdo.ddmm.technology.CompatibilityDirection
+import org.eclipse.xtext.naming.QualifiedName
 
 /**
  * Type checker for technology-specific types, whose compatibility might be defined in a
@@ -25,25 +26,18 @@ class MatrixBasedTypeChecker implements TypeCheckerI<Type> {
             return false
 
         /*
-         * Types need to be defined in the same technology model, so that they belong to the same
-         * compatibility matrix, if any
+         * There needs to exist a compatibility matrix in the model of the basic type
          */
         val basicModel = EcoreUtil2.getContainerOfType(basicType, Technology)
-        val toCheckModel = EcoreUtil2.getContainerOfType(typeToCheck, Technology)
-        if (basicModel != toCheckModel)
-            return false
-
-        /*
-         * There need to exist a compatibility matrix
-         */
         val compatibilityEntries = basicModel.compatibilityEntries
         if (compatibilityEntries.empty)
             return false
 
         /* Search for matching compatibility mappings in the matrix */
+        val toCheckModel = EcoreUtil2.getContainerOfType(typeToCheck, Technology)
         return compatibilityEntries.exists[entry | entry.compatibleTypes.exists[compatibleType |
-            compatibleEntry(basicType, typeToCheck, entry.mappingType, compatibleType,
-                entry.direction)
+            compatibleEntry(basicType, basicModel, typeToCheck, toCheckModel,
+                entry.mappingType.type, compatibleType.type, entry.direction)
         ]]
     }
 
@@ -51,12 +45,23 @@ class MatrixBasedTypeChecker implements TypeCheckerI<Type> {
      * Check if an entry in a compatibility matrix describes the compatibility between the given
      * basic type and the type to check
      */
-    private def compatibleEntry(Type basicType, Type typeToCheck, Type mappingType,
-        Type compatibleType, CompatibilityDirection direction) {
-        val basicName = basicType.typeName
-        val toCheckName = typeToCheck.typeName
-        val mappingName = mappingType.typeName
-        val compatibleName = compatibleType.typeName
+    private def compatibleEntry(Type basicType, Technology basicModel, Type typeToCheck,
+        Technology toCheckModel, Type mappingType, Type compatibleType,
+        CompatibilityDirection direction) {
+        /*
+         * Build type names that include their defining technology model's names. This is necessary,
+         * because a compatibility matrix may contain imported types from other technology models.
+         *
+         */
+        val basicName = QualifiedName.create(basicModel.name, basicType.typeName).toString
+        val toCheckName = QualifiedName.create(toCheckModel.name, typeToCheck.typeName).toString
+
+        val mappingModel = EcoreUtil2.getContainerOfType(mappingType, Technology)
+        val mappingName = QualifiedName.create(mappingModel.name, mappingType.typeName).toString
+
+        val compatibleModel = EcoreUtil2.getContainerOfType(compatibleType, Technology)
+        val compatibleName = QualifiedName.create(compatibleModel.name, compatibleType.typeName)
+            .toString
 
         /*
          * What needs to be found is a compatibility entry that corresponds to the semantics of

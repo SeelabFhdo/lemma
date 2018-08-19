@@ -16,14 +16,32 @@ import de.fhdo.ddmm.technology.TechnologySpecificListType
  */
 class TypecheckingUtils {
     /**
-     * Get name of a type
+     * Get fully qualified name of a type
      */
     static def getTypeName(Type type) {
+        return getTypeName(type, false)
+    }
+
+    /**
+     * Get name of a type, possibly without qualifying parts
+     */
+    static def getTypeName(Type type, boolean withoutQualifyingParts) {
+        val nameParts = getTypeNameParts(type, withoutQualifyingParts)
+        if (nameParts === null)
+            return null
+
+        return QualifiedName.create(nameParts).toString
+    }
+
+    /**
+     * Get full qualifying name parts of a type
+     */
+    static def getTypeNameParts(Type type, boolean withoutQualifyingParts) {
         if (type === null)
             return null
 
         val nameParts = switch (type) {
-            TechnologySpecificPrimitiveType: #[type.name]
+            TechnologySpecificPrimitiveType: type.qualifiedNameParts
             PrimitiveType: #[type.typeName]
             ComplexType: type.qualifiedNameParts
             default: null
@@ -32,7 +50,11 @@ class TypecheckingUtils {
         if (nameParts === null)
             return null
 
-        return QualifiedName.create(nameParts).toString
+        if (withoutQualifyingParts) {
+            val namePartsWithoutQualifyingParts = <String> newArrayList(nameParts.last)
+            return namePartsWithoutQualifyingParts
+        } else
+            return nameParts
     }
 
     /**

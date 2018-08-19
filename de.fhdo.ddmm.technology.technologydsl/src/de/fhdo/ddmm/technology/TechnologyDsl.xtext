@@ -8,6 +8,7 @@ import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 import "de.fhdo.ddmm.data" as data
 
 Technology returns Technology:
+    imports+=TechnologyImport*
     'technology' name=ID '{'
         'types' '{'
             (primitiveTypes+=TechnologySpecificPrimitiveType |
@@ -24,6 +25,10 @@ Technology returns Technology:
             protocols+=Protocol+
         '}'
     '}'
+;
+
+TechnologyImport returns TechnologyImport:
+    'import' 'technology' 'from' importURI=STRING 'as' name=ID
 ;
 
 Protocol returns Protocol:
@@ -59,6 +64,10 @@ TechnologySpecificDataStructure returns TechnologySpecificDataStructure:
     'structure' 'type' name=ID ';'
 ;
 
+PossiblyImportedTechnologySpecificType returns PossiblyImportedTechnologySpecificType:
+    (^import=[TechnologyImport] '::')? type=[data::Type|QualifiedName]
+;
+
 enum CompatibilityDirection returns CompatibilityDirection:
     MAPPING_TO_COMPATIBLE_TYPES='<-' |
     COMPATIBLE_TYPES_TO_MAPPING='->' |
@@ -66,8 +75,9 @@ enum CompatibilityDirection returns CompatibilityDirection:
 ;
 
 CompatibilityMatrixEntry returns CompatibilityMatrixEntry:
-    compatibleTypes+=[data::Type] (',' compatibleTypes+=[data::Type])*
+    compatibleTypes+=PossiblyImportedTechnologySpecificType
+    (',' compatibleTypes+=PossiblyImportedTechnologySpecificType)*
     direction=CompatibilityDirection
-    mappingType=[data::Type]
-     ';'
+    mappingType=PossiblyImportedTechnologySpecificType
+    ';'
 ;

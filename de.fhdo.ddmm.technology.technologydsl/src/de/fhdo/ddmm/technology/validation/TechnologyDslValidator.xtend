@@ -14,6 +14,10 @@ import de.fhdo.ddmm.typechecking.TypecheckingUtils
 import de.fhdo.ddmm.technology.CompatibilityMatrixEntry
 import de.fhdo.ddmm.technology.CompatibilityDirection
 import java.util.List
+import de.fhdo.ddmm.technology.TechnologyImport
+import de.fhdo.ddmm.utils.DdmmUtils
+import de.fhdo.ddmm.technology.PossiblyImportedTechnologySpecificType
+import org.eclipse.xtext.EcoreUtil2
 
 /**
  * This class contains custom validation rules.
@@ -21,6 +25,30 @@ import java.util.List
  * @author <a href="mailto:florian.rademacher@fh-dortmund.de>Florian Rademacher</a>
  */
 class TechnologyDslValidator extends AbstractTechnologyDslValidator {
+    /**
+     * Check if an imported file exists
+     */
+    @Check
+    def checkImportFileExists(TechnologyImport ^import) {
+        if (!DdmmUtils.importFileExists(^import.eResource, import.importURI))
+            error("File not found", TechnologyPackage::Literals.TECHNOLOGY_IMPORT__IMPORT_URI)
+    }
+
+    /**
+     * Check that technology does not import itself
+     */
+    @Check
+    def checkSelfImport(TechnologyImport ^import) {
+        val thisModelRoot = EcoreUtil2.getContainerOfType(import, Technology)
+        val importedModelRoots = DdmmUtils.getImportedModelContents(import.eResource,
+            import.importURI)
+
+        // A model imports itself if its root is contained in the roots of the imported model
+        if (importedModelRoots.contains(thisModelRoot))
+            error("Model must not import itself", import,
+                TechnologyPackage::Literals.TECHNOLOGY_IMPORT__IMPORT_URI)
+    }
+
     /**
      * Check that there are not duplicates in the basic built-ins of a technology-specific primitive
      * type
@@ -222,8 +250,8 @@ class TechnologyDslValidator extends AbstractTechnologyDslValidator {
         val entrySet = <String> newHashSet
         technology.compatibilityEntries.forEach[entry |
             entry.compatibleTypes.forEach[compatibleType |
-                val mappingTypeName = TypecheckingUtils.getTypeName(entry.mappingType)
-                val compatibleTypeName = TypecheckingUtils.getTypeName(compatibleType)
+                val mappingTypeName = TypecheckingUtils.getTypeName(entry.mappingType.type)
+                val compatibleTypeName = TypecheckingUtils.getTypeName(compatibleType.type)
                 var ambiguousEntry = false
                 var duplicateEntry = false
 
@@ -280,6 +308,37 @@ class TechnologyDslValidator extends AbstractTechnologyDslValidator {
         if (compatibleTypeNames.contains(mappingTypeName))
             error("Self-compatibility of types must not be described", entry,
                 TechnologyPackage::Literals.COMPATIBILITY_MATRIX_ENTRY__TECHNOLOGY)
+    }
+
+    /**
+     * For imported types, only the forms "imported compatible types -> local mapping type" or
+     * "local compatible types <- imported mapping type" is allowed. That is, the compatibility
+     * matrix must declare which imported types may be converted _into_ its types. A bidirectional
+     * compatibility direction is prevented, because then all imported technology models must be
+     * traversed to decide whether a compatibility entry exists. Furthermore, for an entry with
+     * imported types it must always be declared that imported types are convertible into local
+     * types. This follows the direction of an initialized parameter of a microservices that has a
+     * technology assigned.
+     */
+    @Check
+    def checkImportedTypeCompatibilityDirection(PossiblyImportedTechnologySpecificType type) {
+        if (type.import === null) {
+            return
+        }
+
+        val containingEntry = EcoreUtil2.getContainerOfType(type, CompatibilityMatrixEntry)
+        val mappingType = containingEntry.mappingType
+        val compatibleTypes = containingEntry.compatibleTypes
+        val direction = containingEntry.direction
+        val conversionFromImportedToLocal = mappingType == type &&
+            direction === CompatibilityDirection.MAPPING_TO_COMPATIBLE_TYPES
+            ||
+            compatibleTypes.contains(type) &&
+            direction === CompatibilityDirection.COMPATIBLE_TYPES_TO_MAPPING
+
+        if (!conversionFromImportedToLocal)
+            error("Compatibility entry must describe conversion from imported to local types",
+                containingEntry, TechnologyPackage::Literals.COMPATIBILITY_MATRIX_ENTRY__DIRECTION)
     }
 
     /**

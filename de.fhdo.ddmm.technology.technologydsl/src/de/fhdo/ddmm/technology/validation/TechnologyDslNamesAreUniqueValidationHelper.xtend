@@ -20,6 +20,10 @@ class TechnologyDslNamesAreUniqueValidationHelper extends NamesAreUniqueValidati
     override getDuplicateNameErrorMessage(IEObjectDescription description,
         EClass clusterType, EStructuralFeature feature) {
         return switch(clusterType) {
+            /* Import */
+            case TechnologyPackage::Literals.TECHNOLOGY_IMPORT: '''Duplicate import alias ''' +
+                '''«description.name.lastSegment»'''
+
             /* Technology */
             case TechnologyPackage::Literals.TECHNOLOGY: '''Duplicate technology ''' +
                 '''«description.name»'''

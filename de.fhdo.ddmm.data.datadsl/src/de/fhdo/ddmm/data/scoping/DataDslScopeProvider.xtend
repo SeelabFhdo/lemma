@@ -30,7 +30,6 @@ class DataDslScopeProvider extends AbstractDataDslScopeProvider {
             reference == DataPackage::Literals.POSSIBLY_IMPORTED_COMPLEX_TYPE__COMPLEX_TYPE)
             return (context as PossiblyImportedComplexType).scopeForPossiblyImportedComplexTypes
 
-
         return super.getScope(context, reference)
     }
 
