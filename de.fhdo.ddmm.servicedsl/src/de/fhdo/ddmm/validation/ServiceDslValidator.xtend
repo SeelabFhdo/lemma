@@ -67,21 +67,6 @@ class ServiceDslValidator extends AbstractServiceDslValidator {
     }
 
     /**
-     * Warn, if an internal interface is already marked as being internal by its containing
-     * microservice
-     */
-    @Check
-    def checkAlreadyInternal(Interface ^interface) {
-        if (interface.internal && interface.internalByContainer) {
-            val containingMicroserviceName = nameProvider.qualifiedName(interface.microservice)
-
-            warning('''Interface is already marked as being internal, because ''' +
-                '''its microservice «containingMicroserviceName» is marked as being internal''',
-                interface, ServicePackage::Literals.INTERFACE__INTERNAL)
-        }
-    }
-
-    /**
      * Check that interfaces are not empty, i.e., that they define or refer to at least one
      * operation
      */
@@ -128,33 +113,15 @@ class ServiceDslValidator extends AbstractServiceDslValidator {
     }
 
     /**
-     * Warn, if an internal operation is already implicitly internal, directly or indirectly,
-     * because its containing interface or microservice is internal
+     * Warn, if an internal operation is already implicitly internal because its containing
+     * interface is internal
      */
     @Check
     def checkAlreadyInternal(Operation operation) {
-        if (!operation.internal || !operation.internalByContainer) {
-            return
-        }
-
-        val isInterfaceInternal = operation.interface.internal
-        val isServiceInternal = operation.interface.microservice.internal
-
-        if (isInterfaceInternal && isServiceInternal) {
-            val interfaceName = operation.interface.name
-            val serviceName = operation.interface.microservice.name
-            warning('''Operation is already implicitly internal, because both its interface ''' +
-                '''«interfaceName» and microservice «serviceName» are internal''', operation,
-                ServicePackage::Literals.OPERATION__INTERNAL)
-        } else if (isInterfaceInternal) {
+        if (operation.internal && operation.interface.internal) {
             val interfaceName = operation.interface.name
             warning('''Operation is already implicitly internal, because its interface ''' +
                 '''«interfaceName» is internal''', operation,
-                ServicePackage::Literals.OPERATION__INTERNAL)
-        } else if (isServiceInternal) {
-            val serviceName = operation.interface.microservice.name
-            warning('''Operation is already implicitly internal, because its microservice ''' +
-                '''«serviceName» is internal''', operation,
                 ServicePackage::Literals.OPERATION__INTERNAL)
         }
     }

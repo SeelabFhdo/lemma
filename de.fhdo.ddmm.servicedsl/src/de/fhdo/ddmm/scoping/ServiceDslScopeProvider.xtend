@@ -221,7 +221,7 @@ class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
                 return parameter.getScopeForOperationImport()
 
             /*
-             * Possibly imported, operations that may initialize the parameter. The scope provider
+             * Possibly imported operations that may initialize the parameter. The scope provider
              * will delegate the scope resolution with PossiblyImportedOperation as the context, if
              * its import feature was set. Otherwise, the context will be an instance of
              * Microservice (see above).

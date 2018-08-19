@@ -207,14 +207,15 @@ class Microservice {
      * Check if microservice can require an interface
      */
     op boolean canRequire(Interface iface, boolean isImportedInterface) {
-        if (iface === null)
+        if (iface === null || iface.microservice === null)
             return false
 
         // A microservice can require an interface if its not one of its own interfaces. Furthermore
         // the the interface must be implemented and, if the interface is imported from another
-        // model, must not be internal.
+        // model, must not be internal, either by itself or its containing microservice.
+        val isInternalPossiblyByContainer = iface.internal || iface.microservice.internal
         var canRequire = !iface.notImplemented &&
-            (!isImportedInterface || !iface.effectivelyInternal)
+            (!isImportedInterface || !isInternalPossiblyByContainer)
         if (interfaces !== null && !interfaces.empty)
             canRequire = canRequire && !interfaces.contains(iface)
 
@@ -225,14 +226,17 @@ class Microservice {
      * Check if microservice can require an operation
      */
     op boolean canRequire(Operation operation, boolean isImportedOperation) {
-        if (operation === null)
+        if (operation === null || operation.interface === null ||
+            operation.interface.microservice === null)
             return false
 
         // A microservice can require an operation if its not an operation from one of its own
         // interfaces. Furthermore the operation must be implemented and, in case the operation is
-        // imported from another model, must not be internal.
+        // imported from another model, must not be internal, as well as its microservice.
+        val isInternalPossiblyByContainer = operation.effectivelyInternal ||
+            operation.interface.microservice.internal
         var canRequire = !operation.effectivelyNotImplemented &&
-            (!isImportedOperation || !operation.effectivelyInternal)
+            (!isImportedOperation || !isInternalPossiblyByContainer)
         if (containedOperations !== null && !containedOperations.empty)
             canRequire = canRequire && !containedOperations.contains(operation)
 
@@ -285,25 +289,6 @@ class Interface {
         val nameParts = microservice.qualifiedNameParts
         nameParts.addAll(name)
         nameParts.asEList
-    }
-
-    /**
-     * Check if the interface is indirectly internal, because its container, i.e., microservice, is
-     * already internal
-     */
-    derived boolean internalByContainer get {
-        if (microservice === null)
-            return false
-
-        return microservice.internal
-    }
-
-    /**
-     * Check, if an interface is effectively internal, either directly or indirectly, i.e., because
-     * its microservice is already internal
-     */
-    derived boolean effectivelyInternal get {
-        return internal || internalByContainer
     }
 }
 
@@ -358,17 +343,15 @@ class Operation {
     }
 
     /**
-     * Check if the operation is indirectly internal, because its containers, i.e., interface or
-     * microservice, is already internal
+     * Check if the operation is indirectly internal, because its container interface is already
+     * internal. This realizes the semantics of internal microservices not automatically hiding
+     * their interfaces and operations for, e.g., parameter initializations.
      */
-    derived boolean internalByContainer get {
+    derived boolean internalByContainerInterface get {
         if (interface === null)
             return false
 
-        if (!interface.internal && interface.microservice === null)
-            return false
-
-        return interface.internal || interface.microservice.internal
+        return interface.internal
     }
 
     /**
@@ -376,7 +359,7 @@ class Operation {
      * its interface or microservice is already internal
      */
     derived boolean effectivelyInternal get {
-        return internal || internalByContainer
+        return internal || internalByContainerInterface
     }
 }
 
