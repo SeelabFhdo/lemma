@@ -301,8 +301,8 @@ class TechnologyDslValidator extends AbstractTechnologyDslValidator {
          *         to check, i.e., the "right side" of compatibleWith(). We need a value list,
          *         because the mapping and compatible primitive types of the entry may exhibit more
          *         more than one basic built-in primitive type. That is, entries like
-         *             primitive type DoubleFloat basic types double, float default;
-         *             primitive type LongInt basic types int, long default;
+         *             primitive type DoubleFloat basic type double, float default;
+         *             primitive type LongInt basic type int, long default;
          *             ...
          *             LongInt -> DoubleFloat;
          *         need to be converted (see the rules below) into a map
