@@ -267,6 +267,22 @@ class TechnologyDslValidator extends AbstractTechnologyDslValidator {
     }
 
     /**
+     * Check that self-compatibility of types is not explicitly described
+     */
+    @Check
+    def checkTypeSelfCompatibility(CompatibilityMatrixEntry entry) {
+        if (entry.mappingType === null || entry.compatibleTypes === null) {
+            return
+        }
+
+        val mappingTypeName = TypecheckingUtils.getTypeName(entry.mappingType.type)
+        val compatibleTypeNames = entry.compatibleTypes.map[TypecheckingUtils.getTypeName(it.type)]
+        if (compatibleTypeNames.contains(mappingTypeName))
+            error("Self-compatibility of types must not be described", entry,
+                TechnologyPackage::Literals.COMPATIBILITY_MATRIX_ENTRY__TECHNOLOGY)
+    }
+
+    /**
      * Warn, if an entry of the compatibility matrix, that maps two technology-specific primitive
      * types with basic built-in types, overrides built-in type conversion rules
      */
