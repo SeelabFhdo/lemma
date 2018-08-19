@@ -177,18 +177,19 @@ class ServiceDslValidator extends AbstractServiceDslValidator {
             val interfaceName = operation.interface.name
             val serviceName = operation.interface.microservice.name
             warning('''Operation is already implicitly required, because both its interface ''' +
-                '''«interfaceName» and microservice «serviceName» are required''', operation,
-                ServicePackage::Literals.OPERATION__INTERNAL)
+                '''«interfaceName» and microservice «serviceName» are required''',
+                importedOperation,
+                ServicePackage::Literals.POSSIBLY_IMPORTED_OPERATION__REQUIRED_BY_CONTAINER)
         } else if (isInterfaceRequired) {
             val interfaceName = operation.interface.name
             warning('''Operation is already implicitly required, because its interface ''' +
-                '''«interfaceName» is required''', operation,
-                ServicePackage::Literals.OPERATION__INTERNAL)
+                '''«interfaceName» is required''', importedOperation,
+                ServicePackage::Literals.POSSIBLY_IMPORTED_OPERATION__REQUIRED_BY_INTERFACE)
         } else if (isServiceRequired) {
             val serviceName = operation.interface.microservice.name
             warning('''Operation is already implicitly required, because its microservice ''' +
-                '''«serviceName» is required''', operation,
-                ServicePackage::Literals.OPERATION__INTERNAL)
+                '''«serviceName» is required''', importedOperation,
+                ServicePackage::Literals.POSSIBLY_IMPORTED_OPERATION__REQUIRED_BY_MICROSERVICE)
         }
     }
 
