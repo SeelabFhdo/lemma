@@ -249,6 +249,13 @@ class ServiceDslValidator extends AbstractServiceDslValidator {
      */
     @Check
     def checkParameter(PossiblyImportedOperation importedOperation) {
+        // The operation may not have a container if the user didn't finish entering the
+        // initializing operation's name and hence the DSL code is syntactically incorrect
+        val operation = importedOperation.operation
+        if (operation.eContainer === null) {
+            return
+        }
+
         val initializedParameter = importedOperation.initializedParameter
         if (initializedParameter === null) {
             return
@@ -269,7 +276,6 @@ class ServiceDslValidator extends AbstractServiceDslValidator {
          * If the operation has an output type that is the same as the initialized parameter's type
          * both types are equal and hence inherently compatible
          */
-        val operation = importedOperation.operation
         val existsSameOutputType = operation.parameters.exists[
             (exchangePattern == ExchangePattern.OUT || exchangePattern == ExchangePattern.INOUT) &&
             effectiveType == parameterType
