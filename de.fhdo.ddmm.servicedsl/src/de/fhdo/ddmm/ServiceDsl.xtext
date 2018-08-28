@@ -21,11 +21,15 @@ enum ImportType returns ImportType:
     DATATYPES='datatypes' | TECHNOLOGY='technology' | MICROSERVICES='microservices'
 ;
 
+enum Visibility returns Visibility:
+    INTERNAL='internal' | ARCHITECTURE='architecture' | PUBLIC='public'
+;
+
 Microservice returns Microservice:
     ('@' 'technology' '(' technology=[Import] ')')?
     (protocols+=ImportedProtocol (protocols+=ImportedProtocol)?)?
-    (internal?='internal')?
     type=MicroserviceType
+    visibility=Visibility?
     'microservice' name=QualifiedNameWithAtLeastOneLevel ('version' version=ID)?
     ('extends' super=[Microservice|QualifiedNameWithAtLeastOneLevel])? '{'
         ('required' 'microservices' '{'
@@ -58,7 +62,7 @@ PossiblyImportedOperation returns PossiblyImportedOperation:
 
 Interface returns Interface:
     (protocols+=ImportedProtocol (protocols+=ImportedProtocol)?)?
-    (internal?='internal')? (notImplemented?='noimpl')? 'interface' name=ID '{'
+    (notImplemented?='noimpl')? visibility=Visibility? 'interface' name=ID '{'
         referredOperations+=ReferredOperation*
         operations+=Operation*
     '}'
@@ -66,7 +70,7 @@ Interface returns Interface:
 
 Operation returns Operation:
     (protocols+=ImportedProtocol (protocols+=ImportedProtocol)?)?
-    (internal?='internal')? (notImplemented?='noimpl')? name=ID '('
+    (notImplemented?='noimpl')? visibility=Visibility? name=ID '('
         parameters+=Parameter? (',' parameters+=Parameter+)?
     ')' ';'
 ;

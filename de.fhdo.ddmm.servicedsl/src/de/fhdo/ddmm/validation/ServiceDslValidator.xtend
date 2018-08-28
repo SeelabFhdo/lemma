@@ -118,11 +118,11 @@ class ServiceDslValidator extends AbstractServiceDslValidator {
      */
     @Check
     def checkAlreadyInternal(Operation operation) {
-        if (operation.internal && operation.interface.internal) {
+        if (operation.effectivelyInternal && operation.interface.effectivelyInternal) {
             val interfaceName = operation.interface.name
             warning('''Operation is already implicitly internal, because its interface ''' +
                 '''«interfaceName» is internal''', operation,
-                ServicePackage::Literals.OPERATION__INTERNAL)
+                ServicePackage::Literals.OPERATION__VISIBILITY)
         }
     }
 

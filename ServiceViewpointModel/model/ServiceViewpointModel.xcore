@@ -70,6 +70,23 @@ enum MicroserviceType {
 }
 
 /**
+ * Visibility of microservices, interfaces, and operations
+ */
+enum Visibility {
+    // Internal enum value used to state that an element does not have an explicit visibility
+    // assigned, yet. This is needed, because the DSL won't allow enum-typed rule features to be
+    // null.
+    NONE,
+    INTERNAL,
+    // This enum value is a helper to explicitly allow distinguishing between interfaces/operations
+    // directly marked as being internal, and those that are part of an internal service but do not
+    // have a visibility assigned. They may still be used by services of the same service model.
+    VISIBLE_IN_SERVICE_MODEL,
+    ARCHITECTURE,
+    PUBLIC
+}
+
+/**
  * Concept to describe a microservices, its interfaces, and operations
  */
 class Microservice {
@@ -91,7 +108,7 @@ class Microservice {
     String name
     String version
     MicroserviceType ^type
-    boolean internal = "false"
+    Visibility visibility = "NONE"
 
     refers Microservice[0..1] ^super
     refers Import[0..1] technology
@@ -200,7 +217,7 @@ class Microservice {
         // A microservice cannot require itself. It can furthermore only require internal
         // microservices from the same model, but not from other, imported models. That is, internal
         // microservices act like private elements of a Java class without getter and setter access.
-        return microservice !== this && (!isImportedService || !microservice.internal)
+        return microservice !== this && (!isImportedService || !microservice.effectivelyInternal)
     }
 
     /**
@@ -210,12 +227,9 @@ class Microservice {
         if (iface === null || iface.microservice === null)
             return false
 
-        // A microservice can require an interface if its not one of its own interfaces. Furthermore
-        // the the interface must be implemented and, if the interface is imported from another
-        // model, must not be internal, either by itself or its containing microservice.
-        val isInternalPossiblyByContainer = iface.internal || iface.microservice.internal
-        var canRequire = !iface.notImplemented &&
-            (!isImportedInterface || !isInternalPossiblyByContainer)
+        // A microservice can require an interface if its implemented and effectively not internal.
+        // Furthermore, it must not be one of its own interfaces.
+        var canRequire = !iface.notImplemented && !iface.effectivelyInternal
         if (interfaces !== null && !interfaces.empty)
             canRequire = canRequire && !interfaces.contains(iface)
 
@@ -230,13 +244,9 @@ class Microservice {
             operation.interface.microservice === null)
             return false
 
-        // A microservice can require an operation if its not an operation from one of its own
-        // interfaces. Furthermore the operation must be implemented and, in case the operation is
-        // imported from another model, must not be internal, as well as its microservice.
-        val isInternalPossiblyByContainer = operation.effectivelyInternal ||
-            operation.interface.microservice.internal
-        var canRequire = !operation.effectivelyNotImplemented &&
-            (!isImportedOperation || !isInternalPossiblyByContainer)
+        // A microservice can require an operation if its implemented and effectively not internal.
+        // Furthermore, it must not be one of its own interfaces.
+        var canRequire = !operation.effectivelyNotImplemented && !operation.effectivelyInternal
         if (containedOperations !== null && !containedOperations.empty)
             canRequire = canRequire && !containedOperations.contains(operation)
 
@@ -252,6 +262,25 @@ class Microservice {
 
         // A microservice cannot extend itself and only microservices of the same type
         return this !== microservice && ^type == microservice.^type
+    }
+
+    /**
+     * Get effective visibility
+     */
+    derived Visibility effectiveVisibility get {
+        // The effective visibility of a service is architecture, in case no visibility has been
+        // specified explicitly
+        if (visibility === Visibility.NONE)
+            return Visibility.ARCHITECTURE
+
+        return visibility
+    }
+
+    /**
+     * Convenience method to check if a microservice is effectively marked as being internal
+     */
+    derived boolean effectivelyInternal get {
+        return effectiveVisibility === Visibility.INTERNAL
     }
 }
 
@@ -270,7 +299,7 @@ class Interface {
     String name
     //String version
     boolean notImplemented = "false"
-    boolean internal = "false"
+    Visibility visibility = "NONE"
 
     //refers Interface[0..1] ^super
     contains ImportedProtocol[0..2] protocols
@@ -290,6 +319,61 @@ class Interface {
         nameParts.addAll(name)
         nameParts.asEList
     }
+
+    /**
+     * Get effective visibility
+     */
+    derived Visibility effectiveVisibility get {
+        if (microservice === null)
+            return null
+
+        val serviceVisibility = microservice.effectiveVisibility
+
+        /*
+         * The effective visibility depends on the effective visibility of the microservice. In
+         * general, the interface's visibility may not be "greater" than the one of the service
+         * (public > architecture > internal). Otherwise, null will be returned as the interface's
+         * effective visibility. If the interface does not exhibit an explicit visibility, the
+         * visibility of the service is "inherited". This, however, is not the case if the service
+         * does not have a visibility, too, or if it's visibility is internal. In the first case,
+         * architecture is the default visibility. In the latter case, the "internal", i.e., not-
+         * usable-by-modeler, visibility "visible in service model" is returned.
+         */
+        switch (serviceVisibility) {
+            case Visibility.INTERNAL:
+                if (visibility === Visibility.NONE)
+                    return Visibility.VISIBLE_IN_SERVICE_MODEL
+                else if (visibility === Visibility.INTERNAL)
+                    return visibility
+
+            case Visibility.ARCHITECTURE:
+                if (visibility === Visibility.NONE)
+                    return serviceVisibility
+                else if (visibility === Visibility.INTERNAL ||
+                    visibility === Visibility.ARCHITECTURE)
+                    return visibility
+
+            case Visibility.PUBLIC:
+                if (visibility === Visibility.NONE)
+                    return serviceVisibility
+                else if (visibility === Visibility.INTERNAL ||
+                    visibility === Visibility.ARCHITECTURE ||
+                    visibility === Visibility.PUBLIC)
+                    return visibility
+
+            default:
+                return null
+        }
+
+        return null
+    }
+
+    /**
+     * Convenience method to check if an interface is effectively marked as being internal
+     */
+    derived boolean effectivelyInternal get {
+        return effectiveVisibility === Visibility.INTERNAL
+    }
 }
 
 /**
@@ -304,7 +388,7 @@ class Operation {
 
     String name
     boolean notImplemented = "false"
-    boolean internal = "false"
+    Visibility visibility = "NONE"
 
     contains ImportedProtocol[0..2] protocols
     contains Parameter[] parameters opposite operation
@@ -343,23 +427,63 @@ class Operation {
     }
 
     /**
-     * Check if the operation is indirectly internal, because its container interface is already
-     * internal. This realizes the semantics of internal microservices not automatically hiding
-     * their interfaces and operations for, e.g., parameter initializations.
+     * Get effective visibility
      */
-    derived boolean internalByContainerInterface get {
+    derived Visibility effectiveVisibility get {
         if (interface === null)
-            return false
+            return null
 
-        return interface.internal
+        val interfaceVisibility = interface.effectiveVisibility
+
+        // The interface's visibility is null if the combination of service and interface visibility
+        // is invalid, which makes the operation's state of visibility invalid, too
+        if (interfaceVisibility === null)
+            return null
+
+        /*
+         * The effective visibility depends on the effective visibility of the interface. In
+         * general, the operation's visibility may not be "greater" than the one of the interface
+         * (public > architecture > internal). Otherwise, null will be returned as the interface's
+         * effective visibility. If the operation does not exhibit an explicit visibility, the
+         * visibility of the interface is "inherited". This, however, is not the case if the
+         * interface does not have a a visibility, too. In this case, architecture is the default
+         * visibility.
+         */
+        switch (interfaceVisibility) {
+            case Visibility.VISIBLE_IN_SERVICE_MODEL,
+            case Visibility.INTERNAL:
+                if (visibility === Visibility.NONE)
+                    return interfaceVisibility
+                else if (visibility === Visibility.INTERNAL)
+                    return visibility
+
+            case Visibility.ARCHITECTURE:
+                if (visibility === Visibility.NONE)
+                    return interfaceVisibility
+                else if (visibility === Visibility.INTERNAL ||
+                    visibility === Visibility.ARCHITECTURE)
+                    return visibility
+
+            case Visibility.PUBLIC:
+                if (visibility === Visibility.NONE)
+                    return interfaceVisibility
+                else if (visibility === Visibility.INTERNAL ||
+                    visibility === Visibility.ARCHITECTURE ||
+                    visibility === Visibility.PUBLIC)
+                    return visibility
+
+            default:
+                return null
+        }
+
+        return null
     }
 
     /**
-     * Check, if an operation is effectively internal, either directly or indirectly, i.e., because
-     * its interface or microservice is already internal
+     * Convenience method to check if an interface is effectively marked as being internal
      */
     derived boolean effectivelyInternal get {
-        return internal || internalByContainerInterface
+        return effectiveVisibility === Visibility.INTERNAL
     }
 }
 

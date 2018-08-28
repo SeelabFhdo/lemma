@@ -324,7 +324,7 @@ class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
     }
 
     /**
-     * Helper method to build a scope for possibly imported microservices, i.e., a microservices
+     * Helper method to build a scope for possibly imported microservices, i.e., a microservice
      * with or without import specifications. Microservices required by another microservice may
      * possibly be imported.
      */
