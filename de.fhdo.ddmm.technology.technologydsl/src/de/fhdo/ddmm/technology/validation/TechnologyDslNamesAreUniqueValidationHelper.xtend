@@ -24,15 +24,12 @@ class TechnologyDslNamesAreUniqueValidationHelper extends NamesAreUniqueValidati
             case TechnologyPackage::Literals.TECHNOLOGY_IMPORT: '''Duplicate import alias ''' +
                 '''«description.name.lastSegment»'''
 
-            /* Technology */
-            case TechnologyPackage::Literals.TECHNOLOGY: '''Duplicate technology ''' +
-                '''«description.name»'''
-
             /* Technology-specific type */
-            case DataPackage::Literals.TYPE: '''Duplicate type «description.name»'''
+            case DataPackage::Literals.TYPE: '''Duplicate type «description.name.lastSegment»'''
 
             /* Protocol */
-            case TechnologyPackage::Literals.PROTOCOL: '''Duplicate protocol «description.name»'''
+            case TechnologyPackage::Literals.PROTOCOL:
+                '''Duplicate protocol «description.name.lastSegment»'''
 
             /* If the cluster type is not covered by the helper, use the default implementation. */
             default: super.getDuplicateNameErrorMessage(description, clusterType, feature)
