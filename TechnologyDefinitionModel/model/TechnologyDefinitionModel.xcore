@@ -1,7 +1,6 @@
 package de.fhdo.ddmm.technology
 
-import de.fhdo.ddmm.data.DataStructure
-import de.fhdo.ddmm.data.ListType
+import de.fhdo.ddmm.data.ComplexType
 import de.fhdo.ddmm.data.PrimitiveType
 import de.fhdo.ddmm.data.PrimitiveValue
 import de.fhdo.ddmm.data.Type
@@ -160,7 +159,7 @@ class TechnologySpecificPrimitiveType extends PrimitiveType {
 /**
  * A list type that is specific to a certain technology, e.g., Queue for Java
  */
-class TechnologySpecificListType extends ListType {
+class TechnologySpecificListType extends ComplexType {
     /**
      * Implicit Constraints:
      *     (C1) Name must be unique.
@@ -186,7 +185,7 @@ class TechnologySpecificListType extends ListType {
 /**
  * A data structure type that is specific to a certain technology
  */
-class TechnologySpecificDataStructure extends DataStructure {
+class TechnologySpecificDataStructure extends ComplexType {
     /**
      * Implicit Constraints:
      *     (C1) Name must be unique.
