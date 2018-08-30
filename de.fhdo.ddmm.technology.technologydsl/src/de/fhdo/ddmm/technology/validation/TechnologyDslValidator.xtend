@@ -18,6 +18,9 @@ import de.fhdo.ddmm.technology.TechnologyImport
 import de.fhdo.ddmm.utils.DdmmUtils
 import de.fhdo.ddmm.technology.PossiblyImportedTechnologySpecificType
 import org.eclipse.xtext.EcoreUtil2
+import de.fhdo.ddmm.technology.ServiceProperty
+import de.fhdo.ddmm.data.PrimitiveValue
+import de.fhdo.ddmm.technology.OperationTechnology
 
 /**
  * This class contains custom validation rules.
@@ -483,5 +486,71 @@ class TechnologyDslValidator extends AbstractTechnologyDslValidator {
         ]]
 
         return canonicalCheckMap
+    }
+
+    /**
+     * Check that the assigned default value of a service property matches its type
+     */
+    @Check
+    def checkDefaultValueType(PrimitiveValue defaultValue) {
+        val serviceProperty = EcoreUtil2.getContainerOfType(defaultValue, ServiceProperty)
+        if (!defaultValue.isOfType(serviceProperty.type))
+            error('''Value is not of type «serviceProperty.type.typeName» ''', serviceProperty,
+                TechnologyPackage::Literals.SERVICE_PROPERTY__DEFAULT_VALUE)
+    }
+
+    /**
+     * Check uniqueness of operation environments' names in an operation technology
+     */
+    @Check
+    def checkOperationEnvironmentsUniqueNames(OperationTechnology operationTechnology) {
+        val operationEnvironments = operationTechnology.operationEnvironments
+        val duplicateIndex = DdmmUtils.getDuplicateIndex(operationEnvironments, [name])
+        if (duplicateIndex > -1) {
+            val duplicateEnvironment = operationEnvironments.get(duplicateIndex)
+            error('''Duplicate operation environment «duplicateEnvironment.name»''',
+                duplicateEnvironment, TechnologyPackage::Literals.OPERATION_ENVIRONMENT__NAME,
+                duplicateIndex)
+        }
+    }
+
+    /**
+     * Check that there is exactly one default operation environment, if more than on environment
+     * is specified for an operation technology
+     */
+    @Check
+    def checkOperationEnvironmentsDefault(OperationTechnology operationTechnology) {
+        val operationEnvironments = operationTechnology.operationEnvironments
+        /* If there is only one operation environment, treat it implicitly as default */
+        if (operationEnvironments.size <= 1)
+            return
+        /* If there is more than one operation environment, one must be marked as default */
+        else if (!operationEnvironments.exists[^default])
+            error('''There must be exactly one default environment''',
+                operationTechnology, TechnologyPackage::Literals.OPERATION_TECHNOLOGY__NAME)
+
+        /* Check that there is only one default environment */
+        val duplicateDefaultIndex = DdmmUtils.getDuplicateIndex(operationEnvironments, [^default],
+            [^default === true])
+        if (duplicateDefaultIndex > -1) {
+            val duplicateEnvironment = operationEnvironments.get(duplicateDefaultIndex)
+            error('''There may only be one default environment''',
+                duplicateEnvironment, TechnologyPackage::Literals.OPERATION_ENVIRONMENT__DEFAULT,
+                duplicateDefaultIndex)
+        }
+    }
+
+    /**
+     * Check uniqueness of service properties names in an operation technology
+     */
+    @Check
+    def checkServicePropertiesUniqueNames(OperationTechnology operationTechnology) {
+        val serviceProperties = operationTechnology.serviceProperties
+        val duplicateIndex = DdmmUtils.getDuplicateIndex(serviceProperties, [name])
+        if (duplicateIndex > -1) {
+            val duplicateProperty = serviceProperties.get(duplicateIndex)
+            error('''Duplicate service property «duplicateProperty.name»''',
+                duplicateProperty, TechnologyPackage::Literals.SERVICE_PROPERTY__NAME)
+        }
     }
 }

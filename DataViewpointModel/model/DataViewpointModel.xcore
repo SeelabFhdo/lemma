@@ -1,5 +1,9 @@
 package de.fhdo.ddmm.data
 
+import java.math.BigDecimal
+import java.text.DateFormat
+import java.text.ParseException
+
 /**
  * This metamodel represents the Data Modeling Viewpoint, which is mainly used for defining custom
  * structure and list types.
@@ -708,5 +712,232 @@ class DataField {
         }
 
         return null
+    }
+}
+
+/**
+ * Primitive type value. In general, there are four "kinds" of values supported by the metamodel:
+ *      (i) Numbers: Comprises values of primitive types byte, short, integer, long, float, and
+ *                   double.
+ *      (ii) Strings: Comprises values of primitive types character, string, and date.
+ *      (iii) Boolean: True and false values.
+ */
+class PrimitiveValue {
+    String stringValue
+    Boolean booleanValue
+    BigDecimal numericValue
+
+    /**
+     * Check if numeric primitive value is in closed set [lowerBound, upperBound]. Returns false if
+     * value is not numeric.
+     */
+    op boolean isInClosedSet(BigDecimal lowerBound, BigDecimal upperBound) {
+        if (numericValue === null)
+            return false
+
+        val outOfBoundLower = numericValue.compareTo(lowerBound) < 0;
+        val outOfBoundUpper = numericValue.compareTo(upperBound) > 0;
+        return !outOfBoundLower && !outOfBoundUpper
+    }
+
+    /**
+     * Check if numeric value has decimals. Returns false if value is not numeric
+     */
+    op boolean hasDecimals() {
+        if (numericValue === null)
+            return false
+
+        val moduloOne = numericValue.remainder(new BigDecimal("1"));
+        return moduloOne.compareTo(BigDecimal.ZERO) != 0
+    }
+
+    /**
+     * Check if value is _exactly_ of the given primitive type
+     */
+    op boolean isOfType(PrimitiveType primitiveType) {
+        return asValueOfType(primitiveType) !== null
+    }
+
+    /**
+     * Check if value does not contain a value of a primitive type
+     */
+    op boolean hasNoValue() {
+        return stringValue === null && numericValue === null && booleanValue === null
+    }
+
+    /**
+     * Cast encapsulated value to _exactly_ the given primitive type. If no _exact_ casting is
+     * possible or the no primitive value is contained, return null.
+     */
+    op Object asValueOfType(PrimitiveType primitiveType) {
+        if (primitiveType === null || hasNoValue)
+            return null
+
+        return switch (primitiveType) {
+            PrimitiveBoolean: asBoolean
+            PrimitiveByte: asByte
+            PrimitiveCharacter: asCharacter
+            PrimitiveDate: asDate
+            PrimitiveDouble: asDouble
+            PrimitiveFloat: asFloat
+            PrimitiveInteger: asInteger
+            PrimitiveLong: asLong
+            PrimitiveShort: asShort
+            PrimitiveString: asString
+        }
+    }
+
+    /**
+     * Return value as boolean or null, if value is no boolean
+     */
+    op Boolean asBoolean() {
+        return booleanValue
+    }
+
+    /**
+     * Return value as byte or null, if value is no byte
+     */
+    op Byte asByte() {
+        if (numericValue === null)
+            return null
+
+        if (hasDecimals)
+            return null
+
+        if (!isInClosedSet(new BigDecimal(Byte.MIN_VALUE), new BigDecimal(Byte.MAX_VALUE)))
+            return null
+
+        return numericValue.byteValue
+    }
+
+    /**
+     * Return value as character or null, if value is no character
+     */
+    op Character asCharacter() {
+        if (stringValue === null)
+            return null
+
+        if (stringValue.empty)
+            return Character.MIN_VALUE
+        else if (stringValue.length === 1)
+            return stringValue.charAt(0)
+
+        return null
+    }
+
+    /**
+     * Return value as date or null, if value is no date in Java's DateFormat.SHORT format
+     */
+    op Date asDate() {
+        if (stringValue === null)
+            return null
+
+        try {
+            val dateFormatter = DateFormat.getDateInstance(DateFormat.SHORT)
+            return dateFormatter.parse(stringValue)
+        } catch (ParseException ex) {
+            return null
+        }
+    }
+
+    /**
+     * Return value as double or null, if value is no double
+     */
+    op Double asDouble() {
+        if (numericValue === null)
+            return null
+
+        if (!isInClosedSet(new BigDecimal(Double.MIN_VALUE), new BigDecimal(Double.MAX_VALUE)))
+            return null
+
+        val doubleValue = numericValue.doubleValue
+        if (!Double.isNaN(doubleValue) && !Double.isInfinite(doubleValue))
+            return doubleValue
+
+        return null
+    }
+
+    /**
+     * Return value as float or null, if value is no float
+     */
+    op Float asFloat() {
+        if (numericValue === null)
+            return null
+
+        if (!isInClosedSet(new BigDecimal(Float.MIN_VALUE), new BigDecimal(Float.MAX_VALUE)))
+            return null
+
+        val floatValue = numericValue.floatValue
+        if (!Float.isNaN(floatValue) && !Float.isInfinite(floatValue))
+            return floatValue
+
+        return null
+    }
+
+    /**
+     * Return value as integer or null, if value is no integer
+     */
+    op Integer asInteger() {
+        if (numericValue === null)
+            return null
+
+        if (hasDecimals)
+            return null
+
+        if (!isInClosedSet(new BigDecimal(Integer.MIN_VALUE), new BigDecimal(Integer.MAX_VALUE)))
+            return null
+
+        try {
+            return numericValue.intValueExact
+        } catch (ArithmeticException ex) {
+            return null
+        }
+    }
+
+    /**
+     * Return value as long or null, if value is no long
+     */
+    op Long asLong() {
+        if (numericValue === null)
+            return null
+
+        if (hasDecimals)
+            return null
+
+        if (!isInClosedSet(new BigDecimal(Long.MIN_VALUE), new BigDecimal(Long.MAX_VALUE)))
+            return null
+
+        try {
+            return numericValue.longValueExact
+        } catch (ArithmeticException ex) {
+            return null
+        }
+    }
+
+    /**
+     * Return value as short or null, if value is no short
+     */
+    op Short asShort() {
+        if (numericValue === null)
+            return null
+
+        if (hasDecimals)
+            return null
+
+        if (!isInClosedSet(new BigDecimal(Short.MIN_VALUE), new BigDecimal(Short.MAX_VALUE)))
+            return null
+
+        try {
+            return numericValue.shortValueExact
+        } catch (ArithmeticException ex) {
+            return null
+        }
+    }
+
+    /**
+     * Return value as string or null, if value is no string
+     */
+    op String asString() {
+        return stringValue
     }
 }

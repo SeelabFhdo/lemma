@@ -3,6 +3,7 @@ package de.fhdo.ddmm.technology
 import de.fhdo.ddmm.data.DataStructure
 import de.fhdo.ddmm.data.ListType
 import de.fhdo.ddmm.data.PrimitiveType
+import de.fhdo.ddmm.data.PrimitiveValue
 import de.fhdo.ddmm.data.Type
 
 /**
@@ -32,6 +33,8 @@ class Technology {
     contains TechnologySpecificDataStructure[] dataStructures opposite technology
     contains CompatibilityMatrixEntry[] compatibilityEntries opposite technology
     contains Protocol[] protocols opposite technology
+    contains DeploymentTechnology[] deploymentTechnologies opposite technology
+    contains InfrastructureTechnology[] infrastructureTechnologies opposite technology
 }
 
 /**
@@ -264,4 +267,82 @@ class PossiblyImportedTechnologySpecificType {
 
     container CompatibilityMatrixEntry mappingEntry opposite mappingType
     container CompatibilityMatrixEntry compatibleEntry opposite compatibleTypes
+}
+
+/**
+ * Abstract superclass of technologies specific to service operation
+ */
+abstract class OperationTechnology {
+    String name
+
+    contains OperationEnvironment[1..*] operationEnvironments opposite operationTechnology
+    contains ServiceProperty[] serviceProperties opposite operationTechnology
+}
+
+/**
+ * Operation environment of an operation technology, e.g., an image of a deployment container
+ */
+class OperationEnvironment {
+    /**
+     * Implicit Constraints:
+     *     (C1) Name must be unique.
+     *          Ensured by: DSL validator.
+     *     (C2) If there is more than one operation environment within an operation technology, than
+     *          there must be at least one default environment.
+     *          Ensured by: DSL validator.
+     */
+
+    String name
+    boolean ^default = "false"
+
+    container OperationTechnology operationTechnology opposite operationEnvironments
+}
+
+/**
+ * A property of an operation technology that may be set per associated service
+ */
+class ServiceProperty {
+    /**
+     * Implicit Constraints:
+     *     (C1) A mandatory property may not have a default value.
+     *          Ensured by: DSL grammar.
+     *     (C2) The assigned default value must be compatible with the poperty's type.
+     *          Ensured by: DSL validator.
+     *     (C3) Name must be unique.
+     *          Ensured by: DSL validator.
+     */
+
+    String name
+    boolean mandatory = "false"
+
+    container OperationTechnology operationTechnology opposite serviceProperties
+
+    contains PrimitiveType ^type
+    contains PrimitiveValue defaultValue
+}
+
+/**
+ * Operation technology for service deployment
+ */
+class DeploymentTechnology extends OperationTechnology {
+    /**
+     * Implicit Constraints:
+     *     (C1) Name must be unique.
+     *          Ensured by: DSL validator.
+     */
+
+    container Technology technology opposite deploymentTechnologies
+}
+
+/**
+ * Infrastructure technology for service operation
+ */
+class InfrastructureTechnology extends OperationTechnology {
+    /**
+     * Implicit Constraints:
+     *     (C1) Name must be unique.
+     *          Ensured by: DSL validator.
+     */
+
+    container Technology technology opposite infrastructureTechnologies
 }

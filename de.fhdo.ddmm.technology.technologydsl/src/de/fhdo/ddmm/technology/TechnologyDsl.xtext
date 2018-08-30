@@ -24,6 +24,14 @@ Technology returns Technology:
         'protocols' '{'
             protocols+=Protocol+
         '}'
+
+        'deployment' 'technologies' '{'
+            deploymentTechnologies+=DeploymentTechnology+
+        '}'
+
+        'infrastructure' 'technologies' '{'
+            infrastructureTechnologies+=InfrastructureTechnology+
+        '}'
     '}'
 ;
 
@@ -81,3 +89,43 @@ CompatibilityMatrixEntry returns CompatibilityMatrixEntry:
     mappingType=PossiblyImportedTechnologySpecificType
     ';'
 ;
+
+DeploymentTechnology returns DeploymentTechnology:
+    name=ID '{'
+        'operation' 'environments' '=' operationEnvironments+=OperationEnvironment
+            (',' operationEnvironments+=OperationEnvironment)*
+            ';'
+
+        ('service' 'properties' '{'
+            serviceProperties+=ServiceProperty+
+        '}')?
+    '}'
+;
+
+InfrastructureTechnology returns InfrastructureTechnology:
+    name=ID '{'
+        'operation' 'environments' '=' operationEnvironments+=OperationEnvironment
+            (',' operationEnvironments+=OperationEnvironment)*
+            ';'
+
+        ('service' 'properties' '{'
+            serviceProperties+=ServiceProperty+
+        '}')?
+    '}'
+;
+
+OperationEnvironment returns OperationEnvironment:
+    name=QUOTED_ID (default?='default')?
+;
+
+ServiceProperty returns ServiceProperty:
+    type=PrimitiveType name=ID
+    ('=' defaultValue=PrimitiveValue | mandatory?='mandatory')?
+    ';'
+;
+
+PrimitiveValue returns data::PrimitiveValue:
+    numericValue=BIG_DECIMAL | booleanValue=BOOLEAN | stringValue=STRING
+;
+
+terminal QUOTED_ID: '"'ID'"';

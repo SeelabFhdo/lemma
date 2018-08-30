@@ -84,3 +84,6 @@ PrimitiveType returns PrimitiveType:
 QualifiedName:
     ID ('.' ID)*
 ;
+
+terminal BIG_DECIMAL returns ecore::EBigDecimal: '-'?INT ('.' INT)?;
+terminal BOOLEAN returns ecore::EBoolean: 'true' | 'false';

@@ -421,4 +421,31 @@ final class DdmmUtils {
 
         return MapBasedScope.createScope(IScope.NULLSCOPE, scopeElements)
     }
+
+    /**
+     * Get index of first duplicate entry from a list, or -1 if list does not contain duplicates
+     */
+    def static <T, S> getDuplicateIndex(List<T> list, Function<T, S> getCompareValue,
+        Predicate<T>... compareValueFilterPredicates) {
+        if (list === null || getCompareValue === null)
+            throw new IllegalArgumentException("List and compare property must not be null")
+
+        val doFiltering = compareValueFilterPredicates !== null &&
+            !compareValueFilterPredicates.empty
+        val List<T> compareList = if (!compareValueFilterPredicates.empty && doFiltering)
+            list.filter[entry | !compareValueFilterPredicates.exists[!apply(entry)]].toList
+        else
+            list
+
+        for (entryIndex : 0..<compareList.size) {
+            val entryValue = getCompareValue.apply(compareList.get(entryIndex))
+            for (compareIndex : entryIndex+1..<compareList.size) {
+                val valueToCompare = getCompareValue.apply(compareList.get(compareIndex))
+                if (entryValue == valueToCompare)
+                    return compareIndex
+            }
+        }
+
+        return -1
+    }
 }
