@@ -103,6 +103,12 @@ class Microservice {
      *     (C4) A microservice may not require itself and only non-internal microservices from
      *          imported models.
      *          Ensured by: DSL scope provider.
+     *     (C5) If a technology is assigned to the service, it must exhibit specifications for types
+     *          and protocols. The rationale if this constraint is, that a technology might be
+     *          assigned, but technology-specific types or protocols must not be explicitly assigned
+     *          for convenience reasons. If they are missing, the defaults from the assigned
+     *          technology are taken instead.
+     *          Ensured by: DSL validator.
      */
 
     String name

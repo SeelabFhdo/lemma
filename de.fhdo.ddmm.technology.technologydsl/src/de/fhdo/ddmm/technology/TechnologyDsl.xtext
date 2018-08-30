@@ -10,28 +10,28 @@ import "de.fhdo.ddmm.data" as data
 Technology returns Technology:
     imports+=TechnologyImport*
     'technology' name=ID '{'
-        'types' '{'
+        ('types' '{'
             (primitiveTypes+=TechnologySpecificPrimitiveType |
                 listTypes+=TechnologySpecificListType |
                 dataStructures+=TechnologySpecificDataStructure
             )+
 
-            'compatibility' 'matrix' '{'
+            ('compatibility' 'matrix' '{'
                 compatibilityEntries+=CompatibilityMatrixEntry+
-            '}'
-        '}'
+            '}')?
+        '}')?
 
-        'protocols' '{'
+        ('protocols' '{'
             protocols+=Protocol+
-        '}'
+        '}')?
 
-        'deployment' 'technologies' '{'
+        ('deployment' 'technologies' '{'
             deploymentTechnologies+=DeploymentTechnology+
-        '}'
+        '}')?
 
-        'infrastructure' 'technologies' '{'
+        ('infrastructure' 'technologies' '{'
             infrastructureTechnologies+=InfrastructureTechnology+
-        '}'
+        '}')?
     '}'
 ;
 

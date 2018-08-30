@@ -22,6 +22,8 @@ class Technology {
      *     (C2) A technology must define at least one default communication protocol for either type
      *          of communication.
      *          Ensured by: DSL validator.
+     *     (C3) Technology models must not be empty.
+     *          Ensured by: DSL validator.
      */
 
     String name

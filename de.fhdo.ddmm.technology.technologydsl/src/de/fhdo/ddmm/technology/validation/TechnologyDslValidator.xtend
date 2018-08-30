@@ -29,6 +29,23 @@ import de.fhdo.ddmm.technology.OperationTechnology
  */
 class TechnologyDslValidator extends AbstractTechnologyDslValidator {
     /**
+     * Check if technology model contains at least one section
+     */
+    @Check
+    def checkModelNotEmpty(Technology technology) {
+        val modelEmpty = technology.primitiveTypes.empty &&
+            technology.listTypes.empty &&
+            technology.dataStructures.empty &&
+            technology.protocols.empty &&
+            technology.deploymentTechnologies.empty &&
+            technology.infrastructureTechnologies.empty
+
+        if (modelEmpty)
+            error("Model must not be empty", technology,
+                TechnologyPackage::Literals.TECHNOLOGY__NAME)
+    }
+
+    /**
      * Check if an imported file exists
      */
     @Check
@@ -148,6 +165,21 @@ class TechnologyDslValidator extends AbstractTechnologyDslValidator {
     @Check
     def checkPrimitiveDefaults(Technology technology) {
         /*
+         * Perform the check only if the "types" section is present. However, the presence needs to
+         * be checked by relying on the existence of other types, i.e., lists and/or data
+         * structures. That is, because the "types" section in the metamodel is not represented by
+         * one coherent concept, but each part of the "types" section is directly encapsulated by
+         * the root concept Technology. Hence, checking for the existence of the "types" section "as
+         * a whole" is not possible.
+         */
+        val technologySpecifiesOtherTypes = !technology.listTypes.empty ||
+            !technology.dataStructures.empty
+
+        if (!technologySpecifiesOtherTypes) {
+            return
+        }
+
+        /*
          * Get built-in primitive types of technology-specific primitive types, which are marked as
          * defaults for the basic built-in primitive types. Here, we map them to the metamodel
          * interfaces of the built-in primitive types. That is, because at runtime, instead of,
@@ -200,6 +232,10 @@ class TechnologyDslValidator extends AbstractTechnologyDslValidator {
      * Convenience method to check protocol defaults
      */
     def checkProtocolsDefaults(Technology technology, CommunicationType forCommunicationType) {
+        if (technology.protocols.empty) {
+            return
+        }
+
         val communicationTypeString = switch (forCommunicationType) {
             case SYNCHRONOUS: "synchronous"
             case ASYNCHRONOUS: "asynchronous"

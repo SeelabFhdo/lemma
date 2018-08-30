@@ -26,6 +26,7 @@ import org.eclipse.xtext.naming.QualifiedName
 import de.fhdo.ddmm.technology.TechnologySpecificPrimitiveType
 import de.fhdo.ddmm.data.Type
 import de.fhdo.ddmm.service.Parameter
+import de.fhdo.ddmm.technology.Technology
 
 /**
  * This class contains custom validation rules for service models.
@@ -64,6 +65,37 @@ class ServiceDslValidator extends AbstractServiceDslValidator {
 
         if (isCyclic)
             error("Cyclic import detected", import, ServicePackage::Literals.IMPORT__IMPORT_URI)
+    }
+
+    /**
+     * Check that annotated technologies define types and protocols
+     */
+    @Check
+    def checkTechnologyForMandatoryConcepts(Microservice microservice) {
+        val technology = microservice.technology
+        if (technology === null || technology.importURI === null || technology.importURI.empty) {
+            return
+        }
+
+        val technologyModelContents = DdmmUtils.getImportedModelContents(microservice.eResource,
+            technology.importURI)
+        if (technologyModelContents === null || technologyModelContents.empty) {
+            return
+        }
+
+        val modelRoot = technologyModelContents.get(0)
+        if (!(modelRoot instanceof Technology)) {
+            return
+        }
+
+        val technologyModel = modelRoot as Technology
+        if (technologyModel === null) {
+            return
+        }
+
+        if (technologyModel.primitiveTypes.empty || technologyModel.protocols.empty)
+            error("Technology does not specify primitive types, protocols, or both",
+                microservice, ServicePackage::Literals.MICROSERVICE__TECHNOLOGY)
     }
 
     /**
