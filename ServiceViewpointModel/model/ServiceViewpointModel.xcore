@@ -762,6 +762,8 @@ class ImportedProtocolAndDataFormat {
      * Implicit Constraints:
      *     (C1) Data format must match protocol as specified in the technology model.
      *          Ensured by: DSL scope provider.
+     *     (C2) Import must match annotated technology of parent microservice.
+     *          Ensured by: DSL scope provider.
      */
     refers Import ^import
     refers Protocol importedProtocol

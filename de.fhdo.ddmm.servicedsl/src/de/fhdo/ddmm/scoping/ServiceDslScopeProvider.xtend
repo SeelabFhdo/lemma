@@ -33,6 +33,7 @@ import de.fhdo.ddmm.service.Operation
 import com.google.common.base.Predicate
 import org.eclipse.xtext.resource.IEObjectDescription
 import de.fhdo.ddmm.service.ImportedProtocolAndDataFormat
+import de.fhdo.ddmm.service.ProtocolSpecification
 
 /**
  * This class implements a custom scope providerfor the Service DSL.
@@ -68,6 +69,9 @@ class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
 
             /* Imported type */
             ImportedType: context.getScope(reference)
+
+            /* Protocol specification */
+            ProtocolSpecification: context.getScope(reference)
 
             /* Imported protocol and data format */
             ImportedProtocolAndDataFormat: context.getScope(reference)
@@ -302,7 +306,7 @@ class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
              * for the annotated element
              */
             case ServicePackage.Literals.IMPORTED_PROTOCOL_AND_DATA_FORMAT__IMPORT:
-                return importedProtocol.getScopeForImportsOfType(Technology)
+                return importedProtocol.getServiceTechnologyImportAliasAsScope()
 
             /* Protocols */
             case ServicePackage::Literals.IMPORTED_PROTOCOL_AND_DATA_FORMAT__IMPORTED_PROTOCOL:
@@ -314,6 +318,19 @@ class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
         }
 
         return null
+    }
+
+    /**
+     * Get the annotated technology of a microservice, that is the container of the given context,
+     * as scope
+     */
+    private def getServiceTechnologyImportAliasAsScope(EObject context) {
+        val microservice = EcoreUtil2.getContainerOfType(context, Microservice)
+        if (microservice === null || microservice.technology === null) {
+            return IScope::NULLSCOPE
+        }
+
+        return Scopes::scopeFor(#[microservice.technology])
     }
 
     /**
@@ -638,5 +655,15 @@ class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
             return resourceContents
         else
             return null
+    }
+
+    /**
+     * Build scope for protocol specifications on microservices, interfaces, and operations
+     */
+    private def getScope(ProtocolSpecification protocolSpecification, EReference reference) {
+        if (reference !== ServicePackage::Literals.IMPORTED_PROTOCOL_AND_DATA_FORMAT__IMPORT)
+            return IScope.NULLSCOPE
+
+        return protocolSpecification.getServiceTechnologyImportAliasAsScope()
     }
 }
