@@ -121,7 +121,7 @@ class Microservice {
     contains PossiblyImportedMicroservice[] requiredMicroservices opposite requiringMicroservice
     contains PossiblyImportedInterface[] requiredInterfaces opposite requiringMicroservice
     contains PossiblyImportedOperation[] requiredOperations opposite requiringMicroservice
-    contains ImportedProtocol[0..2] protocols
+    contains ProtocolSpecification[0..2] protocols
     contains Interface[1..*] interfaces opposite microservice
 
     container ServiceModel serviceModel opposite microservices
@@ -308,7 +308,7 @@ class Interface {
     Visibility visibility = "NONE"
 
     //refers Interface[0..1] ^super
-    contains ImportedProtocol[0..2] protocols
+    contains ProtocolSpecification[0..2] protocols
     contains Operation[] operations opposite ^interface
     contains ReferredOperation[] referredOperations opposite ^interface
 
@@ -396,7 +396,7 @@ class Operation {
     boolean notImplemented = "false"
     Visibility visibility = "NONE"
 
-    contains ImportedProtocol[0..2] protocols
+    contains ProtocolSpecification[0..2] protocols
     contains Parameter[] parameters opposite operation
 
     container Interface ^interface opposite operations
@@ -506,7 +506,7 @@ class ReferredOperation {
      */
 
     refers Operation operation
-    contains ImportedProtocol[0..2] protocols
+    contains ProtocolSpecification[0..2] protocols
 
     container Interface ^interface opposite referredOperations
 }
@@ -755,18 +755,29 @@ class ImportedType {
 }
 
 /**
- * Represents a protocol imported from a technology model
+ * Represents a protocol and data format imported from a technology model
  */
-class ImportedProtocol {
+class ImportedProtocolAndDataFormat {
     /**
      * Implicit Constraints:
      *     (C1) Data format must match protocol as specified in the technology model.
      *          Ensured by: DSL scope provider.
      */
+    refers Import ^import
+    refers Protocol importedProtocol
+    refers DataFormat[0..1] dataFormat
 
+    container ProtocolSpecification specification opposite protocol
+}
+
+/**
+ * Protocol specification that combines a communication type with an imported protocol. Used to
+ * specify, e.g., the default asynchronous and/or synchronous protocol of services, interfaces, and
+ * operations.
+ */
+class ProtocolSpecification {
     CommunicationType communicationType = 'SYNCHRONOUS'
 
-    refers Import ^import
-    refers Protocol protocol
-    refers DataFormat[0..1] dataFormat
+    contains ImportedProtocolAndDataFormat protocol opposite specification
+}
 }

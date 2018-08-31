@@ -7,7 +7,6 @@ import org.eclipse.xtext.validation.Check
 import de.fhdo.ddmm.utils.DdmmUtils
 import de.fhdo.ddmm.service.ServicePackage
 import de.fhdo.ddmm.service.Import
-import de.fhdo.ddmm.service.ImportedProtocol
 import de.fhdo.ddmm.service.Microservice
 import de.fhdo.ddmm.service.Interface
 import de.fhdo.ddmm.service.Operation
@@ -27,6 +26,7 @@ import de.fhdo.ddmm.technology.TechnologySpecificPrimitiveType
 import de.fhdo.ddmm.data.Type
 import de.fhdo.ddmm.service.Parameter
 import de.fhdo.ddmm.technology.Technology
+import de.fhdo.ddmm.service.ProtocolSpecification
 
 /**
  * This class contains custom validation rules for service models.
@@ -207,11 +207,11 @@ class ServiceDslValidator extends AbstractServiceDslValidator {
      * interfaces, operations, or referred operations
      */
     @Check
-    def checkProtocolCommunicationType(ImportedProtocol importedProtocol) {
-        val protocols = switch(importedProtocol.eContainer) {
-            Microservice : (importedProtocol.eContainer as Microservice).protocols
-            Interface : (importedProtocol.eContainer as Interface).protocols
-            Operation : (importedProtocol.eContainer as Operation).protocols
+    def checkProtocolCommunicationType(ProtocolSpecification protocolSpecification) {
+        val protocols = switch(protocolSpecification.eContainer) {
+            Microservice : (protocolSpecification.eContainer as Microservice).protocols
+            Interface : (protocolSpecification.eContainer as Interface).protocols
+            Operation : (protocolSpecification.eContainer as Operation).protocols
             default : null
         }
 
@@ -219,7 +219,7 @@ class ServiceDslValidator extends AbstractServiceDslValidator {
             return
         }
 
-        val containerName = switch(importedProtocol.eContainer) {
+        val containerName = switch(protocolSpecification.eContainer) {
             Microservice : "microservice"
             Interface : "interface"
             Operation : "operation"
@@ -240,7 +240,7 @@ class ServiceDslValidator extends AbstractServiceDslValidator {
             if (protocolsOfType.size > 1)
                 error('''There must not be more than one «protocolTypeName» protocol for the ''' +
                     '''«containerName»''', protocolsOfType.get(1),
-                ServicePackage::Literals.IMPORTED_PROTOCOL__COMMUNICATION_TYPE)
+                ServicePackage::Literals.PROTOCOL_SPECIFICATION__COMMUNICATION_TYPE)
         }
     }
 

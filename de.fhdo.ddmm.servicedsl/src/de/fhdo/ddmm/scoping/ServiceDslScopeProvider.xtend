@@ -15,7 +15,6 @@ import org.eclipse.xtext.resource.EObjectDescription
 import de.fhdo.ddmm.utils.DdmmUtils
 import de.fhdo.ddmm.service.ImportedType
 import de.fhdo.ddmm.technology.Technology
-import de.fhdo.ddmm.service.ImportedProtocol
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.scoping.Scopes
 import de.fhdo.ddmm.service.Microservice
@@ -33,6 +32,7 @@ import de.fhdo.ddmm.service.PossiblyImportedMicroservice
 import de.fhdo.ddmm.service.Operation
 import com.google.common.base.Predicate
 import org.eclipse.xtext.resource.IEObjectDescription
+import de.fhdo.ddmm.service.ImportedProtocolAndDataFormat
 
 /**
  * This class implements a custom scope providerfor the Service DSL.
@@ -69,8 +69,8 @@ class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
             /* Imported type */
             ImportedType: context.getScope(reference)
 
-            /* Imported protocol */
-            ImportedProtocol: context.getScope(reference)
+            /* Imported protocol and data format */
+            ImportedProtocolAndDataFormat: context.getScope(reference)
         }
 
         if (scope !== null)
@@ -292,24 +292,25 @@ class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
     }
 
     /**
-     * Build scope for imported protocols used to annotate microservices, interface, or operations
+     * Build scope for imported protocols used to annotate microservices, interface, or
+     * operations
      */
-    private def getScope(ImportedProtocol protocol, EReference reference) {
+    private def getScope(ImportedProtocolAndDataFormat importedProtocol, EReference reference) {
         switch (reference) {
             /*
              * Available imports and their aliases for protocols imported from technology models
              * for the annotated element
              */
-            case ServicePackage.Literals.IMPORTED_PROTOCOL__IMPORT:
-                return protocol.getScopeForImportsOfType(Technology)
+            case ServicePackage.Literals.IMPORTED_PROTOCOL_AND_DATA_FORMAT__IMPORT:
+                return importedProtocol.getScopeForImportsOfType(Technology)
 
             /* Protocols */
-            case ServicePackage::Literals.IMPORTED_PROTOCOL__PROTOCOL:
-                return protocol.getScopeForImportedProtocol()
+            case ServicePackage::Literals.IMPORTED_PROTOCOL_AND_DATA_FORMAT__IMPORTED_PROTOCOL:
+                return importedProtocol.getScopeForImportedProtocol()
 
             /* Data formats corresponding to an imported protocol */
-            case ServicePackage::Literals.IMPORTED_PROTOCOL__DATA_FORMAT:
-                return protocol.getScopeForDataFormat()
+            case ServicePackage::Literals.IMPORTED_PROTOCOL_AND_DATA_FORMAT__DATA_FORMAT:
+                return importedProtocol.getScopeForDataFormat()
         }
 
         return null
@@ -527,17 +528,18 @@ class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
     /**
      * Build scope for imported protocols
      */
-    private def getScopeForImportedProtocol(ImportedProtocol protocol) {
-        val resourceContents = getImportedModelContents(protocol.eResource,
-            protocol.import.importURI)
+    private def getScopeForImportedProtocol(ImportedProtocolAndDataFormat importedProtocol) {
+        val resourceContents = getImportedModelContents(importedProtocol.eResource,
+            importedProtocol.import.importURI)
         if (resourceContents === null || resourceContents.empty)
             return IScope.NULLSCOPE
 
         // Return scope elements, i.e., defined protocols, that match the ImportedProtocol's
         // communication type
         val resourceRoot = resourceContents.get(0) as Technology
+        val communicationType = importedProtocol.specification.communicationType
         val scopeElements = resourceRoot.protocols
-            .filter[communicationType == protocol.communicationType]
+            .filter[it.communicationType == communicationType]
             .map[
                 val protocolName = QualifiedName.create(it.qualifiedNameParts)
                 EObjectDescription.create(protocolName, it)
@@ -549,14 +551,14 @@ class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
     /**
      * Build scope for data formats of imported protocols
      */
-    private def getScopeForDataFormat(ImportedProtocol importedProtocol) {
+    private def getScopeForDataFormat(ImportedProtocolAndDataFormat importedProtocol) {
         val resourceContents = getImportedModelContents(importedProtocol.eResource,
             importedProtocol.import.importURI)
         if (resourceContents === null || resourceContents.empty)
             return IScope.NULLSCOPE
 
         // May happen if syntax errors in the technology model exist
-        val protocolName = importedProtocol.protocol.name
+        val protocolName = importedProtocol.importedProtocol.name
         if (protocolName === null)
             return IScope.NULLSCOPE
 

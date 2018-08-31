@@ -27,7 +27,7 @@ enum Visibility returns Visibility:
 
 Microservice returns Microservice:
     ('@' 'technology' '(' technology=[Import] ')')?
-    (protocols+=ImportedProtocol (protocols+=ImportedProtocol)?)?
+    (protocols+=ProtocolSpecification (protocols+=ProtocolSpecification)?)?
     type=MicroserviceType
     visibility=Visibility?
     'microservice' name=QualifiedNameWithAtLeastOneLevel ('version' version=ID)?
@@ -61,7 +61,7 @@ PossiblyImportedOperation returns PossiblyImportedOperation:
 ;
 
 Interface returns Interface:
-    (protocols+=ImportedProtocol (protocols+=ImportedProtocol)?)?
+    (protocols+=ProtocolSpecification (protocols+=ProtocolSpecification)?)?
     (notImplemented?='noimpl')? visibility=Visibility? 'interface' name=ID '{'
         referredOperations+=ReferredOperation*
         operations+=Operation*
@@ -69,14 +69,14 @@ Interface returns Interface:
 ;
 
 Operation returns Operation:
-    (protocols+=ImportedProtocol (protocols+=ImportedProtocol)?)?
+    (protocols+=ProtocolSpecification (protocols+=ProtocolSpecification)?)?
     (notImplemented?='noimpl')? visibility=Visibility? name=ID '('
         parameters+=Parameter? (',' parameters+=Parameter+)?
     ')' ';'
 ;
 
 ReferredOperation returns ReferredOperation:
-    (protocols+=ImportedProtocol (protocols+=ImportedProtocol)?)?
+    (protocols+=ProtocolSpecification (protocols+=ProtocolSpecification)?)?
     'refers' operation=[Operation|QualifiedName] ';'
 ;
 
@@ -95,11 +95,15 @@ ImportedType returns ImportedType:
     ^import=[Import] '::' type=[data::Type|QualifiedName]
 ;
 
-ImportedProtocol returns ImportedProtocol:
+ProtocolSpecification returns ProtocolSpecification:
     '@' communicationType=CommunicationType '('
-        ^import=[Import] '::' protocol=[technology::Protocol|QualifiedName]
-        ('/' dataFormat=[technology::DataFormat])?
+        protocol=ImportedProtocolAndDataFormat
     ')'
+;
+
+ImportedProtocolAndDataFormat returns ImportedProtocolAndDataFormat:
+    ^import=[Import] '::' importedProtocol=[technology::Protocol|QualifiedName]
+    ('/' dataFormat=[technology::DataFormat])?
 ;
 
 enum ExchangePattern returns ExchangePattern:
