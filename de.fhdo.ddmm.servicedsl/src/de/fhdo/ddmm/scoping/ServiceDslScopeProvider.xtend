@@ -226,12 +226,21 @@ class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
 
             /*
              * Possibly imported operations that may initialize the parameter. The scope provider
-             * will delegate the scope resolution with PossiblyImportedOperation as the context, if
-             * its import feature was set. Otherwise, the context will be an instance of
-             * Microservice (see above).
+             * will delegate the scope resolution with Parameter as the context, if its import
+             * feature was set. Otherwise, the context will be an instance of Microservice (see
+             * above).
              */
             case ServicePackage::Literals.POSSIBLY_IMPORTED_OPERATION__OPERATION:
                 return parameter.getScopeForInitializingOperation()
+
+            /*
+             * Available imports and their aliases for imported types of operation parameters. The
+             * scope provider will delegate the scope resolution with Parameter as the context, if
+             * its import feature was not set. Otherwise, the context will be an instance of
+             * ImportedType (see below).
+             */
+            case ServicePackage::Literals.IMPORTED_TYPE__IMPORT:
+                return parameter.getScopeForImportedTypeImport()
         }
 
         return null
@@ -266,7 +275,7 @@ class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
              * Available imports and their aliases for imported types used to specify the parameter
              */
             case ServicePackage::Literals.IMPORTED_TYPE__IMPORT:
-                return importedType.getScopeForImportsOfType(DataModel, Technology)
+                return importedType.getScopeForImportedTypeImport()
 
             /* Type of an imported type */
             case ServicePackage::Literals.IMPORTED_TYPE__TYPE:
@@ -274,6 +283,20 @@ class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
         }
 
         return null
+    }
+
+    /**
+     * Build scope for allowed imports of imported types of operation parameters
+     */
+    private def getScopeForImportedTypeImport(EObject context) {
+        // For the specification of an operation parameter's type, imported types from data models
+        // or technologies may be used
+        val dataModelImports = context.getScopeForImportsOfType(DataModel)
+        val technologyImport = context.getServiceTechnologyImportAliasAsScope()
+        if (technologyImport !== IScope.NULLSCOPE)
+            return DdmmUtils.mergeScopes(dataModelImports, technologyImport)
+        else
+            return dataModelImports
     }
 
     /**

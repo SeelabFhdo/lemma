@@ -16,6 +16,7 @@ import org.eclipse.xtext.naming.QualifiedName
 import org.eclipse.xtext.resource.EObjectDescription
 import org.eclipse.xtext.scoping.impl.MapBasedScope
 import org.eclipse.emf.common.util.EList
+import org.eclipse.xtext.scoping.Scopes
 
 /**
  * This class collects _static_ utility methods to be used across DSLs' implementations.
@@ -447,5 +448,18 @@ final class DdmmUtils {
         }
 
         return -1
+    }
+
+    /**
+     * Merge an arbitrary number of scopes by building a new scope that contains all elements of the
+     * given scopes
+     */
+    def static mergeScopes(IScope... scopes) {
+        if (scopes === null || scopes.empty)
+            return IScope::NULLSCOPE
+
+        val mergedScopeElements = <EObject> newArrayList
+        scopes.forEach[mergedScopeElements.addAll(allElements.map[EObjectOrProxy])]
+        return Scopes::scopeFor(mergedScopeElements)
     }
 }
