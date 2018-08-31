@@ -27,6 +27,7 @@ import de.fhdo.ddmm.data.Type
 import de.fhdo.ddmm.service.Parameter
 import de.fhdo.ddmm.technology.Technology
 import de.fhdo.ddmm.service.ProtocolSpecification
+import de.fhdo.ddmm.service.ReferredOperation
 
 /**
  * This class contains custom validation rules for service models.
@@ -212,6 +213,7 @@ class ServiceDslValidator extends AbstractServiceDslValidator {
             Microservice : (protocolSpecification.eContainer as Microservice).protocols
             Interface : (protocolSpecification.eContainer as Interface).protocols
             Operation : (protocolSpecification.eContainer as Operation).protocols
+            ReferredOperation : (protocolSpecification.eContainer as ReferredOperation).protocols
             default : null
         }
 
@@ -222,7 +224,7 @@ class ServiceDslValidator extends AbstractServiceDslValidator {
         val containerName = switch(protocolSpecification.eContainer) {
             Microservice : "microservice"
             Interface : "interface"
-            Operation : "operation"
+            Operation, ReferredOperation : "operation"
         }
 
         for (int i : 0..<2) {
