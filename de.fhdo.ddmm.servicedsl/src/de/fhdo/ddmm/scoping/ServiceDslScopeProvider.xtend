@@ -15,7 +15,6 @@ import org.eclipse.xtext.resource.EObjectDescription
 import de.fhdo.ddmm.utils.DdmmUtils
 import de.fhdo.ddmm.service.ImportedType
 import de.fhdo.ddmm.technology.Technology
-import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.scoping.Scopes
 import de.fhdo.ddmm.service.Microservice
 import de.fhdo.ddmm.ServiceDslQualifiedNameProvider
@@ -305,7 +304,7 @@ class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
      * Build scope for imported types of operation parameters
      */
     private def getScopeForImportedType(ImportedType importedType) {
-        val resourceContents = getImportedModelContents(importedType.eResource,
+        val resourceContents = DdmmUtils.getImportedModelContents(importedType.eResource,
             importedType.import.importURI)
         if (resourceContents === null || resourceContents.empty)
             return IScope.NULLSCOPE
@@ -571,7 +570,7 @@ class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
      * Build scope for imported protocols
      */
     private def getScopeForImportedProtocol(ImportedProtocolAndDataFormat importedProtocol) {
-        val resourceContents = getImportedModelContents(importedProtocol.eResource,
+        val resourceContents = DdmmUtils.getImportedModelContents(importedProtocol.eResource,
             importedProtocol.import.importURI)
         if (resourceContents === null || resourceContents.empty)
             return IScope.NULLSCOPE
@@ -597,7 +596,7 @@ class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
      * Build scope for data formats of imported protocols
      */
     private def getScopeForDataFormat(ImportedProtocolAndDataFormat importedProtocol) {
-        val resourceContents = getImportedModelContents(importedProtocol.eResource,
+        val resourceContents = DdmmUtils.getImportedModelContents(importedProtocol.eResource,
             importedProtocol.import.importURI)
         if (resourceContents === null || resourceContents.empty)
             return IScope.NULLSCOPE
@@ -666,26 +665,6 @@ class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
         val allImports = EcoreUtil2.getContainerOfType(context, ServiceModel).imports
         val validImports = DdmmUtils.getImportsOfModelTypes(allImports, [it.importURI], types)
         return Scopes::scopeFor(validImports)
-    }
-
-    /**
-     * Convenience method to retrieve contents of an imported resource (deals also with import URI
-     * resolution)
-     */
-    private def getImportedModelContents(Resource containingResource, String importUri) {
-        // The URI might be null, if the referenced import alias does not exist, i.e., was not
-        // declared within an instantiation of the respective import rule
-        if (importUri === null)
-            return null
-
-        val importResource = EcoreUtil2.getResource(containingResource, importUri)
-
-        // Get model contents
-        val resourceContents = DdmmUtils.getImportedModelContents(importResource, importUri)
-        if (resourceContents !== null || !resourceContents.empty)
-            return resourceContents
-        else
-            return null
     }
 
     /**
