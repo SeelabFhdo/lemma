@@ -55,6 +55,17 @@ class TechnologyDslValidator extends AbstractTechnologyDslValidator {
     }
 
     /**
+     * Check that imported file defines a technology model
+     */
+    @Check
+    def checkImportType(TechnologyImport technologyImport) {
+        if (!DdmmUtils.isImportOfType(technologyImport.eResource, technologyImport.importURI,
+            Technology))
+            error("File does not contain a technology model definition", technologyImport,
+                TechnologyPackage::Literals.TECHNOLOGY_IMPORT__IMPORT_URI)
+    }
+
+    /**
      * Check that technology does not import itself
      */
     @Check

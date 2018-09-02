@@ -66,6 +66,8 @@ class ComplexTypeImport {
      *          Ensured by: DSL validator.
      *     (C3) Name (= import alias) must be unique.
      *          Ensured by: DSL validator.
+     *     (C4) Imported file must define a data model.
+     *          Ensured by: DSL validator.
      */
 
     String name

@@ -30,6 +30,8 @@ import de.fhdo.ddmm.service.ProtocolSpecification
 import de.fhdo.ddmm.service.ReferredOperation
 import de.fhdo.ddmm.service.Endpoint
 import java.util.List
+import org.eclipse.emf.ecore.EObject
+import de.fhdo.ddmm.data.DataModel
 
 /**
  * This class contains custom validation rules for service models.
@@ -47,6 +49,35 @@ class ServiceDslValidator extends AbstractServiceDslValidator {
     def checkImportFileExists(Import ^import) {
         if (!DdmmUtils.importFileExists(^import.eResource, import.importURI))
             error("File not found", ServicePackage::Literals.IMPORT__IMPORT_URI)
+    }
+
+    /**
+     * Check that imported file defines a model that fits the given import type
+     */
+    @Check
+    def checkImportType(Import ^import) {
+        var Class<? extends EObject> expectedModelType
+        var String expectedModelTypeName
+        switch (import.importType) {
+            case DATATYPES: {
+                expectedModelType = DataModel
+                expectedModelTypeName = "data"
+            }
+            case MICROSERVICES: {
+                expectedModelType = ServiceModel
+                expectedModelTypeName = "service"
+            }
+            case TECHNOLOGY: {
+                expectedModelType = Technology
+                expectedModelTypeName = "technology"
+            }
+            default:
+                return
+        }
+
+        if (!DdmmUtils.isImportOfType(import.eResource, import.importURI, expectedModelType))
+            error('''File does not contain a «expectedModelTypeName» model definition''', import,
+                ServicePackage::Literals.IMPORT__IMPORT_URI)
     }
 
     /**

@@ -52,6 +52,8 @@ class Import {
      *     (C2) Imports must not be cyclic, i.e., the imported model must not directly or indirectly
      *          import this model.
      *          Ensured by: DSL validator.
+     *     (C3) Imported file must define a model that corresponds to the import type.
+     *          Ensured by: DSL validator.
      */
 
     String name

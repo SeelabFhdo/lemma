@@ -462,4 +462,20 @@ final class DdmmUtils {
         scopes.forEach[mergedScopeElements.addAll(allElements.map[EObjectOrProxy])]
         return Scopes::scopeFor(mergedScopeElements)
     }
+
+    /**
+     * Check that an imported resource is of a given type
+     */
+    def static <T extends EObject> isImportOfType(Resource context, String importUri,
+        Class<T> expectedRootType) {
+        val modelContents = getImportedModelContents(context, importUri)
+        if (modelContents === null || modelContents.empty)
+            return false
+
+        val rootElement = modelContents.get(0)
+        if (rootElement === null)
+            return false
+
+        return rootElement.class.interfaces.contains(expectedRootType)
+    }
 }

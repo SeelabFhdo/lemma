@@ -51,6 +51,17 @@ class DataDslValidator extends AbstractDataDslValidator {
     }
 
     /**
+     * Check that imported file defines a data model
+     */
+    @Check
+    def checkImportType(ComplexTypeImport complexTypeImport) {
+        if (!DdmmUtils.isImportOfType(complexTypeImport.eResource, complexTypeImport.importURI,
+            DataModel))
+            error("File does not contain a data model definition", complexTypeImport,
+                DataPackage::Literals.COMPLEX_TYPE_IMPORT__IMPORT_URI)
+    }
+
+    /**
      * Perform checks on data fields
      */
     @Check

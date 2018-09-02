@@ -53,6 +53,8 @@ class TechnologyImport {
      *          Ensured by: DSL validator.
      *     (C3) Import names, i.e., "aliases", must be unique.
      *          Ensured by: DSL validator.
+     *     (C4) Imported file must define a technology model.
+     *          Ensured by: DSL validator.
      */
 
     String name
