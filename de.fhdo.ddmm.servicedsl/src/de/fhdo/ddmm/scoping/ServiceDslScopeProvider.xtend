@@ -37,7 +37,7 @@ import de.fhdo.ddmm.service.ProtocolSpecification
 import de.fhdo.ddmm.technology.CommunicationType
 
 /**
- * This class implements a custom scope providerfor the Service DSL.
+ * This class implements a custom scope provider for the Service DSL.
  *
  * @author <a href="mailto:florian.rademacher@fh-dortmund.de>Florian Rademacher</a>
  */
