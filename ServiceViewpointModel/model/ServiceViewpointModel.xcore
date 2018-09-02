@@ -109,6 +109,8 @@ class Microservice {
      *          for convenience reasons. If they are missing, the defaults from the assigned
      *          technology are taken instead.
      *          Ensured by: DSL validator.
+     *     (C6) Combination of endpoints' protocols and data formats must be unique.
+     *          Ensured by: DSL validator.
      */
 
     String name
@@ -118,6 +120,7 @@ class Microservice {
 
     refers Microservice[0..1] ^super
     refers Import[0..1] technology
+    contains Endpoint[] endpoints opposite microservice
     contains PossiblyImportedMicroservice[] requiredMicroservices opposite requiringMicroservice
     contains PossiblyImportedInterface[] requiredInterfaces opposite requiringMicroservice
     contains PossiblyImportedOperation[] requiredOperations opposite requiringMicroservice
@@ -300,6 +303,8 @@ class Interface {
      *          Ensured by: DSL validator.
      *     (C2) There might be at most one protocol per communication type assigned to an interface.
      *          Ensured by: DSL validator.
+     *     (C3) Combination of endpoints' protocols and data formats must be unique.
+     *          Ensured by: DSL validator.
      */
 
     String name
@@ -308,6 +313,7 @@ class Interface {
     Visibility visibility = "NONE"
 
     //refers Interface[0..1] ^super
+    contains Endpoint[] endpoints opposite ^interface
     contains ProtocolSpecification[0..2] protocols
     contains Operation[] operations opposite ^interface
     contains ReferredOperation[] referredOperations opposite ^interface
@@ -390,12 +396,15 @@ class Operation {
      * Implicit Constraints:
      *     (C1) There might be at most one protocol per communication type assigned to an operation.
      *          Ensured by: DSL validator.
+     *     (C2) Combination of endpoints' protocols and data formats must be unique.
+     *          Ensured by: DSL validator.
      */
 
     String name
     boolean notImplemented = "false"
     Visibility visibility = "NONE"
 
+    contains Endpoint[] endpoints opposite operation
     contains ProtocolSpecification[0..2] protocols
     contains Parameter[] parameters opposite operation
 
@@ -782,4 +791,23 @@ class ProtocolSpecification {
 
     contains ImportedProtocolAndDataFormat protocol opposite specification
 }
+
+/**
+ * Represents an endpoint, i.e., the assignment of physical addresses, e.g., URIs with a protocol,
+ * e.g., REST/JSON.
+ */
+class Endpoint {
+    /**
+     * Implicit Constraints:
+     *     (C1) Addresses must be unique.
+     *          Ensured by: DSL validator.
+     */
+
+    String[1..*] addresses
+
+    contains ImportedProtocolAndDataFormat protocol
+
+    container Microservice microservice opposite endpoints
+    container Interface ^interface opposite endpoints
+    container Operation operation opposite endpoints
 }

@@ -27,6 +27,7 @@ enum Visibility returns Visibility:
 
 Microservice returns Microservice:
     ('@' 'technology' '(' technology=[Import] ')')?
+    ('@' 'endpoints' '(' endpoints+=Endpoint+ ')')?
     (protocols+=ProtocolSpecification (protocols+=ProtocolSpecification)?)?
     type=MicroserviceType
     visibility=Visibility?
@@ -61,6 +62,7 @@ PossiblyImportedOperation returns PossiblyImportedOperation:
 ;
 
 Interface returns Interface:
+    ('@' 'endpoints' '(' endpoints+=Endpoint+ ')')?
     (protocols+=ProtocolSpecification (protocols+=ProtocolSpecification)?)?
     (notImplemented?='noimpl')? visibility=Visibility? 'interface' name=ID '{'
         referredOperations+=ReferredOperation*
@@ -69,6 +71,7 @@ Interface returns Interface:
 ;
 
 Operation returns Operation:
+    ('@' 'endpoints' '(' endpoints+=Endpoint+ ')')?
     (protocols+=ProtocolSpecification (protocols+=ProtocolSpecification)?)?
     (notImplemented?='noimpl')? visibility=Visibility? name=ID '('
         parameters+=Parameter? (',' parameters+=Parameter+)?
@@ -104,6 +107,11 @@ ProtocolSpecification returns ProtocolSpecification:
 ImportedProtocolAndDataFormat returns ImportedProtocolAndDataFormat:
     ^import=[Import] '::' importedProtocol=[technology::Protocol|QualifiedName]
     ('/' dataFormat=[technology::DataFormat])?
+;
+
+Endpoint returns Endpoint:
+    protocol=ImportedProtocolAndDataFormat ':'
+    addresses+=STRING (',' addresses+=STRING)* ';'
 ;
 
 enum ExchangePattern returns ExchangePattern:

@@ -34,6 +34,7 @@ import com.google.common.base.Predicate
 import org.eclipse.xtext.resource.IEObjectDescription
 import de.fhdo.ddmm.service.ImportedProtocolAndDataFormat
 import de.fhdo.ddmm.service.ProtocolSpecification
+import de.fhdo.ddmm.technology.CommunicationType
 
 /**
  * This class implements a custom scope providerfor the Service DSL.
@@ -79,7 +80,6 @@ class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
 
         if (scope !== null)
             return scope
-
         // Try default scope resolution, if no scope could be determined
         else if (scope === null)
             return super.getScope(context, reference)
@@ -132,6 +132,12 @@ class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
              */
             case ServicePackage::Literals.MICROSERVICE__TECHNOLOGY:
                 return microservice.getScopeForImportsOfType(Technology)
+
+            /*
+             * Import aliases of annotated endpoints
+             */
+            case ServicePackage::Literals.IMPORTED_PROTOCOL_AND_DATA_FORMAT__IMPORT:
+                return microservice.getServiceTechnologyImportAliasAsScope()
         }
 
         return null
@@ -575,11 +581,14 @@ class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
             return IScope.NULLSCOPE
 
         // Return scope elements, i.e., defined protocols, that match the ImportedProtocol's
-        // communication type
+        // communication type if the container is a protocol specification
+        val isProtocolSpecification = importedProtocol.specification !== null
+        val CommunicationType filterCommunicationType = if (isProtocolSpecification)
+            importedProtocol.specification.communicationType
+
         val resourceRoot = resourceContents.get(0) as Technology
-        val communicationType = importedProtocol.specification.communicationType
         val scopeElements = resourceRoot.protocols
-            .filter[it.communicationType == communicationType]
+            .filter[!isProtocolSpecification || communicationType == filterCommunicationType]
             .map[
                 val protocolName = QualifiedName.create(it.qualifiedNameParts)
                 EObjectDescription.create(protocolName, it)
@@ -606,10 +615,13 @@ class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
         // protocol
         val resourceRoot = resourceContents.get(0) as Technology
         val scopeElements = resourceRoot.protocols
-            .findFirst[it.name == protocolName]  // protocols must have unique names
+            // We can use the first protocol we find, as protocol names are unique (ensured by
+            // validator of Technology DSL) independent of communication type
+            .findFirst[name == protocolName]
             .dataFormats
 
-        return Scopes::scopeFor(scopeElements)
+        return Scopes::scopeFor(scopeElements, [QualifiedName.create(it.formatName)],
+            IScope.NULLSCOPE)
     }
 
     /**

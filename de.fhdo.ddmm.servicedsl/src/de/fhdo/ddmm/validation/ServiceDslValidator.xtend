@@ -28,6 +28,8 @@ import de.fhdo.ddmm.service.Parameter
 import de.fhdo.ddmm.technology.Technology
 import de.fhdo.ddmm.service.ProtocolSpecification
 import de.fhdo.ddmm.service.ReferredOperation
+import de.fhdo.ddmm.service.Endpoint
+import java.util.List
 
 /**
  * This class contains custom validation rules for service models.
@@ -391,5 +393,59 @@ class ServiceDslValidator extends AbstractServiceDslValidator {
             '''of parameter «initializedParameter.name». To initialize the parameter, an ''' +
             '''additional type conversion would need to be implemented.''', importedOperation,
             ServicePackage::Literals.POSSIBLY_IMPORTED_OPERATION__OPERATION)
+    }
+
+    /**
+     * Check unique endpoints on microservice
+     */
+    @Check
+    private def checkUniqueEndpoints(Microservice microservice) {
+        checkUniqueEndpoints(microservice.endpoints)
+    }
+
+    /**
+     * Check unique endpoints on interface
+     */
+    @Check
+    private def checkUniqueEndpoints(Interface ^interface) {
+        checkUniqueEndpoints(interface.endpoints)
+    }
+
+    /**
+     * Check unique endpoints on operation
+     */
+    @Check
+    private def checkUniqueEndpoints(Operation operation) {
+        checkUniqueEndpoints(operation.endpoints)
+    }
+
+    /**
+     * Convenience method to check endpoint uniqueness in a list of endpoints
+     */
+    private def checkUniqueEndpoints(List<Endpoint> endpoints) {
+        val duplicateIndex = DdmmUtils.getDuplicateIndex(endpoints,
+            [protocol.importedProtocol.name + protocol.dataFormat.formatName])
+        if (duplicateIndex == -1) {
+            return
+        }
+
+        val duplicate = endpoints.get(duplicateIndex)
+        val duplicateProtocol = duplicate.protocol.importedProtocol.name
+        val duplicateFormat = duplicate.protocol.dataFormat.formatName
+        error('''Duplicate endpoint for «duplicateProtocol»/«duplicateFormat»''', duplicate,
+            ServicePackage::Literals.ENDPOINT__PROTOCOL, duplicateIndex)
+    }
+
+    /**
+     * Check uniqueness of an endpoint's addresses
+     */
+    @Check
+    private def checkUniqueEndpointAddresses(Endpoint endpoint) {
+        val duplicateIndex = DdmmUtils.getDuplicateIndex(endpoint.addresses, [it])
+        if (duplicateIndex > -1) {
+            val duplicate = endpoint.addresses.get(duplicateIndex)
+            error('''Duplicate address «duplicate»''', endpoint,
+                ServicePackage::Literals.ENDPOINT__ADDRESSES, duplicateIndex)
+        }
     }
 }
