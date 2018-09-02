@@ -478,4 +478,15 @@ final class DdmmUtils {
 
         return rootElement.class.interfaces.contains(expectedRootType)
     }
+
+    /**
+     * Check if a string corresponds to the terminal rule ID as defined in the grammar
+     * org.eclipse.xtext.common.Terminals
+     */
+    def static matchesId(String string) {
+        if (string === null)
+            return false
+
+        return string.matches("\\^?[a-zA-Z_]\\w*")
+    }
 }

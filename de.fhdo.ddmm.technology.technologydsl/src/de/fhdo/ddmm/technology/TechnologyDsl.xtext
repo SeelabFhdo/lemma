@@ -115,7 +115,7 @@ InfrastructureTechnology returns InfrastructureTechnology:
 ;
 
 OperationEnvironment returns OperationEnvironment:
-    name=QUOTED_ID (default?='default')?
+    name=STRING (default?='default')?
 ;
 
 ServiceProperty returns ServiceProperty:
@@ -127,5 +127,3 @@ ServiceProperty returns ServiceProperty:
 PrimitiveValue returns data::PrimitiveValue:
     numericValue=BIG_DECIMAL | booleanValue=BOOLEAN | stringValue=STRING
 ;
-
-terminal QUOTED_ID: '"'ID'"';

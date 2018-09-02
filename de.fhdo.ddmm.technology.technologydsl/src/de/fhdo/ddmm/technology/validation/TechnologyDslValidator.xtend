@@ -21,6 +21,7 @@ import org.eclipse.xtext.EcoreUtil2
 import de.fhdo.ddmm.technology.ServiceProperty
 import de.fhdo.ddmm.data.PrimitiveValue
 import de.fhdo.ddmm.technology.OperationTechnology
+import de.fhdo.ddmm.technology.OperationEnvironment
 
 /**
  * This class contains custom validation rules.
@@ -599,5 +600,16 @@ class TechnologyDslValidator extends AbstractTechnologyDslValidator {
             error('''Duplicate service property «duplicateProperty.name»''',
                 duplicateProperty, TechnologyPackage::Literals.SERVICE_PROPERTY__NAME)
         }
+    }
+
+    /**
+     * Check that names of operation environments correspond to IDs, especially that they do not
+     * contain spaces or special signs
+     */
+    @Check
+    def checkOperationEnvironmentName(OperationEnvironment operationEnvironment) {
+        if (!DdmmUtils.matchesId(operationEnvironment.name))
+            error("Name is not an ID", operationEnvironment,
+                TechnologyPackage::Literals.OPERATION_ENVIRONMENT__NAME)
     }
 }
