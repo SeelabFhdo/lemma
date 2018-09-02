@@ -39,11 +39,15 @@ class DataDslValidator extends AbstractDataDslValidator {
      * DataDslNamesAreUniqueValidationHelper, but it does not react to
      */
     @Check
-    def checkImportAlias(ComplexTypeImport ^import) {
-        val allImports = import.dataModel.complexTypeImports
-        if (allImports.exists[name == import.name])
-            error('''Duplicate import alias «import.name»''', import,
-                DataPackage::Literals.COMPLEX_TYPE_IMPORT__NAME)
+    def checkImportAlias(DataModel dataModel) {
+        val duplicateIndex = DdmmUtils.getDuplicateIndex(dataModel.complexTypeImports, [name])
+        if (duplicateIndex === -1) {
+            return
+        }
+
+        val duplicate = dataModel.complexTypeImports.get(duplicateIndex)
+        error('''Duplicate import alias «duplicate.name»''', duplicate,
+            DataPackage::Literals.COMPLEX_TYPE_IMPORT__NAME)
     }
 
     /**
