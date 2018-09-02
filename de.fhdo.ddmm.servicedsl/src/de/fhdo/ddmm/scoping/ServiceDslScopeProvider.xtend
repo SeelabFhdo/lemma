@@ -127,15 +127,11 @@ class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
             case ServicePackage::Literals.POSSIBLY_IMPORTED_OPERATION__OPERATION:
                 return microservice.getScopeForPossiblyImportedOperation()
 
-            /*
-             * Annotated technology
-             */
+            /* Annotated technology */
             case ServicePackage::Literals.MICROSERVICE__TECHNOLOGY:
                 return microservice.getScopeForImportsOfType(Technology)
 
-            /*
-             * Import aliases of annotated endpoints
-             */
+            /* Import aliases of annotated endpoints */
             case ServicePackage::Literals.IMPORTED_PROTOCOL_AND_DATA_FORMAT__IMPORT:
                 return microservice.getServiceTechnologyImportAliasAsScope()
         }
