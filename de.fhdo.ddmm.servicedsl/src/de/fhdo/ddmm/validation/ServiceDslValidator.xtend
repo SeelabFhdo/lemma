@@ -455,16 +455,18 @@ class ServiceDslValidator extends AbstractServiceDslValidator {
      */
     private def checkUniqueEndpoints(List<Endpoint> endpoints) {
         val duplicateIndex = DdmmUtils.getDuplicateIndex(endpoints,
-            [protocol.importedProtocol.name + protocol.dataFormat.formatName])
+            [protocol.importedProtocol.name +
+                if (protocol.dataFormat !== null) protocol.dataFormat.formatName else ""
+            ])
         if (duplicateIndex == -1) {
             return
         }
 
         val duplicate = endpoints.get(duplicateIndex)
-        val duplicateProtocol = duplicate.protocol.importedProtocol.name
-        val duplicateFormat = duplicate.protocol.dataFormat.formatName
-        error('''Duplicate endpoint for «duplicateProtocol»/«duplicateFormat»''', duplicate,
-            ServicePackage::Literals.ENDPOINT__PROTOCOL, duplicateIndex)
+        error('''Duplicate endpoint for «duplicate.protocol.importedProtocol.name»''' +
+            '''«IF duplicate.protocol.dataFormat !== null»
+                /«duplicate.protocol.dataFormat.formatName»«ENDIF»''',
+            duplicate, ServicePackage::Literals.ENDPOINT__PROTOCOL, duplicateIndex)
     }
 
     /**
