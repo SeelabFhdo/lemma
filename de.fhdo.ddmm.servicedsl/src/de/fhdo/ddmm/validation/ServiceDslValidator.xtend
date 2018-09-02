@@ -430,7 +430,7 @@ class ServiceDslValidator extends AbstractServiceDslValidator {
      * Check unique endpoints on microservice
      */
     @Check
-    private def checkUniqueEndpoints(Microservice microservice) {
+    def checkUniqueEndpoints(Microservice microservice) {
         checkUniqueEndpoints(microservice.endpoints)
     }
 
@@ -438,7 +438,7 @@ class ServiceDslValidator extends AbstractServiceDslValidator {
      * Check unique endpoints on interface
      */
     @Check
-    private def checkUniqueEndpoints(Interface ^interface) {
+    def checkUniqueEndpoints(Interface ^interface) {
         checkUniqueEndpoints(interface.endpoints)
     }
 
@@ -446,7 +446,7 @@ class ServiceDslValidator extends AbstractServiceDslValidator {
      * Check unique endpoints on operation
      */
     @Check
-    private def checkUniqueEndpoints(Operation operation) {
+    def checkUniqueEndpoints(Operation operation) {
         checkUniqueEndpoints(operation.endpoints)
     }
 
@@ -473,7 +473,7 @@ class ServiceDslValidator extends AbstractServiceDslValidator {
      * Check uniqueness of an endpoint's addresses
      */
     @Check
-    private def checkUniqueEndpointAddresses(Endpoint endpoint) {
+    def checkUniqueEndpointAddresses(Endpoint endpoint) {
         val duplicateIndex = DdmmUtils.getDuplicateIndex(endpoint.addresses, [it])
         if (duplicateIndex > -1) {
             val duplicate = endpoint.addresses.get(duplicateIndex)
