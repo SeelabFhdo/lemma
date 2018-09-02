@@ -40,7 +40,7 @@ final class DdmmUtils {
         if (importResource !== null)
             importedContents = importResource.contents
 
-        // Try again to get imported data model contents with "file://" scheme
+        // Try again to get imported model contents with "file://" scheme
         else if (importResource === null || importedContents.empty) {
             importResource = EcoreUtil2.getResource(context, convertToFileUri(importUri))
             if (importResource === null)  // still no chance to retrieve contents
