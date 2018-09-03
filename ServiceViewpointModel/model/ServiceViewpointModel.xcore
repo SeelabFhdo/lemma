@@ -179,7 +179,7 @@ class Microservice {
     }
 
     /**
-     * Get all all operations that are directly or indirectly (i.e., from required interfaces and
+     * Get all operations that are directly or indirectly (i.e., from required interfaces and
      * microservices) required by this microservice from a given import
      */
     op Operation[] getAllRequiredOperations(Import fromImport) {
@@ -216,6 +216,25 @@ class Microservice {
             )
 
         return operations.asEList
+    }
+
+    /**
+     * Get all microservices that are directly or indirectly (i.e., from required interfaces and
+     * operations) required by this microservice
+     */
+    op PossiblyImportedMicroservice[] getAllRequiredMicroservices() {
+        val microservices = <PossiblyImportedMicroservice> newHashSet
+
+        if (requiredMicroservices !== null && !requiredMicroservices.empty)
+            microservices.addAll(requiredMicroservices)
+
+        if (requiredInterfaces !== null && !requiredInterfaces.empty)
+            microservices.addAll(requiredInterfaces.map[interface.microservice])
+
+        if (requiredOperations !== null && !requiredOperations.empty)
+            microservices.addAll(requiredOperations.map[operation.interface.microservice])
+
+        return microservices.asEList
     }
 
     /**

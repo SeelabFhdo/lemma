@@ -1,0 +1,94 @@
+package de.fhdo.ddmm.operation
+
+import de.fhdo.ddmm.data.PrimitiveValue
+import de.fhdo.ddmm.service.Import
+import de.fhdo.ddmm.service.Microservice
+import de.fhdo.ddmm.technology.DataFormat
+import de.fhdo.ddmm.technology.DeploymentTechnology
+import de.fhdo.ddmm.technology.InfrastructureTechnology
+import de.fhdo.ddmm.technology.OperationEnvironment
+import de.fhdo.ddmm.technology.Protocol
+import de.fhdo.ddmm.technology.ServiceProperty
+
+/**
+ * This metamodel represents the Operation Modeling Viewpoint, which is used for specifying
+ * services' operation.
+ *
+ * @author <a href="mailto:florian.rademacher@fh-dortmund.de>Florian Rademacher</a>
+ */
+class OperationModel {
+    contains Import[1..*] imports
+    contains Container[] containers opposite operationModel
+    contains InfrastructureNode[] infrastructureNodes opposite operationModel
+}
+
+/**
+ * Determines the allowed types of imports
+ */
+enum ImportType {
+    TECHNOLOGY
+    MICROSERVICES
+}
+
+class OperationNode {
+    String name
+
+    refers Import technology
+    refers OperationEnvironment[0..1] operationEnvironment
+    contains ImportedMicroservice[1..*] deployedServices opposite operationNode
+    contains ServicePropertyValue[] defaultServicePropertyValues opposite operationNode
+    contains ServiceDeploymentSpecification[] deploymentSpecifications opposite operationNode
+}
+
+class Container extends OperationNode {
+    refers DeploymentTechnology deploymentTechnology
+    contains TechnologySpecificEndpoint[] defaultBasicEndpoints opposite ^container
+
+    container OperationModel operationModel opposite containers
+}
+
+class InfrastructureNode extends OperationNode {
+    refers InfrastructureTechnology infrastructureTechnology
+
+    container OperationModel operationModel opposite infrastructureNodes
+}
+
+class ImportedMicroservice {
+    refers Import ^import
+    refers Microservice microservice
+
+    container OperationNode operationNode opposite deployedServices
+}
+
+class ServiceDeploymentSpecification {
+    refers Import ^import
+    refers ImportedMicroservice service
+    contains ServicePropertyValue[] servicePropertyValues opposite deploymentSpecification
+    contains TechnologySpecificEndpoint[] basicEndpoints opposite deploymentSpecification
+
+    container OperationNode operationNode opposite deploymentSpecifications
+}
+
+class ServicePropertyValue {
+    refers ServiceProperty serviceProperty
+    contains PrimitiveValue value
+
+    container OperationNode operationNode opposite defaultServicePropertyValues
+    container ServiceDeploymentSpecification deploymentSpecification opposite servicePropertyValues
+}
+
+class TechnologySpecificEndpoint {
+    /**
+     * Implicit Constraints:
+     *     (C1) Addresses must be unique.
+     *          Ensured by: DSL validator.
+     */
+
+    String[1..*] addresses
+
+    refers Protocol protocol
+    refers DataFormat[0..1] dataFormat
+
+    container Container ^container opposite defaultBasicEndpoints
+    container ServiceDeploymentSpecification deploymentSpecification opposite basicEndpoints
+}
