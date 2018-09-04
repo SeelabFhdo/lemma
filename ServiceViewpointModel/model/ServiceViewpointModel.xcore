@@ -83,7 +83,7 @@ enum Visibility {
     // This enum value is a helper to explicitly allow distinguishing between interfaces/operations
     // directly marked as being internal, and those that are part of an internal service but do not
     // have a visibility assigned. They may still be used by services of the same service model.
-    VISIBLE_IN_SERVICE_MODEL,
+    IN_MODEL,
     ARCHITECTURE,
     PUBLIC
 }
@@ -375,7 +375,7 @@ class Interface {
         switch (serviceVisibility) {
             case Visibility.INTERNAL:
                 if (visibility === Visibility.NONE)
-                    return Visibility.VISIBLE_IN_SERVICE_MODEL
+                    return Visibility.IN_MODEL
                 else if (visibility === Visibility.INTERNAL)
                     return visibility
 
@@ -486,7 +486,7 @@ class Operation {
          * visibility.
          */
         switch (interfaceVisibility) {
-            case Visibility.VISIBLE_IN_SERVICE_MODEL,
+            case Visibility.IN_MODEL,
             case Visibility.INTERNAL:
                 if (visibility === Visibility.NONE)
                     return interfaceVisibility
