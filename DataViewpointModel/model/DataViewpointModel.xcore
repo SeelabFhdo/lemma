@@ -92,8 +92,8 @@ class Version {
     String name
 
     contains ComplexType[] complexTypes opposite version
-
     contains Context[] contexts opposite version
+
     container DataModel dataModel opposite versions
 
     /**
