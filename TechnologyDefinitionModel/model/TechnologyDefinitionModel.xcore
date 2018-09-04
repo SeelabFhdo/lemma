@@ -321,7 +321,7 @@ class ServiceProperty {
     container OperationTechnology operationTechnology opposite serviceProperties
 
     contains PrimitiveType ^type
-    contains PrimitiveValue defaultValue
+    contains PrimitiveValue[0..1] defaultValue
 }
 
 /**
