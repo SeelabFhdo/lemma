@@ -17,6 +17,12 @@ import de.fhdo.ddmm.technology.ServiceProperty
  * @author <a href="mailto:florian.rademacher@fh-dortmund.de>Florian Rademacher</a>
  */
 class OperationModel {
+    /**
+     * Implicit Constraints:
+     *     (C1) Model must contain at least one container or infrastructure node.
+     *          Ensured by: DSL validator.
+     */
+
     contains Import[1..*] imports
     contains Container[] containers opposite operationModel
     contains InfrastructureNode[] infrastructureNodes opposite operationModel
@@ -30,7 +36,33 @@ enum ImportType {
     MICROSERVICES
 }
 
+/**
+ * An operation node is a node to which services may be deployed, e.g., a container or some
+ * infrastructure component like a configuration provider
+ */
 class OperationNode {
+    /**
+     * Implicit Constraints:
+     *     (C1) Mandatory service properties service properties need to have values assigned.
+     *          Ensured by: DSL validator.
+     *     (C2) Depending on the concrete type of the operation node, service properties must
+     *          correspond to those defined in the deployment technology (for containers) or the
+     *          infrastructure technology (for infrastructure nodes).
+     *          Ensured by: DSL scope provider.
+     *     (C3) Services in service deployment specifications must correspond to those being
+     *          deployed to the operation node.
+     *          Ensured by: DSL scope provider.
+     *     (C4) The operation environment must be one defined in the assigned deployment technology
+     *          (for containers) or infrastructure technology (for infrastructure nodes).
+     *          Ensured by: DSL scope provider.
+     *     (C5) There might exactly be one deployment specification per service.
+     *          Ensured by: DSL validator.
+     *     (C6) Deployed services must be unique.
+     *          Ensured by: DSL validator.
+     *     (C6) Each service property might receive a value once.
+     *          Ensured by: DSL validator.
+     */
+
     String name
 
     refers Import technology
@@ -40,19 +72,55 @@ class OperationNode {
     contains ServiceDeploymentSpecification[] deploymentSpecifications opposite operationNode
 }
 
+/**
+ * A container is the central operation node. It enables service deployment and operation.
+ */
 class Container extends OperationNode {
+    /**
+     * Implicit Constraints:
+     *     (C1) Protocols of basic endpoints must correspond to those defined in the technology
+     *          being assigned to the operation node.
+     *          Ensured by: DSL scope provider.
+     *     (C2) The deployment technology must be one defined in the technology assigned to the
+     *          operation node.
+     *          Ensured by: DSL scope provider.
+     *     (C3) Endpoints must be unique for protocol and data format combination.
+     *          Ensured by: DSL validator.
+     *     (C4) Each deployed service needs to have a basic endpoint assigned, either via a default
+     *          endpoint or a service-specific endpoint, for each protocol/data format combination
+     *          in the technology being assigned to the operation node.
+     *          Ensured by: DSL validator.
+     */
+
     refers DeploymentTechnology deploymentTechnology
     contains TechnologySpecificEndpoint[] defaultBasicEndpoints opposite ^container
 
     container OperationModel operationModel opposite containers
 }
 
+/**
+ * An infrastructure node is an operation node with supporting character, e.g., a configuration
+ * provider
+ */
 class InfrastructureNode extends OperationNode {
+    /**
+     * Implicit Constraints:
+     *     (C1) Protocols of basic endpoints must correspond to those defined in the technology
+     *          being assigned to the operation node.
+     *          Ensured by: DSL scope provider.
+     *     (C2) The infrastructure technology must be one defined in the technology assigned to the
+     *          operation node.
+     *          Ensured by: DSL scope provider.
+     */
+
     refers InfrastructureTechnology infrastructureTechnology
 
     container OperationModel operationModel opposite infrastructureNodes
 }
 
+/**
+ * Represents an imported microservice
+ */
 class ImportedMicroservice {
     refers Import ^import
     refers Microservice microservice
@@ -60,7 +128,18 @@ class ImportedMicroservice {
     container OperationNode operationNode opposite deployedServices
 }
 
+/**
+ * Represents the further specification of a service being deployed to an operation node
+ */
 class ServiceDeploymentSpecification {
+    /**
+     * Implicit Constraints:
+     *     (C1) Each service property might receive a value once.
+     *          Ensured by: DSL validator.
+     *     (C2) Endpoints must be unique for protocol and data format combination.
+     *          Ensured by: DSL validator.
+     */
+
     refers Import ^import
     refers ImportedMicroservice service
     contains ServicePropertyValue[] servicePropertyValues opposite deploymentSpecification
@@ -69,7 +148,16 @@ class ServiceDeploymentSpecification {
     container OperationNode operationNode opposite deploymentSpecifications
 }
 
+/**
+ * Value assignment to a service property of a deployment specification
+ */
 class ServicePropertyValue {
+    /**
+     * Implicit Constraints:
+     *     (C1) Assigned value must match service property type.
+     *          Ensured by: DSL validator.
+     */
+
     refers ServiceProperty serviceProperty
     contains PrimitiveValue value
 
@@ -77,11 +165,19 @@ class ServicePropertyValue {
     container ServiceDeploymentSpecification deploymentSpecification opposite servicePropertyValues
 }
 
+/**
+ * Default and service-specific basic endpoints
+ */
 class TechnologySpecificEndpoint {
     /**
      * Implicit Constraints:
      *     (C1) Addresses must be unique.
      *          Ensured by: DSL validator.
+     *     (C2) Protocol must be one from the technology assigned to the parent Container.
+     *          Ensured by: DSL scope provider.
+     *     (C3) Data format must be one from the technology assigned to the parent Container and
+     *          correspond to the protocol.
+     *          Ensured by: DSL scope provider.
      */
 
     String[1..*] addresses
