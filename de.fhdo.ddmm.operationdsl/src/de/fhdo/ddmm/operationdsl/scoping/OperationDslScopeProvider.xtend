@@ -348,7 +348,8 @@ class OperationDslScopeProvider extends AbstractOperationDslScopeProvider {
      * Build scope for service properties
      */
     private def getScopeForServiceProperties(EObject context) {
-        /* Service properties may be specified in containers (within their deployment technology) or
+        /*
+         * Service properties may be specified in containers (within their deployment technology) or
          * in infrastructure nodes (within their infrastructure technology). In the following we try
          * to find service properties in the context, which may itself be a container or
          * infrastructure node or an EObject that is a child of a container or infrastructure node.
