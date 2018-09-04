@@ -53,6 +53,10 @@ InfrastructureNode returns InfrastructureNode:
             defaultServicePropertyValues+=ServicePropertyValue+
         '}')?
 
+        ('endpoints' '{'
+            endpoints+=TechnologySpecificEndpoint+
+        '}')?
+
         deploymentSpecifications+=ServiceDeploymentSpecification*
     '}'
 ;

@@ -245,19 +245,21 @@ class OperationDslScopeProvider extends AbstractOperationDslScopeProvider {
      * Build scope for endpoint protocols
      */
     private def getScopeForEndpointProtocols(EObject context) {
-        val container = if (context instanceof Container)
-                context as Container
-            else
-                EcoreUtil2.getContainerOfType(context, Container)
+        var OperationNode operationNode = null
 
-        if (container === null || container.technology === null)
+        if (context instanceof OperationNode)
+            operationNode = context
+        else
+            operationNode = EcoreUtil2.getContainerOfType(context, OperationNode)
+
+        if (operationNode === null || operationNode.technology === null)
             return IScope.NULLSCOPE
 
         return DdmmUtils.getScopeForPossiblyImportedConcept(
-            container.technology,
+            operationNode.technology,
             null,
             Technology,
-            container.technology.importURI,
+            operationNode.technology.importURI,
             [protocols.toList],
             [#[name]]
         )
@@ -267,9 +269,9 @@ class OperationDslScopeProvider extends AbstractOperationDslScopeProvider {
      * Build scope for endpoint data formats
      */
     private def getScopeForDataFormats(TechnologySpecificEndpoint endpoint) {
-        val container = EcoreUtil2.getContainerOfType(endpoint, Container)
-        val resourceContents = DdmmUtils.getImportedModelContents(container.technology.eResource,
-            container.technology.importURI)
+        var node = EcoreUtil2.getContainerOfType(endpoint, OperationNode)
+        val resourceContents = DdmmUtils.getImportedModelContents(node.technology.eResource,
+            node.technology.importURI)
         if (resourceContents === null || resourceContents.empty)
             return IScope.NULLSCOPE
 

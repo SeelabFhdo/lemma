@@ -85,6 +85,14 @@ class OperationDslValidator extends AbstractOperationDslValidator {
     }
 
     /**
+     * Check unique endpoints on infrastructure nodes
+     */
+    @Check
+    def checkUniqueEndpoints(InfrastructureNode infrastructureNode) {
+        checkUniqueEndpoints(infrastructureNode.endpoints)
+    }
+
+    /**
      * Check unique endpoints on service deployment specification
      */
     @Check

@@ -105,15 +105,18 @@ class Container extends OperationNode {
 class InfrastructureNode extends OperationNode {
     /**
      * Implicit Constraints:
-     *     (C1) Protocols of basic endpoints must correspond to those defined in the technology
-     *          being assigned to the operation node.
+     *     (C1) Protocols of endpoints must correspond to those defined in the technology being
+     *          assigned to the operation node.
      *          Ensured by: DSL scope provider.
      *     (C2) The infrastructure technology must be one defined in the technology assigned to the
      *          operation node.
      *          Ensured by: DSL scope provider.
+     *     (C3) Endpoints must be unique for protocol and data format combination.
+     *          Ensured by: DSL validator.
      */
 
     refers InfrastructureTechnology infrastructureTechnology
+    contains TechnologySpecificEndpoint[] endpoints opposite infrastructureNode
 
     container OperationModel operationModel opposite infrastructureNodes
 }
@@ -173,10 +176,10 @@ class TechnologySpecificEndpoint {
      * Implicit Constraints:
      *     (C1) Addresses must be unique.
      *          Ensured by: DSL validator.
-     *     (C2) Protocol must be one from the technology assigned to the parent Container.
+     *     (C2) Protocol must be one from the technology assigned to the parent operation node.
      *          Ensured by: DSL scope provider.
-     *     (C3) Data format must be one from the technology assigned to the parent Container and
-     *          correspond to the protocol.
+     *     (C3) Data format must be one from the technology assigned to the parent operation node
+     *          and correspond to the protocol.
      *          Ensured by: DSL scope provider.
      */
 
@@ -186,5 +189,6 @@ class TechnologySpecificEndpoint {
     refers DataFormat[0..1] dataFormat
 
     container Container ^container opposite defaultBasicEndpoints
+    container InfrastructureNode infrastructureNode opposite endpoints
     container ServiceDeploymentSpecification deploymentSpecification opposite basicEndpoints
 }
