@@ -567,8 +567,8 @@ class Parameter {
      */
 
     String name
-    ExchangePattern exchangePattern = 'IN'
-    CommunicationType communicationType = 'SYNCHRONOUS'
+    ExchangePattern exchangePattern = "IN"
+    CommunicationType communicationType = "SYNCHRONOUS"
     boolean communicatesFault = "false"
     boolean optional = "false"
 
@@ -808,7 +808,7 @@ class ImportedProtocolAndDataFormat {
  * operations.
  */
 class ProtocolSpecification {
-    CommunicationType communicationType = 'SYNCHRONOUS'
+    CommunicationType communicationType = "SYNCHRONOUS"
 
     contains ImportedProtocolAndDataFormat protocol opposite specification
 }
