@@ -15,6 +15,7 @@ import de.fhdo.ddmm.technology.Technology
 import de.fhdo.ddmm.operation.OperationNode
 import de.fhdo.ddmm.operation.InfrastructureNode
 import de.fhdo.ddmm.service.Microservice
+import de.fhdo.ddmm.operation.ImportedMicroservice
 
 /**
  * This class contains validation rules for the Operation DSL.
@@ -314,6 +315,48 @@ class OperationDslValidator extends AbstractOperationDslValidator {
                         '''is not deployed by this model''', importedService,
                         OperationPackage::Literals.IMPORTED_MICROSERVICE__OPERATION_NODE)
             ]
+        ]
+    }
+
+    /**
+     * Warn, if services deployed to infrastructure nodes are not also deployed to containers
+     */
+    @Check
+    def warnInfrastructureDeployments(OperationModel operationModel) {
+        /*
+         * Collect all services deployed to infrastructure nodes in a map that associates the
+         * Microservice instance with the ImportedMicroservice instances. The first will be used
+         * for the comparison with the container deployments, the latter will be used to place the
+         * warnings in the editor.
+         */
+        val infrastructureServices = <Microservice, List<ImportedMicroservice>> newHashMap
+        operationModel.infrastructureNodes.map[deployedServices].flatten.forEach[
+            var associatedImportedServices = infrastructureServices.get(microservice)
+            if (associatedImportedServices === null) {
+                associatedImportedServices = <ImportedMicroservice> newArrayList
+                infrastructureServices.put(microservice, associatedImportedServices)
+            }
+            associatedImportedServices.add(it)
+        ]
+
+        /* Collect all Microservice instances that denote container deployments in a set */
+        val containerServices = <Microservice> newHashSet
+        containerServices.addAll(operationModel.containers
+            .map[deployedServices]
+            .flatten
+            .map[microservice])
+
+        /*
+         * Iterate over all infrastructure services an check, if they are contained in the
+         * container deployment set. If not, place a warning on the ImportedMicroservice instances
+         * associated with the infrastructure Microservice instances.
+         */
+        infrastructureServices.forEach[infrastructureService, associatedImportedServices |
+            if (!containerServices.contains(infrastructureService))
+                associatedImportedServices.forEach[
+                    warning("Service is only deployed to infrastructure node but not to container",
+                        it, OperationPackage::Literals.IMPORTED_MICROSERVICE__OPERATION_NODE)
+                ]
         ]
     }
 }
