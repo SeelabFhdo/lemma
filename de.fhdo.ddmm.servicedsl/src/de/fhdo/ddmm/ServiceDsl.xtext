@@ -27,8 +27,8 @@ enum Visibility returns Visibility:
 
 Microservice returns Microservice:
     ('@' 'technology' '(' technology=[Import] ')')?
-    ('@' 'endpoints' '(' endpoints+=Endpoint+ ')')?
     (protocols+=ProtocolSpecification (protocols+=ProtocolSpecification)?)?
+    ('@' 'endpoints' '(' endpoints+=Endpoint+ ')')?
     type=MicroserviceType
     visibility=Visibility?
     'microservice' name=QualifiedNameWithAtLeastOneLevel ('version' version=ID)?
@@ -62,8 +62,8 @@ PossiblyImportedOperation returns PossiblyImportedOperation:
 ;
 
 Interface returns Interface:
-    ('@' 'endpoints' '(' endpoints+=Endpoint+ ')')?
     (protocols+=ProtocolSpecification (protocols+=ProtocolSpecification)?)?
+    ('@' 'endpoints' '(' endpoints+=Endpoint+ ')')?
     (notImplemented?='noimpl')? visibility=Visibility? 'interface' name=ID '{'
         referredOperations+=ReferredOperation*
         operations+=Operation*
@@ -71,8 +71,8 @@ Interface returns Interface:
 ;
 
 Operation returns Operation:
-    ('@' 'endpoints' '(' endpoints+=Endpoint+ ')')?
     (protocols+=ProtocolSpecification (protocols+=ProtocolSpecification)?)?
+    ('@' 'endpoints' '(' endpoints+=Endpoint+ ')')?
     (notImplemented?='noimpl')? visibility=Visibility? name=ID '('
         parameters+=Parameter? (',' parameters+=Parameter+)?
     ')' ';'
