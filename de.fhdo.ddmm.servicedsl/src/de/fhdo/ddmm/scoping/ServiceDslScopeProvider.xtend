@@ -283,9 +283,23 @@ class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
      * Build scope for referred operations in interfaces
      */
     private def getScope(ReferredOperation operation, EReference reference) {
-        if (reference != ServicePackage::Literals.REFERRED_OPERATION__OPERATION)
-            return IScope.NULLSCOPE
+        switch (reference) {
+            /* Operations to refer to */
+            case ServicePackage::Literals.REFERRED_OPERATION__OPERATION:
+                return operation.getScopeForReferableOperation()
 
+            /* Import aliases of annotated endpoints */
+            case ServicePackage::Literals.IMPORTED_PROTOCOL_AND_DATA_FORMAT__IMPORT:
+                return operation.getServiceTechnologyImportAliasAsScope()
+        }
+
+        return null
+    }
+
+    /**
+     * Build scope for operation to refer to
+     */
+    def getScopeForReferableOperation(ReferredOperation operation) {
         // The interface may refer to all operations of its siblings, i.e., all interfaces of its
         // containing microservice
         val scopeElements = EcoreUtil2.getSiblingsOfType(operation.interface, Interface)

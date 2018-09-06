@@ -533,9 +533,12 @@ class ReferredOperation {
      *     (C1) There might be at most one protocol per communication type assigned to a referred
      *          operation.
      *          Ensured by: DSL validator.
+     *     (C2) Combination of endpoints' protocols and data formats must be unique.
+     *          Ensured by: DSL validator.
      */
 
     refers Operation operation
+    contains Endpoint[] endpoints opposite referredOperation
     contains ProtocolSpecification[0..2] protocols
 
     container Interface ^interface opposite referredOperations
@@ -831,4 +834,5 @@ class Endpoint {
     container Microservice microservice opposite endpoints
     container Interface ^interface opposite endpoints
     container Operation operation opposite endpoints
+    container ReferredOperation referredOperation opposite endpoints
 }

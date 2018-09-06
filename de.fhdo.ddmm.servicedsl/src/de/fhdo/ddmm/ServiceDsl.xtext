@@ -80,6 +80,7 @@ Operation returns Operation:
 
 ReferredOperation returns ReferredOperation:
     (protocols+=ProtocolSpecification (protocols+=ProtocolSpecification)?)?
+    ('@' 'endpoints' '(' endpoints+=Endpoint+ ')')?
     'refers' operation=[Operation|QualifiedName] ';'
 ;
 
