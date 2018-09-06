@@ -52,6 +52,12 @@ class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
             /* Microservices */
             Microservice: context.getScope(reference)
 
+            /* Interfaces */
+            Interface: context.getScope(reference)
+
+            /* Operations */
+            Operation: context.getScope(reference)
+
             /* Possibly imported microservices */
             PossiblyImportedMicroservice: context.getScope(reference)
 
@@ -133,6 +139,32 @@ class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
             /* Import aliases of annotated endpoints */
             case ServicePackage::Literals.IMPORTED_PROTOCOL_AND_DATA_FORMAT__IMPORT:
                 return microservice.getServiceTechnologyImportAliasAsScope()
+        }
+
+        return null
+    }
+
+    /**
+     * Build scope for interfaces and the given reference
+     */
+    private def getScope(Interface ^interface, EReference reference) {
+        switch (reference) {
+            /* Import aliases of annotated endpoints */
+            case ServicePackage::Literals.IMPORTED_PROTOCOL_AND_DATA_FORMAT__IMPORT:
+                return interface.getServiceTechnologyImportAliasAsScope()
+        }
+
+        return null
+    }
+
+    /**
+     * Build scope for operations and the given reference
+     */
+    private def getScope(Operation operation, EReference reference) {
+        switch (reference) {
+            /* Import aliases of annotated endpoints */
+            case ServicePackage::Literals.IMPORTED_PROTOCOL_AND_DATA_FORMAT__IMPORT:
+                return operation.getServiceTechnologyImportAliasAsScope()
         }
 
         return null
