@@ -13,7 +13,6 @@ import de.fhdo.ddmm.service.Operation
 import de.fhdo.ddmm.technology.CommunicationType
 import de.fhdo.ddmm.service.ImportType
 import de.fhdo.ddmm.service.ServiceModel
-import org.eclipse.xtext.EcoreUtil2
 import de.fhdo.ddmm.ServiceDslQualifiedNameProvider
 import com.google.inject.Inject
 import de.fhdo.ddmm.service.PossiblyImportedOperation
@@ -81,24 +80,24 @@ class ServiceDslValidator extends AbstractServiceDslValidator {
     }
 
     /**
-     * Check for cyclic imports (non-transitive)
+     * Check that model does not import itself
      */
     @Check
-    def checkForCyclicImports(Import ^import) {
+    def checkForSelfImport(Import ^import) {
         if (import.importType !== ImportType.MICROSERVICES) {
             return
         }
 
-        val isCyclic = DdmmUtils.isCyclicImport(import, ServiceModel,
-            [it.imports
-                .filter[it.importType === ImportType.MICROSERVICES]
-                .toList
-                .map[EcoreUtil2.getResource(it.eResource, it.importURI)]
-            ]
-        )
+        val thisModel = import.serviceModel
+        val serviceImports = DdmmUtils.getImportsOfModelTypes(thisModel.imports, [importURI],
+            ServiceModel)
 
-        if (isCyclic)
-            error("Cyclic import detected", import, ServicePackage::Literals.IMPORT__IMPORT_URI)
+        serviceImports.forEach[
+            val root = DdmmUtils.getImportedModelContents(eResource, importURI)
+            if (!root.empty && root.get(0) == thisModel)
+                error("Model may not import itself", import,
+                    ServicePackage::Literals.IMPORT__IMPORT_URI)
+        ]
     }
 
     /**
