@@ -743,7 +743,7 @@ class PrimitiveValue {
     }
 
     /**
-     * Check if numeric value has decimals. Returns false if value is not numeric
+     * Check if numeric value has decimals. Returns false if value is not numeric.
      */
     op boolean hasDecimals() {
         if (numericValue === null)
