@@ -40,7 +40,7 @@ enum ImportType {
  * An operation node is a node to which services may be deployed, e.g., a container or some
  * infrastructure component like a configuration provider
  */
-class OperationNode {
+abstract class OperationNode {
     /**
      * Implicit Constraints:
      *     (C1) Mandatory service properties service properties need to have values assigned.
