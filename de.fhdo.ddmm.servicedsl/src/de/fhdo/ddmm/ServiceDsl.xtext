@@ -85,7 +85,7 @@ ReferredOperation returns ReferredOperation:
 ;
 
 Parameter returns Parameter:
-    communicationType=CommunicationType?
+    communicationType=CommunicationType
     exchangePattern=ExchangePattern?
     (communicatesFault?='fault')?
     name=ID

@@ -255,7 +255,7 @@ class TechnologyDslValidator extends AbstractTechnologyDslValidator {
         }
 
         val definedDefaultProtocols = technology.protocols
-            .filter[^default && communicationType == forCommunicationType]
+            .filter[^default && forCommunicationType == communicationType]
 
         if (definedDefaultProtocols.empty)
             error('''Technology must define at least one default «communicationTypeString» ''' +

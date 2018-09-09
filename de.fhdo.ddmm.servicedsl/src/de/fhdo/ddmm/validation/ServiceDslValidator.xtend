@@ -270,7 +270,7 @@ class ServiceDslValidator extends AbstractServiceDslValidator {
                 case ASYNCHRONOUS: "asynchronous"
             }
 
-            val protocolsOfType = protocols.filter[it.communicationType == communicationType]
+            val protocolsOfType = protocols.filter[communicationType == it.communicationType]
             if (protocolsOfType.size > 1)
                 error('''There must not be more than one «protocolTypeName» protocol for the ''' +
                     '''«containerName»''', protocolsOfType.get(1),

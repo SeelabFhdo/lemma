@@ -626,10 +626,12 @@ class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
         val isProtocolSpecification = importedProtocol.specification !== null
         val CommunicationType filterCommunicationType = if (isProtocolSpecification)
             importedProtocol.specification.communicationType
+        if (filterCommunicationType === null)
+            return IScope.NULLSCOPE
 
         val resourceRoot = resourceContents.get(0) as Technology
         val scopeElements = resourceRoot.protocols
-            .filter[!isProtocolSpecification || communicationType == filterCommunicationType]
+            .filter[!isProtocolSpecification || filterCommunicationType == communicationType]
             .map[
                 val protocolName = QualifiedName.create(it.qualifiedNameParts)
                 EObjectDescription.create(protocolName, it)

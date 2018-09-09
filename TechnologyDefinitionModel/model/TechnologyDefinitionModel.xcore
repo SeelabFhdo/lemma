@@ -84,7 +84,7 @@ class Protocol {
      */
 
     String name
-    CommunicationType communicationType = "SYNCHRONOUS"
+    CommunicationType communicationType
     boolean ^default = "false"
 
     refers DataFormat defaultFormat

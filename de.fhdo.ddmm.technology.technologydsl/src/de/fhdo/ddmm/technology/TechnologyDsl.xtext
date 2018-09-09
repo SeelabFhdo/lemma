@@ -40,7 +40,7 @@ TechnologyImport returns TechnologyImport:
 ;
 
 Protocol returns Protocol:
-    communicationType=CommunicationType?
+    communicationType=CommunicationType
     name=ID
     'data' 'formats' dataFormats+=DataFormat (',' dataFormats+=DataFormat)*
     (default?='default' 'with' 'format' defaultFormat=[DataFormat])?
