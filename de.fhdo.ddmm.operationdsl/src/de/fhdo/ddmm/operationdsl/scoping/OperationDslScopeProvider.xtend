@@ -269,20 +269,15 @@ class OperationDslScopeProvider extends AbstractOperationDslScopeProvider {
      * Build scope for endpoint data formats
      */
     private def getScopeForDataFormats(TechnologySpecificEndpoint endpoint) {
-        var node = EcoreUtil2.getContainerOfType(endpoint, OperationNode)
-        val resourceContents = DdmmUtils.getImportedModelContents(node.technology.eResource,
-            node.technology.importURI)
-        if (resourceContents === null || resourceContents.empty)
+        if (endpoint.protocol === null)
             return IScope.NULLSCOPE
 
-        // Return scope elements, i.e., defined data formats, that exist for the ImportedProtocol's
-        // protocol
+        // Return scope elements, i.e., defined data formats, that exist for the protocol
         val protocolName = endpoint.protocol.name
         if (protocolName === null)
             return IScope.NULLSCOPE
 
-        val resourceRoot = resourceContents.get(0) as Technology
-        val scopeElements = resourceRoot.protocols
+        val scopeElements = endpoint.protocol.technology.protocols
             // We can use the first protocol we find, as protocol names are unique (ensured by
             // validator of Technology DSL) independent of communication type
             .findFirst[name == protocolName]
