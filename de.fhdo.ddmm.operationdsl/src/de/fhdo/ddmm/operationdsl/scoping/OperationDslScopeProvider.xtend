@@ -46,14 +46,14 @@ class OperationDslScopeProvider extends AbstractOperationDslScopeProvider {
             /*
              * Scope for service property values. The scope provider will delegate the scope
              * resolution with ServicePropertyValue as the context, if its serviceProperty feature
-             * was set. Otherwise, the context will be an instance of Container (see below).
+             * was set. Otherwise, the context will be an instance of OperationNode (see below).
              */
             ServicePropertyValue: context.getScope(reference)
 
             /*
              * Scope for technology-specific endpoints. The scope provider will delegate the scope
              * resolution with TechnologySpecificEndpoint as the context, if its protocol feature
-             * was set. Otherwise, the context will be an instance of Container (see below).
+             * was set. Otherwise, the context will be an instance of OperationNode (see below).
              */
             TechnologySpecificEndpoint: context.getScope(reference)
 
@@ -73,11 +73,11 @@ class OperationDslScopeProvider extends AbstractOperationDslScopeProvider {
      */
     private def getScope(Container container, EReference reference) {
         switch (reference) {
-            /* Operation environment */
+            /* Operation environments */
             case OperationPackage::Literals.OPERATION_NODE__OPERATION_ENVIRONMENT:
                 return container.getScopeForOperationEnvironment()
 
-            /* Deployment technology */
+            /* Deployment technologies */
             case OperationPackage::Literals.CONTAINER__DEPLOYMENT_TECHNOLOGY:
                 return container.getScopeForDeploymentTechnology()
         }
@@ -92,11 +92,11 @@ class OperationDslScopeProvider extends AbstractOperationDslScopeProvider {
      */
     private def getScope(InfrastructureNode infrastructureNode, EReference reference) {
         switch (reference) {
-            /* Operation environment */
+            /* Operation environments */
             case OperationPackage::Literals.OPERATION_NODE__OPERATION_ENVIRONMENT:
                 return infrastructureNode.getScopeForOperationEnvironment()
 
-            /* Deployment technology */
+            /* Deployment technologies */
             case OperationPackage::Literals.INFRASTRUCTURE_NODE__INFRASTRUCTURE_TECHNOLOGY:
                 return infrastructureNode.getScopeForInfrastructureTechnology()
         }
@@ -111,23 +111,23 @@ class OperationDslScopeProvider extends AbstractOperationDslScopeProvider {
      */
     private def getScope(OperationNode operationNode, EReference reference) {
         switch (reference) {
-            /* Annotated technology */
+            /* Annotated technologies */
             case OperationPackage::Literals.OPERATION_NODE__TECHNOLOGY:
                 return operationNode.getScopeForImportsOfType(Technology)
 
-            /* Import of ImportedMicroservice */
+            /* Import of ImportedMicroservices */
             case OperationPackage::Literals.IMPORTED_MICROSERVICE__IMPORT:
                 return operationNode.getScopeForImportsOfType(ServiceModel)
 
-            /* Service property */
+            /* Service properties */
             case OperationPackage::Literals.SERVICE_PROPERTY_VALUE__SERVICE_PROPERTY:
                 return operationNode.getScopeForServiceProperties()
 
-            /* Protocol */
+            /* Protocols */
             case OperationPackage::Literals.TECHNOLOGY_SPECIFIC_ENDPOINT__PROTOCOL:
                 return operationNode.getScopeForEndpointProtocols()
 
-            /* Import of ServiceDeploymentSpecification */
+            /* Import of ServiceDeploymentSpecifications */
             case OperationPackage::Literals.SERVICE_DEPLOYMENT_SPECIFICATION__IMPORT:
                 return operationNode.getScopeForServiceDeploymentImports()
         }
@@ -192,14 +192,14 @@ class OperationDslScopeProvider extends AbstractOperationDslScopeProvider {
     private def getScope(ImportedMicroservice microservice, EReference reference) {
         switch (reference) {
             /*
-             * Scope for service import. The scope provider will delegate the scope resolution with
+             * Scope for service imports. The scope provider will delegate the scope resolution with
              * ImportedMicroservice as the context, if its import feature was set. Otherwise, the
-             * context will be an instance of Container (see above).
+             * context will be an instance of OperationNode (see above).
              */
             case OperationPackage::Literals.IMPORTED_MICROSERVICE__IMPORT:
                 return microservice.getScopeForImportsOfType(ServiceModel)
 
-            /* Actual imported microservice */
+            /* Actual imported microservices */
             case OperationPackage::Literals.IMPORTED_MICROSERVICE__MICROSERVICE:
                 return microservice.import.getScopeForImportedMicroservices()
         }
@@ -229,11 +229,11 @@ class OperationDslScopeProvider extends AbstractOperationDslScopeProvider {
      */
     private def getScope(TechnologySpecificEndpoint endpoint, EReference reference) {
         switch (reference) {
-            /* Protocol */
+            /* Protocols */
             case OperationPackage::Literals.TECHNOLOGY_SPECIFIC_ENDPOINT__PROTOCOL:
                 return endpoint.getScopeForEndpointProtocols()
 
-            /* Data format */
+            /* Data formats */
             case OperationPackage::Literals.TECHNOLOGY_SPECIFIC_ENDPOINT__DATA_FORMAT:
                 return endpoint.getScopeForDataFormats()
         }
