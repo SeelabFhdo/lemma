@@ -51,6 +51,21 @@ class DataDslValidator extends AbstractDataDslValidator {
     }
 
     /**
+     * Check that imported file is imported exactly once
+     */
+    @Check
+    def checkImportFileUniqueness(DataModel dataModel) {
+        val duplicateIndex = DdmmUtils.getDuplicateIndex(dataModel.complexTypeImports, [importURI])
+        if (duplicateIndex === -1) {
+            return
+        }
+
+        val duplicate = dataModel.complexTypeImports.get(duplicateIndex)
+        error("File is already being imported", duplicate,
+            DataPackage::Literals.COMPLEX_TYPE_IMPORT__IMPORT_URI)
+    }
+
+    /**
      * Check that imported file defines a data model
      */
     @Check

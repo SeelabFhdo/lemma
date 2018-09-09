@@ -101,6 +101,21 @@ class ServiceDslValidator extends AbstractServiceDslValidator {
     }
 
     /**
+     * Check that imported file is imported exactly once
+     */
+    @Check
+    def checkImportFileUniqueness(ServiceModel serviceModel) {
+        val duplicateIndex = DdmmUtils.getDuplicateIndex(serviceModel.imports, [importURI])
+        if (duplicateIndex === -1) {
+            return
+        }
+
+        val duplicate = serviceModel.imports.get(duplicateIndex)
+        error("File is already being imported", duplicate,
+            ServicePackage::Literals.IMPORT__IMPORT_URI)
+    }
+
+    /**
      * Check that annotated technologies define types and protocols
      */
     @Check

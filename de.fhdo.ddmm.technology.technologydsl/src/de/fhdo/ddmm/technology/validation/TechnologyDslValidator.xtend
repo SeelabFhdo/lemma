@@ -47,6 +47,21 @@ class TechnologyDslValidator extends AbstractTechnologyDslValidator {
     }
 
     /**
+     * Check that imported file is imported exactly once
+     */
+    @Check
+    def checkImportFileUniqueness(Technology model) {
+        val duplicateIndex = DdmmUtils.getDuplicateIndex(model.imports, [importURI])
+        if (duplicateIndex === -1) {
+            return
+        }
+
+        val duplicate = model.imports.get(duplicateIndex)
+        error("File is already being imported", duplicate,
+            TechnologyPackage::Literals.TECHNOLOGY_IMPORT__IMPORT_URI)
+    }
+
+    /**
      * Check if an imported file exists
      */
     @Check

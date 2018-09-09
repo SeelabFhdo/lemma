@@ -16,6 +16,7 @@ import de.fhdo.ddmm.operation.OperationNode
 import de.fhdo.ddmm.operation.InfrastructureNode
 import de.fhdo.ddmm.service.Microservice
 import de.fhdo.ddmm.operation.ImportedMicroservice
+import de.fhdo.ddmm.service.ServicePackage
 
 /**
  * This class contains validation rules for the Operation DSL.
@@ -32,6 +33,21 @@ class OperationDslValidator extends AbstractOperationDslValidator {
             error("Model must contain at least one container or infrastructure node",
                 operationModel, OperationPackage::Literals.OPERATION_MODEL__CONTAINERS)
         }
+    }
+
+    /**
+     * Check that imported file is imported exactly once
+     */
+    @Check
+    def checkImportFileUniqueness(OperationModel operationModel) {
+        val duplicateIndex = DdmmUtils.getDuplicateIndex(operationModel.imports, [importURI])
+        if (duplicateIndex === -1) {
+            return
+        }
+
+        val duplicate = operationModel.imports.get(duplicateIndex)
+        error("File is already being imported", duplicate,
+            ServicePackage::Literals.IMPORT__IMPORT_URI)
     }
 
     /**
