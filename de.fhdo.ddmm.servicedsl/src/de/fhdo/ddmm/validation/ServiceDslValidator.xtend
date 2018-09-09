@@ -276,8 +276,8 @@ class ServiceDslValidator extends AbstractServiceDslValidator {
 
         for (int i : 0..<2) {
             val communicationType = switch (i) {
-                case 1: CommunicationType.SYNCHRONOUS
-                case 2: CommunicationType.ASYNCHRONOUS
+                case 0: CommunicationType.SYNCHRONOUS
+                case 1: CommunicationType.ASYNCHRONOUS
             }
 
             val communicationTypeName = switch (communicationType) {
