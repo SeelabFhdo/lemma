@@ -275,20 +275,20 @@ class ServiceDslValidator extends AbstractServiceDslValidator {
         }
 
         for (int i : 0..<2) {
-            val CommunicationType communicationType = switch (i) {
+            val communicationType = switch (i) {
                 case 1: CommunicationType.SYNCHRONOUS
                 case 2: CommunicationType.ASYNCHRONOUS
             }
 
-            val String protocolTypeName = switch (communicationType) {
+            val communicationTypeName = switch (communicationType) {
                 case SYNCHRONOUS: "synchronous"
                 case ASYNCHRONOUS: "asynchronous"
             }
 
             val protocolsOfType = protocols.filter[communicationType == it.communicationType]
             if (protocolsOfType.size > 1)
-                error('''There must not be more than one «protocolTypeName» protocol for the ''' +
-                    '''«containerName»''', protocolsOfType.get(1),
+                error('''There must not be more than one «communicationTypeName» protocol for ''' +
+                    '''the «containerName»''', protocolsOfType.get(1),
                 ServicePackage::Literals.PROTOCOL_SPECIFICATION__COMMUNICATION_TYPE)
         }
     }
