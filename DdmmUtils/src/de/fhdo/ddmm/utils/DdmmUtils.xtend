@@ -401,12 +401,7 @@ final class DdmmUtils {
         val doPredicateFiltering = predicates !== null && !predicates.empty
         val scopeElements = <IEObjectDescription> newArrayList
         conceptsToName
-            .filter[concept |
-                if (doPredicateFiltering)
-                    !predicates.exists[!it.apply(concept)]
-                else
-                    true
-            ]
+            .filter[concept | !doPredicateFiltering || !predicates.exists[!it.apply(concept)]]
             .forEach[concept |
                 var conceptNameParts = getConceptNameParts.apply(concept)
 
