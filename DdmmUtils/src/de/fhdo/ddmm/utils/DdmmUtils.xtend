@@ -398,9 +398,15 @@ final class DdmmUtils {
          * predicates apply. We also calculate the relative names of the relevant concept if
          * necessary.
          */
+        val doPredicateFiltering = predicates !== null && !predicates.empty
         val scopeElements = <IEObjectDescription> newArrayList
         conceptsToName
-            .filter[concept | !predicates.exists[!it.apply(concept)]]
+            .filter[concept |
+                if (doPredicateFiltering)
+                    !predicates.exists[!it.apply(concept)]
+                else
+                    true
+            ]
             .forEach[concept |
                 var conceptNameParts = getConceptNameParts.apply(concept)
 
