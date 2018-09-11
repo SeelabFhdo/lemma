@@ -17,6 +17,7 @@ import de.fhdo.ddmm.operation.InfrastructureNode
 import de.fhdo.ddmm.service.Microservice
 import de.fhdo.ddmm.operation.ImportedMicroservice
 import de.fhdo.ddmm.service.ServicePackage
+import com.google.common.base.Function
 
 /**
  * This class contains validation rules for the Operation DSL.
@@ -144,6 +145,70 @@ class OperationDslValidator extends AbstractOperationDslValidator {
             val duplicate = endpoint.addresses.get(duplicateIndex)
             error('''Duplicate address «duplicate»''', endpoint,
                 OperationPackage::Literals.TECHNOLOGY_SPECIFIC_ENDPOINT__ADDRESSES, duplicateIndex)
+        }
+    }
+
+    /**
+     * Warn if addresses occur more than once for different endpoints
+     */
+    @Check
+    def warnNonUniqueEndpointAddressesInModel(OperationModel model) {
+        val addressToEndpoint = <String, TechnologySpecificEndpoint> newHashMap
+
+        /* Setup function to build warning depending on where the original endpoint is defined */
+        val Function<TechnologySpecificEndpoint, String> buildWarningMessage = [
+            // Default basic endpoint of container
+            if (container !== null)
+                return "Address is also specified for basic endpoint of container " +
+                    container.name
+            // Endpoints of infrastructure node
+            else if (infrastructureNode !== null)
+                return "Address is also specified for endpoint of infrastructure node " +
+                    infrastructureNode.name
+            // Deployment specification inside a container or infrastructure node
+            else if (deploymentSpecification !== null) {
+                val deployedService = deploymentSpecification.service.microservice
+                return "Address is also specified for deployment of service " +
+                    deploymentSpecification.import.name + "::" +
+                    QualifiedName.create(deployedService.qualifiedNameParts).toString
+            }
+        ]
+
+        /* Perform the actual duplicate check */
+        for (i : 0..<4) {
+            var Iterable<TechnologySpecificEndpoint> endpoints
+            switch (i) {
+                // Include default basic endpoints of containers
+                case 0: endpoints = model.containers.map[defaultBasicEndpoints].flatten
+
+                // Include endpoints of containers' deployment specifications
+                case 1: endpoints = model.containers
+                    .map[deploymentSpecifications].flatten
+                    .map[basicEndpoints].flatten
+
+                // Include endpoints of infrastructure nodes
+                case 2: endpoints = model.infrastructureNodes.map[it.endpoints].flatten
+
+                // Include endpoints of infrastructure nodes' deployment specifications
+                case 3: endpoints = model.infrastructureNodes
+                    .map[deploymentSpecifications].flatten
+                    .map[basicEndpoints].flatten
+            }
+
+            // Duplicate check
+            endpoints.forEach[endpoint |
+                for (n : 0..<endpoint.addresses.size) {
+                    val address = endpoint.addresses.get(n)
+                    val duplicateEndpoint = addressToEndpoint.putIfAbsent(address, endpoint)
+
+                    // We do not warn if the duplicate address was detected within the same
+                    // endpoint as this shall result in an error and is therefore separately checked
+                    // by checkUniqueEndpointAddresses()
+                    if (duplicateEndpoint !== null && duplicateEndpoint !== endpoint)
+                        warning(buildWarningMessage.apply(duplicateEndpoint), endpoint,
+                            OperationPackage::Literals.TECHNOLOGY_SPECIFIC_ENDPOINT__ADDRESSES, n)
+                }
+            ]
         }
     }
 
