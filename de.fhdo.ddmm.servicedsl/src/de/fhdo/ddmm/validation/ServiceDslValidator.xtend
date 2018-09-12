@@ -31,6 +31,7 @@ import de.fhdo.ddmm.service.Endpoint
 import java.util.List
 import org.eclipse.emf.ecore.EObject
 import de.fhdo.ddmm.data.DataModel
+import de.fhdo.ddmm.service.Visibility
 
 /**
  * This class contains custom validation rules for service models.
@@ -198,10 +199,11 @@ class ServiceDslValidator extends AbstractServiceDslValidator {
      */
     @Check
     def checkAlreadyInternal(Operation operation) {
-        if (operation.effectivelyInternal && operation.interface.effectivelyInternal) {
+        if (operation.visibility === Visibility.INTERNAL &&
+            operation.interface.effectivelyInternal) {
             val interfaceName = operation.interface.name
             warning('''Operation is already implicitly internal, because its interface ''' +
-                '''«interfaceName» is internal''', operation,
+                '''«interfaceName» is effectively internal''', operation,
                 ServicePackage::Literals.OPERATION__VISIBILITY)
         }
     }
