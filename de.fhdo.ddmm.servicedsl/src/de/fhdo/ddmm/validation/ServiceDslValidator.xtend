@@ -263,15 +263,16 @@ class ServiceDslValidator extends AbstractServiceDslValidator {
         }
     }
 
+    // TODO: Inheritance of microservices
     /**
      * Check non-cyclic inheritance relationships between microservices
      */
-    @Check
+    /*@Check
     def checkCyclicInheritance(Microservice microservice) {
         if (DdmmUtils.hasCyclicInheritance(microservice, [it.super]))
             error("Cyclic inheritance detected", microservice,
                 ServicePackage::Literals.MICROSERVICE__NAME)
-    }
+    }*/
 
     /**
      * Check that there is at most one protocol per communication type annotated on microservices,

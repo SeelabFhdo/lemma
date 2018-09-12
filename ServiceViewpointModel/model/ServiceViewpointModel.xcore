@@ -120,7 +120,8 @@ class Microservice {
     MicroserviceType ^type
     Visibility visibility = "NONE"
 
-    refers Microservice[0..1] ^super
+    // TODO: Inheritance of microservices
+    //refers Microservice[0..1] ^super
     refers Import[0..1] technology
     contains Endpoint[] endpoints opposite microservice
     contains PossiblyImportedMicroservice[] requiredMicroservices opposite requiringMicroservice

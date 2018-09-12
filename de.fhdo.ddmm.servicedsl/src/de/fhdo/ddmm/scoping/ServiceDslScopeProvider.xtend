@@ -17,8 +17,6 @@ import de.fhdo.ddmm.service.ImportedType
 import de.fhdo.ddmm.technology.Technology
 import org.eclipse.xtext.scoping.Scopes
 import de.fhdo.ddmm.service.Microservice
-import de.fhdo.ddmm.ServiceDslQualifiedNameProvider
-import com.google.inject.Inject
 import de.fhdo.ddmm.service.ServiceModel
 import de.fhdo.ddmm.service.Parameter
 import de.fhdo.ddmm.service.Interface
@@ -41,8 +39,9 @@ import de.fhdo.ddmm.technology.CommunicationType
  * @author <a href="mailto:florian.rademacher@fh-dortmund.de>Florian Rademacher</a>
  */
 class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
-    @Inject
-    private ServiceDslQualifiedNameProvider nameProvider
+    // TODO: Inheritance of microservices
+    //@Inject
+    //private ServiceDslQualifiedNameProvider nameProvider
 
     /**
      * Build scope for a given context and a given reference
@@ -96,8 +95,9 @@ class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
     private def getScope(Microservice microservice, EReference reference) {
         switch (reference) {
             /* Super microservices */
-            case ServicePackage::Literals.MICROSERVICE__SUPER:
-                return microservice.getScopeForSuperMicroservice(reference)
+            // TODO: Inheritance of microservices
+            //case ServicePackage::Literals.MICROSERVICE__SUPER:
+            //    return microservice.getScopeForSuperMicroservice(reference)
 
             /*
              * Available imports and their aliases for possibly imported microservices, interfaces
@@ -600,17 +600,18 @@ class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
         )
     }
 
+    // TODO: Inheritance of microservices
     /**
      * Build scope for super microservices considering custom, version-aware name provider
      */
-    private def getScopeForSuperMicroservice(Microservice microservice, EReference reference) {
+    /*private def getScopeForSuperMicroservice(Microservice microservice, EReference reference) {
         val serviceModel = microservice.serviceModel
         if (serviceModel === null)
             return IScope.NULLSCOPE
 
         val scopeElements = serviceModel.microservices.filter[microservice.canExtend(it)]
         return Scopes::scopeFor(scopeElements, nameProvider, IScope.NULLSCOPE)
-    }
+    }*/
 
     /**
      * Build scope for imported protocols

@@ -32,7 +32,9 @@ Microservice returns Microservice:
     type=MicroserviceType
     visibility=Visibility?
     'microservice' name=QualifiedNameWithAtLeastOneLevel ('version' version=ID)?
-    ('extends' super=[Microservice|QualifiedNameWithAtLeastOneLevel])? '{'
+    // TODO: Inheritance of microservices
+    //('extends' super=[Microservice|QualifiedNameWithAtLeastOneLevel])?
+    '{'
         ('required' 'microservices' '{'
             requiredMicroservices+=PossiblyImportedMicroservice
             (',' requiredMicroservices+=PossiblyImportedMicroservice)*
