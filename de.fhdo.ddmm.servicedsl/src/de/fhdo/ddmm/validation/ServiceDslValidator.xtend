@@ -391,30 +391,23 @@ class ServiceDslValidator extends AbstractServiceDslValidator {
             return
         }
 
-        /*
-         * Check that initializing operation has output parameters and also get their types
-         */
-        val outputTypes = operation.parameters.filter[
+        /* Perform full type check leveraging the data DSL's type checker */
+        val outputTypesOfParametersCommunicationType = operation.parameters.filter[
                 // may happen if no type has been entered by the user, yet
                 effectiveType !== null &&
+                communicationType === initializedParameter.communicationType &&
                 (
                     exchangePattern === ExchangePattern.OUT ||
                     exchangePattern === ExchangePattern.INOUT
                 )
             ].map[effectiveType]
 
-        // Despite the fact that the scope provider filters out operations that do not have output
-        // parameters to be used for parameter initialization, output types that are declared in
-        // the DSL might not get recognized in case their technology-specific description contains
-        // syntax errors
-        if (outputTypes.empty) {
-            error("Operation has no output parameters", operation,
-                ServicePackage::Literals.POSSIBLY_IMPORTED_OPERATION__OPERATION)
+        if (outputTypesOfParametersCommunicationType.empty) {
             return
         }
 
-        /* Perform full type check leveraging the data DSL's type checker */
-        warnInitializingTypeCompatibility(importedOperation, outputTypes, parameterType)
+        warnInitializingTypeCompatibility(importedOperation,
+            outputTypesOfParametersCommunicationType, parameterType)
     }
 
     /**
@@ -483,9 +476,14 @@ class ServiceDslValidator extends AbstractServiceDslValidator {
         if (parameterType instanceof TechnologySpecificPrimitiveType)
             typeName = parameterType.technology.name + "::" + typeName
 
-        warning('''Types of output parameters are not directly compatible with type «typeName» ''' +
-            '''of parameter «initializedParameter.name». To initialize the parameter, an ''' +
-            '''additional type conversion would need to be implemented.''', importedOperation,
+        val communicationTypeName = switch (initializedParameter.communicationType) {
+            case CommunicationType.ASYNCHRONOUS: "asynchronous"
+            case CommunicationType.SYNCHRONOUS: "synchronous"
+        }
+
+        warning('''Types of output parameters with communication type «communicationTypeName» ''' +
+            '''are not directly compatible with type «typeName» of parameter ''' +
+            '''«initializedParameter.name».''', importedOperation,
             ServicePackage::Literals.POSSIBLY_IMPORTED_OPERATION__OPERATION)
     }
 
