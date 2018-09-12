@@ -25,6 +25,13 @@ class ServiceModel {
     }
 
     /**
+     * Get all referred operations of all defined microservices
+     */
+    op ReferredOperation[] getContainedReferredOperations() {
+        return microservices.map[it.containedReferredOperations].flatten.toList.asEList
+    }
+
+    /**
      * Get all interfaces of all defined microservices
      */
     op Interface[] getContainedInterfaces() {
@@ -157,6 +164,20 @@ class Microservice {
         return interfaces
             .filter[it.operations !== null]
             .map[it.operations]
+            .flatten
+            .toEList
+    }
+
+    /**
+     * Get all referred operations of all interfaces of the microservice
+     */
+    op ReferredOperation[] getContainedReferredOperations() {
+        if (interfaces === null)
+            return newArrayList.asEList
+
+        return interfaces
+            .filter[it.referredOperations !== null]
+            .map[it.referredOperations]
             .flatten
             .toEList
     }
@@ -557,6 +578,18 @@ class ReferredOperation {
     contains ProtocolSpecification[0..2] protocols
 
     container Interface ^interface opposite referredOperations
+
+    /**
+     * Get parts of the referered operation for creating a qualified name
+     */
+    op String[] getQualifiedNameParts() {
+        if (operation.name === null || operation.name.empty)
+            return newArrayList.asEList
+
+        val nameParts = interface.qualifiedNameParts
+        nameParts.addAll(operation.name)
+        nameParts.asEList
+    }
 }
 
 /**
