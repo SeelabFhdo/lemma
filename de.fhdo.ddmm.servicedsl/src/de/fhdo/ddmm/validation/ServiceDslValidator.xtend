@@ -168,7 +168,7 @@ class ServiceDslValidator extends AbstractServiceDslValidator {
      * microservice
      */
     @Check
-    def checkAlreadyRequired(PossiblyImportedInterface importedInterface) {
+    def warnAlreadyRequired(PossiblyImportedInterface importedInterface) {
         if (importedInterface.required && importedInterface.requiredByContainer) {
             val containingMicroserviceName = nameProvider
                 .qualifiedName(importedInterface.interface.microservice)
@@ -205,7 +205,7 @@ class ServiceDslValidator extends AbstractServiceDslValidator {
      * not implemented by its containing interface.
      */
     @Check
-    def checkAlreadyNotImplemented(Operation operation) {
+    def warnAlreadyNotImplemented(Operation operation) {
         if (operation.notImplemented && operation.notImplementedByContainer) {
             val containingInterfaceName = operation.interface.name
             warning('''Operation is already marked as being not implemented, because ''' +
@@ -219,7 +219,7 @@ class ServiceDslValidator extends AbstractServiceDslValidator {
      * interface is internal
      */
     @Check
-    def checkAlreadyInternal(Operation operation) {
+    def warnAlreadyInternal(Operation operation) {
         if (operation.visibility === Visibility.INTERNAL &&
             operation.interface.effectivelyInternal) {
             val interfaceName = operation.interface.name
@@ -234,7 +234,7 @@ class ServiceDslValidator extends AbstractServiceDslValidator {
      * microservice are required
      */
     @Check
-    def checkAlreadyRequired(PossiblyImportedOperation importedOperation) {
+    def warnAlreadyRequired(PossiblyImportedOperation importedOperation) {
         if (!importedOperation.required || !importedOperation.requiredByContainer) {
             return
         }
@@ -317,10 +317,10 @@ class ServiceDslValidator extends AbstractServiceDslValidator {
     }
 
     /**
-     * Check type compatibility of parameter and initializing operation
+     * Check type compatibility of parameter and initializing operation, and warn if incompatible
      */
     @Check
-    def checkParameter(PossiblyImportedOperation importedOperation) {
+    def warnParameterInitializingTypeCompatibility(PossiblyImportedOperation importedOperation) {
         // The operation may not have a container if the user didn't finish entering the
         // initializing operation's name and hence the DSL code is syntactically incorrect
         val operation = importedOperation.operation
@@ -388,7 +388,7 @@ class ServiceDslValidator extends AbstractServiceDslValidator {
         }
 
         /* Perform full type check leveraging the data DSL's type checker */
-        checkInitializingTypeCompatibility(importedOperation, outputTypes, parameterType)
+        warnInitializingTypeCompatibility(importedOperation, outputTypes, parameterType)
     }
 
     /**
@@ -425,7 +425,7 @@ class ServiceDslValidator extends AbstractServiceDslValidator {
     /**
      * Helper method to perform full type checks of a parameter and its initializing operation
      */
-    private def checkInitializingTypeCompatibility(PossiblyImportedOperation importedOperation,
+    private def warnInitializingTypeCompatibility(PossiblyImportedOperation importedOperation,
         Iterable<Type> outputTypes, Type parameterType) {
         // Iterate over all output types and check their compatibility with the initialized
         // parameter's type until one compatible type was found
