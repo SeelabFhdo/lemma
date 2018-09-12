@@ -32,6 +32,7 @@ import java.util.List
 import org.eclipse.emf.ecore.EObject
 import de.fhdo.ddmm.data.DataModel
 import de.fhdo.ddmm.service.Visibility
+import de.fhdo.ddmm.service.PossiblyImportedMicroservice
 
 /**
  * This class contains custom validation rules for service models.
@@ -176,6 +177,26 @@ class ServiceDslValidator extends AbstractServiceDslValidator {
                 '''«containingMicroserviceName»  is required''', importedInterface,
                 ServicePackage::Literals.POSSIBLY_IMPORTED_INTERFACE__INTERFACE)
         }
+    }
+
+    /**
+     * Warn, if a required interface does not define any implemented methods
+     */
+    @Check
+    def warnNoImplementedOperations(PossiblyImportedInterface importedInterface) {
+        if (importedInterface.required && !importedInterface.interface.hasImplementedOperations)
+            warning("Interface does not define any implemented operation ", importedInterface,
+                ServicePackage::Literals.POSSIBLY_IMPORTED_INTERFACE__INTERFACE)
+    }
+
+    /**
+     * Warn, if a required microservice does not define any implemented methods
+     */
+    @Check
+    def warnNoImplementedOperations(PossiblyImportedMicroservice importedMicroservice) {
+        if (!importedMicroservice.microservice.hasImplementedOperations)
+            warning("Microservice does not define any implemented operation ", importedMicroservice,
+                ServicePackage::Literals.POSSIBLY_IMPORTED_MICROSERVICE__MICROSERVICE)
     }
 
     /**

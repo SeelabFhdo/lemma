@@ -295,6 +295,13 @@ class Microservice {
     }
 
     /**
+     * Check if at least one of the microservice's interfaces has at least one implemented operation
+     */
+    derived boolean hasImplementedOperations get {
+        return interfaces.exists[hasImplementedOperations]
+    }
+
+    /**
      * Get effective visibility
      */
     derived Visibility effectiveVisibility get {
@@ -399,6 +406,13 @@ class Interface {
         }
 
         return null
+    }
+
+    /**
+     * Check if interface has at least one implemented operation
+     */
+    derived boolean hasImplementedOperations get {
+        return operations.exists[!notImplemented]
     }
 
     /**
