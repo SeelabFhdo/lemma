@@ -317,6 +317,32 @@ class ServiceDslValidator extends AbstractServiceDslValidator {
     }
 
     /**
+     * Warn if initializing operation's parameters' output communication types do not match
+     * initialized parameter's communication type
+     */
+    @Check
+    def warnCommunicationTypesNotMatching(Parameter parameter) {
+        if (parameter.initializedByOperation === null) {
+            return
+        }
+
+        val initializingOperation = parameter.initializedByOperation.operation
+        val existsOutParameterOfSameCommunicationType = initializingOperation.parameters
+            .filter[exchangePattern === ExchangePattern.OUT]
+            .exists[communicationType === parameter.communicationType]
+        if (!existsOutParameterOfSameCommunicationType) {
+            val communicationTypeName = switch (parameter.communicationType) {
+                case CommunicationType.ASYNCHRONOUS: "asynchronous"
+                case CommunicationType.SYNCHRONOUS: "synchronous"
+            }
+
+            warning('''Operation does not have any outgoing parameters with communication type ''' +
+                '''«communicationTypeName»''', parameter,
+                ServicePackage::Literals.PARAMETER__INITIALIZED_BY_OPERATION)
+        }
+    }
+
+    /**
      * Check type compatibility of parameter and initializing operation, and warn if incompatible
      */
     @Check
