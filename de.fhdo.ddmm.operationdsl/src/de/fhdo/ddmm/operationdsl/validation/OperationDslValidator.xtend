@@ -8,7 +8,7 @@ import de.fhdo.ddmm.operation.Container
 import java.util.List
 import de.fhdo.ddmm.utils.DdmmUtils
 import de.fhdo.ddmm.operation.ServiceDeploymentSpecification
-import de.fhdo.ddmm.operation.TechnologySpecificEndpoint
+import de.fhdo.ddmm.operation.BasicEndpoint
 import org.eclipse.xtext.naming.QualifiedName
 import de.fhdo.ddmm.technology.Protocol
 import de.fhdo.ddmm.technology.Technology
@@ -121,7 +121,7 @@ class OperationDslValidator extends AbstractOperationDslValidator {
     /**
      * Convenience method to check endpoint uniqueness in a list of endpoints
      */
-    private def checkUniqueEndpoints(List<TechnologySpecificEndpoint> endpoints) {
+    private def checkUniqueEndpoints(List<BasicEndpoint> endpoints) {
         val duplicateIndex = DdmmUtils.getDuplicateIndex(endpoints,
             [protocol.name + if (dataFormat !== null) dataFormat.formatName else ""])
         if (duplicateIndex == -1) {
@@ -131,7 +131,7 @@ class OperationDslValidator extends AbstractOperationDslValidator {
         val duplicate = endpoints.get(duplicateIndex)
         error('''Duplicate endpoint for «duplicate.protocol.name»''' +
             '''«IF duplicate.dataFormat !== null»/«duplicate.dataFormat.formatName»«ENDIF»''',
-            duplicate, OperationPackage::Literals.TECHNOLOGY_SPECIFIC_ENDPOINT__PROTOCOL,
+            duplicate, OperationPackage::Literals.BASIC_ENDPOINT__PROTOCOL,
             duplicateIndex)
     }
 
@@ -139,12 +139,12 @@ class OperationDslValidator extends AbstractOperationDslValidator {
      * Check uniqueness of an endpoint's addresses
      */
     @Check
-    def checkUniqueEndpointAddresses(TechnologySpecificEndpoint endpoint) {
+    def checkUniqueEndpointAddresses(BasicEndpoint endpoint) {
         val duplicateIndex = DdmmUtils.getDuplicateIndex(endpoint.addresses, [it])
         if (duplicateIndex > -1) {
             val duplicate = endpoint.addresses.get(duplicateIndex)
             error('''Duplicate address «duplicate»''', endpoint,
-                OperationPackage::Literals.TECHNOLOGY_SPECIFIC_ENDPOINT__ADDRESSES, duplicateIndex)
+                OperationPackage::Literals.BASIC_ENDPOINT__ADDRESSES, duplicateIndex)
         }
     }
 
@@ -153,10 +153,10 @@ class OperationDslValidator extends AbstractOperationDslValidator {
      */
     @Check
     def warnNonUniqueEndpointAddressesInModel(OperationModel model) {
-        val addressToEndpoint = <String, TechnologySpecificEndpoint> newHashMap
+        val addressToEndpoint = <String, BasicEndpoint> newHashMap
 
         /* Setup function to build warning depending on where the original endpoint is defined */
-        val Function<TechnologySpecificEndpoint, String> buildWarningMessage = [
+        val Function<BasicEndpoint, String> buildWarningMessage = [
             // Default basic endpoint of container
             if (container !== null)
                 return "Address is also specified for basic endpoint of container " +
@@ -176,7 +176,7 @@ class OperationDslValidator extends AbstractOperationDslValidator {
 
         /* Perform the actual duplicate check */
         for (i : 0..<4) {
-            var Iterable<TechnologySpecificEndpoint> endpoints
+            var Iterable<BasicEndpoint> endpoints
             switch (i) {
                 // Include default basic endpoints of containers
                 case 0: endpoints = model.containers.map[defaultBasicEndpoints].flatten
@@ -206,7 +206,7 @@ class OperationDslValidator extends AbstractOperationDslValidator {
                     // by checkUniqueEndpointAddresses()
                     if (duplicateEndpoint !== null && duplicateEndpoint !== endpoint)
                         warning(buildWarningMessage.apply(duplicateEndpoint), endpoint,
-                            OperationPackage::Literals.TECHNOLOGY_SPECIFIC_ENDPOINT__ADDRESSES, n)
+                            OperationPackage::Literals.BASIC_ENDPOINT__ADDRESSES, n)
                 }
             ]
         }

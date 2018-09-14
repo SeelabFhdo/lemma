@@ -32,7 +32,7 @@ Container returns Container:
             defaultServicePropertyValues+=ServicePropertyValue+
 
             ('basic' 'endpoints' '{'
-                defaultBasicEndpoints+=TechnologySpecificEndpoint+
+                defaultBasicEndpoints+=BasicEndpoint+
             '}')?
         '}')?
 
@@ -54,7 +54,7 @@ InfrastructureNode returns InfrastructureNode:
         '}')?
 
         ('endpoints' '{'
-            endpoints+=TechnologySpecificEndpoint+
+            endpoints+=BasicEndpoint+
         '}')?
 
         deploymentSpecifications+=ServiceDeploymentSpecification*
@@ -62,7 +62,7 @@ InfrastructureNode returns InfrastructureNode:
 ;
 
 
-TechnologySpecificEndpoint returns TechnologySpecificEndpoint:
+BasicEndpoint returns BasicEndpoint:
     protocol=[technology::Protocol]
     ('/' dataFormat=[technology::DataFormat])? ':'
     addresses+=STRING (',' addresses+=STRING)* ';'
@@ -73,7 +73,7 @@ ServiceDeploymentSpecification returns ServiceDeploymentSpecification:
     '{'
         servicePropertyValues+=ServicePropertyValue*
         ('basic' 'endpoints' '{'
-            basicEndpoints+=TechnologySpecificEndpoint+
+            basicEndpoints+=BasicEndpoint+
         '}')?
     '}'
 ;

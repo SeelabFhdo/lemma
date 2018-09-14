@@ -15,7 +15,7 @@ import org.eclipse.xtext.naming.QualifiedName
 import de.fhdo.ddmm.operation.ImportedMicroservice
 import de.fhdo.ddmm.service.ServiceModel
 import de.fhdo.ddmm.operation.ServicePropertyValue
-import de.fhdo.ddmm.operation.TechnologySpecificEndpoint
+import de.fhdo.ddmm.operation.BasicEndpoint
 import de.fhdo.ddmm.operation.ServiceDeploymentSpecification
 import de.fhdo.ddmm.operation.OperationNode
 import de.fhdo.ddmm.operation.InfrastructureNode
@@ -51,11 +51,11 @@ class OperationDslScopeProvider extends AbstractOperationDslScopeProvider {
             ServicePropertyValue: context.getScope(reference)
 
             /*
-             * Scope for technology-specific endpoints. The scope provider will delegate the scope
-             * resolution with TechnologySpecificEndpoint as the context, if its protocol feature
-             * was set. Otherwise, the context will be an instance of OperationNode (see below).
+             * Scope for basic endpoints. The scope provider will delegate the scope resolution with
+             * BasicEndpoint as the context, if its protocol feature was set. Otherwise, the context
+             * will be an instance of OperationNode (see below).
              */
-            TechnologySpecificEndpoint: context.getScope(reference)
+            BasicEndpoint: context.getScope(reference)
 
             /* Service deployment specifications */
             ServiceDeploymentSpecification: context.getScope(reference)
@@ -124,7 +124,7 @@ class OperationDslScopeProvider extends AbstractOperationDslScopeProvider {
                 return operationNode.getScopeForServiceProperties()
 
             /* Protocols */
-            case OperationPackage::Literals.TECHNOLOGY_SPECIFIC_ENDPOINT__PROTOCOL:
+            case OperationPackage::Literals.BASIC_ENDPOINT__PROTOCOL:
                 return operationNode.getScopeForEndpointProtocols()
 
             /* Import of ServiceDeploymentSpecifications */
@@ -225,16 +225,16 @@ class OperationDslScopeProvider extends AbstractOperationDslScopeProvider {
     }
 
     /**
-     * Build scope for technology-specific endpoints
+     * Build scope for basic endpoints
      */
-    private def getScope(TechnologySpecificEndpoint endpoint, EReference reference) {
+    private def getScope(BasicEndpoint endpoint, EReference reference) {
         switch (reference) {
             /* Protocols */
-            case OperationPackage::Literals.TECHNOLOGY_SPECIFIC_ENDPOINT__PROTOCOL:
+            case OperationPackage::Literals.BASIC_ENDPOINT__PROTOCOL:
                 return endpoint.getScopeForEndpointProtocols()
 
             /* Data formats */
-            case OperationPackage::Literals.TECHNOLOGY_SPECIFIC_ENDPOINT__DATA_FORMAT:
+            case OperationPackage::Literals.BASIC_ENDPOINT__DATA_FORMAT:
                 return endpoint.getScopeForDataFormats()
         }
 
@@ -268,7 +268,7 @@ class OperationDslScopeProvider extends AbstractOperationDslScopeProvider {
     /**
      * Build scope for endpoint data formats
      */
-    private def getScopeForDataFormats(TechnologySpecificEndpoint endpoint) {
+    private def getScopeForDataFormats(BasicEndpoint endpoint) {
         if (endpoint.protocol === null)
             return IScope.NULLSCOPE
 
@@ -305,7 +305,7 @@ class OperationDslScopeProvider extends AbstractOperationDslScopeProvider {
                 return specification.getScopeForServiceProperties()
 
             /* Protocols */
-            case OperationPackage::Literals.TECHNOLOGY_SPECIFIC_ENDPOINT__PROTOCOL:
+            case OperationPackage::Literals.BASIC_ENDPOINT__PROTOCOL:
                 return specification.getScopeForEndpointProtocols()
         }
 
