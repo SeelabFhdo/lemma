@@ -4,6 +4,7 @@
 package de.fhdo.ddmm
 
 import de.fhdo.ddmm.scoping.ServiceDslScopeProvider
+import org.eclipse.xtext.resource.IDefaultResourceDescriptionStrategy
 
 /**
  * Use this class to register components to be used at runtime / without the Equinox extension
@@ -24,5 +25,13 @@ class ServiceDslRuntimeModule extends AbstractServiceDslRuntimeModule {
      */
     override bindIQualifiedNameProvider() {
         ServiceDslQualifiedNameProvider
+    }
+
+    /**
+     * Bind custom resource description strategy
+     */
+    def Class<? extends IDefaultResourceDescriptionStrategy>
+       bindIDefaultResourceDescriptionStrategy() {
+        ServiceDslResourceDescriptionStrategy
     }
 }
