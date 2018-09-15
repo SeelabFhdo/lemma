@@ -15,12 +15,10 @@ class DataDslResourceDescriptionStrategy extends DefaultResourceDescriptionStrat
      * Export selected EObjects from DSL models
      */
     override createEObjectDescriptions(EObject eObject, IAcceptor<IEObjectDescription> acceptor) {
-        /*
-         * We export everything defined in a DSL, except imported complex types from other data
-         * models. That is, we do not support transitive imports.
-         */
-        if (eObject instanceof ComplexTypeImport)
-            return false
+        switch (eObject) {
+            ComplexTypeImport,  // Don't export imported complex types to prevent transitive imports
+            PrimitiveType: return false
+        }
 
         return super.createEObjectDescriptions(eObject, acceptor)
     }
