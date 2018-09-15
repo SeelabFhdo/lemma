@@ -12,6 +12,9 @@ import de.fhdo.ddmm.typechecking.complex_types.data_structures.TypeGraph
 import de.fhdo.ddmm.typechecking.complex_types.data_structures.NodePair
 import de.fhdo.ddmm.typechecking.complex_types.data_structures.DataFieldComparator
 import de.fhdo.ddmm.typechecking.complex_types.data_structures.DataFieldComparator.ORDERING
+import de.fhdo.ddmm.typechecking.TypecheckingUtils
+import de.fhdo.ddmm.technology.TechnologySpecificDataStructure
+import de.fhdo.ddmm.technology.TechnologySpecificListType
 
 /**
  * TypeChecker implementation for ComplexTypes.
@@ -96,7 +99,7 @@ class ComplexTypeChecker implements TypeCheckerI<ComplexType> {
         val typeToCheck = nodeToCheck.type
 
         /* Perform type-specific compatibility checking */
-        val typesEqual = basicType == typeToCheck
+        val typesEqual = typesEqual(basicType, typeToCheck)
         val structureCheck = basicType.isStructure && typeToCheck.isStructure
         val primitiveListCheck = basicType.isPrimitiveList && typeToCheck.isPrimitiveList
         val structuredListCheck = basicType.isStructuredList && typeToCheck.isStructuredList
@@ -125,6 +128,36 @@ class ComplexTypeChecker implements TypeCheckerI<ComplexType> {
             !structuredListsCompatible(basicType as ListType, typeToCheck as ListType))
             iterator.markCurrentPairIncompatible()
     }
+
+    /**
+     * Check if two types are equal
+     */
+    private def typesEqual(ComplexType basicType, ComplexType typeToCheck) {
+        /* Types are equal and hence compatible */
+        if (basicType == typeToCheck)
+            return true
+
+        /*
+         * Perform technology-specific checks. The basic type is equal to the type to check if (i)
+         * the latter is technology-specific and (ii) if the basic type has the same underlying type
+         * kind as the type to check, i.e., is a structure type when the type to check is a
+         * technology-specific structure type or is a list type when the type to check is a
+         * technology-specific list type. That is, because technology-specific complex types do not
+         * include data fields or primitive types (for primitive lists).
+         */
+        if (!TypecheckingUtils.isTechnologySpecific(typeToCheck))
+            return false
+
+        val basicStructure = basicType.isStructure ||
+            basicType instanceof TechnologySpecificDataStructure
+        if (basicStructure && typeToCheck instanceof TechnologySpecificDataStructure)
+            return true
+
+        val basicList = basicType.isPrimitiveList || basicType instanceof TechnologySpecificListType
+        if (basicList && typeToCheck instanceof TechnologySpecificListType)
+            return true
+    }
+
     /**
      * Check if two DataStructures are compatible
      */

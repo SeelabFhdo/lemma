@@ -1,4 +1,4 @@
-package de.fhdo.ddmm.typechecking.compatibility_matrix
+package de.fhdo.ddmm.typechecking.technology_specific
 
 import de.fhdo.ddmm.typechecking.TypeCheckerI
 import de.fhdo.ddmm.data.Type
