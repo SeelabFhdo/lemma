@@ -66,7 +66,7 @@ class TypeGraphNode {
 
     /**
      * Get information about primitive types, depending on the node type, in the form of a map of
-     * field names to their primitive types.
+     * fields' names to their primitive types.
      *
      * Conceptually, each entry of the map corresponds to a DataField instance. However, as we
      * cannot instantiate this metamodel concept that easy, we just use a "simple" map for the
@@ -79,8 +79,8 @@ class TypeGraphNode {
             return primitiveTypeFieldInfo
 
         /*
-         * Type is a primitively typed list. This means, that the list one "field" that has no name
-         * and whose type is the primitive list type.
+         * Type is a primitively typed list. This means, that the list exhibits one "field" that has
+         * no name and whose type is the primitive list type.
          */
         if (type.isPrimitiveList) {
             primitiveTypeFieldInfo.put("", (type as ListType).primitiveType)
