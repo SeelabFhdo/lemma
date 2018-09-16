@@ -20,9 +20,8 @@ enum ImportType returns service::ImportType:
 
 Container returns Container:
     '@' 'technology' '(' technology=[service::Import] ')'
-    deploymentTechnology=[technology::DeploymentTechnology]
-    'container'
-    name=ID
+    'container' name=ID
+    'deployment' 'technology' deploymentTechnology=[technology::DeploymentTechnology]
     ('with' 'operation' 'environment'
         operationEnvironment=[technology::OperationEnvironment|STRING]
     )?
@@ -53,8 +52,7 @@ Container returns Container:
 
 InfrastructureNode returns InfrastructureNode:
     '@' 'technology' '(' technology=[service::Import] ')'
-    infrastructureTechnology=[technology::InfrastructureTechnology]
-    name=ID
+    name=ID 'is' infrastructureTechnology=[technology::InfrastructureTechnology]
     ('with' 'operation' 'environment'
         operationEnvironment=[technology::OperationEnvironment|STRING]
     )?
