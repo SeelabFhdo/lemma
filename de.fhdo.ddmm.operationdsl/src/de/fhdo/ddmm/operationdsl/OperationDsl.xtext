@@ -29,11 +29,22 @@ Container returns Container:
     'deploys' deployedServices+=ImportedMicroservice (',' deployedServices+=ImportedMicroservice)*
     '{'
         ('default' 'values' '{'
-            defaultServicePropertyValues+=ServicePropertyValue+
+            // Must not be empty
+            (
+                defaultServicePropertyValues+=ServicePropertyValue+
+                |
+                ('basic' 'endpoints' '{'
+                    defaultBasicEndpoints+=BasicEndpoint+
+                '}')
+                |
+                (
+                    defaultServicePropertyValues+=ServicePropertyValue+
 
-            ('basic' 'endpoints' '{'
-                defaultBasicEndpoints+=BasicEndpoint+
-            '}')?
+                    'basic' 'endpoints' '{'
+                        defaultBasicEndpoints+=BasicEndpoint+
+                    '}'
+                )
+            )
         '}')?
 
         deploymentSpecifications+=ServiceDeploymentSpecification*
