@@ -76,7 +76,7 @@ Operation returns Operation:
     (protocols+=ProtocolSpecification (protocols+=ProtocolSpecification)?)?
     ('@' 'endpoints' '(' endpoints+=Endpoint+ ')')?
     (notImplemented?='noimpl')? visibility=Visibility? name=ID '('
-        parameters+=Parameter? (',' parameters+=Parameter+)?
+        parameters+=Parameter? (',' parameters+=Parameter)*
     ')' ';'
 ;
 
