@@ -56,7 +56,7 @@ InfrastructureNode returns InfrastructureNode:
     ('with' 'operation' 'environment'
         operationEnvironment=[technology::OperationEnvironment|STRING]
     )?
-    'deploys' deployedServices+=ImportedMicroservice (',' deployedServices+=ImportedMicroservice)*
+    'used' 'by' deployedServices+=ImportedMicroservice (',' deployedServices+=ImportedMicroservice)*
     '{'
         ('default' 'values' '{'
             defaultServicePropertyValues+=ServicePropertyValue+
