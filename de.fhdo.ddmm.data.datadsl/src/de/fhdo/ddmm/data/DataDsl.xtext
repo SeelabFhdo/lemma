@@ -44,7 +44,7 @@ ComplexType returns ComplexType:
 
 DataStructure returns DataStructure:
     'structure' name=ID ('extends' super=[DataStructure|QualifiedName])? '{'
-        dataFields+=DataField (',' dataFields+=DataField)*
+        (dataFields+=DataField (',' dataFields+=DataField)*)?
     '}'
 ;
 

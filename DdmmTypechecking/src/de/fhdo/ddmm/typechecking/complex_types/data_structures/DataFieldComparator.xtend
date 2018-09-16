@@ -41,7 +41,7 @@ class DataFieldComparator implements Comparator<DataField> {
     /**
      * Do the actual comparison
      */
-    def compareFields(DataField field, DataField fieldToCompare) {
+    private def compareFields(DataField field, DataField fieldToCompare) {
         if (field === null || fieldToCompare === null)
             throw new NullPointerException("None of the arguments may be null")
 

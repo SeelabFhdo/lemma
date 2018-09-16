@@ -88,8 +88,8 @@ class TypeGraphNode {
         }
 
         /*
-         * Type is data structure or structured list, i.e., a list consisting of named and typed
-         * fields.
+         * Type is data structure (and hence may have data fields) or structured list, i.e., a list
+         * consisting of named and typed fields.
          */
         var EList<DataField> dataFields = null
         if (type.isStructure)

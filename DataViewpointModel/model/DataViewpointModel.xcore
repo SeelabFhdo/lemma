@@ -472,7 +472,8 @@ class PossiblyImportedComplexType {
 }
 
 /*
- * Concept for data structures, i.e., complex types consisting of named and typed fields
+ * Concept for data structures, i.e., complex types probably consisting of named and typed fields,
+ * but that may also be empty though
  */
 class DataStructure extends ComplexType {
     /**
@@ -483,7 +484,7 @@ class DataStructure extends ComplexType {
      */
 
     refers DataStructure ^super
-    contains DataField[1..*] dataFields opposite dataStructure
+    contains DataField[] dataFields opposite dataStructure
 
     /**
      * Get the effective fields of the structure considering possible direct and indirect
