@@ -275,6 +275,11 @@ class ComplexTypeChecker implements TypeCheckerI<ComplexType> {
          *     - string               - char
          *     - string               - char
          */
+        // "Receiving" (basic) side needs to have at least as much fields as the "sending" (to
+        // check) side
+        if (basicPrimitiveFields.size < toCheckPrimitiveFields.size)
+            return false
+
         val basicTypedFieldsAvailable = <DataField> newArrayList
         basicTypedFieldsAvailable.addAll(basicPrimitiveFields)
         basicTypedFieldsAvailable.sortWith(new DataFieldComparator(ORDERING.ASCENDING))
