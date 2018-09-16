@@ -228,7 +228,7 @@ class ComplexTypeChecker implements TypeCheckerI<ComplexType> {
     }
 
     /**
-     * Check compatibility of primitive types of lists of primtively typed DataFields
+     * Check compatibility of primitive types of lists of primitively typed DataFields
      */
     private def primitiveFieldsCompatible(List<DataField> basicPrimitiveFields,
         List<DataField> toCheckPrimitiveFields) {
@@ -236,7 +236,7 @@ class ComplexTypeChecker implements TypeCheckerI<ComplexType> {
          * The checking algorithm is based on two lists:
          * - The first list contains the primitively typed fields of the basic node. That is the
          *   node that may "receive" the other node, i.e., the typed field to which another field of
-         *   another type (the "to check node") gets assigned. In the list, the primtive types are
+         *   another type (the "to check node") gets assigned. In the list, the primitive types are
          *   ordered ascending, based on their sizes in bits as determined by
          *   PrimitiveType.sizeCompare(). The first list acts as an "availability list" that
          *   contains the fields being available to "receive" the remaining primitively typed fields
