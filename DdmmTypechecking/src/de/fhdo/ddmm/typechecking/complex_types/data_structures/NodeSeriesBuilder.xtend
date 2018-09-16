@@ -109,7 +109,8 @@ class NodeSeriesBuilder {
         // vehicle = car is possible).
         val mandatoryStructurePairs = buildMandatoryPairsForStructures(basicNodes, nodesToCheck)
         distinctPairSeries.addAll(
-            buildPairSeriesForType(basicNodes, nodesToCheck, [type.isStructure], mandatoryStructurePairs)
+            buildPairSeriesForType(basicNodes, nodesToCheck, [type.isStructure],
+                mandatoryStructurePairs)
         )
 
         // Nodes that represent ListTypes of a primitive
