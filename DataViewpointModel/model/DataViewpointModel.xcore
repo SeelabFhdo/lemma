@@ -369,7 +369,7 @@ abstract class ComplexType extends Type {
 
     /**
      * Flag indicating that the ComplexType instance is a ListType that holds a PrimitiveType and
-     * hence does not consist of several named and types DataFields
+     * hence does not consist of several named and typed DataFields
      */
     derived boolean isPrimitiveList get {
         if (!(this instanceof ListType))
@@ -380,7 +380,7 @@ abstract class ComplexType extends Type {
 
     /**
      * Flag indicating that the ComplexType instance is a ListType that consists of several named
-     * and types DataFields instead of a single "anonymous" PrimitiveType field
+     * and typed DataFields instead of a single "anonymous" PrimitiveType field
      */
     derived boolean isStructuredList get {
         if (!(this instanceof ListType))
