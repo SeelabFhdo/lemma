@@ -295,7 +295,7 @@ class OperationEnvironment {
      *          Ensured by: DSL validator.
      */
 
-    String name
+    String environmentName
     boolean ^default = "false"
 
     container OperationTechnology operationTechnology opposite operationEnvironments

@@ -115,7 +115,7 @@ InfrastructureTechnology returns InfrastructureTechnology:
 ;
 
 OperationEnvironment returns OperationEnvironment:
-    name=STRING (default?='default')?
+    environmentName=STRING (default?='default')?
 ;
 
 ServiceProperty returns ServiceProperty:

@@ -183,7 +183,7 @@ class OperationDslScopeProvider extends AbstractOperationDslScopeProvider {
             return IScope.NULLSCOPE
 
         return Scopes::scopeFor(operationTechnology.operationEnvironments,
-            [QualifiedName.create(name)], IScope.NULLSCOPE)
+            [QualifiedName.create(environmentName)], IScope.NULLSCOPE)
     }
 
     /**
