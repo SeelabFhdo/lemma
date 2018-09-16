@@ -210,7 +210,7 @@ final class DdmmUtils {
      *         context C1 { structure S1 { int someField } }
      *         context C2 { structure S2 { char someOtherField, C1.S1 structureS1 } }
      *     }
-     * The full qualified name of S1 is V1.C1.S1. However, when using this method to calculate its
+     * The fully qualified name of S1 is V1.C1.S1. However, when using this method to calculate its
      * relative name, C1.S1 may be used (like with field structureS1 of S2 in the example) when the
      * using data field is part of a structure in the same version, but in a different context. That
      * is, the V1 part gets removed from the FQN of S1 for structures defined in V1 contexts.
