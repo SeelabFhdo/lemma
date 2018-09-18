@@ -580,14 +580,13 @@ class ServiceDslValidator extends AbstractServiceDslValidator {
     private def checkUniqueEndpointAddresses(List<Endpoint> endpoints, String containerTypeName,
         Function<Endpoint, List<String>> getEndpointContainerNameParts) {
         /*
-         * This ensures the uniqueness check. Its key is an address prefixed by its protocol and
-         * data format if modeled. Assigned to each key is a multi-value (in the form of a map),
-         * which stores the "pure" protocol/data format name and the Endpoint instance of the
-         * address.
+         * This ensures the uniqueness check. Its key is an address prefixed by protocol and data
+         * format if modeled. Assigned to each key is a multi-value (in the form of a map), which
+         * stores the "pure" protocol/data format name and the Endpoint instance of the address.
          */
         val uniqueAddressMap = <String, Map<String, Object>> newHashMap
 
-        /* Iterate over endpoints, build map and uniqueness perform checks */
+        /* Iterate over endpoints, build map and perform uniqueness checks */
         endpoints.forEach[endpoint |
             for (i : 0..<endpoint.addresses.size) {
                 val address = endpoint.addresses.get(i)
