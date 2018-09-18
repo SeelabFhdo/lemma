@@ -15,10 +15,11 @@ import org.eclipse.xtext.naming.QualifiedName
 import de.fhdo.ddmm.operation.ImportedMicroservice
 import de.fhdo.ddmm.service.ServiceModel
 import de.fhdo.ddmm.operation.ServicePropertyValue
-import de.fhdo.ddmm.operation.BasicEndpoint
 import de.fhdo.ddmm.operation.ServiceDeploymentSpecification
 import de.fhdo.ddmm.operation.OperationNode
 import de.fhdo.ddmm.operation.InfrastructureNode
+import de.fhdo.ddmm.operation.ProtocolAndDataFormat
+import de.fhdo.ddmm.operation.BasicEndpoint
 
 /**
  * This class implements a custom scope provider for the Operation DSL.
@@ -30,6 +31,7 @@ class OperationDslScopeProvider extends AbstractOperationDslScopeProvider {
      * Build scope for a given context and a given reference
      */
     override getScope(EObject context, EReference reference) {
+        println(context + ": " + reference)
         val scope = switch (context) {
             /* Containers */
             Container: context.getScope(reference)
@@ -50,12 +52,11 @@ class OperationDslScopeProvider extends AbstractOperationDslScopeProvider {
              */
             ServicePropertyValue: context.getScope(reference)
 
-            /*
-             * Scope for basic endpoints. The scope provider will delegate the scope resolution with
-             * BasicEndpoint as the context, if its protocol feature was set. Otherwise, the context
-             * will be an instance of OperationNode (see below).
-             */
+            /* Scope for basic endpoints */
             BasicEndpoint: context.getScope(reference)
+
+            /* Scope for protocol and data format */
+            ProtocolAndDataFormat: context.getScope(reference)
 
             /* Service deployment specifications */
             ServiceDeploymentSpecification: context.getScope(reference)
@@ -122,10 +123,6 @@ class OperationDslScopeProvider extends AbstractOperationDslScopeProvider {
             /* Service properties */
             case OperationPackage::Literals.SERVICE_PROPERTY_VALUE__SERVICE_PROPERTY:
                 return operationNode.getScopeForServiceProperties()
-
-            /* Protocols */
-            case OperationPackage::Literals.BASIC_ENDPOINT__PROTOCOL:
-                return operationNode.getScopeForEndpointProtocols()
 
             /* Import of ServiceDeploymentSpecifications */
             case OperationPackage::Literals.SERVICE_DEPLOYMENT_SPECIFICATION__IMPORT:
@@ -227,15 +224,28 @@ class OperationDslScopeProvider extends AbstractOperationDslScopeProvider {
     /**
      * Build scope for basic endpoints
      */
-    private def getScope(BasicEndpoint endpoint, EReference reference) {
+    private def getScope(BasicEndpoint basicEndpoint, EReference reference) {
         switch (reference) {
             /* Protocols */
-            case OperationPackage::Literals.BASIC_ENDPOINT__PROTOCOL:
-                return endpoint.getScopeForEndpointProtocols()
+            case OperationPackage::Literals.PROTOCOL_AND_DATA_FORMAT__PROTOCOL:
+                return basicEndpoint.getScopeForEndpointProtocols()
+        }
+
+        return null
+    }
+
+    /**
+     * Build scope for protocols and data formats
+     */
+    private def getScope(ProtocolAndDataFormat protocolAndDataFormat, EReference reference) {
+        switch (reference) {
+            /* Protocols */
+            case OperationPackage::Literals.PROTOCOL_AND_DATA_FORMAT__PROTOCOL:
+                return protocolAndDataFormat.getScopeForEndpointProtocols()
 
             /* Data formats */
-            case OperationPackage::Literals.BASIC_ENDPOINT__DATA_FORMAT:
-                return endpoint.getScopeForDataFormats()
+            case OperationPackage::Literals.PROTOCOL_AND_DATA_FORMAT__DATA_FORMAT:
+                return protocolAndDataFormat.getScopeForDataFormats()
         }
 
         return null
@@ -268,16 +278,16 @@ class OperationDslScopeProvider extends AbstractOperationDslScopeProvider {
     /**
      * Build scope for endpoint data formats
      */
-    private def getScopeForDataFormats(BasicEndpoint endpoint) {
-        if (endpoint.protocol === null)
+    private def getScopeForDataFormats(ProtocolAndDataFormat protocolAndDataFormat) {
+        if (protocolAndDataFormat.protocol === null)
             return IScope.NULLSCOPE
 
         // Return scope elements, i.e., defined data formats, that exist for the protocol
-        val protocolName = endpoint.protocol.name
+        val protocolName = protocolAndDataFormat.protocol.name
         if (protocolName === null)
             return IScope.NULLSCOPE
 
-        val scopeElements = endpoint.protocol.technology.protocols
+        val scopeElements = protocolAndDataFormat.protocol.technology.protocols
             // We can use the first protocol we find, as protocol names are unique (ensured by
             // validator of Technology DSL) independent of communication type
             .findFirst[name == protocolName]
@@ -305,7 +315,7 @@ class OperationDslScopeProvider extends AbstractOperationDslScopeProvider {
                 return specification.getScopeForServiceProperties()
 
             /* Protocols */
-            case OperationPackage::Literals.BASIC_ENDPOINT__PROTOCOL:
+            case OperationPackage::Literals.PROTOCOL_AND_DATA_FORMAT__PROTOCOL:
                 return specification.getScopeForEndpointProtocols()
         }
 

@@ -70,11 +70,13 @@ InfrastructureNode returns InfrastructureNode:
     '}'
 ;
 
+ProtocolAndDataFormat returns ProtocolAndDataFormat:
+    protocol=[technology::Protocol] ('/' dataFormat=[technology::DataFormat])?
+;
 
 BasicEndpoint returns BasicEndpoint:
-    protocol=[technology::Protocol]
-    ('/' dataFormat=[technology::DataFormat])? ':'
-    addresses+=STRING (',' addresses+=STRING)* ';'
+    protocols+=ProtocolAndDataFormat (',' protocols+=ProtocolAndDataFormat)* ':'
+     addresses+=STRING (',' addresses+=STRING)* ';'
 ;
 
 ServiceDeploymentSpecification returns ServiceDeploymentSpecification:

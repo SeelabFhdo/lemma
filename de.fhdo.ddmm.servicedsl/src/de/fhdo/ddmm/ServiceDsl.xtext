@@ -113,7 +113,7 @@ ImportedProtocolAndDataFormat returns ImportedProtocolAndDataFormat:
 ;
 
 Endpoint returns Endpoint:
-    protocol=ImportedProtocolAndDataFormat ':'
+    protocols+=ImportedProtocolAndDataFormat (',' protocols+=ImportedProtocolAndDataFormat)* ':'
     addresses+=STRING (',' addresses+=STRING)* ';'
 ;
 

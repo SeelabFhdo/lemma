@@ -122,17 +122,19 @@ class OperationDslValidator extends AbstractOperationDslValidator {
      * Convenience method to check endpoint uniqueness in a list of endpoints
      */
     private def checkUniqueEndpoints(List<BasicEndpoint> endpoints) {
-        val duplicateIndex = DdmmUtils.getDuplicateIndex(endpoints,
-            [protocol.name + if (dataFormat !== null) dataFormat.formatName else ""])
-        if (duplicateIndex == -1) {
-            return
-        }
-
-        val duplicate = endpoints.get(duplicateIndex)
-        error('''Duplicate endpoint for «duplicate.protocol.name»''' +
-            '''«IF duplicate.dataFormat !== null»/«duplicate.dataFormat.formatName»«ENDIF»''',
-            duplicate, OperationPackage::Literals.BASIC_ENDPOINT__PROTOCOL,
-            duplicateIndex)
+        val protocolSet = <String> newHashSet
+        endpoints.forEach[endpoint |
+            for (i : 0..<endpoint.protocols.size) {
+                val protocolAndDataFormat = endpoint.protocols.get(i)
+                var protocolId = protocolAndDataFormat.protocol.name
+                if (protocolAndDataFormat.dataFormat !== null)
+                    protocolId += "/" + protocolAndDataFormat.dataFormat.formatName
+                val isDuplicate = !protocolSet.add(protocolId)
+                if (isDuplicate)
+                    error('''Duplicate endpoint for protocol «protocolId»''', protocolAndDataFormat,
+                        OperationPackage::Literals.PROTOCOL_AND_DATA_FORMAT__PROTOCOL, i)
+            }
+        ]
     }
 
     /**
@@ -149,14 +151,16 @@ class OperationDslValidator extends AbstractOperationDslValidator {
     }
 
     /**
-     * Warn if addresses occur more than once for different endpoints
+     * Check if addresses occur more than once for different endpoints
      */
     @Check
-    def warnNonUniqueEndpointAddressesInModel(OperationModel model) {
+    def checkNonUniqueEndpointAddressesInModel(OperationModel model) {
         val addressToEndpoint = <String, BasicEndpoint> newHashMap
 
-        /* Setup function to build warning depending on where the original endpoint is defined */
-        val Function<BasicEndpoint, String> buildWarningMessage = [
+        /*
+         * Setup function to build error message depending on where the original endpoint is defined
+         */
+        val Function<BasicEndpoint, String> buildErrorMessage = [
             // Default basic endpoint of container
             if (container !== null)
                 return "Address is also specified for basic endpoint of container " +
@@ -201,11 +205,11 @@ class OperationDslValidator extends AbstractOperationDslValidator {
                     val address = endpoint.addresses.get(n)
                     val duplicateEndpoint = addressToEndpoint.putIfAbsent(address, endpoint)
 
-                    // We do not warn if the duplicate address was detected within the same
+                    // We do not show an error if the duplicate address was detected within the same
                     // endpoint as this shall result in an error and is therefore separately checked
                     // by checkUniqueEndpointAddresses()
                     if (duplicateEndpoint !== null && duplicateEndpoint !== endpoint)
-                        warning(buildWarningMessage.apply(duplicateEndpoint), endpoint,
+                        error(buildErrorMessage.apply(duplicateEndpoint), endpoint,
                             OperationPackage::Literals.BASIC_ENDPOINT__ADDRESSES, n)
                 }
             ]
@@ -294,32 +298,42 @@ class OperationDslValidator extends AbstractOperationDslValidator {
                 .addAll(protocol.dataFormats.map[formatName])
         ]
 
-        container.defaultBasicEndpoints.forEach[
-            if (dataFormat !== null) {
-                val remainingDataFormats = protocolsWithoutDefaultEndpoint.get(protocol.name)
-                if (remainingDataFormats.size == 1)
+        container.defaultBasicEndpoints.forEach[endpoint |
+            endpoint.protocols.forEach[protocolAndDataFormat |
+                val protocol = protocolAndDataFormat.protocol
+                val dataFormat = protocolAndDataFormat.dataFormat
+                if (dataFormat !== null) {
+                    val remainingDataFormats = protocolsWithoutDefaultEndpoint.get(protocol.name)
+                    if (remainingDataFormats.size == 1)
+                        protocolsWithoutDefaultEndpoint.remove(protocol.name)
+                    else
+                        remainingDataFormats.remove(dataFormat)
+                } else
                     protocolsWithoutDefaultEndpoint.remove(protocol.name)
-                else
-                    remainingDataFormats.remove(dataFormat)
-            } else
-                protocolsWithoutDefaultEndpoint.remove(protocol.name)
+            ]
         ]
 
-        protocolsWithoutDefaultEndpoint.forEach[protocol, dataFormats | dataFormats.forEach[format |
-            container.deploymentSpecifications.forEach[
-                val specifiedByBasicEndpoint = basicEndpoints.exists[
-                    it.protocol.name == protocol &&
-                    if (it.dataFormat !== null) it.dataFormat.formatName == format else true
-                ]
+        protocolsWithoutDefaultEndpoint.forEach[protocol, dataFormats |
+            if (container.deploymentSpecifications.empty) {
+                error('''Basic endpoint for protocol «protocol» needs to be ''' +
+                    '''specified for all services''', container,
+                    OperationPackage::Literals.OPERATION_NODE__NAME)
+            }
+
+            dataFormats.forEach[format | container.deploymentSpecifications.forEach[
+                val specifiedByBasicEndpoint = !basicEndpoints.empty &&
+                    basicEndpoints.map[protocols].flatten.exists[
+                        it.protocol.name == protocol &&
+                        if (it.dataFormat !== null) it.dataFormat.formatName == format else true
+                    ]
 
                 if (!specifiedByBasicEndpoint) {
                     error('''Basic endpoint for protocol «protocol»/«format» needs to be ''' +
                         '''specified for all services''', container,
                         OperationPackage::Literals.OPERATION_NODE__NAME)
-                    return
                 }
-            ]
-        ]]
+            ]]
+        ]
     }
 
     /**

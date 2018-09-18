@@ -877,7 +877,7 @@ class Endpoint {
 
     String[1..*] addresses
 
-    contains ImportedProtocolAndDataFormat protocol
+    contains ImportedProtocolAndDataFormat[1..*] protocols
 
     container Microservice microservice opposite endpoints
     container Interface ^interface opposite endpoints

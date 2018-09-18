@@ -169,6 +169,24 @@ class ServicePropertyValue {
 }
 
 /**
+ * Concept to consolidate a protocol and data format from a given technology
+ */
+class ProtocolAndDataFormat {
+    /**
+     * Implicit Constraints:
+     *     (C1) Protocol must be one from the technology assigned to the parent operation node.
+     *          Ensured by: DSL scope provider.
+     *     (C2) Data format must be one from the technology assigned to the parent operation node
+     *          and correspond to the protocol.
+     *          Ensured by: DSL scope provider.
+     */
+    refers Protocol protocol
+    refers DataFormat[0..1] dataFormat
+
+    container BasicEndpoint endpoint opposite protocols
+}
+
+/**
  * Default and service-specific basic endpoints
  */
 class BasicEndpoint {
@@ -176,17 +194,11 @@ class BasicEndpoint {
      * Implicit Constraints:
      *     (C1) Addresses must be unique.
      *          Ensured by: DSL validator.
-     *     (C2) Protocol must be one from the technology assigned to the parent operation node.
-     *          Ensured by: DSL scope provider.
-     *     (C3) Data format must be one from the technology assigned to the parent operation node
-     *          and correspond to the protocol.
-     *          Ensured by: DSL scope provider.
      */
 
     String[1..*] addresses
 
-    refers Protocol protocol
-    refers DataFormat[0..1] dataFormat
+    contains ProtocolAndDataFormat[1..*] protocols opposite endpoint
 
     container Container ^container opposite defaultBasicEndpoints
     container InfrastructureNode infrastructureNode opposite endpoints

@@ -559,19 +559,19 @@ class ServiceDslValidator extends AbstractServiceDslValidator {
      * Convenience method to check endpoint uniqueness in a list of endpoints
      */
     private def checkUniqueEndpoints(List<Endpoint> endpoints) {
-        val duplicateIndex = DdmmUtils.getDuplicateIndex(endpoints,
-            [protocol.importedProtocol.name +
-                if (protocol.dataFormat !== null) protocol.dataFormat.formatName else ""
-            ])
-        if (duplicateIndex == -1) {
-            return
-        }
-
-        val duplicate = endpoints.get(duplicateIndex)
-        error('''Duplicate endpoint for «duplicate.protocol.importedProtocol.name»''' +
-            '''«IF duplicate.protocol.dataFormat !== null»
-                /«duplicate.protocol.dataFormat.formatName»«ENDIF»''',
-            duplicate, ServicePackage::Literals.ENDPOINT__PROTOCOL, duplicateIndex)
+        val protocolSet = <String> newHashSet
+        endpoints.forEach[endpoint |
+            for (i : 0..<endpoint.protocols.size) {
+                val protocol = endpoint.protocols.get(i)
+                var protocolId = protocol.import.name + "::" + protocol.importedProtocol.name
+                if (protocol.dataFormat !== null)
+                    protocolId += "/" + protocol.dataFormat.formatName
+                val isDuplicate = !protocolSet.add(protocolId)
+                if (isDuplicate)
+                    error('''Duplicate endpoint for protocol «protocolId»''', endpoint,
+                        ServicePackage::Literals.ENDPOINT__PROTOCOLS, i)
+            }
+        ]
     }
 
     /**
@@ -589,42 +589,44 @@ class ServiceDslValidator extends AbstractServiceDslValidator {
         /* Iterate over endpoints, build map and perform uniqueness checks */
         endpoints.forEach[endpoint |
             for (i : 0..<endpoint.addresses.size) {
-                val address = endpoint.addresses.get(i)
-                val protocol = endpoint.protocol
-                var protocolName = protocol.import.name + "::" + protocol.importedProtocol.name
-                val dataFormat = protocol.dataFormat
-                if (dataFormat !== null && dataFormat.formatName !== null)
-                    protocolName += "/" + dataFormat.formatName
-                val addressPrefixedByProtocol = protocolName + address
+                endpoint.protocols.forEach[protocol |
+                    val address = endpoint.addresses.get(i)
+                    var protocolName = protocol.import.name + "::" + protocol.importedProtocol.name
+                    val dataFormat = protocol.dataFormat
+                    if (dataFormat !== null && dataFormat.formatName !== null)
+                        protocolName += "/" + dataFormat.formatName
+                    val addressPrefixedByProtocol = protocolName + address
 
-                val valueMap = <String, Object> newHashMap
-                valueMap.put("protocol", protocolName)
-                valueMap.put("endpoint", endpoint)
-                val duplicate = uniqueAddressMap.putIfAbsent(addressPrefixedByProtocol, valueMap)
-                val duplicateEndpoint = if (duplicate !== null)
-                    duplicate.get("endpoint") as Endpoint
+                    val valueMap = <String, Object> newHashMap
+                    valueMap.put("protocol", protocolName)
+                    valueMap.put("endpoint", endpoint)
+                    val duplicate = uniqueAddressMap.putIfAbsent(addressPrefixedByProtocol, valueMap)
+                    val duplicateEndpoint = if (duplicate !== null)
+                        duplicate.get("endpoint") as Endpoint
 
-                // If a duplicate was found we first check that it's not the same endpoint as being
-                // currently iterated. That is, to prevent adding an additional error, when an
-                // endpoint has a duplicate address. This check is performed separately per
-                // endpoint.
-                if (duplicateEndpoint !== null && duplicateEndpoint !== endpoint) {
-                    val duplicateProtocolName = duplicate.get("protocol") as String
-                    val duplicateContainerNameParts = getEndpointContainerNameParts
-                        .apply(duplicateEndpoint)
-                    val currentEndpointContainerNameParts = getEndpointContainerNameParts
-                        .apply(endpoint)
-                    val relativeDuplicateName = QualifiedName.create(
-                        DdmmUtils.calculateRelativeQualifiedNameParts(
-                            duplicateEndpoint, duplicateContainerNameParts, ServiceModel,
-                            endpoint, currentEndpointContainerNameParts, ServiceModel
-                        )
-                    ).toString
+                    // If a duplicate was found we first check that it's not the same endpoint as
+                    // being currently iterated. That is, to prevent adding an additional error,
+                    // when an endpoint has a duplicate address. This check is performed separately
+                    // per endpoint.
+                    if (duplicateEndpoint !== null && duplicateEndpoint !== endpoint) {
+                        val duplicateProtocolName = duplicate.get("protocol") as String
+                        val duplicateContainerNameParts = getEndpointContainerNameParts
+                            .apply(duplicateEndpoint)
+                        val currentEndpointContainerNameParts = getEndpointContainerNameParts
+                            .apply(endpoint)
+                        val relativeDuplicateName = QualifiedName.create(
+                            DdmmUtils.calculateRelativeQualifiedNameParts(
+                                duplicateEndpoint, duplicateContainerNameParts, ServiceModel,
+                                endpoint, currentEndpointContainerNameParts, ServiceModel
+                            )
+                        ).toString
 
-                    error('''Address is already specified for protocol «duplicateProtocolName» ''' +
-                        '''on «containerTypeName» «relativeDuplicateName»''', endpoint,
-                        ServicePackage::Literals.ENDPOINT__ADDRESSES, i)
-                }
+                        error('''Address is already specified for protocol ''' +
+                            '''«duplicateProtocolName» on «containerTypeName» ''' +
+                            '''«relativeDuplicateName»''', endpoint,
+                            ServicePackage::Literals.ENDPOINT__ADDRESSES, i)
+                    }
+                ]
             }
         ]
     }
