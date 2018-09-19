@@ -580,7 +580,7 @@ class ReferredOperation {
     container Interface ^interface opposite referredOperations
 
     /**
-     * Get parts of the referered operation for creating a qualified name
+     * Get parts of the referred operation for creating a qualified name
      */
     op String[] getQualifiedNameParts() {
         if (operation.name === null || operation.name.empty)
