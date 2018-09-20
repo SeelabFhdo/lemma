@@ -309,13 +309,14 @@ class Microservice {
     /**
      * Check if microservice can extend another microservice as its super microservice
      */
-    op boolean canExtend(Microservice microservice) {
+    // TODO: Inheritance of microservices
+    /*op boolean canExtend(Microservice microservice) {
         if (microservice === null)
             return false
 
         // A microservice cannot extend itself and only microservices of the same type
         return this !== microservice && ^type == microservice.^type
-    }
+    }*/
 
     /**
      * Check if at least one of the microservice's interfaces has at least one implemented operation
