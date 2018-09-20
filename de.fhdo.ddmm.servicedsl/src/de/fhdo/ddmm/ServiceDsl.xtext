@@ -122,7 +122,7 @@ enum ExchangePattern returns ExchangePattern:
 ;
 
 enum MicroserviceType returns MicroserviceType:
-    FUNCTIONAL='functional' | INFRASTRUCTURE = 'infrastructure'
+    FUNCTIONAL='functional' | UTILITY='utility' | INFRASTRUCTURE = 'infrastructure'
 ;
 
 QualifiedNameWithAtLeastOneLevel:

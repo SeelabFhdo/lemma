@@ -75,6 +75,7 @@ class Import {
  */
 enum MicroserviceType {
     FUNCTIONAL
+    UTILITY
     INFRASTRUCTURE
 }
 
