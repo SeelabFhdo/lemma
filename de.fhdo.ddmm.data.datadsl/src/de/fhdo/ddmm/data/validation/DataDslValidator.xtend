@@ -20,7 +20,7 @@ import org.eclipse.emf.ecore.resource.Resource
 /**
  * This class contains validation rules for the Data DSL.
  *
- * @author <a href="mailto:florian.rademacher@fh-dortmund.de>Florian Rademacher</a>
+ * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
  */
 class DataDslValidator extends AbstractDataDslValidator {
     /* For debugging purposes to test the type checker. May be safely removed in the future. */

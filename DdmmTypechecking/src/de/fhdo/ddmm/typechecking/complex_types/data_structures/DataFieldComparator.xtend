@@ -6,7 +6,7 @@ import de.fhdo.ddmm.data.DataField
 /**
  * Comparator for data fields
  *
- * @author <a href="mailto:florian.rademacher@fh-dortmund.de>Florian Rademacher</a>
+ * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
  */
 class DataFieldComparator implements Comparator<DataField> {
     enum ORDERING {

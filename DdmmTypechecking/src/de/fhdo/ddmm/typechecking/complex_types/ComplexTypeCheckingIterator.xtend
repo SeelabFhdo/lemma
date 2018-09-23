@@ -10,7 +10,7 @@ import java.util.List
  * Iterator that finds the next pair of nodes, whose compatibility shall be checked by the
  * {@link ComplexTypeChecker}.
  *
- * @author <a href="mailto:florian.rademacher@fh-dortmund.de>Florian Rademacher</a>
+ * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
  */
 class ComplexTypeCheckingIterator implements Iterator<NodePair> {
     var NodePair rootPair

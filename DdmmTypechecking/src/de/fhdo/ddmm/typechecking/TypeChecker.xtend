@@ -11,7 +11,7 @@ import de.fhdo.ddmm.typechecking.technology_specific.MatrixBasedTypeChecker
  * Generic type checker that uses the corresponding TypeCheckers for the given Type instances to
  * check.
  *
- * @author <a href="mailto:florian.rademacher@fh-dortmund.de>Florian Rademacher</a>
+ * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
  */
 class TypeChecker {
     def checkTypeCompatibility(Type basicType, Type typeToCheck)

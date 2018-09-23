@@ -9,7 +9,7 @@ import org.eclipse.xtext.resource.IDefaultResourceDescriptionStrategy
  * Use this class to register components to be used at runtime / without the Equinox extension
  * registry.
  *
- * @author <a href="mailto:florian.rademacher@fh-dortmund.de>Florian Rademacher</a>
+ * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
  */
 class OperationDslRuntimeModule extends AbstractOperationDslRuntimeModule {
     /**

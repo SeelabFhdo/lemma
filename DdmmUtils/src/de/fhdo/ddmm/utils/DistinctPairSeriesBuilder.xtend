@@ -16,7 +16,7 @@ import java.util.List
  *   [[E1, E6], [E2, E5], [E3, E4]]
  * ]
  *
- * @author <a href="mailto:florian.rademacher@fh-dortmund.de>Florian Rademacher</a>
+ * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
  */
 class DistinctPairSeriesBuilder<T> {
     /**

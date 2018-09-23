@@ -17,7 +17,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
  * Represents the structure of a complex type as a directed multigraph. Each node in the graph
  * corresponds to a complex type.
  *
- * @author <a href="mailto:florian.rademacher@fh-dortmund.de>Florian Rademacher</a>
+ * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
  */
 class TypeGraph {
     /* Root node */

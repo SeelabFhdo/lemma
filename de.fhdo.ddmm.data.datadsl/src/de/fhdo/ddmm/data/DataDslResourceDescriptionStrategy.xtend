@@ -8,7 +8,7 @@ import org.eclipse.xtext.resource.IEObjectDescription
 /**
  * Custom resource description strategy for the DataDsl.
  *
- * @author <a href="mailto:florian.rademacher@fh-dortmund.de>Florian Rademacher</a>
+ * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
  */
 class DataDslResourceDescriptionStrategy extends DefaultResourceDescriptionStrategy {
     /**

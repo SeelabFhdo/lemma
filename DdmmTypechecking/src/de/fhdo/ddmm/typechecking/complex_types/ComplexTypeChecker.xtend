@@ -30,7 +30,7 @@ import de.fhdo.ddmm.technology.TechnologySpecificListType
  *   (5) Get the next pair to check from the accompanying iterator, if the root node pair's
  *       compatibility did not get decided along the way. Goto (iii)
  *
- * @author <a href="mailto:florian.rademacher@fh-dortmund.de>Florian Rademacher</a>
+ * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
  */
 class ComplexTypeChecker implements TypeCheckerI<ComplexType> {
     /**

@@ -7,7 +7,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
  *
  * See the {@link NodePair} class for a detailed explanation on the semantics and usage of series.
  *
- * @author <a href="mailto:florian.rademacher@fh-dortmund.de>Florian Rademacher</a>
+ * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
  */
 class NodeSeries {
     /* The parent node pair from which this series resulted */

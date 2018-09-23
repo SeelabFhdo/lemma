@@ -25,7 +25,7 @@ import de.fhdo.ddmm.technology.OperationTechnology
 /**
  * This class contains custom validation rules.
  *
- * @author <a href="mailto:florian.rademacher@fh-dortmund.de>Florian Rademacher</a>
+ * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
  */
 class TechnologyDslValidator extends AbstractTechnologyDslValidator {
     /**

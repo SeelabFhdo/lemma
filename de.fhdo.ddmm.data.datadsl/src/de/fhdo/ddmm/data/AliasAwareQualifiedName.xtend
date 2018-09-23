@@ -16,7 +16,7 @@ import java.util.Arrays
  * QualifiedName instance. However, this class is not used, hence obsolete and will be removed in
  * the future.
  *
- * @author <a href="mailto:florian.rademacher@fh-dortmund.de>Florian Rademacher</a>
+ * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
  */
 class AliasAwareQualifiedName extends QualifiedName {
     var AliasAwareQualifiedName lowerCase;

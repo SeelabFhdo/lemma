@@ -36,7 +36,7 @@ import de.fhdo.ddmm.technology.CommunicationType
 /**
  * This class implements a custom scope provider for the Service DSL.
  *
- * @author <a href="mailto:florian.rademacher@fh-dortmund.de>Florian Rademacher</a>
+ * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
  */
 class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
     // TODO: Inheritance of microservices

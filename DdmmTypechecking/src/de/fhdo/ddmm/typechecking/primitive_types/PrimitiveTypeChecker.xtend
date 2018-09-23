@@ -9,7 +9,7 @@ import de.fhdo.ddmm.typechecking.TypecheckingUtils
  * Simple TypeChecker implementation for PrimitiveTypes and TechnologySpecificPrimitiveTypes that
  * builds upon the metamodel's PrimitiveType compatibility check.
  *
- * @author <a href="mailto:florian.rademacher@fh-dortmund.de>Florian Rademacher</a>
+ * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
  */
 class PrimitiveTypeChecker implements TypeCheckerI<PrimitiveType> {
     /**

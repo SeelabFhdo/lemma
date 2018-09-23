@@ -22,7 +22,7 @@ import de.fhdo.ddmm.technology.TechnologyPackage
 /**
  * This class implements a custom scope provider for the Technology DSL.
  *
- * @author <a href="mailto:florian.rademacher@fh-dortmund.de>Florian Rademacher</a>
+ * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
  */
 class TechnologyDslScopeProvider extends AbstractTechnologyDslScopeProvider {
     /**

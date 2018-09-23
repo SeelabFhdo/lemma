@@ -11,7 +11,7 @@ import de.fhdo.ddmm.data.ComplexType
 /**
  * This metamodel represents the Service Modeling Viewpoint, which is used for defining services.
  *
- * @author <a href="mailto:florian.rademacher@fh-dortmund.de>Florian Rademacher</a>
+ * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
  */
 class ServiceModel {
     contains Import[] imports opposite serviceModel

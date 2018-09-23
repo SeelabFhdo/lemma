@@ -39,7 +39,7 @@ import java.util.Map
 /**
  * This class contains custom validation rules for service models.
  *
- * @author <a href="mailto:florian.rademacher@fh-dortmund.de>Florian Rademacher</a>
+ * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
  */
 class ServiceDslValidator extends AbstractServiceDslValidator {
     @Inject

@@ -9,7 +9,7 @@ import de.fhdo.ddmm.data.Type
  * Root model concept, which represents all concept related to a certain technology that maps
  * microservices to technology
  *
- * @author <a href="mailto:florian.rademacher@fh-dortmund.de>Florian Rademacher</a>
+ * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
  */
 class Technology {
     /**

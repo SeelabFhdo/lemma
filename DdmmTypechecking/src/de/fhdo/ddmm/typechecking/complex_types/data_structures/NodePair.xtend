@@ -5,7 +5,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
 /**
  * Represents an ordered pair of TypeGraphNodes.
  *
- * @author <a href="mailto:florian.rademacher@fh-dortmund.de>Florian Rademacher</a>
+ * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
  *
  * NodePairs and NodeSeries may represent their own kind of "graph", which has the following
  * properties:

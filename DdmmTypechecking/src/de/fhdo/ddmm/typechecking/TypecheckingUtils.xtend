@@ -12,7 +12,7 @@ import de.fhdo.ddmm.technology.TechnologySpecificListType
  * This class defines _static_ utility methods to be used across DSLs' implementations for generic
  * type and typechecking tasks.
  *
- * @author <a href="mailto:florian.rademacher@fh-dortmund.de>Florian Rademacher</a>
+ * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
  */
 class TypecheckingUtils {
     /**

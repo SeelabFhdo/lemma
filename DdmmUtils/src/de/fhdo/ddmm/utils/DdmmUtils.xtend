@@ -21,7 +21,7 @@ import org.eclipse.xtext.scoping.Scopes
 /**
  * This class collects _static_ utility methods to be used across DSLs' implementations.
  *
- * @author <a href="mailto:florian.rademacher@fh-dortmund.de>Florian Rademacher</a>
+ * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
  */
 final class DdmmUtils {
     /**

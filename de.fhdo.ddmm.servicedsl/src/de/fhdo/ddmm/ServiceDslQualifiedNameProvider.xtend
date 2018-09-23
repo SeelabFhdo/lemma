@@ -7,7 +7,7 @@ import org.eclipse.xtext.naming.QualifiedName
 /**
  * Custom qualified name provider.
  *
- * @author <a href="mailto:florian.rademacher@fh-dortmund.de>Florian Rademacher</a>
+ * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
  */
 class ServiceDslQualifiedNameProvider extends DefaultDeclarativeQualifiedNameProvider {
     /**

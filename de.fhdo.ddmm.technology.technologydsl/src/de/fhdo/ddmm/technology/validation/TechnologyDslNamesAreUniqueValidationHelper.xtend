@@ -17,7 +17,7 @@ import de.fhdo.ddmm.technology.ServiceProperty
  * Implementation of NamesAreUniqueValidationHelper to produce custom error messages for duplicated
  * names in a technology definition.
  *
- * @author <a href="mailto:florian.rademacher@fh-dortmund.de>Florian Rademacher</a>
+ * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
  */
 class TechnologyDslNamesAreUniqueValidationHelper extends NamesAreUniqueValidationHelper {
     /**

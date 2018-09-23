@@ -10,7 +10,7 @@ import de.fhdo.ddmm.data.DataPackage
  * Implementation of NamesAreUniqueValidationHelper to produce custom error messages for duplicated
  * names in a data model.
  *
- * @author <a href="mailto:florian.rademacher@fh-dortmund.de>Florian Rademacher</a>
+ * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
  */
 class DataDslNamesAreUniqueValidationHelper extends NamesAreUniqueValidationHelper {
     /**

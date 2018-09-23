@@ -8,7 +8,7 @@ import java.text.ParseException
  * This metamodel represents the Data Modeling Viewpoint, which is mainly used for defining custom
  * structure and list types.
  *
- * @author <a href="mailto:florian.rademacher@fh-dortmund.de>Florian Rademacher</a>
+ * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
  */
 class DataModel {
     /**

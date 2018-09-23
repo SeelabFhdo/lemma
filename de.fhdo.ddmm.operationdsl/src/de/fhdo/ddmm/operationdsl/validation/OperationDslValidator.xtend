@@ -22,7 +22,7 @@ import com.google.common.base.Function
 /**
  * This class contains validation rules for the Operation DSL.
  *
- * @author <a href="mailto:florian.rademacher@fh-dortmund.de>Florian Rademacher</a>
+ * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
  */
 class OperationDslValidator extends AbstractOperationDslValidator {
     /**

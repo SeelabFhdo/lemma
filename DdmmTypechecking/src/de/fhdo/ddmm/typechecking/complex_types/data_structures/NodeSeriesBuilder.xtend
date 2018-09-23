@@ -13,7 +13,7 @@ import de.fhdo.ddmm.data.DataStructure
  * See the {@link NodePair} class for a detailed explanation on the semantics and usage of series
  * and their relation to node pairs.
  *
- * @author <a href="mailto:florian.rademacher@fh-dortmund.de>Florian Rademacher</a>
+ * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
  */
 class NodeSeriesBuilder {
     /**

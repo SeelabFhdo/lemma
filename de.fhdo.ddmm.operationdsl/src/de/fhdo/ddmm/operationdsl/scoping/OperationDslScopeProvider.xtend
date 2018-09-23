@@ -24,7 +24,7 @@ import de.fhdo.ddmm.operation.BasicEndpoint
 /**
  * This class implements a custom scope provider for the Operation DSL.
  *
- * @author <a href="mailto:florian.rademacher@fh-dortmund.de>Florian Rademacher</a>
+ * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
  */
 class OperationDslScopeProvider extends AbstractOperationDslScopeProvider {
     /**

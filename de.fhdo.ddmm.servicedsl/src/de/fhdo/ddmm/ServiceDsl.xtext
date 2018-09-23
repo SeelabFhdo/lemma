@@ -1,5 +1,5 @@
 /**
- * @author <a href="mailto:florian.rademacher@fh-dortmund.de>Florian Rademacher</a>
+ * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
  */
 grammar de.fhdo.ddmm.ServiceDsl with de.fhdo.ddmm.technology.TechnologyDsl
 

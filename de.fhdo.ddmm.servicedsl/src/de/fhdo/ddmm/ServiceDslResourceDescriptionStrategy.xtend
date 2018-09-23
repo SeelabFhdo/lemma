@@ -9,7 +9,7 @@ import de.fhdo.ddmm.service.Import
 /**
  * Custom resource description strategy for the ServiceDsl.
  *
- * @author <a href="mailto:florian.rademacher@fh-dortmund.de>Florian Rademacher</a>
+ * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
  */
 class ServiceDslResourceDescriptionStrategy extends DefaultResourceDescriptionStrategy {
     /**

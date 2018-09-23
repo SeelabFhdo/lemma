@@ -12,7 +12,7 @@ import org.eclipse.xtext.naming.QualifiedName
  * Type checker for technology-specific types, whose compatibility might be defined in a
  * compatibility matrix.
  *
- * @author <a href="mailto:florian.rademacher@fh-dortmund.de>Florian Rademacher</a>
+ * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
  */
 class MatrixBasedTypeChecker implements TypeCheckerI<Type> {
     /**

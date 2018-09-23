@@ -14,7 +14,7 @@ import de.fhdo.ddmm.technology.ServiceProperty
  * This metamodel represents the Operation Modeling Viewpoint, which is used for specifying
  * services' operation.
  *
- * @author <a href="mailto:florian.rademacher@fh-dortmund.de>Florian Rademacher</a>
+ * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
  */
 class OperationModel {
     /**

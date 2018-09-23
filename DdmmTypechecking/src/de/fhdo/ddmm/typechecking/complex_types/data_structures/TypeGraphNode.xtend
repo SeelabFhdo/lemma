@@ -13,7 +13,7 @@ import de.fhdo.ddmm.typechecking.complex_types.data_structures.DataFieldComparat
 /**
  * Represents a node of a TypeGraph.
  *
- * @author <a href="mailto:florian.rademacher@fh-dortmund.de>Florian Rademacher</a>
+ * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
  */
 class TypeGraphNode {
     /* Complex type of the node */

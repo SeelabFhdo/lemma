@@ -7,7 +7,7 @@ import java.util.List
  * list [5, 6, 7, 8, 9] and a window size 3. When a caller retrieves the window number 4 from the
  * list leveraging this list class, the result will be [8, 9, 5].
  *
- * @author <a href="mailto:florian.rademacher@fh-dortmund.de>Florian Rademacher</a>
+ * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
  */
 class RotatingWindowList<T> {
     var List<T> list

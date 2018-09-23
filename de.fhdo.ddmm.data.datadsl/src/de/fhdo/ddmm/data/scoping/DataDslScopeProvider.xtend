@@ -16,7 +16,7 @@ import de.fhdo.ddmm.data.Context
 /**
  * Scope provider for data models.
  *
- * @author <a href="mailto:florian.rademacher@fh-dortmund.de>Florian Rademacher</a>
+ * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
  */
 class DataDslScopeProvider extends AbstractDataDslScopeProvider {
     /**
