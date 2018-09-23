@@ -29,8 +29,8 @@ Microservice returns Microservice:
     ('@' 'technology' '(' technology=[Import] ')')?
     (protocols+=ProtocolSpecification (protocols+=ProtocolSpecification)?)?
     ('@' 'endpoints' '(' endpoints+=Endpoint+ ')')?
-    type=MicroserviceType
     visibility=Visibility?
+    type=MicroserviceType
     'microservice' name=QualifiedNameWithAtLeastOneLevel ('version' version=ID)?
     // TODO: Inheritance of microservices
     //('extends' super=[Microservice|QualifiedNameWithAtLeastOneLevel])?
