@@ -31,7 +31,6 @@ class OperationDslScopeProvider extends AbstractOperationDslScopeProvider {
      * Build scope for a given context and a given reference
      */
     override getScope(EObject context, EReference reference) {
-        println(context + ": " + reference)
         val scope = switch (context) {
             /* Containers */
             Container: context.getScope(reference)
