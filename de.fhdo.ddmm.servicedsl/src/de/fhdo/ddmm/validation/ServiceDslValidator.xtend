@@ -173,7 +173,7 @@ class ServiceDslValidator extends AbstractServiceDslValidator {
             return
         }
 
-        if (technologyModel.primitiveTypes.empty || technologyModel.protocols.empty)
+        if (technologyModel.primitiveTypes.empty && technologyModel.protocols.empty)
             error("Technology does not specify primitive types, protocols, or both",
                 microservice, ServicePackage::Literals.MICROSERVICE__TECHNOLOGY)
     }
