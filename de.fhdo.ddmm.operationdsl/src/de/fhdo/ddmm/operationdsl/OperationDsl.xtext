@@ -30,14 +30,14 @@ Container returns Container:
         ('default' 'values' '{'
             // Must not be empty
             (
-                defaultServicePropertyValues+=ServicePropertyValue+
+                defaultServicePropertyValues+=PropertyValueAssignment+
                 |
                 ('basic' 'endpoints' '{'
                     defaultBasicEndpoints+=BasicEndpoint+
                 '}')
                 |
                 (
-                    defaultServicePropertyValues+=ServicePropertyValue+
+                    defaultServicePropertyValues+=PropertyValueAssignment+
 
                     'basic' 'endpoints' '{'
                         defaultBasicEndpoints+=BasicEndpoint+
@@ -59,7 +59,7 @@ InfrastructureNode returns InfrastructureNode:
     'used' 'by' deployedServices+=ImportedMicroservice (',' deployedServices+=ImportedMicroservice)*
     '{'
         ('default' 'values' '{'
-            defaultServicePropertyValues+=ServicePropertyValue+
+            defaultServicePropertyValues+=PropertyValueAssignment+
         '}')?
 
         ('endpoints' '{'
@@ -82,7 +82,7 @@ BasicEndpoint returns BasicEndpoint:
 ServiceDeploymentSpecification returns ServiceDeploymentSpecification:
     ^import=[service::Import] '::' service=[ImportedMicroservice|QualifiedNameWithAtLeastOneLevel]
     '{'
-        servicePropertyValues+=ServicePropertyValue*
+        servicePropertyValues+=PropertyValueAssignment*
         ('basic' 'endpoints' '{'
             basicEndpoints+=BasicEndpoint+
         '}')?
@@ -94,6 +94,6 @@ ImportedMicroservice returns ImportedMicroservice:
     microservice=[service::Microservice|QualifiedNameWithAtLeastOneLevel]
 ;
 
-ServicePropertyValue returns ServicePropertyValue:
-    serviceProperty=[technology::ServiceProperty] '=' value=PrimitiveValue
+PropertyValueAssignment returns technology::TechnologySpecificPropertyValueAssignment:
+    property=[technology::TechnologySpecificProperty] '=' value=PrimitiveValue
 ;

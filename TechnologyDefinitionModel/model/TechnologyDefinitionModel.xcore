@@ -279,7 +279,7 @@ abstract class OperationTechnology {
     String name
 
     contains OperationEnvironment[1..*] operationEnvironments opposite operationTechnology
-    contains ServiceProperty[] serviceProperties opposite operationTechnology
+    contains TechnologySpecificProperty[] serviceProperties opposite operationTechnology
 }
 
 /**
@@ -302,9 +302,9 @@ class OperationEnvironment {
 }
 
 /**
- * A property of an operation technology that may be set per associated service
+ * A property, e.g., of an operation technology that may be set per associated service or an aspect
  */
-class ServiceProperty {
+class TechnologySpecificProperty {
     /**
      * Implicit Constraints:
      *     (C1) A mandatory property may not have a default value.
@@ -322,6 +322,20 @@ class ServiceProperty {
 
     contains PrimitiveType ^type
     contains PrimitiveValue[0..1] defaultValue
+}
+
+/**
+ * Value assignment to a property
+ */
+class TechnologySpecificPropertyValueAssignment {
+    /**
+     * Implicit Constraints:
+     *     (C1) Assigned value must match property type.
+     *          Ensured by: DSL validator.
+     */
+
+    refers TechnologySpecificProperty property
+    contains PrimitiveValue value
 }
 
 /**

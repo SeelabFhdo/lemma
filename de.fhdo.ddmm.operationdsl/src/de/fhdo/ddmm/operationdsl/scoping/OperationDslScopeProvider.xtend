@@ -14,12 +14,13 @@ import de.fhdo.ddmm.service.Import
 import org.eclipse.xtext.naming.QualifiedName
 import de.fhdo.ddmm.operation.ImportedMicroservice
 import de.fhdo.ddmm.service.ServiceModel
-import de.fhdo.ddmm.operation.ServicePropertyValue
 import de.fhdo.ddmm.operation.ServiceDeploymentSpecification
 import de.fhdo.ddmm.operation.OperationNode
 import de.fhdo.ddmm.operation.InfrastructureNode
 import de.fhdo.ddmm.operation.ProtocolAndDataFormat
 import de.fhdo.ddmm.operation.BasicEndpoint
+import de.fhdo.ddmm.technology.TechnologySpecificPropertyValueAssignment
+import de.fhdo.ddmm.technology.TechnologyPackage
 
 /**
  * This class implements a custom scope provider for the Operation DSL.
@@ -46,10 +47,11 @@ class OperationDslScopeProvider extends AbstractOperationDslScopeProvider {
 
             /*
              * Scope for service property values. The scope provider will delegate the scope
-             * resolution with ServicePropertyValue as the context, if its serviceProperty feature
-             * was set. Otherwise, the context will be an instance of OperationNode (see below).
+             * resolution with TechnologySpecificPropertyValueAssignment as the context, if its
+             * property feature was set. Otherwise, the context will be an instance of OperationNode
+             * (see below).
              */
-            ServicePropertyValue: context.getScope(reference)
+            TechnologySpecificPropertyValueAssignment: context.getScope(reference)
 
             /* Scope for basic endpoints */
             BasicEndpoint: context.getScope(reference)
@@ -120,7 +122,8 @@ class OperationDslScopeProvider extends AbstractOperationDslScopeProvider {
                 return operationNode.getScopeForImportsOfType(ServiceModel)
 
             /* Service properties */
-            case OperationPackage::Literals.SERVICE_PROPERTY_VALUE__SERVICE_PROPERTY:
+            case TechnologyPackage::Literals
+                .TECHNOLOGY_SPECIFIC_PROPERTY_VALUE_ASSIGNMENT__PROPERTY:
                 return operationNode.getScopeForServiceProperties()
 
             /* Import of ServiceDeploymentSpecifications */
@@ -310,7 +313,8 @@ class OperationDslScopeProvider extends AbstractOperationDslScopeProvider {
                 return specification.getScopeForServiceDeploymentServices()
 
             /* Service properties */
-            case OperationPackage::Literals.SERVICE_PROPERTY_VALUE__SERVICE_PROPERTY:
+            case TechnologyPackage::Literals
+                .TECHNOLOGY_SPECIFIC_PROPERTY_VALUE_ASSIGNMENT__PROPERTY:
                 return specification.getScopeForServiceProperties()
 
             /* Protocols */
@@ -343,9 +347,11 @@ class OperationDslScopeProvider extends AbstractOperationDslScopeProvider {
     /**
      * Build scope for service property values
      */
-    private def getScope(ServicePropertyValue servicePropertyValue, EReference reference) {
+    private def getScope(TechnologySpecificPropertyValueAssignment servicePropertyValue,
+        EReference reference) {
         switch (reference) {
-            case OperationPackage::Literals.SERVICE_PROPERTY_VALUE__SERVICE_PROPERTY:
+            case TechnologyPackage::Literals
+                .TECHNOLOGY_SPECIFIC_PROPERTY_VALUE_ASSIGNMENT__PROPERTY:
                 return servicePropertyValue.getScopeForServiceProperties()
         }
     }

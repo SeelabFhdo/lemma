@@ -1,6 +1,5 @@
 package de.fhdo.ddmm.operation
 
-import de.fhdo.ddmm.data.PrimitiveValue
 import de.fhdo.ddmm.service.Import
 import de.fhdo.ddmm.service.Microservice
 import de.fhdo.ddmm.technology.DataFormat
@@ -8,7 +7,7 @@ import de.fhdo.ddmm.technology.DeploymentTechnology
 import de.fhdo.ddmm.technology.InfrastructureTechnology
 import de.fhdo.ddmm.technology.OperationEnvironment
 import de.fhdo.ddmm.technology.Protocol
-import de.fhdo.ddmm.technology.ServiceProperty
+import de.fhdo.ddmm.technology.TechnologySpecificPropertyValueAssignment
 
 /**
  * This metamodel represents the Operation Modeling Viewpoint, which is used for specifying
@@ -43,7 +42,7 @@ enum ImportType {
 abstract class OperationNode {
     /**
      * Implicit Constraints:
-     *     (C1) Mandatory service properties service properties need to have values assigned.
+     *     (C1) Mandatory service properties need to have values assigned.
      *          Ensured by: DSL validator.
      *     (C2) Depending on the concrete type of the operation node, service properties must
      *          correspond to those defined in the deployment technology (for containers) or the
@@ -68,7 +67,7 @@ abstract class OperationNode {
     refers Import technology
     refers OperationEnvironment[0..1] operationEnvironment
     contains ImportedMicroservice[1..*] deployedServices opposite operationNode
-    contains ServicePropertyValue[] defaultServicePropertyValues opposite operationNode
+    contains TechnologySpecificPropertyValueAssignment[] defaultServicePropertyValues
     contains ServiceDeploymentSpecification[] deploymentSpecifications opposite operationNode
 }
 
@@ -145,27 +144,10 @@ class ServiceDeploymentSpecification {
 
     refers Import ^import
     refers ImportedMicroservice service
-    contains ServicePropertyValue[] servicePropertyValues opposite deploymentSpecification
+    contains TechnologySpecificPropertyValueAssignment[] servicePropertyValues
     contains BasicEndpoint[] basicEndpoints opposite deploymentSpecification
 
     container OperationNode operationNode opposite deploymentSpecifications
-}
-
-/**
- * Value assignment to a service property of a deployment specification
- */
-class ServicePropertyValue {
-    /**
-     * Implicit Constraints:
-     *     (C1) Assigned value must match service property type.
-     *          Ensured by: DSL validator.
-     */
-
-    refers ServiceProperty serviceProperty
-    contains PrimitiveValue value
-
-    container OperationNode operationNode opposite defaultServicePropertyValues
-    container ServiceDeploymentSpecification deploymentSpecification opposite servicePropertyValues
 }
 
 /**

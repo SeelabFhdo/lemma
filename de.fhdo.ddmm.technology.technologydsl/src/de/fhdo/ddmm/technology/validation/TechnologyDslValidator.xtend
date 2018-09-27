@@ -18,7 +18,7 @@ import de.fhdo.ddmm.technology.TechnologyImport
 import de.fhdo.ddmm.utils.DdmmUtils
 import de.fhdo.ddmm.technology.PossiblyImportedTechnologySpecificType
 import org.eclipse.xtext.EcoreUtil2
-import de.fhdo.ddmm.technology.ServiceProperty
+import de.fhdo.ddmm.technology.TechnologySpecificProperty
 import de.fhdo.ddmm.data.PrimitiveValue
 import de.fhdo.ddmm.technology.OperationTechnology
 
@@ -551,14 +551,14 @@ class TechnologyDslValidator extends AbstractTechnologyDslValidator {
     }
 
     /**
-     * Check that the assigned default value of a service property matches its type
+     * Check that the assigned default value of a technology-specific property matches its type
      */
     @Check
     def checkDefaultValueType(PrimitiveValue defaultValue) {
-        val serviceProperty = EcoreUtil2.getContainerOfType(defaultValue, ServiceProperty)
-        if (!defaultValue.isOfType(serviceProperty.type))
-            error('''Value is not of type «serviceProperty.type.typeName» ''', serviceProperty,
-                TechnologyPackage::Literals.SERVICE_PROPERTY__DEFAULT_VALUE)
+        val property = EcoreUtil2.getContainerOfType(defaultValue, TechnologySpecificProperty)
+        if (!defaultValue.isOfType(property.type))
+            error('''Value is not of type «property.type.typeName» ''', property,
+                TechnologyPackage::Literals.TECHNOLOGY_SPECIFIC_PROPERTY__DEFAULT_VALUE)
     }
 
     /**
@@ -603,7 +603,7 @@ class TechnologyDslValidator extends AbstractTechnologyDslValidator {
     }
 
     /**
-     * Check uniqueness of service properties names in an operation technology
+     * Check uniqueness of service properties' names in an operation technology
      */
     @Check
     def checkServicePropertiesUniqueNames(OperationTechnology operationTechnology) {
@@ -612,7 +612,7 @@ class TechnologyDslValidator extends AbstractTechnologyDslValidator {
         if (duplicateIndex > -1) {
             val duplicateProperty = serviceProperties.get(duplicateIndex)
             error('''Duplicate service property «duplicateProperty.name»''',
-                duplicateProperty, TechnologyPackage::Literals.SERVICE_PROPERTY__NAME)
+                duplicateProperty, TechnologyPackage::Literals.TECHNOLOGY_SPECIFIC_PROPERTY__NAME)
         }
     }
 }

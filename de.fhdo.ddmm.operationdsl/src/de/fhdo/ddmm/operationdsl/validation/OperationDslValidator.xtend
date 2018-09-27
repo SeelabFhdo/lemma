@@ -3,7 +3,6 @@ package de.fhdo.ddmm.operationdsl.validation
 import org.eclipse.xtext.validation.Check
 import de.fhdo.ddmm.operation.OperationModel
 import de.fhdo.ddmm.operation.OperationPackage
-import de.fhdo.ddmm.operation.ServicePropertyValue
 import de.fhdo.ddmm.operation.Container
 import java.util.List
 import de.fhdo.ddmm.utils.DdmmUtils
@@ -18,6 +17,8 @@ import de.fhdo.ddmm.service.Microservice
 import de.fhdo.ddmm.operation.ImportedMicroservice
 import de.fhdo.ddmm.service.ServicePackage
 import com.google.common.base.Function
+import de.fhdo.ddmm.technology.TechnologySpecificPropertyValueAssignment
+import de.fhdo.ddmm.technology.TechnologyPackage
 
 /**
  * This class contains validation rules for the Operation DSL.
@@ -55,12 +56,12 @@ class OperationDslValidator extends AbstractOperationDslValidator {
      * Check that the assigned value of a service property matches its type
      */
     @Check
-    def checkDefaultValueType(ServicePropertyValue propertyValue) {
-        val serviceProperty = propertyValue.serviceProperty
+    def checkDefaultValueType(TechnologySpecificPropertyValueAssignment propertyValue) {
+        val serviceProperty = propertyValue.property
         val servicePropertyType = serviceProperty.type
         if (!propertyValue.value.isOfType(servicePropertyType))
             error('''Value is not of type «servicePropertyType.typeName» ''', propertyValue,
-                OperationPackage::Literals.SERVICE_PROPERTY_VALUE__VALUE)
+                TechnologyPackage::Literals.TECHNOLOGY_SPECIFIC_PROPERTY_VALUE_ASSIGNMENT__VALUE)
     }
 
     /**
@@ -83,14 +84,15 @@ class OperationDslValidator extends AbstractOperationDslValidator {
      * Convenience method to check uniqueness of service property values in a list of service
      * property values
      */
-    private def checkServicePropertiesUniqueNames(List<ServicePropertyValue> propertyValues) {
-        val duplicateIndex = DdmmUtils.getDuplicateIndex(propertyValues, [serviceProperty.name])
+    private def checkServicePropertiesUniqueNames(
+        List<TechnologySpecificPropertyValueAssignment> propertyValues) {
+        val duplicateIndex = DdmmUtils.getDuplicateIndex(propertyValues, [property.name])
         if (duplicateIndex > -1) {
             val duplicatePropertyValue = propertyValues.get(duplicateIndex)
-            val duplicateProperty = duplicatePropertyValue.serviceProperty
+            val duplicateProperty = duplicatePropertyValue.property
             error('''Duplicate value assigment to service property «duplicateProperty.name»''',
                 duplicatePropertyValue,
-                OperationPackage::Literals.SERVICE_PROPERTY_VALUE__SERVICE_PROPERTY)
+                TechnologyPackage::Literals.TECHNOLOGY_SPECIFIC_PROPERTY_VALUE_ASSIGNMENT__PROPERTY)
         }
     }
 
@@ -237,7 +239,7 @@ class OperationDslValidator extends AbstractOperationDslValidator {
             .filter[technologyProperty |
                 technologyProperty.mandatory && !operationNode.defaultServicePropertyValues
                     .exists[defaultProperty |
-                        defaultProperty.serviceProperty.name == technologyProperty.name
+                        defaultProperty.property.name == technologyProperty.name
                     ]
             ]
 
@@ -259,7 +261,7 @@ class OperationDslValidator extends AbstractOperationDslValidator {
         // Check for all existing deployment specifications if mandatory value is set
         mandatoryNonDefaultProperties.forEach[property |
             operationNode.deploymentSpecifications.forEach[
-                if (!servicePropertyValues.exists[serviceProperty.name == property.name]) {
+                if (!servicePropertyValues.exists[property.name == property.name]) {
                     error('''All deployed services must specify a value for mandatory property '''+
                         '''«property.name»''', operationNode,
                         OperationPackage::Literals.OPERATION_NODE__NAME)

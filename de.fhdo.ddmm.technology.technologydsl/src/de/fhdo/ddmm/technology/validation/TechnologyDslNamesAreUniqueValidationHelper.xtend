@@ -11,7 +11,7 @@ import org.eclipse.xtext.validation.ValidationMessageAcceptor
 import java.util.Map
 import org.eclipse.xtext.naming.QualifiedName
 import de.fhdo.ddmm.technology.OperationEnvironment
-import de.fhdo.ddmm.technology.ServiceProperty
+import de.fhdo.ddmm.technology.TechnologySpecificPropertyValueAssignment
 
 /**
  * Implementation of NamesAreUniqueValidationHelper to produce custom error messages for duplicated
@@ -48,10 +48,10 @@ class TechnologyDslNamesAreUniqueValidationHelper extends NamesAreUniqueValidati
          *                              environments' names should be unique for each concrete
          *                              instance of an OperationTechnology, i.e.,
          *                              DeploymentTechnology and InfrastructureTechnology.
-         *      - ServiceProperty: ditto
+         *      - TechnologySpecificPropertyValueAssignment: ditto
          */
         if (descriptionObject instanceof OperationEnvironment ||
-            descriptionObject instanceof ServiceProperty) {
+            descriptionObject instanceof TechnologySpecificPropertyValueAssignment) {
             return
         }
 

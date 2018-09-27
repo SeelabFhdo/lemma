@@ -97,7 +97,7 @@ DeploymentTechnology returns DeploymentTechnology:
             ';'
 
         ('service' 'properties' '{'
-            serviceProperties+=ServiceProperty+
+            serviceProperties+=TechnologySpecificProperty+
         '}')?
     '}'
 ;
@@ -109,7 +109,7 @@ InfrastructureTechnology returns InfrastructureTechnology:
             ';'
 
         ('service' 'properties' '{'
-            serviceProperties+=ServiceProperty+
+            serviceProperties+=TechnologySpecificProperty+
         '}')?
     '}'
 ;
@@ -118,7 +118,7 @@ OperationEnvironment returns OperationEnvironment:
     environmentName=STRING (default?='default')?
 ;
 
-ServiceProperty returns ServiceProperty:
+TechnologySpecificProperty returns TechnologySpecificProperty:
     type=PrimitiveType name=ID
     ('=' defaultValue=PrimitiveValue | mandatory?='mandatory')?
     ';'
