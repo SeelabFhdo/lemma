@@ -3,6 +3,7 @@ package de.fhdo.ddmm.service
 import de.fhdo.ddmm.data.PrimitiveType
 import de.fhdo.ddmm.data.Type
 import de.fhdo.ddmm.technology.CommunicationType
+import de.fhdo.ddmm.technology.ExchangePattern
 import de.fhdo.ddmm.technology.Protocol
 import de.fhdo.ddmm.technology.DataFormat
 import de.fhdo.ddmm.technology.TechnologySpecificPrimitiveType
@@ -592,15 +593,6 @@ class ReferredOperation {
         nameParts.addAll(operation.name)
         nameParts.asEList
     }
-}
-
-/**
- * Exchange pattern for parameters
- */
-enum ExchangePattern {
-    IN
-    OUT
-    INOUT
 }
 
 class Parameter {

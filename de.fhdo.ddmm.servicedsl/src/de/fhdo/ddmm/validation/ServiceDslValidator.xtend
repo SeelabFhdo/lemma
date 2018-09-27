@@ -17,7 +17,7 @@ import de.fhdo.ddmm.ServiceDslQualifiedNameProvider
 import com.google.inject.Inject
 import de.fhdo.ddmm.service.PossiblyImportedOperation
 import de.fhdo.ddmm.service.PossiblyImportedInterface
-import de.fhdo.ddmm.service.ExchangePattern
+import de.fhdo.ddmm.technology.ExchangePattern
 import de.fhdo.ddmm.typechecking.TypeChecker
 import de.fhdo.ddmm.typechecking.TypesNotCompatibleException
 import org.eclipse.xtext.naming.QualifiedName

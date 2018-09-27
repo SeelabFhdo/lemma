@@ -117,10 +117,6 @@ Endpoint returns Endpoint:
     addresses+=STRING (',' addresses+=STRING)* ';'
 ;
 
-enum ExchangePattern returns ExchangePattern:
-    IN='in' | OUT='out' | INOUT='inout'
-;
-
 enum MicroserviceType returns MicroserviceType:
     FUNCTIONAL='functional' | UTILITY='utility' | INFRASTRUCTURE = 'infrastructure'
 ;

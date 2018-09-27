@@ -64,6 +64,15 @@ class TechnologyImport {
 }
 
 /**
+ * Exchange patterns
+ */
+enum ExchangePattern {
+    IN
+    OUT
+    INOUT
+}
+
+/**
  * Possible types of communication
  */
 enum CommunicationType {

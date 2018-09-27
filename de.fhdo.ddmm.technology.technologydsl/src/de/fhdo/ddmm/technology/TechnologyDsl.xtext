@@ -47,6 +47,10 @@ Protocol returns Protocol:
     ';'
 ;
 
+enum ExchangePattern returns ExchangePattern:
+    IN='in' | OUT='out' | INOUT='inout'
+;
+
 enum CommunicationType returns CommunicationType:
     SYNCHRONOUS='sync' | ASYNCHRONOUS='async'
 ;
