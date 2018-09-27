@@ -719,7 +719,7 @@ class DataField {
 }
 
 /**
- * Primitive type value. In general, there are four "kinds" of values supported by the metamodel:
+ * Primitive type value. In general, there are three "kinds" of values supported by the metamodel:
  *      (i) Numbers: Comprises values of primitive types byte, short, integer, long, float, and
  *                   double.
  *      (ii) Strings: Comprises values of primitive types character, string, and date.
