@@ -366,7 +366,7 @@ class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
     }
 
     /**
-     * Build scope for imported protocols used to annotate microservices, interface, or
+     * Build scope for imported protocols used to annotate microservices, interfaces, or
      * operations
      */
     private def getScope(ImportedProtocolAndDataFormat importedProtocol, EReference reference) {
