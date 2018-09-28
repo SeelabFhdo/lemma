@@ -396,9 +396,8 @@ class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
      */
     private def getServiceTechnologyImportAliasAsScope(EObject context) {
         val microservice = EcoreUtil2.getContainerOfType(context, Microservice)
-        if (microservice === null || microservice.technology === null) {
+        if (microservice === null || microservice.technology === null)
             return IScope::NULLSCOPE
-        }
 
         return Scopes::scopeFor(#[microservice.technology])
     }
