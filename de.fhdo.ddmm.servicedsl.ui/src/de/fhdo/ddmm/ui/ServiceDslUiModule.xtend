@@ -4,10 +4,23 @@
 package de.fhdo.ddmm.ui
 
 import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor
+import org.eclipse.xtext.ui.editor.syntaxcoloring.IHighlightingConfiguration
+import org.eclipse.xtext.ide.editor.syntaxcoloring.ISemanticHighlightingCalculator
+import de.fhdo.ddmm.ui.highlighting.HighlightingCalculator
+import de.fhdo.ddmm.ui.highlighting.HighlightingConfiguration
 
 /**
  * Use this class to register components to be used within the Eclipse IDE.
+ *
+ * @author <a href="mailto:florian.rademacher@fh-dortmund.de>Florian Rademacher</a>
  */
 @FinalFieldsConstructor
 class ServiceDslUiModule extends AbstractServiceDslUiModule {
+    def Class<? extends IHighlightingConfiguration> bindIHighlightingConfiguration() {
+        HighlightingConfiguration
+    }
+
+    def Class<? extends ISemanticHighlightingCalculator> bindISemanticHighlightingCalculator() {
+        HighlightingCalculator
+    }
 }
