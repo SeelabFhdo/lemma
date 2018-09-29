@@ -556,7 +556,7 @@ class TechnologyDslValidator extends AbstractTechnologyDslValidator {
     @Check
     def checkDefaultValueType(PrimitiveValue defaultValue) {
         val property = EcoreUtil2.getContainerOfType(defaultValue, TechnologySpecificProperty)
-        if (!defaultValue.isOfType(property.type))
+        if (property !== null && !defaultValue.isOfType(property.type))
             error('''Value is not of type «property.type.typeName» ''', property,
                 TechnologyPackage::Literals.TECHNOLOGY_SPECIFIC_PROPERTY__DEFAULT_VALUE)
     }
