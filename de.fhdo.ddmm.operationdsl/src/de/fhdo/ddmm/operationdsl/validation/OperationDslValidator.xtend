@@ -56,7 +56,11 @@ class OperationDslValidator extends AbstractOperationDslValidator {
      * Check that the assigned value of a service property matches its type
      */
     @Check
-    def checkDefaultValueType(TechnologySpecificPropertyValueAssignment propertyValue) {
+    def checkPropertyValueType(TechnologySpecificPropertyValueAssignment propertyValue) {
+        if (propertyValue.property === null || propertyValue.value === null) {
+            return
+        }
+
         val serviceProperty = propertyValue.property
         val servicePropertyType = serviceProperty.type
         if (!propertyValue.value.isOfType(servicePropertyType))
