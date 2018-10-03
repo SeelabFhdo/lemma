@@ -18,6 +18,9 @@ import java.util.List
 import de.fhdo.ddmm.typechecking.TypecheckingUtils
 import de.fhdo.ddmm.technology.CompatibilityMatrixEntry
 import de.fhdo.ddmm.technology.TechnologyPackage
+import de.fhdo.ddmm.technology.ServiceAspectPointcut
+import org.eclipse.xtext.scoping.Scopes
+import org.eclipse.xtext.naming.QualifiedName
 
 /**
  * This class implements a custom scope provider for the Technology DSL.
@@ -38,6 +41,9 @@ class TechnologyDslScopeProvider extends AbstractTechnologyDslScopeProvider {
 
             /* Possibly imported interfaces */
             CompatibilityMatrixEntry: context.getScope(reference)
+
+            /* Service aspect pointcuts */
+            ServiceAspectPointcut: context.getScope(reference)
         }
 
         if (scope !== null)
@@ -67,6 +73,65 @@ class TechnologyDslScopeProvider extends AbstractTechnologyDslScopeProvider {
     private def getScope(CompatibilityMatrixEntry entry, EReference reference) {
         // Called when no import was given, hence the URI must be null
         return getScopeForPossiblyImportedType(entry, null)
+    }
+
+    /**
+     * Build scope for service aspect pointcuts
+     */
+    private def getScope(ServiceAspectPointcut pointcut, EReference reference) {
+        switch (reference) {
+            /* Protocols */
+            case TechnologyPackage.Literals::SERVICE_ASPECT_POINTCUT__PROTOCOL:
+                return pointcut.getScopeForPointcutProtocols()
+
+            /* Data formats */
+            case TechnologyPackage.Literals::SERVICE_ASPECT_POINTCUT__DATA_FORMAT:
+                return pointcut.getScopeForPointcutDataFormats()
+        }
+
+        return null
+    }
+
+    /**
+     * Build scope for protocols of aspects pointcuts
+     */
+    private def getScopeForPointcutProtocols(ServiceAspectPointcut pointcut) {
+        if (pointcut === null)
+            return null
+
+        val communicationTypePointcuts = pointcut.selector.pointcuts
+            .filter[forCommunicationType].map[communicationType].toList
+        val technologyModel = EcoreUtil2.getRootContainer(pointcut) as Technology
+        var scopeElements = if (!communicationTypePointcuts.empty)
+            technologyModel.protocols.filter[communicationTypePointcuts.contains(communicationType)]
+        else
+            // In case no communication types were selected, return all protocols defined in the
+            // technology as elements of the scope
+            technologyModel.protocols
+
+        return Scopes::scopeFor(scopeElements)
+    }
+
+    /**
+     * Build scope for data formats of aspects pointcuts
+     */
+    private def getScopeForPointcutDataFormats(ServiceAspectPointcut pointcut) {
+        if (pointcut === null)
+            return null
+
+        val protocolPointcuts = pointcut.selector.pointcuts.filter[forProtocol].toList
+
+        var scopeElements = if (!protocolPointcuts.empty)
+            protocolPointcuts.map[protocol].map[dataFormats].flatten.toList
+        else {
+            // In case no protocols were selected, return all data formats defined in the technology
+            // as elements of the scope
+            val technologyModel = EcoreUtil2.getRootContainer(pointcut) as Technology
+            technologyModel.protocols.map[dataFormats].flatten.toList
+        }
+
+        return Scopes::scopeFor(scopeElements, [QualifiedName.create(formatName)],
+            IScope.NULLSCOPE)
     }
 
     /**

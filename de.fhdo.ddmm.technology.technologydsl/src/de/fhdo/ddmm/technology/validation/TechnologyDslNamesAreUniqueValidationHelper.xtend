@@ -12,6 +12,8 @@ import java.util.Map
 import org.eclipse.xtext.naming.QualifiedName
 import de.fhdo.ddmm.technology.OperationEnvironment
 import de.fhdo.ddmm.technology.TechnologySpecificPropertyValueAssignment
+import de.fhdo.ddmm.technology.TechnologySpecificProperty
+import de.fhdo.ddmm.technology.TechnologyAspect
 
 /**
  * Implementation of NamesAreUniqueValidationHelper to produce custom error messages for duplicated
@@ -24,9 +26,9 @@ class TechnologyDslNamesAreUniqueValidationHelper extends NamesAreUniqueValidati
      * Set cluster types explicitly
      */
     override getClusterTypes() {
-        // DeploymentTechnology and InfrastructureTechnology have the same abstract superclass.
-        // However, we want their names to be unique only for concrete subclasses.
         return ImmutableSet.of(
+            // DeploymentTechnology and InfrastructureTechnology have the same abstract superclass.
+            // However, we want their names to be unique only for concrete subclasses.
             TechnologyPackage::Literals.DEPLOYMENT_TECHNOLOGY,
             TechnologyPackage::Literals.INFRASTRUCTURE_TECHNOLOGY
         );
@@ -49,9 +51,15 @@ class TechnologyDslNamesAreUniqueValidationHelper extends NamesAreUniqueValidati
          *                              instance of an OperationTechnology, i.e.,
          *                              DeploymentTechnology and InfrastructureTechnology.
          *      - TechnologySpecificPropertyValueAssignment: ditto
+         *      - TechnologySpecificProperty: ditto
+         *      - TechnologyAspect: There may aspects with the same name for different join points.
+         *                          Thus, aspect uniqueness is checked by validator to consider
+         *                          this side condition.
          */
         if (descriptionObject instanceof OperationEnvironment ||
-            descriptionObject instanceof TechnologySpecificPropertyValueAssignment) {
+            descriptionObject instanceof TechnologySpecificPropertyValueAssignment ||
+            descriptionObject instanceof TechnologySpecificProperty ||
+            descriptionObject instanceof TechnologyAspect) {
             return
         }
 

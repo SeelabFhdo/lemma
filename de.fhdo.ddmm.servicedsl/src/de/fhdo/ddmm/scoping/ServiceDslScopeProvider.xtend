@@ -32,6 +32,16 @@ import org.eclipse.xtext.resource.IEObjectDescription
 import de.fhdo.ddmm.service.ImportedProtocolAndDataFormat
 import de.fhdo.ddmm.service.ProtocolSpecification
 import de.fhdo.ddmm.technology.CommunicationType
+import de.fhdo.ddmm.service.ImportedServiceAspect
+import de.fhdo.ddmm.technology.ExchangePattern
+import de.fhdo.ddmm.technology.ServiceAspect
+import de.fhdo.ddmm.technology.TechnologyPackage
+import de.fhdo.ddmm.technology.TechnologySpecificPropertyValueAssignment
+import de.fhdo.ddmm.technology.JoinPointType
+import de.fhdo.ddmm.technology.Protocol
+import de.fhdo.ddmm.technology.DataFormat
+import java.util.Map
+import com.google.common.base.Function
 
 /**
  * This class implements a custom scope provider for the Service DSL.
@@ -80,6 +90,12 @@ class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
 
             /* Imported protocol and data format */
             ImportedProtocolAndDataFormat: context.getScope(reference)
+
+            /* Imported service aspects */
+            ImportedServiceAspect: context.getScope(reference)
+
+            /* Technology-specific property value assignments */
+            TechnologySpecificPropertyValueAssignment: context.getScope(reference)
         }
 
         if (scope !== null)
@@ -305,6 +321,8 @@ class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
         val scopeElements = EcoreUtil2.getSiblingsOfType(operation.interface, Interface)
             .map[it.operations]
             .flatten
+            // Prevent NullPointerException when DSL code contains syntax errors
+            .filter[it.name !== null]
             .map[
                 val operationName = QualifiedName.create(it.interface.name, it.name)
                 EObjectDescription.create(operationName, it)
@@ -388,6 +406,157 @@ class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
         }
 
         return null
+    }
+
+    /**
+     * Build scope for imported service aspects used to annotate microservices, interfaces,
+     * operations, or parameters
+     */
+    private def getScope(ImportedServiceAspect importedAspect, EReference reference) {
+        switch (reference) {
+            /*
+             * Available imports and their aliases for aspects imported from technology models
+             * for the annotated element
+             */
+            case ServicePackage.Literals.IMPORTED_SERVICE_ASPECT__IMPORT:
+                return importedAspect.getServiceTechnologyImportAliasAsScope()
+
+            /* Imported aspects */
+            case ServicePackage.Literals.IMPORTED_SERVICE_ASPECT__IMPORTED_ASPECT:
+                return importedAspect.getScopeForImportedAspect()
+
+            /* Properties */
+            case TechnologyPackage.Literals.TECHNOLOGY_SPECIFIC_PROPERTY_VALUE_ASSIGNMENT__PROPERTY:
+                return importedAspect.getScopeForAspectProperty()
+        }
+
+        return null
+    }
+
+    /**
+     * Build scope for technology-specific value assignment
+     */
+    private def getScope(TechnologySpecificPropertyValueAssignment assignment, EReference reference) {
+        switch (reference) {
+            /*
+             * Properties. The scope provider will pass TechnologySpecificPropertyValueAssignment as
+             * context of a value assignment to a service aspect property, if the property received
+             * a value.
+             */
+            case TechnologyPackage.Literals.TECHNOLOGY_SPECIFIC_PROPERTY_VALUE_ASSIGNMENT__PROPERTY:
+                return EcoreUtil2.getContainerOfType(assignment, ImportedServiceAspect)
+                    .getScopeForAspectProperty()
+        }
+
+        return null
+    }
+
+    /**
+     * Build scope for aspect of imported service aspect
+     */
+    private def getScopeForImportedAspect(ImportedServiceAspect importedAspect) {
+        var ExchangePattern forExchangePattern
+        var CommunicationType forCommunicationType
+        var List<Pair<Protocol, DataFormat>> forProtocolsAndDataFormats
+        val aspectContainer = importedAspect.eContainer
+
+        /*
+         * Determine the join point and relevant pointcut values depending on the container in which
+         * the aspect is used
+         */
+        val joinPoint = switch (aspectContainer) {
+            Microservice: {
+                forProtocolsAndDataFormats = aspectContainer
+                    .effectiveProtocolsAndDataFormats.values.toList
+
+                JoinPointType.MICROSERVICES
+            }
+            Interface: {
+                forProtocolsAndDataFormats = aspectContainer
+                    .effectiveProtocolsAndDataFormats.values.toList
+
+                JoinPointType.INTERFACES
+            }
+            Operation: {
+                forProtocolsAndDataFormats = aspectContainer
+                    .effectiveProtocolsAndDataFormats.values.toList
+
+                JoinPointType.OPERATIONS
+            }
+            ReferredOperation: {
+                forProtocolsAndDataFormats = aspectContainer
+                    .effectiveProtocolsAndDataFormats.values.toList
+
+                JoinPointType.OPERATIONS
+            }
+            Parameter: {
+                forCommunicationType = aspectContainer.communicationType
+                forExchangePattern = aspectContainer.exchangePattern
+                forProtocolsAndDataFormats = #[aspectContainer.effectiveProtocolAndDataFormat]
+
+                JoinPointType.PARAMETERS
+            }
+        }
+
+        /*
+         * Get the contents of the resource, i.e., the technology model, from which aspects may be
+         * imported
+         */
+        val resourceContents = DdmmUtils.getImportedModelContents(importedAspect.eResource,
+            importedAspect.import.importURI)
+        if (resourceContents === null || resourceContents.empty)
+            return IScope.NULLSCOPE
+
+        /*
+         * Get the relevant aspects for the determined join point and the respective pointcut values
+         */
+        val declaredAspectsForJoinPoint = (resourceContents.get(0) as Technology).serviceAspects
+            .filter[joinPoints.contains(joinPoint)].toList
+        val scopeAspects = filterMatchingAspects(declaredAspectsForJoinPoint, forExchangePattern,
+            forCommunicationType, forProtocolsAndDataFormats)
+        val scopeElements = scopeAspects.map[
+            val protocolName = QualifiedName.create(it.qualifiedNameParts)
+            EObjectDescription.create(protocolName, it)
+        ]
+        return MapBasedScope.createScope(IScope.NULLSCOPE, scopeElements)
+    }
+
+    /**
+     * Build scope for aspect properties
+     */
+    private def getScopeForAspectProperty(ImportedServiceAspect importedAspect) {
+        return Scopes::scopeFor(importedAspect.importedAspect.properties)
+    }
+
+    /**
+     * Helper method to filter a list of service aspects for those that have a selector that matches
+     * the given pointcut values
+     */
+    protected def filterMatchingAspects(List<ServiceAspect> serviceAspects,
+        ExchangePattern forExchangePattern, CommunicationType forCommunicationType,
+        List<Pair<Protocol, DataFormat>> forProtocolsAndDataFormats) {
+        val matchingAspects = <ServiceAspect> newArrayList
+        // Match aspects for a variety of protocols and data formats
+        if (forProtocolsAndDataFormats !== null)
+            for (protocolAndDataFormat : forProtocolsAndDataFormats) {
+                val forProtocol = protocolAndDataFormat.key
+                val forDataFormat = protocolAndDataFormat.value ?: forProtocol.defaultFormat
+                matchingAspects.addAll(
+                    serviceAspects.filter[
+                        hasMatchingSelector(forExchangePattern, forCommunicationType, forProtocol,
+                            forDataFormat)
+                    ].toList
+                )
+            }
+        // Match aspects without considering protocols and data formats
+        else
+            matchingAspects.addAll(
+                serviceAspects.filter[
+                    hasMatchingSelector(forExchangePattern, forCommunicationType, null, null)
+                ].toList
+            )
+
+        return matchingAspects
     }
 
     /**
@@ -721,5 +890,153 @@ class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
             return IScope.NULLSCOPE
 
         return protocolSpecification.getServiceTechnologyImportAliasAsScope()
+    }
+
+    /**
+     * Helper method to determine effective protocols and data formats of a microservice
+     */
+    private def getEffectiveProtocolsAndDataFormats(Microservice microservice) {
+        /*
+         * Try to get effective protocols and data formats from the service's protocol
+         * specifications
+         */
+        val results = getEffectiveProtocolsAndDataFormats(microservice.protocols, null, null)
+
+        /* Identify missing communication types */
+        val missingCommunicationTypes = <CommunicationType> newArrayList
+        if (!results.containsKey(CommunicationType.ASYNCHRONOUS))
+            missingCommunicationTypes.add(CommunicationType.ASYNCHRONOUS)
+        if (!results.containsKey(CommunicationType.SYNCHRONOUS))
+            missingCommunicationTypes.add(CommunicationType.SYNCHRONOUS)
+
+        val technology = microservice.technology
+        if (missingCommunicationTypes.empty || technology === null)
+            return results
+
+        /*
+         * Complement effective protocols and data formats with the default protocols and data
+         * formats of the annotated technology (if any) for missing communication types
+         */
+        val resourceContents = DdmmUtils.getImportedModelContents(technology.eResource,
+            technology.importURI)
+        if (resourceContents === null || resourceContents.empty)
+            return results
+
+        val technologyModel = resourceContents.get(0) as Technology
+        missingCommunicationTypes.forEach[communicationType |
+            var Protocol defaultProtocol
+            var DataFormat defaultDataFormat
+
+            defaultProtocol = technologyModel.protocols
+                .filter[it.communicationType == communicationType]
+                .findFirst[^default]
+
+            if (defaultProtocol !== null)
+                defaultDataFormat = defaultProtocol.defaultFormat
+
+            if (defaultProtocol !== null)
+                results.put(communicationType, {defaultProtocol -> defaultDataFormat})
+        ]
+
+        return results
+    }
+
+    /**
+     * Helper method to determine effective protocols and data formats of an interface
+     */
+    private def getEffectiveProtocolsAndDataFormats(Interface ^interface) {
+        // Try to get effective protocols and data formats from the protocol specifications of the
+        // interface. If there aren't any, get effective protocols and data formats from the
+        // interface's microservice.
+        return getEffectiveProtocolsAndDataFormats(interface.protocols, interface.microservice,
+            [getEffectiveProtocolsAndDataFormats])
+    }
+
+    /**
+     * Helper method to determine effective protocols and data formats of an operation
+     */
+    private def getEffectiveProtocolsAndDataFormats(Operation operation) {
+        // Try to get effective protocols and data formats from the protocol specifications of the
+        // operation. If there aren't any, get effective protocols and data formats from the
+        // operation's interface.
+        return getEffectiveProtocolsAndDataFormats(operation.protocols, operation.interface,
+            [getEffectiveProtocolsAndDataFormats])
+    }
+
+    /**
+     * Helper method to determine effective protocols and data formats of a referred operation
+     */
+    private def getEffectiveProtocolsAndDataFormats(ReferredOperation referredOperation) {
+        // Try to get effective protocols and data formats from the protocol specifications of the
+        // referred operation. If there aren't any, get effective protocols and data formats from
+        // the referred operation's interface.
+        return getEffectiveProtocolsAndDataFormats(referredOperation.protocols,
+            referredOperation.interface, [getEffectiveProtocolsAndDataFormats])
+    }
+
+    /**
+     * Helper method to determine effective protocol and data format for a parameter with
+     * consideration of its communication type
+     */
+    private def getEffectiveProtocolAndDataFormat(Parameter parameter) {
+        // Try to get effective protocol and data formats from the protocol specifications of the
+        // parameter's operation
+        val operationProtocolsAndDataFormats = parameter.operation.effectiveProtocolsAndDataFormats
+        return operationProtocolsAndDataFormats.get(parameter.communicationType)
+    }
+
+    /**
+     * Helper method to determine effective protocols and data formats from protocol specifications
+     * and possibly the containing concept, if protocol and data format couldn't be determined for a
+     * communication type.
+     *
+     * The method takes the following type arguments:
+     *     - CONTAINER: The container of the protocol specifications.
+     *
+     * The function argument of the method returns for a given CONTAINER object the effective
+     * protocols and data formats.
+     */
+    private def <CONTAINER extends EObject> getEffectiveProtocolsAndDataFormats(
+        List<ProtocolSpecification> protocolSpecifications,
+        CONTAINER container,
+        Function<CONTAINER, Map<CommunicationType, Pair<Protocol, DataFormat>>> getFromContainer) {
+        val Map<CommunicationType, Pair<Protocol, DataFormat>> results = newHashMap
+        val missingCommunicationTypes = <CommunicationType> newArrayList
+
+        for (i : 0..<2) {
+            val communicationType = switch (i) {
+                case 0: CommunicationType.ASYNCHRONOUS
+                case 1: CommunicationType.SYNCHRONOUS
+            }
+
+            // Determine protocol and data format for a given communication from the passed list of
+            // protocol specifications
+            var Protocol protocol
+            var DataFormat dataFormat
+            var protocolSpecification = protocolSpecifications
+                .findFirst[it.communicationType == communicationType]
+
+            if (protocolSpecification !== null &&
+                protocolSpecification.protocol !== null &&
+                protocolSpecification.protocol.importedProtocol !== null) {
+                protocol = protocolSpecification.protocol.importedProtocol
+                dataFormat = protocolSpecification.protocol.dataFormat ?: protocol.defaultFormat
+            }
+
+            if (protocol !== null)
+                results.put(communicationType, {protocol -> dataFormat})
+            else
+                missingCommunicationTypes.add(communicationType)
+        }
+
+        // For those communication types for which no protocol and data format could be determined,
+        // try to gather those from the container and add them to the list of results
+        if (container !== null && getFromContainer !== null && !missingCommunicationTypes.empty) {
+            val containerResults = getFromContainer.apply(container)
+            containerResults.entrySet.filter[missingCommunicationTypes.contains(it.key)]
+                .forEach[results.put(it.key, it.value)]
+        }
+
+        return results
     }
 }

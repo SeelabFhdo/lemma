@@ -27,6 +27,10 @@ Container returns Container:
     )?
     'deploys' deployedServices+=ImportedMicroservice (',' deployedServices+=ImportedMicroservice)*
     '{'
+        ('aspects' '{'
+            aspects+=ImportedOperationAspect+
+        '}')?
+
         ('default' 'values' '{'
             // Must not be empty
             (
@@ -58,6 +62,10 @@ InfrastructureNode returns InfrastructureNode:
     )?
     'used' 'by' deployedServices+=ImportedMicroservice (',' deployedServices+=ImportedMicroservice)*
     '{'
+        ('aspects' '{'
+            aspects+=ImportedOperationAspect+
+        '}')?
+
         ('default' 'values' '{'
             defaultServicePropertyValues+=PropertyValueAssignment+
         '}')?
@@ -76,7 +84,7 @@ ProtocolAndDataFormat returns ProtocolAndDataFormat:
 
 BasicEndpoint returns BasicEndpoint:
     protocols+=ProtocolAndDataFormat (',' protocols+=ProtocolAndDataFormat)* ':'
-     addresses+=STRING (',' addresses+=STRING)* ';'
+    addresses+=STRING (',' addresses+=STRING)* ';'
 ;
 
 ServiceDeploymentSpecification returns ServiceDeploymentSpecification:
@@ -94,6 +102,21 @@ ImportedMicroservice returns ImportedMicroservice:
     microservice=[service::Microservice|QualifiedNameWithAtLeastOneLevel]
 ;
 
+@Override
 PropertyValueAssignment returns technology::TechnologySpecificPropertyValueAssignment:
     property=[technology::TechnologySpecificProperty] '=' value=PrimitiveValue
+;
+
+ImportedOperationAspect returns ImportedOperationAspect:
+    importedAspect=[technology::OperationAspect]
+    (
+        ('(' (singlePropertyValue=PrimitiveValue | values+=PropertyValueAssignment) ')')
+    |
+        ';'
+    )
+;
+
+@Override
+PrimitiveValue returns data::PrimitiveValue:
+    numericValue=BIG_DECIMAL | booleanValue=BOOLEAN | stringValue=STRING
 ;

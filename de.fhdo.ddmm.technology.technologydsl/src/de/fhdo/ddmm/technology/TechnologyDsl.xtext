@@ -25,12 +25,20 @@ Technology returns Technology:
             protocols+=Protocol+
         '}')?
 
+        ('service' 'aspects' '{'
+            serviceAspects+=ServiceAspect+
+        '}')?
+
         ('deployment' 'technologies' '{'
             deploymentTechnologies+=DeploymentTechnology+
         '}')?
 
         ('infrastructure' 'technologies' '{'
             infrastructureTechnologies+=InfrastructureTechnology+
+        '}')?
+
+        ('operation' 'aspects' '{'
+            operationAspects+=OperationAspect+
         '}')?
     '}'
 ;
@@ -130,4 +138,54 @@ TechnologySpecificProperty returns TechnologySpecificProperty:
 
 PrimitiveValue returns data::PrimitiveValue:
     numericValue=BIG_DECIMAL | booleanValue=BOOLEAN | stringValue=STRING
+;
+
+enum ServiceJoinPointType returns JoinPointType:
+    MICROSERVICES = 'microservices' |
+    INTERFACES = 'interfaces' |
+    OPERATIONS = 'operations' |
+    PARAMETERS = 'parameters' |
+    DATA_FIELDS = 'fields'
+;
+
+enum OperationJoinPointType returns JoinPointType:
+    CONTAINERS = 'containers' | INFRASTRUCTURE_NODES = 'infrastructure'
+;
+
+ServiceAspectPointcut returns ServiceAspectPointcut:
+    forExchangePattern?='exchange_pattern' '=' exchangePattern=ExchangePattern |
+    forCommunicationType?='communication_type' '=' communicationType=CommunicationType |
+    forProtocol?='protocol' '=' protocol=[Protocol] |
+    forDataFormat?='data_format' '=' dataFormat=[DataFormat]
+;
+
+ServiceAspectPointcutSelector returns ServiceAspectPointcutSelector:
+    'selector' '('
+        pointcuts+=ServiceAspectPointcut (',' pointcuts+=ServiceAspectPointcut)*
+    ')' ';'
+;
+
+ServiceAspect returns ServiceAspect:
+    'aspect' name=ID
+    'for' joinPoints+=ServiceJoinPointType (',' joinPoints+=ServiceJoinPointType)*
+    (
+        ('{'
+            pointcutSelectors+=ServiceAspectPointcutSelector*
+            properties+=TechnologySpecificProperty*
+        '}')
+        |
+        ';'
+    )
+;
+
+OperationAspect returns OperationAspect:
+    'aspect' name=ID
+    'for' joinPoints+=OperationJoinPointType (',' joinPoints+=OperationJoinPointType)*
+    (
+        ('{'
+            properties+=TechnologySpecificProperty*
+        '}')
+        |
+        ';'
+    )
 ;

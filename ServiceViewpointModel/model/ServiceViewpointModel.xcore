@@ -1,12 +1,15 @@
 package de.fhdo.ddmm.service
 
 import de.fhdo.ddmm.data.PrimitiveType
+import de.fhdo.ddmm.data.PrimitiveValue
 import de.fhdo.ddmm.data.Type
 import de.fhdo.ddmm.technology.CommunicationType
 import de.fhdo.ddmm.technology.ExchangePattern
 import de.fhdo.ddmm.technology.Protocol
 import de.fhdo.ddmm.technology.DataFormat
+import de.fhdo.ddmm.technology.ServiceAspect
 import de.fhdo.ddmm.technology.TechnologySpecificPrimitiveType
+import de.fhdo.ddmm.technology.TechnologySpecificPropertyValueAssignment
 import de.fhdo.ddmm.data.ComplexType
 
 /**
@@ -138,6 +141,7 @@ class Microservice {
     contains PossiblyImportedOperation[] requiredOperations opposite requiringMicroservice
     contains ProtocolSpecification[0..2] protocols
     contains Interface[1..*] interfaces opposite microservice
+    contains ImportedServiceAspect[] aspects opposite microservice
 
     container ServiceModel serviceModel opposite microservices
 
@@ -370,6 +374,7 @@ class Interface {
     contains ProtocolSpecification[0..2] protocols
     contains Operation[] operations opposite ^interface
     contains ReferredOperation[] referredOperations opposite ^interface
+    contains ImportedServiceAspect[] aspects opposite ^interface
 
     container Microservice microservice opposite interfaces
 
@@ -467,6 +472,7 @@ class Operation {
     contains Endpoint[] endpoints opposite operation
     contains ProtocolSpecification[0..2] protocols
     contains Parameter[] parameters opposite operation
+    contains ImportedServiceAspect[] aspects opposite operation
 
     container Interface ^interface opposite operations
 
@@ -579,6 +585,7 @@ class ReferredOperation {
     refers Operation operation
     contains Endpoint[] endpoints opposite referredOperation
     contains ProtocolSpecification[0..2] protocols
+    contains ImportedServiceAspect[] aspects opposite referredOperation
 
     container Interface ^interface opposite referredOperations
 
@@ -622,6 +629,7 @@ class Parameter {
     contains PossiblyImportedOperation[0..1] initializedByOperation  opposite initializedParameter
     contains ImportedType[0..1] importedType
     contains PrimitiveType[0..1] primitiveType
+    contains ImportedServiceAspect[] aspects opposite parameter
 
     container Operation operation opposite parameters
 
@@ -877,4 +885,35 @@ class Endpoint {
     container Interface ^interface opposite endpoints
     container Operation operation opposite endpoints
     container ReferredOperation referredOperation opposite endpoints
+}
+
+/**
+ * Metamodel concept for service aspects being imported from a technology model
+ */
+class ImportedServiceAspect {
+    /**
+     * Implicit Constraints:
+     *     (C1) An aspect may not be assigned twice to a concept instance.
+     *          Ensured by: DSL validator.
+     *     (C2) A single property value may only be assigned if the aspect has exactly one property.
+     *          Ensured by: DSL validator.
+     *     (C3) Property values must match the type of the aspect property as defined in the
+     *          technology being assigned to the parent microservice mapping.
+     *          Ensured by: DSL validator.
+     *     (C4) Mandatory properties must have values assigned.
+     *          Ensured by: DSL validator.
+     *     (C5) Aspect may only be assigned to a concept if all of its selectors match.
+     *          Ensured by: DSL scope provider.
+     */
+
+    refers Import ^import
+    refers ServiceAspect importedAspect
+    contains PrimitiveValue singlePropertyValue
+    contains TechnologySpecificPropertyValueAssignment[] values
+
+    container Microservice microservice opposite aspects
+    container Interface ^interface opposite aspects
+    container Operation operation opposite aspects
+    container ReferredOperation referredOperation opposite aspects
+    container Parameter parameter opposite aspects
 }

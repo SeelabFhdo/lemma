@@ -5,6 +5,7 @@ package de.fhdo.ddmm.technology
 
 import org.eclipse.xtext.validation.INamesAreUniqueValidationHelper
 import de.fhdo.ddmm.technology.validation.TechnologyDslNamesAreUniqueValidationHelper
+import org.eclipse.xtext.resource.IDefaultResourceDescriptionStrategy
 
 /**
  * Use this class to register components to be used at runtime / without the Equinox extension
@@ -15,5 +16,13 @@ import de.fhdo.ddmm.technology.validation.TechnologyDslNamesAreUniqueValidationH
 class TechnologyDslRuntimeModule extends AbstractTechnologyDslRuntimeModule {
     def Class<? extends INamesAreUniqueValidationHelper> bindINamesAreUniqueValidationHelper() {
         TechnologyDslNamesAreUniqueValidationHelper
+    }
+
+    /**
+     * Bind custom resource description strategy
+     */
+    def Class<? extends IDefaultResourceDescriptionStrategy>
+       bindIDefaultResourceDescriptionStrategy() {
+        TechnologyDslResourceDescriptionStrategy
     }
 }

@@ -35,6 +35,10 @@ import de.fhdo.ddmm.service.Visibility
 import de.fhdo.ddmm.service.PossiblyImportedMicroservice
 import com.google.common.base.Function
 import java.util.Map
+import de.fhdo.ddmm.service.ImportedServiceAspect
+import de.fhdo.ddmm.technology.TechnologySpecificPropertyValueAssignment
+import de.fhdo.ddmm.technology.TechnologyPackage
+import org.eclipse.xtext.EcoreUtil2
 
 /**
  * This class contains custom validation rules for service models.
@@ -553,6 +557,93 @@ class ServiceDslValidator extends AbstractServiceDslValidator {
             error('''Duplicate address «duplicate»''', endpoint,
                 ServicePackage::Literals.ENDPOINT__ADDRESSES, duplicateIndex)
         }
+    }
+
+    /**
+     * Check uniqueness of aspects
+     */
+    @Check
+    def checkUniqueAspects(ImportedServiceAspect aspect) {
+        val allAspectsOfContainer = EcoreUtil2.getAllContentsOfType(aspect.eContainer,
+            ImportedServiceAspect)
+        val duplicateIndex = DdmmUtils.getDuplicateIndex(allAspectsOfContainer,
+            [importedAspect.name])
+        if (duplicateIndex > -1) {
+            val duplicateAspect = allAspectsOfContainer.get(duplicateIndex)
+            error("Aspect was already specified", duplicateAspect,
+                ServicePackage.Literals::IMPORTED_SERVICE_ASPECT__IMPORTED_ASPECT)
+        }
+    }
+
+    /**
+     * Check that aspect has only one property, if only a single value is specified, and that the
+     * specified value matches the property's type
+     */
+    @Check
+    def checkSingleAspectProperty(ImportedServiceAspect importedAspect) {
+        val propertyValue = importedAspect.singlePropertyValue
+        if (propertyValue === null) {
+            return
+        }
+
+        val propertyCount = importedAspect.importedAspect.properties.size
+        if (propertyCount > 1)
+            error("Ambiguous value assignment", importedAspect,
+                ServicePackage.Literals::IMPORTED_SERVICE_ASPECT__SINGLE_PROPERTY_VALUE)
+        else if (propertyCount === 1) {
+            val targetProperty = importedAspect.importedAspect.properties.get(0)
+            val targetPropertyType = targetProperty.type
+            if (!propertyValue.isOfType(targetPropertyType))
+                error('''Value is not of type «targetPropertyType.typeName» as expected by ''' +
+                '''property «targetProperty.name»''', importedAspect,
+                ServicePackage.Literals::IMPORTED_SERVICE_ASPECT__SINGLE_PROPERTY_VALUE)
+        }
+    }
+
+    /**
+     * Check that mandatory properties of aspects have values
+     */
+    @Check
+    def checkMandatoryAspectProperties(ImportedServiceAspect importedAspect) {
+        val aspect = importedAspect.importedAspect
+        val aspectProperties = aspect.properties
+        val mandatoryProperties = aspectProperties.filter[mandatory]
+        val mandatoryPropertiesWithoutValues = mandatoryProperties.filter[
+            !importedAspect.values.map[property].contains(it)
+        ]
+        val allMandatoryPropertiesHaveValues = mandatoryPropertiesWithoutValues.empty
+
+        val aspectHasExactlyOneMandatoryProperty = aspectProperties.size === 1 &&
+            !mandatoryProperties.empty
+        if (aspectHasExactlyOneMandatoryProperty) {
+            if (importedAspect.singlePropertyValue === null && !allMandatoryPropertiesHaveValues) {
+                val mandatoryProperty = mandatoryProperties.get(0)
+                error('''Mandatory property «mandatoryProperty.name» does not have value''',
+                    importedAspect,
+                    ServicePackage.Literals::IMPORTED_SERVICE_ASPECT__IMPORTED_ASPECT)
+            }
+        } else if (!allMandatoryPropertiesHaveValues) {
+            mandatoryPropertiesWithoutValues.forEach[
+               error('''Mandatory property «name» does not have value''', importedAspect,
+                    ServicePackage.Literals::IMPORTED_SERVICE_ASPECT__IMPORTED_ASPECT)
+            ]
+        }
+    }
+
+    /**
+     * Check that the assigned value of a service aspect property matches its type
+     */
+    @Check
+    def checkPropertyValueType(TechnologySpecificPropertyValueAssignment propertyValue) {
+        if (propertyValue.property === null || propertyValue.value === null) {
+            return
+        }
+
+        val serviceProperty = propertyValue.property
+        val servicePropertyType = serviceProperty.type
+        if (!propertyValue.value.isOfType(servicePropertyType))
+            error('''Value is not of type «servicePropertyType.typeName» ''', propertyValue,
+                TechnologyPackage::Literals.TECHNOLOGY_SPECIFIC_PROPERTY_VALUE_ASSIGNMENT__VALUE)
     }
 
     /**

@@ -8,6 +8,7 @@ import de.fhdo.ddmm.service.Microservice
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils
 import de.fhdo.ddmm.service.ServicePackage
 import de.fhdo.ddmm.service.ProtocolSpecification
+import de.fhdo.ddmm.service.ImportedServiceAspect
 import de.fhdo.ddmm.service.Interface
 import de.fhdo.ddmm.service.ReferredOperation
 import de.fhdo.ddmm.service.Operation
@@ -69,6 +70,9 @@ class HighlightingCalculator implements ISemanticHighlightingCalculator {
             ],
             ProtocolSpecification -> #[
                 ServicePackage.Literals::PROTOCOL_SPECIFICATION__PROTOCOL -> false
+            ],
+            ImportedServiceAspect -> #[
+                ServicePackage.Literals::IMPORTED_SERVICE_ASPECT__IMPORTED_ASPECT -> true
             ]
         }
 

@@ -29,6 +29,7 @@ Microservice returns Microservice:
     ('@' 'technology' '(' technology=[Import] ')')?
     (protocols+=ProtocolSpecification (protocols+=ProtocolSpecification)?)?
     ('@' 'endpoints' '(' endpoints+=Endpoint+ ')')?
+    aspects+=ImportedServiceAspect*
     visibility=Visibility?
     type=MicroserviceType
     'microservice' name=QualifiedNameWithAtLeastOneLevel ('version' version=ID)?
@@ -66,6 +67,7 @@ PossiblyImportedOperation returns PossiblyImportedOperation:
 Interface returns Interface:
     (protocols+=ProtocolSpecification (protocols+=ProtocolSpecification)?)?
     ('@' 'endpoints' '(' endpoints+=Endpoint+ ')')?
+    aspects+=ImportedServiceAspect*
     (notImplemented?='noimpl')? visibility=Visibility? 'interface' name=ID '{'
         referredOperations+=ReferredOperation*
         operations+=Operation*
@@ -75,6 +77,7 @@ Interface returns Interface:
 Operation returns Operation:
     (protocols+=ProtocolSpecification (protocols+=ProtocolSpecification)?)?
     ('@' 'endpoints' '(' endpoints+=Endpoint+ ')')?
+    aspects+=ImportedServiceAspect*
     (notImplemented?='noimpl')? visibility=Visibility? name=ID '('
         parameters+=Parameter? (',' parameters+=Parameter)*
     ')' ';'
@@ -83,10 +86,12 @@ Operation returns Operation:
 ReferredOperation returns ReferredOperation:
     (protocols+=ProtocolSpecification (protocols+=ProtocolSpecification)?)?
     ('@' 'endpoints' '(' endpoints+=Endpoint+ ')')?
+    aspects+=ImportedServiceAspect*
     'refers' operation=[Operation|QualifiedName] ';'
 ;
 
 Parameter returns Parameter:
+    aspects+=ImportedServiceAspect*
     communicationType=CommunicationType
     exchangePattern=ExchangePattern?
     (communicatesFault?='fault')?
@@ -115,6 +120,22 @@ ImportedProtocolAndDataFormat returns ImportedProtocolAndDataFormat:
 Endpoint returns Endpoint:
     protocols+=ImportedProtocolAndDataFormat (',' protocols+=ImportedProtocolAndDataFormat)* ':'
     addresses+=STRING (',' addresses+=STRING)* ';'
+;
+
+ImportedServiceAspect returns ImportedServiceAspect:
+    '@' ^import=[Import] '::' importedAspect=[technology::ServiceAspect|QualifiedName]
+    ('('
+        (singlePropertyValue=PrimitiveValue | values+=PropertyValueAssignment)
+    ')')?
+;
+
+@Override
+PrimitiveValue returns data::PrimitiveValue:
+    numericValue=BIG_DECIMAL | booleanValue=BOOLEAN | stringValue=STRING
+;
+
+PropertyValueAssignment returns technology::TechnologySpecificPropertyValueAssignment:
+    property=[technology::TechnologySpecificProperty] '=' value=PrimitiveValue
 ;
 
 enum MicroserviceType returns MicroserviceType:

@@ -21,6 +21,12 @@ import org.eclipse.xtext.EcoreUtil2
 import de.fhdo.ddmm.technology.TechnologySpecificProperty
 import de.fhdo.ddmm.data.PrimitiveValue
 import de.fhdo.ddmm.technology.OperationTechnology
+import de.fhdo.ddmm.technology.ServiceAspectPointcutSelector
+import de.fhdo.ddmm.technology.ServiceAspect
+import de.fhdo.ddmm.technology.ServiceAspectPointcut
+import de.fhdo.ddmm.technology.PointcutType
+import de.fhdo.ddmm.technology.JoinPointType
+import de.fhdo.ddmm.technology.TechnologyAspect
 
 /**
  * This class contains custom validation rules.
@@ -614,5 +620,125 @@ class TechnologyDslValidator extends AbstractTechnologyDslValidator {
             error('''Duplicate service property «duplicateProperty.name»''',
                 duplicateProperty, TechnologyPackage::Literals.TECHNOLOGY_SPECIFIC_PROPERTY__NAME)
         }
+    }
+
+    /**
+     * Check that per type only one pointcut exists in a service aspect selector
+     */
+    @Check
+    def checkPointcutUniqueness(ServiceAspectPointcutSelector selector) {
+        val duplicateIndex = DdmmUtils.getDuplicateIndex(selector.pointcuts, [effectiveType])
+        if (duplicateIndex > -1) {
+            val duplicatePoincut = selector.pointcuts.get(duplicateIndex)
+            error('''Duplicate pointcut «duplicatePoincut.effectiveSelectorName»''',
+                TechnologyPackage::Literals.SERVICE_ASPECT_POINTCUT_SELECTOR__POINTCUTS,
+                duplicateIndex)
+        }
+    }
+
+    /**
+     * Check aspect uniqueness considering different types of aspects and join points
+     */
+    @Check
+    def checkAspectUniqueness(Technology technologyModel) {
+        for (i : 0..<2) {
+            val aspects = switch (i) {
+                case 0: technologyModel.serviceAspects
+                case 1: technologyModel.operationAspects
+            }
+
+            // Collect all aspects in a map that maps aspect names to aspects
+            val nameToAspectsMap = <String, List<TechnologyAspect>> newHashMap
+            aspects.forEach[
+                var aspectsList = nameToAspectsMap.get(name)
+                if (aspectsList === null) {
+                    aspectsList = <TechnologyAspect> newArrayList
+                    nameToAspectsMap.put(name, aspectsList)
+                }
+                aspectsList.add(it)
+            ]
+
+            // Iterate over duplicate aspects, i.e., those aspects for which the map contains a list
+            // of aspects with a size greater than 2. Check for duplicate join points leveraging a
+            // set.
+            nameToAspectsMap.entrySet.filter[value.size > 1].forEach[
+                val eponymousAspects = value
+                val uniqueJoinPoints = <JoinPointType> newHashSet
+                eponymousAspects.forEach[aspect | aspect.joinPoints.forEach[joinPoint |
+                    val duplicateJoinPoint = !uniqueJoinPoints.add(joinPoint)
+                    if (duplicateJoinPoint)
+                        error('''Duplicate aspect «aspect.name» for join point ''' +
+                            '''«joinPoint.getName.toLowerCase»''', aspect,
+                            TechnologyPackage::Literals.TECHNOLOGY_ASPECT__NAME)
+                ]]
+            ]
+        }
+    }
+
+    /**
+     * Check that join points of an aspect are unique
+     */
+    @Check
+    def checkJoinPointUniqueness(TechnologyAspect aspect) {
+        val duplicateIndex = DdmmUtils.getDuplicateIndex(aspect.joinPoints, [it])
+        if (duplicateIndex > -1)
+            error("Duplicate join point",
+                TechnologyPackage::Literals.TECHNOLOGY_ASPECT__JOIN_POINTS, duplicateIndex)
+    }
+
+    /**
+     * Check that properties of an aspect are unique
+     */
+    @Check
+    def checkPropertyUniqueness(TechnologyAspect aspect) {
+        val duplicateIndex = DdmmUtils.getDuplicateIndex(aspect.properties, [name])
+        if (duplicateIndex > -1)
+            error("Duplicate property",
+                TechnologyPackage::Literals.TECHNOLOGY_ASPECT__PROPERTIES, duplicateIndex)
+    }
+
+    /**
+     * Check that selectors of a service aspect are unique
+     */
+    @Check
+    def checkSelectorUniqueness(ServiceAspect aspect) {
+        val duplicateIndex = DdmmUtils.getDuplicateIndex(aspect.pointcutSelectors, [selectorString])
+        if (duplicateIndex > -1)
+            error("Duplicate selector",
+                TechnologyPackage::Literals.SERVICE_ASPECT__POINTCUT_SELECTORS, duplicateIndex)
+    }
+
+    /**
+     * Check that "exchange pattern" or "communication type" pointcut is specified in conjunction
+     * with "parameters" or "data fields" join point
+     */
+    @Check
+    def checkParametersPointcut(ServiceAspectPointcut pointcut) {
+        if (
+            pointcut.effectiveType !== PointcutType.EXCHANGE_PATTERN &&
+            pointcut.effectiveType !== PointcutType.COMMUNICATION_TYPE
+        ) {
+            return
+        }
+
+        val joinPoints = pointcut.selector.serviceAspect.joinPoints
+        val allowedJoinPoints = #[JoinPointType.PARAMETERS, JoinPointType.DATA_FIELDS]
+        if (!joinPoints.exists[allowedJoinPoints.contains(it)])
+            error('''Pointcut "«pointcut.effectiveSelectorName»" may only be specified in ''' +
+                '''conjunction with join point "parameters" or "fields"''', pointcut,
+                TechnologyPackage::Literals.SERVICE_ASPECT_POINTCUT__SELECTOR)
+    }
+
+    /**
+     * Warn if pointcut selector is more generic than other
+     */
+    @Check
+    def warnIfSelectorsIsMoreGeneric(ServiceAspectPointcutSelector selector) {
+        val otherSelectors = selector.serviceAspect.pointcutSelectors.filter[it != selector]
+        otherSelectors.forEach[
+            if (selector.isMoreGenericThan(it))
+                warning('''Selector "«selector.selectorString»" is more generic''', it,
+                TechnologyPackage::Literals.SERVICE_ASPECT_POINTCUT_SELECTOR__SELECTOR_STRING)
+        ]
     }
 }

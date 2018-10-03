@@ -1,10 +1,12 @@
 package de.fhdo.ddmm.operation
 
+import de.fhdo.ddmm.data.PrimitiveValue
 import de.fhdo.ddmm.service.Import
 import de.fhdo.ddmm.service.Microservice
 import de.fhdo.ddmm.technology.DataFormat
 import de.fhdo.ddmm.technology.DeploymentTechnology
 import de.fhdo.ddmm.technology.InfrastructureTechnology
+import de.fhdo.ddmm.technology.OperationAspect
 import de.fhdo.ddmm.technology.OperationEnvironment
 import de.fhdo.ddmm.technology.Protocol
 import de.fhdo.ddmm.technology.TechnologySpecificPropertyValueAssignment
@@ -69,6 +71,7 @@ abstract class OperationNode {
     contains ImportedMicroservice[1..*] deployedServices opposite operationNode
     contains TechnologySpecificPropertyValueAssignment[] defaultServicePropertyValues
     contains ServiceDeploymentSpecification[] deploymentSpecifications opposite operationNode
+    contains ImportedOperationAspect[] aspects opposite operationNode
 }
 
 /**
@@ -185,4 +188,28 @@ class BasicEndpoint {
     container Container ^container opposite defaultBasicEndpoints
     container InfrastructureNode infrastructureNode opposite endpoints
     container ServiceDeploymentSpecification deploymentSpecification opposite basicEndpoints
+}
+
+/**
+ * Metamodel concept for operation aspects being implicitly imported from a technology model
+ */
+class ImportedOperationAspect {
+    /**
+     * Implicit Constraints:
+     *     (C1) An aspect may not be assigned twice to a concept instance.
+     *          Ensured by: DSL validator.
+     *     (C2) A single property value may only be assigned if the aspect has exactly one property.
+     *          Ensured by: DSL validator.
+     *     (C3) Property values must match the type of the aspect property as defined in the
+     *          technology being assigned to the parent microservice mapping.
+     *          Ensured by: DSL validator.
+     *     (C4) Mandatory properties must have values assigned.
+     *          Ensured by: DSL validator.
+     */
+
+    refers OperationAspect importedAspect
+    contains PrimitiveValue singlePropertyValue
+    contains TechnologySpecificPropertyValueAssignment[] values
+
+    container OperationNode operationNode opposite aspects
 }

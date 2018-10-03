@@ -19,6 +19,8 @@ import de.fhdo.ddmm.service.ServicePackage
 import com.google.common.base.Function
 import de.fhdo.ddmm.technology.TechnologySpecificPropertyValueAssignment
 import de.fhdo.ddmm.technology.TechnologyPackage
+import de.fhdo.ddmm.operation.ImportedOperationAspect
+import org.eclipse.xtext.EcoreUtil2
 
 /**
  * This class contains validation rules for the Operation DSL.
@@ -56,7 +58,7 @@ class OperationDslValidator extends AbstractOperationDslValidator {
      * Check that the assigned value of a service property matches its type
      */
     @Check
-    def checkPropertyValueType(TechnologySpecificPropertyValueAssignment propertyValue) {
+    def override checkPropertyValueType(TechnologySpecificPropertyValueAssignment propertyValue) {
         if (propertyValue.property === null || propertyValue.value === null) {
             return
         }
@@ -459,5 +461,76 @@ class OperationDslValidator extends AbstractOperationDslValidator {
                         it, OperationPackage::Literals.IMPORTED_MICROSERVICE__OPERATION_NODE)
                 ]
         ]
+    }
+
+    /**
+     * Check uniqueness of aspects
+     */
+    @Check
+    def checkAspectUniqueness(ImportedOperationAspect aspect) {
+        val allAspectsOfContainer = EcoreUtil2.getAllContentsOfType(aspect.eContainer,
+            ImportedOperationAspect)
+        val duplicateIndex = DdmmUtils.getDuplicateIndex(allAspectsOfContainer,
+            [importedAspect.name])
+        if (duplicateIndex > -1) {
+            val duplicateAspect = allAspectsOfContainer.get(duplicateIndex)
+            error("Aspect was already specified", duplicateAspect,
+                OperationPackage.Literals::IMPORTED_OPERATION_ASPECT__IMPORTED_ASPECT)
+        }
+    }
+
+    /**
+     * Check that aspect has only one property, if only a single value is specified, and that the
+     * specified value matches the property's type
+     */
+    @Check
+    def checkSingleAspectProperty(ImportedOperationAspect importedAspect) {
+        val propertyValue = importedAspect.singlePropertyValue
+        if (propertyValue === null) {
+            return
+        }
+
+        val propertyCount = importedAspect.importedAspect.properties.size
+        if (propertyCount > 1)
+            error("Ambiguous value assignment", importedAspect,
+                OperationPackage.Literals::IMPORTED_OPERATION_ASPECT__SINGLE_PROPERTY_VALUE)
+        else if (propertyCount === 1) {
+            val targetProperty = importedAspect.importedAspect.properties.get(0)
+            val targetPropertyType = targetProperty.type
+            if (!propertyValue.isOfType(targetPropertyType))
+                error('''Value is not of type «targetPropertyType.typeName» as expected by ''' +
+                '''property «targetProperty.name»''', importedAspect,
+                OperationPackage.Literals::IMPORTED_OPERATION_ASPECT__SINGLE_PROPERTY_VALUE)
+        }
+    }
+
+    /**
+     * Check that mandatory properties of aspects have values
+     */
+    @Check
+    def checkMandatoryAspectProperties(ImportedOperationAspect importedAspect) {
+        val aspect = importedAspect.importedAspect
+        val aspectProperties = aspect.properties
+        val mandatoryProperties = aspectProperties.filter[mandatory]
+        val mandatoryPropertiesWithoutValues = mandatoryProperties.filter[
+            !importedAspect.values.map[property].contains(it)
+        ]
+        val allMandatoryPropertiesHaveValues = mandatoryPropertiesWithoutValues.empty
+
+        val aspectHasExactlyOneMandatoryProperty = aspectProperties.size === 1 &&
+            !mandatoryProperties.empty
+        if (aspectHasExactlyOneMandatoryProperty) {
+            if (importedAspect.singlePropertyValue === null && !allMandatoryPropertiesHaveValues) {
+                val mandatoryProperty = mandatoryProperties.get(0)
+                error('''Mandatory property «mandatoryProperty.name» does not have value''',
+                    importedAspect,
+                    OperationPackage.Literals::IMPORTED_OPERATION_ASPECT__IMPORTED_ASPECT)
+            }
+        } else if (!allMandatoryPropertiesHaveValues) {
+            mandatoryPropertiesWithoutValues.forEach[
+               error('''Mandatory property «name» does not have value''', importedAspect,
+                    OperationPackage.Literals::IMPORTED_OPERATION_ASPECT__IMPORTED_ASPECT)
+            ]
+        }
     }
 }

@@ -21,6 +21,8 @@ import de.fhdo.ddmm.operation.ProtocolAndDataFormat
 import de.fhdo.ddmm.operation.BasicEndpoint
 import de.fhdo.ddmm.technology.TechnologySpecificPropertyValueAssignment
 import de.fhdo.ddmm.technology.TechnologyPackage
+import de.fhdo.ddmm.technology.JoinPointType
+import de.fhdo.ddmm.operation.ImportedOperationAspect
 
 /**
  * This class implements a custom scope provider for the Operation DSL.
@@ -61,6 +63,9 @@ class OperationDslScopeProvider extends AbstractOperationDslScopeProvider {
 
             /* Service deployment specifications */
             ServiceDeploymentSpecification: context.getScope(reference)
+
+            /* Imported operation aspects */
+            ImportedOperationAspect: context.getScope(reference)
         }
 
         if (scope !== null)
@@ -82,11 +87,62 @@ class OperationDslScopeProvider extends AbstractOperationDslScopeProvider {
             /* Deployment technologies */
             case OperationPackage::Literals.CONTAINER__DEPLOYMENT_TECHNOLOGY:
                 return container.getScopeForDeploymentTechnology()
+
+            /* Imported operation aspects */
+            case OperationPackage::Literals.IMPORTED_OPERATION_ASPECT__IMPORTED_ASPECT:
+                return container.getScopeForImportedAspect()
         }
 
         // If the feature is not Container-specific, delegate scope resolution to superclass
         // OperationNode
         return (container as OperationNode).getScope(reference)
+    }
+
+    /**
+     * Build scope for imported operation aspects used in containers and infrastructure nodes
+     */
+    private def getScope(ImportedOperationAspect importedAspect, EReference reference) {
+        switch (reference) {
+            /* Imported aspects */
+            case OperationPackage.Literals.IMPORTED_OPERATION_ASPECT__IMPORTED_ASPECT:
+                return (importedAspect.eContainer as OperationNode).getScopeForImportedAspect()
+
+            /* Properties */
+            case TechnologyPackage.Literals.TECHNOLOGY_SPECIFIC_PROPERTY_VALUE_ASSIGNMENT__PROPERTY:
+                return importedAspect.getScopeForAspectProperty()
+        }
+
+        return null
+    }
+
+    /**
+     * Build scope for imported operation aspects
+     */
+    private def getScopeForImportedAspect(OperationNode operationNode) {
+        if (operationNode.technology === null)
+            return IScope.NULLSCOPE
+
+        val joinPoint = switch(operationNode) {
+            Container: JoinPointType.CONTAINERS
+            InfrastructureNode: JoinPointType.INFRASTRUCTURE_NODES
+        }
+
+        return DdmmUtils.getScopeForPossiblyImportedConcept(
+            operationNode.technology,
+            null,
+            Technology,
+            operationNode.technology.importURI,
+            [operationAspects.toList],
+            [#[name]],
+            [joinPoints.contains(joinPoint)]
+        )
+    }
+
+    /**
+     * Build scope for aspect properties
+     */
+    private def getScopeForAspectProperty(ImportedOperationAspect importedAspect) {
+        return Scopes::scopeFor(importedAspect.importedAspect.properties)
     }
 
     /**
@@ -345,14 +401,19 @@ class OperationDslScopeProvider extends AbstractOperationDslScopeProvider {
     }
 
     /**
-     * Build scope for service property values
+     * Build scope for property values
      */
-    private def getScope(TechnologySpecificPropertyValueAssignment servicePropertyValue,
+    private def getScope(TechnologySpecificPropertyValueAssignment propertyValue,
         EReference reference) {
-        switch (reference) {
-            case TechnologyPackage::Literals
-                .TECHNOLOGY_SPECIFIC_PROPERTY_VALUE_ASSIGNMENT__PROPERTY:
-                return servicePropertyValue.getScopeForServiceProperties()
+        if (reference !==
+            TechnologyPackage::Literals.TECHNOLOGY_SPECIFIC_PROPERTY_VALUE_ASSIGNMENT__PROPERTY)
+            return IScope.NULLSCOPE
+
+        return switch(propertyValue.eContainer) {
+            ImportedOperationAspect:
+                (propertyValue.eContainer as ImportedOperationAspect).getScopeForAspectProperty()
+            default:
+                propertyValue.getScopeForServiceProperties()
         }
     }
 

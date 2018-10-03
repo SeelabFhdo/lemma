@@ -8,4 +8,8 @@ endpoints
 endpoint
 mashups
 metamodel
+pointcut
+pointcuts
 annotatable
+validators
+referenceable
