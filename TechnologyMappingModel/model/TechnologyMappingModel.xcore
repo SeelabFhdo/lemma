@@ -1,0 +1,347 @@
+package de.fhdo.ddmm.technology.mapping
+
+import de.fhdo.ddmm.data.ComplexType
+import de.fhdo.ddmm.data.DataField
+import de.fhdo.ddmm.data.PrimitiveValue
+import de.fhdo.ddmm.data.Type
+import de.fhdo.ddmm.service.Import
+import de.fhdo.ddmm.service.Interface
+import de.fhdo.ddmm.service.Microservice
+import de.fhdo.ddmm.service.Operation
+import de.fhdo.ddmm.service.Parameter
+import de.fhdo.ddmm.service.ReferredOperation
+import de.fhdo.ddmm.technology.CommunicationType
+import de.fhdo.ddmm.technology.DataFormat
+import de.fhdo.ddmm.technology.Protocol
+import de.fhdo.ddmm.technology.ServiceAspect
+import de.fhdo.ddmm.technology.TechnologySpecificPrimitiveType
+import de.fhdo.ddmm.technology.TechnologySpecificPropertyValueAssignment
+
+/**
+ * Metamodel for technology mappings that provide an alternative to specifying technology in service
+ * models. It aims to preserve the readability of service models and to keep them
+ * technology-agnostic.
+ *
+ * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
+ */
+class TechnologyMapping {
+    /**
+     * Implicit Constraints:
+     *     (C1) Imported files must be unique.
+     *          Ensured by: DSL validator.
+     *     (C2) A microservice may only be mapped once.
+     *          Ensured by: DSL validator.
+     */
+
+    contains Import[1..*] imports
+    contains MicroserviceMapping[1..*] mappings
+
+    /**
+     * Get all mapped interfaces of all mapped microservices
+     */
+    op InterfaceMapping[] getMappedInterfaces() {
+        return mappings.map[interfaceMappings].flatten.toList.asEList
+    }
+
+    /**
+     * Get all operations of all mapped microservices
+     */
+    op OperationMapping[] getMappedOperations() {
+        return mappings.map[it.operationMappings].flatten.toList.asEList
+    }
+
+    /**
+     * Get all mapped referred operations of all mapped microservices
+     */
+    op ReferredOperationMapping[] getMappedReferredOperations() {
+        return mappings.map[referredOperationMappings].flatten.toList.asEList
+    }
+}
+
+/**
+ * Determines the allowed types of imports
+ */
+enum ImportType {
+    TECHNOLOGY
+    MICROSERVICES
+}
+
+/**
+ * Technology mapping for microservices
+ */
+class MicroserviceMapping {
+    /**
+     * Implicit Constraints:
+     *     (C1) Mapping must not be empty.
+     *          Ensured by: DSL validator.
+     *     (C2) Communication types of mapped protocol specifications must be unique.
+     *          Ensured by: DSL validator.
+     *     (C3) Endpoint protocols must be unique.
+     *          Ensured by: DSL validator.
+     *     (C4) Endpoint addresses must be unique.
+     *          Ensured by: DSL validator.
+     */
+
+    refers Import technology
+    contains ImportedMicroservice microservice opposite microserviceMapping
+    contains TechnologySpecificEndpoint[] endpoints opposite microserviceMapping
+    contains TechnologySpecificProtocolSpecification[] protocols
+    contains InterfaceMapping[] interfaceMappings opposite microserviceMapping
+    contains OperationMapping[] operationMappings opposite microserviceMapping
+    contains ReferredOperationMapping[] referredOperationMappings opposite microserviceMapping
+    contains TechnologySpecificImportedServiceAspect[] aspects opposite microserviceMapping
+}
+
+/**
+ * Represents an imported microservice
+ */
+class ImportedMicroservice {
+    refers Import ^import
+    refers Microservice microservice
+
+    container MicroserviceMapping microserviceMapping opposite microservice
+}
+
+/**
+ * Technology mapping for interfaces
+ */
+class InterfaceMapping {
+    /**
+     * Implicit Constraints:
+     *     (C1) An interface may only be mapped once.
+     *          Ensured by: DSL validator.
+     *     (C2) Mapping must not be empty.
+     *          Ensured by: DSL validator.
+     *     (C3) Communication types of mapped protocol specifications must be unique.
+     *          Ensured by: DSL validator.
+     *     (C4) Endpoint protocols must be unique.
+     *          Ensured by: DSL validator.
+     *     (C5) Endpoint addresses must be unique.
+     *          Ensured by: DSL validator.
+     */
+
+    refers Interface ^interface
+    contains TechnologySpecificEndpoint[] endpoints opposite interfaceMapping
+    contains TechnologySpecificProtocolSpecification[] protocols
+    contains TechnologySpecificImportedServiceAspect[] aspects opposite interfaceMapping
+
+    container MicroserviceMapping microserviceMapping opposite interfaceMappings
+}
+
+/**
+ * Technology mapping for operations
+ */
+class OperationMapping {
+    /**
+     * Implicit Constraints:
+     *     (C1) An operation may only be mapped once.
+     *          Ensured by: DSL validator.
+     *     (C2) Mapping must not be empty.
+     *          Ensured by: DSL validator.
+     *     (C3) Communication types of mapped protocol specifications must be unique.
+     *          Ensured by: DSL validator.
+     *     (C4) Endpoint protocols must be unique.
+     *          Ensured by: DSL validator.
+     *     (C5) Endpoint addresses must be unique.
+     *          Ensured by: DSL validator.
+     *     (C6) A parameter may be mapped only once.
+     *          Ensured by: DSL validator.
+     */
+
+    refers Operation operation
+    contains TechnologySpecificEndpoint[] endpoints opposite operationMapping
+    contains TechnologySpecificProtocolSpecification[] protocols
+    contains ParameterMapping[] parameterMappings opposite operationMapping
+    contains TechnologySpecificImportedServiceAspect[] aspects opposite operationMapping
+
+    container MicroserviceMapping microserviceMapping opposite operationMappings
+}
+
+/**
+ * Technology mapping for referred operations
+ */
+class ReferredOperationMapping {
+    /**
+     * Implicit Constraints:
+     *     (C1) An operation may only be mapped once.
+     *          Ensured by: DSL validator.
+     *     (C2) Mapping must not be empty.
+     *          Ensured by: DSL validator.
+     *     (C3) Communication types of mapped protocol specifications must be unique.
+     *          Ensured by: DSL validator.
+     *     (C4) Endpoint protocols must be unique.
+     *          Ensured by: DSL validator.
+     *     (C5) Endpoint addresses must be unique.
+     *          Ensured by: DSL validator.
+     */
+
+    refers ReferredOperation operation
+    contains TechnologySpecificEndpoint[] endpoints opposite referredOperationMapping
+    contains TechnologySpecificProtocolSpecification[] protocols
+    contains TechnologySpecificImportedServiceAspect[] aspects opposite referredOperationMapping
+
+    container MicroserviceMapping microserviceMapping opposite referredOperationMappings
+}
+
+/**
+ * Abstract superclass for technology mapping of operation parameters
+ */
+abstract class ParameterMapping {
+    refers Parameter parameter
+    contains TechnologySpecificImportedServiceAspect[] aspects opposite parameterMapping
+
+    container OperationMapping operationMapping opposite parameterMappings
+}
+
+/**
+ * Technology mapping for primitively typed parameters
+ */
+class PrimitiveParameterMapping extends ParameterMapping {
+    /**
+     * Implicit Constraints:
+     *     (C1) Type must be a technology-specific primitive from the parent microservice mapping's
+     *          assigned technology.
+     *          Ensured by: DSL scope provider.
+     */
+
+    refers TechnologySpecificPrimitiveType primitiveType
+}
+
+/**
+ * Technology mapping for complexly typed parameters
+ */
+class ComplexParameterMapping extends ParameterMapping {
+    /**
+     * Implicit Constraints:
+     *     (C1) A parameter may be mapped only once.
+     *          Ensured by: DSL validator.
+     *     (C2) Maps either a technology-specific complex type directly or individual data fields.
+     *          Ensured by: DSL scope provider.
+     *     (C3) Type must be a technology-specific complex type from the parent microservice
+     *          mapping's assigned technology.
+     *          Ensured by: DSL scope provider.
+     */
+
+    refers ComplexType technologySpecificComplexType
+    contains TechnologySpecificDataFieldTypeMapping[] dataFieldMappings opposite parameterMapping
+}
+
+/**
+ * Technology mapping for data fields of complexly typed parameters
+ */
+class TechnologySpecificDataFieldTypeMapping {
+    /**
+     * Implicit Constraints:
+     *     (C1) Type must be a technology-specific primitive or complex type from the parent
+     *          microservice mapping's assigned technology.
+     *          Ensured by: DSL scope provider.
+     */
+
+    refers Type ^type
+    contains DataFieldHierarchy dataFieldHierarchy opposite mapping
+    contains TechnologySpecificImportedServiceAspect[] aspects opposite dataFieldMapping
+
+    container ComplexParameterMapping parameterMapping opposite dataFieldMappings
+}
+
+/**
+ * Represents the "hierarchy" of data fields in complexly typed parameters. That is, if a data field
+ * itself is again complexly typed then its structure resides on the second level of the hierarchy.
+ */
+class DataFieldHierarchy {
+    refers DataField[] dataFields
+    contains DataFieldHierarchy previous  // pointer to previous hierarchy level
+
+    container TechnologySpecificDataFieldTypeMapping mapping opposite dataFieldHierarchy
+}
+
+/**
+ * Metamodel concept which represents a technology-specific protocol specification
+ */
+class TechnologySpecificProtocolSpecification {
+    /**
+     * Implicit Constraints:
+     *     (C1) Only one protocol per communication type may be mapped.
+     *          Ensured by: DSL validator.
+     */
+
+    CommunicationType communicationType
+
+    contains TechnologySpecificProtocol technologySpecificProtocol opposite protocolSpecification
+}
+
+/**
+ * Technology-specific protocol. It differs from the ImportedProtocolAndDataFormat concept of the
+ * Service Viewpoint metamodel in that it does not have a reference to an Import, because it always
+ * originates from the technology being assigned to the mapped microservice.
+ */
+class TechnologySpecificProtocol {
+    /**
+     * Implicit Constraints:
+     *     (C1) Protocol must be one from the technology assigned to the parent microservice
+     *          mapping.
+     *          Ensured by: DSL scope provider.
+     *     (C2) Data format must be one from the technology assigned to the parent microservice
+     *          mapping and correspond to the protocol.
+     *          Ensured by: DSL scope provider.
+     */
+
+    refers Protocol protocol
+    refers DataFormat[0..1] dataFormat
+
+    container TechnologySpecificProtocolSpecification protocolSpecification
+        opposite technologySpecificProtocol
+    container TechnologySpecificEndpoint endpoint opposite technologySpecificProtocols
+}
+
+/**
+ * Default and service-specific basic endpoints
+ */
+class TechnologySpecificEndpoint {
+    /**
+     * Implicit Constraints:
+     *     (C1) Addresses must be unique.
+     *          Ensured by: DSL validator.
+     *     (C2) Protocol/data format combinations must be unique.
+     *          Ensured by: DSL validator.
+     */
+
+    String[1..*] addresses
+    contains TechnologySpecificProtocol[1..*] technologySpecificProtocols opposite endpoint
+
+    container MicroserviceMapping microserviceMapping opposite endpoints
+    container InterfaceMapping interfaceMapping opposite endpoints
+    container OperationMapping operationMapping opposite endpoints
+    container ReferredOperationMapping referredOperationMapping opposite endpoints
+}
+
+/**
+ * Metamodel concept for service aspects being imported from a technology model
+ */
+class TechnologySpecificImportedServiceAspect {
+    /**
+     * Implicit Constraints:
+     *     (C1) An aspect may not be assigned twice to a concept instance.
+     *          Ensured by: DSL validator.
+     *     (C2) A single property value may only be assigned if the aspect has exactly one property.
+     *          Ensured by: DSL validator.
+     *     (C3) Property values must match the type of the aspect property as defined in the
+     *          technology being assigned to the parent microservice mapping.
+     *          Ensured by: DSL validator.
+     *     (C4) Mandatory properties must have values assigned.
+     *          Ensured by: DSL validator.
+     *     (C5) Aspect may only be assigned to a concept if all of its selectors match.
+     *          Ensured by: DSL scope provider.
+     */
+
+    refers ServiceAspect importedAspect
+    contains PrimitiveValue singlePropertyValue
+    contains TechnologySpecificPropertyValueAssignment[] values
+
+    container MicroserviceMapping microserviceMapping opposite aspects
+    container InterfaceMapping interfaceMapping opposite aspects
+    container OperationMapping operationMapping opposite aspects
+    container ReferredOperationMapping referredOperationMapping opposite aspects
+    container ParameterMapping parameterMapping opposite aspects
+    container TechnologySpecificDataFieldTypeMapping dataFieldMapping opposite aspects
+}

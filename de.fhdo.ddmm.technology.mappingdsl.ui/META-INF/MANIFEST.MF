@@ -1,0 +1,35 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: de.fhdo.ddmm.technology.mappingdsl.ui
+Bundle-Vendor: My Company
+Bundle-Version: 1.0.0.qualifier
+Bundle-SymbolicName: de.fhdo.ddmm.technology.mappingdsl.ui; singleton:=true
+Bundle-ActivationPolicy: lazy
+Require-Bundle: de.fhdo.ddmm.technology.mappingdsl,
+ de.fhdo.ddmm.technology.mappingdsl.ide,
+ TechnologyMappingModel,
+ org.eclipse.xtext.ui,
+ org.eclipse.xtext.ui.shared,
+ org.eclipse.xtext.ui.codetemplates.ui,
+ org.eclipse.ui.editors;bundle-version="3.5.0",
+ org.eclipse.ui.ide;bundle-version="3.5.0",
+ de.fhdo.ddmm.data.datadsl;bundle-version="1.0.0",
+ de.fhdo.ddmm.data.datadsl.ide;bundle-version="1.0.0",
+ de.fhdo.ddmm.data.datadsl.ui;bundle-version="1.0.0",
+ de.fhdo.ddmm.technology.technologydsl;bundle-version="1.0.0",
+ de.fhdo.ddmm.technology.technologydsl.ide;bundle-version="1.0.0",
+ de.fhdo.ddmm.technology.technologydsl.ui;bundle-version="1.0.0",
+ de.fhdo.ddmm.servicedsl;bundle-version="1.0.0",
+ de.fhdo.ddmm.servicedsl.ide;bundle-version="1.0.0",
+ de.fhdo.ddmm.servicedsl.ui;bundle-version="1.0.0",
+ org.eclipse.ui,
+ org.eclipse.compare,
+ org.eclipse.xtext.builder,
+ org.eclipse.xtend.lib;resolution:=optional,
+ org.eclipse.xtext.xbase.lib
+Import-Package: org.apache.log4j
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Export-Package: de.fhdo.ddmm.technology.mappingdsl.ui.contentassist,
+ de.fhdo.ddmm.technology.mappingdsl.ui.quickfix,
+ de.fhdo.ddmm.technology.mappingdsl.ui.internal
+Bundle-Activator: de.fhdo.ddmm.technology.mappingdsl.ui.internal.MappingdslActivator

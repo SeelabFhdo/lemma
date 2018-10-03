@@ -1,0 +1,22 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: de.fhdo.ddmm.technology.mappingdsl.ide
+Bundle-Vendor: My Company
+Bundle-Version: 1.0.0.qualifier
+Bundle-SymbolicName: de.fhdo.ddmm.technology.mappingdsl.ide; singleton:=true
+Bundle-ActivationPolicy: lazy
+Require-Bundle: de.fhdo.ddmm.technology.mappingdsl,
+ TechnologyMappingModel,
+ org.eclipse.xtext.ide,
+ org.eclipse.xtext.xbase.ide,
+ de.fhdo.ddmm.data.datadsl;bundle-version="1.0.0",
+ de.fhdo.ddmm.data.datadsl.ide;bundle-version="1.0.0",
+ de.fhdo.ddmm.technology.technologydsl;bundle-version="1.0.0",
+ de.fhdo.ddmm.technology.technologydsl.ide;bundle-version="1.0.0",
+ de.fhdo.ddmm.servicedsl;bundle-version="1.0.0",
+ de.fhdo.ddmm.servicedsl.ide;bundle-version="1.0.0",
+ org.antlr.runtime
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Export-Package: de.fhdo.ddmm.technology.mappingdsl.ide.contentassist.antlr.internal,
+ de.fhdo.ddmm.technology.mappingdsl.ide.contentassist.antlr
+
