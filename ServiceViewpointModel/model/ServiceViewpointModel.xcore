@@ -324,10 +324,10 @@ class Microservice {
     }*/
 
     /**
-     * Check if at least one of the microservice's interfaces has at least one implemented operation
+     * Convenience method to check if a microservice is effectively implemented
      */
-    derived boolean hasImplementedOperations get {
-        return interfaces.exists[hasImplementedOperations]
+    derived boolean effectivelyImplemented get {
+        return interfaces.exists[effectivelyImplemented]
     }
 
     /**
@@ -439,10 +439,10 @@ class Interface {
     }
 
     /**
-     * Check if interface has at least one implemented operation
+     * Convenience method to check if an interface is effectively implemented
      */
-    derived boolean hasImplementedOperations get {
-        return operations.exists[!notImplemented]
+    derived boolean effectivelyImplemented get {
+        return !notImplemented && operations.exists[!notImplemented]
     }
 
     /**

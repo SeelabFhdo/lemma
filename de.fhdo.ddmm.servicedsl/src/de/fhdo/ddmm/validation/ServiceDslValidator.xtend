@@ -218,7 +218,7 @@ class ServiceDslValidator extends AbstractServiceDslValidator {
      */
     @Check
     def warnNoImplementedOperations(PossiblyImportedInterface importedInterface) {
-        if (importedInterface.required && !importedInterface.interface.hasImplementedOperations)
+        if (importedInterface.required && !importedInterface.interface.effectivelyImplemented)
             warning("Interface does not define any implemented operation ", importedInterface,
                 ServicePackage::Literals.POSSIBLY_IMPORTED_INTERFACE__INTERFACE)
     }
@@ -228,7 +228,7 @@ class ServiceDslValidator extends AbstractServiceDslValidator {
      */
     @Check
     def warnNoImplementedOperations(PossiblyImportedMicroservice importedMicroservice) {
-        if (!importedMicroservice.microservice.hasImplementedOperations)
+        if (!importedMicroservice.microservice.effectivelyImplemented)
             warning("Microservice does not define any implemented operation ", importedMicroservice,
                 ServicePackage::Literals.POSSIBLY_IMPORTED_MICROSERVICE__MICROSERVICE)
     }
