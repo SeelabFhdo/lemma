@@ -7,6 +7,7 @@ import de.fhdo.ddmm.data.PrimitiveType
 import org.eclipse.xtext.naming.QualifiedName
 import de.fhdo.ddmm.technology.TechnologySpecificDataStructure
 import de.fhdo.ddmm.technology.TechnologySpecificListType
+import de.fhdo.ddmm.technology.Technology
 
 /**
  * This class defines _static_ utility methods to be used across DSLs' implementations for generic
@@ -67,5 +68,32 @@ class TypecheckingUtils {
         return type instanceof TechnologySpecificPrimitiveType ||
             type instanceof TechnologySpecificDataStructure ||
             type instanceof TechnologySpecificListType
+    }
+
+    /**
+     * Get technology of technology-specific type
+     */
+    static def getTechnology(Type type) {
+        if (type === null || !isTechnologySpecific(type))
+            return null
+
+        switch (type) {
+            TechnologySpecificPrimitiveType: type.technology
+            TechnologySpecificDataStructure: type.technology
+            TechnologySpecificListType: type.technology
+        }
+    }
+
+    /**
+     * Find default technology-specific primitive type for builtin primitive type
+     */
+    static def findDefaultTechnologySpecificPrimitiveType(Technology technology,
+        PrimitiveType primitiveType) {
+        if (technology === null || primitiveType === null)
+            return null
+
+        return technology.primitiveTypes.findFirst[
+            ^default && basicBuiltinPrimitiveTypes.exists[it.typeName === primitiveType.typeName]
+        ]
     }
 }

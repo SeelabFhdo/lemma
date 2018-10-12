@@ -24,11 +24,25 @@ class TypeChecker {
          * defined in a compatibility matrix. That is, both types are compatible "by definition" and
          * no further checks are necessary.
          */
-        if (TypecheckingUtils.isTechnologySpecific(basicType) &&
-            TypecheckingUtils.isTechnologySpecific(typeToCheck)) {
-            val matrixBasedChecker = new MatrixBasedTypeChecker()
-            if (matrixBasedChecker.compatible(basicType, typeToCheck))
-                return true
+        if (TypecheckingUtils.isTechnologySpecific(typeToCheck)) {
+            var technologySpecificBasicType = basicType
+            // If the basic type, i.e, the original parameter's type, is not technology-specific
+            // but a primitive type, try to retrieve the default technology-specific type mapping.
+            // If such a mapping exists, use the technology-specific mapping to query the
+            // compatibility matrix.
+            if (!TypecheckingUtils.isTechnologySpecific(technologySpecificBasicType) &&
+                technologySpecificBasicType instanceof PrimitiveType) {
+                val technology = TypecheckingUtils.getTechnology(typeToCheck)
+                technologySpecificBasicType = TypecheckingUtils
+                    .findDefaultTechnologySpecificPrimitiveType(technology,
+                        technologySpecificBasicType as PrimitiveType)
+            }
+
+            if (TypecheckingUtils.isTechnologySpecific(technologySpecificBasicType)) {
+                val matrixBasedChecker = new MatrixBasedTypeChecker()
+                if (matrixBasedChecker.compatible(typeToCheck, technologySpecificBasicType))
+                    return true
+            }
         }
 
         /*
