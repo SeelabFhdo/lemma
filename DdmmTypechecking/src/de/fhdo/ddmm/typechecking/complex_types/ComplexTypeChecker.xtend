@@ -164,7 +164,7 @@ class ComplexTypeChecker implements TypeCheckerI<ComplexType> {
     private def structuresCompatible(DataStructure basicStructure, DataStructure structureToCheck) {
         /*
          * Check if extension relationship between basic node and node to check is invalid. For an
-         * assignment, node to check may be a specialization of the basic node, but not vice versa,
+         * assignment, node to check may be a specialization of the basic node, but not vice versa.
          * For example, a Car is a Vehicle and a variable of type Vehicle may hold a Car instance.
          * On the other hand, a Vehicle is not a Car and a variable of type Car may not hold a
          * Vehicle instance.
@@ -174,8 +174,8 @@ class ComplexTypeChecker implements TypeCheckerI<ComplexType> {
          * basic type "extends" the type to check, i.e., if it exhibits more data fields. The
          * semantics of an inheritance extension may hence be circumvented, which is intentional.
          */
-        if (basicStructure.isExtensionOf(structureToCheck))
-            return false
+        if (structureToCheck.isExtensionOf(basicStructure))
+            return true
 
         /* Is basic type smaller than type to check? */
         val basicTypeIsSmaller = basicStructure.compareFieldCounts(structureToCheck) == -1
