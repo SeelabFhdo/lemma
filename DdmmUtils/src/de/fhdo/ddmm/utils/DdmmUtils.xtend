@@ -57,13 +57,15 @@ final class DdmmUtils {
      * "file://".
      */
     def static convertToFileUri(String uri) {
+        if (uri === null)
+            return null
+
         val scheme = URI.createURI(uri).scheme
         if (scheme !== null) {
             val uriWithoutScheme = uri.substring(scheme.length + 1)
             return "file://" + uriWithoutScheme
-        } else {
+        } else
             return "file://" + uri
-        }
     }
 
     /**
