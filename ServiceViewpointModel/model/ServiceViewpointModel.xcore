@@ -624,8 +624,6 @@ class Parameter {
     boolean communicatesFault = "false"
     boolean optional = "false"
 
-    //refers Import[0..1] initializedByImport
-    //refers Operation[0..1] initializedBy
     contains PossiblyImportedOperation[0..1] initializedByOperation  opposite initializedParameter
     contains ImportedType[0..1] importedType
     contains PrimitiveType[0..1] primitiveType
