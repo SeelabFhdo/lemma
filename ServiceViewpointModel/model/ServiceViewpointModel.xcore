@@ -11,6 +11,7 @@ import de.fhdo.ddmm.technology.ServiceAspect
 import de.fhdo.ddmm.technology.TechnologySpecificPrimitiveType
 import de.fhdo.ddmm.technology.TechnologySpecificPropertyValueAssignment
 import de.fhdo.ddmm.data.ComplexType
+import java.util.Map
 
 /**
  * This metamodel represents the Service Modeling Viewpoint, which is used for defining services.
@@ -250,19 +251,19 @@ class Microservice {
      * Get all microservices that are directly or indirectly (i.e., from required interfaces and
      * operations) required by this microservice
      */
-    op PossiblyImportedMicroservice[] getAllRequiredMicroservices() {
-        val microservices = <PossiblyImportedMicroservice> newHashSet
+    op MicroserviceImportMap getAllRequiredMicroservices() {
+        val microservices = <Microservice, Import> newHashMap
 
-        if (requiredMicroservices !== null && !requiredMicroservices.empty)
-            microservices.addAll(requiredMicroservices)
+        if (requiredMicroservices !== null)
+            requiredMicroservices.forEach[microservices.put(microservice, import)]
 
-        if (requiredInterfaces !== null && !requiredInterfaces.empty)
-            microservices.addAll(requiredInterfaces.map[interface.microservice])
+        if (requiredInterfaces !== null)
+            requiredInterfaces.forEach[microservices.put(interface.microservice, import)]
 
-        if (requiredOperations !== null && !requiredOperations.empty)
-            microservices.addAll(requiredOperations.map[operation.interface.microservice])
+        if (requiredOperations !== null)
+            requiredOperations.forEach[microservices.put(operation.interface.microservice, import)]
 
-        return microservices.asEList
+        return microservices
     }
 
     /**
@@ -915,3 +916,5 @@ class ImportedServiceAspect {
     container ReferredOperation referredOperation opposite aspects
     container Parameter parameter opposite aspects
 }
+
+type MicroserviceImportMap wraps Map<Microservice, Import>

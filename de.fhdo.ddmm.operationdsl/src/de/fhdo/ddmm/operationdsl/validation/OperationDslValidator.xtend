@@ -402,7 +402,7 @@ class OperationDslValidator extends AbstractOperationDslValidator {
              * import aliases from the deployed imported microservice's service model
              */
             val requiredServices = <Microservice, String> newHashMap
-            deployedService.allRequiredMicroservices.forEach[
+            deployedService.allRequiredMicroservices.forEach[microservice, import |
                 var requiredName = if (import !== null) import.name + "::" else ""
                 requiredName += QualifiedName.create(microservice.qualifiedNameParts).toString
                 requiredServices.put(microservice, requiredName)
