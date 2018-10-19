@@ -635,7 +635,7 @@ class Parameter {
     /**
      * Check if a parameter is _basically_ initializable by a given operation. This basic check does
      * not include the comparatively "expensive" type compatibility checking, but only those formal
-     * checks that are based on direct characteristics of the paramater and the initializing
+     * checks that are based on direct characteristics of the parameter and the initializing
      * operation.
      */
     op boolean basicallyInitializableBy(Operation initializingOperation) {
