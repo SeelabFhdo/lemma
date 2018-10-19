@@ -126,11 +126,34 @@ public class TechnologySpecificListTypeImpl extends ComplexTypeImpl implements T
                 return ECollections.<String>asEList(CollectionLiterals.<String>newArrayList());
             }
             final ArrayList<String> nameParts = CollectionLiterals.<String>newArrayList();
-            nameParts.add("types");
+            nameParts.add("_types");
             nameParts.add(this.getName());
             _xblockexpression = ECollections.<String>asEList(nameParts);
         }
         return _xblockexpression;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public String buildQualifiedName(final String separator) {
+        if ((separator == null)) {
+            return null;
+        }
+        String qualifiedName = "";
+        EList<String> _qualifiedNameParts = this.getQualifiedNameParts();
+        for (final String part : _qualifiedNameParts) {
+            String _qualifiedName = qualifiedName;
+            qualifiedName = (_qualifiedName + (separator + part));
+        }
+        boolean _isEmpty = qualifiedName.isEmpty();
+        boolean _not = (!_isEmpty);
+        if (_not) {
+            qualifiedName = qualifiedName.substring(separator.length());
+        }
+        return qualifiedName;
     }
 
     /**
@@ -246,6 +269,7 @@ public class TechnologySpecificListTypeImpl extends ComplexTypeImpl implements T
         if (baseClass == ComplexType.class) {
             switch (baseOperationID) {
                 case DataPackage.COMPLEX_TYPE___GET_QUALIFIED_NAME_PARTS: return TechnologyPackage.TECHNOLOGY_SPECIFIC_LIST_TYPE___GET_QUALIFIED_NAME_PARTS;
+                case DataPackage.COMPLEX_TYPE___BUILD_QUALIFIED_NAME__STRING: return TechnologyPackage.TECHNOLOGY_SPECIFIC_LIST_TYPE___BUILD_QUALIFIED_NAME__STRING;
                 default: return super.eDerivedOperationID(baseOperationID, baseClass);
             }
         }
@@ -262,6 +286,8 @@ public class TechnologySpecificListTypeImpl extends ComplexTypeImpl implements T
         switch (operationID) {
             case TechnologyPackage.TECHNOLOGY_SPECIFIC_LIST_TYPE___GET_QUALIFIED_NAME_PARTS:
                 return getQualifiedNameParts();
+            case TechnologyPackage.TECHNOLOGY_SPECIFIC_LIST_TYPE___BUILD_QUALIFIED_NAME__STRING:
+                return buildQualifiedName((String)arguments.get(0));
         }
         return super.eInvoke(operationID, arguments);
     }

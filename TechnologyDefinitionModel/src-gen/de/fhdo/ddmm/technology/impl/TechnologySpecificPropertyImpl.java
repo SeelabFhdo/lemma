@@ -31,10 +31,10 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  * <ul>
  *   <li>{@link de.fhdo.ddmm.technology.impl.TechnologySpecificPropertyImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.fhdo.ddmm.technology.impl.TechnologySpecificPropertyImpl#isMandatory <em>Mandatory</em>}</li>
- *   <li>{@link de.fhdo.ddmm.technology.impl.TechnologySpecificPropertyImpl#getOperationTechnology <em>Operation Technology</em>}</li>
- *   <li>{@link de.fhdo.ddmm.technology.impl.TechnologySpecificPropertyImpl#getTechnologyAspect <em>Technology Aspect</em>}</li>
  *   <li>{@link de.fhdo.ddmm.technology.impl.TechnologySpecificPropertyImpl#getType <em>Type</em>}</li>
  *   <li>{@link de.fhdo.ddmm.technology.impl.TechnologySpecificPropertyImpl#getDefaultValue <em>Default Value</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.technology.impl.TechnologySpecificPropertyImpl#getOperationTechnology <em>Operation Technology</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.technology.impl.TechnologySpecificPropertyImpl#getTechnologyAspect <em>Technology Aspect</em>}</li>
  * </ul>
  *
  * @generated
@@ -166,6 +166,92 @@ public class TechnologySpecificPropertyImpl extends MinimalEObjectImpl.Container
      * <!-- end-user-doc -->
      * @generated
      */
+    public PrimitiveType getType() {
+        return type;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public NotificationChain basicSetType(PrimitiveType newType, NotificationChain msgs) {
+        PrimitiveType oldType = type;
+        type = newType;
+        if (eNotificationRequired()) {
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__TYPE, oldType, newType);
+            if (msgs == null) msgs = notification; else msgs.add(notification);
+        }
+        return msgs;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setType(PrimitiveType newType) {
+        if (newType != type) {
+            NotificationChain msgs = null;
+            if (type != null)
+                msgs = ((InternalEObject)type).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__TYPE, null, msgs);
+            if (newType != null)
+                msgs = ((InternalEObject)newType).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__TYPE, null, msgs);
+            msgs = basicSetType(newType, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__TYPE, newType, newType));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public PrimitiveValue getDefaultValue() {
+        return defaultValue;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public NotificationChain basicSetDefaultValue(PrimitiveValue newDefaultValue, NotificationChain msgs) {
+        PrimitiveValue oldDefaultValue = defaultValue;
+        defaultValue = newDefaultValue;
+        if (eNotificationRequired()) {
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__DEFAULT_VALUE, oldDefaultValue, newDefaultValue);
+            if (msgs == null) msgs = notification; else msgs.add(notification);
+        }
+        return msgs;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setDefaultValue(PrimitiveValue newDefaultValue) {
+        if (newDefaultValue != defaultValue) {
+            NotificationChain msgs = null;
+            if (defaultValue != null)
+                msgs = ((InternalEObject)defaultValue).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__DEFAULT_VALUE, null, msgs);
+            if (newDefaultValue != null)
+                msgs = ((InternalEObject)newDefaultValue).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__DEFAULT_VALUE, null, msgs);
+            msgs = basicSetDefaultValue(newDefaultValue, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__DEFAULT_VALUE, newDefaultValue, newDefaultValue));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public OperationTechnology getOperationTechnology() {
         if (eContainerFeatureID() != TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__OPERATION_TECHNOLOGY) return null;
         return (OperationTechnology)eContainer();
@@ -268,92 +354,6 @@ public class TechnologySpecificPropertyImpl extends MinimalEObjectImpl.Container
      * <!-- end-user-doc -->
      * @generated
      */
-    public PrimitiveType getType() {
-        return type;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public NotificationChain basicSetType(PrimitiveType newType, NotificationChain msgs) {
-        PrimitiveType oldType = type;
-        type = newType;
-        if (eNotificationRequired()) {
-            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__TYPE, oldType, newType);
-            if (msgs == null) msgs = notification; else msgs.add(notification);
-        }
-        return msgs;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setType(PrimitiveType newType) {
-        if (newType != type) {
-            NotificationChain msgs = null;
-            if (type != null)
-                msgs = ((InternalEObject)type).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__TYPE, null, msgs);
-            if (newType != null)
-                msgs = ((InternalEObject)newType).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__TYPE, null, msgs);
-            msgs = basicSetType(newType, msgs);
-            if (msgs != null) msgs.dispatch();
-        }
-        else if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__TYPE, newType, newType));
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public PrimitiveValue getDefaultValue() {
-        return defaultValue;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public NotificationChain basicSetDefaultValue(PrimitiveValue newDefaultValue, NotificationChain msgs) {
-        PrimitiveValue oldDefaultValue = defaultValue;
-        defaultValue = newDefaultValue;
-        if (eNotificationRequired()) {
-            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__DEFAULT_VALUE, oldDefaultValue, newDefaultValue);
-            if (msgs == null) msgs = notification; else msgs.add(notification);
-        }
-        return msgs;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setDefaultValue(PrimitiveValue newDefaultValue) {
-        if (newDefaultValue != defaultValue) {
-            NotificationChain msgs = null;
-            if (defaultValue != null)
-                msgs = ((InternalEObject)defaultValue).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__DEFAULT_VALUE, null, msgs);
-            if (newDefaultValue != null)
-                msgs = ((InternalEObject)newDefaultValue).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__DEFAULT_VALUE, null, msgs);
-            msgs = basicSetDefaultValue(newDefaultValue, msgs);
-            if (msgs != null) msgs.dispatch();
-        }
-        else if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__DEFAULT_VALUE, newDefaultValue, newDefaultValue));
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     @Override
     public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
@@ -377,14 +377,14 @@ public class TechnologySpecificPropertyImpl extends MinimalEObjectImpl.Container
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
-            case TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__OPERATION_TECHNOLOGY:
-                return basicSetOperationTechnology(null, msgs);
-            case TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__TECHNOLOGY_ASPECT:
-                return basicSetTechnologyAspect(null, msgs);
             case TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__TYPE:
                 return basicSetType(null, msgs);
             case TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__DEFAULT_VALUE:
                 return basicSetDefaultValue(null, msgs);
+            case TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__OPERATION_TECHNOLOGY:
+                return basicSetOperationTechnology(null, msgs);
+            case TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__TECHNOLOGY_ASPECT:
+                return basicSetTechnologyAspect(null, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
@@ -417,16 +417,16 @@ public class TechnologySpecificPropertyImpl extends MinimalEObjectImpl.Container
                 return getName();
             case TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__MANDATORY:
                 return isMandatory();
+            case TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__TYPE:
+                return getType();
+            case TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__DEFAULT_VALUE:
+                return getDefaultValue();
             case TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__OPERATION_TECHNOLOGY:
                 if (resolve) return getOperationTechnology();
                 return basicGetOperationTechnology();
             case TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__TECHNOLOGY_ASPECT:
                 if (resolve) return getTechnologyAspect();
                 return basicGetTechnologyAspect();
-            case TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__TYPE:
-                return getType();
-            case TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__DEFAULT_VALUE:
-                return getDefaultValue();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -445,17 +445,17 @@ public class TechnologySpecificPropertyImpl extends MinimalEObjectImpl.Container
             case TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__MANDATORY:
                 setMandatory((Boolean)newValue);
                 return;
-            case TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__OPERATION_TECHNOLOGY:
-                setOperationTechnology((OperationTechnology)newValue);
-                return;
-            case TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__TECHNOLOGY_ASPECT:
-                setTechnologyAspect((TechnologyAspect)newValue);
-                return;
             case TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__TYPE:
                 setType((PrimitiveType)newValue);
                 return;
             case TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__DEFAULT_VALUE:
                 setDefaultValue((PrimitiveValue)newValue);
+                return;
+            case TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__OPERATION_TECHNOLOGY:
+                setOperationTechnology((OperationTechnology)newValue);
+                return;
+            case TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__TECHNOLOGY_ASPECT:
+                setTechnologyAspect((TechnologyAspect)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -475,17 +475,17 @@ public class TechnologySpecificPropertyImpl extends MinimalEObjectImpl.Container
             case TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__MANDATORY:
                 setMandatory(MANDATORY_EDEFAULT);
                 return;
-            case TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__OPERATION_TECHNOLOGY:
-                setOperationTechnology((OperationTechnology)null);
-                return;
-            case TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__TECHNOLOGY_ASPECT:
-                setTechnologyAspect((TechnologyAspect)null);
-                return;
             case TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__TYPE:
                 setType((PrimitiveType)null);
                 return;
             case TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__DEFAULT_VALUE:
                 setDefaultValue((PrimitiveValue)null);
+                return;
+            case TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__OPERATION_TECHNOLOGY:
+                setOperationTechnology((OperationTechnology)null);
+                return;
+            case TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__TECHNOLOGY_ASPECT:
+                setTechnologyAspect((TechnologyAspect)null);
                 return;
         }
         super.eUnset(featureID);
@@ -503,14 +503,14 @@ public class TechnologySpecificPropertyImpl extends MinimalEObjectImpl.Container
                 return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
             case TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__MANDATORY:
                 return mandatory != MANDATORY_EDEFAULT;
-            case TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__OPERATION_TECHNOLOGY:
-                return basicGetOperationTechnology() != null;
-            case TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__TECHNOLOGY_ASPECT:
-                return basicGetTechnologyAspect() != null;
             case TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__TYPE:
                 return type != null;
             case TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__DEFAULT_VALUE:
                 return defaultValue != null;
+            case TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__OPERATION_TECHNOLOGY:
+                return basicGetOperationTechnology() != null;
+            case TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__TECHNOLOGY_ASPECT:
+                return basicGetTechnologyAspect() != null;
         }
         return super.eIsSet(featureID);
     }

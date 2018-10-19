@@ -244,13 +244,40 @@ public interface ServicePackage extends EPackage {
     int MICROSERVICE__VISIBILITY = 3;
 
     /**
+     * The feature id for the '<em><b>Tdefault Protocols</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MICROSERVICE__TDEFAULT_PROTOCOLS = 4;
+
+    /**
      * The feature id for the '<em><b>Technologies</b></em>' reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int MICROSERVICE__TECHNOLOGIES = 4;
+    int MICROSERVICE__TECHNOLOGIES = 5;
+
+    /**
+     * The feature id for the '<em><b>Ttype Definition Technology Import</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MICROSERVICE__TTYPE_DEFINITION_TECHNOLOGY_IMPORT = 6;
+
+    /**
+     * The feature id for the '<em><b>Ttype Definition Technology</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MICROSERVICE__TTYPE_DEFINITION_TECHNOLOGY = 7;
 
     /**
      * The feature id for the '<em><b>Endpoints</b></em>' containment reference list.
@@ -259,7 +286,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MICROSERVICE__ENDPOINTS = 5;
+    int MICROSERVICE__ENDPOINTS = 8;
 
     /**
      * The feature id for the '<em><b>Required Microservices</b></em>' containment reference list.
@@ -268,7 +295,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MICROSERVICE__REQUIRED_MICROSERVICES = 6;
+    int MICROSERVICE__REQUIRED_MICROSERVICES = 9;
 
     /**
      * The feature id for the '<em><b>Required Interfaces</b></em>' containment reference list.
@@ -277,7 +304,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MICROSERVICE__REQUIRED_INTERFACES = 7;
+    int MICROSERVICE__REQUIRED_INTERFACES = 10;
 
     /**
      * The feature id for the '<em><b>Required Operations</b></em>' containment reference list.
@@ -286,7 +313,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MICROSERVICE__REQUIRED_OPERATIONS = 8;
+    int MICROSERVICE__REQUIRED_OPERATIONS = 11;
 
     /**
      * The feature id for the '<em><b>Protocols</b></em>' containment reference list.
@@ -295,7 +322,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MICROSERVICE__PROTOCOLS = 9;
+    int MICROSERVICE__PROTOCOLS = 12;
 
     /**
      * The feature id for the '<em><b>Interfaces</b></em>' containment reference list.
@@ -304,7 +331,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MICROSERVICE__INTERFACES = 10;
+    int MICROSERVICE__INTERFACES = 13;
 
     /**
      * The feature id for the '<em><b>Aspects</b></em>' containment reference list.
@@ -313,7 +340,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MICROSERVICE__ASPECTS = 11;
+    int MICROSERVICE__ASPECTS = 14;
 
     /**
      * The feature id for the '<em><b>Service Model</b></em>' container reference.
@@ -322,7 +349,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MICROSERVICE__SERVICE_MODEL = 12;
+    int MICROSERVICE__SERVICE_MODEL = 15;
 
     /**
      * The feature id for the '<em><b>Effectively Implemented</b></em>' attribute.
@@ -331,7 +358,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MICROSERVICE__EFFECTIVELY_IMPLEMENTED = 13;
+    int MICROSERVICE__EFFECTIVELY_IMPLEMENTED = 16;
 
     /**
      * The feature id for the '<em><b>Effective Visibility</b></em>' attribute.
@@ -340,7 +367,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MICROSERVICE__EFFECTIVE_VISIBILITY = 14;
+    int MICROSERVICE__EFFECTIVE_VISIBILITY = 17;
 
     /**
      * The feature id for the '<em><b>Effectively Internal</b></em>' attribute.
@@ -349,7 +376,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MICROSERVICE__EFFECTIVELY_INTERNAL = 15;
+    int MICROSERVICE__EFFECTIVELY_INTERNAL = 18;
 
     /**
      * The number of structural features of the '<em>Microservice</em>' class.
@@ -358,7 +385,61 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MICROSERVICE_FEATURE_COUNT = 16;
+    int MICROSERVICE_FEATURE_COUNT = 19;
+
+    /**
+     * The operation id for the '<em>Tmissing Endpoint Effective Protocols</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MICROSERVICE___TMISSING_ENDPOINT_EFFECTIVE_PROTOCOLS = 0;
+
+    /**
+     * The operation id for the '<em>Teffective Protocol Specifications</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MICROSERVICE___TEFFECTIVE_PROTOCOL_SPECIFICATIONS = 1;
+
+    /**
+     * The operation id for the '<em>Get Type Definition Technology Imports</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MICROSERVICE___GET_TYPE_DEFINITION_TECHNOLOGY_IMPORTS = 2;
+
+    /**
+     * The operation id for the '<em>Get Type Definition Technology Import</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MICROSERVICE___GET_TYPE_DEFINITION_TECHNOLOGY_IMPORT = 3;
+
+    /**
+     * The operation id for the '<em>Get Type Definition Technologies</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MICROSERVICE___GET_TYPE_DEFINITION_TECHNOLOGIES = 4;
+
+    /**
+     * The operation id for the '<em>Get Type Definition Technology</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MICROSERVICE___GET_TYPE_DEFINITION_TECHNOLOGY = 5;
 
     /**
      * The operation id for the '<em>Get Qualified Name Parts</em>' operation.
@@ -367,7 +448,16 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MICROSERVICE___GET_QUALIFIED_NAME_PARTS = 0;
+    int MICROSERVICE___GET_QUALIFIED_NAME_PARTS = 6;
+
+    /**
+     * The operation id for the '<em>Build Qualified Name</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MICROSERVICE___BUILD_QUALIFIED_NAME__STRING = 7;
 
     /**
      * The operation id for the '<em>Get Contained Operations</em>' operation.
@@ -376,7 +466,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MICROSERVICE___GET_CONTAINED_OPERATIONS = 1;
+    int MICROSERVICE___GET_CONTAINED_OPERATIONS = 8;
 
     /**
      * The operation id for the '<em>Get Contained Referred Operations</em>' operation.
@@ -385,7 +475,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MICROSERVICE___GET_CONTAINED_REFERRED_OPERATIONS = 2;
+    int MICROSERVICE___GET_CONTAINED_REFERRED_OPERATIONS = 9;
 
     /**
      * The operation id for the '<em>Get Required Imports</em>' operation.
@@ -394,7 +484,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MICROSERVICE___GET_REQUIRED_IMPORTS = 3;
+    int MICROSERVICE___GET_REQUIRED_IMPORTS = 10;
 
     /**
      * The operation id for the '<em>Get All Required Operations</em>' operation.
@@ -403,7 +493,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MICROSERVICE___GET_ALL_REQUIRED_OPERATIONS__IMPORT = 4;
+    int MICROSERVICE___GET_ALL_REQUIRED_OPERATIONS__IMPORT = 11;
 
     /**
      * The operation id for the '<em>Get All Required Microservices</em>' operation.
@@ -412,7 +502,16 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MICROSERVICE___GET_ALL_REQUIRED_MICROSERVICES = 5;
+    int MICROSERVICE___GET_ALL_REQUIRED_MICROSERVICES = 12;
+
+    /**
+     * The operation id for the '<em>Get All Initializing Microservices</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MICROSERVICE___GET_ALL_INITIALIZING_MICROSERVICES = 13;
 
     /**
      * The operation id for the '<em>Can Require</em>' operation.
@@ -421,7 +520,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MICROSERVICE___CAN_REQUIRE__MICROSERVICE_BOOLEAN = 6;
+    int MICROSERVICE___CAN_REQUIRE__MICROSERVICE_BOOLEAN = 14;
 
     /**
      * The operation id for the '<em>Can Require</em>' operation.
@@ -430,7 +529,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MICROSERVICE___CAN_REQUIRE__INTERFACE_BOOLEAN = 7;
+    int MICROSERVICE___CAN_REQUIRE__INTERFACE_BOOLEAN = 15;
 
     /**
      * The operation id for the '<em>Can Require</em>' operation.
@@ -439,7 +538,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MICROSERVICE___CAN_REQUIRE__OPERATION_BOOLEAN = 8;
+    int MICROSERVICE___CAN_REQUIRE__OPERATION_BOOLEAN = 16;
 
     /**
      * The number of operations of the '<em>Microservice</em>' class.
@@ -448,7 +547,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MICROSERVICE_OPERATION_COUNT = 9;
+    int MICROSERVICE_OPERATION_COUNT = 17;
 
     /**
      * The meta object id for the '{@link de.fhdo.ddmm.service.impl.InterfaceImpl <em>Interface</em>}' class.
@@ -578,13 +677,40 @@ public interface ServicePackage extends EPackage {
     int INTERFACE_FEATURE_COUNT = 12;
 
     /**
+     * The operation id for the '<em>Tmissing Endpoint Effective Protocols</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERFACE___TMISSING_ENDPOINT_EFFECTIVE_PROTOCOLS = 0;
+
+    /**
+     * The operation id for the '<em>Teffective Protocol Specifications</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERFACE___TEFFECTIVE_PROTOCOL_SPECIFICATIONS = 1;
+
+    /**
      * The operation id for the '<em>Get Qualified Name Parts</em>' operation.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int INTERFACE___GET_QUALIFIED_NAME_PARTS = 0;
+    int INTERFACE___GET_QUALIFIED_NAME_PARTS = 2;
+
+    /**
+     * The operation id for the '<em>Build Qualified Name</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERFACE___BUILD_QUALIFIED_NAME__STRING = 3;
 
     /**
      * The number of operations of the '<em>Interface</em>' class.
@@ -593,7 +719,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERFACE_OPERATION_COUNT = 1;
+    int INTERFACE_OPERATION_COUNT = 4;
 
     /**
      * The meta object id for the '{@link de.fhdo.ddmm.service.impl.OperationImpl <em>Operation</em>}' class.
@@ -723,13 +849,40 @@ public interface ServicePackage extends EPackage {
     int OPERATION_FEATURE_COUNT = 12;
 
     /**
+     * The operation id for the '<em>Tmissing Endpoint Effective Protocols</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int OPERATION___TMISSING_ENDPOINT_EFFECTIVE_PROTOCOLS = 0;
+
+    /**
+     * The operation id for the '<em>Teffective Protocol Specifications</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int OPERATION___TEFFECTIVE_PROTOCOL_SPECIFICATIONS = 1;
+
+    /**
      * The operation id for the '<em>Get Qualified Name Parts</em>' operation.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int OPERATION___GET_QUALIFIED_NAME_PARTS = 0;
+    int OPERATION___GET_QUALIFIED_NAME_PARTS = 2;
+
+    /**
+     * The operation id for the '<em>Build Qualified Name</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int OPERATION___BUILD_QUALIFIED_NAME__STRING = 3;
 
     /**
      * The number of operations of the '<em>Operation</em>' class.
@@ -738,7 +891,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int OPERATION_OPERATION_COUNT = 1;
+    int OPERATION_OPERATION_COUNT = 4;
 
     /**
      * The meta object id for the '{@link de.fhdo.ddmm.service.impl.ReferredOperationImpl <em>Referred Operation</em>}' class.
@@ -805,13 +958,40 @@ public interface ServicePackage extends EPackage {
     int REFERRED_OPERATION_FEATURE_COUNT = 5;
 
     /**
+     * The operation id for the '<em>Tmissing Endpoint Effective Protocols</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int REFERRED_OPERATION___TMISSING_ENDPOINT_EFFECTIVE_PROTOCOLS = 0;
+
+    /**
+     * The operation id for the '<em>Teffective Protocol Specifications</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int REFERRED_OPERATION___TEFFECTIVE_PROTOCOL_SPECIFICATIONS = 1;
+
+    /**
      * The operation id for the '<em>Get Qualified Name Parts</em>' operation.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int REFERRED_OPERATION___GET_QUALIFIED_NAME_PARTS = 0;
+    int REFERRED_OPERATION___GET_QUALIFIED_NAME_PARTS = 2;
+
+    /**
+     * The operation id for the '<em>Build Qualified Name</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int REFERRED_OPERATION___BUILD_QUALIFIED_NAME__STRING = 3;
 
     /**
      * The number of operations of the '<em>Referred Operation</em>' class.
@@ -820,7 +1000,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int REFERRED_OPERATION_OPERATION_COUNT = 1;
+    int REFERRED_OPERATION_OPERATION_COUNT = 4;
 
     /**
      * The meta object id for the '{@link de.fhdo.ddmm.service.impl.ParameterImpl <em>Parameter</em>}' class.
@@ -914,13 +1094,22 @@ public interface ServicePackage extends EPackage {
     int PARAMETER__ASPECTS = 8;
 
     /**
+     * The feature id for the '<em><b>Mapped Data Fields</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PARAMETER__MAPPED_DATA_FIELDS = 9;
+
+    /**
      * The feature id for the '<em><b>Operation</b></em>' container reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int PARAMETER__OPERATION = 9;
+    int PARAMETER__OPERATION = 10;
 
     /**
      * The number of structural features of the '<em>Parameter</em>' class.
@@ -929,7 +1118,25 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int PARAMETER_FEATURE_COUNT = 10;
+    int PARAMETER_FEATURE_COUNT = 11;
+
+    /**
+     * The operation id for the '<em>Get Qualified Name Parts</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PARAMETER___GET_QUALIFIED_NAME_PARTS = 0;
+
+    /**
+     * The operation id for the '<em>Build Qualified Name</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PARAMETER___BUILD_QUALIFIED_NAME__STRING = 1;
 
     /**
      * The operation id for the '<em>Basically Initializable By</em>' operation.
@@ -938,7 +1145,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int PARAMETER___BASICALLY_INITIALIZABLE_BY__OPERATION = 0;
+    int PARAMETER___BASICALLY_INITIALIZABLE_BY__OPERATION = 2;
 
     /**
      * The operation id for the '<em>Get Effective Type</em>' operation.
@@ -947,7 +1154,16 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int PARAMETER___GET_EFFECTIVE_TYPE = 1;
+    int PARAMETER___GET_EFFECTIVE_TYPE = 3;
+
+    /**
+     * The operation id for the '<em>Is Technology Specific Effective Type</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PARAMETER___IS_TECHNOLOGY_SPECIFIC_EFFECTIVE_TYPE = 4;
 
     /**
      * The operation id for the '<em>Get Effective Type Qualified Name Parts</em>' operation.
@@ -956,7 +1172,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int PARAMETER___GET_EFFECTIVE_TYPE_QUALIFIED_NAME_PARTS = 2;
+    int PARAMETER___GET_EFFECTIVE_TYPE_QUALIFIED_NAME_PARTS = 5;
 
     /**
      * The number of operations of the '<em>Parameter</em>' class.
@@ -965,7 +1181,98 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int PARAMETER_OPERATION_COUNT = 3;
+    int PARAMETER_OPERATION_COUNT = 6;
+
+    /**
+     * The meta object id for the '{@link de.fhdo.ddmm.service.impl.MappedDataFieldImpl <em>Mapped Data Field</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.fhdo.ddmm.service.impl.MappedDataFieldImpl
+     * @see de.fhdo.ddmm.service.impl.ServicePackageImpl#getMappedDataField()
+     * @generated
+     */
+    int MAPPED_DATA_FIELD = 7;
+
+    /**
+     * The feature id for the '<em><b>Data Field</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MAPPED_DATA_FIELD__DATA_FIELD = 0;
+
+    /**
+     * The feature id for the '<em><b>Mapped Type</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MAPPED_DATA_FIELD__MAPPED_TYPE = 1;
+
+    /**
+     * The feature id for the '<em><b>Aspects</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MAPPED_DATA_FIELD__ASPECTS = 2;
+
+    /**
+     * The feature id for the '<em><b>Parameter</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MAPPED_DATA_FIELD__PARAMETER = 3;
+
+    /**
+     * The number of structural features of the '<em>Mapped Data Field</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MAPPED_DATA_FIELD_FEATURE_COUNT = 4;
+
+    /**
+     * The operation id for the '<em>Get Qualified Name Parts</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MAPPED_DATA_FIELD___GET_QUALIFIED_NAME_PARTS = 0;
+
+    /**
+     * The operation id for the '<em>Build Qualified Name</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MAPPED_DATA_FIELD___BUILD_QUALIFIED_NAME__STRING = 1;
+
+    /**
+     * The operation id for the '<em>Get Effective Type</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MAPPED_DATA_FIELD___GET_EFFECTIVE_TYPE = 2;
+
+    /**
+     * The number of operations of the '<em>Mapped Data Field</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MAPPED_DATA_FIELD_OPERATION_COUNT = 3;
 
     /**
      * The meta object id for the '{@link de.fhdo.ddmm.service.impl.PossiblyImportedMicroserviceImpl <em>Possibly Imported Microservice</em>}' class.
@@ -975,7 +1282,7 @@ public interface ServicePackage extends EPackage {
      * @see de.fhdo.ddmm.service.impl.ServicePackageImpl#getPossiblyImportedMicroservice()
      * @generated
      */
-    int POSSIBLY_IMPORTED_MICROSERVICE = 7;
+    int POSSIBLY_IMPORTED_MICROSERVICE = 8;
 
     /**
      * The feature id for the '<em><b>Import</b></em>' reference.
@@ -1030,7 +1337,7 @@ public interface ServicePackage extends EPackage {
      * @see de.fhdo.ddmm.service.impl.ServicePackageImpl#getPossiblyImportedInterface()
      * @generated
      */
-    int POSSIBLY_IMPORTED_INTERFACE = 8;
+    int POSSIBLY_IMPORTED_INTERFACE = 9;
 
     /**
      * The feature id for the '<em><b>Import</b></em>' reference.
@@ -1103,7 +1410,7 @@ public interface ServicePackage extends EPackage {
      * @see de.fhdo.ddmm.service.impl.ServicePackageImpl#getPossiblyImportedOperation()
      * @generated
      */
-    int POSSIBLY_IMPORTED_OPERATION = 9;
+    int POSSIBLY_IMPORTED_OPERATION = 10;
 
     /**
      * The feature id for the '<em><b>Import</b></em>' reference.
@@ -1203,7 +1510,7 @@ public interface ServicePackage extends EPackage {
      * @see de.fhdo.ddmm.service.impl.ServicePackageImpl#getImportedType()
      * @generated
      */
-    int IMPORTED_TYPE = 10;
+    int IMPORTED_TYPE = 11;
 
     /**
      * The feature id for the '<em><b>Import</b></em>' reference.
@@ -1249,7 +1556,7 @@ public interface ServicePackage extends EPackage {
      * @see de.fhdo.ddmm.service.impl.ServicePackageImpl#getImportedProtocolAndDataFormat()
      * @generated
      */
-    int IMPORTED_PROTOCOL_AND_DATA_FORMAT = 11;
+    int IMPORTED_PROTOCOL_AND_DATA_FORMAT = 12;
 
     /**
      * The feature id for the '<em><b>Import</b></em>' reference.
@@ -1288,13 +1595,22 @@ public interface ServicePackage extends EPackage {
     int IMPORTED_PROTOCOL_AND_DATA_FORMAT__SPECIFICATION = 3;
 
     /**
+     * The feature id for the '<em><b>Endpoint</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int IMPORTED_PROTOCOL_AND_DATA_FORMAT__ENDPOINT = 4;
+
+    /**
      * The number of structural features of the '<em>Imported Protocol And Data Format</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int IMPORTED_PROTOCOL_AND_DATA_FORMAT_FEATURE_COUNT = 4;
+    int IMPORTED_PROTOCOL_AND_DATA_FORMAT_FEATURE_COUNT = 5;
 
     /**
      * The number of operations of the '<em>Imported Protocol And Data Format</em>' class.
@@ -1313,7 +1629,7 @@ public interface ServicePackage extends EPackage {
      * @see de.fhdo.ddmm.service.impl.ServicePackageImpl#getProtocolSpecification()
      * @generated
      */
-    int PROTOCOL_SPECIFICATION = 12;
+    int PROTOCOL_SPECIFICATION = 13;
 
     /**
      * The feature id for the '<em><b>Communication Type</b></em>' attribute.
@@ -1343,13 +1659,22 @@ public interface ServicePackage extends EPackage {
     int PROTOCOL_SPECIFICATION_FEATURE_COUNT = 2;
 
     /**
+     * The operation id for the '<em>Effective Protocol Specifications</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PROTOCOL_SPECIFICATION___EFFECTIVE_PROTOCOL_SPECIFICATIONS__ELIST = 0;
+
+    /**
      * The number of operations of the '<em>Protocol Specification</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int PROTOCOL_SPECIFICATION_OPERATION_COUNT = 0;
+    int PROTOCOL_SPECIFICATION_OPERATION_COUNT = 1;
 
     /**
      * The meta object id for the '{@link de.fhdo.ddmm.service.impl.EndpointImpl <em>Endpoint</em>}' class.
@@ -1359,7 +1684,7 @@ public interface ServicePackage extends EPackage {
      * @see de.fhdo.ddmm.service.impl.ServicePackageImpl#getEndpoint()
      * @generated
      */
-    int ENDPOINT = 13;
+    int ENDPOINT = 14;
 
     /**
      * The feature id for the '<em><b>Addresses</b></em>' attribute list.
@@ -1441,7 +1766,7 @@ public interface ServicePackage extends EPackage {
      * @see de.fhdo.ddmm.service.impl.ServicePackageImpl#getImportedServiceAspect()
      * @generated
      */
-    int IMPORTED_SERVICE_ASPECT = 14;
+    int IMPORTED_SERVICE_ASPECT = 15;
 
     /**
      * The feature id for the '<em><b>Import</b></em>' reference.
@@ -1525,13 +1850,22 @@ public interface ServicePackage extends EPackage {
     int IMPORTED_SERVICE_ASPECT__PARAMETER = 8;
 
     /**
+     * The feature id for the '<em><b>Mapped Data Field</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int IMPORTED_SERVICE_ASPECT__MAPPED_DATA_FIELD = 9;
+
+    /**
      * The number of structural features of the '<em>Imported Service Aspect</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int IMPORTED_SERVICE_ASPECT_FEATURE_COUNT = 9;
+    int IMPORTED_SERVICE_ASPECT_FEATURE_COUNT = 10;
 
     /**
      * The number of operations of the '<em>Imported Service Aspect</em>' class.
@@ -1550,7 +1884,7 @@ public interface ServicePackage extends EPackage {
      * @see de.fhdo.ddmm.service.impl.ServicePackageImpl#getImportType()
      * @generated
      */
-    int IMPORT_TYPE = 15;
+    int IMPORT_TYPE = 16;
 
     /**
      * The meta object id for the '{@link de.fhdo.ddmm.service.MicroserviceType <em>Microservice Type</em>}' enum.
@@ -1560,7 +1894,7 @@ public interface ServicePackage extends EPackage {
      * @see de.fhdo.ddmm.service.impl.ServicePackageImpl#getMicroserviceType()
      * @generated
      */
-    int MICROSERVICE_TYPE = 16;
+    int MICROSERVICE_TYPE = 17;
 
     /**
      * The meta object id for the '{@link de.fhdo.ddmm.service.Visibility <em>Visibility</em>}' enum.
@@ -1570,7 +1904,17 @@ public interface ServicePackage extends EPackage {
      * @see de.fhdo.ddmm.service.impl.ServicePackageImpl#getVisibility()
      * @generated
      */
-    int VISIBILITY = 17;
+    int VISIBILITY = 18;
+
+    /**
+     * The meta object id for the '<em>Tuple List</em>' data type.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see java.util.List
+     * @see de.fhdo.ddmm.service.impl.ServicePackageImpl#getTupleList()
+     * @generated
+     */
+    int TUPLE_LIST = 19;
 
     /**
      * The meta object id for the '<em>Microservice Import Map</em>' data type.
@@ -1580,7 +1924,17 @@ public interface ServicePackage extends EPackage {
      * @see de.fhdo.ddmm.service.impl.ServicePackageImpl#getMicroserviceImportMap()
      * @generated
      */
-    int MICROSERVICE_IMPORT_MAP = 18;
+    int MICROSERVICE_IMPORT_MAP = 20;
+
+    /**
+     * The meta object id for the '<em>Default Protocols</em>' data type.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see java.util.Map
+     * @see de.fhdo.ddmm.service.impl.ServicePackageImpl#getDefaultProtocols()
+     * @generated
+     */
+    int DEFAULT_PROTOCOLS = 21;
 
 
     /**
@@ -1754,6 +2108,17 @@ public interface ServicePackage extends EPackage {
     EAttribute getMicroservice_Visibility();
 
     /**
+     * Returns the meta object for the attribute '{@link de.fhdo.ddmm.service.Microservice#getT_defaultProtocols <em>Tdefault Protocols</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Tdefault Protocols</em>'.
+     * @see de.fhdo.ddmm.service.Microservice#getT_defaultProtocols()
+     * @see #getMicroservice()
+     * @generated
+     */
+    EAttribute getMicroservice_T_defaultProtocols();
+
+    /**
      * Returns the meta object for the reference list '{@link de.fhdo.ddmm.service.Microservice#getTechnologies <em>Technologies</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1763,6 +2128,28 @@ public interface ServicePackage extends EPackage {
      * @generated
      */
     EReference getMicroservice_Technologies();
+
+    /**
+     * Returns the meta object for the reference '{@link de.fhdo.ddmm.service.Microservice#getT_typeDefinitionTechnologyImport <em>Ttype Definition Technology Import</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference '<em>Ttype Definition Technology Import</em>'.
+     * @see de.fhdo.ddmm.service.Microservice#getT_typeDefinitionTechnologyImport()
+     * @see #getMicroservice()
+     * @generated
+     */
+    EReference getMicroservice_T_typeDefinitionTechnologyImport();
+
+    /**
+     * Returns the meta object for the reference '{@link de.fhdo.ddmm.service.Microservice#getT_typeDefinitionTechnology <em>Ttype Definition Technology</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference '<em>Ttype Definition Technology</em>'.
+     * @see de.fhdo.ddmm.service.Microservice#getT_typeDefinitionTechnology()
+     * @see #getMicroservice()
+     * @generated
+     */
+    EReference getMicroservice_T_typeDefinitionTechnology();
 
     /**
      * Returns the meta object for the containment reference list '{@link de.fhdo.ddmm.service.Microservice#getEndpoints <em>Endpoints</em>}'.
@@ -1886,6 +2273,66 @@ public interface ServicePackage extends EPackage {
     EAttribute getMicroservice_EffectivelyInternal();
 
     /**
+     * Returns the meta object for the '{@link de.fhdo.ddmm.service.Microservice#t_missingEndpointEffectiveProtocols() <em>Tmissing Endpoint Effective Protocols</em>}' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the '<em>Tmissing Endpoint Effective Protocols</em>' operation.
+     * @see de.fhdo.ddmm.service.Microservice#t_missingEndpointEffectiveProtocols()
+     * @generated
+     */
+    EOperation getMicroservice__T_missingEndpointEffectiveProtocols();
+
+    /**
+     * Returns the meta object for the '{@link de.fhdo.ddmm.service.Microservice#t_effectiveProtocolSpecifications() <em>Teffective Protocol Specifications</em>}' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the '<em>Teffective Protocol Specifications</em>' operation.
+     * @see de.fhdo.ddmm.service.Microservice#t_effectiveProtocolSpecifications()
+     * @generated
+     */
+    EOperation getMicroservice__T_effectiveProtocolSpecifications();
+
+    /**
+     * Returns the meta object for the '{@link de.fhdo.ddmm.service.Microservice#getTypeDefinitionTechnologyImports() <em>Get Type Definition Technology Imports</em>}' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the '<em>Get Type Definition Technology Imports</em>' operation.
+     * @see de.fhdo.ddmm.service.Microservice#getTypeDefinitionTechnologyImports()
+     * @generated
+     */
+    EOperation getMicroservice__GetTypeDefinitionTechnologyImports();
+
+    /**
+     * Returns the meta object for the '{@link de.fhdo.ddmm.service.Microservice#getTypeDefinitionTechnologyImport() <em>Get Type Definition Technology Import</em>}' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the '<em>Get Type Definition Technology Import</em>' operation.
+     * @see de.fhdo.ddmm.service.Microservice#getTypeDefinitionTechnologyImport()
+     * @generated
+     */
+    EOperation getMicroservice__GetTypeDefinitionTechnologyImport();
+
+    /**
+     * Returns the meta object for the '{@link de.fhdo.ddmm.service.Microservice#getTypeDefinitionTechnologies() <em>Get Type Definition Technologies</em>}' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the '<em>Get Type Definition Technologies</em>' operation.
+     * @see de.fhdo.ddmm.service.Microservice#getTypeDefinitionTechnologies()
+     * @generated
+     */
+    EOperation getMicroservice__GetTypeDefinitionTechnologies();
+
+    /**
+     * Returns the meta object for the '{@link de.fhdo.ddmm.service.Microservice#getTypeDefinitionTechnology() <em>Get Type Definition Technology</em>}' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the '<em>Get Type Definition Technology</em>' operation.
+     * @see de.fhdo.ddmm.service.Microservice#getTypeDefinitionTechnology()
+     * @generated
+     */
+    EOperation getMicroservice__GetTypeDefinitionTechnology();
+
+    /**
      * Returns the meta object for the '{@link de.fhdo.ddmm.service.Microservice#getQualifiedNameParts() <em>Get Qualified Name Parts</em>}' operation.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1894,6 +2341,16 @@ public interface ServicePackage extends EPackage {
      * @generated
      */
     EOperation getMicroservice__GetQualifiedNameParts();
+
+    /**
+     * Returns the meta object for the '{@link de.fhdo.ddmm.service.Microservice#buildQualifiedName(java.lang.String) <em>Build Qualified Name</em>}' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the '<em>Build Qualified Name</em>' operation.
+     * @see de.fhdo.ddmm.service.Microservice#buildQualifiedName(java.lang.String)
+     * @generated
+     */
+    EOperation getMicroservice__BuildQualifiedName__String();
 
     /**
      * Returns the meta object for the '{@link de.fhdo.ddmm.service.Microservice#getContainedOperations() <em>Get Contained Operations</em>}' operation.
@@ -1944,6 +2401,16 @@ public interface ServicePackage extends EPackage {
      * @generated
      */
     EOperation getMicroservice__GetAllRequiredMicroservices();
+
+    /**
+     * Returns the meta object for the '{@link de.fhdo.ddmm.service.Microservice#getAllInitializingMicroservices() <em>Get All Initializing Microservices</em>}' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the '<em>Get All Initializing Microservices</em>' operation.
+     * @see de.fhdo.ddmm.service.Microservice#getAllInitializingMicroservices()
+     * @generated
+     */
+    EOperation getMicroservice__GetAllInitializingMicroservices();
 
     /**
      * Returns the meta object for the '{@link de.fhdo.ddmm.service.Microservice#canRequire(de.fhdo.ddmm.service.Microservice, boolean) <em>Can Require</em>}' operation.
@@ -2118,6 +2585,26 @@ public interface ServicePackage extends EPackage {
     EAttribute getInterface_EffectivelyInternal();
 
     /**
+     * Returns the meta object for the '{@link de.fhdo.ddmm.service.Interface#t_missingEndpointEffectiveProtocols() <em>Tmissing Endpoint Effective Protocols</em>}' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the '<em>Tmissing Endpoint Effective Protocols</em>' operation.
+     * @see de.fhdo.ddmm.service.Interface#t_missingEndpointEffectiveProtocols()
+     * @generated
+     */
+    EOperation getInterface__T_missingEndpointEffectiveProtocols();
+
+    /**
+     * Returns the meta object for the '{@link de.fhdo.ddmm.service.Interface#t_effectiveProtocolSpecifications() <em>Teffective Protocol Specifications</em>}' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the '<em>Teffective Protocol Specifications</em>' operation.
+     * @see de.fhdo.ddmm.service.Interface#t_effectiveProtocolSpecifications()
+     * @generated
+     */
+    EOperation getInterface__T_effectiveProtocolSpecifications();
+
+    /**
      * Returns the meta object for the '{@link de.fhdo.ddmm.service.Interface#getQualifiedNameParts() <em>Get Qualified Name Parts</em>}' operation.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2126,6 +2613,16 @@ public interface ServicePackage extends EPackage {
      * @generated
      */
     EOperation getInterface__GetQualifiedNameParts();
+
+    /**
+     * Returns the meta object for the '{@link de.fhdo.ddmm.service.Interface#buildQualifiedName(java.lang.String) <em>Build Qualified Name</em>}' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the '<em>Build Qualified Name</em>' operation.
+     * @see de.fhdo.ddmm.service.Interface#buildQualifiedName(java.lang.String)
+     * @generated
+     */
+    EOperation getInterface__BuildQualifiedName__String();
 
     /**
      * Returns the meta object for class '{@link de.fhdo.ddmm.service.Operation <em>Operation</em>}'.
@@ -2270,6 +2767,26 @@ public interface ServicePackage extends EPackage {
     EAttribute getOperation_EffectivelyInternal();
 
     /**
+     * Returns the meta object for the '{@link de.fhdo.ddmm.service.Operation#t_missingEndpointEffectiveProtocols() <em>Tmissing Endpoint Effective Protocols</em>}' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the '<em>Tmissing Endpoint Effective Protocols</em>' operation.
+     * @see de.fhdo.ddmm.service.Operation#t_missingEndpointEffectiveProtocols()
+     * @generated
+     */
+    EOperation getOperation__T_missingEndpointEffectiveProtocols();
+
+    /**
+     * Returns the meta object for the '{@link de.fhdo.ddmm.service.Operation#t_effectiveProtocolSpecifications() <em>Teffective Protocol Specifications</em>}' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the '<em>Teffective Protocol Specifications</em>' operation.
+     * @see de.fhdo.ddmm.service.Operation#t_effectiveProtocolSpecifications()
+     * @generated
+     */
+    EOperation getOperation__T_effectiveProtocolSpecifications();
+
+    /**
      * Returns the meta object for the '{@link de.fhdo.ddmm.service.Operation#getQualifiedNameParts() <em>Get Qualified Name Parts</em>}' operation.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2278,6 +2795,16 @@ public interface ServicePackage extends EPackage {
      * @generated
      */
     EOperation getOperation__GetQualifiedNameParts();
+
+    /**
+     * Returns the meta object for the '{@link de.fhdo.ddmm.service.Operation#buildQualifiedName(java.lang.String) <em>Build Qualified Name</em>}' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the '<em>Build Qualified Name</em>' operation.
+     * @see de.fhdo.ddmm.service.Operation#buildQualifiedName(java.lang.String)
+     * @generated
+     */
+    EOperation getOperation__BuildQualifiedName__String();
 
     /**
      * Returns the meta object for class '{@link de.fhdo.ddmm.service.ReferredOperation <em>Referred Operation</em>}'.
@@ -2345,6 +2872,26 @@ public interface ServicePackage extends EPackage {
     EReference getReferredOperation_Interface();
 
     /**
+     * Returns the meta object for the '{@link de.fhdo.ddmm.service.ReferredOperation#t_missingEndpointEffectiveProtocols() <em>Tmissing Endpoint Effective Protocols</em>}' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the '<em>Tmissing Endpoint Effective Protocols</em>' operation.
+     * @see de.fhdo.ddmm.service.ReferredOperation#t_missingEndpointEffectiveProtocols()
+     * @generated
+     */
+    EOperation getReferredOperation__T_missingEndpointEffectiveProtocols();
+
+    /**
+     * Returns the meta object for the '{@link de.fhdo.ddmm.service.ReferredOperation#t_effectiveProtocolSpecifications() <em>Teffective Protocol Specifications</em>}' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the '<em>Teffective Protocol Specifications</em>' operation.
+     * @see de.fhdo.ddmm.service.ReferredOperation#t_effectiveProtocolSpecifications()
+     * @generated
+     */
+    EOperation getReferredOperation__T_effectiveProtocolSpecifications();
+
+    /**
      * Returns the meta object for the '{@link de.fhdo.ddmm.service.ReferredOperation#getQualifiedNameParts() <em>Get Qualified Name Parts</em>}' operation.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2353,6 +2900,16 @@ public interface ServicePackage extends EPackage {
      * @generated
      */
     EOperation getReferredOperation__GetQualifiedNameParts();
+
+    /**
+     * Returns the meta object for the '{@link de.fhdo.ddmm.service.ReferredOperation#buildQualifiedName(java.lang.String) <em>Build Qualified Name</em>}' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the '<em>Build Qualified Name</em>' operation.
+     * @see de.fhdo.ddmm.service.ReferredOperation#buildQualifiedName(java.lang.String)
+     * @generated
+     */
+    EOperation getReferredOperation__BuildQualifiedName__String();
 
     /**
      * Returns the meta object for class '{@link de.fhdo.ddmm.service.Parameter <em>Parameter</em>}'.
@@ -2464,6 +3021,17 @@ public interface ServicePackage extends EPackage {
     EReference getParameter_Aspects();
 
     /**
+     * Returns the meta object for the containment reference list '{@link de.fhdo.ddmm.service.Parameter#getMappedDataFields <em>Mapped Data Fields</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Mapped Data Fields</em>'.
+     * @see de.fhdo.ddmm.service.Parameter#getMappedDataFields()
+     * @see #getParameter()
+     * @generated
+     */
+    EReference getParameter_MappedDataFields();
+
+    /**
      * Returns the meta object for the container reference '{@link de.fhdo.ddmm.service.Parameter#getOperation <em>Operation</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2473,6 +3041,26 @@ public interface ServicePackage extends EPackage {
      * @generated
      */
     EReference getParameter_Operation();
+
+    /**
+     * Returns the meta object for the '{@link de.fhdo.ddmm.service.Parameter#getQualifiedNameParts() <em>Get Qualified Name Parts</em>}' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the '<em>Get Qualified Name Parts</em>' operation.
+     * @see de.fhdo.ddmm.service.Parameter#getQualifiedNameParts()
+     * @generated
+     */
+    EOperation getParameter__GetQualifiedNameParts();
+
+    /**
+     * Returns the meta object for the '{@link de.fhdo.ddmm.service.Parameter#buildQualifiedName(java.lang.String) <em>Build Qualified Name</em>}' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the '<em>Build Qualified Name</em>' operation.
+     * @see de.fhdo.ddmm.service.Parameter#buildQualifiedName(java.lang.String)
+     * @generated
+     */
+    EOperation getParameter__BuildQualifiedName__String();
 
     /**
      * Returns the meta object for the '{@link de.fhdo.ddmm.service.Parameter#basicallyInitializableBy(de.fhdo.ddmm.service.Operation) <em>Basically Initializable By</em>}' operation.
@@ -2495,6 +3083,16 @@ public interface ServicePackage extends EPackage {
     EOperation getParameter__GetEffectiveType();
 
     /**
+     * Returns the meta object for the '{@link de.fhdo.ddmm.service.Parameter#isTechnologySpecificEffectiveType() <em>Is Technology Specific Effective Type</em>}' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the '<em>Is Technology Specific Effective Type</em>' operation.
+     * @see de.fhdo.ddmm.service.Parameter#isTechnologySpecificEffectiveType()
+     * @generated
+     */
+    EOperation getParameter__IsTechnologySpecificEffectiveType();
+
+    /**
      * Returns the meta object for the '{@link de.fhdo.ddmm.service.Parameter#getEffectiveTypeQualifiedNameParts() <em>Get Effective Type Qualified Name Parts</em>}' operation.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2503,6 +3101,90 @@ public interface ServicePackage extends EPackage {
      * @generated
      */
     EOperation getParameter__GetEffectiveTypeQualifiedNameParts();
+
+    /**
+     * Returns the meta object for class '{@link de.fhdo.ddmm.service.MappedDataField <em>Mapped Data Field</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Mapped Data Field</em>'.
+     * @see de.fhdo.ddmm.service.MappedDataField
+     * @generated
+     */
+    EClass getMappedDataField();
+
+    /**
+     * Returns the meta object for the reference '{@link de.fhdo.ddmm.service.MappedDataField#getDataField <em>Data Field</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference '<em>Data Field</em>'.
+     * @see de.fhdo.ddmm.service.MappedDataField#getDataField()
+     * @see #getMappedDataField()
+     * @generated
+     */
+    EReference getMappedDataField_DataField();
+
+    /**
+     * Returns the meta object for the containment reference '{@link de.fhdo.ddmm.service.MappedDataField#getMappedType <em>Mapped Type</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference '<em>Mapped Type</em>'.
+     * @see de.fhdo.ddmm.service.MappedDataField#getMappedType()
+     * @see #getMappedDataField()
+     * @generated
+     */
+    EReference getMappedDataField_MappedType();
+
+    /**
+     * Returns the meta object for the containment reference list '{@link de.fhdo.ddmm.service.MappedDataField#getAspects <em>Aspects</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Aspects</em>'.
+     * @see de.fhdo.ddmm.service.MappedDataField#getAspects()
+     * @see #getMappedDataField()
+     * @generated
+     */
+    EReference getMappedDataField_Aspects();
+
+    /**
+     * Returns the meta object for the container reference '{@link de.fhdo.ddmm.service.MappedDataField#getParameter <em>Parameter</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the container reference '<em>Parameter</em>'.
+     * @see de.fhdo.ddmm.service.MappedDataField#getParameter()
+     * @see #getMappedDataField()
+     * @generated
+     */
+    EReference getMappedDataField_Parameter();
+
+    /**
+     * Returns the meta object for the '{@link de.fhdo.ddmm.service.MappedDataField#getQualifiedNameParts() <em>Get Qualified Name Parts</em>}' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the '<em>Get Qualified Name Parts</em>' operation.
+     * @see de.fhdo.ddmm.service.MappedDataField#getQualifiedNameParts()
+     * @generated
+     */
+    EOperation getMappedDataField__GetQualifiedNameParts();
+
+    /**
+     * Returns the meta object for the '{@link de.fhdo.ddmm.service.MappedDataField#buildQualifiedName(java.lang.String) <em>Build Qualified Name</em>}' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the '<em>Build Qualified Name</em>' operation.
+     * @see de.fhdo.ddmm.service.MappedDataField#buildQualifiedName(java.lang.String)
+     * @generated
+     */
+    EOperation getMappedDataField__BuildQualifiedName__String();
+
+    /**
+     * Returns the meta object for the '{@link de.fhdo.ddmm.service.MappedDataField#getEffectiveType() <em>Get Effective Type</em>}' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the '<em>Get Effective Type</em>' operation.
+     * @see de.fhdo.ddmm.service.MappedDataField#getEffectiveType()
+     * @generated
+     */
+    EOperation getMappedDataField__GetEffectiveType();
 
     /**
      * Returns the meta object for class '{@link de.fhdo.ddmm.service.PossiblyImportedMicroservice <em>Possibly Imported Microservice</em>}'.
@@ -2797,6 +3479,17 @@ public interface ServicePackage extends EPackage {
     EReference getImportedProtocolAndDataFormat_Specification();
 
     /**
+     * Returns the meta object for the container reference '{@link de.fhdo.ddmm.service.ImportedProtocolAndDataFormat#getEndpoint <em>Endpoint</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the container reference '<em>Endpoint</em>'.
+     * @see de.fhdo.ddmm.service.ImportedProtocolAndDataFormat#getEndpoint()
+     * @see #getImportedProtocolAndDataFormat()
+     * @generated
+     */
+    EReference getImportedProtocolAndDataFormat_Endpoint();
+
+    /**
      * Returns the meta object for class '{@link de.fhdo.ddmm.service.ProtocolSpecification <em>Protocol Specification</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2827,6 +3520,16 @@ public interface ServicePackage extends EPackage {
      * @generated
      */
     EReference getProtocolSpecification_Protocol();
+
+    /**
+     * Returns the meta object for the '{@link de.fhdo.ddmm.service.ProtocolSpecification#effectiveProtocolSpecifications(org.eclipse.emf.common.util.EList) <em>Effective Protocol Specifications</em>}' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the '<em>Effective Protocol Specifications</em>' operation.
+     * @see de.fhdo.ddmm.service.ProtocolSpecification#effectiveProtocolSpecifications(org.eclipse.emf.common.util.EList)
+     * @generated
+     */
+    EOperation getProtocolSpecification__EffectiveProtocolSpecifications__EList();
 
     /**
      * Returns the meta object for class '{@link de.fhdo.ddmm.service.Endpoint <em>Endpoint</em>}'.
@@ -3014,6 +3717,17 @@ public interface ServicePackage extends EPackage {
     EReference getImportedServiceAspect_Parameter();
 
     /**
+     * Returns the meta object for the container reference '{@link de.fhdo.ddmm.service.ImportedServiceAspect#getMappedDataField <em>Mapped Data Field</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the container reference '<em>Mapped Data Field</em>'.
+     * @see de.fhdo.ddmm.service.ImportedServiceAspect#getMappedDataField()
+     * @see #getImportedServiceAspect()
+     * @generated
+     */
+    EReference getImportedServiceAspect_MappedDataField();
+
+    /**
      * Returns the meta object for enum '{@link de.fhdo.ddmm.service.ImportType <em>Import Type</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -3044,6 +3758,17 @@ public interface ServicePackage extends EPackage {
     EEnum getVisibility();
 
     /**
+     * Returns the meta object for data type '{@link java.util.List <em>Tuple List</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for data type '<em>Tuple List</em>'.
+     * @see java.util.List
+     * @model instanceClass="java.util.List&lt;java.util.Map&lt;java.lang.String, java.lang.Object&gt;&gt;"
+     * @generated
+     */
+    EDataType getTupleList();
+
+    /**
      * Returns the meta object for data type '{@link java.util.Map <em>Microservice Import Map</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -3053,6 +3778,17 @@ public interface ServicePackage extends EPackage {
      * @generated
      */
     EDataType getMicroserviceImportMap();
+
+    /**
+     * Returns the meta object for data type '{@link java.util.Map <em>Default Protocols</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for data type '<em>Default Protocols</em>'.
+     * @see java.util.Map
+     * @model instanceClass="java.util.Map&lt;de.fhdo.ddmm.technology.CommunicationType, org.eclipse.xtext.xbase.lib.Pair&lt;de.fhdo.ddmm.service.Import, de.fhdo.ddmm.technology.Protocol&gt;&gt;"
+     * @generated
+     */
+    EDataType getDefaultProtocols();
 
     /**
      * Returns the factory that creates the instances of the model.
@@ -3212,12 +3948,36 @@ public interface ServicePackage extends EPackage {
         EAttribute MICROSERVICE__VISIBILITY = eINSTANCE.getMicroservice_Visibility();
 
         /**
+         * The meta object literal for the '<em><b>Tdefault Protocols</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute MICROSERVICE__TDEFAULT_PROTOCOLS = eINSTANCE.getMicroservice_T_defaultProtocols();
+
+        /**
          * The meta object literal for the '<em><b>Technologies</b></em>' reference list feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
         EReference MICROSERVICE__TECHNOLOGIES = eINSTANCE.getMicroservice_Technologies();
+
+        /**
+         * The meta object literal for the '<em><b>Ttype Definition Technology Import</b></em>' reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference MICROSERVICE__TTYPE_DEFINITION_TECHNOLOGY_IMPORT = eINSTANCE.getMicroservice_T_typeDefinitionTechnologyImport();
+
+        /**
+         * The meta object literal for the '<em><b>Ttype Definition Technology</b></em>' reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference MICROSERVICE__TTYPE_DEFINITION_TECHNOLOGY = eINSTANCE.getMicroservice_T_typeDefinitionTechnology();
 
         /**
          * The meta object literal for the '<em><b>Endpoints</b></em>' containment reference list feature.
@@ -3308,12 +4068,68 @@ public interface ServicePackage extends EPackage {
         EAttribute MICROSERVICE__EFFECTIVELY_INTERNAL = eINSTANCE.getMicroservice_EffectivelyInternal();
 
         /**
+         * The meta object literal for the '<em><b>Tmissing Endpoint Effective Protocols</b></em>' operation.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EOperation MICROSERVICE___TMISSING_ENDPOINT_EFFECTIVE_PROTOCOLS = eINSTANCE.getMicroservice__T_missingEndpointEffectiveProtocols();
+
+        /**
+         * The meta object literal for the '<em><b>Teffective Protocol Specifications</b></em>' operation.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EOperation MICROSERVICE___TEFFECTIVE_PROTOCOL_SPECIFICATIONS = eINSTANCE.getMicroservice__T_effectiveProtocolSpecifications();
+
+        /**
+         * The meta object literal for the '<em><b>Get Type Definition Technology Imports</b></em>' operation.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EOperation MICROSERVICE___GET_TYPE_DEFINITION_TECHNOLOGY_IMPORTS = eINSTANCE.getMicroservice__GetTypeDefinitionTechnologyImports();
+
+        /**
+         * The meta object literal for the '<em><b>Get Type Definition Technology Import</b></em>' operation.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EOperation MICROSERVICE___GET_TYPE_DEFINITION_TECHNOLOGY_IMPORT = eINSTANCE.getMicroservice__GetTypeDefinitionTechnologyImport();
+
+        /**
+         * The meta object literal for the '<em><b>Get Type Definition Technologies</b></em>' operation.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EOperation MICROSERVICE___GET_TYPE_DEFINITION_TECHNOLOGIES = eINSTANCE.getMicroservice__GetTypeDefinitionTechnologies();
+
+        /**
+         * The meta object literal for the '<em><b>Get Type Definition Technology</b></em>' operation.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EOperation MICROSERVICE___GET_TYPE_DEFINITION_TECHNOLOGY = eINSTANCE.getMicroservice__GetTypeDefinitionTechnology();
+
+        /**
          * The meta object literal for the '<em><b>Get Qualified Name Parts</b></em>' operation.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
         EOperation MICROSERVICE___GET_QUALIFIED_NAME_PARTS = eINSTANCE.getMicroservice__GetQualifiedNameParts();
+
+        /**
+         * The meta object literal for the '<em><b>Build Qualified Name</b></em>' operation.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EOperation MICROSERVICE___BUILD_QUALIFIED_NAME__STRING = eINSTANCE.getMicroservice__BuildQualifiedName__String();
 
         /**
          * The meta object literal for the '<em><b>Get Contained Operations</b></em>' operation.
@@ -3354,6 +4170,14 @@ public interface ServicePackage extends EPackage {
          * @generated
          */
         EOperation MICROSERVICE___GET_ALL_REQUIRED_MICROSERVICES = eINSTANCE.getMicroservice__GetAllRequiredMicroservices();
+
+        /**
+         * The meta object literal for the '<em><b>Get All Initializing Microservices</b></em>' operation.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EOperation MICROSERVICE___GET_ALL_INITIALIZING_MICROSERVICES = eINSTANCE.getMicroservice__GetAllInitializingMicroservices();
 
         /**
          * The meta object literal for the '<em><b>Can Require</b></em>' operation.
@@ -3486,12 +4310,36 @@ public interface ServicePackage extends EPackage {
         EAttribute INTERFACE__EFFECTIVELY_INTERNAL = eINSTANCE.getInterface_EffectivelyInternal();
 
         /**
+         * The meta object literal for the '<em><b>Tmissing Endpoint Effective Protocols</b></em>' operation.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EOperation INTERFACE___TMISSING_ENDPOINT_EFFECTIVE_PROTOCOLS = eINSTANCE.getInterface__T_missingEndpointEffectiveProtocols();
+
+        /**
+         * The meta object literal for the '<em><b>Teffective Protocol Specifications</b></em>' operation.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EOperation INTERFACE___TEFFECTIVE_PROTOCOL_SPECIFICATIONS = eINSTANCE.getInterface__T_effectiveProtocolSpecifications();
+
+        /**
          * The meta object literal for the '<em><b>Get Qualified Name Parts</b></em>' operation.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
         EOperation INTERFACE___GET_QUALIFIED_NAME_PARTS = eINSTANCE.getInterface__GetQualifiedNameParts();
+
+        /**
+         * The meta object literal for the '<em><b>Build Qualified Name</b></em>' operation.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EOperation INTERFACE___BUILD_QUALIFIED_NAME__STRING = eINSTANCE.getInterface__BuildQualifiedName__String();
 
         /**
          * The meta object literal for the '{@link de.fhdo.ddmm.service.impl.OperationImpl <em>Operation</em>}' class.
@@ -3600,12 +4448,36 @@ public interface ServicePackage extends EPackage {
         EAttribute OPERATION__EFFECTIVELY_INTERNAL = eINSTANCE.getOperation_EffectivelyInternal();
 
         /**
+         * The meta object literal for the '<em><b>Tmissing Endpoint Effective Protocols</b></em>' operation.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EOperation OPERATION___TMISSING_ENDPOINT_EFFECTIVE_PROTOCOLS = eINSTANCE.getOperation__T_missingEndpointEffectiveProtocols();
+
+        /**
+         * The meta object literal for the '<em><b>Teffective Protocol Specifications</b></em>' operation.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EOperation OPERATION___TEFFECTIVE_PROTOCOL_SPECIFICATIONS = eINSTANCE.getOperation__T_effectiveProtocolSpecifications();
+
+        /**
          * The meta object literal for the '<em><b>Get Qualified Name Parts</b></em>' operation.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
         EOperation OPERATION___GET_QUALIFIED_NAME_PARTS = eINSTANCE.getOperation__GetQualifiedNameParts();
+
+        /**
+         * The meta object literal for the '<em><b>Build Qualified Name</b></em>' operation.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EOperation OPERATION___BUILD_QUALIFIED_NAME__STRING = eINSTANCE.getOperation__BuildQualifiedName__String();
 
         /**
          * The meta object literal for the '{@link de.fhdo.ddmm.service.impl.ReferredOperationImpl <em>Referred Operation</em>}' class.
@@ -3658,12 +4530,36 @@ public interface ServicePackage extends EPackage {
         EReference REFERRED_OPERATION__INTERFACE = eINSTANCE.getReferredOperation_Interface();
 
         /**
+         * The meta object literal for the '<em><b>Tmissing Endpoint Effective Protocols</b></em>' operation.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EOperation REFERRED_OPERATION___TMISSING_ENDPOINT_EFFECTIVE_PROTOCOLS = eINSTANCE.getReferredOperation__T_missingEndpointEffectiveProtocols();
+
+        /**
+         * The meta object literal for the '<em><b>Teffective Protocol Specifications</b></em>' operation.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EOperation REFERRED_OPERATION___TEFFECTIVE_PROTOCOL_SPECIFICATIONS = eINSTANCE.getReferredOperation__T_effectiveProtocolSpecifications();
+
+        /**
          * The meta object literal for the '<em><b>Get Qualified Name Parts</b></em>' operation.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
         EOperation REFERRED_OPERATION___GET_QUALIFIED_NAME_PARTS = eINSTANCE.getReferredOperation__GetQualifiedNameParts();
+
+        /**
+         * The meta object literal for the '<em><b>Build Qualified Name</b></em>' operation.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EOperation REFERRED_OPERATION___BUILD_QUALIFIED_NAME__STRING = eINSTANCE.getReferredOperation__BuildQualifiedName__String();
 
         /**
          * The meta object literal for the '{@link de.fhdo.ddmm.service.impl.ParameterImpl <em>Parameter</em>}' class.
@@ -3748,12 +4644,36 @@ public interface ServicePackage extends EPackage {
         EReference PARAMETER__ASPECTS = eINSTANCE.getParameter_Aspects();
 
         /**
+         * The meta object literal for the '<em><b>Mapped Data Fields</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference PARAMETER__MAPPED_DATA_FIELDS = eINSTANCE.getParameter_MappedDataFields();
+
+        /**
          * The meta object literal for the '<em><b>Operation</b></em>' container reference feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
         EReference PARAMETER__OPERATION = eINSTANCE.getParameter_Operation();
+
+        /**
+         * The meta object literal for the '<em><b>Get Qualified Name Parts</b></em>' operation.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EOperation PARAMETER___GET_QUALIFIED_NAME_PARTS = eINSTANCE.getParameter__GetQualifiedNameParts();
+
+        /**
+         * The meta object literal for the '<em><b>Build Qualified Name</b></em>' operation.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EOperation PARAMETER___BUILD_QUALIFIED_NAME__STRING = eINSTANCE.getParameter__BuildQualifiedName__String();
 
         /**
          * The meta object literal for the '<em><b>Basically Initializable By</b></em>' operation.
@@ -3772,12 +4692,86 @@ public interface ServicePackage extends EPackage {
         EOperation PARAMETER___GET_EFFECTIVE_TYPE = eINSTANCE.getParameter__GetEffectiveType();
 
         /**
+         * The meta object literal for the '<em><b>Is Technology Specific Effective Type</b></em>' operation.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EOperation PARAMETER___IS_TECHNOLOGY_SPECIFIC_EFFECTIVE_TYPE = eINSTANCE.getParameter__IsTechnologySpecificEffectiveType();
+
+        /**
          * The meta object literal for the '<em><b>Get Effective Type Qualified Name Parts</b></em>' operation.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
         EOperation PARAMETER___GET_EFFECTIVE_TYPE_QUALIFIED_NAME_PARTS = eINSTANCE.getParameter__GetEffectiveTypeQualifiedNameParts();
+
+        /**
+         * The meta object literal for the '{@link de.fhdo.ddmm.service.impl.MappedDataFieldImpl <em>Mapped Data Field</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.fhdo.ddmm.service.impl.MappedDataFieldImpl
+         * @see de.fhdo.ddmm.service.impl.ServicePackageImpl#getMappedDataField()
+         * @generated
+         */
+        EClass MAPPED_DATA_FIELD = eINSTANCE.getMappedDataField();
+
+        /**
+         * The meta object literal for the '<em><b>Data Field</b></em>' reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference MAPPED_DATA_FIELD__DATA_FIELD = eINSTANCE.getMappedDataField_DataField();
+
+        /**
+         * The meta object literal for the '<em><b>Mapped Type</b></em>' containment reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference MAPPED_DATA_FIELD__MAPPED_TYPE = eINSTANCE.getMappedDataField_MappedType();
+
+        /**
+         * The meta object literal for the '<em><b>Aspects</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference MAPPED_DATA_FIELD__ASPECTS = eINSTANCE.getMappedDataField_Aspects();
+
+        /**
+         * The meta object literal for the '<em><b>Parameter</b></em>' container reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference MAPPED_DATA_FIELD__PARAMETER = eINSTANCE.getMappedDataField_Parameter();
+
+        /**
+         * The meta object literal for the '<em><b>Get Qualified Name Parts</b></em>' operation.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EOperation MAPPED_DATA_FIELD___GET_QUALIFIED_NAME_PARTS = eINSTANCE.getMappedDataField__GetQualifiedNameParts();
+
+        /**
+         * The meta object literal for the '<em><b>Build Qualified Name</b></em>' operation.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EOperation MAPPED_DATA_FIELD___BUILD_QUALIFIED_NAME__STRING = eINSTANCE.getMappedDataField__BuildQualifiedName__String();
+
+        /**
+         * The meta object literal for the '<em><b>Get Effective Type</b></em>' operation.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EOperation MAPPED_DATA_FIELD___GET_EFFECTIVE_TYPE = eINSTANCE.getMappedDataField__GetEffectiveType();
 
         /**
          * The meta object literal for the '{@link de.fhdo.ddmm.service.impl.PossiblyImportedMicroserviceImpl <em>Possibly Imported Microservice</em>}' class.
@@ -4006,6 +5000,14 @@ public interface ServicePackage extends EPackage {
         EReference IMPORTED_PROTOCOL_AND_DATA_FORMAT__SPECIFICATION = eINSTANCE.getImportedProtocolAndDataFormat_Specification();
 
         /**
+         * The meta object literal for the '<em><b>Endpoint</b></em>' container reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference IMPORTED_PROTOCOL_AND_DATA_FORMAT__ENDPOINT = eINSTANCE.getImportedProtocolAndDataFormat_Endpoint();
+
+        /**
          * The meta object literal for the '{@link de.fhdo.ddmm.service.impl.ProtocolSpecificationImpl <em>Protocol Specification</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -4030,6 +5032,14 @@ public interface ServicePackage extends EPackage {
          * @generated
          */
         EReference PROTOCOL_SPECIFICATION__PROTOCOL = eINSTANCE.getProtocolSpecification_Protocol();
+
+        /**
+         * The meta object literal for the '<em><b>Effective Protocol Specifications</b></em>' operation.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EOperation PROTOCOL_SPECIFICATION___EFFECTIVE_PROTOCOL_SPECIFICATIONS__ELIST = eINSTANCE.getProtocolSpecification__EffectiveProtocolSpecifications__EList();
 
         /**
          * The meta object literal for the '{@link de.fhdo.ddmm.service.impl.EndpointImpl <em>Endpoint</em>}' class.
@@ -4172,6 +5182,14 @@ public interface ServicePackage extends EPackage {
         EReference IMPORTED_SERVICE_ASPECT__PARAMETER = eINSTANCE.getImportedServiceAspect_Parameter();
 
         /**
+         * The meta object literal for the '<em><b>Mapped Data Field</b></em>' container reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference IMPORTED_SERVICE_ASPECT__MAPPED_DATA_FIELD = eINSTANCE.getImportedServiceAspect_MappedDataField();
+
+        /**
          * The meta object literal for the '{@link de.fhdo.ddmm.service.ImportType <em>Import Type</em>}' enum.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -4202,6 +5220,16 @@ public interface ServicePackage extends EPackage {
         EEnum VISIBILITY = eINSTANCE.getVisibility();
 
         /**
+         * The meta object literal for the '<em>Tuple List</em>' data type.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see java.util.List
+         * @see de.fhdo.ddmm.service.impl.ServicePackageImpl#getTupleList()
+         * @generated
+         */
+        EDataType TUPLE_LIST = eINSTANCE.getTupleList();
+
+        /**
          * The meta object literal for the '<em>Microservice Import Map</em>' data type.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -4210,6 +5238,16 @@ public interface ServicePackage extends EPackage {
          * @generated
          */
         EDataType MICROSERVICE_IMPORT_MAP = eINSTANCE.getMicroserviceImportMap();
+
+        /**
+         * The meta object literal for the '<em>Default Protocols</em>' data type.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see java.util.Map
+         * @see de.fhdo.ddmm.service.impl.ServicePackageImpl#getDefaultProtocols()
+         * @generated
+         */
+        EDataType DEFAULT_PROTOCOLS = eINSTANCE.getDefaultProtocols();
 
     }
 

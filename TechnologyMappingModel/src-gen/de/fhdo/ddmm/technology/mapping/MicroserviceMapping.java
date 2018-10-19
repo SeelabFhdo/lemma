@@ -4,6 +4,8 @@ package de.fhdo.ddmm.technology.mapping;
 
 import de.fhdo.ddmm.service.Import;
 
+import de.fhdo.ddmm.technology.Technology;
+
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EObject;
@@ -46,19 +48,23 @@ public interface MicroserviceMapping extends EObject {
      * <!-- begin-model-doc -->
      * *
      * Implicit Constraints:
-     *     (C1) Mapping must not be empty.
+     *     (C1) Communication types of mapped protocol specifications must be unique.
      *          Ensured by: DSL validator.
-     *     (C2) Communication types of mapped protocol specifications must be unique.
+     *     (C2) Endpoint protocols must be unique.
      *          Ensured by: DSL validator.
-     *     (C3) Endpoint protocols must be unique.
+     *     (C3) Endpoint addresses must be unique.
      *          Ensured by: DSL validator.
-     *     (C4) Endpoint addresses must be unique.
+     *     (C4) A technology might be assigned exactly once to a microservice mapping.
      *          Ensured by: DSL validator.
-     *     (C5) A technology might be assigned exactly once to a microservice mapping.
+     *     (C5) Only one assigned technology might comprise technology-specific types.
      *          Ensured by: DSL validator.
-     *     (C6) Only one assigned technology might comprise technology-specific types.
+     *     (C6) Assigned technologies may not only define deployment-specific concepts.
      *          Ensured by: DSL validator.
-     *     (C7) Assigned technologies may not only define deployment-specific concepts.
+     *     (C7) Type definition technologies of microservice cannot differ in service and mapping
+     *          model in case the service model refers to technology-specific types. Otherwise, the
+     *          transformation of the mapping to a service model would not be possible, because the
+     *          technology-specific types could not be mapped, as both service and mapping model
+     *          refer to different technologies for the service.
      *          Ensured by: DSL validator.
      * <!-- end-model-doc -->
      * @return the value of the '<em>Technologies</em>' reference list.
@@ -229,5 +235,61 @@ public interface MicroserviceMapping extends EObject {
      * @generated
      */
     void setMappingModel(TechnologyMapping value);
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * *
+     * Get imports of type definition technologies
+     * <!-- end-model-doc -->
+     * @model kind="operation" unique="false"
+     *        annotation="http://www.eclipse.org/emf/2002/GenModel body='final &lt;%org.eclipse.xtext.xbase.lib.Functions.Function1%&gt;&lt;&lt;%de.fhdo.ddmm.service.Import%&gt;, &lt;%java.lang.Boolean%&gt;&gt; _function = new &lt;%org.eclipse.xtext.xbase.lib.Functions.Function1%&gt;&lt;&lt;%de.fhdo.ddmm.service.Import%&gt;, &lt;%java.lang.Boolean%&gt;&gt;()\n{\n\tpublic &lt;%java.lang.Boolean%&gt; apply(final &lt;%de.fhdo.ddmm.service.Import%&gt; it)\n\t{\n\t\tboolean _xblockexpression = false;\n\t\t{\n\t\t\tfinal &lt;%de.fhdo.ddmm.technology.Technology%&gt; technologyModel = &lt;%de.fhdo.ddmm.utils.DdmmUtils%&gt;.&lt;&lt;%de.fhdo.ddmm.technology.Technology%&gt;&gt;getImportedModelRoot(it.eResource(), it.getImportURI(), &lt;%de.fhdo.ddmm.technology.Technology%&gt;.class);\n\t\t\t_xblockexpression = (((!technologyModel.getPrimitiveTypes().isEmpty()) || \n\t\t\t\t(!technologyModel.getListTypes().isEmpty())) || \n\t\t\t\t(!technologyModel.getDataStructures().isEmpty()));\n\t\t}\n\t\treturn &lt;%java.lang.Boolean%&gt;.valueOf(_xblockexpression);\n\t}\n};\nreturn &lt;%org.eclipse.emf.common.util.ECollections%&gt;.&lt;&lt;%de.fhdo.ddmm.service.Import%&gt;&gt;toEList(&lt;%org.eclipse.xtext.xbase.lib.IterableExtensions%&gt;.&lt;&lt;%de.fhdo.ddmm.service.Import%&gt;&gt;filter(this.getTechnologies(), _function));'"
+     * @generated
+     */
+    EList<Import> getTypeDefinitionTechnologyImports();
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * *
+     * Get import of type definition technology. Note that this corresponds to the first technology
+     * import in the list of type definition technology imports and should only be executed if the
+     * model had been validated to refer to one type definition technology at most.
+     * <!-- end-model-doc -->
+     * @model kind="operation" unique="false"
+     *        annotation="http://www.eclipse.org/emf/2002/GenModel body='final &lt;%org.eclipse.emf.common.util.EList%&gt;&lt;&lt;%de.fhdo.ddmm.service.Import%&gt;&gt; typeDefinitionTechnologyImports = this.getTypeDefinitionTechnologyImports();\n&lt;%de.fhdo.ddmm.service.Import%&gt; _xifexpression = null;\nboolean _isEmpty = typeDefinitionTechnologyImports.isEmpty();\nboolean _not = (!_isEmpty);\nif (_not)\n{\n\t_xifexpression = typeDefinitionTechnologyImports.get(0);\n}\nelse\n{\n\t_xifexpression = null;\n}\nreturn _xifexpression;'"
+     * @generated
+     */
+    Import getTypeDefinitionTechnologyImport();
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * *
+     * Get type definition technology models
+     * <!-- end-model-doc -->
+     * @model kind="operation" unique="false"
+     *        annotation="http://www.eclipse.org/emf/2002/GenModel body='final &lt;%org.eclipse.xtext.xbase.lib.Functions.Function1%&gt;&lt;&lt;%de.fhdo.ddmm.service.Import%&gt;, &lt;%de.fhdo.ddmm.technology.Technology%&gt;&gt; _function = new &lt;%org.eclipse.xtext.xbase.lib.Functions.Function1%&gt;&lt;&lt;%de.fhdo.ddmm.service.Import%&gt;, &lt;%de.fhdo.ddmm.technology.Technology%&gt;&gt;()\n{\n\tpublic &lt;%de.fhdo.ddmm.technology.Technology%&gt; apply(final &lt;%de.fhdo.ddmm.service.Import%&gt; it)\n\t{\n\t\treturn &lt;%de.fhdo.ddmm.utils.DdmmUtils%&gt;.&lt;&lt;%de.fhdo.ddmm.technology.Technology%&gt;&gt;getImportedModelRoot(it.eResource(), it.getImportURI(), &lt;%de.fhdo.ddmm.technology.Technology%&gt;.class);\n\t}\n};\nreturn &lt;%org.eclipse.emf.ecore.xcore.lib.XcoreEListExtensions%&gt;.&lt;&lt;%de.fhdo.ddmm.service.Import%&gt;, &lt;%de.fhdo.ddmm.technology.Technology%&gt;&gt;map(this.getTypeDefinitionTechnologyImports(), _function);'"
+     * @generated
+     */
+    EList<Technology> getTypeDefinitionTechnologies();
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * *
+     * Get type definition technology. Note that this corresponds to the first technology model in
+     * the list of type definition technology models and should only be executed if the service
+     * model had been validated to refer to one type definition technology at most.
+     * <!-- end-model-doc -->
+     * @model kind="operation" unique="false"
+     *        annotation="http://www.eclipse.org/emf/2002/GenModel body='final &lt;%org.eclipse.emf.common.util.EList%&gt;&lt;&lt;%de.fhdo.ddmm.technology.Technology%&gt;&gt; typeDefinitionTechnologies = this.getTypeDefinitionTechnologies();\n&lt;%de.fhdo.ddmm.technology.Technology%&gt; _xifexpression = null;\nboolean _isEmpty = typeDefinitionTechnologies.isEmpty();\nboolean _not = (!_isEmpty);\nif (_not)\n{\n\t_xifexpression = typeDefinitionTechnologies.get(0);\n}\nelse\n{\n\t_xifexpression = null;\n}\nreturn _xifexpression;'"
+     * @generated
+     */
+    Technology getTypeDefinitionTechnology();
 
 } // MicroserviceMapping

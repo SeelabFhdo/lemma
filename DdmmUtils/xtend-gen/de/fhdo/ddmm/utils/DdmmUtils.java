@@ -4,13 +4,18 @@ import com.google.common.base.Function;
 import com.google.common.base.Objects;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
+import java.io.File;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IWorkspaceRoot;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -78,6 +83,31 @@ public final class DdmmUtils {
   }
   
   /**
+   * Convert a relative file path to an absolute file path that is based on an absolute base path
+   */
+  public static String convertToAbsolutePath(final String relativeFilePath, final String absoluteBaseFilePath) {
+    try {
+      final File absoluteBaseFile = new File(absoluteBaseFilePath);
+      String _parent = absoluteBaseFile.getParent();
+      final File absoluteBaseFolder = new File(_parent);
+      final File absoluteFile = new File(absoluteBaseFolder, relativeFilePath);
+      return absoluteFile.getCanonicalPath();
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
+  }
+  
+  /**
+   * Check if a URI exhibits the "file://" scheme
+   */
+  public static boolean isFileUri(final String uri) {
+    if ((uri == null)) {
+      return false;
+    }
+    return uri.startsWith("file://");
+  }
+  
+  /**
    * Add "file://" scheme to URI string. If the string already has a scheme, replace it with
    * "file://".
    */
@@ -97,6 +127,110 @@ public final class DdmmUtils {
   }
   
   /**
+   * Remove "file://" scheme from URI string
+   */
+  public static String removeFileUri(final String uri) {
+    boolean _isFileUri = DdmmUtils.isFileUri(uri);
+    boolean _not = (!_isFileUri);
+    if (_not) {
+      return uri;
+    }
+    final String scheme = URI.createURI(uri).scheme();
+    int _length = scheme.length();
+    int _plus = (_length + 1);
+    return uri.substring(_plus);
+  }
+  
+  /**
+   * Get IFile object from Resource
+   */
+  public static IFile getFileForResource(final Resource resource) {
+    if ((resource == null)) {
+      return null;
+    }
+    final String resourceUri = resource.getURI().toString();
+    final IWorkspaceRoot workspace = ResourcesPlugin.getWorkspace().getRoot();
+    IFile _xifexpression = null;
+    boolean _isPlatform = resource.getURI().isPlatform();
+    if (_isPlatform) {
+      String _platformString = resource.getURI().toPlatformString(true);
+      Path _path = new Path(_platformString);
+      _xifexpression = workspace.getFile(_path);
+    } else {
+      IFile _xifexpression_1 = null;
+      boolean _isFileUri = DdmmUtils.isFileUri(resourceUri);
+      if (_isFileUri) {
+        IFile _xblockexpression = null;
+        {
+          final String fullFilePath = DdmmUtils.removeFileUri(resourceUri);
+          Path _path_1 = new Path(fullFilePath);
+          _xblockexpression = workspace.getFileForLocation(_path_1);
+        }
+        _xifexpression_1 = _xblockexpression;
+      } else {
+        IFile _xblockexpression_1 = null;
+        {
+          Path _path_1 = new Path(resourceUri);
+          final IResource resourceWorkspaceMember = workspace.findMember(_path_1);
+          IFile _xifexpression_2 = null;
+          if ((resourceWorkspaceMember instanceof IFile)) {
+            _xifexpression_2 = ((IFile) resourceWorkspaceMember);
+          } else {
+            _xifexpression_2 = null;
+          }
+          _xblockexpression_1 = _xifexpression_2;
+        }
+        _xifexpression_1 = _xblockexpression_1;
+      }
+      _xifexpression = _xifexpression_1;
+    }
+    final IFile file = _xifexpression;
+    return file;
+  }
+  
+  /**
+   * Convenience method to convert a relative path to an absolute "file://" URI
+   */
+  public static String convertToAbsoluteFileUri(final String relativeFilePath, final String absoluteBaseFilePath) {
+    String _xifexpression = null;
+    boolean _isFileUri = DdmmUtils.isFileUri(relativeFilePath);
+    boolean _not = (!_isFileUri);
+    if (_not) {
+      _xifexpression = DdmmUtils.convertToFileUri(DdmmUtils.convertToAbsolutePath(relativeFilePath, absoluteBaseFilePath));
+    } else {
+      _xifexpression = relativeFilePath;
+    }
+    return _xifexpression;
+  }
+  
+  /**
+   * Convenience method to convert a relative path to an absolute "file://" URI by using a
+   * Resource as base
+   */
+  public static String convertToAbsoluteFileUri(final String relativeFilePath, final Resource base) {
+    String _xifexpression = null;
+    boolean _isFileUri = DdmmUtils.isFileUri(relativeFilePath);
+    if (_isFileUri) {
+      _xifexpression = relativeFilePath;
+    } else {
+      String _xifexpression_1 = null;
+      boolean _isFileUri_1 = DdmmUtils.isFileUri(base.getURI().toString());
+      if (_isFileUri_1) {
+        _xifexpression_1 = DdmmUtils.convertToAbsoluteFileUri(relativeFilePath, base.getURI().toString());
+      } else {
+        String _xblockexpression = null;
+        {
+          final String absoluteResourceFilePath = DdmmUtils.getFileForResource(base).getRawLocation().makeAbsolute().toString();
+          _xblockexpression = DdmmUtils.convertToAbsoluteFileUri(relativeFilePath, absoluteResourceFilePath);
+        }
+        _xifexpression_1 = _xblockexpression;
+      }
+      _xifexpression = _xifexpression_1;
+    }
+    return _xifexpression;
+  }
+  
+  /**
    * Check if an imported file represented by its URI exists. The URI may be project-relative or
    * absolute.
    */
@@ -112,7 +246,7 @@ public final class DdmmUtils {
     if ((projectResource != null)) {
       return true;
     }
-    final Path importFilePath = Paths.get(importUri);
+    final java.nio.file.Path importFilePath = Paths.get(importUri);
     return Files.exists(importFilePath);
   }
   
@@ -452,5 +586,42 @@ public final class DdmmUtils {
       return false;
     }
     return ((List<Class<?>>)Conversions.doWrapArray(rootElement.getClass().getInterfaces())).contains(expectedRootType);
+  }
+  
+  /**
+   * Trim path by another. For example, calling this method with
+   *   pathToTrim = "/home/user/folder/file.txt" and
+   *   by = "/home/user/anotherFolder/anotherFile.dat"
+   * will result in
+   *   "/anotherFolder/anotherFile.dat"
+   */
+  public static String trimPathBy(final String pathToTrim, final String by) {
+    final String[] toTrimSegments = pathToTrim.split(File.separator);
+    final String[] bySegments = by.split(File.separator);
+    int equalToIndex = (-1);
+    int currentIndex = 0;
+    while ((((currentIndex < toTrimSegments.length) && (currentIndex < bySegments.length)) && 
+      Objects.equal(toTrimSegments[currentIndex], bySegments[currentIndex]))) {
+      {
+        equalToIndex = currentIndex;
+        currentIndex++;
+      }
+    }
+    if (((equalToIndex > (-1)) && (equalToIndex < (toTrimSegments.length - 1)))) {
+      String trimmedPath = "";
+      int n = (equalToIndex + 1);
+      while ((n < toTrimSegments.length)) {
+        {
+          String _trimmedPath = trimmedPath;
+          String _get = toTrimSegments[n];
+          String _plus = (File.separator + _get);
+          trimmedPath = (_trimmedPath + _plus);
+          n++;
+        }
+      }
+      return trimmedPath;
+    } else {
+      return pathToTrim;
+    }
   }
 }

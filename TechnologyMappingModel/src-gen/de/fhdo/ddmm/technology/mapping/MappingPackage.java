@@ -232,13 +232,49 @@ public interface MappingPackage extends EPackage {
     int MICROSERVICE_MAPPING_FEATURE_COUNT = 9;
 
     /**
+     * The operation id for the '<em>Get Type Definition Technology Imports</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MICROSERVICE_MAPPING___GET_TYPE_DEFINITION_TECHNOLOGY_IMPORTS = 0;
+
+    /**
+     * The operation id for the '<em>Get Type Definition Technology Import</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MICROSERVICE_MAPPING___GET_TYPE_DEFINITION_TECHNOLOGY_IMPORT = 1;
+
+    /**
+     * The operation id for the '<em>Get Type Definition Technologies</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MICROSERVICE_MAPPING___GET_TYPE_DEFINITION_TECHNOLOGIES = 2;
+
+    /**
+     * The operation id for the '<em>Get Type Definition Technology</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MICROSERVICE_MAPPING___GET_TYPE_DEFINITION_TECHNOLOGY = 3;
+
+    /**
      * The number of operations of the '<em>Microservice Mapping</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int MICROSERVICE_MAPPING_OPERATION_COUNT = 0;
+    int MICROSERVICE_MAPPING_OPERATION_COUNT = 4;
 
     /**
      * The meta object id for the '{@link de.fhdo.ddmm.technology.mapping.impl.ImportedMicroserviceImpl <em>Imported Microservice</em>}' class.
@@ -1353,6 +1389,46 @@ public interface MappingPackage extends EPackage {
     EReference getMicroserviceMapping_MappingModel();
 
     /**
+     * Returns the meta object for the '{@link de.fhdo.ddmm.technology.mapping.MicroserviceMapping#getTypeDefinitionTechnologyImports() <em>Get Type Definition Technology Imports</em>}' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the '<em>Get Type Definition Technology Imports</em>' operation.
+     * @see de.fhdo.ddmm.technology.mapping.MicroserviceMapping#getTypeDefinitionTechnologyImports()
+     * @generated
+     */
+    EOperation getMicroserviceMapping__GetTypeDefinitionTechnologyImports();
+
+    /**
+     * Returns the meta object for the '{@link de.fhdo.ddmm.technology.mapping.MicroserviceMapping#getTypeDefinitionTechnologyImport() <em>Get Type Definition Technology Import</em>}' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the '<em>Get Type Definition Technology Import</em>' operation.
+     * @see de.fhdo.ddmm.technology.mapping.MicroserviceMapping#getTypeDefinitionTechnologyImport()
+     * @generated
+     */
+    EOperation getMicroserviceMapping__GetTypeDefinitionTechnologyImport();
+
+    /**
+     * Returns the meta object for the '{@link de.fhdo.ddmm.technology.mapping.MicroserviceMapping#getTypeDefinitionTechnologies() <em>Get Type Definition Technologies</em>}' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the '<em>Get Type Definition Technologies</em>' operation.
+     * @see de.fhdo.ddmm.technology.mapping.MicroserviceMapping#getTypeDefinitionTechnologies()
+     * @generated
+     */
+    EOperation getMicroserviceMapping__GetTypeDefinitionTechnologies();
+
+    /**
+     * Returns the meta object for the '{@link de.fhdo.ddmm.technology.mapping.MicroserviceMapping#getTypeDefinitionTechnology() <em>Get Type Definition Technology</em>}' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the '<em>Get Type Definition Technology</em>' operation.
+     * @see de.fhdo.ddmm.technology.mapping.MicroserviceMapping#getTypeDefinitionTechnology()
+     * @generated
+     */
+    EOperation getMicroserviceMapping__GetTypeDefinitionTechnology();
+
+    /**
      * Returns the meta object for class '{@link de.fhdo.ddmm.technology.mapping.ImportedMicroservice <em>Imported Microservice</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2274,6 +2350,38 @@ public interface MappingPackage extends EPackage {
          * @generated
          */
         EReference MICROSERVICE_MAPPING__MAPPING_MODEL = eINSTANCE.getMicroserviceMapping_MappingModel();
+
+        /**
+         * The meta object literal for the '<em><b>Get Type Definition Technology Imports</b></em>' operation.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EOperation MICROSERVICE_MAPPING___GET_TYPE_DEFINITION_TECHNOLOGY_IMPORTS = eINSTANCE.getMicroserviceMapping__GetTypeDefinitionTechnologyImports();
+
+        /**
+         * The meta object literal for the '<em><b>Get Type Definition Technology Import</b></em>' operation.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EOperation MICROSERVICE_MAPPING___GET_TYPE_DEFINITION_TECHNOLOGY_IMPORT = eINSTANCE.getMicroserviceMapping__GetTypeDefinitionTechnologyImport();
+
+        /**
+         * The meta object literal for the '<em><b>Get Type Definition Technologies</b></em>' operation.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EOperation MICROSERVICE_MAPPING___GET_TYPE_DEFINITION_TECHNOLOGIES = eINSTANCE.getMicroserviceMapping__GetTypeDefinitionTechnologies();
+
+        /**
+         * The meta object literal for the '<em><b>Get Type Definition Technology</b></em>' operation.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EOperation MICROSERVICE_MAPPING___GET_TYPE_DEFINITION_TECHNOLOGY = eINSTANCE.getMicroserviceMapping__GetTypeDefinitionTechnology();
 
         /**
          * The meta object literal for the '{@link de.fhdo.ddmm.technology.mapping.impl.ImportedMicroserviceImpl <em>Imported Microservice</em>}' class.

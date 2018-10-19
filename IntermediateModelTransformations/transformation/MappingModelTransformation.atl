@@ -1,0 +1,966 @@
+-- @path Mapping=/TechnologyMappingModel/model/TechnologyMappingModel.xcore
+-- @path Service=/ServiceViewpointModel/model/ServiceViewpointModel.xcore
+
+-- Author: Florian Rademacher
+-- E-mail: florian.rademacher@fh-dortmund.de
+
+module MappingModelTransformation;
+create OUT : Service from IN : Mapping;
+
+-- Helpers for managing created import instances ---------------------------------------------------
+--- Helper to store created Import instances. It maps the name of imports to the created instances
+--- and hence enables, e.g., to identify a target Import instance from the name of a source Import
+--- instance.
+helper def : createdImports : Map(String, Service!Import) = Map{};
+
+--- Called helper rule to add a created Import instance to the helper map of created Import 
+--- instances. Note that we cannot use a "normal" helper here, because we need to assign the helper
+--- map to itself to populate it.
+rule CreatedImport(createdImport : Service!Import) {
+	do {
+		thisModule.createdImports <- thisModule.createdImports
+			->including(createdImport.name, createdImport);
+	}
+}
+
+--- Convenience helper to get a created Import instance from a given source Import instance
+helper def : getCreatedImport(sourceImport : Service!Import)
+	: Service!Import = thisModule.createdImports->get(sourceImport.name)
+;
+----------------------------------------------------------------------------------------------------
+
+-- Helpers for managing created microservice instances ---------------------------------------------
+--- Helper to store created Microservice instances. It maps the name of imports to the created
+--- instances and hence enables, e.g., to identify a target Microservuice instance from the name of
+--- a source Microservice instance.
+helper def : createdMicroservices : Map(String, Service!Microservice) = Map{};
+
+--- Called helper rule to add a created Microservice instance to the helper map of created
+--- Microservice instances. Note that we cannot use a "normal" helper here, because we need to 
+--- assign the helper map to itself to populate it.
+rule CreatedMicroservice(createdMicroservice : Service!Interface, serviceImportName : String) {
+	do {
+		thisModule.createdMicroservices <- thisModule.createdMicroservices
+			->including(serviceImportName
+					.concat('.')
+					.concat(createdMicroservice.buildQualifiedName('.')), 
+				createdMicroservice);
+	}
+}
+
+--- Convenience helper to get a created Microservice instance from a given source 
+--- Microservice instance  
+helper def : getCreatedMicroservice(sourceMicroservice : Service!Microservice,
+	serviceImportName : String) : Service!Microservice = 
+	thisModule.createdMicroservices->get(serviceImportName
+		.concat('.')
+		.concat(sourceMicroservice.buildQualifiedName('.'))
+	)
+;
+----------------------------------------------------------------------------------------------------
+
+-- Helpers for managing created interface instances ------------------------------------------------
+--- Helper to store created Interface instances. It maps the name of imports to the created
+--- instances and hence enables, e.g., to identify a target Interface instance from the name of a
+--- source Interface instance.
+helper def : createdInterfaces : Map(String, Service!Interface) = Map{};
+
+--- Called helper rule to add a created Interface instance to the helper map of created Interface
+--- instances. Note that we cannot use a "normal" helper here, because we need to assign the helper
+--- map to itself to populate it.
+rule CreatedInterface(createdInterface : Service!Interface, serviceImportName : String) {
+	do {
+		thisModule.createdInterfaces <- thisModule.createdInterfaces
+			->including(serviceImportName
+					.concat('.')
+					.concat(createdInterface.buildQualifiedName('.')), 
+				createdInterface);
+	}
+}
+
+--- Convenience helper to get a created Interface instance from a given source Interface instance  
+helper def : getCreatedInterface(sourceInterface : Service!Interface, serviceImportName : String) 
+	: Service!Interface = 
+	thisModule.createdInterfaces->get(serviceImportName
+		.concat('.')
+		.concat(sourceInterface.buildQualifiedName('.'))
+	)
+;
+----------------------------------------------------------------------------------------------------
+
+-- Helpers for managing created operation instances ------------------------------------------------
+--- Helper to store created Operation instances. It maps the name of imports to the created
+--- instances and hence enables, e.g., to identify a target Operation instance from the name of a
+--- source Operation instance.
+helper def : createdOperations : Map(String, Service!Operation) = Map{};
+
+--- Called helper rule to add a created Operation instance to the helper map of created Operation
+--- instances. Note that we cannot use a "normal" helper here, because we need to assign the helper
+--- map to itself to populate it.
+rule CreatedOperation(createdOperation : Service!Operation, serviceImportName : String) {
+	do {
+		thisModule.createdOperations <- thisModule.createdOperations
+			->including(serviceImportName
+					.concat('.')
+					.concat(createdOperation.buildQualifiedName('.')), 
+				createdOperation);
+	}
+}
+
+--- Convenience helper to get a created Operation instance from a given source Operation instance  
+helper def : getCreatedOperation(sourceOperation : Service!Operation, serviceImportName : String) 
+	: Service!Operation = 
+	thisModule.createdOperations->get(serviceImportName
+		.concat('.')
+		.concat(sourceOperation.buildQualifiedName('.'))
+	)
+;
+----------------------------------------------------------------------------------------------------
+
+-- Helpers for managing created possibly imported operation instances ------------------------------
+--- Helper to store created PossiblyImportedOperation instances. It maps the source to the target
+--- instance.
+helper def : createdPossiblyImportedOperations 
+	: Map(Service!PossiblyImportedOperation, Service!PossiblyImportedOperation) = Map{};
+
+--- Called helper rule to add a created PossiblyImportedOperation instance to the helper map. Note 
+--- that we cannot use a "normal" helper here, because we need to assign the helper map to itself to
+--- populate it.
+rule CreatedPossiblyImportedOperation(sourceOperation : Service!PossiblyImportedOperation,
+	createdOperation : Service!PossiblyImportedOperation) {
+	do {
+		thisModule.createdPossiblyImportedOperations <- 
+			thisModule.createdPossiblyImportedOperations
+				->including(sourceOperation, createdOperation);
+	}
+}
+
+--- Convenience helper to get a created Operation instance from a given source Operation instance  
+helper def : getCreatedPossiblyImportedOperation(
+	sourceOperation : Service!PossiblyImportedOperation) : Service!Operation = 
+	thisModule.createdPossiblyImportedOperations->get(sourceOperation)
+;
+----------------------------------------------------------------------------------------------------
+
+-- Helpers for managing delayed referred operation instances ---------------------------------------
+--- Helper to keep track of ReferredOperation instances that need to be created at the end of the
+--- transformation, when the Operation instances they refer to have also been created
+helper def : delayedReferredOperations : Sequence(TupleType(
+	referredOperation : Service!ReferredOperation,
+	sourceServiceImportName : String,
+	mapping : Mapping!ReferredOperationMapping)) = Sequence{};
+
+--- Register a delayed referred operation
+rule RegisterDelayedReferredOperation(referredOperation : Service!ReferredOperation, 
+	sourceServiceImportName : String, mapping : Mapping!ReferredOperationMapping) {
+	do {
+		thisModule.delayedReferredOperations <- thisModule.delayedReferredOperations->append(Tuple{
+			referredOperation = referredOperation, 
+			sourceServiceImportName = sourceServiceImportName, 
+			mapping = mapping
+		});
+	}
+}
+----------------------------------------------------------------------------------------------------
+
+-- Helpers for managing possibly imported instances that are required by microservices and might ---
+-- need to be completed with information at the end of the transformation -------------------------- 
+--- Helper to keep track of PossiblyImportedMicroservice instances
+helper def : possiblyImportedMicroservicesTodo : Sequence(TupleType(
+	sourcePossiblyImportedMicroservice : Service!PossiblyImportedMicroservice,
+	requiringMicroserviceImportName : String)) = Sequence{};
+	
+--- Add PossiblyImportedMicroservice instance to the todo list
+rule AddPossiblyImportedMicroservicesTodo(
+	sourcePossiblyImportedMicroservice : Service!PossiblyImportedMicroservice, 
+	requiringMicroserviceImportName : String) {
+	do {
+		thisModule.possiblyImportedMicroservicesTodo <- 
+			thisModule.possiblyImportedMicroservicesTodo->append(Tuple{
+				sourcePossiblyImportedMicroservice = sourcePossiblyImportedMicroservice, 
+				requiringMicroserviceImportName = requiringMicroserviceImportName
+		});
+	}
+}
+
+--- Helper to keep track of PossiblyImportedInterface instances
+helper def : possiblyImportedInterfacesTodo : Sequence(TupleType(
+	sourcePossiblyImportedInterface : Service!PossiblyImportedInterface,
+	requiringMicroserviceImportName : String)) = Sequence{};
+	
+--- Add PossiblyImportedInterface instance to the todo list
+rule AddPossiblyImportedInterfacesTodo(
+	sourcePossiblyImportedInterface : Service!PossiblyImportedInterface, 
+	requiringMicroserviceImportName : String) {
+	do {
+		thisModule.possiblyImportedInterfacesTodo <- 
+			thisModule.possiblyImportedInterfacesTodo->append(Tuple{
+				sourcePossiblyImportedInterface = sourcePossiblyImportedInterface, 
+				requiringMicroserviceImportName = requiringMicroserviceImportName
+		});
+	}
+}
+
+--- Helper to keep track of PossiblyImportedOperation instances
+helper def : possiblyImportedOperationsTodo : Sequence(TupleType(
+	sourcePossiblyImportedOperation : Service!PossiblyImportedOperation,
+	requiringMicroserviceImportName : String)) = Sequence{};
+	
+--- Add PossiblyImportedOperation instance to the todo list
+rule AddPossiblyImportedOperationsTodo(
+	sourcePossiblyImportedOperation : Service!PossiblyImportedOperation, 
+	requiringMicroserviceImportName : String) {
+	do {
+		thisModule.possiblyImportedOperationsTodo <- 
+			thisModule.possiblyImportedOperationsTodo->append(Tuple{
+				sourcePossiblyImportedOperation = sourcePossiblyImportedOperation, 
+				requiringMicroserviceImportName = requiringMicroserviceImportName
+		});
+	}
+}
+
+--- Helper to keep track of Parameter instances that are initialized by a PossiblyImportedOperation
+helper def : initializedParametersTodo : Sequence(TupleType(
+	targetParameter : Service!Paramater, 
+	sourcePossiblyImportedOperation : Service!PossiblyImportedOperation)) = Sequence{};
+	
+--- Add Parameter instance to the todo list
+rule AddInitializedParametersTodo(
+	targetParameter : Service!Paramater,
+	sourcePossiblyImportedOperation : Service!PossiblyImportedOperation) {
+	do {
+		thisModule.initializedParametersTodo <- 
+			thisModule.initializedParametersTodo->append(Tuple{
+				targetParameter = targetParameter, 
+				sourcePossiblyImportedOperation = sourcePossiblyImportedOperation
+		});
+	}
+}
+----------------------------------------------------------------------------------------------------
+
+--- Rule to generate the root of the target service model
+unique lazy rule ServiceModel {
+	from
+		s : Mapping!TechnologyMapping
+	to
+		t : Service!ServiceModel(
+			imports <- Sequence{},
+			microservices <- Sequence{}
+		)	
+}
+
+--- Transform a source Import to a target Import
+rule MappedImport {
+	from
+		m : Mapping!Import
+	do {
+		thisModule.Import(m);
+	}
+}
+
+--- Generic called rule to create service Imports
+rule Import(sourceImport : Service!Import) {
+	to
+		t : Service!Import(
+			name <- sourceImport.name,
+			importURI <- sourceImport.importURI,
+			importType <- sourceImport.importType,
+			serviceModel <- thisModule.ServiceModel()
+		)
+	do {
+		thisModule.ServiceModel().imports <- thisModule.ServiceModel().imports->append(t);
+		thisModule.CreatedImport(t);
+		t;
+	}
+}
+
+--- Transform a MicroserviceMapping to a target Microservice
+rule MappedMicroservice {	
+	from
+		m : Mapping!MicroserviceMapping
+	using {
+		sourceMicroservice : Service!Microservice = m.microservice.microservice;
+	}
+	do {
+		thisModule.Microservice(sourceMicroservice, m, m.microservice.import.name);
+	}
+}
+
+--- Generic called rule to create a target Microservice
+rule Microservice(sourceMicroservice : Service!Microservice, 
+	microserviceMapping : Mapping!MicroserviceMapping, importAlias : String) {
+	to
+		t : Service!Microservice(
+			name <- sourceMicroservice.name,
+			version <- sourceMicroservice.version,
+			type <- sourceMicroservice.type,
+			visibility <- sourceMicroservice.visibility,
+			serviceModel <- thisModule.ServiceModel()
+		)
+	do {
+		-- Assigned technologies
+		for (technology in sourceMicroservice.technologies) {
+			if (thisModule.getCreatedImport(technology).oclIsUndefined())
+				thisModule.Import(technology);
+			t.technologies <- t.technologies->append(thisModule.getCreatedImport(technology));
+		}
+		
+		-- In case a mapping was specified for the element, populate all properties with mapped
+		-- elements. Note that if no mapping was given, none of the properties that may be mapped to
+		-- an alternative technology is populated.
+		if (not microserviceMapping.oclIsUndefined()) {
+			t.protocols <- thisModule.createProtocolSpecifications(microserviceMapping.protocols);
+			t.endpoints <- thisModule.createEndpoints(microserviceMapping.endpoints, 'microservice',
+				t);
+			t.aspects <- thisModule.createServiceAspects(microserviceMapping.aspects, 
+				'microservice', t);
+		-- If no mapping was specified, the rule behaves copies the contents of the source 
+		-- properties to the target properties
+		} else {
+			t.protocols <- thisModule.createProtocolSpecifications(sourceMicroservice.protocols);
+			t.endpoints <- thisModule.createEndpoints(sourceMicroservice.endpoints, 'microservice',
+				t);
+			t.aspects <- thisModule.createServiceAspects(sourceMicroservice.aspects, 'microservice',
+				t);
+		}
+		
+		-- Interfaces
+		for (interface in sourceMicroservice.interfaces) {
+			if (not microserviceMapping.oclIsUndefined())
+				t.interfaces <- t.interfaces->append(thisModule.Interface(interface,
+					microserviceMapping.interfaceMappings->any(i |
+						i.interface.buildQualifiedName('.') = interface.buildQualifiedName('.')
+					), microserviceMapping, importAlias, t));
+			else
+				t.interfaces <- t.interfaces->append(thisModule.Interface(interface, OclUndefined,
+					OclUndefined, importAlias, t));
+		}
+		
+		-- Copy properties that may not be mapped
+		for (requiredMicroservice in sourceMicroservice.requiredMicroservices) {			
+			thisModule.AddPossiblyImportedMicroservicesTodo(requiredMicroservice, importAlias);
+		}
+		
+		for (requiredInterface in sourceMicroservice.requiredInterfaces) {			
+			thisModule.AddPossiblyImportedInterfacesTodo(requiredInterface, importAlias);
+		}
+		
+		for (requiredOperation in sourceMicroservice.requiredOperations) {			
+			thisModule.AddPossiblyImportedOperationsTodo(requiredOperation, importAlias);
+		}
+		
+		-- Populate target service model
+		thisModule.ServiceModel().microservices <- 
+			thisModule.ServiceModel().microservices->append(t);
+		thisModule.CreatedMicroservice(t, importAlias);
+		
+		t;
+	}
+}
+
+--- Generic called rule to create a target Interface
+rule Interface(sourceInterface : Service!Interface, interfaceMapping : Mapping!InterfaceMapping,
+	microserviceMapping : Mapping!MicroserviceMapping, 
+	importAlias : String, container : Service!Microservice) {
+	to
+		t : Service!Interface(
+			name <- sourceInterface.name,
+			notImplemented <- sourceInterface.notImplemented,
+			visibility <- sourceInterface.visibility,
+			microservice <- container
+		)	
+	do {
+		-- In case a mapping was specified for the element, populate all properties with mapped
+		-- elements. Note that if no mapping was given, none of the properties that may be mapped to
+		-- an alternative technology is populated.
+		if (not interfaceMapping.oclIsUndefined()) {
+			t.protocols <- thisModule.createProtocolSpecifications(interfaceMapping.protocols);
+			t.endpoints <- thisModule.createEndpoints(interfaceMapping.endpoints, 'interface', t);			
+			t.aspects <- thisModule.createServiceAspects(interfaceMapping.aspects, 'interface', t);
+			
+		-- If no mapping was specified, the rule behaves copies the contents of the source 
+		-- properties to the target properties
+		} else {
+			t.protocols <- thisModule.createProtocolSpecifications(sourceInterface.protocols);
+			t.endpoints <- thisModule.createEndpoints(sourceInterface.endpoints, 'interface', t);
+			t.aspects <- thisModule.createServiceAspects(sourceInterface.aspects, 'interface', t);
+		}
+		
+		-- Operations
+		for (operation in sourceInterface.operations) {
+			if (not microserviceMapping.oclIsUndefined())
+				t.operations <- t.operations->append(thisModule.Operation(operation,
+					microserviceMapping.operationMappings->any(o | 
+						o.operation.buildQualifiedName('.') = operation.buildQualifiedName('.')
+					), importAlias, t));
+			else
+				t.operations <- t.operations->append(thisModule.Operation(operation, OclUndefined,
+					importAlias, t));
+		}
+		
+		-- Referred operations
+		for (referredOperation in sourceInterface.referredOperations) {
+			if (not microserviceMapping.oclIsUndefined())
+				thisModule.RegisterDelayedReferredOperation(
+					referredOperation, 
+					importAlias,
+					microserviceMapping.referredOperationMappings->any(r | 
+						r.operation.buildQualifiedName('.') = 
+							referredOperation.operation.buildQualifiedName('.')
+					)
+				);
+			else
+				thisModule.RegisterDelayedReferredOperation(referredOperation, importAlias,
+					OclUndefined);
+		}
+		
+		thisModule.CreatedInterface(t, importAlias);
+		t;
+	}
+}
+
+--- Generic called rule to create a target Operation
+rule Operation(sourceOperation : Service!Operation, operationMapping : Mapping!OperationMapping,
+	importAlias : String, container : Service!Interface) {
+	to
+		t : Service!Operation(
+			name <- sourceOperation.name,
+			notImplemented <- sourceOperation.notImplemented,
+			visibility <- sourceOperation.visibility,
+			interface <- container
+		)
+	do {
+		-- In case a mapping was specified for the element, populate all properties with mapped
+		-- elements. Note that if no mapping was given, none of the properties that may be mapped to
+		-- an alternative technology is populated.
+		if (not operationMapping.oclIsUndefined()) {
+			t.protocols <- thisModule.createProtocolSpecifications(operationMapping.protocols);
+			t.endpoints <- thisModule.createEndpoints(operationMapping.endpoints, 'operation', t);
+			t.aspects <- thisModule.createServiceAspects(operationMapping.aspects, 'operation', t);
+			
+		-- If no mapping was specified, the rule behaves copies the contents of the source 
+		-- properties to the target properties
+		} else {
+			t.protocols <- thisModule.createProtocolSpecifications(sourceOperation.protocols);
+			t.endpoints <- thisModule.createEndpoints(sourceOperation.endpoints, 'operation', t);
+			t.aspects <- thisModule.createServiceAspects(sourceOperation.aspects, 'operation', t);
+		}
+		
+		-- Parameters
+		for (parameter in sourceOperation.parameters) {	
+			if (not operationMapping.oclIsUndefined())
+				t.parameters <- t.parameters->append(thisModule.Parameter(parameter,
+					operationMapping.parameterMappings->any(
+						p | p.parameter.name = parameter.name
+					), t));
+			else
+				t.parameters <- t.parameters->append(
+					thisModule.Parameter(parameter, OclUndefined, t)
+				);
+		}
+		
+		thisModule.CreatedOperation(t, importAlias);
+		t;
+	}
+}
+
+--- Generic called rule to create a target Parameter
+rule Parameter(sourceParameter : Service!Parameter, parameterMapping : Mapping!ParameterMapping,
+	container : Service!Operation) {
+	to
+		t : Service!Parameter(
+			name <- sourceParameter.name,
+			exchangePattern <- sourceParameter.exchangePattern,
+			communicationType <- sourceParameter.communicationType,
+			communicatesFault <- sourceParameter.communicatesFault,
+			optional <- sourceParameter.optional,
+			operation <- container
+		)
+	do {
+		-- Defer assignment of the parameter's initializing operation to the end of the 
+		-- transformation as it might not have been created yet
+		if (not sourceParameter.initializedByOperation.oclIsUndefined())
+			thisModule.AddInitializedParametersTodo(t, sourceParameter.initializedByOperation);
+		
+		if (not parameterMapping.oclIsUndefined()) {
+			-- Parameter is mapped to technology-specific primitive type
+			if (parameterMapping.oclIsTypeOf(Mapping!PrimitiveParameterMapping))
+				t.importedType <- thisModule.ImportedType(parameterMapping.technology, 
+					parameterMapping.primitiveType);
+			
+			-- Parameter is mapped to technology-specific complex type
+			else if (parameterMapping.oclIsTypeOf(Mapping!ComplexParameterMapping)) {
+				-- Parameter may either have an imported technology-specific complex type or a
+				-- data field mapping, that specifies deviant types for the data fields of the
+				-- parameter's data structure type
+				if (not parameterMapping.technology.oclIsUndefined() and 
+					not parameterMapping.technologySpecificComplexType.oclIsUndefined())
+					t.importedType <- thisModule.ImportedType(parameterMapping.technology, 
+						parameterMapping.technologySpecificComplexType);
+				
+				for (dataFieldMapping in parameterMapping.dataFieldMappings) {					
+					t.mappedDataFields <- t.mappedDataFields->append(
+						thisModule.MappedDataField(dataFieldMapping, t)
+					);
+				}
+			}
+			
+			-- Mapped aspects
+			t.aspects <- thisModule.createServiceAspects(parameterMapping.aspects, 'parameter', t);			
+		} else {
+			-- Parameter has a type being imported from a data or technology model
+			if (not sourceParameter.importedType.oclIsUndefined())
+				t.importedType <- thisModule.ImportedType(sourceParameter.importedType.import, 
+					sourceParameter.importedType.type);
+			
+			-- Parameter has a built-in primitive type
+			else if (not sourceParameter.primitiveType.oclIsUndefined())
+				t.primitiveType <- sourceParameter.primitiveType;
+			
+			-- Aspects
+			t.aspects <- thisModule.createServiceAspects(sourceParameter.aspects, 'parameter', t);
+		}
+		
+		t;
+	}
+}
+
+--- Generic called rule for creating a MappedDataField 
+rule MappedDataField(dataFieldMapping : Mapping!TechnologySpecificDataFieldTypeMapping,
+	targetParameter : Service!Parameter) {
+	to
+		t : Service!MappedDataField(
+			dataField <- dataFieldMapping.dataFieldHierarchy.dataFields->last(),
+			parameter <- targetParameter,
+			mappedType <- thisModule.ImportedType(dataFieldMapping.technology, 
+				dataFieldMapping.type),
+			aspects <- thisModule.createServiceAspects(dataFieldMapping.aspects, 'mappedDataField', 
+				t)
+		)
+	do {
+		t;
+	}
+}
+
+--- Helper to create ProtocolSpecification instances from a list of either technology-specific
+--- specifications (from a mapped instance) or ProtocolSpecification instances from a source service
+--- model (copy)
+helper def : createProtocolSpecifications(sourceSpecifications : Sequence(OclAny))
+	: Ocl!OclVoid = 
+	sourceSpecifications->iterate(p; 
+		targetSequence : Sequence(Service!ProtocolSpecification) = Sequence{} |
+		let targetSpecification : Service!ProtocolSpecification =
+			if (p.oclIsTypeOf(Mapping!TechnologySpecificProtocolSpecification)) then
+				-- Mappend specifications
+				thisModule.ProtocolSpecification(p.communicationType, 
+					p.technologySpecificProtocol.technology, 
+					p.technologySpecificProtocol.protocol,
+					p.technologySpecificProtocol.dataFormat)
+			else if (p.oclIsTypeOf(Service!ProtocolSpecification)) then
+				-- Specifications from service model
+				thisModule.ProtocolSpecification(p.communicationType, p.protocol.import, 
+					p.protocol.importedProtocol, p.protocol.dataFormat)
+			else
+				OclUndefined
+			endif
+			endif
+		in
+		targetSequence->append(targetSpecification)
+	)
+;
+
+--- Generic called rule to create a target ProtocolSpecification instance
+rule ProtocolSpecification(communicationType : Service!CommunicationType, 
+	sourceProtocolImport : Service!Import, importedProtocol : Service!Protocol, 
+	dataFormat : Service!DataFormat) {
+	to
+		t : Service!ProtocolSpecification(
+			communicationType <- communicationType,
+			protocol <- thisModule.ImportedProtocolAndDataFormat(sourceProtocolImport, 
+				importedProtocol, dataFormat)
+		)
+	do {
+		t;
+	}
+}
+
+--- Generic called rule to create a target ImportedProtocolAndDataFormat instance
+rule ImportedProtocolAndDataFormat(sourceProtocolImport : Service!Import, 
+	importedProtocol : Service!Protocol, dataFormat : Service!DataFormat) {
+	to
+		t : Service!ImportedProtocolAndDataFormat(
+			import <- thisModule.getCreatedImport(sourceProtocolImport),
+			importedProtocol <- importedProtocol,
+			dataFormat <- dataFormat
+		)
+	do {
+		t;
+	}
+}
+
+--- Helper to create Endpoint instances from a list of either technology-specific endpoints (from 
+--- a mapped instance) or Endpoint instances from a source service model (copy)
+helper def : createEndpoints(sourceEndpoints : Sequence(OclAny), oppositeProperty : String, 
+	oppositeElement : OclAny)
+	: Ocl!OclVoid = 
+	sourceEndpoints->iterate(e;
+		targetSequence : Sequence(Service!Endpoint) = Sequence{} |
+		let targetEndpoint : Service!Endpoint =
+			if (e.oclIsTypeOf(Mapping!TechnologySpecificEndpoint)) then
+				thisModule.Endpoint(e.addresses, e.technologySpecificProtocols, OclUndefined)
+			else if (e.oclIsTypeOf(Service!Endpoint)) then
+				thisModule.Endpoint(e.addresses, OclUndefined, e.protocols)
+			else
+				OclUndefined
+			endif
+			endif
+		in
+		-- Note that this line not only adds the created Endpoint to the result sequence, but also
+		-- establishes the opposite link, e.g., to the containing microservice or interface,
+		-- leveraging reflection
+		targetSequence->append(targetEndpoint.refSetValue(oppositeProperty, oppositeElement))		
+	)
+;
+
+--- Generic called rule to create a target Endpoint instance
+rule Endpoint(addresses : Sequence(String), 
+	mappingProtocols : Sequence(Mapping!TechnologySpecificProtocol), 
+	protocols : Sequence(Service!ImportedProtocolAndDataFormat)) {
+	to
+		t : Service!Endpoint(
+			addresses <- addresses		
+		)
+	do {
+		-- Create ImportedProtocolAndDataFormat from mapping or source ImportedProtocolAndDataFormat
+		-- (copy)
+		if (not mappingProtocols.oclIsUndefined())
+			for (protocol in mappingProtocols) {
+				t.protocols <- t.protocols->append(
+					thisModule.ImportedProtocolAndDataFormat(protocol.technology, 
+						protocol.protocol, protocol.dataFormat)
+				);
+				t.protocols->last().endpoint <- t;
+			}
+		else
+			for (protocol in protocols) {
+				t.protocols <- t.protocols->append(
+					thisModule.ImportedProtocolAndDataFormat(protocol.import, 
+						protocol.importedProtocol, protocol.dataFormat)
+				);
+				t.protocols->last().endpoint <- t;
+			}
+		
+		t;
+	}
+}
+
+--- Helper to create ServiceAspect instances from a list of either technology-specific aspects (from 
+--- a mapped instance) or ServiceAspect instances from a source service model (copy)
+helper def : createServiceAspects(sourceAspects : Sequence(OclAny), oppositeProperty : String, 
+	oppositeElement : OclAny)
+	: Ocl!OclVoid = 
+	sourceAspects->iterate(a;
+		targetSequence : Sequence(Service!ServiceAspect) = Sequence{} |
+		let targetAspect : Service!ServiceAspect =
+			if (a.oclIsTypeOf(Mapping!TechnologySpecificImportedServiceAspect)) then
+				thisModule.ServiceAspect(a.technology, a.aspect, a.singlePropertyValue, a.values)
+			else if a.oclIsTypeOf(Service!ServiceAspect) then
+				thisModule.ServiceAspect(a.import, a.importedAspect, a.singlePropertyValue, 
+					a.values)
+			else
+				OclUndefined
+			endif
+			endif
+		in
+		-- Note that this line not only adds the created ServiceAspect to the result sequence, but
+		-- also establishes the opposite link, e.g., to the containing microservice or interface,
+		-- leveraging reflection
+		targetSequence->append(targetAspect.refSetValue(oppositeProperty, oppositeElement))		
+	)
+;
+
+--- Generic called rule to create a target ServiceAspect instance
+rule ServiceAspect(sourceAspectImport : Service!Import, aspect : Service!ServiceAspect,
+	singlePropertyValue : Service!PrimitiveValue, 
+	values : Sequence(Service!TechnologySpecificPropertyValueAssignment)) {
+	to
+		t : Service!ImportedServiceAspect(
+			import <- thisModule.getCreatedImport(sourceAspectImport),
+			importedAspect <- aspect,
+			singlePropertyValue <- singlePropertyValue
+		)
+	do {
+		for (value in values) {
+			t.values <- t.values->append(
+				thisModule.TechnologySpecificPropertyValueAssignment(value)
+			);
+		}
+		
+		t;
+	}
+}
+
+--- Generic called rule to create a target TechnologySpecificPropertyValueAssignment instance from a
+--- source instance (copy)
+rule TechnologySpecificPropertyValueAssignment(
+	sourceAssignment : Service!TechnologySpecificPropertyValueAssignment) {
+	to
+		t : Service!TechnologySpecificPropertyValueAssignment(
+			property <- sourceAssignment.property,
+			value <- thisModule.PrimitiveValue(sourceAssignment.value)
+		)
+	do {
+		t;
+	}
+}
+
+--- Generic called rule to create a PrimitiveValue instance from a source PrimitiveValue (copy)
+rule PrimitiveValue(sourceValue : Service!PrimitiveValue) {
+	to
+		t : Service!PrimitiveValue(
+			stringValue <- sourceValue.stringValue,
+			booleanValue <- sourceValue.booleanValue,
+			numericValue <- sourceValue.numericValue
+		)
+	do {
+		t;
+	}
+}
+
+--- Generic called rule to create an ImportedType instance
+rule ImportedType(sourceImport : Service!Import, sourceType : Service!Type) {
+	to
+		t : Service!ImportedType(
+			import <- thisModule.getCreatedImport(sourceImport),
+			type <- sourceType
+		)
+	do {
+		if (t.import.oclIsUndefined())
+			t.import <- thisModule.Import(sourceImport);
+		
+		t;
+	}
+}
+
+--- Called rule to create or complete instances at the end of the transformation
+endpoint rule AfterTransformation() {
+	do {
+		-- Referred operations
+		for (delayedOperation in thisModule.delayedReferredOperations) {
+			thisModule.ReferredOperation(
+				delayedOperation.referredOperation, 
+				delayedOperation.sourceServiceImportName, 
+				delayedOperation.mapping
+			);
+		}
+		
+		-- Possibly imported microservices, interfaces, and operations that are required by created
+		-- microservices
+		for (microservice in thisModule.possiblyImportedMicroservicesTodo) {
+			thisModule.PossiblyImportedMicroservice(microservice.sourcePossiblyImportedMicroservice,
+				microservice.requiringMicroserviceImportName, OclUndefined);
+		}
+		
+		for (interface in thisModule.possiblyImportedInterfacesTodo) {
+			thisModule.PossiblyImportedInterface(interface.sourcePossiblyImportedInterface,
+				interface.requiringMicroserviceImportName, OclUndefined);
+		}
+		
+		for (operation in thisModule.possiblyImportedOperationsTodo) {
+			thisModule.PossiblyImportedOperation(operation.sourcePossiblyImportedOperation,
+				operation.requiringMicroserviceImportName, OclUndefined);
+		}
+		
+		-- Possibly imported operations for parameter initializations
+		for (parameter in thisModule.initializedParametersTodo) {
+			parameter.targetParameter.initializedByOperation <- 
+				thisModule.getCreatedPossiblyImportedOperation(
+					parameter.sourcePossiblyImportedOperation
+				);
+		}
+	}
+}
+
+--- Generic called rule to create a target ReferredOperation at the end of the transformation when
+--- all instances the target instance depends on were created
+rule ReferredOperation(sourceOperation : Service!ReferredOperation, importAlias : String, 
+	operationMapping : Mapping!ReferredOperationMapping) {
+	to
+		t : Service!ReferredOperation(
+			operation <- thisModule.getCreatedOperation(sourceOperation.operation, importAlias),
+			interface <- thisModule.getCreatedInterface(sourceOperation.interface, importAlias)
+		)
+	do {
+		-- In case a mapping was specified for the element, populate all properties with mapped
+		-- elements. Note that if no mapping was given, none of the properties that may be mapped to
+		-- an alternative technology is populated.
+		if (not operationMapping.oclIsUndefined()) {
+			t.protocols <- thisModule.createProtocolSpecifications(operationMapping.protocols);
+			t.endpoints <- thisModule.createEndpoints(operationMapping.endpoints, 
+				'referredOperation', t);
+			t.aspects <- thisModule.createServiceAspects(operationMapping.aspects, 
+				'referredOperation', t);
+			
+		-- If no mapping was specified, the rule behaves copies the contents of the source 
+		-- properties to the target properties
+		} else {
+			t.protocols <- thisModule.createProtocolSpecifications(sourceOperation.protocols);
+			t.endpoints <- thisModule.createEndpoints(sourceOperation.endpoints, 
+				'referredOperation', t);
+			t.aspects <- thisModule.createServiceAspects(sourceOperation.aspects, 
+				'referredOperation', t);
+		}
+		
+		t;
+	}
+}
+
+--- Generic called rule to create a target PossiblyImportedMicroservice at the end of the 
+--- transformation when all instances the target instance depends on were created
+rule PossiblyImportedMicroservice(source : Service!PossiblyImportedMicroservice, 
+	requiringMicroserviceImportAlias : String) {
+	to
+		t : Service!PossiblyImportedMicroservice
+	do {
+		-- Service got actually imported
+		if (not source.import.oclIsUndefined()) {
+			t.import <- thisModule.getCreatedImport(source.import);
+			-- If the Import instance for the service model from which the service got actually 
+			-- imported wasn't "seen" during the transformation, create it now. The reason why a
+			-- source import wasn't treated during the transformation is that the service, which
+			-- requires this imported service is in another service model than the source mapping
+			-- model. This happens within "dependency chains" of requiring microservices.
+			if (t.import.oclIsUndefined())
+				t.import <- thisModule.Import(source.import);
+			t.microservice <- source.microservice;
+		} 
+		
+		-- Service is from the same model as the requiring service
+		if (source.import.oclIsUndefined() and not source.microservice.oclIsUndefined()) {
+			t.microservice <- thisModule.getCreatedMicroservice(source.microservice, 
+				requiringMicroserviceImportAlias);
+
+			-- Create required service if necessary. Note that the import alias corresponds to that
+			-- of the requiring microservice, as both services were defined in the same model.
+			if (t.microservice.oclIsUndefined())
+				t.microservice <- thisModule.Microservice(source.microservice, OclUndefined,
+					requiringMicroserviceImportAlias);			
+		}
+		
+		-- Set opposite link to requiring microservice
+		t.requiringMicroservice <- thisModule.getCreatedMicroservice(source.requiringMicroservice, 
+			requiringMicroserviceImportAlias);
+		if (t.requiringMicroservice.oclIsUndefined())
+			-- If the opposite link could not be created, because the requiring microservice was not
+			-- created during the transformation, refer to the requiring microservice of the source.
+			-- This might happen if the requiring microservice is defined in a service model that 
+			-- has not been imported into the mapping model. That is, no mapping for any of its
+			-- microservices has been created.
+			t.requiringMicroservice <- source.requiringMicroservice;
+		
+		t;
+	}
+}
+
+--- Generic called rule to create a target PossiblyImportedInterface at the end of the 
+--- transformation when all instances the target instance depends on were created
+rule PossiblyImportedInterface(source : Service!PossiblyImportedInterface, 
+	requiringMicroserviceImportAlias : String) {
+	to
+		t : Service!PossiblyImportedInterface
+	do {
+		-- Interface got actually imported
+		if (not source.import.oclIsUndefined()) {
+			t.import <- thisModule.getCreatedImport(source.import);
+			-- If the Import instance for the service model from which the interface got actually 
+			-- imported wasn't "seen" during the transformation, create it now. The reason why a
+			-- source import wasn't treated during the transformation is that the service, which
+			-- requires this imported interface is in another service model than the source mapping
+			-- model. This happens within "dependency chains" of requiring microservices.
+			if (t.import.oclIsUndefined())
+				t.import <- thisModule.Import(source.import);
+			t.interface <- source.interface;
+		} 
+		
+		-- Interface is from the same model as the requiring service
+		if (source.import.oclIsUndefined() and not source.interface.oclIsUndefined()) {
+			t.interface <- thisModule.getCreatedInterface(source.interface, 
+				requiringMicroserviceImportAlias);
+
+			-- Create required interface if necessary. Note that the import alias corresponds to 
+			-- that of the requiring microservice, as both, the interface and its requiring 
+			-- service, were defined in the same model.
+			if (t.interface.oclIsUndefined()) {
+				thisModule.Microservice(source.interface.microservice, OclUndefined,
+					requiringMicroserviceImportAlias);
+				t.interface <- thisModule.getCreatedInterface(source.interface, 
+					requiringMicroserviceImportAlias);
+			}
+		}
+		
+		-- Set opposite link to requiring microservice
+		t.requiringMicroservice <- thisModule.getCreatedMicroservice(source.requiringMicroservice, 
+			requiringMicroserviceImportAlias);
+		if (t.requiringMicroservice.oclIsUndefined())
+			-- If the opposite link could not be created, because the requiring microservice was not
+			-- created during the transformation, refer to the requiring microservice of the source.
+			-- This might happen if the requiring microservice is defined in a service model that 
+			-- has not been imported into the mapping model. That is, no mapping for any of its
+			-- microservices has been created.
+			t.requiringMicroservice <- source.requiringMicroservice;
+		
+		t;
+	}
+}
+
+--- Generic called rule to create a target PossiblyImportedOperation at the end of the 
+--- transformation when all instances the target instance depends on were created
+rule PossiblyImportedOperation(source : Service!PossiblyImportedOperation, 
+	requiringMicroserviceImportAlias : String) {
+	to
+		t : Service!PossiblyImportedOperation
+	do {
+		-- Operation got actually imported
+		if (not source.import.oclIsUndefined()) {
+			t.import <- thisModule.getCreatedImport(source.import);
+			-- If the Import instance for the service model from which the operation got actually 
+			-- imported wasn't "seen" during the transformation, create it now. The reason why a
+			-- source import wasn't treated during the transformation is that the service, which
+			-- requires this imported operation is in another service model than the source mapping
+			-- model. This happens within "dependency chains" of requiring microservices.
+			if (t.import.oclIsUndefined())
+				t.import <- thisModule.Import(source.import);
+			t.operation <- source.operation;
+		} 
+		
+		-- Operation is from the same model as the requiring service
+		if (source.import.oclIsUndefined() and not source.operation.oclIsUndefined()) {
+			t.operation <- thisModule.getCreatedOperation(source.operation, 
+				requiringMicroserviceImportAlias);
+
+			-- Create required operation if necessary. Note that the import alias corresponds to 
+			-- that of the requiring microservice, as both, the operation and its requiring 
+			-- service, were defined in the same model.
+			if (t.operation.oclIsUndefined()) {
+				thisModule.Microservice(source.operation.interface.microservice, OclUndefined,
+					requiringMicroserviceImportAlias);
+				t.operation <- thisModule.getCreatedOperation(source.operation, 
+					requiringMicroserviceImportAlias);
+			}
+		}
+		
+		-- Set opposite link to requiring microservice
+		t.requiringMicroservice <- thisModule.getCreatedMicroservice(source.requiringMicroservice, 
+			requiringMicroserviceImportAlias);
+		if (t.requiringMicroservice.oclIsUndefined())
+			-- If the opposite link could not be created, because the requiring microservice was not
+			-- created during the transformation, refer to the requiring microservice of the source.
+			-- This might happen if the requiring microservice is defined in a service model that 
+			-- has not been imported into the mapping model. That is, no mapping for any of its
+			-- microservices has been created.
+			t.requiringMicroservice <- source.requiringMicroservice;
+		
+		thisModule.CreatedPossiblyImportedOperation(source, t);
+		t;
+	}
+}

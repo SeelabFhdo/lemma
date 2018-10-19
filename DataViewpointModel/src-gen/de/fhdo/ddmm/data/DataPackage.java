@@ -333,13 +333,22 @@ public interface DataPackage extends EPackage {
     int CONTEXT___GET_QUALIFIED_NAME_PARTS = 0;
 
     /**
+     * The operation id for the '<em>Build Qualified Name</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CONTEXT___BUILD_QUALIFIED_NAME__STRING = 1;
+
+    /**
      * The number of operations of the '<em>Context</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int CONTEXT_OPERATION_COUNT = 1;
+    int CONTEXT_OPERATION_COUNT = 2;
 
     /**
      * The meta object id for the '{@link de.fhdo.ddmm.data.impl.TypeImpl <em>Type</em>}' class.
@@ -1264,13 +1273,22 @@ public interface DataPackage extends EPackage {
     int COMPLEX_TYPE___GET_QUALIFIED_NAME_PARTS = TYPE_OPERATION_COUNT + 0;
 
     /**
+     * The operation id for the '<em>Build Qualified Name</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int COMPLEX_TYPE___BUILD_QUALIFIED_NAME__STRING = TYPE_OPERATION_COUNT + 1;
+
+    /**
      * The operation id for the '<em>Compare Field Counts</em>' operation.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int COMPLEX_TYPE___COMPARE_FIELD_COUNTS__ELIST_ELIST = TYPE_OPERATION_COUNT + 1;
+    int COMPLEX_TYPE___COMPARE_FIELD_COUNTS__ELIST_ELIST = TYPE_OPERATION_COUNT + 2;
 
     /**
      * The number of operations of the '<em>Complex Type</em>' class.
@@ -1279,7 +1297,7 @@ public interface DataPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int COMPLEX_TYPE_OPERATION_COUNT = TYPE_OPERATION_COUNT + 2;
+    int COMPLEX_TYPE_OPERATION_COUNT = TYPE_OPERATION_COUNT + 3;
 
     /**
      * The meta object id for the '{@link de.fhdo.ddmm.data.impl.PossiblyImportedComplexTypeImpl <em>Possibly Imported Complex Type</em>}' class.
@@ -1446,6 +1464,15 @@ public interface DataPackage extends EPackage {
     int DATA_STRUCTURE___GET_QUALIFIED_NAME_PARTS = COMPLEX_TYPE___GET_QUALIFIED_NAME_PARTS;
 
     /**
+     * The operation id for the '<em>Build Qualified Name</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATA_STRUCTURE___BUILD_QUALIFIED_NAME__STRING = COMPLEX_TYPE___BUILD_QUALIFIED_NAME__STRING;
+
+    /**
      * The operation id for the '<em>Compare Field Counts</em>' operation.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1600,6 +1627,15 @@ public interface DataPackage extends EPackage {
     int LIST_TYPE___GET_QUALIFIED_NAME_PARTS = COMPLEX_TYPE___GET_QUALIFIED_NAME_PARTS;
 
     /**
+     * The operation id for the '<em>Build Qualified Name</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LIST_TYPE___BUILD_QUALIFIED_NAME__STRING = COMPLEX_TYPE___BUILD_QUALIFIED_NAME__STRING;
+
+    /**
      * The operation id for the '<em>Compare Field Counts</em>' operation.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1718,13 +1754,22 @@ public interface DataPackage extends EPackage {
     int DATA_FIELD___GET_QUALIFIED_NAME_PARTS = 1;
 
     /**
+     * The operation id for the '<em>Build Qualified Name</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATA_FIELD___BUILD_QUALIFIED_NAME__STRING = 2;
+
+    /**
      * The operation id for the '<em>Find Eponymous Super Field</em>' operation.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int DATA_FIELD___FIND_EPONYMOUS_SUPER_FIELD = 2;
+    int DATA_FIELD___FIND_EPONYMOUS_SUPER_FIELD = 3;
 
     /**
      * The number of operations of the '<em>Field</em>' class.
@@ -1733,7 +1778,7 @@ public interface DataPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int DATA_FIELD_OPERATION_COUNT = 3;
+    int DATA_FIELD_OPERATION_COUNT = 4;
 
     /**
      * The meta object id for the '{@link de.fhdo.ddmm.data.impl.PrimitiveValueImpl <em>Primitive Value</em>}' class.
@@ -1827,13 +1872,22 @@ public interface DataPackage extends EPackage {
     int PRIMITIVE_VALUE___AS_VALUE_OF_TYPE__PRIMITIVETYPE = 4;
 
     /**
+     * The operation id for the '<em>Value As String</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PRIMITIVE_VALUE___VALUE_AS_STRING = 5;
+
+    /**
      * The operation id for the '<em>As Boolean</em>' operation.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int PRIMITIVE_VALUE___AS_BOOLEAN = 5;
+    int PRIMITIVE_VALUE___AS_BOOLEAN = 6;
 
     /**
      * The operation id for the '<em>As Byte</em>' operation.
@@ -1842,7 +1896,7 @@ public interface DataPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int PRIMITIVE_VALUE___AS_BYTE = 6;
+    int PRIMITIVE_VALUE___AS_BYTE = 7;
 
     /**
      * The operation id for the '<em>As Character</em>' operation.
@@ -1851,7 +1905,7 @@ public interface DataPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int PRIMITIVE_VALUE___AS_CHARACTER = 7;
+    int PRIMITIVE_VALUE___AS_CHARACTER = 8;
 
     /**
      * The operation id for the '<em>As Date</em>' operation.
@@ -1860,7 +1914,7 @@ public interface DataPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int PRIMITIVE_VALUE___AS_DATE = 8;
+    int PRIMITIVE_VALUE___AS_DATE = 9;
 
     /**
      * The operation id for the '<em>As Double</em>' operation.
@@ -1869,7 +1923,7 @@ public interface DataPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int PRIMITIVE_VALUE___AS_DOUBLE = 9;
+    int PRIMITIVE_VALUE___AS_DOUBLE = 10;
 
     /**
      * The operation id for the '<em>As Float</em>' operation.
@@ -1878,7 +1932,7 @@ public interface DataPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int PRIMITIVE_VALUE___AS_FLOAT = 10;
+    int PRIMITIVE_VALUE___AS_FLOAT = 11;
 
     /**
      * The operation id for the '<em>As Integer</em>' operation.
@@ -1887,7 +1941,7 @@ public interface DataPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int PRIMITIVE_VALUE___AS_INTEGER = 11;
+    int PRIMITIVE_VALUE___AS_INTEGER = 12;
 
     /**
      * The operation id for the '<em>As Long</em>' operation.
@@ -1896,7 +1950,7 @@ public interface DataPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int PRIMITIVE_VALUE___AS_LONG = 12;
+    int PRIMITIVE_VALUE___AS_LONG = 13;
 
     /**
      * The operation id for the '<em>As Short</em>' operation.
@@ -1905,7 +1959,7 @@ public interface DataPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int PRIMITIVE_VALUE___AS_SHORT = 13;
+    int PRIMITIVE_VALUE___AS_SHORT = 14;
 
     /**
      * The operation id for the '<em>As String</em>' operation.
@@ -1914,7 +1968,7 @@ public interface DataPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int PRIMITIVE_VALUE___AS_STRING = 14;
+    int PRIMITIVE_VALUE___AS_STRING = 15;
 
     /**
      * The number of operations of the '<em>Primitive Value</em>' class.
@@ -1923,7 +1977,7 @@ public interface DataPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int PRIMITIVE_VALUE_OPERATION_COUNT = 15;
+    int PRIMITIVE_VALUE_OPERATION_COUNT = 16;
 
 
     /**
@@ -2170,6 +2224,16 @@ public interface DataPackage extends EPackage {
      * @generated
      */
     EOperation getContext__GetQualifiedNameParts();
+
+    /**
+     * Returns the meta object for the '{@link de.fhdo.ddmm.data.Context#buildQualifiedName(java.lang.String) <em>Build Qualified Name</em>}' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the '<em>Build Qualified Name</em>' operation.
+     * @see de.fhdo.ddmm.data.Context#buildQualifiedName(java.lang.String)
+     * @generated
+     */
+    EOperation getContext__BuildQualifiedName__String();
 
     /**
      * Returns the meta object for class '{@link de.fhdo.ddmm.data.Type <em>Type</em>}'.
@@ -2441,6 +2505,16 @@ public interface DataPackage extends EPackage {
     EOperation getComplexType__GetQualifiedNameParts();
 
     /**
+     * Returns the meta object for the '{@link de.fhdo.ddmm.data.ComplexType#buildQualifiedName(java.lang.String) <em>Build Qualified Name</em>}' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the '<em>Build Qualified Name</em>' operation.
+     * @see de.fhdo.ddmm.data.ComplexType#buildQualifiedName(java.lang.String)
+     * @generated
+     */
+    EOperation getComplexType__BuildQualifiedName__String();
+
+    /**
      * Returns the meta object for the '{@link de.fhdo.ddmm.data.ComplexType#compareFieldCounts(org.eclipse.emf.common.util.EList, org.eclipse.emf.common.util.EList) <em>Compare Field Counts</em>}' operation.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2694,6 +2768,16 @@ public interface DataPackage extends EPackage {
     EOperation getDataField__GetQualifiedNameParts();
 
     /**
+     * Returns the meta object for the '{@link de.fhdo.ddmm.data.DataField#buildQualifiedName(java.lang.String) <em>Build Qualified Name</em>}' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the '<em>Build Qualified Name</em>' operation.
+     * @see de.fhdo.ddmm.data.DataField#buildQualifiedName(java.lang.String)
+     * @generated
+     */
+    EOperation getDataField__BuildQualifiedName__String();
+
+    /**
      * Returns the meta object for the '{@link de.fhdo.ddmm.data.DataField#findEponymousSuperField() <em>Find Eponymous Super Field</em>}' operation.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2795,6 +2879,16 @@ public interface DataPackage extends EPackage {
      * @generated
      */
     EOperation getPrimitiveValue__AsValueOfType__PrimitiveType();
+
+    /**
+     * Returns the meta object for the '{@link de.fhdo.ddmm.data.PrimitiveValue#valueAsString() <em>Value As String</em>}' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the '<em>Value As String</em>' operation.
+     * @see de.fhdo.ddmm.data.PrimitiveValue#valueAsString()
+     * @generated
+     */
+    EOperation getPrimitiveValue__ValueAsString();
 
     /**
      * Returns the meta object for the '{@link de.fhdo.ddmm.data.PrimitiveValue#asBoolean() <em>As Boolean</em>}' operation.
@@ -3112,6 +3206,14 @@ public interface DataPackage extends EPackage {
         EOperation CONTEXT___GET_QUALIFIED_NAME_PARTS = eINSTANCE.getContext__GetQualifiedNameParts();
 
         /**
+         * The meta object literal for the '<em><b>Build Qualified Name</b></em>' operation.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EOperation CONTEXT___BUILD_QUALIFIED_NAME__STRING = eINSTANCE.getContext__BuildQualifiedName__String();
+
+        /**
          * The meta object literal for the '{@link de.fhdo.ddmm.data.impl.TypeImpl <em>Type</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -3346,6 +3448,14 @@ public interface DataPackage extends EPackage {
         EOperation COMPLEX_TYPE___GET_QUALIFIED_NAME_PARTS = eINSTANCE.getComplexType__GetQualifiedNameParts();
 
         /**
+         * The meta object literal for the '<em><b>Build Qualified Name</b></em>' operation.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EOperation COMPLEX_TYPE___BUILD_QUALIFIED_NAME__STRING = eINSTANCE.getComplexType__BuildQualifiedName__String();
+
+        /**
          * The meta object literal for the '<em><b>Compare Field Counts</b></em>' operation.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -3546,6 +3656,14 @@ public interface DataPackage extends EPackage {
         EOperation DATA_FIELD___GET_QUALIFIED_NAME_PARTS = eINSTANCE.getDataField__GetQualifiedNameParts();
 
         /**
+         * The meta object literal for the '<em><b>Build Qualified Name</b></em>' operation.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EOperation DATA_FIELD___BUILD_QUALIFIED_NAME__STRING = eINSTANCE.getDataField__BuildQualifiedName__String();
+
+        /**
          * The meta object literal for the '<em><b>Find Eponymous Super Field</b></em>' operation.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -3626,6 +3744,14 @@ public interface DataPackage extends EPackage {
          * @generated
          */
         EOperation PRIMITIVE_VALUE___AS_VALUE_OF_TYPE__PRIMITIVETYPE = eINSTANCE.getPrimitiveValue__AsValueOfType__PrimitiveType();
+
+        /**
+         * The meta object literal for the '<em><b>Value As String</b></em>' operation.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EOperation PRIMITIVE_VALUE___VALUE_AS_STRING = eINSTANCE.getPrimitiveValue__ValueAsString();
 
         /**
          * The meta object literal for the '<em><b>As Boolean</b></em>' operation.

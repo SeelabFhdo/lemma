@@ -25,6 +25,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.fhdo.ddmm.service.ImportedProtocolAndDataFormat#getImportedProtocol <em>Imported Protocol</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.ImportedProtocolAndDataFormat#getDataFormat <em>Data Format</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.ImportedProtocolAndDataFormat#getSpecification <em>Specification</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.service.ImportedProtocolAndDataFormat#getEndpoint <em>Endpoint</em>}</li>
  * </ul>
  *
  * @see de.fhdo.ddmm.service.ServicePackage#getImportedProtocolAndDataFormat()
@@ -141,5 +142,33 @@ public interface ImportedProtocolAndDataFormat extends EObject {
      * @generated
      */
     void setSpecification(ProtocolSpecification value);
+
+    /**
+     * Returns the value of the '<em><b>Endpoint</b></em>' container reference.
+     * It is bidirectional and its opposite is '{@link de.fhdo.ddmm.service.Endpoint#getProtocols <em>Protocols</em>}'.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Endpoint</em>' container reference isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Endpoint</em>' container reference.
+     * @see #setEndpoint(Endpoint)
+     * @see de.fhdo.ddmm.service.ServicePackage#getImportedProtocolAndDataFormat_Endpoint()
+     * @see de.fhdo.ddmm.service.Endpoint#getProtocols
+     * @model opposite="protocols" transient="false"
+     * @generated
+     */
+    Endpoint getEndpoint();
+
+    /**
+     * Sets the value of the '{@link de.fhdo.ddmm.service.ImportedProtocolAndDataFormat#getEndpoint <em>Endpoint</em>}' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Endpoint</em>' container reference.
+     * @see #getEndpoint()
+     * @generated
+     */
+    void setEndpoint(Endpoint value);
 
 } // ImportedProtocolAndDataFormat

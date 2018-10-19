@@ -1,0 +1,580 @@
+/**
+ */
+package de.fhdo.ddmm.data.intermediate.impl;
+
+import de.fhdo.ddmm.data.intermediate.IntermediateDataField;
+import de.fhdo.ddmm.data.intermediate.IntermediateDataStructure;
+import de.fhdo.ddmm.data.intermediate.IntermediateListType;
+import de.fhdo.ddmm.data.intermediate.IntermediatePackage;
+import de.fhdo.ddmm.data.intermediate.IntermediateType;
+
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
+
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
+
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+
+import org.eclipse.emf.ecore.util.EcoreUtil;
+
+/**
+ * <!-- begin-user-doc -->
+ * An implementation of the model object '<em><b>Data Field</b></em>'.
+ * <!-- end-user-doc -->
+ * <p>
+ * The following features are implemented:
+ * </p>
+ * <ul>
+ *   <li>{@link de.fhdo.ddmm.data.intermediate.impl.IntermediateDataFieldImpl#getName <em>Name</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.data.intermediate.impl.IntermediateDataFieldImpl#getQualifiedName <em>Qualified Name</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.data.intermediate.impl.IntermediateDataFieldImpl#isHidden <em>Hidden</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.data.intermediate.impl.IntermediateDataFieldImpl#isDerived <em>Derived</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.data.intermediate.impl.IntermediateDataFieldImpl#getType <em>Type</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.data.intermediate.impl.IntermediateDataFieldImpl#getDataStructure <em>Data Structure</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.data.intermediate.impl.IntermediateDataFieldImpl#getListType <em>List Type</em>}</li>
+ * </ul>
+ *
+ * @generated
+ */
+public class IntermediateDataFieldImpl extends MinimalEObjectImpl.Container implements IntermediateDataField {
+    /**
+     * The default value of the '{@link #getName() <em>Name</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getName()
+     * @generated
+     * @ordered
+     */
+    protected static final String NAME_EDEFAULT = null;
+
+    /**
+     * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getName()
+     * @generated
+     * @ordered
+     */
+    protected String name = NAME_EDEFAULT;
+
+    /**
+     * The default value of the '{@link #getQualifiedName() <em>Qualified Name</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getQualifiedName()
+     * @generated
+     * @ordered
+     */
+    protected static final String QUALIFIED_NAME_EDEFAULT = null;
+
+    /**
+     * The cached value of the '{@link #getQualifiedName() <em>Qualified Name</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getQualifiedName()
+     * @generated
+     * @ordered
+     */
+    protected String qualifiedName = QUALIFIED_NAME_EDEFAULT;
+
+    /**
+     * The default value of the '{@link #isHidden() <em>Hidden</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isHidden()
+     * @generated
+     * @ordered
+     */
+    protected static final boolean HIDDEN_EDEFAULT = false;
+
+    /**
+     * The cached value of the '{@link #isHidden() <em>Hidden</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isHidden()
+     * @generated
+     * @ordered
+     */
+    protected boolean hidden = HIDDEN_EDEFAULT;
+
+    /**
+     * The default value of the '{@link #isDerived() <em>Derived</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isDerived()
+     * @generated
+     * @ordered
+     */
+    protected static final boolean DERIVED_EDEFAULT = false;
+
+    /**
+     * The cached value of the '{@link #isDerived() <em>Derived</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isDerived()
+     * @generated
+     * @ordered
+     */
+    protected boolean derived = DERIVED_EDEFAULT;
+
+    /**
+     * The cached value of the '{@link #getType() <em>Type</em>}' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getType()
+     * @generated
+     * @ordered
+     */
+    protected IntermediateType type;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected IntermediateDataFieldImpl() {
+        super();
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    protected EClass eStaticClass() {
+        return IntermediatePackage.Literals.INTERMEDIATE_DATA_FIELD;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setName(String newName) {
+        String oldName = name;
+        name = newName;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, IntermediatePackage.INTERMEDIATE_DATA_FIELD__NAME, oldName, name));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public String getQualifiedName() {
+        return qualifiedName;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setQualifiedName(String newQualifiedName) {
+        String oldQualifiedName = qualifiedName;
+        qualifiedName = newQualifiedName;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, IntermediatePackage.INTERMEDIATE_DATA_FIELD__QUALIFIED_NAME, oldQualifiedName, qualifiedName));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public boolean isHidden() {
+        return hidden;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setHidden(boolean newHidden) {
+        boolean oldHidden = hidden;
+        hidden = newHidden;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, IntermediatePackage.INTERMEDIATE_DATA_FIELD__HIDDEN, oldHidden, hidden));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public boolean isDerived() {
+        return derived;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setDerived(boolean newDerived) {
+        boolean oldDerived = derived;
+        derived = newDerived;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, IntermediatePackage.INTERMEDIATE_DATA_FIELD__DERIVED, oldDerived, derived));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public IntermediateType getType() {
+        return type;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public NotificationChain basicSetType(IntermediateType newType, NotificationChain msgs) {
+        IntermediateType oldType = type;
+        type = newType;
+        if (eNotificationRequired()) {
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, IntermediatePackage.INTERMEDIATE_DATA_FIELD__TYPE, oldType, newType);
+            if (msgs == null) msgs = notification; else msgs.add(notification);
+        }
+        return msgs;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setType(IntermediateType newType) {
+        if (newType != type) {
+            NotificationChain msgs = null;
+            if (type != null)
+                msgs = ((InternalEObject)type).eInverseRemove(this, IntermediatePackage.INTERMEDIATE_TYPE__DATA_FIELD, IntermediateType.class, msgs);
+            if (newType != null)
+                msgs = ((InternalEObject)newType).eInverseAdd(this, IntermediatePackage.INTERMEDIATE_TYPE__DATA_FIELD, IntermediateType.class, msgs);
+            msgs = basicSetType(newType, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, IntermediatePackage.INTERMEDIATE_DATA_FIELD__TYPE, newType, newType));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public IntermediateDataStructure getDataStructure() {
+        if (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_DATA_FIELD__DATA_STRUCTURE) return null;
+        return (IntermediateDataStructure)eContainer();
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public IntermediateDataStructure basicGetDataStructure() {
+        if (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_DATA_FIELD__DATA_STRUCTURE) return null;
+        return (IntermediateDataStructure)eInternalContainer();
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public NotificationChain basicSetDataStructure(IntermediateDataStructure newDataStructure, NotificationChain msgs) {
+        msgs = eBasicSetContainer((InternalEObject)newDataStructure, IntermediatePackage.INTERMEDIATE_DATA_FIELD__DATA_STRUCTURE, msgs);
+        return msgs;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setDataStructure(IntermediateDataStructure newDataStructure) {
+        if (newDataStructure != eInternalContainer() || (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_DATA_FIELD__DATA_STRUCTURE && newDataStructure != null)) {
+            if (EcoreUtil.isAncestor(this, newDataStructure))
+                throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
+            NotificationChain msgs = null;
+            if (eInternalContainer() != null)
+                msgs = eBasicRemoveFromContainer(msgs);
+            if (newDataStructure != null)
+                msgs = ((InternalEObject)newDataStructure).eInverseAdd(this, IntermediatePackage.INTERMEDIATE_DATA_STRUCTURE__DATA_FIELDS, IntermediateDataStructure.class, msgs);
+            msgs = basicSetDataStructure(newDataStructure, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, IntermediatePackage.INTERMEDIATE_DATA_FIELD__DATA_STRUCTURE, newDataStructure, newDataStructure));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public IntermediateListType getListType() {
+        if (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_DATA_FIELD__LIST_TYPE) return null;
+        return (IntermediateListType)eContainer();
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public IntermediateListType basicGetListType() {
+        if (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_DATA_FIELD__LIST_TYPE) return null;
+        return (IntermediateListType)eInternalContainer();
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public NotificationChain basicSetListType(IntermediateListType newListType, NotificationChain msgs) {
+        msgs = eBasicSetContainer((InternalEObject)newListType, IntermediatePackage.INTERMEDIATE_DATA_FIELD__LIST_TYPE, msgs);
+        return msgs;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setListType(IntermediateListType newListType) {
+        if (newListType != eInternalContainer() || (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_DATA_FIELD__LIST_TYPE && newListType != null)) {
+            if (EcoreUtil.isAncestor(this, newListType))
+                throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
+            NotificationChain msgs = null;
+            if (eInternalContainer() != null)
+                msgs = eBasicRemoveFromContainer(msgs);
+            if (newListType != null)
+                msgs = ((InternalEObject)newListType).eInverseAdd(this, IntermediatePackage.INTERMEDIATE_LIST_TYPE__DATA_FIELDS, IntermediateListType.class, msgs);
+            msgs = basicSetListType(newListType, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, IntermediatePackage.INTERMEDIATE_DATA_FIELD__LIST_TYPE, newListType, newListType));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+        switch (featureID) {
+            case IntermediatePackage.INTERMEDIATE_DATA_FIELD__TYPE:
+                if (type != null)
+                    msgs = ((InternalEObject)type).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - IntermediatePackage.INTERMEDIATE_DATA_FIELD__TYPE, null, msgs);
+                return basicSetType((IntermediateType)otherEnd, msgs);
+            case IntermediatePackage.INTERMEDIATE_DATA_FIELD__DATA_STRUCTURE:
+                if (eInternalContainer() != null)
+                    msgs = eBasicRemoveFromContainer(msgs);
+                return basicSetDataStructure((IntermediateDataStructure)otherEnd, msgs);
+            case IntermediatePackage.INTERMEDIATE_DATA_FIELD__LIST_TYPE:
+                if (eInternalContainer() != null)
+                    msgs = eBasicRemoveFromContainer(msgs);
+                return basicSetListType((IntermediateListType)otherEnd, msgs);
+        }
+        return super.eInverseAdd(otherEnd, featureID, msgs);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+        switch (featureID) {
+            case IntermediatePackage.INTERMEDIATE_DATA_FIELD__TYPE:
+                return basicSetType(null, msgs);
+            case IntermediatePackage.INTERMEDIATE_DATA_FIELD__DATA_STRUCTURE:
+                return basicSetDataStructure(null, msgs);
+            case IntermediatePackage.INTERMEDIATE_DATA_FIELD__LIST_TYPE:
+                return basicSetListType(null, msgs);
+        }
+        return super.eInverseRemove(otherEnd, featureID, msgs);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
+        switch (eContainerFeatureID()) {
+            case IntermediatePackage.INTERMEDIATE_DATA_FIELD__DATA_STRUCTURE:
+                return eInternalContainer().eInverseRemove(this, IntermediatePackage.INTERMEDIATE_DATA_STRUCTURE__DATA_FIELDS, IntermediateDataStructure.class, msgs);
+            case IntermediatePackage.INTERMEDIATE_DATA_FIELD__LIST_TYPE:
+                return eInternalContainer().eInverseRemove(this, IntermediatePackage.INTERMEDIATE_LIST_TYPE__DATA_FIELDS, IntermediateListType.class, msgs);
+        }
+        return super.eBasicRemoveFromContainerFeature(msgs);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Object eGet(int featureID, boolean resolve, boolean coreType) {
+        switch (featureID) {
+            case IntermediatePackage.INTERMEDIATE_DATA_FIELD__NAME:
+                return getName();
+            case IntermediatePackage.INTERMEDIATE_DATA_FIELD__QUALIFIED_NAME:
+                return getQualifiedName();
+            case IntermediatePackage.INTERMEDIATE_DATA_FIELD__HIDDEN:
+                return isHidden();
+            case IntermediatePackage.INTERMEDIATE_DATA_FIELD__DERIVED:
+                return isDerived();
+            case IntermediatePackage.INTERMEDIATE_DATA_FIELD__TYPE:
+                return getType();
+            case IntermediatePackage.INTERMEDIATE_DATA_FIELD__DATA_STRUCTURE:
+                if (resolve) return getDataStructure();
+                return basicGetDataStructure();
+            case IntermediatePackage.INTERMEDIATE_DATA_FIELD__LIST_TYPE:
+                if (resolve) return getListType();
+                return basicGetListType();
+        }
+        return super.eGet(featureID, resolve, coreType);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void eSet(int featureID, Object newValue) {
+        switch (featureID) {
+            case IntermediatePackage.INTERMEDIATE_DATA_FIELD__NAME:
+                setName((String)newValue);
+                return;
+            case IntermediatePackage.INTERMEDIATE_DATA_FIELD__QUALIFIED_NAME:
+                setQualifiedName((String)newValue);
+                return;
+            case IntermediatePackage.INTERMEDIATE_DATA_FIELD__HIDDEN:
+                setHidden((Boolean)newValue);
+                return;
+            case IntermediatePackage.INTERMEDIATE_DATA_FIELD__DERIVED:
+                setDerived((Boolean)newValue);
+                return;
+            case IntermediatePackage.INTERMEDIATE_DATA_FIELD__TYPE:
+                setType((IntermediateType)newValue);
+                return;
+            case IntermediatePackage.INTERMEDIATE_DATA_FIELD__DATA_STRUCTURE:
+                setDataStructure((IntermediateDataStructure)newValue);
+                return;
+            case IntermediatePackage.INTERMEDIATE_DATA_FIELD__LIST_TYPE:
+                setListType((IntermediateListType)newValue);
+                return;
+        }
+        super.eSet(featureID, newValue);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void eUnset(int featureID) {
+        switch (featureID) {
+            case IntermediatePackage.INTERMEDIATE_DATA_FIELD__NAME:
+                setName(NAME_EDEFAULT);
+                return;
+            case IntermediatePackage.INTERMEDIATE_DATA_FIELD__QUALIFIED_NAME:
+                setQualifiedName(QUALIFIED_NAME_EDEFAULT);
+                return;
+            case IntermediatePackage.INTERMEDIATE_DATA_FIELD__HIDDEN:
+                setHidden(HIDDEN_EDEFAULT);
+                return;
+            case IntermediatePackage.INTERMEDIATE_DATA_FIELD__DERIVED:
+                setDerived(DERIVED_EDEFAULT);
+                return;
+            case IntermediatePackage.INTERMEDIATE_DATA_FIELD__TYPE:
+                setType((IntermediateType)null);
+                return;
+            case IntermediatePackage.INTERMEDIATE_DATA_FIELD__DATA_STRUCTURE:
+                setDataStructure((IntermediateDataStructure)null);
+                return;
+            case IntermediatePackage.INTERMEDIATE_DATA_FIELD__LIST_TYPE:
+                setListType((IntermediateListType)null);
+                return;
+        }
+        super.eUnset(featureID);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public boolean eIsSet(int featureID) {
+        switch (featureID) {
+            case IntermediatePackage.INTERMEDIATE_DATA_FIELD__NAME:
+                return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+            case IntermediatePackage.INTERMEDIATE_DATA_FIELD__QUALIFIED_NAME:
+                return QUALIFIED_NAME_EDEFAULT == null ? qualifiedName != null : !QUALIFIED_NAME_EDEFAULT.equals(qualifiedName);
+            case IntermediatePackage.INTERMEDIATE_DATA_FIELD__HIDDEN:
+                return hidden != HIDDEN_EDEFAULT;
+            case IntermediatePackage.INTERMEDIATE_DATA_FIELD__DERIVED:
+                return derived != DERIVED_EDEFAULT;
+            case IntermediatePackage.INTERMEDIATE_DATA_FIELD__TYPE:
+                return type != null;
+            case IntermediatePackage.INTERMEDIATE_DATA_FIELD__DATA_STRUCTURE:
+                return basicGetDataStructure() != null;
+            case IntermediatePackage.INTERMEDIATE_DATA_FIELD__LIST_TYPE:
+                return basicGetListType() != null;
+        }
+        return super.eIsSet(featureID);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public String toString() {
+        if (eIsProxy()) return super.toString();
+
+        StringBuffer result = new StringBuffer(super.toString());
+        result.append(" (name: ");
+        result.append(name);
+        result.append(", qualifiedName: ");
+        result.append(qualifiedName);
+        result.append(", hidden: ");
+        result.append(hidden);
+        result.append(", derived: ");
+        result.append(derived);
+        result.append(')');
+        return result.toString();
+    }
+
+} //IntermediateDataFieldImpl

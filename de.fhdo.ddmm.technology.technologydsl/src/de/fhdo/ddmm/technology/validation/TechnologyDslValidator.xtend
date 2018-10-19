@@ -205,7 +205,8 @@ class TechnologyDslValidator extends AbstractTechnologyDslValidator {
          * a whole" is not possible.
          */
         val technologySpecifiesOtherTypes = !technology.listTypes.empty ||
-            !technology.dataStructures.empty
+            !technology.dataStructures.empty ||
+            !(technology.primitiveTypes.empty || technology.primitiveTypes.exists[^default])
 
         if (!technologySpecifiesOtherTypes) {
             return

@@ -11,15 +11,15 @@ import org.eclipse.xtext.formatting2.AbstractFormatter2
 import org.eclipse.xtext.formatting2.IFormattableDocument
 
 class ServiceDslFormatter extends AbstractFormatter2 {
-	
-	@Inject extension ServiceDslGrammarAccess
 
-	def dispatch void format(ServiceModel serviceModel, extension IFormattableDocument document) {
-		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
-		for (Microservice microservice : serviceModel.getMicroservices()) {
-			microservice.format;
-		}
-	}
-	
-	// TODO: implement for 
+    @Inject extension ServiceDslGrammarAccess
+
+    def dispatch void format(ServiceModel serviceModel, extension IFormattableDocument document) {
+        // TODO: format HiddenRegions around keywords, attributes, cross references, etc.
+        for (Microservice microservice : serviceModel.getMicroservices()) {
+            microservice.format;
+        }
+    }
+
+    // TODO: implement for
 }

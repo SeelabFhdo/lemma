@@ -2,6 +2,7 @@
  */
 package de.fhdo.ddmm.service.impl;
 
+import de.fhdo.ddmm.service.Endpoint;
 import de.fhdo.ddmm.service.Import;
 import de.fhdo.ddmm.service.ImportedProtocolAndDataFormat;
 import de.fhdo.ddmm.service.ProtocolSpecification;
@@ -33,6 +34,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  *   <li>{@link de.fhdo.ddmm.service.impl.ImportedProtocolAndDataFormatImpl#getImportedProtocol <em>Imported Protocol</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.impl.ImportedProtocolAndDataFormatImpl#getDataFormat <em>Data Format</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.impl.ImportedProtocolAndDataFormatImpl#getSpecification <em>Specification</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.service.impl.ImportedProtocolAndDataFormatImpl#getEndpoint <em>Endpoint</em>}</li>
  * </ul>
  *
  * @generated
@@ -257,6 +259,57 @@ public class ImportedProtocolAndDataFormatImpl extends MinimalEObjectImpl.Contai
      * <!-- end-user-doc -->
      * @generated
      */
+    public Endpoint getEndpoint() {
+        if (eContainerFeatureID() != ServicePackage.IMPORTED_PROTOCOL_AND_DATA_FORMAT__ENDPOINT) return null;
+        return (Endpoint)eContainer();
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public Endpoint basicGetEndpoint() {
+        if (eContainerFeatureID() != ServicePackage.IMPORTED_PROTOCOL_AND_DATA_FORMAT__ENDPOINT) return null;
+        return (Endpoint)eInternalContainer();
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public NotificationChain basicSetEndpoint(Endpoint newEndpoint, NotificationChain msgs) {
+        msgs = eBasicSetContainer((InternalEObject)newEndpoint, ServicePackage.IMPORTED_PROTOCOL_AND_DATA_FORMAT__ENDPOINT, msgs);
+        return msgs;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setEndpoint(Endpoint newEndpoint) {
+        if (newEndpoint != eInternalContainer() || (eContainerFeatureID() != ServicePackage.IMPORTED_PROTOCOL_AND_DATA_FORMAT__ENDPOINT && newEndpoint != null)) {
+            if (EcoreUtil.isAncestor(this, newEndpoint))
+                throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
+            NotificationChain msgs = null;
+            if (eInternalContainer() != null)
+                msgs = eBasicRemoveFromContainer(msgs);
+            if (newEndpoint != null)
+                msgs = ((InternalEObject)newEndpoint).eInverseAdd(this, ServicePackage.ENDPOINT__PROTOCOLS, Endpoint.class, msgs);
+            msgs = basicSetEndpoint(newEndpoint, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ServicePackage.IMPORTED_PROTOCOL_AND_DATA_FORMAT__ENDPOINT, newEndpoint, newEndpoint));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     @Override
     public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
@@ -264,6 +317,10 @@ public class ImportedProtocolAndDataFormatImpl extends MinimalEObjectImpl.Contai
                 if (eInternalContainer() != null)
                     msgs = eBasicRemoveFromContainer(msgs);
                 return basicSetSpecification((ProtocolSpecification)otherEnd, msgs);
+            case ServicePackage.IMPORTED_PROTOCOL_AND_DATA_FORMAT__ENDPOINT:
+                if (eInternalContainer() != null)
+                    msgs = eBasicRemoveFromContainer(msgs);
+                return basicSetEndpoint((Endpoint)otherEnd, msgs);
         }
         return super.eInverseAdd(otherEnd, featureID, msgs);
     }
@@ -278,6 +335,8 @@ public class ImportedProtocolAndDataFormatImpl extends MinimalEObjectImpl.Contai
         switch (featureID) {
             case ServicePackage.IMPORTED_PROTOCOL_AND_DATA_FORMAT__SPECIFICATION:
                 return basicSetSpecification(null, msgs);
+            case ServicePackage.IMPORTED_PROTOCOL_AND_DATA_FORMAT__ENDPOINT:
+                return basicSetEndpoint(null, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
@@ -292,6 +351,8 @@ public class ImportedProtocolAndDataFormatImpl extends MinimalEObjectImpl.Contai
         switch (eContainerFeatureID()) {
             case ServicePackage.IMPORTED_PROTOCOL_AND_DATA_FORMAT__SPECIFICATION:
                 return eInternalContainer().eInverseRemove(this, ServicePackage.PROTOCOL_SPECIFICATION__PROTOCOL, ProtocolSpecification.class, msgs);
+            case ServicePackage.IMPORTED_PROTOCOL_AND_DATA_FORMAT__ENDPOINT:
+                return eInternalContainer().eInverseRemove(this, ServicePackage.ENDPOINT__PROTOCOLS, Endpoint.class, msgs);
         }
         return super.eBasicRemoveFromContainerFeature(msgs);
     }
@@ -316,6 +377,9 @@ public class ImportedProtocolAndDataFormatImpl extends MinimalEObjectImpl.Contai
             case ServicePackage.IMPORTED_PROTOCOL_AND_DATA_FORMAT__SPECIFICATION:
                 if (resolve) return getSpecification();
                 return basicGetSpecification();
+            case ServicePackage.IMPORTED_PROTOCOL_AND_DATA_FORMAT__ENDPOINT:
+                if (resolve) return getEndpoint();
+                return basicGetEndpoint();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -339,6 +403,9 @@ public class ImportedProtocolAndDataFormatImpl extends MinimalEObjectImpl.Contai
                 return;
             case ServicePackage.IMPORTED_PROTOCOL_AND_DATA_FORMAT__SPECIFICATION:
                 setSpecification((ProtocolSpecification)newValue);
+                return;
+            case ServicePackage.IMPORTED_PROTOCOL_AND_DATA_FORMAT__ENDPOINT:
+                setEndpoint((Endpoint)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -364,6 +431,9 @@ public class ImportedProtocolAndDataFormatImpl extends MinimalEObjectImpl.Contai
             case ServicePackage.IMPORTED_PROTOCOL_AND_DATA_FORMAT__SPECIFICATION:
                 setSpecification((ProtocolSpecification)null);
                 return;
+            case ServicePackage.IMPORTED_PROTOCOL_AND_DATA_FORMAT__ENDPOINT:
+                setEndpoint((Endpoint)null);
+                return;
         }
         super.eUnset(featureID);
     }
@@ -384,6 +454,8 @@ public class ImportedProtocolAndDataFormatImpl extends MinimalEObjectImpl.Contai
                 return dataFormat != null;
             case ServicePackage.IMPORTED_PROTOCOL_AND_DATA_FORMAT__SPECIFICATION:
                 return basicGetSpecification() != null;
+            case ServicePackage.IMPORTED_PROTOCOL_AND_DATA_FORMAT__ENDPOINT:
+                return basicGetEndpoint() != null;
         }
         return super.eIsSet(featureID);
     }

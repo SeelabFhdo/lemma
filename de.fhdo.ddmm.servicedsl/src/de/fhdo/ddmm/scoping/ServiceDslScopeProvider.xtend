@@ -374,7 +374,7 @@ class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
             return IScope.NULLSCOPE
 
         // Types may be imported from data models (complex types) or technology models (technology-
-        // specific primitive types)
+        // specific types)
         val resourceRoot = resourceContents.get(0)
         switch (resourceRoot) {
             DataModel: return resourceRoot.getScopeForImportedComplexTypes

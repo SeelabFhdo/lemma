@@ -10,6 +10,7 @@ import de.fhdo.ddmm.data.Type;
 
 import de.fhdo.ddmm.service.ImportedServiceAspect;
 import de.fhdo.ddmm.service.ImportedType;
+import de.fhdo.ddmm.service.MappedDataField;
 import de.fhdo.ddmm.service.Microservice;
 import de.fhdo.ddmm.service.Operation;
 import de.fhdo.ddmm.service.Parameter;
@@ -18,6 +19,8 @@ import de.fhdo.ddmm.service.ServicePackage;
 
 import de.fhdo.ddmm.technology.CommunicationType;
 import de.fhdo.ddmm.technology.ExchangePattern;
+import de.fhdo.ddmm.technology.TechnologySpecificDataStructure;
+import de.fhdo.ddmm.technology.TechnologySpecificListType;
 import de.fhdo.ddmm.technology.TechnologySpecificPrimitiveType;
 
 import java.lang.reflect.InvocationTargetException;
@@ -41,6 +44,7 @@ import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 
+import org.eclipse.xtext.xbase.lib.CollectionExtensions;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
@@ -64,6 +68,7 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
  *   <li>{@link de.fhdo.ddmm.service.impl.ParameterImpl#getImportedType <em>Imported Type</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.impl.ParameterImpl#getPrimitiveType <em>Primitive Type</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.impl.ParameterImpl#getAspects <em>Aspects</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.service.impl.ParameterImpl#getMappedDataFields <em>Mapped Data Fields</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.impl.ParameterImpl#getOperation <em>Operation</em>}</li>
  * </ul>
  *
@@ -209,6 +214,16 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
      * @ordered
      */
     protected EList<ImportedServiceAspect> aspects;
+
+    /**
+     * The cached value of the '{@link #getMappedDataFields() <em>Mapped Data Fields</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getMappedDataFields()
+     * @generated
+     * @ordered
+     */
+    protected EList<MappedDataField> mappedDataFields;
 
     /**
      * <!-- begin-user-doc -->
@@ -480,6 +495,18 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
      * <!-- end-user-doc -->
      * @generated
      */
+    public EList<MappedDataField> getMappedDataFields() {
+        if (mappedDataFields == null) {
+            mappedDataFields = new EObjectContainmentWithInverseEList<MappedDataField>(MappedDataField.class, this, ServicePackage.PARAMETER__MAPPED_DATA_FIELDS, ServicePackage.MAPPED_DATA_FIELD__PARAMETER);
+        }
+        return mappedDataFields;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public Operation getOperation() {
         if (eContainerFeatureID() != ServicePackage.PARAMETER__OPERATION) return null;
         return (Operation)eContainer();
@@ -524,6 +551,47 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
         }
         else if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, ServicePackage.PARAMETER__OPERATION, newOperation, newOperation));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EList<String> getQualifiedNameParts() {
+        EList<String> _xblockexpression = null;
+        {
+            if (((this.getName() == null) || this.getName().isEmpty())) {
+                return ECollections.<String>asEList(CollectionLiterals.<String>newArrayList());
+            }
+            final EList<String> nameParts = this.getOperation().getQualifiedNameParts();
+            CollectionExtensions.<String>addAll(nameParts, this.getName());
+            _xblockexpression = ECollections.<String>asEList(nameParts);
+        }
+        return _xblockexpression;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public String buildQualifiedName(final String separator) {
+        if ((separator == null)) {
+            return null;
+        }
+        String qualifiedName = "";
+        EList<String> _qualifiedNameParts = this.getQualifiedNameParts();
+        for (final String part : _qualifiedNameParts) {
+            String _qualifiedName = qualifiedName;
+            qualifiedName = (_qualifiedName + (separator + part));
+        }
+        boolean _isEmpty = qualifiedName.isEmpty();
+        boolean _not = (!_isEmpty);
+        if (_not) {
+            qualifiedName = qualifiedName.substring(separator.length());
+        }
+        return qualifiedName;
     }
 
     /**
@@ -600,6 +668,21 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
      * <!-- end-user-doc -->
      * @generated
      */
+    public boolean isTechnologySpecificEffectiveType() {
+        final Type effectiveType = this.getEffectiveType();
+        if ((effectiveType == null)) {
+            return false;
+        }
+        return (((effectiveType instanceof TechnologySpecificDataStructure) || 
+            (effectiveType instanceof TechnologySpecificListType)) || 
+            (effectiveType instanceof TechnologySpecificPrimitiveType));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EList<String> getEffectiveTypeQualifiedNameParts() {
         final Type effectiveType = this.getEffectiveType();
         if ((effectiveType == null)) {
@@ -640,6 +723,8 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
                 return basicSetInitializedByOperation((PossiblyImportedOperation)otherEnd, msgs);
             case ServicePackage.PARAMETER__ASPECTS:
                 return ((InternalEList<InternalEObject>)(InternalEList<?>)getAspects()).basicAdd(otherEnd, msgs);
+            case ServicePackage.PARAMETER__MAPPED_DATA_FIELDS:
+                return ((InternalEList<InternalEObject>)(InternalEList<?>)getMappedDataFields()).basicAdd(otherEnd, msgs);
             case ServicePackage.PARAMETER__OPERATION:
                 if (eInternalContainer() != null)
                     msgs = eBasicRemoveFromContainer(msgs);
@@ -664,6 +749,8 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
                 return basicSetPrimitiveType(null, msgs);
             case ServicePackage.PARAMETER__ASPECTS:
                 return ((InternalEList<?>)getAspects()).basicRemove(otherEnd, msgs);
+            case ServicePackage.PARAMETER__MAPPED_DATA_FIELDS:
+                return ((InternalEList<?>)getMappedDataFields()).basicRemove(otherEnd, msgs);
             case ServicePackage.PARAMETER__OPERATION:
                 return basicSetOperation(null, msgs);
         }
@@ -710,6 +797,8 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
                 return getPrimitiveType();
             case ServicePackage.PARAMETER__ASPECTS:
                 return getAspects();
+            case ServicePackage.PARAMETER__MAPPED_DATA_FIELDS:
+                return getMappedDataFields();
             case ServicePackage.PARAMETER__OPERATION:
                 if (resolve) return getOperation();
                 return basicGetOperation();
@@ -754,6 +843,10 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
                 getAspects().clear();
                 getAspects().addAll((Collection<? extends ImportedServiceAspect>)newValue);
                 return;
+            case ServicePackage.PARAMETER__MAPPED_DATA_FIELDS:
+                getMappedDataFields().clear();
+                getMappedDataFields().addAll((Collection<? extends MappedDataField>)newValue);
+                return;
             case ServicePackage.PARAMETER__OPERATION:
                 setOperation((Operation)newValue);
                 return;
@@ -796,6 +889,9 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
             case ServicePackage.PARAMETER__ASPECTS:
                 getAspects().clear();
                 return;
+            case ServicePackage.PARAMETER__MAPPED_DATA_FIELDS:
+                getMappedDataFields().clear();
+                return;
             case ServicePackage.PARAMETER__OPERATION:
                 setOperation((Operation)null);
                 return;
@@ -829,6 +925,8 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
                 return primitiveType != null;
             case ServicePackage.PARAMETER__ASPECTS:
                 return aspects != null && !aspects.isEmpty();
+            case ServicePackage.PARAMETER__MAPPED_DATA_FIELDS:
+                return mappedDataFields != null && !mappedDataFields.isEmpty();
             case ServicePackage.PARAMETER__OPERATION:
                 return basicGetOperation() != null;
         }
@@ -843,10 +941,16 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
     @Override
     public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
         switch (operationID) {
+            case ServicePackage.PARAMETER___GET_QUALIFIED_NAME_PARTS:
+                return getQualifiedNameParts();
+            case ServicePackage.PARAMETER___BUILD_QUALIFIED_NAME__STRING:
+                return buildQualifiedName((String)arguments.get(0));
             case ServicePackage.PARAMETER___BASICALLY_INITIALIZABLE_BY__OPERATION:
                 return basicallyInitializableBy((Operation)arguments.get(0));
             case ServicePackage.PARAMETER___GET_EFFECTIVE_TYPE:
                 return getEffectiveType();
+            case ServicePackage.PARAMETER___IS_TECHNOLOGY_SPECIFIC_EFFECTIVE_TYPE:
+                return isTechnologySpecificEffectiveType();
             case ServicePackage.PARAMETER___GET_EFFECTIVE_TYPE_QUALIFIED_NAME_PARTS:
                 return getEffectiveTypeQualifiedNameParts();
         }

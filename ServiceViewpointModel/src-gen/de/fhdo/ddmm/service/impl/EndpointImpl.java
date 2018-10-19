@@ -24,7 +24,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 import org.eclipse.emf.ecore.util.EDataTypeEList;
-import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -105,7 +105,7 @@ public class EndpointImpl extends MinimalEObjectImpl.Container implements Endpoi
      */
     public EList<ImportedProtocolAndDataFormat> getProtocols() {
         if (protocols == null) {
-            protocols = new EObjectContainmentEList<ImportedProtocolAndDataFormat>(ImportedProtocolAndDataFormat.class, this, ServicePackage.ENDPOINT__PROTOCOLS);
+            protocols = new EObjectContainmentWithInverseEList<ImportedProtocolAndDataFormat>(ImportedProtocolAndDataFormat.class, this, ServicePackage.ENDPOINT__PROTOCOLS, ServicePackage.IMPORTED_PROTOCOL_AND_DATA_FORMAT__ENDPOINT);
         }
         return protocols;
     }
@@ -319,9 +319,12 @@ public class EndpointImpl extends MinimalEObjectImpl.Container implements Endpoi
      * <!-- end-user-doc -->
      * @generated
      */
+    @SuppressWarnings("unchecked")
     @Override
     public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
+            case ServicePackage.ENDPOINT__PROTOCOLS:
+                return ((InternalEList<InternalEObject>)(InternalEList<?>)getProtocols()).basicAdd(otherEnd, msgs);
             case ServicePackage.ENDPOINT__MICROSERVICE:
                 if (eInternalContainer() != null)
                     msgs = eBasicRemoveFromContainer(msgs);

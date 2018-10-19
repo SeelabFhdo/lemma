@@ -96,6 +96,10 @@ public class ServiceAdapterFactory extends AdapterFactoryImpl {
                 return createParameterAdapter();
             }
             @Override
+            public Adapter caseMappedDataField(MappedDataField object) {
+                return createMappedDataFieldAdapter();
+            }
+            @Override
             public Adapter casePossiblyImportedMicroservice(PossiblyImportedMicroservice object) {
                 return createPossiblyImportedMicroserviceAdapter();
             }
@@ -242,6 +246,20 @@ public class ServiceAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createParameterAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.fhdo.ddmm.service.MappedDataField <em>Mapped Data Field</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.fhdo.ddmm.service.MappedDataField
+     * @generated
+     */
+    public Adapter createMappedDataFieldAdapter() {
         return null;
     }
 

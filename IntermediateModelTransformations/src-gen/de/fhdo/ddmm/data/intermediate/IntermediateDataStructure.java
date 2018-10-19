@@ -1,0 +1,74 @@
+/**
+ */
+package de.fhdo.ddmm.data.intermediate;
+
+import org.eclipse.emf.common.util.EList;
+
+/**
+ * <!-- begin-user-doc -->
+ * A representation of the model object '<em><b>Data Structure</b></em>'.
+ * <!-- end-user-doc -->
+ *
+ * <!-- begin-model-doc -->
+ * *
+ * Data structure
+ * <!-- end-model-doc -->
+ *
+ * <p>
+ * The following features are supported:
+ * </p>
+ * <ul>
+ *   <li>{@link de.fhdo.ddmm.data.intermediate.IntermediateDataStructure#getSuper <em>Super</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.data.intermediate.IntermediateDataStructure#getDataFields <em>Data Fields</em>}</li>
+ * </ul>
+ *
+ * @see de.fhdo.ddmm.data.intermediate.IntermediatePackage#getIntermediateDataStructure()
+ * @model
+ * @generated
+ */
+public interface IntermediateDataStructure extends IntermediateComplexType {
+    /**
+     * Returns the value of the '<em><b>Super</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Super</em>' reference isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Super</em>' reference.
+     * @see #setSuper(IntermediateDataStructure)
+     * @see de.fhdo.ddmm.data.intermediate.IntermediatePackage#getIntermediateDataStructure_Super()
+     * @model
+     * @generated
+     */
+    IntermediateDataStructure getSuper();
+
+    /**
+     * Sets the value of the '{@link de.fhdo.ddmm.data.intermediate.IntermediateDataStructure#getSuper <em>Super</em>}' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Super</em>' reference.
+     * @see #getSuper()
+     * @generated
+     */
+    void setSuper(IntermediateDataStructure value);
+
+    /**
+     * Returns the value of the '<em><b>Data Fields</b></em>' containment reference list.
+     * The list contents are of type {@link de.fhdo.ddmm.data.intermediate.IntermediateDataField}.
+     * It is bidirectional and its opposite is '{@link de.fhdo.ddmm.data.intermediate.IntermediateDataField#getDataStructure <em>Data Structure</em>}'.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Data Fields</em>' containment reference list isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Data Fields</em>' containment reference list.
+     * @see de.fhdo.ddmm.data.intermediate.IntermediatePackage#getIntermediateDataStructure_DataFields()
+     * @see de.fhdo.ddmm.data.intermediate.IntermediateDataField#getDataStructure
+     * @model opposite="dataStructure" containment="true"
+     * @generated
+     */
+    EList<IntermediateDataField> getDataFields();
+
+} // IntermediateDataStructure

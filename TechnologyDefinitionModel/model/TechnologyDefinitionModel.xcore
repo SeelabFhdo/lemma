@@ -175,6 +175,22 @@ class TechnologySpecificPrimitiveType extends PrimitiveType {
         nameParts.add(name)
         nameParts.asEList
     }
+
+    /**
+     * Build qualified name from qualified name parts
+     */
+    op String buildQualifiedName(String separator) {
+        if (separator === null)
+            return null
+
+        var String qualifiedName = ""
+        for (part : qualifiedNameParts)
+            qualifiedName += separator + part
+        // Remove leading separator
+        if (!qualifiedName.empty)
+            qualifiedName = qualifiedName.substring(separator.length)
+        return qualifiedName
+    }
 }
 
 /**
@@ -197,9 +213,25 @@ class TechnologySpecificListType extends ComplexType {
             return newArrayList.asEList
 
         val nameParts = newArrayList
-        nameParts.add("types")
+        nameParts.add("_types")
         nameParts.add(name)
         nameParts.asEList
+    }
+
+    /**
+     * Build qualified name from qualified name parts
+     */
+    op String buildQualifiedName(String separator) {
+        if (separator === null)
+            return null
+
+        var String qualifiedName = ""
+        for (part : qualifiedNameParts)
+            qualifiedName += separator + part
+        // Remove leading separator
+        if (!qualifiedName.empty)
+            qualifiedName = qualifiedName.substring(separator.length)
+        return qualifiedName
     }
 }
 
@@ -226,6 +258,22 @@ class TechnologySpecificDataStructure extends ComplexType {
         nameParts.add("_types")
         nameParts.add(name)
         nameParts.asEList
+    }
+
+    /**
+     * Build qualified name from qualified name parts
+     */
+    op String buildQualifiedName(String separator) {
+        if (separator === null)
+            return null
+
+        var String qualifiedName = ""
+        for (part : qualifiedNameParts)
+            qualifiedName += separator + part
+        // Remove leading separator
+        if (!qualifiedName.empty)
+            qualifiedName = qualifiedName.substring(separator.length)
+        return qualifiedName
     }
 }
 
@@ -335,11 +383,11 @@ class TechnologySpecificProperty {
     String name
     boolean mandatory = "false"
 
-    container OperationTechnology operationTechnology opposite serviceProperties
-    container TechnologyAspect technologyAspect opposite properties
-
     contains PrimitiveType ^type
     contains PrimitiveValue[0..1] defaultValue
+
+    container OperationTechnology operationTechnology opposite serviceProperties
+    container TechnologyAspect technologyAspect opposite properties
 }
 
 /**
@@ -473,6 +521,7 @@ class ServiceAspect extends TechnologyAspect {
      */
 
     contains ServiceAspectPointcutSelector[] pointcutSelectors opposite serviceAspect
+
     container Technology technology opposite serviceAspects
 
     /**
@@ -672,6 +721,7 @@ class ServiceAspectPointcutSelector {
      */
 
     contains ServiceAspectPointcut[1..*] pointcuts opposite selector
+
     container ServiceAspect serviceAspect opposite pointcutSelectors
 
     /**

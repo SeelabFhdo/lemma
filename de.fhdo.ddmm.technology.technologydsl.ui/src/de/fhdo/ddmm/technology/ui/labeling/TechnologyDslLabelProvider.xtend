@@ -9,18 +9,18 @@ import org.eclipse.xtext.ui.label.DefaultEObjectLabelProvider
 
 /**
  * Provides labels for EObjects.
- * 
+ *
  * See https://www.eclipse.org/Xtext/documentation/304_ide_concepts.html#label-provider
  */
 class TechnologyDslLabelProvider extends DefaultEObjectLabelProvider {
 
-	@Inject
-	new(AdapterFactoryLabelProvider delegate) {
-		super(delegate);
-	}
+    @Inject
+    new(AdapterFactoryLabelProvider delegate) {
+        super(delegate);
+    }
 
-	// Labels and icons can be computed like this:
-	
+    // Labels and icons can be computed like this:
+
 //	def text(Greeting ele) {
 //		'A greeting to ' + ele.name
 //	}

@@ -16,5 +16,6 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecore.xcore.lib,
  ServiceViewpointModel;bundle-version="0.1.0";visibility:=reexport,
  DataViewpointModel;visibility:=reexport,
- TechnologyDefinitionModel;visibility:=reexport
+ TechnologyDefinitionModel;visibility:=reexport,
+ DdmmUtils;bundle-version="0.1.0"
 Bundle-ActivationPolicy: lazy

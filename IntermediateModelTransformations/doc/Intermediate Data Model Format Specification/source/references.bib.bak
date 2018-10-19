@@ -1,0 +1,41 @@
+% Encoding: UTF-8
+
+@Book{Newman2015,
+  title         = {Building Microservices},
+  publisher     = {O'Reilly Media},
+  year          = {2015},
+  author        = {Newman, Sam},
+  isbn          = {1491950331},
+  abstract      = {Distributed systems have become more fine-grained in the past 10 years, shifting from code-heavy monolithic applications to smaller, self-contained microservices. But developing these systems brings its own set of headaches. With lots of examples and practical advice, this book takes a holistic view of the topics that system architects and administrators must consider when building, managing, and evolving microservice architectures.Microservice technologies are moving quickly. Author Sam Newman provides you with a firm grounding in the concepts while diving into current solutions for modeling, integrating, testing, deploying, and monitoring your own autonomous services. You'll follow a fictional company throughout the book to learn how building a microservice architecture affects a single domain.Discover how microservices allow you to align your system design with your organization's goalsLearn options for integrating a service with the rest of your systemTake an incremental approach when splitting monolithic codebasesDeploy individual microservices through continuous integrationExamine the complexities of testing and monitoring distributed servicesManage security with user-to-service and service-to-service modelsUnderstand the challenges of scaling microservice architectures},
+  file          = {:home/florian/Dokumente/Forschung/Dissertation/Literature/Newman - 2015 - Building Microservices.pdf:pdf},
+  mendeley-tags = {foundations},
+  timestamp     = {2017.01.14},
+}
+
+@Book{Combemale2017,
+  title     = {Engineering Modeling Languages},
+  publisher = {CRC Press},
+  year      = {2017},
+  author    = {Benoit Combemale and Robert B. France and Jean-Marc J\'{e}z\'{e}quel and Bernhard Rumpe and Jim Steel and Didier Vojtisek},
+  owner     = {florian},
+  timestamp = {2018.02.21},
+}
+
+@InProceedings{Kiczales1997,
+  author    = {Kiczales, Gregor and Lamping, John and Mendhekar, Anurag and Maeda, Chris and Lopes, Cristina and Loingtier, Jean-Marc and Irwin, John},
+  title     = {Aspect-oriented programming},
+  booktitle = {Object-Oriented Programming},
+  year      = {1997},
+  pages     = {220--242},
+  publisher = {Springer},
+}
+
+@Book{Steinberg2011,
+  title     = {EMF--Eclipse Modeling Framework},
+  publisher = {Pearson Education},
+  year      = {2011},
+  author    = {Dave Steinberg and Frank Budinsky and Marcelo Paternostro and Ed Merks},
+  edition   = {2},
+}
+
+@Comment{jabref-meta: databaseType:bibtex;}

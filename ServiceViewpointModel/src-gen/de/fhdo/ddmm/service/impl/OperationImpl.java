@@ -2,7 +2,12 @@
  */
 package de.fhdo.ddmm.service.impl;
 
+import com.google.common.base.Objects;
+
+import com.google.common.collect.Iterables;
+
 import de.fhdo.ddmm.service.Endpoint;
+import de.fhdo.ddmm.service.ImportedProtocolAndDataFormat;
 import de.fhdo.ddmm.service.ImportedServiceAspect;
 import de.fhdo.ddmm.service.Interface;
 import de.fhdo.ddmm.service.Operation;
@@ -11,9 +16,18 @@ import de.fhdo.ddmm.service.ProtocolSpecification;
 import de.fhdo.ddmm.service.ServicePackage;
 import de.fhdo.ddmm.service.Visibility;
 
+import de.fhdo.ddmm.technology.CommunicationType;
+import de.fhdo.ddmm.technology.DataFormat;
+import de.fhdo.ddmm.technology.Protocol;
+
 import java.lang.reflect.InvocationTargetException;
 
 import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import java.util.function.Consumer;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -32,8 +46,14 @@ import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 
+import org.eclipse.emf.ecore.xcore.lib.XcoreEListExtensions;
+
 import org.eclipse.xtext.xbase.lib.CollectionExtensions;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
+
+import org.eclipse.xtext.xbase.lib.Functions.Function1;
+
+import org.eclipse.xtext.xbase.lib.IterableExtensions;
 
 /**
  * <!-- begin-user-doc -->
@@ -488,6 +508,129 @@ public class OperationImpl extends MinimalEObjectImpl.Container implements Opera
      * <!-- end-user-doc -->
      * @generated
      */
+    public List<Map<String, Object>> t_missingEndpointEffectiveProtocols() {
+        if (((((this.getInterface() == null) || 
+            (this.getInterface().getMicroservice() == null)) || 
+            (this.getInterface().getMicroservice().getT_defaultProtocols() == null)) || 
+            this.getInterface().getMicroservice().getT_defaultProtocols().isEmpty())) {
+            return null;
+        }
+        final List<Map<String, Object>> effectiveProtocols = this.t_effectiveProtocolSpecifications();
+        if ((effectiveProtocols == null)) {
+            return null;
+        }
+        final Function1<Endpoint, EList<ImportedProtocolAndDataFormat>> _function = new Function1<Endpoint, EList<ImportedProtocolAndDataFormat>>() {
+            public EList<ImportedProtocolAndDataFormat> apply(final Endpoint it) {
+                return it.getProtocols();
+            }
+        };
+        final Function1<ImportedProtocolAndDataFormat, Boolean> _function_1 = new Function1<ImportedProtocolAndDataFormat, Boolean>() {
+            public Boolean apply(final ImportedProtocolAndDataFormat it) {
+                DataFormat _dataFormat = it.getDataFormat();
+                return Boolean.valueOf((_dataFormat == null));
+            }
+        };
+        final Function1<ImportedProtocolAndDataFormat, Protocol> _function_2 = new Function1<ImportedProtocolAndDataFormat, Protocol>() {
+            public Protocol apply(final ImportedProtocolAndDataFormat it) {
+                return it.getImportedProtocol();
+            }
+        };
+        final List<Protocol> endpointProtocolsWithoutDataFormats = IterableExtensions.<Protocol>toList(IterableExtensions.<ImportedProtocolAndDataFormat, Protocol>map(IterableExtensions.<ImportedProtocolAndDataFormat>filter(Iterables.<ImportedProtocolAndDataFormat>concat(XcoreEListExtensions.<Endpoint, EList<ImportedProtocolAndDataFormat>>map(this.getEndpoints(), _function)), _function_1), _function_2));
+        final Function1<Map<String, Object>, Boolean> _function_3 = new Function1<Map<String, Object>, Boolean>() {
+            public Boolean apply(final Map<String, Object> it) {
+                boolean _xblockexpression = false;
+                {
+                    Object _get = it.get("protocol");
+                    final Protocol protocol = ((Protocol) _get);
+                    boolean _contains = endpointProtocolsWithoutDataFormats.contains(protocol);
+                    _xblockexpression = (!_contains);
+                }
+                return Boolean.valueOf(_xblockexpression);
+            }
+        };
+        List<Map<String, Object>> resultProtocols = IterableExtensions.<Map<String, Object>>toList(IterableExtensions.<Map<String, Object>>filter(effectiveProtocols, _function_3));
+        final Function1<Endpoint, EList<ImportedProtocolAndDataFormat>> _function_4 = new Function1<Endpoint, EList<ImportedProtocolAndDataFormat>>() {
+            public EList<ImportedProtocolAndDataFormat> apply(final Endpoint it) {
+                return it.getProtocols();
+            }
+        };
+        final Function1<ImportedProtocolAndDataFormat, Boolean> _function_5 = new Function1<ImportedProtocolAndDataFormat, Boolean>() {
+            public Boolean apply(final ImportedProtocolAndDataFormat it) {
+                DataFormat _dataFormat = it.getDataFormat();
+                return Boolean.valueOf((_dataFormat != null));
+            }
+        };
+        final List<ImportedProtocolAndDataFormat> endpointProtocolsWithDataFormats = IterableExtensions.<ImportedProtocolAndDataFormat>toList(IterableExtensions.<ImportedProtocolAndDataFormat>filter(Iterables.<ImportedProtocolAndDataFormat>concat(XcoreEListExtensions.<Endpoint, EList<ImportedProtocolAndDataFormat>>map(this.getEndpoints(), _function_4)), _function_5));
+        final Function1<Map<String, Object>, Boolean> _function_6 = new Function1<Map<String, Object>, Boolean>() {
+            public Boolean apply(final Map<String, Object> it) {
+                boolean _xblockexpression = false;
+                {
+                    Object _get = it.get("protocol");
+                    final Protocol protocol = ((Protocol) _get);
+                    Object _get_1 = it.get("dataFormat");
+                    final DataFormat dataFormat = ((DataFormat) _get_1);
+                    final Function1<ImportedProtocolAndDataFormat, Boolean> _function = new Function1<ImportedProtocolAndDataFormat, Boolean>() {
+                        public Boolean apply(final ImportedProtocolAndDataFormat it) {
+                            return Boolean.valueOf((Objects.equal(it.getImportedProtocol(), protocol) && Objects.equal(it.getDataFormat(), dataFormat)));
+                        }
+                    };
+                    boolean _exists = IterableExtensions.<ImportedProtocolAndDataFormat>exists(endpointProtocolsWithDataFormats, _function);
+                    _xblockexpression = (!_exists);
+                }
+                return Boolean.valueOf(_xblockexpression);
+            }
+        };
+        return IterableExtensions.<Map<String, Object>>toList(IterableExtensions.<Map<String, Object>>filter(resultProtocols, _function_6));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public List<Map<String, Object>> t_effectiveProtocolSpecifications() {
+        if (((((this.getInterface() == null) || 
+            (this.getInterface().getMicroservice() == null)) || 
+            (this.getInterface().getMicroservice().getT_defaultProtocols() == null)) || 
+            this.getInterface().getMicroservice().getT_defaultProtocols().isEmpty())) {
+            return null;
+        }
+        List<Map<String, Object>> _xifexpression = null;
+        boolean _isEmpty = this.getProtocols().isEmpty();
+        boolean _not = (!_isEmpty);
+        if (_not) {
+            _xifexpression = this.getProtocols().get(0).effectiveProtocolSpecifications(this.getProtocols());
+        }
+        else {
+            _xifexpression = CollectionLiterals.<Map<String, Object>>newArrayList();
+        }
+        final List<Map<String, Object>> effectiveProtocolSpecifications = _xifexpression;
+        final Function1<ProtocolSpecification, CommunicationType> _function = new Function1<ProtocolSpecification, CommunicationType>() {
+            public CommunicationType apply(final ProtocolSpecification it) {
+                return it.getProtocol().getImportedProtocol().getCommunicationType();
+            }
+        };
+        final Set<CommunicationType> protocolSpecificationsCommunicationTypes = IterableExtensions.<CommunicationType>toSet(XcoreEListExtensions.<ProtocolSpecification, CommunicationType>map(this.getProtocols(), _function));
+        final Consumer<Map<String, Object>> _function_1 = new Consumer<Map<String, Object>>() {
+            public void accept(final Map<String, Object> microserviceEffectiveProtocolTuple) {
+                Object _get = microserviceEffectiveProtocolTuple.get("protocol");
+                final Protocol protocol = ((Protocol) _get);
+                boolean _contains = protocolSpecificationsCommunicationTypes.contains(protocol.getCommunicationType());
+                boolean _not = (!_contains);
+                if (_not) {
+                    effectiveProtocolSpecifications.add(microserviceEffectiveProtocolTuple);
+                }
+            }
+        };
+        this.getInterface().t_effectiveProtocolSpecifications().forEach(_function_1);
+        return effectiveProtocolSpecifications;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EList<String> getQualifiedNameParts() {
         EList<String> _xblockexpression = null;
         {
@@ -499,6 +642,29 @@ public class OperationImpl extends MinimalEObjectImpl.Container implements Opera
             _xblockexpression = ECollections.<String>asEList(nameParts);
         }
         return _xblockexpression;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public String buildQualifiedName(final String separator) {
+        if ((separator == null)) {
+            return null;
+        }
+        String qualifiedName = "";
+        EList<String> _qualifiedNameParts = this.getQualifiedNameParts();
+        for (final String part : _qualifiedNameParts) {
+            String _qualifiedName = qualifiedName;
+            qualifiedName = (_qualifiedName + (separator + part));
+        }
+        boolean _isEmpty = qualifiedName.isEmpty();
+        boolean _not = (!_isEmpty);
+        if (_not) {
+            qualifiedName = qualifiedName.substring(separator.length());
+        }
+        return qualifiedName;
     }
 
     /**
@@ -718,8 +884,14 @@ public class OperationImpl extends MinimalEObjectImpl.Container implements Opera
     @Override
     public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
         switch (operationID) {
+            case ServicePackage.OPERATION___TMISSING_ENDPOINT_EFFECTIVE_PROTOCOLS:
+                return t_missingEndpointEffectiveProtocols();
+            case ServicePackage.OPERATION___TEFFECTIVE_PROTOCOL_SPECIFICATIONS:
+                return t_effectiveProtocolSpecifications();
             case ServicePackage.OPERATION___GET_QUALIFIED_NAME_PARTS:
                 return getQualifiedNameParts();
+            case ServicePackage.OPERATION___BUILD_QUALIFIED_NAME__STRING:
+                return buildQualifiedName((String)arguments.get(0));
         }
         return super.eInvoke(operationID, arguments);
     }

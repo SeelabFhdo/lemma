@@ -367,6 +367,29 @@ public abstract class ComplexTypeImpl extends TypeImpl implements ComplexType {
      * <!-- end-user-doc -->
      * @generated
      */
+    public String buildQualifiedName(final String separator) {
+        if ((separator == null)) {
+            return null;
+        }
+        String qualifiedName = "";
+        EList<String> _qualifiedNameParts = this.getQualifiedNameParts();
+        for (final String part : _qualifiedNameParts) {
+            String _qualifiedName = qualifiedName;
+            qualifiedName = (_qualifiedName + (separator + part));
+        }
+        boolean _isEmpty = qualifiedName.isEmpty();
+        boolean _not = (!_isEmpty);
+        if (_not) {
+            qualifiedName = qualifiedName.substring(separator.length());
+        }
+        return qualifiedName;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public int compareFieldCounts(final EList<DataField> fields, final EList<DataField> fieldsToCompare) {
         if (((fields == null) && (fieldsToCompare == null))) {
             return 0;
@@ -612,6 +635,8 @@ public abstract class ComplexTypeImpl extends TypeImpl implements ComplexType {
         switch (operationID) {
             case DataPackage.COMPLEX_TYPE___GET_QUALIFIED_NAME_PARTS:
                 return getQualifiedNameParts();
+            case DataPackage.COMPLEX_TYPE___BUILD_QUALIFIED_NAME__STRING:
+                return buildQualifiedName((String)arguments.get(0));
             case DataPackage.COMPLEX_TYPE___COMPARE_FIELD_COUNTS__ELIST_ELIST:
                 return compareFieldCounts((EList<DataField>)arguments.get(0), (EList<DataField>)arguments.get(1));
         }

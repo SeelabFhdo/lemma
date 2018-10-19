@@ -601,6 +601,15 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    public EOperation getTechnologySpecificPrimitiveType__BuildQualifiedName__String() {
+        return technologySpecificPrimitiveTypeEClass.getEOperations().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EClass getTechnologySpecificListType() {
         return technologySpecificListTypeEClass;
     }
@@ -628,6 +637,15 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    public EOperation getTechnologySpecificListType__BuildQualifiedName__String() {
+        return technologySpecificListTypeEClass.getEOperations().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EClass getTechnologySpecificDataStructure() {
         return technologySpecificDataStructureEClass;
     }
@@ -648,6 +666,15 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      */
     public EOperation getTechnologySpecificDataStructure__GetQualifiedNameParts() {
         return technologySpecificDataStructureEClass.getEOperations().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EOperation getTechnologySpecificDataStructure__BuildQualifiedName__String() {
+        return technologySpecificDataStructureEClass.getEOperations().get(1);
     }
 
     /**
@@ -844,7 +871,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getTechnologySpecificProperty_OperationTechnology() {
+    public EReference getTechnologySpecificProperty_Type() {
         return (EReference)technologySpecificPropertyEClass.getEStructuralFeatures().get(2);
     }
 
@@ -853,7 +880,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getTechnologySpecificProperty_TechnologyAspect() {
+    public EReference getTechnologySpecificProperty_DefaultValue() {
         return (EReference)technologySpecificPropertyEClass.getEStructuralFeatures().get(3);
     }
 
@@ -862,7 +889,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getTechnologySpecificProperty_Type() {
+    public EReference getTechnologySpecificProperty_OperationTechnology() {
         return (EReference)technologySpecificPropertyEClass.getEStructuralFeatures().get(4);
     }
 
@@ -871,7 +898,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getTechnologySpecificProperty_DefaultValue() {
+    public EReference getTechnologySpecificProperty_TechnologyAspect() {
         return (EReference)technologySpecificPropertyEClass.getEStructuralFeatures().get(5);
     }
 
@@ -1363,14 +1390,17 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
         createEReference(technologySpecificPrimitiveTypeEClass, TECHNOLOGY_SPECIFIC_PRIMITIVE_TYPE__TECHNOLOGY);
         createEReference(technologySpecificPrimitiveTypeEClass, TECHNOLOGY_SPECIFIC_PRIMITIVE_TYPE__BASIC_BUILTIN_PRIMITIVE_TYPES);
         createEOperation(technologySpecificPrimitiveTypeEClass, TECHNOLOGY_SPECIFIC_PRIMITIVE_TYPE___GET_QUALIFIED_NAME_PARTS);
+        createEOperation(technologySpecificPrimitiveTypeEClass, TECHNOLOGY_SPECIFIC_PRIMITIVE_TYPE___BUILD_QUALIFIED_NAME__STRING);
 
         technologySpecificListTypeEClass = createEClass(TECHNOLOGY_SPECIFIC_LIST_TYPE);
         createEReference(technologySpecificListTypeEClass, TECHNOLOGY_SPECIFIC_LIST_TYPE__TECHNOLOGY);
         createEOperation(technologySpecificListTypeEClass, TECHNOLOGY_SPECIFIC_LIST_TYPE___GET_QUALIFIED_NAME_PARTS);
+        createEOperation(technologySpecificListTypeEClass, TECHNOLOGY_SPECIFIC_LIST_TYPE___BUILD_QUALIFIED_NAME__STRING);
 
         technologySpecificDataStructureEClass = createEClass(TECHNOLOGY_SPECIFIC_DATA_STRUCTURE);
         createEReference(technologySpecificDataStructureEClass, TECHNOLOGY_SPECIFIC_DATA_STRUCTURE__TECHNOLOGY);
         createEOperation(technologySpecificDataStructureEClass, TECHNOLOGY_SPECIFIC_DATA_STRUCTURE___GET_QUALIFIED_NAME_PARTS);
+        createEOperation(technologySpecificDataStructureEClass, TECHNOLOGY_SPECIFIC_DATA_STRUCTURE___BUILD_QUALIFIED_NAME__STRING);
 
         compatibilityMatrixEntryEClass = createEClass(COMPATIBILITY_MATRIX_ENTRY);
         createEAttribute(compatibilityMatrixEntryEClass, COMPATIBILITY_MATRIX_ENTRY__DIRECTION);
@@ -1397,10 +1427,10 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
         technologySpecificPropertyEClass = createEClass(TECHNOLOGY_SPECIFIC_PROPERTY);
         createEAttribute(technologySpecificPropertyEClass, TECHNOLOGY_SPECIFIC_PROPERTY__NAME);
         createEAttribute(technologySpecificPropertyEClass, TECHNOLOGY_SPECIFIC_PROPERTY__MANDATORY);
-        createEReference(technologySpecificPropertyEClass, TECHNOLOGY_SPECIFIC_PROPERTY__OPERATION_TECHNOLOGY);
-        createEReference(technologySpecificPropertyEClass, TECHNOLOGY_SPECIFIC_PROPERTY__TECHNOLOGY_ASPECT);
         createEReference(technologySpecificPropertyEClass, TECHNOLOGY_SPECIFIC_PROPERTY__TYPE);
         createEReference(technologySpecificPropertyEClass, TECHNOLOGY_SPECIFIC_PROPERTY__DEFAULT_VALUE);
+        createEReference(technologySpecificPropertyEClass, TECHNOLOGY_SPECIFIC_PROPERTY__OPERATION_TECHNOLOGY);
+        createEReference(technologySpecificPropertyEClass, TECHNOLOGY_SPECIFIC_PROPERTY__TECHNOLOGY_ASPECT);
 
         technologySpecificPropertyValueAssignmentEClass = createEClass(TECHNOLOGY_SPECIFIC_PROPERTY_VALUE_ASSIGNMENT);
         createEReference(technologySpecificPropertyValueAssignmentEClass, TECHNOLOGY_SPECIFIC_PROPERTY_VALUE_ASSIGNMENT__PROPERTY);
@@ -1543,15 +1573,24 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
 
         initEOperation(getTechnologySpecificPrimitiveType__GetQualifiedNameParts(), theEcorePackage.getEString(), "getQualifiedNameParts", 0, -1, !IS_UNIQUE, IS_ORDERED);
 
+        EOperation op = initEOperation(getTechnologySpecificPrimitiveType__BuildQualifiedName__String(), theEcorePackage.getEString(), "buildQualifiedName", 0, 1, !IS_UNIQUE, IS_ORDERED);
+        addEParameter(op, theEcorePackage.getEString(), "separator", 0, 1, !IS_UNIQUE, IS_ORDERED);
+
         initEClass(technologySpecificListTypeEClass, TechnologySpecificListType.class, "TechnologySpecificListType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getTechnologySpecificListType_Technology(), this.getTechnology(), this.getTechnology_ListTypes(), "technology", null, 0, 1, TechnologySpecificListType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEOperation(getTechnologySpecificListType__GetQualifiedNameParts(), theEcorePackage.getEString(), "getQualifiedNameParts", 0, -1, !IS_UNIQUE, IS_ORDERED);
 
+        op = initEOperation(getTechnologySpecificListType__BuildQualifiedName__String(), theEcorePackage.getEString(), "buildQualifiedName", 0, 1, !IS_UNIQUE, IS_ORDERED);
+        addEParameter(op, theEcorePackage.getEString(), "separator", 0, 1, !IS_UNIQUE, IS_ORDERED);
+
         initEClass(technologySpecificDataStructureEClass, TechnologySpecificDataStructure.class, "TechnologySpecificDataStructure", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getTechnologySpecificDataStructure_Technology(), this.getTechnology(), this.getTechnology_DataStructures(), "technology", null, 0, 1, TechnologySpecificDataStructure.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEOperation(getTechnologySpecificDataStructure__GetQualifiedNameParts(), theEcorePackage.getEString(), "getQualifiedNameParts", 0, -1, !IS_UNIQUE, IS_ORDERED);
+
+        op = initEOperation(getTechnologySpecificDataStructure__BuildQualifiedName__String(), theEcorePackage.getEString(), "buildQualifiedName", 0, 1, !IS_UNIQUE, IS_ORDERED);
+        addEParameter(op, theEcorePackage.getEString(), "separator", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
         initEClass(compatibilityMatrixEntryEClass, CompatibilityMatrixEntry.class, "CompatibilityMatrixEntry", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getCompatibilityMatrixEntry_Direction(), this.getCompatibilityDirection(), "direction", null, 0, 1, CompatibilityMatrixEntry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1578,10 +1617,10 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
         initEClass(technologySpecificPropertyEClass, TechnologySpecificProperty.class, "TechnologySpecificProperty", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getTechnologySpecificProperty_Name(), theEcorePackage.getEString(), "name", null, 0, 1, TechnologySpecificProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getTechnologySpecificProperty_Mandatory(), theEcorePackage.getEBoolean(), "mandatory", "false", 0, 1, TechnologySpecificProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getTechnologySpecificProperty_OperationTechnology(), this.getOperationTechnology(), this.getOperationTechnology_ServiceProperties(), "operationTechnology", null, 0, 1, TechnologySpecificProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getTechnologySpecificProperty_TechnologyAspect(), this.getTechnologyAspect(), this.getTechnologyAspect_Properties(), "technologyAspect", null, 0, 1, TechnologySpecificProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getTechnologySpecificProperty_Type(), theDataPackage.getPrimitiveType(), null, "type", null, 0, 1, TechnologySpecificProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getTechnologySpecificProperty_DefaultValue(), theDataPackage.getPrimitiveValue(), null, "defaultValue", null, 0, 1, TechnologySpecificProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getTechnologySpecificProperty_OperationTechnology(), this.getOperationTechnology(), this.getOperationTechnology_ServiceProperties(), "operationTechnology", null, 0, 1, TechnologySpecificProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getTechnologySpecificProperty_TechnologyAspect(), this.getTechnologyAspect(), this.getTechnologyAspect_Properties(), "technologyAspect", null, 0, 1, TechnologySpecificProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(technologySpecificPropertyValueAssignmentEClass, TechnologySpecificPropertyValueAssignment.class, "TechnologySpecificPropertyValueAssignment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getTechnologySpecificPropertyValueAssignment_Property(), this.getTechnologySpecificProperty(), null, "property", null, 0, 1, TechnologySpecificPropertyValueAssignment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1608,7 +1647,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
         initEReference(getServiceAspect_PointcutSelectors(), this.getServiceAspectPointcutSelector(), this.getServiceAspectPointcutSelector_ServiceAspect(), "pointcutSelectors", null, 0, -1, ServiceAspect.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getServiceAspect_Technology(), this.getTechnology(), this.getTechnology_ServiceAspects(), "technology", null, 0, 1, ServiceAspect.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-        EOperation op = initEOperation(getServiceAspect__HasMatchingSelector__ExchangePattern_CommunicationType_Protocol_DataFormat(), theEcorePackage.getEBoolean(), "hasMatchingSelector", 0, 1, !IS_UNIQUE, IS_ORDERED);
+        op = initEOperation(getServiceAspect__HasMatchingSelector__ExchangePattern_CommunicationType_Protocol_DataFormat(), theEcorePackage.getEBoolean(), "hasMatchingSelector", 0, 1, !IS_UNIQUE, IS_ORDERED);
         addEParameter(op, this.getExchangePattern(), "forExchangePattern", 0, 1, !IS_UNIQUE, IS_ORDERED);
         addEParameter(op, this.getCommunicationType(), "forCommunicationType", 0, 1, !IS_UNIQUE, IS_ORDERED);
         addEParameter(op, this.getProtocol(), "forProtocol", 0, 1, !IS_UNIQUE, IS_ORDERED);

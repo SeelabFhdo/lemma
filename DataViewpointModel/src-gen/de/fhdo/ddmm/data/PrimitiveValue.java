@@ -186,6 +186,20 @@ public interface PrimitiveValue extends EObject {
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
      * *
+     * Get value as string. Returns an empty string if the instance hasNoValue(), i.e., when its
+     * effectively null.
+     * <!-- end-model-doc -->
+     * @model unique="false"
+     *        annotation="http://www.eclipse.org/emf/2002/GenModel body='boolean _hasNoValue = this.hasNoValue();\nif (_hasNoValue)\n{\n\treturn \"\";\n}\n&lt;%java.lang.String%&gt; _stringValue = this.getStringValue();\nboolean _tripleNotEquals = (_stringValue != null);\nif (_tripleNotEquals)\n{\n\treturn this.getStringValue();\n}\nelse\n{\n\t&lt;%java.math.BigDecimal%&gt; _numericValue = this.getNumericValue();\n\tboolean _tripleNotEquals_1 = (_numericValue != null);\n\tif (_tripleNotEquals_1)\n\t{\n\t\treturn this.getNumericValue().toString();\n\t}\n\telse\n\t{\n\t\t&lt;%java.lang.Boolean%&gt; _booleanValue = this.getBooleanValue();\n\t\tboolean _tripleNotEquals_2 = (_booleanValue != null);\n\t\tif (_tripleNotEquals_2)\n\t\t{\n\t\t\treturn this.getBooleanValue().toString();\n\t\t}\n\t}\n}\nreturn null;'"
+     * @generated
+     */
+    String valueAsString();
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * *
      * Return value as boolean or null, if value is no boolean
      * <!-- end-model-doc -->
      * @model unique="false"

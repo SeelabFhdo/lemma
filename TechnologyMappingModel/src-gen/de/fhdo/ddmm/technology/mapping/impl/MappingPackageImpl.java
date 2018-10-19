@@ -363,6 +363,42 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    public EOperation getMicroserviceMapping__GetTypeDefinitionTechnologyImports() {
+        return microserviceMappingEClass.getEOperations().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EOperation getMicroserviceMapping__GetTypeDefinitionTechnologyImport() {
+        return microserviceMappingEClass.getEOperations().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EOperation getMicroserviceMapping__GetTypeDefinitionTechnologies() {
+        return microserviceMappingEClass.getEOperations().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EOperation getMicroserviceMapping__GetTypeDefinitionTechnology() {
+        return microserviceMappingEClass.getEOperations().get(3);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EClass getImportedMicroservice() {
         return importedMicroserviceEClass;
     }
@@ -1042,6 +1078,10 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
         createEReference(microserviceMappingEClass, MICROSERVICE_MAPPING__REFERRED_OPERATION_MAPPINGS);
         createEReference(microserviceMappingEClass, MICROSERVICE_MAPPING__ASPECTS);
         createEReference(microserviceMappingEClass, MICROSERVICE_MAPPING__MAPPING_MODEL);
+        createEOperation(microserviceMappingEClass, MICROSERVICE_MAPPING___GET_TYPE_DEFINITION_TECHNOLOGY_IMPORTS);
+        createEOperation(microserviceMappingEClass, MICROSERVICE_MAPPING___GET_TYPE_DEFINITION_TECHNOLOGY_IMPORT);
+        createEOperation(microserviceMappingEClass, MICROSERVICE_MAPPING___GET_TYPE_DEFINITION_TECHNOLOGIES);
+        createEOperation(microserviceMappingEClass, MICROSERVICE_MAPPING___GET_TYPE_DEFINITION_TECHNOLOGY);
 
         importedMicroserviceEClass = createEClass(IMPORTED_MICROSERVICE);
         createEReference(importedMicroserviceEClass, IMPORTED_MICROSERVICE__IMPORT);
@@ -1186,6 +1226,14 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
         initEReference(getMicroserviceMapping_ReferredOperationMappings(), this.getReferredOperationMapping(), this.getReferredOperationMapping_MicroserviceMapping(), "referredOperationMappings", null, 0, -1, MicroserviceMapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getMicroserviceMapping_Aspects(), this.getTechnologySpecificImportedServiceAspect(), this.getTechnologySpecificImportedServiceAspect_MicroserviceMapping(), "aspects", null, 0, -1, MicroserviceMapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getMicroserviceMapping_MappingModel(), this.getTechnologyMapping(), this.getTechnologyMapping_Mappings(), "mappingModel", null, 0, 1, MicroserviceMapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEOperation(getMicroserviceMapping__GetTypeDefinitionTechnologyImports(), theServicePackage.getImport(), "getTypeDefinitionTechnologyImports", 0, -1, !IS_UNIQUE, IS_ORDERED);
+
+        initEOperation(getMicroserviceMapping__GetTypeDefinitionTechnologyImport(), theServicePackage.getImport(), "getTypeDefinitionTechnologyImport", 0, 1, !IS_UNIQUE, IS_ORDERED);
+
+        initEOperation(getMicroserviceMapping__GetTypeDefinitionTechnologies(), theTechnologyPackage.getTechnology(), "getTypeDefinitionTechnologies", 0, -1, !IS_UNIQUE, IS_ORDERED);
+
+        initEOperation(getMicroserviceMapping__GetTypeDefinitionTechnology(), theTechnologyPackage.getTechnology(), "getTypeDefinitionTechnology", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
         initEClass(importedMicroserviceEClass, ImportedMicroservice.class, "ImportedMicroservice", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getImportedMicroservice_Import(), theServicePackage.getImport(), null, "import", null, 0, 1, ImportedMicroservice.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

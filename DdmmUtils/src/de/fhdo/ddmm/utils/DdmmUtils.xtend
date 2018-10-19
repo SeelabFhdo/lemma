@@ -17,6 +17,10 @@ import org.eclipse.xtext.resource.EObjectDescription
 import org.eclipse.xtext.scoping.impl.MapBasedScope
 import org.eclipse.emf.common.util.EList
 import org.eclipse.xtext.scoping.Scopes
+import java.io.File
+import org.eclipse.core.resources.ResourcesPlugin
+import org.eclipse.core.runtime.Path
+import org.eclipse.core.resources.IFile
 
 /**
  * This class collects _static_ utility methods to be used across DSLs' implementations.
@@ -69,6 +73,26 @@ final class DdmmUtils {
     }
 
     /**
+     * Convert a relative file path to an absolute file path that is based on an absolute base path
+     */
+    def static convertToAbsolutePath(String relativeFilePath, String absoluteBaseFilePath) {
+        val absoluteBaseFile = new File(absoluteBaseFilePath)
+        val absoluteBaseFolder = new File(absoluteBaseFile.getParent())
+        val absoluteFile = new File(absoluteBaseFolder, relativeFilePath)
+        return absoluteFile.getCanonicalPath()
+    }
+
+    /**
+     * Check if a URI exhibits the "file://" scheme
+     */
+    def static isFileUri(String uri) {
+        if (uri === null)
+            return false
+
+        return uri.startsWith("file://")
+    }
+
+    /**
      * Add "file://" scheme to URI string. If the string already has a scheme, replace it with
      * "file://".
      */
@@ -82,6 +106,68 @@ final class DdmmUtils {
             return "file://" + uriWithoutScheme
         } else
             return "file://" + uri
+    }
+
+    /**
+     * Remove "file://" scheme from URI string
+     */
+    def static removeFileUri(String uri) {
+        if (!isFileUri(uri))
+            return uri
+
+        val scheme = URI.createURI(uri).scheme
+        return uri.substring(scheme.length + 1)
+    }
+
+    /**
+     * Get IFile object from Resource
+     */
+    def static getFileForResource(Resource resource) {
+        if (resource === null)
+            return null
+
+        val resourceUri = resource.URI.toString
+        val workspace = ResourcesPlugin.workspace.root
+        val file = if (resource.URI.isPlatform)
+            workspace.getFile(new Path(resource.URI.toPlatformString(true)))
+        else if (isFileUri(resourceUri)) {
+            val fullFilePath = removeFileUri(resourceUri)
+            workspace.getFileForLocation(new Path(fullFilePath))
+        } else {
+            val resourceWorkspaceMember = workspace.findMember(new Path(resourceUri))
+            if (resourceWorkspaceMember instanceof IFile)
+                resourceWorkspaceMember as IFile
+            else
+                null
+        }
+
+        return file
+    }
+
+    /**
+     * Convenience method to convert a relative path to an absolute "file://" URI
+     */
+    def static convertToAbsoluteFileUri(String relativeFilePath, String absoluteBaseFilePath) {
+        return if (!isFileUri(relativeFilePath))
+                convertToFileUri(convertToAbsolutePath(relativeFilePath, absoluteBaseFilePath))
+            else
+                relativeFilePath
+    }
+
+    /**
+     * Convenience method to convert a relative path to an absolute "file://" URI by using a
+     * Resource as base
+     */
+    def static convertToAbsoluteFileUri(String relativeFilePath, Resource base) {
+        return if (isFileUri(relativeFilePath))
+            relativeFilePath
+        else if (isFileUri(base.URI.toString))
+            convertToAbsoluteFileUri(relativeFilePath, base.URI.toString)
+        else {
+            val absoluteResourceFilePath = getFileForResource(base)
+                .rawLocation.makeAbsolute.toString
+            convertToAbsoluteFileUri(relativeFilePath, absoluteResourceFilePath)
+        }
     }
 
     /**
@@ -504,5 +590,36 @@ final class DdmmUtils {
             return false
 
         return rootElement.class.interfaces.contains(expectedRootType)
+    }
+
+    /**
+     * Trim path by another. For example, calling this method with
+     *   pathToTrim = "/home/user/folder/file.txt" and
+     *   by = "/home/user/anotherFolder/anotherFile.dat"
+     * will result in
+     *   "/anotherFolder/anotherFile.dat"
+     */
+    def static trimPathBy(String pathToTrim, String by) {
+        val toTrimSegments = pathToTrim.split(File.separator)
+        val bySegments = by.split(File.separator)
+
+        var equalToIndex = -1
+        var currentIndex = 0
+        while (currentIndex < toTrimSegments.length && currentIndex < bySegments.length &&
+            toTrimSegments.get(currentIndex) == bySegments.get(currentIndex)) {
+            equalToIndex = currentIndex
+            currentIndex++
+        }
+
+        if (equalToIndex > -1 && equalToIndex < toTrimSegments.length - 1) {
+            var trimmedPath = ""
+            var n = equalToIndex + 1
+            while (n < toTrimSegments.length) {
+                trimmedPath += File.separator + toTrimSegments.get(n)
+                n++
+            }
+            return trimmedPath
+        } else
+            return pathToTrim
     }
 }

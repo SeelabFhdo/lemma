@@ -1,0 +1,267 @@
+package de.fhdo.ddmm.service.intermediate
+
+import de.fhdo.ddmm.data.intermediate.IntermediateImport
+import de.fhdo.ddmm.data.intermediate.IntermediateType
+import de.fhdo.ddmm.service.MicroserviceType
+import de.fhdo.ddmm.service.Visibility
+import de.fhdo.ddmm.technology.CommunicationType
+import de.fhdo.ddmm.technology.ExchangePattern
+
+/**
+ * Metamodel of intermediate service models.
+ *
+ * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
+ */
+class IntermediateServiceModel {
+    contains IntermediateImport[] imports
+    contains IntermediateMicroservice[1..*] microservices opposite serviceModel
+}
+
+/**
+ * Microservice
+ */
+class IntermediateMicroservice {
+    String name
+    String version
+    String qualifiedName
+    MicroserviceType ^type
+    Visibility visibility
+    // Flag to indicate if the microservice has at least one operation that is not flagged as being
+    // not implemented (either directly or transitively via its encapsulating interface)
+    boolean effectivelyImplemented
+
+    contains IntermediateTechnology[] technologies opposite microservice
+    contains IntermediateEndpoint[] endpoints opposite microservice
+    contains IntermediateProtocolSpecification[0..2] protocols
+    contains MicroserviceReference[] requiredMicroservices opposite requiringMicroservice
+    contains InterfaceReference[] requiredInterfaces opposite requiringMicroservice
+    contains OperationReference[] requiredOperations opposite requiringMicroservice
+    contains IntermediateInterface[1..*] interfaces opposite microservice
+    contains IntermediateImportedAspect[] aspects opposite microservice
+
+    container IntermediateServiceModel serviceModel opposite microservices
+}
+
+/**
+ * Interface
+ */
+class IntermediateInterface {
+    String name
+    String qualifiedName
+    Visibility visibility
+    boolean notImplemented
+    boolean hasImplementedOperations
+
+    contains IntermediateEndpoint[] endpoints opposite ^interface
+    contains IntermediateProtocolSpecification[0..2] protocols
+    contains IntermediateOperation[] operations opposite ^interface
+    contains IntermediateReferredOperation[] referredOperations opposite referringInterface
+    contains IntermediateImportedAspect[] aspects opposite ^interface
+
+    container IntermediateMicroservice microservice opposite interfaces
+}
+
+/**
+ * Operation
+ */
+class IntermediateOperation {
+    String name
+    String qualifiedName
+    Visibility visibility
+    boolean notImplemented
+
+    contains IntermediateEndpoint[] endpoints opposite operation
+    contains IntermediateProtocolSpecification[0..2] protocols
+    contains IntermediateImportedAspect[] aspects opposite operation
+    contains IntermediateParameter[] parameters opposite operation
+
+    container IntermediateInterface ^interface opposite operations
+}
+
+/**
+ * Referred operation
+ */
+class IntermediateReferredOperation {
+    // Name and qualified name of the operation in the referring interface. Currently, this is
+    // identical to the name of the operation itself.
+    String nameInReferringInterface
+    String qualifiedNameInReferringInterface
+
+    refers IntermediateOperation operation
+    contains IntermediateEndpoint[] endpoints opposite referredOperation
+    contains IntermediateProtocolSpecification[0..2] protocols
+    contains IntermediateImportedAspect[] aspects opposite referredOperation
+
+    container IntermediateInterface referringInterface opposite referredOperations
+}
+
+/**
+ * Parameter
+ */
+class IntermediateParameter {
+    String name
+    String qualifiedName
+    ExchangePattern exchangePattern
+    CommunicationType communicationType
+    boolean communicatesFault
+    boolean optional
+
+    contains IntermediateType ^type
+    contains OperationReference[0..1] initializedByOperation  opposite initializedParameter
+    contains IntermediateImportedAspect[] aspects opposite parameter
+    contains IntermediateMappedDataField[] mappedDataFields opposite parameter
+
+    container IntermediateOperation operation opposite parameters
+}
+
+/**
+ * Mapped data field
+ */
+class IntermediateMappedDataField {
+    String mappedDataFieldName
+    String qualifiedName
+
+    contains IntermediateType mappedType
+    contains IntermediateImportedAspect[] aspects opposite mappedDataField
+
+    container IntermediateParameter parameter opposite mappedDataFields
+}
+
+/**
+ * Reference to a microservice required by another microservice
+ */
+class MicroserviceReference {
+    String name
+    String version
+    String qualifiedName
+    boolean imported = "false"
+
+    refers IntermediateImport[0..1] ^import
+    // Direct reference to the microservice in case it is contained in the same model as the
+    // requiring microservice
+    refers IntermediateMicroservice[0..1] localMicroservice
+
+    container IntermediateMicroservice requiringMicroservice opposite requiredMicroservices
+}
+
+/**
+ * Reference to an interface required by a microservice
+ */
+class InterfaceReference {
+    String name
+    String qualifiedName
+    boolean imported = "false"
+
+    refers IntermediateImport ^import
+    // Direct reference to the interface in case it is contained in the same model as the
+    // requiring microservice
+    refers IntermediateInterface[0..1] localInterface
+
+    container IntermediateMicroservice requiringMicroservice opposite requiredInterfaces
+}
+
+/**
+ * Reference to an operation required by a microservice
+ */
+class OperationReference {
+    String name
+    String qualifiedName
+    boolean imported = "false"
+
+    refers IntermediateImport ^import
+    // Direct reference to the operation in case it is contained in the same model as the
+    // requiring microservice
+    refers IntermediateOperation[0..1] localOperation
+
+    container IntermediateMicroservice requiringMicroservice opposite requiredOperations
+    container IntermediateParameter initializedParameter opposite initializedByOperation
+}
+
+/**
+ * Technology
+ */
+class IntermediateTechnology {
+    String name
+
+    refers IntermediateImport ^import
+
+    container IntermediateMicroservice microservice opposite technologies
+}
+
+/**
+ * Endpoint
+ */
+class IntermediateEndpoint {
+    CommunicationType communicationType
+    String protocol
+    String dataFormat
+    String[*] addresses
+
+    refers IntermediateTechnology technology
+    container IntermediateMicroservice microservice opposite endpoints
+    container IntermediateInterface ^interface opposite endpoints
+    container IntermediateOperation operation opposite endpoints
+    container IntermediateReferredOperation referredOperation opposite endpoints
+}
+
+/**
+ * Protocol specification
+ */
+class IntermediateProtocolSpecification {
+    CommunicationType communicationType
+    String protocol
+    String dataFormat
+}
+
+/**
+ * Aspect
+ */
+class IntermediateImportedAspect {
+    String name
+
+    refers IntermediateImport ^import
+    contains IntermediateAspectProperty[] properties opposite aspect
+    contains IntermediateAspectPropertyValue[] propertyValues opposite aspect
+
+    container IntermediateMicroservice microservice opposite aspects
+    container IntermediateInterface ^interface opposite aspects
+    container IntermediateOperation operation opposite aspects
+    container IntermediateReferredOperation referredOperation opposite aspects
+    container IntermediateParameter parameter opposite aspects
+    container IntermediateMappedDataField mappedDataField opposite aspects
+}
+
+/**
+ * Aspect property
+ */
+class IntermediateAspectProperty {
+    String name
+    String ^type
+    // The default value is encoded in a single String. However, the validators of the languages
+    // ensure that the default value corresponds to the type of the property.
+    String defaultValue
+    boolean mandatory = "false"
+
+    container IntermediateImportedAspect aspect opposite properties
+}
+
+/**
+ * Property value
+ */
+class IntermediateAspectPropertyValue {
+    // The value is encoded in a single String. However, the validators of the languages ensure that
+    // the value corresponds to the type of the property.
+    String value
+
+    refers IntermediateAspectProperty property
+
+    container IntermediateImportedAspect aspect opposite propertyValues
+}
+
+/**
+ * Imported technology-specific type
+ */
+class IntermediateImportedTechnologySpecificType extends IntermediateType {
+    String qualifiedName
+    refers IntermediateImport ^import
+}

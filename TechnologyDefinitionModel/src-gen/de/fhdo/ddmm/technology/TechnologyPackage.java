@@ -491,13 +491,22 @@ public interface TechnologyPackage extends EPackage {
     int TECHNOLOGY_SPECIFIC_PRIMITIVE_TYPE___GET_QUALIFIED_NAME_PARTS = DataPackage.PRIMITIVE_TYPE_OPERATION_COUNT + 0;
 
     /**
+     * The operation id for the '<em>Build Qualified Name</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TECHNOLOGY_SPECIFIC_PRIMITIVE_TYPE___BUILD_QUALIFIED_NAME__STRING = DataPackage.PRIMITIVE_TYPE_OPERATION_COUNT + 1;
+
+    /**
      * The number of operations of the '<em>Specific Primitive Type</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int TECHNOLOGY_SPECIFIC_PRIMITIVE_TYPE_OPERATION_COUNT = DataPackage.PRIMITIVE_TYPE_OPERATION_COUNT + 1;
+    int TECHNOLOGY_SPECIFIC_PRIMITIVE_TYPE_OPERATION_COUNT = DataPackage.PRIMITIVE_TYPE_OPERATION_COUNT + 2;
 
     /**
      * The meta object id for the '{@link de.fhdo.ddmm.technology.impl.TechnologySpecificListTypeImpl <em>Specific List Type</em>}' class.
@@ -609,13 +618,22 @@ public interface TechnologyPackage extends EPackage {
     int TECHNOLOGY_SPECIFIC_LIST_TYPE___GET_QUALIFIED_NAME_PARTS = DataPackage.COMPLEX_TYPE_OPERATION_COUNT + 0;
 
     /**
+     * The operation id for the '<em>Build Qualified Name</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TECHNOLOGY_SPECIFIC_LIST_TYPE___BUILD_QUALIFIED_NAME__STRING = DataPackage.COMPLEX_TYPE_OPERATION_COUNT + 1;
+
+    /**
      * The number of operations of the '<em>Specific List Type</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int TECHNOLOGY_SPECIFIC_LIST_TYPE_OPERATION_COUNT = DataPackage.COMPLEX_TYPE_OPERATION_COUNT + 1;
+    int TECHNOLOGY_SPECIFIC_LIST_TYPE_OPERATION_COUNT = DataPackage.COMPLEX_TYPE_OPERATION_COUNT + 2;
 
     /**
      * The meta object id for the '{@link de.fhdo.ddmm.technology.impl.TechnologySpecificDataStructureImpl <em>Specific Data Structure</em>}' class.
@@ -727,13 +745,22 @@ public interface TechnologyPackage extends EPackage {
     int TECHNOLOGY_SPECIFIC_DATA_STRUCTURE___GET_QUALIFIED_NAME_PARTS = DataPackage.COMPLEX_TYPE_OPERATION_COUNT + 0;
 
     /**
+     * The operation id for the '<em>Build Qualified Name</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TECHNOLOGY_SPECIFIC_DATA_STRUCTURE___BUILD_QUALIFIED_NAME__STRING = DataPackage.COMPLEX_TYPE_OPERATION_COUNT + 1;
+
+    /**
      * The number of operations of the '<em>Specific Data Structure</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int TECHNOLOGY_SPECIFIC_DATA_STRUCTURE_OPERATION_COUNT = DataPackage.COMPLEX_TYPE_OPERATION_COUNT + 1;
+    int TECHNOLOGY_SPECIFIC_DATA_STRUCTURE_OPERATION_COUNT = DataPackage.COMPLEX_TYPE_OPERATION_COUNT + 2;
 
     /**
      * The meta object id for the '{@link de.fhdo.ddmm.technology.impl.CompatibilityMatrixEntryImpl <em>Compatibility Matrix Entry</em>}' class.
@@ -1002,31 +1029,13 @@ public interface TechnologyPackage extends EPackage {
     int TECHNOLOGY_SPECIFIC_PROPERTY__MANDATORY = 1;
 
     /**
-     * The feature id for the '<em><b>Operation Technology</b></em>' container reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int TECHNOLOGY_SPECIFIC_PROPERTY__OPERATION_TECHNOLOGY = 2;
-
-    /**
-     * The feature id for the '<em><b>Technology Aspect</b></em>' container reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int TECHNOLOGY_SPECIFIC_PROPERTY__TECHNOLOGY_ASPECT = 3;
-
-    /**
      * The feature id for the '<em><b>Type</b></em>' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int TECHNOLOGY_SPECIFIC_PROPERTY__TYPE = 4;
+    int TECHNOLOGY_SPECIFIC_PROPERTY__TYPE = 2;
 
     /**
      * The feature id for the '<em><b>Default Value</b></em>' containment reference.
@@ -1035,7 +1044,25 @@ public interface TechnologyPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TECHNOLOGY_SPECIFIC_PROPERTY__DEFAULT_VALUE = 5;
+    int TECHNOLOGY_SPECIFIC_PROPERTY__DEFAULT_VALUE = 3;
+
+    /**
+     * The feature id for the '<em><b>Operation Technology</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TECHNOLOGY_SPECIFIC_PROPERTY__OPERATION_TECHNOLOGY = 4;
+
+    /**
+     * The feature id for the '<em><b>Technology Aspect</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TECHNOLOGY_SPECIFIC_PROPERTY__TECHNOLOGY_ASPECT = 5;
 
     /**
      * The number of structural features of the '<em>Specific Property</em>' class.
@@ -2120,6 +2147,16 @@ public interface TechnologyPackage extends EPackage {
     EOperation getTechnologySpecificPrimitiveType__GetQualifiedNameParts();
 
     /**
+     * Returns the meta object for the '{@link de.fhdo.ddmm.technology.TechnologySpecificPrimitiveType#buildQualifiedName(java.lang.String) <em>Build Qualified Name</em>}' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the '<em>Build Qualified Name</em>' operation.
+     * @see de.fhdo.ddmm.technology.TechnologySpecificPrimitiveType#buildQualifiedName(java.lang.String)
+     * @generated
+     */
+    EOperation getTechnologySpecificPrimitiveType__BuildQualifiedName__String();
+
+    /**
      * Returns the meta object for class '{@link de.fhdo.ddmm.technology.TechnologySpecificListType <em>Specific List Type</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2151,6 +2188,16 @@ public interface TechnologyPackage extends EPackage {
     EOperation getTechnologySpecificListType__GetQualifiedNameParts();
 
     /**
+     * Returns the meta object for the '{@link de.fhdo.ddmm.technology.TechnologySpecificListType#buildQualifiedName(java.lang.String) <em>Build Qualified Name</em>}' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the '<em>Build Qualified Name</em>' operation.
+     * @see de.fhdo.ddmm.technology.TechnologySpecificListType#buildQualifiedName(java.lang.String)
+     * @generated
+     */
+    EOperation getTechnologySpecificListType__BuildQualifiedName__String();
+
+    /**
      * Returns the meta object for class '{@link de.fhdo.ddmm.technology.TechnologySpecificDataStructure <em>Specific Data Structure</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2180,6 +2227,16 @@ public interface TechnologyPackage extends EPackage {
      * @generated
      */
     EOperation getTechnologySpecificDataStructure__GetQualifiedNameParts();
+
+    /**
+     * Returns the meta object for the '{@link de.fhdo.ddmm.technology.TechnologySpecificDataStructure#buildQualifiedName(java.lang.String) <em>Build Qualified Name</em>}' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the '<em>Build Qualified Name</em>' operation.
+     * @see de.fhdo.ddmm.technology.TechnologySpecificDataStructure#buildQualifiedName(java.lang.String)
+     * @generated
+     */
+    EOperation getTechnologySpecificDataStructure__BuildQualifiedName__String();
 
     /**
      * Returns the meta object for class '{@link de.fhdo.ddmm.technology.CompatibilityMatrixEntry <em>Compatibility Matrix Entry</em>}'.
@@ -2408,28 +2465,6 @@ public interface TechnologyPackage extends EPackage {
     EAttribute getTechnologySpecificProperty_Mandatory();
 
     /**
-     * Returns the meta object for the container reference '{@link de.fhdo.ddmm.technology.TechnologySpecificProperty#getOperationTechnology <em>Operation Technology</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the container reference '<em>Operation Technology</em>'.
-     * @see de.fhdo.ddmm.technology.TechnologySpecificProperty#getOperationTechnology()
-     * @see #getTechnologySpecificProperty()
-     * @generated
-     */
-    EReference getTechnologySpecificProperty_OperationTechnology();
-
-    /**
-     * Returns the meta object for the container reference '{@link de.fhdo.ddmm.technology.TechnologySpecificProperty#getTechnologyAspect <em>Technology Aspect</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the container reference '<em>Technology Aspect</em>'.
-     * @see de.fhdo.ddmm.technology.TechnologySpecificProperty#getTechnologyAspect()
-     * @see #getTechnologySpecificProperty()
-     * @generated
-     */
-    EReference getTechnologySpecificProperty_TechnologyAspect();
-
-    /**
      * Returns the meta object for the containment reference '{@link de.fhdo.ddmm.technology.TechnologySpecificProperty#getType <em>Type</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2450,6 +2485,28 @@ public interface TechnologyPackage extends EPackage {
      * @generated
      */
     EReference getTechnologySpecificProperty_DefaultValue();
+
+    /**
+     * Returns the meta object for the container reference '{@link de.fhdo.ddmm.technology.TechnologySpecificProperty#getOperationTechnology <em>Operation Technology</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the container reference '<em>Operation Technology</em>'.
+     * @see de.fhdo.ddmm.technology.TechnologySpecificProperty#getOperationTechnology()
+     * @see #getTechnologySpecificProperty()
+     * @generated
+     */
+    EReference getTechnologySpecificProperty_OperationTechnology();
+
+    /**
+     * Returns the meta object for the container reference '{@link de.fhdo.ddmm.technology.TechnologySpecificProperty#getTechnologyAspect <em>Technology Aspect</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the container reference '<em>Technology Aspect</em>'.
+     * @see de.fhdo.ddmm.technology.TechnologySpecificProperty#getTechnologyAspect()
+     * @see #getTechnologySpecificProperty()
+     * @generated
+     */
+    EReference getTechnologySpecificProperty_TechnologyAspect();
 
     /**
      * Returns the meta object for class '{@link de.fhdo.ddmm.technology.TechnologySpecificPropertyValueAssignment <em>Specific Property Value Assignment</em>}'.
@@ -3247,6 +3304,14 @@ public interface TechnologyPackage extends EPackage {
         EOperation TECHNOLOGY_SPECIFIC_PRIMITIVE_TYPE___GET_QUALIFIED_NAME_PARTS = eINSTANCE.getTechnologySpecificPrimitiveType__GetQualifiedNameParts();
 
         /**
+         * The meta object literal for the '<em><b>Build Qualified Name</b></em>' operation.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EOperation TECHNOLOGY_SPECIFIC_PRIMITIVE_TYPE___BUILD_QUALIFIED_NAME__STRING = eINSTANCE.getTechnologySpecificPrimitiveType__BuildQualifiedName__String();
+
+        /**
          * The meta object literal for the '{@link de.fhdo.ddmm.technology.impl.TechnologySpecificListTypeImpl <em>Specific List Type</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -3273,6 +3338,14 @@ public interface TechnologyPackage extends EPackage {
         EOperation TECHNOLOGY_SPECIFIC_LIST_TYPE___GET_QUALIFIED_NAME_PARTS = eINSTANCE.getTechnologySpecificListType__GetQualifiedNameParts();
 
         /**
+         * The meta object literal for the '<em><b>Build Qualified Name</b></em>' operation.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EOperation TECHNOLOGY_SPECIFIC_LIST_TYPE___BUILD_QUALIFIED_NAME__STRING = eINSTANCE.getTechnologySpecificListType__BuildQualifiedName__String();
+
+        /**
          * The meta object literal for the '{@link de.fhdo.ddmm.technology.impl.TechnologySpecificDataStructureImpl <em>Specific Data Structure</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -3297,6 +3370,14 @@ public interface TechnologyPackage extends EPackage {
          * @generated
          */
         EOperation TECHNOLOGY_SPECIFIC_DATA_STRUCTURE___GET_QUALIFIED_NAME_PARTS = eINSTANCE.getTechnologySpecificDataStructure__GetQualifiedNameParts();
+
+        /**
+         * The meta object literal for the '<em><b>Build Qualified Name</b></em>' operation.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EOperation TECHNOLOGY_SPECIFIC_DATA_STRUCTURE___BUILD_QUALIFIED_NAME__STRING = eINSTANCE.getTechnologySpecificDataStructure__BuildQualifiedName__String();
 
         /**
          * The meta object literal for the '{@link de.fhdo.ddmm.technology.impl.CompatibilityMatrixEntryImpl <em>Compatibility Matrix Entry</em>}' class.
@@ -3477,22 +3558,6 @@ public interface TechnologyPackage extends EPackage {
         EAttribute TECHNOLOGY_SPECIFIC_PROPERTY__MANDATORY = eINSTANCE.getTechnologySpecificProperty_Mandatory();
 
         /**
-         * The meta object literal for the '<em><b>Operation Technology</b></em>' container reference feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference TECHNOLOGY_SPECIFIC_PROPERTY__OPERATION_TECHNOLOGY = eINSTANCE.getTechnologySpecificProperty_OperationTechnology();
-
-        /**
-         * The meta object literal for the '<em><b>Technology Aspect</b></em>' container reference feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference TECHNOLOGY_SPECIFIC_PROPERTY__TECHNOLOGY_ASPECT = eINSTANCE.getTechnologySpecificProperty_TechnologyAspect();
-
-        /**
          * The meta object literal for the '<em><b>Type</b></em>' containment reference feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -3507,6 +3572,22 @@ public interface TechnologyPackage extends EPackage {
          * @generated
          */
         EReference TECHNOLOGY_SPECIFIC_PROPERTY__DEFAULT_VALUE = eINSTANCE.getTechnologySpecificProperty_DefaultValue();
+
+        /**
+         * The meta object literal for the '<em><b>Operation Technology</b></em>' container reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference TECHNOLOGY_SPECIFIC_PROPERTY__OPERATION_TECHNOLOGY = eINSTANCE.getTechnologySpecificProperty_OperationTechnology();
+
+        /**
+         * The meta object literal for the '<em><b>Technology Aspect</b></em>' container reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference TECHNOLOGY_SPECIFIC_PROPERTY__TECHNOLOGY_ASPECT = eINSTANCE.getTechnologySpecificProperty_TechnologyAspect();
 
         /**
          * The meta object literal for the '{@link de.fhdo.ddmm.technology.impl.TechnologySpecificPropertyValueAssignmentImpl <em>Specific Property Value Assignment</em>}' class.

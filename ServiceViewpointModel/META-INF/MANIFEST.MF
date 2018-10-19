@@ -16,5 +16,6 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecore.xcore.lib,
  DataViewpointModel;visibility:=reexport,
  de.fhdo.ddmm.data.datadsl.tests;bundle-version="1.0.0",
- TechnologyDefinitionModel;bundle-version="0.1.0";visibility:=reexport
+ TechnologyDefinitionModel;bundle-version="0.1.0";visibility:=reexport,
+ DdmmUtils;bundle-version="0.1.0"
 Bundle-ActivationPolicy: lazy

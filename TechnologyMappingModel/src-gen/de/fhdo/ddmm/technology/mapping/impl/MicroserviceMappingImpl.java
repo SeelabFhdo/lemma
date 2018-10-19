@@ -4,6 +4,8 @@ package de.fhdo.ddmm.technology.mapping.impl;
 
 import de.fhdo.ddmm.service.Import;
 
+import de.fhdo.ddmm.technology.Technology;
+
 import de.fhdo.ddmm.technology.mapping.ImportedMicroservice;
 import de.fhdo.ddmm.technology.mapping.InterfaceMapping;
 import de.fhdo.ddmm.technology.mapping.MappingPackage;
@@ -15,11 +17,16 @@ import de.fhdo.ddmm.technology.mapping.TechnologySpecificEndpoint;
 import de.fhdo.ddmm.technology.mapping.TechnologySpecificImportedServiceAspect;
 import de.fhdo.ddmm.technology.mapping.TechnologySpecificProtocolSpecification;
 
+import de.fhdo.ddmm.utils.DdmmUtils;
+
+import java.lang.reflect.InvocationTargetException;
+
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
+import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
@@ -33,6 +40,12 @@ import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
+
+import org.eclipse.emf.ecore.xcore.lib.XcoreEListExtensions;
+
+import org.eclipse.xtext.xbase.lib.Functions.Function1;
+
+import org.eclipse.xtext.xbase.lib.IterableExtensions;
 
 /**
  * <!-- begin-user-doc -->
@@ -338,6 +351,79 @@ public class MicroserviceMappingImpl extends MinimalEObjectImpl.Container implem
      * <!-- end-user-doc -->
      * @generated
      */
+    public EList<Import> getTypeDefinitionTechnologyImports() {
+        final Function1<Import, Boolean> _function = new Function1<Import, Boolean>() {
+            public Boolean apply(final Import it) {
+                boolean _xblockexpression = false;
+                {
+                    final Technology technologyModel = DdmmUtils.<Technology>getImportedModelRoot(it.eResource(), it.getImportURI(), Technology.class);
+                    _xblockexpression = (((!technologyModel.getPrimitiveTypes().isEmpty()) || 
+                        (!technologyModel.getListTypes().isEmpty())) || 
+                        (!technologyModel.getDataStructures().isEmpty()));
+                }
+                return Boolean.valueOf(_xblockexpression);
+            }
+        };
+        return ECollections.<Import>toEList(IterableExtensions.<Import>filter(this.getTechnologies(), _function));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public Import getTypeDefinitionTechnologyImport() {
+        final EList<Import> typeDefinitionTechnologyImports = this.getTypeDefinitionTechnologyImports();
+        Import _xifexpression = null;
+        boolean _isEmpty = typeDefinitionTechnologyImports.isEmpty();
+        boolean _not = (!_isEmpty);
+        if (_not) {
+            _xifexpression = typeDefinitionTechnologyImports.get(0);
+        }
+        else {
+            _xifexpression = null;
+        }
+        return _xifexpression;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EList<Technology> getTypeDefinitionTechnologies() {
+        final Function1<Import, Technology> _function = new Function1<Import, Technology>() {
+            public Technology apply(final Import it) {
+                return DdmmUtils.<Technology>getImportedModelRoot(it.eResource(), it.getImportURI(), Technology.class);
+            }
+        };
+        return XcoreEListExtensions.<Import, Technology>map(this.getTypeDefinitionTechnologyImports(), _function);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public Technology getTypeDefinitionTechnology() {
+        final EList<Technology> typeDefinitionTechnologies = this.getTypeDefinitionTechnologies();
+        Technology _xifexpression = null;
+        boolean _isEmpty = typeDefinitionTechnologies.isEmpty();
+        boolean _not = (!_isEmpty);
+        if (_not) {
+            _xifexpression = typeDefinitionTechnologies.get(0);
+        }
+        else {
+            _xifexpression = null;
+        }
+        return _xifexpression;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     @SuppressWarnings("unchecked")
     @Override
     public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
@@ -551,6 +637,26 @@ public class MicroserviceMappingImpl extends MinimalEObjectImpl.Container implem
                 return basicGetMappingModel() != null;
         }
         return super.eIsSet(featureID);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+        switch (operationID) {
+            case MappingPackage.MICROSERVICE_MAPPING___GET_TYPE_DEFINITION_TECHNOLOGY_IMPORTS:
+                return getTypeDefinitionTechnologyImports();
+            case MappingPackage.MICROSERVICE_MAPPING___GET_TYPE_DEFINITION_TECHNOLOGY_IMPORT:
+                return getTypeDefinitionTechnologyImport();
+            case MappingPackage.MICROSERVICE_MAPPING___GET_TYPE_DEFINITION_TECHNOLOGIES:
+                return getTypeDefinitionTechnologies();
+            case MappingPackage.MICROSERVICE_MAPPING___GET_TYPE_DEFINITION_TECHNOLOGY:
+                return getTypeDefinitionTechnology();
+        }
+        return super.eInvoke(operationID, arguments);
     }
 
 } //MicroserviceMappingImpl

@@ -474,6 +474,15 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    public EOperation getContext__BuildQualifiedName__String() {
+        return contextEClass.getEOperations().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EClass getType() {
         return typeEClass;
     }
@@ -708,8 +717,17 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EOperation getComplexType__CompareFieldCounts__EList_EList() {
+    public EOperation getComplexType__BuildQualifiedName__String() {
         return complexTypeEClass.getEOperations().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EOperation getComplexType__CompareFieldCounts__EList_EList() {
+        return complexTypeEClass.getEOperations().get(2);
     }
 
     /**
@@ -924,8 +942,17 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EOperation getDataField__FindEponymousSuperField() {
+    public EOperation getDataField__BuildQualifiedName__String() {
         return dataFieldEClass.getEOperations().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EOperation getDataField__FindEponymousSuperField() {
+        return dataFieldEClass.getEOperations().get(3);
     }
 
     /**
@@ -1014,7 +1041,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EOperation getPrimitiveValue__AsBoolean() {
+    public EOperation getPrimitiveValue__ValueAsString() {
         return primitiveValueEClass.getEOperations().get(5);
     }
 
@@ -1023,7 +1050,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EOperation getPrimitiveValue__AsByte() {
+    public EOperation getPrimitiveValue__AsBoolean() {
         return primitiveValueEClass.getEOperations().get(6);
     }
 
@@ -1032,7 +1059,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EOperation getPrimitiveValue__AsCharacter() {
+    public EOperation getPrimitiveValue__AsByte() {
         return primitiveValueEClass.getEOperations().get(7);
     }
 
@@ -1041,7 +1068,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EOperation getPrimitiveValue__AsDate() {
+    public EOperation getPrimitiveValue__AsCharacter() {
         return primitiveValueEClass.getEOperations().get(8);
     }
 
@@ -1050,7 +1077,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EOperation getPrimitiveValue__AsDouble() {
+    public EOperation getPrimitiveValue__AsDate() {
         return primitiveValueEClass.getEOperations().get(9);
     }
 
@@ -1059,7 +1086,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EOperation getPrimitiveValue__AsFloat() {
+    public EOperation getPrimitiveValue__AsDouble() {
         return primitiveValueEClass.getEOperations().get(10);
     }
 
@@ -1068,7 +1095,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EOperation getPrimitiveValue__AsInteger() {
+    public EOperation getPrimitiveValue__AsFloat() {
         return primitiveValueEClass.getEOperations().get(11);
     }
 
@@ -1077,7 +1104,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EOperation getPrimitiveValue__AsLong() {
+    public EOperation getPrimitiveValue__AsInteger() {
         return primitiveValueEClass.getEOperations().get(12);
     }
 
@@ -1086,7 +1113,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EOperation getPrimitiveValue__AsShort() {
+    public EOperation getPrimitiveValue__AsLong() {
         return primitiveValueEClass.getEOperations().get(13);
     }
 
@@ -1095,8 +1122,17 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EOperation getPrimitiveValue__AsString() {
+    public EOperation getPrimitiveValue__AsShort() {
         return primitiveValueEClass.getEOperations().get(14);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EOperation getPrimitiveValue__AsString() {
+        return primitiveValueEClass.getEOperations().get(15);
     }
 
     /**
@@ -1153,6 +1189,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
         createEReference(contextEClass, CONTEXT__DATA_MODEL);
         createEReference(contextEClass, CONTEXT__VERSION);
         createEOperation(contextEClass, CONTEXT___GET_QUALIFIED_NAME_PARTS);
+        createEOperation(contextEClass, CONTEXT___BUILD_QUALIFIED_NAME__STRING);
 
         typeEClass = createEClass(TYPE);
 
@@ -1192,6 +1229,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
         createEAttribute(complexTypeEClass, COMPLEX_TYPE__IS_PRIMITIVE_LIST);
         createEAttribute(complexTypeEClass, COMPLEX_TYPE__IS_STRUCTURED_LIST);
         createEOperation(complexTypeEClass, COMPLEX_TYPE___GET_QUALIFIED_NAME_PARTS);
+        createEOperation(complexTypeEClass, COMPLEX_TYPE___BUILD_QUALIFIED_NAME__STRING);
         createEOperation(complexTypeEClass, COMPLEX_TYPE___COMPARE_FIELD_COUNTS__ELIST_ELIST);
 
         possiblyImportedComplexTypeEClass = createEClass(POSSIBLY_IMPORTED_COMPLEX_TYPE);
@@ -1220,6 +1258,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
         createEReference(dataFieldEClass, DATA_FIELD__LIST_TYPE);
         createEOperation(dataFieldEClass, DATA_FIELD___GET_EFFECTIVE_TYPE);
         createEOperation(dataFieldEClass, DATA_FIELD___GET_QUALIFIED_NAME_PARTS);
+        createEOperation(dataFieldEClass, DATA_FIELD___BUILD_QUALIFIED_NAME__STRING);
         createEOperation(dataFieldEClass, DATA_FIELD___FIND_EPONYMOUS_SUPER_FIELD);
 
         primitiveValueEClass = createEClass(PRIMITIVE_VALUE);
@@ -1231,6 +1270,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
         createEOperation(primitiveValueEClass, PRIMITIVE_VALUE___IS_OF_TYPE__PRIMITIVETYPE);
         createEOperation(primitiveValueEClass, PRIMITIVE_VALUE___HAS_NO_VALUE);
         createEOperation(primitiveValueEClass, PRIMITIVE_VALUE___AS_VALUE_OF_TYPE__PRIMITIVETYPE);
+        createEOperation(primitiveValueEClass, PRIMITIVE_VALUE___VALUE_AS_STRING);
         createEOperation(primitiveValueEClass, PRIMITIVE_VALUE___AS_BOOLEAN);
         createEOperation(primitiveValueEClass, PRIMITIVE_VALUE___AS_BYTE);
         createEOperation(primitiveValueEClass, PRIMITIVE_VALUE___AS_CHARACTER);
@@ -1321,13 +1361,16 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 
         initEOperation(getContext__GetQualifiedNameParts(), theEcorePackage.getEString(), "getQualifiedNameParts", 0, -1, !IS_UNIQUE, IS_ORDERED);
 
+        EOperation op = initEOperation(getContext__BuildQualifiedName__String(), theEcorePackage.getEString(), "buildQualifiedName", 0, 1, !IS_UNIQUE, IS_ORDERED);
+        addEParameter(op, theEcorePackage.getEString(), "separator", 0, 1, !IS_UNIQUE, IS_ORDERED);
+
         initEClass(typeEClass, Type.class, "Type", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
         initEClass(primitiveTypeEClass, PrimitiveType.class, "PrimitiveType", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getPrimitiveType_TypeName(), theEcorePackage.getEString(), "typeName", null, 0, 1, PrimitiveType.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, IS_DERIVED, IS_ORDERED);
         initEAttribute(getPrimitiveType_TypeSize(), theEcorePackage.getEIntegerObject(), "typeSize", null, 0, 1, PrimitiveType.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 
-        EOperation op = initEOperation(getPrimitiveType__SizeCompare__PrimitiveType(), theEcorePackage.getEInt(), "sizeCompare", 0, 1, !IS_UNIQUE, IS_ORDERED);
+        op = initEOperation(getPrimitiveType__SizeCompare__PrimitiveType(), theEcorePackage.getEInt(), "sizeCompare", 0, 1, !IS_UNIQUE, IS_ORDERED);
         addEParameter(op, this.getPrimitiveType(), "typeToCompare", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
         op = initEOperation(getPrimitiveType__IsCompatibleWith__PrimitiveType(), theEcorePackage.getEBoolean(), "isCompatibleWith", 0, 1, !IS_UNIQUE, IS_ORDERED);
@@ -1370,6 +1413,9 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 
         initEOperation(getComplexType__GetQualifiedNameParts(), theEcorePackage.getEString(), "getQualifiedNameParts", 0, -1, !IS_UNIQUE, IS_ORDERED);
 
+        op = initEOperation(getComplexType__BuildQualifiedName__String(), theEcorePackage.getEString(), "buildQualifiedName", 0, 1, !IS_UNIQUE, IS_ORDERED);
+        addEParameter(op, theEcorePackage.getEString(), "separator", 0, 1, !IS_UNIQUE, IS_ORDERED);
+
         op = initEOperation(getComplexType__CompareFieldCounts__EList_EList(), theEcorePackage.getEInt(), "compareFieldCounts", 0, 1, !IS_UNIQUE, IS_ORDERED);
         addEParameter(op, this.getDataField(), "fields", 0, -1, !IS_UNIQUE, IS_ORDERED);
         addEParameter(op, this.getDataField(), "fieldsToCompare", 0, -1, !IS_UNIQUE, IS_ORDERED);
@@ -1410,6 +1456,9 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 
         initEOperation(getDataField__GetQualifiedNameParts(), theEcorePackage.getEString(), "getQualifiedNameParts", 0, -1, !IS_UNIQUE, IS_ORDERED);
 
+        op = initEOperation(getDataField__BuildQualifiedName__String(), theEcorePackage.getEString(), "buildQualifiedName", 0, 1, !IS_UNIQUE, IS_ORDERED);
+        addEParameter(op, theEcorePackage.getEString(), "separator", 0, 1, !IS_UNIQUE, IS_ORDERED);
+
         initEOperation(getDataField__FindEponymousSuperField(), this.getDataField(), "findEponymousSuperField", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
         initEClass(primitiveValueEClass, PrimitiveValue.class, "PrimitiveValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -1430,6 +1479,8 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 
         op = initEOperation(getPrimitiveValue__AsValueOfType__PrimitiveType(), theEcorePackage.getEJavaObject(), "asValueOfType", 0, 1, !IS_UNIQUE, IS_ORDERED);
         addEParameter(op, this.getPrimitiveType(), "primitiveType", 0, 1, !IS_UNIQUE, IS_ORDERED);
+
+        initEOperation(getPrimitiveValue__ValueAsString(), theEcorePackage.getEString(), "valueAsString", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
         initEOperation(getPrimitiveValue__AsBoolean(), theEcorePackage.getEBooleanObject(), "asBoolean", 0, 1, !IS_UNIQUE, IS_ORDERED);
 

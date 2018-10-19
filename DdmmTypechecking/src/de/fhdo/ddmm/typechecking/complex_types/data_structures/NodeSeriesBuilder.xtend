@@ -158,7 +158,7 @@ class NodeSeriesBuilder {
             return <Pairs<TypeGraphNode>> newArrayList
     }
 
-    /**
+        /**
      * Build mandatory node pairs for nodes that represent DataStructures
      */
     private def static buildMandatoryPairsForStructures(List<TypeGraphNode> basicNodes,

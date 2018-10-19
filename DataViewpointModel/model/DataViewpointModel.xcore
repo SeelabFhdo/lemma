@@ -156,6 +156,22 @@ class Context {
         nameParts.add(name)
         nameParts.asEList
     }
+
+    /**
+     * Build qualified name from qualified name parts
+     */
+    op String buildQualifiedName(String separator) {
+        if (separator === null)
+            return null
+
+        var String qualifiedName = ""
+        for (part : qualifiedNameParts)
+            qualifiedName += separator + part
+        // Remove leading separator
+        if (!qualifiedName.empty)
+            qualifiedName = qualifiedName.substring(separator.length)
+        return qualifiedName
+    }
 }
 
 /*
@@ -165,7 +181,7 @@ abstract class Type {}
 
 /*
  * Represents built-in primitive types that correspond to Java's primitive types in syntax,
- * semantics, naming and size. Strings and dates, however, are also treated as primitive types.
+ * semantics, namingm and size. Strings and dates, however, are also treated as primitive types.
  */
 abstract class PrimitiveType extends Type {
     /**
@@ -407,6 +423,22 @@ abstract class ComplexType extends Type {
 
         nameParts.add(name)
         nameParts.asEList
+    }
+
+    /**
+     * Build qualified name from qualified name parts
+     */
+    op String buildQualifiedName(String separator) {
+        if (separator === null)
+            return null
+
+        var String qualifiedName = ""
+        for (part : qualifiedNameParts)
+            qualifiedName += separator + part
+        // Remove leading separator
+        if (!qualifiedName.empty)
+            qualifiedName = qualifiedName.substring(separator.length)
+        return qualifiedName
     }
 
     /**
@@ -688,6 +720,22 @@ class DataField {
     }
 
     /**
+     * Build qualified name from qualified name parts
+     */
+    op String buildQualifiedName(String separator) {
+        if (separator === null)
+            return null
+
+        var String qualifiedName = ""
+        for (part : qualifiedNameParts)
+            qualifiedName += separator + part
+        // Remove leading separator
+        if (!qualifiedName.empty)
+            qualifiedName = qualifiedName.substring(separator.length)
+        return qualifiedName
+    }
+
+    /**
      * Find an eponymous field in the inheritance hierarchy of this field's data structure. Returns
      * null, if this field is not part of a data structure, as only data structures may extend other
      * data structures.
@@ -789,6 +837,23 @@ class PrimitiveValue {
             PrimitiveString: asString
         }
     }
+
+    /**
+     * Get value as string. Returns an empty string if the instance hasNoValue(), i.e., when its
+     * effectively null.
+     */
+    op String valueAsString() {
+        if (hasNoValue())
+            return ""
+
+        if (stringValue !== null)
+            return stringValue
+        else if (numericValue !== null)
+            return numericValue.toString
+        else if (booleanValue !== null)
+            return booleanValue.toString
+    }
+
 
     /**
      * Return value as boolean or null, if value is no boolean

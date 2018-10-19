@@ -4,6 +4,10 @@ package de.fhdo.ddmm.service.impl;
 
 import de.fhdo.ddmm.service.*;
 
+import de.fhdo.ddmm.technology.CommunicationType;
+import de.fhdo.ddmm.technology.Protocol;
+
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.ecore.EClass;
@@ -14,6 +18,8 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
+
+import org.eclipse.xtext.xbase.lib.Pair;
 
 /**
  * <!-- begin-user-doc -->
@@ -66,6 +72,7 @@ public class ServiceFactoryImpl extends EFactoryImpl implements ServiceFactory {
             case ServicePackage.OPERATION: return createOperation();
             case ServicePackage.REFERRED_OPERATION: return createReferredOperation();
             case ServicePackage.PARAMETER: return createParameter();
+            case ServicePackage.MAPPED_DATA_FIELD: return createMappedDataField();
             case ServicePackage.POSSIBLY_IMPORTED_MICROSERVICE: return createPossiblyImportedMicroservice();
             case ServicePackage.POSSIBLY_IMPORTED_INTERFACE: return createPossiblyImportedInterface();
             case ServicePackage.POSSIBLY_IMPORTED_OPERATION: return createPossiblyImportedOperation();
@@ -93,8 +100,12 @@ public class ServiceFactoryImpl extends EFactoryImpl implements ServiceFactory {
                 return createMicroserviceTypeFromString(eDataType, initialValue);
             case ServicePackage.VISIBILITY:
                 return createVisibilityFromString(eDataType, initialValue);
+            case ServicePackage.TUPLE_LIST:
+                return createTupleListFromString(eDataType, initialValue);
             case ServicePackage.MICROSERVICE_IMPORT_MAP:
                 return createMicroserviceImportMapFromString(eDataType, initialValue);
+            case ServicePackage.DEFAULT_PROTOCOLS:
+                return createDefaultProtocolsFromString(eDataType, initialValue);
             default:
                 throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
         }
@@ -114,8 +125,12 @@ public class ServiceFactoryImpl extends EFactoryImpl implements ServiceFactory {
                 return convertMicroserviceTypeToString(eDataType, instanceValue);
             case ServicePackage.VISIBILITY:
                 return convertVisibilityToString(eDataType, instanceValue);
+            case ServicePackage.TUPLE_LIST:
+                return convertTupleListToString(eDataType, instanceValue);
             case ServicePackage.MICROSERVICE_IMPORT_MAP:
                 return convertMicroserviceImportMapToString(eDataType, instanceValue);
+            case ServicePackage.DEFAULT_PROTOCOLS:
+                return convertDefaultProtocolsToString(eDataType, instanceValue);
             default:
                 throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
         }
@@ -189,6 +204,16 @@ public class ServiceFactoryImpl extends EFactoryImpl implements ServiceFactory {
     public Parameter createParameter() {
         ParameterImpl parameter = new ParameterImpl();
         return parameter;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public MappedDataField createMappedDataField() {
+        MappedDataFieldImpl mappedDataField = new MappedDataFieldImpl();
+        return mappedDataField;
     }
 
     /**
@@ -337,6 +362,25 @@ public class ServiceFactoryImpl extends EFactoryImpl implements ServiceFactory {
      * @generated
      */
     @SuppressWarnings("unchecked")
+    public List<Map<String, Object>> createTupleListFromString(EDataType eDataType, String initialValue) {
+        return (List<Map<String, Object>>)super.createFromString(initialValue);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public String convertTupleListToString(EDataType eDataType, Object instanceValue) {
+        return super.convertToString(instanceValue);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @SuppressWarnings("unchecked")
     public Map<Microservice, Import> createMicroserviceImportMapFromString(EDataType eDataType, String initialValue) {
         return (Map<Microservice, Import>)super.createFromString(initialValue);
     }
@@ -347,6 +391,25 @@ public class ServiceFactoryImpl extends EFactoryImpl implements ServiceFactory {
      * @generated
      */
     public String convertMicroserviceImportMapToString(EDataType eDataType, Object instanceValue) {
+        return super.convertToString(instanceValue);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @SuppressWarnings("unchecked")
+    public Map<CommunicationType, Pair<Import, Protocol>> createDefaultProtocolsFromString(EDataType eDataType, String initialValue) {
+        return (Map<CommunicationType, Pair<Import, Protocol>>)super.createFromString(initialValue);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public String convertDefaultProtocolsToString(EDataType eDataType, Object instanceValue) {
         return super.convertToString(instanceValue);
     }
 

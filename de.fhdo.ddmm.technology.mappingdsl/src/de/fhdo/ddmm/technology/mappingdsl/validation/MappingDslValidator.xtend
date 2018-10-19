@@ -172,11 +172,31 @@ class MappingDslValidator extends AbstractMappingDslValidator {
             .filter[!technologies.empty]
             .toList
 
-        checkMappingUniqueness(modelMappingsWithTechnology, "Service", [
+        // Perform uniqueness check based on import alias and full qualified name of the service in
+        // its source model. This check performs the check for a duplicate mapping of a service from
+        // the same model.
+        val duplicateMappingFound = checkMappingUniqueness(modelMappingsWithTechnology, "Service", [
                 val qualifiedNameSegments = <String> newArrayList
+                // The import or its name may be null in case the model contains errors
+                if (microservice.import !== null && microservice.import.name !== null)
+                    qualifiedNameSegments.add(microservice.import.name)
                 qualifiedNameSegments.addAll(microservice.microservice.qualifiedNameParts)
                 QualifiedName.create(qualifiedNameSegments).toString
             ], MappingPackage::Literals.MICROSERVICE_MAPPING__MICROSERVICE
+        )
+
+        // If no duplicate mapping of the same service has been found, check for duplicate mappings
+        // of services that have the same full qualified name but originate from a different source
+        // model. This check is necessary to prevent duplicate service names in intermediate service
+        // models that result from the intermediate model-to-model transformation.
+        if (!duplicateMappingFound)
+            checkMappingUniqueness(modelMappingsWithTechnology, [
+                val qualifiedNameSegments = <String> newArrayList
+                qualifiedNameSegments.addAll(microservice.microservice.qualifiedNameParts)
+                QualifiedName.create(qualifiedNameSegments).toString
+            ], MappingPackage::Literals.MICROSERVICE_MAPPING__MICROSERVICE,
+            "A service with the same qualified name but from another service model has already " +
+            "been mapped"
         )
     }
 
@@ -352,20 +372,53 @@ class MappingDslValidator extends AbstractMappingDslValidator {
         warnParameterMappingTypeCompatibility(mapping)
     }
 
-    /**
-     * Check that microservice mapping is not empty
-     */
     @Check
-    def checkNotEmpty(MicroserviceMapping mapping) {
-        val isEmpty = mapping.protocols.empty &&
-            mapping.endpoints.empty &&
-            mapping.interfaceMappings.empty &&
-            mapping.operationMappings.empty &&
-            mapping.referredOperationMappings.empty &&
-            mapping.aspects.empty
+    def checkDifferingParameterTechnologies(MicroserviceMapping mapping) {
+        if (mapping.technologies.empty || mapping.microservice === null ||
+            mapping.microservice.microservice === null) {
+            return
+        }
 
-        if (isEmpty)
-            error("Mapping must not be empty", mapping,
+        val mappedService = mapping.microservice.microservice
+        if (mappedService.technologies.empty) {
+            return
+        }
+
+        val mappedServiceTypeTechnologyImport = mappedService.typeDefinitionTechnologyImport
+        if (mappedServiceTypeTechnologyImport === null) {
+            return
+        }
+        val mappedServiceModelPath = DdmmUtils
+            .getFileForResource(mappedServiceTypeTechnologyImport.serviceModel.eResource)
+            .rawLocation.makeAbsolute.toString
+        val mappedTypeTechnologyPath = DdmmUtils.convertToAbsoluteFileUri(
+            mappedServiceTypeTechnologyImport.importURI, mappedServiceModelPath
+        )
+
+        val mappingTypeTechnologyImport = mapping.typeDefinitionTechnologyImport
+        if (mappingTypeTechnologyImport === null) {
+            return
+        }
+        val mappingServiceModelPath = DdmmUtils.getFileForResource(mapping.eResource)
+            .rawLocation.makeAbsolute.toString
+        val mappingTypeTechnologyPath = DdmmUtils.convertToAbsoluteFileUri(
+            mappingTypeTechnologyImport.importURI, mappingServiceModelPath
+        )
+
+        if (mappedTypeTechnologyPath == mappingTypeTechnologyPath) {
+            return
+        }
+
+        val mappedServiceOperations = mappedService.containedOperations
+        mappedServiceOperations.addAll(mappedService.containedReferredOperations.map[operation])
+        if (mappedServiceOperations.exists[parameters.exists[isTechnologySpecificEffectiveType]])
+            error('''Type definition technology "«mappedService.typeDefinitionTechnology.name»"''' +
+                ''' in the service model differs from type definition technology ''' +
+                '''"«mapping.typeDefinitionTechnology.name»" used for the mapping. Moreover, ''' +
+                '''the mapped microservice refers to technology-specific types in the ''' +
+                '''parameters of its operations. Subsequent transformations of the ''' +
+                '''microservice will not be possible. Please remove the technology-dependence ''' +
+                '''of the service in its service model.''', mapping,
                 MappingPackage::Literals.MICROSERVICE_MAPPING__MICROSERVICE)
     }
 
@@ -476,14 +529,24 @@ class MappingDslValidator extends AbstractMappingDslValidator {
      */
     private def <T extends EObject> checkMappingUniqueness(List<T> mappingsToCheck,
         String mappingName, Function<T, String> getMappingObjectName, EReference mappingFeature) {
+        return checkMappingUniqueness(mappingsToCheck, getMappingObjectName, mappingFeature,
+            '''«mappingName» is already mapped''')
+    }
+
+    /**
+     * Helper to check that service-specific mappings are unique with a custom error message
+     */
+    private def <T extends EObject> checkMappingUniqueness(List<T> mappingsToCheck,
+        Function<T, String> getMappingObjectName, EReference mappingFeature, String errorMessage) {
         val duplicateIndex = DdmmUtils.getDuplicateIndex(mappingsToCheck, getMappingObjectName)
 
         if (duplicateIndex === -1) {
-            return
+            return false
         }
 
         val duplicate = mappingsToCheck.get(duplicateIndex)
-        error('''«mappingName» is already mapped''', duplicate, mappingFeature)
+        error(errorMessage, duplicate, mappingFeature)
+        return true
     }
 
     /**

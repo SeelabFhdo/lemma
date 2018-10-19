@@ -326,6 +326,38 @@ public class PrimitiveValueImpl extends MinimalEObjectImpl.Container implements 
      * <!-- end-user-doc -->
      * @generated
      */
+    public String valueAsString() {
+        boolean _hasNoValue = this.hasNoValue();
+        if (_hasNoValue) {
+            return "";
+        }
+        String _stringValue = this.getStringValue();
+        boolean _tripleNotEquals = (_stringValue != null);
+        if (_tripleNotEquals) {
+            return this.getStringValue();
+        }
+        else {
+            BigDecimal _numericValue = this.getNumericValue();
+            boolean _tripleNotEquals_1 = (_numericValue != null);
+            if (_tripleNotEquals_1) {
+                return this.getNumericValue().toString();
+            }
+            else {
+                Boolean _booleanValue = this.getBooleanValue();
+                boolean _tripleNotEquals_2 = (_booleanValue != null);
+                if (_tripleNotEquals_2) {
+                    return this.getBooleanValue().toString();
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public Boolean asBoolean() {
         return this.getBooleanValue();
     }
@@ -669,6 +701,8 @@ public class PrimitiveValueImpl extends MinimalEObjectImpl.Container implements 
                 return hasNoValue();
             case DataPackage.PRIMITIVE_VALUE___AS_VALUE_OF_TYPE__PRIMITIVETYPE:
                 return asValueOfType((PrimitiveType)arguments.get(0));
+            case DataPackage.PRIMITIVE_VALUE___VALUE_AS_STRING:
+                return valueAsString();
             case DataPackage.PRIMITIVE_VALUE___AS_BOOLEAN:
                 return asBoolean();
             case DataPackage.PRIMITIVE_VALUE___AS_BYTE:

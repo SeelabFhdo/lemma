@@ -8,11 +8,13 @@ import com.google.common.collect.Iterables;
 
 import de.fhdo.ddmm.service.Endpoint;
 import de.fhdo.ddmm.service.Import;
+import de.fhdo.ddmm.service.ImportedProtocolAndDataFormat;
 import de.fhdo.ddmm.service.ImportedServiceAspect;
 import de.fhdo.ddmm.service.Interface;
 import de.fhdo.ddmm.service.Microservice;
 import de.fhdo.ddmm.service.MicroserviceType;
 import de.fhdo.ddmm.service.Operation;
+import de.fhdo.ddmm.service.Parameter;
 import de.fhdo.ddmm.service.PossiblyImportedInterface;
 import de.fhdo.ddmm.service.PossiblyImportedMicroservice;
 import de.fhdo.ddmm.service.PossiblyImportedOperation;
@@ -22,14 +24,24 @@ import de.fhdo.ddmm.service.ServiceModel;
 import de.fhdo.ddmm.service.ServicePackage;
 import de.fhdo.ddmm.service.Visibility;
 
+import de.fhdo.ddmm.technology.CommunicationType;
+import de.fhdo.ddmm.technology.DataFormat;
+import de.fhdo.ddmm.technology.Protocol;
+import de.fhdo.ddmm.technology.Technology;
+
+import de.fhdo.ddmm.utils.DdmmUtils;
+
 import java.lang.reflect.InvocationTargetException;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -50,12 +62,15 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 
+import org.eclipse.emf.ecore.xcore.lib.XcoreEListExtensions;
+
 import org.eclipse.xtext.xbase.lib.CollectionExtensions;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
+import org.eclipse.xtext.xbase.lib.Pair;
 
 /**
  * <!-- begin-user-doc -->
@@ -69,7 +84,10 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
  *   <li>{@link de.fhdo.ddmm.service.impl.MicroserviceImpl#getVersion <em>Version</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.impl.MicroserviceImpl#getType <em>Type</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.impl.MicroserviceImpl#getVisibility <em>Visibility</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.service.impl.MicroserviceImpl#getT_defaultProtocols <em>Tdefault Protocols</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.impl.MicroserviceImpl#getTechnologies <em>Technologies</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.service.impl.MicroserviceImpl#getT_typeDefinitionTechnologyImport <em>Ttype Definition Technology Import</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.service.impl.MicroserviceImpl#getT_typeDefinitionTechnology <em>Ttype Definition Technology</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.impl.MicroserviceImpl#getEndpoints <em>Endpoints</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.impl.MicroserviceImpl#getRequiredMicroservices <em>Required Microservices</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.impl.MicroserviceImpl#getRequiredInterfaces <em>Required Interfaces</em>}</li>
@@ -167,6 +185,16 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
     protected Visibility visibility = VISIBILITY_EDEFAULT;
 
     /**
+     * The cached value of the '{@link #getT_defaultProtocols() <em>Tdefault Protocols</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getT_defaultProtocols()
+     * @generated
+     * @ordered
+     */
+    protected Map<CommunicationType, Pair<Import, Protocol>> t_defaultProtocols;
+
+    /**
      * The cached value of the '{@link #getTechnologies() <em>Technologies</em>}' reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -175,6 +203,26 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
      * @ordered
      */
     protected EList<Import> technologies;
+
+    /**
+     * The cached value of the '{@link #getT_typeDefinitionTechnologyImport() <em>Ttype Definition Technology Import</em>}' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getT_typeDefinitionTechnologyImport()
+     * @generated
+     * @ordered
+     */
+    protected Import t_typeDefinitionTechnologyImport;
+
+    /**
+     * The cached value of the '{@link #getT_typeDefinitionTechnology() <em>Ttype Definition Technology</em>}' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getT_typeDefinitionTechnology()
+     * @generated
+     * @ordered
+     */
+    protected Technology t_typeDefinitionTechnology;
 
     /**
      * The cached value of the '{@link #getEndpoints() <em>Endpoints</em>}' containment reference list.
@@ -384,11 +432,108 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
      * <!-- end-user-doc -->
      * @generated
      */
+    public Map<CommunicationType, Pair<Import, Protocol>> getT_defaultProtocols() {
+        return t_defaultProtocols;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setT_defaultProtocols(Map<CommunicationType, Pair<Import, Protocol>> newT_defaultProtocols) {
+        Map<CommunicationType, Pair<Import, Protocol>> oldT_defaultProtocols = t_defaultProtocols;
+        t_defaultProtocols = newT_defaultProtocols;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ServicePackage.MICROSERVICE__TDEFAULT_PROTOCOLS, oldT_defaultProtocols, t_defaultProtocols));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EList<Import> getTechnologies() {
         if (technologies == null) {
             technologies = new EObjectResolvingEList<Import>(Import.class, this, ServicePackage.MICROSERVICE__TECHNOLOGIES);
         }
         return technologies;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public Import getT_typeDefinitionTechnologyImport() {
+        if (t_typeDefinitionTechnologyImport != null && t_typeDefinitionTechnologyImport.eIsProxy()) {
+            InternalEObject oldT_typeDefinitionTechnologyImport = (InternalEObject)t_typeDefinitionTechnologyImport;
+            t_typeDefinitionTechnologyImport = (Import)eResolveProxy(oldT_typeDefinitionTechnologyImport);
+            if (t_typeDefinitionTechnologyImport != oldT_typeDefinitionTechnologyImport) {
+                if (eNotificationRequired())
+                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, ServicePackage.MICROSERVICE__TTYPE_DEFINITION_TECHNOLOGY_IMPORT, oldT_typeDefinitionTechnologyImport, t_typeDefinitionTechnologyImport));
+            }
+        }
+        return t_typeDefinitionTechnologyImport;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public Import basicGetT_typeDefinitionTechnologyImport() {
+        return t_typeDefinitionTechnologyImport;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setT_typeDefinitionTechnologyImport(Import newT_typeDefinitionTechnologyImport) {
+        Import oldT_typeDefinitionTechnologyImport = t_typeDefinitionTechnologyImport;
+        t_typeDefinitionTechnologyImport = newT_typeDefinitionTechnologyImport;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ServicePackage.MICROSERVICE__TTYPE_DEFINITION_TECHNOLOGY_IMPORT, oldT_typeDefinitionTechnologyImport, t_typeDefinitionTechnologyImport));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public Technology getT_typeDefinitionTechnology() {
+        if (t_typeDefinitionTechnology != null && t_typeDefinitionTechnology.eIsProxy()) {
+            InternalEObject oldT_typeDefinitionTechnology = (InternalEObject)t_typeDefinitionTechnology;
+            t_typeDefinitionTechnology = (Technology)eResolveProxy(oldT_typeDefinitionTechnology);
+            if (t_typeDefinitionTechnology != oldT_typeDefinitionTechnology) {
+                if (eNotificationRequired())
+                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, ServicePackage.MICROSERVICE__TTYPE_DEFINITION_TECHNOLOGY, oldT_typeDefinitionTechnology, t_typeDefinitionTechnology));
+            }
+        }
+        return t_typeDefinitionTechnology;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public Technology basicGetT_typeDefinitionTechnology() {
+        return t_typeDefinitionTechnology;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setT_typeDefinitionTechnology(Technology newT_typeDefinitionTechnology) {
+        Technology oldT_typeDefinitionTechnology = t_typeDefinitionTechnology;
+        t_typeDefinitionTechnology = newT_typeDefinitionTechnology;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ServicePackage.MICROSERVICE__TTYPE_DEFINITION_TECHNOLOGY, oldT_typeDefinitionTechnology, t_typeDefinitionTechnology));
     }
 
     /**
@@ -569,6 +714,199 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
      * <!-- end-user-doc -->
      * @generated
      */
+    public List<Map<String, Object>> t_missingEndpointEffectiveProtocols() {
+        if (((this.getT_defaultProtocols() == null) || this.getT_defaultProtocols().isEmpty())) {
+            return null;
+        }
+        final List<Map<String, Object>> effectiveProtocols = this.t_effectiveProtocolSpecifications();
+        if ((effectiveProtocols == null)) {
+            return null;
+        }
+        final Function1<Endpoint, EList<ImportedProtocolAndDataFormat>> _function = new Function1<Endpoint, EList<ImportedProtocolAndDataFormat>>() {
+            public EList<ImportedProtocolAndDataFormat> apply(final Endpoint it) {
+                return it.getProtocols();
+            }
+        };
+        final Function1<ImportedProtocolAndDataFormat, Boolean> _function_1 = new Function1<ImportedProtocolAndDataFormat, Boolean>() {
+            public Boolean apply(final ImportedProtocolAndDataFormat it) {
+                DataFormat _dataFormat = it.getDataFormat();
+                return Boolean.valueOf((_dataFormat == null));
+            }
+        };
+        final Function1<ImportedProtocolAndDataFormat, Protocol> _function_2 = new Function1<ImportedProtocolAndDataFormat, Protocol>() {
+            public Protocol apply(final ImportedProtocolAndDataFormat it) {
+                return it.getImportedProtocol();
+            }
+        };
+        final List<Protocol> endpointProtocolsWithoutDataFormats = IterableExtensions.<Protocol>toList(IterableExtensions.<ImportedProtocolAndDataFormat, Protocol>map(IterableExtensions.<ImportedProtocolAndDataFormat>filter(Iterables.<ImportedProtocolAndDataFormat>concat(XcoreEListExtensions.<Endpoint, EList<ImportedProtocolAndDataFormat>>map(this.getEndpoints(), _function)), _function_1), _function_2));
+        final Function1<Map<String, Object>, Boolean> _function_3 = new Function1<Map<String, Object>, Boolean>() {
+            public Boolean apply(final Map<String, Object> it) {
+                boolean _xblockexpression = false;
+                {
+                    Object _get = it.get("protocol");
+                    final Protocol protocol = ((Protocol) _get);
+                    boolean _contains = endpointProtocolsWithoutDataFormats.contains(protocol);
+                    _xblockexpression = (!_contains);
+                }
+                return Boolean.valueOf(_xblockexpression);
+            }
+        };
+        List<Map<String, Object>> resultProtocols = IterableExtensions.<Map<String, Object>>toList(IterableExtensions.<Map<String, Object>>filter(effectiveProtocols, _function_3));
+        final Function1<Endpoint, EList<ImportedProtocolAndDataFormat>> _function_4 = new Function1<Endpoint, EList<ImportedProtocolAndDataFormat>>() {
+            public EList<ImportedProtocolAndDataFormat> apply(final Endpoint it) {
+                return it.getProtocols();
+            }
+        };
+        final Function1<ImportedProtocolAndDataFormat, Boolean> _function_5 = new Function1<ImportedProtocolAndDataFormat, Boolean>() {
+            public Boolean apply(final ImportedProtocolAndDataFormat it) {
+                DataFormat _dataFormat = it.getDataFormat();
+                return Boolean.valueOf((_dataFormat != null));
+            }
+        };
+        final List<ImportedProtocolAndDataFormat> endpointProtocolsWithDataFormats = IterableExtensions.<ImportedProtocolAndDataFormat>toList(IterableExtensions.<ImportedProtocolAndDataFormat>filter(Iterables.<ImportedProtocolAndDataFormat>concat(XcoreEListExtensions.<Endpoint, EList<ImportedProtocolAndDataFormat>>map(this.getEndpoints(), _function_4)), _function_5));
+        final Function1<Map<String, Object>, Boolean> _function_6 = new Function1<Map<String, Object>, Boolean>() {
+            public Boolean apply(final Map<String, Object> it) {
+                boolean _xblockexpression = false;
+                {
+                    Object _get = it.get("protocol");
+                    final Protocol protocol = ((Protocol) _get);
+                    Object _get_1 = it.get("dataFormat");
+                    final DataFormat dataFormat = ((DataFormat) _get_1);
+                    final Function1<ImportedProtocolAndDataFormat, Boolean> _function = new Function1<ImportedProtocolAndDataFormat, Boolean>() {
+                        public Boolean apply(final ImportedProtocolAndDataFormat it) {
+                            return Boolean.valueOf((Objects.equal(it.getImportedProtocol(), protocol) && Objects.equal(it.getDataFormat(), dataFormat)));
+                        }
+                    };
+                    boolean _exists = IterableExtensions.<ImportedProtocolAndDataFormat>exists(endpointProtocolsWithDataFormats, _function);
+                    _xblockexpression = (!_exists);
+                }
+                return Boolean.valueOf(_xblockexpression);
+            }
+        };
+        return IterableExtensions.<Map<String, Object>>toList(IterableExtensions.<Map<String, Object>>filter(resultProtocols, _function_6));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public List<Map<String, Object>> t_effectiveProtocolSpecifications() {
+        if (((this.getT_defaultProtocols() == null) || this.getT_defaultProtocols().isEmpty())) {
+            return null;
+        }
+        List<Map<String, Object>> _xifexpression = null;
+        boolean _isEmpty = this.getProtocols().isEmpty();
+        boolean _not = (!_isEmpty);
+        if (_not) {
+            _xifexpression = this.getProtocols().get(0).effectiveProtocolSpecifications(this.getProtocols());
+        }
+        else {
+            _xifexpression = CollectionLiterals.<Map<String, Object>>newArrayList();
+        }
+        final List<Map<String, Object>> effectiveProtocolSpecifications = _xifexpression;
+        final Function1<ProtocolSpecification, CommunicationType> _function = new Function1<ProtocolSpecification, CommunicationType>() {
+            public CommunicationType apply(final ProtocolSpecification it) {
+                return it.getProtocol().getImportedProtocol().getCommunicationType();
+            }
+        };
+        final Set<CommunicationType> protocolSpecificationsCommunicationTypes = IterableExtensions.<CommunicationType>toSet(XcoreEListExtensions.<ProtocolSpecification, CommunicationType>map(this.getProtocols(), _function));
+        final BiConsumer<CommunicationType, Pair<Import, Protocol>> _function_1 = new BiConsumer<CommunicationType, Pair<Import, Protocol>>() {
+            public void accept(final CommunicationType communicationType, final Pair<Import, Protocol> importAndProtocol) {
+                boolean _contains = protocolSpecificationsCommunicationTypes.contains(communicationType);
+                boolean _not = (!_contains);
+                if (_not) {
+                    final HashMap<String, Object> entry = CollectionLiterals.<String, Object>newHashMap();
+                    final Protocol protocol = importAndProtocol.getValue();
+                    entry.put("protocol", protocol);
+                    entry.put("dataFormat", protocol.getDefaultFormat());
+                    entry.put("import", importAndProtocol.getKey());
+                    effectiveProtocolSpecifications.add(entry);
+                }
+            }
+        };
+        this.getT_defaultProtocols().forEach(_function_1);
+        return effectiveProtocolSpecifications;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EList<Import> getTypeDefinitionTechnologyImports() {
+        final Function1<Import, Boolean> _function = new Function1<Import, Boolean>() {
+            public Boolean apply(final Import it) {
+                boolean _xblockexpression = false;
+                {
+                    final Technology technologyModel = DdmmUtils.<Technology>getImportedModelRoot(it.eResource(), it.getImportURI(), Technology.class);
+                    _xblockexpression = (((!technologyModel.getPrimitiveTypes().isEmpty()) || 
+                        (!technologyModel.getListTypes().isEmpty())) || 
+                        (!technologyModel.getDataStructures().isEmpty()));
+                }
+                return Boolean.valueOf(_xblockexpression);
+            }
+        };
+        return ECollections.<Import>toEList(IterableExtensions.<Import>filter(this.getTechnologies(), _function));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public Import getTypeDefinitionTechnologyImport() {
+        final EList<Import> typeDefinitionTechnologyImports = this.getTypeDefinitionTechnologyImports();
+        Import _xifexpression = null;
+        boolean _isEmpty = typeDefinitionTechnologyImports.isEmpty();
+        boolean _not = (!_isEmpty);
+        if (_not) {
+            _xifexpression = typeDefinitionTechnologyImports.get(0);
+        }
+        else {
+            _xifexpression = null;
+        }
+        return _xifexpression;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EList<Technology> getTypeDefinitionTechnologies() {
+        final Function1<Import, Technology> _function = new Function1<Import, Technology>() {
+            public Technology apply(final Import it) {
+                return DdmmUtils.<Technology>getImportedModelRoot(it.eResource(), it.getImportURI(), Technology.class);
+            }
+        };
+        return XcoreEListExtensions.<Import, Technology>map(this.getTypeDefinitionTechnologyImports(), _function);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public Technology getTypeDefinitionTechnology() {
+        final EList<Technology> typeDefinitionTechnologies = this.getTypeDefinitionTechnologies();
+        Technology _xifexpression = null;
+        boolean _isEmpty = typeDefinitionTechnologies.isEmpty();
+        boolean _not = (!_isEmpty);
+        if (_not) {
+            _xifexpression = typeDefinitionTechnologies.get(0);
+        }
+        else {
+            _xifexpression = null;
+        }
+        return _xifexpression;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EList<String> getQualifiedNameParts() {
         EList<String> _xblockexpression = null;
         {
@@ -585,6 +923,29 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
             _xblockexpression = ECollections.<String>asEList(nameParts);
         }
         return _xblockexpression;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public String buildQualifiedName(final String separator) {
+        if ((separator == null)) {
+            return null;
+        }
+        String qualifiedName = "";
+        EList<String> _qualifiedNameParts = this.getQualifiedNameParts();
+        for (final String part : _qualifiedNameParts) {
+            String _qualifiedName = qualifiedName;
+            qualifiedName = (_qualifiedName + (separator + part));
+        }
+        boolean _isEmpty = qualifiedName.isEmpty();
+        boolean _not = (!_isEmpty);
+        if (_not) {
+            qualifiedName = qualifiedName.substring(separator.length());
+        }
+        return qualifiedName;
     }
 
     /**
@@ -790,6 +1151,31 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
      * <!-- end-user-doc -->
      * @generated
      */
+    public EList<Microservice> getAllInitializingMicroservices() {
+        final HashSet<Microservice> microservices = CollectionLiterals.<Microservice>newHashSet();
+        final Function1<Operation, EList<Parameter>> _function = new Function1<Operation, EList<Parameter>>() {
+            public EList<Parameter> apply(final Operation it) {
+                return it.getParameters();
+            }
+        };
+        final Consumer<Parameter> _function_1 = new Consumer<Parameter>() {
+            public void accept(final Parameter it) {
+                PossiblyImportedOperation _initializedByOperation = it.getInitializedByOperation();
+                boolean _tripleNotEquals = (_initializedByOperation != null);
+                if (_tripleNotEquals) {
+                    microservices.add(it.getOperation().getInterface().getMicroservice());
+                }
+            }
+        };
+        Iterables.<Parameter>concat(XcoreEListExtensions.<Operation, EList<Parameter>>map(this.getContainedOperations(), _function)).forEach(_function_1);
+        return ECollections.<Microservice>asEList(((Microservice[])org.eclipse.xtext.xbase.lib.Conversions.unwrapArray(microservices, Microservice.class)));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public boolean canRequire(final Microservice microservice, final boolean isImportedService) {
         if ((microservice == null)) {
             return false;
@@ -917,8 +1303,16 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
                 return getType();
             case ServicePackage.MICROSERVICE__VISIBILITY:
                 return getVisibility();
+            case ServicePackage.MICROSERVICE__TDEFAULT_PROTOCOLS:
+                return getT_defaultProtocols();
             case ServicePackage.MICROSERVICE__TECHNOLOGIES:
                 return getTechnologies();
+            case ServicePackage.MICROSERVICE__TTYPE_DEFINITION_TECHNOLOGY_IMPORT:
+                if (resolve) return getT_typeDefinitionTechnologyImport();
+                return basicGetT_typeDefinitionTechnologyImport();
+            case ServicePackage.MICROSERVICE__TTYPE_DEFINITION_TECHNOLOGY:
+                if (resolve) return getT_typeDefinitionTechnology();
+                return basicGetT_typeDefinitionTechnology();
             case ServicePackage.MICROSERVICE__ENDPOINTS:
                 return getEndpoints();
             case ServicePackage.MICROSERVICE__REQUIRED_MICROSERVICES:
@@ -967,9 +1361,18 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
             case ServicePackage.MICROSERVICE__VISIBILITY:
                 setVisibility((Visibility)newValue);
                 return;
+            case ServicePackage.MICROSERVICE__TDEFAULT_PROTOCOLS:
+                setT_defaultProtocols((Map<CommunicationType, Pair<Import, Protocol>>)newValue);
+                return;
             case ServicePackage.MICROSERVICE__TECHNOLOGIES:
                 getTechnologies().clear();
                 getTechnologies().addAll((Collection<? extends Import>)newValue);
+                return;
+            case ServicePackage.MICROSERVICE__TTYPE_DEFINITION_TECHNOLOGY_IMPORT:
+                setT_typeDefinitionTechnologyImport((Import)newValue);
+                return;
+            case ServicePackage.MICROSERVICE__TTYPE_DEFINITION_TECHNOLOGY:
+                setT_typeDefinitionTechnology((Technology)newValue);
                 return;
             case ServicePackage.MICROSERVICE__ENDPOINTS:
                 getEndpoints().clear();
@@ -1026,8 +1429,17 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
             case ServicePackage.MICROSERVICE__VISIBILITY:
                 setVisibility(VISIBILITY_EDEFAULT);
                 return;
+            case ServicePackage.MICROSERVICE__TDEFAULT_PROTOCOLS:
+                setT_defaultProtocols((Map<CommunicationType, Pair<Import, Protocol>>)null);
+                return;
             case ServicePackage.MICROSERVICE__TECHNOLOGIES:
                 getTechnologies().clear();
+                return;
+            case ServicePackage.MICROSERVICE__TTYPE_DEFINITION_TECHNOLOGY_IMPORT:
+                setT_typeDefinitionTechnologyImport((Import)null);
+                return;
+            case ServicePackage.MICROSERVICE__TTYPE_DEFINITION_TECHNOLOGY:
+                setT_typeDefinitionTechnology((Technology)null);
                 return;
             case ServicePackage.MICROSERVICE__ENDPOINTS:
                 getEndpoints().clear();
@@ -1073,8 +1485,14 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
                 return type != TYPE_EDEFAULT;
             case ServicePackage.MICROSERVICE__VISIBILITY:
                 return visibility != VISIBILITY_EDEFAULT;
+            case ServicePackage.MICROSERVICE__TDEFAULT_PROTOCOLS:
+                return t_defaultProtocols != null;
             case ServicePackage.MICROSERVICE__TECHNOLOGIES:
                 return technologies != null && !technologies.isEmpty();
+            case ServicePackage.MICROSERVICE__TTYPE_DEFINITION_TECHNOLOGY_IMPORT:
+                return t_typeDefinitionTechnologyImport != null;
+            case ServicePackage.MICROSERVICE__TTYPE_DEFINITION_TECHNOLOGY:
+                return t_typeDefinitionTechnology != null;
             case ServicePackage.MICROSERVICE__ENDPOINTS:
                 return endpoints != null && !endpoints.isEmpty();
             case ServicePackage.MICROSERVICE__REQUIRED_MICROSERVICES:
@@ -1109,8 +1527,22 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
     @Override
     public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
         switch (operationID) {
+            case ServicePackage.MICROSERVICE___TMISSING_ENDPOINT_EFFECTIVE_PROTOCOLS:
+                return t_missingEndpointEffectiveProtocols();
+            case ServicePackage.MICROSERVICE___TEFFECTIVE_PROTOCOL_SPECIFICATIONS:
+                return t_effectiveProtocolSpecifications();
+            case ServicePackage.MICROSERVICE___GET_TYPE_DEFINITION_TECHNOLOGY_IMPORTS:
+                return getTypeDefinitionTechnologyImports();
+            case ServicePackage.MICROSERVICE___GET_TYPE_DEFINITION_TECHNOLOGY_IMPORT:
+                return getTypeDefinitionTechnologyImport();
+            case ServicePackage.MICROSERVICE___GET_TYPE_DEFINITION_TECHNOLOGIES:
+                return getTypeDefinitionTechnologies();
+            case ServicePackage.MICROSERVICE___GET_TYPE_DEFINITION_TECHNOLOGY:
+                return getTypeDefinitionTechnology();
             case ServicePackage.MICROSERVICE___GET_QUALIFIED_NAME_PARTS:
                 return getQualifiedNameParts();
+            case ServicePackage.MICROSERVICE___BUILD_QUALIFIED_NAME__STRING:
+                return buildQualifiedName((String)arguments.get(0));
             case ServicePackage.MICROSERVICE___GET_CONTAINED_OPERATIONS:
                 return getContainedOperations();
             case ServicePackage.MICROSERVICE___GET_CONTAINED_REFERRED_OPERATIONS:
@@ -1121,6 +1553,8 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
                 return getAllRequiredOperations((Import)arguments.get(0));
             case ServicePackage.MICROSERVICE___GET_ALL_REQUIRED_MICROSERVICES:
                 return getAllRequiredMicroservices();
+            case ServicePackage.MICROSERVICE___GET_ALL_INITIALIZING_MICROSERVICES:
+                return getAllInitializingMicroservices();
             case ServicePackage.MICROSERVICE___CAN_REQUIRE__MICROSERVICE_BOOLEAN:
                 return canRequire((Microservice)arguments.get(0), (Boolean)arguments.get(1));
             case ServicePackage.MICROSERVICE___CAN_REQUIRE__INTERFACE_BOOLEAN:
@@ -1149,6 +1583,8 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
         result.append(type);
         result.append(", visibility: ");
         result.append(visibility);
+        result.append(", t_defaultProtocols: ");
+        result.append(t_defaultProtocols);
         result.append(')');
         return result.toString();
     }

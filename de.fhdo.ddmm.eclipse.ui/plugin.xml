@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.commands">
+      <category
+            name="Domain-driven Microservice Design"
+            id="de.fhdo.ddmm.eclipse.ui.category.ddmmCommands">
+      </category>
+      <command
+            name="Generate Intermediate Models"
+            categoryId="de.fhdo.ddmm.eclipse.ui.category.ddmmCommands"
+            id="de.fhdo.ddmm.eclipse.ui.commands.generateIntermediateModels">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            commandId="de.fhdo.ddmm.eclipse.ui.commands.generateIntermediateModels"
+            class="de.fhdo.ddmm.eclipse.ui.IntermediateModelTransformationController">
+      </handler>
+   </extension>
+   <extension
+         point="org.eclipse.ui.bindings">
+      <key
+            commandId="de.fhdo.ddmm.eclipse.ui.commands.generateIntermediateModels"
+            contextId="org.eclipse.ui.contexts.window"
+            sequence="M1+6"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration">
+      </key>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="menu:org.eclipse.ui.main.menu?after=additions">
+         <menu
+               label="Domain-driven Microservice Design"
+               mnemonic="D"
+               id="de.fhdo.ddmm.eclipse.ui.ddmmMenu">
+            <command
+                  commandId="de.fhdo.ddmm.eclipse.ui.commands.generateIntermediateModels"
+                  mnemonic="M"
+                  icon="icons/generateIntermediateModels.gif"
+                  id="de.fhdo.ddmm.eclipse.ui.ddmmMenu.generateIntermediateModels">
+            </command>
+         </menu>
+      </menuContribution>
+      <menuContribution
+            locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
+         <toolbar
+               id="de.fhdo.ddmm.eclipse.ui.ddmmToolbar">
+            <command
+                  commandId="de.fhdo.ddmm.eclipse.ui.commands.generateIntermediateModels"
+                  icon="icons/generateIntermediateModels.gif"
+                  tooltip="Generate Intermediate Models"
+                  id="de.fhdo.ddmm.eclipse.ui.toolbars.generateIntermediateModels">
+            </command>
+         </toolbar>
+      </menuContribution>
+   </extension>
+
+</plugin>

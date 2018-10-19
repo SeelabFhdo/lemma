@@ -13,7 +13,10 @@ import de.fhdo.ddmm.data.PrimitiveType;
 import de.fhdo.ddmm.data.PrimitiveValue;
 import de.fhdo.ddmm.data.Type;
 import de.fhdo.ddmm.service.Import;
+import de.fhdo.ddmm.service.Microservice;
+import de.fhdo.ddmm.service.Operation;
 import de.fhdo.ddmm.service.Parameter;
+import de.fhdo.ddmm.service.ReferredOperation;
 import de.fhdo.ddmm.service.ServicePackage;
 import de.fhdo.ddmm.technology.CommunicationType;
 import de.fhdo.ddmm.technology.DataFormat;
@@ -253,33 +256,56 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
    * Check that service mappings are unique
    */
   @Check
-  public void checkMappingUniqueness(final TechnologyMapping model) {
-    final Function1<MicroserviceMapping, Boolean> _function = (MicroserviceMapping it) -> {
-      boolean _isEmpty = it.getTechnologies().isEmpty();
-      return Boolean.valueOf((!_isEmpty));
-    };
-    final List<MicroserviceMapping> modelMappingsWithTechnology = IterableExtensions.<MicroserviceMapping>toList(IterableExtensions.<MicroserviceMapping>filter(model.getMappings(), _function));
-    final Function<MicroserviceMapping, String> _function_1 = (MicroserviceMapping it) -> {
-      String _xblockexpression = null;
-      {
-        final ArrayList<String> qualifiedNameSegments = CollectionLiterals.<String>newArrayList();
-        qualifiedNameSegments.addAll(it.getMicroservice().getMicroservice().getQualifiedNameParts());
-        _xblockexpression = QualifiedName.create(qualifiedNameSegments).toString();
+  public boolean checkMappingUniqueness(final TechnologyMapping model) {
+    boolean _xblockexpression = false;
+    {
+      final Function1<MicroserviceMapping, Boolean> _function = (MicroserviceMapping it) -> {
+        boolean _isEmpty = it.getTechnologies().isEmpty();
+        return Boolean.valueOf((!_isEmpty));
+      };
+      final List<MicroserviceMapping> modelMappingsWithTechnology = IterableExtensions.<MicroserviceMapping>toList(IterableExtensions.<MicroserviceMapping>filter(model.getMappings(), _function));
+      final Function<MicroserviceMapping, String> _function_1 = (MicroserviceMapping it) -> {
+        String _xblockexpression_1 = null;
+        {
+          final ArrayList<String> qualifiedNameSegments = CollectionLiterals.<String>newArrayList();
+          if (((it.getMicroservice().getImport() != null) && (it.getMicroservice().getImport().getName() != null))) {
+            qualifiedNameSegments.add(it.getMicroservice().getImport().getName());
+          }
+          qualifiedNameSegments.addAll(it.getMicroservice().getMicroservice().getQualifiedNameParts());
+          _xblockexpression_1 = QualifiedName.create(qualifiedNameSegments).toString();
+        }
+        return _xblockexpression_1;
+      };
+      final boolean duplicateMappingFound = this.<MicroserviceMapping>checkMappingUniqueness(modelMappingsWithTechnology, "Service", _function_1, MappingPackage.Literals.MICROSERVICE_MAPPING__MICROSERVICE);
+      boolean _xifexpression = false;
+      if ((!duplicateMappingFound)) {
+        final Function<MicroserviceMapping, String> _function_2 = (MicroserviceMapping it) -> {
+          String _xblockexpression_1 = null;
+          {
+            final ArrayList<String> qualifiedNameSegments = CollectionLiterals.<String>newArrayList();
+            qualifiedNameSegments.addAll(it.getMicroservice().getMicroservice().getQualifiedNameParts());
+            _xblockexpression_1 = QualifiedName.create(qualifiedNameSegments).toString();
+          }
+          return _xblockexpression_1;
+        };
+        _xifexpression = this.<MicroserviceMapping>checkMappingUniqueness(modelMappingsWithTechnology, _function_2, MappingPackage.Literals.MICROSERVICE_MAPPING__MICROSERVICE, 
+          ("A service with the same qualified name but from another service model has already " + 
+            "been mapped"));
       }
-      return _xblockexpression;
-    };
-    this.<MicroserviceMapping>checkMappingUniqueness(modelMappingsWithTechnology, "Service", _function_1, MappingPackage.Literals.MICROSERVICE_MAPPING__MICROSERVICE);
+      _xblockexpression = _xifexpression;
+    }
+    return _xblockexpression;
   }
   
   /**
    * Check that interface mappings are unique
    */
   @Check
-  public void checkInterfaceMappingUniqueness(final MicroserviceMapping microserviceMapping) {
+  public boolean checkInterfaceMappingUniqueness(final MicroserviceMapping microserviceMapping) {
     final Function<InterfaceMapping, String> _function = (InterfaceMapping it) -> {
       return QualifiedName.create(it.getInterface().getQualifiedNameParts()).toString();
     };
-    this.<InterfaceMapping>checkMappingUniqueness(microserviceMapping.getInterfaceMappings(), "Interface", _function, 
+    return this.<InterfaceMapping>checkMappingUniqueness(microserviceMapping.getInterfaceMappings(), "Interface", _function, 
       MappingPackage.Literals.INTERFACE_MAPPING__INTERFACE);
   }
   
@@ -287,11 +313,11 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
    * Check that operation mappings are unique
    */
   @Check
-  public void checkOperationMappingUniqueness(final MicroserviceMapping microserviceMapping) {
+  public boolean checkOperationMappingUniqueness(final MicroserviceMapping microserviceMapping) {
     final Function<OperationMapping, String> _function = (OperationMapping it) -> {
       return QualifiedName.create(it.getOperation().getQualifiedNameParts()).toString();
     };
-    this.<OperationMapping>checkMappingUniqueness(microserviceMapping.getOperationMappings(), "Operation", _function, 
+    return this.<OperationMapping>checkMappingUniqueness(microserviceMapping.getOperationMappings(), "Operation", _function, 
       MappingPackage.Literals.OPERATION_MAPPING__OPERATION);
   }
   
@@ -299,11 +325,11 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
    * Check that referred operation mappings are unique
    */
   @Check
-  public void checkReferredOperationMappingUniqueness(final MicroserviceMapping microserviceMapping) {
+  public boolean checkReferredOperationMappingUniqueness(final MicroserviceMapping microserviceMapping) {
     final Function<ReferredOperationMapping, String> _function = (ReferredOperationMapping it) -> {
       return QualifiedName.create(it.getOperation().getQualifiedNameParts()).toString();
     };
-    this.<ReferredOperationMapping>checkMappingUniqueness(microserviceMapping.getReferredOperationMappings(), "Referred operation", _function, 
+    return this.<ReferredOperationMapping>checkMappingUniqueness(microserviceMapping.getReferredOperationMappings(), "Referred operation", _function, 
       MappingPackage.Literals.REFERRED_OPERATION_MAPPING__OPERATION);
   }
   
@@ -489,19 +515,76 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
     this.warnParameterMappingTypeCompatibility(mapping);
   }
   
-  /**
-   * Check that microservice mapping is not empty
-   */
   @Check
-  public void checkNotEmpty(final MicroserviceMapping mapping) {
-    final boolean isEmpty = (((((mapping.getProtocols().isEmpty() && 
-      mapping.getEndpoints().isEmpty()) && 
-      mapping.getInterfaceMappings().isEmpty()) && 
-      mapping.getOperationMappings().isEmpty()) && 
-      mapping.getReferredOperationMappings().isEmpty()) && 
-      mapping.getAspects().isEmpty());
-    if (isEmpty) {
-      this.error("Mapping must not be empty", mapping, 
+  public void checkDifferingParameterTechnologies(final MicroserviceMapping mapping) {
+    if (((mapping.getTechnologies().isEmpty() || (mapping.getMicroservice() == null)) || 
+      (mapping.getMicroservice().getMicroservice() == null))) {
+      return;
+    }
+    final Microservice mappedService = mapping.getMicroservice().getMicroservice();
+    boolean _isEmpty = mappedService.getTechnologies().isEmpty();
+    if (_isEmpty) {
+      return;
+    }
+    final Import mappedServiceTypeTechnologyImport = mappedService.getTypeDefinitionTechnologyImport();
+    if ((mappedServiceTypeTechnologyImport == null)) {
+      return;
+    }
+    final String mappedServiceModelPath = DdmmUtils.getFileForResource(mappedServiceTypeTechnologyImport.getServiceModel().eResource()).getRawLocation().makeAbsolute().toString();
+    final String mappedTypeTechnologyPath = DdmmUtils.convertToAbsoluteFileUri(
+      mappedServiceTypeTechnologyImport.getImportURI(), mappedServiceModelPath);
+    final Import mappingTypeTechnologyImport = mapping.getTypeDefinitionTechnologyImport();
+    if ((mappingTypeTechnologyImport == null)) {
+      return;
+    }
+    final String mappingServiceModelPath = DdmmUtils.getFileForResource(mapping.eResource()).getRawLocation().makeAbsolute().toString();
+    final String mappingTypeTechnologyPath = DdmmUtils.convertToAbsoluteFileUri(
+      mappingTypeTechnologyImport.getImportURI(), mappingServiceModelPath);
+    boolean _equals = Objects.equal(mappedTypeTechnologyPath, mappingTypeTechnologyPath);
+    if (_equals) {
+      return;
+    }
+    final EList<Operation> mappedServiceOperations = mappedService.getContainedOperations();
+    final Function1<ReferredOperation, Operation> _function = (ReferredOperation it) -> {
+      return it.getOperation();
+    };
+    mappedServiceOperations.addAll(ListExtensions.<ReferredOperation, Operation>map(mappedService.getContainedReferredOperations(), _function));
+    final Function1<Operation, Boolean> _function_1 = (Operation it) -> {
+      final Function1<Parameter, Boolean> _function_2 = (Parameter it_1) -> {
+        return Boolean.valueOf(it_1.isTechnologySpecificEffectiveType());
+      };
+      return Boolean.valueOf(IterableExtensions.<Parameter>exists(it.getParameters(), _function_2));
+    };
+    boolean _exists = IterableExtensions.<Operation>exists(mappedServiceOperations, _function_1);
+    if (_exists) {
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("Type definition technology \"");
+      String _name = mappedService.getTypeDefinitionTechnology().getName();
+      _builder.append(_name);
+      _builder.append("\"");
+      StringConcatenation _builder_1 = new StringConcatenation();
+      _builder_1.append(" ");
+      _builder_1.append("in the service model differs from type definition technology ");
+      String _plus = (_builder.toString() + _builder_1);
+      StringConcatenation _builder_2 = new StringConcatenation();
+      _builder_2.append("\"");
+      String _name_1 = mapping.getTypeDefinitionTechnology().getName();
+      _builder_2.append(_name_1);
+      _builder_2.append("\" used for the mapping. Moreover, ");
+      String _plus_1 = (_plus + _builder_2);
+      StringConcatenation _builder_3 = new StringConcatenation();
+      _builder_3.append("the mapped microservice refers to technology-specific types in the ");
+      String _plus_2 = (_plus_1 + _builder_3);
+      StringConcatenation _builder_4 = new StringConcatenation();
+      _builder_4.append("parameters of its operations. Subsequent transformations of the ");
+      String _plus_3 = (_plus_2 + _builder_4);
+      StringConcatenation _builder_5 = new StringConcatenation();
+      _builder_5.append("microservice will not be possible. Please remove the technology-dependence ");
+      String _plus_4 = (_plus_3 + _builder_5);
+      StringConcatenation _builder_6 = new StringConcatenation();
+      _builder_6.append("of the service in its service model.");
+      String _plus_5 = (_plus_4 + _builder_6);
+      this.error(_plus_5, mapping, 
         MappingPackage.Literals.MICROSERVICE_MAPPING__MICROSERVICE);
     }
   }
@@ -648,16 +731,24 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
   /**
    * Helper to check that service-specific mappings are unique
    */
-  private <T extends EObject> void checkMappingUniqueness(final List<T> mappingsToCheck, final String mappingName, final Function<T, String> getMappingObjectName, final EReference mappingFeature) {
-    final Integer duplicateIndex = DdmmUtils.<T, String>getDuplicateIndex(mappingsToCheck, getMappingObjectName);
-    if (((duplicateIndex).intValue() == (-1))) {
-      return;
-    }
-    final T duplicate = mappingsToCheck.get((duplicateIndex).intValue());
+  private <T extends EObject> boolean checkMappingUniqueness(final List<T> mappingsToCheck, final String mappingName, final Function<T, String> getMappingObjectName, final EReference mappingFeature) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append(mappingName);
     _builder.append(" is already mapped");
-    this.error(_builder.toString(), duplicate, mappingFeature);
+    return this.<T>checkMappingUniqueness(mappingsToCheck, getMappingObjectName, mappingFeature, _builder.toString());
+  }
+  
+  /**
+   * Helper to check that service-specific mappings are unique with a custom error message
+   */
+  private <T extends EObject> boolean checkMappingUniqueness(final List<T> mappingsToCheck, final Function<T, String> getMappingObjectName, final EReference mappingFeature, final String errorMessage) {
+    final Integer duplicateIndex = DdmmUtils.<T, String>getDuplicateIndex(mappingsToCheck, getMappingObjectName);
+    if (((duplicateIndex).intValue() == (-1))) {
+      return false;
+    }
+    final T duplicate = mappingsToCheck.get((duplicateIndex).intValue());
+    this.error(errorMessage, duplicate, mappingFeature);
+    return true;
   }
   
   /**

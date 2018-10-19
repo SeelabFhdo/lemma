@@ -3,6 +3,7 @@ package de.fhdo.ddmm.service
 import de.fhdo.ddmm.data.PrimitiveType
 import de.fhdo.ddmm.data.PrimitiveValue
 import de.fhdo.ddmm.data.Type
+import de.fhdo.ddmm.technology.Technology
 import de.fhdo.ddmm.technology.CommunicationType
 import de.fhdo.ddmm.technology.ExchangePattern
 import de.fhdo.ddmm.technology.Protocol
@@ -11,7 +12,13 @@ import de.fhdo.ddmm.technology.ServiceAspect
 import de.fhdo.ddmm.technology.TechnologySpecificPrimitiveType
 import de.fhdo.ddmm.technology.TechnologySpecificPropertyValueAssignment
 import de.fhdo.ddmm.data.ComplexType
+import de.fhdo.ddmm.data.DataField
+import java.util.List
 import java.util.Map
+import org.eclipse.xtext.xbase.lib.Pair
+import de.fhdo.ddmm.utils.DdmmUtils
+import de.fhdo.ddmm.technology.TechnologySpecificDataStructure
+import de.fhdo.ddmm.technology.TechnologySpecificListType
 
 /**
  * This metamodel represents the Service Modeling Viewpoint, which is used for defining services.
@@ -54,7 +61,7 @@ enum ImportType {
 }
 
 /**
- * Concept for importing data types, technology, and microservices into the metamodel
+ * Concept for importing data types, technologies, and microservices into the metamodel
  */
 class Import {
     /**
@@ -134,16 +141,26 @@ class Microservice {
      *          Ensured by: DSL validator.
      *     (C9) Assigned technologies may not only define deployment-specific concepts.
      *          Ensured by: DSL validator.
+     *     (C10) If the service does not specify explicit protocols for a communication type, only
+     *           one technology may comprise a default protocol specification for that type.
+     *           Ensured by: DSL validator.
      */
 
     String name
     String version
     MicroserviceType ^type
     Visibility visibility = "NONE"
+    // TRANSFORMATION ONLY: Default protocols per communication type
+    DefaultProtocols t_defaultProtocols
 
     // TODO: Inheritance of microservices
     //refers Microservice[0..1] ^super
     refers Import[] technologies
+    // TRANSFORMATION ONLY: Import of technology that contains the default types (there can only be
+    //                      one)
+    refers Import t_typeDefinitionTechnologyImport
+    // TRANSFORMATION ONLY: Technology that contains the default types (there can only be one)
+    refers Technology t_typeDefinitionTechnology
     contains Endpoint[] endpoints opposite microservice
     contains PossiblyImportedMicroservice[] requiredMicroservices opposite requiringMicroservice
     contains PossiblyImportedInterface[] requiredInterfaces opposite requiringMicroservice
@@ -153,6 +170,123 @@ class Microservice {
     contains ImportedServiceAspect[] aspects opposite microservice
 
     container ServiceModel serviceModel opposite microservices
+
+    /**
+     * TRANSFORMATION ONLY: Get those effective protocols and data formats of the microservice that
+     * are not used in an endpoint of the microservice.
+     */
+    op TupleList t_missingEndpointEffectiveProtocols() {
+        if (t_defaultProtocols === null || t_defaultProtocols.empty)
+            return null
+
+        val effectiveProtocols = t_effectiveProtocolSpecifications()
+        if (effectiveProtocols === null)
+            return null
+
+        // Remove effective protocols for which endpoints exist that do not specify data formats. In
+        // this case, the endpoint and its addresses account for all data formats of the endpoint
+        // protocol.
+        val endpointProtocolsWithoutDataFormats = endpoints.map[protocols].flatten
+            .filter[dataFormat === null]
+            .map[importedProtocol]
+            .toList
+        var resultProtocols = effectiveProtocols.filter[
+            val protocol = get("protocol") as Protocol
+            !endpointProtocolsWithoutDataFormats.contains(protocol)
+        ].toList
+
+        // Remove effective protocols for which endpoints with data formats exist
+        val endpointProtocolsWithDataFormats = endpoints.map[protocols].flatten
+            .filter[dataFormat !== null]
+            .toList
+        return resultProtocols.filter[
+            val protocol = get("protocol") as Protocol
+            val dataFormat = get("dataFormat") as DataFormat
+            !endpointProtocolsWithDataFormats.exists[
+                it.importedProtocol == protocol && it.dataFormat == dataFormat
+            ]
+        ].toList
+    }
+
+    /**
+     * TRANSFORMATION ONLY: Get effective protocols of the microservice as combinations of Protocol
+     * and DataFormat. The effective protocols are primarily determined by the microservice's
+     * protocol specifications. If a protocol specification for a communication type is missing, the
+     * default protocol and data format for the communication type are taken from the service's
+     * default protocol technology.
+     */
+    op TupleList t_effectiveProtocolSpecifications() {
+        if (t_defaultProtocols === null || t_defaultProtocols.empty)
+            return null
+
+        val effectiveProtocolSpecifications = if (!protocols.empty)
+                protocols.get(0).effectiveProtocolSpecifications(protocols)
+            else
+                <Map<String, Object>> newArrayList
+
+        // Complement effective protocols with default protocols if necessary
+        val protocolSpecificationsCommunicationTypes = protocols
+            .map[protocol.importedProtocol.communicationType].toSet
+        t_defaultProtocols.forEach[communicationType, importAndProtocol |
+            if (!protocolSpecificationsCommunicationTypes.contains(communicationType)) {
+                val entry = <String, Object> newHashMap
+                val protocol = importAndProtocol.value
+                entry.put("protocol", protocol)
+                entry.put("dataFormat", protocol.defaultFormat)
+                entry.put("import", importAndProtocol.key)
+                effectiveProtocolSpecifications.add(entry)
+            }
+        ]
+
+        return effectiveProtocolSpecifications
+    }
+
+    /**
+     * Get imports of type definition technologies
+     */
+    op Import[] getTypeDefinitionTechnologyImports() {
+        return technologies.filter[
+            val technologyModel = DdmmUtils.getImportedModelRoot(eResource, importURI, Technology)
+            !technologyModel.primitiveTypes.empty ||
+            !technologyModel.listTypes.empty ||
+            !technologyModel.dataStructures.empty
+        ].toEList
+    }
+
+    /**
+     * Get import of type definition technology. Note that this corresponds to the first technology
+     * import in the list of type definition technology imports and should only be executed if the
+     * model had been validated to refer to one type definition technology at most.
+     */
+    op Import getTypeDefinitionTechnologyImport() {
+        val typeDefinitionTechnologyImports = getTypeDefinitionTechnologyImports()
+        return if (!typeDefinitionTechnologyImports.empty)
+                typeDefinitionTechnologyImports.get(0)
+            else
+                null
+    }
+
+    /**
+     * Get type definition technology models
+     */
+    op Technology[] getTypeDefinitionTechnologies() {
+        return typeDefinitionTechnologyImports.map[
+            DdmmUtils.getImportedModelRoot(eResource, importURI, Technology)
+        ]
+    }
+
+    /**
+     * Get type definition technology. Note that this corresponds to the first technology model in
+     * the list of type definition technology models and should only be executed if the service
+     * model had been validated to refer to one type definition technology at most.
+     */
+    op Technology getTypeDefinitionTechnology() {
+        val typeDefinitionTechnologies = getTypeDefinitionTechnologies()
+        return if (!typeDefinitionTechnologies.empty)
+                typeDefinitionTechnologies.get(0)
+            else
+                null
+    }
 
     /**
      * Get parts of the microservice for creating a qualified name
@@ -167,6 +301,22 @@ class Microservice {
 
         nameParts.addAll(name.split("\\."))
         nameParts.asEList
+    }
+
+    /**
+     * Build qualified name from qualified name parts
+     */
+    op String buildQualifiedName(String separator) {
+        if (separator === null)
+            return null
+
+        var String qualifiedName = ""
+        for (part : qualifiedNameParts)
+            qualifiedName += separator + part
+        // Remove leading separator
+        if (!qualifiedName.empty)
+            qualifiedName = qualifiedName.substring(separator.length)
+        return qualifiedName
     }
 
     /**
@@ -272,6 +422,21 @@ class Microservice {
             requiredOperations.forEach[microservices.put(operation.interface.microservice, import)]
 
         return microservices
+    }
+
+    /**
+     * Get all microservices whose operations' initializing parameters belong to operations of this
+     * microservice
+     */
+    op Microservice[] getAllInitializingMicroservices() {
+        val microservices = <Microservice> newHashSet
+
+        containedOperations.map[parameters].flatten.forEach[
+            if (initializedByOperation !== null)
+                microservices.add(operation.interface.microservice)
+        ]
+
+        return microservices.asEList
     }
 
     /**
@@ -388,6 +553,74 @@ class Interface {
     container Microservice microservice opposite interfaces
 
     /**
+     * TRANSFORMATION ONLY: Get those effective protocols and data formats of the interface that
+     * are not used in an endpoint of the interface.
+     */
+    op TupleList t_missingEndpointEffectiveProtocols() {
+        if (microservice === null ||
+            microservice.t_defaultProtocols === null ||
+            microservice.t_defaultProtocols.empty)
+            return null
+
+        val effectiveProtocols = t_effectiveProtocolSpecifications()
+        if (effectiveProtocols === null)
+            return null
+
+        // Remove effective protocols for which endpoints exist that do not specify data formats. In
+        // this case, the endpoint and its addresses account for all data formats of the endpoint
+        // protocol.
+        val endpointProtocolsWithoutDataFormats = endpoints.map[protocols].flatten
+            .filter[dataFormat === null]
+            .map[importedProtocol]
+            .toList
+        var resultProtocols = effectiveProtocols.filter[
+            val protocol = get("protocol") as Protocol
+            !endpointProtocolsWithoutDataFormats.contains(protocol)
+        ].toList
+
+        // Remove effective protocols for which endpoints with data formats exist
+        val endpointProtocolsWithDataFormats = endpoints.map[protocols].flatten
+            .filter[dataFormat !== null]
+            .toList
+        return resultProtocols.filter[
+            val protocol = get("protocol") as Protocol
+            val dataFormat = get("dataFormat") as DataFormat
+            !endpointProtocolsWithDataFormats.exists[
+                it.importedProtocol == protocol && it.dataFormat == dataFormat
+            ]
+        ].toList
+    }
+
+    /**
+     * TRANSFORMATION ONLY: Get effective protocols of the interface as combinations of Protocol
+     * and DataFormat. The effective protocols are primarily determined by the interface's protocol
+     * specifications. If a protocol specification for a communication type is missing, the type's
+     * effective protocols are taken from the containing microservice.
+     */
+    op TupleList t_effectiveProtocolSpecifications() {
+        if (microservice === null ||
+            microservice.t_defaultProtocols === null ||
+            microservice.t_defaultProtocols.empty)
+            return null
+
+        val effectiveProtocolSpecifications = if (!protocols.empty)
+                protocols.get(0).effectiveProtocolSpecifications(protocols)
+            else
+                <Map<String, Object>> newArrayList
+
+        // Complement effective protocols with those of the containing microservice
+        val protocolSpecificationsCommunicationTypes = protocols
+                .map[protocol.importedProtocol.communicationType].toSet
+        microservice.t_effectiveProtocolSpecifications.forEach[microserviceEffectiveProtocolTuple |
+            val protocol = microserviceEffectiveProtocolTuple.get("protocol") as Protocol
+            if (!protocolSpecificationsCommunicationTypes.contains(protocol.communicationType))
+                effectiveProtocolSpecifications.add(microserviceEffectiveProtocolTuple)
+        ]
+
+        return effectiveProtocolSpecifications
+    }
+
+    /**
      * Get parts of the interface for creating a qualified name
      */
     op String[] getQualifiedNameParts() {
@@ -397,6 +630,22 @@ class Interface {
         val nameParts = microservice.qualifiedNameParts
         nameParts.addAll(name)
         nameParts.asEList
+    }
+
+    /**
+     * Build qualified name from qualified name parts
+     */
+    op String buildQualifiedName(String separator) {
+        if (separator === null)
+            return null
+
+        var String qualifiedName = ""
+        for (part : qualifiedNameParts)
+            qualifiedName += separator + part
+        // Remove leading separator
+        if (!qualifiedName.empty)
+            qualifiedName = qualifiedName.substring(separator.length)
+        return qualifiedName
     }
 
     /**
@@ -486,6 +735,76 @@ class Operation {
     container Interface ^interface opposite operations
 
     /**
+     * TRANSFORMATION ONLY: Get those effective protocols and data formats of the operation that
+     * are not used in an endpoint of the operation.
+     */
+    op TupleList t_missingEndpointEffectiveProtocols() {
+        if (interface === null ||
+            interface.microservice === null ||
+            interface.microservice.t_defaultProtocols === null ||
+            interface.microservice.t_defaultProtocols.empty)
+            return null
+
+        val effectiveProtocols = t_effectiveProtocolSpecifications()
+        if (effectiveProtocols === null)
+            return null
+
+        // Remove effective protocols for which endpoints exist that do not specify data formats. In
+        // this case, the endpoint and its addresses account for all data formats of the endpoint
+        // protocol.
+        val endpointProtocolsWithoutDataFormats = endpoints.map[protocols].flatten
+            .filter[dataFormat === null]
+            .map[importedProtocol]
+            .toList
+        var resultProtocols = effectiveProtocols.filter[
+            val protocol = get("protocol") as Protocol
+            !endpointProtocolsWithoutDataFormats.contains(protocol)
+        ].toList
+
+        // Remove effective protocols for which endpoints with data formats exist
+        val endpointProtocolsWithDataFormats = endpoints.map[protocols].flatten
+            .filter[dataFormat !== null]
+            .toList
+        return resultProtocols.filter[
+            val protocol = get("protocol") as Protocol
+            val dataFormat = get("dataFormat") as DataFormat
+            !endpointProtocolsWithDataFormats.exists[
+                it.importedProtocol == protocol && it.dataFormat == dataFormat
+            ]
+        ].toList
+    }
+
+    /**
+     * TRANSFORMATION ONLY: Get effective protocols of the operation as combinations of Protocol
+     * and DataFormat. The effective protocols are primarily determined by the operation's protocol
+     * specifications. If a protocol specification for a communication type is missing, the type's
+     * effective protocols are taken from the containing interface.
+     */
+    op TupleList t_effectiveProtocolSpecifications() {
+        if (interface === null ||
+            interface.microservice === null ||
+            interface.microservice.t_defaultProtocols === null ||
+            interface.microservice.t_defaultProtocols.empty)
+            return null
+
+        val effectiveProtocolSpecifications = if (!protocols.empty)
+                protocols.get(0).effectiveProtocolSpecifications(protocols)
+            else
+                <Map<String, Object>> newArrayList
+
+        // Complement effective protocols with those of the containing interface
+        val protocolSpecificationsCommunicationTypes = protocols
+                .map[protocol.importedProtocol.communicationType].toSet
+        interface.t_effectiveProtocolSpecifications.forEach[microserviceEffectiveProtocolTuple |
+            val protocol = microserviceEffectiveProtocolTuple.get("protocol") as Protocol
+            if (!protocolSpecificationsCommunicationTypes.contains(protocol.communicationType))
+                effectiveProtocolSpecifications.add(microserviceEffectiveProtocolTuple)
+        ]
+
+        return effectiveProtocolSpecifications
+    }
+
+    /**
      * Get parts of the operation for creating a qualified name
      */
     op String[] getQualifiedNameParts() {
@@ -495,6 +814,22 @@ class Operation {
         val nameParts = interface.qualifiedNameParts
         nameParts.addAll(name)
         nameParts.asEList
+    }
+
+    /**
+     * Build qualified name from qualified name parts
+     */
+    op String buildQualifiedName(String separator) {
+        if (separator === null)
+            return null
+
+        var String qualifiedName = ""
+        for (part : qualifiedNameParts)
+            qualifiedName += separator + part
+        // Remove leading separator
+        if (!qualifiedName.empty)
+            qualifiedName = qualifiedName.substring(separator.length)
+        return qualifiedName
     }
 
     /**
@@ -579,7 +914,7 @@ class Operation {
 
 /**
  * Represents an operation to which an interface other than its defining interface refers. Used for
- * interface mashups
+ * interface mashups.
  */
 class ReferredOperation {
     /**
@@ -599,6 +934,81 @@ class ReferredOperation {
     container Interface ^interface opposite referredOperations
 
     /**
+     * TRANSFORMATION ONLY: Get those effective protocols and data formats of the referred operation
+     * that are not used in an endpoint of the referred operation. Note that a referred operation
+     * "inherits" its effective protocols from its surrounding interface that refers to the original
+     * operation and hence particularly _not_ from the interface in which the operation being
+     * referred to is declared.
+     */
+    op TupleList t_missingEndpointEffectiveProtocols() {
+        if (interface === null ||
+            interface.microservice === null ||
+            interface.microservice.t_defaultProtocols === null ||
+            interface.microservice.t_defaultProtocols.empty)
+            return null
+
+        val effectiveProtocols = t_effectiveProtocolSpecifications()
+        if (effectiveProtocols === null)
+            return null
+
+        // Remove effective protocols for which endpoints exist that do not specify data formats. In
+        // this case, the endpoint and its addresses account for all data formats of the endpoint
+        // protocol.
+        val endpointProtocolsWithoutDataFormats = endpoints.map[protocols].flatten
+            .filter[dataFormat === null]
+            .map[importedProtocol]
+            .toList
+        var resultProtocols = effectiveProtocols.filter[
+            val protocol = get("protocol") as Protocol
+            !endpointProtocolsWithoutDataFormats.contains(protocol)
+        ].toList
+
+        // Remove effective protocols for which endpoints with data formats exist
+        val endpointProtocolsWithDataFormats = endpoints.map[protocols].flatten
+            .filter[dataFormat !== null]
+            .toList
+        return resultProtocols.filter[
+            val protocol = get("protocol") as Protocol
+            val dataFormat = get("dataFormat") as DataFormat
+            !endpointProtocolsWithDataFormats.exists[
+                it.importedProtocol == protocol && it.dataFormat == dataFormat
+            ]
+        ].toList
+    }
+
+    /**
+     * TRANSFORMATION ONLY: Get effective protocols of the referred operation as combinations of
+     * Protocol and DataFormat. The effective protocols are primarily determined by the referred
+     * operations _own_ (i.e., _not_ the operation it refers to) protocol specifications. If a
+     * protocol specification for a communication type is missing, the type's effective protocols
+     * are taken from the interface that surrounds the referred operation (i.e., _not_ the interface
+     * of the operation being referred to).
+     */
+    op TupleList t_effectiveProtocolSpecifications() {
+        if (interface === null ||
+            interface.microservice === null ||
+            interface.microservice.t_defaultProtocols === null ||
+            interface.microservice.t_defaultProtocols.empty)
+            return null
+
+        val effectiveProtocolSpecifications = if (!protocols.empty)
+                protocols.get(0).effectiveProtocolSpecifications(protocols)
+            else
+                <Map<String, Object>> newArrayList
+
+        // Complement effective protocols with those of the containing interface
+        val protocolSpecificationsCommunicationTypes = protocols
+                .map[protocol.importedProtocol.communicationType].toSet
+        interface.t_effectiveProtocolSpecifications.forEach[microserviceEffectiveProtocolTuple |
+            val protocol = microserviceEffectiveProtocolTuple.get("protocol") as Protocol
+            if (!protocolSpecificationsCommunicationTypes.contains(protocol.communicationType))
+                effectiveProtocolSpecifications.add(microserviceEffectiveProtocolTuple)
+        ]
+
+        return effectiveProtocolSpecifications
+    }
+
+    /**
      * Get parts of the referred operation for creating a qualified name
      */
     op String[] getQualifiedNameParts() {
@@ -608,6 +1018,22 @@ class ReferredOperation {
         val nameParts = interface.qualifiedNameParts
         nameParts.addAll(operation.name)
         nameParts.asEList
+    }
+
+    /**
+     * Build qualified name from qualified name parts
+     */
+    op String buildQualifiedName(String separator) {
+        if (separator === null)
+            return null
+
+        var String qualifiedName = ""
+        for (part : qualifiedNameParts)
+            qualifiedName += separator + part
+        // Remove leading separator
+        if (!qualifiedName.empty)
+            qualifiedName = qualifiedName.substring(separator.length)
+        return qualifiedName
     }
 }
 
@@ -637,8 +1063,40 @@ class Parameter {
     contains ImportedType[0..1] importedType
     contains PrimitiveType[0..1] primitiveType
     contains ImportedServiceAspect[] aspects opposite parameter
+    // This property encapsulates the information from the Mapping DSL, which allows to enrich (and/
+    // or map) single data fields (and/or their types) of a parameter's complex type with (to)
+    // technology-specific information (type)
+    contains MappedDataField[] mappedDataFields opposite parameter
 
     container Operation operation opposite parameters
+
+    /**
+     * Get parts of the parameter for creating a qualified name
+     */
+    op String[] getQualifiedNameParts() {
+        if (name === null || name.empty)
+            return newArrayList.asEList
+
+        val nameParts = operation.qualifiedNameParts
+        nameParts.addAll(name)
+        nameParts.asEList
+    }
+
+    /**
+     * Build qualified name from qualified name parts
+     */
+    op String buildQualifiedName(String separator) {
+        if (separator === null)
+            return null
+
+        var String qualifiedName = ""
+        for (part : qualifiedNameParts)
+            qualifiedName += separator + part
+        // Remove leading separator
+        if (!qualifiedName.empty)
+            qualifiedName = qualifiedName.substring(separator.length)
+        return qualifiedName
+    }
 
     /**
      * Check if a parameter is _basically_ initializable by a given operation. This basic check does
@@ -703,6 +1161,19 @@ class Parameter {
     }
 
     /**
+     * Check if the effective type of the parameter is technology-specific
+     */
+    op boolean isTechnologySpecificEffectiveType() {
+        val effectiveType = getEffectiveType()
+        if (effectiveType === null)
+            return false
+
+        return effectiveType instanceof TechnologySpecificDataStructure ||
+            effectiveType instanceof TechnologySpecificListType ||
+            effectiveType instanceof TechnologySpecificPrimitiveType
+    }
+
+    /**
      * Get parts of the parameter for creating a qualified name depending on its effective type
      */
     op String[] getEffectiveTypeQualifiedNameParts() {
@@ -727,6 +1198,59 @@ class Parameter {
             return effectiveType.qualifiedNameParts
 
         return null
+    }
+}
+
+/**
+ * Concept to express technology-specific information, which was assigned to a data field leveraging
+ * the Mapping DSL
+ */
+class MappedDataField {
+    refers DataField dataField
+    contains ImportedType mappedType
+    contains ImportedServiceAspect[] aspects opposite mappedDataField
+
+    container Parameter parameter opposite mappedDataFields
+
+    /**
+     * Get parts of the parameter for creating a qualified name
+     */
+    op String[] getQualifiedNameParts() {
+        if (dataField === null || dataField.name.empty)
+            return newArrayList.asEList
+
+        val nameParts = parameter.qualifiedNameParts
+        nameParts.addAll(dataField.name)
+        nameParts.asEList
+    }
+
+    /**
+     * Build qualified name from qualified name parts
+     */
+    op String buildQualifiedName(String separator) {
+        if (separator === null)
+            return null
+
+        var String qualifiedName = ""
+        for (part : qualifiedNameParts)
+            qualifiedName += separator + part
+        // Remove leading separator
+        if (!qualifiedName.empty)
+            qualifiedName = qualifiedName.substring(separator.length)
+        return qualifiedName
+    }
+
+    /**
+     * Get the effective type of the mapped data field. The effective type corresponds to the mapped
+     * type, if the field has one. Otherwise, it is the effective type of the field itself.
+     */
+    op Type getEffectiveType() {
+        if (mappedType !== null)
+            return mappedType.^type
+        else if (dataField !== null)
+            return dataField.effectiveType
+        else
+            return null
     }
 }
 
@@ -860,6 +1384,7 @@ class ImportedProtocolAndDataFormat {
     refers DataFormat[0..1] dataFormat
 
     container ProtocolSpecification specification opposite protocol
+    container Endpoint endpoint opposite protocols
 }
 
 /**
@@ -871,6 +1396,44 @@ class ProtocolSpecification {
     CommunicationType communicationType
 
     contains ImportedProtocolAndDataFormat protocol opposite specification
+
+    /**
+     * Reusable helper method to determine effective protocol specifications from a list of
+     * ProtocolSpecification instances as combinations of Protocol and DataFormat. In case a
+     * ProtocolSpecification instance does not specify a data format, the effective protocol
+     * specifications correspond to the ProtocolSpecification's Protocol being combined with all of
+     * its DataFormats.
+     */
+    op TupleList effectiveProtocolSpecifications(ProtocolSpecification[] specifications) {
+        if (specifications === null)
+            return null
+
+        val results = <Map<String, Object>> newArrayList
+        specifications.forEach[specification |
+            val protocol = specification.protocol
+            val importedProtocol = protocol.importedProtocol
+            // Protocol specification has data format
+            if (protocol.dataFormat !== null) {
+                val entry = <String, Object> newHashMap
+                entry.put("protocol", importedProtocol)
+                entry.put("dataFormat", protocol.dataFormat)
+                entry.put("import", protocol.import)
+                results.add(entry)
+
+            // Protocol specification lacks data format
+            } else {
+                // Combine the specification's protocol with all of the protocol's data formats
+                importedProtocol.dataFormats.forEach[dataFormat |
+                    val entry = <String, Object> newHashMap
+                    entry.put("protocol", importedProtocol)
+                    entry.put("dataFormat", dataFormat)
+                    entry.put("import", protocol.import)
+                    results.add(entry)
+                ]
+            }
+        ]
+        return results
+    }
 }
 
 /**
@@ -886,7 +1449,7 @@ class Endpoint {
 
     String[1..*] addresses
 
-    contains ImportedProtocolAndDataFormat[1..*] protocols
+    contains ImportedProtocolAndDataFormat[1..*] protocols opposite endpoint
 
     container Microservice microservice opposite endpoints
     container Interface ^interface opposite endpoints
@@ -923,6 +1486,9 @@ class ImportedServiceAspect {
     container Operation operation opposite aspects
     container ReferredOperation referredOperation opposite aspects
     container Parameter parameter opposite aspects
+    container MappedDataField mappedDataField opposite aspects
 }
 
+type TupleList wraps List<Map<String, Object>>
 type MicroserviceImportMap wraps Map<Microservice, Import>
+type DefaultProtocols wraps Map<CommunicationType, Pair<Import, Protocol>>

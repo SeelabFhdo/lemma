@@ -7,15 +7,30 @@ import de.fhdo.ddmm.service.ProtocolSpecification;
 import de.fhdo.ddmm.service.ServicePackage;
 
 import de.fhdo.ddmm.technology.CommunicationType;
+import de.fhdo.ddmm.technology.DataFormat;
+import de.fhdo.ddmm.technology.Protocol;
+
+import java.lang.reflect.InvocationTargetException;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import java.util.function.Consumer;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+
+import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+
+import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 
 /**
  * <!-- begin-user-doc -->
@@ -150,6 +165,47 @@ public class ProtocolSpecificationImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    public List<Map<String, Object>> effectiveProtocolSpecifications(final EList<ProtocolSpecification> specifications) {
+        if ((specifications == null)) {
+            return null;
+        }
+        final ArrayList<Map<String, Object>> results = CollectionLiterals.<Map<String, Object>>newArrayList();
+        final Consumer<ProtocolSpecification> _function = new Consumer<ProtocolSpecification>() {
+            public void accept(final ProtocolSpecification specification) {
+                final ImportedProtocolAndDataFormat protocol = specification.getProtocol();
+                final Protocol importedProtocol = protocol.getImportedProtocol();
+                DataFormat _dataFormat = protocol.getDataFormat();
+                boolean _tripleNotEquals = (_dataFormat != null);
+                if (_tripleNotEquals) {
+                    final HashMap<String, Object> entry = CollectionLiterals.<String, Object>newHashMap();
+                    entry.put("protocol", importedProtocol);
+                    entry.put("dataFormat", protocol.getDataFormat());
+                    entry.put("import", protocol.getImport());
+                    results.add(entry);
+                }
+                else {
+                    final Consumer<DataFormat> _function = new Consumer<DataFormat>() {
+                        public void accept(final DataFormat dataFormat) {
+                            final HashMap<String, Object> entry = CollectionLiterals.<String, Object>newHashMap();
+                            entry.put("protocol", importedProtocol);
+                            entry.put("dataFormat", dataFormat);
+                            entry.put("import", protocol.getImport());
+                            results.add(entry);
+                        }
+                    };
+                    importedProtocol.getDataFormats().forEach(_function);
+                }
+            }
+        };
+        specifications.forEach(_function);
+        return results;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     @Override
     public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
@@ -241,6 +297,21 @@ public class ProtocolSpecificationImpl extends MinimalEObjectImpl.Container impl
                 return protocol != null;
         }
         return super.eIsSet(featureID);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    @SuppressWarnings("unchecked")
+    public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+        switch (operationID) {
+            case ServicePackage.PROTOCOL_SPECIFICATION___EFFECTIVE_PROTOCOL_SPECIFICATIONS__ELIST:
+                return effectiveProtocolSpecifications((EList<ProtocolSpecification>)arguments.get(0));
+        }
+        return super.eInvoke(operationID, arguments);
     }
 
     /**

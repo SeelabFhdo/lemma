@@ -16,6 +16,8 @@ import de.fhdo.ddmm.technology.Protocol
 import de.fhdo.ddmm.technology.ServiceAspect
 import de.fhdo.ddmm.technology.TechnologySpecificPrimitiveType
 import de.fhdo.ddmm.technology.TechnologySpecificPropertyValueAssignment
+import de.fhdo.ddmm.utils.DdmmUtils
+import de.fhdo.ddmm.technology.Technology
 
 /**
  * Metamodel for technology mappings that provide an alternative to specifying technology in service
@@ -64,19 +66,23 @@ class TechnologyMapping {
 class MicroserviceMapping {
     /**
      * Implicit Constraints:
-     *     (C1) Mapping must not be empty.
+     *     (C1) Communication types of mapped protocol specifications must be unique.
      *          Ensured by: DSL validator.
-     *     (C2) Communication types of mapped protocol specifications must be unique.
+     *     (C2) Endpoint protocols must be unique.
      *          Ensured by: DSL validator.
-     *     (C3) Endpoint protocols must be unique.
+     *     (C3) Endpoint addresses must be unique.
      *          Ensured by: DSL validator.
-     *     (C4) Endpoint addresses must be unique.
+     *     (C4) A technology might be assigned exactly once to a microservice mapping.
      *          Ensured by: DSL validator.
-     *     (C5) A technology might be assigned exactly once to a microservice mapping.
+     *     (C5) Only one assigned technology might comprise technology-specific types.
      *          Ensured by: DSL validator.
-     *     (C6) Only one assigned technology might comprise technology-specific types.
+     *     (C6) Assigned technologies may not only define deployment-specific concepts.
      *          Ensured by: DSL validator.
-     *     (C7) Assigned technologies may not only define deployment-specific concepts.
+     *     (C7) Type definition technologies of microservice cannot differ in service and mapping
+     *          model in case the service model refers to technology-specific types. Otherwise, the
+     *          transformation of the mapping to a service model would not be possible, because the
+     *          technology-specific types could not be mapped, as both service and mapping model
+     *          refer to different technologies for the service.
      *          Ensured by: DSL validator.
      */
 
@@ -90,6 +96,53 @@ class MicroserviceMapping {
     contains TechnologySpecificImportedServiceAspect[] aspects opposite microserviceMapping
 
     container TechnologyMapping mappingModel opposite mappings
+
+    /**
+     * Get imports of type definition technologies
+     */
+    op Import[] getTypeDefinitionTechnologyImports() {
+        return technologies.filter[
+            val technologyModel = DdmmUtils.getImportedModelRoot(eResource, importURI, Technology)
+            !technologyModel.primitiveTypes.empty ||
+            !technologyModel.listTypes.empty ||
+            !technologyModel.dataStructures.empty
+        ].toEList
+    }
+
+    /**
+     * Get import of type definition technology. Note that this corresponds to the first technology
+     * import in the list of type definition technology imports and should only be executed if the
+     * model had been validated to refer to one type definition technology at most.
+     */
+    op Import getTypeDefinitionTechnologyImport() {
+        val typeDefinitionTechnologyImports = getTypeDefinitionTechnologyImports()
+        return if (!typeDefinitionTechnologyImports.empty)
+                typeDefinitionTechnologyImports.get(0)
+            else
+                null
+    }
+
+    /**
+     * Get type definition technology models
+     */
+    op Technology[] getTypeDefinitionTechnologies() {
+        return typeDefinitionTechnologyImports.map[
+            DdmmUtils.getImportedModelRoot(eResource, importURI, Technology)
+        ]
+    }
+
+    /**
+     * Get type definition technology. Note that this corresponds to the first technology model in
+     * the list of type definition technology models and should only be executed if the service
+     * model had been validated to refer to one type definition technology at most.
+     */
+    op Technology getTypeDefinitionTechnology() {
+        val typeDefinitionTechnologies = getTypeDefinitionTechnologies()
+        return if (!typeDefinitionTechnologies.empty)
+                typeDefinitionTechnologies.get(0)
+            else
+                null
+    }
 }
 
 /**

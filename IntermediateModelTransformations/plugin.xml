@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated IntermediateServiceModel -->
+      <package
+            uri="de.fhdo.ddmm.service.intermediate"
+            class="de.fhdo.ddmm.service.intermediate.IntermediatePackage"
+            genModel="model/IntermediateServiceModel.xcore"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated IntermediateDataModel -->
+      <package
+            uri="de.fhdo.ddmm.data.intermediate"
+            class="de.fhdo.ddmm.data.intermediate.IntermediatePackage"
+            genModel="model/IntermediateDataModel.xcore"/>
+   </extension>
+
+</plugin>

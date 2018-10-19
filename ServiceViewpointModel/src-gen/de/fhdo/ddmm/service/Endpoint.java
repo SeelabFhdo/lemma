@@ -55,6 +55,7 @@ public interface Endpoint extends EObject {
     /**
      * Returns the value of the '<em><b>Protocols</b></em>' containment reference list.
      * The list contents are of type {@link de.fhdo.ddmm.service.ImportedProtocolAndDataFormat}.
+     * It is bidirectional and its opposite is '{@link de.fhdo.ddmm.service.ImportedProtocolAndDataFormat#getEndpoint <em>Endpoint</em>}'.
      * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Protocols</em>' containment reference list isn't clear,
@@ -63,7 +64,8 @@ public interface Endpoint extends EObject {
      * <!-- end-user-doc -->
      * @return the value of the '<em>Protocols</em>' containment reference list.
      * @see de.fhdo.ddmm.service.ServicePackage#getEndpoint_Protocols()
-     * @model containment="true" required="true"
+     * @see de.fhdo.ddmm.service.ImportedProtocolAndDataFormat#getEndpoint
+     * @model opposite="endpoint" containment="true" required="true"
      * @generated
      */
     EList<ImportedProtocolAndDataFormat> getProtocols();

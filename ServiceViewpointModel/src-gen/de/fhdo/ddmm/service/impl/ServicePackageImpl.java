@@ -11,6 +11,7 @@ import de.fhdo.ddmm.service.ImportedProtocolAndDataFormat;
 import de.fhdo.ddmm.service.ImportedServiceAspect;
 import de.fhdo.ddmm.service.ImportedType;
 import de.fhdo.ddmm.service.Interface;
+import de.fhdo.ddmm.service.MappedDataField;
 import de.fhdo.ddmm.service.Microservice;
 import de.fhdo.ddmm.service.MicroserviceType;
 import de.fhdo.ddmm.service.Operation;
@@ -27,6 +28,7 @@ import de.fhdo.ddmm.service.Visibility;
 
 import de.fhdo.ddmm.technology.TechnologyPackage;
 
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.ecore.EAttribute;
@@ -95,6 +97,13 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     private EClass parameterEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass mappedDataFieldEClass = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -178,7 +187,21 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    private EDataType tupleListEDataType = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     private EDataType microserviceImportMapEDataType = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EDataType defaultProtocolsEDataType = null;
 
     /**
      * Creates an instance of the model <b>Package</b>, registered with
@@ -228,8 +251,8 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
 
         // Initialize simple dependencies
         EcorePackage.eINSTANCE.eClass();
-        DataPackage.eINSTANCE.eClass();
         TechnologyPackage.eINSTANCE.eClass();
+        DataPackage.eINSTANCE.eClass();
 
         // Create package meta-data objects
         theServicePackage.createPackageContents();
@@ -395,8 +418,8 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getMicroservice_Technologies() {
-        return (EReference)microserviceEClass.getEStructuralFeatures().get(4);
+    public EAttribute getMicroservice_T_defaultProtocols() {
+        return (EAttribute)microserviceEClass.getEStructuralFeatures().get(4);
     }
 
     /**
@@ -404,7 +427,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getMicroservice_Endpoints() {
+    public EReference getMicroservice_Technologies() {
         return (EReference)microserviceEClass.getEStructuralFeatures().get(5);
     }
 
@@ -413,7 +436,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getMicroservice_RequiredMicroservices() {
+    public EReference getMicroservice_T_typeDefinitionTechnologyImport() {
         return (EReference)microserviceEClass.getEStructuralFeatures().get(6);
     }
 
@@ -422,7 +445,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getMicroservice_RequiredInterfaces() {
+    public EReference getMicroservice_T_typeDefinitionTechnology() {
         return (EReference)microserviceEClass.getEStructuralFeatures().get(7);
     }
 
@@ -431,7 +454,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getMicroservice_RequiredOperations() {
+    public EReference getMicroservice_Endpoints() {
         return (EReference)microserviceEClass.getEStructuralFeatures().get(8);
     }
 
@@ -440,7 +463,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getMicroservice_Protocols() {
+    public EReference getMicroservice_RequiredMicroservices() {
         return (EReference)microserviceEClass.getEStructuralFeatures().get(9);
     }
 
@@ -449,7 +472,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getMicroservice_Interfaces() {
+    public EReference getMicroservice_RequiredInterfaces() {
         return (EReference)microserviceEClass.getEStructuralFeatures().get(10);
     }
 
@@ -458,7 +481,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getMicroservice_Aspects() {
+    public EReference getMicroservice_RequiredOperations() {
         return (EReference)microserviceEClass.getEStructuralFeatures().get(11);
     }
 
@@ -467,7 +490,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getMicroservice_ServiceModel() {
+    public EReference getMicroservice_Protocols() {
         return (EReference)microserviceEClass.getEStructuralFeatures().get(12);
     }
 
@@ -476,8 +499,35 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    public EReference getMicroservice_Interfaces() {
+        return (EReference)microserviceEClass.getEStructuralFeatures().get(13);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getMicroservice_Aspects() {
+        return (EReference)microserviceEClass.getEStructuralFeatures().get(14);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getMicroservice_ServiceModel() {
+        return (EReference)microserviceEClass.getEStructuralFeatures().get(15);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EAttribute getMicroservice_EffectivelyImplemented() {
-        return (EAttribute)microserviceEClass.getEStructuralFeatures().get(13);
+        return (EAttribute)microserviceEClass.getEStructuralFeatures().get(16);
     }
 
     /**
@@ -486,7 +536,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     public EAttribute getMicroservice_EffectiveVisibility() {
-        return (EAttribute)microserviceEClass.getEStructuralFeatures().get(14);
+        return (EAttribute)microserviceEClass.getEStructuralFeatures().get(17);
     }
 
     /**
@@ -495,7 +545,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     public EAttribute getMicroservice_EffectivelyInternal() {
-        return (EAttribute)microserviceEClass.getEStructuralFeatures().get(15);
+        return (EAttribute)microserviceEClass.getEStructuralFeatures().get(18);
     }
 
     /**
@@ -503,7 +553,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EOperation getMicroservice__GetQualifiedNameParts() {
+    public EOperation getMicroservice__T_missingEndpointEffectiveProtocols() {
         return microserviceEClass.getEOperations().get(0);
     }
 
@@ -512,7 +562,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EOperation getMicroservice__GetContainedOperations() {
+    public EOperation getMicroservice__T_effectiveProtocolSpecifications() {
         return microserviceEClass.getEOperations().get(1);
     }
 
@@ -521,7 +571,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EOperation getMicroservice__GetContainedReferredOperations() {
+    public EOperation getMicroservice__GetTypeDefinitionTechnologyImports() {
         return microserviceEClass.getEOperations().get(2);
     }
 
@@ -530,7 +580,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EOperation getMicroservice__GetRequiredImports() {
+    public EOperation getMicroservice__GetTypeDefinitionTechnologyImport() {
         return microserviceEClass.getEOperations().get(3);
     }
 
@@ -539,7 +589,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EOperation getMicroservice__GetAllRequiredOperations__Import() {
+    public EOperation getMicroservice__GetTypeDefinitionTechnologies() {
         return microserviceEClass.getEOperations().get(4);
     }
 
@@ -548,7 +598,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EOperation getMicroservice__GetAllRequiredMicroservices() {
+    public EOperation getMicroservice__GetTypeDefinitionTechnology() {
         return microserviceEClass.getEOperations().get(5);
     }
 
@@ -557,7 +607,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EOperation getMicroservice__CanRequire__Microservice_boolean() {
+    public EOperation getMicroservice__GetQualifiedNameParts() {
         return microserviceEClass.getEOperations().get(6);
     }
 
@@ -566,7 +616,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EOperation getMicroservice__CanRequire__Interface_boolean() {
+    public EOperation getMicroservice__BuildQualifiedName__String() {
         return microserviceEClass.getEOperations().get(7);
     }
 
@@ -575,8 +625,80 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EOperation getMicroservice__CanRequire__Operation_boolean() {
+    public EOperation getMicroservice__GetContainedOperations() {
         return microserviceEClass.getEOperations().get(8);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EOperation getMicroservice__GetContainedReferredOperations() {
+        return microserviceEClass.getEOperations().get(9);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EOperation getMicroservice__GetRequiredImports() {
+        return microserviceEClass.getEOperations().get(10);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EOperation getMicroservice__GetAllRequiredOperations__Import() {
+        return microserviceEClass.getEOperations().get(11);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EOperation getMicroservice__GetAllRequiredMicroservices() {
+        return microserviceEClass.getEOperations().get(12);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EOperation getMicroservice__GetAllInitializingMicroservices() {
+        return microserviceEClass.getEOperations().get(13);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EOperation getMicroservice__CanRequire__Microservice_boolean() {
+        return microserviceEClass.getEOperations().get(14);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EOperation getMicroservice__CanRequire__Interface_boolean() {
+        return microserviceEClass.getEOperations().get(15);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EOperation getMicroservice__CanRequire__Operation_boolean() {
+        return microserviceEClass.getEOperations().get(16);
     }
 
     /**
@@ -701,8 +823,35 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EOperation getInterface__GetQualifiedNameParts() {
+    public EOperation getInterface__T_missingEndpointEffectiveProtocols() {
         return interfaceEClass.getEOperations().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EOperation getInterface__T_effectiveProtocolSpecifications() {
+        return interfaceEClass.getEOperations().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EOperation getInterface__GetQualifiedNameParts() {
+        return interfaceEClass.getEOperations().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EOperation getInterface__BuildQualifiedName__String() {
+        return interfaceEClass.getEOperations().get(3);
     }
 
     /**
@@ -827,8 +976,35 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EOperation getOperation__GetQualifiedNameParts() {
+    public EOperation getOperation__T_missingEndpointEffectiveProtocols() {
         return operationEClass.getEOperations().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EOperation getOperation__T_effectiveProtocolSpecifications() {
+        return operationEClass.getEOperations().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EOperation getOperation__GetQualifiedNameParts() {
+        return operationEClass.getEOperations().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EOperation getOperation__BuildQualifiedName__String() {
+        return operationEClass.getEOperations().get(3);
     }
 
     /**
@@ -890,8 +1066,35 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EOperation getReferredOperation__GetQualifiedNameParts() {
+    public EOperation getReferredOperation__T_missingEndpointEffectiveProtocols() {
         return referredOperationEClass.getEOperations().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EOperation getReferredOperation__T_effectiveProtocolSpecifications() {
+        return referredOperationEClass.getEOperations().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EOperation getReferredOperation__GetQualifiedNameParts() {
+        return referredOperationEClass.getEOperations().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EOperation getReferredOperation__BuildQualifiedName__String() {
+        return referredOperationEClass.getEOperations().get(3);
     }
 
     /**
@@ -989,7 +1192,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getParameter_Operation() {
+    public EReference getParameter_MappedDataFields() {
         return (EReference)parameterEClass.getEStructuralFeatures().get(9);
     }
 
@@ -998,7 +1201,16 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EOperation getParameter__BasicallyInitializableBy__Operation() {
+    public EReference getParameter_Operation() {
+        return (EReference)parameterEClass.getEStructuralFeatures().get(10);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EOperation getParameter__GetQualifiedNameParts() {
         return parameterEClass.getEOperations().get(0);
     }
 
@@ -1007,7 +1219,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EOperation getParameter__GetEffectiveType() {
+    public EOperation getParameter__BuildQualifiedName__String() {
         return parameterEClass.getEOperations().get(1);
     }
 
@@ -1016,8 +1228,107 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EOperation getParameter__GetEffectiveTypeQualifiedNameParts() {
+    public EOperation getParameter__BasicallyInitializableBy__Operation() {
         return parameterEClass.getEOperations().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EOperation getParameter__GetEffectiveType() {
+        return parameterEClass.getEOperations().get(3);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EOperation getParameter__IsTechnologySpecificEffectiveType() {
+        return parameterEClass.getEOperations().get(4);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EOperation getParameter__GetEffectiveTypeQualifiedNameParts() {
+        return parameterEClass.getEOperations().get(5);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getMappedDataField() {
+        return mappedDataFieldEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getMappedDataField_DataField() {
+        return (EReference)mappedDataFieldEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getMappedDataField_MappedType() {
+        return (EReference)mappedDataFieldEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getMappedDataField_Aspects() {
+        return (EReference)mappedDataFieldEClass.getEStructuralFeatures().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getMappedDataField_Parameter() {
+        return (EReference)mappedDataFieldEClass.getEStructuralFeatures().get(3);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EOperation getMappedDataField__GetQualifiedNameParts() {
+        return mappedDataFieldEClass.getEOperations().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EOperation getMappedDataField__BuildQualifiedName__String() {
+        return mappedDataFieldEClass.getEOperations().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EOperation getMappedDataField__GetEffectiveType() {
+        return mappedDataFieldEClass.getEOperations().get(2);
     }
 
     /**
@@ -1268,6 +1579,15 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    public EReference getImportedProtocolAndDataFormat_Endpoint() {
+        return (EReference)importedProtocolAndDataFormatEClass.getEStructuralFeatures().get(4);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EClass getProtocolSpecification() {
         return protocolSpecificationEClass;
     }
@@ -1288,6 +1608,15 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      */
     public EReference getProtocolSpecification_Protocol() {
         return (EReference)protocolSpecificationEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EOperation getProtocolSpecification__EffectiveProtocolSpecifications__EList() {
+        return protocolSpecificationEClass.getEOperations().get(0);
     }
 
     /**
@@ -1448,6 +1777,15 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    public EReference getImportedServiceAspect_MappedDataField() {
+        return (EReference)importedServiceAspectEClass.getEStructuralFeatures().get(9);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EEnum getImportType() {
         return importTypeEEnum;
     }
@@ -1475,8 +1813,26 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    public EDataType getTupleList() {
+        return tupleListEDataType;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EDataType getMicroserviceImportMap() {
         return microserviceImportMapEDataType;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EDataType getDefaultProtocols() {
+        return defaultProtocolsEDataType;
     }
 
     /**
@@ -1525,7 +1881,10 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
         createEAttribute(microserviceEClass, MICROSERVICE__VERSION);
         createEAttribute(microserviceEClass, MICROSERVICE__TYPE);
         createEAttribute(microserviceEClass, MICROSERVICE__VISIBILITY);
+        createEAttribute(microserviceEClass, MICROSERVICE__TDEFAULT_PROTOCOLS);
         createEReference(microserviceEClass, MICROSERVICE__TECHNOLOGIES);
+        createEReference(microserviceEClass, MICROSERVICE__TTYPE_DEFINITION_TECHNOLOGY_IMPORT);
+        createEReference(microserviceEClass, MICROSERVICE__TTYPE_DEFINITION_TECHNOLOGY);
         createEReference(microserviceEClass, MICROSERVICE__ENDPOINTS);
         createEReference(microserviceEClass, MICROSERVICE__REQUIRED_MICROSERVICES);
         createEReference(microserviceEClass, MICROSERVICE__REQUIRED_INTERFACES);
@@ -1537,12 +1896,20 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
         createEAttribute(microserviceEClass, MICROSERVICE__EFFECTIVELY_IMPLEMENTED);
         createEAttribute(microserviceEClass, MICROSERVICE__EFFECTIVE_VISIBILITY);
         createEAttribute(microserviceEClass, MICROSERVICE__EFFECTIVELY_INTERNAL);
+        createEOperation(microserviceEClass, MICROSERVICE___TMISSING_ENDPOINT_EFFECTIVE_PROTOCOLS);
+        createEOperation(microserviceEClass, MICROSERVICE___TEFFECTIVE_PROTOCOL_SPECIFICATIONS);
+        createEOperation(microserviceEClass, MICROSERVICE___GET_TYPE_DEFINITION_TECHNOLOGY_IMPORTS);
+        createEOperation(microserviceEClass, MICROSERVICE___GET_TYPE_DEFINITION_TECHNOLOGY_IMPORT);
+        createEOperation(microserviceEClass, MICROSERVICE___GET_TYPE_DEFINITION_TECHNOLOGIES);
+        createEOperation(microserviceEClass, MICROSERVICE___GET_TYPE_DEFINITION_TECHNOLOGY);
         createEOperation(microserviceEClass, MICROSERVICE___GET_QUALIFIED_NAME_PARTS);
+        createEOperation(microserviceEClass, MICROSERVICE___BUILD_QUALIFIED_NAME__STRING);
         createEOperation(microserviceEClass, MICROSERVICE___GET_CONTAINED_OPERATIONS);
         createEOperation(microserviceEClass, MICROSERVICE___GET_CONTAINED_REFERRED_OPERATIONS);
         createEOperation(microserviceEClass, MICROSERVICE___GET_REQUIRED_IMPORTS);
         createEOperation(microserviceEClass, MICROSERVICE___GET_ALL_REQUIRED_OPERATIONS__IMPORT);
         createEOperation(microserviceEClass, MICROSERVICE___GET_ALL_REQUIRED_MICROSERVICES);
+        createEOperation(microserviceEClass, MICROSERVICE___GET_ALL_INITIALIZING_MICROSERVICES);
         createEOperation(microserviceEClass, MICROSERVICE___CAN_REQUIRE__MICROSERVICE_BOOLEAN);
         createEOperation(microserviceEClass, MICROSERVICE___CAN_REQUIRE__INTERFACE_BOOLEAN);
         createEOperation(microserviceEClass, MICROSERVICE___CAN_REQUIRE__OPERATION_BOOLEAN);
@@ -1560,7 +1927,10 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
         createEAttribute(interfaceEClass, INTERFACE__EFFECTIVE_VISIBILITY);
         createEAttribute(interfaceEClass, INTERFACE__EFFECTIVELY_IMPLEMENTED);
         createEAttribute(interfaceEClass, INTERFACE__EFFECTIVELY_INTERNAL);
+        createEOperation(interfaceEClass, INTERFACE___TMISSING_ENDPOINT_EFFECTIVE_PROTOCOLS);
+        createEOperation(interfaceEClass, INTERFACE___TEFFECTIVE_PROTOCOL_SPECIFICATIONS);
         createEOperation(interfaceEClass, INTERFACE___GET_QUALIFIED_NAME_PARTS);
+        createEOperation(interfaceEClass, INTERFACE___BUILD_QUALIFIED_NAME__STRING);
 
         operationEClass = createEClass(OPERATION);
         createEAttribute(operationEClass, OPERATION__NAME);
@@ -1575,7 +1945,10 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
         createEAttribute(operationEClass, OPERATION__EFFECTIVELY_NOT_IMPLEMENTED);
         createEAttribute(operationEClass, OPERATION__EFFECTIVE_VISIBILITY);
         createEAttribute(operationEClass, OPERATION__EFFECTIVELY_INTERNAL);
+        createEOperation(operationEClass, OPERATION___TMISSING_ENDPOINT_EFFECTIVE_PROTOCOLS);
+        createEOperation(operationEClass, OPERATION___TEFFECTIVE_PROTOCOL_SPECIFICATIONS);
         createEOperation(operationEClass, OPERATION___GET_QUALIFIED_NAME_PARTS);
+        createEOperation(operationEClass, OPERATION___BUILD_QUALIFIED_NAME__STRING);
 
         referredOperationEClass = createEClass(REFERRED_OPERATION);
         createEReference(referredOperationEClass, REFERRED_OPERATION__OPERATION);
@@ -1583,7 +1956,10 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
         createEReference(referredOperationEClass, REFERRED_OPERATION__PROTOCOLS);
         createEReference(referredOperationEClass, REFERRED_OPERATION__ASPECTS);
         createEReference(referredOperationEClass, REFERRED_OPERATION__INTERFACE);
+        createEOperation(referredOperationEClass, REFERRED_OPERATION___TMISSING_ENDPOINT_EFFECTIVE_PROTOCOLS);
+        createEOperation(referredOperationEClass, REFERRED_OPERATION___TEFFECTIVE_PROTOCOL_SPECIFICATIONS);
         createEOperation(referredOperationEClass, REFERRED_OPERATION___GET_QUALIFIED_NAME_PARTS);
+        createEOperation(referredOperationEClass, REFERRED_OPERATION___BUILD_QUALIFIED_NAME__STRING);
 
         parameterEClass = createEClass(PARAMETER);
         createEAttribute(parameterEClass, PARAMETER__NAME);
@@ -1595,10 +1971,23 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
         createEReference(parameterEClass, PARAMETER__IMPORTED_TYPE);
         createEReference(parameterEClass, PARAMETER__PRIMITIVE_TYPE);
         createEReference(parameterEClass, PARAMETER__ASPECTS);
+        createEReference(parameterEClass, PARAMETER__MAPPED_DATA_FIELDS);
         createEReference(parameterEClass, PARAMETER__OPERATION);
+        createEOperation(parameterEClass, PARAMETER___GET_QUALIFIED_NAME_PARTS);
+        createEOperation(parameterEClass, PARAMETER___BUILD_QUALIFIED_NAME__STRING);
         createEOperation(parameterEClass, PARAMETER___BASICALLY_INITIALIZABLE_BY__OPERATION);
         createEOperation(parameterEClass, PARAMETER___GET_EFFECTIVE_TYPE);
+        createEOperation(parameterEClass, PARAMETER___IS_TECHNOLOGY_SPECIFIC_EFFECTIVE_TYPE);
         createEOperation(parameterEClass, PARAMETER___GET_EFFECTIVE_TYPE_QUALIFIED_NAME_PARTS);
+
+        mappedDataFieldEClass = createEClass(MAPPED_DATA_FIELD);
+        createEReference(mappedDataFieldEClass, MAPPED_DATA_FIELD__DATA_FIELD);
+        createEReference(mappedDataFieldEClass, MAPPED_DATA_FIELD__MAPPED_TYPE);
+        createEReference(mappedDataFieldEClass, MAPPED_DATA_FIELD__ASPECTS);
+        createEReference(mappedDataFieldEClass, MAPPED_DATA_FIELD__PARAMETER);
+        createEOperation(mappedDataFieldEClass, MAPPED_DATA_FIELD___GET_QUALIFIED_NAME_PARTS);
+        createEOperation(mappedDataFieldEClass, MAPPED_DATA_FIELD___BUILD_QUALIFIED_NAME__STRING);
+        createEOperation(mappedDataFieldEClass, MAPPED_DATA_FIELD___GET_EFFECTIVE_TYPE);
 
         possiblyImportedMicroserviceEClass = createEClass(POSSIBLY_IMPORTED_MICROSERVICE);
         createEReference(possiblyImportedMicroserviceEClass, POSSIBLY_IMPORTED_MICROSERVICE__IMPORT);
@@ -1631,10 +2020,12 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
         createEReference(importedProtocolAndDataFormatEClass, IMPORTED_PROTOCOL_AND_DATA_FORMAT__IMPORTED_PROTOCOL);
         createEReference(importedProtocolAndDataFormatEClass, IMPORTED_PROTOCOL_AND_DATA_FORMAT__DATA_FORMAT);
         createEReference(importedProtocolAndDataFormatEClass, IMPORTED_PROTOCOL_AND_DATA_FORMAT__SPECIFICATION);
+        createEReference(importedProtocolAndDataFormatEClass, IMPORTED_PROTOCOL_AND_DATA_FORMAT__ENDPOINT);
 
         protocolSpecificationEClass = createEClass(PROTOCOL_SPECIFICATION);
         createEAttribute(protocolSpecificationEClass, PROTOCOL_SPECIFICATION__COMMUNICATION_TYPE);
         createEReference(protocolSpecificationEClass, PROTOCOL_SPECIFICATION__PROTOCOL);
+        createEOperation(protocolSpecificationEClass, PROTOCOL_SPECIFICATION___EFFECTIVE_PROTOCOL_SPECIFICATIONS__ELIST);
 
         endpointEClass = createEClass(ENDPOINT);
         createEAttribute(endpointEClass, ENDPOINT__ADDRESSES);
@@ -1654,6 +2045,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
         createEReference(importedServiceAspectEClass, IMPORTED_SERVICE_ASPECT__OPERATION);
         createEReference(importedServiceAspectEClass, IMPORTED_SERVICE_ASPECT__REFERRED_OPERATION);
         createEReference(importedServiceAspectEClass, IMPORTED_SERVICE_ASPECT__PARAMETER);
+        createEReference(importedServiceAspectEClass, IMPORTED_SERVICE_ASPECT__MAPPED_DATA_FIELD);
 
         // Create enums
         importTypeEEnum = createEEnum(IMPORT_TYPE);
@@ -1661,7 +2053,9 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
         visibilityEEnum = createEEnum(VISIBILITY);
 
         // Create data types
+        tupleListEDataType = createEDataType(TUPLE_LIST);
         microserviceImportMapEDataType = createEDataType(MICROSERVICE_IMPORT_MAP);
+        defaultProtocolsEDataType = createEDataType(DEFAULT_PROTOCOLS);
     }
 
     /**
@@ -1720,7 +2114,10 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
         initEAttribute(getMicroservice_Version(), theEcorePackage.getEString(), "version", null, 0, 1, Microservice.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getMicroservice_Type(), this.getMicroserviceType(), "type", null, 0, 1, Microservice.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getMicroservice_Visibility(), this.getVisibility(), "visibility", "NONE", 0, 1, Microservice.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getMicroservice_T_defaultProtocols(), this.getDefaultProtocols(), "t_defaultProtocols", null, 0, 1, Microservice.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getMicroservice_Technologies(), this.getImport(), null, "technologies", null, 0, -1, Microservice.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getMicroservice_T_typeDefinitionTechnologyImport(), this.getImport(), null, "t_typeDefinitionTechnologyImport", null, 0, 1, Microservice.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getMicroservice_T_typeDefinitionTechnology(), theTechnologyPackage.getTechnology(), null, "t_typeDefinitionTechnology", null, 0, 1, Microservice.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getMicroservice_Endpoints(), this.getEndpoint(), this.getEndpoint_Microservice(), "endpoints", null, 0, -1, Microservice.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getMicroservice_RequiredMicroservices(), this.getPossiblyImportedMicroservice(), this.getPossiblyImportedMicroservice_RequiringMicroservice(), "requiredMicroservices", null, 0, -1, Microservice.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getMicroservice_RequiredInterfaces(), this.getPossiblyImportedInterface(), this.getPossiblyImportedInterface_RequiringMicroservice(), "requiredInterfaces", null, 0, -1, Microservice.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1733,7 +2130,22 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
         initEAttribute(getMicroservice_EffectiveVisibility(), this.getVisibility(), "effectiveVisibility", null, 0, 1, Microservice.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, IS_DERIVED, IS_ORDERED);
         initEAttribute(getMicroservice_EffectivelyInternal(), theEcorePackage.getEBoolean(), "effectivelyInternal", null, 0, 1, Microservice.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 
+        initEOperation(getMicroservice__T_missingEndpointEffectiveProtocols(), this.getTupleList(), "t_missingEndpointEffectiveProtocols", 0, 1, !IS_UNIQUE, IS_ORDERED);
+
+        initEOperation(getMicroservice__T_effectiveProtocolSpecifications(), this.getTupleList(), "t_effectiveProtocolSpecifications", 0, 1, !IS_UNIQUE, IS_ORDERED);
+
+        initEOperation(getMicroservice__GetTypeDefinitionTechnologyImports(), this.getImport(), "getTypeDefinitionTechnologyImports", 0, -1, !IS_UNIQUE, IS_ORDERED);
+
+        initEOperation(getMicroservice__GetTypeDefinitionTechnologyImport(), this.getImport(), "getTypeDefinitionTechnologyImport", 0, 1, !IS_UNIQUE, IS_ORDERED);
+
+        initEOperation(getMicroservice__GetTypeDefinitionTechnologies(), theTechnologyPackage.getTechnology(), "getTypeDefinitionTechnologies", 0, -1, !IS_UNIQUE, IS_ORDERED);
+
+        initEOperation(getMicroservice__GetTypeDefinitionTechnology(), theTechnologyPackage.getTechnology(), "getTypeDefinitionTechnology", 0, 1, !IS_UNIQUE, IS_ORDERED);
+
         initEOperation(getMicroservice__GetQualifiedNameParts(), theEcorePackage.getEString(), "getQualifiedNameParts", 0, -1, !IS_UNIQUE, IS_ORDERED);
+
+        EOperation op = initEOperation(getMicroservice__BuildQualifiedName__String(), theEcorePackage.getEString(), "buildQualifiedName", 0, 1, !IS_UNIQUE, IS_ORDERED);
+        addEParameter(op, theEcorePackage.getEString(), "separator", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
         initEOperation(getMicroservice__GetContainedOperations(), this.getOperation(), "getContainedOperations", 0, -1, !IS_UNIQUE, IS_ORDERED);
 
@@ -1741,10 +2153,12 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
 
         initEOperation(getMicroservice__GetRequiredImports(), this.getImport(), "getRequiredImports", 0, -1, !IS_UNIQUE, IS_ORDERED);
 
-        EOperation op = initEOperation(getMicroservice__GetAllRequiredOperations__Import(), this.getOperation(), "getAllRequiredOperations", 0, -1, !IS_UNIQUE, IS_ORDERED);
+        op = initEOperation(getMicroservice__GetAllRequiredOperations__Import(), this.getOperation(), "getAllRequiredOperations", 0, -1, !IS_UNIQUE, IS_ORDERED);
         addEParameter(op, this.getImport(), "fromImport", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
         initEOperation(getMicroservice__GetAllRequiredMicroservices(), this.getMicroserviceImportMap(), "getAllRequiredMicroservices", 0, 1, !IS_UNIQUE, IS_ORDERED);
+
+        initEOperation(getMicroservice__GetAllInitializingMicroservices(), this.getMicroservice(), "getAllInitializingMicroservices", 0, -1, !IS_UNIQUE, IS_ORDERED);
 
         op = initEOperation(getMicroservice__CanRequire__Microservice_boolean(), theEcorePackage.getEBoolean(), "canRequire", 0, 1, !IS_UNIQUE, IS_ORDERED);
         addEParameter(op, this.getMicroservice(), "microservice", 0, 1, !IS_UNIQUE, IS_ORDERED);
@@ -1772,7 +2186,14 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
         initEAttribute(getInterface_EffectivelyImplemented(), theEcorePackage.getEBoolean(), "effectivelyImplemented", null, 0, 1, Interface.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, IS_DERIVED, IS_ORDERED);
         initEAttribute(getInterface_EffectivelyInternal(), theEcorePackage.getEBoolean(), "effectivelyInternal", null, 0, 1, Interface.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 
+        initEOperation(getInterface__T_missingEndpointEffectiveProtocols(), this.getTupleList(), "t_missingEndpointEffectiveProtocols", 0, 1, !IS_UNIQUE, IS_ORDERED);
+
+        initEOperation(getInterface__T_effectiveProtocolSpecifications(), this.getTupleList(), "t_effectiveProtocolSpecifications", 0, 1, !IS_UNIQUE, IS_ORDERED);
+
         initEOperation(getInterface__GetQualifiedNameParts(), theEcorePackage.getEString(), "getQualifiedNameParts", 0, -1, !IS_UNIQUE, IS_ORDERED);
+
+        op = initEOperation(getInterface__BuildQualifiedName__String(), theEcorePackage.getEString(), "buildQualifiedName", 0, 1, !IS_UNIQUE, IS_ORDERED);
+        addEParameter(op, theEcorePackage.getEString(), "separator", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
         initEClass(operationEClass, Operation.class, "Operation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getOperation_Name(), theEcorePackage.getEString(), "name", null, 0, 1, Operation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1788,7 +2209,14 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
         initEAttribute(getOperation_EffectiveVisibility(), this.getVisibility(), "effectiveVisibility", null, 0, 1, Operation.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, IS_DERIVED, IS_ORDERED);
         initEAttribute(getOperation_EffectivelyInternal(), theEcorePackage.getEBoolean(), "effectivelyInternal", null, 0, 1, Operation.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 
+        initEOperation(getOperation__T_missingEndpointEffectiveProtocols(), this.getTupleList(), "t_missingEndpointEffectiveProtocols", 0, 1, !IS_UNIQUE, IS_ORDERED);
+
+        initEOperation(getOperation__T_effectiveProtocolSpecifications(), this.getTupleList(), "t_effectiveProtocolSpecifications", 0, 1, !IS_UNIQUE, IS_ORDERED);
+
         initEOperation(getOperation__GetQualifiedNameParts(), theEcorePackage.getEString(), "getQualifiedNameParts", 0, -1, !IS_UNIQUE, IS_ORDERED);
+
+        op = initEOperation(getOperation__BuildQualifiedName__String(), theEcorePackage.getEString(), "buildQualifiedName", 0, 1, !IS_UNIQUE, IS_ORDERED);
+        addEParameter(op, theEcorePackage.getEString(), "separator", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
         initEClass(referredOperationEClass, ReferredOperation.class, "ReferredOperation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getReferredOperation_Operation(), this.getOperation(), null, "operation", null, 0, 1, ReferredOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1797,7 +2225,14 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
         initEReference(getReferredOperation_Aspects(), this.getImportedServiceAspect(), this.getImportedServiceAspect_ReferredOperation(), "aspects", null, 0, -1, ReferredOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getReferredOperation_Interface(), this.getInterface(), this.getInterface_ReferredOperations(), "interface", null, 0, 1, ReferredOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
+        initEOperation(getReferredOperation__T_missingEndpointEffectiveProtocols(), this.getTupleList(), "t_missingEndpointEffectiveProtocols", 0, 1, !IS_UNIQUE, IS_ORDERED);
+
+        initEOperation(getReferredOperation__T_effectiveProtocolSpecifications(), this.getTupleList(), "t_effectiveProtocolSpecifications", 0, 1, !IS_UNIQUE, IS_ORDERED);
+
         initEOperation(getReferredOperation__GetQualifiedNameParts(), theEcorePackage.getEString(), "getQualifiedNameParts", 0, -1, !IS_UNIQUE, IS_ORDERED);
+
+        op = initEOperation(getReferredOperation__BuildQualifiedName__String(), theEcorePackage.getEString(), "buildQualifiedName", 0, 1, !IS_UNIQUE, IS_ORDERED);
+        addEParameter(op, theEcorePackage.getEString(), "separator", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
         initEClass(parameterEClass, Parameter.class, "Parameter", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getParameter_Name(), theEcorePackage.getEString(), "name", null, 0, 1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1809,14 +2244,35 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
         initEReference(getParameter_ImportedType(), this.getImportedType(), null, "importedType", null, 0, 1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getParameter_PrimitiveType(), theDataPackage.getPrimitiveType(), null, "primitiveType", null, 0, 1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getParameter_Aspects(), this.getImportedServiceAspect(), this.getImportedServiceAspect_Parameter(), "aspects", null, 0, -1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getParameter_MappedDataFields(), this.getMappedDataField(), this.getMappedDataField_Parameter(), "mappedDataFields", null, 0, -1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getParameter_Operation(), this.getOperation(), this.getOperation_Parameters(), "operation", null, 0, 1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEOperation(getParameter__GetQualifiedNameParts(), theEcorePackage.getEString(), "getQualifiedNameParts", 0, -1, !IS_UNIQUE, IS_ORDERED);
+
+        op = initEOperation(getParameter__BuildQualifiedName__String(), theEcorePackage.getEString(), "buildQualifiedName", 0, 1, !IS_UNIQUE, IS_ORDERED);
+        addEParameter(op, theEcorePackage.getEString(), "separator", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
         op = initEOperation(getParameter__BasicallyInitializableBy__Operation(), theEcorePackage.getEBoolean(), "basicallyInitializableBy", 0, 1, !IS_UNIQUE, IS_ORDERED);
         addEParameter(op, this.getOperation(), "initializingOperation", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
         initEOperation(getParameter__GetEffectiveType(), theDataPackage.getType(), "getEffectiveType", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
+        initEOperation(getParameter__IsTechnologySpecificEffectiveType(), theEcorePackage.getEBoolean(), "isTechnologySpecificEffectiveType", 0, 1, !IS_UNIQUE, IS_ORDERED);
+
         initEOperation(getParameter__GetEffectiveTypeQualifiedNameParts(), theEcorePackage.getEString(), "getEffectiveTypeQualifiedNameParts", 0, -1, !IS_UNIQUE, IS_ORDERED);
+
+        initEClass(mappedDataFieldEClass, MappedDataField.class, "MappedDataField", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEReference(getMappedDataField_DataField(), theDataPackage.getDataField(), null, "dataField", null, 0, 1, MappedDataField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getMappedDataField_MappedType(), this.getImportedType(), null, "mappedType", null, 0, 1, MappedDataField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getMappedDataField_Aspects(), this.getImportedServiceAspect(), this.getImportedServiceAspect_MappedDataField(), "aspects", null, 0, -1, MappedDataField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getMappedDataField_Parameter(), this.getParameter(), this.getParameter_MappedDataFields(), "parameter", null, 0, 1, MappedDataField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEOperation(getMappedDataField__GetQualifiedNameParts(), theEcorePackage.getEString(), "getQualifiedNameParts", 0, -1, !IS_UNIQUE, IS_ORDERED);
+
+        op = initEOperation(getMappedDataField__BuildQualifiedName__String(), theEcorePackage.getEString(), "buildQualifiedName", 0, 1, !IS_UNIQUE, IS_ORDERED);
+        addEParameter(op, theEcorePackage.getEString(), "separator", 0, 1, !IS_UNIQUE, IS_ORDERED);
+
+        initEOperation(getMappedDataField__GetEffectiveType(), theDataPackage.getType(), "getEffectiveType", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
         initEClass(possiblyImportedMicroserviceEClass, PossiblyImportedMicroservice.class, "PossiblyImportedMicroservice", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getPossiblyImportedMicroservice_Import(), this.getImport(), null, "import", null, 0, 1, PossiblyImportedMicroservice.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1849,14 +2305,18 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
         initEReference(getImportedProtocolAndDataFormat_ImportedProtocol(), theTechnologyPackage.getProtocol(), null, "importedProtocol", null, 0, 1, ImportedProtocolAndDataFormat.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getImportedProtocolAndDataFormat_DataFormat(), theTechnologyPackage.getDataFormat(), null, "dataFormat", null, 0, 1, ImportedProtocolAndDataFormat.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getImportedProtocolAndDataFormat_Specification(), this.getProtocolSpecification(), this.getProtocolSpecification_Protocol(), "specification", null, 0, 1, ImportedProtocolAndDataFormat.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getImportedProtocolAndDataFormat_Endpoint(), this.getEndpoint(), this.getEndpoint_Protocols(), "endpoint", null, 0, 1, ImportedProtocolAndDataFormat.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(protocolSpecificationEClass, ProtocolSpecification.class, "ProtocolSpecification", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getProtocolSpecification_CommunicationType(), theTechnologyPackage.getCommunicationType(), "communicationType", null, 0, 1, ProtocolSpecification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getProtocolSpecification_Protocol(), this.getImportedProtocolAndDataFormat(), this.getImportedProtocolAndDataFormat_Specification(), "protocol", null, 0, 1, ProtocolSpecification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
+        op = initEOperation(getProtocolSpecification__EffectiveProtocolSpecifications__EList(), this.getTupleList(), "effectiveProtocolSpecifications", 0, 1, !IS_UNIQUE, IS_ORDERED);
+        addEParameter(op, this.getProtocolSpecification(), "specifications", 0, -1, !IS_UNIQUE, IS_ORDERED);
+
         initEClass(endpointEClass, Endpoint.class, "Endpoint", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getEndpoint_Addresses(), theEcorePackage.getEString(), "addresses", null, 1, -1, Endpoint.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getEndpoint_Protocols(), this.getImportedProtocolAndDataFormat(), null, "protocols", null, 1, -1, Endpoint.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getEndpoint_Protocols(), this.getImportedProtocolAndDataFormat(), this.getImportedProtocolAndDataFormat_Endpoint(), "protocols", null, 1, -1, Endpoint.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getEndpoint_Microservice(), this.getMicroservice(), this.getMicroservice_Endpoints(), "microservice", null, 0, 1, Endpoint.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getEndpoint_Interface(), this.getInterface(), this.getInterface_Endpoints(), "interface", null, 0, 1, Endpoint.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getEndpoint_Operation(), this.getOperation(), this.getOperation_Endpoints(), "operation", null, 0, 1, Endpoint.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1872,6 +2332,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
         initEReference(getImportedServiceAspect_Operation(), this.getOperation(), this.getOperation_Aspects(), "operation", null, 0, 1, ImportedServiceAspect.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getImportedServiceAspect_ReferredOperation(), this.getReferredOperation(), this.getReferredOperation_Aspects(), "referredOperation", null, 0, 1, ImportedServiceAspect.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getImportedServiceAspect_Parameter(), this.getParameter(), this.getParameter_Aspects(), "parameter", null, 0, 1, ImportedServiceAspect.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getImportedServiceAspect_MappedDataField(), this.getMappedDataField(), this.getMappedDataField_Aspects(), "mappedDataField", null, 0, 1, ImportedServiceAspect.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         // Initialize enums and add enum literals
         initEEnum(importTypeEEnum, ImportType.class, "ImportType");
@@ -1892,7 +2353,9 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
         addEEnumLiteral(visibilityEEnum, Visibility.PUBLIC);
 
         // Initialize data types
+        initEDataType(tupleListEDataType, List.class, "TupleList", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS, "java.util.List<java.util.Map<java.lang.String, java.lang.Object>>");
         initEDataType(microserviceImportMapEDataType, Map.class, "MicroserviceImportMap", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS, "java.util.Map<de.fhdo.ddmm.service.Microservice, de.fhdo.ddmm.service.Import>");
+        initEDataType(defaultProtocolsEDataType, Map.class, "DefaultProtocols", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS, "java.util.Map<de.fhdo.ddmm.technology.CommunicationType, org.eclipse.xtext.xbase.lib.Pair<de.fhdo.ddmm.service.Import, de.fhdo.ddmm.technology.Protocol>>");
 
         // Create resource
         createResource(eNS_URI);

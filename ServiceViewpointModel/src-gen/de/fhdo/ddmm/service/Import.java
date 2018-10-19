@@ -11,7 +11,7 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <!-- begin-model-doc -->
  * *
- * Concept for importing data types, technology, and microservices into the metamodel
+ * Concept for importing data types, technologies, and microservices into the metamodel
  * <!-- end-model-doc -->
  *
  * <p>

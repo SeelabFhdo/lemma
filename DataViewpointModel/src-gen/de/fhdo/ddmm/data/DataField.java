@@ -238,6 +238,19 @@ public interface DataField extends EObject {
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
      * *
+     * Build qualified name from qualified name parts
+     * <!-- end-model-doc -->
+     * @model unique="false" separatorUnique="false"
+     *        annotation="http://www.eclipse.org/emf/2002/GenModel body='if ((separator == null))\n{\n\treturn null;\n}\n&lt;%java.lang.String%&gt; qualifiedName = \"\";\n&lt;%org.eclipse.emf.common.util.EList%&gt;&lt;&lt;%java.lang.String%&gt;&gt; _qualifiedNameParts = this.getQualifiedNameParts();\nfor (final &lt;%java.lang.String%&gt; part : _qualifiedNameParts)\n{\n\t&lt;%java.lang.String%&gt; _qualifiedName = qualifiedName;\n\tqualifiedName = (_qualifiedName + (separator + part));\n}\nboolean _isEmpty = qualifiedName.isEmpty();\nboolean _not = (!_isEmpty);\nif (_not)\n{\n\tqualifiedName = qualifiedName.substring(separator.length());\n}\nreturn qualifiedName;'"
+     * @generated
+     */
+    String buildQualifiedName(String separator);
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * *
      * Find an eponymous field in the inheritance hierarchy of this field's data structure. Returns
      * null, if this field is not part of a data structure, as only data structures may extend other
      * data structures.

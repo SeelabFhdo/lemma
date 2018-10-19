@@ -30,6 +30,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.fhdo.ddmm.service.Parameter#getImportedType <em>Imported Type</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.Parameter#getPrimitiveType <em>Primitive Type</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.Parameter#getAspects <em>Aspects</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.service.Parameter#getMappedDataFields <em>Mapped Data Fields</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.Parameter#getOperation <em>Operation</em>}</li>
  * </ul>
  *
@@ -287,6 +288,24 @@ public interface Parameter extends EObject {
     EList<ImportedServiceAspect> getAspects();
 
     /**
+     * Returns the value of the '<em><b>Mapped Data Fields</b></em>' containment reference list.
+     * The list contents are of type {@link de.fhdo.ddmm.service.MappedDataField}.
+     * It is bidirectional and its opposite is '{@link de.fhdo.ddmm.service.MappedDataField#getParameter <em>Parameter</em>}'.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Mapped Data Fields</em>' containment reference list isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Mapped Data Fields</em>' containment reference list.
+     * @see de.fhdo.ddmm.service.ServicePackage#getParameter_MappedDataFields()
+     * @see de.fhdo.ddmm.service.MappedDataField#getParameter
+     * @model opposite="parameter" containment="true"
+     * @generated
+     */
+    EList<MappedDataField> getMappedDataFields();
+
+    /**
      * Returns the value of the '<em><b>Operation</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.ddmm.service.Operation#getParameters <em>Parameters</em>}'.
      * <!-- begin-user-doc -->
@@ -319,6 +338,32 @@ public interface Parameter extends EObject {
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
      * *
+     * Get parts of the parameter for creating a qualified name
+     * <!-- end-model-doc -->
+     * @model kind="operation" unique="false"
+     *        annotation="http://www.eclipse.org/emf/2002/GenModel body='&lt;%org.eclipse.emf.common.util.EList%&gt;&lt;&lt;%java.lang.String%&gt;&gt; _xblockexpression = null;\n{\n\tif (((this.getName() == null) || this.getName().isEmpty()))\n\t{\n\t\treturn &lt;%org.eclipse.emf.common.util.ECollections%&gt;.&lt;&lt;%java.lang.String%&gt;&gt;asEList(&lt;%org.eclipse.xtext.xbase.lib.CollectionLiterals%&gt;.&lt;&lt;%java.lang.String%&gt;&gt;newArrayList());\n\t}\n\tfinal &lt;%org.eclipse.emf.common.util.EList%&gt;&lt;&lt;%java.lang.String%&gt;&gt; nameParts = this.getOperation().getQualifiedNameParts();\n\t&lt;%org.eclipse.xtext.xbase.lib.CollectionExtensions%&gt;.&lt;&lt;%java.lang.String%&gt;&gt;addAll(nameParts, this.getName());\n\t_xblockexpression = &lt;%org.eclipse.emf.common.util.ECollections%&gt;.&lt;&lt;%java.lang.String%&gt;&gt;asEList(nameParts);\n}\nreturn _xblockexpression;'"
+     * @generated
+     */
+    EList<String> getQualifiedNameParts();
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * *
+     * Build qualified name from qualified name parts
+     * <!-- end-model-doc -->
+     * @model unique="false" separatorUnique="false"
+     *        annotation="http://www.eclipse.org/emf/2002/GenModel body='if ((separator == null))\n{\n\treturn null;\n}\n&lt;%java.lang.String%&gt; qualifiedName = \"\";\n&lt;%org.eclipse.emf.common.util.EList%&gt;&lt;&lt;%java.lang.String%&gt;&gt; _qualifiedNameParts = this.getQualifiedNameParts();\nfor (final &lt;%java.lang.String%&gt; part : _qualifiedNameParts)\n{\n\t&lt;%java.lang.String%&gt; _qualifiedName = qualifiedName;\n\tqualifiedName = (_qualifiedName + (separator + part));\n}\nboolean _isEmpty = qualifiedName.isEmpty();\nboolean _not = (!_isEmpty);\nif (_not)\n{\n\tqualifiedName = qualifiedName.substring(separator.length());\n}\nreturn qualifiedName;'"
+     * @generated
+     */
+    String buildQualifiedName(String separator);
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * *
      * Check if a parameter is _basically_ initializable by a given operation. This basic check does
      * not include the comparatively "expensive" type compatibility checking, but only those formal
      * checks that are based on direct characteristics of the parameter and the initializing
@@ -342,6 +387,19 @@ public interface Parameter extends EObject {
      * @generated
      */
     Type getEffectiveType();
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * *
+     * Check if the effective type of the parameter is technology-specific
+     * <!-- end-model-doc -->
+     * @model kind="operation" unique="false"
+     *        annotation="http://www.eclipse.org/emf/2002/GenModel body='final &lt;%de.fhdo.ddmm.data.Type%&gt; effectiveType = this.getEffectiveType();\nif ((effectiveType == null))\n{\n\treturn false;\n}\nreturn (((effectiveType instanceof &lt;%de.fhdo.ddmm.technology.TechnologySpecificDataStructure%&gt;) || \n\t(effectiveType instanceof &lt;%de.fhdo.ddmm.technology.TechnologySpecificListType%&gt;)) || \n\t(effectiveType instanceof &lt;%de.fhdo.ddmm.technology.TechnologySpecificPrimitiveType%&gt;));'"
+     * @generated
+     */
+    boolean isTechnologySpecificEffectiveType();
 
     /**
      * <!-- begin-user-doc -->

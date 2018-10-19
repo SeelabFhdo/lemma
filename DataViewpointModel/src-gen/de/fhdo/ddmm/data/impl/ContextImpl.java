@@ -260,6 +260,29 @@ public class ContextImpl extends MinimalEObjectImpl.Container implements Context
      * <!-- end-user-doc -->
      * @generated
      */
+    public String buildQualifiedName(final String separator) {
+        if ((separator == null)) {
+            return null;
+        }
+        String qualifiedName = "";
+        EList<String> _qualifiedNameParts = this.getQualifiedNameParts();
+        for (final String part : _qualifiedNameParts) {
+            String _qualifiedName = qualifiedName;
+            qualifiedName = (_qualifiedName + (separator + part));
+        }
+        boolean _isEmpty = qualifiedName.isEmpty();
+        boolean _not = (!_isEmpty);
+        if (_not) {
+            qualifiedName = qualifiedName.substring(separator.length());
+        }
+        return qualifiedName;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     @SuppressWarnings("unchecked")
     @Override
     public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
@@ -414,6 +437,8 @@ public class ContextImpl extends MinimalEObjectImpl.Container implements Context
         switch (operationID) {
             case DataPackage.CONTEXT___GET_QUALIFIED_NAME_PARTS:
                 return getQualifiedNameParts();
+            case DataPackage.CONTEXT___BUILD_QUALIFIED_NAME__STRING:
+                return buildQualifiedName((String)arguments.get(0));
         }
         return super.eInvoke(operationID, arguments);
     }
