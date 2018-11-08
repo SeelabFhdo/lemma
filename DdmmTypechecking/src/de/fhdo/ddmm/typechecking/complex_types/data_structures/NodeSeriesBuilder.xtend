@@ -19,7 +19,7 @@ class NodeSeriesBuilder {
     /**
      * Build all possible (and sensible) series for a node pair
      */
-    def static buildNodeSeries(NodePair nodePair) {
+    def static List<NodeSeries> buildNodeSeries(NodePair nodePair) {
         val builtNodeSeries = <NodeSeries> newArrayList
         val basicChildren = nodePair.basicNode.children
         val nodeToCheckChildren = nodePair.nodeToCheck.children
