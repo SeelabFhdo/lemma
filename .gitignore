@@ -1,7 +1,5 @@
 .metadata/
 bin/
-src-gen/
-xtend-gen
 .launch/
 Trash/
 JavaTest/
