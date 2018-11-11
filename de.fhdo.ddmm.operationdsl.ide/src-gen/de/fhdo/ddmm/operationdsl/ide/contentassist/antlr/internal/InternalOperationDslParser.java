@@ -51166,29 +51166,29 @@ public class InternalOperationDslParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__PossiblyImportedMicroservice__MicroserviceAssignment_1"
-    // InternalOperationDsl.g:16704:1: rule__PossiblyImportedMicroservice__MicroserviceAssignment_1 : ( ( ruleQualifiedNameWithAtLeastOneLevel ) ) ;
+    // InternalOperationDsl.g:16704:1: rule__PossiblyImportedMicroservice__MicroserviceAssignment_1 : ( ( ruleQualifiedName ) ) ;
     public final void rule__PossiblyImportedMicroservice__MicroserviceAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalOperationDsl.g:16708:1: ( ( ( ruleQualifiedNameWithAtLeastOneLevel ) ) )
-            // InternalOperationDsl.g:16709:2: ( ( ruleQualifiedNameWithAtLeastOneLevel ) )
+            // InternalOperationDsl.g:16708:1: ( ( ( ruleQualifiedName ) ) )
+            // InternalOperationDsl.g:16709:2: ( ( ruleQualifiedName ) )
             {
-            // InternalOperationDsl.g:16709:2: ( ( ruleQualifiedNameWithAtLeastOneLevel ) )
-            // InternalOperationDsl.g:16710:3: ( ruleQualifiedNameWithAtLeastOneLevel )
+            // InternalOperationDsl.g:16709:2: ( ( ruleQualifiedName ) )
+            // InternalOperationDsl.g:16710:3: ( ruleQualifiedName )
             {
              before(grammarAccess.getPossiblyImportedMicroserviceAccess().getMicroserviceMicroserviceCrossReference_1_0()); 
-            // InternalOperationDsl.g:16711:3: ( ruleQualifiedNameWithAtLeastOneLevel )
-            // InternalOperationDsl.g:16712:4: ruleQualifiedNameWithAtLeastOneLevel
+            // InternalOperationDsl.g:16711:3: ( ruleQualifiedName )
+            // InternalOperationDsl.g:16712:4: ruleQualifiedName
             {
-             before(grammarAccess.getPossiblyImportedMicroserviceAccess().getMicroserviceMicroserviceQualifiedNameWithAtLeastOneLevelParserRuleCall_1_0_1()); 
+             before(grammarAccess.getPossiblyImportedMicroserviceAccess().getMicroserviceMicroserviceQualifiedNameParserRuleCall_1_0_1()); 
             pushFollow(FOLLOW_2);
-            ruleQualifiedNameWithAtLeastOneLevel();
+            ruleQualifiedName();
 
             state._fsp--;
 
-             after(grammarAccess.getPossiblyImportedMicroserviceAccess().getMicroserviceMicroserviceQualifiedNameWithAtLeastOneLevelParserRuleCall_1_0_1()); 
+             after(grammarAccess.getPossiblyImportedMicroserviceAccess().getMicroserviceMicroserviceQualifiedNameParserRuleCall_1_0_1()); 
 
             }
 

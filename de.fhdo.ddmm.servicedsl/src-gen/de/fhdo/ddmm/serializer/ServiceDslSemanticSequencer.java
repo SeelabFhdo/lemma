@@ -437,7 +437,7 @@ public class ServiceDslSemanticSequencer extends TechnologyDslSemanticSequencer 
 	 *     PossiblyImportedMicroservice returns PossiblyImportedMicroservice
 	 *
 	 * Constraint:
-	 *     (import=[Import|ID]? microservice=[Microservice|QualifiedNameWithAtLeastOneLevel])
+	 *     (import=[Import|ID]? microservice=[Microservice|QualifiedName])
 	 */
 	protected void sequence_PossiblyImportedMicroservice(ISerializationContext context, PossiblyImportedMicroservice semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

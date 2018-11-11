@@ -12521,9 +12521,9 @@ rule__PossiblyImportedMicroservice__MicroserviceAssignment_1
 	(
 		{ before(grammarAccess.getPossiblyImportedMicroserviceAccess().getMicroserviceMicroserviceCrossReference_1_0()); }
 		(
-			{ before(grammarAccess.getPossiblyImportedMicroserviceAccess().getMicroserviceMicroserviceQualifiedNameWithAtLeastOneLevelParserRuleCall_1_0_1()); }
-			ruleQualifiedNameWithAtLeastOneLevel
-			{ after(grammarAccess.getPossiblyImportedMicroserviceAccess().getMicroserviceMicroserviceQualifiedNameWithAtLeastOneLevelParserRuleCall_1_0_1()); }
+			{ before(grammarAccess.getPossiblyImportedMicroserviceAccess().getMicroserviceMicroserviceQualifiedNameParserRuleCall_1_0_1()); }
+			ruleQualifiedName
+			{ after(grammarAccess.getPossiblyImportedMicroserviceAccess().getMicroserviceMicroserviceQualifiedNameParserRuleCall_1_0_1()); }
 		)
 		{ after(grammarAccess.getPossiblyImportedMicroserviceAccess().getMicroserviceMicroserviceCrossReference_1_0()); }
 	)

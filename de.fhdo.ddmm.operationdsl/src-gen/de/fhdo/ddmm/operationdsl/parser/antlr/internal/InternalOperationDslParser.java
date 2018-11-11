@@ -4533,7 +4533,7 @@ public class InternalOperationDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "rulePossiblyImportedMicroservice"
-    // InternalOperationDsl.g:1882:1: rulePossiblyImportedMicroservice returns [EObject current=null] : ( ( ( (otherlv_0= RULE_ID ) ) otherlv_1= '::' )? ( ( ruleQualifiedNameWithAtLeastOneLevel ) ) ) ;
+    // InternalOperationDsl.g:1882:1: rulePossiblyImportedMicroservice returns [EObject current=null] : ( ( ( (otherlv_0= RULE_ID ) ) otherlv_1= '::' )? ( ( ruleQualifiedName ) ) ) ;
     public final EObject rulePossiblyImportedMicroservice() throws RecognitionException {
         EObject current = null;
 
@@ -4544,11 +4544,11 @@ public class InternalOperationDslParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalOperationDsl.g:1888:2: ( ( ( ( (otherlv_0= RULE_ID ) ) otherlv_1= '::' )? ( ( ruleQualifiedNameWithAtLeastOneLevel ) ) ) )
-            // InternalOperationDsl.g:1889:2: ( ( ( (otherlv_0= RULE_ID ) ) otherlv_1= '::' )? ( ( ruleQualifiedNameWithAtLeastOneLevel ) ) )
+            // InternalOperationDsl.g:1888:2: ( ( ( ( (otherlv_0= RULE_ID ) ) otherlv_1= '::' )? ( ( ruleQualifiedName ) ) ) )
+            // InternalOperationDsl.g:1889:2: ( ( ( (otherlv_0= RULE_ID ) ) otherlv_1= '::' )? ( ( ruleQualifiedName ) ) )
             {
-            // InternalOperationDsl.g:1889:2: ( ( ( (otherlv_0= RULE_ID ) ) otherlv_1= '::' )? ( ( ruleQualifiedNameWithAtLeastOneLevel ) ) )
-            // InternalOperationDsl.g:1890:3: ( ( (otherlv_0= RULE_ID ) ) otherlv_1= '::' )? ( ( ruleQualifiedNameWithAtLeastOneLevel ) )
+            // InternalOperationDsl.g:1889:2: ( ( ( (otherlv_0= RULE_ID ) ) otherlv_1= '::' )? ( ( ruleQualifiedName ) ) )
+            // InternalOperationDsl.g:1890:3: ( ( (otherlv_0= RULE_ID ) ) otherlv_1= '::' )? ( ( ruleQualifiedName ) )
             {
             // InternalOperationDsl.g:1890:3: ( ( (otherlv_0= RULE_ID ) ) otherlv_1= '::' )?
             int alt48=2;
@@ -4596,11 +4596,11 @@ public class InternalOperationDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalOperationDsl.g:1909:3: ( ( ruleQualifiedNameWithAtLeastOneLevel ) )
-            // InternalOperationDsl.g:1910:4: ( ruleQualifiedNameWithAtLeastOneLevel )
+            // InternalOperationDsl.g:1909:3: ( ( ruleQualifiedName ) )
+            // InternalOperationDsl.g:1910:4: ( ruleQualifiedName )
             {
-            // InternalOperationDsl.g:1910:4: ( ruleQualifiedNameWithAtLeastOneLevel )
-            // InternalOperationDsl.g:1911:5: ruleQualifiedNameWithAtLeastOneLevel
+            // InternalOperationDsl.g:1910:4: ( ruleQualifiedName )
+            // InternalOperationDsl.g:1911:5: ruleQualifiedName
             {
 
             					if (current==null) {
@@ -4611,7 +4611,7 @@ public class InternalOperationDslParser extends AbstractInternalAntlrParser {
             					newCompositeNode(grammarAccess.getPossiblyImportedMicroserviceAccess().getMicroserviceMicroserviceCrossReference_1_0());
             				
             pushFollow(FOLLOW_2);
-            ruleQualifiedNameWithAtLeastOneLevel();
+            ruleQualifiedName();
 
             state._fsp--;
 

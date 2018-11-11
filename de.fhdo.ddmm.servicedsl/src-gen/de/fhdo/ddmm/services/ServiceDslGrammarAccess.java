@@ -433,13 +433,13 @@ public class ServiceDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cColonColonKeyword_0_1 = (Keyword)cGroup_0.eContents().get(1);
 		private final Assignment cMicroserviceAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final CrossReference cMicroserviceMicroserviceCrossReference_1_0 = (CrossReference)cMicroserviceAssignment_1.eContents().get(0);
-		private final RuleCall cMicroserviceMicroserviceQualifiedNameWithAtLeastOneLevelParserRuleCall_1_0_1 = (RuleCall)cMicroserviceMicroserviceCrossReference_1_0.eContents().get(1);
+		private final RuleCall cMicroserviceMicroserviceQualifiedNameParserRuleCall_1_0_1 = (RuleCall)cMicroserviceMicroserviceCrossReference_1_0.eContents().get(1);
 		
 		//PossiblyImportedMicroservice:
-		//	(^import=[Import] '::')? microservice=[Microservice|QualifiedNameWithAtLeastOneLevel];
+		//	(^import=[Import] '::')? microservice=[Microservice|QualifiedName];
 		@Override public ParserRule getRule() { return rule; }
 		
-		//(^import=[Import] '::')? microservice=[Microservice|QualifiedNameWithAtLeastOneLevel]
+		//(^import=[Import] '::')? microservice=[Microservice|QualifiedName]
 		public Group getGroup() { return cGroup; }
 		
 		//(^import=[Import] '::')?
@@ -457,14 +457,14 @@ public class ServiceDslGrammarAccess extends AbstractGrammarElementFinder {
 		//'::'
 		public Keyword getColonColonKeyword_0_1() { return cColonColonKeyword_0_1; }
 		
-		//microservice=[Microservice|QualifiedNameWithAtLeastOneLevel]
+		//microservice=[Microservice|QualifiedName]
 		public Assignment getMicroserviceAssignment_1() { return cMicroserviceAssignment_1; }
 		
-		//[Microservice|QualifiedNameWithAtLeastOneLevel]
+		//[Microservice|QualifiedName]
 		public CrossReference getMicroserviceMicroserviceCrossReference_1_0() { return cMicroserviceMicroserviceCrossReference_1_0; }
 		
-		//QualifiedNameWithAtLeastOneLevel
-		public RuleCall getMicroserviceMicroserviceQualifiedNameWithAtLeastOneLevelParserRuleCall_1_0_1() { return cMicroserviceMicroserviceQualifiedNameWithAtLeastOneLevelParserRuleCall_1_0_1; }
+		//QualifiedName
+		public RuleCall getMicroserviceMicroserviceQualifiedNameParserRuleCall_1_0_1() { return cMicroserviceMicroserviceQualifiedNameParserRuleCall_1_0_1; }
 	}
 	public class PossiblyImportedInterfaceElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.fhdo.ddmm.ServiceDsl.PossiblyImportedInterface");
@@ -1660,7 +1660,7 @@ public class ServiceDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//PossiblyImportedMicroservice:
-	//	(^import=[Import] '::')? microservice=[Microservice|QualifiedNameWithAtLeastOneLevel];
+	//	(^import=[Import] '::')? microservice=[Microservice|QualifiedName];
 	public PossiblyImportedMicroserviceElements getPossiblyImportedMicroserviceAccess() {
 		return pPossiblyImportedMicroservice;
 	}

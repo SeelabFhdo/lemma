@@ -1571,7 +1571,7 @@ public class InternalServiceDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "rulePossiblyImportedMicroservice"
-    // InternalServiceDsl.g:659:1: rulePossiblyImportedMicroservice returns [EObject current=null] : ( ( ( (otherlv_0= RULE_ID ) ) otherlv_1= '::' )? ( ( ruleQualifiedNameWithAtLeastOneLevel ) ) ) ;
+    // InternalServiceDsl.g:659:1: rulePossiblyImportedMicroservice returns [EObject current=null] : ( ( ( (otherlv_0= RULE_ID ) ) otherlv_1= '::' )? ( ( ruleQualifiedName ) ) ) ;
     public final EObject rulePossiblyImportedMicroservice() throws RecognitionException {
         EObject current = null;
 
@@ -1582,11 +1582,11 @@ public class InternalServiceDslParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalServiceDsl.g:665:2: ( ( ( ( (otherlv_0= RULE_ID ) ) otherlv_1= '::' )? ( ( ruleQualifiedNameWithAtLeastOneLevel ) ) ) )
-            // InternalServiceDsl.g:666:2: ( ( ( (otherlv_0= RULE_ID ) ) otherlv_1= '::' )? ( ( ruleQualifiedNameWithAtLeastOneLevel ) ) )
+            // InternalServiceDsl.g:665:2: ( ( ( ( (otherlv_0= RULE_ID ) ) otherlv_1= '::' )? ( ( ruleQualifiedName ) ) ) )
+            // InternalServiceDsl.g:666:2: ( ( ( (otherlv_0= RULE_ID ) ) otherlv_1= '::' )? ( ( ruleQualifiedName ) ) )
             {
-            // InternalServiceDsl.g:666:2: ( ( ( (otherlv_0= RULE_ID ) ) otherlv_1= '::' )? ( ( ruleQualifiedNameWithAtLeastOneLevel ) ) )
-            // InternalServiceDsl.g:667:3: ( ( (otherlv_0= RULE_ID ) ) otherlv_1= '::' )? ( ( ruleQualifiedNameWithAtLeastOneLevel ) )
+            // InternalServiceDsl.g:666:2: ( ( ( (otherlv_0= RULE_ID ) ) otherlv_1= '::' )? ( ( ruleQualifiedName ) ) )
+            // InternalServiceDsl.g:667:3: ( ( (otherlv_0= RULE_ID ) ) otherlv_1= '::' )? ( ( ruleQualifiedName ) )
             {
             // InternalServiceDsl.g:667:3: ( ( (otherlv_0= RULE_ID ) ) otherlv_1= '::' )?
             int alt18=2;
@@ -1634,11 +1634,11 @@ public class InternalServiceDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalServiceDsl.g:686:3: ( ( ruleQualifiedNameWithAtLeastOneLevel ) )
-            // InternalServiceDsl.g:687:4: ( ruleQualifiedNameWithAtLeastOneLevel )
+            // InternalServiceDsl.g:686:3: ( ( ruleQualifiedName ) )
+            // InternalServiceDsl.g:687:4: ( ruleQualifiedName )
             {
-            // InternalServiceDsl.g:687:4: ( ruleQualifiedNameWithAtLeastOneLevel )
-            // InternalServiceDsl.g:688:5: ruleQualifiedNameWithAtLeastOneLevel
+            // InternalServiceDsl.g:687:4: ( ruleQualifiedName )
+            // InternalServiceDsl.g:688:5: ruleQualifiedName
             {
 
             					if (current==null) {
@@ -1649,7 +1649,7 @@ public class InternalServiceDslParser extends AbstractInternalAntlrParser {
             					newCompositeNode(grammarAccess.getPossiblyImportedMicroserviceAccess().getMicroserviceMicroserviceCrossReference_1_0());
             				
             pushFollow(FOLLOW_2);
-            ruleQualifiedNameWithAtLeastOneLevel();
+            ruleQualifiedName();
 
             state._fsp--;
 

@@ -1645,7 +1645,7 @@ public class MappingDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//PossiblyImportedMicroservice:
-	//	(^import=[Import] '::')? microservice=[Microservice|QualifiedNameWithAtLeastOneLevel];
+	//	(^import=[Import] '::')? microservice=[Microservice|QualifiedName];
 	public ServiceDslGrammarAccess.PossiblyImportedMicroserviceElements getPossiblyImportedMicroserviceAccess() {
 		return gaServiceDsl.getPossiblyImportedMicroserviceAccess();
 	}

@@ -1916,7 +1916,7 @@ rulePossiblyImportedMicroservice returns [EObject current=null]
 				{
 					newCompositeNode(grammarAccess.getPossiblyImportedMicroserviceAccess().getMicroserviceMicroserviceCrossReference_1_0());
 				}
-				ruleQualifiedNameWithAtLeastOneLevel
+				ruleQualifiedName
 				{
 					afterParserOrEnumRuleCall();
 				}

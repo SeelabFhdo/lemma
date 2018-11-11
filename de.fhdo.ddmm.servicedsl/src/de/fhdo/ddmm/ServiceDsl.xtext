@@ -53,7 +53,7 @@ Microservice returns Microservice:
 ;
 
 PossiblyImportedMicroservice returns PossiblyImportedMicroservice:
-    (^import=[Import] '::')? microservice=[Microservice|QualifiedNameWithAtLeastOneLevel]
+    (^import=[Import] '::')? microservice=[Microservice|QualifiedName]
 ;
 
 PossiblyImportedInterface returns PossiblyImportedInterface:
