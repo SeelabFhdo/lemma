@@ -185,6 +185,10 @@ class OperationDslScopeProvider extends AbstractOperationDslScopeProvider {
             /* Import of ServiceDeploymentSpecifications */
             case OperationPackage::Literals.SERVICE_DEPLOYMENT_SPECIFICATION__IMPORT:
                 return operationNode.getScopeForServiceDeploymentImports()
+
+            /* Protocols */
+            case OperationPackage::Literals.PROTOCOL_AND_DATA_FORMAT__PROTOCOL:
+                return operationNode.getScopeForEndpointProtocols()
         }
 
         return null

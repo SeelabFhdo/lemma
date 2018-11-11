@@ -256,6 +256,12 @@ public class OperationDslScopeProvider extends AbstractOperationDslScopeProvider
         return this.getScopeForServiceDeploymentImports(operationNode);
       }
     }
+    if (!_matched) {
+      if (Objects.equal(reference, OperationPackage.Literals.PROTOCOL_AND_DATA_FORMAT__PROTOCOL)) {
+        _matched=true;
+        return this.getScopeForEndpointProtocols(operationNode);
+      }
+    }
     return null;
   }
   
