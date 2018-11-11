@@ -41,9 +41,6 @@ class OperationDslScopeProvider extends AbstractOperationDslScopeProvider {
             /* Infrastructure nodes */
             InfrastructureNode: context.getScope(reference)
 
-            /* All kinds of operation nodes (i.e., containers and infrastructure nodes) */
-            OperationNode: context.getScope(reference)
-
             /* Imported microservice */
             ImportedMicroservice: context.getScope(reference)
 

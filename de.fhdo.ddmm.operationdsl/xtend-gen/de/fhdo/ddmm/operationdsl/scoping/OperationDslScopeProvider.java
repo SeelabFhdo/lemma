@@ -70,12 +70,6 @@ public class OperationDslScopeProvider extends AbstractOperationDslScopeProvider
       }
     }
     if (!_matched) {
-      if (context instanceof OperationNode) {
-        _matched=true;
-        _switchResult = this.getScope(((OperationNode)context), reference);
-      }
-    }
-    if (!_matched) {
       if (context instanceof ImportedMicroservice) {
         _matched=true;
         _switchResult = this.getScope(((ImportedMicroservice)context), reference);
