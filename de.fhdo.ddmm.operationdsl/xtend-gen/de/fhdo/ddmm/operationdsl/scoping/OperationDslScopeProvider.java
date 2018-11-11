@@ -493,9 +493,7 @@ public class OperationDslScopeProvider extends AbstractOperationDslScopeProvider
    */
   private IScope getScopeForServiceDeploymentServices(final ServiceDeploymentSpecification specification) {
     final Function1<ImportedMicroservice, Boolean> _function = (ImportedMicroservice it) -> {
-      String _name = it.getImport().getName();
-      String _name_1 = specification.getImport().getName();
-      return Boolean.valueOf(Objects.equal(_name, _name_1));
+      return Boolean.valueOf(((it.getImport().getName() != null) && Objects.equal(it.getImport().getName(), specification.getImport().getName())));
     };
     final Function<ImportedMicroservice, QualifiedName> _function_1 = (ImportedMicroservice it) -> {
       return QualifiedName.create(it.getMicroservice().getQualifiedNameParts());

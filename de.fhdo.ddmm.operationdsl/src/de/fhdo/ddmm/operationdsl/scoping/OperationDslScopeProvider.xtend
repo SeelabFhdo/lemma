@@ -396,7 +396,7 @@ class OperationDslScopeProvider extends AbstractOperationDslScopeProvider {
      */
     private def getScopeForServiceDeploymentServices(ServiceDeploymentSpecification specification) {
         return Scopes::scopeFor(specification.operationNode.deployedServices
-            .filter[import.name == specification.import.name],
+            .filter[import.name !== null && import.name == specification.import.name],
             [QualifiedName.create(microservice.qualifiedNameParts)], IScope.NULLSCOPE
         )
     }
