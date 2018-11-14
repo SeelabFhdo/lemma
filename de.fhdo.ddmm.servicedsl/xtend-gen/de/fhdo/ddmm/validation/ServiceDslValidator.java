@@ -819,6 +819,24 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
   }
   
   /**
+   * Check uniqueness of aspect properties in value assignments
+   */
+  @Check
+  public void checkUniqueValueAssignments(final ImportedServiceAspect aspect) {
+    if ((aspect.getValues().isEmpty() || (aspect.getImportedAspect().getProperties().size() <= 1))) {
+      return;
+    }
+    final Function<TechnologySpecificPropertyValueAssignment, String> _function = (TechnologySpecificPropertyValueAssignment it) -> {
+      return it.getProperty().getName();
+    };
+    final int duplicateIndex = DdmmUtils.<TechnologySpecificPropertyValueAssignment, String>getDuplicateIndex(aspect.getValues(), _function);
+    if ((duplicateIndex > (-1))) {
+      this.error("Duplicate value assignment to property", 
+        ServicePackage.Literals.IMPORTED_SERVICE_ASPECT__VALUES, duplicateIndex);
+    }
+  }
+  
+  /**
    * Check that mandatory properties of aspects have values
    */
   @Check

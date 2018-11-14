@@ -601,6 +601,21 @@ class ServiceDslValidator extends AbstractServiceDslValidator {
     }
 
     /**
+     * Check uniqueness of aspect properties in value assignments
+     */
+    @Check
+    def checkUniqueValueAssignments(ImportedServiceAspect aspect) {
+        if (aspect.values.empty || aspect.importedAspect.properties.size <= 1) {
+            return
+        }
+
+        val duplicateIndex = DdmmUtils.getDuplicateIndex(aspect.values, [property.name])
+        if (duplicateIndex > -1)
+            error("Duplicate value assignment to property",
+                ServicePackage.Literals::IMPORTED_SERVICE_ASPECT__VALUES, duplicateIndex)
+    }
+
+    /**
      * Check that mandatory properties of aspects have values
      */
     @Check

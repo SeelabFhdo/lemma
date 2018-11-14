@@ -9,6 +9,7 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import de.fhdo.ddmm.data.ComplexType;
 import de.fhdo.ddmm.data.DataModel;
+import de.fhdo.ddmm.data.PrimitiveValue;
 import de.fhdo.ddmm.scoping.AbstractServiceDslScopeProvider;
 import de.fhdo.ddmm.service.Import;
 import de.fhdo.ddmm.service.ImportedProtocolAndDataFormat;
@@ -36,6 +37,7 @@ import de.fhdo.ddmm.technology.TechnologyPackage;
 import de.fhdo.ddmm.technology.TechnologySpecificDataStructure;
 import de.fhdo.ddmm.technology.TechnologySpecificListType;
 import de.fhdo.ddmm.technology.TechnologySpecificPrimitiveType;
+import de.fhdo.ddmm.technology.TechnologySpecificProperty;
 import de.fhdo.ddmm.technology.TechnologySpecificPropertyValueAssignment;
 import de.fhdo.ddmm.utils.DdmmUtils;
 import java.util.ArrayList;
@@ -472,7 +474,7 @@ public class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
     boolean _matched = false;
     if (Objects.equal(reference, TechnologyPackage.Literals.TECHNOLOGY_SPECIFIC_PROPERTY_VALUE_ASSIGNMENT__PROPERTY)) {
       _matched=true;
-      return this.getScopeForAspectProperty(EcoreUtil2.<ImportedServiceAspect>getContainerOfType(assignment, ImportedServiceAspect.class));
+      return this.getScopeForAspectProperty(assignment);
     }
     return null;
   }
@@ -570,8 +572,31 @@ public class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
   /**
    * Build scope for aspect properties
    */
-  private IScope getScopeForAspectProperty(final ImportedServiceAspect importedAspect) {
-    return Scopes.scopeFor(importedAspect.getImportedAspect().getProperties());
+  private IScope getScopeForAspectProperty(final EObject container) {
+    if ((container instanceof TechnologySpecificPropertyValueAssignment)) {
+      final ImportedServiceAspect aspect = EcoreUtil2.<ImportedServiceAspect>getContainerOfType(container, ImportedServiceAspect.class);
+      return Scopes.scopeFor(aspect.getImportedAspect().getProperties());
+    } else {
+      if ((container instanceof ImportedServiceAspect)) {
+        final HashSet<String> alreadyUsedProperties = CollectionLiterals.<String>newHashSet();
+        final Consumer<TechnologySpecificPropertyValueAssignment> _function = (TechnologySpecificPropertyValueAssignment it) -> {
+          PrimitiveValue _value = it.getValue();
+          boolean _tripleNotEquals = (_value != null);
+          if (_tripleNotEquals) {
+            alreadyUsedProperties.add(it.getProperty().getName());
+          }
+        };
+        ((ImportedServiceAspect)container).getValues().forEach(_function);
+        final Function1<TechnologySpecificProperty, Boolean> _function_1 = (TechnologySpecificProperty it) -> {
+          boolean _contains = alreadyUsedProperties.contains(it.getName());
+          return Boolean.valueOf((!_contains));
+        };
+        final Iterable<TechnologySpecificProperty> availableProperties = IterableExtensions.<TechnologySpecificProperty>filter(((ImportedServiceAspect)container).getImportedAspect().getProperties(), _function_1);
+        return Scopes.scopeFor(availableProperties);
+      } else {
+        return IScope.NULLSCOPE;
+      }
+    }
   }
   
   /**

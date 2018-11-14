@@ -1777,7 +1777,8 @@ public class MappingDslGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//ImportedServiceAspect:
 	//	'@' ^import=[Import] '::' importedAspect=[technology::ServiceAspect|QualifiedName] ('('
-	//	(singlePropertyValue=PrimitiveValue | values+=PropertyValueAssignment)
+	//	(singlePropertyValue=PrimitiveValue
+	//	| values+=PropertyValueAssignment (',' values+=PropertyValueAssignment)*)
 	//	')')?;
 	public ServiceDslGrammarAccess.ImportedServiceAspectElements getImportedServiceAspectAccess() {
 		return gaServiceDsl.getImportedServiceAspectAccess();

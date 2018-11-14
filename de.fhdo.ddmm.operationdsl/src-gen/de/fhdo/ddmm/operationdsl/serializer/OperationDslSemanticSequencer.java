@@ -351,7 +351,10 @@ public class OperationDslSemanticSequencer extends ServiceDslSemanticSequencer {
 	 *     ImportedOperationAspect returns ImportedOperationAspect
 	 *
 	 * Constraint:
-	 *     (importedAspect=[OperationAspect|ID] (singlePropertyValue=PrimitiveValue | values+=PropertyValueAssignment)?)
+	 *     (
+	 *         importedAspect=[OperationAspect|ID] 
+	 *         (singlePropertyValue=PrimitiveValue | (values+=PropertyValueAssignment values+=PropertyValueAssignment*))?
+	 *     )
 	 */
 	protected void sequence_ImportedOperationAspect(ISerializationContext context, ImportedOperationAspect semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

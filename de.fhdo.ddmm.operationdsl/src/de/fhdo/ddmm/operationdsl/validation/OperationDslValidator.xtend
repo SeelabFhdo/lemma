@@ -480,6 +480,21 @@ class OperationDslValidator extends AbstractOperationDslValidator {
     }
 
     /**
+     * Check uniqueness of aspect properties in value assignments
+     */
+    @Check
+    def checkUniqueValueAssignments(ImportedOperationAspect aspect) {
+        if (aspect.values.empty || aspect.importedAspect.properties.size <= 1) {
+            return
+        }
+
+        val duplicateIndex = DdmmUtils.getDuplicateIndex(aspect.values, [property.name])
+        if (duplicateIndex > -1)
+            error("Duplicate value assignment to property",
+                OperationPackage.Literals::IMPORTED_OPERATION_ASPECT__VALUES, duplicateIndex)
+    }
+
+    /**
      * Check that aspect has only one property, if only a single value is specified, and that the
      * specified value matches the property's type
      */

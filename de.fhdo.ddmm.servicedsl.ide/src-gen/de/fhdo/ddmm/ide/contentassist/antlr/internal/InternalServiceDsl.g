@@ -1310,9 +1310,9 @@ rule__ImportedServiceAspect__Alternatives_4_1
 	)
 	|
 	(
-		{ before(grammarAccess.getImportedServiceAspectAccess().getValuesAssignment_4_1_1()); }
-		(rule__ImportedServiceAspect__ValuesAssignment_4_1_1)
-		{ after(grammarAccess.getImportedServiceAspectAccess().getValuesAssignment_4_1_1()); }
+		{ before(grammarAccess.getImportedServiceAspectAccess().getGroup_4_1_1()); }
+		(rule__ImportedServiceAspect__Group_4_1_1__0)
+		{ after(grammarAccess.getImportedServiceAspectAccess().getGroup_4_1_1()); }
 	)
 ;
 finally {
@@ -6369,6 +6369,114 @@ rule__ImportedServiceAspect__Group_4__2__Impl
 	{ before(grammarAccess.getImportedServiceAspectAccess().getRightParenthesisKeyword_4_2()); }
 	')'
 	{ after(grammarAccess.getImportedServiceAspectAccess().getRightParenthesisKeyword_4_2()); }
+)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+
+rule__ImportedServiceAspect__Group_4_1_1__0
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	rule__ImportedServiceAspect__Group_4_1_1__0__Impl
+	rule__ImportedServiceAspect__Group_4_1_1__1
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__ImportedServiceAspect__Group_4_1_1__0__Impl
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+(
+	{ before(grammarAccess.getImportedServiceAspectAccess().getValuesAssignment_4_1_1_0()); }
+	(rule__ImportedServiceAspect__ValuesAssignment_4_1_1_0)
+	{ after(grammarAccess.getImportedServiceAspectAccess().getValuesAssignment_4_1_1_0()); }
+)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__ImportedServiceAspect__Group_4_1_1__1
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	rule__ImportedServiceAspect__Group_4_1_1__1__Impl
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__ImportedServiceAspect__Group_4_1_1__1__Impl
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+(
+	{ before(grammarAccess.getImportedServiceAspectAccess().getGroup_4_1_1_1()); }
+	(rule__ImportedServiceAspect__Group_4_1_1_1__0)*
+	{ after(grammarAccess.getImportedServiceAspectAccess().getGroup_4_1_1_1()); }
+)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+
+rule__ImportedServiceAspect__Group_4_1_1_1__0
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	rule__ImportedServiceAspect__Group_4_1_1_1__0__Impl
+	rule__ImportedServiceAspect__Group_4_1_1_1__1
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__ImportedServiceAspect__Group_4_1_1_1__0__Impl
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+(
+	{ before(grammarAccess.getImportedServiceAspectAccess().getCommaKeyword_4_1_1_1_0()); }
+	','
+	{ after(grammarAccess.getImportedServiceAspectAccess().getCommaKeyword_4_1_1_1_0()); }
+)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__ImportedServiceAspect__Group_4_1_1_1__1
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	rule__ImportedServiceAspect__Group_4_1_1_1__1__Impl
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__ImportedServiceAspect__Group_4_1_1_1__1__Impl
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+(
+	{ before(grammarAccess.getImportedServiceAspectAccess().getValuesAssignment_4_1_1_1_1()); }
+	(rule__ImportedServiceAspect__ValuesAssignment_4_1_1_1_1)
+	{ after(grammarAccess.getImportedServiceAspectAccess().getValuesAssignment_4_1_1_1_1()); }
 )
 ;
 finally {
@@ -13346,15 +13454,30 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__ImportedServiceAspect__ValuesAssignment_4_1_1
+rule__ImportedServiceAspect__ValuesAssignment_4_1_1_0
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 	(
-		{ before(grammarAccess.getImportedServiceAspectAccess().getValuesPropertyValueAssignmentParserRuleCall_4_1_1_0()); }
+		{ before(grammarAccess.getImportedServiceAspectAccess().getValuesPropertyValueAssignmentParserRuleCall_4_1_1_0_0()); }
 		rulePropertyValueAssignment
-		{ after(grammarAccess.getImportedServiceAspectAccess().getValuesPropertyValueAssignmentParserRuleCall_4_1_1_0()); }
+		{ after(grammarAccess.getImportedServiceAspectAccess().getValuesPropertyValueAssignmentParserRuleCall_4_1_1_0_0()); }
+	)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__ImportedServiceAspect__ValuesAssignment_4_1_1_1_1
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	(
+		{ before(grammarAccess.getImportedServiceAspectAccess().getValuesPropertyValueAssignmentParserRuleCall_4_1_1_1_1_0()); }
+		rulePropertyValueAssignment
+		{ after(grammarAccess.getImportedServiceAspectAccess().getValuesPropertyValueAssignmentParserRuleCall_4_1_1_1_1_0()); }
 	)
 ;
 finally {

@@ -110,7 +110,11 @@ PropertyValueAssignment returns technology::TechnologySpecificPropertyValueAssig
 ImportedOperationAspect returns ImportedOperationAspect:
     importedAspect=[technology::OperationAspect]
     (
-        ('(' (singlePropertyValue=PrimitiveValue | values+=PropertyValueAssignment) ')')
+        ('(' (
+            singlePropertyValue=PrimitiveValue
+            |
+            (values+=PropertyValueAssignment (',' values+=PropertyValueAssignment)*)
+        ) ')')
     |
         ';'
     )

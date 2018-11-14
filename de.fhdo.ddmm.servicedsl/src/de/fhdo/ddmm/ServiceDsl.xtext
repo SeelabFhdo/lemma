@@ -125,7 +125,10 @@ Endpoint returns Endpoint:
 ImportedServiceAspect returns ImportedServiceAspect:
     '@' ^import=[Import] '::' importedAspect=[technology::ServiceAspect|QualifiedName]
     ('('
-        (singlePropertyValue=PrimitiveValue | values+=PropertyValueAssignment)
+        (singlePropertyValue=PrimitiveValue
+            |
+         (values+=PropertyValueAssignment (',' values+=PropertyValueAssignment)*)
+        )
     ')')?
 ;
 

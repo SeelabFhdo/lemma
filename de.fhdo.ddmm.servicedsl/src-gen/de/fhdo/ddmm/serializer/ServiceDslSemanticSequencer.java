@@ -304,7 +304,11 @@ public class ServiceDslSemanticSequencer extends TechnologyDslSemanticSequencer 
 	 *     ImportedServiceAspect returns ImportedServiceAspect
 	 *
 	 * Constraint:
-	 *     (import=[Import|ID] importedAspect=[ServiceAspect|QualifiedName] (singlePropertyValue=PrimitiveValue | values+=PropertyValueAssignment)?)
+	 *     (
+	 *         import=[Import|ID] 
+	 *         importedAspect=[ServiceAspect|QualifiedName] 
+	 *         (singlePropertyValue=PrimitiveValue | (values+=PropertyValueAssignment values+=PropertyValueAssignment*))?
+	 *     )
 	 */
 	protected void sequence_ImportedServiceAspect(ISerializationContext context, ImportedServiceAspect semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

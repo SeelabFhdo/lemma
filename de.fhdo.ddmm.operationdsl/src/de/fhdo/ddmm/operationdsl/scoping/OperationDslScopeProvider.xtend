@@ -138,8 +138,31 @@ class OperationDslScopeProvider extends AbstractOperationDslScopeProvider {
     /**
      * Build scope for aspect properties
      */
-    private def getScopeForAspectProperty(ImportedOperationAspect importedAspect) {
-        return Scopes::scopeFor(importedAspect.importedAspect.properties)
+    private def getScopeForAspectProperty(EObject container) {
+        // If we're inside an assignment, we need to return all available properties. Otherwise a
+        // cyclic link resolution exception will occur. However, this also gives rise to possible
+        // duplicate specification of properties for several value assignments. These duplicates get
+        // checked in addition by the validator.
+        if (container instanceof TechnologySpecificPropertyValueAssignment) {
+            val aspect = EcoreUtil2.getContainerOfType(container, ImportedOperationAspect)
+            return Scopes::scopeFor(aspect.importedAspect.properties)
+
+        // If we're inside the aspect itself, i.e., when the modeler _just_ begins to express a new
+        // value assignment for a property, we only provide those properties that haven't received
+        // values yet
+        } else if (container instanceof ImportedOperationAspect) {
+            val alreadyUsedProperties = <String> newHashSet
+            container.values.forEach[
+                if (value !== null)
+                    alreadyUsedProperties.add(property.name)
+            ]
+
+            val availableProperties = container.importedAspect.properties
+                .filter[!alreadyUsedProperties.contains(name)]
+            return Scopes::scopeFor(availableProperties)
+        }
+        else
+            return IScope.NULLSCOPE
     }
 
     /**
@@ -412,7 +435,7 @@ class OperationDslScopeProvider extends AbstractOperationDslScopeProvider {
 
         return switch(propertyValue.eContainer) {
             ImportedOperationAspect:
-                (propertyValue.eContainer as ImportedOperationAspect).getScopeForAspectProperty()
+                propertyValue.getScopeForAspectProperty()
             default:
                 propertyValue.getScopeForServiceProperties()
         }

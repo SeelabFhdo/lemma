@@ -1965,27 +1965,54 @@ ruleImportedServiceAspect returns [EObject current=null]
 				    |
 				(
 					(
-						{
-							newCompositeNode(grammarAccess.getImportedServiceAspectAccess().getValuesPropertyValueAssignmentParserRuleCall_4_1_1_0());
-						}
-						lv_values_6_0=rulePropertyValueAssignment
-						{
-							if ($current==null) {
-								$current = createModelElementForParent(grammarAccess.getImportedServiceAspectRule());
+						(
+							{
+								newCompositeNode(grammarAccess.getImportedServiceAspectAccess().getValuesPropertyValueAssignmentParserRuleCall_4_1_1_0_0());
 							}
-							add(
-								$current,
-								"values",
-								lv_values_6_0,
-								"de.fhdo.ddmm.ServiceDsl.PropertyValueAssignment");
-							afterParserOrEnumRuleCall();
-						}
+							lv_values_6_0=rulePropertyValueAssignment
+							{
+								if ($current==null) {
+									$current = createModelElementForParent(grammarAccess.getImportedServiceAspectRule());
+								}
+								add(
+									$current,
+									"values",
+									lv_values_6_0,
+									"de.fhdo.ddmm.ServiceDsl.PropertyValueAssignment");
+								afterParserOrEnumRuleCall();
+							}
+						)
 					)
+					(
+						otherlv_7=','
+						{
+							newLeafNode(otherlv_7, grammarAccess.getImportedServiceAspectAccess().getCommaKeyword_4_1_1_1_0());
+						}
+						(
+							(
+								{
+									newCompositeNode(grammarAccess.getImportedServiceAspectAccess().getValuesPropertyValueAssignmentParserRuleCall_4_1_1_1_1_0());
+								}
+								lv_values_8_0=rulePropertyValueAssignment
+								{
+									if ($current==null) {
+										$current = createModelElementForParent(grammarAccess.getImportedServiceAspectRule());
+									}
+									add(
+										$current,
+										"values",
+										lv_values_8_0,
+										"de.fhdo.ddmm.ServiceDsl.PropertyValueAssignment");
+									afterParserOrEnumRuleCall();
+								}
+							)
+						)
+					)*
 				)
 			)
-			otherlv_7=')'
+			otherlv_9=')'
 			{
-				newLeafNode(otherlv_7, grammarAccess.getImportedServiceAspectAccess().getRightParenthesisKeyword_4_2());
+				newLeafNode(otherlv_9, grammarAccess.getImportedServiceAspectAccess().getRightParenthesisKeyword_4_2());
 			}
 		)?
 	)

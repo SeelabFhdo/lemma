@@ -57,6 +57,8 @@ class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
      * Build scope for a given context and a given reference
      */
     override getScope(EObject context, EReference reference) {
+        //println(context.class.simpleName + ": " + reference.name)
+
         val scope = switch (context) {
             /* Microservices */
             Microservice: context.getScope(reference)
@@ -436,7 +438,8 @@ class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
     /**
      * Build scope for technology-specific value assignment
      */
-    private def getScope(TechnologySpecificPropertyValueAssignment assignment, EReference reference) {
+    private def getScope(TechnologySpecificPropertyValueAssignment assignment,
+        EReference reference) {
         switch (reference) {
             /*
              * Properties. The scope provider will pass TechnologySpecificPropertyValueAssignment as
@@ -444,8 +447,7 @@ class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
              * a value.
              */
             case TechnologyPackage.Literals.TECHNOLOGY_SPECIFIC_PROPERTY_VALUE_ASSIGNMENT__PROPERTY:
-                return EcoreUtil2.getContainerOfType(assignment, ImportedServiceAspect)
-                    .getScopeForAspectProperty()
+                return assignment.getScopeForAspectProperty()
         }
 
         return null
@@ -524,8 +526,31 @@ class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
     /**
      * Build scope for aspect properties
      */
-    private def getScopeForAspectProperty(ImportedServiceAspect importedAspect) {
-        return Scopes::scopeFor(importedAspect.importedAspect.properties)
+    private def getScopeForAspectProperty(EObject container) {
+        // If we're inside an assignment, we need to return all available properties. Otherwise a
+        // cyclic link resolution exception will occur. However, this also gives rise to possible
+        // duplicate specification of properties for several value assignments. These duplicates get
+        // checked in addition by the validator.
+        if (container instanceof TechnologySpecificPropertyValueAssignment) {
+            val aspect = EcoreUtil2.getContainerOfType(container, ImportedServiceAspect)
+            return Scopes::scopeFor(aspect.importedAspect.properties)
+
+        // If we're inside the aspect itself, i.e., when the modeler _just_ begins to express a new
+        // value assignment for a property, we only provide those properties that haven't received
+        // values yet
+        } else if (container instanceof ImportedServiceAspect) {
+            val alreadyUsedProperties = <String> newHashSet
+            container.values.forEach[
+                if (value !== null)
+                    alreadyUsedProperties.add(property.name)
+            ]
+
+            val availableProperties = container.importedAspect.properties
+                .filter[!alreadyUsedProperties.contains(name)]
+            return Scopes::scopeFor(availableProperties)
+        }
+        else
+            return IScope.NULLSCOPE
     }
 
     /**

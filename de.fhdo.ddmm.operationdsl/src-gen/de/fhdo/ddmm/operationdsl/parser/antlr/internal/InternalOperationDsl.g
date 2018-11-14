@@ -1234,33 +1234,60 @@ ruleImportedOperationAspect returns [EObject current=null]
 					    |
 					(
 						(
-							{
-								newCompositeNode(grammarAccess.getImportedOperationAspectAccess().getValuesPropertyValueAssignmentParserRuleCall_1_0_1_1_0());
-							}
-							lv_values_3_0=rulePropertyValueAssignment
-							{
-								if ($current==null) {
-									$current = createModelElementForParent(grammarAccess.getImportedOperationAspectRule());
+							(
+								{
+									newCompositeNode(grammarAccess.getImportedOperationAspectAccess().getValuesPropertyValueAssignmentParserRuleCall_1_0_1_1_0_0());
 								}
-								add(
-									$current,
-									"values",
-									lv_values_3_0,
-									"de.fhdo.ddmm.operationdsl.OperationDsl.PropertyValueAssignment");
-								afterParserOrEnumRuleCall();
-							}
+								lv_values_3_0=rulePropertyValueAssignment
+								{
+									if ($current==null) {
+										$current = createModelElementForParent(grammarAccess.getImportedOperationAspectRule());
+									}
+									add(
+										$current,
+										"values",
+										lv_values_3_0,
+										"de.fhdo.ddmm.operationdsl.OperationDsl.PropertyValueAssignment");
+									afterParserOrEnumRuleCall();
+								}
+							)
 						)
+						(
+							otherlv_4=','
+							{
+								newLeafNode(otherlv_4, grammarAccess.getImportedOperationAspectAccess().getCommaKeyword_1_0_1_1_1_0());
+							}
+							(
+								(
+									{
+										newCompositeNode(grammarAccess.getImportedOperationAspectAccess().getValuesPropertyValueAssignmentParserRuleCall_1_0_1_1_1_1_0());
+									}
+									lv_values_5_0=rulePropertyValueAssignment
+									{
+										if ($current==null) {
+											$current = createModelElementForParent(grammarAccess.getImportedOperationAspectRule());
+										}
+										add(
+											$current,
+											"values",
+											lv_values_5_0,
+											"de.fhdo.ddmm.operationdsl.OperationDsl.PropertyValueAssignment");
+										afterParserOrEnumRuleCall();
+									}
+								)
+							)
+						)*
 					)
 				)
-				otherlv_4=')'
+				otherlv_6=')'
 				{
-					newLeafNode(otherlv_4, grammarAccess.getImportedOperationAspectAccess().getRightParenthesisKeyword_1_0_2());
+					newLeafNode(otherlv_6, grammarAccess.getImportedOperationAspectAccess().getRightParenthesisKeyword_1_0_2());
 				}
 			)
 			    |
-			otherlv_5=';'
+			otherlv_7=';'
 			{
-				newLeafNode(otherlv_5, grammarAccess.getImportedOperationAspectAccess().getSemicolonKeyword_1_1());
+				newLeafNode(otherlv_7, grammarAccess.getImportedOperationAspectAccess().getSemicolonKeyword_1_1());
 			}
 		)
 	)
@@ -3188,27 +3215,54 @@ ruleImportedServiceAspect returns [EObject current=null]
 				    |
 				(
 					(
-						{
-							newCompositeNode(grammarAccess.getImportedServiceAspectAccess().getValuesPropertyValueAssignmentParserRuleCall_4_1_1_0());
-						}
-						lv_values_6_0=rulePropertyValueAssignment
-						{
-							if ($current==null) {
-								$current = createModelElementForParent(grammarAccess.getImportedServiceAspectRule());
+						(
+							{
+								newCompositeNode(grammarAccess.getImportedServiceAspectAccess().getValuesPropertyValueAssignmentParserRuleCall_4_1_1_0_0());
 							}
-							add(
-								$current,
-								"values",
-								lv_values_6_0,
-								"de.fhdo.ddmm.operationdsl.OperationDsl.PropertyValueAssignment");
-							afterParserOrEnumRuleCall();
-						}
+							lv_values_6_0=rulePropertyValueAssignment
+							{
+								if ($current==null) {
+									$current = createModelElementForParent(grammarAccess.getImportedServiceAspectRule());
+								}
+								add(
+									$current,
+									"values",
+									lv_values_6_0,
+									"de.fhdo.ddmm.operationdsl.OperationDsl.PropertyValueAssignment");
+								afterParserOrEnumRuleCall();
+							}
+						)
 					)
+					(
+						otherlv_7=','
+						{
+							newLeafNode(otherlv_7, grammarAccess.getImportedServiceAspectAccess().getCommaKeyword_4_1_1_1_0());
+						}
+						(
+							(
+								{
+									newCompositeNode(grammarAccess.getImportedServiceAspectAccess().getValuesPropertyValueAssignmentParserRuleCall_4_1_1_1_1_0());
+								}
+								lv_values_8_0=rulePropertyValueAssignment
+								{
+									if ($current==null) {
+										$current = createModelElementForParent(grammarAccess.getImportedServiceAspectRule());
+									}
+									add(
+										$current,
+										"values",
+										lv_values_8_0,
+										"de.fhdo.ddmm.operationdsl.OperationDsl.PropertyValueAssignment");
+									afterParserOrEnumRuleCall();
+								}
+							)
+						)
+					)*
 				)
 			)
-			otherlv_7=')'
+			otherlv_9=')'
 			{
-				newLeafNode(otherlv_7, grammarAccess.getImportedServiceAspectAccess().getRightParenthesisKeyword_4_2());
+				newLeafNode(otherlv_9, grammarAccess.getImportedServiceAspectAccess().getRightParenthesisKeyword_4_2());
 			}
 		)?
 	)

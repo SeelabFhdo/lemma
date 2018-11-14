@@ -3,6 +3,7 @@ package de.fhdo.ddmm.operationdsl.scoping;
 import com.google.common.base.Function;
 import com.google.common.base.Objects;
 import com.google.common.base.Predicate;
+import de.fhdo.ddmm.data.PrimitiveValue;
 import de.fhdo.ddmm.operation.BasicEndpoint;
 import de.fhdo.ddmm.operation.Container;
 import de.fhdo.ddmm.operation.ImportedMicroservice;
@@ -33,6 +34,7 @@ import de.fhdo.ddmm.utils.DdmmUtils;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.function.Consumer;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
@@ -201,8 +203,31 @@ public class OperationDslScopeProvider extends AbstractOperationDslScopeProvider
   /**
    * Build scope for aspect properties
    */
-  private IScope getScopeForAspectProperty(final ImportedOperationAspect importedAspect) {
-    return Scopes.scopeFor(importedAspect.getImportedAspect().getProperties());
+  private IScope getScopeForAspectProperty(final EObject container) {
+    if ((container instanceof TechnologySpecificPropertyValueAssignment)) {
+      final ImportedOperationAspect aspect = EcoreUtil2.<ImportedOperationAspect>getContainerOfType(container, ImportedOperationAspect.class);
+      return Scopes.scopeFor(aspect.getImportedAspect().getProperties());
+    } else {
+      if ((container instanceof ImportedOperationAspect)) {
+        final HashSet<String> alreadyUsedProperties = CollectionLiterals.<String>newHashSet();
+        final Consumer<TechnologySpecificPropertyValueAssignment> _function = (TechnologySpecificPropertyValueAssignment it) -> {
+          PrimitiveValue _value = it.getValue();
+          boolean _tripleNotEquals = (_value != null);
+          if (_tripleNotEquals) {
+            alreadyUsedProperties.add(it.getProperty().getName());
+          }
+        };
+        ((ImportedOperationAspect)container).getValues().forEach(_function);
+        final Function1<TechnologySpecificProperty, Boolean> _function_1 = (TechnologySpecificProperty it) -> {
+          boolean _contains = alreadyUsedProperties.contains(it.getName());
+          return Boolean.valueOf((!_contains));
+        };
+        final Iterable<TechnologySpecificProperty> availableProperties = IterableExtensions.<TechnologySpecificProperty>filter(((ImportedOperationAspect)container).getImportedAspect().getProperties(), _function_1);
+        return Scopes.scopeFor(availableProperties);
+      } else {
+        return IScope.NULLSCOPE;
+      }
+    }
   }
   
   /**
@@ -515,8 +540,7 @@ public class OperationDslScopeProvider extends AbstractOperationDslScopeProvider
     boolean _matched = false;
     if (_eContainer instanceof ImportedOperationAspect) {
       _matched=true;
-      EObject _eContainer_1 = propertyValue.eContainer();
-      _switchResult = this.getScopeForAspectProperty(((ImportedOperationAspect) _eContainer_1));
+      _switchResult = this.getScopeForAspectProperty(propertyValue);
     }
     if (!_matched) {
       _switchResult = this.getScopeForServiceProperties(propertyValue);

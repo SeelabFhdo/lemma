@@ -81,6 +81,8 @@ public class OperationDslParser extends AbstractContentAssistParser {
 					put(grammarAccess.getPropertyValueAssignmentAccess().getGroup(), "rule__PropertyValueAssignment__Group__0");
 					put(grammarAccess.getImportedOperationAspectAccess().getGroup(), "rule__ImportedOperationAspect__Group__0");
 					put(grammarAccess.getImportedOperationAspectAccess().getGroup_1_0(), "rule__ImportedOperationAspect__Group_1_0__0");
+					put(grammarAccess.getImportedOperationAspectAccess().getGroup_1_0_1_1(), "rule__ImportedOperationAspect__Group_1_0_1_1__0");
+					put(grammarAccess.getImportedOperationAspectAccess().getGroup_1_0_1_1_1(), "rule__ImportedOperationAspect__Group_1_0_1_1_1__0");
 					put(grammarAccess.getServiceModelAccess().getGroup(), "rule__ServiceModel__Group__0");
 					put(grammarAccess.getImportAccess().getGroup(), "rule__Import__Group__0");
 					put(grammarAccess.getMicroserviceAccess().getGroup(), "rule__Microservice__Group__0");
@@ -121,6 +123,8 @@ public class OperationDslParser extends AbstractContentAssistParser {
 					put(grammarAccess.getEndpointAccess().getGroup_4(), "rule__Endpoint__Group_4__0");
 					put(grammarAccess.getImportedServiceAspectAccess().getGroup(), "rule__ImportedServiceAspect__Group__0");
 					put(grammarAccess.getImportedServiceAspectAccess().getGroup_4(), "rule__ImportedServiceAspect__Group_4__0");
+					put(grammarAccess.getImportedServiceAspectAccess().getGroup_4_1_1(), "rule__ImportedServiceAspect__Group_4_1_1__0");
+					put(grammarAccess.getImportedServiceAspectAccess().getGroup_4_1_1_1(), "rule__ImportedServiceAspect__Group_4_1_1_1__0");
 					put(grammarAccess.getQualifiedNameWithAtLeastOneLevelAccess().getGroup(), "rule__QualifiedNameWithAtLeastOneLevel__Group__0");
 					put(grammarAccess.getTechnologyAccess().getGroup(), "rule__Technology__Group__0");
 					put(grammarAccess.getTechnologyAccess().getGroup_4(), "rule__Technology__Group_4__0");
@@ -231,7 +235,8 @@ public class OperationDslParser extends AbstractContentAssistParser {
 					put(grammarAccess.getPropertyValueAssignmentAccess().getValueAssignment_2(), "rule__PropertyValueAssignment__ValueAssignment_2");
 					put(grammarAccess.getImportedOperationAspectAccess().getImportedAspectAssignment_0(), "rule__ImportedOperationAspect__ImportedAspectAssignment_0");
 					put(grammarAccess.getImportedOperationAspectAccess().getSinglePropertyValueAssignment_1_0_1_0(), "rule__ImportedOperationAspect__SinglePropertyValueAssignment_1_0_1_0");
-					put(grammarAccess.getImportedOperationAspectAccess().getValuesAssignment_1_0_1_1(), "rule__ImportedOperationAspect__ValuesAssignment_1_0_1_1");
+					put(grammarAccess.getImportedOperationAspectAccess().getValuesAssignment_1_0_1_1_0(), "rule__ImportedOperationAspect__ValuesAssignment_1_0_1_1_0");
+					put(grammarAccess.getImportedOperationAspectAccess().getValuesAssignment_1_0_1_1_1_1(), "rule__ImportedOperationAspect__ValuesAssignment_1_0_1_1_1_1");
 					put(grammarAccess.getPrimitiveValueAccess().getNumericValueAssignment_0(), "rule__PrimitiveValue__NumericValueAssignment_0");
 					put(grammarAccess.getPrimitiveValueAccess().getBooleanValueAssignment_1(), "rule__PrimitiveValue__BooleanValueAssignment_1");
 					put(grammarAccess.getPrimitiveValueAccess().getStringValueAssignment_2(), "rule__PrimitiveValue__StringValueAssignment_2");
@@ -308,7 +313,8 @@ public class OperationDslParser extends AbstractContentAssistParser {
 					put(grammarAccess.getImportedServiceAspectAccess().getImportAssignment_1(), "rule__ImportedServiceAspect__ImportAssignment_1");
 					put(grammarAccess.getImportedServiceAspectAccess().getImportedAspectAssignment_3(), "rule__ImportedServiceAspect__ImportedAspectAssignment_3");
 					put(grammarAccess.getImportedServiceAspectAccess().getSinglePropertyValueAssignment_4_1_0(), "rule__ImportedServiceAspect__SinglePropertyValueAssignment_4_1_0");
-					put(grammarAccess.getImportedServiceAspectAccess().getValuesAssignment_4_1_1(), "rule__ImportedServiceAspect__ValuesAssignment_4_1_1");
+					put(grammarAccess.getImportedServiceAspectAccess().getValuesAssignment_4_1_1_0(), "rule__ImportedServiceAspect__ValuesAssignment_4_1_1_0");
+					put(grammarAccess.getImportedServiceAspectAccess().getValuesAssignment_4_1_1_1_1(), "rule__ImportedServiceAspect__ValuesAssignment_4_1_1_1_1");
 					put(grammarAccess.getTechnologyAccess().getImportsAssignment_0(), "rule__Technology__ImportsAssignment_0");
 					put(grammarAccess.getTechnologyAccess().getNameAssignment_2(), "rule__Technology__NameAssignment_2");
 					put(grammarAccess.getTechnologyAccess().getPrimitiveTypesAssignment_4_2_0(), "rule__Technology__PrimitiveTypesAssignment_4_2_0");
