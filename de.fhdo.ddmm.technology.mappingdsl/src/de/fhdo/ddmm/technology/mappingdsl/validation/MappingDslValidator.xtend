@@ -60,7 +60,12 @@ class MappingDslValidator extends AbstractMappingDslValidator {
      */
     @Check
     def checkMappingUniqueness(TechnologyMapping model) {
-        checkMappingUniqueness(model.mappings, "Service", [
+        // A mapping's technology or name may be null if the model contains syntax errors
+        val modelMappingsWithTechnology = model.mappings
+            .filter[technology !== null && technology.name !== null]
+            .toList
+
+        checkMappingUniqueness(modelMappingsWithTechnology, "Service", [
                 val qualifiedNameSegments = <String> newArrayList
                 qualifiedNameSegments.add(technology.name)
                 qualifiedNameSegments.addAll(microservice.microservice.qualifiedNameParts)

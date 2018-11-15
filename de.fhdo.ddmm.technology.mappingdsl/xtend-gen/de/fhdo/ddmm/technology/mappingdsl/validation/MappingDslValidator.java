@@ -93,7 +93,11 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
    */
   @Check
   public void checkMappingUniqueness(final TechnologyMapping model) {
-    final Function<MicroserviceMapping, String> _function = (MicroserviceMapping it) -> {
+    final Function1<MicroserviceMapping, Boolean> _function = (MicroserviceMapping it) -> {
+      return Boolean.valueOf(((it.getTechnology() != null) && (it.getTechnology().getName() != null)));
+    };
+    final List<MicroserviceMapping> modelMappingsWithTechnology = IterableExtensions.<MicroserviceMapping>toList(IterableExtensions.<MicroserviceMapping>filter(model.getMappings(), _function));
+    final Function<MicroserviceMapping, String> _function_1 = (MicroserviceMapping it) -> {
       String _xblockexpression = null;
       {
         final ArrayList<String> qualifiedNameSegments = CollectionLiterals.<String>newArrayList();
@@ -103,7 +107,7 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
       }
       return _xblockexpression;
     };
-    this.<MicroserviceMapping>checkMappingUniqueness(model.getMappings(), "Service", _function, MappingPackage.Literals.MICROSERVICE_MAPPING__MICROSERVICE);
+    this.<MicroserviceMapping>checkMappingUniqueness(modelMappingsWithTechnology, "Service", _function_1, MappingPackage.Literals.MICROSERVICE_MAPPING__MICROSERVICE);
   }
   
   /**
