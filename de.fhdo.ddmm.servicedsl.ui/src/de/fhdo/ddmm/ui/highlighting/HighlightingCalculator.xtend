@@ -88,29 +88,29 @@ class HighlightingCalculator implements ISemanticHighlightingCalculator {
 
                     /* Iterate over the current feature's nodes to highlight them */
                     NodeModelUtils.findNodesForFeature(it, feature).forEach[
-                        // Determine the node to start the highlighting. If the "highlight
-                        // immediately" flag is set for the feature, the current feature itself is
-                        // the first node to highlight. Otherwise the previous sibling is the node
-                        // at which the highlighting starts.
-                        var currentSibling = if (highlightImmediately)
-                                it
-                            else
-                                previousSibling
+                        // Determine node to start highlighting. In case highlighting shall not
+                        // start on the feature node itself, i.e., immediately, find the opening
+                        // bracket of the aspect string (currently there are not built-in aspects
+                        // without parameters, i.e., opening brackets).
+                        var nodeToHighlight = it
+                        if (!highlightImmediately) {
+                            while (nodeToHighlight !== null &&
+                                nodeToHighlight.nextSibling !== null &&
+                                nodeToHighlight.nextSibling.text != "(")
+                                nodeToHighlight = nodeToHighlight.previousSibling
+                        }
 
-                        // Walk the node model backwards from the determined start node until the
-                        // beginning of the surrounding annotation, i.e., the "@" token, was reached
-                        var annotationBeginReached = false
-                        while (currentSibling !== null && !annotationBeginReached) {
-                            if (currentSibling.text == "@")
-                                annotationBeginReached = true
-
-                            // Analogous to the standard Eclipse highlighting for Java, we do not
-                            // highlight possible brackets of annotation values
-                            if (currentSibling.text != "(")
-                                acceptor.addPosition(currentSibling.offset, currentSibling.length,
+                        // Highlight nodes including the "@" sign, which marks the beginning of an
+                        // aspect's annotation string
+                        if (nodeToHighlight !== null) {
+                            do {
+                                acceptor.addPosition(nodeToHighlight.offset, nodeToHighlight.length,
                                     HighlightingConfiguration.ANNOTATION_ID)
-
-                            currentSibling = currentSibling.previousSibling
+                                nodeToHighlight = nodeToHighlight.previousSibling
+                            } while (nodeToHighlight !== null &&
+                                nodeToHighlight.nextSibling !== null &&
+                                nodeToHighlight.nextSibling.text != "@"
+                            )
                         }
                     ]
                 ]]
