@@ -81,6 +81,27 @@ public class OperationDslValidator extends AbstractOperationDslValidator {
   }
   
   /**
+   * Check import aliases for uniqueness
+   */
+  @Check
+  public void checkImportAlias(final OperationModel operationModel) {
+    final Function<Import, String> _function = (Import it) -> {
+      return it.getName();
+    };
+    final int duplicateIndex = DdmmUtils.<Import, String>getDuplicateIndex(operationModel.getImports(), _function);
+    if ((duplicateIndex == (-1))) {
+      return;
+    }
+    final Import duplicate = operationModel.getImports().get(duplicateIndex);
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("Duplicate import alias ");
+    String _name = duplicate.getName();
+    _builder.append(_name);
+    this.error(_builder.toString(), duplicate, 
+      ServicePackage.Literals.IMPORT__NAME);
+  }
+  
+  /**
    * Check that the assigned value of a service property matches its type
    */
   @Check

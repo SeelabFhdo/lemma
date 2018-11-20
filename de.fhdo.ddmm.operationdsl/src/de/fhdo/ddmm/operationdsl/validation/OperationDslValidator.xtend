@@ -56,6 +56,21 @@ class OperationDslValidator extends AbstractOperationDslValidator {
     }
 
     /**
+     * Check import aliases for uniqueness
+     */
+    @Check
+    def checkImportAlias(OperationModel operationModel) {
+        val duplicateIndex = DdmmUtils.getDuplicateIndex(operationModel.imports, [name])
+        if (duplicateIndex === -1) {
+            return
+        }
+
+        val duplicate = operationModel.imports.get(duplicateIndex)
+        error('''Duplicate import alias «duplicate.name»''', duplicate,
+            ServicePackage::Literals.IMPORT__NAME)
+    }
+
+    /**
      * Check that the assigned value of a service property matches its type
      */
     @Check
