@@ -67,6 +67,8 @@ public interface OperationNode extends EObject {
      *          Ensured by: DSL validator.
      *     (C7) A technology might be assigned exactly once to an operation node.
      *          Ensured by: DSL validator.
+     *     (C8) Assigned technologies may not only define service-specific concepts.
+     *          Ensured by: DSL validator.
      * <!-- end-model-doc -->
      * @return the value of the '<em>Name</em>' attribute.
      * @see #setName(String)

@@ -102,6 +102,47 @@ public class OperationDslValidator extends AbstractOperationDslValidator {
   }
   
   /**
+   * Check that annotated technologies define not only service-related concepts
+   */
+  @Check
+  public void checkTechnologiesForDeploymentConcepts(final OperationNode operationNode) {
+    int _size = operationNode.getTechnologies().size();
+    ExclusiveRange _doubleDotLessThan = new ExclusiveRange(0, _size, true);
+    for (final Integer i : _doubleDotLessThan) {
+      {
+        final Import technologyImport = operationNode.getTechnologies().get((i).intValue());
+        final Technology technologyModel = this.getTechnologyModelRoot(technologyImport);
+        if (((technologyModel.getDeploymentTechnologies().isEmpty() && 
+          technologyModel.getInfrastructureTechnologies().isEmpty()) && 
+          technologyModel.getOperationAspects().isEmpty())) {
+          this.error("Technology does not specify operation-related concepts", 
+            OperationPackage.Literals.OPERATION_NODE__TECHNOLOGIES, (i).intValue());
+        }
+      }
+    }
+  }
+  
+  /**
+   * Helper to get root element of a technology model
+   */
+  private Technology getTechnologyModelRoot(final Import technologyImport) {
+    final EList<EObject> technologyContents = DdmmUtils.getImportedModelContents(technologyImport.eResource(), 
+      technologyImport.getImportURI());
+    if (((technologyContents == null) || technologyContents.isEmpty())) {
+      return null;
+    }
+    final EObject modelRoot = technologyContents.get(0);
+    if ((!(modelRoot instanceof Technology))) {
+      return null;
+    }
+    final Technology technologyModel = ((Technology) modelRoot);
+    if ((technologyModel == null)) {
+      return null;
+    }
+    return technologyModel;
+  }
+  
+  /**
    * Check that the assigned value of a service property matches its type
    */
   @Check

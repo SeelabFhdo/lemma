@@ -71,6 +71,43 @@ class OperationDslValidator extends AbstractOperationDslValidator {
     }
 
     /**
+     * Check that annotated technologies define not only service-related concepts
+     */
+    @Check
+    def checkTechnologiesForDeploymentConcepts(OperationNode operationNode) {
+        for (i : 0..<operationNode.technologies.size) {
+            val technologyImport = operationNode.technologies.get(i)
+            val technologyModel = getTechnologyModelRoot(technologyImport)
+            if (technologyModel.deploymentTechnologies.empty &&
+                technologyModel.infrastructureTechnologies.empty &&
+                technologyModel.operationAspects.empty) {
+                error("Technology does not specify operation-related concepts",
+                    OperationPackage::Literals.OPERATION_NODE__TECHNOLOGIES, i)
+            }
+        }
+    }
+
+    /**
+     * Helper to get root element of a technology model
+     */
+    private def getTechnologyModelRoot(Import technologyImport) {
+        val technologyContents = DdmmUtils.getImportedModelContents(technologyImport.eResource,
+                technologyImport.importURI)
+        if (technologyContents === null || technologyContents.empty)
+            return null
+
+        val modelRoot = technologyContents.get(0)
+        if (!(modelRoot instanceof Technology))
+            return null
+
+        val technologyModel = modelRoot as Technology
+        if (technologyModel === null)
+            return null
+
+        return technologyModel
+    }
+
+    /**
      * Check that the assigned value of a service property matches its type
      */
     @Check
