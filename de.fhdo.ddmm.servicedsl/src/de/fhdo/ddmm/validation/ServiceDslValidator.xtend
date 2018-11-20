@@ -59,6 +59,21 @@ class ServiceDslValidator extends AbstractServiceDslValidator {
     }
 
     /**
+     * Check import aliases for uniqueness
+     */
+    @Check
+    def checkImportAlias(ServiceModel serviceModel) {
+        val duplicateIndex = DdmmUtils.getDuplicateIndex(serviceModel.imports, [name])
+        if (duplicateIndex === -1) {
+            return
+        }
+
+        val duplicate = serviceModel.imports.get(duplicateIndex)
+        error('''Duplicate import alias «duplicate.name»''', duplicate,
+            ServicePackage::Literals.IMPORT__NAME)
+    }
+
+    /**
      * Check that imported file defines a model that fits the given import type
      */
     @Check

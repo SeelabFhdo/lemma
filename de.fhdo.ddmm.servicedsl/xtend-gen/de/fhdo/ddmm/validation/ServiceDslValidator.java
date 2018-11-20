@@ -84,6 +84,27 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
   }
   
   /**
+   * Check import aliases for uniqueness
+   */
+  @Check
+  public void checkImportAlias(final ServiceModel serviceModel) {
+    final Function<Import, String> _function = (Import it) -> {
+      return it.getName();
+    };
+    final int duplicateIndex = DdmmUtils.<Import, String>getDuplicateIndex(serviceModel.getImports(), _function);
+    if ((duplicateIndex == (-1))) {
+      return;
+    }
+    final Import duplicate = serviceModel.getImports().get(duplicateIndex);
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("Duplicate import alias ");
+    String _name = duplicate.getName();
+    _builder.append(_name);
+    this.error(_builder.toString(), duplicate, 
+      ServicePackage.Literals.IMPORT__NAME);
+  }
+  
+  /**
    * Check that imported file defines a model that fits the given import type
    */
   @Check
