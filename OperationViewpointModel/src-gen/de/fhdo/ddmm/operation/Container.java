@@ -2,8 +2,6 @@
  */
 package de.fhdo.ddmm.operation;
 
-import de.fhdo.ddmm.technology.DeploymentTechnology;
-
 import org.eclipse.emf.common.util.EList;
 
 /**
@@ -31,7 +29,8 @@ import org.eclipse.emf.common.util.EList;
  */
 public interface Container extends OperationNode {
     /**
-     * Returns the value of the '<em><b>Deployment Technology</b></em>' reference.
+     * Returns the value of the '<em><b>Deployment Technology</b></em>' containment reference.
+     * It is bidirectional and its opposite is '{@link de.fhdo.ddmm.operation.DeploymentTechnologyReference#getContainer <em>Container</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
@@ -50,23 +49,24 @@ public interface Container extends OperationNode {
      *          in the technology being assigned to the operation node.
      *          Ensured by: DSL validator.
      * <!-- end-model-doc -->
-     * @return the value of the '<em>Deployment Technology</em>' reference.
-     * @see #setDeploymentTechnology(DeploymentTechnology)
+     * @return the value of the '<em>Deployment Technology</em>' containment reference.
+     * @see #setDeploymentTechnology(DeploymentTechnologyReference)
      * @see de.fhdo.ddmm.operation.OperationPackage#getContainer_DeploymentTechnology()
-     * @model
+     * @see de.fhdo.ddmm.operation.DeploymentTechnologyReference#getContainer
+     * @model opposite="container" containment="true"
      * @generated
      */
-    DeploymentTechnology getDeploymentTechnology();
+    DeploymentTechnologyReference getDeploymentTechnology();
 
     /**
-     * Sets the value of the '{@link de.fhdo.ddmm.operation.Container#getDeploymentTechnology <em>Deployment Technology</em>}' reference.
+     * Sets the value of the '{@link de.fhdo.ddmm.operation.Container#getDeploymentTechnology <em>Deployment Technology</em>}' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Deployment Technology</em>' reference.
+     * @param value the new value of the '<em>Deployment Technology</em>' containment reference.
      * @see #getDeploymentTechnology()
      * @generated
      */
-    void setDeploymentTechnology(DeploymentTechnology value);
+    void setDeploymentTechnology(DeploymentTechnologyReference value);
 
     /**
      * Returns the value of the '<em><b>Default Basic Endpoints</b></em>' containment reference list.

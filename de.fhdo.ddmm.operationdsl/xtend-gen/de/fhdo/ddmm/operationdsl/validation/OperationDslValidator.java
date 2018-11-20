@@ -21,7 +21,6 @@ import de.fhdo.ddmm.service.Microservice;
 import de.fhdo.ddmm.service.ServicePackage;
 import de.fhdo.ddmm.technology.DataFormat;
 import de.fhdo.ddmm.technology.InfrastructureTechnology;
-import de.fhdo.ddmm.technology.OperationAspect;
 import de.fhdo.ddmm.technology.OperationTechnology;
 import de.fhdo.ddmm.technology.Protocol;
 import de.fhdo.ddmm.technology.Technology;
@@ -102,6 +101,25 @@ public class OperationDslValidator extends AbstractOperationDslValidator {
       _builder.append(" ");
       this.error(_builder.toString(), propertyValue, 
         TechnologyPackage.Literals.TECHNOLOGY_SPECIFIC_PROPERTY_VALUE_ASSIGNMENT__VALUE);
+    }
+  }
+  
+  /**
+   * Check that technology is assigned only once to an operation node
+   */
+  @Check
+  public void checkTechnologyUniqueness(final OperationNode operationNode) {
+    final Function<Import, Import> _function = (Import it) -> {
+      return it;
+    };
+    final int duplicateIndex = DdmmUtils.<Import, Import>getDuplicateIndex(operationNode.getTechnologies(), _function);
+    if ((duplicateIndex > (-1))) {
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("Duplicate technology assignment for ");
+      String _name = operationNode.getName();
+      _builder.append(_name);
+      this.error(_builder.toString(), 
+        OperationPackage.Literals.OPERATION_NODE__TECHNOLOGIES, duplicateIndex);
     }
   }
   
@@ -318,11 +336,11 @@ public class OperationDslValidator extends AbstractOperationDslValidator {
   public void checkMandatoryPropertiesHaveValues(final OperationNode operationNode) {
     OperationTechnology _xifexpression = null;
     if ((operationNode instanceof Container)) {
-      _xifexpression = ((Container)operationNode).getDeploymentTechnology();
+      _xifexpression = ((Container)operationNode).getDeploymentTechnology().getDeploymentTechnology();
     } else {
       InfrastructureTechnology _xifexpression_1 = null;
       if ((operationNode instanceof InfrastructureNode)) {
-        _xifexpression_1 = ((InfrastructureNode)operationNode).getInfrastructureTechnology();
+        _xifexpression_1 = ((InfrastructureNode)operationNode).getInfrastructureTechnology().getInfrastructureTechnology();
       }
       _xifexpression = _xifexpression_1;
     }
@@ -380,17 +398,26 @@ public class OperationDslValidator extends AbstractOperationDslValidator {
   
   /**
    * Check that each service has a basic endpoint assigned for each protocol/format combination
-   * from the defining technology
+   * from each assigned technology
    */
   @Check
   public void checkServicesForBasicEndpoints(final Container container) {
-    Import _technology = container.getTechnology();
-    boolean _tripleEquals = (_technology == null);
-    if (_tripleEquals) {
+    if (((container.getTechnologies() == null) || container.getTechnologies().isEmpty())) {
       return;
     }
-    final EList<EObject> technologyModel = DdmmUtils.getImportedModelContents(container.getTechnology().eResource(), 
-      container.getTechnology().getImportURI());
+    final Consumer<Import> _function = (Import it) -> {
+      this.checkServicesForBasicEndpoints(container, it);
+    };
+    container.getTechnologies().forEach(_function);
+  }
+  
+  /**
+   * Helper to check that each service of a given container has a basic endpoint assigned for each
+   * protocol/format combination from the given technology
+   */
+  private void checkServicesForBasicEndpoints(final Container container, final Import technologyImport) {
+    final EList<EObject> technologyModel = DdmmUtils.getImportedModelContents(technologyImport.eResource(), 
+      technologyImport.getImportURI());
     if (((technologyModel == null) || technologyModel.isEmpty())) {
       return;
     }
@@ -634,17 +661,17 @@ public class OperationDslValidator extends AbstractOperationDslValidator {
    * Check uniqueness of aspects
    */
   @Check
-  public void checkAspectUniqueness(final ImportedOperationAspect aspect) {
-    final List<ImportedOperationAspect> allAspectsOfContainer = EcoreUtil2.<ImportedOperationAspect>getAllContentsOfType(aspect.eContainer(), 
+  public void checkAspectUniqueness(final ImportedOperationAspect importedAspect) {
+    final List<ImportedOperationAspect> allAspectsOfContainer = EcoreUtil2.<ImportedOperationAspect>getAllContentsOfType(importedAspect.eContainer(), 
       ImportedOperationAspect.class);
     final Function<ImportedOperationAspect, String> _function = (ImportedOperationAspect it) -> {
-      return it.getImportedAspect().getName();
+      return it.getAspect().getName();
     };
     final int duplicateIndex = DdmmUtils.<ImportedOperationAspect, String>getDuplicateIndex(allAspectsOfContainer, _function);
     if ((duplicateIndex > (-1))) {
       final ImportedOperationAspect duplicateAspect = allAspectsOfContainer.get(duplicateIndex);
       this.error("Aspect was already specified", duplicateAspect, 
-        OperationPackage.Literals.IMPORTED_OPERATION_ASPECT__IMPORTED_ASPECT);
+        OperationPackage.Literals.IMPORTED_OPERATION_ASPECT__ASPECT);
     }
   }
   
@@ -652,14 +679,14 @@ public class OperationDslValidator extends AbstractOperationDslValidator {
    * Check uniqueness of aspect properties in value assignments
    */
   @Check
-  public void checkUniqueValueAssignments(final ImportedOperationAspect aspect) {
-    if ((aspect.getValues().isEmpty() || (aspect.getImportedAspect().getProperties().size() <= 1))) {
+  public void checkUniqueValueAssignments(final ImportedOperationAspect importedAspect) {
+    if ((importedAspect.getValues().isEmpty() || (importedAspect.getAspect().getProperties().size() <= 1))) {
       return;
     }
     final Function<TechnologySpecificPropertyValueAssignment, String> _function = (TechnologySpecificPropertyValueAssignment it) -> {
       return it.getProperty().getName();
     };
-    final int duplicateIndex = DdmmUtils.<TechnologySpecificPropertyValueAssignment, String>getDuplicateIndex(aspect.getValues(), _function);
+    final int duplicateIndex = DdmmUtils.<TechnologySpecificPropertyValueAssignment, String>getDuplicateIndex(importedAspect.getValues(), _function);
     if ((duplicateIndex > (-1))) {
       this.error("Duplicate value assignment to property", 
         OperationPackage.Literals.IMPORTED_OPERATION_ASPECT__VALUES, duplicateIndex);
@@ -676,13 +703,13 @@ public class OperationDslValidator extends AbstractOperationDslValidator {
     if ((propertyValue == null)) {
       return;
     }
-    final int propertyCount = importedAspect.getImportedAspect().getProperties().size();
+    final int propertyCount = importedAspect.getAspect().getProperties().size();
     if ((propertyCount > 1)) {
       this.error("Ambiguous value assignment", importedAspect, 
         OperationPackage.Literals.IMPORTED_OPERATION_ASPECT__SINGLE_PROPERTY_VALUE);
     } else {
       if ((propertyCount == 1)) {
-        final TechnologySpecificProperty targetProperty = importedAspect.getImportedAspect().getProperties().get(0);
+        final TechnologySpecificProperty targetProperty = importedAspect.getAspect().getProperties().get(0);
         final PrimitiveType targetPropertyType = targetProperty.getType();
         boolean _isOfType = propertyValue.isOfType(targetPropertyType);
         boolean _not = (!_isOfType);
@@ -709,8 +736,7 @@ public class OperationDslValidator extends AbstractOperationDslValidator {
    */
   @Check
   public void checkMandatoryAspectProperties(final ImportedOperationAspect importedAspect) {
-    final OperationAspect aspect = importedAspect.getImportedAspect();
-    final EList<TechnologySpecificProperty> aspectProperties = aspect.getProperties();
+    final EList<TechnologySpecificProperty> aspectProperties = importedAspect.getAspect().getProperties();
     final Function1<TechnologySpecificProperty, Boolean> _function = (TechnologySpecificProperty it) -> {
       return Boolean.valueOf(it.isMandatory());
     };
@@ -735,7 +761,7 @@ public class OperationDslValidator extends AbstractOperationDslValidator {
         _builder.append(_name);
         _builder.append(" does not have value");
         this.error(_builder.toString(), importedAspect, 
-          OperationPackage.Literals.IMPORTED_OPERATION_ASPECT__IMPORTED_ASPECT);
+          OperationPackage.Literals.IMPORTED_OPERATION_ASPECT__ASPECT);
       }
     } else {
       if ((!allMandatoryPropertiesHaveValues)) {
@@ -746,7 +772,7 @@ public class OperationDslValidator extends AbstractOperationDslValidator {
           _builder_1.append(_name_1);
           _builder_1.append(" does not have value");
           this.error(_builder_1.toString(), importedAspect, 
-            OperationPackage.Literals.IMPORTED_OPERATION_ASPECT__IMPORTED_ASPECT);
+            OperationPackage.Literals.IMPORTED_OPERATION_ASPECT__ASPECT);
         };
         mandatoryPropertiesWithoutValues.forEach(_function_2);
       }

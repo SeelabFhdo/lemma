@@ -1157,13 +1157,22 @@ public interface TechnologyPackage extends EPackage {
     int DEPLOYMENT_TECHNOLOGY_FEATURE_COUNT = OPERATION_TECHNOLOGY_FEATURE_COUNT + 1;
 
     /**
+     * The operation id for the '<em>Get Qualified Name Parts</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DEPLOYMENT_TECHNOLOGY___GET_QUALIFIED_NAME_PARTS = OPERATION_TECHNOLOGY_OPERATION_COUNT + 0;
+
+    /**
      * The number of operations of the '<em>Deployment Technology</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int DEPLOYMENT_TECHNOLOGY_OPERATION_COUNT = OPERATION_TECHNOLOGY_OPERATION_COUNT + 0;
+    int DEPLOYMENT_TECHNOLOGY_OPERATION_COUNT = OPERATION_TECHNOLOGY_OPERATION_COUNT + 1;
 
     /**
      * The meta object id for the '{@link de.fhdo.ddmm.technology.impl.InfrastructureTechnologyImpl <em>Infrastructure Technology</em>}' class.
@@ -1221,13 +1230,22 @@ public interface TechnologyPackage extends EPackage {
     int INFRASTRUCTURE_TECHNOLOGY_FEATURE_COUNT = OPERATION_TECHNOLOGY_FEATURE_COUNT + 1;
 
     /**
+     * The operation id for the '<em>Get Qualified Name Parts</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INFRASTRUCTURE_TECHNOLOGY___GET_QUALIFIED_NAME_PARTS = OPERATION_TECHNOLOGY_OPERATION_COUNT + 0;
+
+    /**
      * The number of operations of the '<em>Infrastructure Technology</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int INFRASTRUCTURE_TECHNOLOGY_OPERATION_COUNT = OPERATION_TECHNOLOGY_OPERATION_COUNT + 0;
+    int INFRASTRUCTURE_TECHNOLOGY_OPERATION_COUNT = OPERATION_TECHNOLOGY_OPERATION_COUNT + 1;
 
     /**
      * The meta object id for the '{@link de.fhdo.ddmm.technology.impl.TechnologyAspectImpl <em>Aspect</em>}' class.
@@ -2487,6 +2505,16 @@ public interface TechnologyPackage extends EPackage {
     EReference getDeploymentTechnology_Technology();
 
     /**
+     * Returns the meta object for the '{@link de.fhdo.ddmm.technology.DeploymentTechnology#getQualifiedNameParts() <em>Get Qualified Name Parts</em>}' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the '<em>Get Qualified Name Parts</em>' operation.
+     * @see de.fhdo.ddmm.technology.DeploymentTechnology#getQualifiedNameParts()
+     * @generated
+     */
+    EOperation getDeploymentTechnology__GetQualifiedNameParts();
+
+    /**
      * Returns the meta object for class '{@link de.fhdo.ddmm.technology.InfrastructureTechnology <em>Infrastructure Technology</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2506,6 +2534,16 @@ public interface TechnologyPackage extends EPackage {
      * @generated
      */
     EReference getInfrastructureTechnology_Technology();
+
+    /**
+     * Returns the meta object for the '{@link de.fhdo.ddmm.technology.InfrastructureTechnology#getQualifiedNameParts() <em>Get Qualified Name Parts</em>}' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the '<em>Get Qualified Name Parts</em>' operation.
+     * @see de.fhdo.ddmm.technology.InfrastructureTechnology#getQualifiedNameParts()
+     * @generated
+     */
+    EOperation getInfrastructureTechnology__GetQualifiedNameParts();
 
     /**
      * Returns the meta object for class '{@link de.fhdo.ddmm.technology.TechnologyAspect <em>Aspect</em>}'.
@@ -3515,6 +3553,14 @@ public interface TechnologyPackage extends EPackage {
         EReference DEPLOYMENT_TECHNOLOGY__TECHNOLOGY = eINSTANCE.getDeploymentTechnology_Technology();
 
         /**
+         * The meta object literal for the '<em><b>Get Qualified Name Parts</b></em>' operation.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EOperation DEPLOYMENT_TECHNOLOGY___GET_QUALIFIED_NAME_PARTS = eINSTANCE.getDeploymentTechnology__GetQualifiedNameParts();
+
+        /**
          * The meta object literal for the '{@link de.fhdo.ddmm.technology.impl.InfrastructureTechnologyImpl <em>Infrastructure Technology</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -3531,6 +3577,14 @@ public interface TechnologyPackage extends EPackage {
          * @generated
          */
         EReference INFRASTRUCTURE_TECHNOLOGY__TECHNOLOGY = eINSTANCE.getInfrastructureTechnology_Technology();
+
+        /**
+         * The meta object literal for the '<em><b>Get Qualified Name Parts</b></em>' operation.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EOperation INFRASTRUCTURE_TECHNOLOGY___GET_QUALIFIED_NAME_PARTS = eINSTANCE.getInfrastructureTechnology__GetQualifiedNameParts();
 
         /**
          * The meta object literal for the '{@link de.fhdo.ddmm.technology.impl.TechnologyAspectImpl <em>Aspect</em>}' class.

@@ -70,29 +70,24 @@ public class HighlightingCalculator implements ISemanticHighlightingCalculator {
           final EReference feature = featureDescription.getKey();
           final Boolean highlightImmediately = featureDescription.getValue();
           final Consumer<INode> _function_4 = (INode it_1) -> {
-            INode _xifexpression = null;
-            if ((highlightImmediately).booleanValue()) {
-              _xifexpression = it_1;
-            } else {
-              _xifexpression = it_1.getPreviousSibling();
-            }
-            INode currentSibling = _xifexpression;
-            boolean annotationBeginReached = false;
-            while (((currentSibling != null) && (!annotationBeginReached))) {
-              {
-                String _text = currentSibling.getText();
-                boolean _equals = Objects.equal(_text, "@");
-                if (_equals) {
-                  annotationBeginReached = true;
-                }
-                String _text_1 = currentSibling.getText();
-                boolean _notEquals = (!Objects.equal(_text_1, "("));
-                if (_notEquals) {
-                  acceptor.addPosition(currentSibling.getOffset(), currentSibling.getLength(), 
-                    HighlightingConfiguration.ANNOTATION_ID);
-                }
-                currentSibling = currentSibling.getPreviousSibling();
+            INode nodeToHighlight = it_1;
+            if ((!(highlightImmediately).booleanValue())) {
+              while ((((nodeToHighlight != null) && 
+                (nodeToHighlight.getNextSibling() != null)) && 
+                (!Objects.equal(nodeToHighlight.getNextSibling().getText(), "(")))) {
+                nodeToHighlight = nodeToHighlight.getPreviousSibling();
               }
+            }
+            if ((nodeToHighlight != null)) {
+              do {
+                {
+                  acceptor.addPosition(nodeToHighlight.getOffset(), nodeToHighlight.getLength(), 
+                    HighlightingConfiguration.ANNOTATION_ID);
+                  nodeToHighlight = nodeToHighlight.getPreviousSibling();
+                }
+              } while((((nodeToHighlight != null) && 
+                (nodeToHighlight.getNextSibling() != null)) && 
+                (!Objects.equal(nodeToHighlight.getNextSibling().getText(), "@"))));
             }
           };
           NodeModelUtils.findNodesForFeature(it, feature).forEach(_function_4);

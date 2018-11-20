@@ -18,11 +18,12 @@ import de.fhdo.ddmm.operation.ServiceDeploymentSpecification
 import de.fhdo.ddmm.operation.OperationNode
 import de.fhdo.ddmm.operation.InfrastructureNode
 import de.fhdo.ddmm.operation.ProtocolAndDataFormat
-import de.fhdo.ddmm.operation.BasicEndpoint
 import de.fhdo.ddmm.technology.TechnologySpecificPropertyValueAssignment
 import de.fhdo.ddmm.technology.TechnologyPackage
 import de.fhdo.ddmm.technology.JoinPointType
 import de.fhdo.ddmm.operation.ImportedOperationAspect
+import de.fhdo.ddmm.operation.DeploymentTechnologyReference
+import de.fhdo.ddmm.operation.InfrastructureTechnologyReference
 
 /**
  * This class implements a custom scope provider for the Operation DSL.
@@ -35,11 +36,20 @@ class OperationDslScopeProvider extends AbstractOperationDslScopeProvider {
      */
     override getScope(EObject context, EReference reference) {
         val scope = switch (context) {
+            /* Operation model */
+            OperationModel: context.getScope(reference)
+
             /* Containers */
             Container: context.getScope(reference)
 
+            /* Deployment technology references */
+            DeploymentTechnologyReference: context.getScope(reference)
+
             /* Infrastructure nodes */
             InfrastructureNode: context.getScope(reference)
+
+            /* Infrastructure technology references */
+            InfrastructureTechnologyReference: context.getScope(reference)
 
             /* Imported microservice */
             ImportedMicroservice: context.getScope(reference)
@@ -51,9 +61,6 @@ class OperationDslScopeProvider extends AbstractOperationDslScopeProvider {
              * (see below).
              */
             TechnologySpecificPropertyValueAssignment: context.getScope(reference)
-
-            /* Scope for basic endpoints */
-            BasicEndpoint: context.getScope(reference)
 
             /* Scope for protocol and data format */
             ProtocolAndDataFormat: context.getScope(reference)
@@ -73,6 +80,22 @@ class OperationDslScopeProvider extends AbstractOperationDslScopeProvider {
     }
 
     /**
+     * Build scope for operation model
+     */
+    private def getScope(OperationModel model, EReference reference) {
+        switch (reference) {
+            /*
+             * Technologies. This is necessary because in the grammar file the technology
+             * annotation comes before the initialization of the operation nodes' "name" feature.
+             */
+            case OperationPackage::Literals.OPERATION_NODE__TECHNOLOGIES:
+                return model.getScopeForImportsOfType(Technology)
+        }
+
+        return null
+    }
+
+    /**
      * Build scope for Container-specific features
      */
     private def getScope(Container container, EReference reference) {
@@ -81,13 +104,9 @@ class OperationDslScopeProvider extends AbstractOperationDslScopeProvider {
             case OperationPackage::Literals.OPERATION_NODE__OPERATION_ENVIRONMENT:
                 return container.getScopeForOperationEnvironment()
 
-            /* Deployment technologies */
-            case OperationPackage::Literals.CONTAINER__DEPLOYMENT_TECHNOLOGY:
-                return container.getScopeForDeploymentTechnology()
-
-            /* Imported operation aspects */
-            case OperationPackage::Literals.IMPORTED_OPERATION_ASPECT__IMPORTED_ASPECT:
-                return container.getScopeForImportedAspect()
+            /* Deployment technology imports */
+            case OperationPackage::Literals.DEPLOYMENT_TECHNOLOGY_REFERENCE__IMPORT:
+                return container.getScopeForAnnotatedTechnologies()
         }
 
         // If the feature is not Container-specific, delegate scope resolution to superclass
@@ -96,13 +115,31 @@ class OperationDslScopeProvider extends AbstractOperationDslScopeProvider {
     }
 
     /**
+     * Build scope for deployment technology references
+     */
+    private def getScope(DeploymentTechnologyReference deploymentTechnologyReference,
+        EReference reference) {
+        switch (reference) {
+            /* Imports */
+            case OperationPackage::Literals.DEPLOYMENT_TECHNOLOGY_REFERENCE__IMPORT:
+                return deploymentTechnologyReference.container.getScopeForAnnotatedTechnologies()
+
+            /* Deployment technologies */
+            case OperationPackage::Literals.DEPLOYMENT_TECHNOLOGY_REFERENCE__DEPLOYMENT_TECHNOLOGY:
+                return deploymentTechnologyReference.getScopeForDeploymentTechnology()
+        }
+
+        return null
+    }
+
+    /**
      * Build scope for imported operation aspects used in containers and infrastructure nodes
      */
     private def getScope(ImportedOperationAspect importedAspect, EReference reference) {
         switch (reference) {
             /* Imported aspects */
-            case OperationPackage.Literals.IMPORTED_OPERATION_ASPECT__IMPORTED_ASPECT:
-                return (importedAspect.eContainer as OperationNode).getScopeForImportedAspect()
+            case OperationPackage.Literals.IMPORTED_OPERATION_ASPECT__ASPECT:
+                return importedAspect.getScopeForImportedAspect()
 
             /* Properties */
             case TechnologyPackage.Literals.TECHNOLOGY_SPECIFIC_PROPERTY_VALUE_ASSIGNMENT__PROPERTY:
@@ -115,22 +152,22 @@ class OperationDslScopeProvider extends AbstractOperationDslScopeProvider {
     /**
      * Build scope for imported operation aspects
      */
-    private def getScopeForImportedAspect(OperationNode operationNode) {
-        if (operationNode.technology === null)
+    private def getScopeForImportedAspect(ImportedOperationAspect importedAspect) {
+        if (importedAspect.technology === null)
             return IScope.NULLSCOPE
 
-        val joinPoint = switch(operationNode) {
+        val joinPoint = switch(importedAspect.eContainer) {
             Container: JoinPointType.CONTAINERS
             InfrastructureNode: JoinPointType.INFRASTRUCTURE_NODES
         }
 
         return DdmmUtils.getScopeForPossiblyImportedConcept(
-            operationNode.technology,
+            importedAspect.technology,
             null,
             Technology,
-            operationNode.technology.importURI,
+            importedAspect.technology.importURI,
             [operationAspects.toList],
-            [#[name]],
+            [qualifiedNameParts],
             [joinPoints.contains(joinPoint)]
         )
     }
@@ -139,13 +176,17 @@ class OperationDslScopeProvider extends AbstractOperationDslScopeProvider {
      * Build scope for aspect properties
      */
     private def getScopeForAspectProperty(EObject container) {
+        if (!(container instanceof TechnologySpecificPropertyValueAssignment) &&
+            !(container instanceof ImportedOperationAspect))
+            return IScope.NULLSCOPE
+
         // If we're inside an assignment, we need to return all available properties. Otherwise a
         // cyclic link resolution exception will occur. However, this also gives rise to possible
         // duplicate specification of properties for several value assignments. These duplicates get
         // checked in addition by the validator.
         if (container instanceof TechnologySpecificPropertyValueAssignment) {
             val aspect = EcoreUtil2.getContainerOfType(container, ImportedOperationAspect)
-            return Scopes::scopeFor(aspect.importedAspect.properties)
+            return Scopes::scopeFor(aspect.aspect.properties)
 
         // If we're inside the aspect itself, i.e., when the modeler _just_ begins to express a new
         // value assignment for a property, we only provide those properties that haven't received
@@ -157,12 +198,10 @@ class OperationDslScopeProvider extends AbstractOperationDslScopeProvider {
                     alreadyUsedProperties.add(property.name)
             ]
 
-            val availableProperties = container.importedAspect.properties
+            val availableProperties = container.aspect.properties
                 .filter[!alreadyUsedProperties.contains(name)]
             return Scopes::scopeFor(availableProperties)
         }
-        else
-            return IScope.NULLSCOPE
     }
 
     /**
@@ -174,9 +213,9 @@ class OperationDslScopeProvider extends AbstractOperationDslScopeProvider {
             case OperationPackage::Literals.OPERATION_NODE__OPERATION_ENVIRONMENT:
                 return infrastructureNode.getScopeForOperationEnvironment()
 
-            /* Deployment technologies */
-            case OperationPackage::Literals.INFRASTRUCTURE_NODE__INFRASTRUCTURE_TECHNOLOGY:
-                return infrastructureNode.getScopeForInfrastructureTechnology()
+            /* Infrastructure technology imports */
+            case OperationPackage::Literals.INFRASTRUCTURE_TECHNOLOGY_REFERENCE__IMPORT:
+                return infrastructureNode.getScopeForAnnotatedTechnologies()
         }
 
         // If the feature is not InfrastructureNode-specific, delegate scope resolution to
@@ -185,12 +224,32 @@ class OperationDslScopeProvider extends AbstractOperationDslScopeProvider {
     }
 
     /**
+     * Build scope for infrastructure technology references
+     */
+    private def getScope(InfrastructureTechnologyReference infrastructureTechnologyReference,
+        EReference reference) {
+        switch (reference) {
+            /* Imports */
+            case OperationPackage::Literals.INFRASTRUCTURE_TECHNOLOGY_REFERENCE__IMPORT:
+                return infrastructureTechnologyReference.infrastructureNode
+                    .getScopeForAnnotatedTechnologies()
+
+            /* Infrastructure technologies */
+            case OperationPackage::Literals
+                .INFRASTRUCTURE_TECHNOLOGY_REFERENCE__INFRASTRUCTURE_TECHNOLOGY:
+                return infrastructureTechnologyReference.getScopeForInfrastructureTechnology()
+        }
+
+        return null
+    }
+
+    /**
      * Build scope for operation nodes
      */
     private def getScope(OperationNode operationNode, EReference reference) {
         switch (reference) {
             /* Annotated technologies */
-            case OperationPackage::Literals.OPERATION_NODE__TECHNOLOGY:
+            case OperationPackage::Literals.OPERATION_NODE__TECHNOLOGIES:
                 return operationNode.getScopeForImportsOfType(Technology)
 
             /* Import of ImportedMicroservices */
@@ -207,44 +266,55 @@ class OperationDslScopeProvider extends AbstractOperationDslScopeProvider {
                 return operationNode.getScopeForServiceDeploymentImports()
 
             /* Protocols */
-            case OperationPackage::Literals.PROTOCOL_AND_DATA_FORMAT__PROTOCOL:
-                return operationNode.getScopeForEndpointProtocols()
+            case OperationPackage::Literals.PROTOCOL_AND_DATA_FORMAT__TECHNOLOGY:
+                return operationNode.getScopeForAnnotatedTechnologies()
+
+            /* Aspect technologies */
+            case OperationPackage::Literals.IMPORTED_OPERATION_ASPECT__TECHNOLOGY:
+                return operationNode.getScopeForAnnotatedTechnologies()
         }
 
         return null
     }
 
     /**
+     * Build scope that comprises annotated technologies of an annotatable concept instance
+     */
+    private def getScopeForAnnotatedTechnologies(OperationNode operationNode) {
+        return Scopes::scopeFor(operationNode.technologies)
+    }
+
+    /**
      * Get scope for deployment technology
      */
-    private def getScopeForDeploymentTechnology(Container container) {
-        if (container.technology === null)
+    private def getScopeForDeploymentTechnology(DeploymentTechnologyReference reference) {
+        if (reference.import === null)
             return IScope.NULLSCOPE
 
         return DdmmUtils.getScopeForPossiblyImportedConcept(
-            container,
+            reference,
             null,
             Technology,
-            container.technology.importURI,
+            reference.import.importURI,
             [deploymentTechnologies.toList],
-            [#[name]]
+            [qualifiedNameParts]
         )
     }
 
     /**
      * Get scope for infrastructure technology
      */
-    private def getScopeForInfrastructureTechnology(InfrastructureNode infrastructureNode) {
-        if (infrastructureNode.technology === null)
+    private def getScopeForInfrastructureTechnology(InfrastructureTechnologyReference reference) {
+        if (reference.import === null)
             return IScope.NULLSCOPE
 
         return DdmmUtils.getScopeForPossiblyImportedConcept(
-            infrastructureNode,
+            reference,
             null,
             Technology,
-            infrastructureNode.technology.importURI,
+            reference.import.importURI,
             [infrastructureTechnologies.toList],
-            [#[name]]
+            [qualifiedNameParts]
         )
     }
 
@@ -254,9 +324,9 @@ class OperationDslScopeProvider extends AbstractOperationDslScopeProvider {
     private def getScopeForOperationEnvironment(OperationNode operationNode) {
         val operationTechnology =
             if (operationNode instanceof Container)
-                operationNode.deploymentTechnology
+                operationNode.deploymentTechnology.deploymentTechnology
             else if (operationNode instanceof InfrastructureNode)
-                operationNode.infrastructureTechnology
+                operationNode.infrastructureTechnology.infrastructureTechnology
 
         if (operationTechnology === null)
             return IScope.NULLSCOPE
@@ -304,23 +374,15 @@ class OperationDslScopeProvider extends AbstractOperationDslScopeProvider {
     }
 
     /**
-     * Build scope for basic endpoints
-     */
-    private def getScope(BasicEndpoint basicEndpoint, EReference reference) {
-        switch (reference) {
-            /* Protocols */
-            case OperationPackage::Literals.PROTOCOL_AND_DATA_FORMAT__PROTOCOL:
-                return basicEndpoint.getScopeForEndpointProtocols()
-        }
-
-        return null
-    }
-
-    /**
      * Build scope for protocols and data formats
      */
     private def getScope(ProtocolAndDataFormat protocolAndDataFormat, EReference reference) {
         switch (reference) {
+            /* Technologies */
+            case OperationPackage::Literals.PROTOCOL_AND_DATA_FORMAT__TECHNOLOGY:
+                return EcoreUtil2.getContainerOfType(protocolAndDataFormat, OperationNode)
+                    .getScopeForAnnotatedTechnologies()
+
             /* Protocols */
             case OperationPackage::Literals.PROTOCOL_AND_DATA_FORMAT__PROTOCOL:
                 return protocolAndDataFormat.getScopeForEndpointProtocols()
@@ -336,24 +398,17 @@ class OperationDslScopeProvider extends AbstractOperationDslScopeProvider {
     /**
      * Build scope for endpoint protocols
      */
-    private def getScopeForEndpointProtocols(EObject context) {
-        var OperationNode operationNode = null
-
-        if (context instanceof OperationNode)
-            operationNode = context
-        else
-            operationNode = EcoreUtil2.getContainerOfType(context, OperationNode)
-
-        if (operationNode === null || operationNode.technology === null)
+    private def getScopeForEndpointProtocols(ProtocolAndDataFormat protocol) {
+        if (protocol.technology === null)
             return IScope.NULLSCOPE
 
         return DdmmUtils.getScopeForPossiblyImportedConcept(
-            operationNode.technology,
+            protocol.technology,
             null,
             Technology,
-            operationNode.technology.importURI,
+            protocol.technology.importURI,
             [protocols.toList],
-            [#[name]]
+            [qualifiedNameParts]
         )
     }
 
@@ -392,14 +447,16 @@ class OperationDslScopeProvider extends AbstractOperationDslScopeProvider {
             case OperationPackage::Literals.SERVICE_DEPLOYMENT_SPECIFICATION__SERVICE:
                 return specification.getScopeForServiceDeploymentServices()
 
+            /* Technologies */
+            case OperationPackage::Literals.PROTOCOL_AND_DATA_FORMAT__TECHNOLOGY:
+                /* Technologies */
+                return EcoreUtil2.getContainerOfType(specification, OperationNode)
+                    .getScopeForAnnotatedTechnologies()
+
             /* Service properties */
             case TechnologyPackage::Literals
                 .TECHNOLOGY_SPECIFIC_PROPERTY_VALUE_ASSIGNMENT__PROPERTY:
                 return specification.getScopeForServiceProperties()
-
-            /* Protocols */
-            case OperationPackage::Literals.PROTOCOL_AND_DATA_FORMAT__PROTOCOL:
-                return specification.getScopeForEndpointProtocols()
         }
 
         return null
@@ -461,18 +518,21 @@ class OperationDslScopeProvider extends AbstractOperationDslScopeProvider {
         var InfrastructureNode infrastructureNode
         if (container === null)
             infrastructureNode = if (context instanceof InfrastructureNode)
-                context as InfrastructureNode
-            else
-                EcoreUtil2.getContainerOfType(context, InfrastructureNode)
+                    context as InfrastructureNode
+                else
+                    EcoreUtil2.getContainerOfType(context, InfrastructureNode)
 
-        if (container === null && infrastructureNode === null)
+        if (container === null && infrastructureNode === null ||
+            container.deploymentTechnology === null &&
+            infrastructureNode.infrastructureTechnology === null)
             return IScope.NULLSCOPE
 
         /* Get service properties from container or infrastructure node and build scope */
         val serviceProperties = if (container !== null)
-                container.deploymentTechnology.serviceProperties
+                container.deploymentTechnology.deploymentTechnology.serviceProperties
             else
-                infrastructureNode.infrastructureTechnology.serviceProperties
+                infrastructureNode.infrastructureTechnology.infrastructureTechnology
+                    .serviceProperties
 
         return Scopes::scopeFor(serviceProperties)
     }

@@ -28,6 +28,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
+import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
@@ -39,7 +40,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * </p>
  * <ul>
  *   <li>{@link de.fhdo.ddmm.operation.impl.OperationNodeImpl#getName <em>Name</em>}</li>
- *   <li>{@link de.fhdo.ddmm.operation.impl.OperationNodeImpl#getTechnology <em>Technology</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.operation.impl.OperationNodeImpl#getTechnologies <em>Technologies</em>}</li>
  *   <li>{@link de.fhdo.ddmm.operation.impl.OperationNodeImpl#getOperationEnvironment <em>Operation Environment</em>}</li>
  *   <li>{@link de.fhdo.ddmm.operation.impl.OperationNodeImpl#getDeployedServices <em>Deployed Services</em>}</li>
  *   <li>{@link de.fhdo.ddmm.operation.impl.OperationNodeImpl#getDefaultServicePropertyValues <em>Default Service Property Values</em>}</li>
@@ -71,14 +72,14 @@ public abstract class OperationNodeImpl extends MinimalEObjectImpl.Container imp
     protected String name = NAME_EDEFAULT;
 
     /**
-     * The cached value of the '{@link #getTechnology() <em>Technology</em>}' reference.
+     * The cached value of the '{@link #getTechnologies() <em>Technologies</em>}' reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getTechnology()
+     * @see #getTechnologies()
      * @generated
      * @ordered
      */
-    protected Import technology;
+    protected EList<Import> technologies;
 
     /**
      * The cached value of the '{@link #getOperationEnvironment() <em>Operation Environment</em>}' reference.
@@ -175,37 +176,11 @@ public abstract class OperationNodeImpl extends MinimalEObjectImpl.Container imp
      * <!-- end-user-doc -->
      * @generated
      */
-    public Import getTechnology() {
-        if (technology != null && technology.eIsProxy()) {
-            InternalEObject oldTechnology = (InternalEObject)technology;
-            technology = (Import)eResolveProxy(oldTechnology);
-            if (technology != oldTechnology) {
-                if (eNotificationRequired())
-                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, OperationPackage.OPERATION_NODE__TECHNOLOGY, oldTechnology, technology));
-            }
+    public EList<Import> getTechnologies() {
+        if (technologies == null) {
+            technologies = new EObjectResolvingEList<Import>(Import.class, this, OperationPackage.OPERATION_NODE__TECHNOLOGIES);
         }
-        return technology;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public Import basicGetTechnology() {
-        return technology;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setTechnology(Import newTechnology) {
-        Import oldTechnology = technology;
-        technology = newTechnology;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, OperationPackage.OPERATION_NODE__TECHNOLOGY, oldTechnology, technology));
+        return technologies;
     }
 
     /**
@@ -343,9 +318,8 @@ public abstract class OperationNodeImpl extends MinimalEObjectImpl.Container imp
         switch (featureID) {
             case OperationPackage.OPERATION_NODE__NAME:
                 return getName();
-            case OperationPackage.OPERATION_NODE__TECHNOLOGY:
-                if (resolve) return getTechnology();
-                return basicGetTechnology();
+            case OperationPackage.OPERATION_NODE__TECHNOLOGIES:
+                return getTechnologies();
             case OperationPackage.OPERATION_NODE__OPERATION_ENVIRONMENT:
                 if (resolve) return getOperationEnvironment();
                 return basicGetOperationEnvironment();
@@ -373,8 +347,9 @@ public abstract class OperationNodeImpl extends MinimalEObjectImpl.Container imp
             case OperationPackage.OPERATION_NODE__NAME:
                 setName((String)newValue);
                 return;
-            case OperationPackage.OPERATION_NODE__TECHNOLOGY:
-                setTechnology((Import)newValue);
+            case OperationPackage.OPERATION_NODE__TECHNOLOGIES:
+                getTechnologies().clear();
+                getTechnologies().addAll((Collection<? extends Import>)newValue);
                 return;
             case OperationPackage.OPERATION_NODE__OPERATION_ENVIRONMENT:
                 setOperationEnvironment((OperationEnvironment)newValue);
@@ -410,8 +385,8 @@ public abstract class OperationNodeImpl extends MinimalEObjectImpl.Container imp
             case OperationPackage.OPERATION_NODE__NAME:
                 setName(NAME_EDEFAULT);
                 return;
-            case OperationPackage.OPERATION_NODE__TECHNOLOGY:
-                setTechnology((Import)null);
+            case OperationPackage.OPERATION_NODE__TECHNOLOGIES:
+                getTechnologies().clear();
                 return;
             case OperationPackage.OPERATION_NODE__OPERATION_ENVIRONMENT:
                 setOperationEnvironment((OperationEnvironment)null);
@@ -442,8 +417,8 @@ public abstract class OperationNodeImpl extends MinimalEObjectImpl.Container imp
         switch (featureID) {
             case OperationPackage.OPERATION_NODE__NAME:
                 return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-            case OperationPackage.OPERATION_NODE__TECHNOLOGY:
-                return technology != null;
+            case OperationPackage.OPERATION_NODE__TECHNOLOGIES:
+                return technologies != null && !technologies.isEmpty();
             case OperationPackage.OPERATION_NODE__OPERATION_ENVIRONMENT:
                 return operationEnvironment != null;
             case OperationPackage.OPERATION_NODE__DEPLOYED_SERVICES:

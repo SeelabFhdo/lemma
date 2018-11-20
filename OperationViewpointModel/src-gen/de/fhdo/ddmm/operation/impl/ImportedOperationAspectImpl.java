@@ -8,6 +8,8 @@ import de.fhdo.ddmm.operation.ImportedOperationAspect;
 import de.fhdo.ddmm.operation.OperationNode;
 import de.fhdo.ddmm.operation.OperationPackage;
 
+import de.fhdo.ddmm.service.Import;
+
 import de.fhdo.ddmm.technology.OperationAspect;
 import de.fhdo.ddmm.technology.TechnologySpecificPropertyValueAssignment;
 
@@ -36,7 +38,8 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.fhdo.ddmm.operation.impl.ImportedOperationAspectImpl#getImportedAspect <em>Imported Aspect</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.operation.impl.ImportedOperationAspectImpl#getTechnology <em>Technology</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.operation.impl.ImportedOperationAspectImpl#getAspect <em>Aspect</em>}</li>
  *   <li>{@link de.fhdo.ddmm.operation.impl.ImportedOperationAspectImpl#getSinglePropertyValue <em>Single Property Value</em>}</li>
  *   <li>{@link de.fhdo.ddmm.operation.impl.ImportedOperationAspectImpl#getValues <em>Values</em>}</li>
  *   <li>{@link de.fhdo.ddmm.operation.impl.ImportedOperationAspectImpl#getOperationNode <em>Operation Node</em>}</li>
@@ -46,14 +49,24 @@ import org.eclipse.emf.ecore.util.InternalEList;
  */
 public class ImportedOperationAspectImpl extends MinimalEObjectImpl.Container implements ImportedOperationAspect {
     /**
-     * The cached value of the '{@link #getImportedAspect() <em>Imported Aspect</em>}' reference.
+     * The cached value of the '{@link #getTechnology() <em>Technology</em>}' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getImportedAspect()
+     * @see #getTechnology()
      * @generated
      * @ordered
      */
-    protected OperationAspect importedAspect;
+    protected Import technology;
+
+    /**
+     * The cached value of the '{@link #getAspect() <em>Aspect</em>}' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getAspect()
+     * @generated
+     * @ordered
+     */
+    protected OperationAspect aspect;
 
     /**
      * The cached value of the '{@link #getSinglePropertyValue() <em>Single Property Value</em>}' containment reference.
@@ -99,16 +112,16 @@ public class ImportedOperationAspectImpl extends MinimalEObjectImpl.Container im
      * <!-- end-user-doc -->
      * @generated
      */
-    public OperationAspect getImportedAspect() {
-        if (importedAspect != null && importedAspect.eIsProxy()) {
-            InternalEObject oldImportedAspect = (InternalEObject)importedAspect;
-            importedAspect = (OperationAspect)eResolveProxy(oldImportedAspect);
-            if (importedAspect != oldImportedAspect) {
+    public Import getTechnology() {
+        if (technology != null && technology.eIsProxy()) {
+            InternalEObject oldTechnology = (InternalEObject)technology;
+            technology = (Import)eResolveProxy(oldTechnology);
+            if (technology != oldTechnology) {
                 if (eNotificationRequired())
-                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, OperationPackage.IMPORTED_OPERATION_ASPECT__IMPORTED_ASPECT, oldImportedAspect, importedAspect));
+                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, OperationPackage.IMPORTED_OPERATION_ASPECT__TECHNOLOGY, oldTechnology, technology));
             }
         }
-        return importedAspect;
+        return technology;
     }
 
     /**
@@ -116,8 +129,8 @@ public class ImportedOperationAspectImpl extends MinimalEObjectImpl.Container im
      * <!-- end-user-doc -->
      * @generated
      */
-    public OperationAspect basicGetImportedAspect() {
-        return importedAspect;
+    public Import basicGetTechnology() {
+        return technology;
     }
 
     /**
@@ -125,11 +138,49 @@ public class ImportedOperationAspectImpl extends MinimalEObjectImpl.Container im
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setImportedAspect(OperationAspect newImportedAspect) {
-        OperationAspect oldImportedAspect = importedAspect;
-        importedAspect = newImportedAspect;
+    public void setTechnology(Import newTechnology) {
+        Import oldTechnology = technology;
+        technology = newTechnology;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, OperationPackage.IMPORTED_OPERATION_ASPECT__IMPORTED_ASPECT, oldImportedAspect, importedAspect));
+            eNotify(new ENotificationImpl(this, Notification.SET, OperationPackage.IMPORTED_OPERATION_ASPECT__TECHNOLOGY, oldTechnology, technology));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public OperationAspect getAspect() {
+        if (aspect != null && aspect.eIsProxy()) {
+            InternalEObject oldAspect = (InternalEObject)aspect;
+            aspect = (OperationAspect)eResolveProxy(oldAspect);
+            if (aspect != oldAspect) {
+                if (eNotificationRequired())
+                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, OperationPackage.IMPORTED_OPERATION_ASPECT__ASPECT, oldAspect, aspect));
+            }
+        }
+        return aspect;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public OperationAspect basicGetAspect() {
+        return aspect;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setAspect(OperationAspect newAspect) {
+        OperationAspect oldAspect = aspect;
+        aspect = newAspect;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, OperationPackage.IMPORTED_OPERATION_ASPECT__ASPECT, oldAspect, aspect));
     }
 
     /**
@@ -294,9 +345,12 @@ public class ImportedOperationAspectImpl extends MinimalEObjectImpl.Container im
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
-            case OperationPackage.IMPORTED_OPERATION_ASPECT__IMPORTED_ASPECT:
-                if (resolve) return getImportedAspect();
-                return basicGetImportedAspect();
+            case OperationPackage.IMPORTED_OPERATION_ASPECT__TECHNOLOGY:
+                if (resolve) return getTechnology();
+                return basicGetTechnology();
+            case OperationPackage.IMPORTED_OPERATION_ASPECT__ASPECT:
+                if (resolve) return getAspect();
+                return basicGetAspect();
             case OperationPackage.IMPORTED_OPERATION_ASPECT__SINGLE_PROPERTY_VALUE:
                 return getSinglePropertyValue();
             case OperationPackage.IMPORTED_OPERATION_ASPECT__VALUES:
@@ -317,8 +371,11 @@ public class ImportedOperationAspectImpl extends MinimalEObjectImpl.Container im
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
-            case OperationPackage.IMPORTED_OPERATION_ASPECT__IMPORTED_ASPECT:
-                setImportedAspect((OperationAspect)newValue);
+            case OperationPackage.IMPORTED_OPERATION_ASPECT__TECHNOLOGY:
+                setTechnology((Import)newValue);
+                return;
+            case OperationPackage.IMPORTED_OPERATION_ASPECT__ASPECT:
+                setAspect((OperationAspect)newValue);
                 return;
             case OperationPackage.IMPORTED_OPERATION_ASPECT__SINGLE_PROPERTY_VALUE:
                 setSinglePropertyValue((PrimitiveValue)newValue);
@@ -342,8 +399,11 @@ public class ImportedOperationAspectImpl extends MinimalEObjectImpl.Container im
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
-            case OperationPackage.IMPORTED_OPERATION_ASPECT__IMPORTED_ASPECT:
-                setImportedAspect((OperationAspect)null);
+            case OperationPackage.IMPORTED_OPERATION_ASPECT__TECHNOLOGY:
+                setTechnology((Import)null);
+                return;
+            case OperationPackage.IMPORTED_OPERATION_ASPECT__ASPECT:
+                setAspect((OperationAspect)null);
                 return;
             case OperationPackage.IMPORTED_OPERATION_ASPECT__SINGLE_PROPERTY_VALUE:
                 setSinglePropertyValue((PrimitiveValue)null);
@@ -366,8 +426,10 @@ public class ImportedOperationAspectImpl extends MinimalEObjectImpl.Container im
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
-            case OperationPackage.IMPORTED_OPERATION_ASPECT__IMPORTED_ASPECT:
-                return importedAspect != null;
+            case OperationPackage.IMPORTED_OPERATION_ASPECT__TECHNOLOGY:
+                return technology != null;
+            case OperationPackage.IMPORTED_OPERATION_ASPECT__ASPECT:
+                return aspect != null;
             case OperationPackage.IMPORTED_OPERATION_ASPECT__SINGLE_PROPERTY_VALUE:
                 return singlePropertyValue != null;
             case OperationPackage.IMPORTED_OPERATION_ASPECT__VALUES:

@@ -59,7 +59,9 @@ public class OperationFactoryImpl extends EFactoryImpl implements OperationFacto
         switch (eClass.getClassifierID()) {
             case OperationPackage.OPERATION_MODEL: return createOperationModel();
             case OperationPackage.CONTAINER: return createContainer();
+            case OperationPackage.DEPLOYMENT_TECHNOLOGY_REFERENCE: return createDeploymentTechnologyReference();
             case OperationPackage.INFRASTRUCTURE_NODE: return createInfrastructureNode();
+            case OperationPackage.INFRASTRUCTURE_TECHNOLOGY_REFERENCE: return createInfrastructureTechnologyReference();
             case OperationPackage.IMPORTED_MICROSERVICE: return createImportedMicroservice();
             case OperationPackage.SERVICE_DEPLOYMENT_SPECIFICATION: return createServiceDeploymentSpecification();
             case OperationPackage.PROTOCOL_AND_DATA_FORMAT: return createProtocolAndDataFormat();
@@ -125,9 +127,29 @@ public class OperationFactoryImpl extends EFactoryImpl implements OperationFacto
      * <!-- end-user-doc -->
      * @generated
      */
+    public DeploymentTechnologyReference createDeploymentTechnologyReference() {
+        DeploymentTechnologyReferenceImpl deploymentTechnologyReference = new DeploymentTechnologyReferenceImpl();
+        return deploymentTechnologyReference;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public InfrastructureNode createInfrastructureNode() {
         InfrastructureNodeImpl infrastructureNode = new InfrastructureNodeImpl();
         return infrastructureNode;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public InfrastructureTechnologyReference createInfrastructureTechnologyReference() {
+        InfrastructureTechnologyReferenceImpl infrastructureTechnologyReference = new InfrastructureTechnologyReferenceImpl();
+        return infrastructureTechnologyReference;
     }
 
     /**

@@ -3,10 +3,9 @@
 package de.fhdo.ddmm.operation.impl;
 
 import de.fhdo.ddmm.operation.BasicEndpoint;
+import de.fhdo.ddmm.operation.DeploymentTechnologyReference;
 import de.fhdo.ddmm.operation.OperationModel;
 import de.fhdo.ddmm.operation.OperationPackage;
-
-import de.fhdo.ddmm.technology.DeploymentTechnology;
 
 import java.util.Collection;
 
@@ -41,14 +40,14 @@ import org.eclipse.emf.ecore.util.InternalEList;
  */
 public class ContainerImpl extends OperationNodeImpl implements de.fhdo.ddmm.operation.Container {
     /**
-     * The cached value of the '{@link #getDeploymentTechnology() <em>Deployment Technology</em>}' reference.
+     * The cached value of the '{@link #getDeploymentTechnology() <em>Deployment Technology</em>}' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @see #getDeploymentTechnology()
      * @generated
      * @ordered
      */
-    protected DeploymentTechnology deploymentTechnology;
+    protected DeploymentTechnologyReference deploymentTechnology;
 
     /**
      * The cached value of the '{@link #getDefaultBasicEndpoints() <em>Default Basic Endpoints</em>}' containment reference list.
@@ -84,15 +83,7 @@ public class ContainerImpl extends OperationNodeImpl implements de.fhdo.ddmm.ope
      * <!-- end-user-doc -->
      * @generated
      */
-    public DeploymentTechnology getDeploymentTechnology() {
-        if (deploymentTechnology != null && deploymentTechnology.eIsProxy()) {
-            InternalEObject oldDeploymentTechnology = (InternalEObject)deploymentTechnology;
-            deploymentTechnology = (DeploymentTechnology)eResolveProxy(oldDeploymentTechnology);
-            if (deploymentTechnology != oldDeploymentTechnology) {
-                if (eNotificationRequired())
-                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, OperationPackage.CONTAINER__DEPLOYMENT_TECHNOLOGY, oldDeploymentTechnology, deploymentTechnology));
-            }
-        }
+    public DeploymentTechnologyReference getDeploymentTechnology() {
         return deploymentTechnology;
     }
 
@@ -101,20 +92,33 @@ public class ContainerImpl extends OperationNodeImpl implements de.fhdo.ddmm.ope
      * <!-- end-user-doc -->
      * @generated
      */
-    public DeploymentTechnology basicGetDeploymentTechnology() {
-        return deploymentTechnology;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setDeploymentTechnology(DeploymentTechnology newDeploymentTechnology) {
-        DeploymentTechnology oldDeploymentTechnology = deploymentTechnology;
+    public NotificationChain basicSetDeploymentTechnology(DeploymentTechnologyReference newDeploymentTechnology, NotificationChain msgs) {
+        DeploymentTechnologyReference oldDeploymentTechnology = deploymentTechnology;
         deploymentTechnology = newDeploymentTechnology;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, OperationPackage.CONTAINER__DEPLOYMENT_TECHNOLOGY, oldDeploymentTechnology, deploymentTechnology));
+        if (eNotificationRequired()) {
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, OperationPackage.CONTAINER__DEPLOYMENT_TECHNOLOGY, oldDeploymentTechnology, newDeploymentTechnology);
+            if (msgs == null) msgs = notification; else msgs.add(notification);
+        }
+        return msgs;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setDeploymentTechnology(DeploymentTechnologyReference newDeploymentTechnology) {
+        if (newDeploymentTechnology != deploymentTechnology) {
+            NotificationChain msgs = null;
+            if (deploymentTechnology != null)
+                msgs = ((InternalEObject)deploymentTechnology).eInverseRemove(this, OperationPackage.DEPLOYMENT_TECHNOLOGY_REFERENCE__CONTAINER, DeploymentTechnologyReference.class, msgs);
+            if (newDeploymentTechnology != null)
+                msgs = ((InternalEObject)newDeploymentTechnology).eInverseAdd(this, OperationPackage.DEPLOYMENT_TECHNOLOGY_REFERENCE__CONTAINER, DeploymentTechnologyReference.class, msgs);
+            msgs = basicSetDeploymentTechnology(newDeploymentTechnology, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, OperationPackage.CONTAINER__DEPLOYMENT_TECHNOLOGY, newDeploymentTechnology, newDeploymentTechnology));
     }
 
     /**
@@ -189,6 +193,10 @@ public class ContainerImpl extends OperationNodeImpl implements de.fhdo.ddmm.ope
     @Override
     public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
+            case OperationPackage.CONTAINER__DEPLOYMENT_TECHNOLOGY:
+                if (deploymentTechnology != null)
+                    msgs = ((InternalEObject)deploymentTechnology).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - OperationPackage.CONTAINER__DEPLOYMENT_TECHNOLOGY, null, msgs);
+                return basicSetDeploymentTechnology((DeploymentTechnologyReference)otherEnd, msgs);
             case OperationPackage.CONTAINER__DEFAULT_BASIC_ENDPOINTS:
                 return ((InternalEList<InternalEObject>)(InternalEList<?>)getDefaultBasicEndpoints()).basicAdd(otherEnd, msgs);
             case OperationPackage.CONTAINER__OPERATION_MODEL:
@@ -207,6 +215,8 @@ public class ContainerImpl extends OperationNodeImpl implements de.fhdo.ddmm.ope
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
+            case OperationPackage.CONTAINER__DEPLOYMENT_TECHNOLOGY:
+                return basicSetDeploymentTechnology(null, msgs);
             case OperationPackage.CONTAINER__DEFAULT_BASIC_ENDPOINTS:
                 return ((InternalEList<?>)getDefaultBasicEndpoints()).basicRemove(otherEnd, msgs);
             case OperationPackage.CONTAINER__OPERATION_MODEL:
@@ -238,8 +248,7 @@ public class ContainerImpl extends OperationNodeImpl implements de.fhdo.ddmm.ope
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
             case OperationPackage.CONTAINER__DEPLOYMENT_TECHNOLOGY:
-                if (resolve) return getDeploymentTechnology();
-                return basicGetDeploymentTechnology();
+                return getDeploymentTechnology();
             case OperationPackage.CONTAINER__DEFAULT_BASIC_ENDPOINTS:
                 return getDefaultBasicEndpoints();
             case OperationPackage.CONTAINER__OPERATION_MODEL:
@@ -259,7 +268,7 @@ public class ContainerImpl extends OperationNodeImpl implements de.fhdo.ddmm.ope
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
             case OperationPackage.CONTAINER__DEPLOYMENT_TECHNOLOGY:
-                setDeploymentTechnology((DeploymentTechnology)newValue);
+                setDeploymentTechnology((DeploymentTechnologyReference)newValue);
                 return;
             case OperationPackage.CONTAINER__DEFAULT_BASIC_ENDPOINTS:
                 getDefaultBasicEndpoints().clear();
@@ -281,7 +290,7 @@ public class ContainerImpl extends OperationNodeImpl implements de.fhdo.ddmm.ope
     public void eUnset(int featureID) {
         switch (featureID) {
             case OperationPackage.CONTAINER__DEPLOYMENT_TECHNOLOGY:
-                setDeploymentTechnology((DeploymentTechnology)null);
+                setDeploymentTechnology((DeploymentTechnologyReference)null);
                 return;
             case OperationPackage.CONTAINER__DEFAULT_BASIC_ENDPOINTS:
                 getDefaultBasicEndpoints().clear();

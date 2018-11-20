@@ -2,6 +2,8 @@
  */
 package de.fhdo.ddmm.operation;
 
+import de.fhdo.ddmm.service.Import;
+
 import de.fhdo.ddmm.technology.DataFormat;
 import de.fhdo.ddmm.technology.Protocol;
 
@@ -21,6 +23,7 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
+ *   <li>{@link de.fhdo.ddmm.operation.ProtocolAndDataFormat#getTechnology <em>Technology</em>}</li>
  *   <li>{@link de.fhdo.ddmm.operation.ProtocolAndDataFormat#getProtocol <em>Protocol</em>}</li>
  *   <li>{@link de.fhdo.ddmm.operation.ProtocolAndDataFormat#getDataFormat <em>Data Format</em>}</li>
  *   <li>{@link de.fhdo.ddmm.operation.ProtocolAndDataFormat#getEndpoint <em>Endpoint</em>}</li>
@@ -32,7 +35,7 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface ProtocolAndDataFormat extends EObject {
     /**
-     * Returns the value of the '<em><b>Protocol</b></em>' reference.
+     * Returns the value of the '<em><b>Technology</b></em>' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
@@ -44,6 +47,32 @@ public interface ProtocolAndDataFormat extends EObject {
      *          and correspond to the protocol.
      *          Ensured by: DSL scope provider.
      * <!-- end-model-doc -->
+     * @return the value of the '<em>Technology</em>' reference.
+     * @see #setTechnology(Import)
+     * @see de.fhdo.ddmm.operation.OperationPackage#getProtocolAndDataFormat_Technology()
+     * @model
+     * @generated
+     */
+    Import getTechnology();
+
+    /**
+     * Sets the value of the '{@link de.fhdo.ddmm.operation.ProtocolAndDataFormat#getTechnology <em>Technology</em>}' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Technology</em>' reference.
+     * @see #getTechnology()
+     * @generated
+     */
+    void setTechnology(Import value);
+
+    /**
+     * Returns the value of the '<em><b>Protocol</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Protocol</em>' reference isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
      * @return the value of the '<em>Protocol</em>' reference.
      * @see #setProtocol(Protocol)
      * @see de.fhdo.ddmm.operation.OperationPackage#getProtocolAndDataFormat_Protocol()

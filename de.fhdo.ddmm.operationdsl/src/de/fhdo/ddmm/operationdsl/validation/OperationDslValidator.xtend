@@ -21,6 +21,7 @@ import de.fhdo.ddmm.technology.TechnologySpecificPropertyValueAssignment
 import de.fhdo.ddmm.technology.TechnologyPackage
 import de.fhdo.ddmm.operation.ImportedOperationAspect
 import org.eclipse.xtext.EcoreUtil2
+import de.fhdo.ddmm.service.Import
 
 /**
  * This class contains validation rules for the Operation DSL.
@@ -68,6 +69,18 @@ class OperationDslValidator extends AbstractOperationDslValidator {
         if (!propertyValue.value.isOfType(servicePropertyType))
             error('''Value is not of type «servicePropertyType.typeName» ''', propertyValue,
                 TechnologyPackage::Literals.TECHNOLOGY_SPECIFIC_PROPERTY_VALUE_ASSIGNMENT__VALUE)
+    }
+
+    /**
+     * Check that technology is assigned only once to an operation node
+     */
+    @Check
+    def checkTechnologyUniqueness(OperationNode operationNode) {
+        val duplicateIndex = DdmmUtils.getDuplicateIndex(operationNode.technologies, [it])
+        if (duplicateIndex > -1) {
+            error('''Duplicate technology assignment for «operationNode.name»''',
+                OperationPackage::Literals.OPERATION_NODE__TECHNOLOGIES, duplicateIndex)
+        }
     }
 
     /**
@@ -231,9 +244,9 @@ class OperationDslValidator extends AbstractOperationDslValidator {
     def checkMandatoryPropertiesHaveValues(OperationNode operationNode) {
         val operationTechnology =
             if (operationNode instanceof Container)
-                operationNode.deploymentTechnology
+                operationNode.deploymentTechnology.deploymentTechnology
             else if (operationNode instanceof InfrastructureNode)
-                operationNode.infrastructureTechnology
+                operationNode.infrastructureTechnology.infrastructureTechnology
 
         if (operationTechnology === null) {
             return
@@ -279,16 +292,26 @@ class OperationDslValidator extends AbstractOperationDslValidator {
 
     /**
      * Check that each service has a basic endpoint assigned for each protocol/format combination
-     * from the defining technology
+     * from each assigned technology
      */
     @Check
     def checkServicesForBasicEndpoints(Container container) {
-        if (container.technology === null) {
+        if (container.technologies === null || container.technologies.empty) {
             return
         }
 
-        val technologyModel = DdmmUtils.getImportedModelContents(container.technology.eResource,
-            container.technology.importURI)
+        container.technologies.forEach[
+            checkServicesForBasicEndpoints(container,  it)
+        ]
+    }
+
+    /**
+     * Helper to check that each service of a given container has a basic endpoint assigned for each
+     * protocol/format combination from the given technology
+     */
+    private def checkServicesForBasicEndpoints(Container container, Import technologyImport) {
+        val technologyModel = DdmmUtils.getImportedModelContents(technologyImport.eResource,
+            technologyImport.importURI)
         if (technologyModel === null || technologyModel.empty) {
             return
         }
@@ -467,15 +490,14 @@ class OperationDslValidator extends AbstractOperationDslValidator {
      * Check uniqueness of aspects
      */
     @Check
-    def checkAspectUniqueness(ImportedOperationAspect aspect) {
-        val allAspectsOfContainer = EcoreUtil2.getAllContentsOfType(aspect.eContainer,
+    def checkAspectUniqueness(ImportedOperationAspect importedAspect) {
+        val allAspectsOfContainer = EcoreUtil2.getAllContentsOfType(importedAspect.eContainer,
             ImportedOperationAspect)
-        val duplicateIndex = DdmmUtils.getDuplicateIndex(allAspectsOfContainer,
-            [importedAspect.name])
+        val duplicateIndex = DdmmUtils.getDuplicateIndex(allAspectsOfContainer, [aspect.name])
         if (duplicateIndex > -1) {
             val duplicateAspect = allAspectsOfContainer.get(duplicateIndex)
             error("Aspect was already specified", duplicateAspect,
-                OperationPackage.Literals::IMPORTED_OPERATION_ASPECT__IMPORTED_ASPECT)
+                OperationPackage.Literals::IMPORTED_OPERATION_ASPECT__ASPECT)
         }
     }
 
@@ -483,12 +505,12 @@ class OperationDslValidator extends AbstractOperationDslValidator {
      * Check uniqueness of aspect properties in value assignments
      */
     @Check
-    def checkUniqueValueAssignments(ImportedOperationAspect aspect) {
-        if (aspect.values.empty || aspect.importedAspect.properties.size <= 1) {
+    def checkUniqueValueAssignments(ImportedOperationAspect importedAspect) {
+        if (importedAspect.values.empty || importedAspect.aspect.properties.size <= 1) {
             return
         }
 
-        val duplicateIndex = DdmmUtils.getDuplicateIndex(aspect.values, [property.name])
+        val duplicateIndex = DdmmUtils.getDuplicateIndex(importedAspect.values, [property.name])
         if (duplicateIndex > -1)
             error("Duplicate value assignment to property",
                 OperationPackage.Literals::IMPORTED_OPERATION_ASPECT__VALUES, duplicateIndex)
@@ -505,12 +527,12 @@ class OperationDslValidator extends AbstractOperationDslValidator {
             return
         }
 
-        val propertyCount = importedAspect.importedAspect.properties.size
+        val propertyCount = importedAspect.aspect.properties.size
         if (propertyCount > 1)
             error("Ambiguous value assignment", importedAspect,
                 OperationPackage.Literals::IMPORTED_OPERATION_ASPECT__SINGLE_PROPERTY_VALUE)
         else if (propertyCount === 1) {
-            val targetProperty = importedAspect.importedAspect.properties.get(0)
+            val targetProperty = importedAspect.aspect.properties.get(0)
             val targetPropertyType = targetProperty.type
             if (!propertyValue.isOfType(targetPropertyType))
                 error('''Value is not of type «targetPropertyType.typeName» as expected by ''' +
@@ -524,8 +546,7 @@ class OperationDslValidator extends AbstractOperationDslValidator {
      */
     @Check
     def checkMandatoryAspectProperties(ImportedOperationAspect importedAspect) {
-        val aspect = importedAspect.importedAspect
-        val aspectProperties = aspect.properties
+        val aspectProperties = importedAspect.aspect.properties
         val mandatoryProperties = aspectProperties.filter[mandatory]
         val mandatoryPropertiesWithoutValues = mandatoryProperties.filter[
             !importedAspect.values.map[property].contains(it)
@@ -539,12 +560,12 @@ class OperationDslValidator extends AbstractOperationDslValidator {
                 val mandatoryProperty = mandatoryProperties.get(0)
                 error('''Mandatory property «mandatoryProperty.name» does not have value''',
                     importedAspect,
-                    OperationPackage.Literals::IMPORTED_OPERATION_ASPECT__IMPORTED_ASPECT)
+                    OperationPackage.Literals::IMPORTED_OPERATION_ASPECT__ASPECT)
             }
         } else if (!allMandatoryPropertiesHaveValues) {
             mandatoryPropertiesWithoutValues.forEach[
                error('''Mandatory property «name» does not have value''', importedAspect,
-                    OperationPackage.Literals::IMPORTED_OPERATION_ASPECT__IMPORTED_ASPECT)
+                    OperationPackage.Literals::IMPORTED_OPERATION_ASPECT__ASPECT)
             ]
         }
     }

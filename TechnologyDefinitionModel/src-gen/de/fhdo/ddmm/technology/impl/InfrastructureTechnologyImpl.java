@@ -6,8 +6,15 @@ import de.fhdo.ddmm.technology.InfrastructureTechnology;
 import de.fhdo.ddmm.technology.Technology;
 import de.fhdo.ddmm.technology.TechnologyPackage;
 
+import java.lang.reflect.InvocationTargetException;
+
+import java.util.ArrayList;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+
+import org.eclipse.emf.common.util.ECollections;
+import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
@@ -15,6 +22,8 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import org.eclipse.emf.ecore.util.EcoreUtil;
+
+import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 
 /**
  * <!-- begin-user-doc -->
@@ -98,6 +107,25 @@ public class InfrastructureTechnologyImpl extends OperationTechnologyImpl implem
         }
         else if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, TechnologyPackage.INFRASTRUCTURE_TECHNOLOGY__TECHNOLOGY, newTechnology, newTechnology));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EList<String> getQualifiedNameParts() {
+        EList<String> _xblockexpression = null;
+        {
+            if (((this.getName() == null) || this.getName().isEmpty())) {
+                return ECollections.<String>asEList(CollectionLiterals.<String>newArrayList());
+            }
+            final ArrayList<String> nameParts = CollectionLiterals.<String>newArrayList();
+            nameParts.add("_infrastructure");
+            nameParts.add(this.getName());
+            _xblockexpression = ECollections.<String>asEList(nameParts);
+        }
+        return _xblockexpression;
     }
 
     /**
@@ -201,6 +229,20 @@ public class InfrastructureTechnologyImpl extends OperationTechnologyImpl implem
                 return basicGetTechnology() != null;
         }
         return super.eIsSet(featureID);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+        switch (operationID) {
+            case TechnologyPackage.INFRASTRUCTURE_TECHNOLOGY___GET_QUALIFIED_NAME_PARTS:
+                return getQualifiedNameParts();
+        }
+        return super.eInvoke(operationID, arguments);
     }
 
 } //InfrastructureTechnologyImpl

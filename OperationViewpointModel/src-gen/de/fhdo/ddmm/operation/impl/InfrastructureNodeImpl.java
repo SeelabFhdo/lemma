@@ -4,10 +4,9 @@ package de.fhdo.ddmm.operation.impl;
 
 import de.fhdo.ddmm.operation.BasicEndpoint;
 import de.fhdo.ddmm.operation.InfrastructureNode;
+import de.fhdo.ddmm.operation.InfrastructureTechnologyReference;
 import de.fhdo.ddmm.operation.OperationModel;
 import de.fhdo.ddmm.operation.OperationPackage;
-
-import de.fhdo.ddmm.technology.InfrastructureTechnology;
 
 import java.util.Collection;
 
@@ -42,14 +41,14 @@ import org.eclipse.emf.ecore.util.InternalEList;
  */
 public class InfrastructureNodeImpl extends OperationNodeImpl implements InfrastructureNode {
     /**
-     * The cached value of the '{@link #getInfrastructureTechnology() <em>Infrastructure Technology</em>}' reference.
+     * The cached value of the '{@link #getInfrastructureTechnology() <em>Infrastructure Technology</em>}' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @see #getInfrastructureTechnology()
      * @generated
      * @ordered
      */
-    protected InfrastructureTechnology infrastructureTechnology;
+    protected InfrastructureTechnologyReference infrastructureTechnology;
 
     /**
      * The cached value of the '{@link #getEndpoints() <em>Endpoints</em>}' containment reference list.
@@ -85,15 +84,7 @@ public class InfrastructureNodeImpl extends OperationNodeImpl implements Infrast
      * <!-- end-user-doc -->
      * @generated
      */
-    public InfrastructureTechnology getInfrastructureTechnology() {
-        if (infrastructureTechnology != null && infrastructureTechnology.eIsProxy()) {
-            InternalEObject oldInfrastructureTechnology = (InternalEObject)infrastructureTechnology;
-            infrastructureTechnology = (InfrastructureTechnology)eResolveProxy(oldInfrastructureTechnology);
-            if (infrastructureTechnology != oldInfrastructureTechnology) {
-                if (eNotificationRequired())
-                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, OperationPackage.INFRASTRUCTURE_NODE__INFRASTRUCTURE_TECHNOLOGY, oldInfrastructureTechnology, infrastructureTechnology));
-            }
-        }
+    public InfrastructureTechnologyReference getInfrastructureTechnology() {
         return infrastructureTechnology;
     }
 
@@ -102,20 +93,33 @@ public class InfrastructureNodeImpl extends OperationNodeImpl implements Infrast
      * <!-- end-user-doc -->
      * @generated
      */
-    public InfrastructureTechnology basicGetInfrastructureTechnology() {
-        return infrastructureTechnology;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setInfrastructureTechnology(InfrastructureTechnology newInfrastructureTechnology) {
-        InfrastructureTechnology oldInfrastructureTechnology = infrastructureTechnology;
+    public NotificationChain basicSetInfrastructureTechnology(InfrastructureTechnologyReference newInfrastructureTechnology, NotificationChain msgs) {
+        InfrastructureTechnologyReference oldInfrastructureTechnology = infrastructureTechnology;
         infrastructureTechnology = newInfrastructureTechnology;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, OperationPackage.INFRASTRUCTURE_NODE__INFRASTRUCTURE_TECHNOLOGY, oldInfrastructureTechnology, infrastructureTechnology));
+        if (eNotificationRequired()) {
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, OperationPackage.INFRASTRUCTURE_NODE__INFRASTRUCTURE_TECHNOLOGY, oldInfrastructureTechnology, newInfrastructureTechnology);
+            if (msgs == null) msgs = notification; else msgs.add(notification);
+        }
+        return msgs;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setInfrastructureTechnology(InfrastructureTechnologyReference newInfrastructureTechnology) {
+        if (newInfrastructureTechnology != infrastructureTechnology) {
+            NotificationChain msgs = null;
+            if (infrastructureTechnology != null)
+                msgs = ((InternalEObject)infrastructureTechnology).eInverseRemove(this, OperationPackage.INFRASTRUCTURE_TECHNOLOGY_REFERENCE__INFRASTRUCTURE_NODE, InfrastructureTechnologyReference.class, msgs);
+            if (newInfrastructureTechnology != null)
+                msgs = ((InternalEObject)newInfrastructureTechnology).eInverseAdd(this, OperationPackage.INFRASTRUCTURE_TECHNOLOGY_REFERENCE__INFRASTRUCTURE_NODE, InfrastructureTechnologyReference.class, msgs);
+            msgs = basicSetInfrastructureTechnology(newInfrastructureTechnology, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, OperationPackage.INFRASTRUCTURE_NODE__INFRASTRUCTURE_TECHNOLOGY, newInfrastructureTechnology, newInfrastructureTechnology));
     }
 
     /**
@@ -190,6 +194,10 @@ public class InfrastructureNodeImpl extends OperationNodeImpl implements Infrast
     @Override
     public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
+            case OperationPackage.INFRASTRUCTURE_NODE__INFRASTRUCTURE_TECHNOLOGY:
+                if (infrastructureTechnology != null)
+                    msgs = ((InternalEObject)infrastructureTechnology).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - OperationPackage.INFRASTRUCTURE_NODE__INFRASTRUCTURE_TECHNOLOGY, null, msgs);
+                return basicSetInfrastructureTechnology((InfrastructureTechnologyReference)otherEnd, msgs);
             case OperationPackage.INFRASTRUCTURE_NODE__ENDPOINTS:
                 return ((InternalEList<InternalEObject>)(InternalEList<?>)getEndpoints()).basicAdd(otherEnd, msgs);
             case OperationPackage.INFRASTRUCTURE_NODE__OPERATION_MODEL:
@@ -208,6 +216,8 @@ public class InfrastructureNodeImpl extends OperationNodeImpl implements Infrast
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
+            case OperationPackage.INFRASTRUCTURE_NODE__INFRASTRUCTURE_TECHNOLOGY:
+                return basicSetInfrastructureTechnology(null, msgs);
             case OperationPackage.INFRASTRUCTURE_NODE__ENDPOINTS:
                 return ((InternalEList<?>)getEndpoints()).basicRemove(otherEnd, msgs);
             case OperationPackage.INFRASTRUCTURE_NODE__OPERATION_MODEL:
@@ -239,8 +249,7 @@ public class InfrastructureNodeImpl extends OperationNodeImpl implements Infrast
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
             case OperationPackage.INFRASTRUCTURE_NODE__INFRASTRUCTURE_TECHNOLOGY:
-                if (resolve) return getInfrastructureTechnology();
-                return basicGetInfrastructureTechnology();
+                return getInfrastructureTechnology();
             case OperationPackage.INFRASTRUCTURE_NODE__ENDPOINTS:
                 return getEndpoints();
             case OperationPackage.INFRASTRUCTURE_NODE__OPERATION_MODEL:
@@ -260,7 +269,7 @@ public class InfrastructureNodeImpl extends OperationNodeImpl implements Infrast
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
             case OperationPackage.INFRASTRUCTURE_NODE__INFRASTRUCTURE_TECHNOLOGY:
-                setInfrastructureTechnology((InfrastructureTechnology)newValue);
+                setInfrastructureTechnology((InfrastructureTechnologyReference)newValue);
                 return;
             case OperationPackage.INFRASTRUCTURE_NODE__ENDPOINTS:
                 getEndpoints().clear();
@@ -282,7 +291,7 @@ public class InfrastructureNodeImpl extends OperationNodeImpl implements Infrast
     public void eUnset(int featureID) {
         switch (featureID) {
             case OperationPackage.INFRASTRUCTURE_NODE__INFRASTRUCTURE_TECHNOLOGY:
-                setInfrastructureTechnology((InfrastructureTechnology)null);
+                setInfrastructureTechnology((InfrastructureTechnologyReference)null);
                 return;
             case OperationPackage.INFRASTRUCTURE_NODE__ENDPOINTS:
                 getEndpoints().clear();

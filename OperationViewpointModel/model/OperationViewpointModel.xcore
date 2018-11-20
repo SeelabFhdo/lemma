@@ -53,7 +53,7 @@ abstract class OperationNode {
      *     (C3) Services in service deployment specifications must correspond to those being
      *          deployed to the operation node.
      *          Ensured by: DSL scope provider.
-     *     (C4) The operation environment must be one defined in the assigned deployment technology
+     *     (C4) The operation environment must be defined in the assigned deployment technology
      *          (for containers) or infrastructure technology (for infrastructure nodes).
      *          Ensured by: DSL scope provider.
      *     (C5) There might exactly be one deployment specification per service.
@@ -62,12 +62,14 @@ abstract class OperationNode {
      *          Ensured by: DSL validator.
      *     (C6) Each service property might receive a value once.
      *          Ensured by: DSL validator.
+     *     (C7) A technology might be assigned exactly once to an operation node.
+     *          Ensured by: DSL validator.
      */
 
     String name
 
-    refers Import technology
-    refers OperationEnvironment[0..1] operationEnvironment
+    refers Import[1..*] technologies
+    refers OperationEnvironment operationEnvironment
     contains ImportedMicroservice[1..*] deployedServices opposite operationNode
     contains TechnologySpecificPropertyValueAssignment[] defaultServicePropertyValues
     contains ServiceDeploymentSpecification[] deploymentSpecifications opposite operationNode
@@ -94,10 +96,17 @@ class Container extends OperationNode {
      *          Ensured by: DSL validator.
      */
 
-    refers DeploymentTechnology deploymentTechnology
+    contains DeploymentTechnologyReference deploymentTechnology opposite ^container
     contains BasicEndpoint[] defaultBasicEndpoints opposite ^container
 
     container OperationModel operationModel opposite containers
+}
+
+class DeploymentTechnologyReference {
+    refers Import ^import
+    refers DeploymentTechnology deploymentTechnology
+
+    container Container ^container opposite deploymentTechnology
 }
 
 /**
@@ -117,10 +126,17 @@ class InfrastructureNode extends OperationNode {
      *          Ensured by: DSL validator.
      */
 
-    refers InfrastructureTechnology infrastructureTechnology
+    contains InfrastructureTechnologyReference infrastructureTechnology opposite infrastructureNode
     contains BasicEndpoint[] endpoints opposite infrastructureNode
 
     container OperationModel operationModel opposite infrastructureNodes
+}
+
+class InfrastructureTechnologyReference {
+    refers Import ^import
+    refers InfrastructureTechnology infrastructureTechnology
+
+    container InfrastructureNode infrastructureNode opposite infrastructureTechnology
 }
 
 /**
@@ -165,6 +181,7 @@ class ProtocolAndDataFormat {
      *          and correspond to the protocol.
      *          Ensured by: DSL scope provider.
      */
+    refers Import technology
     refers Protocol protocol
     refers DataFormat[0..1] dataFormat
 
@@ -207,7 +224,8 @@ class ImportedOperationAspect {
      *          Ensured by: DSL validator.
      */
 
-    refers OperationAspect importedAspect
+    refers Import technology
+    refers OperationAspect aspect
     contains PrimitiveValue singlePropertyValue
     contains TechnologySpecificPropertyValueAssignment[] values
 

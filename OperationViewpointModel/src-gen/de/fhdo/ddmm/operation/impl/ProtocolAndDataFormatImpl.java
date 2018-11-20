@@ -6,6 +6,8 @@ import de.fhdo.ddmm.operation.BasicEndpoint;
 import de.fhdo.ddmm.operation.OperationPackage;
 import de.fhdo.ddmm.operation.ProtocolAndDataFormat;
 
+import de.fhdo.ddmm.service.Import;
+
 import de.fhdo.ddmm.technology.DataFormat;
 import de.fhdo.ddmm.technology.Protocol;
 
@@ -28,6 +30,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link de.fhdo.ddmm.operation.impl.ProtocolAndDataFormatImpl#getTechnology <em>Technology</em>}</li>
  *   <li>{@link de.fhdo.ddmm.operation.impl.ProtocolAndDataFormatImpl#getProtocol <em>Protocol</em>}</li>
  *   <li>{@link de.fhdo.ddmm.operation.impl.ProtocolAndDataFormatImpl#getDataFormat <em>Data Format</em>}</li>
  *   <li>{@link de.fhdo.ddmm.operation.impl.ProtocolAndDataFormatImpl#getEndpoint <em>Endpoint</em>}</li>
@@ -36,6 +39,16 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  * @generated
  */
 public class ProtocolAndDataFormatImpl extends MinimalEObjectImpl.Container implements ProtocolAndDataFormat {
+    /**
+     * The cached value of the '{@link #getTechnology() <em>Technology</em>}' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getTechnology()
+     * @generated
+     * @ordered
+     */
+    protected Import technology;
+
     /**
      * The cached value of the '{@link #getProtocol() <em>Protocol</em>}' reference.
      * <!-- begin-user-doc -->
@@ -73,6 +86,44 @@ public class ProtocolAndDataFormatImpl extends MinimalEObjectImpl.Container impl
     @Override
     protected EClass eStaticClass() {
         return OperationPackage.Literals.PROTOCOL_AND_DATA_FORMAT;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public Import getTechnology() {
+        if (technology != null && technology.eIsProxy()) {
+            InternalEObject oldTechnology = (InternalEObject)technology;
+            technology = (Import)eResolveProxy(oldTechnology);
+            if (technology != oldTechnology) {
+                if (eNotificationRequired())
+                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, OperationPackage.PROTOCOL_AND_DATA_FORMAT__TECHNOLOGY, oldTechnology, technology));
+            }
+        }
+        return technology;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public Import basicGetTechnology() {
+        return technology;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setTechnology(Import newTechnology) {
+        Import oldTechnology = technology;
+        technology = newTechnology;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, OperationPackage.PROTOCOL_AND_DATA_FORMAT__TECHNOLOGY, oldTechnology, technology));
     }
 
     /**
@@ -254,6 +305,9 @@ public class ProtocolAndDataFormatImpl extends MinimalEObjectImpl.Container impl
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
+            case OperationPackage.PROTOCOL_AND_DATA_FORMAT__TECHNOLOGY:
+                if (resolve) return getTechnology();
+                return basicGetTechnology();
             case OperationPackage.PROTOCOL_AND_DATA_FORMAT__PROTOCOL:
                 if (resolve) return getProtocol();
                 return basicGetProtocol();
@@ -275,6 +329,9 @@ public class ProtocolAndDataFormatImpl extends MinimalEObjectImpl.Container impl
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
+            case OperationPackage.PROTOCOL_AND_DATA_FORMAT__TECHNOLOGY:
+                setTechnology((Import)newValue);
+                return;
             case OperationPackage.PROTOCOL_AND_DATA_FORMAT__PROTOCOL:
                 setProtocol((Protocol)newValue);
                 return;
@@ -296,6 +353,9 @@ public class ProtocolAndDataFormatImpl extends MinimalEObjectImpl.Container impl
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
+            case OperationPackage.PROTOCOL_AND_DATA_FORMAT__TECHNOLOGY:
+                setTechnology((Import)null);
+                return;
             case OperationPackage.PROTOCOL_AND_DATA_FORMAT__PROTOCOL:
                 setProtocol((Protocol)null);
                 return;
@@ -317,6 +377,8 @@ public class ProtocolAndDataFormatImpl extends MinimalEObjectImpl.Container impl
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
+            case OperationPackage.PROTOCOL_AND_DATA_FORMAT__TECHNOLOGY:
+                return technology != null;
             case OperationPackage.PROTOCOL_AND_DATA_FORMAT__PROTOCOL:
                 return protocol != null;
             case OperationPackage.PROTOCOL_AND_DATA_FORMAT__DATA_FORMAT:

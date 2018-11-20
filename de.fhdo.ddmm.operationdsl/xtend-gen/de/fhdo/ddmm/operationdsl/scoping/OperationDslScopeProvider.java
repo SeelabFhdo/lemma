@@ -4,11 +4,12 @@ import com.google.common.base.Function;
 import com.google.common.base.Objects;
 import com.google.common.base.Predicate;
 import de.fhdo.ddmm.data.PrimitiveValue;
-import de.fhdo.ddmm.operation.BasicEndpoint;
 import de.fhdo.ddmm.operation.Container;
+import de.fhdo.ddmm.operation.DeploymentTechnologyReference;
 import de.fhdo.ddmm.operation.ImportedMicroservice;
 import de.fhdo.ddmm.operation.ImportedOperationAspect;
 import de.fhdo.ddmm.operation.InfrastructureNode;
+import de.fhdo.ddmm.operation.InfrastructureTechnologyReference;
 import de.fhdo.ddmm.operation.OperationModel;
 import de.fhdo.ddmm.operation.OperationNode;
 import de.fhdo.ddmm.operation.OperationPackage;
@@ -31,7 +32,6 @@ import de.fhdo.ddmm.technology.TechnologyPackage;
 import de.fhdo.ddmm.technology.TechnologySpecificProperty;
 import de.fhdo.ddmm.technology.TechnologySpecificPropertyValueAssignment;
 import de.fhdo.ddmm.utils.DdmmUtils;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.function.Consumer;
@@ -61,14 +61,32 @@ public class OperationDslScopeProvider extends AbstractOperationDslScopeProvider
   public IScope getScope(final EObject context, final EReference reference) {
     IScope _switchResult = null;
     boolean _matched = false;
-    if (context instanceof Container) {
+    if (context instanceof OperationModel) {
       _matched=true;
-      _switchResult = this.getScope(((Container)context), reference);
+      _switchResult = this.getScope(((OperationModel)context), reference);
+    }
+    if (!_matched) {
+      if (context instanceof Container) {
+        _matched=true;
+        _switchResult = this.getScope(((Container)context), reference);
+      }
+    }
+    if (!_matched) {
+      if (context instanceof DeploymentTechnologyReference) {
+        _matched=true;
+        _switchResult = this.getScope(((DeploymentTechnologyReference)context), reference);
+      }
     }
     if (!_matched) {
       if (context instanceof InfrastructureNode) {
         _matched=true;
         _switchResult = this.getScope(((InfrastructureNode)context), reference);
+      }
+    }
+    if (!_matched) {
+      if (context instanceof InfrastructureTechnologyReference) {
+        _matched=true;
+        _switchResult = this.getScope(((InfrastructureTechnologyReference)context), reference);
       }
     }
     if (!_matched) {
@@ -81,12 +99,6 @@ public class OperationDslScopeProvider extends AbstractOperationDslScopeProvider
       if (context instanceof TechnologySpecificPropertyValueAssignment) {
         _matched=true;
         _switchResult = this.getScope(((TechnologySpecificPropertyValueAssignment)context), reference);
-      }
-    }
-    if (!_matched) {
-      if (context instanceof BasicEndpoint) {
-        _matched=true;
-        _switchResult = this.getScope(((BasicEndpoint)context), reference);
       }
     }
     if (!_matched) {
@@ -119,6 +131,18 @@ public class OperationDslScopeProvider extends AbstractOperationDslScopeProvider
   }
   
   /**
+   * Build scope for operation model
+   */
+  private IScope getScope(final OperationModel model, final EReference reference) {
+    boolean _matched = false;
+    if (Objects.equal(reference, OperationPackage.Literals.OPERATION_NODE__TECHNOLOGIES)) {
+      _matched=true;
+      return this.getScopeForImportsOfType(model, Technology.class);
+    }
+    return null;
+  }
+  
+  /**
    * Build scope for Container-specific features
    */
   private IScope getScope(final Container container, final EReference reference) {
@@ -128,18 +152,30 @@ public class OperationDslScopeProvider extends AbstractOperationDslScopeProvider
       return this.getScopeForOperationEnvironment(container);
     }
     if (!_matched) {
-      if (Objects.equal(reference, OperationPackage.Literals.CONTAINER__DEPLOYMENT_TECHNOLOGY)) {
+      if (Objects.equal(reference, OperationPackage.Literals.DEPLOYMENT_TECHNOLOGY_REFERENCE__IMPORT)) {
         _matched=true;
-        return this.getScopeForDeploymentTechnology(container);
-      }
-    }
-    if (!_matched) {
-      if (Objects.equal(reference, OperationPackage.Literals.IMPORTED_OPERATION_ASPECT__IMPORTED_ASPECT)) {
-        _matched=true;
-        return this.getScopeForImportedAspect(container);
+        return this.getScopeForAnnotatedTechnologies(container);
       }
     }
     return this.getScope(((OperationNode) container), reference);
+  }
+  
+  /**
+   * Build scope for deployment technology references
+   */
+  private IScope getScope(final DeploymentTechnologyReference deploymentTechnologyReference, final EReference reference) {
+    boolean _matched = false;
+    if (Objects.equal(reference, OperationPackage.Literals.DEPLOYMENT_TECHNOLOGY_REFERENCE__IMPORT)) {
+      _matched=true;
+      return this.getScopeForAnnotatedTechnologies(deploymentTechnologyReference.getContainer());
+    }
+    if (!_matched) {
+      if (Objects.equal(reference, OperationPackage.Literals.DEPLOYMENT_TECHNOLOGY_REFERENCE__DEPLOYMENT_TECHNOLOGY)) {
+        _matched=true;
+        return this.getScopeForDeploymentTechnology(deploymentTechnologyReference);
+      }
+    }
+    return null;
   }
   
   /**
@@ -147,10 +183,9 @@ public class OperationDslScopeProvider extends AbstractOperationDslScopeProvider
    */
   private IScope getScope(final ImportedOperationAspect importedAspect, final EReference reference) {
     boolean _matched = false;
-    if (Objects.equal(reference, OperationPackage.Literals.IMPORTED_OPERATION_ASPECT__IMPORTED_ASPECT)) {
+    if (Objects.equal(reference, OperationPackage.Literals.IMPORTED_OPERATION_ASPECT__ASPECT)) {
       _matched=true;
-      EObject _eContainer = importedAspect.eContainer();
-      return this.getScopeForImportedAspect(((OperationNode) _eContainer));
+      return this.getScopeForImportedAspect(importedAspect);
     }
     if (!_matched) {
       if (Objects.equal(reference, TechnologyPackage.Literals.TECHNOLOGY_SPECIFIC_PROPERTY_VALUE_ASSIGNMENT__PROPERTY)) {
@@ -164,20 +199,21 @@ public class OperationDslScopeProvider extends AbstractOperationDslScopeProvider
   /**
    * Build scope for imported operation aspects
    */
-  private IScope getScopeForImportedAspect(final OperationNode operationNode) {
-    Import _technology = operationNode.getTechnology();
+  private IScope getScopeForImportedAspect(final ImportedOperationAspect importedAspect) {
+    Import _technology = importedAspect.getTechnology();
     boolean _tripleEquals = (_technology == null);
     if (_tripleEquals) {
       return IScope.NULLSCOPE;
     }
     JoinPointType _switchResult = null;
+    EObject _eContainer = importedAspect.eContainer();
     boolean _matched = false;
-    if (operationNode instanceof Container) {
+    if (_eContainer instanceof Container) {
       _matched=true;
       _switchResult = JoinPointType.CONTAINERS;
     }
     if (!_matched) {
-      if (operationNode instanceof InfrastructureNode) {
+      if (_eContainer instanceof InfrastructureNode) {
         _matched=true;
         _switchResult = JoinPointType.INFRASTRUCTURE_NODES;
       }
@@ -187,26 +223,29 @@ public class OperationDslScopeProvider extends AbstractOperationDslScopeProvider
       return IterableExtensions.<OperationAspect>toList(it.getOperationAspects());
     };
     final Function<OperationAspect, List<String>> _function_1 = (OperationAspect it) -> {
-      String _name = it.getName();
-      return Collections.<String>unmodifiableList(CollectionLiterals.<String>newArrayList(_name));
+      return it.getQualifiedNameParts();
     };
     final Predicate<OperationAspect> _function_2 = (OperationAspect it) -> {
       return it.getJoinPoints().contains(joinPoint);
     };
     return DdmmUtils.<Import, Technology, OperationAspect>getScopeForPossiblyImportedConcept(
-      operationNode.getTechnology(), 
+      importedAspect.getTechnology(), 
       null, 
       Technology.class, 
-      operationNode.getTechnology().getImportURI(), _function, _function_1, _function_2);
+      importedAspect.getTechnology().getImportURI(), _function, _function_1, _function_2);
   }
   
   /**
    * Build scope for aspect properties
    */
   private IScope getScopeForAspectProperty(final EObject container) {
+    if (((!(container instanceof TechnologySpecificPropertyValueAssignment)) && 
+      (!(container instanceof ImportedOperationAspect)))) {
+      return IScope.NULLSCOPE;
+    }
     if ((container instanceof TechnologySpecificPropertyValueAssignment)) {
       final ImportedOperationAspect aspect = EcoreUtil2.<ImportedOperationAspect>getContainerOfType(container, ImportedOperationAspect.class);
-      return Scopes.scopeFor(aspect.getImportedAspect().getProperties());
+      return Scopes.scopeFor(aspect.getAspect().getProperties());
     } else {
       if ((container instanceof ImportedOperationAspect)) {
         final HashSet<String> alreadyUsedProperties = CollectionLiterals.<String>newHashSet();
@@ -222,12 +261,11 @@ public class OperationDslScopeProvider extends AbstractOperationDslScopeProvider
           boolean _contains = alreadyUsedProperties.contains(it.getName());
           return Boolean.valueOf((!_contains));
         };
-        final Iterable<TechnologySpecificProperty> availableProperties = IterableExtensions.<TechnologySpecificProperty>filter(((ImportedOperationAspect)container).getImportedAspect().getProperties(), _function_1);
+        final Iterable<TechnologySpecificProperty> availableProperties = IterableExtensions.<TechnologySpecificProperty>filter(((ImportedOperationAspect)container).getAspect().getProperties(), _function_1);
         return Scopes.scopeFor(availableProperties);
-      } else {
-        return IScope.NULLSCOPE;
       }
     }
+    return null;
   }
   
   /**
@@ -240,12 +278,30 @@ public class OperationDslScopeProvider extends AbstractOperationDslScopeProvider
       return this.getScopeForOperationEnvironment(infrastructureNode);
     }
     if (!_matched) {
-      if (Objects.equal(reference, OperationPackage.Literals.INFRASTRUCTURE_NODE__INFRASTRUCTURE_TECHNOLOGY)) {
+      if (Objects.equal(reference, OperationPackage.Literals.INFRASTRUCTURE_TECHNOLOGY_REFERENCE__IMPORT)) {
         _matched=true;
-        return this.getScopeForInfrastructureTechnology(infrastructureNode);
+        return this.getScopeForAnnotatedTechnologies(infrastructureNode);
       }
     }
     return this.getScope(((OperationNode) infrastructureNode), reference);
+  }
+  
+  /**
+   * Build scope for infrastructure technology references
+   */
+  private IScope getScope(final InfrastructureTechnologyReference infrastructureTechnologyReference, final EReference reference) {
+    boolean _matched = false;
+    if (Objects.equal(reference, OperationPackage.Literals.INFRASTRUCTURE_TECHNOLOGY_REFERENCE__IMPORT)) {
+      _matched=true;
+      return this.getScopeForAnnotatedTechnologies(infrastructureTechnologyReference.getInfrastructureNode());
+    }
+    if (!_matched) {
+      if (Objects.equal(reference, OperationPackage.Literals.INFRASTRUCTURE_TECHNOLOGY_REFERENCE__INFRASTRUCTURE_TECHNOLOGY)) {
+        _matched=true;
+        return this.getScopeForInfrastructureTechnology(infrastructureTechnologyReference);
+      }
+    }
+    return null;
   }
   
   /**
@@ -253,7 +309,7 @@ public class OperationDslScopeProvider extends AbstractOperationDslScopeProvider
    */
   private IScope getScope(final OperationNode operationNode, final EReference reference) {
     boolean _matched = false;
-    if (Objects.equal(reference, OperationPackage.Literals.OPERATION_NODE__TECHNOLOGY)) {
+    if (Objects.equal(reference, OperationPackage.Literals.OPERATION_NODE__TECHNOLOGIES)) {
       _matched=true;
       return this.getScopeForImportsOfType(operationNode, Technology.class);
     }
@@ -276,20 +332,33 @@ public class OperationDslScopeProvider extends AbstractOperationDslScopeProvider
       }
     }
     if (!_matched) {
-      if (Objects.equal(reference, OperationPackage.Literals.PROTOCOL_AND_DATA_FORMAT__PROTOCOL)) {
+      if (Objects.equal(reference, OperationPackage.Literals.PROTOCOL_AND_DATA_FORMAT__TECHNOLOGY)) {
         _matched=true;
-        return this.getScopeForEndpointProtocols(operationNode);
+        return this.getScopeForAnnotatedTechnologies(operationNode);
+      }
+    }
+    if (!_matched) {
+      if (Objects.equal(reference, OperationPackage.Literals.IMPORTED_OPERATION_ASPECT__TECHNOLOGY)) {
+        _matched=true;
+        return this.getScopeForAnnotatedTechnologies(operationNode);
       }
     }
     return null;
   }
   
   /**
+   * Build scope that comprises annotated technologies of an annotatable concept instance
+   */
+  private IScope getScopeForAnnotatedTechnologies(final OperationNode operationNode) {
+    return Scopes.scopeFor(operationNode.getTechnologies());
+  }
+  
+  /**
    * Get scope for deployment technology
    */
-  private IScope getScopeForDeploymentTechnology(final Container container) {
-    Import _technology = container.getTechnology();
-    boolean _tripleEquals = (_technology == null);
+  private IScope getScopeForDeploymentTechnology(final DeploymentTechnologyReference reference) {
+    Import _import = reference.getImport();
+    boolean _tripleEquals = (_import == null);
     if (_tripleEquals) {
       return IScope.NULLSCOPE;
     }
@@ -297,21 +366,20 @@ public class OperationDslScopeProvider extends AbstractOperationDslScopeProvider
       return IterableExtensions.<DeploymentTechnology>toList(it.getDeploymentTechnologies());
     };
     final Function<DeploymentTechnology, List<String>> _function_1 = (DeploymentTechnology it) -> {
-      String _name = it.getName();
-      return Collections.<String>unmodifiableList(CollectionLiterals.<String>newArrayList(_name));
+      return it.getQualifiedNameParts();
     };
-    return DdmmUtils.<Container, Technology, DeploymentTechnology>getScopeForPossiblyImportedConcept(container, 
+    return DdmmUtils.<DeploymentTechnologyReference, Technology, DeploymentTechnology>getScopeForPossiblyImportedConcept(reference, 
       null, 
       Technology.class, 
-      container.getTechnology().getImportURI(), _function, _function_1);
+      reference.getImport().getImportURI(), _function, _function_1);
   }
   
   /**
    * Get scope for infrastructure technology
    */
-  private IScope getScopeForInfrastructureTechnology(final InfrastructureNode infrastructureNode) {
-    Import _technology = infrastructureNode.getTechnology();
-    boolean _tripleEquals = (_technology == null);
+  private IScope getScopeForInfrastructureTechnology(final InfrastructureTechnologyReference reference) {
+    Import _import = reference.getImport();
+    boolean _tripleEquals = (_import == null);
     if (_tripleEquals) {
       return IScope.NULLSCOPE;
     }
@@ -319,13 +387,12 @@ public class OperationDslScopeProvider extends AbstractOperationDslScopeProvider
       return IterableExtensions.<InfrastructureTechnology>toList(it.getInfrastructureTechnologies());
     };
     final Function<InfrastructureTechnology, List<String>> _function_1 = (InfrastructureTechnology it) -> {
-      String _name = it.getName();
-      return Collections.<String>unmodifiableList(CollectionLiterals.<String>newArrayList(_name));
+      return it.getQualifiedNameParts();
     };
-    return DdmmUtils.<InfrastructureNode, Technology, InfrastructureTechnology>getScopeForPossiblyImportedConcept(infrastructureNode, 
+    return DdmmUtils.<InfrastructureTechnologyReference, Technology, InfrastructureTechnology>getScopeForPossiblyImportedConcept(reference, 
       null, 
       Technology.class, 
-      infrastructureNode.getTechnology().getImportURI(), _function, _function_1);
+      reference.getImport().getImportURI(), _function, _function_1);
   }
   
   /**
@@ -334,11 +401,11 @@ public class OperationDslScopeProvider extends AbstractOperationDslScopeProvider
   private IScope getScopeForOperationEnvironment(final OperationNode operationNode) {
     OperationTechnology _xifexpression = null;
     if ((operationNode instanceof Container)) {
-      _xifexpression = ((Container)operationNode).getDeploymentTechnology();
+      _xifexpression = ((Container)operationNode).getDeploymentTechnology().getDeploymentTechnology();
     } else {
       InfrastructureTechnology _xifexpression_1 = null;
       if ((operationNode instanceof InfrastructureNode)) {
-        _xifexpression_1 = ((InfrastructureNode)operationNode).getInfrastructureTechnology();
+        _xifexpression_1 = ((InfrastructureNode)operationNode).getInfrastructureTechnology().getInfrastructureTechnology();
       }
       _xifexpression = _xifexpression_1;
     }
@@ -390,25 +457,19 @@ public class OperationDslScopeProvider extends AbstractOperationDslScopeProvider
   }
   
   /**
-   * Build scope for basic endpoints
-   */
-  private IScope getScope(final BasicEndpoint basicEndpoint, final EReference reference) {
-    boolean _matched = false;
-    if (Objects.equal(reference, OperationPackage.Literals.PROTOCOL_AND_DATA_FORMAT__PROTOCOL)) {
-      _matched=true;
-      return this.getScopeForEndpointProtocols(basicEndpoint);
-    }
-    return null;
-  }
-  
-  /**
    * Build scope for protocols and data formats
    */
   private IScope getScope(final ProtocolAndDataFormat protocolAndDataFormat, final EReference reference) {
     boolean _matched = false;
-    if (Objects.equal(reference, OperationPackage.Literals.PROTOCOL_AND_DATA_FORMAT__PROTOCOL)) {
+    if (Objects.equal(reference, OperationPackage.Literals.PROTOCOL_AND_DATA_FORMAT__TECHNOLOGY)) {
       _matched=true;
-      return this.getScopeForEndpointProtocols(protocolAndDataFormat);
+      return this.getScopeForAnnotatedTechnologies(EcoreUtil2.<OperationNode>getContainerOfType(protocolAndDataFormat, OperationNode.class));
+    }
+    if (!_matched) {
+      if (Objects.equal(reference, OperationPackage.Literals.PROTOCOL_AND_DATA_FORMAT__PROTOCOL)) {
+        _matched=true;
+        return this.getScopeForEndpointProtocols(protocolAndDataFormat);
+      }
     }
     if (!_matched) {
       if (Objects.equal(reference, OperationPackage.Literals.PROTOCOL_AND_DATA_FORMAT__DATA_FORMAT)) {
@@ -422,28 +483,23 @@ public class OperationDslScopeProvider extends AbstractOperationDslScopeProvider
   /**
    * Build scope for endpoint protocols
    */
-  private IScope getScopeForEndpointProtocols(final EObject context) {
-    OperationNode operationNode = null;
-    if ((context instanceof OperationNode)) {
-      operationNode = ((OperationNode)context);
-    } else {
-      operationNode = EcoreUtil2.<OperationNode>getContainerOfType(context, OperationNode.class);
-    }
-    if (((operationNode == null) || (operationNode.getTechnology() == null))) {
+  private IScope getScopeForEndpointProtocols(final ProtocolAndDataFormat protocol) {
+    Import _technology = protocol.getTechnology();
+    boolean _tripleEquals = (_technology == null);
+    if (_tripleEquals) {
       return IScope.NULLSCOPE;
     }
     final Function<Technology, List<Protocol>> _function = (Technology it) -> {
       return IterableExtensions.<Protocol>toList(it.getProtocols());
     };
     final Function<Protocol, List<String>> _function_1 = (Protocol it) -> {
-      String _name = it.getName();
-      return Collections.<String>unmodifiableList(CollectionLiterals.<String>newArrayList(_name));
+      return it.getQualifiedNameParts();
     };
     return DdmmUtils.<Import, Technology, Protocol>getScopeForPossiblyImportedConcept(
-      operationNode.getTechnology(), 
+      protocol.getTechnology(), 
       null, 
       Technology.class, 
-      operationNode.getTechnology().getImportURI(), _function, _function_1);
+      protocol.getTechnology().getImportURI(), _function, _function_1);
   }
   
   /**
@@ -487,15 +543,15 @@ public class OperationDslScopeProvider extends AbstractOperationDslScopeProvider
       }
     }
     if (!_matched) {
-      if (Objects.equal(reference, TechnologyPackage.Literals.TECHNOLOGY_SPECIFIC_PROPERTY_VALUE_ASSIGNMENT__PROPERTY)) {
+      if (Objects.equal(reference, OperationPackage.Literals.PROTOCOL_AND_DATA_FORMAT__TECHNOLOGY)) {
         _matched=true;
-        return this.getScopeForServiceProperties(specification);
+        return this.getScopeForAnnotatedTechnologies(EcoreUtil2.<OperationNode>getContainerOfType(specification, OperationNode.class));
       }
     }
     if (!_matched) {
-      if (Objects.equal(reference, OperationPackage.Literals.PROTOCOL_AND_DATA_FORMAT__PROTOCOL)) {
+      if (Objects.equal(reference, TechnologyPackage.Literals.TECHNOLOGY_SPECIFIC_PROPERTY_VALUE_ASSIGNMENT__PROPERTY)) {
         _matched=true;
-        return this.getScopeForEndpointProtocols(specification);
+        return this.getScopeForServiceProperties(specification);
       }
     }
     return null;
@@ -569,14 +625,16 @@ public class OperationDslScopeProvider extends AbstractOperationDslScopeProvider
       }
       infrastructureNode = _xifexpression_1;
     }
-    if (((container == null) && (infrastructureNode == null))) {
+    if ((((container == null) && (infrastructureNode == null)) || 
+      ((container.getDeploymentTechnology() == null) && 
+        (infrastructureNode.getInfrastructureTechnology() == null)))) {
       return IScope.NULLSCOPE;
     }
     EList<TechnologySpecificProperty> _xifexpression_2 = null;
     if ((container != null)) {
-      _xifexpression_2 = container.getDeploymentTechnology().getServiceProperties();
+      _xifexpression_2 = container.getDeploymentTechnology().getDeploymentTechnology().getServiceProperties();
     } else {
-      _xifexpression_2 = infrastructureNode.getInfrastructureTechnology().getServiceProperties();
+      _xifexpression_2 = infrastructureNode.getInfrastructureTechnology().getInfrastructureTechnology().getServiceProperties();
     }
     final EList<TechnologySpecificProperty> serviceProperties = _xifexpression_2;
     return Scopes.scopeFor(serviceProperties);

@@ -27,7 +27,7 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  * <ul>
  *   <li>{@link de.fhdo.ddmm.operation.OperationNode#getName <em>Name</em>}</li>
- *   <li>{@link de.fhdo.ddmm.operation.OperationNode#getTechnology <em>Technology</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.operation.OperationNode#getTechnologies <em>Technologies</em>}</li>
  *   <li>{@link de.fhdo.ddmm.operation.OperationNode#getOperationEnvironment <em>Operation Environment</em>}</li>
  *   <li>{@link de.fhdo.ddmm.operation.OperationNode#getDeployedServices <em>Deployed Services</em>}</li>
  *   <li>{@link de.fhdo.ddmm.operation.OperationNode#getDefaultServicePropertyValues <em>Default Service Property Values</em>}</li>
@@ -56,7 +56,7 @@ public interface OperationNode extends EObject {
      *     (C3) Services in service deployment specifications must correspond to those being
      *          deployed to the operation node.
      *          Ensured by: DSL scope provider.
-     *     (C4) The operation environment must be one defined in the assigned deployment technology
+     *     (C4) The operation environment must be defined in the assigned deployment technology
      *          (for containers) or infrastructure technology (for infrastructure nodes).
      *          Ensured by: DSL scope provider.
      *     (C5) There might exactly be one deployment specification per service.
@@ -64,6 +64,8 @@ public interface OperationNode extends EObject {
      *     (C6) Deployed services must be unique.
      *          Ensured by: DSL validator.
      *     (C6) Each service property might receive a value once.
+     *          Ensured by: DSL validator.
+     *     (C7) A technology might be assigned exactly once to an operation node.
      *          Ensured by: DSL validator.
      * <!-- end-model-doc -->
      * @return the value of the '<em>Name</em>' attribute.
@@ -85,30 +87,20 @@ public interface OperationNode extends EObject {
     void setName(String value);
 
     /**
-     * Returns the value of the '<em><b>Technology</b></em>' reference.
+     * Returns the value of the '<em><b>Technologies</b></em>' reference list.
+     * The list contents are of type {@link de.fhdo.ddmm.service.Import}.
      * <!-- begin-user-doc -->
      * <p>
-     * If the meaning of the '<em>Technology</em>' reference isn't clear,
+     * If the meaning of the '<em>Technologies</em>' reference list isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Technology</em>' reference.
-     * @see #setTechnology(Import)
-     * @see de.fhdo.ddmm.operation.OperationPackage#getOperationNode_Technology()
-     * @model
+     * @return the value of the '<em>Technologies</em>' reference list.
+     * @see de.fhdo.ddmm.operation.OperationPackage#getOperationNode_Technologies()
+     * @model required="true"
      * @generated
      */
-    Import getTechnology();
-
-    /**
-     * Sets the value of the '{@link de.fhdo.ddmm.operation.OperationNode#getTechnology <em>Technology</em>}' reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Technology</em>' reference.
-     * @see #getTechnology()
-     * @generated
-     */
-    void setTechnology(Import value);
+    EList<Import> getTechnologies();
 
     /**
      * Returns the value of the '<em><b>Operation Environment</b></em>' reference.

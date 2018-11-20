@@ -40,6 +40,15 @@ public interface OperationFactory extends EFactory {
     Container createContainer();
 
     /**
+     * Returns a new object of class '<em>Deployment Technology Reference</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Deployment Technology Reference</em>'.
+     * @generated
+     */
+    DeploymentTechnologyReference createDeploymentTechnologyReference();
+
+    /**
      * Returns a new object of class '<em>Infrastructure Node</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -47,6 +56,15 @@ public interface OperationFactory extends EFactory {
      * @generated
      */
     InfrastructureNode createInfrastructureNode();
+
+    /**
+     * Returns a new object of class '<em>Infrastructure Technology Reference</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Infrastructure Technology Reference</em>'.
+     * @generated
+     */
+    InfrastructureTechnologyReference createInfrastructureTechnologyReference();
 
     /**
      * Returns a new object of class '<em>Imported Microservice</em>'.

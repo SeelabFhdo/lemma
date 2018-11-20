@@ -2,8 +2,6 @@
  */
 package de.fhdo.ddmm.operation;
 
-import de.fhdo.ddmm.technology.InfrastructureTechnology;
-
 import org.eclipse.emf.common.util.EList;
 
 /**
@@ -32,7 +30,8 @@ import org.eclipse.emf.common.util.EList;
  */
 public interface InfrastructureNode extends OperationNode {
     /**
-     * Returns the value of the '<em><b>Infrastructure Technology</b></em>' reference.
+     * Returns the value of the '<em><b>Infrastructure Technology</b></em>' containment reference.
+     * It is bidirectional and its opposite is '{@link de.fhdo.ddmm.operation.InfrastructureTechnologyReference#getInfrastructureNode <em>Infrastructure Node</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
@@ -47,23 +46,24 @@ public interface InfrastructureNode extends OperationNode {
      *     (C3) Endpoints must be unique for protocol and data format combination.
      *          Ensured by: DSL validator.
      * <!-- end-model-doc -->
-     * @return the value of the '<em>Infrastructure Technology</em>' reference.
-     * @see #setInfrastructureTechnology(InfrastructureTechnology)
+     * @return the value of the '<em>Infrastructure Technology</em>' containment reference.
+     * @see #setInfrastructureTechnology(InfrastructureTechnologyReference)
      * @see de.fhdo.ddmm.operation.OperationPackage#getInfrastructureNode_InfrastructureTechnology()
-     * @model
+     * @see de.fhdo.ddmm.operation.InfrastructureTechnologyReference#getInfrastructureNode
+     * @model opposite="infrastructureNode" containment="true"
      * @generated
      */
-    InfrastructureTechnology getInfrastructureTechnology();
+    InfrastructureTechnologyReference getInfrastructureTechnology();
 
     /**
-     * Sets the value of the '{@link de.fhdo.ddmm.operation.InfrastructureNode#getInfrastructureTechnology <em>Infrastructure Technology</em>}' reference.
+     * Sets the value of the '{@link de.fhdo.ddmm.operation.InfrastructureNode#getInfrastructureTechnology <em>Infrastructure Technology</em>}' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Infrastructure Technology</em>' reference.
+     * @param value the new value of the '<em>Infrastructure Technology</em>' containment reference.
      * @see #getInfrastructureTechnology()
      * @generated
      */
-    void setInfrastructureTechnology(InfrastructureTechnology value);
+    void setInfrastructureTechnology(InfrastructureTechnologyReference value);
 
     /**
      * Returns the value of the '<em><b>Endpoints</b></em>' containment reference list.

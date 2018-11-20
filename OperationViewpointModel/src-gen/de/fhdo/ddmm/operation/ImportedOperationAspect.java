@@ -4,6 +4,8 @@ package de.fhdo.ddmm.operation;
 
 import de.fhdo.ddmm.data.PrimitiveValue;
 
+import de.fhdo.ddmm.service.Import;
+
 import de.fhdo.ddmm.technology.OperationAspect;
 import de.fhdo.ddmm.technology.TechnologySpecificPropertyValueAssignment;
 
@@ -25,7 +27,8 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link de.fhdo.ddmm.operation.ImportedOperationAspect#getImportedAspect <em>Imported Aspect</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.operation.ImportedOperationAspect#getTechnology <em>Technology</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.operation.ImportedOperationAspect#getAspect <em>Aspect</em>}</li>
  *   <li>{@link de.fhdo.ddmm.operation.ImportedOperationAspect#getSinglePropertyValue <em>Single Property Value</em>}</li>
  *   <li>{@link de.fhdo.ddmm.operation.ImportedOperationAspect#getValues <em>Values</em>}</li>
  *   <li>{@link de.fhdo.ddmm.operation.ImportedOperationAspect#getOperationNode <em>Operation Node</em>}</li>
@@ -37,7 +40,7 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface ImportedOperationAspect extends EObject {
     /**
-     * Returns the value of the '<em><b>Imported Aspect</b></em>' reference.
+     * Returns the value of the '<em><b>Technology</b></em>' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
@@ -53,23 +56,49 @@ public interface ImportedOperationAspect extends EObject {
      *     (C4) Mandatory properties must have values assigned.
      *          Ensured by: DSL validator.
      * <!-- end-model-doc -->
-     * @return the value of the '<em>Imported Aspect</em>' reference.
-     * @see #setImportedAspect(OperationAspect)
-     * @see de.fhdo.ddmm.operation.OperationPackage#getImportedOperationAspect_ImportedAspect()
+     * @return the value of the '<em>Technology</em>' reference.
+     * @see #setTechnology(Import)
+     * @see de.fhdo.ddmm.operation.OperationPackage#getImportedOperationAspect_Technology()
      * @model
      * @generated
      */
-    OperationAspect getImportedAspect();
+    Import getTechnology();
 
     /**
-     * Sets the value of the '{@link de.fhdo.ddmm.operation.ImportedOperationAspect#getImportedAspect <em>Imported Aspect</em>}' reference.
+     * Sets the value of the '{@link de.fhdo.ddmm.operation.ImportedOperationAspect#getTechnology <em>Technology</em>}' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Imported Aspect</em>' reference.
-     * @see #getImportedAspect()
+     * @param value the new value of the '<em>Technology</em>' reference.
+     * @see #getTechnology()
      * @generated
      */
-    void setImportedAspect(OperationAspect value);
+    void setTechnology(Import value);
+
+    /**
+     * Returns the value of the '<em><b>Aspect</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Aspect</em>' reference isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Aspect</em>' reference.
+     * @see #setAspect(OperationAspect)
+     * @see de.fhdo.ddmm.operation.OperationPackage#getImportedOperationAspect_Aspect()
+     * @model
+     * @generated
+     */
+    OperationAspect getAspect();
+
+    /**
+     * Sets the value of the '{@link de.fhdo.ddmm.operation.ImportedOperationAspect#getAspect <em>Aspect</em>}' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Aspect</em>' reference.
+     * @see #getAspect()
+     * @generated
+     */
+    void setAspect(OperationAspect value);
 
     /**
      * Returns the value of the '<em><b>Single Property Value</b></em>' containment reference.

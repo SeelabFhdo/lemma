@@ -925,6 +925,15 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    public EOperation getDeploymentTechnology__GetQualifiedNameParts() {
+        return deploymentTechnologyEClass.getEOperations().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EClass getInfrastructureTechnology() {
         return infrastructureTechnologyEClass;
     }
@@ -936,6 +945,15 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      */
     public EReference getInfrastructureTechnology_Technology() {
         return (EReference)infrastructureTechnologyEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EOperation getInfrastructureTechnology__GetQualifiedNameParts() {
+        return infrastructureTechnologyEClass.getEOperations().get(0);
     }
 
     /**
@@ -1390,9 +1408,11 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
 
         deploymentTechnologyEClass = createEClass(DEPLOYMENT_TECHNOLOGY);
         createEReference(deploymentTechnologyEClass, DEPLOYMENT_TECHNOLOGY__TECHNOLOGY);
+        createEOperation(deploymentTechnologyEClass, DEPLOYMENT_TECHNOLOGY___GET_QUALIFIED_NAME_PARTS);
 
         infrastructureTechnologyEClass = createEClass(INFRASTRUCTURE_TECHNOLOGY);
         createEReference(infrastructureTechnologyEClass, INFRASTRUCTURE_TECHNOLOGY__TECHNOLOGY);
+        createEOperation(infrastructureTechnologyEClass, INFRASTRUCTURE_TECHNOLOGY___GET_QUALIFIED_NAME_PARTS);
 
         technologyAspectEClass = createEClass(TECHNOLOGY_ASPECT);
         createEAttribute(technologyAspectEClass, TECHNOLOGY_ASPECT__NAME);
@@ -1570,8 +1590,12 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
         initEClass(deploymentTechnologyEClass, DeploymentTechnology.class, "DeploymentTechnology", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getDeploymentTechnology_Technology(), this.getTechnology(), this.getTechnology_DeploymentTechnologies(), "technology", null, 0, 1, DeploymentTechnology.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
+        initEOperation(getDeploymentTechnology__GetQualifiedNameParts(), theEcorePackage.getEString(), "getQualifiedNameParts", 0, -1, !IS_UNIQUE, IS_ORDERED);
+
         initEClass(infrastructureTechnologyEClass, InfrastructureTechnology.class, "InfrastructureTechnology", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getInfrastructureTechnology_Technology(), this.getTechnology(), this.getTechnology_InfrastructureTechnologies(), "technology", null, 0, 1, InfrastructureTechnology.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEOperation(getInfrastructureTechnology__GetQualifiedNameParts(), theEcorePackage.getEString(), "getQualifiedNameParts", 0, -1, !IS_UNIQUE, IS_ORDERED);
 
         initEClass(technologyAspectEClass, TechnologyAspect.class, "TechnologyAspect", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getTechnologyAspect_Name(), theEcorePackage.getEString(), "name", null, 0, 1, TechnologyAspect.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

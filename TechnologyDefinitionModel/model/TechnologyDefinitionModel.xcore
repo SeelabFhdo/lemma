@@ -367,6 +367,19 @@ class DeploymentTechnology extends OperationTechnology {
      */
 
     container Technology technology opposite deploymentTechnologies
+
+    /**
+     * Get parts of the technology for creating a qualified name
+     */
+    op String[] getQualifiedNameParts() {
+        if (name === null || name.empty)
+            return newArrayList.asEList
+
+        val nameParts = newArrayList
+        nameParts.add("_deployment")
+        nameParts.add(name)
+        nameParts.asEList
+    }
 }
 
 /**
@@ -380,6 +393,19 @@ class InfrastructureTechnology extends OperationTechnology {
      */
 
     container Technology technology opposite infrastructureTechnologies
+
+    /**
+     * Get parts of the technology for creating a qualified name
+     */
+    op String[] getQualifiedNameParts() {
+        if (name === null || name.empty)
+            return newArrayList.asEList
+
+        val nameParts = newArrayList
+        nameParts.add("_infrastructure")
+        nameParts.add(name)
+        nameParts.asEList
+    }
 }
 
 /**

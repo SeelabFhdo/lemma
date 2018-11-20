@@ -26,9 +26,11 @@ import de.fhdo.ddmm.data.PrimitiveValue;
 import de.fhdo.ddmm.data.Version;
 import de.fhdo.ddmm.operation.BasicEndpoint;
 import de.fhdo.ddmm.operation.Container;
+import de.fhdo.ddmm.operation.DeploymentTechnologyReference;
 import de.fhdo.ddmm.operation.ImportedMicroservice;
 import de.fhdo.ddmm.operation.ImportedOperationAspect;
 import de.fhdo.ddmm.operation.InfrastructureNode;
+import de.fhdo.ddmm.operation.InfrastructureTechnologyReference;
 import de.fhdo.ddmm.operation.OperationModel;
 import de.fhdo.ddmm.operation.OperationPackage;
 import de.fhdo.ddmm.operation.ProtocolAndDataFormat;
@@ -159,6 +161,9 @@ public class OperationDslSemanticSequencer extends ServiceDslSemanticSequencer {
 			case OperationPackage.CONTAINER:
 				sequence_Container(context, (Container) semanticObject); 
 				return; 
+			case OperationPackage.DEPLOYMENT_TECHNOLOGY_REFERENCE:
+				sequence_DeploymentTechnologyReference(context, (DeploymentTechnologyReference) semanticObject); 
+				return; 
 			case OperationPackage.IMPORTED_MICROSERVICE:
 				sequence_ImportedMicroservice(context, (ImportedMicroservice) semanticObject); 
 				return; 
@@ -167,6 +172,9 @@ public class OperationDslSemanticSequencer extends ServiceDslSemanticSequencer {
 				return; 
 			case OperationPackage.INFRASTRUCTURE_NODE:
 				sequence_InfrastructureNode(context, (InfrastructureNode) semanticObject); 
+				return; 
+			case OperationPackage.INFRASTRUCTURE_TECHNOLOGY_REFERENCE:
+				sequence_InfrastructureTechnologyReference(context, (InfrastructureTechnologyReference) semanticObject); 
 				return; 
 			case OperationPackage.OPERATION_MODEL:
 				sequence_OperationModel(context, (OperationModel) semanticObject); 
@@ -305,9 +313,9 @@ public class OperationDslSemanticSequencer extends ServiceDslSemanticSequencer {
 	 *
 	 * Constraint:
 	 *     (
-	 *         technology=[Import|ID] 
+	 *         technologies+=[Import|ID]+ 
 	 *         name=ID 
-	 *         deploymentTechnology=[DeploymentTechnology|ID] 
+	 *         deploymentTechnology=DeploymentTechnologyReference 
 	 *         operationEnvironment=[OperationEnvironment|STRING]? 
 	 *         deployedServices+=ImportedMicroservice 
 	 *         deployedServices+=ImportedMicroservice* 
@@ -322,6 +330,27 @@ public class OperationDslSemanticSequencer extends ServiceDslSemanticSequencer {
 	 */
 	protected void sequence_Container(ISerializationContext context, Container semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     DeploymentTechnologyReference returns DeploymentTechnologyReference
+	 *
+	 * Constraint:
+	 *     (import=[Import|ID] deploymentTechnology=[DeploymentTechnology|QualifiedName])
+	 */
+	protected void sequence_DeploymentTechnologyReference(ISerializationContext context, DeploymentTechnologyReference semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, OperationPackage.Literals.DEPLOYMENT_TECHNOLOGY_REFERENCE__IMPORT) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, OperationPackage.Literals.DEPLOYMENT_TECHNOLOGY_REFERENCE__IMPORT));
+			if (transientValues.isValueTransient(semanticObject, OperationPackage.Literals.DEPLOYMENT_TECHNOLOGY_REFERENCE__DEPLOYMENT_TECHNOLOGY) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, OperationPackage.Literals.DEPLOYMENT_TECHNOLOGY_REFERENCE__DEPLOYMENT_TECHNOLOGY));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getDeploymentTechnologyReferenceAccess().getImportImportIDTerminalRuleCall_0_0_1(), semanticObject.eGet(OperationPackage.Literals.DEPLOYMENT_TECHNOLOGY_REFERENCE__IMPORT, false));
+		feeder.accept(grammarAccess.getDeploymentTechnologyReferenceAccess().getDeploymentTechnologyDeploymentTechnologyQualifiedNameParserRuleCall_2_0_1(), semanticObject.eGet(OperationPackage.Literals.DEPLOYMENT_TECHNOLOGY_REFERENCE__DEPLOYMENT_TECHNOLOGY, false));
+		feeder.finish();
 	}
 	
 	
@@ -352,7 +381,8 @@ public class OperationDslSemanticSequencer extends ServiceDslSemanticSequencer {
 	 *
 	 * Constraint:
 	 *     (
-	 *         importedAspect=[OperationAspect|ID] 
+	 *         technology=[Import|ID] 
+	 *         aspect=[OperationAspect|QualifiedName] 
 	 *         (singlePropertyValue=PrimitiveValue | (values+=PropertyValueAssignment values+=PropertyValueAssignment*))?
 	 *     )
 	 */
@@ -367,9 +397,9 @@ public class OperationDslSemanticSequencer extends ServiceDslSemanticSequencer {
 	 *
 	 * Constraint:
 	 *     (
-	 *         technology=[Import|ID] 
+	 *         technologies+=[Import|ID]+ 
 	 *         name=ID 
-	 *         infrastructureTechnology=[InfrastructureTechnology|ID] 
+	 *         infrastructureTechnology=InfrastructureTechnologyReference 
 	 *         operationEnvironment=[OperationEnvironment|STRING]? 
 	 *         deployedServices+=ImportedMicroservice 
 	 *         deployedServices+=ImportedMicroservice* 
@@ -381,6 +411,27 @@ public class OperationDslSemanticSequencer extends ServiceDslSemanticSequencer {
 	 */
 	protected void sequence_InfrastructureNode(ISerializationContext context, InfrastructureNode semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     InfrastructureTechnologyReference returns InfrastructureTechnologyReference
+	 *
+	 * Constraint:
+	 *     (import=[Import|ID] infrastructureTechnology=[InfrastructureTechnology|QualifiedName])
+	 */
+	protected void sequence_InfrastructureTechnologyReference(ISerializationContext context, InfrastructureTechnologyReference semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, OperationPackage.Literals.INFRASTRUCTURE_TECHNOLOGY_REFERENCE__IMPORT) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, OperationPackage.Literals.INFRASTRUCTURE_TECHNOLOGY_REFERENCE__IMPORT));
+			if (transientValues.isValueTransient(semanticObject, OperationPackage.Literals.INFRASTRUCTURE_TECHNOLOGY_REFERENCE__INFRASTRUCTURE_TECHNOLOGY) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, OperationPackage.Literals.INFRASTRUCTURE_TECHNOLOGY_REFERENCE__INFRASTRUCTURE_TECHNOLOGY));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getInfrastructureTechnologyReferenceAccess().getImportImportIDTerminalRuleCall_0_0_1(), semanticObject.eGet(OperationPackage.Literals.INFRASTRUCTURE_TECHNOLOGY_REFERENCE__IMPORT, false));
+		feeder.accept(grammarAccess.getInfrastructureTechnologyReferenceAccess().getInfrastructureTechnologyInfrastructureTechnologyQualifiedNameParserRuleCall_2_0_1(), semanticObject.eGet(OperationPackage.Literals.INFRASTRUCTURE_TECHNOLOGY_REFERENCE__INFRASTRUCTURE_TECHNOLOGY, false));
+		feeder.finish();
 	}
 	
 	
@@ -434,7 +485,7 @@ public class OperationDslSemanticSequencer extends ServiceDslSemanticSequencer {
 	 *     ProtocolAndDataFormat returns ProtocolAndDataFormat
 	 *
 	 * Constraint:
-	 *     (protocol=[Protocol|ID] dataFormat=[DataFormat|ID]?)
+	 *     (technology=[Import|ID] protocol=[Protocol|QualifiedName] dataFormat=[DataFormat|ID]?)
 	 */
 	protected void sequence_ProtocolAndDataFormat(ISerializationContext context, ProtocolAndDataFormat semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

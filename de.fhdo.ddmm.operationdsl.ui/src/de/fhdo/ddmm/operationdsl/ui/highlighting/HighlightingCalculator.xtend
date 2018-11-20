@@ -31,7 +31,7 @@ class HighlightingCalculator implements ISemanticHighlightingCalculator {
         /* Color technology annotations on operation nodes */
         resource.allContents.filter[it instanceof OperationNode].forEach[
             val nodes = NodeModelUtils.findNodesForFeature(it,
-                OperationPackage.Literals::OPERATION_NODE__TECHNOLOGY)
+                OperationPackage.Literals::OPERATION_NODE__TECHNOLOGIES)
 
             nodes.forEach[
                 // Walk the node model backwards from the previous node of the annotated technology

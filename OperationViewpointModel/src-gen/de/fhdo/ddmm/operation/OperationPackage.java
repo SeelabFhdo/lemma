@@ -133,13 +133,13 @@ public interface OperationPackage extends EPackage {
     int OPERATION_NODE__NAME = 0;
 
     /**
-     * The feature id for the '<em><b>Technology</b></em>' reference.
+     * The feature id for the '<em><b>Technologies</b></em>' reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int OPERATION_NODE__TECHNOLOGY = 1;
+    int OPERATION_NODE__TECHNOLOGIES = 1;
 
     /**
      * The feature id for the '<em><b>Operation Environment</b></em>' reference.
@@ -224,13 +224,13 @@ public interface OperationPackage extends EPackage {
     int CONTAINER__NAME = OPERATION_NODE__NAME;
 
     /**
-     * The feature id for the '<em><b>Technology</b></em>' reference.
+     * The feature id for the '<em><b>Technologies</b></em>' reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int CONTAINER__TECHNOLOGY = OPERATION_NODE__TECHNOLOGY;
+    int CONTAINER__TECHNOLOGIES = OPERATION_NODE__TECHNOLOGIES;
 
     /**
      * The feature id for the '<em><b>Operation Environment</b></em>' reference.
@@ -278,7 +278,7 @@ public interface OperationPackage extends EPackage {
     int CONTAINER__ASPECTS = OPERATION_NODE__ASPECTS;
 
     /**
-     * The feature id for the '<em><b>Deployment Technology</b></em>' reference.
+     * The feature id for the '<em><b>Deployment Technology</b></em>' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -323,6 +323,61 @@ public interface OperationPackage extends EPackage {
     int CONTAINER_OPERATION_COUNT = OPERATION_NODE_OPERATION_COUNT + 0;
 
     /**
+     * The meta object id for the '{@link de.fhdo.ddmm.operation.impl.DeploymentTechnologyReferenceImpl <em>Deployment Technology Reference</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.fhdo.ddmm.operation.impl.DeploymentTechnologyReferenceImpl
+     * @see de.fhdo.ddmm.operation.impl.OperationPackageImpl#getDeploymentTechnologyReference()
+     * @generated
+     */
+    int DEPLOYMENT_TECHNOLOGY_REFERENCE = 3;
+
+    /**
+     * The feature id for the '<em><b>Import</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DEPLOYMENT_TECHNOLOGY_REFERENCE__IMPORT = 0;
+
+    /**
+     * The feature id for the '<em><b>Deployment Technology</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DEPLOYMENT_TECHNOLOGY_REFERENCE__DEPLOYMENT_TECHNOLOGY = 1;
+
+    /**
+     * The feature id for the '<em><b>Container</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DEPLOYMENT_TECHNOLOGY_REFERENCE__CONTAINER = 2;
+
+    /**
+     * The number of structural features of the '<em>Deployment Technology Reference</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DEPLOYMENT_TECHNOLOGY_REFERENCE_FEATURE_COUNT = 3;
+
+    /**
+     * The number of operations of the '<em>Deployment Technology Reference</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DEPLOYMENT_TECHNOLOGY_REFERENCE_OPERATION_COUNT = 0;
+
+    /**
      * The meta object id for the '{@link de.fhdo.ddmm.operation.impl.InfrastructureNodeImpl <em>Infrastructure Node</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -330,7 +385,7 @@ public interface OperationPackage extends EPackage {
      * @see de.fhdo.ddmm.operation.impl.OperationPackageImpl#getInfrastructureNode()
      * @generated
      */
-    int INFRASTRUCTURE_NODE = 3;
+    int INFRASTRUCTURE_NODE = 4;
 
     /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -342,13 +397,13 @@ public interface OperationPackage extends EPackage {
     int INFRASTRUCTURE_NODE__NAME = OPERATION_NODE__NAME;
 
     /**
-     * The feature id for the '<em><b>Technology</b></em>' reference.
+     * The feature id for the '<em><b>Technologies</b></em>' reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int INFRASTRUCTURE_NODE__TECHNOLOGY = OPERATION_NODE__TECHNOLOGY;
+    int INFRASTRUCTURE_NODE__TECHNOLOGIES = OPERATION_NODE__TECHNOLOGIES;
 
     /**
      * The feature id for the '<em><b>Operation Environment</b></em>' reference.
@@ -396,7 +451,7 @@ public interface OperationPackage extends EPackage {
     int INFRASTRUCTURE_NODE__ASPECTS = OPERATION_NODE__ASPECTS;
 
     /**
-     * The feature id for the '<em><b>Infrastructure Technology</b></em>' reference.
+     * The feature id for the '<em><b>Infrastructure Technology</b></em>' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -441,6 +496,61 @@ public interface OperationPackage extends EPackage {
     int INFRASTRUCTURE_NODE_OPERATION_COUNT = OPERATION_NODE_OPERATION_COUNT + 0;
 
     /**
+     * The meta object id for the '{@link de.fhdo.ddmm.operation.impl.InfrastructureTechnologyReferenceImpl <em>Infrastructure Technology Reference</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.fhdo.ddmm.operation.impl.InfrastructureTechnologyReferenceImpl
+     * @see de.fhdo.ddmm.operation.impl.OperationPackageImpl#getInfrastructureTechnologyReference()
+     * @generated
+     */
+    int INFRASTRUCTURE_TECHNOLOGY_REFERENCE = 5;
+
+    /**
+     * The feature id for the '<em><b>Import</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INFRASTRUCTURE_TECHNOLOGY_REFERENCE__IMPORT = 0;
+
+    /**
+     * The feature id for the '<em><b>Infrastructure Technology</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INFRASTRUCTURE_TECHNOLOGY_REFERENCE__INFRASTRUCTURE_TECHNOLOGY = 1;
+
+    /**
+     * The feature id for the '<em><b>Infrastructure Node</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INFRASTRUCTURE_TECHNOLOGY_REFERENCE__INFRASTRUCTURE_NODE = 2;
+
+    /**
+     * The number of structural features of the '<em>Infrastructure Technology Reference</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INFRASTRUCTURE_TECHNOLOGY_REFERENCE_FEATURE_COUNT = 3;
+
+    /**
+     * The number of operations of the '<em>Infrastructure Technology Reference</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INFRASTRUCTURE_TECHNOLOGY_REFERENCE_OPERATION_COUNT = 0;
+
+    /**
      * The meta object id for the '{@link de.fhdo.ddmm.operation.impl.ImportedMicroserviceImpl <em>Imported Microservice</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -448,7 +558,7 @@ public interface OperationPackage extends EPackage {
      * @see de.fhdo.ddmm.operation.impl.OperationPackageImpl#getImportedMicroservice()
      * @generated
      */
-    int IMPORTED_MICROSERVICE = 4;
+    int IMPORTED_MICROSERVICE = 6;
 
     /**
      * The feature id for the '<em><b>Import</b></em>' reference.
@@ -503,7 +613,7 @@ public interface OperationPackage extends EPackage {
      * @see de.fhdo.ddmm.operation.impl.OperationPackageImpl#getServiceDeploymentSpecification()
      * @generated
      */
-    int SERVICE_DEPLOYMENT_SPECIFICATION = 5;
+    int SERVICE_DEPLOYMENT_SPECIFICATION = 7;
 
     /**
      * The feature id for the '<em><b>Import</b></em>' reference.
@@ -576,7 +686,16 @@ public interface OperationPackage extends EPackage {
      * @see de.fhdo.ddmm.operation.impl.OperationPackageImpl#getProtocolAndDataFormat()
      * @generated
      */
-    int PROTOCOL_AND_DATA_FORMAT = 6;
+    int PROTOCOL_AND_DATA_FORMAT = 8;
+
+    /**
+     * The feature id for the '<em><b>Technology</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PROTOCOL_AND_DATA_FORMAT__TECHNOLOGY = 0;
 
     /**
      * The feature id for the '<em><b>Protocol</b></em>' reference.
@@ -585,7 +704,7 @@ public interface OperationPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int PROTOCOL_AND_DATA_FORMAT__PROTOCOL = 0;
+    int PROTOCOL_AND_DATA_FORMAT__PROTOCOL = 1;
 
     /**
      * The feature id for the '<em><b>Data Format</b></em>' reference.
@@ -594,7 +713,7 @@ public interface OperationPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int PROTOCOL_AND_DATA_FORMAT__DATA_FORMAT = 1;
+    int PROTOCOL_AND_DATA_FORMAT__DATA_FORMAT = 2;
 
     /**
      * The feature id for the '<em><b>Endpoint</b></em>' container reference.
@@ -603,7 +722,7 @@ public interface OperationPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int PROTOCOL_AND_DATA_FORMAT__ENDPOINT = 2;
+    int PROTOCOL_AND_DATA_FORMAT__ENDPOINT = 3;
 
     /**
      * The number of structural features of the '<em>Protocol And Data Format</em>' class.
@@ -612,7 +731,7 @@ public interface OperationPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int PROTOCOL_AND_DATA_FORMAT_FEATURE_COUNT = 3;
+    int PROTOCOL_AND_DATA_FORMAT_FEATURE_COUNT = 4;
 
     /**
      * The number of operations of the '<em>Protocol And Data Format</em>' class.
@@ -631,7 +750,7 @@ public interface OperationPackage extends EPackage {
      * @see de.fhdo.ddmm.operation.impl.OperationPackageImpl#getBasicEndpoint()
      * @generated
      */
-    int BASIC_ENDPOINT = 7;
+    int BASIC_ENDPOINT = 9;
 
     /**
      * The feature id for the '<em><b>Addresses</b></em>' attribute list.
@@ -704,16 +823,25 @@ public interface OperationPackage extends EPackage {
      * @see de.fhdo.ddmm.operation.impl.OperationPackageImpl#getImportedOperationAspect()
      * @generated
      */
-    int IMPORTED_OPERATION_ASPECT = 8;
+    int IMPORTED_OPERATION_ASPECT = 10;
 
     /**
-     * The feature id for the '<em><b>Imported Aspect</b></em>' reference.
+     * The feature id for the '<em><b>Technology</b></em>' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int IMPORTED_OPERATION_ASPECT__IMPORTED_ASPECT = 0;
+    int IMPORTED_OPERATION_ASPECT__TECHNOLOGY = 0;
+
+    /**
+     * The feature id for the '<em><b>Aspect</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int IMPORTED_OPERATION_ASPECT__ASPECT = 1;
 
     /**
      * The feature id for the '<em><b>Single Property Value</b></em>' containment reference.
@@ -722,7 +850,7 @@ public interface OperationPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int IMPORTED_OPERATION_ASPECT__SINGLE_PROPERTY_VALUE = 1;
+    int IMPORTED_OPERATION_ASPECT__SINGLE_PROPERTY_VALUE = 2;
 
     /**
      * The feature id for the '<em><b>Values</b></em>' containment reference list.
@@ -731,7 +859,7 @@ public interface OperationPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int IMPORTED_OPERATION_ASPECT__VALUES = 2;
+    int IMPORTED_OPERATION_ASPECT__VALUES = 3;
 
     /**
      * The feature id for the '<em><b>Operation Node</b></em>' container reference.
@@ -740,7 +868,7 @@ public interface OperationPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int IMPORTED_OPERATION_ASPECT__OPERATION_NODE = 3;
+    int IMPORTED_OPERATION_ASPECT__OPERATION_NODE = 4;
 
     /**
      * The number of structural features of the '<em>Imported Operation Aspect</em>' class.
@@ -749,7 +877,7 @@ public interface OperationPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int IMPORTED_OPERATION_ASPECT_FEATURE_COUNT = 4;
+    int IMPORTED_OPERATION_ASPECT_FEATURE_COUNT = 5;
 
     /**
      * The number of operations of the '<em>Imported Operation Aspect</em>' class.
@@ -768,7 +896,7 @@ public interface OperationPackage extends EPackage {
      * @see de.fhdo.ddmm.operation.impl.OperationPackageImpl#getImportType()
      * @generated
      */
-    int IMPORT_TYPE = 9;
+    int IMPORT_TYPE = 11;
 
 
     /**
@@ -836,15 +964,15 @@ public interface OperationPackage extends EPackage {
     EAttribute getOperationNode_Name();
 
     /**
-     * Returns the meta object for the reference '{@link de.fhdo.ddmm.operation.OperationNode#getTechnology <em>Technology</em>}'.
+     * Returns the meta object for the reference list '{@link de.fhdo.ddmm.operation.OperationNode#getTechnologies <em>Technologies</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the reference '<em>Technology</em>'.
-     * @see de.fhdo.ddmm.operation.OperationNode#getTechnology()
+     * @return the meta object for the reference list '<em>Technologies</em>'.
+     * @see de.fhdo.ddmm.operation.OperationNode#getTechnologies()
      * @see #getOperationNode()
      * @generated
      */
-    EReference getOperationNode_Technology();
+    EReference getOperationNode_Technologies();
 
     /**
      * Returns the meta object for the reference '{@link de.fhdo.ddmm.operation.OperationNode#getOperationEnvironment <em>Operation Environment</em>}'.
@@ -912,10 +1040,10 @@ public interface OperationPackage extends EPackage {
     EClass getContainer();
 
     /**
-     * Returns the meta object for the reference '{@link de.fhdo.ddmm.operation.Container#getDeploymentTechnology <em>Deployment Technology</em>}'.
+     * Returns the meta object for the containment reference '{@link de.fhdo.ddmm.operation.Container#getDeploymentTechnology <em>Deployment Technology</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the reference '<em>Deployment Technology</em>'.
+     * @return the meta object for the containment reference '<em>Deployment Technology</em>'.
      * @see de.fhdo.ddmm.operation.Container#getDeploymentTechnology()
      * @see #getContainer()
      * @generated
@@ -945,6 +1073,49 @@ public interface OperationPackage extends EPackage {
     EReference getContainer_OperationModel();
 
     /**
+     * Returns the meta object for class '{@link de.fhdo.ddmm.operation.DeploymentTechnologyReference <em>Deployment Technology Reference</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Deployment Technology Reference</em>'.
+     * @see de.fhdo.ddmm.operation.DeploymentTechnologyReference
+     * @generated
+     */
+    EClass getDeploymentTechnologyReference();
+
+    /**
+     * Returns the meta object for the reference '{@link de.fhdo.ddmm.operation.DeploymentTechnologyReference#getImport <em>Import</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference '<em>Import</em>'.
+     * @see de.fhdo.ddmm.operation.DeploymentTechnologyReference#getImport()
+     * @see #getDeploymentTechnologyReference()
+     * @generated
+     */
+    EReference getDeploymentTechnologyReference_Import();
+
+    /**
+     * Returns the meta object for the reference '{@link de.fhdo.ddmm.operation.DeploymentTechnologyReference#getDeploymentTechnology <em>Deployment Technology</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference '<em>Deployment Technology</em>'.
+     * @see de.fhdo.ddmm.operation.DeploymentTechnologyReference#getDeploymentTechnology()
+     * @see #getDeploymentTechnologyReference()
+     * @generated
+     */
+    EReference getDeploymentTechnologyReference_DeploymentTechnology();
+
+    /**
+     * Returns the meta object for the container reference '{@link de.fhdo.ddmm.operation.DeploymentTechnologyReference#getContainer <em>Container</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the container reference '<em>Container</em>'.
+     * @see de.fhdo.ddmm.operation.DeploymentTechnologyReference#getContainer()
+     * @see #getDeploymentTechnologyReference()
+     * @generated
+     */
+    EReference getDeploymentTechnologyReference_Container();
+
+    /**
      * Returns the meta object for class '{@link de.fhdo.ddmm.operation.InfrastructureNode <em>Infrastructure Node</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -955,10 +1126,10 @@ public interface OperationPackage extends EPackage {
     EClass getInfrastructureNode();
 
     /**
-     * Returns the meta object for the reference '{@link de.fhdo.ddmm.operation.InfrastructureNode#getInfrastructureTechnology <em>Infrastructure Technology</em>}'.
+     * Returns the meta object for the containment reference '{@link de.fhdo.ddmm.operation.InfrastructureNode#getInfrastructureTechnology <em>Infrastructure Technology</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the reference '<em>Infrastructure Technology</em>'.
+     * @return the meta object for the containment reference '<em>Infrastructure Technology</em>'.
      * @see de.fhdo.ddmm.operation.InfrastructureNode#getInfrastructureTechnology()
      * @see #getInfrastructureNode()
      * @generated
@@ -986,6 +1157,49 @@ public interface OperationPackage extends EPackage {
      * @generated
      */
     EReference getInfrastructureNode_OperationModel();
+
+    /**
+     * Returns the meta object for class '{@link de.fhdo.ddmm.operation.InfrastructureTechnologyReference <em>Infrastructure Technology Reference</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Infrastructure Technology Reference</em>'.
+     * @see de.fhdo.ddmm.operation.InfrastructureTechnologyReference
+     * @generated
+     */
+    EClass getInfrastructureTechnologyReference();
+
+    /**
+     * Returns the meta object for the reference '{@link de.fhdo.ddmm.operation.InfrastructureTechnologyReference#getImport <em>Import</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference '<em>Import</em>'.
+     * @see de.fhdo.ddmm.operation.InfrastructureTechnologyReference#getImport()
+     * @see #getInfrastructureTechnologyReference()
+     * @generated
+     */
+    EReference getInfrastructureTechnologyReference_Import();
+
+    /**
+     * Returns the meta object for the reference '{@link de.fhdo.ddmm.operation.InfrastructureTechnologyReference#getInfrastructureTechnology <em>Infrastructure Technology</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference '<em>Infrastructure Technology</em>'.
+     * @see de.fhdo.ddmm.operation.InfrastructureTechnologyReference#getInfrastructureTechnology()
+     * @see #getInfrastructureTechnologyReference()
+     * @generated
+     */
+    EReference getInfrastructureTechnologyReference_InfrastructureTechnology();
+
+    /**
+     * Returns the meta object for the container reference '{@link de.fhdo.ddmm.operation.InfrastructureTechnologyReference#getInfrastructureNode <em>Infrastructure Node</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the container reference '<em>Infrastructure Node</em>'.
+     * @see de.fhdo.ddmm.operation.InfrastructureTechnologyReference#getInfrastructureNode()
+     * @see #getInfrastructureTechnologyReference()
+     * @generated
+     */
+    EReference getInfrastructureTechnologyReference_InfrastructureNode();
 
     /**
      * Returns the meta object for class '{@link de.fhdo.ddmm.operation.ImportedMicroservice <em>Imported Microservice</em>}'.
@@ -1106,6 +1320,17 @@ public interface OperationPackage extends EPackage {
     EClass getProtocolAndDataFormat();
 
     /**
+     * Returns the meta object for the reference '{@link de.fhdo.ddmm.operation.ProtocolAndDataFormat#getTechnology <em>Technology</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference '<em>Technology</em>'.
+     * @see de.fhdo.ddmm.operation.ProtocolAndDataFormat#getTechnology()
+     * @see #getProtocolAndDataFormat()
+     * @generated
+     */
+    EReference getProtocolAndDataFormat_Technology();
+
+    /**
      * Returns the meta object for the reference '{@link de.fhdo.ddmm.operation.ProtocolAndDataFormat#getProtocol <em>Protocol</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1214,15 +1439,26 @@ public interface OperationPackage extends EPackage {
     EClass getImportedOperationAspect();
 
     /**
-     * Returns the meta object for the reference '{@link de.fhdo.ddmm.operation.ImportedOperationAspect#getImportedAspect <em>Imported Aspect</em>}'.
+     * Returns the meta object for the reference '{@link de.fhdo.ddmm.operation.ImportedOperationAspect#getTechnology <em>Technology</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the reference '<em>Imported Aspect</em>'.
-     * @see de.fhdo.ddmm.operation.ImportedOperationAspect#getImportedAspect()
+     * @return the meta object for the reference '<em>Technology</em>'.
+     * @see de.fhdo.ddmm.operation.ImportedOperationAspect#getTechnology()
      * @see #getImportedOperationAspect()
      * @generated
      */
-    EReference getImportedOperationAspect_ImportedAspect();
+    EReference getImportedOperationAspect_Technology();
+
+    /**
+     * Returns the meta object for the reference '{@link de.fhdo.ddmm.operation.ImportedOperationAspect#getAspect <em>Aspect</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference '<em>Aspect</em>'.
+     * @see de.fhdo.ddmm.operation.ImportedOperationAspect#getAspect()
+     * @see #getImportedOperationAspect()
+     * @generated
+     */
+    EReference getImportedOperationAspect_Aspect();
 
     /**
      * Returns the meta object for the containment reference '{@link de.fhdo.ddmm.operation.ImportedOperationAspect#getSinglePropertyValue <em>Single Property Value</em>}'.
@@ -1343,12 +1579,12 @@ public interface OperationPackage extends EPackage {
         EAttribute OPERATION_NODE__NAME = eINSTANCE.getOperationNode_Name();
 
         /**
-         * The meta object literal for the '<em><b>Technology</b></em>' reference feature.
+         * The meta object literal for the '<em><b>Technologies</b></em>' reference list feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference OPERATION_NODE__TECHNOLOGY = eINSTANCE.getOperationNode_Technology();
+        EReference OPERATION_NODE__TECHNOLOGIES = eINSTANCE.getOperationNode_Technologies();
 
         /**
          * The meta object literal for the '<em><b>Operation Environment</b></em>' reference feature.
@@ -1401,7 +1637,7 @@ public interface OperationPackage extends EPackage {
         EClass CONTAINER = eINSTANCE.getContainer();
 
         /**
-         * The meta object literal for the '<em><b>Deployment Technology</b></em>' reference feature.
+         * The meta object literal for the '<em><b>Deployment Technology</b></em>' containment reference feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
@@ -1425,6 +1661,40 @@ public interface OperationPackage extends EPackage {
         EReference CONTAINER__OPERATION_MODEL = eINSTANCE.getContainer_OperationModel();
 
         /**
+         * The meta object literal for the '{@link de.fhdo.ddmm.operation.impl.DeploymentTechnologyReferenceImpl <em>Deployment Technology Reference</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.fhdo.ddmm.operation.impl.DeploymentTechnologyReferenceImpl
+         * @see de.fhdo.ddmm.operation.impl.OperationPackageImpl#getDeploymentTechnologyReference()
+         * @generated
+         */
+        EClass DEPLOYMENT_TECHNOLOGY_REFERENCE = eINSTANCE.getDeploymentTechnologyReference();
+
+        /**
+         * The meta object literal for the '<em><b>Import</b></em>' reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference DEPLOYMENT_TECHNOLOGY_REFERENCE__IMPORT = eINSTANCE.getDeploymentTechnologyReference_Import();
+
+        /**
+         * The meta object literal for the '<em><b>Deployment Technology</b></em>' reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference DEPLOYMENT_TECHNOLOGY_REFERENCE__DEPLOYMENT_TECHNOLOGY = eINSTANCE.getDeploymentTechnologyReference_DeploymentTechnology();
+
+        /**
+         * The meta object literal for the '<em><b>Container</b></em>' container reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference DEPLOYMENT_TECHNOLOGY_REFERENCE__CONTAINER = eINSTANCE.getDeploymentTechnologyReference_Container();
+
+        /**
          * The meta object literal for the '{@link de.fhdo.ddmm.operation.impl.InfrastructureNodeImpl <em>Infrastructure Node</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -1435,7 +1705,7 @@ public interface OperationPackage extends EPackage {
         EClass INFRASTRUCTURE_NODE = eINSTANCE.getInfrastructureNode();
 
         /**
-         * The meta object literal for the '<em><b>Infrastructure Technology</b></em>' reference feature.
+         * The meta object literal for the '<em><b>Infrastructure Technology</b></em>' containment reference feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
@@ -1457,6 +1727,40 @@ public interface OperationPackage extends EPackage {
          * @generated
          */
         EReference INFRASTRUCTURE_NODE__OPERATION_MODEL = eINSTANCE.getInfrastructureNode_OperationModel();
+
+        /**
+         * The meta object literal for the '{@link de.fhdo.ddmm.operation.impl.InfrastructureTechnologyReferenceImpl <em>Infrastructure Technology Reference</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.fhdo.ddmm.operation.impl.InfrastructureTechnologyReferenceImpl
+         * @see de.fhdo.ddmm.operation.impl.OperationPackageImpl#getInfrastructureTechnologyReference()
+         * @generated
+         */
+        EClass INFRASTRUCTURE_TECHNOLOGY_REFERENCE = eINSTANCE.getInfrastructureTechnologyReference();
+
+        /**
+         * The meta object literal for the '<em><b>Import</b></em>' reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference INFRASTRUCTURE_TECHNOLOGY_REFERENCE__IMPORT = eINSTANCE.getInfrastructureTechnologyReference_Import();
+
+        /**
+         * The meta object literal for the '<em><b>Infrastructure Technology</b></em>' reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference INFRASTRUCTURE_TECHNOLOGY_REFERENCE__INFRASTRUCTURE_TECHNOLOGY = eINSTANCE.getInfrastructureTechnologyReference_InfrastructureTechnology();
+
+        /**
+         * The meta object literal for the '<em><b>Infrastructure Node</b></em>' container reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference INFRASTRUCTURE_TECHNOLOGY_REFERENCE__INFRASTRUCTURE_NODE = eINSTANCE.getInfrastructureTechnologyReference_InfrastructureNode();
 
         /**
          * The meta object literal for the '{@link de.fhdo.ddmm.operation.impl.ImportedMicroserviceImpl <em>Imported Microservice</em>}' class.
@@ -1553,6 +1857,14 @@ public interface OperationPackage extends EPackage {
         EClass PROTOCOL_AND_DATA_FORMAT = eINSTANCE.getProtocolAndDataFormat();
 
         /**
+         * The meta object literal for the '<em><b>Technology</b></em>' reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference PROTOCOL_AND_DATA_FORMAT__TECHNOLOGY = eINSTANCE.getProtocolAndDataFormat_Technology();
+
+        /**
          * The meta object literal for the '<em><b>Protocol</b></em>' reference feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -1637,12 +1949,20 @@ public interface OperationPackage extends EPackage {
         EClass IMPORTED_OPERATION_ASPECT = eINSTANCE.getImportedOperationAspect();
 
         /**
-         * The meta object literal for the '<em><b>Imported Aspect</b></em>' reference feature.
+         * The meta object literal for the '<em><b>Technology</b></em>' reference feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference IMPORTED_OPERATION_ASPECT__IMPORTED_ASPECT = eINSTANCE.getImportedOperationAspect_ImportedAspect();
+        EReference IMPORTED_OPERATION_ASPECT__TECHNOLOGY = eINSTANCE.getImportedOperationAspect_Technology();
+
+        /**
+         * The meta object literal for the '<em><b>Aspect</b></em>' reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference IMPORTED_OPERATION_ASPECT__ASPECT = eINSTANCE.getImportedOperationAspect_Aspect();
 
         /**
          * The meta object literal for the '<em><b>Single Property Value</b></em>' containment reference feature.

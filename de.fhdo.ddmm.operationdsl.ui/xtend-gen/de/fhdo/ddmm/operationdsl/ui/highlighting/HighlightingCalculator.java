@@ -41,7 +41,7 @@ public class HighlightingCalculator implements ISemanticHighlightingCalculator {
     };
     final Procedure1<EObject> _function_1 = (EObject it) -> {
       final List<INode> nodes = NodeModelUtils.findNodesForFeature(it, 
-        OperationPackage.Literals.OPERATION_NODE__TECHNOLOGY);
+        OperationPackage.Literals.OPERATION_NODE__TECHNOLOGIES);
       final Consumer<INode> _function_2 = (INode it_1) -> {
         INode currentSibling = it_1.getPreviousSibling();
         boolean annotationBeginReached = false;

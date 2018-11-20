@@ -19,9 +19,9 @@ enum ImportType returns service::ImportType:
 ;
 
 Container returns Container:
-    '@' 'technology' '(' technology=[service::Import] ')'
+    ('@' 'technology' '(' technologies+=[service::Import] ')')+
     'container' name=ID
-    'deployment' 'technology' deploymentTechnology=[technology::DeploymentTechnology]
+    'deployment' 'technology' deploymentTechnology=DeploymentTechnologyReference
     ('with' 'operation' 'environment'
         operationEnvironment=[technology::OperationEnvironment|STRING]
     )?
@@ -54,9 +54,14 @@ Container returns Container:
     '}'
 ;
 
+DeploymentTechnologyReference returns DeploymentTechnologyReference:
+    ^import=[service::Import] '::'
+    deploymentTechnology=[technology::DeploymentTechnology|QualifiedName]
+;
+
 InfrastructureNode returns InfrastructureNode:
-    '@' 'technology' '(' technology=[service::Import] ')'
-    name=ID 'is' infrastructureTechnology=[technology::InfrastructureTechnology]
+    ('@' 'technology' '(' technologies+=[service::Import] ')')+
+    name=ID 'is' infrastructureTechnology=InfrastructureTechnologyReference
     ('with' 'operation' 'environment'
         operationEnvironment=[technology::OperationEnvironment|STRING]
     )?
@@ -78,8 +83,14 @@ InfrastructureNode returns InfrastructureNode:
     '}'
 ;
 
+InfrastructureTechnologyReference returns InfrastructureTechnologyReference:
+    ^import=[service::Import] '::'
+    infrastructureTechnology=[technology::InfrastructureTechnology|QualifiedName]
+;
+
 ProtocolAndDataFormat returns ProtocolAndDataFormat:
-    protocol=[technology::Protocol] ('/' dataFormat=[technology::DataFormat])?
+    technology=[service::Import] '::'
+    protocol=[technology::Protocol|QualifiedName] ('/' dataFormat=[technology::DataFormat])?
 ;
 
 BasicEndpoint returns BasicEndpoint:
@@ -108,7 +119,7 @@ PropertyValueAssignment returns technology::TechnologySpecificPropertyValueAssig
 ;
 
 ImportedOperationAspect returns ImportedOperationAspect:
-    importedAspect=[technology::OperationAspect]
+    technology=[service::Import] '::' aspect=[technology::OperationAspect|QualifiedName]
     (
         ('(' (
             singlePropertyValue=PrimitiveValue

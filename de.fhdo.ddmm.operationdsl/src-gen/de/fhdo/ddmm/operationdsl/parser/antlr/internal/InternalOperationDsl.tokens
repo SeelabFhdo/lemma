@@ -3,10 +3,10 @@
 ','=23
 '->'=100
 '.'=53
-'/'=34
-':'=35
-'::'=37
-';'=36
+'/'=35
+':'=36
+'::'=31
+';'=37
 '<-'=99
 '<->'=101
 '='=38
@@ -20,7 +20,7 @@
 'based'=59
 'basic'=29
 'boolean'=78
-'by'=33
+'by'=34
 'byte'=79
 'char'=80
 'communication_type'=68
@@ -57,7 +57,7 @@
 'interface'=49
 'interfaces'=46
 'internal'=88
-'is'=31
+'is'=32
 'list'=61
 'long'=85
 'mandatory'=66
@@ -83,7 +83,7 @@
 'sync'=97
 'technology'=14
 'type'=58
-'used'=32
+'used'=33
 'utility'=92
 'values'=28
 'version'=43

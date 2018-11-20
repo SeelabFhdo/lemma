@@ -5,10 +5,12 @@ package de.fhdo.ddmm.operation.impl;
 import de.fhdo.ddmm.data.DataPackage;
 
 import de.fhdo.ddmm.operation.BasicEndpoint;
+import de.fhdo.ddmm.operation.DeploymentTechnologyReference;
 import de.fhdo.ddmm.operation.ImportType;
 import de.fhdo.ddmm.operation.ImportedMicroservice;
 import de.fhdo.ddmm.operation.ImportedOperationAspect;
 import de.fhdo.ddmm.operation.InfrastructureNode;
+import de.fhdo.ddmm.operation.InfrastructureTechnologyReference;
 import de.fhdo.ddmm.operation.OperationFactory;
 import de.fhdo.ddmm.operation.OperationModel;
 import de.fhdo.ddmm.operation.OperationNode;
@@ -62,7 +64,21 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
      * <!-- end-user-doc -->
      * @generated
      */
+    private EClass deploymentTechnologyReferenceEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     private EClass infrastructureNodeEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass infrastructureTechnologyReferenceEClass = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -232,7 +248,7 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getOperationNode_Technology() {
+    public EReference getOperationNode_Technologies() {
         return (EReference)operationNodeEClass.getEStructuralFeatures().get(1);
     }
 
@@ -322,6 +338,42 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
      * <!-- end-user-doc -->
      * @generated
      */
+    public EClass getDeploymentTechnologyReference() {
+        return deploymentTechnologyReferenceEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getDeploymentTechnologyReference_Import() {
+        return (EReference)deploymentTechnologyReferenceEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getDeploymentTechnologyReference_DeploymentTechnology() {
+        return (EReference)deploymentTechnologyReferenceEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getDeploymentTechnologyReference_Container() {
+        return (EReference)deploymentTechnologyReferenceEClass.getEStructuralFeatures().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EClass getInfrastructureNode() {
         return infrastructureNodeEClass;
     }
@@ -351,6 +403,42 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
      */
     public EReference getInfrastructureNode_OperationModel() {
         return (EReference)infrastructureNodeEClass.getEStructuralFeatures().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getInfrastructureTechnologyReference() {
+        return infrastructureTechnologyReferenceEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getInfrastructureTechnologyReference_Import() {
+        return (EReference)infrastructureTechnologyReferenceEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getInfrastructureTechnologyReference_InfrastructureTechnology() {
+        return (EReference)infrastructureTechnologyReferenceEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getInfrastructureTechnologyReference_InfrastructureNode() {
+        return (EReference)infrastructureTechnologyReferenceEClass.getEStructuralFeatures().get(2);
     }
 
     /**
@@ -457,7 +545,7 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getProtocolAndDataFormat_Protocol() {
+    public EReference getProtocolAndDataFormat_Technology() {
         return (EReference)protocolAndDataFormatEClass.getEStructuralFeatures().get(0);
     }
 
@@ -466,7 +554,7 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getProtocolAndDataFormat_DataFormat() {
+    public EReference getProtocolAndDataFormat_Protocol() {
         return (EReference)protocolAndDataFormatEClass.getEStructuralFeatures().get(1);
     }
 
@@ -475,8 +563,17 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getProtocolAndDataFormat_Endpoint() {
+    public EReference getProtocolAndDataFormat_DataFormat() {
         return (EReference)protocolAndDataFormatEClass.getEStructuralFeatures().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getProtocolAndDataFormat_Endpoint() {
+        return (EReference)protocolAndDataFormatEClass.getEStructuralFeatures().get(3);
     }
 
     /**
@@ -547,7 +644,7 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getImportedOperationAspect_ImportedAspect() {
+    public EReference getImportedOperationAspect_Technology() {
         return (EReference)importedOperationAspectEClass.getEStructuralFeatures().get(0);
     }
 
@@ -556,7 +653,7 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getImportedOperationAspect_SinglePropertyValue() {
+    public EReference getImportedOperationAspect_Aspect() {
         return (EReference)importedOperationAspectEClass.getEStructuralFeatures().get(1);
     }
 
@@ -565,7 +662,7 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getImportedOperationAspect_Values() {
+    public EReference getImportedOperationAspect_SinglePropertyValue() {
         return (EReference)importedOperationAspectEClass.getEStructuralFeatures().get(2);
     }
 
@@ -574,8 +671,17 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getImportedOperationAspect_OperationNode() {
+    public EReference getImportedOperationAspect_Values() {
         return (EReference)importedOperationAspectEClass.getEStructuralFeatures().get(3);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getImportedOperationAspect_OperationNode() {
+        return (EReference)importedOperationAspectEClass.getEStructuralFeatures().get(4);
     }
 
     /**
@@ -622,7 +728,7 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
 
         operationNodeEClass = createEClass(OPERATION_NODE);
         createEAttribute(operationNodeEClass, OPERATION_NODE__NAME);
-        createEReference(operationNodeEClass, OPERATION_NODE__TECHNOLOGY);
+        createEReference(operationNodeEClass, OPERATION_NODE__TECHNOLOGIES);
         createEReference(operationNodeEClass, OPERATION_NODE__OPERATION_ENVIRONMENT);
         createEReference(operationNodeEClass, OPERATION_NODE__DEPLOYED_SERVICES);
         createEReference(operationNodeEClass, OPERATION_NODE__DEFAULT_SERVICE_PROPERTY_VALUES);
@@ -634,10 +740,20 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
         createEReference(containerEClass, CONTAINER__DEFAULT_BASIC_ENDPOINTS);
         createEReference(containerEClass, CONTAINER__OPERATION_MODEL);
 
+        deploymentTechnologyReferenceEClass = createEClass(DEPLOYMENT_TECHNOLOGY_REFERENCE);
+        createEReference(deploymentTechnologyReferenceEClass, DEPLOYMENT_TECHNOLOGY_REFERENCE__IMPORT);
+        createEReference(deploymentTechnologyReferenceEClass, DEPLOYMENT_TECHNOLOGY_REFERENCE__DEPLOYMENT_TECHNOLOGY);
+        createEReference(deploymentTechnologyReferenceEClass, DEPLOYMENT_TECHNOLOGY_REFERENCE__CONTAINER);
+
         infrastructureNodeEClass = createEClass(INFRASTRUCTURE_NODE);
         createEReference(infrastructureNodeEClass, INFRASTRUCTURE_NODE__INFRASTRUCTURE_TECHNOLOGY);
         createEReference(infrastructureNodeEClass, INFRASTRUCTURE_NODE__ENDPOINTS);
         createEReference(infrastructureNodeEClass, INFRASTRUCTURE_NODE__OPERATION_MODEL);
+
+        infrastructureTechnologyReferenceEClass = createEClass(INFRASTRUCTURE_TECHNOLOGY_REFERENCE);
+        createEReference(infrastructureTechnologyReferenceEClass, INFRASTRUCTURE_TECHNOLOGY_REFERENCE__IMPORT);
+        createEReference(infrastructureTechnologyReferenceEClass, INFRASTRUCTURE_TECHNOLOGY_REFERENCE__INFRASTRUCTURE_TECHNOLOGY);
+        createEReference(infrastructureTechnologyReferenceEClass, INFRASTRUCTURE_TECHNOLOGY_REFERENCE__INFRASTRUCTURE_NODE);
 
         importedMicroserviceEClass = createEClass(IMPORTED_MICROSERVICE);
         createEReference(importedMicroserviceEClass, IMPORTED_MICROSERVICE__IMPORT);
@@ -652,6 +768,7 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
         createEReference(serviceDeploymentSpecificationEClass, SERVICE_DEPLOYMENT_SPECIFICATION__OPERATION_NODE);
 
         protocolAndDataFormatEClass = createEClass(PROTOCOL_AND_DATA_FORMAT);
+        createEReference(protocolAndDataFormatEClass, PROTOCOL_AND_DATA_FORMAT__TECHNOLOGY);
         createEReference(protocolAndDataFormatEClass, PROTOCOL_AND_DATA_FORMAT__PROTOCOL);
         createEReference(protocolAndDataFormatEClass, PROTOCOL_AND_DATA_FORMAT__DATA_FORMAT);
         createEReference(protocolAndDataFormatEClass, PROTOCOL_AND_DATA_FORMAT__ENDPOINT);
@@ -664,7 +781,8 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
         createEReference(basicEndpointEClass, BASIC_ENDPOINT__DEPLOYMENT_SPECIFICATION);
 
         importedOperationAspectEClass = createEClass(IMPORTED_OPERATION_ASPECT);
-        createEReference(importedOperationAspectEClass, IMPORTED_OPERATION_ASPECT__IMPORTED_ASPECT);
+        createEReference(importedOperationAspectEClass, IMPORTED_OPERATION_ASPECT__TECHNOLOGY);
+        createEReference(importedOperationAspectEClass, IMPORTED_OPERATION_ASPECT__ASPECT);
         createEReference(importedOperationAspectEClass, IMPORTED_OPERATION_ASPECT__SINGLE_PROPERTY_VALUE);
         createEReference(importedOperationAspectEClass, IMPORTED_OPERATION_ASPECT__VALUES);
         createEReference(importedOperationAspectEClass, IMPORTED_OPERATION_ASPECT__OPERATION_NODE);
@@ -718,7 +836,7 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
 
         initEClass(operationNodeEClass, OperationNode.class, "OperationNode", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getOperationNode_Name(), theEcorePackage.getEString(), "name", null, 0, 1, OperationNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getOperationNode_Technology(), theServicePackage.getImport(), null, "technology", null, 0, 1, OperationNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getOperationNode_Technologies(), theServicePackage.getImport(), null, "technologies", null, 1, -1, OperationNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getOperationNode_OperationEnvironment(), theTechnologyPackage.getOperationEnvironment(), null, "operationEnvironment", null, 0, 1, OperationNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getOperationNode_DeployedServices(), this.getImportedMicroservice(), this.getImportedMicroservice_OperationNode(), "deployedServices", null, 1, -1, OperationNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getOperationNode_DefaultServicePropertyValues(), theTechnologyPackage.getTechnologySpecificPropertyValueAssignment(), null, "defaultServicePropertyValues", null, 0, -1, OperationNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -726,14 +844,24 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
         initEReference(getOperationNode_Aspects(), this.getImportedOperationAspect(), this.getImportedOperationAspect_OperationNode(), "aspects", null, 0, -1, OperationNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(containerEClass, de.fhdo.ddmm.operation.Container.class, "Container", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getContainer_DeploymentTechnology(), theTechnologyPackage.getDeploymentTechnology(), null, "deploymentTechnology", null, 0, 1, de.fhdo.ddmm.operation.Container.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getContainer_DeploymentTechnology(), this.getDeploymentTechnologyReference(), this.getDeploymentTechnologyReference_Container(), "deploymentTechnology", null, 0, 1, de.fhdo.ddmm.operation.Container.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getContainer_DefaultBasicEndpoints(), this.getBasicEndpoint(), this.getBasicEndpoint_Container(), "defaultBasicEndpoints", null, 0, -1, de.fhdo.ddmm.operation.Container.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getContainer_OperationModel(), this.getOperationModel(), this.getOperationModel_Containers(), "operationModel", null, 0, 1, de.fhdo.ddmm.operation.Container.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
+        initEClass(deploymentTechnologyReferenceEClass, DeploymentTechnologyReference.class, "DeploymentTechnologyReference", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEReference(getDeploymentTechnologyReference_Import(), theServicePackage.getImport(), null, "import", null, 0, 1, DeploymentTechnologyReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getDeploymentTechnologyReference_DeploymentTechnology(), theTechnologyPackage.getDeploymentTechnology(), null, "deploymentTechnology", null, 0, 1, DeploymentTechnologyReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getDeploymentTechnologyReference_Container(), this.getContainer(), this.getContainer_DeploymentTechnology(), "container", null, 0, 1, DeploymentTechnologyReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
         initEClass(infrastructureNodeEClass, InfrastructureNode.class, "InfrastructureNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getInfrastructureNode_InfrastructureTechnology(), theTechnologyPackage.getInfrastructureTechnology(), null, "infrastructureTechnology", null, 0, 1, InfrastructureNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getInfrastructureNode_InfrastructureTechnology(), this.getInfrastructureTechnologyReference(), this.getInfrastructureTechnologyReference_InfrastructureNode(), "infrastructureTechnology", null, 0, 1, InfrastructureNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getInfrastructureNode_Endpoints(), this.getBasicEndpoint(), this.getBasicEndpoint_InfrastructureNode(), "endpoints", null, 0, -1, InfrastructureNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getInfrastructureNode_OperationModel(), this.getOperationModel(), this.getOperationModel_InfrastructureNodes(), "operationModel", null, 0, 1, InfrastructureNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEClass(infrastructureTechnologyReferenceEClass, InfrastructureTechnologyReference.class, "InfrastructureTechnologyReference", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEReference(getInfrastructureTechnologyReference_Import(), theServicePackage.getImport(), null, "import", null, 0, 1, InfrastructureTechnologyReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getInfrastructureTechnologyReference_InfrastructureTechnology(), theTechnologyPackage.getInfrastructureTechnology(), null, "infrastructureTechnology", null, 0, 1, InfrastructureTechnologyReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getInfrastructureTechnologyReference_InfrastructureNode(), this.getInfrastructureNode(), this.getInfrastructureNode_InfrastructureTechnology(), "infrastructureNode", null, 0, 1, InfrastructureTechnologyReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(importedMicroserviceEClass, ImportedMicroservice.class, "ImportedMicroservice", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getImportedMicroservice_Import(), theServicePackage.getImport(), null, "import", null, 0, 1, ImportedMicroservice.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -748,6 +876,7 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
         initEReference(getServiceDeploymentSpecification_OperationNode(), this.getOperationNode(), this.getOperationNode_DeploymentSpecifications(), "operationNode", null, 0, 1, ServiceDeploymentSpecification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(protocolAndDataFormatEClass, ProtocolAndDataFormat.class, "ProtocolAndDataFormat", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEReference(getProtocolAndDataFormat_Technology(), theServicePackage.getImport(), null, "technology", null, 0, 1, ProtocolAndDataFormat.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getProtocolAndDataFormat_Protocol(), theTechnologyPackage.getProtocol(), null, "protocol", null, 0, 1, ProtocolAndDataFormat.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getProtocolAndDataFormat_DataFormat(), theTechnologyPackage.getDataFormat(), null, "dataFormat", null, 0, 1, ProtocolAndDataFormat.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getProtocolAndDataFormat_Endpoint(), this.getBasicEndpoint(), this.getBasicEndpoint_Protocols(), "endpoint", null, 0, 1, ProtocolAndDataFormat.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -760,7 +889,8 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
         initEReference(getBasicEndpoint_DeploymentSpecification(), this.getServiceDeploymentSpecification(), this.getServiceDeploymentSpecification_BasicEndpoints(), "deploymentSpecification", null, 0, 1, BasicEndpoint.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(importedOperationAspectEClass, ImportedOperationAspect.class, "ImportedOperationAspect", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getImportedOperationAspect_ImportedAspect(), theTechnologyPackage.getOperationAspect(), null, "importedAspect", null, 0, 1, ImportedOperationAspect.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getImportedOperationAspect_Technology(), theServicePackage.getImport(), null, "technology", null, 0, 1, ImportedOperationAspect.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getImportedOperationAspect_Aspect(), theTechnologyPackage.getOperationAspect(), null, "aspect", null, 0, 1, ImportedOperationAspect.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getImportedOperationAspect_SinglePropertyValue(), theDataPackage.getPrimitiveValue(), null, "singlePropertyValue", null, 0, 1, ImportedOperationAspect.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getImportedOperationAspect_Values(), theTechnologyPackage.getTechnologySpecificPropertyValueAssignment(), null, "values", null, 0, -1, ImportedOperationAspect.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getImportedOperationAspect_OperationNode(), this.getOperationNode(), this.getOperationNode_Aspects(), "operationNode", null, 0, 1, ImportedOperationAspect.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

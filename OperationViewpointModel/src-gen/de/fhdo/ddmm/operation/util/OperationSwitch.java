@@ -85,10 +85,22 @@ public class OperationSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
+            case OperationPackage.DEPLOYMENT_TECHNOLOGY_REFERENCE: {
+                DeploymentTechnologyReference deploymentTechnologyReference = (DeploymentTechnologyReference)theEObject;
+                T result = caseDeploymentTechnologyReference(deploymentTechnologyReference);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
             case OperationPackage.INFRASTRUCTURE_NODE: {
                 InfrastructureNode infrastructureNode = (InfrastructureNode)theEObject;
                 T result = caseInfrastructureNode(infrastructureNode);
                 if (result == null) result = caseOperationNode(infrastructureNode);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case OperationPackage.INFRASTRUCTURE_TECHNOLOGY_REFERENCE: {
+                InfrastructureTechnologyReference infrastructureTechnologyReference = (InfrastructureTechnologyReference)theEObject;
+                T result = caseInfrastructureTechnologyReference(infrastructureTechnologyReference);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -172,6 +184,21 @@ public class OperationSwitch<T> extends Switch<T> {
     }
 
     /**
+     * Returns the result of interpreting the object as an instance of '<em>Deployment Technology Reference</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Deployment Technology Reference</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseDeploymentTechnologyReference(DeploymentTechnologyReference object) {
+        return null;
+    }
+
+    /**
      * Returns the result of interpreting the object as an instance of '<em>Infrastructure Node</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
@@ -183,6 +210,21 @@ public class OperationSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseInfrastructureNode(InfrastructureNode object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Infrastructure Technology Reference</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Infrastructure Technology Reference</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseInfrastructureTechnologyReference(InfrastructureTechnologyReference object) {
         return null;
     }
 

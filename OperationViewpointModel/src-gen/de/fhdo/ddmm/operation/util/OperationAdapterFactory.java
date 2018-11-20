@@ -80,8 +80,16 @@ public class OperationAdapterFactory extends AdapterFactoryImpl {
                 return createContainerAdapter();
             }
             @Override
+            public Adapter caseDeploymentTechnologyReference(DeploymentTechnologyReference object) {
+                return createDeploymentTechnologyReferenceAdapter();
+            }
+            @Override
             public Adapter caseInfrastructureNode(InfrastructureNode object) {
                 return createInfrastructureNodeAdapter();
+            }
+            @Override
+            public Adapter caseInfrastructureTechnologyReference(InfrastructureTechnologyReference object) {
+                return createInfrastructureTechnologyReferenceAdapter();
             }
             @Override
             public Adapter caseImportedMicroservice(ImportedMicroservice object) {
@@ -166,6 +174,20 @@ public class OperationAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
+     * Creates a new adapter for an object of class '{@link de.fhdo.ddmm.operation.DeploymentTechnologyReference <em>Deployment Technology Reference</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.fhdo.ddmm.operation.DeploymentTechnologyReference
+     * @generated
+     */
+    public Adapter createDeploymentTechnologyReferenceAdapter() {
+        return null;
+    }
+
+    /**
      * Creates a new adapter for an object of class '{@link de.fhdo.ddmm.operation.InfrastructureNode <em>Infrastructure Node</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
@@ -176,6 +198,20 @@ public class OperationAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createInfrastructureNodeAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.fhdo.ddmm.operation.InfrastructureTechnologyReference <em>Infrastructure Technology Reference</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.fhdo.ddmm.operation.InfrastructureTechnologyReference
+     * @generated
+     */
+    public Adapter createInfrastructureTechnologyReferenceAdapter() {
         return null;
     }
 
