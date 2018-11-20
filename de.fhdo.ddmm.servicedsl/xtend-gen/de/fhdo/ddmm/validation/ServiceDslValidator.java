@@ -239,7 +239,7 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
   }
   
   /**
-   * Check that technology is assigned only once to an operation node
+   * Check that technology is assigned only once to a microservice
    */
   @Check
   public void checkTechnologyUniqueness(final Microservice microservice) {
