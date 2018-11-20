@@ -117,7 +117,7 @@ class Protocol {
             return newArrayList.asEList
 
         val nameParts = newArrayList
-        nameParts.add("protocols")
+        nameParts.add("_protocols")
         nameParts.add(name)
         nameParts.asEList
     }
@@ -171,7 +171,7 @@ class TechnologySpecificPrimitiveType extends PrimitiveType {
             return newArrayList.asEList
 
         val nameParts = newArrayList
-        nameParts.add("types")
+        nameParts.add("_types")
         nameParts.add(name)
         nameParts.asEList
     }
@@ -223,7 +223,7 @@ class TechnologySpecificDataStructure extends ComplexType {
             return newArrayList.asEList
 
         val nameParts = newArrayList
-        nameParts.add("types")
+        nameParts.add("_types")
         nameParts.add(name)
         nameParts.asEList
     }
@@ -430,7 +430,7 @@ abstract class TechnologyAspect {
             return newArrayList.asEList
 
         val nameParts = newArrayList
-        nameParts.add("aspects")
+        nameParts.add("_aspects")
         nameParts.add(name)
         nameParts.asEList
     }

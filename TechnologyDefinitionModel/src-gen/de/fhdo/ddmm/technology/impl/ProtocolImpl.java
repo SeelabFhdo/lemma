@@ -325,7 +325,7 @@ public class ProtocolImpl extends MinimalEObjectImpl.Container implements Protoc
                 return ECollections.<String>asEList(CollectionLiterals.<String>newArrayList());
             }
             final ArrayList<String> nameParts = CollectionLiterals.<String>newArrayList();
-            nameParts.add("protocols");
+            nameParts.add("_protocols");
             nameParts.add(this.getName());
             _xblockexpression = ECollections.<String>asEList(nameParts);
         }

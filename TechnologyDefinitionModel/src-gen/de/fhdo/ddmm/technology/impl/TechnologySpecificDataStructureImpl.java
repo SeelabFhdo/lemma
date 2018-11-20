@@ -126,7 +126,7 @@ public class TechnologySpecificDataStructureImpl extends ComplexTypeImpl impleme
                 return ECollections.<String>asEList(CollectionLiterals.<String>newArrayList());
             }
             final ArrayList<String> nameParts = CollectionLiterals.<String>newArrayList();
-            nameParts.add("types");
+            nameParts.add("_types");
             nameParts.add(this.getName());
             _xblockexpression = ECollections.<String>asEList(nameParts);
         }

@@ -162,7 +162,7 @@ public abstract class TechnologyAspectImpl extends MinimalEObjectImpl.Container 
                 return ECollections.<String>asEList(CollectionLiterals.<String>newArrayList());
             }
             final ArrayList<String> nameParts = CollectionLiterals.<String>newArrayList();
-            nameParts.add("aspects");
+            nameParts.add("_aspects");
             nameParts.add(this.getName());
             _xblockexpression = ECollections.<String>asEList(nameParts);
         }
