@@ -625,10 +625,17 @@ public class OperationDslScopeProvider extends AbstractOperationDslScopeProvider
       }
       infrastructureNode = _xifexpression_1;
     }
-    if ((((container == null) && (infrastructureNode == null)) || 
-      ((container.getDeploymentTechnology() == null) && 
-        (infrastructureNode.getInfrastructureTechnology() == null)))) {
+    if (((container == null) && (infrastructureNode == null))) {
       return IScope.NULLSCOPE;
+    } else {
+      if (((container != null) && (container.getDeploymentTechnology() == null))) {
+        return IScope.NULLSCOPE;
+      } else {
+        if (((infrastructureNode != null) && 
+          (infrastructureNode.getInfrastructureTechnology() == null))) {
+          return IScope.NULLSCOPE;
+        }
+      }
     }
     EList<TechnologySpecificProperty> _xifexpression_2 = null;
     if ((container != null)) {

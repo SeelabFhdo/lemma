@@ -522,8 +522,11 @@ class OperationDslScopeProvider extends AbstractOperationDslScopeProvider {
                 else
                     EcoreUtil2.getContainerOfType(context, InfrastructureNode)
 
-        if (container === null && infrastructureNode === null ||
-            container.deploymentTechnology === null &&
+        if (container === null && infrastructureNode === null)
+            return IScope.NULLSCOPE
+        else if (container !== null && container.deploymentTechnology === null)
+            return IScope.NULLSCOPE
+        else if (infrastructureNode !== null &&
             infrastructureNode.infrastructureTechnology === null)
             return IScope.NULLSCOPE
 
