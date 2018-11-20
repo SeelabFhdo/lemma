@@ -102,6 +102,9 @@ class Container extends OperationNode {
     container OperationModel operationModel opposite containers
 }
 
+/**
+ * Reference to a deployment technology
+ */
 class DeploymentTechnologyReference {
     refers Import ^import
     refers DeploymentTechnology deploymentTechnology
@@ -132,6 +135,9 @@ class InfrastructureNode extends OperationNode {
     container OperationModel operationModel opposite infrastructureNodes
 }
 
+/**
+ * Reference to an infrastructure technology
+ */
 class InfrastructureTechnologyReference {
     refers Import ^import
     refers InfrastructureTechnology infrastructureTechnology
