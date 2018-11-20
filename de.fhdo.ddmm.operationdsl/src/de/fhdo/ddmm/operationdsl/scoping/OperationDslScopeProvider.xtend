@@ -522,22 +522,22 @@ class OperationDslScopeProvider extends AbstractOperationDslScopeProvider {
                 else
                     EcoreUtil2.getContainerOfType(context, InfrastructureNode)
 
-        if (container === null && infrastructureNode === null)
-            return IScope.NULLSCOPE
-        else if (container !== null && container.deploymentTechnology === null)
-            return IScope.NULLSCOPE
-        else if (infrastructureNode !== null &&
-            infrastructureNode.infrastructureTechnology === null)
-            return IScope.NULLSCOPE
-
         /* Get service properties from container or infrastructure node and build scope */
-        val serviceProperties = if (container !== null)
-                container.deploymentTechnology.deploymentTechnology.serviceProperties
-            else
+        if (container !== null &&
+            container.deploymentTechnology !== null &&
+            container.deploymentTechnology.deploymentTechnology !== null)
+                return Scopes::scopeFor(
+                    container.deploymentTechnology.deploymentTechnology.serviceProperties
+                )
+        else if (infrastructureNode !== null &&
+            infrastructureNode.infrastructureTechnology !== null &&
+            infrastructureNode.infrastructureTechnology.infrastructureTechnology !== null)
+            return Scopes::scopeFor(
                 infrastructureNode.infrastructureTechnology.infrastructureTechnology
                     .serviceProperties
-
-        return Scopes::scopeFor(serviceProperties)
+            )
+        else
+            return IScope.NULLSCOPE
     }
 
     /**
