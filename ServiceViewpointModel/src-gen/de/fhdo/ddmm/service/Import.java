@@ -43,6 +43,8 @@ public interface Import extends EObject {
      *          Ensured by: DSL validator.
      *     (C3) Imported file must define a model that corresponds to the import type.
      *          Ensured by: DSL validator.
+     *     (C4) Import alias must be unique.
+     *          Ensured by: DSL validator.
      * <!-- end-model-doc -->
      * @return the value of the '<em>Name</em>' attribute.
      * @see #setName(String)

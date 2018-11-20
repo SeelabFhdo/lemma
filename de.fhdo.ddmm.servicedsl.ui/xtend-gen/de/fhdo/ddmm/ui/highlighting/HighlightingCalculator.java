@@ -47,7 +47,7 @@ public class HighlightingCalculator implements ISemanticHighlightingCalculator {
    * Provide highlighting for annotations
    */
   private void provideHighlightingForAnnotations(final XtextResource resource, final IHighlightedPositionAcceptor acceptor) {
-    Pair<EReference, Boolean> _mappedTo = Pair.<EReference, Boolean>of(ServicePackage.Literals.MICROSERVICE__TECHNOLOGY, Boolean.valueOf(false));
+    Pair<EReference, Boolean> _mappedTo = Pair.<EReference, Boolean>of(ServicePackage.Literals.MICROSERVICE__TECHNOLOGIES, Boolean.valueOf(false));
     Pair<EReference, Boolean> _mappedTo_1 = Pair.<EReference, Boolean>of(ServicePackage.Literals.MICROSERVICE__ENDPOINTS, Boolean.valueOf(false));
     Pair<Class<Microservice>, List<Pair<EReference, Boolean>>> _mappedTo_2 = Pair.<Class<Microservice>, List<Pair<EReference, Boolean>>>of(Microservice.class, Collections.<Pair<EReference, Boolean>>unmodifiableList(CollectionLiterals.<Pair<EReference, Boolean>>newArrayList(_mappedTo, _mappedTo_1)));
     Pair<EReference, Boolean> _mappedTo_3 = Pair.<EReference, Boolean>of(ServicePackage.Literals.INTERFACE__ENDPOINTS, Boolean.valueOf(false));

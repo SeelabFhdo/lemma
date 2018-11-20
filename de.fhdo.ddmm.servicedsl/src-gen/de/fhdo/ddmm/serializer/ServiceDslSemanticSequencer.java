@@ -363,7 +363,7 @@ public class ServiceDslSemanticSequencer extends TechnologyDslSemanticSequencer 
 	 *
 	 * Constraint:
 	 *     (
-	 *         technology=[Import|ID]? 
+	 *         technologies+=[Import|ID]* 
 	 *         (protocols+=ProtocolSpecification protocols+=ProtocolSpecification?)? 
 	 *         endpoints+=Endpoint* 
 	 *         aspects+=ImportedServiceAspect* 

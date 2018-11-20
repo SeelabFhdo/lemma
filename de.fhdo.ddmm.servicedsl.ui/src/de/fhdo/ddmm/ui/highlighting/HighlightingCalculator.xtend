@@ -56,7 +56,7 @@ class HighlightingCalculator implements ISemanticHighlightingCalculator {
          */
         val annotatableConcepts = #{
             Microservice -> #[
-                ServicePackage.Literals::MICROSERVICE__TECHNOLOGY -> false,
+                ServicePackage.Literals::MICROSERVICE__TECHNOLOGIES -> false,
                 ServicePackage.Literals::MICROSERVICE__ENDPOINTS -> false
             ],
             Interface -> #[

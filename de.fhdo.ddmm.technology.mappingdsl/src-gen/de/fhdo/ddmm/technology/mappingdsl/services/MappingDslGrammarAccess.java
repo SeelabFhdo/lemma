@@ -1619,8 +1619,8 @@ public class MappingDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//Microservice:
-	//	('@' 'technology' '(' technology=[Import] ')')? (protocols+=ProtocolSpecification protocols+=ProtocolSpecification?)?
-	//	('@' 'endpoints' '(' endpoints+=Endpoint+ ')')?
+	//	('@' 'technology' '(' technologies+=[Import] ')')* (protocols+=ProtocolSpecification
+	//	protocols+=ProtocolSpecification?)? ('@' 'endpoints' '(' endpoints+=Endpoint+ ')')?
 	//	aspects+=ImportedServiceAspect*
 	//	visibility=Visibility?
 	//	type=MicroserviceType

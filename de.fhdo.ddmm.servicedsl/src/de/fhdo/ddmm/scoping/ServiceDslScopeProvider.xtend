@@ -151,12 +151,12 @@ class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
                 return microservice.getScopeForPossiblyImportedOperation()
 
             /* Annotated technology */
-            case ServicePackage::Literals.MICROSERVICE__TECHNOLOGY:
+            case ServicePackage::Literals.MICROSERVICE__TECHNOLOGIES:
                 return microservice.getScopeForImportsOfType(Technology)
 
             /* Import aliases of annotated endpoints */
             case ServicePackage::Literals.IMPORTED_PROTOCOL_AND_DATA_FORMAT__IMPORT:
-                return microservice.getServiceTechnologyImportAliasAsScope()
+                return microservice.getServiceTechnologyImportAliasesAsScope()
         }
 
         return null
@@ -169,7 +169,7 @@ class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
         switch (reference) {
             /* Import aliases of annotated endpoints */
             case ServicePackage::Literals.IMPORTED_PROTOCOL_AND_DATA_FORMAT__IMPORT:
-                return interface.getServiceTechnologyImportAliasAsScope()
+                return interface.getServiceTechnologyImportAliasesAsScope()
         }
 
         return null
@@ -182,7 +182,7 @@ class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
         switch (reference) {
             /* Import aliases of annotated endpoints */
             case ServicePackage::Literals.IMPORTED_PROTOCOL_AND_DATA_FORMAT__IMPORT:
-                return operation.getServiceTechnologyImportAliasAsScope()
+                return operation.getServiceTechnologyImportAliasesAsScope()
         }
 
         return null
@@ -308,7 +308,7 @@ class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
 
             /* Import aliases of annotated endpoints */
             case ServicePackage::Literals.IMPORTED_PROTOCOL_AND_DATA_FORMAT__IMPORT:
-                return operation.getServiceTechnologyImportAliasAsScope()
+                return operation.getServiceTechnologyImportAliasesAsScope()
         }
 
         return null
@@ -359,9 +359,9 @@ class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
         // For the specification of an operation parameter's type, imported types from data models
         // or technologies may be used
         val dataModelImports = context.getScopeForImportsOfType(DataModel)
-        val technologyImport = context.getServiceTechnologyImportAliasAsScope()
-        if (technologyImport !== IScope.NULLSCOPE)
-            return DdmmUtils.mergeScopes(dataModelImports, technologyImport)
+        val technologyImportAliases = context.getServiceTechnologyImportAliasesAsScope()
+        if (technologyImportAliases !== IScope.NULLSCOPE)
+            return DdmmUtils.mergeScopes(dataModelImports, technologyImportAliases)
         else
             return dataModelImports
     }
@@ -396,7 +396,7 @@ class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
              * for the annotated element
              */
             case ServicePackage.Literals.IMPORTED_PROTOCOL_AND_DATA_FORMAT__IMPORT:
-                return importedProtocol.getServiceTechnologyImportAliasAsScope()
+                return importedProtocol.getServiceTechnologyImportAliasesAsScope()
 
             /* Protocols */
             case ServicePackage::Literals.IMPORTED_PROTOCOL_AND_DATA_FORMAT__IMPORTED_PROTOCOL:
@@ -421,7 +421,7 @@ class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
              * for the annotated element
              */
             case ServicePackage.Literals.IMPORTED_SERVICE_ASPECT__IMPORT:
-                return importedAspect.getServiceTechnologyImportAliasAsScope()
+                return importedAspect.getServiceTechnologyImportAliasesAsScope()
 
             /* Imported aspects */
             case ServicePackage.Literals.IMPORTED_SERVICE_ASPECT__IMPORTED_ASPECT:
@@ -585,15 +585,15 @@ class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
     }
 
     /**
-     * Get the annotated technology of a microservice, that is the container of the given context,
-     * as scope
+     * Get the annotated technologies of a microservice, that is the container of the given context,
+     * as scopes
      */
-    private def getServiceTechnologyImportAliasAsScope(EObject context) {
+    private def getServiceTechnologyImportAliasesAsScope(EObject context) {
         val microservice = EcoreUtil2.getContainerOfType(context, Microservice)
-        if (microservice === null || microservice.technology === null)
+        if (microservice === null || microservice.technologies.empty)
             return IScope::NULLSCOPE
 
-        return Scopes::scopeFor(#[microservice.technology])
+        return Scopes::scopeFor(microservice.technologies)
     }
 
     /**
@@ -914,7 +914,7 @@ class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
         if (reference !== ServicePackage::Literals.IMPORTED_PROTOCOL_AND_DATA_FORMAT__IMPORT)
             return IScope.NULLSCOPE
 
-        return protocolSpecification.getServiceTechnologyImportAliasAsScope()
+        return protocolSpecification.getServiceTechnologyImportAliasesAsScope()
     }
 
     /**
@@ -934,33 +934,32 @@ class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
         if (!results.containsKey(CommunicationType.SYNCHRONOUS))
             missingCommunicationTypes.add(CommunicationType.SYNCHRONOUS)
 
-        val technology = microservice.technology
-        if (missingCommunicationTypes.empty || technology === null)
+        if (missingCommunicationTypes.empty ||  microservice.technologies.empty)
             return results
 
         /*
          * Complement effective protocols and data formats with the default protocols and data
          * formats of the annotated technology (if any) for missing communication types
          */
-        val resourceContents = DdmmUtils.getImportedModelContents(technology.eResource,
-            technology.importURI)
-        if (resourceContents === null || resourceContents.empty)
-            return results
+        microservice.technologies.forEach[
+            val resourceContents = DdmmUtils.getImportedModelContents(eResource, importURI)
+            if (resourceContents !== null && !resourceContents.empty) {
+                val technologyModel = resourceContents.get(0) as Technology
+                missingCommunicationTypes.forEach[communicationType |
+                    var Protocol defaultProtocol
+                    var DataFormat defaultDataFormat
 
-        val technologyModel = resourceContents.get(0) as Technology
-        missingCommunicationTypes.forEach[communicationType |
-            var Protocol defaultProtocol
-            var DataFormat defaultDataFormat
+                    defaultProtocol = technologyModel.protocols
+                        .filter[it.communicationType == communicationType]
+                        .findFirst[^default]
 
-            defaultProtocol = technologyModel.protocols
-                .filter[it.communicationType == communicationType]
-                .findFirst[^default]
+                    if (defaultProtocol !== null)
+                        defaultDataFormat = defaultProtocol.defaultFormat
 
-            if (defaultProtocol !== null)
-                defaultDataFormat = defaultProtocol.defaultFormat
-
-            if (defaultProtocol !== null)
-                results.put(communicationType, {defaultProtocol -> defaultDataFormat})
+                    if (defaultProtocol !== null)
+                        results.put(communicationType, {defaultProtocol -> defaultDataFormat})
+                ]
+            }
         ]
 
         return results

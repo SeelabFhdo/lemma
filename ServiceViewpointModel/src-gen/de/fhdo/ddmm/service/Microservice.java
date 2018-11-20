@@ -26,7 +26,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.fhdo.ddmm.service.Microservice#getVersion <em>Version</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.Microservice#getType <em>Type</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.Microservice#getVisibility <em>Visibility</em>}</li>
- *   <li>{@link de.fhdo.ddmm.service.Microservice#getTechnology <em>Technology</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.service.Microservice#getTechnologies <em>Technologies</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.Microservice#getEndpoints <em>Endpoints</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.Microservice#getRequiredMicroservices <em>Required Microservices</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.Microservice#getRequiredInterfaces <em>Required Interfaces</em>}</li>
@@ -70,6 +70,12 @@ public interface Microservice extends EObject {
      *          technology are taken instead.
      *          Ensured by: DSL validator.
      *     (C6) Combination of endpoints' protocols and data formats must be unique.
+     *          Ensured by: DSL validator.
+     *     (C7) A technology might be assigned exactly once to a microservice.
+     *          Ensured by: DSL validator.
+     *     (C8) Only one assigned technology might comprise technology-specific types.
+     *          Ensured by: DSL validator.
+     *     (C9) Assigned technologies may not only define deployment-specific concepts.
      *          Ensured by: DSL validator.
      * <!-- end-model-doc -->
      * @return the value of the '<em>Name</em>' attribute.
@@ -176,30 +182,20 @@ public interface Microservice extends EObject {
     void setVisibility(Visibility value);
 
     /**
-     * Returns the value of the '<em><b>Technology</b></em>' reference.
+     * Returns the value of the '<em><b>Technologies</b></em>' reference list.
+     * The list contents are of type {@link de.fhdo.ddmm.service.Import}.
      * <!-- begin-user-doc -->
      * <p>
-     * If the meaning of the '<em>Technology</em>' reference isn't clear,
+     * If the meaning of the '<em>Technologies</em>' reference list isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Technology</em>' reference.
-     * @see #setTechnology(Import)
-     * @see de.fhdo.ddmm.service.ServicePackage#getMicroservice_Technology()
+     * @return the value of the '<em>Technologies</em>' reference list.
+     * @see de.fhdo.ddmm.service.ServicePackage#getMicroservice_Technologies()
      * @model
      * @generated
      */
-    Import getTechnology();
-
-    /**
-     * Sets the value of the '{@link de.fhdo.ddmm.service.Microservice#getTechnology <em>Technology</em>}' reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Technology</em>' reference.
-     * @see #getTechnology()
-     * @generated
-     */
-    void setTechnology(Import value);
+    EList<Import> getTechnologies();
 
     /**
      * Returns the value of the '<em><b>Endpoints</b></em>' containment reference list.

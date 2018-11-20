@@ -46,6 +46,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
+import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -68,7 +69,7 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
  *   <li>{@link de.fhdo.ddmm.service.impl.MicroserviceImpl#getVersion <em>Version</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.impl.MicroserviceImpl#getType <em>Type</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.impl.MicroserviceImpl#getVisibility <em>Visibility</em>}</li>
- *   <li>{@link de.fhdo.ddmm.service.impl.MicroserviceImpl#getTechnology <em>Technology</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.service.impl.MicroserviceImpl#getTechnologies <em>Technologies</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.impl.MicroserviceImpl#getEndpoints <em>Endpoints</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.impl.MicroserviceImpl#getRequiredMicroservices <em>Required Microservices</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.impl.MicroserviceImpl#getRequiredInterfaces <em>Required Interfaces</em>}</li>
@@ -166,14 +167,14 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
     protected Visibility visibility = VISIBILITY_EDEFAULT;
 
     /**
-     * The cached value of the '{@link #getTechnology() <em>Technology</em>}' reference.
+     * The cached value of the '{@link #getTechnologies() <em>Technologies</em>}' reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getTechnology()
+     * @see #getTechnologies()
      * @generated
      * @ordered
      */
-    protected Import technology;
+    protected EList<Import> technologies;
 
     /**
      * The cached value of the '{@link #getEndpoints() <em>Endpoints</em>}' containment reference list.
@@ -383,37 +384,11 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
      * <!-- end-user-doc -->
      * @generated
      */
-    public Import getTechnology() {
-        if (technology != null && technology.eIsProxy()) {
-            InternalEObject oldTechnology = (InternalEObject)technology;
-            technology = (Import)eResolveProxy(oldTechnology);
-            if (technology != oldTechnology) {
-                if (eNotificationRequired())
-                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, ServicePackage.MICROSERVICE__TECHNOLOGY, oldTechnology, technology));
-            }
+    public EList<Import> getTechnologies() {
+        if (technologies == null) {
+            technologies = new EObjectResolvingEList<Import>(Import.class, this, ServicePackage.MICROSERVICE__TECHNOLOGIES);
         }
-        return technology;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public Import basicGetTechnology() {
-        return technology;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setTechnology(Import newTechnology) {
-        Import oldTechnology = technology;
-        technology = newTechnology;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, ServicePackage.MICROSERVICE__TECHNOLOGY, oldTechnology, technology));
+        return technologies;
     }
 
     /**
@@ -942,9 +917,8 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
                 return getType();
             case ServicePackage.MICROSERVICE__VISIBILITY:
                 return getVisibility();
-            case ServicePackage.MICROSERVICE__TECHNOLOGY:
-                if (resolve) return getTechnology();
-                return basicGetTechnology();
+            case ServicePackage.MICROSERVICE__TECHNOLOGIES:
+                return getTechnologies();
             case ServicePackage.MICROSERVICE__ENDPOINTS:
                 return getEndpoints();
             case ServicePackage.MICROSERVICE__REQUIRED_MICROSERVICES:
@@ -993,8 +967,9 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
             case ServicePackage.MICROSERVICE__VISIBILITY:
                 setVisibility((Visibility)newValue);
                 return;
-            case ServicePackage.MICROSERVICE__TECHNOLOGY:
-                setTechnology((Import)newValue);
+            case ServicePackage.MICROSERVICE__TECHNOLOGIES:
+                getTechnologies().clear();
+                getTechnologies().addAll((Collection<? extends Import>)newValue);
                 return;
             case ServicePackage.MICROSERVICE__ENDPOINTS:
                 getEndpoints().clear();
@@ -1051,8 +1026,8 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
             case ServicePackage.MICROSERVICE__VISIBILITY:
                 setVisibility(VISIBILITY_EDEFAULT);
                 return;
-            case ServicePackage.MICROSERVICE__TECHNOLOGY:
-                setTechnology((Import)null);
+            case ServicePackage.MICROSERVICE__TECHNOLOGIES:
+                getTechnologies().clear();
                 return;
             case ServicePackage.MICROSERVICE__ENDPOINTS:
                 getEndpoints().clear();
@@ -1098,8 +1073,8 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
                 return type != TYPE_EDEFAULT;
             case ServicePackage.MICROSERVICE__VISIBILITY:
                 return visibility != VISIBILITY_EDEFAULT;
-            case ServicePackage.MICROSERVICE__TECHNOLOGY:
-                return technology != null;
+            case ServicePackage.MICROSERVICE__TECHNOLOGIES:
+                return technologies != null && !technologies.isEmpty();
             case ServicePackage.MICROSERVICE__ENDPOINTS:
                 return endpoints != null && !endpoints.isEmpty();
             case ServicePackage.MICROSERVICE__REQUIRED_MICROSERVICES:

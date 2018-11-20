@@ -395,7 +395,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getMicroservice_Technology() {
+    public EReference getMicroservice_Technologies() {
         return (EReference)microserviceEClass.getEStructuralFeatures().get(4);
     }
 
@@ -1525,7 +1525,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
         createEAttribute(microserviceEClass, MICROSERVICE__VERSION);
         createEAttribute(microserviceEClass, MICROSERVICE__TYPE);
         createEAttribute(microserviceEClass, MICROSERVICE__VISIBILITY);
-        createEReference(microserviceEClass, MICROSERVICE__TECHNOLOGY);
+        createEReference(microserviceEClass, MICROSERVICE__TECHNOLOGIES);
         createEReference(microserviceEClass, MICROSERVICE__ENDPOINTS);
         createEReference(microserviceEClass, MICROSERVICE__REQUIRED_MICROSERVICES);
         createEReference(microserviceEClass, MICROSERVICE__REQUIRED_INTERFACES);
@@ -1720,7 +1720,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
         initEAttribute(getMicroservice_Version(), theEcorePackage.getEString(), "version", null, 0, 1, Microservice.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getMicroservice_Type(), this.getMicroserviceType(), "type", null, 0, 1, Microservice.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getMicroservice_Visibility(), this.getVisibility(), "visibility", "NONE", 0, 1, Microservice.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getMicroservice_Technology(), this.getImport(), null, "technology", null, 0, 1, Microservice.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getMicroservice_Technologies(), this.getImport(), null, "technologies", null, 0, -1, Microservice.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getMicroservice_Endpoints(), this.getEndpoint(), this.getEndpoint_Microservice(), "endpoints", null, 0, -1, Microservice.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getMicroservice_RequiredMicroservices(), this.getPossiblyImportedMicroservice(), this.getPossiblyImportedMicroservice_RequiringMicroservice(), "requiredMicroservices", null, 0, -1, Microservice.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getMicroservice_RequiredInterfaces(), this.getPossiblyImportedInterface(), this.getPossiblyImportedInterface_RequiringMicroservice(), "requiredInterfaces", null, 0, -1, Microservice.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

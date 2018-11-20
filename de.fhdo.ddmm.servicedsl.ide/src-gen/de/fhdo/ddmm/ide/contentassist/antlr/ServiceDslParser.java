@@ -170,7 +170,7 @@ public class ServiceDslParser extends AbstractContentAssistParser {
 					put(grammarAccess.getImportAccess().getImportTypeAssignment_1(), "rule__Import__ImportTypeAssignment_1");
 					put(grammarAccess.getImportAccess().getImportURIAssignment_3(), "rule__Import__ImportURIAssignment_3");
 					put(grammarAccess.getImportAccess().getNameAssignment_5(), "rule__Import__NameAssignment_5");
-					put(grammarAccess.getMicroserviceAccess().getTechnologyAssignment_0_3(), "rule__Microservice__TechnologyAssignment_0_3");
+					put(grammarAccess.getMicroserviceAccess().getTechnologiesAssignment_0_3(), "rule__Microservice__TechnologiesAssignment_0_3");
 					put(grammarAccess.getMicroserviceAccess().getProtocolsAssignment_1_0(), "rule__Microservice__ProtocolsAssignment_1_0");
 					put(grammarAccess.getMicroserviceAccess().getProtocolsAssignment_1_1(), "rule__Microservice__ProtocolsAssignment_1_1");
 					put(grammarAccess.getMicroserviceAccess().getEndpointsAssignment_2_3(), "rule__Microservice__EndpointsAssignment_2_3");

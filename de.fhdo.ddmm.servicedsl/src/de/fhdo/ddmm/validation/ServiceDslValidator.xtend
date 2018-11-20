@@ -167,34 +167,75 @@ class ServiceDslValidator extends AbstractServiceDslValidator {
     }
 
     /**
-     * Check that annotated technologies define types and protocols
+     * Check that technology is assigned only once to an operation node
      */
     @Check
-    def checkTechnologyForMandatoryConcepts(Microservice microservice) {
-        val technology = microservice.technology
-        if (technology === null || technology.importURI === null || technology.importURI.empty) {
-            return
+    def checkTechnologyUniqueness(Microservice microservice) {
+        val duplicateIndex = DdmmUtils.getDuplicateIndex(microservice.technologies, [it])
+        if (duplicateIndex > -1) {
+            error('''Duplicate technology assignment''',
+                ServicePackage::Literals.MICROSERVICE__TECHNOLOGIES, duplicateIndex)
         }
+    }
 
-        val technologyModelContents = DdmmUtils.getImportedModelContents(microservice.eResource,
-            technology.importURI)
-        if (technologyModelContents === null || technologyModelContents.empty) {
-            return
+    /**
+     * Check that only one annotated technology contains type definitions
+     */
+    @Check
+    def checkUniqueTypeDefinitionTechnology(Microservice microservice) {
+        var String typeDefinitionTechnologyName = null
+        for (i : 0..<microservice.technologies.size) {
+            val technologyImport = microservice.technologies.get(i)
+            val technologyModel = getTechnologyModelRoot(technologyImport)
+            if (!technologyModel.primitiveTypes.empty ||
+                !technologyModel.listTypes.empty ||
+                !technologyModel.dataStructures.empty) {
+                if (typeDefinitionTechnologyName === null)
+                    typeDefinitionTechnologyName = technologyModel.name
+                else
+                    error('''Technology "«typeDefinitionTechnologyName»" already defines ''' +
+                        '''technology-specific types. Only one technology per microservice may ''' +
+                        '''define technology-specific types.''',
+                        ServicePackage::Literals.MICROSERVICE__TECHNOLOGIES, i)
+            }
         }
+    }
 
-        val modelRoot = technologyModelContents.get(0)
-        if (!(modelRoot instanceof Technology)) {
-            return
+    /**
+     * Check that annotated technologies define not only deployment-related concepts
+     */
+    @Check
+    def checkTechnologiesForServiceConcepts(Microservice microservice) {
+        for (i : 0..<microservice.technologies.size) {
+            val technologyImport = microservice.technologies.get(i)
+            val technologyModel = getTechnologyModelRoot(technologyImport)
+            if (technologyModel.primitiveTypes.empty &&
+                technologyModel.protocols.empty &&
+                technologyModel.serviceAspects.empty) {
+                error("Technology does not specify service-related concepts",
+                    ServicePackage::Literals.MICROSERVICE__TECHNOLOGIES, i)
+            }
         }
+    }
+
+    /**
+     * Helper to get root element of a technology model
+     */
+    private def getTechnologyModelRoot(Import technologyImport) {
+        val technologyContents = DdmmUtils.getImportedModelContents(technologyImport.eResource,
+                technologyImport.importURI)
+        if (technologyContents === null || technologyContents.empty)
+            return null
+
+        val modelRoot = technologyContents.get(0)
+        if (!(modelRoot instanceof Technology))
+            return null
 
         val technologyModel = modelRoot as Technology
-        if (technologyModel === null) {
-            return
-        }
+        if (technologyModel === null)
+            return null
 
-        if (technologyModel.primitiveTypes.empty && technologyModel.protocols.empty)
-            error("Technology does not specify primitive types, protocols, or both",
-                microservice, ServicePackage::Literals.MICROSERVICE__TECHNOLOGY)
+        return technologyModel
     }
 
     /**

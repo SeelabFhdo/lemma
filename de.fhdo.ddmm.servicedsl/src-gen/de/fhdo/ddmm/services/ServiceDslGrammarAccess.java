@@ -110,9 +110,9 @@ public class ServiceDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cCommercialAtKeyword_0_0 = (Keyword)cGroup_0.eContents().get(0);
 		private final Keyword cTechnologyKeyword_0_1 = (Keyword)cGroup_0.eContents().get(1);
 		private final Keyword cLeftParenthesisKeyword_0_2 = (Keyword)cGroup_0.eContents().get(2);
-		private final Assignment cTechnologyAssignment_0_3 = (Assignment)cGroup_0.eContents().get(3);
-		private final CrossReference cTechnologyImportCrossReference_0_3_0 = (CrossReference)cTechnologyAssignment_0_3.eContents().get(0);
-		private final RuleCall cTechnologyImportIDTerminalRuleCall_0_3_0_1 = (RuleCall)cTechnologyImportCrossReference_0_3_0.eContents().get(1);
+		private final Assignment cTechnologiesAssignment_0_3 = (Assignment)cGroup_0.eContents().get(3);
+		private final CrossReference cTechnologiesImportCrossReference_0_3_0 = (CrossReference)cTechnologiesAssignment_0_3.eContents().get(0);
+		private final RuleCall cTechnologiesImportIDTerminalRuleCall_0_3_0_1 = (RuleCall)cTechnologiesImportCrossReference_0_3_0.eContents().get(1);
 		private final Keyword cRightParenthesisKeyword_0_4 = (Keyword)cGroup_0.eContents().get(4);
 		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
 		private final Assignment cProtocolsAssignment_1_0 = (Assignment)cGroup_1.eContents().get(0);
@@ -178,8 +178,8 @@ public class ServiceDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightCurlyBracketKeyword_14 = (Keyword)cGroup.eContents().get(14);
 		
 		//Microservice:
-		//	('@' 'technology' '(' technology=[Import] ')')? (protocols+=ProtocolSpecification protocols+=ProtocolSpecification?)?
-		//	('@' 'endpoints' '(' endpoints+=Endpoint+ ')')?
+		//	('@' 'technology' '(' technologies+=[Import] ')')* (protocols+=ProtocolSpecification
+		//	protocols+=ProtocolSpecification?)? ('@' 'endpoints' '(' endpoints+=Endpoint+ ')')?
 		//	aspects+=ImportedServiceAspect*
 		//	visibility=Visibility?
 		//	type=MicroserviceType
@@ -197,7 +197,7 @@ public class ServiceDslGrammarAccess extends AbstractGrammarElementFinder {
 		//	'}';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//('@' 'technology' '(' technology=[Import] ')')? (protocols+=ProtocolSpecification protocols+=ProtocolSpecification?)?
+		//('@' 'technology' '(' technologies+=[Import] ')')* (protocols+=ProtocolSpecification protocols+=ProtocolSpecification?)?
 		//('@' 'endpoints' '(' endpoints+=Endpoint+ ')')? aspects+=ImportedServiceAspect* visibility=Visibility?
 		//type=MicroserviceType 'microservice' name=QualifiedNameWithAtLeastOneLevel ('version' version=ID)? // TODO: Inheritance of microservices
 		////('extends' super=[Microservice|QualifiedNameWithAtLeastOneLevel])?
@@ -208,7 +208,7 @@ public class ServiceDslGrammarAccess extends AbstractGrammarElementFinder {
 		//'}')? interfaces+=Interface+ '}'
 		public Group getGroup() { return cGroup; }
 		
-		//('@' 'technology' '(' technology=[Import] ')')?
+		//('@' 'technology' '(' technologies+=[Import] ')')*
 		public Group getGroup_0() { return cGroup_0; }
 		
 		//'@'
@@ -220,14 +220,14 @@ public class ServiceDslGrammarAccess extends AbstractGrammarElementFinder {
 		//'('
 		public Keyword getLeftParenthesisKeyword_0_2() { return cLeftParenthesisKeyword_0_2; }
 		
-		//technology=[Import]
-		public Assignment getTechnologyAssignment_0_3() { return cTechnologyAssignment_0_3; }
+		//technologies+=[Import]
+		public Assignment getTechnologiesAssignment_0_3() { return cTechnologiesAssignment_0_3; }
 		
 		//[Import]
-		public CrossReference getTechnologyImportCrossReference_0_3_0() { return cTechnologyImportCrossReference_0_3_0; }
+		public CrossReference getTechnologiesImportCrossReference_0_3_0() { return cTechnologiesImportCrossReference_0_3_0; }
 		
 		//ID
-		public RuleCall getTechnologyImportIDTerminalRuleCall_0_3_0_1() { return cTechnologyImportIDTerminalRuleCall_0_3_0_1; }
+		public RuleCall getTechnologiesImportIDTerminalRuleCall_0_3_0_1() { return cTechnologiesImportIDTerminalRuleCall_0_3_0_1; }
 		
 		//')'
 		public Keyword getRightParenthesisKeyword_0_4() { return cRightParenthesisKeyword_0_4; }
@@ -1655,8 +1655,8 @@ public class ServiceDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//Microservice:
-	//	('@' 'technology' '(' technology=[Import] ')')? (protocols+=ProtocolSpecification protocols+=ProtocolSpecification?)?
-	//	('@' 'endpoints' '(' endpoints+=Endpoint+ ')')?
+	//	('@' 'technology' '(' technologies+=[Import] ')')* (protocols+=ProtocolSpecification
+	//	protocols+=ProtocolSpecification?)? ('@' 'endpoints' '(' endpoints+=Endpoint+ ')')?
 	//	aspects+=ImportedServiceAspect*
 	//	visibility=Visibility?
 	//	type=MicroserviceType

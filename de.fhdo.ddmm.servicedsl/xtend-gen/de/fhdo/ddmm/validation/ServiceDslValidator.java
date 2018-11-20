@@ -239,30 +239,97 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
   }
   
   /**
-   * Check that annotated technologies define types and protocols
+   * Check that technology is assigned only once to an operation node
    */
   @Check
-  public void checkTechnologyForMandatoryConcepts(final Microservice microservice) {
-    final Import technology = microservice.getTechnology();
-    if ((((technology == null) || (technology.getImportURI() == null)) || technology.getImportURI().isEmpty())) {
-      return;
+  public void checkTechnologyUniqueness(final Microservice microservice) {
+    final Function<Import, Import> _function = (Import it) -> {
+      return it;
+    };
+    final int duplicateIndex = DdmmUtils.<Import, Import>getDuplicateIndex(microservice.getTechnologies(), _function);
+    if ((duplicateIndex > (-1))) {
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("Duplicate technology assignment");
+      this.error(_builder.toString(), 
+        ServicePackage.Literals.MICROSERVICE__TECHNOLOGIES, duplicateIndex);
     }
-    final EList<EObject> technologyModelContents = DdmmUtils.getImportedModelContents(microservice.eResource(), 
-      technology.getImportURI());
-    if (((technologyModelContents == null) || technologyModelContents.isEmpty())) {
-      return;
+  }
+  
+  /**
+   * Check that only one annotated technology contains type definitions
+   */
+  @Check
+  public void checkUniqueTypeDefinitionTechnology(final Microservice microservice) {
+    String typeDefinitionTechnologyName = null;
+    int _size = microservice.getTechnologies().size();
+    ExclusiveRange _doubleDotLessThan = new ExclusiveRange(0, _size, true);
+    for (final Integer i : _doubleDotLessThan) {
+      {
+        final Import technologyImport = microservice.getTechnologies().get((i).intValue());
+        final Technology technologyModel = this.getTechnologyModelRoot(technologyImport);
+        if ((((!technologyModel.getPrimitiveTypes().isEmpty()) || 
+          (!technologyModel.getListTypes().isEmpty())) || 
+          (!technologyModel.getDataStructures().isEmpty()))) {
+          if ((typeDefinitionTechnologyName == null)) {
+            typeDefinitionTechnologyName = technologyModel.getName();
+          } else {
+            StringConcatenation _builder = new StringConcatenation();
+            _builder.append("Technology \"");
+            _builder.append(typeDefinitionTechnologyName);
+            _builder.append("\" already defines ");
+            StringConcatenation _builder_1 = new StringConcatenation();
+            _builder_1.append("technology-specific types. Only one technology per microservice may ");
+            String _plus = (_builder.toString() + _builder_1);
+            StringConcatenation _builder_2 = new StringConcatenation();
+            _builder_2.append("define technology-specific types.");
+            String _plus_1 = (_plus + _builder_2);
+            this.error(_plus_1, 
+              ServicePackage.Literals.MICROSERVICE__TECHNOLOGIES, (i).intValue());
+          }
+        }
+      }
     }
-    final EObject modelRoot = technologyModelContents.get(0);
+  }
+  
+  /**
+   * Check that annotated technologies define not only deployment-related concepts
+   */
+  @Check
+  public void checkTechnologiesForServiceConcepts(final Microservice microservice) {
+    int _size = microservice.getTechnologies().size();
+    ExclusiveRange _doubleDotLessThan = new ExclusiveRange(0, _size, true);
+    for (final Integer i : _doubleDotLessThan) {
+      {
+        final Import technologyImport = microservice.getTechnologies().get((i).intValue());
+        final Technology technologyModel = this.getTechnologyModelRoot(technologyImport);
+        if (((technologyModel.getPrimitiveTypes().isEmpty() && 
+          technologyModel.getProtocols().isEmpty()) && 
+          technologyModel.getServiceAspects().isEmpty())) {
+          this.error("Technology does not specify service-related concepts", 
+            ServicePackage.Literals.MICROSERVICE__TECHNOLOGIES, (i).intValue());
+        }
+      }
+    }
+  }
+  
+  /**
+   * Helper to get root element of a technology model
+   */
+  private Technology getTechnologyModelRoot(final Import technologyImport) {
+    final EList<EObject> technologyContents = DdmmUtils.getImportedModelContents(technologyImport.eResource(), 
+      technologyImport.getImportURI());
+    if (((technologyContents == null) || technologyContents.isEmpty())) {
+      return null;
+    }
+    final EObject modelRoot = technologyContents.get(0);
     if ((!(modelRoot instanceof Technology))) {
-      return;
+      return null;
     }
     final Technology technologyModel = ((Technology) modelRoot);
     if ((technologyModel == null)) {
-      return;
+      return null;
     }
-    if ((technologyModel.getPrimitiveTypes().isEmpty() && technologyModel.getProtocols().isEmpty())) {
-      this.error("Technology does not specify primitive types, protocols, or both", microservice, ServicePackage.Literals.MICROSERVICE__TECHNOLOGY);
-    }
+    return technologyModel;
   }
   
   /**

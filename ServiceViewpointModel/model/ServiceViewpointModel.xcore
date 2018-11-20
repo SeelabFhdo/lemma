@@ -66,6 +66,8 @@ class Import {
      *          Ensured by: DSL validator.
      *     (C3) Imported file must define a model that corresponds to the import type.
      *          Ensured by: DSL validator.
+     *     (C4) Import alias must be unique.
+     *          Ensured by: DSL validator.
      */
 
     String name
@@ -126,6 +128,12 @@ class Microservice {
      *          Ensured by: DSL validator.
      *     (C6) Combination of endpoints' protocols and data formats must be unique.
      *          Ensured by: DSL validator.
+     *     (C7) A technology might be assigned exactly once to a microservice.
+     *          Ensured by: DSL validator.
+     *     (C8) Only one assigned technology might comprise technology-specific types.
+     *          Ensured by: DSL validator.
+     *     (C9) Assigned technologies may not only define deployment-specific concepts.
+     *          Ensured by: DSL validator.
      */
 
     String name
@@ -135,7 +143,7 @@ class Microservice {
 
     // TODO: Inheritance of microservices
     //refers Microservice[0..1] ^super
-    refers Import[0..1] technology
+    refers Import[] technologies
     contains Endpoint[] endpoints opposite microservice
     contains PossiblyImportedMicroservice[] requiredMicroservices opposite requiringMicroservice
     contains PossiblyImportedInterface[] requiredInterfaces opposite requiringMicroservice

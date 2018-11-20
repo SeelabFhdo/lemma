@@ -19468,44 +19468,53 @@ public class InternalOperationDslParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__Microservice__Group__0__Impl"
-    // InternalOperationDsl.g:6127:1: rule__Microservice__Group__0__Impl : ( ( rule__Microservice__Group_0__0 )? ) ;
+    // InternalOperationDsl.g:6127:1: rule__Microservice__Group__0__Impl : ( ( rule__Microservice__Group_0__0 )* ) ;
     public final void rule__Microservice__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalOperationDsl.g:6131:1: ( ( ( rule__Microservice__Group_0__0 )? ) )
-            // InternalOperationDsl.g:6132:1: ( ( rule__Microservice__Group_0__0 )? )
+            // InternalOperationDsl.g:6131:1: ( ( ( rule__Microservice__Group_0__0 )* ) )
+            // InternalOperationDsl.g:6132:1: ( ( rule__Microservice__Group_0__0 )* )
             {
-            // InternalOperationDsl.g:6132:1: ( ( rule__Microservice__Group_0__0 )? )
-            // InternalOperationDsl.g:6133:2: ( rule__Microservice__Group_0__0 )?
+            // InternalOperationDsl.g:6132:1: ( ( rule__Microservice__Group_0__0 )* )
+            // InternalOperationDsl.g:6133:2: ( rule__Microservice__Group_0__0 )*
             {
              before(grammarAccess.getMicroserviceAccess().getGroup_0()); 
-            // InternalOperationDsl.g:6134:2: ( rule__Microservice__Group_0__0 )?
-            int alt57=2;
-            int LA57_0 = input.LA(1);
+            // InternalOperationDsl.g:6134:2: ( rule__Microservice__Group_0__0 )*
+            loop57:
+            do {
+                int alt57=2;
+                int LA57_0 = input.LA(1);
 
-            if ( (LA57_0==40) ) {
-                int LA57_1 = input.LA(2);
+                if ( (LA57_0==40) ) {
+                    int LA57_1 = input.LA(2);
 
-                if ( (LA57_1==14) ) {
-                    alt57=1;
-                }
-            }
-            switch (alt57) {
-                case 1 :
-                    // InternalOperationDsl.g:6134:3: rule__Microservice__Group_0__0
-                    {
-                    pushFollow(FOLLOW_2);
-                    rule__Microservice__Group_0__0();
-
-                    state._fsp--;
-
-
+                    if ( (LA57_1==14) ) {
+                        alt57=1;
                     }
-                    break;
 
-            }
+
+                }
+
+
+                switch (alt57) {
+            	case 1 :
+            	    // InternalOperationDsl.g:6134:3: rule__Microservice__Group_0__0
+            	    {
+            	    pushFollow(FOLLOW_8);
+            	    rule__Microservice__Group_0__0();
+
+            	    state._fsp--;
+
+
+            	    }
+            	    break;
+
+            	default :
+            	    break loop57;
+                }
+            } while (true);
 
              after(grammarAccess.getMicroserviceAccess().getGroup_0()); 
 
@@ -21102,31 +21111,31 @@ public class InternalOperationDslParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__Microservice__Group_0__3__Impl"
-    // InternalOperationDsl.g:6620:1: rule__Microservice__Group_0__3__Impl : ( ( rule__Microservice__TechnologyAssignment_0_3 ) ) ;
+    // InternalOperationDsl.g:6620:1: rule__Microservice__Group_0__3__Impl : ( ( rule__Microservice__TechnologiesAssignment_0_3 ) ) ;
     public final void rule__Microservice__Group_0__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalOperationDsl.g:6624:1: ( ( ( rule__Microservice__TechnologyAssignment_0_3 ) ) )
-            // InternalOperationDsl.g:6625:1: ( ( rule__Microservice__TechnologyAssignment_0_3 ) )
+            // InternalOperationDsl.g:6624:1: ( ( ( rule__Microservice__TechnologiesAssignment_0_3 ) ) )
+            // InternalOperationDsl.g:6625:1: ( ( rule__Microservice__TechnologiesAssignment_0_3 ) )
             {
-            // InternalOperationDsl.g:6625:1: ( ( rule__Microservice__TechnologyAssignment_0_3 ) )
-            // InternalOperationDsl.g:6626:2: ( rule__Microservice__TechnologyAssignment_0_3 )
+            // InternalOperationDsl.g:6625:1: ( ( rule__Microservice__TechnologiesAssignment_0_3 ) )
+            // InternalOperationDsl.g:6626:2: ( rule__Microservice__TechnologiesAssignment_0_3 )
             {
-             before(grammarAccess.getMicroserviceAccess().getTechnologyAssignment_0_3()); 
-            // InternalOperationDsl.g:6627:2: ( rule__Microservice__TechnologyAssignment_0_3 )
-            // InternalOperationDsl.g:6627:3: rule__Microservice__TechnologyAssignment_0_3
+             before(grammarAccess.getMicroserviceAccess().getTechnologiesAssignment_0_3()); 
+            // InternalOperationDsl.g:6627:2: ( rule__Microservice__TechnologiesAssignment_0_3 )
+            // InternalOperationDsl.g:6627:3: rule__Microservice__TechnologiesAssignment_0_3
             {
             pushFollow(FOLLOW_2);
-            rule__Microservice__TechnologyAssignment_0_3();
+            rule__Microservice__TechnologiesAssignment_0_3();
 
             state._fsp--;
 
 
             }
 
-             after(grammarAccess.getMicroserviceAccess().getTechnologyAssignment_0_3()); 
+             after(grammarAccess.getMicroserviceAccess().getTechnologiesAssignment_0_3()); 
 
             }
 
@@ -52623,9 +52632,9 @@ public class InternalOperationDslParser extends AbstractInternalContentAssistPar
     // $ANTLR end "rule__Import__NameAssignment_5"
 
 
-    // $ANTLR start "rule__Microservice__TechnologyAssignment_0_3"
-    // InternalOperationDsl.g:17166:1: rule__Microservice__TechnologyAssignment_0_3 : ( ( RULE_ID ) ) ;
-    public final void rule__Microservice__TechnologyAssignment_0_3() throws RecognitionException {
+    // $ANTLR start "rule__Microservice__TechnologiesAssignment_0_3"
+    // InternalOperationDsl.g:17166:1: rule__Microservice__TechnologiesAssignment_0_3 : ( ( RULE_ID ) ) ;
+    public final void rule__Microservice__TechnologiesAssignment_0_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
@@ -52636,17 +52645,17 @@ public class InternalOperationDslParser extends AbstractInternalContentAssistPar
             // InternalOperationDsl.g:17171:2: ( ( RULE_ID ) )
             // InternalOperationDsl.g:17172:3: ( RULE_ID )
             {
-             before(grammarAccess.getMicroserviceAccess().getTechnologyImportCrossReference_0_3_0()); 
+             before(grammarAccess.getMicroserviceAccess().getTechnologiesImportCrossReference_0_3_0()); 
             // InternalOperationDsl.g:17173:3: ( RULE_ID )
             // InternalOperationDsl.g:17174:4: RULE_ID
             {
-             before(grammarAccess.getMicroserviceAccess().getTechnologyImportIDTerminalRuleCall_0_3_0_1()); 
+             before(grammarAccess.getMicroserviceAccess().getTechnologiesImportIDTerminalRuleCall_0_3_0_1()); 
             match(input,RULE_ID,FOLLOW_2); 
-             after(grammarAccess.getMicroserviceAccess().getTechnologyImportIDTerminalRuleCall_0_3_0_1()); 
+             after(grammarAccess.getMicroserviceAccess().getTechnologiesImportIDTerminalRuleCall_0_3_0_1()); 
 
             }
 
-             after(grammarAccess.getMicroserviceAccess().getTechnologyImportCrossReference_0_3_0()); 
+             after(grammarAccess.getMicroserviceAccess().getTechnologiesImportCrossReference_0_3_0()); 
 
             }
 
@@ -52665,7 +52674,7 @@ public class InternalOperationDslParser extends AbstractInternalContentAssistPar
         }
         return ;
     }
-    // $ANTLR end "rule__Microservice__TechnologyAssignment_0_3"
+    // $ANTLR end "rule__Microservice__TechnologiesAssignment_0_3"
 
 
     // $ANTLR start "rule__Microservice__ProtocolsAssignment_1_0"
@@ -58833,80 +58842,80 @@ public class InternalOperationDslParser extends AbstractInternalContentAssistPar
         }
     }
     static final String dfa_20s = "\135\uffff";
-    static final String dfa_21s = "\2\4\2\uffff\1\64\3\51\4\4\2\64\6\4\3\52\1\72\1\56\1\52\1\4\1\5\3\4\1\5\3\4\3\52\2\56\1\64\1\15\2\52\3\4\1\5\1\4\2\51\1\72\1\56\1\15\1\64\2\4\1\5\3\4\1\64\3\52\3\56\4\4\1\5\1\52\2\56\1\64\1\15\4\4\1\5\1\4\2\52\1\4\1\56\1\15\2\4\2\56";
-    static final String dfa_22s = "\1\140\1\63\2\uffff\1\64\3\51\3\4\1\140\2\64\1\4\1\7\3\4\1\140\3\52\1\72\2\103\1\140\1\7\3\4\1\5\2\4\1\140\3\56\1\103\1\71\1\64\1\56\1\103\1\52\1\63\2\4\1\5\1\52\2\51\1\72\1\103\1\56\1\64\1\140\1\4\1\7\3\4\1\64\3\56\1\103\1\71\1\103\4\4\1\5\2\103\1\71\1\64\1\56\2\4\1\140\1\4\1\5\1\52\1\103\1\52\1\63\1\103\1\56\2\4\1\103\1\71";
+    static final String dfa_21s = "\2\4\2\uffff\3\51\1\64\3\4\2\64\6\4\1\56\1\52\1\4\3\52\1\72\3\4\1\5\4\4\1\5\2\56\1\64\1\15\2\52\1\4\3\52\1\4\1\5\1\4\2\51\1\4\1\56\1\15\1\64\2\4\1\72\3\4\1\64\1\5\3\56\1\4\3\52\3\4\1\5\1\52\2\56\1\64\1\15\4\4\1\5\1\4\2\52\1\4\1\56\1\15\2\4\2\56";
+    static final String dfa_22s = "\1\140\1\63\2\uffff\3\51\1\64\3\4\2\64\1\140\3\4\1\7\1\4\2\103\1\140\3\52\1\72\3\4\1\5\2\4\2\140\1\7\1\103\1\71\1\64\1\56\1\103\1\52\1\63\3\56\1\4\1\5\1\52\2\51\1\4\1\103\1\56\1\64\1\140\1\4\1\72\3\4\1\64\1\7\1\103\1\71\1\103\1\4\3\56\3\4\1\5\2\103\1\71\1\64\1\56\2\4\1\140\1\4\1\5\1\52\1\103\1\52\1\63\1\103\1\56\2\4\1\103\1\71";
     static final String dfa_23s = "\2\uffff\1\2\1\1\131\uffff";
     static final String dfa_24s = "\135\uffff}>";
     static final String[] dfa_25s = {
             "\1\2\13\uffff\3\2\24\uffff\1\2\1\1\31\uffff\1\3\35\uffff\1\2",
-            "\1\4\24\uffff\1\6\1\7\30\uffff\1\5",
+            "\1\7\24\uffff\1\5\1\6\30\uffff\1\4",
             "",
             "",
             "\1\10",
             "\1\11",
-            "\1\12",
+            "\1\11",
             "\1\12",
             "\1\13",
             "\1\14",
             "\1\15",
-            "\1\2\13\uffff\3\2\25\uffff\1\20\1\17\30\uffff\1\3\1\16\34\uffff\1\2",
-            "\1\21",
-            "\1\22",
+            "\1\16",
+            "\1\17",
+            "\1\2\13\uffff\3\2\25\uffff\1\22\1\21\30\uffff\1\3\1\20\34\uffff\1\2",
             "\1\23",
-            "\1\27\1\26\1\24\1\25",
-            "\1\4",
-            "\1\30",
-            "\1\31",
-            "\1\2\13\uffff\3\2\25\uffff\1\20\1\17\30\uffff\1\3\1\16\34\uffff\1\2",
-            "\1\32",
-            "\1\32",
-            "\1\32",
-            "\1\33",
-            "\1\36\11\uffff\1\35\1\37\11\uffff\1\34",
-            "\1\42\15\uffff\1\41\12\uffff\1\40",
-            "\1\2\13\uffff\3\2\25\uffff\1\20\31\uffff\1\3\35\uffff\1\2",
-            "\1\45\1\43\1\44",
+            "\1\24",
+            "\1\25",
+            "\1\31\1\30\1\26\1\27",
+            "\1\7",
+            "\1\34\11\uffff\1\33\1\35\11\uffff\1\32",
+            "\1\40\15\uffff\1\37\12\uffff\1\36",
+            "\1\2\13\uffff\3\2\25\uffff\1\22\1\21\30\uffff\1\3\1\20\34\uffff\1\2",
+            "\1\41",
+            "\1\41",
+            "\1\41",
+            "\1\42",
+            "\1\43",
+            "\1\44",
+            "\1\45",
             "\1\46",
             "\1\47",
             "\1\50",
-            "\1\51",
-            "\1\52",
-            "\1\53",
-            "\1\2\13\uffff\3\2\25\uffff\1\54\31\uffff\1\3\35\uffff\1\2",
-            "\1\32\3\uffff\1\55",
-            "\1\32\3\uffff\1\55",
-            "\1\32\3\uffff\1\55",
-            "\1\36\11\uffff\1\35\1\37\11\uffff\1\34",
-            "\1\36\12\uffff\1\37",
-            "\1\56",
-            "\1\60\40\uffff\1\57",
-            "\1\42\15\uffff\1\41\12\uffff\1\40",
-            "\1\42",
-            "\1\4\24\uffff\1\61\1\62\30\uffff\1\5",
+            "\1\2\13\uffff\3\2\25\uffff\1\51\31\uffff\1\3\35\uffff\1\2",
+            "\1\2\13\uffff\3\2\25\uffff\1\22\31\uffff\1\3\35\uffff\1\2",
+            "\1\54\1\52\1\53",
+            "\1\34\11\uffff\1\33\1\35\11\uffff\1\32",
+            "\1\34\12\uffff\1\35",
+            "\1\55",
+            "\1\57\40\uffff\1\56",
+            "\1\40\15\uffff\1\37\12\uffff\1\36",
+            "\1\40",
+            "\1\7\24\uffff\1\60\1\61\30\uffff\1\4",
+            "\1\41\3\uffff\1\62",
+            "\1\41\3\uffff\1\62",
+            "\1\41\3\uffff\1\62",
             "\1\63",
             "\1\64",
-            "\1\65",
-            "\1\66\45\uffff\1\67",
+            "\1\65\45\uffff\1\66",
+            "\1\67",
+            "\1\67",
             "\1\70",
-            "\1\70",
-            "\1\71",
-            "\1\36\11\uffff\1\73\1\37\11\uffff\1\72",
-            "\1\60\40\uffff\1\57",
+            "\1\34\11\uffff\1\72\1\35\11\uffff\1\71",
+            "\1\57\40\uffff\1\56",
+            "\1\73",
+            "\1\2\13\uffff\3\2\25\uffff\1\22\31\uffff\1\3\35\uffff\1\2",
             "\1\74",
-            "\1\2\13\uffff\3\2\25\uffff\1\20\31\uffff\1\3\35\uffff\1\2",
             "\1\75",
-            "\1\100\1\76\1\77",
+            "\1\76",
+            "\1\77",
+            "\1\100",
             "\1\101",
-            "\1\102",
-            "\1\103",
-            "\1\104",
-            "\1\32\3\uffff\1\55",
-            "\1\32\3\uffff\1\55",
-            "\1\32\3\uffff\1\55",
-            "\1\36\11\uffff\1\73\1\37\11\uffff\1\72",
-            "\1\36\12\uffff\1\37",
+            "\1\104\1\102\1\103",
+            "\1\34\11\uffff\1\72\1\35\11\uffff\1\71",
+            "\1\34\12\uffff\1\35",
             "\1\107\11\uffff\1\106\1\110\11\uffff\1\105",
             "\1\111",
+            "\1\41\3\uffff\1\62",
+            "\1\41\3\uffff\1\62",
+            "\1\41\3\uffff\1\62",
             "\1\112",
             "\1\113",
             "\1\114",
@@ -58921,10 +58930,10 @@ public class InternalOperationDslParser extends AbstractInternalContentAssistPar
             "\1\2\13\uffff\3\2\25\uffff\1\126\31\uffff\1\3\35\uffff\1\2",
             "\1\127",
             "\1\130",
-            "\1\66\45\uffff\1\67",
+            "\1\65\45\uffff\1\66",
             "\1\120\15\uffff\1\117\12\uffff\1\116",
             "\1\120",
-            "\1\4\56\uffff\1\5",
+            "\1\7\56\uffff\1\4",
             "\1\107\11\uffff\1\132\1\110\11\uffff\1\131",
             "\1\123\40\uffff\1\122",
             "\1\133",

@@ -244,13 +244,13 @@ public interface ServicePackage extends EPackage {
     int MICROSERVICE__VISIBILITY = 3;
 
     /**
-     * The feature id for the '<em><b>Technology</b></em>' reference.
+     * The feature id for the '<em><b>Technologies</b></em>' reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int MICROSERVICE__TECHNOLOGY = 4;
+    int MICROSERVICE__TECHNOLOGIES = 4;
 
     /**
      * The feature id for the '<em><b>Endpoints</b></em>' containment reference list.
@@ -1754,15 +1754,15 @@ public interface ServicePackage extends EPackage {
     EAttribute getMicroservice_Visibility();
 
     /**
-     * Returns the meta object for the reference '{@link de.fhdo.ddmm.service.Microservice#getTechnology <em>Technology</em>}'.
+     * Returns the meta object for the reference list '{@link de.fhdo.ddmm.service.Microservice#getTechnologies <em>Technologies</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the reference '<em>Technology</em>'.
-     * @see de.fhdo.ddmm.service.Microservice#getTechnology()
+     * @return the meta object for the reference list '<em>Technologies</em>'.
+     * @see de.fhdo.ddmm.service.Microservice#getTechnologies()
      * @see #getMicroservice()
      * @generated
      */
-    EReference getMicroservice_Technology();
+    EReference getMicroservice_Technologies();
 
     /**
      * Returns the meta object for the containment reference list '{@link de.fhdo.ddmm.service.Microservice#getEndpoints <em>Endpoints</em>}'.
@@ -3212,12 +3212,12 @@ public interface ServicePackage extends EPackage {
         EAttribute MICROSERVICE__VISIBILITY = eINSTANCE.getMicroservice_Visibility();
 
         /**
-         * The meta object literal for the '<em><b>Technology</b></em>' reference feature.
+         * The meta object literal for the '<em><b>Technologies</b></em>' reference list feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference MICROSERVICE__TECHNOLOGY = eINSTANCE.getMicroservice_Technology();
+        EReference MICROSERVICE__TECHNOLOGIES = eINSTANCE.getMicroservice_Technologies();
 
         /**
          * The meta object literal for the '<em><b>Endpoints</b></em>' containment reference list feature.

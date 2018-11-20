@@ -1811,7 +1811,7 @@ ruleMicroservice returns [EObject current=null]
 					}
 					otherlv_3=RULE_ID
 					{
-						newLeafNode(otherlv_3, grammarAccess.getMicroserviceAccess().getTechnologyImportCrossReference_0_3_0());
+						newLeafNode(otherlv_3, grammarAccess.getMicroserviceAccess().getTechnologiesImportCrossReference_0_3_0());
 					}
 				)
 			)
@@ -1819,7 +1819,7 @@ ruleMicroservice returns [EObject current=null]
 			{
 				newLeafNode(otherlv_4, grammarAccess.getMicroserviceAccess().getRightParenthesisKeyword_0_4());
 			}
-		)?
+		)*
 		(
 			(
 				(

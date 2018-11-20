@@ -26,7 +26,7 @@ enum Visibility returns Visibility:
 ;
 
 Microservice returns Microservice:
-    ('@' 'technology' '(' technology=[Import] ')')?
+    ('@' 'technology' '(' technologies+=[Import] ')')*
     (protocols+=ProtocolSpecification (protocols+=ProtocolSpecification)?)?
     ('@' 'endpoints' '(' endpoints+=Endpoint+ ')')?
     aspects+=ImportedServiceAspect*
