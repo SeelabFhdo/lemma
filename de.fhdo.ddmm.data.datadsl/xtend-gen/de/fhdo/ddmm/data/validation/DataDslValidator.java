@@ -38,11 +38,11 @@ public class DataDslValidator extends AbstractDataDslValidator {
     final Function<ComplexTypeImport, String> _function = (ComplexTypeImport it) -> {
       return it.getName();
     };
-    final int duplicateIndex = DdmmUtils.<ComplexTypeImport, String>getDuplicateIndex(dataModel.getComplexTypeImports(), _function);
-    if ((duplicateIndex == (-1))) {
+    final Integer duplicateIndex = DdmmUtils.<ComplexTypeImport, String>getDuplicateIndex(dataModel.getComplexTypeImports(), _function);
+    if (((duplicateIndex).intValue() == (-1))) {
       return;
     }
-    final ComplexTypeImport duplicate = dataModel.getComplexTypeImports().get(duplicateIndex);
+    final ComplexTypeImport duplicate = dataModel.getComplexTypeImports().get((duplicateIndex).intValue());
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("Duplicate import alias ");
     String _name = duplicate.getName();
@@ -59,11 +59,11 @@ public class DataDslValidator extends AbstractDataDslValidator {
     final Function<ComplexTypeImport, String> _function = (ComplexTypeImport it) -> {
       return it.getImportURI();
     };
-    final int duplicateIndex = DdmmUtils.<ComplexTypeImport, String>getDuplicateIndex(dataModel.getComplexTypeImports(), _function);
-    if ((duplicateIndex == (-1))) {
+    final Integer duplicateIndex = DdmmUtils.<ComplexTypeImport, String>getDuplicateIndex(dataModel.getComplexTypeImports(), _function);
+    if (((duplicateIndex).intValue() == (-1))) {
       return;
     }
-    final ComplexTypeImport duplicate = dataModel.getComplexTypeImports().get(duplicateIndex);
+    final ComplexTypeImport duplicate = dataModel.getComplexTypeImports().get((duplicateIndex).intValue());
     this.error("File is already being imported", duplicate, 
       DataPackage.Literals.COMPLEX_TYPE_IMPORT__IMPORT_URI);
   }

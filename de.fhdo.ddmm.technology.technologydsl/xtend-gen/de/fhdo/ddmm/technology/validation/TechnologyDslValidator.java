@@ -82,11 +82,11 @@ public class TechnologyDslValidator extends AbstractTechnologyDslValidator {
     final Function<TechnologyImport, String> _function = (TechnologyImport it) -> {
       return it.getImportURI();
     };
-    final int duplicateIndex = DdmmUtils.<TechnologyImport, String>getDuplicateIndex(model.getImports(), _function);
-    if ((duplicateIndex == (-1))) {
+    final Integer duplicateIndex = DdmmUtils.<TechnologyImport, String>getDuplicateIndex(model.getImports(), _function);
+    if (((duplicateIndex).intValue() == (-1))) {
       return;
     }
-    final TechnologyImport duplicate = model.getImports().get(duplicateIndex);
+    final TechnologyImport duplicate = model.getImports().get((duplicateIndex).intValue());
     this.error("File is already being imported", duplicate, 
       TechnologyPackage.Literals.TECHNOLOGY_IMPORT__IMPORT_URI);
   }
@@ -597,15 +597,15 @@ public class TechnologyDslValidator extends AbstractTechnologyDslValidator {
     final Function<OperationEnvironment, String> _function = (OperationEnvironment it) -> {
       return it.getEnvironmentName();
     };
-    final int duplicateIndex = DdmmUtils.<OperationEnvironment, String>getDuplicateIndex(operationEnvironments, _function);
-    if ((duplicateIndex > (-1))) {
-      final OperationEnvironment duplicateEnvironment = operationEnvironments.get(duplicateIndex);
+    final Integer duplicateIndex = DdmmUtils.<OperationEnvironment, String>getDuplicateIndex(operationEnvironments, _function);
+    if (((duplicateIndex).intValue() > (-1))) {
+      final OperationEnvironment duplicateEnvironment = operationEnvironments.get((duplicateIndex).intValue());
       StringConcatenation _builder = new StringConcatenation();
       _builder.append("Duplicate operation environment ");
       String _environmentName = duplicateEnvironment.getEnvironmentName();
       _builder.append(_environmentName);
       this.error(_builder.toString(), duplicateEnvironment, 
-        TechnologyPackage.Literals.OPERATION_ENVIRONMENT__ENVIRONMENT_NAME, duplicateIndex);
+        TechnologyPackage.Literals.OPERATION_ENVIRONMENT__ENVIRONMENT_NAME, (duplicateIndex).intValue());
     }
   }
   
@@ -639,12 +639,12 @@ public class TechnologyDslValidator extends AbstractTechnologyDslValidator {
       boolean _isDefault = it.isDefault();
       return (Boolean.valueOf(_isDefault) == Boolean.valueOf(true));
     };
-    final int duplicateDefaultIndex = DdmmUtils.<OperationEnvironment, Boolean>getDuplicateIndex(operationEnvironments, _function_1, _function_2);
-    if ((duplicateDefaultIndex > (-1))) {
-      final OperationEnvironment duplicateEnvironment = operationEnvironments.get(duplicateDefaultIndex);
+    final Integer duplicateDefaultIndex = DdmmUtils.<OperationEnvironment, Boolean>getDuplicateIndex(operationEnvironments, _function_1, _function_2);
+    if (((duplicateDefaultIndex).intValue() > (-1))) {
+      final OperationEnvironment duplicateEnvironment = operationEnvironments.get((duplicateDefaultIndex).intValue());
       StringConcatenation _builder_1 = new StringConcatenation();
       _builder_1.append("There may only be one default environment");
-      this.error(_builder_1.toString(), duplicateEnvironment, TechnologyPackage.Literals.OPERATION_ENVIRONMENT__DEFAULT, duplicateDefaultIndex);
+      this.error(_builder_1.toString(), duplicateEnvironment, TechnologyPackage.Literals.OPERATION_ENVIRONMENT__DEFAULT, (duplicateDefaultIndex).intValue());
     }
   }
   
@@ -657,9 +657,9 @@ public class TechnologyDslValidator extends AbstractTechnologyDslValidator {
     final Function<TechnologySpecificProperty, String> _function = (TechnologySpecificProperty it) -> {
       return it.getName();
     };
-    final int duplicateIndex = DdmmUtils.<TechnologySpecificProperty, String>getDuplicateIndex(serviceProperties, _function);
-    if ((duplicateIndex > (-1))) {
-      final TechnologySpecificProperty duplicateProperty = serviceProperties.get(duplicateIndex);
+    final Integer duplicateIndex = DdmmUtils.<TechnologySpecificProperty, String>getDuplicateIndex(serviceProperties, _function);
+    if (((duplicateIndex).intValue() > (-1))) {
+      final TechnologySpecificProperty duplicateProperty = serviceProperties.get((duplicateIndex).intValue());
       StringConcatenation _builder = new StringConcatenation();
       _builder.append("Duplicate service property ");
       String _name = duplicateProperty.getName();
@@ -676,15 +676,15 @@ public class TechnologyDslValidator extends AbstractTechnologyDslValidator {
     final Function<ServiceAspectPointcut, PointcutType> _function = (ServiceAspectPointcut it) -> {
       return it.getEffectiveType();
     };
-    final int duplicateIndex = DdmmUtils.<ServiceAspectPointcut, PointcutType>getDuplicateIndex(selector.getPointcuts(), _function);
-    if ((duplicateIndex > (-1))) {
-      final ServiceAspectPointcut duplicatePoincut = selector.getPointcuts().get(duplicateIndex);
+    final Integer duplicateIndex = DdmmUtils.<ServiceAspectPointcut, PointcutType>getDuplicateIndex(selector.getPointcuts(), _function);
+    if (((duplicateIndex).intValue() > (-1))) {
+      final ServiceAspectPointcut duplicatePoincut = selector.getPointcuts().get((duplicateIndex).intValue());
       StringConcatenation _builder = new StringConcatenation();
       _builder.append("Duplicate pointcut ");
       String _effectiveSelectorName = duplicatePoincut.getEffectiveSelectorName();
       _builder.append(_effectiveSelectorName);
       this.error(_builder.toString(), 
-        TechnologyPackage.Literals.SERVICE_ASPECT_POINTCUT_SELECTOR__POINTCUTS, duplicateIndex);
+        TechnologyPackage.Literals.SERVICE_ASPECT_POINTCUT_SELECTOR__POINTCUTS, (duplicateIndex).intValue());
     }
   }
   
@@ -760,10 +760,10 @@ public class TechnologyDslValidator extends AbstractTechnologyDslValidator {
     final Function<JoinPointType, JoinPointType> _function = (JoinPointType it) -> {
       return it;
     };
-    final int duplicateIndex = DdmmUtils.<JoinPointType, JoinPointType>getDuplicateIndex(aspect.getJoinPoints(), _function);
-    if ((duplicateIndex > (-1))) {
+    final Integer duplicateIndex = DdmmUtils.<JoinPointType, JoinPointType>getDuplicateIndex(aspect.getJoinPoints(), _function);
+    if (((duplicateIndex).intValue() > (-1))) {
       this.error("Duplicate join point", 
-        TechnologyPackage.Literals.TECHNOLOGY_ASPECT__JOIN_POINTS, duplicateIndex);
+        TechnologyPackage.Literals.TECHNOLOGY_ASPECT__JOIN_POINTS, (duplicateIndex).intValue());
     }
   }
   
@@ -775,10 +775,10 @@ public class TechnologyDslValidator extends AbstractTechnologyDslValidator {
     final Function<TechnologySpecificProperty, String> _function = (TechnologySpecificProperty it) -> {
       return it.getName();
     };
-    final int duplicateIndex = DdmmUtils.<TechnologySpecificProperty, String>getDuplicateIndex(aspect.getProperties(), _function);
-    if ((duplicateIndex > (-1))) {
+    final Integer duplicateIndex = DdmmUtils.<TechnologySpecificProperty, String>getDuplicateIndex(aspect.getProperties(), _function);
+    if (((duplicateIndex).intValue() > (-1))) {
       this.error("Duplicate property", 
-        TechnologyPackage.Literals.TECHNOLOGY_ASPECT__PROPERTIES, duplicateIndex);
+        TechnologyPackage.Literals.TECHNOLOGY_ASPECT__PROPERTIES, (duplicateIndex).intValue());
     }
   }
   
@@ -790,10 +790,10 @@ public class TechnologyDslValidator extends AbstractTechnologyDslValidator {
     final Function<ServiceAspectPointcutSelector, String> _function = (ServiceAspectPointcutSelector it) -> {
       return it.getSelectorString();
     };
-    final int duplicateIndex = DdmmUtils.<ServiceAspectPointcutSelector, String>getDuplicateIndex(aspect.getPointcutSelectors(), _function);
-    if ((duplicateIndex > (-1))) {
+    final Integer duplicateIndex = DdmmUtils.<ServiceAspectPointcutSelector, String>getDuplicateIndex(aspect.getPointcutSelectors(), _function);
+    if (((duplicateIndex).intValue() > (-1))) {
       this.error("Duplicate selector", 
-        TechnologyPackage.Literals.SERVICE_ASPECT__POINTCUT_SELECTORS, duplicateIndex);
+        TechnologyPackage.Literals.SERVICE_ASPECT__POINTCUT_SELECTORS, (duplicateIndex).intValue());
     }
   }
   

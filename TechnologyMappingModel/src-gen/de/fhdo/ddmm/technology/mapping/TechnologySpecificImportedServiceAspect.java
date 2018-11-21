@@ -4,6 +4,8 @@ package de.fhdo.ddmm.technology.mapping;
 
 import de.fhdo.ddmm.data.PrimitiveValue;
 
+import de.fhdo.ddmm.service.Import;
+
 import de.fhdo.ddmm.technology.ServiceAspect;
 import de.fhdo.ddmm.technology.TechnologySpecificPropertyValueAssignment;
 
@@ -25,7 +27,8 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link de.fhdo.ddmm.technology.mapping.TechnologySpecificImportedServiceAspect#getImportedAspect <em>Imported Aspect</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.technology.mapping.TechnologySpecificImportedServiceAspect#getTechnology <em>Technology</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.technology.mapping.TechnologySpecificImportedServiceAspect#getAspect <em>Aspect</em>}</li>
  *   <li>{@link de.fhdo.ddmm.technology.mapping.TechnologySpecificImportedServiceAspect#getSinglePropertyValue <em>Single Property Value</em>}</li>
  *   <li>{@link de.fhdo.ddmm.technology.mapping.TechnologySpecificImportedServiceAspect#getValues <em>Values</em>}</li>
  *   <li>{@link de.fhdo.ddmm.technology.mapping.TechnologySpecificImportedServiceAspect#getMicroserviceMapping <em>Microservice Mapping</em>}</li>
@@ -42,7 +45,7 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface TechnologySpecificImportedServiceAspect extends EObject {
     /**
-     * Returns the value of the '<em><b>Imported Aspect</b></em>' reference.
+     * Returns the value of the '<em><b>Technology</b></em>' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
@@ -60,23 +63,49 @@ public interface TechnologySpecificImportedServiceAspect extends EObject {
      *     (C5) Aspect may only be assigned to a concept if all of its selectors match.
      *          Ensured by: DSL scope provider.
      * <!-- end-model-doc -->
-     * @return the value of the '<em>Imported Aspect</em>' reference.
-     * @see #setImportedAspect(ServiceAspect)
-     * @see de.fhdo.ddmm.technology.mapping.MappingPackage#getTechnologySpecificImportedServiceAspect_ImportedAspect()
+     * @return the value of the '<em>Technology</em>' reference.
+     * @see #setTechnology(Import)
+     * @see de.fhdo.ddmm.technology.mapping.MappingPackage#getTechnologySpecificImportedServiceAspect_Technology()
      * @model
      * @generated
      */
-    ServiceAspect getImportedAspect();
+    Import getTechnology();
 
     /**
-     * Sets the value of the '{@link de.fhdo.ddmm.technology.mapping.TechnologySpecificImportedServiceAspect#getImportedAspect <em>Imported Aspect</em>}' reference.
+     * Sets the value of the '{@link de.fhdo.ddmm.technology.mapping.TechnologySpecificImportedServiceAspect#getTechnology <em>Technology</em>}' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Imported Aspect</em>' reference.
-     * @see #getImportedAspect()
+     * @param value the new value of the '<em>Technology</em>' reference.
+     * @see #getTechnology()
      * @generated
      */
-    void setImportedAspect(ServiceAspect value);
+    void setTechnology(Import value);
+
+    /**
+     * Returns the value of the '<em><b>Aspect</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Aspect</em>' reference isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Aspect</em>' reference.
+     * @see #setAspect(ServiceAspect)
+     * @see de.fhdo.ddmm.technology.mapping.MappingPackage#getTechnologySpecificImportedServiceAspect_Aspect()
+     * @model
+     * @generated
+     */
+    ServiceAspect getAspect();
+
+    /**
+     * Sets the value of the '{@link de.fhdo.ddmm.technology.mapping.TechnologySpecificImportedServiceAspect#getAspect <em>Aspect</em>}' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Aspect</em>' reference.
+     * @see #getAspect()
+     * @generated
+     */
+    void setAspect(ServiceAspect value);
 
     /**
      * Returns the value of the '<em><b>Single Property Value</b></em>' containment reference.

@@ -282,7 +282,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getMicroserviceMapping_Technology() {
+    public EReference getMicroserviceMapping_Technologies() {
         return (EReference)microserviceMappingEClass.getEStructuralFeatures().get(0);
     }
 
@@ -615,8 +615,17 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getPrimitiveParameterMapping_PrimitiveType() {
+    public EReference getPrimitiveParameterMapping_Technology() {
         return (EReference)primitiveParameterMappingEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getPrimitiveParameterMapping_PrimitiveType() {
+        return (EReference)primitiveParameterMappingEClass.getEStructuralFeatures().get(1);
     }
 
     /**
@@ -633,7 +642,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getComplexParameterMapping_TechnologySpecificComplexType() {
+    public EReference getComplexParameterMapping_Technology() {
         return (EReference)complexParameterMappingEClass.getEStructuralFeatures().get(0);
     }
 
@@ -642,8 +651,17 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getComplexParameterMapping_DataFieldMappings() {
+    public EReference getComplexParameterMapping_TechnologySpecificComplexType() {
         return (EReference)complexParameterMappingEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getComplexParameterMapping_DataFieldMappings() {
+        return (EReference)complexParameterMappingEClass.getEStructuralFeatures().get(2);
     }
 
     /**
@@ -660,7 +678,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getTechnologySpecificDataFieldTypeMapping_Type() {
+    public EReference getTechnologySpecificDataFieldTypeMapping_Technology() {
         return (EReference)technologySpecificDataFieldTypeMappingEClass.getEStructuralFeatures().get(0);
     }
 
@@ -669,7 +687,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getTechnologySpecificDataFieldTypeMapping_DataFieldHierarchy() {
+    public EReference getTechnologySpecificDataFieldTypeMapping_Type() {
         return (EReference)technologySpecificDataFieldTypeMappingEClass.getEStructuralFeatures().get(1);
     }
 
@@ -678,7 +696,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getTechnologySpecificDataFieldTypeMapping_Aspects() {
+    public EReference getTechnologySpecificDataFieldTypeMapping_DataFieldHierarchy() {
         return (EReference)technologySpecificDataFieldTypeMappingEClass.getEStructuralFeatures().get(2);
     }
 
@@ -687,8 +705,17 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getTechnologySpecificDataFieldTypeMapping_ParameterMapping() {
+    public EReference getTechnologySpecificDataFieldTypeMapping_Aspects() {
         return (EReference)technologySpecificDataFieldTypeMappingEClass.getEStructuralFeatures().get(3);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getTechnologySpecificDataFieldTypeMapping_ParameterMapping() {
+        return (EReference)technologySpecificDataFieldTypeMappingEClass.getEStructuralFeatures().get(4);
     }
 
     /**
@@ -768,7 +795,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getTechnologySpecificProtocol_Protocol() {
+    public EReference getTechnologySpecificProtocol_Technology() {
         return (EReference)technologySpecificProtocolEClass.getEStructuralFeatures().get(0);
     }
 
@@ -777,7 +804,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getTechnologySpecificProtocol_DataFormat() {
+    public EReference getTechnologySpecificProtocol_Protocol() {
         return (EReference)technologySpecificProtocolEClass.getEStructuralFeatures().get(1);
     }
 
@@ -786,7 +813,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getTechnologySpecificProtocol_ProtocolSpecification() {
+    public EReference getTechnologySpecificProtocol_DataFormat() {
         return (EReference)technologySpecificProtocolEClass.getEStructuralFeatures().get(2);
     }
 
@@ -795,8 +822,17 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getTechnologySpecificProtocol_Endpoint() {
+    public EReference getTechnologySpecificProtocol_ProtocolSpecification() {
         return (EReference)technologySpecificProtocolEClass.getEStructuralFeatures().get(3);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getTechnologySpecificProtocol_Endpoint() {
+        return (EReference)technologySpecificProtocolEClass.getEStructuralFeatures().get(4);
     }
 
     /**
@@ -876,7 +912,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getTechnologySpecificImportedServiceAspect_ImportedAspect() {
+    public EReference getTechnologySpecificImportedServiceAspect_Technology() {
         return (EReference)technologySpecificImportedServiceAspectEClass.getEStructuralFeatures().get(0);
     }
 
@@ -885,7 +921,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getTechnologySpecificImportedServiceAspect_SinglePropertyValue() {
+    public EReference getTechnologySpecificImportedServiceAspect_Aspect() {
         return (EReference)technologySpecificImportedServiceAspectEClass.getEStructuralFeatures().get(1);
     }
 
@@ -894,7 +930,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getTechnologySpecificImportedServiceAspect_Values() {
+    public EReference getTechnologySpecificImportedServiceAspect_SinglePropertyValue() {
         return (EReference)technologySpecificImportedServiceAspectEClass.getEStructuralFeatures().get(2);
     }
 
@@ -903,7 +939,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getTechnologySpecificImportedServiceAspect_MicroserviceMapping() {
+    public EReference getTechnologySpecificImportedServiceAspect_Values() {
         return (EReference)technologySpecificImportedServiceAspectEClass.getEStructuralFeatures().get(3);
     }
 
@@ -912,7 +948,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getTechnologySpecificImportedServiceAspect_InterfaceMapping() {
+    public EReference getTechnologySpecificImportedServiceAspect_MicroserviceMapping() {
         return (EReference)technologySpecificImportedServiceAspectEClass.getEStructuralFeatures().get(4);
     }
 
@@ -921,7 +957,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getTechnologySpecificImportedServiceAspect_OperationMapping() {
+    public EReference getTechnologySpecificImportedServiceAspect_InterfaceMapping() {
         return (EReference)technologySpecificImportedServiceAspectEClass.getEStructuralFeatures().get(5);
     }
 
@@ -930,7 +966,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getTechnologySpecificImportedServiceAspect_ReferredOperationMapping() {
+    public EReference getTechnologySpecificImportedServiceAspect_OperationMapping() {
         return (EReference)technologySpecificImportedServiceAspectEClass.getEStructuralFeatures().get(6);
     }
 
@@ -939,7 +975,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getTechnologySpecificImportedServiceAspect_ParameterMapping() {
+    public EReference getTechnologySpecificImportedServiceAspect_ReferredOperationMapping() {
         return (EReference)technologySpecificImportedServiceAspectEClass.getEStructuralFeatures().get(7);
     }
 
@@ -948,8 +984,17 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getTechnologySpecificImportedServiceAspect_DataFieldMapping() {
+    public EReference getTechnologySpecificImportedServiceAspect_ParameterMapping() {
         return (EReference)technologySpecificImportedServiceAspectEClass.getEStructuralFeatures().get(8);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getTechnologySpecificImportedServiceAspect_DataFieldMapping() {
+        return (EReference)technologySpecificImportedServiceAspectEClass.getEStructuralFeatures().get(9);
     }
 
     /**
@@ -988,7 +1033,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
         createEOperation(technologyMappingEClass, TECHNOLOGY_MAPPING___GET_MAPPED_REFERRED_OPERATIONS);
 
         microserviceMappingEClass = createEClass(MICROSERVICE_MAPPING);
-        createEReference(microserviceMappingEClass, MICROSERVICE_MAPPING__TECHNOLOGY);
+        createEReference(microserviceMappingEClass, MICROSERVICE_MAPPING__TECHNOLOGIES);
         createEReference(microserviceMappingEClass, MICROSERVICE_MAPPING__MICROSERVICE);
         createEReference(microserviceMappingEClass, MICROSERVICE_MAPPING__ENDPOINTS);
         createEReference(microserviceMappingEClass, MICROSERVICE_MAPPING__PROTOCOLS);
@@ -1031,13 +1076,16 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
         createEReference(parameterMappingEClass, PARAMETER_MAPPING__OPERATION_MAPPING);
 
         primitiveParameterMappingEClass = createEClass(PRIMITIVE_PARAMETER_MAPPING);
+        createEReference(primitiveParameterMappingEClass, PRIMITIVE_PARAMETER_MAPPING__TECHNOLOGY);
         createEReference(primitiveParameterMappingEClass, PRIMITIVE_PARAMETER_MAPPING__PRIMITIVE_TYPE);
 
         complexParameterMappingEClass = createEClass(COMPLEX_PARAMETER_MAPPING);
+        createEReference(complexParameterMappingEClass, COMPLEX_PARAMETER_MAPPING__TECHNOLOGY);
         createEReference(complexParameterMappingEClass, COMPLEX_PARAMETER_MAPPING__TECHNOLOGY_SPECIFIC_COMPLEX_TYPE);
         createEReference(complexParameterMappingEClass, COMPLEX_PARAMETER_MAPPING__DATA_FIELD_MAPPINGS);
 
         technologySpecificDataFieldTypeMappingEClass = createEClass(TECHNOLOGY_SPECIFIC_DATA_FIELD_TYPE_MAPPING);
+        createEReference(technologySpecificDataFieldTypeMappingEClass, TECHNOLOGY_SPECIFIC_DATA_FIELD_TYPE_MAPPING__TECHNOLOGY);
         createEReference(technologySpecificDataFieldTypeMappingEClass, TECHNOLOGY_SPECIFIC_DATA_FIELD_TYPE_MAPPING__TYPE);
         createEReference(technologySpecificDataFieldTypeMappingEClass, TECHNOLOGY_SPECIFIC_DATA_FIELD_TYPE_MAPPING__DATA_FIELD_HIERARCHY);
         createEReference(technologySpecificDataFieldTypeMappingEClass, TECHNOLOGY_SPECIFIC_DATA_FIELD_TYPE_MAPPING__ASPECTS);
@@ -1053,6 +1101,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
         createEReference(technologySpecificProtocolSpecificationEClass, TECHNOLOGY_SPECIFIC_PROTOCOL_SPECIFICATION__TECHNOLOGY_SPECIFIC_PROTOCOL);
 
         technologySpecificProtocolEClass = createEClass(TECHNOLOGY_SPECIFIC_PROTOCOL);
+        createEReference(technologySpecificProtocolEClass, TECHNOLOGY_SPECIFIC_PROTOCOL__TECHNOLOGY);
         createEReference(technologySpecificProtocolEClass, TECHNOLOGY_SPECIFIC_PROTOCOL__PROTOCOL);
         createEReference(technologySpecificProtocolEClass, TECHNOLOGY_SPECIFIC_PROTOCOL__DATA_FORMAT);
         createEReference(technologySpecificProtocolEClass, TECHNOLOGY_SPECIFIC_PROTOCOL__PROTOCOL_SPECIFICATION);
@@ -1067,7 +1116,8 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
         createEReference(technologySpecificEndpointEClass, TECHNOLOGY_SPECIFIC_ENDPOINT__REFERRED_OPERATION_MAPPING);
 
         technologySpecificImportedServiceAspectEClass = createEClass(TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT);
-        createEReference(technologySpecificImportedServiceAspectEClass, TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__IMPORTED_ASPECT);
+        createEReference(technologySpecificImportedServiceAspectEClass, TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__TECHNOLOGY);
+        createEReference(technologySpecificImportedServiceAspectEClass, TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__ASPECT);
         createEReference(technologySpecificImportedServiceAspectEClass, TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__SINGLE_PROPERTY_VALUE);
         createEReference(technologySpecificImportedServiceAspectEClass, TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__VALUES);
         createEReference(technologySpecificImportedServiceAspectEClass, TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__MICROSERVICE_MAPPING);
@@ -1127,7 +1177,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
         initEOperation(getTechnologyMapping__GetMappedReferredOperations(), this.getReferredOperationMapping(), "getMappedReferredOperations", 0, -1, !IS_UNIQUE, IS_ORDERED);
 
         initEClass(microserviceMappingEClass, MicroserviceMapping.class, "MicroserviceMapping", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getMicroserviceMapping_Technology(), theServicePackage.getImport(), null, "technology", null, 0, 1, MicroserviceMapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getMicroserviceMapping_Technologies(), theServicePackage.getImport(), null, "technologies", null, 1, -1, MicroserviceMapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getMicroserviceMapping_Microservice(), this.getImportedMicroservice(), this.getImportedMicroservice_MicroserviceMapping(), "microservice", null, 0, 1, MicroserviceMapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getMicroserviceMapping_Endpoints(), this.getTechnologySpecificEndpoint(), this.getTechnologySpecificEndpoint_MicroserviceMapping(), "endpoints", null, 0, -1, MicroserviceMapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getMicroserviceMapping_Protocols(), this.getTechnologySpecificProtocolSpecification(), null, "protocols", null, 0, -1, MicroserviceMapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1170,13 +1220,16 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
         initEReference(getParameterMapping_OperationMapping(), this.getOperationMapping(), this.getOperationMapping_ParameterMappings(), "operationMapping", null, 0, 1, ParameterMapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(primitiveParameterMappingEClass, PrimitiveParameterMapping.class, "PrimitiveParameterMapping", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEReference(getPrimitiveParameterMapping_Technology(), theServicePackage.getImport(), null, "technology", null, 0, 1, PrimitiveParameterMapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getPrimitiveParameterMapping_PrimitiveType(), theTechnologyPackage.getTechnologySpecificPrimitiveType(), null, "primitiveType", null, 0, 1, PrimitiveParameterMapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(complexParameterMappingEClass, ComplexParameterMapping.class, "ComplexParameterMapping", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEReference(getComplexParameterMapping_Technology(), theServicePackage.getImport(), null, "technology", null, 0, 1, ComplexParameterMapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getComplexParameterMapping_TechnologySpecificComplexType(), theDataPackage.getComplexType(), null, "technologySpecificComplexType", null, 0, 1, ComplexParameterMapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getComplexParameterMapping_DataFieldMappings(), this.getTechnologySpecificDataFieldTypeMapping(), this.getTechnologySpecificDataFieldTypeMapping_ParameterMapping(), "dataFieldMappings", null, 0, -1, ComplexParameterMapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(technologySpecificDataFieldTypeMappingEClass, TechnologySpecificDataFieldTypeMapping.class, "TechnologySpecificDataFieldTypeMapping", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEReference(getTechnologySpecificDataFieldTypeMapping_Technology(), theServicePackage.getImport(), null, "technology", null, 0, 1, TechnologySpecificDataFieldTypeMapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getTechnologySpecificDataFieldTypeMapping_Type(), theDataPackage.getType(), null, "type", null, 0, 1, TechnologySpecificDataFieldTypeMapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getTechnologySpecificDataFieldTypeMapping_DataFieldHierarchy(), this.getDataFieldHierarchy(), this.getDataFieldHierarchy_Mapping(), "dataFieldHierarchy", null, 0, 1, TechnologySpecificDataFieldTypeMapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getTechnologySpecificDataFieldTypeMapping_Aspects(), this.getTechnologySpecificImportedServiceAspect(), this.getTechnologySpecificImportedServiceAspect_DataFieldMapping(), "aspects", null, 0, -1, TechnologySpecificDataFieldTypeMapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1192,6 +1245,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
         initEReference(getTechnologySpecificProtocolSpecification_TechnologySpecificProtocol(), this.getTechnologySpecificProtocol(), this.getTechnologySpecificProtocol_ProtocolSpecification(), "technologySpecificProtocol", null, 0, 1, TechnologySpecificProtocolSpecification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(technologySpecificProtocolEClass, TechnologySpecificProtocol.class, "TechnologySpecificProtocol", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEReference(getTechnologySpecificProtocol_Technology(), theServicePackage.getImport(), null, "technology", null, 0, 1, TechnologySpecificProtocol.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getTechnologySpecificProtocol_Protocol(), theTechnologyPackage.getProtocol(), null, "protocol", null, 0, 1, TechnologySpecificProtocol.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getTechnologySpecificProtocol_DataFormat(), theTechnologyPackage.getDataFormat(), null, "dataFormat", null, 0, 1, TechnologySpecificProtocol.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getTechnologySpecificProtocol_ProtocolSpecification(), this.getTechnologySpecificProtocolSpecification(), this.getTechnologySpecificProtocolSpecification_TechnologySpecificProtocol(), "protocolSpecification", null, 0, 1, TechnologySpecificProtocol.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1206,7 +1260,8 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
         initEReference(getTechnologySpecificEndpoint_ReferredOperationMapping(), this.getReferredOperationMapping(), this.getReferredOperationMapping_Endpoints(), "referredOperationMapping", null, 0, 1, TechnologySpecificEndpoint.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(technologySpecificImportedServiceAspectEClass, TechnologySpecificImportedServiceAspect.class, "TechnologySpecificImportedServiceAspect", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getTechnologySpecificImportedServiceAspect_ImportedAspect(), theTechnologyPackage.getServiceAspect(), null, "importedAspect", null, 0, 1, TechnologySpecificImportedServiceAspect.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getTechnologySpecificImportedServiceAspect_Technology(), theServicePackage.getImport(), null, "technology", null, 0, 1, TechnologySpecificImportedServiceAspect.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getTechnologySpecificImportedServiceAspect_Aspect(), theTechnologyPackage.getServiceAspect(), null, "aspect", null, 0, 1, TechnologySpecificImportedServiceAspect.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getTechnologySpecificImportedServiceAspect_SinglePropertyValue(), theDataPackage.getPrimitiveValue(), null, "singlePropertyValue", null, 0, 1, TechnologySpecificImportedServiceAspect.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getTechnologySpecificImportedServiceAspect_Values(), theTechnologyPackage.getTechnologySpecificPropertyValueAssignment(), null, "values", null, 0, -1, TechnologySpecificImportedServiceAspect.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getTechnologySpecificImportedServiceAspect_MicroserviceMapping(), this.getMicroserviceMapping(), this.getMicroserviceMapping_Aspects(), "microserviceMapping", null, 0, 1, TechnologySpecificImportedServiceAspect.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

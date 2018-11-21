@@ -142,13 +142,13 @@ public interface MappingPackage extends EPackage {
     int MICROSERVICE_MAPPING = 1;
 
     /**
-     * The feature id for the '<em><b>Technology</b></em>' reference.
+     * The feature id for the '<em><b>Technologies</b></em>' reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int MICROSERVICE_MAPPING__TECHNOLOGY = 0;
+    int MICROSERVICE_MAPPING__TECHNOLOGIES = 0;
 
     /**
      * The feature id for the '<em><b>Microservice</b></em>' containment reference.
@@ -616,13 +616,22 @@ public interface MappingPackage extends EPackage {
     int PRIMITIVE_PARAMETER_MAPPING__OPERATION_MAPPING = PARAMETER_MAPPING__OPERATION_MAPPING;
 
     /**
+     * The feature id for the '<em><b>Technology</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PRIMITIVE_PARAMETER_MAPPING__TECHNOLOGY = PARAMETER_MAPPING_FEATURE_COUNT + 0;
+
+    /**
      * The feature id for the '<em><b>Primitive Type</b></em>' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int PRIMITIVE_PARAMETER_MAPPING__PRIMITIVE_TYPE = PARAMETER_MAPPING_FEATURE_COUNT + 0;
+    int PRIMITIVE_PARAMETER_MAPPING__PRIMITIVE_TYPE = PARAMETER_MAPPING_FEATURE_COUNT + 1;
 
     /**
      * The number of structural features of the '<em>Primitive Parameter Mapping</em>' class.
@@ -631,7 +640,7 @@ public interface MappingPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int PRIMITIVE_PARAMETER_MAPPING_FEATURE_COUNT = PARAMETER_MAPPING_FEATURE_COUNT + 1;
+    int PRIMITIVE_PARAMETER_MAPPING_FEATURE_COUNT = PARAMETER_MAPPING_FEATURE_COUNT + 2;
 
     /**
      * The number of operations of the '<em>Primitive Parameter Mapping</em>' class.
@@ -680,13 +689,22 @@ public interface MappingPackage extends EPackage {
     int COMPLEX_PARAMETER_MAPPING__OPERATION_MAPPING = PARAMETER_MAPPING__OPERATION_MAPPING;
 
     /**
+     * The feature id for the '<em><b>Technology</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int COMPLEX_PARAMETER_MAPPING__TECHNOLOGY = PARAMETER_MAPPING_FEATURE_COUNT + 0;
+
+    /**
      * The feature id for the '<em><b>Technology Specific Complex Type</b></em>' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int COMPLEX_PARAMETER_MAPPING__TECHNOLOGY_SPECIFIC_COMPLEX_TYPE = PARAMETER_MAPPING_FEATURE_COUNT + 0;
+    int COMPLEX_PARAMETER_MAPPING__TECHNOLOGY_SPECIFIC_COMPLEX_TYPE = PARAMETER_MAPPING_FEATURE_COUNT + 1;
 
     /**
      * The feature id for the '<em><b>Data Field Mappings</b></em>' containment reference list.
@@ -695,7 +713,7 @@ public interface MappingPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int COMPLEX_PARAMETER_MAPPING__DATA_FIELD_MAPPINGS = PARAMETER_MAPPING_FEATURE_COUNT + 1;
+    int COMPLEX_PARAMETER_MAPPING__DATA_FIELD_MAPPINGS = PARAMETER_MAPPING_FEATURE_COUNT + 2;
 
     /**
      * The number of structural features of the '<em>Complex Parameter Mapping</em>' class.
@@ -704,7 +722,7 @@ public interface MappingPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int COMPLEX_PARAMETER_MAPPING_FEATURE_COUNT = PARAMETER_MAPPING_FEATURE_COUNT + 2;
+    int COMPLEX_PARAMETER_MAPPING_FEATURE_COUNT = PARAMETER_MAPPING_FEATURE_COUNT + 3;
 
     /**
      * The number of operations of the '<em>Complex Parameter Mapping</em>' class.
@@ -726,13 +744,22 @@ public interface MappingPackage extends EPackage {
     int TECHNOLOGY_SPECIFIC_DATA_FIELD_TYPE_MAPPING = 9;
 
     /**
+     * The feature id for the '<em><b>Technology</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TECHNOLOGY_SPECIFIC_DATA_FIELD_TYPE_MAPPING__TECHNOLOGY = 0;
+
+    /**
      * The feature id for the '<em><b>Type</b></em>' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int TECHNOLOGY_SPECIFIC_DATA_FIELD_TYPE_MAPPING__TYPE = 0;
+    int TECHNOLOGY_SPECIFIC_DATA_FIELD_TYPE_MAPPING__TYPE = 1;
 
     /**
      * The feature id for the '<em><b>Data Field Hierarchy</b></em>' containment reference.
@@ -741,7 +768,7 @@ public interface MappingPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TECHNOLOGY_SPECIFIC_DATA_FIELD_TYPE_MAPPING__DATA_FIELD_HIERARCHY = 1;
+    int TECHNOLOGY_SPECIFIC_DATA_FIELD_TYPE_MAPPING__DATA_FIELD_HIERARCHY = 2;
 
     /**
      * The feature id for the '<em><b>Aspects</b></em>' containment reference list.
@@ -750,7 +777,7 @@ public interface MappingPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TECHNOLOGY_SPECIFIC_DATA_FIELD_TYPE_MAPPING__ASPECTS = 2;
+    int TECHNOLOGY_SPECIFIC_DATA_FIELD_TYPE_MAPPING__ASPECTS = 3;
 
     /**
      * The feature id for the '<em><b>Parameter Mapping</b></em>' container reference.
@@ -759,7 +786,7 @@ public interface MappingPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TECHNOLOGY_SPECIFIC_DATA_FIELD_TYPE_MAPPING__PARAMETER_MAPPING = 3;
+    int TECHNOLOGY_SPECIFIC_DATA_FIELD_TYPE_MAPPING__PARAMETER_MAPPING = 4;
 
     /**
      * The number of structural features of the '<em>Technology Specific Data Field Type Mapping</em>' class.
@@ -768,7 +795,7 @@ public interface MappingPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TECHNOLOGY_SPECIFIC_DATA_FIELD_TYPE_MAPPING_FEATURE_COUNT = 4;
+    int TECHNOLOGY_SPECIFIC_DATA_FIELD_TYPE_MAPPING_FEATURE_COUNT = 5;
 
     /**
      * The number of operations of the '<em>Technology Specific Data Field Type Mapping</em>' class.
@@ -891,13 +918,22 @@ public interface MappingPackage extends EPackage {
     int TECHNOLOGY_SPECIFIC_PROTOCOL = 12;
 
     /**
+     * The feature id for the '<em><b>Technology</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TECHNOLOGY_SPECIFIC_PROTOCOL__TECHNOLOGY = 0;
+
+    /**
      * The feature id for the '<em><b>Protocol</b></em>' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int TECHNOLOGY_SPECIFIC_PROTOCOL__PROTOCOL = 0;
+    int TECHNOLOGY_SPECIFIC_PROTOCOL__PROTOCOL = 1;
 
     /**
      * The feature id for the '<em><b>Data Format</b></em>' reference.
@@ -906,7 +942,7 @@ public interface MappingPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TECHNOLOGY_SPECIFIC_PROTOCOL__DATA_FORMAT = 1;
+    int TECHNOLOGY_SPECIFIC_PROTOCOL__DATA_FORMAT = 2;
 
     /**
      * The feature id for the '<em><b>Protocol Specification</b></em>' container reference.
@@ -915,7 +951,7 @@ public interface MappingPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TECHNOLOGY_SPECIFIC_PROTOCOL__PROTOCOL_SPECIFICATION = 2;
+    int TECHNOLOGY_SPECIFIC_PROTOCOL__PROTOCOL_SPECIFICATION = 3;
 
     /**
      * The feature id for the '<em><b>Endpoint</b></em>' container reference.
@@ -924,7 +960,7 @@ public interface MappingPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TECHNOLOGY_SPECIFIC_PROTOCOL__ENDPOINT = 3;
+    int TECHNOLOGY_SPECIFIC_PROTOCOL__ENDPOINT = 4;
 
     /**
      * The number of structural features of the '<em>Technology Specific Protocol</em>' class.
@@ -933,7 +969,7 @@ public interface MappingPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TECHNOLOGY_SPECIFIC_PROTOCOL_FEATURE_COUNT = 4;
+    int TECHNOLOGY_SPECIFIC_PROTOCOL_FEATURE_COUNT = 5;
 
     /**
      * The number of operations of the '<em>Technology Specific Protocol</em>' class.
@@ -1037,13 +1073,22 @@ public interface MappingPackage extends EPackage {
     int TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT = 14;
 
     /**
-     * The feature id for the '<em><b>Imported Aspect</b></em>' reference.
+     * The feature id for the '<em><b>Technology</b></em>' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__IMPORTED_ASPECT = 0;
+    int TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__TECHNOLOGY = 0;
+
+    /**
+     * The feature id for the '<em><b>Aspect</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__ASPECT = 1;
 
     /**
      * The feature id for the '<em><b>Single Property Value</b></em>' containment reference.
@@ -1052,7 +1097,7 @@ public interface MappingPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__SINGLE_PROPERTY_VALUE = 1;
+    int TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__SINGLE_PROPERTY_VALUE = 2;
 
     /**
      * The feature id for the '<em><b>Values</b></em>' containment reference list.
@@ -1061,7 +1106,7 @@ public interface MappingPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__VALUES = 2;
+    int TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__VALUES = 3;
 
     /**
      * The feature id for the '<em><b>Microservice Mapping</b></em>' container reference.
@@ -1070,7 +1115,7 @@ public interface MappingPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__MICROSERVICE_MAPPING = 3;
+    int TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__MICROSERVICE_MAPPING = 4;
 
     /**
      * The feature id for the '<em><b>Interface Mapping</b></em>' container reference.
@@ -1079,7 +1124,7 @@ public interface MappingPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__INTERFACE_MAPPING = 4;
+    int TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__INTERFACE_MAPPING = 5;
 
     /**
      * The feature id for the '<em><b>Operation Mapping</b></em>' container reference.
@@ -1088,7 +1133,7 @@ public interface MappingPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__OPERATION_MAPPING = 5;
+    int TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__OPERATION_MAPPING = 6;
 
     /**
      * The feature id for the '<em><b>Referred Operation Mapping</b></em>' container reference.
@@ -1097,7 +1142,7 @@ public interface MappingPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__REFERRED_OPERATION_MAPPING = 6;
+    int TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__REFERRED_OPERATION_MAPPING = 7;
 
     /**
      * The feature id for the '<em><b>Parameter Mapping</b></em>' container reference.
@@ -1106,7 +1151,7 @@ public interface MappingPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__PARAMETER_MAPPING = 7;
+    int TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__PARAMETER_MAPPING = 8;
 
     /**
      * The feature id for the '<em><b>Data Field Mapping</b></em>' container reference.
@@ -1115,7 +1160,7 @@ public interface MappingPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__DATA_FIELD_MAPPING = 8;
+    int TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__DATA_FIELD_MAPPING = 9;
 
     /**
      * The number of structural features of the '<em>Technology Specific Imported Service Aspect</em>' class.
@@ -1124,7 +1169,7 @@ public interface MappingPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT_FEATURE_COUNT = 9;
+    int TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT_FEATURE_COUNT = 10;
 
     /**
      * The number of operations of the '<em>Technology Specific Imported Service Aspect</em>' class.
@@ -1209,15 +1254,15 @@ public interface MappingPackage extends EPackage {
     EClass getMicroserviceMapping();
 
     /**
-     * Returns the meta object for the reference '{@link de.fhdo.ddmm.technology.mapping.MicroserviceMapping#getTechnology <em>Technology</em>}'.
+     * Returns the meta object for the reference list '{@link de.fhdo.ddmm.technology.mapping.MicroserviceMapping#getTechnologies <em>Technologies</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the reference '<em>Technology</em>'.
-     * @see de.fhdo.ddmm.technology.mapping.MicroserviceMapping#getTechnology()
+     * @return the meta object for the reference list '<em>Technologies</em>'.
+     * @see de.fhdo.ddmm.technology.mapping.MicroserviceMapping#getTechnologies()
      * @see #getMicroserviceMapping()
      * @generated
      */
-    EReference getMicroserviceMapping_Technology();
+    EReference getMicroserviceMapping_Technologies();
 
     /**
      * Returns the meta object for the containment reference '{@link de.fhdo.ddmm.technology.mapping.MicroserviceMapping#getMicroservice <em>Microservice</em>}'.
@@ -1610,6 +1655,17 @@ public interface MappingPackage extends EPackage {
     EClass getPrimitiveParameterMapping();
 
     /**
+     * Returns the meta object for the reference '{@link de.fhdo.ddmm.technology.mapping.PrimitiveParameterMapping#getTechnology <em>Technology</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference '<em>Technology</em>'.
+     * @see de.fhdo.ddmm.technology.mapping.PrimitiveParameterMapping#getTechnology()
+     * @see #getPrimitiveParameterMapping()
+     * @generated
+     */
+    EReference getPrimitiveParameterMapping_Technology();
+
+    /**
      * Returns the meta object for the reference '{@link de.fhdo.ddmm.technology.mapping.PrimitiveParameterMapping#getPrimitiveType <em>Primitive Type</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1629,6 +1685,17 @@ public interface MappingPackage extends EPackage {
      * @generated
      */
     EClass getComplexParameterMapping();
+
+    /**
+     * Returns the meta object for the reference '{@link de.fhdo.ddmm.technology.mapping.ComplexParameterMapping#getTechnology <em>Technology</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference '<em>Technology</em>'.
+     * @see de.fhdo.ddmm.technology.mapping.ComplexParameterMapping#getTechnology()
+     * @see #getComplexParameterMapping()
+     * @generated
+     */
+    EReference getComplexParameterMapping_Technology();
 
     /**
      * Returns the meta object for the reference '{@link de.fhdo.ddmm.technology.mapping.ComplexParameterMapping#getTechnologySpecificComplexType <em>Technology Specific Complex Type</em>}'.
@@ -1661,6 +1728,17 @@ public interface MappingPackage extends EPackage {
      * @generated
      */
     EClass getTechnologySpecificDataFieldTypeMapping();
+
+    /**
+     * Returns the meta object for the reference '{@link de.fhdo.ddmm.technology.mapping.TechnologySpecificDataFieldTypeMapping#getTechnology <em>Technology</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference '<em>Technology</em>'.
+     * @see de.fhdo.ddmm.technology.mapping.TechnologySpecificDataFieldTypeMapping#getTechnology()
+     * @see #getTechnologySpecificDataFieldTypeMapping()
+     * @generated
+     */
+    EReference getTechnologySpecificDataFieldTypeMapping_Technology();
 
     /**
      * Returns the meta object for the reference '{@link de.fhdo.ddmm.technology.mapping.TechnologySpecificDataFieldTypeMapping#getType <em>Type</em>}'.
@@ -1790,6 +1868,17 @@ public interface MappingPackage extends EPackage {
      * @generated
      */
     EClass getTechnologySpecificProtocol();
+
+    /**
+     * Returns the meta object for the reference '{@link de.fhdo.ddmm.technology.mapping.TechnologySpecificProtocol#getTechnology <em>Technology</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference '<em>Technology</em>'.
+     * @see de.fhdo.ddmm.technology.mapping.TechnologySpecificProtocol#getTechnology()
+     * @see #getTechnologySpecificProtocol()
+     * @generated
+     */
+    EReference getTechnologySpecificProtocol_Technology();
 
     /**
      * Returns the meta object for the reference '{@link de.fhdo.ddmm.technology.mapping.TechnologySpecificProtocol#getProtocol <em>Protocol</em>}'.
@@ -1922,15 +2011,26 @@ public interface MappingPackage extends EPackage {
     EClass getTechnologySpecificImportedServiceAspect();
 
     /**
-     * Returns the meta object for the reference '{@link de.fhdo.ddmm.technology.mapping.TechnologySpecificImportedServiceAspect#getImportedAspect <em>Imported Aspect</em>}'.
+     * Returns the meta object for the reference '{@link de.fhdo.ddmm.technology.mapping.TechnologySpecificImportedServiceAspect#getTechnology <em>Technology</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the reference '<em>Imported Aspect</em>'.
-     * @see de.fhdo.ddmm.technology.mapping.TechnologySpecificImportedServiceAspect#getImportedAspect()
+     * @return the meta object for the reference '<em>Technology</em>'.
+     * @see de.fhdo.ddmm.technology.mapping.TechnologySpecificImportedServiceAspect#getTechnology()
      * @see #getTechnologySpecificImportedServiceAspect()
      * @generated
      */
-    EReference getTechnologySpecificImportedServiceAspect_ImportedAspect();
+    EReference getTechnologySpecificImportedServiceAspect_Technology();
+
+    /**
+     * Returns the meta object for the reference '{@link de.fhdo.ddmm.technology.mapping.TechnologySpecificImportedServiceAspect#getAspect <em>Aspect</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference '<em>Aspect</em>'.
+     * @see de.fhdo.ddmm.technology.mapping.TechnologySpecificImportedServiceAspect#getAspect()
+     * @see #getTechnologySpecificImportedServiceAspect()
+     * @generated
+     */
+    EReference getTechnologySpecificImportedServiceAspect_Aspect();
 
     /**
      * Returns the meta object for the containment reference '{@link de.fhdo.ddmm.technology.mapping.TechnologySpecificImportedServiceAspect#getSinglePropertyValue <em>Single Property Value</em>}'.
@@ -2104,12 +2204,12 @@ public interface MappingPackage extends EPackage {
         EClass MICROSERVICE_MAPPING = eINSTANCE.getMicroserviceMapping();
 
         /**
-         * The meta object literal for the '<em><b>Technology</b></em>' reference feature.
+         * The meta object literal for the '<em><b>Technologies</b></em>' reference list feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference MICROSERVICE_MAPPING__TECHNOLOGY = eINSTANCE.getMicroserviceMapping_Technology();
+        EReference MICROSERVICE_MAPPING__TECHNOLOGIES = eINSTANCE.getMicroserviceMapping_Technologies();
 
         /**
          * The meta object literal for the '<em><b>Microservice</b></em>' containment reference feature.
@@ -2412,6 +2512,14 @@ public interface MappingPackage extends EPackage {
         EClass PRIMITIVE_PARAMETER_MAPPING = eINSTANCE.getPrimitiveParameterMapping();
 
         /**
+         * The meta object literal for the '<em><b>Technology</b></em>' reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference PRIMITIVE_PARAMETER_MAPPING__TECHNOLOGY = eINSTANCE.getPrimitiveParameterMapping_Technology();
+
+        /**
          * The meta object literal for the '<em><b>Primitive Type</b></em>' reference feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -2428,6 +2536,14 @@ public interface MappingPackage extends EPackage {
          * @generated
          */
         EClass COMPLEX_PARAMETER_MAPPING = eINSTANCE.getComplexParameterMapping();
+
+        /**
+         * The meta object literal for the '<em><b>Technology</b></em>' reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference COMPLEX_PARAMETER_MAPPING__TECHNOLOGY = eINSTANCE.getComplexParameterMapping_Technology();
 
         /**
          * The meta object literal for the '<em><b>Technology Specific Complex Type</b></em>' reference feature.
@@ -2454,6 +2570,14 @@ public interface MappingPackage extends EPackage {
          * @generated
          */
         EClass TECHNOLOGY_SPECIFIC_DATA_FIELD_TYPE_MAPPING = eINSTANCE.getTechnologySpecificDataFieldTypeMapping();
+
+        /**
+         * The meta object literal for the '<em><b>Technology</b></em>' reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference TECHNOLOGY_SPECIFIC_DATA_FIELD_TYPE_MAPPING__TECHNOLOGY = eINSTANCE.getTechnologySpecificDataFieldTypeMapping_Technology();
 
         /**
          * The meta object literal for the '<em><b>Type</b></em>' reference feature.
@@ -2558,6 +2682,14 @@ public interface MappingPackage extends EPackage {
         EClass TECHNOLOGY_SPECIFIC_PROTOCOL = eINSTANCE.getTechnologySpecificProtocol();
 
         /**
+         * The meta object literal for the '<em><b>Technology</b></em>' reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference TECHNOLOGY_SPECIFIC_PROTOCOL__TECHNOLOGY = eINSTANCE.getTechnologySpecificProtocol_Technology();
+
+        /**
          * The meta object literal for the '<em><b>Protocol</b></em>' reference feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -2658,12 +2790,20 @@ public interface MappingPackage extends EPackage {
         EClass TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT = eINSTANCE.getTechnologySpecificImportedServiceAspect();
 
         /**
-         * The meta object literal for the '<em><b>Imported Aspect</b></em>' reference feature.
+         * The meta object literal for the '<em><b>Technology</b></em>' reference feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__IMPORTED_ASPECT = eINSTANCE.getTechnologySpecificImportedServiceAspect_ImportedAspect();
+        EReference TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__TECHNOLOGY = eINSTANCE.getTechnologySpecificImportedServiceAspect_Technology();
+
+        /**
+         * The meta object literal for the '<em><b>Aspect</b></em>' reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__ASPECT = eINSTANCE.getTechnologySpecificImportedServiceAspect_Aspect();
 
         /**
          * The meta object literal for the '<em><b>Single Property Value</b></em>' containment reference feature.

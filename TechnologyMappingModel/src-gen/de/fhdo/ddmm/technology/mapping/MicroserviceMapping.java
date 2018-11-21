@@ -22,7 +22,7 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link de.fhdo.ddmm.technology.mapping.MicroserviceMapping#getTechnology <em>Technology</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.technology.mapping.MicroserviceMapping#getTechnologies <em>Technologies</em>}</li>
  *   <li>{@link de.fhdo.ddmm.technology.mapping.MicroserviceMapping#getMicroservice <em>Microservice</em>}</li>
  *   <li>{@link de.fhdo.ddmm.technology.mapping.MicroserviceMapping#getEndpoints <em>Endpoints</em>}</li>
  *   <li>{@link de.fhdo.ddmm.technology.mapping.MicroserviceMapping#getProtocols <em>Protocols</em>}</li>
@@ -39,7 +39,8 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface MicroserviceMapping extends EObject {
     /**
-     * Returns the value of the '<em><b>Technology</b></em>' reference.
+     * Returns the value of the '<em><b>Technologies</b></em>' reference list.
+     * The list contents are of type {@link de.fhdo.ddmm.service.Import}.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
@@ -53,24 +54,19 @@ public interface MicroserviceMapping extends EObject {
      *          Ensured by: DSL validator.
      *     (C4) Endpoint addresses must be unique.
      *          Ensured by: DSL validator.
+     *     (C5) A technology might be assigned exactly once to a microservice mapping.
+     *          Ensured by: DSL validator.
+     *     (C6) Only one assigned technology might comprise technology-specific types.
+     *          Ensured by: DSL validator.
+     *     (C7) Assigned technologies may not only define deployment-specific concepts.
+     *          Ensured by: DSL validator.
      * <!-- end-model-doc -->
-     * @return the value of the '<em>Technology</em>' reference.
-     * @see #setTechnology(Import)
-     * @see de.fhdo.ddmm.technology.mapping.MappingPackage#getMicroserviceMapping_Technology()
-     * @model
+     * @return the value of the '<em>Technologies</em>' reference list.
+     * @see de.fhdo.ddmm.technology.mapping.MappingPackage#getMicroserviceMapping_Technologies()
+     * @model required="true"
      * @generated
      */
-    Import getTechnology();
-
-    /**
-     * Sets the value of the '{@link de.fhdo.ddmm.technology.mapping.MicroserviceMapping#getTechnology <em>Technology</em>}' reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Technology</em>' reference.
-     * @see #getTechnology()
-     * @generated
-     */
-    void setTechnology(Import value);
+    EList<Import> getTechnologies();
 
     /**
      * Returns the value of the '<em><b>Microservice</b></em>' containment reference.

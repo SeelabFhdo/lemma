@@ -46,6 +46,7 @@ import de.fhdo.ddmm.technology.mapping.PrimitiveParameterMapping;
 import de.fhdo.ddmm.technology.mapping.ReferredOperationMapping;
 import de.fhdo.ddmm.technology.mapping.TechnologyMapping;
 import de.fhdo.ddmm.technology.mapping.TechnologySpecificDataFieldTypeMapping;
+import de.fhdo.ddmm.technology.mapping.TechnologySpecificEndpoint;
 import de.fhdo.ddmm.technology.mapping.TechnologySpecificImportedServiceAspect;
 import de.fhdo.ddmm.technology.mapping.TechnologySpecificProtocol;
 import de.fhdo.ddmm.technology.mapping.TechnologySpecificProtocolSpecification;
@@ -105,6 +106,12 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
       if (context instanceof TechnologySpecificProtocol) {
         _matched=true;
         _switchResult = this.getScope(((TechnologySpecificProtocol)context), reference);
+      }
+    }
+    if (!_matched) {
+      if (context instanceof TechnologySpecificEndpoint) {
+        _matched=true;
+        _switchResult = this.getScope(((TechnologySpecificEndpoint)context), reference);
       }
     }
     if (!_matched) {
@@ -177,26 +184,20 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
    */
   private IScope getScope(final MicroserviceMapping mapping, final EReference reference) {
     boolean _matched = false;
-    if (Objects.equal(reference, MappingPackage.Literals.MICROSERVICE_MAPPING__TECHNOLOGY)) {
+    if (Objects.equal(reference, MappingPackage.Literals.IMPORTED_MICROSERVICE__IMPORT)) {
       _matched=true;
-      return this.getScopeForImportsOfType(mapping, Technology.class);
+      return this.getScopeForImportsOfType(mapping, ServiceModel.class);
     }
     if (!_matched) {
-      if (Objects.equal(reference, MappingPackage.Literals.IMPORTED_MICROSERVICE__IMPORT)) {
+      if (Objects.equal(reference, MappingPackage.Literals.TECHNOLOGY_SPECIFIC_PROTOCOL__TECHNOLOGY)) {
         _matched=true;
-        return this.getScopeForImportsOfType(mapping, ServiceModel.class);
+        return this.getScopeForAnnotatedTechnologies(mapping);
       }
     }
     if (!_matched) {
-      if (Objects.equal(reference, MappingPackage.Literals.TECHNOLOGY_SPECIFIC_PROTOCOL__PROTOCOL)) {
+      if (Objects.equal(reference, MappingPackage.Literals.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__TECHNOLOGY)) {
         _matched=true;
-        return this.getScopeForTechnologySpecificProtocols(mapping);
-      }
-    }
-    if (!_matched) {
-      if (Objects.equal(reference, MappingPackage.Literals.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__IMPORTED_ASPECT)) {
-        _matched=true;
-        return this.getScopeForImportedAspect(mapping);
+        return this.getScopeForAnnotatedTechnologies(mapping);
       }
     }
     return null;
@@ -212,15 +213,15 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
       return this.getScopeForInterfaces(mapping);
     }
     if (!_matched) {
-      if (Objects.equal(reference, MappingPackage.Literals.TECHNOLOGY_SPECIFIC_PROTOCOL__PROTOCOL)) {
+      if (Objects.equal(reference, MappingPackage.Literals.TECHNOLOGY_SPECIFIC_PROTOCOL__TECHNOLOGY)) {
         _matched=true;
-        return this.getScopeForTechnologySpecificProtocols(mapping);
+        return this.getScopeForAnnotatedTechnologies(mapping.getMicroserviceMapping());
       }
     }
     if (!_matched) {
-      if (Objects.equal(reference, MappingPackage.Literals.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__IMPORTED_ASPECT)) {
+      if (Objects.equal(reference, MappingPackage.Literals.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__TECHNOLOGY)) {
         _matched=true;
-        return this.getScopeForImportedAspect(mapping);
+        return this.getScopeForAnnotatedTechnologies(mapping.getMicroserviceMapping());
       }
     }
     return null;
@@ -236,15 +237,15 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
       return this.getScopeForOperations(mapping);
     }
     if (!_matched) {
-      if (Objects.equal(reference, MappingPackage.Literals.TECHNOLOGY_SPECIFIC_PROTOCOL__PROTOCOL)) {
+      if (Objects.equal(reference, MappingPackage.Literals.TECHNOLOGY_SPECIFIC_PROTOCOL__TECHNOLOGY)) {
         _matched=true;
-        return this.getScopeForTechnologySpecificProtocols(mapping);
+        return this.getScopeForAnnotatedTechnologies(mapping.getMicroserviceMapping());
       }
     }
     if (!_matched) {
-      if (Objects.equal(reference, MappingPackage.Literals.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__IMPORTED_ASPECT)) {
+      if (Objects.equal(reference, MappingPackage.Literals.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__TECHNOLOGY)) {
         _matched=true;
-        return this.getScopeForImportedAspect(mapping);
+        return this.getScopeForAnnotatedTechnologies(mapping.getMicroserviceMapping());
       }
     }
     return null;
@@ -260,15 +261,15 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
       return this.getScopeForReferredOperations(mapping);
     }
     if (!_matched) {
-      if (Objects.equal(reference, MappingPackage.Literals.TECHNOLOGY_SPECIFIC_PROTOCOL__PROTOCOL)) {
+      if (Objects.equal(reference, MappingPackage.Literals.TECHNOLOGY_SPECIFIC_PROTOCOL__TECHNOLOGY)) {
         _matched=true;
-        return this.getScopeForTechnologySpecificProtocols(mapping);
+        return this.getScopeForAnnotatedTechnologies(mapping.getMicroserviceMapping());
       }
     }
     if (!_matched) {
-      if (Objects.equal(reference, MappingPackage.Literals.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__IMPORTED_ASPECT)) {
+      if (Objects.equal(reference, MappingPackage.Literals.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__TECHNOLOGY)) {
         _matched=true;
-        return this.getScopeForImportedAspect(mapping);
+        return this.getScopeForAnnotatedTechnologies(mapping.getMicroserviceMapping());
       }
     }
     return null;
@@ -297,11 +298,18 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
    */
   private IScope getScope(final TechnologySpecificProtocolSpecification protocolSpecification, final EReference reference) {
     boolean _matched = false;
-    if (Objects.equal(reference, MappingPackage.Literals.TECHNOLOGY_SPECIFIC_PROTOCOL__PROTOCOL)) {
+    if (Objects.equal(reference, MappingPackage.Literals.TECHNOLOGY_SPECIFIC_PROTOCOL__TECHNOLOGY)) {
       _matched=true;
-      return this.getScopeForTechnologySpecificProtocols(protocolSpecification);
+      return this.getScopeForAnnotatedTechnologies(EcoreUtil2.<MicroserviceMapping>getContainerOfType(protocolSpecification, MicroserviceMapping.class));
     }
     return null;
+  }
+  
+  /**
+   * Build scope that comprises annotated technologies of an annotatable concept instance
+   */
+  private IScope getScopeForAnnotatedTechnologies(final MicroserviceMapping mapping) {
+    return Scopes.scopeFor(mapping.getTechnologies());
   }
   
   /**
@@ -323,6 +331,18 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
   }
   
   /**
+   * Build scope for technology-specific endpoints and the given reference
+   */
+  private IScope getScope(final TechnologySpecificEndpoint endpoint, final EReference reference) {
+    boolean _matched = false;
+    if (Objects.equal(reference, MappingPackage.Literals.TECHNOLOGY_SPECIFIC_PROTOCOL__TECHNOLOGY)) {
+      _matched=true;
+      return this.getScopeForAnnotatedTechnologies(EcoreUtil2.<MicroserviceMapping>getContainerOfType(endpoint, MicroserviceMapping.class));
+    }
+    return null;
+  }
+  
+  /**
    * Build scope for primitive parameter mappings and the given reference
    */
   private IScope getScope(final PrimitiveParameterMapping mapping, final EReference reference) {
@@ -338,9 +358,15 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
       }
     }
     if (!_matched) {
-      if (Objects.equal(reference, MappingPackage.Literals.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__IMPORTED_ASPECT)) {
+      if (Objects.equal(reference, MappingPackage.Literals.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__TECHNOLOGY)) {
         _matched=true;
-        return this.getScopeForImportedAspect(mapping);
+        return this.getScopeForAnnotatedTechnologies(EcoreUtil2.<MicroserviceMapping>getContainerOfType(mapping, MicroserviceMapping.class));
+      }
+    }
+    if (!_matched) {
+      if (Objects.equal(reference, MappingPackage.Literals.PRIMITIVE_PARAMETER_MAPPING__TECHNOLOGY)) {
+        _matched=true;
+        return this.getScopeForTypeDefinitionTechnology(mapping);
       }
     }
     return null;
@@ -356,6 +382,18 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
       return this.getScopeForComplexParameters(mapping);
     }
     if (!_matched) {
+      if (Objects.equal(reference, MappingPackage.Literals.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__TECHNOLOGY)) {
+        _matched=true;
+        return this.getScopeForAnnotatedTechnologies(EcoreUtil2.<MicroserviceMapping>getContainerOfType(mapping, MicroserviceMapping.class));
+      }
+    }
+    if (!_matched) {
+      if (Objects.equal(reference, MappingPackage.Literals.COMPLEX_PARAMETER_MAPPING__TECHNOLOGY)) {
+        _matched=true;
+        return this.getScopeForTypeDefinitionTechnology(mapping);
+      }
+    }
+    if (!_matched) {
       if (Objects.equal(reference, MappingPackage.Literals.COMPLEX_PARAMETER_MAPPING__TECHNOLOGY_SPECIFIC_COMPLEX_TYPE)) {
         _matched=true;
         return this.getScopeForParameterTypes(mapping);
@@ -367,12 +405,6 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
         return this.getScopeForComplexDataFields(mapping);
       }
     }
-    if (!_matched) {
-      if (Objects.equal(reference, MappingPackage.Literals.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__IMPORTED_ASPECT)) {
-        _matched=true;
-        return this.getScopeForImportedAspect(mapping);
-      }
-    }
     return null;
   }
   
@@ -381,14 +413,14 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
    */
   private IScope getScope(final TechnologySpecificDataFieldTypeMapping mapping, final EReference reference) {
     boolean _matched = false;
-    if (Objects.equal(reference, MappingPackage.Literals.TECHNOLOGY_SPECIFIC_DATA_FIELD_TYPE_MAPPING__TYPE)) {
+    if (Objects.equal(reference, MappingPackage.Literals.TECHNOLOGY_SPECIFIC_DATA_FIELD_TYPE_MAPPING__TECHNOLOGY)) {
       _matched=true;
-      return this.getScopeForParameterTypes(mapping);
+      return this.getScopeForTypeDefinitionTechnology(mapping);
     }
     if (!_matched) {
-      if (Objects.equal(reference, MappingPackage.Literals.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__IMPORTED_ASPECT)) {
+      if (Objects.equal(reference, MappingPackage.Literals.TECHNOLOGY_SPECIFIC_DATA_FIELD_TYPE_MAPPING__TYPE)) {
         _matched=true;
-        return this.getScopeForImportedAspect(mapping);
+        return this.getScopeForParameterTypes(mapping);
       }
     }
     return null;
@@ -468,21 +500,25 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
    */
   private IScope getScopeForParameterTypes(final EObject mapping) {
     Type parameterType = null;
+    Import technology = null;
     boolean _matched = false;
     if (mapping instanceof PrimitiveParameterMapping) {
       _matched=true;
-      parameterType = ((PrimitiveParameterMapping)mapping).getParameter().getPrimitiveType();
+      parameterType = ((PrimitiveParameterMapping)mapping).getParameter().getEffectiveType();
+      technology = ((PrimitiveParameterMapping)mapping).getTechnology();
     }
     if (!_matched) {
       if (mapping instanceof ComplexParameterMapping) {
         _matched=true;
         parameterType = ((ComplexParameterMapping)mapping).getParameter().getImportedType().getType();
+        technology = ((ComplexParameterMapping)mapping).getTechnology();
       }
     }
     if (!_matched) {
       if (mapping instanceof TechnologySpecificDataFieldTypeMapping) {
         _matched=true;
         parameterType = IterableExtensions.<DataField>last(((TechnologySpecificDataFieldTypeMapping)mapping).getDataFieldHierarchy().getDataFields()).getEffectiveType();
+        technology = ((TechnologySpecificDataFieldTypeMapping)mapping).getTechnology();
       }
     }
     if (!_matched) {
@@ -502,8 +538,7 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
       };
       getImportedConcepts = _function;
       final Function<Type, List<String>> _function_1 = (Type it) -> {
-        String _name = ((TechnologySpecificPrimitiveType) it).getName();
-        return Collections.<String>unmodifiableList(CollectionLiterals.<String>newArrayList(_name));
+        return ((TechnologySpecificPrimitiveType) it).getQualifiedNameParts();
       };
       getConceptNameParts = _function_1;
     } else {
@@ -518,8 +553,7 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
           };
           getImportedConcepts = _function_2;
           final Function<Type, List<String>> _function_3 = (Type it) -> {
-            String _name = ((TechnologySpecificDataStructure) it).getName();
-            return Collections.<String>unmodifiableList(CollectionLiterals.<String>newArrayList(_name));
+            return ((TechnologySpecificDataStructure) it).getQualifiedNameParts();
           };
           getConceptNameParts = _function_3;
         } else {
@@ -532,19 +566,46 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
             };
             getImportedConcepts = _function_4;
             final Function<Type, List<String>> _function_5 = (Type it) -> {
-              String _name = ((TechnologySpecificListType) it).getName();
-              return Collections.<String>unmodifiableList(CollectionLiterals.<String>newArrayList(_name));
+              return ((TechnologySpecificListType) it).getQualifiedNameParts();
             };
             getConceptNameParts = _function_5;
           }
         }
       }
     }
-    final Import technology = EcoreUtil2.<MicroserviceMapping>getContainerOfType(mapping, MicroserviceMapping.class).getTechnology();
     return DdmmUtils.<Import, Technology, Type>getScopeForPossiblyImportedConcept(technology, 
       null, 
       Technology.class, 
       technology.getImportURI(), getImportedConcepts, getConceptNameParts);
+  }
+  
+  /**
+   * Build scope for microservice mapping technology that defines types
+   */
+  private IScope getScopeForTypeDefinitionTechnology(final EObject context) {
+    MicroserviceMapping _xifexpression = null;
+    if ((context instanceof MicroserviceMapping)) {
+      _xifexpression = ((MicroserviceMapping)context);
+    } else {
+      _xifexpression = EcoreUtil2.<MicroserviceMapping>getContainerOfType(context, MicroserviceMapping.class);
+    }
+    final MicroserviceMapping mapping = _xifexpression;
+    if ((mapping == null)) {
+      return IScope.NULLSCOPE;
+    }
+    final Function1<Import, Boolean> _function = (Import it) -> {
+      boolean _xblockexpression = false;
+      {
+        final Technology modelRoot = DdmmUtils.<Technology>getImportedModelRoot(it.eResource(), it.getImportURI(), Technology.class);
+        _xblockexpression = ((modelRoot != null) && (!modelRoot.getPrimitiveTypes().isEmpty()));
+      }
+      return Boolean.valueOf(_xblockexpression);
+    };
+    final Import typeDefinitionTechnology = IterableExtensions.<Import>findFirst(mapping.getTechnologies(), _function);
+    if ((typeDefinitionTechnology == null)) {
+      return IScope.NULLSCOPE;
+    }
+    return Scopes.scopeFor(Collections.<EObject>unmodifiableList(CollectionLiterals.<EObject>newArrayList(typeDefinitionTechnology)));
   }
   
   /**
@@ -648,51 +709,13 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
   /**
    * Build scope for technology-specific protocols
    */
-  private IScope getScopeForTechnologySpecificProtocols(final EObject context) {
-    Import technology = null;
-    TechnologySpecificProtocolSpecification protocolSpecification = null;
-    boolean _matched = false;
-    if (context instanceof MicroserviceMapping) {
-      _matched=true;
-      technology = ((MicroserviceMapping)context).getTechnology();
-    }
-    if (!_matched) {
-      if (context instanceof InterfaceMapping) {
-        _matched=true;
-        technology = ((InterfaceMapping)context).getMicroserviceMapping().getTechnology();
-      }
-    }
-    if (!_matched) {
-      if (context instanceof OperationMapping) {
-        _matched=true;
-        technology = ((OperationMapping)context).getMicroserviceMapping().getTechnology();
-      }
-    }
-    if (!_matched) {
-      if (context instanceof ReferredOperationMapping) {
-        _matched=true;
-        technology = ((ReferredOperationMapping)context).getMicroserviceMapping().getTechnology();
-      }
-    }
-    if (!_matched) {
-      if (context instanceof TechnologySpecificProtocol) {
-        _matched=true;
-        final TechnologySpecificProtocol protocol = ((TechnologySpecificProtocol) context);
-        protocolSpecification = protocol.getProtocolSpecification();
-        technology = EcoreUtil2.<MicroserviceMapping>getContainerOfType(protocol, MicroserviceMapping.class).getTechnology();
-      }
-    }
-    if (!_matched) {
-      if (context instanceof TechnologySpecificProtocolSpecification) {
-        _matched=true;
-        protocolSpecification = ((TechnologySpecificProtocolSpecification) context);
-        technology = EcoreUtil2.<MicroserviceMapping>getContainerOfType(protocolSpecification, 
-          MicroserviceMapping.class).getTechnology();
-      }
-    }
-    if ((technology == null)) {
+  private IScope getScopeForTechnologySpecificProtocols(final TechnologySpecificProtocol protocol) {
+    Import _technology = protocol.getTechnology();
+    boolean _tripleEquals = (_technology == null);
+    if (_tripleEquals) {
       return IScope.NULLSCOPE;
     }
+    final TechnologySpecificProtocolSpecification protocolSpecification = protocol.getProtocolSpecification();
     CommunicationType _xifexpression = null;
     if ((protocolSpecification != null)) {
       _xifexpression = protocolSpecification.getCommunicationType();
@@ -711,14 +734,14 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
       return IterableExtensions.<Protocol>toList(it.getProtocols());
     };
     final Function<Protocol, List<String>> _function_2 = (Protocol it) -> {
-      String _name = it.getName();
-      return Collections.<String>unmodifiableList(CollectionLiterals.<String>newArrayList(_name));
+      return it.getQualifiedNameParts();
     };
     final List<Predicate<Protocol>> _converted_communicationTypeFilter = (List<Predicate<Protocol>>)communicationTypeFilter;
-    return DdmmUtils.<Import, Technology, Protocol>getScopeForPossiblyImportedConcept(technology, 
+    return DdmmUtils.<Import, Technology, Protocol>getScopeForPossiblyImportedConcept(
+      protocol.getTechnology(), 
       null, 
       Technology.class, 
-      technology.getImportURI(), _function_1, _function_2, ((Predicate<Protocol>[])Conversions.unwrapArray(_converted_communicationTypeFilter, Predicate.class)));
+      protocol.getTechnology().getImportURI(), _function_1, _function_2, ((Predicate<Protocol>[])Conversions.unwrapArray(_converted_communicationTypeFilter, Predicate.class)));
   }
   
   /**
@@ -771,9 +794,15 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
    */
   private IScope getScope(final TechnologySpecificImportedServiceAspect importedAspect, final EReference reference) {
     boolean _matched = false;
-    if (Objects.equal(reference, MappingPackage.Literals.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__IMPORTED_ASPECT)) {
+    if (Objects.equal(reference, MappingPackage.Literals.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__TECHNOLOGY)) {
       _matched=true;
-      return this.getScopeForImportedAspect(importedAspect);
+      return this.getScopeForAnnotatedTechnologies(EcoreUtil2.<MicroserviceMapping>getContainerOfType(importedAspect, MicroserviceMapping.class));
+    }
+    if (!_matched) {
+      if (Objects.equal(reference, MappingPackage.Literals.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__ASPECT)) {
+        _matched=true;
+        return this.getScopeForImportedAspect(importedAspect);
+      }
     }
     if (!_matched) {
       if (Objects.equal(reference, TechnologyPackage.Literals.TECHNOLOGY_SPECIFIC_PROPERTY_VALUE_ASSIGNMENT__PROPERTY)) {
@@ -801,21 +830,14 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
    * Build scope for aspect properties
    */
   private IScope getScopeForAspectProperty(final TechnologySpecificImportedServiceAspect importedAspect) {
-    return Scopes.scopeFor(importedAspect.getImportedAspect().getProperties());
+    return Scopes.scopeFor(importedAspect.getAspect().getProperties());
   }
   
   /**
    * Build scope for aspect of imported service aspect
    */
-  private IScope getScopeForImportedAspect(final EObject context) {
-    MicroserviceMapping _xifexpression = null;
-    if ((context instanceof MicroserviceMapping)) {
-      _xifexpression = ((MicroserviceMapping)context);
-    } else {
-      _xifexpression = EcoreUtil2.<MicroserviceMapping>getContainerOfType(context, MicroserviceMapping.class);
-    }
-    final MicroserviceMapping microserviceMapping = _xifexpression;
-    Import _technology = microserviceMapping.getTechnology();
+  private IScope getScopeForImportedAspect(final TechnologySpecificImportedServiceAspect aspect) {
+    Import _technology = aspect.getTechnology();
     boolean _tripleEquals = (_technology == null);
     if (_tripleEquals) {
       return IScope.NULLSCOPE;
@@ -823,13 +845,7 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     ExchangePattern forExchangePattern = null;
     CommunicationType forCommunicationType = null;
     List<Pair<Protocol, DataFormat>> forProtocolsAndDataFormats = null;
-    EObject _xifexpression_1 = null;
-    if ((context instanceof TechnologySpecificImportedServiceAspect)) {
-      _xifexpression_1 = ((TechnologySpecificImportedServiceAspect)context).eContainer();
-    } else {
-      _xifexpression_1 = context;
-    }
-    final EObject mapping = _xifexpression_1;
+    final EObject mapping = aspect.eContainer();
     JoinPointType _switchResult = null;
     boolean _matched = false;
     if (mapping instanceof MicroserviceMapping) {
@@ -906,9 +922,8 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
       }
     }
     final JoinPointType joinPoint = _switchResult;
-    final Import technology = microserviceMapping.getTechnology();
-    final EList<EObject> resourceContents = DdmmUtils.getImportedModelContents(technology.eResource(), 
-      technology.getImportURI());
+    final EList<EObject> resourceContents = DdmmUtils.getImportedModelContents(aspect.getTechnology().eResource(), 
+      aspect.getTechnology().getImportURI());
     if (((resourceContents == null) || resourceContents.isEmpty())) {
       return IScope.NULLSCOPE;
     }
@@ -918,7 +933,11 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     };
     final List<ServiceAspect> declaredAspectsForJoinPoint = IterableExtensions.<ServiceAspect>toList(IterableExtensions.<ServiceAspect>filter(((Technology) _get).getServiceAspects(), _function));
     final ArrayList<ServiceAspect> scopeAspects = this.filterMatchingAspects(declaredAspectsForJoinPoint, forExchangePattern, forCommunicationType, forProtocolsAndDataFormats);
-    return Scopes.scopeFor(scopeAspects);
+    final Function<ServiceAspect, QualifiedName> _function_1 = (ServiceAspect it) -> {
+      return QualifiedName.create(it.getQualifiedNameParts());
+    };
+    return Scopes.<ServiceAspect>scopeFor(scopeAspects, _function_1, 
+      IScope.NULLSCOPE);
   }
   
   /**
@@ -953,33 +972,29 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     if (_isEmpty) {
       return results;
     }
-    final Import technology = mapping.getTechnology();
-    final EList<EObject> resourceContents = DdmmUtils.getImportedModelContents(technology.eResource(), 
-      technology.getImportURI());
-    if (((resourceContents == null) || resourceContents.isEmpty())) {
-      return results;
-    }
-    EObject _get = resourceContents.get(0);
-    final Technology technologyModel = ((Technology) _get);
-    final Consumer<CommunicationType> _function = (CommunicationType communicationType) -> {
-      Protocol defaultProtocol = null;
-      DataFormat defaultDataFormat = null;
-      final Function1<Protocol, Boolean> _function_1 = (Protocol it) -> {
-        CommunicationType _communicationType = it.getCommunicationType();
-        return Boolean.valueOf(Objects.equal(_communicationType, communicationType));
+    final Consumer<Import> _function = (Import it) -> {
+      final Technology technologyModel = DdmmUtils.<Technology>getImportedModelRoot(it.eResource(), it.getImportURI(), Technology.class);
+      final Consumer<CommunicationType> _function_1 = (CommunicationType communicationType) -> {
+        Protocol defaultProtocol = null;
+        DataFormat defaultDataFormat = null;
+        final Function1<Protocol, Boolean> _function_2 = (Protocol it_1) -> {
+          CommunicationType _communicationType = it_1.getCommunicationType();
+          return Boolean.valueOf(Objects.equal(_communicationType, communicationType));
+        };
+        final Function1<Protocol, Boolean> _function_3 = (Protocol it_1) -> {
+          return Boolean.valueOf(it_1.isDefault());
+        };
+        defaultProtocol = IterableExtensions.<Protocol>findFirst(IterableExtensions.<Protocol>filter(technologyModel.getProtocols(), _function_2), _function_3);
+        if ((defaultProtocol != null)) {
+          defaultDataFormat = defaultProtocol.getDefaultFormat();
+        }
+        if ((defaultProtocol != null)) {
+          results.put(communicationType, Pair.<Protocol, DataFormat>of(defaultProtocol, defaultDataFormat));
+        }
       };
-      final Function1<Protocol, Boolean> _function_2 = (Protocol it) -> {
-        return Boolean.valueOf(it.isDefault());
-      };
-      defaultProtocol = IterableExtensions.<Protocol>findFirst(IterableExtensions.<Protocol>filter(technologyModel.getProtocols(), _function_1), _function_2);
-      if ((defaultProtocol != null)) {
-        defaultDataFormat = defaultProtocol.getDefaultFormat();
-      }
-      if ((defaultProtocol != null)) {
-        results.put(communicationType, Pair.<Protocol, DataFormat>of(defaultProtocol, defaultDataFormat));
-      }
+      missingCommunicationTypes.forEach(_function_1);
     };
-    missingCommunicationTypes.forEach(_function);
+    mapping.getTechnologies().forEach(_function);
     return results;
   }
   

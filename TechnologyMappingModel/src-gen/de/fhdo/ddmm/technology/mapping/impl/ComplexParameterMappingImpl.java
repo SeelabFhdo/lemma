@@ -4,6 +4,8 @@ package de.fhdo.ddmm.technology.mapping.impl;
 
 import de.fhdo.ddmm.data.ComplexType;
 
+import de.fhdo.ddmm.service.Import;
+
 import de.fhdo.ddmm.technology.mapping.ComplexParameterMapping;
 import de.fhdo.ddmm.technology.mapping.MappingPackage;
 import de.fhdo.ddmm.technology.mapping.TechnologySpecificDataFieldTypeMapping;
@@ -31,6 +33,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link de.fhdo.ddmm.technology.mapping.impl.ComplexParameterMappingImpl#getTechnology <em>Technology</em>}</li>
  *   <li>{@link de.fhdo.ddmm.technology.mapping.impl.ComplexParameterMappingImpl#getTechnologySpecificComplexType <em>Technology Specific Complex Type</em>}</li>
  *   <li>{@link de.fhdo.ddmm.technology.mapping.impl.ComplexParameterMappingImpl#getDataFieldMappings <em>Data Field Mappings</em>}</li>
  * </ul>
@@ -38,6 +41,16 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * @generated
  */
 public class ComplexParameterMappingImpl extends ParameterMappingImpl implements ComplexParameterMapping {
+    /**
+     * The cached value of the '{@link #getTechnology() <em>Technology</em>}' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getTechnology()
+     * @generated
+     * @ordered
+     */
+    protected Import technology;
+
     /**
      * The cached value of the '{@link #getTechnologySpecificComplexType() <em>Technology Specific Complex Type</em>}' reference.
      * <!-- begin-user-doc -->
@@ -75,6 +88,44 @@ public class ComplexParameterMappingImpl extends ParameterMappingImpl implements
     @Override
     protected EClass eStaticClass() {
         return MappingPackage.Literals.COMPLEX_PARAMETER_MAPPING;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public Import getTechnology() {
+        if (technology != null && technology.eIsProxy()) {
+            InternalEObject oldTechnology = (InternalEObject)technology;
+            technology = (Import)eResolveProxy(oldTechnology);
+            if (technology != oldTechnology) {
+                if (eNotificationRequired())
+                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, MappingPackage.COMPLEX_PARAMETER_MAPPING__TECHNOLOGY, oldTechnology, technology));
+            }
+        }
+        return technology;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public Import basicGetTechnology() {
+        return technology;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setTechnology(Import newTechnology) {
+        Import oldTechnology = technology;
+        technology = newTechnology;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.COMPLEX_PARAMETER_MAPPING__TECHNOLOGY, oldTechnology, technology));
     }
 
     /**
@@ -164,6 +215,9 @@ public class ComplexParameterMappingImpl extends ParameterMappingImpl implements
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
+            case MappingPackage.COMPLEX_PARAMETER_MAPPING__TECHNOLOGY:
+                if (resolve) return getTechnology();
+                return basicGetTechnology();
             case MappingPackage.COMPLEX_PARAMETER_MAPPING__TECHNOLOGY_SPECIFIC_COMPLEX_TYPE:
                 if (resolve) return getTechnologySpecificComplexType();
                 return basicGetTechnologySpecificComplexType();
@@ -182,6 +236,9 @@ public class ComplexParameterMappingImpl extends ParameterMappingImpl implements
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
+            case MappingPackage.COMPLEX_PARAMETER_MAPPING__TECHNOLOGY:
+                setTechnology((Import)newValue);
+                return;
             case MappingPackage.COMPLEX_PARAMETER_MAPPING__TECHNOLOGY_SPECIFIC_COMPLEX_TYPE:
                 setTechnologySpecificComplexType((ComplexType)newValue);
                 return;
@@ -201,6 +258,9 @@ public class ComplexParameterMappingImpl extends ParameterMappingImpl implements
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
+            case MappingPackage.COMPLEX_PARAMETER_MAPPING__TECHNOLOGY:
+                setTechnology((Import)null);
+                return;
             case MappingPackage.COMPLEX_PARAMETER_MAPPING__TECHNOLOGY_SPECIFIC_COMPLEX_TYPE:
                 setTechnologySpecificComplexType((ComplexType)null);
                 return;
@@ -219,6 +279,8 @@ public class ComplexParameterMappingImpl extends ParameterMappingImpl implements
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
+            case MappingPackage.COMPLEX_PARAMETER_MAPPING__TECHNOLOGY:
+                return technology != null;
             case MappingPackage.COMPLEX_PARAMETER_MAPPING__TECHNOLOGY_SPECIFIC_COMPLEX_TYPE:
                 return technologySpecificComplexType != null;
             case MappingPackage.COMPLEX_PARAMETER_MAPPING__DATA_FIELD_MAPPINGS:

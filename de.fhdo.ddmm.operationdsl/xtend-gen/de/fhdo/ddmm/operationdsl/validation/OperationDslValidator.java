@@ -71,11 +71,11 @@ public class OperationDslValidator extends AbstractOperationDslValidator {
     final Function<Import, String> _function = (Import it) -> {
       return it.getImportURI();
     };
-    final int duplicateIndex = DdmmUtils.<Import, String>getDuplicateIndex(operationModel.getImports(), _function);
-    if ((duplicateIndex == (-1))) {
+    final Integer duplicateIndex = DdmmUtils.<Import, String>getDuplicateIndex(operationModel.getImports(), _function);
+    if (((duplicateIndex).intValue() == (-1))) {
       return;
     }
-    final Import duplicate = operationModel.getImports().get(duplicateIndex);
+    final Import duplicate = operationModel.getImports().get((duplicateIndex).intValue());
     this.error("File is already being imported", duplicate, 
       ServicePackage.Literals.IMPORT__IMPORT_URI);
   }
@@ -88,11 +88,11 @@ public class OperationDslValidator extends AbstractOperationDslValidator {
     final Function<Import, String> _function = (Import it) -> {
       return it.getName();
     };
-    final int duplicateIndex = DdmmUtils.<Import, String>getDuplicateIndex(operationModel.getImports(), _function);
-    if ((duplicateIndex == (-1))) {
+    final Integer duplicateIndex = DdmmUtils.<Import, String>getDuplicateIndex(operationModel.getImports(), _function);
+    if (((duplicateIndex).intValue() == (-1))) {
       return;
     }
-    final Import duplicate = operationModel.getImports().get(duplicateIndex);
+    final Import duplicate = operationModel.getImports().get((duplicateIndex).intValue());
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("Duplicate import alias ");
     String _name = duplicate.getName();
@@ -155,14 +155,14 @@ public class OperationDslValidator extends AbstractOperationDslValidator {
     final Function<Import, Import> _function = (Import it) -> {
       return it;
     };
-    final int duplicateIndex = DdmmUtils.<Import, Import>getDuplicateIndex(operationNode.getTechnologies(), _function);
-    if ((duplicateIndex > (-1))) {
+    final Integer duplicateIndex = DdmmUtils.<Import, Import>getDuplicateIndex(operationNode.getTechnologies(), _function);
+    if (((duplicateIndex).intValue() > (-1))) {
       StringConcatenation _builder = new StringConcatenation();
       _builder.append("Duplicate technology assignment for ");
       String _name = operationNode.getName();
       _builder.append(_name);
       this.error(_builder.toString(), 
-        OperationPackage.Literals.OPERATION_NODE__TECHNOLOGIES, duplicateIndex);
+        OperationPackage.Literals.OPERATION_NODE__TECHNOLOGIES, (duplicateIndex).intValue());
     }
   }
   
@@ -190,9 +190,9 @@ public class OperationDslValidator extends AbstractOperationDslValidator {
     final Function<TechnologySpecificPropertyValueAssignment, String> _function = (TechnologySpecificPropertyValueAssignment it) -> {
       return it.getProperty().getName();
     };
-    final int duplicateIndex = DdmmUtils.<TechnologySpecificPropertyValueAssignment, String>getDuplicateIndex(propertyValues, _function);
-    if ((duplicateIndex > (-1))) {
-      final TechnologySpecificPropertyValueAssignment duplicatePropertyValue = propertyValues.get(duplicateIndex);
+    final Integer duplicateIndex = DdmmUtils.<TechnologySpecificPropertyValueAssignment, String>getDuplicateIndex(propertyValues, _function);
+    if (((duplicateIndex).intValue() > (-1))) {
+      final TechnologySpecificPropertyValueAssignment duplicatePropertyValue = propertyValues.get((duplicateIndex).intValue());
       final TechnologySpecificProperty duplicateProperty = duplicatePropertyValue.getProperty();
       StringConcatenation _builder = new StringConcatenation();
       _builder.append("Duplicate value assigment to service property ");
@@ -270,14 +270,14 @@ public class OperationDslValidator extends AbstractOperationDslValidator {
     final Function<String, String> _function = (String it) -> {
       return it;
     };
-    final int duplicateIndex = DdmmUtils.<String, String>getDuplicateIndex(endpoint.getAddresses(), _function);
-    if ((duplicateIndex > (-1))) {
-      final String duplicate = endpoint.getAddresses().get(duplicateIndex);
+    final Integer duplicateIndex = DdmmUtils.<String, String>getDuplicateIndex(endpoint.getAddresses(), _function);
+    if (((duplicateIndex).intValue() > (-1))) {
+      final String duplicate = endpoint.getAddresses().get((duplicateIndex).intValue());
       StringConcatenation _builder = new StringConcatenation();
       _builder.append("Duplicate address ");
       _builder.append(duplicate);
       this.error(_builder.toString(), endpoint, 
-        OperationPackage.Literals.BASIC_ENDPOINT__ADDRESSES, duplicateIndex);
+        OperationPackage.Literals.BASIC_ENDPOINT__ADDRESSES, (duplicateIndex).intValue());
     }
   }
   
@@ -571,12 +571,12 @@ public class OperationDslValidator extends AbstractOperationDslValidator {
       QualifiedName _create = QualifiedName.create(it.getService().getMicroservice().getQualifiedNameParts());
       return (_name + _create);
     };
-    final int duplicateIndex = DdmmUtils.<ServiceDeploymentSpecification, String>getDuplicateIndex(operationNode.getDeploymentSpecifications(), _function);
-    if ((duplicateIndex > (-1))) {
+    final Integer duplicateIndex = DdmmUtils.<ServiceDeploymentSpecification, String>getDuplicateIndex(operationNode.getDeploymentSpecifications(), _function);
+    if (((duplicateIndex).intValue() > (-1))) {
       StringConcatenation _builder = new StringConcatenation();
       _builder.append("Duplicate deployment specification");
       this.error(_builder.toString(), operationNode, 
-        OperationPackage.Literals.OPERATION_NODE__DEPLOYMENT_SPECIFICATIONS, duplicateIndex);
+        OperationPackage.Literals.OPERATION_NODE__DEPLOYMENT_SPECIFICATIONS, (duplicateIndex).intValue());
     }
   }
   
@@ -590,12 +590,12 @@ public class OperationDslValidator extends AbstractOperationDslValidator {
       QualifiedName _create = QualifiedName.create(it.getMicroservice().getQualifiedNameParts());
       return (_name + _create);
     };
-    final int duplicateIndex = DdmmUtils.<ImportedMicroservice, String>getDuplicateIndex(operationNode.getDeployedServices(), _function);
-    if ((duplicateIndex > (-1))) {
+    final Integer duplicateIndex = DdmmUtils.<ImportedMicroservice, String>getDuplicateIndex(operationNode.getDeployedServices(), _function);
+    if (((duplicateIndex).intValue() > (-1))) {
       StringConcatenation _builder = new StringConcatenation();
       _builder.append("Duplicate deployed service");
       this.error(_builder.toString(), operationNode, 
-        OperationPackage.Literals.OPERATION_NODE__DEPLOYED_SERVICES, duplicateIndex);
+        OperationPackage.Literals.OPERATION_NODE__DEPLOYED_SERVICES, (duplicateIndex).intValue());
     }
   }
   
@@ -710,9 +710,9 @@ public class OperationDslValidator extends AbstractOperationDslValidator {
     final Function<ImportedOperationAspect, String> _function = (ImportedOperationAspect it) -> {
       return it.getAspect().getName();
     };
-    final int duplicateIndex = DdmmUtils.<ImportedOperationAspect, String>getDuplicateIndex(allAspectsOfContainer, _function);
-    if ((duplicateIndex > (-1))) {
-      final ImportedOperationAspect duplicateAspect = allAspectsOfContainer.get(duplicateIndex);
+    final Integer duplicateIndex = DdmmUtils.<ImportedOperationAspect, String>getDuplicateIndex(allAspectsOfContainer, _function);
+    if (((duplicateIndex).intValue() > (-1))) {
+      final ImportedOperationAspect duplicateAspect = allAspectsOfContainer.get((duplicateIndex).intValue());
       this.error("Aspect was already specified", duplicateAspect, 
         OperationPackage.Literals.IMPORTED_OPERATION_ASPECT__ASPECT);
     }
@@ -729,10 +729,10 @@ public class OperationDslValidator extends AbstractOperationDslValidator {
     final Function<TechnologySpecificPropertyValueAssignment, String> _function = (TechnologySpecificPropertyValueAssignment it) -> {
       return it.getProperty().getName();
     };
-    final int duplicateIndex = DdmmUtils.<TechnologySpecificPropertyValueAssignment, String>getDuplicateIndex(importedAspect.getValues(), _function);
-    if ((duplicateIndex > (-1))) {
+    final Integer duplicateIndex = DdmmUtils.<TechnologySpecificPropertyValueAssignment, String>getDuplicateIndex(importedAspect.getValues(), _function);
+    if (((duplicateIndex).intValue() > (-1))) {
       this.error("Duplicate value assignment to property", 
-        OperationPackage.Literals.IMPORTED_OPERATION_ASPECT__VALUES, duplicateIndex);
+        OperationPackage.Literals.IMPORTED_OPERATION_ASPECT__VALUES, (duplicateIndex).intValue());
     }
   }
   

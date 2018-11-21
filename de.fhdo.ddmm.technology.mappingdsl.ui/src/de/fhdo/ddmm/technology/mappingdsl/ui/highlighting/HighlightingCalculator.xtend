@@ -32,25 +32,27 @@ class HighlightingCalculator implements ISemanticHighlightingCalculator {
         /* Color technology annotations on microservice mapping nodes */
         resource.allContents.filter[it instanceof MicroserviceMapping].forEach[
             val nodes = NodeModelUtils.findNodesForFeature(it,
-                MappingPackage.Literals::MICROSERVICE_MAPPING__TECHNOLOGY)
+                MappingPackage.Literals::MICROSERVICE_MAPPING__TECHNOLOGIES)
 
             nodes.forEach[
-                // Walk the node model backwards from the previous node of the annotated technology
-                // until the beginning of the surrounding annotation, i.e., the "@" token, was
-                // reached
-                var currentSibling = previousSibling
-                var annotationBeginReached = false
-                while (currentSibling !== null && !annotationBeginReached) {
-                    if (currentSibling.text == "@")
-                        annotationBeginReached = true
+                // Determine node to start highlighting
+                var nodeToHighlight = it
+                while (nodeToHighlight !== null &&
+                    nodeToHighlight.nextSibling !== null &&
+                    nodeToHighlight.nextSibling.text != "(")
+                    nodeToHighlight = nodeToHighlight.previousSibling
 
-                    // Analogous to the standard Eclipse highlighting for Java, we do not
-                    // highlight possible brackets of annotation values
-                    if (currentSibling.text != "(")
-                        acceptor.addPosition(currentSibling.offset, currentSibling.length,
+                // Highlight nodes including the "@" sign, which marks the beginning of an
+                // aspect's annotation string
+                if (nodeToHighlight !== null) {
+                    do {
+                        acceptor.addPosition(nodeToHighlight.offset, nodeToHighlight.length,
                             HighlightingConfiguration.ANNOTATION_ID)
-
-                    currentSibling = currentSibling.previousSibling
+                        nodeToHighlight = nodeToHighlight.previousSibling
+                    } while (nodeToHighlight !== null &&
+                        nodeToHighlight.nextSibling !== null &&
+                        nodeToHighlight.nextSibling.text != "@"
+                    )
                 }
             ]
         ]

@@ -4,6 +4,8 @@ package de.fhdo.ddmm.technology.mapping;
 
 import de.fhdo.ddmm.data.Type;
 
+import de.fhdo.ddmm.service.Import;
+
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EObject;
@@ -22,6 +24,7 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
+ *   <li>{@link de.fhdo.ddmm.technology.mapping.TechnologySpecificDataFieldTypeMapping#getTechnology <em>Technology</em>}</li>
  *   <li>{@link de.fhdo.ddmm.technology.mapping.TechnologySpecificDataFieldTypeMapping#getType <em>Type</em>}</li>
  *   <li>{@link de.fhdo.ddmm.technology.mapping.TechnologySpecificDataFieldTypeMapping#getDataFieldHierarchy <em>Data Field Hierarchy</em>}</li>
  *   <li>{@link de.fhdo.ddmm.technology.mapping.TechnologySpecificDataFieldTypeMapping#getAspects <em>Aspects</em>}</li>
@@ -34,16 +37,39 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface TechnologySpecificDataFieldTypeMapping extends EObject {
     /**
-     * Returns the value of the '<em><b>Type</b></em>' reference.
+     * Returns the value of the '<em><b>Technology</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Technology</em>' reference isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Technology</em>' reference.
+     * @see #setTechnology(Import)
+     * @see de.fhdo.ddmm.technology.mapping.MappingPackage#getTechnologySpecificDataFieldTypeMapping_Technology()
+     * @model
+     * @generated
+     */
+    Import getTechnology();
+
+    /**
+     * Sets the value of the '{@link de.fhdo.ddmm.technology.mapping.TechnologySpecificDataFieldTypeMapping#getTechnology <em>Technology</em>}' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * *
-     * Implicit Constraints:
-     *     (C1) Type must be a technology-specific primitive or complex type from the parent
-     *          microservice mapping's assigned technology.
-     *          Ensured by: DSL scope provider.
-     * <!-- end-model-doc -->
+     * @param value the new value of the '<em>Technology</em>' reference.
+     * @see #getTechnology()
+     * @generated
+     */
+    void setTechnology(Import value);
+
+    /**
+     * Returns the value of the '<em><b>Type</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Type</em>' reference isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
      * @return the value of the '<em>Type</em>' reference.
      * @see #setType(Type)
      * @see de.fhdo.ddmm.technology.mapping.MappingPackage#getTechnologySpecificDataFieldTypeMapping_Type()

@@ -48,6 +48,7 @@ import de.fhdo.ddmm.technology.mapping.ParameterMapping
 import java.util.Map
 import de.fhdo.ddmm.technology.TechnologyPackage
 import de.fhdo.ddmm.technology.TechnologySpecificPropertyValueAssignment
+import de.fhdo.ddmm.technology.mapping.TechnologySpecificEndpoint
 
 /**
  * This class implements a custom scope provider for the Mapping DSL.
@@ -71,6 +72,9 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
 
             /* Technology-specific protocols */
             TechnologySpecificProtocol: context.getScope(reference)
+
+            /* Technology-specific endpoints */
+            TechnologySpecificEndpoint: context.getScope(reference)
 
             /* Interface mappings */
             InterfaceMapping: context.getScope(reference)
@@ -112,19 +116,17 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
      */
     private def getScope(MicroserviceMapping mapping, EReference reference) {
         switch (reference) {
-            /* Annotated technologies */
-            case MappingPackage::Literals.MICROSERVICE_MAPPING__TECHNOLOGY:
-                return mapping.getScopeForImportsOfType(Technology)
             /* Import of ImportedMicroservices */
             case MappingPackage::Literals.IMPORTED_MICROSERVICE__IMPORT:
                 return mapping.getScopeForImportsOfType(ServiceModel)
-            /* Endpoint protocols */
-            case MappingPackage::Literals.TECHNOLOGY_SPECIFIC_PROTOCOL__PROTOCOL:
-                return mapping.getScopeForTechnologySpecificProtocols()
-            /* Imported aspects */
-            case MappingPackage.Literals
-                .TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__IMPORTED_ASPECT:
-                return mapping.getScopeForImportedAspect()
+
+            /* Protocol technologies */
+            case MappingPackage::Literals.TECHNOLOGY_SPECIFIC_PROTOCOL__TECHNOLOGY:
+                return mapping.getScopeForAnnotatedTechnologies()
+
+            /* Aspect technologies */
+            case MappingPackage::Literals.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__TECHNOLOGY:
+                return mapping.getScopeForAnnotatedTechnologies()
         }
 
         return null
@@ -138,13 +140,14 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
             /* Interfaces */
             case MappingPackage::Literals.INTERFACE_MAPPING__INTERFACE:
                 return mapping.getScopeForInterfaces()
-            /* Endpoint protocols */
-            case MappingPackage::Literals.TECHNOLOGY_SPECIFIC_PROTOCOL__PROTOCOL:
-                return mapping.getScopeForTechnologySpecificProtocols()
-            /* Imported aspects */
-            case MappingPackage.Literals
-                .TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__IMPORTED_ASPECT:
-                return mapping.getScopeForImportedAspect()
+
+            /* Protocol technologies */
+            case MappingPackage::Literals.TECHNOLOGY_SPECIFIC_PROTOCOL__TECHNOLOGY:
+                return mapping.microserviceMapping.getScopeForAnnotatedTechnologies()
+
+            /* Aspect technologies */
+            case MappingPackage::Literals.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__TECHNOLOGY:
+                return mapping.microserviceMapping.getScopeForAnnotatedTechnologies()
         }
 
         return null
@@ -158,13 +161,14 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
             /* Operation */
             case MappingPackage::Literals.OPERATION_MAPPING__OPERATION:
                 return mapping.getScopeForOperations()
-            /* Endpoint protocols */
-            case MappingPackage::Literals.TECHNOLOGY_SPECIFIC_PROTOCOL__PROTOCOL:
-                return mapping.getScopeForTechnologySpecificProtocols()
-            /* Imported aspects */
-            case MappingPackage.Literals
-                .TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__IMPORTED_ASPECT:
-                return mapping.getScopeForImportedAspect()
+
+            /* Protocol technologies */
+            case MappingPackage::Literals.TECHNOLOGY_SPECIFIC_PROTOCOL__TECHNOLOGY:
+                return mapping.microserviceMapping.getScopeForAnnotatedTechnologies()
+
+            /* Aspect technologies */
+            case MappingPackage::Literals.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__TECHNOLOGY:
+                return mapping.microserviceMapping.getScopeForAnnotatedTechnologies()
         }
 
         return null
@@ -178,13 +182,14 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
             /* Operation */
             case MappingPackage::Literals.REFERRED_OPERATION_MAPPING__OPERATION:
                 return mapping.getScopeForReferredOperations()
-            /* Endpoint protocols */
-            case MappingPackage::Literals.TECHNOLOGY_SPECIFIC_PROTOCOL__PROTOCOL:
-                return mapping.getScopeForTechnologySpecificProtocols()
-            /* Imported aspects */
-            case MappingPackage.Literals
-                .TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__IMPORTED_ASPECT:
-                return mapping.getScopeForImportedAspect()
+
+            /* Protocol technologies */
+            case MappingPackage::Literals.TECHNOLOGY_SPECIFIC_PROTOCOL__TECHNOLOGY:
+                return mapping.microserviceMapping.getScopeForAnnotatedTechnologies()
+
+            /* Aspect technologies */
+            case MappingPackage::Literals.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__TECHNOLOGY:
+                return mapping.microserviceMapping.getScopeForAnnotatedTechnologies()
         }
 
         return null
@@ -195,11 +200,7 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
      */
     private def getScope(ImportedMicroservice microservice, EReference reference) {
         switch (reference) {
-            /*
-             * Scope for service imports. The scope provider will delegate the scope resolution with
-             * ImportedMicroservice as the context, if its import feature was set. Otherwise, the
-             * context will be an instance of MicroserviceMapping (see above).
-             */
+            /* Scope for service imports */
             case MappingPackage::Literals.IMPORTED_MICROSERVICE__IMPORT:
                 return microservice.getScopeForImportsOfType(ServiceModel)
 
@@ -217,12 +218,20 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     private def getScope(TechnologySpecificProtocolSpecification protocolSpecification,
         EReference reference) {
         switch (reference) {
-            /* Protocols */
-            case MappingPackage::Literals.TECHNOLOGY_SPECIFIC_PROTOCOL__PROTOCOL:
-                return protocolSpecification.getScopeForTechnologySpecificProtocols()
+            /* Technologies */
+            case MappingPackage::Literals.TECHNOLOGY_SPECIFIC_PROTOCOL__TECHNOLOGY:
+                return EcoreUtil2.getContainerOfType(protocolSpecification, MicroserviceMapping)
+                    .getScopeForAnnotatedTechnologies()
         }
 
         return null
+    }
+
+    /**
+     * Build scope that comprises annotated technologies of an annotatable concept instance
+     */
+    private def getScopeForAnnotatedTechnologies(MicroserviceMapping mapping) {
+        return Scopes::scopeFor(mapping.technologies)
     }
 
     /**
@@ -230,16 +239,27 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
      */
     private def getScope(TechnologySpecificProtocol protocol, EReference reference) {
         switch (reference) {
-            /*
-             * Protocols. TechnologySpecificProtocol will be the context, if the feature
-             * technologySpecificProtocol of TechnologySpecificProtocolSpecification was set.
-             */
+            /* Protocols */
             case MappingPackage::Literals.TECHNOLOGY_SPECIFIC_PROTOCOL__PROTOCOL:
                 return protocol.getScopeForTechnologySpecificProtocols()
 
             /* Data formats */
             case MappingPackage::Literals.TECHNOLOGY_SPECIFIC_PROTOCOL__DATA_FORMAT:
                 return protocol.getScopeForDataFormats()
+        }
+
+        return null
+    }
+
+    /**
+     * Build scope for technology-specific endpoints and the given reference
+     */
+    private def getScope(TechnologySpecificEndpoint endpoint, EReference reference) {
+        switch (reference) {
+            /* Technologies */
+            case MappingPackage::Literals.TECHNOLOGY_SPECIFIC_PROTOCOL__TECHNOLOGY:
+                return EcoreUtil2.getContainerOfType(endpoint, MicroserviceMapping)
+                    .getScopeForAnnotatedTechnologies()
         }
 
         return null
@@ -253,13 +273,19 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
             /* Parameters */
             case MappingPackage::Literals.PARAMETER_MAPPING__PARAMETER:
                 return mapping.getScopeForPrimitiveParameters()
+
             /* Types */
             case MappingPackage::Literals.PRIMITIVE_PARAMETER_MAPPING__PRIMITIVE_TYPE:
                 return mapping.getScopeForParameterTypes()
-            /* Imported aspects */
-            case MappingPackage.Literals
-                .TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__IMPORTED_ASPECT:
-                return mapping.getScopeForImportedAspect()
+
+            /* Aspect technologies */
+            case MappingPackage::Literals.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__TECHNOLOGY:
+                return EcoreUtil2.getContainerOfType(mapping, MicroserviceMapping)
+                    .getScopeForAnnotatedTechnologies()
+
+            /* Data type technologies */
+            case MappingPackage::Literals.PRIMITIVE_PARAMETER_MAPPING__TECHNOLOGY:
+                return mapping.getScopeForTypeDefinitionTechnology()
         }
 
         return null
@@ -273,17 +299,24 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
             /* Parameters */
             case MappingPackage::Literals.PARAMETER_MAPPING__PARAMETER:
                 return mapping.getScopeForComplexParameters()
+
+            /* Aspect technologies */
+            case MappingPackage::Literals.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__TECHNOLOGY:
+                return EcoreUtil2.getContainerOfType(mapping, MicroserviceMapping)
+                    .getScopeForAnnotatedTechnologies()
+
+            /* Data type technologies */
+            case MappingPackage::Literals.COMPLEX_PARAMETER_MAPPING__TECHNOLOGY:
+                return mapping.getScopeForTypeDefinitionTechnology()
+
             /* Technology-specific complex types for parameters */
             case MappingPackage::Literals
                 .COMPLEX_PARAMETER_MAPPING__TECHNOLOGY_SPECIFIC_COMPLEX_TYPE:
                 return mapping.getScopeForParameterTypes()
+
             /* Data fields */
             case MappingPackage::Literals.DATA_FIELD_HIERARCHY__DATA_FIELDS:
                 return mapping.getScopeForComplexDataFields()
-            /* Imported aspects */
-            case MappingPackage.Literals
-                .TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__IMPORTED_ASPECT:
-                return mapping.getScopeForImportedAspect()
         }
 
         return null
@@ -294,13 +327,13 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
      */
     private def getScope(TechnologySpecificDataFieldTypeMapping mapping, EReference reference) {
         switch (reference) {
+            /* Data type technologies */
+            case MappingPackage::Literals.TECHNOLOGY_SPECIFIC_DATA_FIELD_TYPE_MAPPING__TECHNOLOGY:
+                return mapping.getScopeForTypeDefinitionTechnology()
+
             /* Types */
             case MappingPackage::Literals.TECHNOLOGY_SPECIFIC_DATA_FIELD_TYPE_MAPPING__TYPE:
                 return mapping.getScopeForParameterTypes()
-            /* Imported aspects */
-            case MappingPackage.Literals
-                .TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__IMPORTED_ASPECT:
-                return mapping.getScopeForImportedAspect()
         }
 
         return null
@@ -370,11 +403,20 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     private def getScopeForParameterTypes(EObject mapping) {
         /* Determine type of mapped parameter */
         var Type parameterType
+        var Import technology
         switch (mapping) {
-            PrimitiveParameterMapping: parameterType = mapping.parameter.primitiveType
-            ComplexParameterMapping: parameterType = mapping.parameter.importedType.type
-            TechnologySpecificDataFieldTypeMapping:
+            PrimitiveParameterMapping: {
+                parameterType = mapping.parameter.effectiveType
+                technology = mapping.technology
+            }
+            ComplexParameterMapping: {
+                parameterType = mapping.parameter.importedType.type
+                technology = mapping.technology
+            }
+            TechnologySpecificDataFieldTypeMapping: {
                 parameterType = mapping.dataFieldHierarchy.dataFields.last.effectiveType
+                technology = mapping.technology
+            }
             default: return IScope.NULLSCOPE
         }
 
@@ -391,21 +433,20 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
         // Parameter is of primitive type
         if (parameterType instanceof PrimitiveType) {
             getImportedConcepts = [primitiveTypes.map[it as Type]]
-            getConceptNameParts = [#[(it as TechnologySpecificPrimitiveType).name]]
+            getConceptNameParts = [(it as TechnologySpecificPrimitiveType).qualifiedNameParts]
         } else if (parameterType instanceof ComplexType) {
             // Parameter is of structure type
             if (parameterType.isStructure) {
                 getImportedConcepts = [dataStructures.map[it as Type]]
-                getConceptNameParts = [#[(it as TechnologySpecificDataStructure).name]]
+                getConceptNameParts = [(it as TechnologySpecificDataStructure).qualifiedNameParts]
             // Parameter is of list type
             } else if (parameterType.isStructuredList || parameterType.isPrimitiveList) {
                 getImportedConcepts = [listTypes.map[it as Type]]
-                getConceptNameParts = [#[(it as TechnologySpecificListType).name]]
+                getConceptNameParts = [(it as TechnologySpecificListType).qualifiedNameParts]
             }
         }
 
         /* Perform actual scope building */
-        val technology = EcoreUtil2.getContainerOfType(mapping, MicroserviceMapping).technology
         return DdmmUtils.getScopeForPossiblyImportedConcept(
             technology,
             null,
@@ -414,6 +455,29 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
             getImportedConcepts,
             getConceptNameParts
         )
+    }
+
+    /**
+     * Build scope for microservice mapping technology that defines types
+     */
+    private def getScopeForTypeDefinitionTechnology(EObject context) {
+        val mapping = if (context instanceof MicroserviceMapping)
+                context
+            else
+                EcoreUtil2.getContainerOfType(context, MicroserviceMapping)
+
+        if (mapping === null)
+            return IScope.NULLSCOPE
+
+        val typeDefinitionTechnology = mapping.technologies.findFirst[
+            val modelRoot = DdmmUtils.getImportedModelRoot(eResource, importURI, Technology)
+            modelRoot !== null && !modelRoot.primitiveTypes.empty
+        ]
+
+        if (typeDefinitionTechnology === null)
+            return IScope.NULLSCOPE
+
+        return Scopes::scopeFor(#[typeDefinitionTechnology])
     }
 
     /**
@@ -495,38 +559,15 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     /**
      * Build scope for technology-specific protocols
      */
-    private def getScopeForTechnologySpecificProtocols(EObject context) {
-        /*
-         * Determine technology and, if possible, technology-specific protocol specification. In
-         * case the latter can be determined, we take its communication type into account for
-         * creating the scope of available protocols.
-         */
-        var Import technology
-        var TechnologySpecificProtocolSpecification protocolSpecification
-        switch(context) {
-            MicroserviceMapping: technology = context.technology
-            InterfaceMapping: technology = context.microserviceMapping.technology
-            OperationMapping: technology = context.microserviceMapping.technology
-            ReferredOperationMapping: technology = context.microserviceMapping.technology
-            TechnologySpecificProtocol: {
-                val protocol = context as TechnologySpecificProtocol
-                protocolSpecification = protocol.protocolSpecification
-                technology = EcoreUtil2.getContainerOfType(protocol, MicroserviceMapping).technology
-            }
-            TechnologySpecificProtocolSpecification: {
-                protocolSpecification = context as TechnologySpecificProtocolSpecification
-                technology = EcoreUtil2.getContainerOfType(protocolSpecification,
-                    MicroserviceMapping).technology
-            }
-        }
-
-        if (technology === null)
+    private def getScopeForTechnologySpecificProtocols(TechnologySpecificProtocol protocol) {
+        if (protocol.technology === null)
             return IScope.NULLSCOPE
 
         /*
          * Create the scope, possibly with filtering of communication types if the context is or
          * encapsulates a protocol specification
          */
+        val protocolSpecification = protocol.protocolSpecification
         val forCommunicationType = if (protocolSpecification !== null)
             protocolSpecification.communicationType
 
@@ -534,12 +575,12 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
             #[[forCommunicationType == communicationType]]
 
         return DdmmUtils.getScopeForPossiblyImportedConcept(
-            technology,
+            protocol.technology,
             null,
             Technology,
-            technology.importURI,
+            protocol.technology.importURI,
             [protocols.toList],
-            [#[name]],
+            [qualifiedNameParts],
             communicationTypeFilter
         )
     }
@@ -590,9 +631,13 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     private def getScope(TechnologySpecificImportedServiceAspect importedAspect,
         EReference reference) {
         switch (reference) {
-            /* Imported aspects */
-            case MappingPackage.Literals
-                .TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__IMPORTED_ASPECT:
+            /* Technologies */
+            case MappingPackage::Literals.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__TECHNOLOGY:
+                return EcoreUtil2.getContainerOfType(importedAspect, MicroserviceMapping)
+                    .getScopeForAnnotatedTechnologies()
+
+            /* Aspects */
+            case MappingPackage.Literals.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__ASPECT:
                 return importedAspect.getScopeForImportedAspect()
 
             /* Properties */
@@ -608,11 +653,7 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
      */
     private def getScope(TechnologySpecificPropertyValueAssignment assignment, EReference reference) {
         switch (reference) {
-            /*
-             * Properties. The scope provider will pass TechnologySpecificPropertyValueAssignment as
-             * context of a value assignment to a service aspect property, if the property received
-             * a value.
-             */
+            /* Properties */
             case TechnologyPackage.Literals.TECHNOLOGY_SPECIFIC_PROPERTY_VALUE_ASSIGNMENT__PROPERTY:
                 return EcoreUtil2.getContainerOfType(assignment,
                     TechnologySpecificImportedServiceAspect).getScopeForAspectProperty()
@@ -625,32 +666,25 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
      * Build scope for aspect properties
      */
     private def getScopeForAspectProperty(TechnologySpecificImportedServiceAspect importedAspect) {
-        return Scopes::scopeFor(importedAspect.importedAspect.properties)
+        return Scopes::scopeFor(importedAspect.aspect.properties)
     }
 
     /**
      * Build scope for aspect of imported service aspect
      */
-    private def getScopeForImportedAspect(EObject context) {
-        val microserviceMapping = if (context instanceof MicroserviceMapping)
-                context
-            else
-                EcoreUtil2.getContainerOfType(context, MicroserviceMapping)
-        if (microserviceMapping.technology === null)
+    private def getScopeForImportedAspect(TechnologySpecificImportedServiceAspect aspect) {
+        if (aspect.technology === null)
             return IScope.NULLSCOPE
 
         var ExchangePattern forExchangePattern
         var CommunicationType forCommunicationType
         var List<Pair<Protocol, DataFormat>> forProtocolsAndDataFormats
-        val mapping = if (context instanceof TechnologySpecificImportedServiceAspect)
-                context.eContainer
-            else
-                context
 
         /*
          * Determine the join point and relevant pointcut values depending on the container in which
          * the aspect is used
          */
+        val mapping = aspect.eContainer
         val joinPoint = switch (mapping) {
             MicroserviceMapping: {
                 forProtocolsAndDataFormats = mapping.effectiveProtocolsAndDataFormats
@@ -700,9 +734,8 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
          * Get the contents of the resource, i.e., the technology model, from which aspects may be
          * imported
          */
-        val technology = microserviceMapping.technology
-        val resourceContents = DdmmUtils.getImportedModelContents(technology.eResource,
-            technology.importURI)
+        val resourceContents = DdmmUtils.getImportedModelContents(aspect.technology.eResource,
+            aspect.technology.importURI)
         if (resourceContents === null || resourceContents.empty)
             return IScope.NULLSCOPE
 
@@ -713,7 +746,8 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
             .filter[joinPoints.contains(joinPoint)].toList
         val scopeAspects = filterMatchingAspects(declaredAspectsForJoinPoint, forExchangePattern,
             forCommunicationType, forProtocolsAndDataFormats)
-        return Scopes::scopeFor(scopeAspects)
+        return Scopes::scopeFor(scopeAspects, [QualifiedName.create(it.qualifiedNameParts)],
+            IScope.NULLSCOPE)
     }
 
     /**
@@ -744,30 +778,27 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
 
         if (missingCommunicationTypes.empty)
             return results
+
         /*
          * Complement effective protocols and data formats with the default protocols and data
-         * formats of the annotated technology for missing communication types
+         * formats of the annotated technologies for missing communication types
          */
-        val technology = mapping.technology
-        val resourceContents = DdmmUtils.getImportedModelContents(technology.eResource,
-            technology.importURI)
-        if (resourceContents === null || resourceContents.empty)
-            return results
+        mapping.technologies.forEach[
+            val technologyModel = DdmmUtils.getImportedModelRoot(eResource, importURI, Technology)
+            missingCommunicationTypes.forEach[communicationType |
+                var Protocol defaultProtocol
+                var DataFormat defaultDataFormat
 
-        val technologyModel = resourceContents.get(0) as Technology
-        missingCommunicationTypes.forEach[communicationType |
-            var Protocol defaultProtocol
-            var DataFormat defaultDataFormat
+                defaultProtocol = technologyModel.protocols
+                    .filter[it.communicationType == communicationType]
+                    .findFirst[^default]
 
-            defaultProtocol = technologyModel.protocols
-                .filter[it.communicationType == communicationType]
-                .findFirst[^default]
+                if (defaultProtocol !== null)
+                    defaultDataFormat = defaultProtocol.defaultFormat
 
-            if (defaultProtocol !== null)
-                defaultDataFormat = defaultProtocol.defaultFormat
-
-            if (defaultProtocol !== null)
-                results.put(communicationType, {defaultProtocol -> defaultDataFormat})
+                if (defaultProtocol !== null)
+                    results.put(communicationType, {defaultProtocol -> defaultDataFormat})
+            ]
         ]
 
         return results

@@ -19,6 +19,7 @@ import de.fhdo.ddmm.technology.CommunicationType;
 import de.fhdo.ddmm.technology.DataFormat;
 import de.fhdo.ddmm.technology.Protocol;
 import de.fhdo.ddmm.technology.ServiceAspect;
+import de.fhdo.ddmm.technology.Technology;
 import de.fhdo.ddmm.technology.TechnologySpecificPrimitiveType;
 import de.fhdo.ddmm.technology.TechnologySpecificProperty;
 import de.fhdo.ddmm.technology.TechnologySpecificPropertyValueAssignment;
@@ -79,13 +80,89 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
     final Function<Import, String> _function = (Import it) -> {
       return it.getImportURI();
     };
-    final int duplicateIndex = DdmmUtils.<Import, String>getDuplicateIndex(model.getImports(), _function);
-    if ((duplicateIndex == (-1))) {
+    final Integer duplicateIndex = DdmmUtils.<Import, String>getDuplicateIndex(model.getImports(), _function);
+    if (((duplicateIndex).intValue() == (-1))) {
       return;
     }
-    final Import duplicate = model.getImports().get(duplicateIndex);
+    final Import duplicate = model.getImports().get((duplicateIndex).intValue());
     this.error("File is already being imported", duplicate, 
       ServicePackage.Literals.IMPORT__IMPORT_URI);
+  }
+  
+  /**
+   * Check that technology is assigned only once to a microservice mapping
+   */
+  @Check
+  public void checkTechnologyUniqueness(final MicroserviceMapping mapping) {
+    final Function<Import, Import> _function = (Import it) -> {
+      return it;
+    };
+    final Integer duplicateIndex = DdmmUtils.<Import, Import>getDuplicateIndex(mapping.getTechnologies(), _function);
+    if (((duplicateIndex).intValue() > (-1))) {
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("Duplicate technology assignment");
+      this.error(_builder.toString(), 
+        MappingPackage.Literals.MICROSERVICE_MAPPING__TECHNOLOGIES, (duplicateIndex).intValue());
+    }
+  }
+  
+  /**
+   * Check that only one annotated technology contains type definitions
+   */
+  @Check
+  public void checkUniqueTypeDefinitionTechnology(final MicroserviceMapping mapping) {
+    String typeDefinitionTechnologyName = null;
+    int _size = mapping.getTechnologies().size();
+    ExclusiveRange _doubleDotLessThan = new ExclusiveRange(0, _size, true);
+    for (final Integer i : _doubleDotLessThan) {
+      {
+        final Import technologyImport = mapping.getTechnologies().get((i).intValue());
+        final Technology technologyModel = DdmmUtils.<Technology>getImportedModelRoot(technologyImport.eResource(), 
+          technologyImport.getImportURI(), Technology.class);
+        if ((((!technologyModel.getPrimitiveTypes().isEmpty()) || 
+          (!technologyModel.getListTypes().isEmpty())) || 
+          (!technologyModel.getDataStructures().isEmpty()))) {
+          if ((typeDefinitionTechnologyName == null)) {
+            typeDefinitionTechnologyName = technologyModel.getName();
+          } else {
+            StringConcatenation _builder = new StringConcatenation();
+            _builder.append("Technology \"");
+            _builder.append(typeDefinitionTechnologyName);
+            _builder.append("\" already defines ");
+            StringConcatenation _builder_1 = new StringConcatenation();
+            _builder_1.append("technology-specific types. Only one technology per microservice may ");
+            String _plus = (_builder.toString() + _builder_1);
+            StringConcatenation _builder_2 = new StringConcatenation();
+            _builder_2.append("define technology-specific types.");
+            String _plus_1 = (_plus + _builder_2);
+            this.error(_plus_1, 
+              MappingPackage.Literals.MICROSERVICE_MAPPING__TECHNOLOGIES, (i).intValue());
+          }
+        }
+      }
+    }
+  }
+  
+  /**
+   * Check that annotated technologies define not only deployment-related concepts
+   */
+  @Check
+  public void checkTechnologiesForServiceConcepts(final MicroserviceMapping mapping) {
+    int _size = mapping.getTechnologies().size();
+    ExclusiveRange _doubleDotLessThan = new ExclusiveRange(0, _size, true);
+    for (final Integer i : _doubleDotLessThan) {
+      {
+        final Import technologyImport = mapping.getTechnologies().get((i).intValue());
+        final Technology technologyModel = DdmmUtils.<Technology>getImportedModelRoot(technologyImport.eResource(), 
+          technologyImport.getImportURI(), Technology.class);
+        if (((technologyModel.getPrimitiveTypes().isEmpty() && 
+          technologyModel.getProtocols().isEmpty()) && 
+          technologyModel.getServiceAspects().isEmpty())) {
+          this.error("Technology does not specify service-related concepts", 
+            MappingPackage.Literals.MICROSERVICE_MAPPING__TECHNOLOGIES, (i).intValue());
+        }
+      }
+    }
   }
   
   /**
@@ -94,14 +171,14 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
   @Check
   public void checkMappingUniqueness(final TechnologyMapping model) {
     final Function1<MicroserviceMapping, Boolean> _function = (MicroserviceMapping it) -> {
-      return Boolean.valueOf(((it.getTechnology() != null) && (it.getTechnology().getName() != null)));
+      boolean _isEmpty = it.getTechnologies().isEmpty();
+      return Boolean.valueOf((!_isEmpty));
     };
     final List<MicroserviceMapping> modelMappingsWithTechnology = IterableExtensions.<MicroserviceMapping>toList(IterableExtensions.<MicroserviceMapping>filter(model.getMappings(), _function));
     final Function<MicroserviceMapping, String> _function_1 = (MicroserviceMapping it) -> {
       String _xblockexpression = null;
       {
         final ArrayList<String> qualifiedNameSegments = CollectionLiterals.<String>newArrayList();
-        qualifiedNameSegments.add(it.getTechnology().getName());
         qualifiedNameSegments.addAll(it.getMicroservice().getMicroservice().getQualifiedNameParts());
         _xblockexpression = QualifiedName.create(qualifiedNameSegments).toString();
       }
@@ -232,14 +309,14 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
     final Function<String, String> _function = (String it) -> {
       return it;
     };
-    final int duplicateIndex = DdmmUtils.<String, String>getDuplicateIndex(endpoint.getAddresses(), _function);
-    if ((duplicateIndex > (-1))) {
-      final String duplicate = endpoint.getAddresses().get(duplicateIndex);
+    final Integer duplicateIndex = DdmmUtils.<String, String>getDuplicateIndex(endpoint.getAddresses(), _function);
+    if (((duplicateIndex).intValue() > (-1))) {
+      final String duplicate = endpoint.getAddresses().get((duplicateIndex).intValue());
       StringConcatenation _builder = new StringConcatenation();
       _builder.append("Duplicate address ");
       _builder.append(duplicate);
       this.error(_builder.toString(), endpoint, 
-        MappingPackage.Literals.TECHNOLOGY_SPECIFIC_ENDPOINT__ADDRESSES, duplicateIndex);
+        MappingPackage.Literals.TECHNOLOGY_SPECIFIC_ENDPOINT__ADDRESSES, (duplicateIndex).intValue());
     }
   }
   
@@ -396,10 +473,10 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
     final Function<ParameterMapping, Parameter> _function = (ParameterMapping it) -> {
       return it.getParameter();
     };
-    final int duplicateIndex = DdmmUtils.<ParameterMapping, Parameter>getDuplicateIndex(mapping.getParameterMappings(), _function);
-    if ((duplicateIndex > (-1))) {
-      final ParameterMapping duplicateMapping = mapping.getParameterMappings().get(duplicateIndex);
-      final Parameter duplicateParameter = mapping.getParameterMappings().get(duplicateIndex).getParameter();
+    final Integer duplicateIndex = DdmmUtils.<ParameterMapping, Parameter>getDuplicateIndex(mapping.getParameterMappings(), _function);
+    if (((duplicateIndex).intValue() > (-1))) {
+      final ParameterMapping duplicateMapping = mapping.getParameterMappings().get((duplicateIndex).intValue());
+      final Parameter duplicateParameter = mapping.getParameterMappings().get((duplicateIndex).intValue()).getParameter();
       StringConcatenation _builder = new StringConcatenation();
       _builder.append("Duplicate mapping for parameter ");
       String _name = duplicateParameter.getName();
@@ -416,9 +493,9 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
     final Function<TechnologySpecificDataFieldTypeMapping, DataField> _function = (TechnologySpecificDataFieldTypeMapping it) -> {
       return IterableExtensions.<DataField>last(it.getDataFieldHierarchy().getDataFields());
     };
-    final int duplicateIndex = DdmmUtils.<TechnologySpecificDataFieldTypeMapping, DataField>getDuplicateIndex(mapping.getDataFieldMappings(), _function);
-    if ((duplicateIndex > (-1))) {
-      final TechnologySpecificDataFieldTypeMapping duplicateMapping = mapping.getDataFieldMappings().get(duplicateIndex);
+    final Integer duplicateIndex = DdmmUtils.<TechnologySpecificDataFieldTypeMapping, DataField>getDuplicateIndex(mapping.getDataFieldMappings(), _function);
+    if (((duplicateIndex).intValue() > (-1))) {
+      final TechnologySpecificDataFieldTypeMapping duplicateMapping = mapping.getDataFieldMappings().get((duplicateIndex).intValue());
       final DataField duplicateField = IterableExtensions.<DataField>last(duplicateMapping.getDataFieldHierarchy().getDataFields());
       StringConcatenation _builder = new StringConcatenation();
       _builder.append("Duplicate mapping for data field ");
@@ -467,11 +544,11 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
           CommunicationType _communicationType = it.getCommunicationType();
           return Objects.equal(currentCommunicationType, _communicationType);
         };
-        final int duplicateIndex = DdmmUtils.<TechnologySpecificProtocolSpecification, CommunicationType>getDuplicateIndex(protocolSpecifications, _function, _function_1);
-        if ((duplicateIndex == (-1))) {
+        final Integer duplicateIndex = DdmmUtils.<TechnologySpecificProtocolSpecification, CommunicationType>getDuplicateIndex(protocolSpecifications, _function, _function_1);
+        if (((duplicateIndex).intValue() == (-1))) {
           return;
         }
-        final TechnologySpecificProtocolSpecification duplicate = protocolSpecifications.get(duplicateIndex);
+        final TechnologySpecificProtocolSpecification duplicate = protocolSpecifications.get((duplicateIndex).intValue());
         StringConcatenation _builder = new StringConcatenation();
         _builder.append("There must not be more than one ");
         _builder.append(currentCommunicationTypeName);
@@ -488,11 +565,11 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
    * Helper to check that service-specific mappings are unique
    */
   private <T extends EObject> void checkMappingUniqueness(final List<T> mappingsToCheck, final String mappingName, final Function<T, String> getMappingObjectName, final EReference mappingFeature) {
-    final int duplicateIndex = DdmmUtils.<T, String>getDuplicateIndex(mappingsToCheck, getMappingObjectName);
-    if ((duplicateIndex == (-1))) {
+    final Integer duplicateIndex = DdmmUtils.<T, String>getDuplicateIndex(mappingsToCheck, getMappingObjectName);
+    if (((duplicateIndex).intValue() == (-1))) {
       return;
     }
-    final T duplicate = mappingsToCheck.get(duplicateIndex);
+    final T duplicate = mappingsToCheck.get((duplicateIndex).intValue());
     StringConcatenation _builder = new StringConcatenation();
     _builder.append(mappingName);
     _builder.append(" is already mapped");
@@ -539,15 +616,16 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
               DdmmUtils.<TechnologySpecificEndpoint, TechnologyMapping>calculateRelativeQualifiedNameParts(duplicateEndpoint, duplicateContainerNameParts, TechnologyMapping.class, endpoint, currentEndpointContainerNameParts, TechnologyMapping.class)).toString();
             StringConcatenation _builder = new StringConcatenation();
             _builder.append("Address is already specified for protocol ");
-            _builder.append(duplicateProtocolName);
-            _builder.append(" ");
             StringConcatenation _builder_1 = new StringConcatenation();
-            _builder_1.append("on ");
-            _builder_1.append(containerTypeName);
-            _builder_1.append(" ");
-            _builder_1.append(relativeDuplicateName);
+            _builder_1.append(duplicateProtocolName);
+            _builder_1.append(" on ");
             String _plus_1 = (_builder.toString() + _builder_1);
-            this.error(_plus_1, endpoint, 
+            StringConcatenation _builder_2 = new StringConcatenation();
+            _builder_2.append(containerTypeName);
+            _builder_2.append(" ");
+            _builder_2.append(relativeDuplicateName);
+            String _plus_2 = (_plus_1 + _builder_2);
+            this.error(_plus_2, endpoint, 
               MappingPackage.Literals.TECHNOLOGY_SPECIFIC_ENDPOINT__ADDRESSES, (i).intValue());
           }
         };
@@ -631,16 +709,24 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
    * Check uniqueness of aspects
    */
   @Check
-  public void checkAspectsUniqueness(final TechnologySpecificImportedServiceAspect aspect) {
-    final List<TechnologySpecificImportedServiceAspect> allAspectsOfContainer = EcoreUtil2.<TechnologySpecificImportedServiceAspect>getAllContentsOfType(aspect.eContainer(), 
+  public void checkAspectsUniqueness(final TechnologySpecificImportedServiceAspect importedAspect) {
+    if (((((importedAspect.getTechnology() == null) || (importedAspect.getTechnology().getName() == null)) || 
+      (importedAspect.getAspect() == null)) || (importedAspect.getAspect().getName() == null))) {
+      return;
+    }
+    final List<TechnologySpecificImportedServiceAspect> allAspectsOfContainer = EcoreUtil2.<TechnologySpecificImportedServiceAspect>getAllContentsOfType(importedAspect.eContainer(), 
       TechnologySpecificImportedServiceAspect.class);
     final Function<TechnologySpecificImportedServiceAspect, String> _function = (TechnologySpecificImportedServiceAspect it) -> {
-      return it.getImportedAspect().getName();
+      return QualifiedName.create(importedAspect.getTechnology().getName(), it.getAspect().getName()).toString();
     };
-    final int duplicateIndex = DdmmUtils.<TechnologySpecificImportedServiceAspect, String>getDuplicateIndex(allAspectsOfContainer, _function);
-    if ((duplicateIndex > (-1))) {
-      final TechnologySpecificImportedServiceAspect duplicateAspect = allAspectsOfContainer.get(duplicateIndex);
-      this.error("Aspect was already specified", duplicateAspect, MappingPackage.Literals.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__IMPORTED_ASPECT);
+    final Predicate<TechnologySpecificImportedServiceAspect> _function_1 = (TechnologySpecificImportedServiceAspect it) -> {
+      String _name = it.getAspect().getName();
+      return (_name != null);
+    };
+    final Integer duplicateIndex = DdmmUtils.<TechnologySpecificImportedServiceAspect, String>getDuplicateIndex(allAspectsOfContainer, _function, _function_1);
+    if (((duplicateIndex).intValue() > (-1))) {
+      final TechnologySpecificImportedServiceAspect duplicateAspect = allAspectsOfContainer.get((duplicateIndex).intValue());
+      this.error("Aspect was already specified", duplicateAspect, MappingPackage.Literals.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__ASPECT);
     }
   }
   
@@ -654,12 +740,12 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
     if ((propertyValue == null)) {
       return;
     }
-    final int propertyCount = importedAspect.getImportedAspect().getProperties().size();
+    final int propertyCount = importedAspect.getAspect().getProperties().size();
     if ((propertyCount > 1)) {
       this.error("Ambiguous value assignment", importedAspect, MappingPackage.Literals.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__SINGLE_PROPERTY_VALUE);
     } else {
       if ((propertyCount == 1)) {
-        final TechnologySpecificProperty targetProperty = importedAspect.getImportedAspect().getProperties().get(0);
+        final TechnologySpecificProperty targetProperty = importedAspect.getAspect().getProperties().get(0);
         final PrimitiveType targetPropertyType = targetProperty.getType();
         boolean _isOfType = propertyValue.isOfType(targetPropertyType);
         boolean _not = (!_isOfType);
@@ -685,7 +771,7 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
    */
   @Check
   public void checkMandatoryAspectProperties(final TechnologySpecificImportedServiceAspect importedAspect) {
-    final ServiceAspect aspect = importedAspect.getImportedAspect();
+    final ServiceAspect aspect = importedAspect.getAspect();
     final EList<TechnologySpecificProperty> aspectProperties = aspect.getProperties();
     final Function1<TechnologySpecificProperty, Boolean> _function = (TechnologySpecificProperty it) -> {
       return Boolean.valueOf(it.isMandatory());
@@ -710,7 +796,7 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
         String _name = mandatoryProperty.getName();
         _builder.append(_name);
         _builder.append(" does not have value");
-        this.error(_builder.toString(), importedAspect, MappingPackage.Literals.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__IMPORTED_ASPECT);
+        this.error(_builder.toString(), importedAspect, MappingPackage.Literals.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__ASPECT);
       }
     } else {
       if ((!allMandatoryPropertiesHaveValues)) {
@@ -721,7 +807,7 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
           _builder_1.append(_name_1);
           _builder_1.append(" does not have value");
           this.error(_builder_1.toString(), importedAspect, 
-            MappingPackage.Literals.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__IMPORTED_ASPECT);
+            MappingPackage.Literals.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__ASPECT);
         };
         mandatoryPropertiesWithoutValues.forEach(_function_2);
       }

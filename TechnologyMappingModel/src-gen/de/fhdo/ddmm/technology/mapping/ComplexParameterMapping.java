@@ -4,6 +4,8 @@ package de.fhdo.ddmm.technology.mapping;
 
 import de.fhdo.ddmm.data.ComplexType;
 
+import de.fhdo.ddmm.service.Import;
+
 import org.eclipse.emf.common.util.EList;
 
 /**
@@ -20,6 +22,7 @@ import org.eclipse.emf.common.util.EList;
  * The following features are supported:
  * </p>
  * <ul>
+ *   <li>{@link de.fhdo.ddmm.technology.mapping.ComplexParameterMapping#getTechnology <em>Technology</em>}</li>
  *   <li>{@link de.fhdo.ddmm.technology.mapping.ComplexParameterMapping#getTechnologySpecificComplexType <em>Technology Specific Complex Type</em>}</li>
  *   <li>{@link de.fhdo.ddmm.technology.mapping.ComplexParameterMapping#getDataFieldMappings <em>Data Field Mappings</em>}</li>
  * </ul>
@@ -30,7 +33,7 @@ import org.eclipse.emf.common.util.EList;
  */
 public interface ComplexParameterMapping extends ParameterMapping {
     /**
-     * Returns the value of the '<em><b>Technology Specific Complex Type</b></em>' reference.
+     * Returns the value of the '<em><b>Technology</b></em>' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
@@ -40,10 +43,33 @@ public interface ComplexParameterMapping extends ParameterMapping {
      *          Ensured by: DSL validator.
      *     (C2) Maps either a technology-specific complex type directly or individual data fields.
      *          Ensured by: DSL scope provider.
-     *     (C3) Type must be a technology-specific complex type from the parent microservice
-     *          mapping's assigned technology.
-     *          Ensured by: DSL scope provider.
      * <!-- end-model-doc -->
+     * @return the value of the '<em>Technology</em>' reference.
+     * @see #setTechnology(Import)
+     * @see de.fhdo.ddmm.technology.mapping.MappingPackage#getComplexParameterMapping_Technology()
+     * @model
+     * @generated
+     */
+    Import getTechnology();
+
+    /**
+     * Sets the value of the '{@link de.fhdo.ddmm.technology.mapping.ComplexParameterMapping#getTechnology <em>Technology</em>}' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Technology</em>' reference.
+     * @see #getTechnology()
+     * @generated
+     */
+    void setTechnology(Import value);
+
+    /**
+     * Returns the value of the '<em><b>Technology Specific Complex Type</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Technology Specific Complex Type</em>' reference isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
      * @return the value of the '<em>Technology Specific Complex Type</em>' reference.
      * @see #setTechnologySpecificComplexType(ComplexType)
      * @see de.fhdo.ddmm.technology.mapping.MappingPackage#getComplexParameterMapping_TechnologySpecificComplexType()

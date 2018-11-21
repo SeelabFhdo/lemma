@@ -2,6 +2,8 @@
  */
 package de.fhdo.ddmm.technology.mapping.impl;
 
+import de.fhdo.ddmm.service.Import;
+
 import de.fhdo.ddmm.technology.TechnologySpecificPrimitiveType;
 
 import de.fhdo.ddmm.technology.mapping.MappingPackage;
@@ -22,12 +24,23 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link de.fhdo.ddmm.technology.mapping.impl.PrimitiveParameterMappingImpl#getTechnology <em>Technology</em>}</li>
  *   <li>{@link de.fhdo.ddmm.technology.mapping.impl.PrimitiveParameterMappingImpl#getPrimitiveType <em>Primitive Type</em>}</li>
  * </ul>
  *
  * @generated
  */
 public class PrimitiveParameterMappingImpl extends ParameterMappingImpl implements PrimitiveParameterMapping {
+    /**
+     * The cached value of the '{@link #getTechnology() <em>Technology</em>}' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getTechnology()
+     * @generated
+     * @ordered
+     */
+    protected Import technology;
+
     /**
      * The cached value of the '{@link #getPrimitiveType() <em>Primitive Type</em>}' reference.
      * <!-- begin-user-doc -->
@@ -55,6 +68,44 @@ public class PrimitiveParameterMappingImpl extends ParameterMappingImpl implemen
     @Override
     protected EClass eStaticClass() {
         return MappingPackage.Literals.PRIMITIVE_PARAMETER_MAPPING;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public Import getTechnology() {
+        if (technology != null && technology.eIsProxy()) {
+            InternalEObject oldTechnology = (InternalEObject)technology;
+            technology = (Import)eResolveProxy(oldTechnology);
+            if (technology != oldTechnology) {
+                if (eNotificationRequired())
+                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, MappingPackage.PRIMITIVE_PARAMETER_MAPPING__TECHNOLOGY, oldTechnology, technology));
+            }
+        }
+        return technology;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public Import basicGetTechnology() {
+        return technology;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setTechnology(Import newTechnology) {
+        Import oldTechnology = technology;
+        technology = newTechnology;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.PRIMITIVE_PARAMETER_MAPPING__TECHNOLOGY, oldTechnology, technology));
     }
 
     /**
@@ -103,6 +154,9 @@ public class PrimitiveParameterMappingImpl extends ParameterMappingImpl implemen
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
+            case MappingPackage.PRIMITIVE_PARAMETER_MAPPING__TECHNOLOGY:
+                if (resolve) return getTechnology();
+                return basicGetTechnology();
             case MappingPackage.PRIMITIVE_PARAMETER_MAPPING__PRIMITIVE_TYPE:
                 if (resolve) return getPrimitiveType();
                 return basicGetPrimitiveType();
@@ -118,6 +172,9 @@ public class PrimitiveParameterMappingImpl extends ParameterMappingImpl implemen
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
+            case MappingPackage.PRIMITIVE_PARAMETER_MAPPING__TECHNOLOGY:
+                setTechnology((Import)newValue);
+                return;
             case MappingPackage.PRIMITIVE_PARAMETER_MAPPING__PRIMITIVE_TYPE:
                 setPrimitiveType((TechnologySpecificPrimitiveType)newValue);
                 return;
@@ -133,6 +190,9 @@ public class PrimitiveParameterMappingImpl extends ParameterMappingImpl implemen
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
+            case MappingPackage.PRIMITIVE_PARAMETER_MAPPING__TECHNOLOGY:
+                setTechnology((Import)null);
+                return;
             case MappingPackage.PRIMITIVE_PARAMETER_MAPPING__PRIMITIVE_TYPE:
                 setPrimitiveType((TechnologySpecificPrimitiveType)null);
                 return;
@@ -148,6 +208,8 @@ public class PrimitiveParameterMappingImpl extends ParameterMappingImpl implemen
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
+            case MappingPackage.PRIMITIVE_PARAMETER_MAPPING__TECHNOLOGY:
+                return technology != null;
             case MappingPackage.PRIMITIVE_PARAMETER_MAPPING__PRIMITIVE_TYPE:
                 return primitiveType != null;
         }

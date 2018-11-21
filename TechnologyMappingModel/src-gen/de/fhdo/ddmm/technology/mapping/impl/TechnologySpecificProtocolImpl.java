@@ -2,6 +2,8 @@
  */
 package de.fhdo.ddmm.technology.mapping.impl;
 
+import de.fhdo.ddmm.service.Import;
+
 import de.fhdo.ddmm.technology.DataFormat;
 import de.fhdo.ddmm.technology.Protocol;
 
@@ -29,6 +31,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link de.fhdo.ddmm.technology.mapping.impl.TechnologySpecificProtocolImpl#getTechnology <em>Technology</em>}</li>
  *   <li>{@link de.fhdo.ddmm.technology.mapping.impl.TechnologySpecificProtocolImpl#getProtocol <em>Protocol</em>}</li>
  *   <li>{@link de.fhdo.ddmm.technology.mapping.impl.TechnologySpecificProtocolImpl#getDataFormat <em>Data Format</em>}</li>
  *   <li>{@link de.fhdo.ddmm.technology.mapping.impl.TechnologySpecificProtocolImpl#getProtocolSpecification <em>Protocol Specification</em>}</li>
@@ -38,6 +41,16 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  * @generated
  */
 public class TechnologySpecificProtocolImpl extends MinimalEObjectImpl.Container implements TechnologySpecificProtocol {
+    /**
+     * The cached value of the '{@link #getTechnology() <em>Technology</em>}' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getTechnology()
+     * @generated
+     * @ordered
+     */
+    protected Import technology;
+
     /**
      * The cached value of the '{@link #getProtocol() <em>Protocol</em>}' reference.
      * <!-- begin-user-doc -->
@@ -75,6 +88,44 @@ public class TechnologySpecificProtocolImpl extends MinimalEObjectImpl.Container
     @Override
     protected EClass eStaticClass() {
         return MappingPackage.Literals.TECHNOLOGY_SPECIFIC_PROTOCOL;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public Import getTechnology() {
+        if (technology != null && technology.eIsProxy()) {
+            InternalEObject oldTechnology = (InternalEObject)technology;
+            technology = (Import)eResolveProxy(oldTechnology);
+            if (technology != oldTechnology) {
+                if (eNotificationRequired())
+                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, MappingPackage.TECHNOLOGY_SPECIFIC_PROTOCOL__TECHNOLOGY, oldTechnology, technology));
+            }
+        }
+        return technology;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public Import basicGetTechnology() {
+        return technology;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setTechnology(Import newTechnology) {
+        Import oldTechnology = technology;
+        technology = newTechnology;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.TECHNOLOGY_SPECIFIC_PROTOCOL__TECHNOLOGY, oldTechnology, technology));
     }
 
     /**
@@ -315,6 +366,9 @@ public class TechnologySpecificProtocolImpl extends MinimalEObjectImpl.Container
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
+            case MappingPackage.TECHNOLOGY_SPECIFIC_PROTOCOL__TECHNOLOGY:
+                if (resolve) return getTechnology();
+                return basicGetTechnology();
             case MappingPackage.TECHNOLOGY_SPECIFIC_PROTOCOL__PROTOCOL:
                 if (resolve) return getProtocol();
                 return basicGetProtocol();
@@ -339,6 +393,9 @@ public class TechnologySpecificProtocolImpl extends MinimalEObjectImpl.Container
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
+            case MappingPackage.TECHNOLOGY_SPECIFIC_PROTOCOL__TECHNOLOGY:
+                setTechnology((Import)newValue);
+                return;
             case MappingPackage.TECHNOLOGY_SPECIFIC_PROTOCOL__PROTOCOL:
                 setProtocol((Protocol)newValue);
                 return;
@@ -363,6 +420,9 @@ public class TechnologySpecificProtocolImpl extends MinimalEObjectImpl.Container
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
+            case MappingPackage.TECHNOLOGY_SPECIFIC_PROTOCOL__TECHNOLOGY:
+                setTechnology((Import)null);
+                return;
             case MappingPackage.TECHNOLOGY_SPECIFIC_PROTOCOL__PROTOCOL:
                 setProtocol((Protocol)null);
                 return;
@@ -387,6 +447,8 @@ public class TechnologySpecificProtocolImpl extends MinimalEObjectImpl.Container
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
+            case MappingPackage.TECHNOLOGY_SPECIFIC_PROTOCOL__TECHNOLOGY:
+                return technology != null;
             case MappingPackage.TECHNOLOGY_SPECIFIC_PROTOCOL__PROTOCOL:
                 return protocol != null;
             case MappingPackage.TECHNOLOGY_SPECIFIC_PROTOCOL__DATA_FORMAT:

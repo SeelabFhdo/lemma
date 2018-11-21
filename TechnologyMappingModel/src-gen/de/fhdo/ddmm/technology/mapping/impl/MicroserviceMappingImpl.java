@@ -30,6 +30,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
+import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -41,7 +42,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.fhdo.ddmm.technology.mapping.impl.MicroserviceMappingImpl#getTechnology <em>Technology</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.technology.mapping.impl.MicroserviceMappingImpl#getTechnologies <em>Technologies</em>}</li>
  *   <li>{@link de.fhdo.ddmm.technology.mapping.impl.MicroserviceMappingImpl#getMicroservice <em>Microservice</em>}</li>
  *   <li>{@link de.fhdo.ddmm.technology.mapping.impl.MicroserviceMappingImpl#getEndpoints <em>Endpoints</em>}</li>
  *   <li>{@link de.fhdo.ddmm.technology.mapping.impl.MicroserviceMappingImpl#getProtocols <em>Protocols</em>}</li>
@@ -56,14 +57,14 @@ import org.eclipse.emf.ecore.util.InternalEList;
  */
 public class MicroserviceMappingImpl extends MinimalEObjectImpl.Container implements MicroserviceMapping {
     /**
-     * The cached value of the '{@link #getTechnology() <em>Technology</em>}' reference.
+     * The cached value of the '{@link #getTechnologies() <em>Technologies</em>}' reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getTechnology()
+     * @see #getTechnologies()
      * @generated
      * @ordered
      */
-    protected Import technology;
+    protected EList<Import> technologies;
 
     /**
      * The cached value of the '{@link #getMicroservice() <em>Microservice</em>}' containment reference.
@@ -159,37 +160,11 @@ public class MicroserviceMappingImpl extends MinimalEObjectImpl.Container implem
      * <!-- end-user-doc -->
      * @generated
      */
-    public Import getTechnology() {
-        if (technology != null && technology.eIsProxy()) {
-            InternalEObject oldTechnology = (InternalEObject)technology;
-            technology = (Import)eResolveProxy(oldTechnology);
-            if (technology != oldTechnology) {
-                if (eNotificationRequired())
-                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, MappingPackage.MICROSERVICE_MAPPING__TECHNOLOGY, oldTechnology, technology));
-            }
+    public EList<Import> getTechnologies() {
+        if (technologies == null) {
+            technologies = new EObjectResolvingEList<Import>(Import.class, this, MappingPackage.MICROSERVICE_MAPPING__TECHNOLOGIES);
         }
-        return technology;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public Import basicGetTechnology() {
-        return technology;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setTechnology(Import newTechnology) {
-        Import oldTechnology = technology;
-        technology = newTechnology;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.MICROSERVICE_MAPPING__TECHNOLOGY, oldTechnology, technology));
+        return technologies;
     }
 
     /**
@@ -439,9 +414,8 @@ public class MicroserviceMappingImpl extends MinimalEObjectImpl.Container implem
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
-            case MappingPackage.MICROSERVICE_MAPPING__TECHNOLOGY:
-                if (resolve) return getTechnology();
-                return basicGetTechnology();
+            case MappingPackage.MICROSERVICE_MAPPING__TECHNOLOGIES:
+                return getTechnologies();
             case MappingPackage.MICROSERVICE_MAPPING__MICROSERVICE:
                 return getMicroservice();
             case MappingPackage.MICROSERVICE_MAPPING__ENDPOINTS:
@@ -472,8 +446,9 @@ public class MicroserviceMappingImpl extends MinimalEObjectImpl.Container implem
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
-            case MappingPackage.MICROSERVICE_MAPPING__TECHNOLOGY:
-                setTechnology((Import)newValue);
+            case MappingPackage.MICROSERVICE_MAPPING__TECHNOLOGIES:
+                getTechnologies().clear();
+                getTechnologies().addAll((Collection<? extends Import>)newValue);
                 return;
             case MappingPackage.MICROSERVICE_MAPPING__MICROSERVICE:
                 setMicroservice((ImportedMicroservice)newValue);
@@ -517,8 +492,8 @@ public class MicroserviceMappingImpl extends MinimalEObjectImpl.Container implem
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
-            case MappingPackage.MICROSERVICE_MAPPING__TECHNOLOGY:
-                setTechnology((Import)null);
+            case MappingPackage.MICROSERVICE_MAPPING__TECHNOLOGIES:
+                getTechnologies().clear();
                 return;
             case MappingPackage.MICROSERVICE_MAPPING__MICROSERVICE:
                 setMicroservice((ImportedMicroservice)null);
@@ -556,8 +531,8 @@ public class MicroserviceMappingImpl extends MinimalEObjectImpl.Container implem
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
-            case MappingPackage.MICROSERVICE_MAPPING__TECHNOLOGY:
-                return technology != null;
+            case MappingPackage.MICROSERVICE_MAPPING__TECHNOLOGIES:
+                return technologies != null && !technologies.isEmpty();
             case MappingPackage.MICROSERVICE_MAPPING__MICROSERVICE:
                 return microservice != null;
             case MappingPackage.MICROSERVICE_MAPPING__ENDPOINTS:

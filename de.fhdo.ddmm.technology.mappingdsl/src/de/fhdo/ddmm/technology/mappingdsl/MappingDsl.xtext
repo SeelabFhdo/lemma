@@ -18,7 +18,7 @@ enum ImportType returns service::ImportType:
 ;
 
 MicroserviceMapping returns MicroserviceMapping:
-    '@' 'technology' '(' technology=[service::Import] ')'
+    ('@' 'technology' '(' technologies+=[service::Import] ')')+
     microservice=ImportedMicroservice '{'
         ('protocols' '{'
             protocols+=TechnologySpecificProtocolSpecification+
@@ -93,7 +93,8 @@ ReferredOperationMapping returns ReferredOperationMapping:
 
 PrimitiveParameterMapping returns PrimitiveParameterMapping:
     'primitive' parameter=[service::Parameter] ':'
-    primitiveType=[technology::TechnologySpecificPrimitiveType]
+    technology=[service::Import] '::'
+    primitiveType=[technology::TechnologySpecificPrimitiveType|QualifiedName]
     ('{'
         'aspects' '{'
             aspects+=TechnologySpecificImportedServiceAspect+
@@ -104,7 +105,8 @@ PrimitiveParameterMapping returns PrimitiveParameterMapping:
 ComplexParameterMapping returns ComplexParameterMapping:
     'complex' parameter=[service::Parameter]
         (
-            (':' technologySpecificComplexType=[data::ComplexType]
+            (':' technology=[service::Import] '::'
+             technologySpecificComplexType=[data::ComplexType|QualifiedName]
                 ('{'
                     'aspects' '{'
                         aspects+=TechnologySpecificImportedServiceAspect+
@@ -124,7 +126,8 @@ ComplexParameterMapping returns ComplexParameterMapping:
 ;
 
 TechnologySpecificDataFieldTypeMapping returns TechnologySpecificDataFieldTypeMapping:
-    dataFieldHierarchy=DataFieldHierarchy ':' type=[data::Type]
+    dataFieldHierarchy=DataFieldHierarchy ':' technology=[service::Import] '::'
+    type=[data::Type|QualifiedName]
     ('{'
         'aspects' '{'
             aspects+=TechnologySpecificImportedServiceAspect+
@@ -148,7 +151,8 @@ TechnologySpecificProtocolSpecification returns TechnologySpecificProtocolSpecif
 ;
 
 TechnologySpecificProtocol returns TechnologySpecificProtocol:
-    protocol=[technology::Protocol]
+    technology=[service::Import] '::'
+    protocol=[technology::Protocol|QualifiedName]
     ('/' dataFormat=[technology::DataFormat])?
 ;
 
@@ -159,7 +163,7 @@ TechnologySpecificEndpoint returns TechnologySpecificEndpoint:
 ;
 
 TechnologySpecificImportedServiceAspect returns TechnologySpecificImportedServiceAspect:
-    importedAspect=[technology::ServiceAspect]
+    technology=[service::Import] '::' aspect=[technology::ServiceAspect|QualifiedName]
     (
         ('(' (singlePropertyValue=PrimitiveValue | values+=PropertyValueAssignment) ')')
     |

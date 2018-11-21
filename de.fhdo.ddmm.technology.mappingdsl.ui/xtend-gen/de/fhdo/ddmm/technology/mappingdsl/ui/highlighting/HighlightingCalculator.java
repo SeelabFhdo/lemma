@@ -41,25 +41,24 @@ public class HighlightingCalculator implements ISemanticHighlightingCalculator {
     };
     final Procedure1<EObject> _function_1 = (EObject it) -> {
       final List<INode> nodes = NodeModelUtils.findNodesForFeature(it, 
-        MappingPackage.Literals.MICROSERVICE_MAPPING__TECHNOLOGY);
+        MappingPackage.Literals.MICROSERVICE_MAPPING__TECHNOLOGIES);
       final Consumer<INode> _function_2 = (INode it_1) -> {
-        INode currentSibling = it_1.getPreviousSibling();
-        boolean annotationBeginReached = false;
-        while (((currentSibling != null) && (!annotationBeginReached))) {
-          {
-            String _text = currentSibling.getText();
-            boolean _equals = Objects.equal(_text, "@");
-            if (_equals) {
-              annotationBeginReached = true;
-            }
-            String _text_1 = currentSibling.getText();
-            boolean _notEquals = (!Objects.equal(_text_1, "("));
-            if (_notEquals) {
-              acceptor.addPosition(currentSibling.getOffset(), currentSibling.getLength(), 
+        INode nodeToHighlight = it_1;
+        while ((((nodeToHighlight != null) && 
+          (nodeToHighlight.getNextSibling() != null)) && 
+          (!Objects.equal(nodeToHighlight.getNextSibling().getText(), "(")))) {
+          nodeToHighlight = nodeToHighlight.getPreviousSibling();
+        }
+        if ((nodeToHighlight != null)) {
+          do {
+            {
+              acceptor.addPosition(nodeToHighlight.getOffset(), nodeToHighlight.getLength(), 
                 HighlightingConfiguration.ANNOTATION_ID);
+              nodeToHighlight = nodeToHighlight.getPreviousSibling();
             }
-            currentSibling = currentSibling.getPreviousSibling();
-          }
+          } while((((nodeToHighlight != null) && 
+            (nodeToHighlight.getNextSibling() != null)) && 
+            (!Objects.equal(nodeToHighlight.getNextSibling().getText(), "@"))));
         }
       };
       nodes.forEach(_function_2);

@@ -33,6 +33,8 @@ import de.fhdo.ddmm.data.ComplexType
 import org.eclipse.emf.ecore.EStructuralFeature
 import de.fhdo.ddmm.technology.mapping.TechnologySpecificImportedServiceAspect
 import org.eclipse.xtext.EcoreUtil2
+import de.fhdo.ddmm.service.Import
+import de.fhdo.ddmm.technology.Technology
 
 /**
  * This class contains validation rules for the Mapping DSL.
@@ -56,18 +58,71 @@ class MappingDslValidator extends AbstractMappingDslValidator {
     }
 
     /**
+     * Check that technology is assigned only once to a microservice mapping
+     */
+    @Check
+    def checkTechnologyUniqueness(MicroserviceMapping mapping) {
+        val duplicateIndex = DdmmUtils.getDuplicateIndex(mapping.technologies, [it])
+        if (duplicateIndex > -1) {
+            error('''Duplicate technology assignment''',
+                MappingPackage::Literals.MICROSERVICE_MAPPING__TECHNOLOGIES, duplicateIndex)
+        }
+    }
+
+    /**
+     * Check that only one annotated technology contains type definitions
+     */
+    @Check
+    def checkUniqueTypeDefinitionTechnology(MicroserviceMapping mapping) {
+        var String typeDefinitionTechnologyName = null
+        for (i : 0..<mapping.technologies.size) {
+            val technologyImport = mapping.technologies.get(i)
+            val technologyModel = DdmmUtils.getImportedModelRoot(technologyImport.eResource,
+                technologyImport.importURI, Technology)
+            if (!technologyModel.primitiveTypes.empty ||
+                !technologyModel.listTypes.empty ||
+                !technologyModel.dataStructures.empty) {
+                if (typeDefinitionTechnologyName === null)
+                    typeDefinitionTechnologyName = technologyModel.name
+                else
+                    error('''Technology "«typeDefinitionTechnologyName»" already defines ''' +
+                        '''technology-specific types. Only one technology per microservice may ''' +
+                        '''define technology-specific types.''',
+                        MappingPackage::Literals.MICROSERVICE_MAPPING__TECHNOLOGIES, i)
+            }
+        }
+    }
+
+    /**
+     * Check that annotated technologies define not only deployment-related concepts
+     */
+    @Check
+    def checkTechnologiesForServiceConcepts(MicroserviceMapping mapping) {
+        for (i : 0..<mapping.technologies.size) {
+            val technologyImport = mapping.technologies.get(i)
+            val technologyModel = DdmmUtils.getImportedModelRoot(technologyImport.eResource,
+                technologyImport.importURI, Technology)
+            if (technologyModel.primitiveTypes.empty &&
+                technologyModel.protocols.empty &&
+                technologyModel.serviceAspects.empty) {
+                error("Technology does not specify service-related concepts",
+                    MappingPackage::Literals.MICROSERVICE_MAPPING__TECHNOLOGIES, i)
+            }
+        }
+    }
+
+    /**
      * Check that service mappings are unique
      */
     @Check
     def checkMappingUniqueness(TechnologyMapping model) {
-        // A mapping's technology or name may be null if the model contains syntax errors
+        // Mapping technologies may be empty if the model contains syntax errors
         val modelMappingsWithTechnology = model.mappings
-            .filter[technology !== null && technology.name !== null]
+            .filter[!technologies.empty]
             .toList
 
         checkMappingUniqueness(modelMappingsWithTechnology, "Service", [
                 val qualifiedNameSegments = <String> newArrayList
-                qualifiedNameSegments.add(technology.name)
                 qualifiedNameSegments.addAll(microservice.microservice.qualifiedNameParts)
                 QualifiedName.create(qualifiedNameSegments).toString
             ], MappingPackage::Literals.MICROSERVICE_MAPPING__MICROSERVICE
@@ -413,10 +468,10 @@ class MappingDslValidator extends AbstractMappingDslValidator {
                     val duplicateEndpoint = if (duplicate !== null)
                         duplicate.get("endpoint") as TechnologySpecificEndpoint
 
-                    // If a duplicate was found we first check that it's not the same endpoint as being
-                    // currently iterated. That is, to prevent adding an additional error, when an
-                    // endpoint has a duplicate address. This check is performed separately per
-                    // endpoint.
+                    // If a duplicate was found we first check that it's not the same endpoint as
+                    // being currently iterated. That is, to prevent adding an additional error,
+                    // when an endpoint has a duplicate address. This check is performed separately
+                    // per endpoint.
                     if (duplicateEndpoint !== null && duplicateEndpoint !== endpoint) {
                         val duplicateProtocolName = duplicate.get("protocol") as String
                         val duplicateContainerNameParts = getEndpointContainerNameParts
@@ -430,8 +485,9 @@ class MappingDslValidator extends AbstractMappingDslValidator {
                             )
                         ).toString
 
-                        error('''Address is already specified for protocol «duplicateProtocolName» ''' +
-                            '''on «containerTypeName» «relativeDuplicateName»''', endpoint,
+                        error('''Address is already specified for protocol ''' +
+                            '''«duplicateProtocolName» on ''' +
+                            '''«containerTypeName» «relativeDuplicateName»''', endpoint,
                             MappingPackage::Literals.TECHNOLOGY_SPECIFIC_ENDPOINT__ADDRESSES, i)
                     }
                 ]
@@ -506,15 +562,21 @@ class MappingDslValidator extends AbstractMappingDslValidator {
      * Check uniqueness of aspects
      */
     @Check
-    def checkAspectsUniqueness(TechnologySpecificImportedServiceAspect aspect) {
-        val allAspectsOfContainer = EcoreUtil2.getAllContentsOfType(aspect.eContainer,
+    def checkAspectsUniqueness(TechnologySpecificImportedServiceAspect importedAspect) {
+        if (importedAspect.technology === null || importedAspect.technology.name === null ||
+            importedAspect.aspect === null || importedAspect.aspect.name === null) {
+            return
+        }
+
+        val allAspectsOfContainer = EcoreUtil2.getAllContentsOfType(importedAspect.eContainer,
             TechnologySpecificImportedServiceAspect)
         val duplicateIndex = DdmmUtils.getDuplicateIndex(allAspectsOfContainer,
-            [importedAspect.name])
+            [QualifiedName.create(importedAspect.technology.name, aspect.name).toString],
+            [aspect.name !== null])
         if (duplicateIndex > -1) {
             val duplicateAspect = allAspectsOfContainer.get(duplicateIndex)
             error("Aspect was already specified", duplicateAspect, MappingPackage
-                .Literals::TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__IMPORTED_ASPECT)
+                .Literals::TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__ASPECT)
         }
     }
 
@@ -529,12 +591,12 @@ class MappingDslValidator extends AbstractMappingDslValidator {
             return
         }
 
-        val propertyCount = importedAspect.importedAspect.properties.size
+        val propertyCount = importedAspect.aspect.properties.size
         if (propertyCount > 1)
             error("Ambiguous value assignment", importedAspect, MappingPackage
                     .Literals::TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__SINGLE_PROPERTY_VALUE)
         else if (propertyCount === 1) {
-            val targetProperty = importedAspect.importedAspect.properties.get(0)
+            val targetProperty = importedAspect.aspect.properties.get(0)
             val targetPropertyType = targetProperty.type
             if (!propertyValue.isOfType(targetPropertyType))
                 error('''Value is not of type «targetPropertyType.typeName» as expected by ''' +
@@ -548,7 +610,7 @@ class MappingDslValidator extends AbstractMappingDslValidator {
      */
     @Check
     def checkMandatoryAspectProperties(TechnologySpecificImportedServiceAspect importedAspect) {
-        val aspect = importedAspect.importedAspect
+        val aspect = importedAspect.aspect
         val aspectProperties = aspect.properties
         val mandatoryProperties = aspectProperties.filter[mandatory]
         val mandatoryPropertiesWithoutValues = mandatoryProperties.filter[
@@ -563,13 +625,12 @@ class MappingDslValidator extends AbstractMappingDslValidator {
                 val mandatoryProperty = mandatoryProperties.get(0)
                 error('''Mandatory property «mandatoryProperty.name» does not have value''',
                     importedAspect, MappingPackage
-                        .Literals::TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__IMPORTED_ASPECT)
+                        .Literals::TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__ASPECT)
             }
         } else if (!allMandatoryPropertiesHaveValues) {
             mandatoryPropertiesWithoutValues.forEach[
                error('''Mandatory property «name» does not have value''', importedAspect,
-                    MappingPackage
-                        .Literals::TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__IMPORTED_ASPECT)
+                    MappingPackage.Literals::TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__ASPECT)
             ]
         }
     }

@@ -91,11 +91,11 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
     final Function<Import, String> _function = (Import it) -> {
       return it.getName();
     };
-    final int duplicateIndex = DdmmUtils.<Import, String>getDuplicateIndex(serviceModel.getImports(), _function);
-    if ((duplicateIndex == (-1))) {
+    final Integer duplicateIndex = DdmmUtils.<Import, String>getDuplicateIndex(serviceModel.getImports(), _function);
+    if (((duplicateIndex).intValue() == (-1))) {
       return;
     }
-    final Import duplicate = serviceModel.getImports().get(duplicateIndex);
+    final Import duplicate = serviceModel.getImports().get((duplicateIndex).intValue());
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("Duplicate import alias ");
     String _name = duplicate.getName();
@@ -178,11 +178,11 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
     final Function<Import, String> _function = (Import it) -> {
       return it.getImportURI();
     };
-    final int duplicateIndex = DdmmUtils.<Import, String>getDuplicateIndex(serviceModel.getImports(), _function);
-    if ((duplicateIndex == (-1))) {
+    final Integer duplicateIndex = DdmmUtils.<Import, String>getDuplicateIndex(serviceModel.getImports(), _function);
+    if (((duplicateIndex).intValue() == (-1))) {
       return;
     }
-    final Import duplicate = serviceModel.getImports().get(duplicateIndex);
+    final Import duplicate = serviceModel.getImports().get((duplicateIndex).intValue());
     this.error("File is already being imported", duplicate, 
       ServicePackage.Literals.IMPORT__IMPORT_URI);
   }
@@ -246,12 +246,12 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
     final Function<Import, Import> _function = (Import it) -> {
       return it;
     };
-    final int duplicateIndex = DdmmUtils.<Import, Import>getDuplicateIndex(microservice.getTechnologies(), _function);
-    if ((duplicateIndex > (-1))) {
+    final Integer duplicateIndex = DdmmUtils.<Import, Import>getDuplicateIndex(microservice.getTechnologies(), _function);
+    if (((duplicateIndex).intValue() > (-1))) {
       StringConcatenation _builder = new StringConcatenation();
       _builder.append("Duplicate technology assignment");
       this.error(_builder.toString(), 
-        ServicePackage.Literals.MICROSERVICE__TECHNOLOGIES, duplicateIndex);
+        ServicePackage.Literals.MICROSERVICE__TECHNOLOGIES, (duplicateIndex).intValue());
     }
   }
   
@@ -821,14 +821,14 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
     final Function<String, String> _function = (String it) -> {
       return it;
     };
-    final int duplicateIndex = DdmmUtils.<String, String>getDuplicateIndex(endpoint.getAddresses(), _function);
-    if ((duplicateIndex > (-1))) {
-      final String duplicate = endpoint.getAddresses().get(duplicateIndex);
+    final Integer duplicateIndex = DdmmUtils.<String, String>getDuplicateIndex(endpoint.getAddresses(), _function);
+    if (((duplicateIndex).intValue() > (-1))) {
+      final String duplicate = endpoint.getAddresses().get((duplicateIndex).intValue());
       StringConcatenation _builder = new StringConcatenation();
       _builder.append("Duplicate address ");
       _builder.append(duplicate);
       this.error(_builder.toString(), endpoint, 
-        ServicePackage.Literals.ENDPOINT__ADDRESSES, duplicateIndex);
+        ServicePackage.Literals.ENDPOINT__ADDRESSES, (duplicateIndex).intValue());
     }
   }
   
@@ -842,9 +842,9 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
     final Function<ImportedServiceAspect, String> _function = (ImportedServiceAspect it) -> {
       return it.getImportedAspect().getName();
     };
-    final int duplicateIndex = DdmmUtils.<ImportedServiceAspect, String>getDuplicateIndex(allAspectsOfContainer, _function);
-    if ((duplicateIndex > (-1))) {
-      final ImportedServiceAspect duplicateAspect = allAspectsOfContainer.get(duplicateIndex);
+    final Integer duplicateIndex = DdmmUtils.<ImportedServiceAspect, String>getDuplicateIndex(allAspectsOfContainer, _function);
+    if (((duplicateIndex).intValue() > (-1))) {
+      final ImportedServiceAspect duplicateAspect = allAspectsOfContainer.get((duplicateIndex).intValue());
       this.error("Aspect was already specified", duplicateAspect, 
         ServicePackage.Literals.IMPORTED_SERVICE_ASPECT__IMPORTED_ASPECT);
     }
@@ -899,10 +899,10 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
     final Function<TechnologySpecificPropertyValueAssignment, String> _function = (TechnologySpecificPropertyValueAssignment it) -> {
       return it.getProperty().getName();
     };
-    final int duplicateIndex = DdmmUtils.<TechnologySpecificPropertyValueAssignment, String>getDuplicateIndex(aspect.getValues(), _function);
-    if ((duplicateIndex > (-1))) {
+    final Integer duplicateIndex = DdmmUtils.<TechnologySpecificPropertyValueAssignment, String>getDuplicateIndex(aspect.getValues(), _function);
+    if (((duplicateIndex).intValue() > (-1))) {
       this.error("Duplicate value assignment to property", 
-        ServicePackage.Literals.IMPORTED_SERVICE_ASPECT__VALUES, duplicateIndex);
+        ServicePackage.Literals.IMPORTED_SERVICE_ASPECT__VALUES, (duplicateIndex).intValue());
     }
   }
   

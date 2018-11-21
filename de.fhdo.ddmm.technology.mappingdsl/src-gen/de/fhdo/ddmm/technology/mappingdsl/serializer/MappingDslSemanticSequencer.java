@@ -319,7 +319,7 @@ public class MappingDslSemanticSequencer extends ServiceDslSemanticSequencer {
 	 *     (
 	 *         parameter=[Parameter|ID] 
 	 *         (
-	 *             (technologySpecificComplexType=[ComplexType|ID] aspects+=TechnologySpecificImportedServiceAspect*) | 
+	 *             (technology=[Import|ID] technologySpecificComplexType=[ComplexType|QualifiedName] aspects+=TechnologySpecificImportedServiceAspect*) | 
 	 *             (
 	 *                 aspects+=TechnologySpecificImportedServiceAspect* 
 	 *                 dataFieldMappings+=TechnologySpecificDataFieldTypeMapping 
@@ -390,7 +390,7 @@ public class MappingDslSemanticSequencer extends ServiceDslSemanticSequencer {
 	 *
 	 * Constraint:
 	 *     (
-	 *         technology=[Import|ID] 
+	 *         technologies+=[Import|ID]+ 
 	 *         microservice=ImportedMicroservice 
 	 *         protocols+=TechnologySpecificProtocolSpecification* 
 	 *         endpoints+=TechnologySpecificEndpoint* 
@@ -432,7 +432,12 @@ public class MappingDslSemanticSequencer extends ServiceDslSemanticSequencer {
 	 *     PrimitiveParameterMapping returns PrimitiveParameterMapping
 	 *
 	 * Constraint:
-	 *     (parameter=[Parameter|ID] primitiveType=[TechnologySpecificPrimitiveType|ID] aspects+=TechnologySpecificImportedServiceAspect*)
+	 *     (
+	 *         parameter=[Parameter|ID] 
+	 *         technology=[Import|ID] 
+	 *         primitiveType=[TechnologySpecificPrimitiveType|QualifiedName] 
+	 *         aspects+=TechnologySpecificImportedServiceAspect*
+	 *     )
 	 */
 	protected void sequence_PrimitiveParameterMapping(ISerializationContext context, PrimitiveParameterMapping semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -473,7 +478,7 @@ public class MappingDslSemanticSequencer extends ServiceDslSemanticSequencer {
 	 *     TechnologySpecificDataFieldTypeMapping returns TechnologySpecificDataFieldTypeMapping
 	 *
 	 * Constraint:
-	 *     (dataFieldHierarchy=DataFieldHierarchy type=[Type|ID] aspects+=TechnologySpecificImportedServiceAspect*)
+	 *     (dataFieldHierarchy=DataFieldHierarchy technology=[Import|ID] type=[Type|QualifiedName] aspects+=TechnologySpecificImportedServiceAspect*)
 	 */
 	protected void sequence_TechnologySpecificDataFieldTypeMapping(ISerializationContext context, TechnologySpecificDataFieldTypeMapping semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -502,7 +507,7 @@ public class MappingDslSemanticSequencer extends ServiceDslSemanticSequencer {
 	 *     TechnologySpecificImportedServiceAspect returns TechnologySpecificImportedServiceAspect
 	 *
 	 * Constraint:
-	 *     (importedAspect=[ServiceAspect|ID] (singlePropertyValue=PrimitiveValue | values+=PropertyValueAssignment)?)
+	 *     (technology=[Import|ID] aspect=[ServiceAspect|QualifiedName] (singlePropertyValue=PrimitiveValue | values+=PropertyValueAssignment)?)
 	 */
 	protected void sequence_TechnologySpecificImportedServiceAspect(ISerializationContext context, TechnologySpecificImportedServiceAspect semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -535,7 +540,7 @@ public class MappingDslSemanticSequencer extends ServiceDslSemanticSequencer {
 	 *     TechnologySpecificProtocol returns TechnologySpecificProtocol
 	 *
 	 * Constraint:
-	 *     (protocol=[Protocol|ID] dataFormat=[DataFormat|ID]?)
+	 *     (technology=[Import|ID] protocol=[Protocol|QualifiedName] dataFormat=[DataFormat|ID]?)
 	 */
 	protected void sequence_TechnologySpecificProtocol(ISerializationContext context, TechnologySpecificProtocol semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

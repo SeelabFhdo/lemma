@@ -4,6 +4,8 @@ package de.fhdo.ddmm.technology.mapping.impl;
 
 import de.fhdo.ddmm.data.Type;
 
+import de.fhdo.ddmm.service.Import;
+
 import de.fhdo.ddmm.technology.mapping.ComplexParameterMapping;
 import de.fhdo.ddmm.technology.mapping.DataFieldHierarchy;
 import de.fhdo.ddmm.technology.mapping.MappingPackage;
@@ -35,6 +37,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link de.fhdo.ddmm.technology.mapping.impl.TechnologySpecificDataFieldTypeMappingImpl#getTechnology <em>Technology</em>}</li>
  *   <li>{@link de.fhdo.ddmm.technology.mapping.impl.TechnologySpecificDataFieldTypeMappingImpl#getType <em>Type</em>}</li>
  *   <li>{@link de.fhdo.ddmm.technology.mapping.impl.TechnologySpecificDataFieldTypeMappingImpl#getDataFieldHierarchy <em>Data Field Hierarchy</em>}</li>
  *   <li>{@link de.fhdo.ddmm.technology.mapping.impl.TechnologySpecificDataFieldTypeMappingImpl#getAspects <em>Aspects</em>}</li>
@@ -44,6 +47,16 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * @generated
  */
 public class TechnologySpecificDataFieldTypeMappingImpl extends MinimalEObjectImpl.Container implements TechnologySpecificDataFieldTypeMapping {
+    /**
+     * The cached value of the '{@link #getTechnology() <em>Technology</em>}' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getTechnology()
+     * @generated
+     * @ordered
+     */
+    protected Import technology;
+
     /**
      * The cached value of the '{@link #getType() <em>Type</em>}' reference.
      * <!-- begin-user-doc -->
@@ -91,6 +104,44 @@ public class TechnologySpecificDataFieldTypeMappingImpl extends MinimalEObjectIm
     @Override
     protected EClass eStaticClass() {
         return MappingPackage.Literals.TECHNOLOGY_SPECIFIC_DATA_FIELD_TYPE_MAPPING;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public Import getTechnology() {
+        if (technology != null && technology.eIsProxy()) {
+            InternalEObject oldTechnology = (InternalEObject)technology;
+            technology = (Import)eResolveProxy(oldTechnology);
+            if (technology != oldTechnology) {
+                if (eNotificationRequired())
+                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, MappingPackage.TECHNOLOGY_SPECIFIC_DATA_FIELD_TYPE_MAPPING__TECHNOLOGY, oldTechnology, technology));
+            }
+        }
+        return technology;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public Import basicGetTechnology() {
+        return technology;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setTechnology(Import newTechnology) {
+        Import oldTechnology = technology;
+        technology = newTechnology;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.TECHNOLOGY_SPECIFIC_DATA_FIELD_TYPE_MAPPING__TECHNOLOGY, oldTechnology, technology));
     }
 
     /**
@@ -300,6 +351,9 @@ public class TechnologySpecificDataFieldTypeMappingImpl extends MinimalEObjectIm
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
+            case MappingPackage.TECHNOLOGY_SPECIFIC_DATA_FIELD_TYPE_MAPPING__TECHNOLOGY:
+                if (resolve) return getTechnology();
+                return basicGetTechnology();
             case MappingPackage.TECHNOLOGY_SPECIFIC_DATA_FIELD_TYPE_MAPPING__TYPE:
                 if (resolve) return getType();
                 return basicGetType();
@@ -323,6 +377,9 @@ public class TechnologySpecificDataFieldTypeMappingImpl extends MinimalEObjectIm
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
+            case MappingPackage.TECHNOLOGY_SPECIFIC_DATA_FIELD_TYPE_MAPPING__TECHNOLOGY:
+                setTechnology((Import)newValue);
+                return;
             case MappingPackage.TECHNOLOGY_SPECIFIC_DATA_FIELD_TYPE_MAPPING__TYPE:
                 setType((Type)newValue);
                 return;
@@ -348,6 +405,9 @@ public class TechnologySpecificDataFieldTypeMappingImpl extends MinimalEObjectIm
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
+            case MappingPackage.TECHNOLOGY_SPECIFIC_DATA_FIELD_TYPE_MAPPING__TECHNOLOGY:
+                setTechnology((Import)null);
+                return;
             case MappingPackage.TECHNOLOGY_SPECIFIC_DATA_FIELD_TYPE_MAPPING__TYPE:
                 setType((Type)null);
                 return;
@@ -372,6 +432,8 @@ public class TechnologySpecificDataFieldTypeMappingImpl extends MinimalEObjectIm
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
+            case MappingPackage.TECHNOLOGY_SPECIFIC_DATA_FIELD_TYPE_MAPPING__TECHNOLOGY:
+                return technology != null;
             case MappingPackage.TECHNOLOGY_SPECIFIC_DATA_FIELD_TYPE_MAPPING__TYPE:
                 return type != null;
             case MappingPackage.TECHNOLOGY_SPECIFIC_DATA_FIELD_TYPE_MAPPING__DATA_FIELD_HIERARCHY:

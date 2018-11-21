@@ -4,6 +4,8 @@ package de.fhdo.ddmm.technology.mapping.impl;
 
 import de.fhdo.ddmm.data.PrimitiveValue;
 
+import de.fhdo.ddmm.service.Import;
+
 import de.fhdo.ddmm.technology.ServiceAspect;
 import de.fhdo.ddmm.technology.TechnologySpecificPropertyValueAssignment;
 
@@ -41,7 +43,8 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.fhdo.ddmm.technology.mapping.impl.TechnologySpecificImportedServiceAspectImpl#getImportedAspect <em>Imported Aspect</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.technology.mapping.impl.TechnologySpecificImportedServiceAspectImpl#getTechnology <em>Technology</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.technology.mapping.impl.TechnologySpecificImportedServiceAspectImpl#getAspect <em>Aspect</em>}</li>
  *   <li>{@link de.fhdo.ddmm.technology.mapping.impl.TechnologySpecificImportedServiceAspectImpl#getSinglePropertyValue <em>Single Property Value</em>}</li>
  *   <li>{@link de.fhdo.ddmm.technology.mapping.impl.TechnologySpecificImportedServiceAspectImpl#getValues <em>Values</em>}</li>
  *   <li>{@link de.fhdo.ddmm.technology.mapping.impl.TechnologySpecificImportedServiceAspectImpl#getMicroserviceMapping <em>Microservice Mapping</em>}</li>
@@ -56,14 +59,24 @@ import org.eclipse.emf.ecore.util.InternalEList;
  */
 public class TechnologySpecificImportedServiceAspectImpl extends MinimalEObjectImpl.Container implements TechnologySpecificImportedServiceAspect {
     /**
-     * The cached value of the '{@link #getImportedAspect() <em>Imported Aspect</em>}' reference.
+     * The cached value of the '{@link #getTechnology() <em>Technology</em>}' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getImportedAspect()
+     * @see #getTechnology()
      * @generated
      * @ordered
      */
-    protected ServiceAspect importedAspect;
+    protected Import technology;
+
+    /**
+     * The cached value of the '{@link #getAspect() <em>Aspect</em>}' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getAspect()
+     * @generated
+     * @ordered
+     */
+    protected ServiceAspect aspect;
 
     /**
      * The cached value of the '{@link #getSinglePropertyValue() <em>Single Property Value</em>}' containment reference.
@@ -109,16 +122,16 @@ public class TechnologySpecificImportedServiceAspectImpl extends MinimalEObjectI
      * <!-- end-user-doc -->
      * @generated
      */
-    public ServiceAspect getImportedAspect() {
-        if (importedAspect != null && importedAspect.eIsProxy()) {
-            InternalEObject oldImportedAspect = (InternalEObject)importedAspect;
-            importedAspect = (ServiceAspect)eResolveProxy(oldImportedAspect);
-            if (importedAspect != oldImportedAspect) {
+    public Import getTechnology() {
+        if (technology != null && technology.eIsProxy()) {
+            InternalEObject oldTechnology = (InternalEObject)technology;
+            technology = (Import)eResolveProxy(oldTechnology);
+            if (technology != oldTechnology) {
                 if (eNotificationRequired())
-                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__IMPORTED_ASPECT, oldImportedAspect, importedAspect));
+                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__TECHNOLOGY, oldTechnology, technology));
             }
         }
-        return importedAspect;
+        return technology;
     }
 
     /**
@@ -126,8 +139,8 @@ public class TechnologySpecificImportedServiceAspectImpl extends MinimalEObjectI
      * <!-- end-user-doc -->
      * @generated
      */
-    public ServiceAspect basicGetImportedAspect() {
-        return importedAspect;
+    public Import basicGetTechnology() {
+        return technology;
     }
 
     /**
@@ -135,11 +148,49 @@ public class TechnologySpecificImportedServiceAspectImpl extends MinimalEObjectI
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setImportedAspect(ServiceAspect newImportedAspect) {
-        ServiceAspect oldImportedAspect = importedAspect;
-        importedAspect = newImportedAspect;
+    public void setTechnology(Import newTechnology) {
+        Import oldTechnology = technology;
+        technology = newTechnology;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__IMPORTED_ASPECT, oldImportedAspect, importedAspect));
+            eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__TECHNOLOGY, oldTechnology, technology));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public ServiceAspect getAspect() {
+        if (aspect != null && aspect.eIsProxy()) {
+            InternalEObject oldAspect = (InternalEObject)aspect;
+            aspect = (ServiceAspect)eResolveProxy(oldAspect);
+            if (aspect != oldAspect) {
+                if (eNotificationRequired())
+                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__ASPECT, oldAspect, aspect));
+            }
+        }
+        return aspect;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public ServiceAspect basicGetAspect() {
+        return aspect;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setAspect(ServiceAspect newAspect) {
+        ServiceAspect oldAspect = aspect;
+        aspect = newAspect;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__ASPECT, oldAspect, aspect));
     }
 
     /**
@@ -599,9 +650,12 @@ public class TechnologySpecificImportedServiceAspectImpl extends MinimalEObjectI
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
-            case MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__IMPORTED_ASPECT:
-                if (resolve) return getImportedAspect();
-                return basicGetImportedAspect();
+            case MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__TECHNOLOGY:
+                if (resolve) return getTechnology();
+                return basicGetTechnology();
+            case MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__ASPECT:
+                if (resolve) return getAspect();
+                return basicGetAspect();
             case MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__SINGLE_PROPERTY_VALUE:
                 return getSinglePropertyValue();
             case MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__VALUES:
@@ -637,8 +691,11 @@ public class TechnologySpecificImportedServiceAspectImpl extends MinimalEObjectI
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
-            case MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__IMPORTED_ASPECT:
-                setImportedAspect((ServiceAspect)newValue);
+            case MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__TECHNOLOGY:
+                setTechnology((Import)newValue);
+                return;
+            case MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__ASPECT:
+                setAspect((ServiceAspect)newValue);
                 return;
             case MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__SINGLE_PROPERTY_VALUE:
                 setSinglePropertyValue((PrimitiveValue)newValue);
@@ -677,8 +734,11 @@ public class TechnologySpecificImportedServiceAspectImpl extends MinimalEObjectI
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
-            case MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__IMPORTED_ASPECT:
-                setImportedAspect((ServiceAspect)null);
+            case MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__TECHNOLOGY:
+                setTechnology((Import)null);
+                return;
+            case MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__ASPECT:
+                setAspect((ServiceAspect)null);
                 return;
             case MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__SINGLE_PROPERTY_VALUE:
                 setSinglePropertyValue((PrimitiveValue)null);
@@ -716,8 +776,10 @@ public class TechnologySpecificImportedServiceAspectImpl extends MinimalEObjectI
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
-            case MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__IMPORTED_ASPECT:
-                return importedAspect != null;
+            case MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__TECHNOLOGY:
+                return technology != null;
+            case MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__ASPECT:
+                return aspect != null;
             case MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__SINGLE_PROPERTY_VALUE:
                 return singlePropertyValue != null;
             case MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__VALUES:
