@@ -456,19 +456,21 @@ final class DdmmUtils {
         for (entryIndex : 0..<list.size) {
             val entry = list.get(entryIndex)
             val ignoreEntry = doFiltering && compareValueFilterPredicates.exists[!apply(entry)]
-            val entryValue = getCompareValue.apply(entry)
 
-            var compareIndex = entryIndex+1
-            while (!ignoreEntry && compareIndex < list.size) {
-                val entryToCompare = list.get(compareIndex)
-                val ignoreEntryToCompare = doFiltering &&
-                    compareValueFilterPredicates.exists[!apply(entryToCompare)]
-                val valueToCompare = getCompareValue.apply(entryToCompare)
+            if (!ignoreEntry) {
+                val entryValue = getCompareValue.apply(entry)
 
-                if (!ignoreEntryToCompare && entryValue == valueToCompare)
-                    return compareIndex
+                for (compareIndex : entryIndex+1..< list.size) {
+                    val entryToCompare = list.get(compareIndex)
+                    val ignoreEntryToCompare = doFiltering &&
+                        compareValueFilterPredicates.exists[!apply(entryToCompare)]
 
-                compareIndex++
+                    if (!ignoreEntryToCompare) {
+                        val valueToCompare = getCompareValue.apply(entryToCompare)
+                        if (entryValue == valueToCompare)
+                            return compareIndex
+                    }
+                }
             }
         }
 

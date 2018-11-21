@@ -378,7 +378,7 @@ public final class DdmmUtils {
   /**
    * Get index of first duplicate entry from a list, or -1 if list does not contain duplicates
    */
-  public static <T extends Object, S extends Object> int getDuplicateIndex(final List<T> list, final Function<T, S> getCompareValue, final Predicate<T>... compareValueFilterPredicates) {
+  public static <T extends Object, S extends Object> Integer getDuplicateIndex(final List<T> list, final Function<T, S> getCompareValue, final Predicate<T>... compareValueFilterPredicates) {
     if (((list == null) || (getCompareValue == null))) {
       throw new IllegalArgumentException("List and compare property must not be null");
     }
@@ -393,26 +393,31 @@ public final class DdmmUtils {
           boolean _apply = it.apply(entry);
           return Boolean.valueOf((!_apply));
         })));
-        final S entryValue = getCompareValue.apply(entry);
-        int compareIndex = ((entryIndex).intValue() + 1);
-        while (((!ignoreEntry) && (compareIndex < list.size()))) {
-          {
-            final T entryToCompare = list.get(compareIndex);
-            final boolean ignoreEntryToCompare = (doFiltering && 
-              IterableExtensions.<Predicate<T>>exists(((Iterable<Predicate<T>>)Conversions.doWrapArray(compareValueFilterPredicates)), ((Function1<Predicate<T>, Boolean>) (Predicate<T> it) -> {
-                boolean _apply = it.apply(entryToCompare);
-                return Boolean.valueOf((!_apply));
-              })));
-            final S valueToCompare = getCompareValue.apply(entryToCompare);
-            if (((!ignoreEntryToCompare) && Objects.equal(entryValue, valueToCompare))) {
-              return compareIndex;
+        if ((!ignoreEntry)) {
+          final S entryValue = getCompareValue.apply(entry);
+          int _size_1 = list.size();
+          ExclusiveRange _doubleDotLessThan_1 = new ExclusiveRange(((entryIndex).intValue() + 1), _size_1, true);
+          for (final Integer compareIndex : _doubleDotLessThan_1) {
+            {
+              final T entryToCompare = list.get((compareIndex).intValue());
+              final boolean ignoreEntryToCompare = (doFiltering && 
+                IterableExtensions.<Predicate<T>>exists(((Iterable<Predicate<T>>)Conversions.doWrapArray(compareValueFilterPredicates)), ((Function1<Predicate<T>, Boolean>) (Predicate<T> it) -> {
+                  boolean _apply = it.apply(entryToCompare);
+                  return Boolean.valueOf((!_apply));
+                })));
+              if ((!ignoreEntryToCompare)) {
+                final S valueToCompare = getCompareValue.apply(entryToCompare);
+                boolean _equals = Objects.equal(entryValue, valueToCompare);
+                if (_equals) {
+                  return compareIndex;
+                }
+              }
             }
-            compareIndex++;
           }
         }
       }
     }
-    return (-1);
+    return Integer.valueOf((-1));
   }
   
   /**
