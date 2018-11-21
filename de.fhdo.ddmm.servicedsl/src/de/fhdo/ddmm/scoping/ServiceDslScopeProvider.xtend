@@ -57,8 +57,6 @@ class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
      * Build scope for a given context and a given reference
      */
     override getScope(EObject context, EReference reference) {
-        //println(context.class.simpleName + ": " + reference.name)
-
         val scope = switch (context) {
             /* Microservices */
             Microservice: context.getScope(reference)
