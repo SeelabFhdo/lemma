@@ -61,6 +61,23 @@ public final class DdmmUtils {
   }
   
   /**
+   * Get root of an imported model
+   */
+  public static <T extends EObject> T getImportedModelRoot(final Resource context, final String importUri, final Class<T> rootType) {
+    final EList<EObject> modelContents = DdmmUtils.getImportedModelContents(context, importUri);
+    if (((modelContents == null) || modelContents.isEmpty())) {
+      return null;
+    }
+    final EObject modelRoot = modelContents.get(0);
+    boolean _isAssignableFrom = rootType.isAssignableFrom(modelRoot.getClass());
+    boolean _not = (!_isAssignableFrom);
+    if (_not) {
+      return null;
+    }
+    return ((T) modelRoot);
+  }
+  
+  /**
    * Add "file://" scheme to URI string. If the string already has a scheme, replace it with
    * "file://".
    */

@@ -53,6 +53,22 @@ final class DdmmUtils {
     }
 
     /**
+     * Get root of an imported model
+     */
+    def static <T extends EObject> T getImportedModelRoot(Resource context, String importUri,
+        Class<T> rootType) {
+        val modelContents = getImportedModelContents(context, importUri)
+        if (modelContents === null || modelContents.empty)
+            return null
+
+        val modelRoot = modelContents.get(0)
+        if (!rootType.isAssignableFrom(modelRoot.class))
+            return null
+
+        return modelRoot as T
+    }
+
+    /**
      * Add "file://" scheme to URI string. If the string already has a scheme, replace it with
      * "file://".
      */

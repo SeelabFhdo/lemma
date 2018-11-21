@@ -186,7 +186,8 @@ class ServiceDslValidator extends AbstractServiceDslValidator {
         var String typeDefinitionTechnologyName = null
         for (i : 0..<microservice.technologies.size) {
             val technologyImport = microservice.technologies.get(i)
-            val technologyModel = getTechnologyModelRoot(technologyImport)
+            val technologyModel = DdmmUtils.getImportedModelRoot(technologyImport.eResource,
+                technologyImport.importURI, Technology)
             if (!technologyModel.primitiveTypes.empty ||
                 !technologyModel.listTypes.empty ||
                 !technologyModel.dataStructures.empty) {
@@ -208,7 +209,8 @@ class ServiceDslValidator extends AbstractServiceDslValidator {
     def checkTechnologiesForServiceConcepts(Microservice microservice) {
         for (i : 0..<microservice.technologies.size) {
             val technologyImport = microservice.technologies.get(i)
-            val technologyModel = getTechnologyModelRoot(technologyImport)
+            val technologyModel = DdmmUtils.getImportedModelRoot(technologyImport.eResource,
+                technologyImport.importURI, Technology)
             if (technologyModel.primitiveTypes.empty &&
                 technologyModel.protocols.empty &&
                 technologyModel.serviceAspects.empty) {
@@ -216,26 +218,6 @@ class ServiceDslValidator extends AbstractServiceDslValidator {
                     ServicePackage::Literals.MICROSERVICE__TECHNOLOGIES, i)
             }
         }
-    }
-
-    /**
-     * Helper to get root element of a technology model
-     */
-    private def getTechnologyModelRoot(Import technologyImport) {
-        val technologyContents = DdmmUtils.getImportedModelContents(technologyImport.eResource,
-                technologyImport.importURI)
-        if (technologyContents === null || technologyContents.empty)
-            return null
-
-        val modelRoot = technologyContents.get(0)
-        if (!(modelRoot instanceof Technology))
-            return null
-
-        val technologyModel = modelRoot as Technology
-        if (technologyModel === null)
-            return null
-
-        return technologyModel
     }
 
     /**

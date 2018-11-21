@@ -111,7 +111,8 @@ public class OperationDslValidator extends AbstractOperationDslValidator {
     for (final Integer i : _doubleDotLessThan) {
       {
         final Import technologyImport = operationNode.getTechnologies().get((i).intValue());
-        final Technology technologyModel = this.getTechnologyModelRoot(technologyImport);
+        final Technology technologyModel = DdmmUtils.<Technology>getImportedModelRoot(technologyImport.eResource(), 
+          technologyImport.getImportURI(), Technology.class);
         if (((technologyModel.getDeploymentTechnologies().isEmpty() && 
           technologyModel.getInfrastructureTechnologies().isEmpty()) && 
           technologyModel.getOperationAspects().isEmpty())) {
@@ -120,26 +121,6 @@ public class OperationDslValidator extends AbstractOperationDslValidator {
         }
       }
     }
-  }
-  
-  /**
-   * Helper to get root element of a technology model
-   */
-  private Technology getTechnologyModelRoot(final Import technologyImport) {
-    final EList<EObject> technologyContents = DdmmUtils.getImportedModelContents(technologyImport.eResource(), 
-      technologyImport.getImportURI());
-    if (((technologyContents == null) || technologyContents.isEmpty())) {
-      return null;
-    }
-    final EObject modelRoot = technologyContents.get(0);
-    if ((!(modelRoot instanceof Technology))) {
-      return null;
-    }
-    final Technology technologyModel = ((Technology) modelRoot);
-    if ((technologyModel == null)) {
-      return null;
-    }
-    return technologyModel;
   }
   
   /**

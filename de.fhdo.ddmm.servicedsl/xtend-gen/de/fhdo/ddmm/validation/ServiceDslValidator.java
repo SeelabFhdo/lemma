@@ -266,7 +266,8 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
     for (final Integer i : _doubleDotLessThan) {
       {
         final Import technologyImport = microservice.getTechnologies().get((i).intValue());
-        final Technology technologyModel = this.getTechnologyModelRoot(technologyImport);
+        final Technology technologyModel = DdmmUtils.<Technology>getImportedModelRoot(technologyImport.eResource(), 
+          technologyImport.getImportURI(), Technology.class);
         if ((((!technologyModel.getPrimitiveTypes().isEmpty()) || 
           (!technologyModel.getListTypes().isEmpty())) || 
           (!technologyModel.getDataStructures().isEmpty()))) {
@@ -301,7 +302,8 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
     for (final Integer i : _doubleDotLessThan) {
       {
         final Import technologyImport = microservice.getTechnologies().get((i).intValue());
-        final Technology technologyModel = this.getTechnologyModelRoot(technologyImport);
+        final Technology technologyModel = DdmmUtils.<Technology>getImportedModelRoot(technologyImport.eResource(), 
+          technologyImport.getImportURI(), Technology.class);
         if (((technologyModel.getPrimitiveTypes().isEmpty() && 
           technologyModel.getProtocols().isEmpty()) && 
           technologyModel.getServiceAspects().isEmpty())) {
@@ -310,26 +312,6 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
         }
       }
     }
-  }
-  
-  /**
-   * Helper to get root element of a technology model
-   */
-  private Technology getTechnologyModelRoot(final Import technologyImport) {
-    final EList<EObject> technologyContents = DdmmUtils.getImportedModelContents(technologyImport.eResource(), 
-      technologyImport.getImportURI());
-    if (((technologyContents == null) || technologyContents.isEmpty())) {
-      return null;
-    }
-    final EObject modelRoot = technologyContents.get(0);
-    if ((!(modelRoot instanceof Technology))) {
-      return null;
-    }
-    final Technology technologyModel = ((Technology) modelRoot);
-    if ((technologyModel == null)) {
-      return null;
-    }
-    return technologyModel;
   }
   
   /**
