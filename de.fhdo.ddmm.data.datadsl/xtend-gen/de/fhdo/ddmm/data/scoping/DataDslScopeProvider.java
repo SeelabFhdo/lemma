@@ -10,6 +10,7 @@ import de.fhdo.ddmm.data.ComplexTypeImport;
 import de.fhdo.ddmm.data.Context;
 import de.fhdo.ddmm.data.DataModel;
 import de.fhdo.ddmm.data.DataPackage;
+import de.fhdo.ddmm.data.DataStructure;
 import de.fhdo.ddmm.data.PossiblyImportedComplexType;
 import de.fhdo.ddmm.data.Version;
 import de.fhdo.ddmm.data.scoping.AbstractDataDslScopeProvider;
@@ -19,6 +20,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.xtext.EcoreUtil2;
 import org.eclipse.xtext.scoping.IScope;
+import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 
 /**
@@ -33,18 +35,55 @@ public class DataDslScopeProvider extends AbstractDataDslScopeProvider {
    */
   @Override
   public IScope getScope(final EObject context, final EReference reference) {
-    if (((context instanceof PossiblyImportedComplexType) && 
-      Objects.equal(reference, DataPackage.Literals.POSSIBLY_IMPORTED_COMPLEX_TYPE__COMPLEX_TYPE))) {
-      return this.getScopeForPossiblyImportedComplexTypes(((PossiblyImportedComplexType) context));
+    IScope _switchResult = null;
+    boolean _matched = false;
+    if (context instanceof PossiblyImportedComplexType) {
+      _matched=true;
+      _switchResult = this.getScopeForPossiblyImportedComplexTypes(((PossiblyImportedComplexType)context), reference);
     }
-    return super.getScope(context, reference);
+    if (!_matched) {
+      if (context instanceof DataStructure) {
+        _matched=true;
+        _switchResult = this.getScopeForDataStructures(((DataStructure)context), reference);
+      }
+    }
+    final IScope scope = _switchResult;
+    if ((scope != null)) {
+      return scope;
+    } else {
+      if ((scope == null)) {
+        return super.getScope(context, reference);
+      }
+    }
+    return null;
   }
   
   /**
-   * Build relatively named scope for possibly imported complex types w.r.t. the import's name,
-   * i.e., its "alias"
+   * Build scope for possibly imported complex types
    */
-  private IScope getScopeForPossiblyImportedComplexTypes(final PossiblyImportedComplexType type) {
+  private IScope getScopeForPossiblyImportedComplexTypes(final PossiblyImportedComplexType type, final EReference reference) {
+    if ((reference != DataPackage.Literals.POSSIBLY_IMPORTED_COMPLEX_TYPE__COMPLEX_TYPE)) {
+      return null;
+    }
+    EObject container = null;
+    List<String> qualifiedNameParts = null;
+    final Version containingVersion = EcoreUtil2.<Version>getContainerOfType(type, Version.class);
+    final Context containingContext = EcoreUtil2.<Context>getContainerOfType(type, Context.class);
+    final DataModel containingDataModel = EcoreUtil2.<DataModel>getContainerOfType(type, DataModel.class);
+    if ((containingVersion != null)) {
+      container = containingVersion;
+      qualifiedNameParts = containingVersion.getQualifiedNameParts();
+    } else {
+      if ((containingContext != null)) {
+        container = containingContext;
+        qualifiedNameParts = containingContext.getQualifiedNameParts();
+      } else {
+        if ((containingDataModel != null)) {
+          container = containingDataModel;
+          qualifiedNameParts = null;
+        }
+      }
+    }
     String _xifexpression = null;
     ComplexTypeImport _import = type.getImport();
     boolean _tripleNotEquals = (_import != null);
@@ -52,39 +91,34 @@ public class DataDslScopeProvider extends AbstractDataDslScopeProvider {
       _xifexpression = type.getImport().getImportURI();
     }
     final String importUri = _xifexpression;
-    final Version containingVersion = EcoreUtil2.<Version>getContainerOfType(type, Version.class);
-    if ((containingVersion != null)) {
-      final Function<DataModel, List<ComplexType>> _function = (DataModel it) -> {
-        return IterableExtensions.<ComplexType>toList(it.getContainedComplexTypes());
-      };
-      final Function<ComplexType, List<String>> _function_1 = (ComplexType it) -> {
-        return it.getQualifiedNameParts();
-      };
-      return DdmmUtils.<Version, DataModel, ComplexType>getScopeForPossiblyImportedConcept(containingVersion, 
-        containingVersion.getQualifiedNameParts(), 
-        DataModel.class, importUri, _function, _function_1);
-    }
-    final Context containingContext = EcoreUtil2.<Context>getContainerOfType(type, Context.class);
-    if ((containingContext != null)) {
-      final Function<DataModel, List<ComplexType>> _function_2 = (DataModel it) -> {
-        return IterableExtensions.<ComplexType>toList(it.getContainedComplexTypes());
-      };
-      final Function<ComplexType, List<String>> _function_3 = (ComplexType it) -> {
-        return it.getQualifiedNameParts();
-      };
-      return DdmmUtils.<Context, DataModel, ComplexType>getScopeForPossiblyImportedConcept(containingContext, 
-        containingContext.getQualifiedNameParts(), 
-        DataModel.class, importUri, _function_2, _function_3);
-    }
-    final DataModel containingDataModel = EcoreUtil2.<DataModel>getContainerOfType(type, DataModel.class);
-    final Function<DataModel, List<ComplexType>> _function_4 = (DataModel it) -> {
+    final Function<DataModel, List<ComplexType>> _function = (DataModel it) -> {
       return IterableExtensions.<ComplexType>toList(it.getContainedComplexTypes());
     };
-    final Function<ComplexType, List<String>> _function_5 = (ComplexType it) -> {
+    final Function<ComplexType, List<String>> _function_1 = (ComplexType it) -> {
       return it.getQualifiedNameParts();
     };
-    return DdmmUtils.<DataModel, DataModel, ComplexType>getScopeForPossiblyImportedConcept(containingDataModel, 
-      null, 
-      DataModel.class, importUri, _function_4, _function_5);
+    return DdmmUtils.<EObject, DataModel, ComplexType>getScopeForPossiblyImportedConcept(container, qualifiedNameParts, 
+      DataModel.class, importUri, _function, _function_1);
+  }
+  
+  /**
+   * Build scope for possibly imported complex types
+   */
+  private IScope getScopeForDataStructures(final DataStructure structure, final EReference reference) {
+    if ((reference != DataPackage.Literals.DATA_STRUCTURE__SUPER)) {
+      return null;
+    }
+    final DataModel modelRoot = EcoreUtil2.<DataModel>getContainerOfType(structure, DataModel.class);
+    final Function1<ComplexType, Boolean> _function = (ComplexType it) -> {
+      return Boolean.valueOf(((it instanceof DataStructure) && (!Objects.equal(it, structure))));
+    };
+    final Iterable<ComplexType> localStructures = IterableExtensions.<ComplexType>filter(modelRoot.getContainedComplexTypes(), _function);
+    final Function<ComplexType, List<String>> _function_1 = (ComplexType it) -> {
+      return it.getQualifiedNameParts();
+    };
+    return DdmmUtils.<ComplexType, DataStructure, DataModel>getScopeWithRelativeQualifiedNames(
+      IterableExtensions.<ComplexType>toList(localStructures), _function_1, structure, 
+      structure.getQualifiedNameParts(), 
+      DataModel.class);
   }
 }

@@ -12,6 +12,8 @@ import de.fhdo.ddmm.data.PossiblyImportedComplexType
 import org.eclipse.xtext.EcoreUtil2
 import de.fhdo.ddmm.data.Version
 import de.fhdo.ddmm.data.Context
+import java.util.List
+import de.fhdo.ddmm.data.DataStructure
 
 /**
  * Scope provider for data models.
@@ -23,68 +25,76 @@ class DataDslScopeProvider extends AbstractDataDslScopeProvider {
      * Build scope for a given context and reference
      */
     override getScope(EObject context, EReference reference) {
-        /*
-         * Build scope for possibly imported complex types
-         */
-        if (context instanceof PossiblyImportedComplexType &&
-            reference == DataPackage::Literals.POSSIBLY_IMPORTED_COMPLEX_TYPE__COMPLEX_TYPE)
-            return (context as PossiblyImportedComplexType).scopeForPossiblyImportedComplexTypes
+        val scope = switch (context) {
+            /* Possibly imported complex types */
+            PossiblyImportedComplexType: context.getScopeForPossiblyImportedComplexTypes(reference)
 
-        return super.getScope(context, reference)
+            /* Data structures */
+            DataStructure: context.getScopeForDataStructures(reference)
+        }
+
+        if (scope !== null)
+            return scope
+        // Try default scope resolution, if no scope could be determined
+        else if (scope === null)
+            return super.getScope(context, reference)
     }
 
     /**
-     * Build relatively named scope for possibly imported complex types w.r.t. the import's name,
-     * i.e., its "alias"
+     * Build scope for possibly imported complex types
      */
-    private def getScopeForPossiblyImportedComplexTypes(PossiblyImportedComplexType type) {
-        val importUri = if (type.import !== null) type.import.importURI
+    private def getScopeForPossiblyImportedComplexTypes(PossiblyImportedComplexType type,
+        EReference reference) {
+        if (reference !== DataPackage::Literals.POSSIBLY_IMPORTED_COMPLEX_TYPE__COMPLEX_TYPE)
+            return null
 
-        /*
-         * Container of type is version, whose qualifying name parts will be used for relative
-         * naming
-         */
+        /* Determine container and qualified name parts of possibly imported complex type */
+        var EObject container
+        var List<String> qualifiedNameParts
         val containingVersion = EcoreUtil2.getContainerOfType(type, Version)
-        if (containingVersion !== null) {
-            return DdmmUtils.getScopeForPossiblyImportedConcept(
-                containingVersion,
-                containingVersion.qualifiedNameParts,
-                DataModel,
-                importUri,
-                [containedComplexTypes.toList],
-                [qualifiedNameParts]
-            )
-        }
-
-        /*
-         * Container of type is context, whose qualifying name parts will be used for relative
-         * naming
-         */
         val containingContext = EcoreUtil2.getContainerOfType(type, Context)
-        if (containingContext !== null) {
-            return DdmmUtils.getScopeForPossiblyImportedConcept(
-                containingContext,
-                containingContext.qualifiedNameParts,
-                DataModel,
-                importUri,
-                [containedComplexTypes.toList],
-                [qualifiedNameParts]
-            )
+        val containingDataModel = EcoreUtil2.getContainerOfType(type, DataModel)
+
+        if (containingVersion !== null) {
+            container = containingVersion
+            qualifiedNameParts = containingVersion.qualifiedNameParts
+        } else if (containingContext !== null) {
+            container = containingContext
+            qualifiedNameParts = containingContext.qualifiedNameParts
+        } else if (containingDataModel !== null) {
+            container = containingDataModel
+            qualifiedNameParts = null
         }
 
-        /*
-         * Container of type is data model. In this case no relative naming will happen as data
-         * models do not have names themselves (hence parameter containerNameParts is null). That
-         * is, the full qualified name will be used instead.
-         */
-        val containingDataModel = EcoreUtil2.getContainerOfType(type, DataModel)
+        /* Build and return scope */
+        val importUri = if (type.import !== null) type.import.importURI
         return DdmmUtils.getScopeForPossiblyImportedConcept(
-                containingDataModel,
-                null,
-                DataModel,
-                importUri,
-                [containedComplexTypes.toList],
-                [qualifiedNameParts]
-            )
+            container,
+            qualifiedNameParts,
+            DataModel,
+            importUri,
+            [containedComplexTypes.toList],
+            [it.qualifiedNameParts]
+        )
+   }
+
+   /**
+    * Build scope for possibly imported complex types
+    */
+   private def getScopeForDataStructures(DataStructure structure, EReference reference) {
+        if (reference !== DataPackage::Literals.DATA_STRUCTURE__SUPER)
+            return null
+
+        // Data structures may only inherit from data structures in the same model
+        val modelRoot = EcoreUtil2.getContainerOfType(structure, DataModel)
+        val localStructures = modelRoot.containedComplexTypes
+            .filter[it instanceof DataStructure && it != structure]
+        return DdmmUtils.getScopeWithRelativeQualifiedNames(
+            localStructures.toList,
+            [qualifiedNameParts],
+            structure,
+            structure.qualifiedNameParts,
+            DataModel
+        )
    }
 }
