@@ -221,6 +221,56 @@ class ServiceDslValidator extends AbstractServiceDslValidator {
     }
 
     /**
+     * Check technologies of a microservice per communication type for unambiguous default protocols
+     */
+    @Check
+    def checkTechnologiesForUniqueDefaultProtocols(Microservice microservice) {
+        if (microservice.technologies.empty) {
+            return
+        }
+
+        val nonUniqueCommunicationTypes = CommunicationType.values
+            .filter[communicationType |
+                !microservice.protocols.exists[communicationType === it.communicationType]
+            ]
+            .filter[!isDefaultProtocolUnique(microservice, it)]
+
+        for (communicationType : nonUniqueCommunicationTypes) {
+            val String typeString = switch (communicationType) {
+                case CommunicationType.ASYNCHRONOUS: "asynchronous"
+                case CommunicationType.SYNCHRONOUS: "synchronous"
+            }
+            error('''Ambiguous default protocol for «typeString» communication. The ''' +
+                '''microservice needs to explicitly specifiy a protocol for «typeString» ''' +
+                '''communication.''', microservice, ServicePackage::Literals.MICROSERVICE__NAME)
+        }
+    }
+
+    /**
+     * Helper to check if default protocol of a microservice is unique for a given communication
+     * type
+     */
+    private def isDefaultProtocolUnique(Microservice microservice,
+        CommunicationType communicationType) {
+        var boolean alreadyFoundDefaultProtocolForCommunicationType
+        for (technologyImport : microservice.technologies) {
+            val technologyModel = DdmmUtils.getImportedModelRoot(technologyImport.eResource,
+                technologyImport.importURI, Technology)
+            val hasDefaultProtocolForCommunicationType = technologyModel.protocols.exists[
+                ^default && it.communicationType === communicationType
+            ]
+            if (hasDefaultProtocolForCommunicationType) {
+                if (alreadyFoundDefaultProtocolForCommunicationType)
+                    return false
+                else
+                    alreadyFoundDefaultProtocolForCommunicationType = true
+            }
+        }
+
+        return true
+    }
+
+    /**
      * Check that interfaces are not empty, i.e., that they define or refer to at least one
      * operation
      */

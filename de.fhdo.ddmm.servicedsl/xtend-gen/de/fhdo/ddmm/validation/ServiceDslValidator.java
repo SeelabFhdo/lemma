@@ -32,6 +32,7 @@ import de.fhdo.ddmm.service.Visibility;
 import de.fhdo.ddmm.technology.CommunicationType;
 import de.fhdo.ddmm.technology.DataFormat;
 import de.fhdo.ddmm.technology.ExchangePattern;
+import de.fhdo.ddmm.technology.Protocol;
 import de.fhdo.ddmm.technology.ServiceAspect;
 import de.fhdo.ddmm.technology.Technology;
 import de.fhdo.ddmm.technology.TechnologyPackage;
@@ -312,6 +313,88 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
         }
       }
     }
+  }
+  
+  /**
+   * Check technologies of a microservice per communication type for unambiguous default protocols
+   */
+  @Check
+  public void checkTechnologiesForUniqueDefaultProtocols(final Microservice microservice) {
+    boolean _isEmpty = microservice.getTechnologies().isEmpty();
+    if (_isEmpty) {
+      return;
+    }
+    final Function1<CommunicationType, Boolean> _function = (CommunicationType communicationType) -> {
+      final Function1<ProtocolSpecification, Boolean> _function_1 = (ProtocolSpecification it) -> {
+        CommunicationType _communicationType = it.getCommunicationType();
+        return Boolean.valueOf((communicationType == _communicationType));
+      };
+      boolean _exists = IterableExtensions.<ProtocolSpecification>exists(microservice.getProtocols(), _function_1);
+      return Boolean.valueOf((!_exists));
+    };
+    final Function1<CommunicationType, Boolean> _function_1 = (CommunicationType it) -> {
+      boolean _isDefaultProtocolUnique = this.isDefaultProtocolUnique(microservice, it);
+      return Boolean.valueOf((!_isDefaultProtocolUnique));
+    };
+    final Iterable<CommunicationType> nonUniqueCommunicationTypes = IterableExtensions.<CommunicationType>filter(IterableExtensions.<CommunicationType>filter(((Iterable<CommunicationType>)Conversions.doWrapArray(CommunicationType.values())), _function), _function_1);
+    for (final CommunicationType communicationType : nonUniqueCommunicationTypes) {
+      {
+        String _switchResult = null;
+        if (communicationType != null) {
+          switch (communicationType) {
+            case ASYNCHRONOUS:
+              _switchResult = "asynchronous";
+              break;
+            case SYNCHRONOUS:
+              _switchResult = "synchronous";
+              break;
+            default:
+              break;
+          }
+        }
+        final String typeString = _switchResult;
+        StringConcatenation _builder = new StringConcatenation();
+        _builder.append("Ambiguous default protocol for ");
+        _builder.append(typeString);
+        _builder.append(" communication. The ");
+        StringConcatenation _builder_1 = new StringConcatenation();
+        _builder_1.append("microservice needs to explicitly specifiy a protocol for ");
+        _builder_1.append(typeString);
+        _builder_1.append(" ");
+        String _plus = (_builder.toString() + _builder_1);
+        StringConcatenation _builder_2 = new StringConcatenation();
+        _builder_2.append("communication.");
+        String _plus_1 = (_plus + _builder_2);
+        this.error(_plus_1, microservice, ServicePackage.Literals.MICROSERVICE__NAME);
+      }
+    }
+  }
+  
+  /**
+   * Helper to check if default protocol of a microservice is unique for a given communication
+   * type
+   */
+  private boolean isDefaultProtocolUnique(final Microservice microservice, final CommunicationType communicationType) {
+    boolean alreadyFoundDefaultProtocolForCommunicationType = false;
+    EList<Import> _technologies = microservice.getTechnologies();
+    for (final Import technologyImport : _technologies) {
+      {
+        final Technology technologyModel = DdmmUtils.<Technology>getImportedModelRoot(technologyImport.eResource(), 
+          technologyImport.getImportURI(), Technology.class);
+        final Function1<Protocol, Boolean> _function = (Protocol it) -> {
+          return Boolean.valueOf((it.isDefault() && (it.getCommunicationType() == communicationType)));
+        };
+        final boolean hasDefaultProtocolForCommunicationType = IterableExtensions.<Protocol>exists(technologyModel.getProtocols(), _function);
+        if (hasDefaultProtocolForCommunicationType) {
+          if (alreadyFoundDefaultProtocolForCommunicationType) {
+            return false;
+          } else {
+            alreadyFoundDefaultProtocolForCommunicationType = true;
+          }
+        }
+      }
+    }
+    return true;
   }
   
   /**
