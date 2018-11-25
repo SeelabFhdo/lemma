@@ -166,6 +166,90 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
   }
   
   /**
+   * Check technologies of a microservice mapping per communication type for unambiguous default
+   * protocols
+   */
+  @Check
+  public void checkTechnologiesForUniqueDefaultProtocols(final MicroserviceMapping mapping) {
+    boolean _isEmpty = mapping.getTechnologies().isEmpty();
+    if (_isEmpty) {
+      return;
+    }
+    final Function1<CommunicationType, Boolean> _function = (CommunicationType communicationType) -> {
+      final Function1<TechnologySpecificProtocolSpecification, Boolean> _function_1 = (TechnologySpecificProtocolSpecification it) -> {
+        CommunicationType _communicationType = it.getCommunicationType();
+        return Boolean.valueOf((communicationType == _communicationType));
+      };
+      boolean _exists = IterableExtensions.<TechnologySpecificProtocolSpecification>exists(mapping.getProtocols(), _function_1);
+      return Boolean.valueOf((!_exists));
+    };
+    final Function1<CommunicationType, Boolean> _function_1 = (CommunicationType it) -> {
+      boolean _isDefaultProtocolUnique = this.isDefaultProtocolUnique(mapping, it);
+      return Boolean.valueOf((!_isDefaultProtocolUnique));
+    };
+    final Iterable<CommunicationType> nonUniqueCommunicationTypes = IterableExtensions.<CommunicationType>filter(IterableExtensions.<CommunicationType>filter(((Iterable<CommunicationType>)Conversions.doWrapArray(CommunicationType.values())), _function), _function_1);
+    for (final CommunicationType communicationType : nonUniqueCommunicationTypes) {
+      {
+        String _switchResult = null;
+        if (communicationType != null) {
+          switch (communicationType) {
+            case ASYNCHRONOUS:
+              _switchResult = "asynchronous";
+              break;
+            case SYNCHRONOUS:
+              _switchResult = "synchronous";
+              break;
+            default:
+              break;
+          }
+        }
+        final String typeString = _switchResult;
+        StringConcatenation _builder = new StringConcatenation();
+        _builder.append("Ambiguous default protocol for ");
+        _builder.append(typeString);
+        _builder.append(" communication. The ");
+        StringConcatenation _builder_1 = new StringConcatenation();
+        _builder_1.append("mapping needs to explicitly specifiy a protocol for ");
+        _builder_1.append(typeString);
+        _builder_1.append(" ");
+        String _plus = (_builder.toString() + _builder_1);
+        StringConcatenation _builder_2 = new StringConcatenation();
+        _builder_2.append("communication.");
+        String _plus_1 = (_plus + _builder_2);
+        this.error(_plus_1, mapping, 
+          MappingPackage.Literals.MICROSERVICE_MAPPING__MICROSERVICE);
+      }
+    }
+  }
+  
+  /**
+   * Helper to check if default protocol of a microservice mapping is unique for a given
+   * communication type
+   */
+  private boolean isDefaultProtocolUnique(final MicroserviceMapping mapping, final CommunicationType communicationType) {
+    boolean alreadyFoundDefaultProtocolForCommunicationType = false;
+    EList<Import> _technologies = mapping.getTechnologies();
+    for (final Import technologyImport : _technologies) {
+      {
+        final Technology technologyModel = DdmmUtils.<Technology>getImportedModelRoot(technologyImport.eResource(), 
+          technologyImport.getImportURI(), Technology.class);
+        final Function1<Protocol, Boolean> _function = (Protocol it) -> {
+          return Boolean.valueOf((it.isDefault() && (it.getCommunicationType() == communicationType)));
+        };
+        final boolean hasDefaultProtocolForCommunicationType = IterableExtensions.<Protocol>exists(technologyModel.getProtocols(), _function);
+        if (hasDefaultProtocolForCommunicationType) {
+          if (alreadyFoundDefaultProtocolForCommunicationType) {
+            return false;
+          } else {
+            alreadyFoundDefaultProtocolForCommunicationType = true;
+          }
+        }
+      }
+    }
+    return true;
+  }
+  
+  /**
    * Check that service mappings are unique
    */
   @Check

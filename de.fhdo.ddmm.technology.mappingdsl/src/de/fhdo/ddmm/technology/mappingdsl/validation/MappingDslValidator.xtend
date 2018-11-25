@@ -33,7 +33,6 @@ import de.fhdo.ddmm.data.ComplexType
 import org.eclipse.emf.ecore.EStructuralFeature
 import de.fhdo.ddmm.technology.mapping.TechnologySpecificImportedServiceAspect
 import org.eclipse.xtext.EcoreUtil2
-import de.fhdo.ddmm.service.Import
 import de.fhdo.ddmm.technology.Technology
 
 /**
@@ -109,6 +108,58 @@ class MappingDslValidator extends AbstractMappingDslValidator {
                     MappingPackage::Literals.MICROSERVICE_MAPPING__TECHNOLOGIES, i)
             }
         }
+    }
+
+    /**
+     * Check technologies of a microservice mapping per communication type for unambiguous default
+     * protocols
+     */
+    @Check
+    def checkTechnologiesForUniqueDefaultProtocols(MicroserviceMapping mapping) {
+        if (mapping.technologies.empty) {
+            return
+        }
+
+        val nonUniqueCommunicationTypes = CommunicationType.values
+            .filter[communicationType |
+                !mapping.protocols.exists[communicationType === it.communicationType]
+            ]
+            .filter[!isDefaultProtocolUnique(mapping, it)]
+
+        for (communicationType : nonUniqueCommunicationTypes) {
+            val String typeString = switch (communicationType) {
+                case CommunicationType.ASYNCHRONOUS: "asynchronous"
+                case CommunicationType.SYNCHRONOUS: "synchronous"
+            }
+            error('''Ambiguous default protocol for «typeString» communication. The ''' +
+                '''mapping needs to explicitly specifiy a protocol for «typeString» ''' +
+                '''communication.''', mapping,
+                MappingPackage::Literals.MICROSERVICE_MAPPING__MICROSERVICE)
+        }
+    }
+
+    /**
+     * Helper to check if default protocol of a microservice mapping is unique for a given
+     * communication type
+     */
+    private def isDefaultProtocolUnique(MicroserviceMapping mapping,
+        CommunicationType communicationType) {
+        var boolean alreadyFoundDefaultProtocolForCommunicationType
+        for (technologyImport : mapping.technologies) {
+            val technologyModel = DdmmUtils.getImportedModelRoot(technologyImport.eResource,
+                technologyImport.importURI, Technology)
+            val hasDefaultProtocolForCommunicationType = technologyModel.protocols.exists[
+                ^default && it.communicationType === communicationType
+            ]
+            if (hasDefaultProtocolForCommunicationType) {
+                if (alreadyFoundDefaultProtocolForCommunicationType)
+                    return false
+                else
+                    alreadyFoundDefaultProtocolForCommunicationType = true
+            }
+        }
+
+        return true
     }
 
     /**
