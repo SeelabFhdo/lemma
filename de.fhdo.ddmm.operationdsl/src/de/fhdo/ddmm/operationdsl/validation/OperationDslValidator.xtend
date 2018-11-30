@@ -339,8 +339,8 @@ class OperationDslValidator extends AbstractOperationDslValidator {
     }
 
     /**
-     * Helper to check that each service of a given container has a basic endpoint assigned for each
-     * protocol/format combination from the given technology
+     * Helper to warn if a service of a given container does not have a basic endpoint assigned for
+     * each protocol/format combination in the given technology
      */
     private def checkServicesForBasicEndpoints(Container container, Import technologyImport) {
         val technologyModel = DdmmUtils.getImportedModelContents(technologyImport.eResource,
@@ -379,8 +379,7 @@ class OperationDslValidator extends AbstractOperationDslValidator {
 
         protocolsWithoutDefaultEndpoint.forEach[protocol, dataFormats |
             if (container.deploymentSpecifications.empty) {
-                error('''Basic endpoint for protocol «protocol» needs to be ''' +
-                    '''specified for all services''', container,
+                warning('''No basic endpoint specified for protocol «protocol»''', container,
                     OperationPackage::Literals.OPERATION_NODE__NAME)
             }
 
@@ -392,9 +391,8 @@ class OperationDslValidator extends AbstractOperationDslValidator {
                     ]
 
                 if (!specifiedByBasicEndpoint) {
-                    error('''Basic endpoint for protocol «protocol»/«format» needs to be ''' +
-                        '''specified for all services''', container,
-                        OperationPackage::Literals.OPERATION_NODE__NAME)
+                    warning('''No basic endpoint specified for protocol «protocol»/«format» ''',
+                        container, OperationPackage::Literals.OPERATION_NODE__NAME)
                 }
             ]]
         ]

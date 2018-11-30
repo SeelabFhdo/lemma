@@ -455,8 +455,8 @@ public class OperationDslValidator extends AbstractOperationDslValidator {
   }
   
   /**
-   * Helper to check that each service of a given container has a basic endpoint assigned for each
-   * protocol/format combination from the given technology
+   * Helper to warn if a service of a given container does not have a basic endpoint assigned for
+   * each protocol/format combination in the given technology
    */
   private void checkServicesForBasicEndpoints(final Container container, final Import technologyImport) {
     final EList<EObject> technologyModel = DdmmUtils.getImportedModelContents(technologyImport.eResource(), 
@@ -505,13 +505,9 @@ public class OperationDslValidator extends AbstractOperationDslValidator {
       boolean _isEmpty = container.getDeploymentSpecifications().isEmpty();
       if (_isEmpty) {
         StringConcatenation _builder = new StringConcatenation();
-        _builder.append("Basic endpoint for protocol ");
+        _builder.append("No basic endpoint specified for protocol ");
         _builder.append(protocol);
-        _builder.append(" needs to be ");
-        StringConcatenation _builder_1 = new StringConcatenation();
-        _builder_1.append("specified for all services");
-        String _plus = (_builder.toString() + _builder_1);
-        this.error(_plus, container, 
+        this.warning(_builder.toString(), container, 
           OperationPackage.Literals.OPERATION_NODE__NAME);
       }
       final Consumer<String> _function_3 = (String format) -> {
@@ -541,17 +537,13 @@ public class OperationDslValidator extends AbstractOperationDslValidator {
                 return Boolean.valueOf(_and);
               })));
           if ((!specifiedByBasicEndpoint)) {
-            StringConcatenation _builder_2 = new StringConcatenation();
-            _builder_2.append("Basic endpoint for protocol ");
-            _builder_2.append(protocol);
-            _builder_2.append("/");
-            _builder_2.append(format);
-            _builder_2.append(" needs to be ");
-            StringConcatenation _builder_3 = new StringConcatenation();
-            _builder_3.append("specified for all services");
-            String _plus_1 = (_builder_2.toString() + _builder_3);
-            this.error(_plus_1, container, 
-              OperationPackage.Literals.OPERATION_NODE__NAME);
+            StringConcatenation _builder_1 = new StringConcatenation();
+            _builder_1.append("No basic endpoint specified for protocol ");
+            _builder_1.append(protocol);
+            _builder_1.append("/");
+            _builder_1.append(format);
+            _builder_1.append(" ");
+            this.warning(_builder_1.toString(), container, OperationPackage.Literals.OPERATION_NODE__NAME);
           }
         };
         container.getDeploymentSpecifications().forEach(_function_4);
