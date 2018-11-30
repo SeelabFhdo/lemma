@@ -619,7 +619,7 @@ class MappingDslValidator extends AbstractMappingDslValidator {
             return
         }
 
-        val allAspectsOfContainer = EcoreUtil2.getAllContentsOfType(importedAspect.eContainer,
+        val allAspectsOfContainer = EcoreUtil2.getSiblingsOfType(importedAspect.eContainer,
             TechnologySpecificImportedServiceAspect)
         val duplicateIndex = DdmmUtils.getDuplicateIndex(allAspectsOfContainer,
             [QualifiedName.create(importedAspect.technology.name, aspect.name).toString],

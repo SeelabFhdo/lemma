@@ -798,7 +798,7 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
       (importedAspect.getAspect() == null)) || (importedAspect.getAspect().getName() == null))) {
       return;
     }
-    final List<TechnologySpecificImportedServiceAspect> allAspectsOfContainer = EcoreUtil2.<TechnologySpecificImportedServiceAspect>getAllContentsOfType(importedAspect.eContainer(), 
+    final List<TechnologySpecificImportedServiceAspect> allAspectsOfContainer = EcoreUtil2.<TechnologySpecificImportedServiceAspect>getSiblingsOfType(importedAspect.eContainer(), 
       TechnologySpecificImportedServiceAspect.class);
     final Function<TechnologySpecificImportedServiceAspect, String> _function = (TechnologySpecificImportedServiceAspect it) -> {
       return QualifiedName.create(importedAspect.getTechnology().getName(), it.getAspect().getName()).toString();

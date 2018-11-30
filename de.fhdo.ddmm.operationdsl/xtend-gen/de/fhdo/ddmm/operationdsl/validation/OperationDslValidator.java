@@ -705,7 +705,7 @@ public class OperationDslValidator extends AbstractOperationDslValidator {
    */
   @Check
   public void checkAspectUniqueness(final ImportedOperationAspect importedAspect) {
-    final List<ImportedOperationAspect> allAspectsOfContainer = EcoreUtil2.<ImportedOperationAspect>getAllContentsOfType(importedAspect.eContainer(), 
+    final List<ImportedOperationAspect> allAspectsOfContainer = EcoreUtil2.<ImportedOperationAspect>getSiblingsOfType(importedAspect.eContainer(), 
       ImportedOperationAspect.class);
     final Function<ImportedOperationAspect, String> _function = (ImportedOperationAspect it) -> {
       return it.getAspect().getName();

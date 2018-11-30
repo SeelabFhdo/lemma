@@ -920,7 +920,7 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
    */
   @Check
   public void checkUniqueAspects(final ImportedServiceAspect aspect) {
-    final List<ImportedServiceAspect> allAspectsOfContainer = EcoreUtil2.<ImportedServiceAspect>getAllContentsOfType(aspect.eContainer(), 
+    final List<ImportedServiceAspect> allAspectsOfContainer = EcoreUtil2.<ImportedServiceAspect>getSiblingsOfType(aspect.eContainer(), 
       ImportedServiceAspect.class);
     final Function<ImportedServiceAspect, String> _function = (ImportedServiceAspect it) -> {
       return it.getImportedAspect().getName();
