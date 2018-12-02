@@ -11,7 +11,6 @@ import de.fhdo.ddmm.service.Microservice
 import de.fhdo.ddmm.service.Interface
 import de.fhdo.ddmm.service.Operation
 import de.fhdo.ddmm.technology.CommunicationType
-import de.fhdo.ddmm.service.ImportType
 import de.fhdo.ddmm.service.ServiceModel
 import de.fhdo.ddmm.ServiceDslQualifiedNameProvider
 import com.google.inject.Inject
@@ -106,19 +105,14 @@ class ServiceDslValidator extends AbstractServiceDslValidator {
      * Check that model does not import itself
      */
     @Check
-    def checkForSelfImport(Import ^import) {
-        if (import.importType !== ImportType.MICROSERVICES) {
-            return
-        }
-
-        val thisModel = import.serviceModel
-        val serviceImports = DdmmUtils.getImportsOfModelTypes(thisModel.imports, [importURI],
+    def checkForSelfImport(ServiceModel thisModel) {
+        val importedServiceModels = DdmmUtils.getImportsOfModelTypes(thisModel.imports, [importURI],
             ServiceModel)
 
-        serviceImports.forEach[
-            val root = DdmmUtils.getImportedModelContents(eResource, importURI)
-            if (!root.empty && root.get(0) == thisModel)
-                error("Model may not import itself", import,
+        importedServiceModels.forEach[
+            val importedRoot = DdmmUtils.getImportedModelContents(eResource, importURI)
+            if (!importedRoot.empty && importedRoot.get(0) == thisModel)
+                error("Model may not import itself", it,
                     ServicePackage::Literals.IMPORT__IMPORT_URI)
         ]
     }

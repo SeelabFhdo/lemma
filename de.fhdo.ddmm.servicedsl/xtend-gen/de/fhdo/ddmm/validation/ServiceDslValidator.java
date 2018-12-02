@@ -149,26 +149,20 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
    * Check that model does not import itself
    */
   @Check
-  public void checkForSelfImport(final Import import_) {
-    ImportType _importType = import_.getImportType();
-    boolean _tripleNotEquals = (_importType != ImportType.MICROSERVICES);
-    if (_tripleNotEquals) {
-      return;
-    }
-    final ServiceModel thisModel = import_.getServiceModel();
+  public void checkForSelfImport(final ServiceModel thisModel) {
     final Function<Import, String> _function = (Import it) -> {
       return it.getImportURI();
     };
-    final Iterable<Import> serviceImports = DdmmUtils.<Import>getImportsOfModelTypes(thisModel.getImports(), _function, 
+    final Iterable<Import> importedServiceModels = DdmmUtils.<Import>getImportsOfModelTypes(thisModel.getImports(), _function, 
       ServiceModel.class);
     final Consumer<Import> _function_1 = (Import it) -> {
-      final EList<EObject> root = DdmmUtils.getImportedModelContents(it.eResource(), it.getImportURI());
-      if (((!root.isEmpty()) && Objects.equal(root.get(0), thisModel))) {
-        this.error("Model may not import itself", import_, 
+      final EList<EObject> importedRoot = DdmmUtils.getImportedModelContents(it.eResource(), it.getImportURI());
+      if (((!importedRoot.isEmpty()) && Objects.equal(importedRoot.get(0), thisModel))) {
+        this.error("Model may not import itself", it, 
           ServicePackage.Literals.IMPORT__IMPORT_URI);
       }
     };
-    serviceImports.forEach(_function_1);
+    importedServiceModels.forEach(_function_1);
   }
   
   /**
