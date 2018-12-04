@@ -31,6 +31,7 @@ import de.fhdo.ddmm.utils.DdmmUtils;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import org.eclipse.emf.common.util.EList;
@@ -45,6 +46,7 @@ import org.eclipse.xtext.xbase.lib.ExclusiveRange;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.ListExtensions;
+import org.eclipse.xtext.xbase.lib.Pair;
 
 /**
  * This class contains validation rules for the Operation DSL.
@@ -282,94 +284,169 @@ public class OperationDslValidator extends AbstractOperationDslValidator {
   }
   
   /**
-   * Check if addresses occur more than once for different endpoints
+   * Warn if endpoint addresses occur more than once when the same microservice is deployed to
+   * different containers. Node that containers may exhibit the same endpoint addresses for
+   * different microservices, because typically the microservice determines additional endpoint
+   * address parts, e.g., the path fragment of a URI, while containers determine the physical
+   * endpoint parts, e.g., the scheme and authority of a URI.
    */
   @Check
-  public void checkNonUniqueEndpointAddressesInModel(final OperationModel model) {
-    final HashMap<String, BasicEndpoint> addressToEndpoint = CollectionLiterals.<String, BasicEndpoint>newHashMap();
-    final Function<BasicEndpoint, String> _function = (BasicEndpoint it) -> {
-      Container _container = it.getContainer();
-      boolean _tripleNotEquals = (_container != null);
-      if (_tripleNotEquals) {
-        String _name = it.getContainer().getName();
-        return ("Address is also specified for basic endpoint of container " + _name);
-      } else {
-        InfrastructureNode _infrastructureNode = it.getInfrastructureNode();
-        boolean _tripleNotEquals_1 = (_infrastructureNode != null);
-        if (_tripleNotEquals_1) {
-          String _name_1 = it.getInfrastructureNode().getName();
-          return ("Address is also specified for endpoint of infrastructure node " + _name_1);
-        } else {
-          ServiceDeploymentSpecification _deploymentSpecification = it.getDeploymentSpecification();
-          boolean _tripleNotEquals_2 = (_deploymentSpecification != null);
-          if (_tripleNotEquals_2) {
-            final Microservice deployedService = it.getDeploymentSpecification().getService().getMicroservice();
-            String _name_2 = it.getDeploymentSpecification().getImport().getName();
-            String _plus = ("Address is also specified for deployment of service " + _name_2);
-            String _plus_1 = (_plus + "::");
-            String _string = QualifiedName.create(deployedService.getQualifiedNameParts()).toString();
-            return (_plus_1 + _string);
-          }
-        }
-      }
-      return null;
+  public void warnSameAddressOnDifferentContainers(final Container containerToCheck) {
+    final Function1<Container, Boolean> _function = (Container otherContainer) -> {
+      return Boolean.valueOf(((!Objects.equal(otherContainer, containerToCheck)) && 
+        IterableExtensions.<ImportedMicroservice>exists(otherContainer.getDeployedServices(), 
+          ((Function1<ImportedMicroservice, Boolean>) (ImportedMicroservice it) -> {
+            final Function1<ImportedMicroservice, Microservice> _function_1 = (ImportedMicroservice it_1) -> {
+              return it_1.getMicroservice();
+            };
+            return Boolean.valueOf(ListExtensions.<ImportedMicroservice, Microservice>map(containerToCheck.getDeployedServices(), _function_1).contains(it.getMicroservice()));
+          }))));
     };
-    final Function<BasicEndpoint, String> buildErrorMessage = _function;
-    ExclusiveRange _doubleDotLessThan = new ExclusiveRange(0, 4, true);
-    for (final Integer i : _doubleDotLessThan) {
-      {
-        Iterable<BasicEndpoint> endpoints = null;
-        if (i != null) {
-          switch (i) {
-            case 0:
-              final Function1<Container, EList<BasicEndpoint>> _function_1 = (Container it) -> {
-                return it.getDefaultBasicEndpoints();
-              };
-              endpoints = Iterables.<BasicEndpoint>concat(ListExtensions.<Container, EList<BasicEndpoint>>map(model.getContainers(), _function_1));
-              break;
-            case 1:
-              final Function1<Container, EList<ServiceDeploymentSpecification>> _function_2 = (Container it) -> {
-                return it.getDeploymentSpecifications();
-              };
-              final Function1<ServiceDeploymentSpecification, EList<BasicEndpoint>> _function_3 = (ServiceDeploymentSpecification it) -> {
-                return it.getBasicEndpoints();
-              };
-              endpoints = Iterables.<BasicEndpoint>concat(IterableExtensions.<ServiceDeploymentSpecification, EList<BasicEndpoint>>map(Iterables.<ServiceDeploymentSpecification>concat(ListExtensions.<Container, EList<ServiceDeploymentSpecification>>map(model.getContainers(), _function_2)), _function_3));
-              break;
-            case 2:
-              final Function1<InfrastructureNode, EList<BasicEndpoint>> _function_4 = (InfrastructureNode it) -> {
-                return it.getEndpoints();
-              };
-              endpoints = Iterables.<BasicEndpoint>concat(ListExtensions.<InfrastructureNode, EList<BasicEndpoint>>map(model.getInfrastructureNodes(), _function_4));
-              break;
-            case 3:
-              final Function1<InfrastructureNode, EList<ServiceDeploymentSpecification>> _function_5 = (InfrastructureNode it) -> {
-                return it.getDeploymentSpecifications();
-              };
-              final Function1<ServiceDeploymentSpecification, EList<BasicEndpoint>> _function_6 = (ServiceDeploymentSpecification it) -> {
-                return it.getBasicEndpoints();
-              };
-              endpoints = Iterables.<BasicEndpoint>concat(IterableExtensions.<ServiceDeploymentSpecification, EList<BasicEndpoint>>map(Iterables.<ServiceDeploymentSpecification>concat(ListExtensions.<InfrastructureNode, EList<ServiceDeploymentSpecification>>map(model.getInfrastructureNodes(), _function_5)), _function_6));
-              break;
+    final Iterable<Container> otherContainersWithSameMicroservices = IterableExtensions.<Container>filter(containerToCheck.getOperationModel().getContainers(), _function);
+    boolean _isEmpty = IterableExtensions.isEmpty(otherContainersWithSameMicroservices);
+    if (_isEmpty) {
+      return;
+    }
+    final BiConsumer<String, Pair<BasicEndpoint, Integer>> _function_1 = (String addressToCheck, Pair<BasicEndpoint, Integer> addressEndpointAndIndex) -> {
+      final Consumer<Container> _function_2 = (Container it) -> {
+        final Function1<BasicEndpoint, EList<String>> _function_3 = (BasicEndpoint it_1) -> {
+          return it_1.getAddresses();
+        };
+        boolean _contains = IterableExtensions.<String>toList(Iterables.<String>concat(ListExtensions.<BasicEndpoint, EList<String>>map(it.getDefaultBasicEndpoints(), _function_3))).contains(addressToCheck);
+        if (_contains) {
+          StringConcatenation _builder = new StringConcatenation();
+          _builder.append("Address ");
+          _builder.append(addressToCheck);
+          _builder.append(" is already specified on a container ");
+          StringConcatenation _builder_1 = new StringConcatenation();
+          _builder_1.append("that deploys the same microservices");
+          String _plus = (_builder.toString() + _builder_1);
+          this.warning(_plus, addressEndpointAndIndex.getKey(), 
+            OperationPackage.Literals.BASIC_ENDPOINT__ADDRESSES, 
+            (addressEndpointAndIndex.getValue()).intValue());
+        }
+        final Consumer<ServiceDeploymentSpecification> _function_4 = (ServiceDeploymentSpecification it_1) -> {
+          final Function1<BasicEndpoint, EList<String>> _function_5 = (BasicEndpoint it_2) -> {
+            return it_2.getAddresses();
+          };
+          boolean _contains_1 = IterableExtensions.<String>toList(Iterables.<String>concat(ListExtensions.<BasicEndpoint, EList<String>>map(it_1.getBasicEndpoints(), _function_5))).contains(addressToCheck);
+          if (_contains_1) {
+            StringConcatenation _builder_2 = new StringConcatenation();
+            _builder_2.append("Address ");
+            _builder_2.append(addressToCheck);
+            _builder_2.append(" is already specified on a container ");
+            StringConcatenation _builder_3 = new StringConcatenation();
+            _builder_3.append("that deploys the same microservices");
+            String _plus_1 = (_builder_2.toString() + _builder_3);
+            this.warning(_plus_1, addressEndpointAndIndex.getKey(), 
+              OperationPackage.Literals.BASIC_ENDPOINT__ADDRESSES, 
+              (addressEndpointAndIndex.getValue()).intValue());
+          }
+        };
+        it.getDeploymentSpecifications().forEach(_function_4);
+      };
+      otherContainersWithSameMicroservices.forEach(_function_2);
+    };
+    this.getAddressesAndEndpoints(containerToCheck).forEach(_function_1);
+  }
+  
+  /**
+   * Check if addresses occur more than once for between infrastructure nodes and other
+   * infrastructure nodes or containers
+   */
+  @Check
+  public void checkDuplicateEndpointAddresses(final OperationModel model) {
+    final HashMap<String, Pair<BasicEndpoint, Integer>> infrastructureNodeAddresses = CollectionLiterals.<String, Pair<BasicEndpoint, Integer>>newHashMap();
+    final Consumer<InfrastructureNode> _function = (InfrastructureNode it) -> {
+      final BiConsumer<String, Pair<BasicEndpoint, Integer>> _function_1 = (String address, Pair<BasicEndpoint, Integer> endpointAndIndex) -> {
+        boolean _containsKey = infrastructureNodeAddresses.containsKey(address);
+        boolean _not = (!_containsKey);
+        if (_not) {
+          infrastructureNodeAddresses.put(address, endpointAndIndex);
+        } else {
+          StringConcatenation _builder = new StringConcatenation();
+          _builder.append("Address ");
+          _builder.append(address);
+          _builder.append(" is already specified for an endpoint of ");
+          StringConcatenation _builder_1 = new StringConcatenation();
+          _builder_1.append("another infrastructure node");
+          String _plus = (_builder.toString() + _builder_1);
+          this.error(_plus, endpointAndIndex.getKey(), 
+            OperationPackage.Literals.BASIC_ENDPOINT__ADDRESSES, 
+            (endpointAndIndex.getValue()).intValue());
+        }
+      };
+      this.getAddressesAndEndpoints(it).forEach(_function_1);
+    };
+    model.getInfrastructureNodes().forEach(_function);
+    final Consumer<Container> _function_1 = (Container it) -> {
+      final BiConsumer<String, Pair<BasicEndpoint, Integer>> _function_2 = (String address, Pair<BasicEndpoint, Integer> endpointAndIndex) -> {
+        boolean _containsKey = infrastructureNodeAddresses.containsKey(address);
+        if (_containsKey) {
+          StringConcatenation _builder = new StringConcatenation();
+          _builder.append("Address ");
+          _builder.append(address);
+          _builder.append(" is already specified for an endpoint of ");
+          StringConcatenation _builder_1 = new StringConcatenation();
+          _builder_1.append("an infrastructure node");
+          String _plus = (_builder.toString() + _builder_1);
+          this.error(_plus, endpointAndIndex.getKey(), 
+            OperationPackage.Literals.BASIC_ENDPOINT__ADDRESSES, 
+            (endpointAndIndex.getValue()).intValue());
+        }
+      };
+      this.getAddressesAndEndpoints(it).forEach(_function_2);
+    };
+    model.getContainers().forEach(_function_1);
+  }
+  
+  /**
+   * Helper to get all addresses, their endpoints, and endpoint indexes of an operation node
+   */
+  private Map<String, Pair<BasicEndpoint, Integer>> getAddressesAndEndpoints(final OperationNode node) {
+    final HashMap<String, Pair<BasicEndpoint, Integer>> addressesAndEndpoint = CollectionLiterals.<String, Pair<BasicEndpoint, Integer>>newHashMap();
+    if ((node instanceof Container)) {
+      final Consumer<BasicEndpoint> _function = (BasicEndpoint endpoint) -> {
+        int _size = endpoint.getAddresses().size();
+        ExclusiveRange _doubleDotLessThan = new ExclusiveRange(0, _size, true);
+        for (final Integer n : _doubleDotLessThan) {
+          {
+            final String address = endpoint.getAddresses().get((n).intValue());
+            addressesAndEndpoint.put(address, Pair.<BasicEndpoint, Integer>of(endpoint, n));
           }
         }
-        final Consumer<BasicEndpoint> _function_7 = (BasicEndpoint endpoint) -> {
+      };
+      ((Container)node).getDefaultBasicEndpoints().forEach(_function);
+    } else {
+      if ((node instanceof InfrastructureNode)) {
+        final Consumer<BasicEndpoint> _function_1 = (BasicEndpoint endpoint) -> {
           int _size = endpoint.getAddresses().size();
-          ExclusiveRange _doubleDotLessThan_1 = new ExclusiveRange(0, _size, true);
-          for (final Integer n : _doubleDotLessThan_1) {
+          ExclusiveRange _doubleDotLessThan = new ExclusiveRange(0, _size, true);
+          for (final Integer n : _doubleDotLessThan) {
             {
               final String address = endpoint.getAddresses().get((n).intValue());
-              final BasicEndpoint duplicateEndpoint = addressToEndpoint.putIfAbsent(address, endpoint);
-              if (((duplicateEndpoint != null) && (duplicateEndpoint != endpoint))) {
-                this.error(buildErrorMessage.apply(duplicateEndpoint), endpoint, 
-                  OperationPackage.Literals.BASIC_ENDPOINT__ADDRESSES, (n).intValue());
-              }
+              addressesAndEndpoint.put(address, Pair.<BasicEndpoint, Integer>of(endpoint, n));
             }
           }
         };
-        endpoints.forEach(_function_7);
+        ((InfrastructureNode)node).getEndpoints().forEach(_function_1);
       }
     }
+    final Consumer<ServiceDeploymentSpecification> _function_2 = (ServiceDeploymentSpecification it) -> {
+      final Consumer<BasicEndpoint> _function_3 = (BasicEndpoint endpoint) -> {
+        int _size = endpoint.getAddresses().size();
+        ExclusiveRange _doubleDotLessThan = new ExclusiveRange(0, _size, true);
+        for (final Integer n : _doubleDotLessThan) {
+          {
+            final String address = endpoint.getAddresses().get((n).intValue());
+            addressesAndEndpoint.put(address, Pair.<BasicEndpoint, Integer>of(endpoint, n));
+          }
+        }
+      };
+      it.getBasicEndpoints().forEach(_function_3);
+    };
+    node.getDeploymentSpecifications().forEach(_function_2);
+    return addressesAndEndpoint;
   }
   
   /**

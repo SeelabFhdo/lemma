@@ -22,6 +22,7 @@ import de.fhdo.ddmm.technology.TechnologyPackage
 import de.fhdo.ddmm.operation.ImportedOperationAspect
 import org.eclipse.xtext.EcoreUtil2
 import de.fhdo.ddmm.service.Import
+import java.util.Map
 
 /**
  * This class contains validation rules for the Operation DSL.
@@ -205,69 +206,113 @@ class OperationDslValidator extends AbstractOperationDslValidator {
     }
 
     /**
-     * Check if addresses occur more than once for different endpoints
+     * Warn if endpoint addresses occur more than once when the same microservice is deployed to
+     * different containers. Node that containers may exhibit the same endpoint addresses for
+     * different microservices, because typically the microservice determines additional endpoint
+     * address parts, e.g., the path fragment of a URI, while containers determine the physical
+     * endpoint parts, e.g., the scheme and authority of a URI.
      */
     @Check
-    def checkNonUniqueEndpointAddressesInModel(OperationModel model) {
-        val addressToEndpoint = <String, BasicEndpoint> newHashMap
+    def warnSameAddressOnDifferentContainers(Container containerToCheck) {
+        val otherContainersWithSameMicroservices = containerToCheck.operationModel.containers
+            .filter[otherContainer |
+                otherContainer != containerToCheck &&
+                otherContainer.deployedServices.exists[
+                    containerToCheck.deployedServices.map[microservice].contains(it.microservice)
+                ]
+            ]
 
-        /*
-         * Setup function to build error message depending on where the original endpoint is defined
-         */
-        val Function<BasicEndpoint, String> buildErrorMessage = [
-            // Default basic endpoint of container
-            if (container !== null)
-                return "Address is also specified for basic endpoint of container " +
-                    container.name
-            // Endpoints of infrastructure node
-            else if (infrastructureNode !== null)
-                return "Address is also specified for endpoint of infrastructure node " +
-                    infrastructureNode.name
-            // Deployment specification inside a container or infrastructure node
-            else if (deploymentSpecification !== null) {
-                val deployedService = deploymentSpecification.service.microservice
-                return "Address is also specified for deployment of service " +
-                    deploymentSpecification.import.name + "::" +
-                    QualifiedName.create(deployedService.qualifiedNameParts).toString
-            }
+        if (otherContainersWithSameMicroservices.empty) {
+            return
+        }
+
+        containerToCheck.addressesAndEndpoints.forEach[addressToCheck, addressEndpointAndIndex |
+            otherContainersWithSameMicroservices.forEach[
+                if (defaultBasicEndpoints.map[addresses].flatten.toList.contains(addressToCheck))
+                    warning('''Address «addressToCheck» is already specified on a container ''' +
+                        '''that deploys the same microservices''', addressEndpointAndIndex.key,
+                        OperationPackage::Literals.BASIC_ENDPOINT__ADDRESSES,
+                        addressEndpointAndIndex.value
+                    )
+
+                deploymentSpecifications.forEach[
+                    if (basicEndpoints.map[addresses].flatten.toList.contains(addressToCheck))
+                        warning('''Address «addressToCheck» is already specified on a container ''' +
+                            '''that deploys the same microservices''', addressEndpointAndIndex.key,
+                            OperationPackage::Literals.BASIC_ENDPOINT__ADDRESSES,
+                            addressEndpointAndIndex.value
+                        )
+                ]
+            ]
+        ]
+    }
+
+    /**
+     * Check if addresses occur more than once for between infrastructure nodes and other
+     * infrastructure nodes or containers
+     */
+    @Check
+    def checkDuplicateEndpointAddresses(OperationModel model) {
+        /* Check duplicate addresses on endpoints of infrastructure nodes */
+        val infrastructureNodeAddresses = <String, Pair<BasicEndpoint, Integer>> newHashMap
+        model.infrastructureNodes.forEach[
+            it.addressesAndEndpoints.forEach[address, endpointAndIndex |
+                if (!infrastructureNodeAddresses.containsKey(address))
+                    infrastructureNodeAddresses.put(address, endpointAndIndex)
+                else
+                    error('''Address «address» is already specified for an endpoint of ''' +
+                        '''another infrastructure node''', endpointAndIndex.key,
+                        OperationPackage::Literals.BASIC_ENDPOINT__ADDRESSES,
+                        endpointAndIndex.value
+                    )
+            ]
         ]
 
-        /* Perform the actual duplicate check */
-        for (i : 0..<4) {
-            var Iterable<BasicEndpoint> endpoints
-            switch (i) {
-                // Include default basic endpoints of containers
-                case 0: endpoints = model.containers.map[defaultBasicEndpoints].flatten
+        /* Check duplicate addresses between endpoints of infrastructure nodes and containers */
+        model.containers.forEach[
+            it.addressesAndEndpoints.forEach[address, endpointAndIndex |
+                if (infrastructureNodeAddresses.containsKey(address))
+                    error('''Address «address» is already specified for an endpoint of ''' +
+                        '''an infrastructure node''', endpointAndIndex.key,
+                        OperationPackage::Literals.BASIC_ENDPOINT__ADDRESSES,
+                        endpointAndIndex.value
+                    )
+            ]
+        ]
+    }
 
-                // Include endpoints of containers' deployment specifications
-                case 1: endpoints = model.containers
-                    .map[deploymentSpecifications].flatten
-                    .map[basicEndpoints].flatten
+    /**
+     * Helper to get all addresses, their endpoints, and endpoint indexes of an operation node
+     */
+    private def Map<String, Pair<BasicEndpoint, Integer>>
+        getAddressesAndEndpoints(OperationNode node) {
+        val addressesAndEndpoint = <String, Pair<BasicEndpoint, Integer>> newHashMap
 
-                // Include endpoints of infrastructure nodes
-                case 2: endpoints = model.infrastructureNodes.map[it.endpoints].flatten
-
-                // Include endpoints of infrastructure nodes' deployment specifications
-                case 3: endpoints = model.infrastructureNodes
-                    .map[deploymentSpecifications].flatten
-                    .map[basicEndpoints].flatten
-            }
-
-            // Duplicate check
-            endpoints.forEach[endpoint |
+        /* Get node-specific endpoints depending on node's concrete type */
+        if (node instanceof Container)
+            node.defaultBasicEndpoints.forEach[endpoint |
                 for (n : 0..<endpoint.addresses.size) {
                     val address = endpoint.addresses.get(n)
-                    val duplicateEndpoint = addressToEndpoint.putIfAbsent(address, endpoint)
-
-                    // We do not show an error if the duplicate address was detected within the same
-                    // endpoint as this shall result in an error and is therefore separately checked
-                    // by checkUniqueEndpointAddresses()
-                    if (duplicateEndpoint !== null && duplicateEndpoint !== endpoint)
-                        error(buildErrorMessage.apply(duplicateEndpoint), endpoint,
-                            OperationPackage::Literals.BASIC_ENDPOINT__ADDRESSES, n)
+                    addressesAndEndpoint.put(address, {endpoint -> n})
                 }
             ]
-        }
+        else if (node instanceof InfrastructureNode)
+            node.endpoints.forEach[endpoint |
+                for (n : 0..<endpoint.addresses.size) {
+                    val address = endpoint.addresses.get(n)
+                    addressesAndEndpoint.put(address, {endpoint -> n})
+                }
+            ]
+
+        /* Get endpoints of service-specific deployment specifications */
+       node.deploymentSpecifications.forEach[basicEndpoints.forEach[endpoint |
+            for (n : 0..<endpoint.addresses.size) {
+                val address = endpoint.addresses.get(n)
+                addressesAndEndpoint.put(address, {endpoint -> n})
+            }
+        ]]
+
+        return addressesAndEndpoint
     }
 
     /**
