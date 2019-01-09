@@ -11,7 +11,7 @@ import org.eclipse.emf.common.util.EList;
  *
  * <!-- begin-model-doc -->
  * Represents built-in primitive types that correspond to Java's primitive types in syntax,
- * semantics, namingm and size. Strings and dates, however, are also treated as primitive types.
+ * semantics, naming and size. Strings and dates, however, are also treated as primitive types.
  * <!-- end-model-doc -->
  *
  * <p>
