@@ -6,7 +6,6 @@ import com.google.common.base.Predicate
 import org.eclipse.swt.widgets.Display
 import de.fhdo.ddmm.intermediate.transformations.IntermediateTransformationException
 import de.fhdo.ddmm.intermediate.transformations.IntermediateTransformationExceptionKind
-import org.eclipse.core.resources.IFile
 import org.eclipse.core.resources.ResourcesPlugin
 import org.eclipse.core.runtime.Path
 
@@ -85,11 +84,7 @@ class TransformationThread extends Thread {
             fileTypeDescription.refiningTransformationStrategies.forEach[
                 val sourceFilePath = new Path(targetPath)
                 val sourceFile = ResourcesPlugin.getWorkspace().getRoot().getFile(sourceFilePath)
-                // DEBUG
-                val targetPathFragments = targetPath.split("/")
-                targetPathFragments.set(targetPathFragments.length-1, "refined_" + targetPathFragments.last)
-                var targetPath2 = targetPathFragments.join("/")
-                refiningTransformation(sourceFile, targetPath2,
+                refiningTransformation(sourceFile, targetPath,
                     [internalTransformationWarningCallback])
             ]
         } catch(IntermediateTransformationException ex) {

@@ -13,7 +13,6 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.xtext.xbase.lib.Conversions;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
@@ -102,17 +101,10 @@ public class TransformationThread extends Thread {
       final Consumer<AbstractIntermediateModelTransformationStrategy> _function_3 = (AbstractIntermediateModelTransformationStrategy it) -> {
         final Path sourceFilePath = new Path(targetPath);
         final IFile sourceFile = ResourcesPlugin.getWorkspace().getRoot().getFile(sourceFilePath);
-        final String[] targetPathFragments = targetPath.split("/");
-        int _length = targetPathFragments.length;
-        int _minus = (_length - 1);
-        String _last = IterableExtensions.<String>last(((Iterable<String>)Conversions.doWrapArray(targetPathFragments)));
-        String _plus = ("refined_" + _last);
-        targetPathFragments[_minus] = _plus;
-        String targetPath2 = IterableExtensions.join(((Iterable<?>)Conversions.doWrapArray(targetPathFragments)), "/");
         final Predicate<IntermediateTransformationException> _function_4 = (IntermediateTransformationException it_1) -> {
           return this.internalTransformationWarningCallback(it_1);
         };
-        it.refiningTransformation(sourceFile, targetPath2, _function_4);
+        it.refiningTransformation(sourceFile, targetPath, _function_4);
       };
       fileTypeDescription.getRefiningTransformationStrategies().forEach(_function_3);
     } catch (final Throwable _t) {
