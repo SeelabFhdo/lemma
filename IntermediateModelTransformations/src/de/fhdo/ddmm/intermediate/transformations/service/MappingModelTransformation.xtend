@@ -27,6 +27,8 @@ class MappingModelTransformation extends AbstractIntermediateModelTransformation
         ServiceModel
     )
 
+    String absoluteSourceModelPath
+
     /**
      * Get project-relative path to compiled ATL model transformation file
      */
@@ -42,9 +44,17 @@ class MappingModelTransformation extends AbstractIntermediateModelTransformation
     }
 
     /**
+     * Before transformation hook
+     *
+     */
+    override beforeTransformationHook(String absoluteSourceModelPath) {
+        this.absoluteSourceModelPath = absoluteSourceModelPath
+    }
+
+    /**
      * Prepare source model
      */
-    override prepareSourceModel(EObject modelRoot, String absoluteSourceModelPath) {
+    override prepareSourceModel(EObject modelRoot) {
         val mappingModel = modelRoot as TechnologyMapping
 
         // Convert import URIs to absolute URIs

@@ -283,8 +283,17 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    public EAttribute getServiceModel_T_modelUri() {
+        return (EAttribute)serviceModelEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EReference getServiceModel_Imports() {
-        return (EReference)serviceModelEClass.getEStructuralFeatures().get(0);
+        return (EReference)serviceModelEClass.getEStructuralFeatures().get(1);
     }
 
     /**
@@ -293,7 +302,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     public EReference getServiceModel_Microservices() {
-        return (EReference)serviceModelEClass.getEStructuralFeatures().get(1);
+        return (EReference)serviceModelEClass.getEStructuralFeatures().get(2);
     }
 
     /**
@@ -427,8 +436,8 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getMicroservice_Technologies() {
-        return (EReference)microserviceEClass.getEStructuralFeatures().get(5);
+    public EAttribute getMicroservice_T_sourceModelUri() {
+        return (EAttribute)microserviceEClass.getEStructuralFeatures().get(5);
     }
 
     /**
@@ -436,7 +445,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getMicroservice_T_typeDefinitionTechnologyImport() {
+    public EReference getMicroservice_Technologies() {
         return (EReference)microserviceEClass.getEStructuralFeatures().get(6);
     }
 
@@ -445,7 +454,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getMicroservice_T_typeDefinitionTechnology() {
+    public EReference getMicroservice_T_typeDefinitionTechnologyImport() {
         return (EReference)microserviceEClass.getEStructuralFeatures().get(7);
     }
 
@@ -454,7 +463,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getMicroservice_Endpoints() {
+    public EReference getMicroservice_T_typeDefinitionTechnology() {
         return (EReference)microserviceEClass.getEStructuralFeatures().get(8);
     }
 
@@ -463,7 +472,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getMicroservice_RequiredMicroservices() {
+    public EReference getMicroservice_Endpoints() {
         return (EReference)microserviceEClass.getEStructuralFeatures().get(9);
     }
 
@@ -472,7 +481,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getMicroservice_RequiredInterfaces() {
+    public EReference getMicroservice_RequiredMicroservices() {
         return (EReference)microserviceEClass.getEStructuralFeatures().get(10);
     }
 
@@ -481,7 +490,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getMicroservice_RequiredOperations() {
+    public EReference getMicroservice_RequiredInterfaces() {
         return (EReference)microserviceEClass.getEStructuralFeatures().get(11);
     }
 
@@ -490,7 +499,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getMicroservice_Protocols() {
+    public EReference getMicroservice_RequiredOperations() {
         return (EReference)microserviceEClass.getEStructuralFeatures().get(12);
     }
 
@@ -499,7 +508,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getMicroservice_Interfaces() {
+    public EReference getMicroservice_Protocols() {
         return (EReference)microserviceEClass.getEStructuralFeatures().get(13);
     }
 
@@ -508,7 +517,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getMicroservice_Aspects() {
+    public EReference getMicroservice_Interfaces() {
         return (EReference)microserviceEClass.getEStructuralFeatures().get(14);
     }
 
@@ -517,7 +526,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getMicroservice_ServiceModel() {
+    public EReference getMicroservice_Aspects() {
         return (EReference)microserviceEClass.getEStructuralFeatures().get(15);
     }
 
@@ -526,8 +535,8 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getMicroservice_EffectivelyImplemented() {
-        return (EAttribute)microserviceEClass.getEStructuralFeatures().get(16);
+    public EReference getMicroservice_ServiceModel() {
+        return (EReference)microserviceEClass.getEStructuralFeatures().get(16);
     }
 
     /**
@@ -535,7 +544,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getMicroservice_EffectiveVisibility() {
+    public EAttribute getMicroservice_EffectivelyImplemented() {
         return (EAttribute)microserviceEClass.getEStructuralFeatures().get(17);
     }
 
@@ -544,8 +553,17 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getMicroservice_EffectivelyInternal() {
+    public EAttribute getMicroservice_EffectiveVisibility() {
         return (EAttribute)microserviceEClass.getEStructuralFeatures().get(18);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getMicroservice_EffectivelyInternal() {
+        return (EAttribute)microserviceEClass.getEStructuralFeatures().get(19);
     }
 
     /**
@@ -1864,6 +1882,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
 
         // Create classes and their features
         serviceModelEClass = createEClass(SERVICE_MODEL);
+        createEAttribute(serviceModelEClass, SERVICE_MODEL__TMODEL_URI);
         createEReference(serviceModelEClass, SERVICE_MODEL__IMPORTS);
         createEReference(serviceModelEClass, SERVICE_MODEL__MICROSERVICES);
         createEOperation(serviceModelEClass, SERVICE_MODEL___GET_CONTAINED_OPERATIONS);
@@ -1882,6 +1901,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
         createEAttribute(microserviceEClass, MICROSERVICE__TYPE);
         createEAttribute(microserviceEClass, MICROSERVICE__VISIBILITY);
         createEAttribute(microserviceEClass, MICROSERVICE__TDEFAULT_PROTOCOLS);
+        createEAttribute(microserviceEClass, MICROSERVICE__TSOURCE_MODEL_URI);
         createEReference(microserviceEClass, MICROSERVICE__TECHNOLOGIES);
         createEReference(microserviceEClass, MICROSERVICE__TTYPE_DEFINITION_TECHNOLOGY_IMPORT);
         createEReference(microserviceEClass, MICROSERVICE__TTYPE_DEFINITION_TECHNOLOGY);
@@ -2094,6 +2114,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
 
         // Initialize classes, features, and operations; add parameters
         initEClass(serviceModelEClass, ServiceModel.class, "ServiceModel", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getServiceModel_T_modelUri(), theEcorePackage.getEString(), "t_modelUri", null, 0, 1, ServiceModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getServiceModel_Imports(), this.getImport(), this.getImport_ServiceModel(), "imports", null, 0, -1, ServiceModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getServiceModel_Microservices(), this.getMicroservice(), this.getMicroservice_ServiceModel(), "microservices", null, 1, -1, ServiceModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -2115,6 +2136,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
         initEAttribute(getMicroservice_Type(), this.getMicroserviceType(), "type", null, 0, 1, Microservice.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getMicroservice_Visibility(), this.getVisibility(), "visibility", "NONE", 0, 1, Microservice.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getMicroservice_T_defaultProtocols(), this.getDefaultProtocols(), "t_defaultProtocols", null, 0, 1, Microservice.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getMicroservice_T_sourceModelUri(), theEcorePackage.getEString(), "t_sourceModelUri", null, 0, 1, Microservice.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getMicroservice_Technologies(), this.getImport(), null, "technologies", null, 0, -1, Microservice.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getMicroservice_T_typeDefinitionTechnologyImport(), this.getImport(), null, "t_typeDefinitionTechnologyImport", null, 0, 1, Microservice.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getMicroservice_T_typeDefinitionTechnology(), theTechnologyPackage.getTechnology(), null, "t_typeDefinitionTechnology", null, 0, 1, Microservice.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

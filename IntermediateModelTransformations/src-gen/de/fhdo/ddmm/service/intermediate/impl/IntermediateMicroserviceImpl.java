@@ -43,6 +43,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link de.fhdo.ddmm.service.intermediate.impl.IntermediateMicroserviceImpl#getSourceModelUri <em>Source Model Uri</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.intermediate.impl.IntermediateMicroserviceImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.intermediate.impl.IntermediateMicroserviceImpl#getVersion <em>Version</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.intermediate.impl.IntermediateMicroserviceImpl#getQualifiedName <em>Qualified Name</em>}</li>
@@ -63,6 +64,26 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * @generated
  */
 public class IntermediateMicroserviceImpl extends MinimalEObjectImpl.Container implements IntermediateMicroservice {
+    /**
+     * The default value of the '{@link #getSourceModelUri() <em>Source Model Uri</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getSourceModelUri()
+     * @generated
+     * @ordered
+     */
+    protected static final String SOURCE_MODEL_URI_EDEFAULT = null;
+
+    /**
+     * The cached value of the '{@link #getSourceModelUri() <em>Source Model Uri</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getSourceModelUri()
+     * @generated
+     * @ordered
+     */
+    protected String sourceModelUri = SOURCE_MODEL_URI_EDEFAULT;
+
     /**
      * The default value of the '{@link #getName() <em>Name</em>}' attribute.
      * <!-- begin-user-doc -->
@@ -280,6 +301,27 @@ public class IntermediateMicroserviceImpl extends MinimalEObjectImpl.Container i
     @Override
     protected EClass eStaticClass() {
         return IntermediatePackage.Literals.INTERMEDIATE_MICROSERVICE;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public String getSourceModelUri() {
+        return sourceModelUri;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setSourceModelUri(String newSourceModelUri) {
+        String oldSourceModelUri = sourceModelUri;
+        sourceModelUri = newSourceModelUri;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, IntermediatePackage.INTERMEDIATE_MICROSERVICE__SOURCE_MODEL_URI, oldSourceModelUri, sourceModelUri));
     }
 
     /**
@@ -638,6 +680,8 @@ public class IntermediateMicroserviceImpl extends MinimalEObjectImpl.Container i
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
+            case IntermediatePackage.INTERMEDIATE_MICROSERVICE__SOURCE_MODEL_URI:
+                return getSourceModelUri();
             case IntermediatePackage.INTERMEDIATE_MICROSERVICE__NAME:
                 return getName();
             case IntermediatePackage.INTERMEDIATE_MICROSERVICE__VERSION:
@@ -682,6 +726,9 @@ public class IntermediateMicroserviceImpl extends MinimalEObjectImpl.Container i
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
+            case IntermediatePackage.INTERMEDIATE_MICROSERVICE__SOURCE_MODEL_URI:
+                setSourceModelUri((String)newValue);
+                return;
             case IntermediatePackage.INTERMEDIATE_MICROSERVICE__NAME:
                 setName((String)newValue);
                 return;
@@ -747,6 +794,9 @@ public class IntermediateMicroserviceImpl extends MinimalEObjectImpl.Container i
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
+            case IntermediatePackage.INTERMEDIATE_MICROSERVICE__SOURCE_MODEL_URI:
+                setSourceModelUri(SOURCE_MODEL_URI_EDEFAULT);
+                return;
             case IntermediatePackage.INTERMEDIATE_MICROSERVICE__NAME:
                 setName(NAME_EDEFAULT);
                 return;
@@ -804,6 +854,8 @@ public class IntermediateMicroserviceImpl extends MinimalEObjectImpl.Container i
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
+            case IntermediatePackage.INTERMEDIATE_MICROSERVICE__SOURCE_MODEL_URI:
+                return SOURCE_MODEL_URI_EDEFAULT == null ? sourceModelUri != null : !SOURCE_MODEL_URI_EDEFAULT.equals(sourceModelUri);
             case IntermediatePackage.INTERMEDIATE_MICROSERVICE__NAME:
                 return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
             case IntermediatePackage.INTERMEDIATE_MICROSERVICE__VERSION:
@@ -848,7 +900,9 @@ public class IntermediateMicroserviceImpl extends MinimalEObjectImpl.Container i
         if (eIsProxy()) return super.toString();
 
         StringBuffer result = new StringBuffer(super.toString());
-        result.append(" (name: ");
+        result.append(" (sourceModelUri: ");
+        result.append(sourceModelUri);
+        result.append(", name: ");
         result.append(name);
         result.append(", version: ");
         result.append(version);

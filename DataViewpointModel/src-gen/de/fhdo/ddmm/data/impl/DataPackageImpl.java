@@ -276,8 +276,8 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getDataModel_ComplexTypeImports() {
-        return (EReference)dataModelEClass.getEStructuralFeatures().get(0);
+    public EAttribute getDataModel_T_modelUri() {
+        return (EAttribute)dataModelEClass.getEStructuralFeatures().get(0);
     }
 
     /**
@@ -285,7 +285,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getDataModel_Versions() {
+    public EReference getDataModel_ComplexTypeImports() {
         return (EReference)dataModelEClass.getEStructuralFeatures().get(1);
     }
 
@@ -294,7 +294,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getDataModel_Contexts() {
+    public EReference getDataModel_Versions() {
         return (EReference)dataModelEClass.getEStructuralFeatures().get(2);
     }
 
@@ -303,8 +303,17 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getDataModel_ComplexTypes() {
+    public EReference getDataModel_Contexts() {
         return (EReference)dataModelEClass.getEStructuralFeatures().get(3);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getDataModel_ComplexTypes() {
+        return (EReference)dataModelEClass.getEStructuralFeatures().get(4);
     }
 
     /**
@@ -1164,6 +1173,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 
         // Create classes and their features
         dataModelEClass = createEClass(DATA_MODEL);
+        createEAttribute(dataModelEClass, DATA_MODEL__TMODEL_URI);
         createEReference(dataModelEClass, DATA_MODEL__COMPLEX_TYPE_IMPORTS);
         createEReference(dataModelEClass, DATA_MODEL__VERSIONS);
         createEReference(dataModelEClass, DATA_MODEL__CONTEXTS);
@@ -1331,6 +1341,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 
         // Initialize classes, features, and operations; add parameters
         initEClass(dataModelEClass, DataModel.class, "DataModel", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getDataModel_T_modelUri(), theEcorePackage.getEString(), "t_modelUri", null, 0, 1, DataModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getDataModel_ComplexTypeImports(), this.getComplexTypeImport(), this.getComplexTypeImport_DataModel(), "complexTypeImports", null, 0, -1, DataModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getDataModel_Versions(), this.getVersion(), this.getVersion_DataModel(), "versions", null, 0, -1, DataModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getDataModel_Contexts(), this.getContext(), this.getContext_DataModel(), "contexts", null, 0, -1, DataModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

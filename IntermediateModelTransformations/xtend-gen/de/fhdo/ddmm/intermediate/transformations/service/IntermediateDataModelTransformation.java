@@ -34,6 +34,8 @@ public class IntermediateDataModelTransformation extends AbstractIntermediateMod
     IntermediatePackage.eINSTANCE, 
     IntermediateDataModel.class);
   
+  private String absoluteSourceModelPath;
+  
   /**
    * Get project-relative path to compiled ATL model transformation file
    */
@@ -51,19 +53,33 @@ public class IntermediateDataModelTransformation extends AbstractIntermediateMod
   }
   
   /**
+   * Before transformation hook
+   */
+  @Override
+  public void beforeTransformationHook(final String absoluteSourceModelPath) {
+    this.absoluteSourceModelPath = absoluteSourceModelPath;
+  }
+  
+  /**
    * Prepare source model
    */
   @Override
-  public void prepareSourceModel(final EObject modelRoot, final String absoluteSourceModelPath) {
+  public void prepareSourceModel(final EObject modelRoot) {
+    final DataModel dataModel = ((DataModel) modelRoot);
+    boolean _isFileUri = DdmmUtils.isFileUri(this.absoluteSourceModelPath);
+    boolean _not = (!_isFileUri);
+    if (_not) {
+      dataModel.setT_modelUri(DdmmUtils.convertToFileUri(this.absoluteSourceModelPath));
+    }
     final Consumer<ComplexTypeImport> _function = (ComplexTypeImport it) -> {
-      boolean _isFileUri = DdmmUtils.isFileUri(it.getImportURI());
-      boolean _not = (!_isFileUri);
-      if (_not) {
+      boolean _isFileUri_1 = DdmmUtils.isFileUri(it.getImportURI());
+      boolean _not_1 = (!_isFileUri_1);
+      if (_not_1) {
         it.setImportURI(DdmmUtils.convertToFileUri(
-          DdmmUtils.convertToAbsolutePath(it.getImportURI(), absoluteSourceModelPath)));
+          DdmmUtils.convertToAbsolutePath(it.getImportURI(), this.absoluteSourceModelPath)));
       }
     };
-    ((DataModel) modelRoot).getComplexTypeImports().forEach(_function);
+    dataModel.getComplexTypeImports().forEach(_function);
   }
   
   /**

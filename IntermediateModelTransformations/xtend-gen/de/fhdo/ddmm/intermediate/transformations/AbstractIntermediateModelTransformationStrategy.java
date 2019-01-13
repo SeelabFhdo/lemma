@@ -59,9 +59,15 @@ public abstract class AbstractIntermediateModelTransformationStrategy {
   public abstract TargetModelInfo getTargetModelInfo();
   
   /**
+   * Before transformation hook (optional)
+   */
+  protected void beforeTransformationHook(final String absoluteSourceModelPath) {
+  }
+  
+  /**
    * Prepare source model (optional)
    */
-  protected void prepareSourceModel(final EObject modelRoot, final String absoluteSourceModelPath) {
+  protected void prepareSourceModel(final EObject modelRoot) {
   }
   
   /**
@@ -95,6 +101,18 @@ public abstract class AbstractIntermediateModelTransformationStrategy {
    * Add transformation target paths of imported model files to target model
    */
   protected abstract void populateTargetModelWithImportTargetPaths(final EMFModel targetModel, final Map<String, String> targetPaths);
+  
+  /**
+   * Modify target model (optional)
+   */
+  protected void modifyTargetModel(final EObject modelRoot) {
+  }
+  
+  /**
+   * After transformation hook (optional)
+   */
+  protected void afterTransformationHook(final String absoluteSourceModelPath) {
+  }
   
   /**
    * Constructor
@@ -138,10 +156,11 @@ public abstract class AbstractIntermediateModelTransformationStrategy {
    */
   private void doTransformation(final IFile sourceModelFile, final Function<IFile, Resource> sourceModelLoader, final String targetModelFile, final Map<String, String> targetPathsOfImports, final Predicate<IntermediateTransformationException> warningCallback) {
     try {
-      final Resource sourceModelResource = sourceModelLoader.apply(sourceModelFile);
       final String absoluteSourceModelPath = sourceModelFile.getRawLocation().makeAbsolute().toString();
+      this.beforeTransformationHook(absoluteSourceModelPath);
+      final Resource sourceModelResource = sourceModelLoader.apply(sourceModelFile);
       final EObject sourceModelRoot = sourceModelResource.getContents().get(0);
-      this.prepareSourceModel(sourceModelRoot, absoluteSourceModelPath);
+      this.prepareSourceModel(sourceModelRoot);
       final AbstractSourceModelValidator sourceModelValidator = this.getSourceModelValidator();
       boolean _xifexpression = false;
       if ((sourceModelValidator != null)) {
@@ -177,6 +196,9 @@ public abstract class AbstractIntermediateModelTransformationStrategy {
       if (((targetPathsOfImports != null) && (!targetPathsOfImports.isEmpty()))) {
         this.populateTargetModelWithImportTargetPaths(targetModel, targetPathsOfImports);
       }
+      final EObject targetModelRoot = targetModel.getResource().getContents().get(0);
+      this.modifyTargetModel(targetModelRoot);
+      this.afterTransformationHook(targetModelFile);
       Resource _resource = targetModel.getResource();
       _resource.setURI(URI.createURI(targetModelFile));
       targetModel.getResource().save(CollectionLiterals.<Object, Object>emptyMap());

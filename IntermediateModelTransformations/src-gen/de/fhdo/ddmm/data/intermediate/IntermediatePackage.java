@@ -69,13 +69,22 @@ public interface IntermediatePackage extends EPackage {
     int INTERMEDIATE_DATA_MODEL = 0;
 
     /**
+     * The feature id for the '<em><b>Source Model Uri</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_DATA_MODEL__SOURCE_MODEL_URI = 0;
+
+    /**
      * The feature id for the '<em><b>Imports</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_DATA_MODEL__IMPORTS = 0;
+    int INTERMEDIATE_DATA_MODEL__IMPORTS = 1;
 
     /**
      * The feature id for the '<em><b>Versions</b></em>' containment reference list.
@@ -84,7 +93,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_DATA_MODEL__VERSIONS = 1;
+    int INTERMEDIATE_DATA_MODEL__VERSIONS = 2;
 
     /**
      * The feature id for the '<em><b>Contexts</b></em>' containment reference list.
@@ -93,7 +102,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_DATA_MODEL__CONTEXTS = 2;
+    int INTERMEDIATE_DATA_MODEL__CONTEXTS = 3;
 
     /**
      * The feature id for the '<em><b>Complex Types</b></em>' containment reference list.
@@ -102,7 +111,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_DATA_MODEL__COMPLEX_TYPES = 3;
+    int INTERMEDIATE_DATA_MODEL__COMPLEX_TYPES = 4;
 
     /**
      * The number of structural features of the '<em>Data Model</em>' class.
@@ -111,7 +120,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_DATA_MODEL_FEATURE_COUNT = 4;
+    int INTERMEDIATE_DATA_MODEL_FEATURE_COUNT = 5;
 
     /**
      * The number of operations of the '<em>Data Model</em>' class.
@@ -1055,6 +1064,17 @@ public interface IntermediatePackage extends EPackage {
     EClass getIntermediateDataModel();
 
     /**
+     * Returns the meta object for the attribute '{@link de.fhdo.ddmm.data.intermediate.IntermediateDataModel#getSourceModelUri <em>Source Model Uri</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Source Model Uri</em>'.
+     * @see de.fhdo.ddmm.data.intermediate.IntermediateDataModel#getSourceModelUri()
+     * @see #getIntermediateDataModel()
+     * @generated
+     */
+    EAttribute getIntermediateDataModel_SourceModelUri();
+
+    /**
      * Returns the meta object for the containment reference list '{@link de.fhdo.ddmm.data.intermediate.IntermediateDataModel#getImports <em>Imports</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1657,6 +1677,14 @@ public interface IntermediatePackage extends EPackage {
          * @generated
          */
         EClass INTERMEDIATE_DATA_MODEL = eINSTANCE.getIntermediateDataModel();
+
+        /**
+         * The meta object literal for the '<em><b>Source Model Uri</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute INTERMEDIATE_DATA_MODEL__SOURCE_MODEL_URI = eINSTANCE.getIntermediateDataModel_SourceModelUri();
 
         /**
          * The meta object literal for the '<em><b>Imports</b></em>' containment reference list feature.

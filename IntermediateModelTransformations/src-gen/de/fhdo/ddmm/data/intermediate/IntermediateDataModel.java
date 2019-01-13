@@ -21,6 +21,7 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
+ *   <li>{@link de.fhdo.ddmm.data.intermediate.IntermediateDataModel#getSourceModelUri <em>Source Model Uri</em>}</li>
  *   <li>{@link de.fhdo.ddmm.data.intermediate.IntermediateDataModel#getImports <em>Imports</em>}</li>
  *   <li>{@link de.fhdo.ddmm.data.intermediate.IntermediateDataModel#getVersions <em>Versions</em>}</li>
  *   <li>{@link de.fhdo.ddmm.data.intermediate.IntermediateDataModel#getContexts <em>Contexts</em>}</li>
@@ -32,6 +33,32 @@ import org.eclipse.emf.ecore.EObject;
  * @generated
  */
 public interface IntermediateDataModel extends EObject {
+    /**
+     * Returns the value of the '<em><b>Source Model Uri</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Source Model Uri</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Source Model Uri</em>' attribute.
+     * @see #setSourceModelUri(String)
+     * @see de.fhdo.ddmm.data.intermediate.IntermediatePackage#getIntermediateDataModel_SourceModelUri()
+     * @model unique="false"
+     * @generated
+     */
+    String getSourceModelUri();
+
+    /**
+     * Sets the value of the '{@link de.fhdo.ddmm.data.intermediate.IntermediateDataModel#getSourceModelUri <em>Source Model Uri</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Source Model Uri</em>' attribute.
+     * @see #getSourceModelUri()
+     * @generated
+     */
+    void setSourceModelUri(String value);
+
     /**
      * Returns the value of the '<em><b>Imports</b></em>' containment reference list.
      * The list contents are of type {@link de.fhdo.ddmm.data.intermediate.IntermediateImport}.

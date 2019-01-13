@@ -192,13 +192,19 @@ helper def : getCreatedMappedDataField(sourceMappedDataField : Service!MappedDat
 	thisModule.createdMappedDataFields->get(sourceMappedDataField.buildQualifiedName('.'))
 ;
 ----------------------------------------------------------------------------------------------------
-	
+
+--- Helper to retrieve a reference to the input model
+helper def : inputModel() : Service!ServiceModel =
+	Service!ServiceModel.allInstances().first()
+;
+
 --- Rule to generate the root of the target intermediate service model
 unique lazy rule IntermediateServiceModel {
 	from
 		s : Service!ServiceModel
 	to
 		t : Intermediate!IntermediateServiceModel(
+			sourceModelUri <- thisModule.inputModel().t_modelUri,
 			imports <- Sequence{},
 			microservices <- Sequence{}
 		)
@@ -233,6 +239,11 @@ rule IntermediateMicroservice {
 		m : Service!Microservice
 	to
 		i : Intermediate!IntermediateMicroservice(
+			sourceModelUri <- if (not m.t_sourceModelUri.oclIsUndefined()) then 
+					m.t_sourceModelUri 
+				else 
+					thisModule.IntermediateServiceModel().sourceModelUri 
+				endif,
 			name <- m.name,
 			version <- m.version,
 			qualifiedName <- m.buildQualifiedName('.'),

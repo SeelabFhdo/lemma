@@ -138,6 +138,17 @@ default value in case it did not receive an explicit value.</p>
 <dd><p>Root of the Intermediate Service Model instance.</p>
 <dl class="attribute">
 <dt>
+<code class="descname">String[1] sourceModelUri</code></dt>
+<dd><p><cite>“file://”</cite> URI pointing to the source Service Model file from which
+this model was derived. Not that this might be an empty string, if the
+<a class="reference internal" href="#IntermediateMicroservice" title="IntermediateMicroservice"><code class="xref java java-type docutils literal notranslate"><span class="pre">IntermediateMicroservice</span></code></a> instances were derived from
+different Service Models. Model processors should then rely on the
+<a class="reference internal" href="#link-intermediatemicroservice-sourcemodeluri"><span class="std std-ref">eponymous attribute</span></a> in the
+<code class="docutils literal notranslate"><span class="pre">IntermediateMicroservice</span></code> concept.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
 <code class="descname">IntermediateImport[*] imports</code></dt>
 <dd><p>References to <a class="reference external" href="../../../Intermediate Data Model Format Specification/build/html/body.html#IntermediateDataModel" title="(in Intermediate Data Model Format Specification v1.0)"><code class="docutils literal notranslate"><span class="pre">IntermediateDataModel</span></code></a>, Technology
 Model (cf. <a class="reference internal" href="#tab-model-types"><span class="std std-numref">Table 1</span></a>), or Intermediate Service Model
@@ -161,6 +172,13 @@ source Service Model.</p>
 <dt id="IntermediateMicroservice">
  class <code class="descname">IntermediateMicroservice</code><a class="headerlink" href="#IntermediateMicroservice" title="Permalink to this definition">¶</a></dt>
 <dd><p>A modeled microservice.</p>
+<span class="target" id="link-intermediatemicroservice-sourcemodeluri"></span><dl class="attribute">
+<dt>
+<code class="descname">String[1] sourceModelUri</code></dt>
+<dd><p><cite>“file://”</cite> URI pointing to the source Service Model file from which
+this microservice originates.</p>
+</dd></dl>
+
 <span class="target" id="link-intermediatemicroservice-name"></span><dl class="attribute">
 <dt>
 <code class="descname">String[1] name</code></dt>
@@ -1038,8 +1056,8 @@ between microservices.</p>
 <dl class="type">
 <dt id="IntermediateEndpoint">
  class <code class="descname">IntermediateEndpoint</code><a class="headerlink" href="#IntermediateEndpoint" title="Permalink to this definition">¶</a></dt>
-<dd><p>A protocol- and format-specific endpoint, e.g., “<a class="reference external" href="http://www.example.org">http://www.example.org</a>” for
-HTTP and a format like JSON.</p>
+<dd><p>A protocol- and format-specific endpoint, e.g., <cite>“http://www.example.org”</cite>
+for HTTP and a format like JSON.</p>
 <dl class="attribute">
 <dt>
 <code class="descname">CommunicationType[1] communicationType</code></dt>
@@ -1064,7 +1082,7 @@ endpoint. It corresponds to the communication type of the endpoint’s
 <dt>
 <code class="descname">String[*] addresses</code></dt>
 <dd><p>List of protocol- and format-specific addresses that were assigned to
-the endpoint, e.g., “<a class="reference external" href="http://www.example.org">http://www.example.org</a>”.</p>
+the endpoint, e.g., <cite>“http://www.example.org”</cite>.</p>
 <div class="admonition hint">
 <p class="first admonition-title">Hint</p>
 <p class="last">If the list of addresses is empty, code generators should produce

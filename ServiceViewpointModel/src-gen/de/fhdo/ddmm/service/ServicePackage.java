@@ -71,13 +71,22 @@ public interface ServicePackage extends EPackage {
     int SERVICE_MODEL = 0;
 
     /**
+     * The feature id for the '<em><b>Tmodel Uri</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SERVICE_MODEL__TMODEL_URI = 0;
+
+    /**
      * The feature id for the '<em><b>Imports</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int SERVICE_MODEL__IMPORTS = 0;
+    int SERVICE_MODEL__IMPORTS = 1;
 
     /**
      * The feature id for the '<em><b>Microservices</b></em>' containment reference list.
@@ -86,7 +95,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SERVICE_MODEL__MICROSERVICES = 1;
+    int SERVICE_MODEL__MICROSERVICES = 2;
 
     /**
      * The number of structural features of the '<em>Model</em>' class.
@@ -95,7 +104,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SERVICE_MODEL_FEATURE_COUNT = 2;
+    int SERVICE_MODEL_FEATURE_COUNT = 3;
 
     /**
      * The operation id for the '<em>Get Contained Operations</em>' operation.
@@ -253,13 +262,22 @@ public interface ServicePackage extends EPackage {
     int MICROSERVICE__TDEFAULT_PROTOCOLS = 4;
 
     /**
+     * The feature id for the '<em><b>Tsource Model Uri</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MICROSERVICE__TSOURCE_MODEL_URI = 5;
+
+    /**
      * The feature id for the '<em><b>Technologies</b></em>' reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int MICROSERVICE__TECHNOLOGIES = 5;
+    int MICROSERVICE__TECHNOLOGIES = 6;
 
     /**
      * The feature id for the '<em><b>Ttype Definition Technology Import</b></em>' reference.
@@ -268,7 +286,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MICROSERVICE__TTYPE_DEFINITION_TECHNOLOGY_IMPORT = 6;
+    int MICROSERVICE__TTYPE_DEFINITION_TECHNOLOGY_IMPORT = 7;
 
     /**
      * The feature id for the '<em><b>Ttype Definition Technology</b></em>' reference.
@@ -277,7 +295,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MICROSERVICE__TTYPE_DEFINITION_TECHNOLOGY = 7;
+    int MICROSERVICE__TTYPE_DEFINITION_TECHNOLOGY = 8;
 
     /**
      * The feature id for the '<em><b>Endpoints</b></em>' containment reference list.
@@ -286,7 +304,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MICROSERVICE__ENDPOINTS = 8;
+    int MICROSERVICE__ENDPOINTS = 9;
 
     /**
      * The feature id for the '<em><b>Required Microservices</b></em>' containment reference list.
@@ -295,7 +313,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MICROSERVICE__REQUIRED_MICROSERVICES = 9;
+    int MICROSERVICE__REQUIRED_MICROSERVICES = 10;
 
     /**
      * The feature id for the '<em><b>Required Interfaces</b></em>' containment reference list.
@@ -304,7 +322,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MICROSERVICE__REQUIRED_INTERFACES = 10;
+    int MICROSERVICE__REQUIRED_INTERFACES = 11;
 
     /**
      * The feature id for the '<em><b>Required Operations</b></em>' containment reference list.
@@ -313,7 +331,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MICROSERVICE__REQUIRED_OPERATIONS = 11;
+    int MICROSERVICE__REQUIRED_OPERATIONS = 12;
 
     /**
      * The feature id for the '<em><b>Protocols</b></em>' containment reference list.
@@ -322,7 +340,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MICROSERVICE__PROTOCOLS = 12;
+    int MICROSERVICE__PROTOCOLS = 13;
 
     /**
      * The feature id for the '<em><b>Interfaces</b></em>' containment reference list.
@@ -331,7 +349,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MICROSERVICE__INTERFACES = 13;
+    int MICROSERVICE__INTERFACES = 14;
 
     /**
      * The feature id for the '<em><b>Aspects</b></em>' containment reference list.
@@ -340,7 +358,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MICROSERVICE__ASPECTS = 14;
+    int MICROSERVICE__ASPECTS = 15;
 
     /**
      * The feature id for the '<em><b>Service Model</b></em>' container reference.
@@ -349,7 +367,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MICROSERVICE__SERVICE_MODEL = 15;
+    int MICROSERVICE__SERVICE_MODEL = 16;
 
     /**
      * The feature id for the '<em><b>Effectively Implemented</b></em>' attribute.
@@ -358,7 +376,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MICROSERVICE__EFFECTIVELY_IMPLEMENTED = 16;
+    int MICROSERVICE__EFFECTIVELY_IMPLEMENTED = 17;
 
     /**
      * The feature id for the '<em><b>Effective Visibility</b></em>' attribute.
@@ -367,7 +385,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MICROSERVICE__EFFECTIVE_VISIBILITY = 17;
+    int MICROSERVICE__EFFECTIVE_VISIBILITY = 18;
 
     /**
      * The feature id for the '<em><b>Effectively Internal</b></em>' attribute.
@@ -376,7 +394,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MICROSERVICE__EFFECTIVELY_INTERNAL = 18;
+    int MICROSERVICE__EFFECTIVELY_INTERNAL = 19;
 
     /**
      * The number of structural features of the '<em>Microservice</em>' class.
@@ -385,7 +403,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MICROSERVICE_FEATURE_COUNT = 19;
+    int MICROSERVICE_FEATURE_COUNT = 20;
 
     /**
      * The operation id for the '<em>Tmissing Endpoint Effective Protocols</em>' operation.
@@ -1948,6 +1966,17 @@ public interface ServicePackage extends EPackage {
     EClass getServiceModel();
 
     /**
+     * Returns the meta object for the attribute '{@link de.fhdo.ddmm.service.ServiceModel#getT_modelUri <em>Tmodel Uri</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Tmodel Uri</em>'.
+     * @see de.fhdo.ddmm.service.ServiceModel#getT_modelUri()
+     * @see #getServiceModel()
+     * @generated
+     */
+    EAttribute getServiceModel_T_modelUri();
+
+    /**
      * Returns the meta object for the containment reference list '{@link de.fhdo.ddmm.service.ServiceModel#getImports <em>Imports</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2117,6 +2146,17 @@ public interface ServicePackage extends EPackage {
      * @generated
      */
     EAttribute getMicroservice_T_defaultProtocols();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.fhdo.ddmm.service.Microservice#getT_sourceModelUri <em>Tsource Model Uri</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Tsource Model Uri</em>'.
+     * @see de.fhdo.ddmm.service.Microservice#getT_sourceModelUri()
+     * @see #getMicroservice()
+     * @generated
+     */
+    EAttribute getMicroservice_T_sourceModelUri();
 
     /**
      * Returns the meta object for the reference list '{@link de.fhdo.ddmm.service.Microservice#getTechnologies <em>Technologies</em>}'.
@@ -3824,6 +3864,14 @@ public interface ServicePackage extends EPackage {
         EClass SERVICE_MODEL = eINSTANCE.getServiceModel();
 
         /**
+         * The meta object literal for the '<em><b>Tmodel Uri</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute SERVICE_MODEL__TMODEL_URI = eINSTANCE.getServiceModel_T_modelUri();
+
+        /**
          * The meta object literal for the '<em><b>Imports</b></em>' containment reference list feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -3954,6 +4002,14 @@ public interface ServicePackage extends EPackage {
          * @generated
          */
         EAttribute MICROSERVICE__TDEFAULT_PROTOCOLS = eINSTANCE.getMicroservice_T_defaultProtocols();
+
+        /**
+         * The meta object literal for the '<em><b>Tsource Model Uri</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute MICROSERVICE__TSOURCE_MODEL_URI = eINSTANCE.getMicroservice_T_sourceModelUri();
 
         /**
          * The meta object literal for the '<em><b>Technologies</b></em>' reference list feature.

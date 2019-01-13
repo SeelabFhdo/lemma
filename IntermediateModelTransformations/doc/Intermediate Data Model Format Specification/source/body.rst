@@ -109,6 +109,11 @@ Model Root
 
     Root of the Intermediate Data Model instance.
 
+    .. py:attribute:: String[1] sourceModelUri
+
+        `\"file://\"` URI pointing to the source Data Model file from which this
+        model was derived.
+
     .. py:attribute:: IntermediateImport [*] imports
 
         References to Intermediate Data Model instances that were 
@@ -177,7 +182,7 @@ structures.
     .. py:attribute:: String[1] importTypeName
 
         Name of the import type. In the context of Domain Data Models, the value
-        of this attribute is always "DATATYPES".
+        of this attribute is always \"DATATYPES\".
 
     .. py:attribute:: IntermediateDataModel[1] dataModel
 
@@ -186,8 +191,8 @@ structures.
     .. py:method:: String[1] getImportTypeNameForDatatypes()
 
         Helper that returns the name of the import type for data types. This
-        method will always return the value "DATATYPES". This corresponds to the
-        possible value of the 
+        method will always return the value \"DATATYPES\". This corresponds to 
+        the possible value of the 
         :ref:`importTypeName <link__IntermediateImport_importTypeName>`
         attribute.
 
@@ -488,7 +493,7 @@ Custom, domain-specific Types
             In case the data structure inherits from a super data structure, the
             data fields also contain derived, non-hidden data fields from the
             inheritance hierarchy, i.e., the *effective fields* of the 
-            structure. The derived fields can be distinguished from "local" 
+            structure. The derived fields can be distinguished from \"local\" 
             fields of the structure on the basis of the
             :ref:`IntermediateDataField.derived 
             <link__IntermediateDataField_derived>` attribute.

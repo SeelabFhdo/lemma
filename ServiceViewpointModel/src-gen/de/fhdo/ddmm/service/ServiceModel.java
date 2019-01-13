@@ -21,6 +21,7 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
+ *   <li>{@link de.fhdo.ddmm.service.ServiceModel#getT_modelUri <em>Tmodel Uri</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.ServiceModel#getImports <em>Imports</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.ServiceModel#getMicroservices <em>Microservices</em>}</li>
  * </ul>
@@ -30,6 +31,32 @@ import org.eclipse.emf.ecore.EObject;
  * @generated
  */
 public interface ServiceModel extends EObject {
+    /**
+     * Returns the value of the '<em><b>Tmodel Uri</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Tmodel Uri</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Tmodel Uri</em>' attribute.
+     * @see #setT_modelUri(String)
+     * @see de.fhdo.ddmm.service.ServicePackage#getServiceModel_T_modelUri()
+     * @model unique="false"
+     * @generated
+     */
+    String getT_modelUri();
+
+    /**
+     * Sets the value of the '{@link de.fhdo.ddmm.service.ServiceModel#getT_modelUri <em>Tmodel Uri</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Tmodel Uri</em>' attribute.
+     * @see #getT_modelUri()
+     * @generated
+     */
+    void setT_modelUri(String value);
+
     /**
      * Returns the value of the '<em><b>Imports</b></em>' containment reference list.
      * The list contents are of type {@link de.fhdo.ddmm.service.Import}.

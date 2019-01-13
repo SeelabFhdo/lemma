@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
+ *   <li>{@link de.fhdo.ddmm.service.intermediate.IntermediateMicroservice#getSourceModelUri <em>Source Model Uri</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.intermediate.IntermediateMicroservice#getName <em>Name</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.intermediate.IntermediateMicroservice#getVersion <em>Version</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.intermediate.IntermediateMicroservice#getQualifiedName <em>Qualified Name</em>}</li>
@@ -45,6 +46,32 @@ import org.eclipse.emf.ecore.EObject;
  * @generated
  */
 public interface IntermediateMicroservice extends EObject {
+    /**
+     * Returns the value of the '<em><b>Source Model Uri</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Source Model Uri</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Source Model Uri</em>' attribute.
+     * @see #setSourceModelUri(String)
+     * @see de.fhdo.ddmm.service.intermediate.IntermediatePackage#getIntermediateMicroservice_SourceModelUri()
+     * @model unique="false"
+     * @generated
+     */
+    String getSourceModelUri();
+
+    /**
+     * Sets the value of the '{@link de.fhdo.ddmm.service.intermediate.IntermediateMicroservice#getSourceModelUri <em>Source Model Uri</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Source Model Uri</em>' attribute.
+     * @see #getSourceModelUri()
+     * @generated
+     */
+    void setSourceModelUri(String value);
+
     /**
      * Returns the value of the '<em><b>Name</b></em>' attribute.
      * <!-- begin-user-doc -->

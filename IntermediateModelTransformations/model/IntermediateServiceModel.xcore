@@ -13,6 +13,14 @@ import de.fhdo.ddmm.technology.ExchangePattern
  * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
  */
 class IntermediateServiceModel {
+    // "file://" URI to the source model from which this intermediate model originated. Note that
+    // this only gets filled, if the whole model was derived from a source Service Model. If the
+    // source model was a Mapping Model, however,, this field is empty, because each microservice
+    // could then have potentially been derived from different Service Models. In this case, model
+    // processors would need to rely on the sourceModelUri field in the IntermediateMicroservice
+    // concept.
+    String sourceModelUri
+
     contains IntermediateImport[] imports
     contains IntermediateMicroservice[1..*] microservices opposite serviceModel
 }
@@ -21,6 +29,7 @@ class IntermediateServiceModel {
  * Microservice
  */
 class IntermediateMicroservice {
+    String sourceModelUri
     String name
     String version
     String qualifiedName

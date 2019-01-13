@@ -41,6 +41,8 @@ public class IntermediateServiceModelTransformation extends AbstractIntermediate
     IntermediatePackage.eINSTANCE, 
     IntermediateServiceModel.class);
   
+  private String absoluteSourceModelPath;
+  
   /**
    * Get project-relative path to compiled ATL model transformation file
    */
@@ -58,13 +60,26 @@ public class IntermediateServiceModelTransformation extends AbstractIntermediate
   }
   
   /**
+   * Before transformation hook
+   */
+  @Override
+  public void beforeTransformationHook(final String absoluteSourceModelPath) {
+    this.absoluteSourceModelPath = absoluteSourceModelPath;
+  }
+  
+  /**
    * Prepare source model
    */
   @Override
-  public void prepareSourceModel(final EObject modelRoot, final String absoluteSourceModelPath) {
+  public void prepareSourceModel(final EObject modelRoot) {
     final ServiceModel serviceModel = ((ServiceModel) modelRoot);
+    String _t_modelUri = serviceModel.getT_modelUri();
+    boolean _tripleEquals = (_t_modelUri == null);
+    if (_tripleEquals) {
+      serviceModel.setT_modelUri(DdmmUtils.convertToFileUri(this.absoluteSourceModelPath));
+    }
     final Consumer<Import> _function = (Import it) -> {
-      it.setImportURI(DdmmUtils.convertToAbsoluteFileUri(it.getImportURI(), absoluteSourceModelPath));
+      it.setImportURI(DdmmUtils.convertToAbsoluteFileUri(it.getImportURI(), this.absoluteSourceModelPath));
     };
     serviceModel.getImports().forEach(_function);
     this.linkTechnologyModels(serviceModel.getMicroservices());

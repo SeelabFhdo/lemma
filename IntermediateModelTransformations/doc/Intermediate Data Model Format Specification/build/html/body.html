@@ -138,6 +138,13 @@ default value in case it did not receive an explicit value.</p>
 <dd><p>Root of the Intermediate Data Model instance.</p>
 <dl class="attribute">
 <dt>
+<code class="descname">String[1] sourceModelUri</code></dt>
+<dd><p><cite>“file://”</cite> URI pointing to the source Data Model file from which this
+model was derived.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
 <code class="descname">IntermediateImport [*] imports</code></dt>
 <dd><p>References to Intermediate Data Model instances that were
 imported into the source Domain Data Model
@@ -227,8 +234,8 @@ of this attribute is always “DATATYPES”.</p>
 <dt>
 <code class="descname">String[1] getImportTypeNameForDatatypes()</code></dt>
 <dd><p>Helper that returns the name of the import type for data types. This
-method will always return the value “DATATYPES”. This corresponds to the
-possible value of the
+method will always return the value “DATATYPES”. This corresponds to
+the possible value of the
 <a class="reference internal" href="#link-intermediateimport-importtypename"><span class="std std-ref">importTypeName</span></a>
 attribute.</p>
 </dd></dl>

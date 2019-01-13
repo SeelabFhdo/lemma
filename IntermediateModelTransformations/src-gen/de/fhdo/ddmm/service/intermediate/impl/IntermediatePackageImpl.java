@@ -209,8 +209,8 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
         isInited = true;
 
         // Initialize simple dependencies
-        de.fhdo.ddmm.data.intermediate.IntermediatePackage.eINSTANCE.eClass();
         EcorePackage.eINSTANCE.eClass();
+        de.fhdo.ddmm.data.intermediate.IntermediatePackage.eINSTANCE.eClass();
         ServicePackage.eINSTANCE.eClass();
         TechnologyPackage.eINSTANCE.eClass();
         DataPackage.eINSTANCE.eClass();
@@ -244,8 +244,17 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    public EAttribute getIntermediateServiceModel_SourceModelUri() {
+        return (EAttribute)intermediateServiceModelEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EReference getIntermediateServiceModel_Imports() {
-        return (EReference)intermediateServiceModelEClass.getEStructuralFeatures().get(0);
+        return (EReference)intermediateServiceModelEClass.getEStructuralFeatures().get(1);
     }
 
     /**
@@ -254,7 +263,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * @generated
      */
     public EReference getIntermediateServiceModel_Microservices() {
-        return (EReference)intermediateServiceModelEClass.getEStructuralFeatures().get(1);
+        return (EReference)intermediateServiceModelEClass.getEStructuralFeatures().get(2);
     }
 
     /**
@@ -271,7 +280,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getIntermediateMicroservice_Name() {
+    public EAttribute getIntermediateMicroservice_SourceModelUri() {
         return (EAttribute)intermediateMicroserviceEClass.getEStructuralFeatures().get(0);
     }
 
@@ -280,7 +289,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getIntermediateMicroservice_Version() {
+    public EAttribute getIntermediateMicroservice_Name() {
         return (EAttribute)intermediateMicroserviceEClass.getEStructuralFeatures().get(1);
     }
 
@@ -289,7 +298,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getIntermediateMicroservice_QualifiedName() {
+    public EAttribute getIntermediateMicroservice_Version() {
         return (EAttribute)intermediateMicroserviceEClass.getEStructuralFeatures().get(2);
     }
 
@@ -298,7 +307,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getIntermediateMicroservice_Type() {
+    public EAttribute getIntermediateMicroservice_QualifiedName() {
         return (EAttribute)intermediateMicroserviceEClass.getEStructuralFeatures().get(3);
     }
 
@@ -307,7 +316,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getIntermediateMicroservice_Visibility() {
+    public EAttribute getIntermediateMicroservice_Type() {
         return (EAttribute)intermediateMicroserviceEClass.getEStructuralFeatures().get(4);
     }
 
@@ -316,7 +325,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getIntermediateMicroservice_EffectivelyImplemented() {
+    public EAttribute getIntermediateMicroservice_Visibility() {
         return (EAttribute)intermediateMicroserviceEClass.getEStructuralFeatures().get(5);
     }
 
@@ -325,8 +334,8 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getIntermediateMicroservice_Technologies() {
-        return (EReference)intermediateMicroserviceEClass.getEStructuralFeatures().get(6);
+    public EAttribute getIntermediateMicroservice_EffectivelyImplemented() {
+        return (EAttribute)intermediateMicroserviceEClass.getEStructuralFeatures().get(6);
     }
 
     /**
@@ -334,7 +343,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getIntermediateMicroservice_Endpoints() {
+    public EReference getIntermediateMicroservice_Technologies() {
         return (EReference)intermediateMicroserviceEClass.getEStructuralFeatures().get(7);
     }
 
@@ -343,7 +352,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getIntermediateMicroservice_Protocols() {
+    public EReference getIntermediateMicroservice_Endpoints() {
         return (EReference)intermediateMicroserviceEClass.getEStructuralFeatures().get(8);
     }
 
@@ -352,7 +361,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getIntermediateMicroservice_RequiredMicroservices() {
+    public EReference getIntermediateMicroservice_Protocols() {
         return (EReference)intermediateMicroserviceEClass.getEStructuralFeatures().get(9);
     }
 
@@ -361,7 +370,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getIntermediateMicroservice_RequiredInterfaces() {
+    public EReference getIntermediateMicroservice_RequiredMicroservices() {
         return (EReference)intermediateMicroserviceEClass.getEStructuralFeatures().get(10);
     }
 
@@ -370,7 +379,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getIntermediateMicroservice_RequiredOperations() {
+    public EReference getIntermediateMicroservice_RequiredInterfaces() {
         return (EReference)intermediateMicroserviceEClass.getEStructuralFeatures().get(11);
     }
 
@@ -379,7 +388,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getIntermediateMicroservice_Interfaces() {
+    public EReference getIntermediateMicroservice_RequiredOperations() {
         return (EReference)intermediateMicroserviceEClass.getEStructuralFeatures().get(12);
     }
 
@@ -388,7 +397,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getIntermediateMicroservice_Aspects() {
+    public EReference getIntermediateMicroservice_Interfaces() {
         return (EReference)intermediateMicroserviceEClass.getEStructuralFeatures().get(13);
     }
 
@@ -397,8 +406,17 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getIntermediateMicroservice_ServiceModel() {
+    public EReference getIntermediateMicroservice_Aspects() {
         return (EReference)intermediateMicroserviceEClass.getEStructuralFeatures().get(14);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getIntermediateMicroservice_ServiceModel() {
+        return (EReference)intermediateMicroserviceEClass.getEStructuralFeatures().get(15);
     }
 
     /**
@@ -1447,10 +1465,12 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
 
         // Create classes and their features
         intermediateServiceModelEClass = createEClass(INTERMEDIATE_SERVICE_MODEL);
+        createEAttribute(intermediateServiceModelEClass, INTERMEDIATE_SERVICE_MODEL__SOURCE_MODEL_URI);
         createEReference(intermediateServiceModelEClass, INTERMEDIATE_SERVICE_MODEL__IMPORTS);
         createEReference(intermediateServiceModelEClass, INTERMEDIATE_SERVICE_MODEL__MICROSERVICES);
 
         intermediateMicroserviceEClass = createEClass(INTERMEDIATE_MICROSERVICE);
+        createEAttribute(intermediateMicroserviceEClass, INTERMEDIATE_MICROSERVICE__SOURCE_MODEL_URI);
         createEAttribute(intermediateMicroserviceEClass, INTERMEDIATE_MICROSERVICE__NAME);
         createEAttribute(intermediateMicroserviceEClass, INTERMEDIATE_MICROSERVICE__VERSION);
         createEAttribute(intermediateMicroserviceEClass, INTERMEDIATE_MICROSERVICE__QUALIFIED_NAME);
@@ -1620,8 +1640,8 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
         setNsURI(eNS_URI);
 
         // Obtain other dependent packages
-        de.fhdo.ddmm.data.intermediate.IntermediatePackage theIntermediatePackage_1 = (de.fhdo.ddmm.data.intermediate.IntermediatePackage)EPackage.Registry.INSTANCE.getEPackage(de.fhdo.ddmm.data.intermediate.IntermediatePackage.eNS_URI);
         EcorePackage theEcorePackage = (EcorePackage)EPackage.Registry.INSTANCE.getEPackage(EcorePackage.eNS_URI);
+        de.fhdo.ddmm.data.intermediate.IntermediatePackage theIntermediatePackage_1 = (de.fhdo.ddmm.data.intermediate.IntermediatePackage)EPackage.Registry.INSTANCE.getEPackage(de.fhdo.ddmm.data.intermediate.IntermediatePackage.eNS_URI);
         ServicePackage theServicePackage = (ServicePackage)EPackage.Registry.INSTANCE.getEPackage(ServicePackage.eNS_URI);
         TechnologyPackage theTechnologyPackage = (TechnologyPackage)EPackage.Registry.INSTANCE.getEPackage(TechnologyPackage.eNS_URI);
 
@@ -1634,10 +1654,12 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
 
         // Initialize classes, features, and operations; add parameters
         initEClass(intermediateServiceModelEClass, IntermediateServiceModel.class, "IntermediateServiceModel", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getIntermediateServiceModel_SourceModelUri(), theEcorePackage.getEString(), "sourceModelUri", null, 0, 1, IntermediateServiceModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getIntermediateServiceModel_Imports(), theIntermediatePackage_1.getIntermediateImport(), null, "imports", null, 0, -1, IntermediateServiceModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getIntermediateServiceModel_Microservices(), this.getIntermediateMicroservice(), this.getIntermediateMicroservice_ServiceModel(), "microservices", null, 1, -1, IntermediateServiceModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(intermediateMicroserviceEClass, IntermediateMicroservice.class, "IntermediateMicroservice", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getIntermediateMicroservice_SourceModelUri(), theEcorePackage.getEString(), "sourceModelUri", null, 0, 1, IntermediateMicroservice.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getIntermediateMicroservice_Name(), theEcorePackage.getEString(), "name", null, 0, 1, IntermediateMicroservice.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getIntermediateMicroservice_Version(), theEcorePackage.getEString(), "version", null, 0, 1, IntermediateMicroservice.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getIntermediateMicroservice_QualifiedName(), theEcorePackage.getEString(), "qualifiedName", null, 0, 1, IntermediateMicroservice.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

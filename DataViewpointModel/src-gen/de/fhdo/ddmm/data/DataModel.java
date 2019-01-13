@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
+ *   <li>{@link de.fhdo.ddmm.data.DataModel#getT_modelUri <em>Tmodel Uri</em>}</li>
  *   <li>{@link de.fhdo.ddmm.data.DataModel#getComplexTypeImports <em>Complex Type Imports</em>}</li>
  *   <li>{@link de.fhdo.ddmm.data.DataModel#getVersions <em>Versions</em>}</li>
  *   <li>{@link de.fhdo.ddmm.data.DataModel#getContexts <em>Contexts</em>}</li>
@@ -34,9 +35,7 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface DataModel extends EObject {
     /**
-     * Returns the value of the '<em><b>Complex Type Imports</b></em>' containment reference list.
-     * The list contents are of type {@link de.fhdo.ddmm.data.ComplexTypeImport}.
-     * It is bidirectional and its opposite is '{@link de.fhdo.ddmm.data.ComplexTypeImport#getDataModel <em>Data Model</em>}'.
+     * Returns the value of the '<em><b>Tmodel Uri</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
@@ -47,6 +46,34 @@ public interface DataModel extends EObject {
      *          contexts), contexts, or without versions and contexts.
      *          Ensured by: DSL grammar.
      * <!-- end-model-doc -->
+     * @return the value of the '<em>Tmodel Uri</em>' attribute.
+     * @see #setT_modelUri(String)
+     * @see de.fhdo.ddmm.data.DataPackage#getDataModel_T_modelUri()
+     * @model unique="false"
+     * @generated
+     */
+    String getT_modelUri();
+
+    /**
+     * Sets the value of the '{@link de.fhdo.ddmm.data.DataModel#getT_modelUri <em>Tmodel Uri</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Tmodel Uri</em>' attribute.
+     * @see #getT_modelUri()
+     * @generated
+     */
+    void setT_modelUri(String value);
+
+    /**
+     * Returns the value of the '<em><b>Complex Type Imports</b></em>' containment reference list.
+     * The list contents are of type {@link de.fhdo.ddmm.data.ComplexTypeImport}.
+     * It is bidirectional and its opposite is '{@link de.fhdo.ddmm.data.ComplexTypeImport#getDataModel <em>Data Model</em>}'.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Complex Type Imports</em>' containment reference list isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
      * @return the value of the '<em>Complex Type Imports</em>' containment reference list.
      * @see de.fhdo.ddmm.data.DataPackage#getDataModel_ComplexTypeImports()
      * @see de.fhdo.ddmm.data.ComplexTypeImport#getDataModel

@@ -26,6 +26,9 @@ import de.fhdo.ddmm.technology.TechnologySpecificListType
  * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
  */
 class ServiceModel {
+    // TRANSFORMATION ONLY: The file path of the model in the form of a "file://" URI
+    String t_modelUri
+
     contains Import[] imports opposite serviceModel
     contains Microservice[1..*] microservices opposite serviceModel
 
@@ -152,6 +155,13 @@ class Microservice {
     Visibility visibility = "NONE"
     // TRANSFORMATION ONLY: Default protocols per communication type
     DefaultProtocols t_defaultProtocols
+    // TRANSFORMATION ONLY: The path to the source model from which this microservice originated.
+    //                      For transformations of Service Models to Intermediate Service Models,
+    //                      this corresponds to the t_modelUri field of the root ServiceModel
+    //                      concept. However, it can differ per microservice if the source was a
+    //                      Mapping Model. That is, because Mapping Models may consist of
+    //                      microservices being imported from different Service Models.
+    String t_sourceModelUri
 
     // TODO: Inheritance of microservices
     //refers Microservice[0..1] ^super

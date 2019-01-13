@@ -23,9 +23,14 @@ rule CreatedImport(createdImport : Service!Import) {
 	}
 }
 
+--- Convenience helper to get a created Import instance from its alias
+helper def : getCreatedImportByAlias(alias : String)
+	: Service!Import = thisModule.createdImports->get(alias)
+;
+
 --- Convenience helper to get a created Import instance from a given source Import instance
 helper def : getCreatedImport(sourceImport : Service!Import)
-	: Service!Import = thisModule.createdImports->get(sourceImport.name)
+	: Service!Import = thisModule.getCreatedImportByAlias(sourceImport.name)
 ;
 ----------------------------------------------------------------------------------------------------
 
@@ -244,6 +249,9 @@ unique lazy rule ServiceModel {
 		s : Mapping!TechnologyMapping
 	to
 		t : Service!ServiceModel(
+			-- Signal the refining Intermediate Service Model transformation that the microservices
+        	-- are likely to originate from different imported Service Models
+			t_modelUri <- '',
 			imports <- Sequence{},
 			microservices <- Sequence{}
 		)	
@@ -291,6 +299,7 @@ rule Microservice(sourceMicroservice : Service!Microservice,
 	microserviceMapping : Mapping!MicroserviceMapping, importAlias : String) {
 	to
 		t : Service!Microservice(
+			t_sourceModelUri <- thisModule.getCreatedImportByAlias(importAlias).importURI,
 			name <- sourceMicroservice.name,
 			version <- sourceMicroservice.version,
 			type <- sourceMicroservice.type,

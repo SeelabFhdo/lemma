@@ -41,9 +41,14 @@ abstract class AbstractIntermediateModelTransformationStrategy {
     abstract def TargetModelInfo getTargetModelInfo()
 
     /**
+     * Before transformation hook (optional)
+     */
+    protected def void beforeTransformationHook(String absoluteSourceModelPath) {}
+
+    /**
      * Prepare source model (optional)
      */
-    protected def void prepareSourceModel(EObject modelRoot, String absoluteSourceModelPath) {}
+    protected def void prepareSourceModel(EObject modelRoot) {}
 
     /**
      * Get validator for source model. Optional, may return null.
@@ -77,6 +82,16 @@ abstract class AbstractIntermediateModelTransformationStrategy {
      */
     abstract protected def void populateTargetModelWithImportTargetPaths(EMFModel targetModel,
         Map<String, String> targetPaths)
+
+    /**
+     * Modify target model (optional)
+     */
+    protected def void modifyTargetModel(EObject modelRoot) {}
+
+    /**
+     * After transformation hook (optional)
+     */
+    protected def void afterTransformationHook(String absoluteSourceModelPath) {}
 
     /**
      * Constructor
@@ -119,11 +134,14 @@ abstract class AbstractIntermediateModelTransformationStrategy {
     private def doTransformation(IFile sourceModelFile, Function<IFile, Resource> sourceModelLoader,
         String targetModelFile, Map<String, String> targetPathsOfImports,
         Predicate<IntermediateTransformationException> warningCallback) {
+        /* Before transformation hook */
+        val absoluteSourceModelPath = sourceModelFile.rawLocation.makeAbsolute.toString
+        beforeTransformationHook(absoluteSourceModelPath)
+
         /* Prepare source model */
         val sourceModelResource = sourceModelLoader.apply(sourceModelFile)
-        val absoluteSourceModelPath = sourceModelFile.rawLocation.makeAbsolute.toString
         val sourceModelRoot = sourceModelResource.contents.get(0)
-        prepareSourceModel(sourceModelRoot, absoluteSourceModelPath)
+        prepareSourceModel(sourceModelRoot)
 
         /* Validate prepared source model */
         val sourceModelValidator = getSourceModelValidator()
@@ -149,6 +167,13 @@ abstract class AbstractIntermediateModelTransformationStrategy {
 
         if (targetPathsOfImports !== null && !targetPathsOfImports.empty)
             populateTargetModelWithImportTargetPaths(targetModel, targetPathsOfImports)
+
+        /* Modify target model */
+        val targetModelRoot = targetModel.resource.contents.get(0)
+        modifyTargetModel(targetModelRoot)
+
+        /* After transformation hook */
+        afterTransformationHook(targetModelFile)
 
         // Store transformation result in XMI file
         targetModel.resource.URI = URI.createURI(targetModelFile)

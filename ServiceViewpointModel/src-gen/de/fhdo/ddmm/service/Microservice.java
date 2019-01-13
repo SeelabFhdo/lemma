@@ -34,6 +34,7 @@ import org.eclipse.xtext.xbase.lib.Pair;
  *   <li>{@link de.fhdo.ddmm.service.Microservice#getType <em>Type</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.Microservice#getVisibility <em>Visibility</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.Microservice#getT_defaultProtocols <em>Tdefault Protocols</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.service.Microservice#getT_sourceModelUri <em>Tsource Model Uri</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.Microservice#getTechnologies <em>Technologies</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.Microservice#getT_typeDefinitionTechnologyImport <em>Ttype Definition Technology Import</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.Microservice#getT_typeDefinitionTechnology <em>Ttype Definition Technology</em>}</li>
@@ -219,6 +220,32 @@ public interface Microservice extends EObject {
      * @generated
      */
     void setT_defaultProtocols(Map<CommunicationType, Pair<Import, Protocol>> value);
+
+    /**
+     * Returns the value of the '<em><b>Tsource Model Uri</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Tsource Model Uri</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Tsource Model Uri</em>' attribute.
+     * @see #setT_sourceModelUri(String)
+     * @see de.fhdo.ddmm.service.ServicePackage#getMicroservice_T_sourceModelUri()
+     * @model unique="false"
+     * @generated
+     */
+    String getT_sourceModelUri();
+
+    /**
+     * Sets the value of the '{@link de.fhdo.ddmm.service.Microservice#getT_sourceModelUri <em>Tsource Model Uri</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Tsource Model Uri</em>' attribute.
+     * @see #getT_sourceModelUri()
+     * @generated
+     */
+    void setT_sourceModelUri(String value);
 
     /**
      * Returns the value of the '<em><b>Technologies</b></em>' reference list.

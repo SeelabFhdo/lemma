@@ -32,6 +32,8 @@ class IntermediateServiceModelTransformation
         IntermediateServiceModel
     )
 
+    private String absoluteSourceModelPath
+
     /**
      * Get project-relative path to compiled ATL model transformation file
      */
@@ -47,10 +49,24 @@ class IntermediateServiceModelTransformation
     }
 
     /**
+     * Before transformation hook
+     *
+     */
+    override beforeTransformationHook(String absoluteSourceModelPath) {
+        this.absoluteSourceModelPath = absoluteSourceModelPath
+    }
+
+    /**
      * Prepare source model
      */
-    override prepareSourceModel(EObject modelRoot, String absoluteSourceModelPath) {
+    override prepareSourceModel(EObject modelRoot) {
         val serviceModel = modelRoot as ServiceModel
+
+        // Set source model URI. Note that the source model URI is only null, if this is not a
+        // refining transformation of a Mapping Model, in which case the model URI will be an
+        // empty string on the root model level.
+        if (serviceModel.t_modelUri === null)
+            serviceModel.t_modelUri = DdmmUtils.convertToFileUri(absoluteSourceModelPath)
 
         // Convert import URIs to absolute URIs
         serviceModel.imports.forEach[

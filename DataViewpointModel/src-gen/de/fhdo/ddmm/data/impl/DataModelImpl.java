@@ -16,6 +16,7 @@ import java.util.Collection;
 
 import java.util.function.Consumer;
 
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.common.util.ECollections;
@@ -24,6 +25,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
@@ -39,6 +41,7 @@ import org.eclipse.xtext.xbase.lib.CollectionLiterals;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link de.fhdo.ddmm.data.impl.DataModelImpl#getT_modelUri <em>Tmodel Uri</em>}</li>
  *   <li>{@link de.fhdo.ddmm.data.impl.DataModelImpl#getComplexTypeImports <em>Complex Type Imports</em>}</li>
  *   <li>{@link de.fhdo.ddmm.data.impl.DataModelImpl#getVersions <em>Versions</em>}</li>
  *   <li>{@link de.fhdo.ddmm.data.impl.DataModelImpl#getContexts <em>Contexts</em>}</li>
@@ -48,6 +51,26 @@ import org.eclipse.xtext.xbase.lib.CollectionLiterals;
  * @generated
  */
 public class DataModelImpl extends MinimalEObjectImpl.Container implements DataModel {
+    /**
+     * The default value of the '{@link #getT_modelUri() <em>Tmodel Uri</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getT_modelUri()
+     * @generated
+     * @ordered
+     */
+    protected static final String TMODEL_URI_EDEFAULT = null;
+
+    /**
+     * The cached value of the '{@link #getT_modelUri() <em>Tmodel Uri</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getT_modelUri()
+     * @generated
+     * @ordered
+     */
+    protected String t_modelUri = TMODEL_URI_EDEFAULT;
+
     /**
      * The cached value of the '{@link #getComplexTypeImports() <em>Complex Type Imports</em>}' containment reference list.
      * <!-- begin-user-doc -->
@@ -105,6 +128,27 @@ public class DataModelImpl extends MinimalEObjectImpl.Container implements DataM
     @Override
     protected EClass eStaticClass() {
         return DataPackage.Literals.DATA_MODEL;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public String getT_modelUri() {
+        return t_modelUri;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setT_modelUri(String newT_modelUri) {
+        String oldT_modelUri = t_modelUri;
+        t_modelUri = newT_modelUri;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.DATA_MODEL__TMODEL_URI, oldT_modelUri, t_modelUri));
     }
 
     /**
@@ -235,6 +279,8 @@ public class DataModelImpl extends MinimalEObjectImpl.Container implements DataM
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
+            case DataPackage.DATA_MODEL__TMODEL_URI:
+                return getT_modelUri();
             case DataPackage.DATA_MODEL__COMPLEX_TYPE_IMPORTS:
                 return getComplexTypeImports();
             case DataPackage.DATA_MODEL__VERSIONS:
@@ -256,6 +302,9 @@ public class DataModelImpl extends MinimalEObjectImpl.Container implements DataM
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
+            case DataPackage.DATA_MODEL__TMODEL_URI:
+                setT_modelUri((String)newValue);
+                return;
             case DataPackage.DATA_MODEL__COMPLEX_TYPE_IMPORTS:
                 getComplexTypeImports().clear();
                 getComplexTypeImports().addAll((Collection<? extends ComplexTypeImport>)newValue);
@@ -284,6 +333,9 @@ public class DataModelImpl extends MinimalEObjectImpl.Container implements DataM
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
+            case DataPackage.DATA_MODEL__TMODEL_URI:
+                setT_modelUri(TMODEL_URI_EDEFAULT);
+                return;
             case DataPackage.DATA_MODEL__COMPLEX_TYPE_IMPORTS:
                 getComplexTypeImports().clear();
                 return;
@@ -308,6 +360,8 @@ public class DataModelImpl extends MinimalEObjectImpl.Container implements DataM
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
+            case DataPackage.DATA_MODEL__TMODEL_URI:
+                return TMODEL_URI_EDEFAULT == null ? t_modelUri != null : !TMODEL_URI_EDEFAULT.equals(t_modelUri);
             case DataPackage.DATA_MODEL__COMPLEX_TYPE_IMPORTS:
                 return complexTypeImports != null && !complexTypeImports.isEmpty();
             case DataPackage.DATA_MODEL__VERSIONS:
@@ -332,6 +386,22 @@ public class DataModelImpl extends MinimalEObjectImpl.Container implements DataM
                 return getContainedComplexTypes();
         }
         return super.eInvoke(operationID, arguments);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public String toString() {
+        if (eIsProxy()) return super.toString();
+
+        StringBuffer result = new StringBuffer(super.toString());
+        result.append(" (t_modelUri: ");
+        result.append(t_modelUri);
+        result.append(')');
+        return result.toString();
     }
 
 } //DataModelImpl

@@ -68,13 +68,22 @@ public interface IntermediatePackage extends EPackage {
     int INTERMEDIATE_SERVICE_MODEL = 0;
 
     /**
+     * The feature id for the '<em><b>Source Model Uri</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_SERVICE_MODEL__SOURCE_MODEL_URI = 0;
+
+    /**
      * The feature id for the '<em><b>Imports</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_SERVICE_MODEL__IMPORTS = 0;
+    int INTERMEDIATE_SERVICE_MODEL__IMPORTS = 1;
 
     /**
      * The feature id for the '<em><b>Microservices</b></em>' containment reference list.
@@ -83,7 +92,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_SERVICE_MODEL__MICROSERVICES = 1;
+    int INTERMEDIATE_SERVICE_MODEL__MICROSERVICES = 2;
 
     /**
      * The number of structural features of the '<em>Service Model</em>' class.
@@ -92,7 +101,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_SERVICE_MODEL_FEATURE_COUNT = 2;
+    int INTERMEDIATE_SERVICE_MODEL_FEATURE_COUNT = 3;
 
     /**
      * The number of operations of the '<em>Service Model</em>' class.
@@ -114,13 +123,22 @@ public interface IntermediatePackage extends EPackage {
     int INTERMEDIATE_MICROSERVICE = 1;
 
     /**
+     * The feature id for the '<em><b>Source Model Uri</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_MICROSERVICE__SOURCE_MODEL_URI = 0;
+
+    /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_MICROSERVICE__NAME = 0;
+    int INTERMEDIATE_MICROSERVICE__NAME = 1;
 
     /**
      * The feature id for the '<em><b>Version</b></em>' attribute.
@@ -129,7 +147,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_MICROSERVICE__VERSION = 1;
+    int INTERMEDIATE_MICROSERVICE__VERSION = 2;
 
     /**
      * The feature id for the '<em><b>Qualified Name</b></em>' attribute.
@@ -138,7 +156,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_MICROSERVICE__QUALIFIED_NAME = 2;
+    int INTERMEDIATE_MICROSERVICE__QUALIFIED_NAME = 3;
 
     /**
      * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -147,7 +165,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_MICROSERVICE__TYPE = 3;
+    int INTERMEDIATE_MICROSERVICE__TYPE = 4;
 
     /**
      * The feature id for the '<em><b>Visibility</b></em>' attribute.
@@ -156,7 +174,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_MICROSERVICE__VISIBILITY = 4;
+    int INTERMEDIATE_MICROSERVICE__VISIBILITY = 5;
 
     /**
      * The feature id for the '<em><b>Effectively Implemented</b></em>' attribute.
@@ -165,7 +183,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_MICROSERVICE__EFFECTIVELY_IMPLEMENTED = 5;
+    int INTERMEDIATE_MICROSERVICE__EFFECTIVELY_IMPLEMENTED = 6;
 
     /**
      * The feature id for the '<em><b>Technologies</b></em>' containment reference list.
@@ -174,7 +192,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_MICROSERVICE__TECHNOLOGIES = 6;
+    int INTERMEDIATE_MICROSERVICE__TECHNOLOGIES = 7;
 
     /**
      * The feature id for the '<em><b>Endpoints</b></em>' containment reference list.
@@ -183,7 +201,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_MICROSERVICE__ENDPOINTS = 7;
+    int INTERMEDIATE_MICROSERVICE__ENDPOINTS = 8;
 
     /**
      * The feature id for the '<em><b>Protocols</b></em>' containment reference list.
@@ -192,7 +210,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_MICROSERVICE__PROTOCOLS = 8;
+    int INTERMEDIATE_MICROSERVICE__PROTOCOLS = 9;
 
     /**
      * The feature id for the '<em><b>Required Microservices</b></em>' containment reference list.
@@ -201,7 +219,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_MICROSERVICE__REQUIRED_MICROSERVICES = 9;
+    int INTERMEDIATE_MICROSERVICE__REQUIRED_MICROSERVICES = 10;
 
     /**
      * The feature id for the '<em><b>Required Interfaces</b></em>' containment reference list.
@@ -210,7 +228,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_MICROSERVICE__REQUIRED_INTERFACES = 10;
+    int INTERMEDIATE_MICROSERVICE__REQUIRED_INTERFACES = 11;
 
     /**
      * The feature id for the '<em><b>Required Operations</b></em>' containment reference list.
@@ -219,7 +237,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_MICROSERVICE__REQUIRED_OPERATIONS = 11;
+    int INTERMEDIATE_MICROSERVICE__REQUIRED_OPERATIONS = 12;
 
     /**
      * The feature id for the '<em><b>Interfaces</b></em>' containment reference list.
@@ -228,7 +246,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_MICROSERVICE__INTERFACES = 12;
+    int INTERMEDIATE_MICROSERVICE__INTERFACES = 13;
 
     /**
      * The feature id for the '<em><b>Aspects</b></em>' containment reference list.
@@ -237,7 +255,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_MICROSERVICE__ASPECTS = 13;
+    int INTERMEDIATE_MICROSERVICE__ASPECTS = 14;
 
     /**
      * The feature id for the '<em><b>Service Model</b></em>' container reference.
@@ -246,7 +264,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_MICROSERVICE__SERVICE_MODEL = 14;
+    int INTERMEDIATE_MICROSERVICE__SERVICE_MODEL = 15;
 
     /**
      * The number of structural features of the '<em>Microservice</em>' class.
@@ -255,7 +273,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_MICROSERVICE_FEATURE_COUNT = 15;
+    int INTERMEDIATE_MICROSERVICE_FEATURE_COUNT = 16;
 
     /**
      * The number of operations of the '<em>Microservice</em>' class.
@@ -1616,6 +1634,17 @@ public interface IntermediatePackage extends EPackage {
     EClass getIntermediateServiceModel();
 
     /**
+     * Returns the meta object for the attribute '{@link de.fhdo.ddmm.service.intermediate.IntermediateServiceModel#getSourceModelUri <em>Source Model Uri</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Source Model Uri</em>'.
+     * @see de.fhdo.ddmm.service.intermediate.IntermediateServiceModel#getSourceModelUri()
+     * @see #getIntermediateServiceModel()
+     * @generated
+     */
+    EAttribute getIntermediateServiceModel_SourceModelUri();
+
+    /**
      * Returns the meta object for the containment reference list '{@link de.fhdo.ddmm.service.intermediate.IntermediateServiceModel#getImports <em>Imports</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1646,6 +1675,17 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      */
     EClass getIntermediateMicroservice();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.fhdo.ddmm.service.intermediate.IntermediateMicroservice#getSourceModelUri <em>Source Model Uri</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Source Model Uri</em>'.
+     * @see de.fhdo.ddmm.service.intermediate.IntermediateMicroservice#getSourceModelUri()
+     * @see #getIntermediateMicroservice()
+     * @generated
+     */
+    EAttribute getIntermediateMicroservice_SourceModelUri();
 
     /**
      * Returns the meta object for the attribute '{@link de.fhdo.ddmm.service.intermediate.IntermediateMicroservice#getName <em>Name</em>}'.
@@ -3074,6 +3114,14 @@ public interface IntermediatePackage extends EPackage {
         EClass INTERMEDIATE_SERVICE_MODEL = eINSTANCE.getIntermediateServiceModel();
 
         /**
+         * The meta object literal for the '<em><b>Source Model Uri</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute INTERMEDIATE_SERVICE_MODEL__SOURCE_MODEL_URI = eINSTANCE.getIntermediateServiceModel_SourceModelUri();
+
+        /**
          * The meta object literal for the '<em><b>Imports</b></em>' containment reference list feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -3098,6 +3146,14 @@ public interface IntermediatePackage extends EPackage {
          * @generated
          */
         EClass INTERMEDIATE_MICROSERVICE = eINSTANCE.getIntermediateMicroservice();
+
+        /**
+         * The meta object literal for the '<em><b>Source Model Uri</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute INTERMEDIATE_MICROSERVICE__SOURCE_MODEL_URI = eINSTANCE.getIntermediateMicroservice_SourceModelUri();
 
         /**
          * The meta object literal for the '<em><b>Name</b></em>' attribute feature.

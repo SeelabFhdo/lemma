@@ -113,12 +113,18 @@ helper def : getCreatedComplexType(sourceComplexType : Data!ComplexType)
 helper def : delayedSuperLinks : Map(String, String) = Map{};
 ----------------------------------------------------------------------------------------------------
 
+--- Helper to retrieve a reference to the input model
+helper def : inputModel() : Data!DataModel =
+	Data!DataModel.allInstances().first()
+;
+
 --- Rule to generate the root of the target intermediate data model
 unique lazy rule IntermediateDataModel {
 	from
 		s : Data!DataModel
 	to
 		t : Intermediate!IntermediateDataModel(
+			sourceModelUri <- thisModule.inputModel().t_modelUri,
 			imports <- Sequence{},
 			versions <- Sequence{},
 			contexts <- Sequence{},

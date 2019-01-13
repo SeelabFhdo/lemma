@@ -69,13 +69,22 @@ public interface DataPackage extends EPackage {
     int DATA_MODEL = 0;
 
     /**
+     * The feature id for the '<em><b>Tmodel Uri</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATA_MODEL__TMODEL_URI = 0;
+
+    /**
      * The feature id for the '<em><b>Complex Type Imports</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int DATA_MODEL__COMPLEX_TYPE_IMPORTS = 0;
+    int DATA_MODEL__COMPLEX_TYPE_IMPORTS = 1;
 
     /**
      * The feature id for the '<em><b>Versions</b></em>' containment reference list.
@@ -84,7 +93,7 @@ public interface DataPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int DATA_MODEL__VERSIONS = 1;
+    int DATA_MODEL__VERSIONS = 2;
 
     /**
      * The feature id for the '<em><b>Contexts</b></em>' containment reference list.
@@ -93,7 +102,7 @@ public interface DataPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int DATA_MODEL__CONTEXTS = 2;
+    int DATA_MODEL__CONTEXTS = 3;
 
     /**
      * The feature id for the '<em><b>Complex Types</b></em>' containment reference list.
@@ -102,7 +111,7 @@ public interface DataPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int DATA_MODEL__COMPLEX_TYPES = 3;
+    int DATA_MODEL__COMPLEX_TYPES = 4;
 
     /**
      * The number of structural features of the '<em>Model</em>' class.
@@ -111,7 +120,7 @@ public interface DataPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int DATA_MODEL_FEATURE_COUNT = 4;
+    int DATA_MODEL_FEATURE_COUNT = 5;
 
     /**
      * The operation id for the '<em>Get Contained Complex Types</em>' operation.
@@ -1991,6 +2000,17 @@ public interface DataPackage extends EPackage {
     EClass getDataModel();
 
     /**
+     * Returns the meta object for the attribute '{@link de.fhdo.ddmm.data.DataModel#getT_modelUri <em>Tmodel Uri</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Tmodel Uri</em>'.
+     * @see de.fhdo.ddmm.data.DataModel#getT_modelUri()
+     * @see #getDataModel()
+     * @generated
+     */
+    EAttribute getDataModel_T_modelUri();
+
+    /**
      * Returns the meta object for the containment reference list '{@link de.fhdo.ddmm.data.DataModel#getComplexTypeImports <em>Complex Type Imports</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -3022,6 +3042,14 @@ public interface DataPackage extends EPackage {
          * @generated
          */
         EClass DATA_MODEL = eINSTANCE.getDataModel();
+
+        /**
+         * The meta object literal for the '<em><b>Tmodel Uri</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute DATA_MODEL__TMODEL_URI = eINSTANCE.getDataModel_T_modelUri();
 
         /**
          * The meta object literal for the '<em><b>Complex Type Imports</b></em>' containment reference list feature.

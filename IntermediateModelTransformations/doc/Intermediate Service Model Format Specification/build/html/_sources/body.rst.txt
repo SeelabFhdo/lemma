@@ -107,6 +107,16 @@ Model Root
     
     Root of the Intermediate Service Model instance.
 
+    .. py:attribute:: String[1] sourceModelUri
+
+        `\"file://\"` URI pointing to the source Service Model file from which 
+        this model was derived. Not that this might be an empty string, if the
+        :java:type:`IntermediateMicroservice` instances were derived from 
+        different Service Models. Model processors should then rely on the
+        :ref:`eponymous attribute 
+        <link__IntermediateMicroservice_sourceModelUri>` in the 
+        ``IntermediateMicroservice`` concept.
+
     .. py:attribute:: IntermediateImport[*] imports
 
         References to :java:type:`data_model:IntermediateDataModel`, Technology
@@ -126,6 +136,13 @@ Microservices
 
     A modeled microservice.    
     
+    .. _link__IntermediateMicroservice_sourceModelUri:
+
+    .. py:attribute:: String[1] sourceModelUri
+
+        `\"file://\"` URI pointing to the source Service Model file from which 
+        this microservice originates.
+
     .. _link__IntermediateMicroservice_name:
 
     .. py:attribute:: String[1] name
@@ -396,7 +413,7 @@ Microservices
         .. HINT::
 
             If no protocol specifications were explicitly assigned to the 
-            interface, it "inherits" the specifications of its 
+            interface, it \"inherits\" the specifications of its 
             :ref:`microservice <link__IntermediateMicroservice_protocols>`.
 
             If the service also exhibited no protocol specifications and thus 
@@ -492,7 +509,7 @@ Microservices
         .. HINT::
 
             If no protocol specifications were explicitly assigned to the 
-            operation, it "inherits" the specifications of its 
+            operation, it \"inherits\" the specifications of its 
             :ref:`interface <link__IntermediateInterface_protocols>`.
 
             If the interface also exhibited no protocol specifications and thus 
@@ -568,7 +585,7 @@ Microservices
             <link__IntermediateParameter_exchangePattern>`, 
             :ref:`communicationType 
             <link__IntermediateParameter_communicationType>`, and ``optional``
-            attributes determine a parameter's "timing behavior":
+            attributes determine a parameter's \"timing behavior\":
 
             +------------+-----------------+---------+-------------------------+
             |**Exchange**|**Communication**|**Opt?** |**Operation Behavior**   |
@@ -617,7 +634,7 @@ Microservices
             |            |                 |         |outgoing parameter for   |
             |            |                 |         |the respective           |
             |            |                 |         |communication type and   |
-            |            |                 |         |"optional" flag.         |
+            |            |                 |         |\"optional\" flag.       |
             +------------+-----------------+---------+-------------------------+
     
     .. _link__IntermediateParameter_type:
@@ -799,7 +816,7 @@ Microservices
         .. HINT::
 
             If no protocol specifications were explicitly assigned to the 
-            referred operation, it "inherits" the specifications of its 
+            referred operation, it \"inherits\" the specifications of its 
             :ref:`interface <link__IntermediateInterface_protocols>`.
 
             If the interface also exhibited no protocol specifications and thus 
@@ -835,7 +852,7 @@ types are needed to allow intermediate service models to refer to them.
     .. py:attribute:: String[1] qualifiedName
 
         Qualified name of the type. It consists of the name of the defining
-        technology, the "_types" prefix as internal qualifier within the 
+        technology, the \"_types\" prefix as internal qualifier within the 
         Technology Model, and the name of the type.
 
     .. py:attribute:: IntermediateImport[1] import
@@ -879,8 +896,8 @@ between microservices.
 
 .. java:type:: class IntermediateEndpoint
 
-    A protocol- and format-specific endpoint, e.g., "http://www.example.org" for
-    HTTP and a format like JSON.
+    A protocol- and format-specific endpoint, e.g., `\"http://www.example.org\"`
+    for HTTP and a format like JSON.
 
     .. py:attribute:: CommunicationType[1] communicationType
 
@@ -903,7 +920,7 @@ between microservices.
     .. py:attribute:: String[*] addresses
 
         List of protocol- and format-specific addresses that were assigned to 
-        the endpoint, e.g., "http://www.example.org".
+        the endpoint, e.g., `\"http://www.example.org\"`.
 
         .. HINT::
 
@@ -917,8 +934,8 @@ between microservices.
         .. HINT::
 
             In case the modeler did not specify a data format for an endpoint,
-            this is shorthand notation for "endpoint's addresses apply to all
-            formats of the protocol". That is, ``IntermediateEndpoint`` 
+            this is shorthand notation for \"endpoint's addresses apply to all
+            formats of the protocol\". That is, ``IntermediateEndpoint`` 
             instances with the source addresses are generated for all formats
             of the protocol. However, code generators must only create endpoints
             for the protocols and data formats that were assigned to the 
@@ -1167,7 +1184,7 @@ modeling concepts are described.
 
     .. py:attribute:: String[1] name
 
-        Name of the source technology, e.g., "go" or "python" [#python]_.
+        Name of the source technology, e.g., \"go\" or \"python\" [#python]_.
 
     .. py:attribute:: IntermediateImport[1] import
 
@@ -1256,16 +1273,16 @@ modeling concepts are described.
         <data_model:link__IntermediatePrimitiveType>` of the property. This can
         be one of the values:
 
-        - "boolean"
-        - "byte"
-        - "char"
-        - "date"
-        - "double"
-        - "float"
-        - "int"
-        - "long"
-        - "short"
-        - "string"
+        - \"boolean\"
+        - \"byte\"
+        - \"char\"
+        - \"date\"
+        - \"double\"
+        - \"float\"
+        - \"int\"
+        - \"long\"
+        - \"short\"
+        - \"string\"
 
     .. py:attribute:: String defaultValue
 

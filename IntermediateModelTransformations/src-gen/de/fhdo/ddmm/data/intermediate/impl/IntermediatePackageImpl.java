@@ -203,8 +203,8 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getIntermediateDataModel_Imports() {
-        return (EReference)intermediateDataModelEClass.getEStructuralFeatures().get(0);
+    public EAttribute getIntermediateDataModel_SourceModelUri() {
+        return (EAttribute)intermediateDataModelEClass.getEStructuralFeatures().get(0);
     }
 
     /**
@@ -212,7 +212,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getIntermediateDataModel_Versions() {
+    public EReference getIntermediateDataModel_Imports() {
         return (EReference)intermediateDataModelEClass.getEStructuralFeatures().get(1);
     }
 
@@ -221,7 +221,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getIntermediateDataModel_Contexts() {
+    public EReference getIntermediateDataModel_Versions() {
         return (EReference)intermediateDataModelEClass.getEStructuralFeatures().get(2);
     }
 
@@ -230,8 +230,17 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getIntermediateDataModel_ComplexTypes() {
+    public EReference getIntermediateDataModel_Contexts() {
         return (EReference)intermediateDataModelEClass.getEStructuralFeatures().get(3);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getIntermediateDataModel_ComplexTypes() {
+        return (EReference)intermediateDataModelEClass.getEStructuralFeatures().get(4);
     }
 
     /**
@@ -704,6 +713,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
 
         // Create classes and their features
         intermediateDataModelEClass = createEClass(INTERMEDIATE_DATA_MODEL);
+        createEAttribute(intermediateDataModelEClass, INTERMEDIATE_DATA_MODEL__SOURCE_MODEL_URI);
         createEReference(intermediateDataModelEClass, INTERMEDIATE_DATA_MODEL__IMPORTS);
         createEReference(intermediateDataModelEClass, INTERMEDIATE_DATA_MODEL__VERSIONS);
         createEReference(intermediateDataModelEClass, INTERMEDIATE_DATA_MODEL__CONTEXTS);
@@ -810,6 +820,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
 
         // Initialize classes, features, and operations; add parameters
         initEClass(intermediateDataModelEClass, IntermediateDataModel.class, "IntermediateDataModel", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getIntermediateDataModel_SourceModelUri(), theEcorePackage.getEString(), "sourceModelUri", null, 0, 1, IntermediateDataModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getIntermediateDataModel_Imports(), this.getIntermediateImport(), this.getIntermediateImport_DataModel(), "imports", null, 0, -1, IntermediateDataModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getIntermediateDataModel_Versions(), this.getIntermediateVersion(), this.getIntermediateVersion_DataModel(), "versions", null, 0, -1, IntermediateDataModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getIntermediateDataModel_Contexts(), this.getIntermediateContext(), this.getIntermediateContext_DataModel(), "contexts", null, 0, -1, IntermediateDataModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

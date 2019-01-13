@@ -85,6 +85,7 @@ import org.eclipse.xtext.xbase.lib.Pair;
  *   <li>{@link de.fhdo.ddmm.service.impl.MicroserviceImpl#getType <em>Type</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.impl.MicroserviceImpl#getVisibility <em>Visibility</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.impl.MicroserviceImpl#getT_defaultProtocols <em>Tdefault Protocols</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.service.impl.MicroserviceImpl#getT_sourceModelUri <em>Tsource Model Uri</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.impl.MicroserviceImpl#getTechnologies <em>Technologies</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.impl.MicroserviceImpl#getT_typeDefinitionTechnologyImport <em>Ttype Definition Technology Import</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.impl.MicroserviceImpl#getT_typeDefinitionTechnology <em>Ttype Definition Technology</em>}</li>
@@ -193,6 +194,26 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
      * @ordered
      */
     protected Map<CommunicationType, Pair<Import, Protocol>> t_defaultProtocols;
+
+    /**
+     * The default value of the '{@link #getT_sourceModelUri() <em>Tsource Model Uri</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getT_sourceModelUri()
+     * @generated
+     * @ordered
+     */
+    protected static final String TSOURCE_MODEL_URI_EDEFAULT = null;
+
+    /**
+     * The cached value of the '{@link #getT_sourceModelUri() <em>Tsource Model Uri</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getT_sourceModelUri()
+     * @generated
+     * @ordered
+     */
+    protected String t_sourceModelUri = TSOURCE_MODEL_URI_EDEFAULT;
 
     /**
      * The cached value of the '{@link #getTechnologies() <em>Technologies</em>}' reference list.
@@ -446,6 +467,27 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
         t_defaultProtocols = newT_defaultProtocols;
         if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, ServicePackage.MICROSERVICE__TDEFAULT_PROTOCOLS, oldT_defaultProtocols, t_defaultProtocols));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public String getT_sourceModelUri() {
+        return t_sourceModelUri;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setT_sourceModelUri(String newT_sourceModelUri) {
+        String oldT_sourceModelUri = t_sourceModelUri;
+        t_sourceModelUri = newT_sourceModelUri;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ServicePackage.MICROSERVICE__TSOURCE_MODEL_URI, oldT_sourceModelUri, t_sourceModelUri));
     }
 
     /**
@@ -1305,6 +1347,8 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
                 return getVisibility();
             case ServicePackage.MICROSERVICE__TDEFAULT_PROTOCOLS:
                 return getT_defaultProtocols();
+            case ServicePackage.MICROSERVICE__TSOURCE_MODEL_URI:
+                return getT_sourceModelUri();
             case ServicePackage.MICROSERVICE__TECHNOLOGIES:
                 return getTechnologies();
             case ServicePackage.MICROSERVICE__TTYPE_DEFINITION_TECHNOLOGY_IMPORT:
@@ -1363,6 +1407,9 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
                 return;
             case ServicePackage.MICROSERVICE__TDEFAULT_PROTOCOLS:
                 setT_defaultProtocols((Map<CommunicationType, Pair<Import, Protocol>>)newValue);
+                return;
+            case ServicePackage.MICROSERVICE__TSOURCE_MODEL_URI:
+                setT_sourceModelUri((String)newValue);
                 return;
             case ServicePackage.MICROSERVICE__TECHNOLOGIES:
                 getTechnologies().clear();
@@ -1432,6 +1479,9 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
             case ServicePackage.MICROSERVICE__TDEFAULT_PROTOCOLS:
                 setT_defaultProtocols((Map<CommunicationType, Pair<Import, Protocol>>)null);
                 return;
+            case ServicePackage.MICROSERVICE__TSOURCE_MODEL_URI:
+                setT_sourceModelUri(TSOURCE_MODEL_URI_EDEFAULT);
+                return;
             case ServicePackage.MICROSERVICE__TECHNOLOGIES:
                 getTechnologies().clear();
                 return;
@@ -1487,6 +1537,8 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
                 return visibility != VISIBILITY_EDEFAULT;
             case ServicePackage.MICROSERVICE__TDEFAULT_PROTOCOLS:
                 return t_defaultProtocols != null;
+            case ServicePackage.MICROSERVICE__TSOURCE_MODEL_URI:
+                return TSOURCE_MODEL_URI_EDEFAULT == null ? t_sourceModelUri != null : !TSOURCE_MODEL_URI_EDEFAULT.equals(t_sourceModelUri);
             case ServicePackage.MICROSERVICE__TECHNOLOGIES:
                 return technologies != null && !technologies.isEmpty();
             case ServicePackage.MICROSERVICE__TTYPE_DEFINITION_TECHNOLOGY_IMPORT:
@@ -1585,6 +1637,8 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
         result.append(visibility);
         result.append(", t_defaultProtocols: ");
         result.append(t_defaultProtocols);
+        result.append(", t_sourceModelUri: ");
+        result.append(t_sourceModelUri);
         result.append(')');
         return result.toString();
     }

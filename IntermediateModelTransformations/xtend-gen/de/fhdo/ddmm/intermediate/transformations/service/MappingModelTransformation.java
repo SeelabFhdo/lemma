@@ -34,6 +34,8 @@ public class MappingModelTransformation extends AbstractIntermediateModelTransfo
     ServicePackage.eINSTANCE, 
     ServiceModel.class);
   
+  private String absoluteSourceModelPath;
+  
   /**
    * Get project-relative path to compiled ATL model transformation file
    */
@@ -51,12 +53,20 @@ public class MappingModelTransformation extends AbstractIntermediateModelTransfo
   }
   
   /**
+   * Before transformation hook
+   */
+  @Override
+  public void beforeTransformationHook(final String absoluteSourceModelPath) {
+    this.absoluteSourceModelPath = absoluteSourceModelPath;
+  }
+  
+  /**
    * Prepare source model
    */
   @Override
-  public void prepareSourceModel(final EObject modelRoot, final String absoluteSourceModelPath) {
+  public void prepareSourceModel(final EObject modelRoot) {
     final TechnologyMapping mappingModel = ((TechnologyMapping) modelRoot);
-    this.convertImportUrisToAbsoluteFileUris(mappingModel.getImports(), absoluteSourceModelPath);
+    this.convertImportUrisToAbsoluteFileUris(mappingModel.getImports(), this.absoluteSourceModelPath);
   }
   
   /**

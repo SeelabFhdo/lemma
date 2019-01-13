@@ -26,6 +26,8 @@ class IntermediateDataModelTransformation
         IntermediateDataModel
     )
 
+    private String absoluteSourceModelPath
+
     /**
      * Get project-relative path to compiled ATL model transformation file
      */
@@ -41,12 +43,26 @@ class IntermediateDataModelTransformation
     }
 
     /**
+     * Before transformation hook
+     *
+     */
+    override beforeTransformationHook(String absoluteSourceModelPath) {
+        this.absoluteSourceModelPath = absoluteSourceModelPath
+    }
+
+    /**
      * Prepare source model
      */
-    override prepareSourceModel(EObject modelRoot, String absoluteSourceModelPath) {
+    override prepareSourceModel(EObject modelRoot) {
+        val dataModel = (modelRoot as DataModel)
+
+        // Set URI of source model
+        if (!DdmmUtils.isFileUri(absoluteSourceModelPath))
+            dataModel.t_modelUri = DdmmUtils.convertToFileUri(absoluteSourceModelPath)
+
         // Convert import URIs of imported model files to absolute file URIs. Otherwise the
         // transformation won't have access to them and the contained model elements.
-        (modelRoot as DataModel).complexTypeImports.forEach[
+        dataModel.complexTypeImports.forEach[
             if (!DdmmUtils.isFileUri(importURI))
                 importURI = DdmmUtils.convertToFileUri(
                     DdmmUtils.convertToAbsolutePath(importURI, absoluteSourceModelPath)
