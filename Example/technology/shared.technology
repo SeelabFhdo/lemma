@@ -1,0 +1,28 @@
+technology ^operation {
+	protocols {
+		sync rest data formats json default with format json;
+		sync soap data formats xml;
+		async amqp data formats json default with format json;
+	}
+
+	service aspects {
+		aspect get for operations {
+			selector (protocol = rest);
+		}
+		aspect HttpStatus for parameters {
+			selector (protocol = rest, exchange_pattern = out);
+			selector (protocol = rest, exchange_pattern = inout);
+			int statusCode mandatory;
+		}
+	}
+
+	infrastructure technologies {
+		serviceDiscovery {
+			operation environments = "spring-cloud-netflix-eureka" default;
+		}
+
+		apiGateway {
+			operation environments = "spring-cloud-netflix-zuul" default;
+		}
+	}
+}

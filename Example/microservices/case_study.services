@@ -1,0 +1,115 @@
+import datatypes from "../domain/case_study.data" as domain
+import technology from "../technology/java.technology" as java
+import technology from "../technology/python.technology" as python
+import technology from "../technology/shared.technology" as shared
+
+/* Current allocation */
+@technology(java)
+@technology(shared)
+functional microservice com.example.CurrentAllocation {
+	interface CurrentAllocation {
+		@shared::_aspects.get
+		getCurrentAllocation(
+			sync in parkingSpaceId : long,
+			@shared::_aspects.HttpStatus(200)
+			sync out classAllocations : domain::ParkingSpace.VehicleCounts
+		);
+
+		updateAllocations(
+			async in parkingSpaceId : long,
+			async in updatedAllocations : domain::ParkingSpace.VehicleCounts
+		);
+	}
+}
+
+/* Search for free space */
+@technology(java)
+@technology(shared)
+functional microservice com.example.SearchForFreeSpace {
+	interface SearchSpace {
+		@shared::_aspects.get
+		getFreeSpace(
+			sync in inLocation : domain::ParkingSpace.Location,
+			sync in distance : float,
+			@shared::_aspects.HttpStatus(200)
+			sync out freeSpaces : domain::ParkingSpace.ParkingSpaces,
+			@shared::_aspects.HttpStatus(200)
+			sync out allocations : domain::ParkingSpace.VehicleCounts,
+			@shared::_aspects.HttpStatus(404)
+			sync out fault foundNone : boolean
+		);
+	}
+}
+
+/* Allocations over time */
+@technology(python)
+@technology(shared)
+functional microservice com.example.AllocationsOverTime {
+	interface AllocationsOverTime {
+		@shared::_aspects.get
+		getAllocations(
+			sync parkingSpaceId : long,
+			sync in beginTimestamp : date,
+			sync in endTimestamp : date,
+			@shared::_aspects.HttpStatus(200)
+			sync out allocations : domain::ParkingSpace.VehicleCounts
+		);
+
+		updateAllocations(
+			async in parkingSpaceId : long,
+			async in updatedAllocations : domain::ParkingSpace.VehicleCounts
+		);
+	}
+}
+
+/* Parking space management */
+@technology(java)
+@technology(shared)
+functional microservice com.example.ParkingSpaceManagement {
+	interface ParkingSpaceInformation {
+		@shared::_aspects.get
+		getInformation(
+			sync in id : long,
+			@shared::_aspects.HttpStatus(200)
+			sync out info : domain::ParkingSpace.ParkingSpace
+		);
+
+		propagateInformationChanges(
+			async out changedParkingSpaceInfo : domain::ParkingSpace.ParkingSpace,
+			async out changedAllocations : domain::ParkingSpace.VehicleCounts
+		);
+	}
+
+	public interface ParkingSpaceMgmt {
+		createParkingSpace(
+			sync in newSpace : domain::ParkingSpace.ParkingSpace,
+			sync out id : long
+		);
+
+		updateParkingSpace(
+			sync in space : domain::ParkingSpace.ParkingSpace
+		);
+
+		deleteParkingSpace(
+			sync in id : long
+		);
+
+		resetCounters(
+			sync in parkingSpaceId : long,
+			sync in vehicleClass : string
+		);
+	}
+}
+
+/* Data export */
+@technology(java)
+@technology(shared)
+functional microservice com.example.DataExport {
+	interface DataExport {
+		@shared::_aspects.get
+		getAllExportData(
+			@shared::_aspects.HttpStatus(200)
+			sync out exportData : domain::ParkingSpace.ExportData
+		);
+	}
+}

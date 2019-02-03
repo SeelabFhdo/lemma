@@ -1,0 +1,96 @@
+/* The ParkingSpace context encapsulates domain concepts related to parking spaces */
+context ParkingSpace {
+	// Parking space concept
+	structure ParkingSpace {
+		string name,
+		string description,
+		boolean parkingNotAllowed,
+		VehicleCounts capacities,
+		Location location
+	}
+
+	list ParkingSpaces { ParkingSpace parkingSpace }
+
+	// Location concept
+	structure Location {
+		double latitude,
+		double longitude,
+		string street,
+		string zip,
+		string city,
+		string country
+	}
+
+	// Concept to express counts of vehicles of a given class
+	structure VehicleCount {
+		string vehicleClass,
+		int count,
+		date timestamp
+	}
+
+	list VehicleCounts { VehicleCount vehicleCount }
+
+	// Export data concept
+	structure ParkingSpaceExportData {
+		ParkingSpace parkingSpace,
+		VehicleCounts spaceAllocations
+	}
+
+	list ExportData { ParkingSpaceExportData parkingSpaceExportData }
+}
+
+/*
+ * The SensorSystem context encapsulates domain concepts related to delineator-based sensor systems
+ */
+context SensorSystem {
+	// Concept to model sensor systems
+	structure SensorSystem {
+		// Delineators denote pairs of "controller" and "helper" delineators. Controller delineators
+		// detect vehicle information with helper delineators. Therefore, a radio connection between
+		// a controller and a helper delineator is established.
+		Delineators controllers,
+		Delineators helpers,
+		// The gateway delineator sends detected vehicle information to the Parking Space Accounting
+		// Application
+		Delineator gateway,
+		ParkingSpace.Location location,
+		// Detection results comprise derived vehicle information, i.e., vehicle class, direction,
+		// speed, and length
+		DetectionResults results
+	}
+
+	list SensorSystems { SensorSystem system }
+
+	list DetectionResults { DetectionResult result }
+
+	// Concept to express results of vehicle detections
+	structure DetectionResult {
+		date timestamp,
+		string derivedVehicleClass,
+		string derivedDirection,
+		double calculcatedSpeed,
+		double calculatedLength,
+		// A "vector" represent the raw data of the radio-based vehicle detection. There exists one
+		// vector for each pair of controller and helper delineators. From a set of vectors, the
+		// vehicle class, direction, speed, and length are derived.
+		Vectors vector
+	}
+
+	list Vectors { Vector vector }
+
+	// Vector concept for detection of raw data
+	structure Vector {
+		date timestamp,
+		string direction,
+		double speed,
+		double length,
+		string raw
+	}
+
+	// A single delineator
+	structure Delineator {
+		int identifier
+	}
+
+	list Delineators { Delineator delineator }
+}

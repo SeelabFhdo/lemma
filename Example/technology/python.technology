@@ -1,0 +1,22 @@
+technology python {
+	types {
+		primitive type Int based on byte, int, short default;
+		primitive type Long based on long default;
+		primitive type Float based on float, double default;
+		primitive type Bool based on boolean default;
+		primitive type Str based on string, char default;
+		primitive type Unicode based on string;
+		primitive type Datetime based on date default;
+		primitive type Complex;
+
+		list type List;
+		list type Tuple;
+		list type Set;
+	}
+
+	deployment technologies {
+		docker {
+			operation environments = "python" default;
+		}
+	}
+}
