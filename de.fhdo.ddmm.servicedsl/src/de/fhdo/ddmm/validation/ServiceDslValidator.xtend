@@ -133,25 +133,34 @@ class ServiceDslValidator extends AbstractServiceDslValidator {
     }
 
     /**
-     * Check that microservice, interface, and operation endpoints' addresses are unique per
-     * protocol/data format combination
+     * Check that microservice endpoints' addresses are unique per protocol/data format combination
      */
     @Check
     def checkUniqueEndpointAddresses(ServiceModel serviceModel) {
-        /* Check for microservices */
         val microserviceEndpoints = serviceModel.microservices.map[endpoints].flatten.toList
         checkUniqueEndpointAddresses(microserviceEndpoints, "microservice",
             [microservice.qualifiedNameParts])
+    }
 
-        /* Check for interfaces */
-        val interfaceEndpoints = serviceModel.containedInterfaces.map[endpoints].flatten.toList
+    /**
+     * Check that interface endpoints' addresses are unique per protocol/data format combination
+     */
+    @Check
+    def checkUniqueEndpointAddresses(Microservice microservice) {
+        val interfaceEndpoints = microservice.interfaces.map[endpoints].flatten.toList
         checkUniqueEndpointAddresses(interfaceEndpoints, "interface",
             [interface.qualifiedNameParts])
+    }
 
-        /* Combined check for operations and referred operations */
+    /**
+     * Check that operation endpoints' addresses are unique per protocol/data format combination
+     */
+    @Check
+    def checkUniqueEndpointAddresses(Interface ^interface) {
+        // Combined check for operations and referred operations
         val List<Endpoint> operationEndpoints = newArrayList
-        operationEndpoints.addAll(serviceModel.containedReferredOperations.map[endpoints].flatten)
-        operationEndpoints.addAll(serviceModel.containedOperations.map[endpoints].flatten)
+        operationEndpoints.addAll(interface.referredOperations.map[endpoints].flatten)
+        operationEndpoints.addAll(interface.operations.map[endpoints].flatten)
         checkUniqueEndpointAddresses(operationEndpoints, "operation", [
             if (operation !== null)
                 operation.qualifiedNameParts

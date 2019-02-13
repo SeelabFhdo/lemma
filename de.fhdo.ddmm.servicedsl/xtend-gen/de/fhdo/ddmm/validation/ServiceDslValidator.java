@@ -183,8 +183,7 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
   }
   
   /**
-   * Check that microservice, interface, and operation endpoints' addresses are unique per
-   * protocol/data format combination
+   * Check that microservice endpoints' addresses are unique per protocol/data format combination
    */
   @Check
   public void checkUniqueEndpointAddresses(final ServiceModel serviceModel) {
@@ -196,24 +195,38 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
       return it.getMicroservice().getQualifiedNameParts();
     };
     this.checkUniqueEndpointAddresses(microserviceEndpoints, "microservice", _function_1);
-    final Function1<Interface, EList<Endpoint>> _function_2 = (Interface it) -> {
+  }
+  
+  /**
+   * Check that interface endpoints' addresses are unique per protocol/data format combination
+   */
+  @Check
+  public void checkUniqueEndpointAddresses(final Microservice microservice) {
+    final Function1<Interface, EList<Endpoint>> _function = (Interface it) -> {
       return it.getEndpoints();
     };
-    final List<Endpoint> interfaceEndpoints = IterableExtensions.<Endpoint>toList(Iterables.<Endpoint>concat(ListExtensions.<Interface, EList<Endpoint>>map(serviceModel.getContainedInterfaces(), _function_2)));
-    final Function<Endpoint, List<String>> _function_3 = (Endpoint it) -> {
+    final List<Endpoint> interfaceEndpoints = IterableExtensions.<Endpoint>toList(Iterables.<Endpoint>concat(ListExtensions.<Interface, EList<Endpoint>>map(microservice.getInterfaces(), _function)));
+    final Function<Endpoint, List<String>> _function_1 = (Endpoint it) -> {
       return it.getInterface().getQualifiedNameParts();
     };
-    this.checkUniqueEndpointAddresses(interfaceEndpoints, "interface", _function_3);
+    this.checkUniqueEndpointAddresses(interfaceEndpoints, "interface", _function_1);
+  }
+  
+  /**
+   * Check that operation endpoints' addresses are unique per protocol/data format combination
+   */
+  @Check
+  public void checkUniqueEndpointAddresses(final Interface interface_) {
     final List<Endpoint> operationEndpoints = CollectionLiterals.<Endpoint>newArrayList();
-    final Function1<ReferredOperation, EList<Endpoint>> _function_4 = (ReferredOperation it) -> {
+    final Function1<ReferredOperation, EList<Endpoint>> _function = (ReferredOperation it) -> {
       return it.getEndpoints();
     };
-    Iterables.<Endpoint>addAll(operationEndpoints, Iterables.<Endpoint>concat(ListExtensions.<ReferredOperation, EList<Endpoint>>map(serviceModel.getContainedReferredOperations(), _function_4)));
-    final Function1<Operation, EList<Endpoint>> _function_5 = (Operation it) -> {
+    Iterables.<Endpoint>addAll(operationEndpoints, Iterables.<Endpoint>concat(ListExtensions.<ReferredOperation, EList<Endpoint>>map(interface_.getReferredOperations(), _function)));
+    final Function1<Operation, EList<Endpoint>> _function_1 = (Operation it) -> {
       return it.getEndpoints();
     };
-    Iterables.<Endpoint>addAll(operationEndpoints, Iterables.<Endpoint>concat(ListExtensions.<Operation, EList<Endpoint>>map(serviceModel.getContainedOperations(), _function_5)));
-    final Function<Endpoint, List<String>> _function_6 = (Endpoint it) -> {
+    Iterables.<Endpoint>addAll(operationEndpoints, Iterables.<Endpoint>concat(ListExtensions.<Operation, EList<Endpoint>>map(interface_.getOperations(), _function_1)));
+    final Function<Endpoint, List<String>> _function_2 = (Endpoint it) -> {
       EList<String> _xifexpression = null;
       Operation _operation = it.getOperation();
       boolean _tripleNotEquals = (_operation != null);
@@ -230,7 +243,7 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
       }
       return _xifexpression;
     };
-    this.checkUniqueEndpointAddresses(operationEndpoints, "operation", _function_6);
+    this.checkUniqueEndpointAddresses(operationEndpoints, "operation", _function_2);
   }
   
   /**
