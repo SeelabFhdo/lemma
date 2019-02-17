@@ -4,7 +4,7 @@
 package de.fhdo.ddmm.data.tests
 
 import com.google.inject.Inject
-import de.fhdo.ddmm.data.Version
+import de.fhdo.ddmm.data.DataModel
 import org.eclipse.xtext.testing.InjectWith
 import org.eclipse.xtext.testing.XtextRunner
 import org.eclipse.xtext.testing.util.ParseHelper
@@ -15,15 +15,11 @@ import org.junit.runner.RunWith
 @RunWith(XtextRunner)
 @InjectWith(DataDslInjectorProvider)
 class DataDslParsingTest {
-	@Inject
-	ParseHelper<Version> parseHelper
-	
-	@Test
-	def void loadModel() {
-		val result = parseHelper.parse('''
-			Hello Xtext!
-		''')
-		Assert.assertNotNull(result)
-		Assert.assertTrue(result.eResource.errors.isEmpty)
-	}
+    @Inject
+    ParseHelper<DataModel> parseHelper
+
+    @Test
+    def void loadModel() {
+        // TODO
+    }
 }

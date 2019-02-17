@@ -15,15 +15,11 @@ import org.junit.runner.RunWith
 @RunWith(XtextRunner)
 @InjectWith(ServiceDslInjectorProvider)
 class ServiceDslParsingTest {
-	@Inject
-	ParseHelper<ServiceModel> parseHelper
-	
-	@Test
-	def void loadModel() {
-		val result = parseHelper.parse('''
-			Hello Xtext!
-		''')
-		Assert.assertNotNull(result)
-		Assert.assertTrue(result.eResource.errors.isEmpty)
-	}
+    @Inject
+    ParseHelper<ServiceModel> parseHelper
+
+    @Test
+    def void loadModel() {
+        // TODO
+    }
 }
