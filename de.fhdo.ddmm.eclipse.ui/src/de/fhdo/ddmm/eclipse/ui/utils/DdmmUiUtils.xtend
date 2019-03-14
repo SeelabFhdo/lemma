@@ -54,8 +54,10 @@ final class DdmmUiUtils {
         val resultFiles = <IProject, List<IFile>> newHashMap
         val projects = ResourcesPlugin.workspace.root.projects
         projects.forEach[
-            val resultFilesForProject = findFilesInProject(extensions)
-            resultFiles.put(it, resultFilesForProject)
+            if (it.open) {
+                val resultFilesForProject = findFilesInProject(extensions)
+                resultFiles.put(it, resultFilesForProject)
+            }
         ]
         return resultFiles
     }
