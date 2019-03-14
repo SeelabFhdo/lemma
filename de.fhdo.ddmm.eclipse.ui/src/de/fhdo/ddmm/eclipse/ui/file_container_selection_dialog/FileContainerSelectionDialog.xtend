@@ -127,7 +127,7 @@ class FileContainerSelectionDialog extends TitleAreaDialog {
         createButton(parent, ABORT, "Abort", false)
 
         // Cancel
-        createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CANCEL_LABEL, false)
+        createButton(parent, CANCEL, IDialogConstants.CANCEL_LABEL, false)
 
         // Previous file
         val previousButton = createButton(parent, PREVIOUS, "< Previous", false)
@@ -282,8 +282,8 @@ class FileContainerSelectionDialog extends TitleAreaDialog {
     override createDialogArea(Composite parent) {
         val area = super.createDialogArea(parent) as Composite
         val container = new Composite(area, SWT.NONE)
-        container.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true))
-        container.setLayout(new GridLayout(1, false))
+        container.layoutData = new GridData(SWT.FILL, SWT.FILL, true, true)
+        container.layout = new GridLayout(1, false)
 
         createContainerSelection(container)
         createFilepathInput(container)
@@ -312,7 +312,7 @@ class FileContainerSelectionDialog extends TitleAreaDialog {
         treeViewerData.grabExcessVerticalSpace = true
         treeViewerData.horizontalAlignment = GridData.FILL
         treeViewerData.verticalAlignment = GridData.FILL
-        containerSelectionTree.tree.setLayoutData(treeViewerData)
+        containerSelectionTree.tree.layoutData = treeViewerData
 
         // Toggle element collapse state on double click
         containerSelectionTree.addDoubleClickListener(new IDoubleClickListener() {
@@ -372,8 +372,8 @@ class FileContainerSelectionDialog extends TitleAreaDialog {
      */
     private def createFilepathInput(Composite parent) {
         val inputContainer = new Composite(parent, SWT.NONE)
-        inputContainer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false))
-        inputContainer.setLayout(new GridLayout(3, false))
+        inputContainer.layoutData = new GridData(SWT.FILL, SWT.FILL, true, false)
+        inputContainer.layout = new GridLayout(3, false)
 
         val filepathLabel = new Label(inputContainer, SWT.NULL)
         filepathLabel.text = "File path:"
@@ -382,7 +382,7 @@ class FileContainerSelectionDialog extends TitleAreaDialog {
         val filepathData = new GridData()
         filepathData.grabExcessHorizontalSpace = true
         filepathData.horizontalAlignment = GridData.FILL
-        filepathField.setLayoutData(filepathData)
+        filepathField.layoutData = filepathData
 
         val extensionLabel = new Label(inputContainer, SWT.NULL)
         extensionLabel.text = ".xmi"

@@ -144,7 +144,6 @@ class SelectModelsDialog extends TitleAreaDialog {
         treeViewer.setLabelProvider(rootLabelProvider)
         treeViewer.tree.setHeaderVisible(true)
         treeViewer.tree.setLinesVisible(true)
-        treeViewer.setInput(inputModelFiles)
 
         // Toggle element collapse state on double click
         treeViewer.addDoubleClickListener(new IDoubleClickListener() {
@@ -196,6 +195,8 @@ class SelectModelsDialog extends TitleAreaDialog {
                 }
             }
         })
+
+        treeViewer.setInput(inputModelFiles)
     }
 
     /**

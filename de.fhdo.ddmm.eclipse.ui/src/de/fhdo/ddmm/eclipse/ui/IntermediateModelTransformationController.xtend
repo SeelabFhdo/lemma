@@ -20,7 +20,7 @@ class IntermediateModelTransformationController extends AbstractHandler {
     override execute(ExecutionEvent event) throws ExecutionException {
         var AbstractUiModelTransformationStrategy strategy
         try {
-        strategy = new ServiceModelTransformationStrategy
+            strategy = new ServiceModelTransformationStrategy
         } catch (Exception ex) {
             ex.printStackTrace
         }
