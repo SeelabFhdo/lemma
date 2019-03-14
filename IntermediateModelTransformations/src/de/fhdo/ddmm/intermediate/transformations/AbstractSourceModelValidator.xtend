@@ -14,7 +14,7 @@ import com.google.common.base.Function
  */
 abstract class AbstractSourceModelValidator<T extends EObject> {
     protected String absoluteModelPath
-    private Predicate<IntermediateTransformationException> warningCallback
+    Predicate<IntermediateTransformationException> warningCallback
 
     /**
      * Validate source model

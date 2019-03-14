@@ -47,8 +47,6 @@ public class TransformationDialog extends TitleAreaDialog {
   
   private static final Logger LOGGER = LoggerFactory.getLogger(TransformationDialog.class);
   
-  private AbstractUiModelTransformationStrategy strategy;
-  
   private List<ModelFile> filesToTransform;
   
   private ModelFile currentModelFile;
@@ -93,7 +91,6 @@ public class TransformationDialog extends TitleAreaDialog {
         }
       }
     }
-    this.strategy = strategy;
     final Function1<ModelFile, Boolean> _function = new Function1<ModelFile, Boolean>() {
       public Boolean apply(final ModelFile it) {
         AbstractIntermediateModelTransformationStrategy _mainTransformationStrategy = it.getFileTypeDescription().getMainTransformationStrategy();

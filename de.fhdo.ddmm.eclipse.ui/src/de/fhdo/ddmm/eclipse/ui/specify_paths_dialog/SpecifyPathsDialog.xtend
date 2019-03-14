@@ -41,22 +41,22 @@ import org.eclipse.jface.dialogs.IDialogConstants
  * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
  */
 class SpecifyPathsDialog extends TitleAreaDialog {
-    private static val MIN_DIALOG_WIDTH = 500
-    private static val MIN_DIALOG_HEIGHT = 250
-    private static val int UNSELECT_ALL = 2
-    private static val int SELECT_ALL = 3
-    private static val ResourceManager RESOURCE_MANAGER =
+    static val MIN_DIALOG_WIDTH = 500
+    static val MIN_DIALOG_HEIGHT = 250
+    static val int UNSELECT_ALL = 2
+    static val int SELECT_ALL = 3
+    static val ResourceManager RESOURCE_MANAGER =
         new LocalResourceManager(JFaceResources.getResources())
 
-    private Shell parentShell
-    private Map<String, List<ModelFile>> inputModelFiles
-    private AbstractUiModelTransformationStrategy strategy
-    private TableViewer tableViewer
-    private Image checkboxActive
-    private Image checkboxInactive
+    Shell parentShell
+    Map<String, List<ModelFile>> inputModelFiles
+    AbstractUiModelTransformationStrategy strategy
+    TableViewer tableViewer
+    Image checkboxActive
+    Image checkboxInactive
 
     @Accessors(PUBLIC_GETTER)
-    private List<ModelFile> selectedModelFiles = <ModelFile> newArrayList
+    List<ModelFile> selectedModelFiles = <ModelFile> newArrayList
 
     /**
      * Constructor
@@ -83,7 +83,7 @@ class SpecifyPathsDialog extends TitleAreaDialog {
     /**
      * Create dialog (to be called after constructor and before open())
      */
-    override def create() {
+    override create() {
         super.create()
 
         val title = strategy.specifyPathsDialogTitle ?: ""
@@ -149,7 +149,7 @@ class SpecifyPathsDialog extends TitleAreaDialog {
     /**
      * OK button was pressed
      */
-    override def okPressed() {
+    override okPressed() {
         /* Get selected model files */
         selectedModelFiles = filterSelectedModelFiles()
         if (selectedModelFiles.empty) {

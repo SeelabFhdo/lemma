@@ -26,13 +26,13 @@ import de.fhdo.ddmm.service.Microservice
  */
 class IntermediateServiceModelTransformation
     extends AbstractIntermediateModelTransformationStrategy {
-    private static val TARGET_MODEL_INFO = new TargetModelInfo(
+    static val TARGET_MODEL_INFO = new TargetModelInfo(
         IntermediatePackage.eNS_URI,
         IntermediatePackage.eINSTANCE,
         IntermediateServiceModel
     )
 
-    private String absoluteSourceModelPath
+    String absoluteSourceModelPath
 
     /**
      * Get project-relative path to compiled ATL model transformation file

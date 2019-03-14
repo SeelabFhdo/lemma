@@ -13,8 +13,8 @@ import com.google.common.base.Predicate
  * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
  */
 class ModelTableTransformationTargetPathColumnEditingSupport extends EditingSupport {
-    private TableViewer tableViewer
-    private Predicate<Pair<ModelFile, String>> newValueValidator
+    TableViewer tableViewer
+    Predicate<Pair<ModelFile, String>> newValueValidator
 
     /**
      * Constructor

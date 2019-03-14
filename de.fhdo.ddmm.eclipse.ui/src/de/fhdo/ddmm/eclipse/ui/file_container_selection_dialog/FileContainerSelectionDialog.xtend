@@ -46,23 +46,22 @@ class FileContainerSelectionDialog extends TitleAreaDialog {
     public static val int ABORT = 4
     public static val int RUN_TRANSFORMATIONS = 5
 
-    private static val MIN_DIALOG_WIDTH = 500
-    private static val MIN_DIALOG_HEIGHT = 250
+    static val MIN_DIALOG_WIDTH = 500
+    static val MIN_DIALOG_HEIGHT = 250
 
-    private String title
-    private String message
-    private ModelFile modelFile
-    private IResource initialResource
-    private IResource initialSelection
-    private int currentFileIndex
-    private int fileCount
-    private boolean lastFile
-    private TreeViewer containerSelectionTree
-    private Text filepathField
-    private Map<String, ModelFile> alreadySpecifiedPaths
+    String title
+    String message
+    ModelFile modelFile
+    IResource initialResource
+    IResource initialSelection
+    int currentFileIndex
+    boolean lastFile
+    TreeViewer containerSelectionTree
+    Text filepathField
+    Map<String, ModelFile> alreadySpecifiedPaths
 
     @Accessors(PUBLIC_GETTER)
-    private IFile selectedFile
+    IFile selectedFile
 
     /**
      * Constructor
@@ -89,7 +88,6 @@ class FileContainerSelectionDialog extends TitleAreaDialog {
         this.modelFile = modelFile
         this.alreadySpecifiedPaths = alreadySpecifiedPaths
         this.currentFileIndex = currentFileIndex
-        this.fileCount = fileCount
         lastFile = currentFileIndex === fileCount
 
         // The initial file may be null if the dialog is opened for the first time for the given
@@ -106,7 +104,7 @@ class FileContainerSelectionDialog extends TitleAreaDialog {
     /**
      * Create dialog (to be called after constructor and before open())
      */
-    override def create() {
+    override create() {
         super.create()
         setTitle(title ?: "")
         setMessage(message ?: "", IMessageProvider.INFORMATION)
@@ -115,7 +113,7 @@ class FileContainerSelectionDialog extends TitleAreaDialog {
     /**
      * Treat shell closing event like a press of the abort button
      */
-    override def handleShellCloseEvent() {
+    override handleShellCloseEvent() {
         abortPressed()
     }
 
@@ -157,7 +155,7 @@ class FileContainerSelectionDialog extends TitleAreaDialog {
     /**
      * Handle click on the cancel button
      */
-    override def cancelPressed() {
+    override cancelPressed() {
         val buttonPressed = MessageDialog.open(MessageDialog.QUESTION, shell, "Confirm usage of " +
             "default path", '''If you cancel the explicit specification of a path for the ''' +
             '''imported model file "«modelFile.file.fullPath»" the default path ''' +

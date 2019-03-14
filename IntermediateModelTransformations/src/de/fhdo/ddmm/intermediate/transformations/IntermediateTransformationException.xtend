@@ -10,10 +10,10 @@ import org.eclipse.xtend.lib.annotations.Accessors
  */
 class IntermediateTransformationException extends Exception {
     @Accessors(PUBLIC_GETTER)
-    private IntermediateTransformationExceptionKind kind
+    IntermediateTransformationExceptionKind kind
 
     @Accessors(PUBLIC_GETTER)
-    private IntermediateTransformationPhase phase
+    IntermediateTransformationPhase phase
 
     /**
      * Constructor

@@ -15,8 +15,8 @@ import org.eclipse.core.resources.IFile
  * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
  */
 class ModelTreeContentProvider implements ITreeContentProvider {
-    private Map<IProject, List<ModelFile>> inputModelFilesWithProjects
-    private AbstractUiModelTransformationStrategy strategy
+    Map<IProject, List<ModelFile>> inputModelFilesWithProjects
+    AbstractUiModelTransformationStrategy strategy
 
     /**
      * Constructor

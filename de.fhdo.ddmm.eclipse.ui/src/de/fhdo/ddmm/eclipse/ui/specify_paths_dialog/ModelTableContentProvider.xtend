@@ -13,7 +13,7 @@ import org.eclipse.jface.viewers.IStructuredContentProvider
  * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
  */
 class ModelTableContentProvider implements IStructuredContentProvider {
-    private AbstractUiModelTransformationStrategy strategy
+    AbstractUiModelTransformationStrategy strategy
 
     /**
      * Constructor

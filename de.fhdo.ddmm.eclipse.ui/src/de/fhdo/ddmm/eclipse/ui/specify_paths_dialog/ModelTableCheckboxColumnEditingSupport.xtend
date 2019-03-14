@@ -13,8 +13,8 @@ import com.google.common.base.Predicate
  * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
  */
 class ModelTableCheckboxColumnEditingSupport extends EditingSupport {
-    private TableViewer tableViewer
-    private Predicate<Pair<ModelFile, Boolean>> newValueValidator
+    TableViewer tableViewer
+    Predicate<Pair<ModelFile, Boolean>> newValueValidator
 
     /**
      * Constructor

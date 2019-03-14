@@ -15,7 +15,7 @@ import java.util.Collections
  * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
  */
 class FileContainerSelectionTreeContentProvider implements ITreeContentProvider {
-    private Class<? extends EObject> intermediateModelClass
+    Class<? extends EObject> intermediateModelClass
 
     /**
      * Constructor

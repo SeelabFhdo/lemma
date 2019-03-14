@@ -46,7 +46,7 @@ import org.eclipse.xtext.EcoreUtil2
  */
 class ServiceDslValidator extends AbstractServiceDslValidator {
     @Inject
-    private ServiceDslQualifiedNameProvider nameProvider
+    ServiceDslQualifiedNameProvider nameProvider
 
     /**
      * Check if an imported file exists

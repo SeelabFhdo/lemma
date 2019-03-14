@@ -34,15 +34,15 @@ import org.eclipse.jface.viewers.ColumnLabelProvider
  * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
  */
 class SelectModelsDialog extends TitleAreaDialog {
-    private static val MIN_DIALOG_WIDTH = 500
-    private static val MIN_DIALOG_HEIGHT = 250
+    static val MIN_DIALOG_WIDTH = 500
+    static val MIN_DIALOG_HEIGHT = 250
 
-    private AbstractUiModelTransformationStrategy strategy
-    private Map<IProject, List<ModelFile>> inputModelFiles
-    private TreeViewer treeViewer
+    AbstractUiModelTransformationStrategy strategy
+    Map<IProject, List<ModelFile>> inputModelFiles
+    TreeViewer treeViewer
 
     @Accessors(PUBLIC_GETTER)
-    private var List<ModelFile> selectedModelFiles = <ModelFile> newArrayList
+    var List<ModelFile> selectedModelFiles = <ModelFile> newArrayList
 
     /**
      * Constructor
@@ -64,7 +64,7 @@ class SelectModelsDialog extends TitleAreaDialog {
     /**
      * OK button was pressed
      */
-    override def okPressed() {
+    override okPressed() {
         selectedModelFiles = filterSelectedModelFiles()
         if (selectedModelFiles.empty)
             MessageDialog.openError(shell, "No model files selected", "No model files were " +
@@ -86,7 +86,7 @@ class SelectModelsDialog extends TitleAreaDialog {
     /**
      * Create dialog (to be called after constructor and before open())
      */
-    override def create() {
+    override create() {
         super.create()
         val title = strategy.modelSelectionDialogTitle ?: ""
         setTitle(title)

@@ -21,9 +21,9 @@ import de.fhdo.ddmm.eclipse.ui.AbstractUiModelTransformationStrategy
  * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
  */
 class SelectModelsHandler extends AbstractHandler {
-    private val SHELL = PlatformUI.workbench.activeWorkbenchWindow.shell
+    val SHELL = PlatformUI.workbench.activeWorkbenchWindow.shell
 
-    private AbstractUiModelTransformationStrategy transformationStrategy
+    AbstractUiModelTransformationStrategy transformationStrategy
 
     /**
      * Constructor

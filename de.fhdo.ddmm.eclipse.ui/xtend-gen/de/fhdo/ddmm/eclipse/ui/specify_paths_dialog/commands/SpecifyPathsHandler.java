@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.function.BiConsumer;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
@@ -20,7 +19,6 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
-import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.ListExtensions;
 
 /**
@@ -81,22 +79,11 @@ public class SpecifyPathsHandler extends AbstractHandler {
    */
   private LinkedHashMap<String, List<ModelFile>> createModelTableFiles() {
     final LinkedHashMap<String, List<ModelFile>> result = CollectionLiterals.<String, List<ModelFile>>newLinkedHashMap();
-    final Function1<ModelFile, String> _function = new Function1<ModelFile, String>() {
-      public String apply(final ModelFile it) {
-        return it.getFile().getLocation().toString();
-      }
-    };
-    final Function1<ModelFile, ModelFile> _function_1 = new Function1<ModelFile, ModelFile>() {
-      public ModelFile apply(final ModelFile it) {
-        return SpecifyPathsHandler.this.prepareModelFile(it);
-      }
-    };
-    final Map<String, ModelFile> modelFilesByFullPath = IterableExtensions.<ModelFile, String, ModelFile>toMap(this.inputModelFiles, _function, _function_1);
     final ArrayDeque<ModelFile> filesTodo = new ArrayDeque<ModelFile>(this.inputModelFiles);
     final HashSet<String> filesDone = CollectionLiterals.<String>newHashSet();
     while ((!filesTodo.isEmpty())) {
       {
-        final ModelFile currentFile = filesTodo.pop();
+        final ModelFile currentFile = this.prepareModelFile(filesTodo.pop());
         final String currentFileFullPath = currentFile.getFile().getLocation().toString();
         boolean _contains = filesDone.contains(currentFileFullPath);
         boolean _not = (!_contains);

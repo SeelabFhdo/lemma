@@ -13,7 +13,7 @@ import de.fhdo.ddmm.eclipse.ui.ModelFileStyledLabelProvider
  * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
  */
 class ModelTreeLabelProvider extends ModelFileStyledLabelProvider {
-    private Image projectIcon
+    Image projectIcon
 
     /**
      * Constructor

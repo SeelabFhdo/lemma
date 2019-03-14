@@ -16,7 +16,6 @@ import de.fhdo.ddmm.operation.InfrastructureNode
 import de.fhdo.ddmm.service.Microservice
 import de.fhdo.ddmm.operation.ImportedMicroservice
 import de.fhdo.ddmm.service.ServicePackage
-import com.google.common.base.Function
 import de.fhdo.ddmm.technology.TechnologySpecificPropertyValueAssignment
 import de.fhdo.ddmm.technology.TechnologyPackage
 import de.fhdo.ddmm.operation.ImportedOperationAspect
@@ -93,7 +92,7 @@ class OperationDslValidator extends AbstractOperationDslValidator {
      * Check that the assigned value of a service property matches its type
      */
     @Check
-    def override checkPropertyValueType(TechnologySpecificPropertyValueAssignment propertyValue) {
+    override checkPropertyValueType(TechnologySpecificPropertyValueAssignment propertyValue) {
         if (propertyValue.property === null || propertyValue.value === null) {
             return
         }

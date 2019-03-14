@@ -32,16 +32,16 @@ class ServiceModelTransformationStrategy extends AbstractUiModelTransformationSt
     public static val MAPPING_MODEL_FILE_TYPE_ID = "MAPPING"
     public static val SERVICE_MODEL_FILE_TYPE_ID = "SERVICE"
 
-    private static val DATA_DSL_EDITOR_ID = "de.fhdo.ddmm.data.DataDsl"
-    private static val SERVICE_DSL_EDITOR_ID = "de.fhdo.ddmm.ServiceDsl"
-    private static val MAPPING_DSL_EDITOR_ID = "de.fhdo.ddmm.technology.mappingdsl.MappingDsl"
-    private static val List<String> DATA_MODEL_FILE_EXTENSIONS = newArrayList
-    private static val List<String> SERVICE_MODEL_FILE_EXTENSIONS = newArrayList
-    private static val List<String> MAPPING_MODEL_FILE_EXTENSIONS = newArrayList
-    private static val String MODEL_TYPE_PREFIX = "service"
-    private static val ResourceManager RESOURCE_MANAGER =
+    static val DATA_DSL_EDITOR_ID = "de.fhdo.ddmm.data.DataDsl"
+    static val SERVICE_DSL_EDITOR_ID = "de.fhdo.ddmm.ServiceDsl"
+    static val MAPPING_DSL_EDITOR_ID = "de.fhdo.ddmm.technology.mappingdsl.MappingDsl"
+    static val List<String> DATA_MODEL_FILE_EXTENSIONS = newArrayList
+    static val List<String> SERVICE_MODEL_FILE_EXTENSIONS = newArrayList
+    static val List<String> MAPPING_MODEL_FILE_EXTENSIONS = newArrayList
+    static val String MODEL_TYPE_PREFIX = "service"
+    static val ResourceManager RESOURCE_MANAGER =
         new LocalResourceManager(JFaceResources.getResources())
-    private var LinkedHashMap<String, ModelFileTypeDescription> modelFileTypeDescriptions
+    var LinkedHashMap<String, ModelFileTypeDescription> modelFileTypeDescriptions
 
     /**
      * Constructor

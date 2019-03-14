@@ -1,7 +1,5 @@
 package de.fhdo.ddmm.intermediate.transformations
 
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
 import org.eclipse.m2m.atl.core.emf.EMFInjector
 import org.eclipse.m2m.atl.core.emf.EMFModelFactory
 import org.eclipse.emf.ecore.EPackage
@@ -29,11 +27,10 @@ import com.google.common.base.Function
  * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
  */
 abstract class AbstractIntermediateModelTransformationStrategy {
-    private Logger logger
-    private var EMFInjector atlModelInjector
-    private var EMFModelFactory atlModelFactory
-    private var String targetModelUri
-    private var EPackage targetModelPackage
+    var EMFInjector atlModelInjector
+    var EMFModelFactory atlModelFactory
+    var String targetModelUri
+    var EPackage targetModelPackage
 
     /**
      * Get information like URI, EPackage, and root class of the target intermediate metamodel
@@ -97,7 +94,6 @@ abstract class AbstractIntermediateModelTransformationStrategy {
      * Constructor
      */
     new() {
-        logger = LoggerFactory.getLogger(getClass())
         atlModelFactory = new EMFModelFactory
         atlModelInjector = new EMFInjector
 

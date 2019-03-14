@@ -17,10 +17,10 @@ import org.eclipse.jface.window.Window
  * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
  */
 class SpecifyPathsHandler extends AbstractHandler {
-    private val SHELL = PlatformUI.workbench.activeWorkbenchWindow.shell
+    val SHELL = PlatformUI.workbench.activeWorkbenchWindow.shell
 
-    private List<ModelFile> inputModelFiles
-    private AbstractUiModelTransformationStrategy strategy
+    List<ModelFile> inputModelFiles
+    AbstractUiModelTransformationStrategy strategy
 
     /**
      * Constructor
@@ -66,14 +66,6 @@ class SpecifyPathsHandler extends AbstractHandler {
         val result = <String, List<ModelFile>> newLinkedHashMap
 
         /*
-         * Setup a map that assigns an input model file to be put in the table to its full path. The
-         * map is used to keep track of model file instances and enable their reuse within the table
-         * and the children lists of the displayed model files.
-         */
-        val modelFilesByFullPath = inputModelFiles
-            .toMap([it.file.location.toString], [prepareModelFile(it)])
-
-        /*
          * Setup data structures to keep track of the iteration for model table entries resulting
          * from model files being directly or indirectly, i.e., transitively, imported by the input
          * model files.
@@ -86,7 +78,7 @@ class SpecifyPathsHandler extends AbstractHandler {
          * files as children of the already found model files.
          */
         while (!filesTodo.empty) {
-            val currentFile = filesTodo.pop
+            val currentFile = prepareModelFile(filesTodo.pop)
             val currentFileFullPath = currentFile.file.location.toString
 
             // Scan for additional children only, if the file hasn't been treated already

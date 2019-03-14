@@ -13,20 +13,20 @@ import java.util.LinkedList
  */
 class ModelFileTypeDescription {
     @Accessors
-    private Image icon
+    Image icon
 
     @Accessors
-    private String description
+    String description
 
     @Accessors
-    private List<String> extensions
+    List<String> extensions
 
     // Each model file type has one main transformation strategy that transforms the model file into
     // a result file. In most cases, this result file corresponds to the resulting XMI file.
     // However, there might be subsequent refiningTransformationStrategies, which transform the
     // result file into more specific files.
     @Accessors
-    private AbstractIntermediateModelTransformationStrategy mainTransformationStrategy
+    AbstractIntermediateModelTransformationStrategy mainTransformationStrategy
 
     // Refining transformation strategies may be used to specify model transformation chains, i.e.,
     // the model that results from executing the main transformation strategy is an input of the
@@ -35,8 +35,7 @@ class ModelFileTypeDescription {
     // from a mapping model (main transformation strategy) and transform it to an intermediate
     // service model (refining transformation strategy).
     @Accessors
-    private LinkedList<AbstractIntermediateModelTransformationStrategy>
-        refiningTransformationStrategies
+    LinkedList<AbstractIntermediateModelTransformationStrategy> refiningTransformationStrategies
 
     /**
      * Constructor

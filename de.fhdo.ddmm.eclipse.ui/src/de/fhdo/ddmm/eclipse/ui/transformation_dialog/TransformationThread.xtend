@@ -15,15 +15,15 @@ import org.eclipse.core.runtime.Path
  * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
  */
 class TransformationThread extends Thread {
-    private List<ModelFile> modelFiles
-    private volatile boolean stopTransformations
-    private volatile boolean continueTransformationAfterWarning
-    private Predicate<ModelFile> nextTransformationCallback
-    private Predicate<IntermediateTransformationException> transformationWarningCallback
-    private Predicate<Exception> transformationExceptionCallback
-    private Predicate<Void> currentTransformationFinishedCallback
-    private Predicate<Void> transformationsFinishedCallback
-    private Display display
+    List<ModelFile> modelFiles
+    volatile boolean stopTransformations
+    volatile boolean continueTransformationAfterWarning
+    Predicate<ModelFile> nextTransformationCallback
+    Predicate<IntermediateTransformationException> transformationWarningCallback
+    Predicate<Exception> transformationExceptionCallback
+    Predicate<Void> currentTransformationFinishedCallback
+    Predicate<Void> transformationsFinishedCallback
+    Display display
 
     /**
      * Constructor

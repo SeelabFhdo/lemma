@@ -14,7 +14,7 @@ import java.util.LinkedHashMap
  * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
  */
 abstract class AbstractUiModelTransformationStrategy {
-    private var AbstractIntermediateModelTransformationStrategy transformationStrategy
+    var AbstractIntermediateModelTransformationStrategy transformationStrategy
 
     /**
      * Return the transformation strategy of the concrete subclass. Note, that this method mimics

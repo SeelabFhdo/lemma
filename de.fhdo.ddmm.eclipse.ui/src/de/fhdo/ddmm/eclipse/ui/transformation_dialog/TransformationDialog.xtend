@@ -29,27 +29,26 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
 class TransformationDialog  extends TitleAreaDialog {
-    private static val MIN_DIALOG_WIDTH = 200
-    private static val MIN_DIALOG_HEIGHT = 120
-    private static val PROGRESS_TITLE_TEXT = "Performing intermediate model transformations"
-    private static final Logger LOGGER = LoggerFactory.getLogger(TransformationDialog)
+    static val MIN_DIALOG_WIDTH = 200
+    static val MIN_DIALOG_HEIGHT = 120
+    static val PROGRESS_TITLE_TEXT = "Performing intermediate model transformations"
+    static final Logger LOGGER = LoggerFactory.getLogger(TransformationDialog)
 
-    private AbstractUiModelTransformationStrategy strategy
-    private List<ModelFile> filesToTransform
-    private ModelFile currentModelFile
-    private static val ResourceManager RESOURCE_MANAGER =
+    List<ModelFile> filesToTransform
+    ModelFile currentModelFile
+    static val ResourceManager RESOURCE_MANAGER =
         new LocalResourceManager(JFaceResources.getResources())
-    private TransformationThread transformationThread
-    private Button cancelButton
-    private int currentTransformationIndex
-    private CLabel progressTitleLabel
-    private ProgressBar progressBar
-    private Label progressMessageLabel
-    private StyledText progressMessageText
-    private boolean stopTransformations
-    private boolean cancelPressed
-    private boolean shellClosed
-    private boolean ignoreAllTransformationWarnings
+    TransformationThread transformationThread
+    Button cancelButton
+    int currentTransformationIndex
+    CLabel progressTitleLabel
+    ProgressBar progressBar
+    Label progressMessageLabel
+    StyledText progressMessageText
+    boolean stopTransformations
+    boolean cancelPressed
+    boolean shellClosed
+    boolean ignoreAllTransformationWarnings
 
     /**
      * Constructor
@@ -64,8 +63,6 @@ class TransformationDialog  extends TitleAreaDialog {
             throw new IllegalArgumentException("Transformation strategy must not be null")
         else if (inputModelFiles === null || inputModelFiles.empty)
             throw new IllegalArgumentException("Input models must not be null or empty")
-
-        this.strategy = strategy
 
         // Model files that lack transformation strategies cannot be transformed
         filesToTransform = inputModelFiles
@@ -241,7 +238,7 @@ class TransformationDialog  extends TitleAreaDialog {
     /**
      * Create dialog (to be called after constructor and before open())
      */
-    override def create() {
+    override create() {
         super.create()
         setTitle("Performing Intermediate Model Transformations")
     }
@@ -323,14 +320,14 @@ class TransformationDialog  extends TitleAreaDialog {
     /**
      * User clicked close icon in the window bar
      */
-    override def handleShellCloseEvent() {
+    override handleShellCloseEvent() {
         userAborted(true)
     }
 
     /**
      * "Cancel" was pressed
      */
-    override def cancelPressed() {
+    override cancelPressed() {
         userAborted(false)
     }
 

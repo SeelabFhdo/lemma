@@ -32,8 +32,6 @@ import org.eclipse.xtext.resource.IResourceServiceProvider;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.Pair;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Abstract strategy for model-to-model transformations of DDMM-related source to intermediate
@@ -43,8 +41,6 @@ import org.slf4j.LoggerFactory;
  */
 @SuppressWarnings("all")
 public abstract class AbstractIntermediateModelTransformationStrategy {
-  private Logger logger;
-  
   private EMFInjector atlModelInjector;
   
   private EMFModelFactory atlModelFactory;
@@ -118,7 +114,6 @@ public abstract class AbstractIntermediateModelTransformationStrategy {
    * Constructor
    */
   public AbstractIntermediateModelTransformationStrategy() {
-    this.logger = LoggerFactory.getLogger(this.getClass());
     EMFModelFactory _eMFModelFactory = new EMFModelFactory();
     this.atlModelFactory = _eMFModelFactory;
     EMFInjector _eMFInjector = new EMFInjector();

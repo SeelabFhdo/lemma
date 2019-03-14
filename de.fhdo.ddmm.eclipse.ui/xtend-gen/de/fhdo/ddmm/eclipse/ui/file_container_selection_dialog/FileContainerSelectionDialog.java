@@ -84,8 +84,6 @@ public class FileContainerSelectionDialog extends TitleAreaDialog {
   
   private int currentFileIndex;
   
-  private int fileCount;
-  
   private boolean lastFile;
   
   private TreeViewer containerSelectionTree;
@@ -127,7 +125,6 @@ public class FileContainerSelectionDialog extends TitleAreaDialog {
     this.modelFile = modelFile;
     this.alreadySpecifiedPaths = alreadySpecifiedPaths;
     this.currentFileIndex = currentFileIndex;
-    this.fileCount = fileCount;
     this.lastFile = (currentFileIndex == fileCount);
     if ((initialFile != null)) {
       this.initialResource = initialFile;

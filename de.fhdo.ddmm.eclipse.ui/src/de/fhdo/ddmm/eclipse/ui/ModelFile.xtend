@@ -16,42 +16,42 @@ import org.eclipse.xtext.diagnostics.Severity
  */
 class ModelFile implements Comparable<ModelFile> {
     @Accessors
-    private IFile file
+    IFile file
 
     @Accessors(PUBLIC_GETTER)
-    private ModelFileTypeDescription fileTypeDescription
+    ModelFileTypeDescription fileTypeDescription
 
     @Accessors
-    private Object parent
+    Object parent
 
     @Accessors
-    private String importAlias
+    String importAlias
 
     @Accessors
-    private List<ModelFile> children = newArrayList
+    List<ModelFile> children = newArrayList
 
     @Accessors
-    private boolean scannedForChildren
+    boolean scannedForChildren
 
-    private XtextResource xtextResource
+    XtextResource xtextResource
 
-    private boolean xtextResourceLoaded
+    boolean xtextResourceLoaded
 
     @Accessors(PUBLIC_SETTER)
-    private Boolean hasErrors
+    Boolean hasErrors
 
     @Accessors(PUBLIC_SETTER)
-    private Boolean hasWarnings
+    Boolean hasWarnings
 
-    private List<Issue> issues
+    List<Issue> issues
 
-    private boolean scannedForIssues
-
-    @Accessors
-    private boolean selectedForTransformation
+    boolean scannedForIssues
 
     @Accessors
-    private String transformationTargetPath
+    boolean selectedForTransformation
+
+    @Accessors
+    String transformationTargetPath
 
     /**
      * Convenience constructor
@@ -79,7 +79,7 @@ class ModelFile implements Comparable<ModelFile> {
     /**
      * Get Xtext resource of the encapsulated file or load it on demand
      */
-    public def XtextResource getXtextResource() {
+    def XtextResource getXtextResource() {
         if (xtextResource === null && !xtextResourceLoaded) {
             xtextResource = DdmmUiUtils.loadXtextResource(file)
             xtextResourceLoaded = true  // Try to load resource exactly once
@@ -91,7 +91,7 @@ class ModelFile implements Comparable<ModelFile> {
     /**
      * Check if Xtext resource has errors
      */
-    public def hasErrors() {
+    def hasErrors() {
         if (hasErrors === null)
             hasErrors = hasIssuesOfSeverity(Severity.ERROR)
 
@@ -101,7 +101,7 @@ class ModelFile implements Comparable<ModelFile> {
     /**
      * Check if Xtext resource has warnings
      */
-    public def hasWarnings() {
+    def hasWarnings() {
         if (hasWarnings === null)
             hasWarnings = hasIssuesOfSeverity(Severity.WARNING)
 

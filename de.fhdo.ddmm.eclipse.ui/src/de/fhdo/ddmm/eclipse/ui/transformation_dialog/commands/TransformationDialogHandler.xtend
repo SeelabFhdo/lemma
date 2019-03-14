@@ -15,10 +15,10 @@ import de.fhdo.ddmm.eclipse.ui.transformation_dialog.TransformationDialog
  * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
  */
 class TransformationDialogHandler extends AbstractHandler {
-    private val SHELL = PlatformUI.workbench.activeWorkbenchWindow.shell
+    val SHELL = PlatformUI.workbench.activeWorkbenchWindow.shell
 
-    private List<ModelFile> inputModelFiles
-    private AbstractUiModelTransformationStrategy strategy
+    List<ModelFile> inputModelFiles
+    AbstractUiModelTransformationStrategy strategy
 
     /**
      * Constructor

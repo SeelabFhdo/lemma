@@ -11,13 +11,13 @@ import org.eclipse.emf.ecore.EObject
  */
 class TargetModelInfo {
     @Accessors
-    private String namespaceUri
+    String namespaceUri
 
     @Accessors
-    private EPackage ecorePackage
+    EPackage ecorePackage
 
     @Accessors
-    private Class<? extends EObject> rootClass
+    Class<? extends EObject> rootClass
 
     /**
      * Constructor

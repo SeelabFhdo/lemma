@@ -21,7 +21,7 @@ import org.eclipse.core.resources.ResourcesPlugin
  * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
  */
 class MappingModelTransformation extends AbstractIntermediateModelTransformationStrategy {
-    private static val TARGET_MODEL_INFO = new TargetModelInfo(
+    static val TARGET_MODEL_INFO = new TargetModelInfo(
         ServicePackage.eNS_URI,
         ServicePackage.eINSTANCE,
         ServiceModel
