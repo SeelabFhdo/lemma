@@ -154,6 +154,7 @@ public class ProtocolImpl extends MinimalEObjectImpl.Container implements Protoc
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getName() {
         return name;
     }
@@ -163,6 +164,7 @@ public class ProtocolImpl extends MinimalEObjectImpl.Container implements Protoc
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setName(String newName) {
         String oldName = name;
         name = newName;
@@ -175,6 +177,7 @@ public class ProtocolImpl extends MinimalEObjectImpl.Container implements Protoc
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public CommunicationType getCommunicationType() {
         return communicationType;
     }
@@ -184,6 +187,7 @@ public class ProtocolImpl extends MinimalEObjectImpl.Container implements Protoc
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setCommunicationType(CommunicationType newCommunicationType) {
         CommunicationType oldCommunicationType = communicationType;
         communicationType = newCommunicationType == null ? COMMUNICATION_TYPE_EDEFAULT : newCommunicationType;
@@ -196,6 +200,7 @@ public class ProtocolImpl extends MinimalEObjectImpl.Container implements Protoc
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isDefault() {
         return default_;
     }
@@ -205,6 +210,7 @@ public class ProtocolImpl extends MinimalEObjectImpl.Container implements Protoc
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setDefault(boolean newDefault) {
         boolean oldDefault = default_;
         default_ = newDefault;
@@ -217,6 +223,7 @@ public class ProtocolImpl extends MinimalEObjectImpl.Container implements Protoc
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public DataFormat getDefaultFormat() {
         if (defaultFormat != null && defaultFormat.eIsProxy()) {
             InternalEObject oldDefaultFormat = (InternalEObject)defaultFormat;
@@ -243,6 +250,7 @@ public class ProtocolImpl extends MinimalEObjectImpl.Container implements Protoc
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setDefaultFormat(DataFormat newDefaultFormat) {
         DataFormat oldDefaultFormat = defaultFormat;
         defaultFormat = newDefaultFormat;
@@ -255,6 +263,7 @@ public class ProtocolImpl extends MinimalEObjectImpl.Container implements Protoc
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<DataFormat> getDataFormats() {
         if (dataFormats == null) {
             dataFormats = new EObjectContainmentWithInverseEList<DataFormat>(DataFormat.class, this, TechnologyPackage.PROTOCOL__DATA_FORMATS, TechnologyPackage.DATA_FORMAT__PROTOCOL);
@@ -267,6 +276,7 @@ public class ProtocolImpl extends MinimalEObjectImpl.Container implements Protoc
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Technology getTechnology() {
         if (eContainerFeatureID() != TechnologyPackage.PROTOCOL__TECHNOLOGY) return null;
         return (Technology)eContainer();
@@ -297,6 +307,7 @@ public class ProtocolImpl extends MinimalEObjectImpl.Container implements Protoc
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setTechnology(Technology newTechnology) {
         if (newTechnology != eInternalContainer() || (eContainerFeatureID() != TechnologyPackage.PROTOCOL__TECHNOLOGY && newTechnology != null)) {
             if (EcoreUtil.isAncestor(this, newTechnology))
@@ -318,6 +329,7 @@ public class ProtocolImpl extends MinimalEObjectImpl.Container implements Protoc
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<String> getQualifiedNameParts() {
         EList<String> _xblockexpression = null;
         {
@@ -516,7 +528,7 @@ public class ProtocolImpl extends MinimalEObjectImpl.Container implements Protoc
     public String toString() {
         if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
+        StringBuilder result = new StringBuilder(super.toString());
         result.append(" (name: ");
         result.append(name);
         result.append(", communicationType: ");

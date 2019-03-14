@@ -308,6 +308,7 @@ public class IntermediateMicroserviceImpl extends MinimalEObjectImpl.Container i
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getSourceModelUri() {
         return sourceModelUri;
     }
@@ -317,6 +318,7 @@ public class IntermediateMicroserviceImpl extends MinimalEObjectImpl.Container i
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setSourceModelUri(String newSourceModelUri) {
         String oldSourceModelUri = sourceModelUri;
         sourceModelUri = newSourceModelUri;
@@ -329,6 +331,7 @@ public class IntermediateMicroserviceImpl extends MinimalEObjectImpl.Container i
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getName() {
         return name;
     }
@@ -338,6 +341,7 @@ public class IntermediateMicroserviceImpl extends MinimalEObjectImpl.Container i
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setName(String newName) {
         String oldName = name;
         name = newName;
@@ -350,6 +354,7 @@ public class IntermediateMicroserviceImpl extends MinimalEObjectImpl.Container i
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getVersion() {
         return version;
     }
@@ -359,6 +364,7 @@ public class IntermediateMicroserviceImpl extends MinimalEObjectImpl.Container i
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setVersion(String newVersion) {
         String oldVersion = version;
         version = newVersion;
@@ -371,6 +377,7 @@ public class IntermediateMicroserviceImpl extends MinimalEObjectImpl.Container i
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getQualifiedName() {
         return qualifiedName;
     }
@@ -380,6 +387,7 @@ public class IntermediateMicroserviceImpl extends MinimalEObjectImpl.Container i
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setQualifiedName(String newQualifiedName) {
         String oldQualifiedName = qualifiedName;
         qualifiedName = newQualifiedName;
@@ -392,6 +400,7 @@ public class IntermediateMicroserviceImpl extends MinimalEObjectImpl.Container i
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public MicroserviceType getType() {
         return type;
     }
@@ -401,6 +410,7 @@ public class IntermediateMicroserviceImpl extends MinimalEObjectImpl.Container i
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setType(MicroserviceType newType) {
         MicroserviceType oldType = type;
         type = newType == null ? TYPE_EDEFAULT : newType;
@@ -413,6 +423,7 @@ public class IntermediateMicroserviceImpl extends MinimalEObjectImpl.Container i
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Visibility getVisibility() {
         return visibility;
     }
@@ -422,6 +433,7 @@ public class IntermediateMicroserviceImpl extends MinimalEObjectImpl.Container i
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setVisibility(Visibility newVisibility) {
         Visibility oldVisibility = visibility;
         visibility = newVisibility == null ? VISIBILITY_EDEFAULT : newVisibility;
@@ -434,6 +446,7 @@ public class IntermediateMicroserviceImpl extends MinimalEObjectImpl.Container i
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isEffectivelyImplemented() {
         return effectivelyImplemented;
     }
@@ -443,6 +456,7 @@ public class IntermediateMicroserviceImpl extends MinimalEObjectImpl.Container i
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setEffectivelyImplemented(boolean newEffectivelyImplemented) {
         boolean oldEffectivelyImplemented = effectivelyImplemented;
         effectivelyImplemented = newEffectivelyImplemented;
@@ -455,6 +469,7 @@ public class IntermediateMicroserviceImpl extends MinimalEObjectImpl.Container i
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<IntermediateTechnology> getTechnologies() {
         if (technologies == null) {
             technologies = new EObjectContainmentWithInverseEList<IntermediateTechnology>(IntermediateTechnology.class, this, IntermediatePackage.INTERMEDIATE_MICROSERVICE__TECHNOLOGIES, IntermediatePackage.INTERMEDIATE_TECHNOLOGY__MICROSERVICE);
@@ -467,6 +482,7 @@ public class IntermediateMicroserviceImpl extends MinimalEObjectImpl.Container i
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<IntermediateEndpoint> getEndpoints() {
         if (endpoints == null) {
             endpoints = new EObjectContainmentWithInverseEList<IntermediateEndpoint>(IntermediateEndpoint.class, this, IntermediatePackage.INTERMEDIATE_MICROSERVICE__ENDPOINTS, IntermediatePackage.INTERMEDIATE_ENDPOINT__MICROSERVICE);
@@ -479,6 +495,7 @@ public class IntermediateMicroserviceImpl extends MinimalEObjectImpl.Container i
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<IntermediateProtocolSpecification> getProtocols() {
         if (protocols == null) {
             protocols = new EObjectContainmentEList<IntermediateProtocolSpecification>(IntermediateProtocolSpecification.class, this, IntermediatePackage.INTERMEDIATE_MICROSERVICE__PROTOCOLS);
@@ -491,6 +508,7 @@ public class IntermediateMicroserviceImpl extends MinimalEObjectImpl.Container i
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<MicroserviceReference> getRequiredMicroservices() {
         if (requiredMicroservices == null) {
             requiredMicroservices = new EObjectContainmentWithInverseEList<MicroserviceReference>(MicroserviceReference.class, this, IntermediatePackage.INTERMEDIATE_MICROSERVICE__REQUIRED_MICROSERVICES, IntermediatePackage.MICROSERVICE_REFERENCE__REQUIRING_MICROSERVICE);
@@ -503,6 +521,7 @@ public class IntermediateMicroserviceImpl extends MinimalEObjectImpl.Container i
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<InterfaceReference> getRequiredInterfaces() {
         if (requiredInterfaces == null) {
             requiredInterfaces = new EObjectContainmentWithInverseEList<InterfaceReference>(InterfaceReference.class, this, IntermediatePackage.INTERMEDIATE_MICROSERVICE__REQUIRED_INTERFACES, IntermediatePackage.INTERFACE_REFERENCE__REQUIRING_MICROSERVICE);
@@ -515,6 +534,7 @@ public class IntermediateMicroserviceImpl extends MinimalEObjectImpl.Container i
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<OperationReference> getRequiredOperations() {
         if (requiredOperations == null) {
             requiredOperations = new EObjectContainmentWithInverseEList<OperationReference>(OperationReference.class, this, IntermediatePackage.INTERMEDIATE_MICROSERVICE__REQUIRED_OPERATIONS, IntermediatePackage.OPERATION_REFERENCE__REQUIRING_MICROSERVICE);
@@ -527,6 +547,7 @@ public class IntermediateMicroserviceImpl extends MinimalEObjectImpl.Container i
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<IntermediateInterface> getInterfaces() {
         if (interfaces == null) {
             interfaces = new EObjectContainmentWithInverseEList<IntermediateInterface>(IntermediateInterface.class, this, IntermediatePackage.INTERMEDIATE_MICROSERVICE__INTERFACES, IntermediatePackage.INTERMEDIATE_INTERFACE__MICROSERVICE);
@@ -539,6 +560,7 @@ public class IntermediateMicroserviceImpl extends MinimalEObjectImpl.Container i
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<IntermediateImportedAspect> getAspects() {
         if (aspects == null) {
             aspects = new EObjectContainmentWithInverseEList<IntermediateImportedAspect>(IntermediateImportedAspect.class, this, IntermediatePackage.INTERMEDIATE_MICROSERVICE__ASPECTS, IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__MICROSERVICE);
@@ -551,6 +573,7 @@ public class IntermediateMicroserviceImpl extends MinimalEObjectImpl.Container i
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public IntermediateServiceModel getServiceModel() {
         if (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_MICROSERVICE__SERVICE_MODEL) return null;
         return (IntermediateServiceModel)eContainer();
@@ -581,6 +604,7 @@ public class IntermediateMicroserviceImpl extends MinimalEObjectImpl.Container i
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setServiceModel(IntermediateServiceModel newServiceModel) {
         if (newServiceModel != eInternalContainer() || (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_MICROSERVICE__SERVICE_MODEL && newServiceModel != null)) {
             if (EcoreUtil.isAncestor(this, newServiceModel))
@@ -899,7 +923,7 @@ public class IntermediateMicroserviceImpl extends MinimalEObjectImpl.Container i
     public String toString() {
         if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
+        StringBuilder result = new StringBuilder(super.toString());
         result.append(" (sourceModelUri: ");
         result.append(sourceModelUri);
         result.append(", name: ");

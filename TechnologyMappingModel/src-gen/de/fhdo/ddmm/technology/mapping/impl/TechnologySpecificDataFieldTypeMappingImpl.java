@@ -111,6 +111,7 @@ public class TechnologySpecificDataFieldTypeMappingImpl extends MinimalEObjectIm
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Import getTechnology() {
         if (technology != null && technology.eIsProxy()) {
             InternalEObject oldTechnology = (InternalEObject)technology;
@@ -137,6 +138,7 @@ public class TechnologySpecificDataFieldTypeMappingImpl extends MinimalEObjectIm
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setTechnology(Import newTechnology) {
         Import oldTechnology = technology;
         technology = newTechnology;
@@ -149,6 +151,7 @@ public class TechnologySpecificDataFieldTypeMappingImpl extends MinimalEObjectIm
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Type getType() {
         if (type != null && type.eIsProxy()) {
             InternalEObject oldType = (InternalEObject)type;
@@ -175,6 +178,7 @@ public class TechnologySpecificDataFieldTypeMappingImpl extends MinimalEObjectIm
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setType(Type newType) {
         Type oldType = type;
         type = newType;
@@ -187,6 +191,7 @@ public class TechnologySpecificDataFieldTypeMappingImpl extends MinimalEObjectIm
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public DataFieldHierarchy getDataFieldHierarchy() {
         return dataFieldHierarchy;
     }
@@ -211,6 +216,7 @@ public class TechnologySpecificDataFieldTypeMappingImpl extends MinimalEObjectIm
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setDataFieldHierarchy(DataFieldHierarchy newDataFieldHierarchy) {
         if (newDataFieldHierarchy != dataFieldHierarchy) {
             NotificationChain msgs = null;
@@ -230,6 +236,7 @@ public class TechnologySpecificDataFieldTypeMappingImpl extends MinimalEObjectIm
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<TechnologySpecificImportedServiceAspect> getAspects() {
         if (aspects == null) {
             aspects = new EObjectContainmentWithInverseEList<TechnologySpecificImportedServiceAspect>(TechnologySpecificImportedServiceAspect.class, this, MappingPackage.TECHNOLOGY_SPECIFIC_DATA_FIELD_TYPE_MAPPING__ASPECTS, MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__DATA_FIELD_MAPPING);
@@ -242,6 +249,7 @@ public class TechnologySpecificDataFieldTypeMappingImpl extends MinimalEObjectIm
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ComplexParameterMapping getParameterMapping() {
         if (eContainerFeatureID() != MappingPackage.TECHNOLOGY_SPECIFIC_DATA_FIELD_TYPE_MAPPING__PARAMETER_MAPPING) return null;
         return (ComplexParameterMapping)eContainer();
@@ -272,6 +280,7 @@ public class TechnologySpecificDataFieldTypeMappingImpl extends MinimalEObjectIm
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setParameterMapping(ComplexParameterMapping newParameterMapping) {
         if (newParameterMapping != eInternalContainer() || (eContainerFeatureID() != MappingPackage.TECHNOLOGY_SPECIFIC_DATA_FIELD_TYPE_MAPPING__PARAMETER_MAPPING && newParameterMapping != null)) {
             if (EcoreUtil.isAncestor(this, newParameterMapping))

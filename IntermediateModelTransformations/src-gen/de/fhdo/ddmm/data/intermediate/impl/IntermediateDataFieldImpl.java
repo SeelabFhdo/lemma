@@ -153,6 +153,7 @@ public class IntermediateDataFieldImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getName() {
         return name;
     }
@@ -162,6 +163,7 @@ public class IntermediateDataFieldImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setName(String newName) {
         String oldName = name;
         name = newName;
@@ -174,6 +176,7 @@ public class IntermediateDataFieldImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getQualifiedName() {
         return qualifiedName;
     }
@@ -183,6 +186,7 @@ public class IntermediateDataFieldImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setQualifiedName(String newQualifiedName) {
         String oldQualifiedName = qualifiedName;
         qualifiedName = newQualifiedName;
@@ -195,6 +199,7 @@ public class IntermediateDataFieldImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isHidden() {
         return hidden;
     }
@@ -204,6 +209,7 @@ public class IntermediateDataFieldImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setHidden(boolean newHidden) {
         boolean oldHidden = hidden;
         hidden = newHidden;
@@ -216,6 +222,7 @@ public class IntermediateDataFieldImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isDerived() {
         return derived;
     }
@@ -225,6 +232,7 @@ public class IntermediateDataFieldImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setDerived(boolean newDerived) {
         boolean oldDerived = derived;
         derived = newDerived;
@@ -237,6 +245,7 @@ public class IntermediateDataFieldImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public IntermediateType getType() {
         return type;
     }
@@ -261,6 +270,7 @@ public class IntermediateDataFieldImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setType(IntermediateType newType) {
         if (newType != type) {
             NotificationChain msgs = null;
@@ -280,6 +290,7 @@ public class IntermediateDataFieldImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public IntermediateDataStructure getDataStructure() {
         if (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_DATA_FIELD__DATA_STRUCTURE) return null;
         return (IntermediateDataStructure)eContainer();
@@ -310,6 +321,7 @@ public class IntermediateDataFieldImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setDataStructure(IntermediateDataStructure newDataStructure) {
         if (newDataStructure != eInternalContainer() || (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_DATA_FIELD__DATA_STRUCTURE && newDataStructure != null)) {
             if (EcoreUtil.isAncestor(this, newDataStructure))
@@ -331,6 +343,7 @@ public class IntermediateDataFieldImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public IntermediateListType getListType() {
         if (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_DATA_FIELD__LIST_TYPE) return null;
         return (IntermediateListType)eContainer();
@@ -361,6 +374,7 @@ public class IntermediateDataFieldImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setListType(IntermediateListType newListType) {
         if (newListType != eInternalContainer() || (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_DATA_FIELD__LIST_TYPE && newListType != null)) {
             if (EcoreUtil.isAncestor(this, newListType))
@@ -564,7 +578,7 @@ public class IntermediateDataFieldImpl extends MinimalEObjectImpl.Container impl
     public String toString() {
         if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
+        StringBuilder result = new StringBuilder(super.toString());
         result.append(" (name: ");
         result.append(name);
         result.append(", qualifiedName: ");

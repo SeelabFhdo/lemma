@@ -249,6 +249,7 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getName() {
         return name;
     }
@@ -258,6 +259,7 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setName(String newName) {
         String oldName = name;
         name = newName;
@@ -270,6 +272,7 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ExchangePattern getExchangePattern() {
         return exchangePattern;
     }
@@ -279,6 +282,7 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setExchangePattern(ExchangePattern newExchangePattern) {
         ExchangePattern oldExchangePattern = exchangePattern;
         exchangePattern = newExchangePattern == null ? EXCHANGE_PATTERN_EDEFAULT : newExchangePattern;
@@ -291,6 +295,7 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public CommunicationType getCommunicationType() {
         return communicationType;
     }
@@ -300,6 +305,7 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setCommunicationType(CommunicationType newCommunicationType) {
         CommunicationType oldCommunicationType = communicationType;
         communicationType = newCommunicationType == null ? COMMUNICATION_TYPE_EDEFAULT : newCommunicationType;
@@ -312,6 +318,7 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isCommunicatesFault() {
         return communicatesFault;
     }
@@ -321,6 +328,7 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setCommunicatesFault(boolean newCommunicatesFault) {
         boolean oldCommunicatesFault = communicatesFault;
         communicatesFault = newCommunicatesFault;
@@ -333,6 +341,7 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isOptional() {
         return optional;
     }
@@ -342,6 +351,7 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setOptional(boolean newOptional) {
         boolean oldOptional = optional;
         optional = newOptional;
@@ -354,6 +364,7 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public PossiblyImportedOperation getInitializedByOperation() {
         return initializedByOperation;
     }
@@ -378,6 +389,7 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setInitializedByOperation(PossiblyImportedOperation newInitializedByOperation) {
         if (newInitializedByOperation != initializedByOperation) {
             NotificationChain msgs = null;
@@ -397,6 +409,7 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ImportedType getImportedType() {
         return importedType;
     }
@@ -421,6 +434,7 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setImportedType(ImportedType newImportedType) {
         if (newImportedType != importedType) {
             NotificationChain msgs = null;
@@ -440,6 +454,7 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public PrimitiveType getPrimitiveType() {
         return primitiveType;
     }
@@ -464,6 +479,7 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setPrimitiveType(PrimitiveType newPrimitiveType) {
         if (newPrimitiveType != primitiveType) {
             NotificationChain msgs = null;
@@ -483,6 +499,7 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<ImportedServiceAspect> getAspects() {
         if (aspects == null) {
             aspects = new EObjectContainmentWithInverseEList<ImportedServiceAspect>(ImportedServiceAspect.class, this, ServicePackage.PARAMETER__ASPECTS, ServicePackage.IMPORTED_SERVICE_ASPECT__PARAMETER);
@@ -495,6 +512,7 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<MappedDataField> getMappedDataFields() {
         if (mappedDataFields == null) {
             mappedDataFields = new EObjectContainmentWithInverseEList<MappedDataField>(MappedDataField.class, this, ServicePackage.PARAMETER__MAPPED_DATA_FIELDS, ServicePackage.MAPPED_DATA_FIELD__PARAMETER);
@@ -507,6 +525,7 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Operation getOperation() {
         if (eContainerFeatureID() != ServicePackage.PARAMETER__OPERATION) return null;
         return (Operation)eContainer();
@@ -537,6 +556,7 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setOperation(Operation newOperation) {
         if (newOperation != eInternalContainer() || (eContainerFeatureID() != ServicePackage.PARAMETER__OPERATION && newOperation != null)) {
             if (EcoreUtil.isAncestor(this, newOperation))
@@ -558,6 +578,7 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<String> getQualifiedNameParts() {
         EList<String> _xblockexpression = null;
         {
@@ -576,6 +597,7 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String buildQualifiedName(final String separator) {
         if ((separator == null)) {
             return null;
@@ -599,6 +621,7 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean basicallyInitializableBy(final Operation initializingOperation) {
         if ((((this.getOperation() == null) || 
             (this.getOperation().getInterface() == null)) || 
@@ -647,6 +670,7 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Type getEffectiveType() {
         PrimitiveType _primitiveType = this.getPrimitiveType();
         boolean _tripleNotEquals = (_primitiveType != null);
@@ -668,6 +692,7 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isTechnologySpecificEffectiveType() {
         final Type effectiveType = this.getEffectiveType();
         if ((effectiveType == null)) {
@@ -683,6 +708,7 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<String> getEffectiveTypeQualifiedNameParts() {
         final Type effectiveType = this.getEffectiveType();
         if ((effectiveType == null)) {
@@ -966,7 +992,7 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
     public String toString() {
         if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
+        StringBuilder result = new StringBuilder(super.toString());
         result.append(" (name: ");
         result.append(name);
         result.append(", exchangePattern: ");

@@ -114,6 +114,7 @@ public class IntermediateProtocolSpecificationImpl extends MinimalEObjectImpl.Co
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public CommunicationType getCommunicationType() {
         return communicationType;
     }
@@ -123,6 +124,7 @@ public class IntermediateProtocolSpecificationImpl extends MinimalEObjectImpl.Co
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setCommunicationType(CommunicationType newCommunicationType) {
         CommunicationType oldCommunicationType = communicationType;
         communicationType = newCommunicationType == null ? COMMUNICATION_TYPE_EDEFAULT : newCommunicationType;
@@ -135,6 +137,7 @@ public class IntermediateProtocolSpecificationImpl extends MinimalEObjectImpl.Co
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getProtocol() {
         return protocol;
     }
@@ -144,6 +147,7 @@ public class IntermediateProtocolSpecificationImpl extends MinimalEObjectImpl.Co
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setProtocol(String newProtocol) {
         String oldProtocol = protocol;
         protocol = newProtocol;
@@ -156,6 +160,7 @@ public class IntermediateProtocolSpecificationImpl extends MinimalEObjectImpl.Co
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getDataFormat() {
         return dataFormat;
     }
@@ -165,6 +170,7 @@ public class IntermediateProtocolSpecificationImpl extends MinimalEObjectImpl.Co
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setDataFormat(String newDataFormat) {
         String oldDataFormat = dataFormat;
         dataFormat = newDataFormat;
@@ -259,7 +265,7 @@ public class IntermediateProtocolSpecificationImpl extends MinimalEObjectImpl.Co
     public String toString() {
         if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
+        StringBuilder result = new StringBuilder(super.toString());
         result.append(" (communicationType: ");
         result.append(communicationType);
         result.append(", protocol: ");

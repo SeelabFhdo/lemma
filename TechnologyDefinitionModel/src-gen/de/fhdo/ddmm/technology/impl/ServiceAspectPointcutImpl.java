@@ -258,6 +258,7 @@ public class ServiceAspectPointcutImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isForExchangePattern() {
         return forExchangePattern;
     }
@@ -267,6 +268,7 @@ public class ServiceAspectPointcutImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setForExchangePattern(boolean newForExchangePattern) {
         boolean oldForExchangePattern = forExchangePattern;
         forExchangePattern = newForExchangePattern;
@@ -279,6 +281,7 @@ public class ServiceAspectPointcutImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isForCommunicationType() {
         return forCommunicationType;
     }
@@ -288,6 +291,7 @@ public class ServiceAspectPointcutImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setForCommunicationType(boolean newForCommunicationType) {
         boolean oldForCommunicationType = forCommunicationType;
         forCommunicationType = newForCommunicationType;
@@ -300,6 +304,7 @@ public class ServiceAspectPointcutImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isForProtocol() {
         return forProtocol;
     }
@@ -309,6 +314,7 @@ public class ServiceAspectPointcutImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setForProtocol(boolean newForProtocol) {
         boolean oldForProtocol = forProtocol;
         forProtocol = newForProtocol;
@@ -321,6 +327,7 @@ public class ServiceAspectPointcutImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isForDataFormat() {
         return forDataFormat;
     }
@@ -330,6 +337,7 @@ public class ServiceAspectPointcutImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setForDataFormat(boolean newForDataFormat) {
         boolean oldForDataFormat = forDataFormat;
         forDataFormat = newForDataFormat;
@@ -342,6 +350,7 @@ public class ServiceAspectPointcutImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ExchangePattern getExchangePattern() {
         return exchangePattern;
     }
@@ -351,6 +360,7 @@ public class ServiceAspectPointcutImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setExchangePattern(ExchangePattern newExchangePattern) {
         ExchangePattern oldExchangePattern = exchangePattern;
         exchangePattern = newExchangePattern == null ? EXCHANGE_PATTERN_EDEFAULT : newExchangePattern;
@@ -363,6 +373,7 @@ public class ServiceAspectPointcutImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public CommunicationType getCommunicationType() {
         return communicationType;
     }
@@ -372,6 +383,7 @@ public class ServiceAspectPointcutImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setCommunicationType(CommunicationType newCommunicationType) {
         CommunicationType oldCommunicationType = communicationType;
         communicationType = newCommunicationType == null ? COMMUNICATION_TYPE_EDEFAULT : newCommunicationType;
@@ -384,6 +396,7 @@ public class ServiceAspectPointcutImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Protocol getProtocol() {
         if (protocol != null && protocol.eIsProxy()) {
             InternalEObject oldProtocol = (InternalEObject)protocol;
@@ -410,6 +423,7 @@ public class ServiceAspectPointcutImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setProtocol(Protocol newProtocol) {
         Protocol oldProtocol = protocol;
         protocol = newProtocol;
@@ -422,6 +436,7 @@ public class ServiceAspectPointcutImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public DataFormat getDataFormat() {
         if (dataFormat != null && dataFormat.eIsProxy()) {
             InternalEObject oldDataFormat = (InternalEObject)dataFormat;
@@ -448,6 +463,7 @@ public class ServiceAspectPointcutImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setDataFormat(DataFormat newDataFormat) {
         DataFormat oldDataFormat = dataFormat;
         dataFormat = newDataFormat;
@@ -460,6 +476,7 @@ public class ServiceAspectPointcutImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ServiceAspectPointcutSelector getSelector() {
         if (eContainerFeatureID() != TechnologyPackage.SERVICE_ASPECT_POINTCUT__SELECTOR) return null;
         return (ServiceAspectPointcutSelector)eContainer();
@@ -490,6 +507,7 @@ public class ServiceAspectPointcutImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setSelector(ServiceAspectPointcutSelector newSelector) {
         if (newSelector != eInternalContainer() || (eContainerFeatureID() != TechnologyPackage.SERVICE_ASPECT_POINTCUT__SELECTOR && newSelector != null)) {
             if (EcoreUtil.isAncestor(this, newSelector))
@@ -511,6 +529,7 @@ public class ServiceAspectPointcutImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public PointcutType getEffectiveType() {
         PointcutType _xifexpression = null;
         boolean _isForExchangePattern = this.isForExchangePattern();
@@ -552,6 +571,7 @@ public class ServiceAspectPointcutImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getEffectiveSelectorName() {
         String _switchResult = null;
         PointcutType _effectiveType = this.getEffectiveType();
@@ -585,6 +605,7 @@ public class ServiceAspectPointcutImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getEffectiveValue() {
         String _xifexpression = null;
         if (((this.getEffectiveType() == PointcutType.EXCHANGE_PATTERN) && (this.getExchangePattern() != null))) {
@@ -622,6 +643,7 @@ public class ServiceAspectPointcutImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getPrintableEffectiveValue() {
         String _xifexpression = null;
         if (((this.getEffectiveType() == PointcutType.EXCHANGE_PATTERN) && (this.getExchangePattern() != null))) {
@@ -668,6 +690,7 @@ public class ServiceAspectPointcutImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<PointcutType> getOrderedPointcutTypes() {
         return ECollections.<PointcutType>asEList(java.util.Collections.<PointcutType>unmodifiableList(org.eclipse.xtext.xbase.lib.CollectionLiterals.<PointcutType>newArrayList(PointcutType.EXCHANGE_PATTERN, PointcutType.COMMUNICATION_TYPE, PointcutType.PROTOCOL, PointcutType.DATA_FORMAT)));
     }
@@ -886,7 +909,7 @@ public class ServiceAspectPointcutImpl extends MinimalEObjectImpl.Container impl
     public String toString() {
         if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
+        StringBuilder result = new StringBuilder(super.toString());
         result.append(" (forExchangePattern: ");
         result.append(forExchangePattern);
         result.append(", forCommunicationType: ");

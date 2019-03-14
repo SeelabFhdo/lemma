@@ -88,6 +88,7 @@ public class BasicEndpointImpl extends MinimalEObjectImpl.Container implements B
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<String> getAddresses() {
         if (addresses == null) {
             addresses = new EDataTypeEList<String>(String.class, this, OperationPackage.BASIC_ENDPOINT__ADDRESSES);
@@ -100,6 +101,7 @@ public class BasicEndpointImpl extends MinimalEObjectImpl.Container implements B
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<ProtocolAndDataFormat> getProtocols() {
         if (protocols == null) {
             protocols = new EObjectContainmentWithInverseEList<ProtocolAndDataFormat>(ProtocolAndDataFormat.class, this, OperationPackage.BASIC_ENDPOINT__PROTOCOLS, OperationPackage.PROTOCOL_AND_DATA_FORMAT__ENDPOINT);
@@ -112,6 +114,7 @@ public class BasicEndpointImpl extends MinimalEObjectImpl.Container implements B
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public de.fhdo.ddmm.operation.Container getContainer() {
         if (eContainerFeatureID() != OperationPackage.BASIC_ENDPOINT__CONTAINER) return null;
         return (de.fhdo.ddmm.operation.Container)eContainer();
@@ -142,6 +145,7 @@ public class BasicEndpointImpl extends MinimalEObjectImpl.Container implements B
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setContainer(de.fhdo.ddmm.operation.Container newContainer) {
         if (newContainer != eInternalContainer() || (eContainerFeatureID() != OperationPackage.BASIC_ENDPOINT__CONTAINER && newContainer != null)) {
             if (EcoreUtil.isAncestor(this, newContainer))
@@ -163,6 +167,7 @@ public class BasicEndpointImpl extends MinimalEObjectImpl.Container implements B
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public InfrastructureNode getInfrastructureNode() {
         if (eContainerFeatureID() != OperationPackage.BASIC_ENDPOINT__INFRASTRUCTURE_NODE) return null;
         return (InfrastructureNode)eContainer();
@@ -193,6 +198,7 @@ public class BasicEndpointImpl extends MinimalEObjectImpl.Container implements B
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setInfrastructureNode(InfrastructureNode newInfrastructureNode) {
         if (newInfrastructureNode != eInternalContainer() || (eContainerFeatureID() != OperationPackage.BASIC_ENDPOINT__INFRASTRUCTURE_NODE && newInfrastructureNode != null)) {
             if (EcoreUtil.isAncestor(this, newInfrastructureNode))
@@ -214,6 +220,7 @@ public class BasicEndpointImpl extends MinimalEObjectImpl.Container implements B
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ServiceDeploymentSpecification getDeploymentSpecification() {
         if (eContainerFeatureID() != OperationPackage.BASIC_ENDPOINT__DEPLOYMENT_SPECIFICATION) return null;
         return (ServiceDeploymentSpecification)eContainer();
@@ -244,6 +251,7 @@ public class BasicEndpointImpl extends MinimalEObjectImpl.Container implements B
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setDeploymentSpecification(ServiceDeploymentSpecification newDeploymentSpecification) {
         if (newDeploymentSpecification != eInternalContainer() || (eContainerFeatureID() != OperationPackage.BASIC_ENDPOINT__DEPLOYMENT_SPECIFICATION && newDeploymentSpecification != null)) {
             if (EcoreUtil.isAncestor(this, newDeploymentSpecification))
@@ -438,7 +446,7 @@ public class BasicEndpointImpl extends MinimalEObjectImpl.Container implements B
     public String toString() {
         if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
+        StringBuilder result = new StringBuilder(super.toString());
         result.append(" (addresses: ");
         result.append(addresses);
         result.append(')');

@@ -112,6 +112,7 @@ public class ServiceDeploymentSpecificationImpl extends MinimalEObjectImpl.Conta
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Import getImport() {
         if (import_ != null && import_.eIsProxy()) {
             InternalEObject oldImport = (InternalEObject)import_;
@@ -138,6 +139,7 @@ public class ServiceDeploymentSpecificationImpl extends MinimalEObjectImpl.Conta
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setImport(Import newImport) {
         Import oldImport = import_;
         import_ = newImport;
@@ -150,6 +152,7 @@ public class ServiceDeploymentSpecificationImpl extends MinimalEObjectImpl.Conta
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ImportedMicroservice getService() {
         if (service != null && service.eIsProxy()) {
             InternalEObject oldService = (InternalEObject)service;
@@ -176,6 +179,7 @@ public class ServiceDeploymentSpecificationImpl extends MinimalEObjectImpl.Conta
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setService(ImportedMicroservice newService) {
         ImportedMicroservice oldService = service;
         service = newService;
@@ -188,6 +192,7 @@ public class ServiceDeploymentSpecificationImpl extends MinimalEObjectImpl.Conta
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<TechnologySpecificPropertyValueAssignment> getServicePropertyValues() {
         if (servicePropertyValues == null) {
             servicePropertyValues = new EObjectContainmentEList<TechnologySpecificPropertyValueAssignment>(TechnologySpecificPropertyValueAssignment.class, this, OperationPackage.SERVICE_DEPLOYMENT_SPECIFICATION__SERVICE_PROPERTY_VALUES);
@@ -200,6 +205,7 @@ public class ServiceDeploymentSpecificationImpl extends MinimalEObjectImpl.Conta
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<BasicEndpoint> getBasicEndpoints() {
         if (basicEndpoints == null) {
             basicEndpoints = new EObjectContainmentWithInverseEList<BasicEndpoint>(BasicEndpoint.class, this, OperationPackage.SERVICE_DEPLOYMENT_SPECIFICATION__BASIC_ENDPOINTS, OperationPackage.BASIC_ENDPOINT__DEPLOYMENT_SPECIFICATION);
@@ -212,6 +218,7 @@ public class ServiceDeploymentSpecificationImpl extends MinimalEObjectImpl.Conta
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public OperationNode getOperationNode() {
         if (eContainerFeatureID() != OperationPackage.SERVICE_DEPLOYMENT_SPECIFICATION__OPERATION_NODE) return null;
         return (OperationNode)eContainer();
@@ -242,6 +249,7 @@ public class ServiceDeploymentSpecificationImpl extends MinimalEObjectImpl.Conta
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setOperationNode(OperationNode newOperationNode) {
         if (newOperationNode != eInternalContainer() || (eContainerFeatureID() != OperationPackage.SERVICE_DEPLOYMENT_SPECIFICATION__OPERATION_NODE && newOperationNode != null)) {
             if (EcoreUtil.isAncestor(this, newOperationNode))

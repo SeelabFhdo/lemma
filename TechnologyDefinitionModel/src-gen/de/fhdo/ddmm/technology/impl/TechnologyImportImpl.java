@@ -97,6 +97,7 @@ public class TechnologyImportImpl extends MinimalEObjectImpl.Container implement
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getName() {
         return name;
     }
@@ -106,6 +107,7 @@ public class TechnologyImportImpl extends MinimalEObjectImpl.Container implement
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setName(String newName) {
         String oldName = name;
         name = newName;
@@ -118,6 +120,7 @@ public class TechnologyImportImpl extends MinimalEObjectImpl.Container implement
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getImportURI() {
         return importURI;
     }
@@ -127,6 +130,7 @@ public class TechnologyImportImpl extends MinimalEObjectImpl.Container implement
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setImportURI(String newImportURI) {
         String oldImportURI = importURI;
         importURI = newImportURI;
@@ -139,6 +143,7 @@ public class TechnologyImportImpl extends MinimalEObjectImpl.Container implement
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Technology getTechnology() {
         if (eContainerFeatureID() != TechnologyPackage.TECHNOLOGY_IMPORT__TECHNOLOGY) return null;
         return (Technology)eContainer();
@@ -169,6 +174,7 @@ public class TechnologyImportImpl extends MinimalEObjectImpl.Container implement
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setTechnology(Technology newTechnology) {
         if (newTechnology != eInternalContainer() || (eContainerFeatureID() != TechnologyPackage.TECHNOLOGY_IMPORT__TECHNOLOGY && newTechnology != null)) {
             if (EcoreUtil.isAncestor(this, newTechnology))
@@ -317,7 +323,7 @@ public class TechnologyImportImpl extends MinimalEObjectImpl.Container implement
     public String toString() {
         if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
+        StringBuilder result = new StringBuilder(super.toString());
         result.append(" (name: ");
         result.append(name);
         result.append(", importURI: ");

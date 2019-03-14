@@ -80,6 +80,7 @@ public class ImportedMicroserviceImpl extends MinimalEObjectImpl.Container imple
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Import getImport() {
         if (import_ != null && import_.eIsProxy()) {
             InternalEObject oldImport = (InternalEObject)import_;
@@ -106,6 +107,7 @@ public class ImportedMicroserviceImpl extends MinimalEObjectImpl.Container imple
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setImport(Import newImport) {
         Import oldImport = import_;
         import_ = newImport;
@@ -118,6 +120,7 @@ public class ImportedMicroserviceImpl extends MinimalEObjectImpl.Container imple
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Microservice getMicroservice() {
         if (microservice != null && microservice.eIsProxy()) {
             InternalEObject oldMicroservice = (InternalEObject)microservice;
@@ -144,6 +147,7 @@ public class ImportedMicroserviceImpl extends MinimalEObjectImpl.Container imple
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setMicroservice(Microservice newMicroservice) {
         Microservice oldMicroservice = microservice;
         microservice = newMicroservice;
@@ -156,6 +160,7 @@ public class ImportedMicroserviceImpl extends MinimalEObjectImpl.Container imple
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public OperationNode getOperationNode() {
         if (eContainerFeatureID() != OperationPackage.IMPORTED_MICROSERVICE__OPERATION_NODE) return null;
         return (OperationNode)eContainer();
@@ -186,6 +191,7 @@ public class ImportedMicroserviceImpl extends MinimalEObjectImpl.Container imple
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setOperationNode(OperationNode newOperationNode) {
         if (newOperationNode != eInternalContainer() || (eContainerFeatureID() != OperationPackage.IMPORTED_MICROSERVICE__OPERATION_NODE && newOperationNode != null)) {
             if (EcoreUtil.isAncestor(this, newOperationNode))

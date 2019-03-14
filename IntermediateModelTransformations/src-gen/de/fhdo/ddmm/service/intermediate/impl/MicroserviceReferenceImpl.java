@@ -163,6 +163,7 @@ public class MicroserviceReferenceImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getName() {
         return name;
     }
@@ -172,6 +173,7 @@ public class MicroserviceReferenceImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setName(String newName) {
         String oldName = name;
         name = newName;
@@ -184,6 +186,7 @@ public class MicroserviceReferenceImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getVersion() {
         return version;
     }
@@ -193,6 +196,7 @@ public class MicroserviceReferenceImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setVersion(String newVersion) {
         String oldVersion = version;
         version = newVersion;
@@ -205,6 +209,7 @@ public class MicroserviceReferenceImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getQualifiedName() {
         return qualifiedName;
     }
@@ -214,6 +219,7 @@ public class MicroserviceReferenceImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setQualifiedName(String newQualifiedName) {
         String oldQualifiedName = qualifiedName;
         qualifiedName = newQualifiedName;
@@ -226,6 +232,7 @@ public class MicroserviceReferenceImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isImported() {
         return imported;
     }
@@ -235,6 +242,7 @@ public class MicroserviceReferenceImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setImported(boolean newImported) {
         boolean oldImported = imported;
         imported = newImported;
@@ -247,6 +255,7 @@ public class MicroserviceReferenceImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public IntermediateImport getImport() {
         if (import_ != null && import_.eIsProxy()) {
             InternalEObject oldImport = (InternalEObject)import_;
@@ -273,6 +282,7 @@ public class MicroserviceReferenceImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setImport(IntermediateImport newImport) {
         IntermediateImport oldImport = import_;
         import_ = newImport;
@@ -285,6 +295,7 @@ public class MicroserviceReferenceImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public IntermediateMicroservice getLocalMicroservice() {
         if (localMicroservice != null && localMicroservice.eIsProxy()) {
             InternalEObject oldLocalMicroservice = (InternalEObject)localMicroservice;
@@ -311,6 +322,7 @@ public class MicroserviceReferenceImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setLocalMicroservice(IntermediateMicroservice newLocalMicroservice) {
         IntermediateMicroservice oldLocalMicroservice = localMicroservice;
         localMicroservice = newLocalMicroservice;
@@ -323,6 +335,7 @@ public class MicroserviceReferenceImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public IntermediateMicroservice getRequiringMicroservice() {
         if (eContainerFeatureID() != IntermediatePackage.MICROSERVICE_REFERENCE__REQUIRING_MICROSERVICE) return null;
         return (IntermediateMicroservice)eContainer();
@@ -353,6 +366,7 @@ public class MicroserviceReferenceImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setRequiringMicroservice(IntermediateMicroservice newRequiringMicroservice) {
         if (newRequiringMicroservice != eInternalContainer() || (eContainerFeatureID() != IntermediatePackage.MICROSERVICE_REFERENCE__REQUIRING_MICROSERVICE && newRequiringMicroservice != null)) {
             if (EcoreUtil.isAncestor(this, newRequiringMicroservice))
@@ -543,7 +557,7 @@ public class MicroserviceReferenceImpl extends MinimalEObjectImpl.Container impl
     public String toString() {
         if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
+        StringBuilder result = new StringBuilder(super.toString());
         result.append(" (name: ");
         result.append(name);
         result.append(", version: ");

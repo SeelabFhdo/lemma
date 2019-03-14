@@ -122,6 +122,7 @@ public class TechnologySpecificImportedServiceAspectImpl extends MinimalEObjectI
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Import getTechnology() {
         if (technology != null && technology.eIsProxy()) {
             InternalEObject oldTechnology = (InternalEObject)technology;
@@ -148,6 +149,7 @@ public class TechnologySpecificImportedServiceAspectImpl extends MinimalEObjectI
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setTechnology(Import newTechnology) {
         Import oldTechnology = technology;
         technology = newTechnology;
@@ -160,6 +162,7 @@ public class TechnologySpecificImportedServiceAspectImpl extends MinimalEObjectI
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ServiceAspect getAspect() {
         if (aspect != null && aspect.eIsProxy()) {
             InternalEObject oldAspect = (InternalEObject)aspect;
@@ -186,6 +189,7 @@ public class TechnologySpecificImportedServiceAspectImpl extends MinimalEObjectI
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setAspect(ServiceAspect newAspect) {
         ServiceAspect oldAspect = aspect;
         aspect = newAspect;
@@ -198,6 +202,7 @@ public class TechnologySpecificImportedServiceAspectImpl extends MinimalEObjectI
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public PrimitiveValue getSinglePropertyValue() {
         return singlePropertyValue;
     }
@@ -222,6 +227,7 @@ public class TechnologySpecificImportedServiceAspectImpl extends MinimalEObjectI
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setSinglePropertyValue(PrimitiveValue newSinglePropertyValue) {
         if (newSinglePropertyValue != singlePropertyValue) {
             NotificationChain msgs = null;
@@ -241,6 +247,7 @@ public class TechnologySpecificImportedServiceAspectImpl extends MinimalEObjectI
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<TechnologySpecificPropertyValueAssignment> getValues() {
         if (values == null) {
             values = new EObjectContainmentEList<TechnologySpecificPropertyValueAssignment>(TechnologySpecificPropertyValueAssignment.class, this, MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__VALUES);
@@ -253,6 +260,7 @@ public class TechnologySpecificImportedServiceAspectImpl extends MinimalEObjectI
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public MicroserviceMapping getMicroserviceMapping() {
         if (eContainerFeatureID() != MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__MICROSERVICE_MAPPING) return null;
         return (MicroserviceMapping)eContainer();
@@ -283,6 +291,7 @@ public class TechnologySpecificImportedServiceAspectImpl extends MinimalEObjectI
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setMicroserviceMapping(MicroserviceMapping newMicroserviceMapping) {
         if (newMicroserviceMapping != eInternalContainer() || (eContainerFeatureID() != MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__MICROSERVICE_MAPPING && newMicroserviceMapping != null)) {
             if (EcoreUtil.isAncestor(this, newMicroserviceMapping))
@@ -304,6 +313,7 @@ public class TechnologySpecificImportedServiceAspectImpl extends MinimalEObjectI
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public InterfaceMapping getInterfaceMapping() {
         if (eContainerFeatureID() != MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__INTERFACE_MAPPING) return null;
         return (InterfaceMapping)eContainer();
@@ -334,6 +344,7 @@ public class TechnologySpecificImportedServiceAspectImpl extends MinimalEObjectI
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setInterfaceMapping(InterfaceMapping newInterfaceMapping) {
         if (newInterfaceMapping != eInternalContainer() || (eContainerFeatureID() != MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__INTERFACE_MAPPING && newInterfaceMapping != null)) {
             if (EcoreUtil.isAncestor(this, newInterfaceMapping))
@@ -355,6 +366,7 @@ public class TechnologySpecificImportedServiceAspectImpl extends MinimalEObjectI
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public OperationMapping getOperationMapping() {
         if (eContainerFeatureID() != MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__OPERATION_MAPPING) return null;
         return (OperationMapping)eContainer();
@@ -385,6 +397,7 @@ public class TechnologySpecificImportedServiceAspectImpl extends MinimalEObjectI
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setOperationMapping(OperationMapping newOperationMapping) {
         if (newOperationMapping != eInternalContainer() || (eContainerFeatureID() != MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__OPERATION_MAPPING && newOperationMapping != null)) {
             if (EcoreUtil.isAncestor(this, newOperationMapping))
@@ -406,6 +419,7 @@ public class TechnologySpecificImportedServiceAspectImpl extends MinimalEObjectI
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ReferredOperationMapping getReferredOperationMapping() {
         if (eContainerFeatureID() != MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__REFERRED_OPERATION_MAPPING) return null;
         return (ReferredOperationMapping)eContainer();
@@ -436,6 +450,7 @@ public class TechnologySpecificImportedServiceAspectImpl extends MinimalEObjectI
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setReferredOperationMapping(ReferredOperationMapping newReferredOperationMapping) {
         if (newReferredOperationMapping != eInternalContainer() || (eContainerFeatureID() != MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__REFERRED_OPERATION_MAPPING && newReferredOperationMapping != null)) {
             if (EcoreUtil.isAncestor(this, newReferredOperationMapping))
@@ -457,6 +472,7 @@ public class TechnologySpecificImportedServiceAspectImpl extends MinimalEObjectI
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ParameterMapping getParameterMapping() {
         if (eContainerFeatureID() != MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__PARAMETER_MAPPING) return null;
         return (ParameterMapping)eContainer();
@@ -487,6 +503,7 @@ public class TechnologySpecificImportedServiceAspectImpl extends MinimalEObjectI
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setParameterMapping(ParameterMapping newParameterMapping) {
         if (newParameterMapping != eInternalContainer() || (eContainerFeatureID() != MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__PARAMETER_MAPPING && newParameterMapping != null)) {
             if (EcoreUtil.isAncestor(this, newParameterMapping))
@@ -508,6 +525,7 @@ public class TechnologySpecificImportedServiceAspectImpl extends MinimalEObjectI
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public TechnologySpecificDataFieldTypeMapping getDataFieldMapping() {
         if (eContainerFeatureID() != MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__DATA_FIELD_MAPPING) return null;
         return (TechnologySpecificDataFieldTypeMapping)eContainer();
@@ -538,6 +556,7 @@ public class TechnologySpecificImportedServiceAspectImpl extends MinimalEObjectI
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setDataFieldMapping(TechnologySpecificDataFieldTypeMapping newDataFieldMapping) {
         if (newDataFieldMapping != eInternalContainer() || (eContainerFeatureID() != MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__DATA_FIELD_MAPPING && newDataFieldMapping != null)) {
             if (EcoreUtil.isAncestor(this, newDataFieldMapping))

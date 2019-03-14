@@ -136,6 +136,7 @@ public class PrimitiveValueImpl extends MinimalEObjectImpl.Container implements 
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getStringValue() {
         return stringValue;
     }
@@ -145,6 +146,7 @@ public class PrimitiveValueImpl extends MinimalEObjectImpl.Container implements 
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setStringValue(String newStringValue) {
         String oldStringValue = stringValue;
         stringValue = newStringValue;
@@ -157,6 +159,7 @@ public class PrimitiveValueImpl extends MinimalEObjectImpl.Container implements 
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Boolean getBooleanValue() {
         return booleanValue;
     }
@@ -166,6 +169,7 @@ public class PrimitiveValueImpl extends MinimalEObjectImpl.Container implements 
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setBooleanValue(Boolean newBooleanValue) {
         Boolean oldBooleanValue = booleanValue;
         booleanValue = newBooleanValue;
@@ -178,6 +182,7 @@ public class PrimitiveValueImpl extends MinimalEObjectImpl.Container implements 
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public BigDecimal getNumericValue() {
         return numericValue;
     }
@@ -187,6 +192,7 @@ public class PrimitiveValueImpl extends MinimalEObjectImpl.Container implements 
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setNumericValue(BigDecimal newNumericValue) {
         BigDecimal oldNumericValue = numericValue;
         numericValue = newNumericValue;
@@ -199,6 +205,7 @@ public class PrimitiveValueImpl extends MinimalEObjectImpl.Container implements 
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isInClosedSet(final BigDecimal lowerBound, final BigDecimal upperBound) {
         BigDecimal _numericValue = this.getNumericValue();
         boolean _tripleEquals = (_numericValue == null);
@@ -217,6 +224,7 @@ public class PrimitiveValueImpl extends MinimalEObjectImpl.Container implements 
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean hasDecimals() {
         BigDecimal _numericValue = this.getNumericValue();
         boolean _tripleEquals = (_numericValue == null);
@@ -235,6 +243,7 @@ public class PrimitiveValueImpl extends MinimalEObjectImpl.Container implements 
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isOfType(final PrimitiveType primitiveType) {
         Object _asValueOfType = this.asValueOfType(primitiveType);
         return (_asValueOfType != null);
@@ -245,6 +254,7 @@ public class PrimitiveValueImpl extends MinimalEObjectImpl.Container implements 
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean hasNoValue() {
         return (((this.getStringValue() == null) && (this.getNumericValue() == null)) && (this.getBooleanValue() == null));
     }
@@ -254,6 +264,7 @@ public class PrimitiveValueImpl extends MinimalEObjectImpl.Container implements 
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Object asValueOfType(final PrimitiveType primitiveType) {
         if (((primitiveType == null) || this.hasNoValue())) {
             return null;
@@ -326,6 +337,7 @@ public class PrimitiveValueImpl extends MinimalEObjectImpl.Container implements 
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String valueAsString() {
         boolean _hasNoValue = this.hasNoValue();
         if (_hasNoValue) {
@@ -358,6 +370,7 @@ public class PrimitiveValueImpl extends MinimalEObjectImpl.Container implements 
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Boolean asBoolean() {
         return this.getBooleanValue();
     }
@@ -367,6 +380,7 @@ public class PrimitiveValueImpl extends MinimalEObjectImpl.Container implements 
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Byte asByte() {
         BigDecimal _numericValue = this.getNumericValue();
         boolean _tripleEquals = (_numericValue == null);
@@ -392,6 +406,7 @@ public class PrimitiveValueImpl extends MinimalEObjectImpl.Container implements 
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Character asCharacter() {
         String _stringValue = this.getStringValue();
         boolean _tripleEquals = (_stringValue == null);
@@ -417,6 +432,7 @@ public class PrimitiveValueImpl extends MinimalEObjectImpl.Container implements 
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Date asDate() {
         String _stringValue = this.getStringValue();
         boolean _tripleEquals = (_stringValue == null);
@@ -429,7 +445,6 @@ public class PrimitiveValueImpl extends MinimalEObjectImpl.Container implements 
         }
         catch (final Throwable _t) {
             if (_t instanceof ParseException) {
-                final ParseException ex = (ParseException)_t;
                 return null;
             }
             else {
@@ -443,6 +458,7 @@ public class PrimitiveValueImpl extends MinimalEObjectImpl.Container implements 
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Double asDouble() {
         BigDecimal _numericValue = this.getNumericValue();
         boolean _tripleEquals = (_numericValue == null);
@@ -468,6 +484,7 @@ public class PrimitiveValueImpl extends MinimalEObjectImpl.Container implements 
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Float asFloat() {
         BigDecimal _numericValue = this.getNumericValue();
         boolean _tripleEquals = (_numericValue == null);
@@ -493,6 +510,7 @@ public class PrimitiveValueImpl extends MinimalEObjectImpl.Container implements 
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Integer asInteger() {
         BigDecimal _numericValue = this.getNumericValue();
         boolean _tripleEquals = (_numericValue == null);
@@ -515,7 +533,6 @@ public class PrimitiveValueImpl extends MinimalEObjectImpl.Container implements 
         }
         catch (final Throwable _t) {
             if (_t instanceof ArithmeticException) {
-                final ArithmeticException ex = (ArithmeticException)_t;
                 return null;
             }
             else {
@@ -529,6 +546,7 @@ public class PrimitiveValueImpl extends MinimalEObjectImpl.Container implements 
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Long asLong() {
         BigDecimal _numericValue = this.getNumericValue();
         boolean _tripleEquals = (_numericValue == null);
@@ -551,7 +569,6 @@ public class PrimitiveValueImpl extends MinimalEObjectImpl.Container implements 
         }
         catch (final Throwable _t) {
             if (_t instanceof ArithmeticException) {
-                final ArithmeticException ex = (ArithmeticException)_t;
                 return null;
             }
             else {
@@ -565,6 +582,7 @@ public class PrimitiveValueImpl extends MinimalEObjectImpl.Container implements 
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Short asShort() {
         BigDecimal _numericValue = this.getNumericValue();
         boolean _tripleEquals = (_numericValue == null);
@@ -587,7 +605,6 @@ public class PrimitiveValueImpl extends MinimalEObjectImpl.Container implements 
         }
         catch (final Throwable _t) {
             if (_t instanceof ArithmeticException) {
-                final ArithmeticException ex = (ArithmeticException)_t;
                 return null;
             }
             else {
@@ -601,6 +618,7 @@ public class PrimitiveValueImpl extends MinimalEObjectImpl.Container implements 
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String asString() {
         return this.getStringValue();
     }
@@ -736,7 +754,7 @@ public class PrimitiveValueImpl extends MinimalEObjectImpl.Container implements 
     public String toString() {
         if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
+        StringBuilder result = new StringBuilder(super.toString());
         result.append(" (stringValue: ");
         result.append(stringValue);
         result.append(", booleanValue: ");

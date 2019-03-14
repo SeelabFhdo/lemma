@@ -135,6 +135,7 @@ public class DataModelImpl extends MinimalEObjectImpl.Container implements DataM
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getT_modelUri() {
         return t_modelUri;
     }
@@ -144,6 +145,7 @@ public class DataModelImpl extends MinimalEObjectImpl.Container implements DataM
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setT_modelUri(String newT_modelUri) {
         String oldT_modelUri = t_modelUri;
         t_modelUri = newT_modelUri;
@@ -156,6 +158,7 @@ public class DataModelImpl extends MinimalEObjectImpl.Container implements DataM
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<ComplexTypeImport> getComplexTypeImports() {
         if (complexTypeImports == null) {
             complexTypeImports = new EObjectContainmentWithInverseEList<ComplexTypeImport>(ComplexTypeImport.class, this, DataPackage.DATA_MODEL__COMPLEX_TYPE_IMPORTS, DataPackage.COMPLEX_TYPE_IMPORT__DATA_MODEL);
@@ -168,6 +171,7 @@ public class DataModelImpl extends MinimalEObjectImpl.Container implements DataM
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Version> getVersions() {
         if (versions == null) {
             versions = new EObjectContainmentWithInverseEList<Version>(Version.class, this, DataPackage.DATA_MODEL__VERSIONS, DataPackage.VERSION__DATA_MODEL);
@@ -180,6 +184,7 @@ public class DataModelImpl extends MinimalEObjectImpl.Container implements DataM
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Context> getContexts() {
         if (contexts == null) {
             contexts = new EObjectContainmentWithInverseEList<Context>(Context.class, this, DataPackage.DATA_MODEL__CONTEXTS, DataPackage.CONTEXT__DATA_MODEL);
@@ -192,6 +197,7 @@ public class DataModelImpl extends MinimalEObjectImpl.Container implements DataM
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<ComplexType> getComplexTypes() {
         if (complexTypes == null) {
             complexTypes = new EObjectContainmentWithInverseEList<ComplexType>(ComplexType.class, this, DataPackage.DATA_MODEL__COMPLEX_TYPES, DataPackage.COMPLEX_TYPE__DATA_MODEL);
@@ -204,6 +210,7 @@ public class DataModelImpl extends MinimalEObjectImpl.Container implements DataM
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<ComplexType> getContainedComplexTypes() {
         final ArrayList<ComplexType> containedComplexTypes = CollectionLiterals.<ComplexType>newArrayList();
         EList<Version> _versions = this.getVersions();
@@ -397,7 +404,7 @@ public class DataModelImpl extends MinimalEObjectImpl.Container implements DataM
     public String toString() {
         if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
+        StringBuilder result = new StringBuilder(super.toString());
         result.append(" (t_modelUri: ");
         result.append(t_modelUri);
         result.append(')');

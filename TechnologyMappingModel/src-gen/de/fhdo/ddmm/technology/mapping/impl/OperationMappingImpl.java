@@ -123,6 +123,7 @@ public class OperationMappingImpl extends MinimalEObjectImpl.Container implement
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Operation getOperation() {
         if (operation != null && operation.eIsProxy()) {
             InternalEObject oldOperation = (InternalEObject)operation;
@@ -149,6 +150,7 @@ public class OperationMappingImpl extends MinimalEObjectImpl.Container implement
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setOperation(Operation newOperation) {
         Operation oldOperation = operation;
         operation = newOperation;
@@ -161,6 +163,7 @@ public class OperationMappingImpl extends MinimalEObjectImpl.Container implement
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<TechnologySpecificEndpoint> getEndpoints() {
         if (endpoints == null) {
             endpoints = new EObjectContainmentWithInverseEList<TechnologySpecificEndpoint>(TechnologySpecificEndpoint.class, this, MappingPackage.OPERATION_MAPPING__ENDPOINTS, MappingPackage.TECHNOLOGY_SPECIFIC_ENDPOINT__OPERATION_MAPPING);
@@ -173,6 +176,7 @@ public class OperationMappingImpl extends MinimalEObjectImpl.Container implement
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<TechnologySpecificProtocolSpecification> getProtocols() {
         if (protocols == null) {
             protocols = new EObjectContainmentEList<TechnologySpecificProtocolSpecification>(TechnologySpecificProtocolSpecification.class, this, MappingPackage.OPERATION_MAPPING__PROTOCOLS);
@@ -185,6 +189,7 @@ public class OperationMappingImpl extends MinimalEObjectImpl.Container implement
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<ParameterMapping> getParameterMappings() {
         if (parameterMappings == null) {
             parameterMappings = new EObjectContainmentWithInverseEList<ParameterMapping>(ParameterMapping.class, this, MappingPackage.OPERATION_MAPPING__PARAMETER_MAPPINGS, MappingPackage.PARAMETER_MAPPING__OPERATION_MAPPING);
@@ -197,6 +202,7 @@ public class OperationMappingImpl extends MinimalEObjectImpl.Container implement
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<TechnologySpecificImportedServiceAspect> getAspects() {
         if (aspects == null) {
             aspects = new EObjectContainmentWithInverseEList<TechnologySpecificImportedServiceAspect>(TechnologySpecificImportedServiceAspect.class, this, MappingPackage.OPERATION_MAPPING__ASPECTS, MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__OPERATION_MAPPING);
@@ -209,6 +215,7 @@ public class OperationMappingImpl extends MinimalEObjectImpl.Container implement
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public MicroserviceMapping getMicroserviceMapping() {
         if (eContainerFeatureID() != MappingPackage.OPERATION_MAPPING__MICROSERVICE_MAPPING) return null;
         return (MicroserviceMapping)eContainer();
@@ -239,6 +246,7 @@ public class OperationMappingImpl extends MinimalEObjectImpl.Container implement
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setMicroserviceMapping(MicroserviceMapping newMicroserviceMapping) {
         if (newMicroserviceMapping != eInternalContainer() || (eContainerFeatureID() != MappingPackage.OPERATION_MAPPING__MICROSERVICE_MAPPING && newMicroserviceMapping != null)) {
             if (EcoreUtil.isAncestor(this, newMicroserviceMapping))

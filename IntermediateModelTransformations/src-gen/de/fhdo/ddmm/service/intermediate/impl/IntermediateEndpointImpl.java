@@ -154,6 +154,7 @@ public class IntermediateEndpointImpl extends MinimalEObjectImpl.Container imple
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public CommunicationType getCommunicationType() {
         return communicationType;
     }
@@ -163,6 +164,7 @@ public class IntermediateEndpointImpl extends MinimalEObjectImpl.Container imple
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setCommunicationType(CommunicationType newCommunicationType) {
         CommunicationType oldCommunicationType = communicationType;
         communicationType = newCommunicationType == null ? COMMUNICATION_TYPE_EDEFAULT : newCommunicationType;
@@ -175,6 +177,7 @@ public class IntermediateEndpointImpl extends MinimalEObjectImpl.Container imple
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getProtocol() {
         return protocol;
     }
@@ -184,6 +187,7 @@ public class IntermediateEndpointImpl extends MinimalEObjectImpl.Container imple
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setProtocol(String newProtocol) {
         String oldProtocol = protocol;
         protocol = newProtocol;
@@ -196,6 +200,7 @@ public class IntermediateEndpointImpl extends MinimalEObjectImpl.Container imple
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getDataFormat() {
         return dataFormat;
     }
@@ -205,6 +210,7 @@ public class IntermediateEndpointImpl extends MinimalEObjectImpl.Container imple
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setDataFormat(String newDataFormat) {
         String oldDataFormat = dataFormat;
         dataFormat = newDataFormat;
@@ -217,6 +223,7 @@ public class IntermediateEndpointImpl extends MinimalEObjectImpl.Container imple
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<String> getAddresses() {
         if (addresses == null) {
             addresses = new EDataTypeEList<String>(String.class, this, IntermediatePackage.INTERMEDIATE_ENDPOINT__ADDRESSES);
@@ -229,6 +236,7 @@ public class IntermediateEndpointImpl extends MinimalEObjectImpl.Container imple
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public IntermediateTechnology getTechnology() {
         if (technology != null && technology.eIsProxy()) {
             InternalEObject oldTechnology = (InternalEObject)technology;
@@ -255,6 +263,7 @@ public class IntermediateEndpointImpl extends MinimalEObjectImpl.Container imple
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setTechnology(IntermediateTechnology newTechnology) {
         IntermediateTechnology oldTechnology = technology;
         technology = newTechnology;
@@ -267,6 +276,7 @@ public class IntermediateEndpointImpl extends MinimalEObjectImpl.Container imple
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public IntermediateMicroservice getMicroservice() {
         if (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_ENDPOINT__MICROSERVICE) return null;
         return (IntermediateMicroservice)eContainer();
@@ -297,6 +307,7 @@ public class IntermediateEndpointImpl extends MinimalEObjectImpl.Container imple
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setMicroservice(IntermediateMicroservice newMicroservice) {
         if (newMicroservice != eInternalContainer() || (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_ENDPOINT__MICROSERVICE && newMicroservice != null)) {
             if (EcoreUtil.isAncestor(this, newMicroservice))
@@ -318,6 +329,7 @@ public class IntermediateEndpointImpl extends MinimalEObjectImpl.Container imple
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public IntermediateInterface getInterface() {
         if (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_ENDPOINT__INTERFACE) return null;
         return (IntermediateInterface)eContainer();
@@ -348,6 +360,7 @@ public class IntermediateEndpointImpl extends MinimalEObjectImpl.Container imple
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setInterface(IntermediateInterface newInterface) {
         if (newInterface != eInternalContainer() || (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_ENDPOINT__INTERFACE && newInterface != null)) {
             if (EcoreUtil.isAncestor(this, newInterface))
@@ -369,6 +382,7 @@ public class IntermediateEndpointImpl extends MinimalEObjectImpl.Container imple
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public IntermediateOperation getOperation() {
         if (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_ENDPOINT__OPERATION) return null;
         return (IntermediateOperation)eContainer();
@@ -399,6 +413,7 @@ public class IntermediateEndpointImpl extends MinimalEObjectImpl.Container imple
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setOperation(IntermediateOperation newOperation) {
         if (newOperation != eInternalContainer() || (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_ENDPOINT__OPERATION && newOperation != null)) {
             if (EcoreUtil.isAncestor(this, newOperation))
@@ -420,6 +435,7 @@ public class IntermediateEndpointImpl extends MinimalEObjectImpl.Container imple
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public IntermediateReferredOperation getReferredOperation() {
         if (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_ENDPOINT__REFERRED_OPERATION) return null;
         return (IntermediateReferredOperation)eContainer();
@@ -450,6 +466,7 @@ public class IntermediateEndpointImpl extends MinimalEObjectImpl.Container imple
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setReferredOperation(IntermediateReferredOperation newReferredOperation) {
         if (newReferredOperation != eInternalContainer() || (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_ENDPOINT__REFERRED_OPERATION && newReferredOperation != null)) {
             if (EcoreUtil.isAncestor(this, newReferredOperation))
@@ -688,7 +705,7 @@ public class IntermediateEndpointImpl extends MinimalEObjectImpl.Container imple
     public String toString() {
         if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
+        StringBuilder result = new StringBuilder(super.toString());
         result.append(" (communicationType: ");
         result.append(communicationType);
         result.append(", protocol: ");

@@ -36,7 +36,7 @@ import org.eclipse.xtext.xbase.lib.Pair;
  */
 @SuppressWarnings("all")
 public class IntermediateServiceModelTransformation extends AbstractIntermediateModelTransformationStrategy {
-  private final static TargetModelInfo TARGET_MODEL_INFO = new TargetModelInfo(
+  private static final TargetModelInfo TARGET_MODEL_INFO = new TargetModelInfo(
     IntermediatePackage.eNS_URI, 
     IntermediatePackage.eINSTANCE, 
     IntermediateServiceModel.class);

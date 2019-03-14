@@ -79,6 +79,7 @@ public class IntermediateComplexTypeImpl extends IntermediateTypeImpl implements
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getQualifiedName() {
         return qualifiedName;
     }
@@ -88,6 +89,7 @@ public class IntermediateComplexTypeImpl extends IntermediateTypeImpl implements
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setQualifiedName(String newQualifiedName) {
         String oldQualifiedName = qualifiedName;
         qualifiedName = newQualifiedName;
@@ -100,6 +102,7 @@ public class IntermediateComplexTypeImpl extends IntermediateTypeImpl implements
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public IntermediateDataModel getDataModel() {
         if (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_COMPLEX_TYPE__DATA_MODEL) return null;
         return (IntermediateDataModel)eContainer();
@@ -130,6 +133,7 @@ public class IntermediateComplexTypeImpl extends IntermediateTypeImpl implements
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setDataModel(IntermediateDataModel newDataModel) {
         if (newDataModel != eInternalContainer() || (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_COMPLEX_TYPE__DATA_MODEL && newDataModel != null)) {
             if (EcoreUtil.isAncestor(this, newDataModel))
@@ -151,6 +155,7 @@ public class IntermediateComplexTypeImpl extends IntermediateTypeImpl implements
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public IntermediateVersion getVersion() {
         if (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_COMPLEX_TYPE__VERSION) return null;
         return (IntermediateVersion)eContainer();
@@ -181,6 +186,7 @@ public class IntermediateComplexTypeImpl extends IntermediateTypeImpl implements
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setVersion(IntermediateVersion newVersion) {
         if (newVersion != eInternalContainer() || (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_COMPLEX_TYPE__VERSION && newVersion != null)) {
             if (EcoreUtil.isAncestor(this, newVersion))
@@ -202,6 +208,7 @@ public class IntermediateComplexTypeImpl extends IntermediateTypeImpl implements
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public IntermediateContext getContext() {
         if (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_COMPLEX_TYPE__CONTEXT) return null;
         return (IntermediateContext)eContainer();
@@ -232,6 +239,7 @@ public class IntermediateComplexTypeImpl extends IntermediateTypeImpl implements
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setContext(IntermediateContext newContext) {
         if (newContext != eInternalContainer() || (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_COMPLEX_TYPE__CONTEXT && newContext != null)) {
             if (EcoreUtil.isAncestor(this, newContext))
@@ -408,7 +416,7 @@ public class IntermediateComplexTypeImpl extends IntermediateTypeImpl implements
     public String toString() {
         if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
+        StringBuilder result = new StringBuilder(super.toString());
         result.append(" (qualifiedName: ");
         result.append(qualifiedName);
         result.append(')');

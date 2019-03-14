@@ -110,6 +110,7 @@ public abstract class TechnologyAspectImpl extends MinimalEObjectImpl.Container 
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getName() {
         return name;
     }
@@ -119,6 +120,7 @@ public abstract class TechnologyAspectImpl extends MinimalEObjectImpl.Container 
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setName(String newName) {
         String oldName = name;
         name = newName;
@@ -131,6 +133,7 @@ public abstract class TechnologyAspectImpl extends MinimalEObjectImpl.Container 
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<JoinPointType> getJoinPoints() {
         if (joinPoints == null) {
             joinPoints = new EDataTypeEList<JoinPointType>(JoinPointType.class, this, TechnologyPackage.TECHNOLOGY_ASPECT__JOIN_POINTS);
@@ -143,6 +146,7 @@ public abstract class TechnologyAspectImpl extends MinimalEObjectImpl.Container 
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<TechnologySpecificProperty> getProperties() {
         if (properties == null) {
             properties = new EObjectContainmentWithInverseEList<TechnologySpecificProperty>(TechnologySpecificProperty.class, this, TechnologyPackage.TECHNOLOGY_ASPECT__PROPERTIES, TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__TECHNOLOGY_ASPECT);
@@ -155,6 +159,7 @@ public abstract class TechnologyAspectImpl extends MinimalEObjectImpl.Container 
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<String> getQualifiedNameParts() {
         EList<String> _xblockexpression = null;
         {
@@ -302,7 +307,7 @@ public abstract class TechnologyAspectImpl extends MinimalEObjectImpl.Container 
     public String toString() {
         if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
+        StringBuilder result = new StringBuilder(super.toString());
         result.append(" (name: ");
         result.append(name);
         result.append(", joinPoints: ");

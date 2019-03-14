@@ -136,6 +136,7 @@ public class ReferredOperationImpl extends MinimalEObjectImpl.Container implemen
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Operation getOperation() {
         if (operation != null && operation.eIsProxy()) {
             InternalEObject oldOperation = (InternalEObject)operation;
@@ -162,6 +163,7 @@ public class ReferredOperationImpl extends MinimalEObjectImpl.Container implemen
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setOperation(Operation newOperation) {
         Operation oldOperation = operation;
         operation = newOperation;
@@ -174,6 +176,7 @@ public class ReferredOperationImpl extends MinimalEObjectImpl.Container implemen
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Endpoint> getEndpoints() {
         if (endpoints == null) {
             endpoints = new EObjectContainmentWithInverseEList<Endpoint>(Endpoint.class, this, ServicePackage.REFERRED_OPERATION__ENDPOINTS, ServicePackage.ENDPOINT__REFERRED_OPERATION);
@@ -186,6 +189,7 @@ public class ReferredOperationImpl extends MinimalEObjectImpl.Container implemen
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<ProtocolSpecification> getProtocols() {
         if (protocols == null) {
             protocols = new EObjectContainmentEList<ProtocolSpecification>(ProtocolSpecification.class, this, ServicePackage.REFERRED_OPERATION__PROTOCOLS);
@@ -198,6 +202,7 @@ public class ReferredOperationImpl extends MinimalEObjectImpl.Container implemen
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<ImportedServiceAspect> getAspects() {
         if (aspects == null) {
             aspects = new EObjectContainmentWithInverseEList<ImportedServiceAspect>(ImportedServiceAspect.class, this, ServicePackage.REFERRED_OPERATION__ASPECTS, ServicePackage.IMPORTED_SERVICE_ASPECT__REFERRED_OPERATION);
@@ -210,6 +215,7 @@ public class ReferredOperationImpl extends MinimalEObjectImpl.Container implemen
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Interface getInterface() {
         if (eContainerFeatureID() != ServicePackage.REFERRED_OPERATION__INTERFACE) return null;
         return (Interface)eContainer();
@@ -240,6 +246,7 @@ public class ReferredOperationImpl extends MinimalEObjectImpl.Container implemen
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setInterface(Interface newInterface) {
         if (newInterface != eInternalContainer() || (eContainerFeatureID() != ServicePackage.REFERRED_OPERATION__INTERFACE && newInterface != null)) {
             if (EcoreUtil.isAncestor(this, newInterface))
@@ -261,6 +268,7 @@ public class ReferredOperationImpl extends MinimalEObjectImpl.Container implemen
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public List<Map<String, Object>> t_missingEndpointEffectiveProtocols() {
         if (((((this.getInterface() == null) || 
             (this.getInterface().getMicroservice() == null)) || 
@@ -341,6 +349,7 @@ public class ReferredOperationImpl extends MinimalEObjectImpl.Container implemen
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public List<Map<String, Object>> t_effectiveProtocolSpecifications() {
         if (((((this.getInterface() == null) || 
             (this.getInterface().getMicroservice() == null)) || 
@@ -384,6 +393,7 @@ public class ReferredOperationImpl extends MinimalEObjectImpl.Container implemen
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<String> getQualifiedNameParts() {
         EList<String> _xblockexpression = null;
         {
@@ -402,6 +412,7 @@ public class ReferredOperationImpl extends MinimalEObjectImpl.Container implemen
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String buildQualifiedName(final String separator) {
         if ((separator == null)) {
             return null;

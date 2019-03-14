@@ -101,6 +101,7 @@ public class ProtocolSpecificationImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public CommunicationType getCommunicationType() {
         return communicationType;
     }
@@ -110,6 +111,7 @@ public class ProtocolSpecificationImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setCommunicationType(CommunicationType newCommunicationType) {
         CommunicationType oldCommunicationType = communicationType;
         communicationType = newCommunicationType == null ? COMMUNICATION_TYPE_EDEFAULT : newCommunicationType;
@@ -122,6 +124,7 @@ public class ProtocolSpecificationImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ImportedProtocolAndDataFormat getProtocol() {
         return protocol;
     }
@@ -146,6 +149,7 @@ public class ProtocolSpecificationImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setProtocol(ImportedProtocolAndDataFormat newProtocol) {
         if (newProtocol != protocol) {
             NotificationChain msgs = null;
@@ -165,6 +169,7 @@ public class ProtocolSpecificationImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public List<Map<String, Object>> effectiveProtocolSpecifications(final EList<ProtocolSpecification> specifications) {
         if ((specifications == null)) {
             return null;
@@ -323,7 +328,7 @@ public class ProtocolSpecificationImpl extends MinimalEObjectImpl.Container impl
     public String toString() {
         if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
+        StringBuilder result = new StringBuilder(super.toString());
         result.append(" (communicationType: ");
         result.append(communicationType);
         result.append(')');

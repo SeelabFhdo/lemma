@@ -97,6 +97,7 @@ public class OperationEnvironmentImpl extends MinimalEObjectImpl.Container imple
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getEnvironmentName() {
         return environmentName;
     }
@@ -106,6 +107,7 @@ public class OperationEnvironmentImpl extends MinimalEObjectImpl.Container imple
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setEnvironmentName(String newEnvironmentName) {
         String oldEnvironmentName = environmentName;
         environmentName = newEnvironmentName;
@@ -118,6 +120,7 @@ public class OperationEnvironmentImpl extends MinimalEObjectImpl.Container imple
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isDefault() {
         return default_;
     }
@@ -127,6 +130,7 @@ public class OperationEnvironmentImpl extends MinimalEObjectImpl.Container imple
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setDefault(boolean newDefault) {
         boolean oldDefault = default_;
         default_ = newDefault;
@@ -139,6 +143,7 @@ public class OperationEnvironmentImpl extends MinimalEObjectImpl.Container imple
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public OperationTechnology getOperationTechnology() {
         if (eContainerFeatureID() != TechnologyPackage.OPERATION_ENVIRONMENT__OPERATION_TECHNOLOGY) return null;
         return (OperationTechnology)eContainer();
@@ -169,6 +174,7 @@ public class OperationEnvironmentImpl extends MinimalEObjectImpl.Container imple
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setOperationTechnology(OperationTechnology newOperationTechnology) {
         if (newOperationTechnology != eInternalContainer() || (eContainerFeatureID() != TechnologyPackage.OPERATION_ENVIRONMENT__OPERATION_TECHNOLOGY && newOperationTechnology != null)) {
             if (EcoreUtil.isAncestor(this, newOperationTechnology))
@@ -317,7 +323,7 @@ public class OperationEnvironmentImpl extends MinimalEObjectImpl.Container imple
     public String toString() {
         if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
+        StringBuilder result = new StringBuilder(super.toString());
         result.append(" (environmentName: ");
         result.append(environmentName);
         result.append(", default: ");

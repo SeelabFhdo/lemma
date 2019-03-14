@@ -93,6 +93,7 @@ public class ProtocolAndDataFormatImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Import getTechnology() {
         if (technology != null && technology.eIsProxy()) {
             InternalEObject oldTechnology = (InternalEObject)technology;
@@ -119,6 +120,7 @@ public class ProtocolAndDataFormatImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setTechnology(Import newTechnology) {
         Import oldTechnology = technology;
         technology = newTechnology;
@@ -131,6 +133,7 @@ public class ProtocolAndDataFormatImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Protocol getProtocol() {
         if (protocol != null && protocol.eIsProxy()) {
             InternalEObject oldProtocol = (InternalEObject)protocol;
@@ -157,6 +160,7 @@ public class ProtocolAndDataFormatImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setProtocol(Protocol newProtocol) {
         Protocol oldProtocol = protocol;
         protocol = newProtocol;
@@ -169,6 +173,7 @@ public class ProtocolAndDataFormatImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public DataFormat getDataFormat() {
         if (dataFormat != null && dataFormat.eIsProxy()) {
             InternalEObject oldDataFormat = (InternalEObject)dataFormat;
@@ -195,6 +200,7 @@ public class ProtocolAndDataFormatImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setDataFormat(DataFormat newDataFormat) {
         DataFormat oldDataFormat = dataFormat;
         dataFormat = newDataFormat;
@@ -207,6 +213,7 @@ public class ProtocolAndDataFormatImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public BasicEndpoint getEndpoint() {
         if (eContainerFeatureID() != OperationPackage.PROTOCOL_AND_DATA_FORMAT__ENDPOINT) return null;
         return (BasicEndpoint)eContainer();
@@ -237,6 +244,7 @@ public class ProtocolAndDataFormatImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setEndpoint(BasicEndpoint newEndpoint) {
         if (newEndpoint != eInternalContainer() || (eContainerFeatureID() != OperationPackage.PROTOCOL_AND_DATA_FORMAT__ENDPOINT && newEndpoint != null)) {
             if (EcoreUtil.isAncestor(this, newEndpoint))

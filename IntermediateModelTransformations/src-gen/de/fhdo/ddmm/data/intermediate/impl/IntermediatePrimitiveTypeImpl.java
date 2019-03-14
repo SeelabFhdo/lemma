@@ -69,6 +69,7 @@ public class IntermediatePrimitiveTypeImpl extends IntermediateTypeImpl implemen
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Integer getSize() {
         return size;
     }
@@ -78,6 +79,7 @@ public class IntermediatePrimitiveTypeImpl extends IntermediateTypeImpl implemen
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setSize(Integer newSize) {
         Integer oldSize = size;
         size = newSize;
@@ -152,7 +154,7 @@ public class IntermediatePrimitiveTypeImpl extends IntermediateTypeImpl implemen
     public String toString() {
         if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
+        StringBuilder result = new StringBuilder(super.toString());
         result.append(" (size: ");
         result.append(size);
         result.append(')');

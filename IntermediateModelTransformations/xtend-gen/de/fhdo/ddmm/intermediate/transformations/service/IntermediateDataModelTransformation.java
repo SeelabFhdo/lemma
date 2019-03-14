@@ -29,7 +29,7 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
  */
 @SuppressWarnings("all")
 public class IntermediateDataModelTransformation extends AbstractIntermediateModelTransformationStrategy {
-  private final static TargetModelInfo TARGET_MODEL_INFO = new TargetModelInfo(
+  private static final TargetModelInfo TARGET_MODEL_INFO = new TargetModelInfo(
     IntermediatePackage.eNS_URI, 
     IntermediatePackage.eINSTANCE, 
     IntermediateDataModel.class);

@@ -22,6 +22,8 @@ import org.eclipse.emf.ecore.xmi.XMIResource;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.ResourceManager;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorDescriptor;
 import org.eclipse.ui.IFileEditorMapping;
 import org.eclipse.ui.PlatformUI;
@@ -50,29 +52,37 @@ import org.osgi.framework.FrameworkUtil;
  */
 @SuppressWarnings("all")
 public final class DdmmUiUtils {
-  public final static String SERVICE_DSL_EDITOR_ID = "de.fhdo.ddmm.ServiceDsl";
+  public static final String SERVICE_DSL_EDITOR_ID = "de.fhdo.ddmm.ServiceDsl";
   
-  public final static String MAPPING_DSL_EDITOR_ID = "de.fhdo.ddmm.technology.mappingdsl.MappingDsl";
+  public static final String MAPPING_DSL_EDITOR_ID = "de.fhdo.ddmm.technology.mappingdsl.MappingDsl";
   
-  public final static String OPERATION_DSL_EDITOR_ID = "de.fhdo.ddmm.operationdsl.OperationDsl";
+  public static final String OPERATION_DSL_EDITOR_ID = "de.fhdo.ddmm.operationdsl.OperationDsl";
   
   /**
    * Helper to get file extensions for registered DSL editors
    */
   public static List<String> getFileExtensions(final String... forEditorIds) {
     final IFileEditorMapping[] fileEditorMappings = PlatformUI.getWorkbench().getEditorRegistry().getFileEditorMappings();
-    final Function1<IFileEditorMapping, Boolean> _function = (IFileEditorMapping it) -> {
-      final Function1<IEditorDescriptor, String> _function_1 = (IEditorDescriptor it_1) -> {
-        return it_1.getId();
-      };
-      final Function1<String, Boolean> _function_2 = (String it_1) -> {
-        return Boolean.valueOf(((List<String>)Conversions.doWrapArray(forEditorIds)).contains(it_1));
-      };
-      return Boolean.valueOf(IterableExtensions.<String>exists(ListExtensions.<IEditorDescriptor, String>map(((List<IEditorDescriptor>)Conversions.doWrapArray(it.getEditors())), _function_1), _function_2));
+    final Function1<IFileEditorMapping, Boolean> _function = new Function1<IFileEditorMapping, Boolean>() {
+      public Boolean apply(final IFileEditorMapping it) {
+        final Function1<IEditorDescriptor, String> _function = new Function1<IEditorDescriptor, String>() {
+          public String apply(final IEditorDescriptor it) {
+            return it.getId();
+          }
+        };
+        final Function1<String, Boolean> _function_1 = new Function1<String, Boolean>() {
+          public Boolean apply(final String it) {
+            return Boolean.valueOf(((List<String>)Conversions.doWrapArray(forEditorIds)).contains(it));
+          }
+        };
+        return Boolean.valueOf(IterableExtensions.<String>exists(ListExtensions.<IEditorDescriptor, String>map(((List<IEditorDescriptor>)Conversions.doWrapArray(it.getEditors())), _function), _function_1));
+      }
     };
     final Iterable<IFileEditorMapping> editorDescriptions = IterableExtensions.<IFileEditorMapping>filter(((Iterable<IFileEditorMapping>)Conversions.doWrapArray(fileEditorMappings)), _function);
-    final Function1<IFileEditorMapping, String> _function_1 = (IFileEditorMapping it) -> {
-      return it.getExtension();
+    final Function1<IFileEditorMapping, String> _function_1 = new Function1<IFileEditorMapping, String>() {
+      public String apply(final IFileEditorMapping it) {
+        return it.getExtension();
+      }
     };
     return IterableExtensions.<String>toList(IterableExtensions.<IFileEditorMapping, String>map(editorDescriptions, _function_1));
   }
@@ -84,9 +94,14 @@ public final class DdmmUiUtils {
   public static HashMap<IProject, List<IFile>> findFilesInWorkspaceProjects(final String... extensions) {
     final HashMap<IProject, List<IFile>> resultFiles = CollectionLiterals.<IProject, List<IFile>>newHashMap();
     final IProject[] projects = ResourcesPlugin.getWorkspace().getRoot().getProjects();
-    final Consumer<IProject> _function = (IProject it) -> {
-      final ArrayList<IFile> resultFilesForProject = DdmmUiUtils.findFilesInProject(it, extensions);
-      resultFiles.put(it, resultFilesForProject);
+    final Consumer<IProject> _function = new Consumer<IProject>() {
+      public void accept(final IProject it) {
+        boolean _isOpen = it.isOpen();
+        if (_isOpen) {
+          final ArrayList<IFile> resultFilesForProject = DdmmUiUtils.findFilesInProject(it, extensions);
+          resultFiles.put(it, resultFilesForProject);
+        }
+      }
     };
     ((List<IProject>)Conversions.doWrapArray(projects)).forEach(_function);
     return resultFiles;
@@ -101,8 +116,10 @@ public final class DdmmUiUtils {
       if ((project == null)) {
         return null;
       }
-      final Function1<IResource, Boolean> _function = (IResource it) -> {
-        return Boolean.valueOf(((it instanceof IFolder) || (it instanceof IFile)));
+      final Function1<IResource, Boolean> _function = new Function1<IResource, Boolean>() {
+        public Boolean apply(final IResource it) {
+          return Boolean.valueOf(((it instanceof IFolder) || (it instanceof IFile)));
+        }
       };
       final Iterable<IResource> foldersAndFiles = IterableExtensions.<IResource>filter(((Iterable<IResource>)Conversions.doWrapArray(project.members())), _function);
       List<IResource> _list = IterableExtensions.<IResource>toList(foldersAndFiles);
@@ -123,11 +140,15 @@ public final class DdmmUiUtils {
             }
           } else {
             if ((resource instanceof IFolder)) {
-              final Function1<IResource, Boolean> _function_1 = (IResource it) -> {
-                return Boolean.valueOf(((it instanceof IFolder) || (it instanceof IFile)));
+              final Function1<IResource, Boolean> _function_1 = new Function1<IResource, Boolean>() {
+                public Boolean apply(final IResource it) {
+                  return Boolean.valueOf(((it instanceof IFolder) || (it instanceof IFile)));
+                }
               };
-              final Consumer<IResource> _function_2 = (IResource it) -> {
-                resourcesTodo.push(it);
+              final Consumer<IResource> _function_2 = new Consumer<IResource>() {
+                public void accept(final IResource it) {
+                  resourcesTodo.push(it);
+                }
               };
               IterableExtensions.<IResource>filter(((Iterable<IResource>)Conversions.doWrapArray(((IFolder)resource).members())), _function_1).forEach(_function_2);
             }
@@ -148,8 +169,10 @@ public final class DdmmUiUtils {
       return false;
     }
     final String extensionLowerCase = file.getFileExtension().toLowerCase();
-    final Function1<String, String> _function = (String it) -> {
-      return it.toLowerCase();
+    final Function1<String, String> _function = new Function1<String, String>() {
+      public String apply(final String it) {
+        return it.toLowerCase();
+      }
     };
     return ListExtensions.<String, String>map(((List<String>)Conversions.doWrapArray(fileExtensions)), _function).contains(extensionLowerCase);
   }
@@ -295,5 +318,24 @@ public final class DdmmUiUtils {
     final URI fileUri = URI.createURI(file.getFullPath().toString());
     final IResourceServiceProvider resourceSetProvider = resourceSetProviderRegistry.getResourceServiceProvider(fileUri);
     return resourceSetProvider.<ResourceSet>get(ResourceSet.class);
+  }
+  
+  /**
+   * Run UI event loop
+   */
+  public static void runEventLoop(final Shell shell) {
+    final Display display = shell.getDisplay();
+    while (((shell != null) && (!shell.isDisposed()))) {
+      boolean _readAndDispatch = display.readAndDispatch();
+      boolean _not = (!_readAndDispatch);
+      if (_not) {
+        display.sleep();
+      }
+    }
+    boolean _isDisposed = display.isDisposed();
+    boolean _not = (!_isDisposed);
+    if (_not) {
+      display.update();
+    }
   }
 }

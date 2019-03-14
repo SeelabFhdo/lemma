@@ -84,6 +84,7 @@ public class DataFieldHierarchyImpl extends MinimalEObjectImpl.Container impleme
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<DataField> getDataFields() {
         if (dataFields == null) {
             dataFields = new EObjectResolvingEList<DataField>(DataField.class, this, MappingPackage.DATA_FIELD_HIERARCHY__DATA_FIELDS);
@@ -96,6 +97,7 @@ public class DataFieldHierarchyImpl extends MinimalEObjectImpl.Container impleme
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public DataFieldHierarchy getPrevious() {
         return previous;
     }
@@ -120,6 +122,7 @@ public class DataFieldHierarchyImpl extends MinimalEObjectImpl.Container impleme
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setPrevious(DataFieldHierarchy newPrevious) {
         if (newPrevious != previous) {
             NotificationChain msgs = null;
@@ -139,6 +142,7 @@ public class DataFieldHierarchyImpl extends MinimalEObjectImpl.Container impleme
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public TechnologySpecificDataFieldTypeMapping getMapping() {
         if (eContainerFeatureID() != MappingPackage.DATA_FIELD_HIERARCHY__MAPPING) return null;
         return (TechnologySpecificDataFieldTypeMapping)eContainer();
@@ -169,6 +173,7 @@ public class DataFieldHierarchyImpl extends MinimalEObjectImpl.Container impleme
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setMapping(TechnologySpecificDataFieldTypeMapping newMapping) {
         if (newMapping != eInternalContainer() || (eContainerFeatureID() != MappingPackage.DATA_FIELD_HIERARCHY__MAPPING && newMapping != null)) {
             if (EcoreUtil.isAncestor(this, newMapping))

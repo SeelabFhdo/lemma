@@ -97,6 +97,7 @@ public class ComplexTypeImportImpl extends MinimalEObjectImpl.Container implemen
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getName() {
         return name;
     }
@@ -106,6 +107,7 @@ public class ComplexTypeImportImpl extends MinimalEObjectImpl.Container implemen
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setName(String newName) {
         String oldName = name;
         name = newName;
@@ -118,6 +120,7 @@ public class ComplexTypeImportImpl extends MinimalEObjectImpl.Container implemen
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getImportURI() {
         return importURI;
     }
@@ -127,6 +130,7 @@ public class ComplexTypeImportImpl extends MinimalEObjectImpl.Container implemen
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setImportURI(String newImportURI) {
         String oldImportURI = importURI;
         importURI = newImportURI;
@@ -139,6 +143,7 @@ public class ComplexTypeImportImpl extends MinimalEObjectImpl.Container implemen
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public DataModel getDataModel() {
         if (eContainerFeatureID() != DataPackage.COMPLEX_TYPE_IMPORT__DATA_MODEL) return null;
         return (DataModel)eContainer();
@@ -169,6 +174,7 @@ public class ComplexTypeImportImpl extends MinimalEObjectImpl.Container implemen
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setDataModel(DataModel newDataModel) {
         if (newDataModel != eInternalContainer() || (eContainerFeatureID() != DataPackage.COMPLEX_TYPE_IMPORT__DATA_MODEL && newDataModel != null)) {
             if (EcoreUtil.isAncestor(this, newDataModel))
@@ -317,7 +323,7 @@ public class ComplexTypeImportImpl extends MinimalEObjectImpl.Container implemen
     public String toString() {
         if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
+        StringBuilder result = new StringBuilder(super.toString());
         result.append(" (name: ");
         result.append(name);
         result.append(", importURI: ");

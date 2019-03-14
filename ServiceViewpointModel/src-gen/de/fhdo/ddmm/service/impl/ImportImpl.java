@@ -119,6 +119,7 @@ public class ImportImpl extends MinimalEObjectImpl.Container implements Import {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getName() {
         return name;
     }
@@ -128,6 +129,7 @@ public class ImportImpl extends MinimalEObjectImpl.Container implements Import {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setName(String newName) {
         String oldName = name;
         name = newName;
@@ -140,6 +142,7 @@ public class ImportImpl extends MinimalEObjectImpl.Container implements Import {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getImportURI() {
         return importURI;
     }
@@ -149,6 +152,7 @@ public class ImportImpl extends MinimalEObjectImpl.Container implements Import {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setImportURI(String newImportURI) {
         String oldImportURI = importURI;
         importURI = newImportURI;
@@ -161,6 +165,7 @@ public class ImportImpl extends MinimalEObjectImpl.Container implements Import {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ImportType getImportType() {
         return importType;
     }
@@ -170,6 +175,7 @@ public class ImportImpl extends MinimalEObjectImpl.Container implements Import {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setImportType(ImportType newImportType) {
         ImportType oldImportType = importType;
         importType = newImportType == null ? IMPORT_TYPE_EDEFAULT : newImportType;
@@ -182,6 +188,7 @@ public class ImportImpl extends MinimalEObjectImpl.Container implements Import {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ServiceModel getServiceModel() {
         if (eContainerFeatureID() != ServicePackage.IMPORT__SERVICE_MODEL) return null;
         return (ServiceModel)eContainer();
@@ -212,6 +219,7 @@ public class ImportImpl extends MinimalEObjectImpl.Container implements Import {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setServiceModel(ServiceModel newServiceModel) {
         if (newServiceModel != eInternalContainer() || (eContainerFeatureID() != ServicePackage.IMPORT__SERVICE_MODEL && newServiceModel != null)) {
             if (EcoreUtil.isAncestor(this, newServiceModel))
@@ -370,7 +378,7 @@ public class ImportImpl extends MinimalEObjectImpl.Container implements Import {
     public String toString() {
         if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
+        StringBuilder result = new StringBuilder(super.toString());
         result.append(" (name: ");
         result.append(name);
         result.append(", importURI: ");

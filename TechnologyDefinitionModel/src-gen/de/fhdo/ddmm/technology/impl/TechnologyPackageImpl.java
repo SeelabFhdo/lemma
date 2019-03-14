@@ -262,7 +262,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
 
     /**
      * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-     * 
+     *
      * <p>This method is used to initialize {@link TechnologyPackage#eINSTANCE} when that field is accessed.
      * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
      * <!-- begin-user-doc -->
@@ -276,7 +276,8 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
         if (isInited) return (TechnologyPackage)EPackage.Registry.INSTANCE.getEPackage(TechnologyPackage.eNS_URI);
 
         // Obtain or create and register package
-        TechnologyPackageImpl theTechnologyPackage = (TechnologyPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof TechnologyPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new TechnologyPackageImpl());
+        Object registeredTechnologyPackage = EPackage.Registry.INSTANCE.get(eNS_URI);
+        TechnologyPackageImpl theTechnologyPackage = registeredTechnologyPackage instanceof TechnologyPackageImpl ? (TechnologyPackageImpl)registeredTechnologyPackage : new TechnologyPackageImpl();
 
         isInited = true;
 
@@ -293,7 +294,6 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
         // Mark meta-data to indicate it can't be changed
         theTechnologyPackage.freeze();
 
-  
         // Update the registry and return the package
         EPackage.Registry.INSTANCE.put(TechnologyPackage.eNS_URI, theTechnologyPackage);
         return theTechnologyPackage;
@@ -304,6 +304,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getTechnology() {
         return technologyEClass;
     }
@@ -313,6 +314,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getTechnology_Name() {
         return (EAttribute)technologyEClass.getEStructuralFeatures().get(0);
     }
@@ -322,6 +324,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getTechnology_Imports() {
         return (EReference)technologyEClass.getEStructuralFeatures().get(1);
     }
@@ -331,6 +334,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getTechnology_PrimitiveTypes() {
         return (EReference)technologyEClass.getEStructuralFeatures().get(2);
     }
@@ -340,6 +344,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getTechnology_ListTypes() {
         return (EReference)technologyEClass.getEStructuralFeatures().get(3);
     }
@@ -349,6 +354,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getTechnology_DataStructures() {
         return (EReference)technologyEClass.getEStructuralFeatures().get(4);
     }
@@ -358,6 +364,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getTechnology_CompatibilityEntries() {
         return (EReference)technologyEClass.getEStructuralFeatures().get(5);
     }
@@ -367,6 +374,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getTechnology_Protocols() {
         return (EReference)technologyEClass.getEStructuralFeatures().get(6);
     }
@@ -376,6 +384,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getTechnology_ServiceAspects() {
         return (EReference)technologyEClass.getEStructuralFeatures().get(7);
     }
@@ -385,6 +394,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getTechnology_DeploymentTechnologies() {
         return (EReference)technologyEClass.getEStructuralFeatures().get(8);
     }
@@ -394,6 +404,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getTechnology_InfrastructureTechnologies() {
         return (EReference)technologyEClass.getEStructuralFeatures().get(9);
     }
@@ -403,6 +414,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getTechnology_OperationAspects() {
         return (EReference)technologyEClass.getEStructuralFeatures().get(10);
     }
@@ -412,6 +424,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getTechnologyImport() {
         return technologyImportEClass;
     }
@@ -421,6 +434,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getTechnologyImport_Name() {
         return (EAttribute)technologyImportEClass.getEStructuralFeatures().get(0);
     }
@@ -430,6 +444,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getTechnologyImport_ImportURI() {
         return (EAttribute)technologyImportEClass.getEStructuralFeatures().get(1);
     }
@@ -439,6 +454,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getTechnologyImport_Technology() {
         return (EReference)technologyImportEClass.getEStructuralFeatures().get(2);
     }
@@ -448,6 +464,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getProtocol() {
         return protocolEClass;
     }
@@ -457,6 +474,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getProtocol_Name() {
         return (EAttribute)protocolEClass.getEStructuralFeatures().get(0);
     }
@@ -466,6 +484,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getProtocol_CommunicationType() {
         return (EAttribute)protocolEClass.getEStructuralFeatures().get(1);
     }
@@ -475,6 +494,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getProtocol_Default() {
         return (EAttribute)protocolEClass.getEStructuralFeatures().get(2);
     }
@@ -484,6 +504,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getProtocol_DefaultFormat() {
         return (EReference)protocolEClass.getEStructuralFeatures().get(3);
     }
@@ -493,6 +514,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getProtocol_DataFormats() {
         return (EReference)protocolEClass.getEStructuralFeatures().get(4);
     }
@@ -502,6 +524,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getProtocol_Technology() {
         return (EReference)protocolEClass.getEStructuralFeatures().get(5);
     }
@@ -511,6 +534,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EOperation getProtocol__GetQualifiedNameParts() {
         return protocolEClass.getEOperations().get(0);
     }
@@ -520,6 +544,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getDataFormat() {
         return dataFormatEClass;
     }
@@ -529,6 +554,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getDataFormat_FormatName() {
         return (EAttribute)dataFormatEClass.getEStructuralFeatures().get(0);
     }
@@ -538,6 +564,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getDataFormat_Protocol() {
         return (EReference)dataFormatEClass.getEStructuralFeatures().get(1);
     }
@@ -547,6 +574,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getTechnologySpecificPrimitiveType() {
         return technologySpecificPrimitiveTypeEClass;
     }
@@ -556,6 +584,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getTechnologySpecificPrimitiveType_Name() {
         return (EAttribute)technologySpecificPrimitiveTypeEClass.getEStructuralFeatures().get(0);
     }
@@ -565,6 +594,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getTechnologySpecificPrimitiveType_Default() {
         return (EAttribute)technologySpecificPrimitiveTypeEClass.getEStructuralFeatures().get(1);
     }
@@ -574,6 +604,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getTechnologySpecificPrimitiveType_Technology() {
         return (EReference)technologySpecificPrimitiveTypeEClass.getEStructuralFeatures().get(2);
     }
@@ -583,6 +614,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getTechnologySpecificPrimitiveType_BasicBuiltinPrimitiveTypes() {
         return (EReference)technologySpecificPrimitiveTypeEClass.getEStructuralFeatures().get(3);
     }
@@ -592,6 +624,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EOperation getTechnologySpecificPrimitiveType__GetQualifiedNameParts() {
         return technologySpecificPrimitiveTypeEClass.getEOperations().get(0);
     }
@@ -601,6 +634,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EOperation getTechnologySpecificPrimitiveType__BuildQualifiedName__String() {
         return technologySpecificPrimitiveTypeEClass.getEOperations().get(1);
     }
@@ -610,6 +644,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getTechnologySpecificListType() {
         return technologySpecificListTypeEClass;
     }
@@ -619,6 +654,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getTechnologySpecificListType_Technology() {
         return (EReference)technologySpecificListTypeEClass.getEStructuralFeatures().get(0);
     }
@@ -628,6 +664,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EOperation getTechnologySpecificListType__GetQualifiedNameParts() {
         return technologySpecificListTypeEClass.getEOperations().get(0);
     }
@@ -637,6 +674,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EOperation getTechnologySpecificListType__BuildQualifiedName__String() {
         return technologySpecificListTypeEClass.getEOperations().get(1);
     }
@@ -646,6 +684,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getTechnologySpecificDataStructure() {
         return technologySpecificDataStructureEClass;
     }
@@ -655,6 +694,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getTechnologySpecificDataStructure_Technology() {
         return (EReference)technologySpecificDataStructureEClass.getEStructuralFeatures().get(0);
     }
@@ -664,6 +704,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EOperation getTechnologySpecificDataStructure__GetQualifiedNameParts() {
         return technologySpecificDataStructureEClass.getEOperations().get(0);
     }
@@ -673,6 +714,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EOperation getTechnologySpecificDataStructure__BuildQualifiedName__String() {
         return technologySpecificDataStructureEClass.getEOperations().get(1);
     }
@@ -682,6 +724,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getCompatibilityMatrixEntry() {
         return compatibilityMatrixEntryEClass;
     }
@@ -691,6 +734,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getCompatibilityMatrixEntry_Direction() {
         return (EAttribute)compatibilityMatrixEntryEClass.getEStructuralFeatures().get(0);
     }
@@ -700,6 +744,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getCompatibilityMatrixEntry_MappingType() {
         return (EReference)compatibilityMatrixEntryEClass.getEStructuralFeatures().get(1);
     }
@@ -709,6 +754,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getCompatibilityMatrixEntry_CompatibleTypes() {
         return (EReference)compatibilityMatrixEntryEClass.getEStructuralFeatures().get(2);
     }
@@ -718,6 +764,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getCompatibilityMatrixEntry_Technology() {
         return (EReference)compatibilityMatrixEntryEClass.getEStructuralFeatures().get(3);
     }
@@ -727,6 +774,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getPossiblyImportedTechnologySpecificType() {
         return possiblyImportedTechnologySpecificTypeEClass;
     }
@@ -736,6 +784,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getPossiblyImportedTechnologySpecificType_Import() {
         return (EReference)possiblyImportedTechnologySpecificTypeEClass.getEStructuralFeatures().get(0);
     }
@@ -745,6 +794,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getPossiblyImportedTechnologySpecificType_Type() {
         return (EReference)possiblyImportedTechnologySpecificTypeEClass.getEStructuralFeatures().get(1);
     }
@@ -754,6 +804,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getPossiblyImportedTechnologySpecificType_MappingEntry() {
         return (EReference)possiblyImportedTechnologySpecificTypeEClass.getEStructuralFeatures().get(2);
     }
@@ -763,6 +814,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getPossiblyImportedTechnologySpecificType_CompatibleEntry() {
         return (EReference)possiblyImportedTechnologySpecificTypeEClass.getEStructuralFeatures().get(3);
     }
@@ -772,6 +824,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getOperationTechnology() {
         return operationTechnologyEClass;
     }
@@ -781,6 +834,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getOperationTechnology_Name() {
         return (EAttribute)operationTechnologyEClass.getEStructuralFeatures().get(0);
     }
@@ -790,6 +844,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getOperationTechnology_OperationEnvironments() {
         return (EReference)operationTechnologyEClass.getEStructuralFeatures().get(1);
     }
@@ -799,6 +854,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getOperationTechnology_ServiceProperties() {
         return (EReference)operationTechnologyEClass.getEStructuralFeatures().get(2);
     }
@@ -808,6 +864,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getOperationEnvironment() {
         return operationEnvironmentEClass;
     }
@@ -817,6 +874,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getOperationEnvironment_EnvironmentName() {
         return (EAttribute)operationEnvironmentEClass.getEStructuralFeatures().get(0);
     }
@@ -826,6 +884,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getOperationEnvironment_Default() {
         return (EAttribute)operationEnvironmentEClass.getEStructuralFeatures().get(1);
     }
@@ -835,6 +894,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getOperationEnvironment_OperationTechnology() {
         return (EReference)operationEnvironmentEClass.getEStructuralFeatures().get(2);
     }
@@ -844,6 +904,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getTechnologySpecificProperty() {
         return technologySpecificPropertyEClass;
     }
@@ -853,6 +914,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getTechnologySpecificProperty_Name() {
         return (EAttribute)technologySpecificPropertyEClass.getEStructuralFeatures().get(0);
     }
@@ -862,6 +924,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getTechnologySpecificProperty_Mandatory() {
         return (EAttribute)technologySpecificPropertyEClass.getEStructuralFeatures().get(1);
     }
@@ -871,6 +934,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getTechnologySpecificProperty_Type() {
         return (EReference)technologySpecificPropertyEClass.getEStructuralFeatures().get(2);
     }
@@ -880,6 +944,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getTechnologySpecificProperty_DefaultValue() {
         return (EReference)technologySpecificPropertyEClass.getEStructuralFeatures().get(3);
     }
@@ -889,6 +954,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getTechnologySpecificProperty_OperationTechnology() {
         return (EReference)technologySpecificPropertyEClass.getEStructuralFeatures().get(4);
     }
@@ -898,6 +964,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getTechnologySpecificProperty_TechnologyAspect() {
         return (EReference)technologySpecificPropertyEClass.getEStructuralFeatures().get(5);
     }
@@ -907,6 +974,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getTechnologySpecificPropertyValueAssignment() {
         return technologySpecificPropertyValueAssignmentEClass;
     }
@@ -916,6 +984,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getTechnologySpecificPropertyValueAssignment_Property() {
         return (EReference)technologySpecificPropertyValueAssignmentEClass.getEStructuralFeatures().get(0);
     }
@@ -925,6 +994,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getTechnologySpecificPropertyValueAssignment_Value() {
         return (EReference)technologySpecificPropertyValueAssignmentEClass.getEStructuralFeatures().get(1);
     }
@@ -934,6 +1004,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getDeploymentTechnology() {
         return deploymentTechnologyEClass;
     }
@@ -943,6 +1014,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getDeploymentTechnology_Technology() {
         return (EReference)deploymentTechnologyEClass.getEStructuralFeatures().get(0);
     }
@@ -952,6 +1024,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EOperation getDeploymentTechnology__GetQualifiedNameParts() {
         return deploymentTechnologyEClass.getEOperations().get(0);
     }
@@ -961,6 +1034,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getInfrastructureTechnology() {
         return infrastructureTechnologyEClass;
     }
@@ -970,6 +1044,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getInfrastructureTechnology_Technology() {
         return (EReference)infrastructureTechnologyEClass.getEStructuralFeatures().get(0);
     }
@@ -979,6 +1054,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EOperation getInfrastructureTechnology__GetQualifiedNameParts() {
         return infrastructureTechnologyEClass.getEOperations().get(0);
     }
@@ -988,6 +1064,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getTechnologyAspect() {
         return technologyAspectEClass;
     }
@@ -997,6 +1074,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getTechnologyAspect_Name() {
         return (EAttribute)technologyAspectEClass.getEStructuralFeatures().get(0);
     }
@@ -1006,6 +1084,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getTechnologyAspect_JoinPoints() {
         return (EAttribute)technologyAspectEClass.getEStructuralFeatures().get(1);
     }
@@ -1015,6 +1094,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getTechnologyAspect_Properties() {
         return (EReference)technologyAspectEClass.getEStructuralFeatures().get(2);
     }
@@ -1024,6 +1104,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EOperation getTechnologyAspect__GetQualifiedNameParts() {
         return technologyAspectEClass.getEOperations().get(0);
     }
@@ -1033,6 +1114,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getServiceAspect() {
         return serviceAspectEClass;
     }
@@ -1042,6 +1124,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getServiceAspect_PointcutSelectors() {
         return (EReference)serviceAspectEClass.getEStructuralFeatures().get(0);
     }
@@ -1051,6 +1134,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getServiceAspect_Technology() {
         return (EReference)serviceAspectEClass.getEStructuralFeatures().get(1);
     }
@@ -1060,6 +1144,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EOperation getServiceAspect__HasMatchingSelector__ExchangePattern_CommunicationType_Protocol_DataFormat() {
         return serviceAspectEClass.getEOperations().get(0);
     }
@@ -1069,6 +1154,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getServiceAspectPointcut() {
         return serviceAspectPointcutEClass;
     }
@@ -1078,6 +1164,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getServiceAspectPointcut_ForExchangePattern() {
         return (EAttribute)serviceAspectPointcutEClass.getEStructuralFeatures().get(0);
     }
@@ -1087,6 +1174,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getServiceAspectPointcut_ForCommunicationType() {
         return (EAttribute)serviceAspectPointcutEClass.getEStructuralFeatures().get(1);
     }
@@ -1096,6 +1184,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getServiceAspectPointcut_ForProtocol() {
         return (EAttribute)serviceAspectPointcutEClass.getEStructuralFeatures().get(2);
     }
@@ -1105,6 +1194,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getServiceAspectPointcut_ForDataFormat() {
         return (EAttribute)serviceAspectPointcutEClass.getEStructuralFeatures().get(3);
     }
@@ -1114,6 +1204,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getServiceAspectPointcut_ExchangePattern() {
         return (EAttribute)serviceAspectPointcutEClass.getEStructuralFeatures().get(4);
     }
@@ -1123,6 +1214,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getServiceAspectPointcut_CommunicationType() {
         return (EAttribute)serviceAspectPointcutEClass.getEStructuralFeatures().get(5);
     }
@@ -1132,6 +1224,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getServiceAspectPointcut_Protocol() {
         return (EReference)serviceAspectPointcutEClass.getEStructuralFeatures().get(6);
     }
@@ -1141,6 +1234,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getServiceAspectPointcut_DataFormat() {
         return (EReference)serviceAspectPointcutEClass.getEStructuralFeatures().get(7);
     }
@@ -1150,6 +1244,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getServiceAspectPointcut_Selector() {
         return (EReference)serviceAspectPointcutEClass.getEStructuralFeatures().get(8);
     }
@@ -1159,6 +1254,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getServiceAspectPointcut_EffectiveType() {
         return (EAttribute)serviceAspectPointcutEClass.getEStructuralFeatures().get(9);
     }
@@ -1168,6 +1264,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getServiceAspectPointcut_EffectiveSelectorName() {
         return (EAttribute)serviceAspectPointcutEClass.getEStructuralFeatures().get(10);
     }
@@ -1177,6 +1274,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getServiceAspectPointcut_EffectiveValue() {
         return (EAttribute)serviceAspectPointcutEClass.getEStructuralFeatures().get(11);
     }
@@ -1186,6 +1284,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getServiceAspectPointcut_PrintableEffectiveValue() {
         return (EAttribute)serviceAspectPointcutEClass.getEStructuralFeatures().get(12);
     }
@@ -1195,6 +1294,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getServiceAspectPointcut_OrderedPointcutTypes() {
         return (EAttribute)serviceAspectPointcutEClass.getEStructuralFeatures().get(13);
     }
@@ -1204,6 +1304,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getServiceAspectPointcutSelector() {
         return serviceAspectPointcutSelectorEClass;
     }
@@ -1213,6 +1314,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getServiceAspectPointcutSelector_Pointcuts() {
         return (EReference)serviceAspectPointcutSelectorEClass.getEStructuralFeatures().get(0);
     }
@@ -1222,6 +1324,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getServiceAspectPointcutSelector_ServiceAspect() {
         return (EReference)serviceAspectPointcutSelectorEClass.getEStructuralFeatures().get(1);
     }
@@ -1231,6 +1334,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getServiceAspectPointcutSelector_SelectorString() {
         return (EAttribute)serviceAspectPointcutSelectorEClass.getEStructuralFeatures().get(2);
     }
@@ -1240,6 +1344,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EOperation getServiceAspectPointcutSelector__IsMoreGenericThan__ServiceAspectPointcutSelector() {
         return serviceAspectPointcutSelectorEClass.getEOperations().get(0);
     }
@@ -1249,6 +1354,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EOperation getServiceAspectPointcutSelector__OrderedSelectorValues() {
         return serviceAspectPointcutSelectorEClass.getEOperations().get(1);
     }
@@ -1258,6 +1364,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getOperationAspect() {
         return operationAspectEClass;
     }
@@ -1267,6 +1374,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getOperationAspect_Technology() {
         return (EReference)operationAspectEClass.getEStructuralFeatures().get(0);
     }
@@ -1276,6 +1384,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EEnum getExchangePattern() {
         return exchangePatternEEnum;
     }
@@ -1285,6 +1394,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EEnum getCommunicationType() {
         return communicationTypeEEnum;
     }
@@ -1294,6 +1404,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EEnum getCompatibilityDirection() {
         return compatibilityDirectionEEnum;
     }
@@ -1303,6 +1414,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EEnum getJoinPointType() {
         return joinPointTypeEEnum;
     }
@@ -1312,6 +1424,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EEnum getPointcutType() {
         return pointcutTypeEEnum;
     }
@@ -1321,6 +1434,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EDataType getPointcutTypeStringsMap() {
         return pointcutTypeStringsMapEDataType;
     }
@@ -1330,6 +1444,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public TechnologyFactory getTechnologyFactory() {
         return (TechnologyFactory)getEFactoryInstance();
     }

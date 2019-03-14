@@ -134,7 +134,6 @@ public interface Version extends EObject {
      * Get all ComplexTypes contained by the Version
      * <!-- end-model-doc -->
      * @model kind="operation" unique="false"
-     *        annotation="http://www.eclipse.org/emf/2002/GenModel body='final &lt;%java.util.ArrayList%&gt;&lt;&lt;%de.fhdo.ddmm.data.ComplexType%&gt;&gt; containedComplexTypes = &lt;%org.eclipse.xtext.xbase.lib.CollectionLiterals%&gt;.&lt;&lt;%de.fhdo.ddmm.data.ComplexType%&gt;&gt;newArrayList();\n&lt;%org.eclipse.emf.common.util.EList%&gt;&lt;&lt;%de.fhdo.ddmm.data.Context%&gt;&gt; _contexts = this.getContexts();\nboolean _tripleNotEquals = (_contexts != null);\nif (_tripleNotEquals)\n{\n\tfinal &lt;%java.util.function.Consumer%&gt;&lt;&lt;%de.fhdo.ddmm.data.Context%&gt;&gt; _function = new &lt;%java.util.function.Consumer%&gt;&lt;&lt;%de.fhdo.ddmm.data.Context%&gt;&gt;()\n\t{\n\t\tpublic void accept(final &lt;%de.fhdo.ddmm.data.Context%&gt; it)\n\t\t{\n\t\t\tcontainedComplexTypes.addAll(it.getComplexTypes());\n\t\t}\n\t};\n\tthis.getContexts().forEach(_function);\n}\ncontainedComplexTypes.addAll(this.getComplexTypes());\nreturn &lt;%org.eclipse.emf.common.util.ECollections%&gt;.&lt;&lt;%de.fhdo.ddmm.data.ComplexType%&gt;&gt;asEList(containedComplexTypes);'"
      * @generated
      */
     EList<ComplexType> getContainedComplexTypes();
@@ -147,7 +146,6 @@ public interface Version extends EObject {
      * Get parts of the version for creating a qualified name
      * <!-- end-model-doc -->
      * @model kind="operation" unique="false"
-     *        annotation="http://www.eclipse.org/emf/2002/GenModel body='&lt;%org.eclipse.emf.common.util.EList%&gt;&lt;&lt;%java.lang.String%&gt;&gt; _xblockexpression = null;\n{\n\tif (((this.getName() == null) || this.getName().isEmpty()))\n\t{\n\t\treturn &lt;%org.eclipse.emf.common.util.ECollections%&gt;.&lt;&lt;%java.lang.String%&gt;&gt;asEList(&lt;%org.eclipse.xtext.xbase.lib.CollectionLiterals%&gt;.&lt;&lt;%java.lang.String%&gt;&gt;newArrayList());\n\t}\n\tfinal &lt;%java.util.ArrayList%&gt;&lt;&lt;%java.lang.String%&gt;&gt; nameParts = &lt;%org.eclipse.xtext.xbase.lib.CollectionLiterals%&gt;.&lt;&lt;%java.lang.String%&gt;&gt;newArrayList();\n\tnameParts.add(this.getName());\n\t_xblockexpression = &lt;%org.eclipse.emf.common.util.ECollections%&gt;.&lt;&lt;%java.lang.String%&gt;&gt;asEList(nameParts);\n}\nreturn _xblockexpression;'"
      * @generated
      */
     EList<String> getQualifiedNameParts();

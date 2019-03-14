@@ -39,13 +39,13 @@ import org.slf4j.LoggerFactory;
 
 @SuppressWarnings("all")
 public class TransformationDialog extends TitleAreaDialog {
-  private final static int MIN_DIALOG_WIDTH = 200;
+  private static final int MIN_DIALOG_WIDTH = 200;
   
-  private final static int MIN_DIALOG_HEIGHT = 120;
+  private static final int MIN_DIALOG_HEIGHT = 120;
   
-  private final static String PROGRESS_TITLE_TEXT = "Performing intermediate model transformations";
+  private static final String PROGRESS_TITLE_TEXT = "Performing intermediate model transformations";
   
-  private final static Logger LOGGER = LoggerFactory.getLogger(TransformationDialog.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(TransformationDialog.class);
   
   private AbstractUiModelTransformationStrategy strategy;
   
@@ -53,7 +53,7 @@ public class TransformationDialog extends TitleAreaDialog {
   
   private ModelFile currentModelFile;
   
-  private final static ResourceManager RESOURCE_MANAGER = new LocalResourceManager(JFaceResources.getResources());
+  private static final ResourceManager RESOURCE_MANAGER = new LocalResourceManager(JFaceResources.getResources());
   
   private TransformationThread transformationThread;
   
@@ -94,9 +94,11 @@ public class TransformationDialog extends TitleAreaDialog {
       }
     }
     this.strategy = strategy;
-    final Function1<ModelFile, Boolean> _function = (ModelFile it) -> {
-      AbstractIntermediateModelTransformationStrategy _mainTransformationStrategy = it.getFileTypeDescription().getMainTransformationStrategy();
-      return Boolean.valueOf((_mainTransformationStrategy != null));
+    final Function1<ModelFile, Boolean> _function = new Function1<ModelFile, Boolean>() {
+      public Boolean apply(final ModelFile it) {
+        AbstractIntermediateModelTransformationStrategy _mainTransformationStrategy = it.getFileTypeDescription().getMainTransformationStrategy();
+        return Boolean.valueOf((_mainTransformationStrategy != null));
+      }
     };
     this.filesToTransform = IterableExtensions.<ModelFile>toList(IterableExtensions.<ModelFile>filter(inputModelFiles, _function));
   }
@@ -108,36 +110,35 @@ public class TransformationDialog extends TitleAreaDialog {
     this.constrainShellSize();
     this.getShell().open();
     Display _display = this.getShell().getDisplay();
-    final Predicate<ModelFile> _function = (ModelFile it) -> {
-      return this.nextTransformation(it);
+    final Predicate<ModelFile> _function = new Predicate<ModelFile>() {
+      public boolean apply(final ModelFile it) {
+        return TransformationDialog.this.nextTransformation(it);
+      }
     };
-    final Predicate<IntermediateTransformationException> _function_1 = (IntermediateTransformationException it) -> {
-      return this.transformationWarningOccurred(it);
+    final Predicate<IntermediateTransformationException> _function_1 = new Predicate<IntermediateTransformationException>() {
+      public boolean apply(final IntermediateTransformationException it) {
+        return TransformationDialog.this.transformationWarningOccurred(it);
+      }
     };
-    final Predicate<Exception> _function_2 = (Exception it) -> {
-      return this.transformationExceptionOccurred(it);
+    final Predicate<Exception> _function_2 = new Predicate<Exception>() {
+      public boolean apply(final Exception it) {
+        return TransformationDialog.this.transformationExceptionOccurred(it);
+      }
     };
-    final Predicate<Void> _function_3 = (Void it) -> {
-      return this.currentTransformationFinished();
+    final Predicate<Void> _function_3 = new Predicate<Void>() {
+      public boolean apply(final Void it) {
+        return TransformationDialog.this.currentTransformationFinished();
+      }
     };
-    final Predicate<Void> _function_4 = (Void it) -> {
-      return this.transformationsFinished();
+    final Predicate<Void> _function_4 = new Predicate<Void>() {
+      public boolean apply(final Void it) {
+        return TransformationDialog.this.transformationsFinished();
+      }
     };
     TransformationThread _transformationThread = new TransformationThread(this.filesToTransform, _display, _function, _function_1, _function_2, _function_3, _function_4);
     this.transformationThread = _transformationThread;
     this.transformationThread.start();
-    while (((this.getShell() != null) && (!this.getShell().isDisposed()))) {
-      boolean _readAndDispatch = this.getShell().getDisplay().readAndDispatch();
-      boolean _not = (!_readAndDispatch);
-      if (_not) {
-        this.getShell().getDisplay().sleep();
-      }
-    }
-    boolean _isDisposed = this.getShell().isDisposed();
-    boolean _not = (!_isDisposed);
-    if (_not) {
-      this.getShell().getDisplay().update();
-    }
+    DdmmUiUtils.runEventLoop(this.getShell());
     return this.getReturnCode();
   }
   
@@ -347,7 +348,6 @@ public class TransformationDialog extends TitleAreaDialog {
   /**
    * Create dialog (to be called after constructor and before open())
    */
-  @Override
   public void create() {
     super.create();
     this.setTitle("Performing Intermediate Model Transformations");
@@ -356,7 +356,6 @@ public class TransformationDialog extends TitleAreaDialog {
   /**
    * Close dialog
    */
-  @Override
   public void closeTray() {
     TransformationDialog.RESOURCE_MANAGER.dispose();
     super.closeTray();
@@ -365,7 +364,6 @@ public class TransformationDialog extends TitleAreaDialog {
   /**
    * Flag to indicate that dialog is resizable
    */
-  @Override
   public boolean isResizable() {
     return true;
   }
@@ -373,7 +371,6 @@ public class TransformationDialog extends TitleAreaDialog {
   /**
    * Initial size
    */
-  @Override
   public Point getInitialSize() {
     final Point shellSize = super.getInitialSize();
     int _max = Math.max(this.convertHorizontalDLUsToPixels(TransformationDialog.MIN_DIALOG_WIDTH), shellSize.x);
@@ -384,7 +381,6 @@ public class TransformationDialog extends TitleAreaDialog {
   /**
    * Internal callback for dialog area creation
    */
-  @Override
   public Control createDialogArea(final Composite parent) {
     Control _createDialogArea = super.createDialogArea(parent);
     final Composite area = ((Composite) _createDialogArea);
@@ -427,7 +423,6 @@ public class TransformationDialog extends TitleAreaDialog {
   /**
    * Create buttons for the button bar
    */
-  @Override
   public void createButtonsForButtonBar(final Composite parent) {
     this.cancelButton = this.createButton(parent, IDialogConstants.CANCEL_ID, 
       IDialogConstants.CANCEL_LABEL, false);
@@ -436,7 +431,6 @@ public class TransformationDialog extends TitleAreaDialog {
   /**
    * User clicked close icon in the window bar
    */
-  @Override
   public void handleShellCloseEvent() {
     this.userAborted(true);
   }
@@ -444,7 +438,6 @@ public class TransformationDialog extends TitleAreaDialog {
   /**
    * "Cancel" was pressed
    */
-  @Override
   public void cancelPressed() {
     this.userAborted(false);
   }

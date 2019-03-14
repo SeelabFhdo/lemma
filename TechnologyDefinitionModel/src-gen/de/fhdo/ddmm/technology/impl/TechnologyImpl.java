@@ -199,6 +199,7 @@ public class TechnologyImpl extends MinimalEObjectImpl.Container implements Tech
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getName() {
         return name;
     }
@@ -208,6 +209,7 @@ public class TechnologyImpl extends MinimalEObjectImpl.Container implements Tech
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setName(String newName) {
         String oldName = name;
         name = newName;
@@ -220,6 +222,7 @@ public class TechnologyImpl extends MinimalEObjectImpl.Container implements Tech
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<TechnologyImport> getImports() {
         if (imports == null) {
             imports = new EObjectContainmentWithInverseEList<TechnologyImport>(TechnologyImport.class, this, TechnologyPackage.TECHNOLOGY__IMPORTS, TechnologyPackage.TECHNOLOGY_IMPORT__TECHNOLOGY);
@@ -232,6 +235,7 @@ public class TechnologyImpl extends MinimalEObjectImpl.Container implements Tech
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<TechnologySpecificPrimitiveType> getPrimitiveTypes() {
         if (primitiveTypes == null) {
             primitiveTypes = new EObjectContainmentWithInverseEList<TechnologySpecificPrimitiveType>(TechnologySpecificPrimitiveType.class, this, TechnologyPackage.TECHNOLOGY__PRIMITIVE_TYPES, TechnologyPackage.TECHNOLOGY_SPECIFIC_PRIMITIVE_TYPE__TECHNOLOGY);
@@ -244,6 +248,7 @@ public class TechnologyImpl extends MinimalEObjectImpl.Container implements Tech
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<TechnologySpecificListType> getListTypes() {
         if (listTypes == null) {
             listTypes = new EObjectContainmentWithInverseEList<TechnologySpecificListType>(TechnologySpecificListType.class, this, TechnologyPackage.TECHNOLOGY__LIST_TYPES, TechnologyPackage.TECHNOLOGY_SPECIFIC_LIST_TYPE__TECHNOLOGY);
@@ -256,6 +261,7 @@ public class TechnologyImpl extends MinimalEObjectImpl.Container implements Tech
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<TechnologySpecificDataStructure> getDataStructures() {
         if (dataStructures == null) {
             dataStructures = new EObjectContainmentWithInverseEList<TechnologySpecificDataStructure>(TechnologySpecificDataStructure.class, this, TechnologyPackage.TECHNOLOGY__DATA_STRUCTURES, TechnologyPackage.TECHNOLOGY_SPECIFIC_DATA_STRUCTURE__TECHNOLOGY);
@@ -268,6 +274,7 @@ public class TechnologyImpl extends MinimalEObjectImpl.Container implements Tech
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<CompatibilityMatrixEntry> getCompatibilityEntries() {
         if (compatibilityEntries == null) {
             compatibilityEntries = new EObjectContainmentWithInverseEList<CompatibilityMatrixEntry>(CompatibilityMatrixEntry.class, this, TechnologyPackage.TECHNOLOGY__COMPATIBILITY_ENTRIES, TechnologyPackage.COMPATIBILITY_MATRIX_ENTRY__TECHNOLOGY);
@@ -280,6 +287,7 @@ public class TechnologyImpl extends MinimalEObjectImpl.Container implements Tech
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Protocol> getProtocols() {
         if (protocols == null) {
             protocols = new EObjectContainmentWithInverseEList<Protocol>(Protocol.class, this, TechnologyPackage.TECHNOLOGY__PROTOCOLS, TechnologyPackage.PROTOCOL__TECHNOLOGY);
@@ -292,6 +300,7 @@ public class TechnologyImpl extends MinimalEObjectImpl.Container implements Tech
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<ServiceAspect> getServiceAspects() {
         if (serviceAspects == null) {
             serviceAspects = new EObjectContainmentWithInverseEList<ServiceAspect>(ServiceAspect.class, this, TechnologyPackage.TECHNOLOGY__SERVICE_ASPECTS, TechnologyPackage.SERVICE_ASPECT__TECHNOLOGY);
@@ -304,6 +313,7 @@ public class TechnologyImpl extends MinimalEObjectImpl.Container implements Tech
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<DeploymentTechnology> getDeploymentTechnologies() {
         if (deploymentTechnologies == null) {
             deploymentTechnologies = new EObjectContainmentWithInverseEList<DeploymentTechnology>(DeploymentTechnology.class, this, TechnologyPackage.TECHNOLOGY__DEPLOYMENT_TECHNOLOGIES, TechnologyPackage.DEPLOYMENT_TECHNOLOGY__TECHNOLOGY);
@@ -316,6 +326,7 @@ public class TechnologyImpl extends MinimalEObjectImpl.Container implements Tech
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<InfrastructureTechnology> getInfrastructureTechnologies() {
         if (infrastructureTechnologies == null) {
             infrastructureTechnologies = new EObjectContainmentWithInverseEList<InfrastructureTechnology>(InfrastructureTechnology.class, this, TechnologyPackage.TECHNOLOGY__INFRASTRUCTURE_TECHNOLOGIES, TechnologyPackage.INFRASTRUCTURE_TECHNOLOGY__TECHNOLOGY);
@@ -328,6 +339,7 @@ public class TechnologyImpl extends MinimalEObjectImpl.Container implements Tech
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<OperationAspect> getOperationAspects() {
         if (operationAspects == null) {
             operationAspects = new EObjectContainmentWithInverseEList<OperationAspect>(OperationAspect.class, this, TechnologyPackage.TECHNOLOGY__OPERATION_ASPECTS, TechnologyPackage.OPERATION_ASPECT__TECHNOLOGY);
@@ -578,7 +590,7 @@ public class TechnologyImpl extends MinimalEObjectImpl.Container implements Tech
     public String toString() {
         if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
+        StringBuilder result = new StringBuilder(super.toString());
         result.append(" (name: ");
         result.append(name);
         result.append(')');

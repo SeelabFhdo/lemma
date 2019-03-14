@@ -102,6 +102,7 @@ public class ContextImpl extends MinimalEObjectImpl.Container implements Context
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getName() {
         return name;
     }
@@ -111,6 +112,7 @@ public class ContextImpl extends MinimalEObjectImpl.Container implements Context
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setName(String newName) {
         String oldName = name;
         name = newName;
@@ -123,6 +125,7 @@ public class ContextImpl extends MinimalEObjectImpl.Container implements Context
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<ComplexType> getComplexTypes() {
         if (complexTypes == null) {
             complexTypes = new EObjectContainmentWithInverseEList<ComplexType>(ComplexType.class, this, DataPackage.CONTEXT__COMPLEX_TYPES, DataPackage.COMPLEX_TYPE__CONTEXT);
@@ -135,6 +138,7 @@ public class ContextImpl extends MinimalEObjectImpl.Container implements Context
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public DataModel getDataModel() {
         if (eContainerFeatureID() != DataPackage.CONTEXT__DATA_MODEL) return null;
         return (DataModel)eContainer();
@@ -165,6 +169,7 @@ public class ContextImpl extends MinimalEObjectImpl.Container implements Context
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setDataModel(DataModel newDataModel) {
         if (newDataModel != eInternalContainer() || (eContainerFeatureID() != DataPackage.CONTEXT__DATA_MODEL && newDataModel != null)) {
             if (EcoreUtil.isAncestor(this, newDataModel))
@@ -186,6 +191,7 @@ public class ContextImpl extends MinimalEObjectImpl.Container implements Context
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Version getVersion() {
         if (eContainerFeatureID() != DataPackage.CONTEXT__VERSION) return null;
         return (Version)eContainer();
@@ -216,6 +222,7 @@ public class ContextImpl extends MinimalEObjectImpl.Container implements Context
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setVersion(Version newVersion) {
         if (newVersion != eInternalContainer() || (eContainerFeatureID() != DataPackage.CONTEXT__VERSION && newVersion != null)) {
             if (EcoreUtil.isAncestor(this, newVersion))
@@ -237,6 +244,7 @@ public class ContextImpl extends MinimalEObjectImpl.Container implements Context
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<String> getQualifiedNameParts() {
         EList<String> _xblockexpression = null;
         {
@@ -260,6 +268,7 @@ public class ContextImpl extends MinimalEObjectImpl.Container implements Context
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String buildQualifiedName(final String separator) {
         if ((separator == null)) {
             return null;
@@ -452,7 +461,7 @@ public class ContextImpl extends MinimalEObjectImpl.Container implements Context
     public String toString() {
         if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
+        StringBuilder result = new StringBuilder(super.toString());
         result.append(" (name: ");
         result.append(name);
         result.append(')');

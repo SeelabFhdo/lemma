@@ -138,6 +138,7 @@ public class TechnologyFactoryImpl extends EFactoryImpl implements TechnologyFac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Technology createTechnology() {
         TechnologyImpl technology = new TechnologyImpl();
         return technology;
@@ -148,6 +149,7 @@ public class TechnologyFactoryImpl extends EFactoryImpl implements TechnologyFac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public TechnologyImport createTechnologyImport() {
         TechnologyImportImpl technologyImport = new TechnologyImportImpl();
         return technologyImport;
@@ -158,6 +160,7 @@ public class TechnologyFactoryImpl extends EFactoryImpl implements TechnologyFac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Protocol createProtocol() {
         ProtocolImpl protocol = new ProtocolImpl();
         return protocol;
@@ -168,6 +171,7 @@ public class TechnologyFactoryImpl extends EFactoryImpl implements TechnologyFac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public DataFormat createDataFormat() {
         DataFormatImpl dataFormat = new DataFormatImpl();
         return dataFormat;
@@ -178,6 +182,7 @@ public class TechnologyFactoryImpl extends EFactoryImpl implements TechnologyFac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public TechnologySpecificPrimitiveType createTechnologySpecificPrimitiveType() {
         TechnologySpecificPrimitiveTypeImpl technologySpecificPrimitiveType = new TechnologySpecificPrimitiveTypeImpl();
         return technologySpecificPrimitiveType;
@@ -188,6 +193,7 @@ public class TechnologyFactoryImpl extends EFactoryImpl implements TechnologyFac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public TechnologySpecificListType createTechnologySpecificListType() {
         TechnologySpecificListTypeImpl technologySpecificListType = new TechnologySpecificListTypeImpl();
         return technologySpecificListType;
@@ -198,6 +204,7 @@ public class TechnologyFactoryImpl extends EFactoryImpl implements TechnologyFac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public TechnologySpecificDataStructure createTechnologySpecificDataStructure() {
         TechnologySpecificDataStructureImpl technologySpecificDataStructure = new TechnologySpecificDataStructureImpl();
         return technologySpecificDataStructure;
@@ -208,6 +215,7 @@ public class TechnologyFactoryImpl extends EFactoryImpl implements TechnologyFac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public CompatibilityMatrixEntry createCompatibilityMatrixEntry() {
         CompatibilityMatrixEntryImpl compatibilityMatrixEntry = new CompatibilityMatrixEntryImpl();
         return compatibilityMatrixEntry;
@@ -218,6 +226,7 @@ public class TechnologyFactoryImpl extends EFactoryImpl implements TechnologyFac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public PossiblyImportedTechnologySpecificType createPossiblyImportedTechnologySpecificType() {
         PossiblyImportedTechnologySpecificTypeImpl possiblyImportedTechnologySpecificType = new PossiblyImportedTechnologySpecificTypeImpl();
         return possiblyImportedTechnologySpecificType;
@@ -228,6 +237,7 @@ public class TechnologyFactoryImpl extends EFactoryImpl implements TechnologyFac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public OperationEnvironment createOperationEnvironment() {
         OperationEnvironmentImpl operationEnvironment = new OperationEnvironmentImpl();
         return operationEnvironment;
@@ -238,6 +248,7 @@ public class TechnologyFactoryImpl extends EFactoryImpl implements TechnologyFac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public TechnologySpecificProperty createTechnologySpecificProperty() {
         TechnologySpecificPropertyImpl technologySpecificProperty = new TechnologySpecificPropertyImpl();
         return technologySpecificProperty;
@@ -248,6 +259,7 @@ public class TechnologyFactoryImpl extends EFactoryImpl implements TechnologyFac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public TechnologySpecificPropertyValueAssignment createTechnologySpecificPropertyValueAssignment() {
         TechnologySpecificPropertyValueAssignmentImpl technologySpecificPropertyValueAssignment = new TechnologySpecificPropertyValueAssignmentImpl();
         return technologySpecificPropertyValueAssignment;
@@ -258,6 +270,7 @@ public class TechnologyFactoryImpl extends EFactoryImpl implements TechnologyFac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public DeploymentTechnology createDeploymentTechnology() {
         DeploymentTechnologyImpl deploymentTechnology = new DeploymentTechnologyImpl();
         return deploymentTechnology;
@@ -268,6 +281,7 @@ public class TechnologyFactoryImpl extends EFactoryImpl implements TechnologyFac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public InfrastructureTechnology createInfrastructureTechnology() {
         InfrastructureTechnologyImpl infrastructureTechnology = new InfrastructureTechnologyImpl();
         return infrastructureTechnology;
@@ -278,6 +292,7 @@ public class TechnologyFactoryImpl extends EFactoryImpl implements TechnologyFac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ServiceAspect createServiceAspect() {
         ServiceAspectImpl serviceAspect = new ServiceAspectImpl();
         return serviceAspect;
@@ -288,6 +303,7 @@ public class TechnologyFactoryImpl extends EFactoryImpl implements TechnologyFac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ServiceAspectPointcut createServiceAspectPointcut() {
         ServiceAspectPointcutImpl serviceAspectPointcut = new ServiceAspectPointcutImpl();
         return serviceAspectPointcut;
@@ -298,6 +314,7 @@ public class TechnologyFactoryImpl extends EFactoryImpl implements TechnologyFac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ServiceAspectPointcutSelector createServiceAspectPointcutSelector() {
         ServiceAspectPointcutSelectorImpl serviceAspectPointcutSelector = new ServiceAspectPointcutSelectorImpl();
         return serviceAspectPointcutSelector;
@@ -308,6 +325,7 @@ public class TechnologyFactoryImpl extends EFactoryImpl implements TechnologyFac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public OperationAspect createOperationAspect() {
         OperationAspectImpl operationAspect = new OperationAspectImpl();
         return operationAspect;
@@ -437,6 +455,7 @@ public class TechnologyFactoryImpl extends EFactoryImpl implements TechnologyFac
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public TechnologyPackage getTechnologyPackage() {
         return (TechnologyPackage)getEPackage();
     }

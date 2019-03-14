@@ -307,7 +307,6 @@ public final class DdmmUtils {
             resourcesToCheck.addAll(getImportedResources.apply(toCheckModelRoot));
           } catch (final Throwable _t) {
             if (_t instanceof ClassCastException) {
-              final ClassCastException ex = (ClassCastException)_t;
             } else {
               throw Exceptions.sneakyThrow(_t);
             }
@@ -439,7 +438,6 @@ public final class DdmmUtils {
             _xtrycatchfinallyexpression = ((ROOT_CONCEPT) _get);
           } catch (final Throwable _t) {
             if (_t instanceof ClassCastException) {
-              final ClassCastException ex = (ClassCastException)_t;
               _xtrycatchfinallyexpression = null;
             } else {
               throw Exceptions.sneakyThrow(_t);

@@ -215,7 +215,6 @@ public interface DataField extends EObject {
      * Get the effective type (complex type, possibly imported, or primitive type) of the field
      * <!-- end-model-doc -->
      * @model kind="operation" unique="false"
-     *        annotation="http://www.eclipse.org/emf/2002/GenModel body='&lt;%de.fhdo.ddmm.data.PossiblyImportedComplexType%&gt; _complexType = this.getComplexType();\nboolean _tripleNotEquals = (_complexType != null);\nif (_tripleNotEquals)\n{\n\treturn this.getComplexType().getComplexType();\n}\nelse\n{\n\t&lt;%de.fhdo.ddmm.data.PrimitiveType%&gt; _primitiveType = this.getPrimitiveType();\n\tboolean _tripleNotEquals_1 = (_primitiveType != null);\n\tif (_tripleNotEquals_1)\n\t{\n\t\treturn this.getPrimitiveType();\n\t}\n\telse\n\t{\n\t\treturn null;\n\t}\n}'"
      * @generated
      */
     Type getEffectiveType();
@@ -228,7 +227,6 @@ public interface DataField extends EObject {
      * Get parts of the data field for creating a qualified name
      * <!-- end-model-doc -->
      * @model kind="operation" unique="false"
-     *        annotation="http://www.eclipse.org/emf/2002/GenModel body='&lt;%org.eclipse.emf.common.util.EList%&gt;&lt;&lt;%java.lang.String%&gt;&gt; _xblockexpression = null;\n{\n\tif (((this.getName() == null) || this.getName().isEmpty()))\n\t{\n\t\treturn &lt;%org.eclipse.emf.common.util.ECollections%&gt;.&lt;&lt;%java.lang.String%&gt;&gt;asEList(&lt;%org.eclipse.xtext.xbase.lib.CollectionLiterals%&gt;.&lt;&lt;%java.lang.String%&gt;&gt;newArrayList());\n\t}\n\tfinal &lt;%java.util.ArrayList%&gt;&lt;&lt;%java.lang.String%&gt;&gt; nameParts = &lt;%org.eclipse.xtext.xbase.lib.CollectionLiterals%&gt;.&lt;&lt;%java.lang.String%&gt;&gt;newArrayList();\n\t&lt;%de.fhdo.ddmm.data.DataStructure%&gt; _dataStructure = this.getDataStructure();\n\tboolean _tripleNotEquals = (_dataStructure != null);\n\tif (_tripleNotEquals)\n\t{\n\t\tnameParts.addAll(this.getDataStructure().getQualifiedNameParts());\n\t}\n\telse\n\t{\n\t\t&lt;%de.fhdo.ddmm.data.ListType%&gt; _listType = this.getListType();\n\t\tboolean _tripleNotEquals_1 = (_listType != null);\n\t\tif (_tripleNotEquals_1)\n\t\t{\n\t\t\tnameParts.addAll(this.getListType().getQualifiedNameParts());\n\t\t}\n\t}\n\tnameParts.add(this.getName());\n\t_xblockexpression = &lt;%org.eclipse.emf.common.util.ECollections%&gt;.&lt;&lt;%java.lang.String%&gt;&gt;asEList(nameParts);\n}\nreturn _xblockexpression;'"
      * @generated
      */
     EList<String> getQualifiedNameParts();
@@ -241,7 +239,6 @@ public interface DataField extends EObject {
      * Build qualified name from qualified name parts
      * <!-- end-model-doc -->
      * @model unique="false" separatorUnique="false"
-     *        annotation="http://www.eclipse.org/emf/2002/GenModel body='if ((separator == null))\n{\n\treturn null;\n}\n&lt;%java.lang.String%&gt; qualifiedName = \"\";\n&lt;%org.eclipse.emf.common.util.EList%&gt;&lt;&lt;%java.lang.String%&gt;&gt; _qualifiedNameParts = this.getQualifiedNameParts();\nfor (final &lt;%java.lang.String%&gt; part : _qualifiedNameParts)\n{\n\t&lt;%java.lang.String%&gt; _qualifiedName = qualifiedName;\n\tqualifiedName = (_qualifiedName + (separator + part));\n}\nboolean _isEmpty = qualifiedName.isEmpty();\nboolean _not = (!_isEmpty);\nif (_not)\n{\n\tqualifiedName = qualifiedName.substring(separator.length());\n}\nreturn qualifiedName;'"
      * @generated
      */
     String buildQualifiedName(String separator);
@@ -256,7 +253,6 @@ public interface DataField extends EObject {
      * data structures.
      * <!-- end-model-doc -->
      * @model unique="false"
-     *        annotation="http://www.eclipse.org/emf/2002/GenModel body='&lt;%de.fhdo.ddmm.data.DataStructure%&gt; _dataStructure = this.getDataStructure();\nboolean _tripleEquals = (_dataStructure == null);\nif (_tripleEquals)\n{\n\treturn null;\n}\nif (((this.getName() == null) || this.getName().isEmpty()))\n{\n\treturn null;\n}\n&lt;%de.fhdo.ddmm.data.DataStructure%&gt; superStructure = this.getDataStructure().getSuper();\nwhile ((superStructure != null))\n{\n\t{\n\t\tfinal &lt;%org.eclipse.xtext.xbase.lib.Functions.Function1%&gt;&lt;&lt;%de.fhdo.ddmm.data.DataField%&gt;, &lt;%java.lang.Boolean%&gt;&gt; _function = new &lt;%org.eclipse.xtext.xbase.lib.Functions.Function1%&gt;&lt;&lt;%de.fhdo.ddmm.data.DataField%&gt;, &lt;%java.lang.Boolean%&gt;&gt;()\n\t\t{\n\t\t\tpublic &lt;%java.lang.Boolean%&gt; apply(final &lt;%de.fhdo.ddmm.data.DataField%&gt; it)\n\t\t\t{\n\t\t\t\t&lt;%java.lang.String%&gt; _name = &lt;%this%&gt;.getName();\n\t\t\t\t&lt;%java.lang.String%&gt; _name_1 = it.getName();\n\t\t\t\treturn &lt;%java.lang.Boolean%&gt;.valueOf(&lt;%com.google.common.base.Objects%&gt;.equal(_name, _name_1));\n\t\t\t}\n\t\t};\n\t\tfinal &lt;%de.fhdo.ddmm.data.DataField%&gt; overridenField = &lt;%org.eclipse.xtext.xbase.lib.IterableExtensions%&gt;.&lt;&lt;%de.fhdo.ddmm.data.DataField%&gt;&gt;findFirst(superStructure.getDataFields(), _function);\n\t\tif ((overridenField != null))\n\t\t{\n\t\t\treturn overridenField;\n\t\t}\n\t\telse\n\t\t{\n\t\t\tsuperStructure = superStructure.getSuper();\n\t\t}\n\t}\n}\nreturn null;'"
      * @generated
      */
     DataField findEponymousSuperField();

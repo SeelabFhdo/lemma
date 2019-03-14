@@ -123,6 +123,7 @@ public class TechnologySpecificPrimitiveTypeImpl extends PrimitiveTypeImpl imple
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getName() {
         return name;
     }
@@ -132,6 +133,7 @@ public class TechnologySpecificPrimitiveTypeImpl extends PrimitiveTypeImpl imple
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setName(String newName) {
         String oldName = name;
         name = newName;
@@ -144,6 +146,7 @@ public class TechnologySpecificPrimitiveTypeImpl extends PrimitiveTypeImpl imple
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isDefault() {
         return default_;
     }
@@ -153,6 +156,7 @@ public class TechnologySpecificPrimitiveTypeImpl extends PrimitiveTypeImpl imple
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setDefault(boolean newDefault) {
         boolean oldDefault = default_;
         default_ = newDefault;
@@ -165,6 +169,7 @@ public class TechnologySpecificPrimitiveTypeImpl extends PrimitiveTypeImpl imple
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Technology getTechnology() {
         if (eContainerFeatureID() != TechnologyPackage.TECHNOLOGY_SPECIFIC_PRIMITIVE_TYPE__TECHNOLOGY) return null;
         return (Technology)eContainer();
@@ -195,6 +200,7 @@ public class TechnologySpecificPrimitiveTypeImpl extends PrimitiveTypeImpl imple
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setTechnology(Technology newTechnology) {
         if (newTechnology != eInternalContainer() || (eContainerFeatureID() != TechnologyPackage.TECHNOLOGY_SPECIFIC_PRIMITIVE_TYPE__TECHNOLOGY && newTechnology != null)) {
             if (EcoreUtil.isAncestor(this, newTechnology))
@@ -216,6 +222,7 @@ public class TechnologySpecificPrimitiveTypeImpl extends PrimitiveTypeImpl imple
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<PrimitiveType> getBasicBuiltinPrimitiveTypes() {
         if (basicBuiltinPrimitiveTypes == null) {
             basicBuiltinPrimitiveTypes = new EObjectContainmentEList<PrimitiveType>(PrimitiveType.class, this, TechnologyPackage.TECHNOLOGY_SPECIFIC_PRIMITIVE_TYPE__BASIC_BUILTIN_PRIMITIVE_TYPES);
@@ -228,6 +235,7 @@ public class TechnologySpecificPrimitiveTypeImpl extends PrimitiveTypeImpl imple
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<String> getQualifiedNameParts() {
         EList<String> _xblockexpression = null;
         {
@@ -247,6 +255,7 @@ public class TechnologySpecificPrimitiveTypeImpl extends PrimitiveTypeImpl imple
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String buildQualifiedName(final String separator) {
         if ((separator == null)) {
             return null;
@@ -427,7 +436,7 @@ public class TechnologySpecificPrimitiveTypeImpl extends PrimitiveTypeImpl imple
     public String toString() {
         if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
+        StringBuilder result = new StringBuilder(super.toString());
         result.append(" (name: ");
         result.append(name);
         result.append(", default: ");

@@ -80,6 +80,7 @@ public class MappingFactoryImpl extends EFactoryImpl implements MappingFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public TechnologyMapping createTechnologyMapping() {
         TechnologyMappingImpl technologyMapping = new TechnologyMappingImpl();
         return technologyMapping;
@@ -90,6 +91,7 @@ public class MappingFactoryImpl extends EFactoryImpl implements MappingFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public MicroserviceMapping createMicroserviceMapping() {
         MicroserviceMappingImpl microserviceMapping = new MicroserviceMappingImpl();
         return microserviceMapping;
@@ -100,6 +102,7 @@ public class MappingFactoryImpl extends EFactoryImpl implements MappingFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ImportedMicroservice createImportedMicroservice() {
         ImportedMicroserviceImpl importedMicroservice = new ImportedMicroserviceImpl();
         return importedMicroservice;
@@ -110,6 +113,7 @@ public class MappingFactoryImpl extends EFactoryImpl implements MappingFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public InterfaceMapping createInterfaceMapping() {
         InterfaceMappingImpl interfaceMapping = new InterfaceMappingImpl();
         return interfaceMapping;
@@ -120,6 +124,7 @@ public class MappingFactoryImpl extends EFactoryImpl implements MappingFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public OperationMapping createOperationMapping() {
         OperationMappingImpl operationMapping = new OperationMappingImpl();
         return operationMapping;
@@ -130,6 +135,7 @@ public class MappingFactoryImpl extends EFactoryImpl implements MappingFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ReferredOperationMapping createReferredOperationMapping() {
         ReferredOperationMappingImpl referredOperationMapping = new ReferredOperationMappingImpl();
         return referredOperationMapping;
@@ -140,6 +146,7 @@ public class MappingFactoryImpl extends EFactoryImpl implements MappingFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public PrimitiveParameterMapping createPrimitiveParameterMapping() {
         PrimitiveParameterMappingImpl primitiveParameterMapping = new PrimitiveParameterMappingImpl();
         return primitiveParameterMapping;
@@ -150,6 +157,7 @@ public class MappingFactoryImpl extends EFactoryImpl implements MappingFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ComplexParameterMapping createComplexParameterMapping() {
         ComplexParameterMappingImpl complexParameterMapping = new ComplexParameterMappingImpl();
         return complexParameterMapping;
@@ -160,6 +168,7 @@ public class MappingFactoryImpl extends EFactoryImpl implements MappingFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public TechnologySpecificDataFieldTypeMapping createTechnologySpecificDataFieldTypeMapping() {
         TechnologySpecificDataFieldTypeMappingImpl technologySpecificDataFieldTypeMapping = new TechnologySpecificDataFieldTypeMappingImpl();
         return technologySpecificDataFieldTypeMapping;
@@ -170,6 +179,7 @@ public class MappingFactoryImpl extends EFactoryImpl implements MappingFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public DataFieldHierarchy createDataFieldHierarchy() {
         DataFieldHierarchyImpl dataFieldHierarchy = new DataFieldHierarchyImpl();
         return dataFieldHierarchy;
@@ -180,6 +190,7 @@ public class MappingFactoryImpl extends EFactoryImpl implements MappingFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public TechnologySpecificProtocolSpecification createTechnologySpecificProtocolSpecification() {
         TechnologySpecificProtocolSpecificationImpl technologySpecificProtocolSpecification = new TechnologySpecificProtocolSpecificationImpl();
         return technologySpecificProtocolSpecification;
@@ -190,6 +201,7 @@ public class MappingFactoryImpl extends EFactoryImpl implements MappingFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public TechnologySpecificProtocol createTechnologySpecificProtocol() {
         TechnologySpecificProtocolImpl technologySpecificProtocol = new TechnologySpecificProtocolImpl();
         return technologySpecificProtocol;
@@ -200,6 +212,7 @@ public class MappingFactoryImpl extends EFactoryImpl implements MappingFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public TechnologySpecificEndpoint createTechnologySpecificEndpoint() {
         TechnologySpecificEndpointImpl technologySpecificEndpoint = new TechnologySpecificEndpointImpl();
         return technologySpecificEndpoint;
@@ -210,6 +223,7 @@ public class MappingFactoryImpl extends EFactoryImpl implements MappingFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public TechnologySpecificImportedServiceAspect createTechnologySpecificImportedServiceAspect() {
         TechnologySpecificImportedServiceAspectImpl technologySpecificImportedServiceAspect = new TechnologySpecificImportedServiceAspectImpl();
         return technologySpecificImportedServiceAspect;
@@ -220,6 +234,7 @@ public class MappingFactoryImpl extends EFactoryImpl implements MappingFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public MappingPackage getMappingPackage() {
         return (MappingPackage)getEPackage();
     }

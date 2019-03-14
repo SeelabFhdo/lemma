@@ -95,6 +95,7 @@ public class ComplexParameterMappingImpl extends ParameterMappingImpl implements
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Import getTechnology() {
         if (technology != null && technology.eIsProxy()) {
             InternalEObject oldTechnology = (InternalEObject)technology;
@@ -121,6 +122,7 @@ public class ComplexParameterMappingImpl extends ParameterMappingImpl implements
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setTechnology(Import newTechnology) {
         Import oldTechnology = technology;
         technology = newTechnology;
@@ -133,6 +135,7 @@ public class ComplexParameterMappingImpl extends ParameterMappingImpl implements
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ComplexType getTechnologySpecificComplexType() {
         if (technologySpecificComplexType != null && technologySpecificComplexType.eIsProxy()) {
             InternalEObject oldTechnologySpecificComplexType = (InternalEObject)technologySpecificComplexType;
@@ -159,6 +162,7 @@ public class ComplexParameterMappingImpl extends ParameterMappingImpl implements
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setTechnologySpecificComplexType(ComplexType newTechnologySpecificComplexType) {
         ComplexType oldTechnologySpecificComplexType = technologySpecificComplexType;
         technologySpecificComplexType = newTechnologySpecificComplexType;
@@ -171,6 +175,7 @@ public class ComplexParameterMappingImpl extends ParameterMappingImpl implements
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<TechnologySpecificDataFieldTypeMapping> getDataFieldMappings() {
         if (dataFieldMappings == null) {
             dataFieldMappings = new EObjectContainmentWithInverseEList<TechnologySpecificDataFieldTypeMapping>(TechnologySpecificDataFieldTypeMapping.class, this, MappingPackage.COMPLEX_PARAMETER_MAPPING__DATA_FIELD_MAPPINGS, MappingPackage.TECHNOLOGY_SPECIFIC_DATA_FIELD_TYPE_MAPPING__PARAMETER_MAPPING);

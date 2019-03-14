@@ -112,6 +112,7 @@ public class ImportedOperationAspectImpl extends MinimalEObjectImpl.Container im
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Import getTechnology() {
         if (technology != null && technology.eIsProxy()) {
             InternalEObject oldTechnology = (InternalEObject)technology;
@@ -138,6 +139,7 @@ public class ImportedOperationAspectImpl extends MinimalEObjectImpl.Container im
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setTechnology(Import newTechnology) {
         Import oldTechnology = technology;
         technology = newTechnology;
@@ -150,6 +152,7 @@ public class ImportedOperationAspectImpl extends MinimalEObjectImpl.Container im
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public OperationAspect getAspect() {
         if (aspect != null && aspect.eIsProxy()) {
             InternalEObject oldAspect = (InternalEObject)aspect;
@@ -176,6 +179,7 @@ public class ImportedOperationAspectImpl extends MinimalEObjectImpl.Container im
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setAspect(OperationAspect newAspect) {
         OperationAspect oldAspect = aspect;
         aspect = newAspect;
@@ -188,6 +192,7 @@ public class ImportedOperationAspectImpl extends MinimalEObjectImpl.Container im
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public PrimitiveValue getSinglePropertyValue() {
         return singlePropertyValue;
     }
@@ -212,6 +217,7 @@ public class ImportedOperationAspectImpl extends MinimalEObjectImpl.Container im
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setSinglePropertyValue(PrimitiveValue newSinglePropertyValue) {
         if (newSinglePropertyValue != singlePropertyValue) {
             NotificationChain msgs = null;
@@ -231,6 +237,7 @@ public class ImportedOperationAspectImpl extends MinimalEObjectImpl.Container im
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<TechnologySpecificPropertyValueAssignment> getValues() {
         if (values == null) {
             values = new EObjectContainmentEList<TechnologySpecificPropertyValueAssignment>(TechnologySpecificPropertyValueAssignment.class, this, OperationPackage.IMPORTED_OPERATION_ASPECT__VALUES);
@@ -243,6 +250,7 @@ public class ImportedOperationAspectImpl extends MinimalEObjectImpl.Container im
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public OperationNode getOperationNode() {
         if (eContainerFeatureID() != OperationPackage.IMPORTED_OPERATION_ASPECT__OPERATION_NODE) return null;
         return (OperationNode)eContainer();
@@ -273,6 +281,7 @@ public class ImportedOperationAspectImpl extends MinimalEObjectImpl.Container im
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setOperationNode(OperationNode newOperationNode) {
         if (newOperationNode != eInternalContainer() || (eContainerFeatureID() != OperationPackage.IMPORTED_OPERATION_ASPECT__OPERATION_NODE && newOperationNode != null)) {
             if (EcoreUtil.isAncestor(this, newOperationNode))

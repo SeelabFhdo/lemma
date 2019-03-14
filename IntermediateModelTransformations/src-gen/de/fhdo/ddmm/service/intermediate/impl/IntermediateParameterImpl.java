@@ -239,6 +239,7 @@ public class IntermediateParameterImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getName() {
         return name;
     }
@@ -248,6 +249,7 @@ public class IntermediateParameterImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setName(String newName) {
         String oldName = name;
         name = newName;
@@ -260,6 +262,7 @@ public class IntermediateParameterImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getQualifiedName() {
         return qualifiedName;
     }
@@ -269,6 +272,7 @@ public class IntermediateParameterImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setQualifiedName(String newQualifiedName) {
         String oldQualifiedName = qualifiedName;
         qualifiedName = newQualifiedName;
@@ -281,6 +285,7 @@ public class IntermediateParameterImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ExchangePattern getExchangePattern() {
         return exchangePattern;
     }
@@ -290,6 +295,7 @@ public class IntermediateParameterImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setExchangePattern(ExchangePattern newExchangePattern) {
         ExchangePattern oldExchangePattern = exchangePattern;
         exchangePattern = newExchangePattern == null ? EXCHANGE_PATTERN_EDEFAULT : newExchangePattern;
@@ -302,6 +308,7 @@ public class IntermediateParameterImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public CommunicationType getCommunicationType() {
         return communicationType;
     }
@@ -311,6 +318,7 @@ public class IntermediateParameterImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setCommunicationType(CommunicationType newCommunicationType) {
         CommunicationType oldCommunicationType = communicationType;
         communicationType = newCommunicationType == null ? COMMUNICATION_TYPE_EDEFAULT : newCommunicationType;
@@ -323,6 +331,7 @@ public class IntermediateParameterImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isCommunicatesFault() {
         return communicatesFault;
     }
@@ -332,6 +341,7 @@ public class IntermediateParameterImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setCommunicatesFault(boolean newCommunicatesFault) {
         boolean oldCommunicatesFault = communicatesFault;
         communicatesFault = newCommunicatesFault;
@@ -344,6 +354,7 @@ public class IntermediateParameterImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isOptional() {
         return optional;
     }
@@ -353,6 +364,7 @@ public class IntermediateParameterImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setOptional(boolean newOptional) {
         boolean oldOptional = optional;
         optional = newOptional;
@@ -365,6 +377,7 @@ public class IntermediateParameterImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public IntermediateType getType() {
         return type;
     }
@@ -389,6 +402,7 @@ public class IntermediateParameterImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setType(IntermediateType newType) {
         if (newType != type) {
             NotificationChain msgs = null;
@@ -408,6 +422,7 @@ public class IntermediateParameterImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public OperationReference getInitializedByOperation() {
         return initializedByOperation;
     }
@@ -432,6 +447,7 @@ public class IntermediateParameterImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setInitializedByOperation(OperationReference newInitializedByOperation) {
         if (newInitializedByOperation != initializedByOperation) {
             NotificationChain msgs = null;
@@ -451,6 +467,7 @@ public class IntermediateParameterImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<IntermediateImportedAspect> getAspects() {
         if (aspects == null) {
             aspects = new EObjectContainmentWithInverseEList<IntermediateImportedAspect>(IntermediateImportedAspect.class, this, IntermediatePackage.INTERMEDIATE_PARAMETER__ASPECTS, IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__PARAMETER);
@@ -463,6 +480,7 @@ public class IntermediateParameterImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<IntermediateMappedDataField> getMappedDataFields() {
         if (mappedDataFields == null) {
             mappedDataFields = new EObjectContainmentWithInverseEList<IntermediateMappedDataField>(IntermediateMappedDataField.class, this, IntermediatePackage.INTERMEDIATE_PARAMETER__MAPPED_DATA_FIELDS, IntermediatePackage.INTERMEDIATE_MAPPED_DATA_FIELD__PARAMETER);
@@ -475,6 +493,7 @@ public class IntermediateParameterImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public IntermediateOperation getOperation() {
         if (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_PARAMETER__OPERATION) return null;
         return (IntermediateOperation)eContainer();
@@ -505,6 +524,7 @@ public class IntermediateParameterImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setOperation(IntermediateOperation newOperation) {
         if (newOperation != eInternalContainer() || (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_PARAMETER__OPERATION && newOperation != null)) {
             if (EcoreUtil.isAncestor(this, newOperation))
@@ -753,7 +773,7 @@ public class IntermediateParameterImpl extends MinimalEObjectImpl.Container impl
     public String toString() {
         if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
+        StringBuilder result = new StringBuilder(super.toString());
         result.append(" (name: ");
         result.append(name);
         result.append(", qualifiedName: ");

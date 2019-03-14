@@ -123,7 +123,6 @@ public interface PrimitiveValue extends EObject {
      * value is not numeric.
      * <!-- end-model-doc -->
      * @model unique="false" lowerBoundUnique="false" upperBoundUnique="false"
-     *        annotation="http://www.eclipse.org/emf/2002/GenModel body='&lt;%java.math.BigDecimal%&gt; _numericValue = this.getNumericValue();\nboolean _tripleEquals = (_numericValue == null);\nif (_tripleEquals)\n{\n\treturn false;\n}\nint _compareTo = this.getNumericValue().compareTo(lowerBound);\nfinal boolean outOfBoundLower = (_compareTo &lt; 0);\nint _compareTo_1 = this.getNumericValue().compareTo(upperBound);\nfinal boolean outOfBoundUpper = (_compareTo_1 &gt; 0);\nreturn ((!outOfBoundLower) &amp;&amp; (!outOfBoundUpper));'"
      * @generated
      */
     boolean isInClosedSet(BigDecimal lowerBound, BigDecimal upperBound);
@@ -136,7 +135,6 @@ public interface PrimitiveValue extends EObject {
      * Check if numeric value has decimals. Returns false if value is not numeric.
      * <!-- end-model-doc -->
      * @model unique="false"
-     *        annotation="http://www.eclipse.org/emf/2002/GenModel body='&lt;%java.math.BigDecimal%&gt; _numericValue = this.getNumericValue();\nboolean _tripleEquals = (_numericValue == null);\nif (_tripleEquals)\n{\n\treturn false;\n}\n&lt;%java.math.BigDecimal%&gt; _numericValue_1 = this.getNumericValue();\n&lt;%java.math.BigDecimal%&gt; _bigDecimal = new &lt;%java.math.BigDecimal%&gt;(\"1\");\nfinal &lt;%java.math.BigDecimal%&gt; moduloOne = _numericValue_1.remainder(_bigDecimal);\nint _compareTo = moduloOne.compareTo(&lt;%java.math.BigDecimal%&gt;.ZERO);\nreturn (_compareTo != 0);'"
      * @generated
      */
     boolean hasDecimals();
@@ -149,7 +147,6 @@ public interface PrimitiveValue extends EObject {
      * Check if value is _exactly_ of the given primitive type
      * <!-- end-model-doc -->
      * @model unique="false" primitiveTypeUnique="false"
-     *        annotation="http://www.eclipse.org/emf/2002/GenModel body='&lt;%java.lang.Object%&gt; _asValueOfType = this.asValueOfType(primitiveType);\nreturn (_asValueOfType != null);'"
      * @generated
      */
     boolean isOfType(PrimitiveType primitiveType);
@@ -162,7 +159,6 @@ public interface PrimitiveValue extends EObject {
      * Check if value does not contain a value of a primitive type
      * <!-- end-model-doc -->
      * @model unique="false"
-     *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return (((this.getStringValue() == null) &amp;&amp; (this.getNumericValue() == null)) &amp;&amp; (this.getBooleanValue() == null));'"
      * @generated
      */
     boolean hasNoValue();
@@ -176,7 +172,6 @@ public interface PrimitiveValue extends EObject {
      * possible or the no primitive value is contained, return null.
      * <!-- end-model-doc -->
      * @model unique="false" primitiveTypeUnique="false"
-     *        annotation="http://www.eclipse.org/emf/2002/GenModel body='if (((primitiveType == null) || this.hasNoValue()))\n{\n\treturn null;\n}\n&lt;%java.lang.Object%&gt; _switchResult = null;\nboolean _matched = false;\nif (primitiveType instanceof &lt;%de.fhdo.ddmm.data.PrimitiveBoolean%&gt;)\n{\n\t_matched=true;\n\t_switchResult = this.asBoolean();\n}\nif (!_matched)\n{\n\tif (primitiveType instanceof &lt;%de.fhdo.ddmm.data.PrimitiveByte%&gt;)\n\t{\n\t\t_matched=true;\n\t\t_switchResult = this.asByte();\n\t}\n}\nif (!_matched)\n{\n\tif (primitiveType instanceof &lt;%de.fhdo.ddmm.data.PrimitiveCharacter%&gt;)\n\t{\n\t\t_matched=true;\n\t\t_switchResult = this.asCharacter();\n\t}\n}\nif (!_matched)\n{\n\tif (primitiveType instanceof &lt;%de.fhdo.ddmm.data.PrimitiveDate%&gt;)\n\t{\n\t\t_matched=true;\n\t\t_switchResult = this.asDate();\n\t}\n}\nif (!_matched)\n{\n\tif (primitiveType instanceof &lt;%de.fhdo.ddmm.data.PrimitiveDouble%&gt;)\n\t{\n\t\t_matched=true;\n\t\t_switchResult = this.asDouble();\n\t}\n}\nif (!_matched)\n{\n\tif (primitiveType instanceof &lt;%de.fhdo.ddmm.data.PrimitiveFloat%&gt;)\n\t{\n\t\t_matched=true;\n\t\t_switchResult = this.asFloat();\n\t}\n}\nif (!_matched)\n{\n\tif (primitiveType instanceof &lt;%de.fhdo.ddmm.data.PrimitiveInteger%&gt;)\n\t{\n\t\t_matched=true;\n\t\t_switchResult = this.asInteger();\n\t}\n}\nif (!_matched)\n{\n\tif (primitiveType instanceof &lt;%de.fhdo.ddmm.data.PrimitiveLong%&gt;)\n\t{\n\t\t_matched=true;\n\t\t_switchResult = this.asLong();\n\t}\n}\nif (!_matched)\n{\n\tif (primitiveType instanceof &lt;%de.fhdo.ddmm.data.PrimitiveShort%&gt;)\n\t{\n\t\t_matched=true;\n\t\t_switchResult = this.asShort();\n\t}\n}\nif (!_matched)\n{\n\tif (primitiveType instanceof &lt;%de.fhdo.ddmm.data.PrimitiveString%&gt;)\n\t{\n\t\t_matched=true;\n\t\t_switchResult = this.asString();\n\t}\n}\nreturn _switchResult;'"
      * @generated
      */
     Object asValueOfType(PrimitiveType primitiveType);
@@ -190,7 +185,6 @@ public interface PrimitiveValue extends EObject {
      * effectively null.
      * <!-- end-model-doc -->
      * @model unique="false"
-     *        annotation="http://www.eclipse.org/emf/2002/GenModel body='boolean _hasNoValue = this.hasNoValue();\nif (_hasNoValue)\n{\n\treturn \"\";\n}\n&lt;%java.lang.String%&gt; _stringValue = this.getStringValue();\nboolean _tripleNotEquals = (_stringValue != null);\nif (_tripleNotEquals)\n{\n\treturn this.getStringValue();\n}\nelse\n{\n\t&lt;%java.math.BigDecimal%&gt; _numericValue = this.getNumericValue();\n\tboolean _tripleNotEquals_1 = (_numericValue != null);\n\tif (_tripleNotEquals_1)\n\t{\n\t\treturn this.getNumericValue().toString();\n\t}\n\telse\n\t{\n\t\t&lt;%java.lang.Boolean%&gt; _booleanValue = this.getBooleanValue();\n\t\tboolean _tripleNotEquals_2 = (_booleanValue != null);\n\t\tif (_tripleNotEquals_2)\n\t\t{\n\t\t\treturn this.getBooleanValue().toString();\n\t\t}\n\t}\n}\nreturn null;'"
      * @generated
      */
     String valueAsString();
@@ -203,7 +197,6 @@ public interface PrimitiveValue extends EObject {
      * Return value as boolean or null, if value is no boolean
      * <!-- end-model-doc -->
      * @model unique="false"
-     *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return this.getBooleanValue();'"
      * @generated
      */
     Boolean asBoolean();
@@ -216,7 +209,6 @@ public interface PrimitiveValue extends EObject {
      * Return value as byte or null, if value is no byte
      * <!-- end-model-doc -->
      * @model unique="false"
-     *        annotation="http://www.eclipse.org/emf/2002/GenModel body='&lt;%java.math.BigDecimal%&gt; _numericValue = this.getNumericValue();\nboolean _tripleEquals = (_numericValue == null);\nif (_tripleEquals)\n{\n\treturn null;\n}\nboolean _hasDecimals = this.hasDecimals();\nif (_hasDecimals)\n{\n\treturn null;\n}\n&lt;%java.math.BigDecimal%&gt; _bigDecimal = new &lt;%java.math.BigDecimal%&gt;(&lt;%java.lang.Byte%&gt;.MIN_VALUE);\n&lt;%java.math.BigDecimal%&gt; _bigDecimal_1 = new &lt;%java.math.BigDecimal%&gt;(&lt;%java.lang.Byte%&gt;.MAX_VALUE);\nboolean _isInClosedSet = this.isInClosedSet(_bigDecimal, _bigDecimal_1);\nboolean _not = (!_isInClosedSet);\nif (_not)\n{\n\treturn null;\n}\nreturn &lt;%java.lang.Byte%&gt;.valueOf(this.getNumericValue().byteValue());'"
      * @generated
      */
     Byte asByte();
@@ -229,7 +221,6 @@ public interface PrimitiveValue extends EObject {
      * Return value as character or null, if value is no character
      * <!-- end-model-doc -->
      * @model unique="false"
-     *        annotation="http://www.eclipse.org/emf/2002/GenModel body='&lt;%java.lang.String%&gt; _stringValue = this.getStringValue();\nboolean _tripleEquals = (_stringValue == null);\nif (_tripleEquals)\n{\n\treturn null;\n}\nboolean _isEmpty = this.getStringValue().isEmpty();\nif (_isEmpty)\n{\n\treturn &lt;%java.lang.Character%&gt;.valueOf(&lt;%java.lang.Character%&gt;.MIN_VALUE);\n}\nelse\n{\n\tint _length = this.getStringValue().length();\n\tboolean _tripleEquals_1 = (_length == 1);\n\tif (_tripleEquals_1)\n\t{\n\t\treturn &lt;%java.lang.Character%&gt;.valueOf(this.getStringValue().charAt(0));\n\t}\n}\nreturn null;'"
      * @generated
      */
     Character asCharacter();
@@ -242,7 +233,6 @@ public interface PrimitiveValue extends EObject {
      * Return value as date or null, if value is no date in Java's DateFormat.SHORT format
      * <!-- end-model-doc -->
      * @model unique="false"
-     *        annotation="http://www.eclipse.org/emf/2002/GenModel body='&lt;%java.lang.String%&gt; _stringValue = this.getStringValue();\nboolean _tripleEquals = (_stringValue == null);\nif (_tripleEquals)\n{\n\treturn null;\n}\ntry\n{\n\tfinal &lt;%java.text.DateFormat%&gt; dateFormatter = &lt;%java.text.DateFormat%&gt;.getDateInstance(&lt;%java.text.DateFormat%&gt;.SHORT);\n\treturn dateFormatter.parse(this.getStringValue());\n}\ncatch (final Throwable _t) {\n\tif (_t instanceof &lt;%java.text.ParseException%&gt;) {\n\t\tfinal &lt;%java.text.ParseException%&gt; ex = (&lt;%java.text.ParseException%&gt;)_t;\n\t\treturn null;\n\t}\n\telse\n\t{\n\t\tthrow &lt;%org.eclipse.xtext.xbase.lib.Exceptions%&gt;.sneakyThrow(_t);\n\t}\n}'"
      * @generated
      */
     Date asDate();
@@ -255,7 +245,6 @@ public interface PrimitiveValue extends EObject {
      * Return value as double or null, if value is no double
      * <!-- end-model-doc -->
      * @model unique="false"
-     *        annotation="http://www.eclipse.org/emf/2002/GenModel body='&lt;%java.math.BigDecimal%&gt; _numericValue = this.getNumericValue();\nboolean _tripleEquals = (_numericValue == null);\nif (_tripleEquals)\n{\n\treturn null;\n}\n&lt;%java.math.BigDecimal%&gt; _bigDecimal = new &lt;%java.math.BigDecimal%&gt;(&lt;%java.lang.Double%&gt;.MIN_VALUE);\n&lt;%java.math.BigDecimal%&gt; _bigDecimal_1 = new &lt;%java.math.BigDecimal%&gt;(&lt;%java.lang.Double%&gt;.MAX_VALUE);\nboolean _isInClosedSet = this.isInClosedSet(_bigDecimal, _bigDecimal_1);\nboolean _not = (!_isInClosedSet);\nif (_not)\n{\n\treturn null;\n}\nfinal double doubleValue = this.getNumericValue().doubleValue();\nif (((!&lt;%java.lang.Double%&gt;.isNaN(doubleValue)) &amp;&amp; (!&lt;%java.lang.Double%&gt;.isInfinite(doubleValue))))\n{\n\treturn &lt;%java.lang.Double%&gt;.valueOf(doubleValue);\n}\nreturn null;'"
      * @generated
      */
     Double asDouble();
@@ -268,7 +257,6 @@ public interface PrimitiveValue extends EObject {
      * Return value as float or null, if value is no float
      * <!-- end-model-doc -->
      * @model unique="false"
-     *        annotation="http://www.eclipse.org/emf/2002/GenModel body='&lt;%java.math.BigDecimal%&gt; _numericValue = this.getNumericValue();\nboolean _tripleEquals = (_numericValue == null);\nif (_tripleEquals)\n{\n\treturn null;\n}\n&lt;%java.math.BigDecimal%&gt; _bigDecimal = new &lt;%java.math.BigDecimal%&gt;(&lt;%java.lang.Float%&gt;.MIN_VALUE);\n&lt;%java.math.BigDecimal%&gt; _bigDecimal_1 = new &lt;%java.math.BigDecimal%&gt;(&lt;%java.lang.Float%&gt;.MAX_VALUE);\nboolean _isInClosedSet = this.isInClosedSet(_bigDecimal, _bigDecimal_1);\nboolean _not = (!_isInClosedSet);\nif (_not)\n{\n\treturn null;\n}\nfinal float floatValue = this.getNumericValue().floatValue();\nif (((!&lt;%java.lang.Float%&gt;.isNaN(floatValue)) &amp;&amp; (!&lt;%java.lang.Float%&gt;.isInfinite(floatValue))))\n{\n\treturn &lt;%java.lang.Float%&gt;.valueOf(floatValue);\n}\nreturn null;'"
      * @generated
      */
     Float asFloat();
@@ -281,7 +269,6 @@ public interface PrimitiveValue extends EObject {
      * Return value as integer or null, if value is no integer
      * <!-- end-model-doc -->
      * @model unique="false"
-     *        annotation="http://www.eclipse.org/emf/2002/GenModel body='&lt;%java.math.BigDecimal%&gt; _numericValue = this.getNumericValue();\nboolean _tripleEquals = (_numericValue == null);\nif (_tripleEquals)\n{\n\treturn null;\n}\nboolean _hasDecimals = this.hasDecimals();\nif (_hasDecimals)\n{\n\treturn null;\n}\n&lt;%java.math.BigDecimal%&gt; _bigDecimal = new &lt;%java.math.BigDecimal%&gt;(&lt;%java.lang.Integer%&gt;.MIN_VALUE);\n&lt;%java.math.BigDecimal%&gt; _bigDecimal_1 = new &lt;%java.math.BigDecimal%&gt;(&lt;%java.lang.Integer%&gt;.MAX_VALUE);\nboolean _isInClosedSet = this.isInClosedSet(_bigDecimal, _bigDecimal_1);\nboolean _not = (!_isInClosedSet);\nif (_not)\n{\n\treturn null;\n}\ntry\n{\n\treturn &lt;%java.lang.Integer%&gt;.valueOf(this.getNumericValue().intValueExact());\n}\ncatch (final Throwable _t) {\n\tif (_t instanceof &lt;%java.lang.ArithmeticException%&gt;) {\n\t\tfinal &lt;%java.lang.ArithmeticException%&gt; ex = (&lt;%java.lang.ArithmeticException%&gt;)_t;\n\t\treturn null;\n\t}\n\telse\n\t{\n\t\tthrow &lt;%org.eclipse.xtext.xbase.lib.Exceptions%&gt;.sneakyThrow(_t);\n\t}\n}'"
      * @generated
      */
     Integer asInteger();
@@ -294,7 +281,6 @@ public interface PrimitiveValue extends EObject {
      * Return value as long or null, if value is no long
      * <!-- end-model-doc -->
      * @model unique="false"
-     *        annotation="http://www.eclipse.org/emf/2002/GenModel body='&lt;%java.math.BigDecimal%&gt; _numericValue = this.getNumericValue();\nboolean _tripleEquals = (_numericValue == null);\nif (_tripleEquals)\n{\n\treturn null;\n}\nboolean _hasDecimals = this.hasDecimals();\nif (_hasDecimals)\n{\n\treturn null;\n}\n&lt;%java.math.BigDecimal%&gt; _bigDecimal = new &lt;%java.math.BigDecimal%&gt;(&lt;%java.lang.Long%&gt;.MIN_VALUE);\n&lt;%java.math.BigDecimal%&gt; _bigDecimal_1 = new &lt;%java.math.BigDecimal%&gt;(&lt;%java.lang.Long%&gt;.MAX_VALUE);\nboolean _isInClosedSet = this.isInClosedSet(_bigDecimal, _bigDecimal_1);\nboolean _not = (!_isInClosedSet);\nif (_not)\n{\n\treturn null;\n}\ntry\n{\n\treturn &lt;%java.lang.Long%&gt;.valueOf(this.getNumericValue().longValueExact());\n}\ncatch (final Throwable _t) {\n\tif (_t instanceof &lt;%java.lang.ArithmeticException%&gt;) {\n\t\tfinal &lt;%java.lang.ArithmeticException%&gt; ex = (&lt;%java.lang.ArithmeticException%&gt;)_t;\n\t\treturn null;\n\t}\n\telse\n\t{\n\t\tthrow &lt;%org.eclipse.xtext.xbase.lib.Exceptions%&gt;.sneakyThrow(_t);\n\t}\n}'"
      * @generated
      */
     Long asLong();
@@ -307,7 +293,6 @@ public interface PrimitiveValue extends EObject {
      * Return value as short or null, if value is no short
      * <!-- end-model-doc -->
      * @model unique="false"
-     *        annotation="http://www.eclipse.org/emf/2002/GenModel body='&lt;%java.math.BigDecimal%&gt; _numericValue = this.getNumericValue();\nboolean _tripleEquals = (_numericValue == null);\nif (_tripleEquals)\n{\n\treturn null;\n}\nboolean _hasDecimals = this.hasDecimals();\nif (_hasDecimals)\n{\n\treturn null;\n}\n&lt;%java.math.BigDecimal%&gt; _bigDecimal = new &lt;%java.math.BigDecimal%&gt;(&lt;%java.lang.Short%&gt;.MIN_VALUE);\n&lt;%java.math.BigDecimal%&gt; _bigDecimal_1 = new &lt;%java.math.BigDecimal%&gt;(&lt;%java.lang.Short%&gt;.MAX_VALUE);\nboolean _isInClosedSet = this.isInClosedSet(_bigDecimal, _bigDecimal_1);\nboolean _not = (!_isInClosedSet);\nif (_not)\n{\n\treturn null;\n}\ntry\n{\n\treturn &lt;%java.lang.Short%&gt;.valueOf(this.getNumericValue().shortValueExact());\n}\ncatch (final Throwable _t) {\n\tif (_t instanceof &lt;%java.lang.ArithmeticException%&gt;) {\n\t\tfinal &lt;%java.lang.ArithmeticException%&gt; ex = (&lt;%java.lang.ArithmeticException%&gt;)_t;\n\t\treturn null;\n\t}\n\telse\n\t{\n\t\tthrow &lt;%org.eclipse.xtext.xbase.lib.Exceptions%&gt;.sneakyThrow(_t);\n\t}\n}'"
      * @generated
      */
     Short asShort();
@@ -320,7 +305,6 @@ public interface PrimitiveValue extends EObject {
      * Return value as string or null, if value is no string
      * <!-- end-model-doc -->
      * @model unique="false"
-     *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return this.getStringValue();'"
      * @generated
      */
     String asString();

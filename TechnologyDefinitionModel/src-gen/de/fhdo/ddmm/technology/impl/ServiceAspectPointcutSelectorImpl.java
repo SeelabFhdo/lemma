@@ -10,8 +10,6 @@ import de.fhdo.ddmm.technology.ServiceAspectPointcut;
 import de.fhdo.ddmm.technology.ServiceAspectPointcutSelector;
 import de.fhdo.ddmm.technology.TechnologyPackage;
 
-import java.lang.Iterable;
-
 import java.lang.reflect.InvocationTargetException;
 
 import java.util.Collection;
@@ -106,6 +104,7 @@ public class ServiceAspectPointcutSelectorImpl extends MinimalEObjectImpl.Contai
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<ServiceAspectPointcut> getPointcuts() {
         if (pointcuts == null) {
             pointcuts = new EObjectContainmentWithInverseEList<ServiceAspectPointcut>(ServiceAspectPointcut.class, this, TechnologyPackage.SERVICE_ASPECT_POINTCUT_SELECTOR__POINTCUTS, TechnologyPackage.SERVICE_ASPECT_POINTCUT__SELECTOR);
@@ -118,6 +117,7 @@ public class ServiceAspectPointcutSelectorImpl extends MinimalEObjectImpl.Contai
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ServiceAspect getServiceAspect() {
         if (eContainerFeatureID() != TechnologyPackage.SERVICE_ASPECT_POINTCUT_SELECTOR__SERVICE_ASPECT) return null;
         return (ServiceAspect)eContainer();
@@ -148,6 +148,7 @@ public class ServiceAspectPointcutSelectorImpl extends MinimalEObjectImpl.Contai
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setServiceAspect(ServiceAspect newServiceAspect) {
         if (newServiceAspect != eInternalContainer() || (eContainerFeatureID() != TechnologyPackage.SERVICE_ASPECT_POINTCUT_SELECTOR__SERVICE_ASPECT && newServiceAspect != null)) {
             if (EcoreUtil.isAncestor(this, newServiceAspect))
@@ -169,6 +170,7 @@ public class ServiceAspectPointcutSelectorImpl extends MinimalEObjectImpl.Contai
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getSelectorString() {
         boolean _isEmpty = this.getPointcuts().isEmpty();
         if (_isEmpty) {
@@ -212,6 +214,7 @@ public class ServiceAspectPointcutSelectorImpl extends MinimalEObjectImpl.Contai
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isMoreGenericThan(final ServiceAspectPointcutSelector otherSelector) {
         if ((otherSelector == null)) {
             return true;
@@ -256,6 +259,7 @@ public class ServiceAspectPointcutSelectorImpl extends MinimalEObjectImpl.Contai
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Map<PointcutType, List<String>> orderedSelectorValues() {
         boolean _isEmpty = this.getPointcuts().isEmpty();
         if (_isEmpty) {

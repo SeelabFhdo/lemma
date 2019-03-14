@@ -80,6 +80,7 @@ public class IntermediateDataStructureImpl extends IntermediateComplexTypeImpl i
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public IntermediateDataStructure getSuper() {
         if (super_ != null && super_.eIsProxy()) {
             InternalEObject oldSuper = (InternalEObject)super_;
@@ -106,6 +107,7 @@ public class IntermediateDataStructureImpl extends IntermediateComplexTypeImpl i
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setSuper(IntermediateDataStructure newSuper) {
         IntermediateDataStructure oldSuper = super_;
         super_ = newSuper;
@@ -118,6 +120,7 @@ public class IntermediateDataStructureImpl extends IntermediateComplexTypeImpl i
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<IntermediateDataField> getDataFields() {
         if (dataFields == null) {
             dataFields = new EObjectContainmentWithInverseEList<IntermediateDataField>(IntermediateDataField.class, this, IntermediatePackage.INTERMEDIATE_DATA_STRUCTURE__DATA_FIELDS, IntermediatePackage.INTERMEDIATE_DATA_FIELD__DATA_STRUCTURE);

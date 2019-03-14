@@ -150,7 +150,7 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
 
     /**
      * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-     * 
+     *
      * <p>This method is used to initialize {@link OperationPackage#eINSTANCE} when that field is accessed.
      * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
      * <!-- begin-user-doc -->
@@ -164,7 +164,8 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
         if (isInited) return (OperationPackage)EPackage.Registry.INSTANCE.getEPackage(OperationPackage.eNS_URI);
 
         // Obtain or create and register package
-        OperationPackageImpl theOperationPackage = (OperationPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof OperationPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new OperationPackageImpl());
+        Object registeredOperationPackage = EPackage.Registry.INSTANCE.get(eNS_URI);
+        OperationPackageImpl theOperationPackage = registeredOperationPackage instanceof OperationPackageImpl ? (OperationPackageImpl)registeredOperationPackage : new OperationPackageImpl();
 
         isInited = true;
 
@@ -183,7 +184,6 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
         // Mark meta-data to indicate it can't be changed
         theOperationPackage.freeze();
 
-  
         // Update the registry and return the package
         EPackage.Registry.INSTANCE.put(OperationPackage.eNS_URI, theOperationPackage);
         return theOperationPackage;
@@ -194,6 +194,7 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getOperationModel() {
         return operationModelEClass;
     }
@@ -203,6 +204,7 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getOperationModel_Imports() {
         return (EReference)operationModelEClass.getEStructuralFeatures().get(0);
     }
@@ -212,6 +214,7 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getOperationModel_Containers() {
         return (EReference)operationModelEClass.getEStructuralFeatures().get(1);
     }
@@ -221,6 +224,7 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getOperationModel_InfrastructureNodes() {
         return (EReference)operationModelEClass.getEStructuralFeatures().get(2);
     }
@@ -230,6 +234,7 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getOperationNode() {
         return operationNodeEClass;
     }
@@ -239,6 +244,7 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getOperationNode_Name() {
         return (EAttribute)operationNodeEClass.getEStructuralFeatures().get(0);
     }
@@ -248,6 +254,7 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getOperationNode_Technologies() {
         return (EReference)operationNodeEClass.getEStructuralFeatures().get(1);
     }
@@ -257,6 +264,7 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getOperationNode_OperationEnvironment() {
         return (EReference)operationNodeEClass.getEStructuralFeatures().get(2);
     }
@@ -266,6 +274,7 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getOperationNode_DeployedServices() {
         return (EReference)operationNodeEClass.getEStructuralFeatures().get(3);
     }
@@ -275,6 +284,7 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getOperationNode_DefaultServicePropertyValues() {
         return (EReference)operationNodeEClass.getEStructuralFeatures().get(4);
     }
@@ -284,6 +294,7 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getOperationNode_DeploymentSpecifications() {
         return (EReference)operationNodeEClass.getEStructuralFeatures().get(5);
     }
@@ -293,6 +304,7 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getOperationNode_Aspects() {
         return (EReference)operationNodeEClass.getEStructuralFeatures().get(6);
     }
@@ -302,6 +314,7 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getContainer() {
         return containerEClass;
     }
@@ -311,6 +324,7 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getContainer_DeploymentTechnology() {
         return (EReference)containerEClass.getEStructuralFeatures().get(0);
     }
@@ -320,6 +334,7 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getContainer_DefaultBasicEndpoints() {
         return (EReference)containerEClass.getEStructuralFeatures().get(1);
     }
@@ -329,6 +344,7 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getContainer_OperationModel() {
         return (EReference)containerEClass.getEStructuralFeatures().get(2);
     }
@@ -338,6 +354,7 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getDeploymentTechnologyReference() {
         return deploymentTechnologyReferenceEClass;
     }
@@ -347,6 +364,7 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getDeploymentTechnologyReference_Import() {
         return (EReference)deploymentTechnologyReferenceEClass.getEStructuralFeatures().get(0);
     }
@@ -356,6 +374,7 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getDeploymentTechnologyReference_DeploymentTechnology() {
         return (EReference)deploymentTechnologyReferenceEClass.getEStructuralFeatures().get(1);
     }
@@ -365,6 +384,7 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getDeploymentTechnologyReference_Container() {
         return (EReference)deploymentTechnologyReferenceEClass.getEStructuralFeatures().get(2);
     }
@@ -374,6 +394,7 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getInfrastructureNode() {
         return infrastructureNodeEClass;
     }
@@ -383,6 +404,7 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getInfrastructureNode_InfrastructureTechnology() {
         return (EReference)infrastructureNodeEClass.getEStructuralFeatures().get(0);
     }
@@ -392,6 +414,7 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getInfrastructureNode_Endpoints() {
         return (EReference)infrastructureNodeEClass.getEStructuralFeatures().get(1);
     }
@@ -401,6 +424,7 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getInfrastructureNode_OperationModel() {
         return (EReference)infrastructureNodeEClass.getEStructuralFeatures().get(2);
     }
@@ -410,6 +434,7 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getInfrastructureTechnologyReference() {
         return infrastructureTechnologyReferenceEClass;
     }
@@ -419,6 +444,7 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getInfrastructureTechnologyReference_Import() {
         return (EReference)infrastructureTechnologyReferenceEClass.getEStructuralFeatures().get(0);
     }
@@ -428,6 +454,7 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getInfrastructureTechnologyReference_InfrastructureTechnology() {
         return (EReference)infrastructureTechnologyReferenceEClass.getEStructuralFeatures().get(1);
     }
@@ -437,6 +464,7 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getInfrastructureTechnologyReference_InfrastructureNode() {
         return (EReference)infrastructureTechnologyReferenceEClass.getEStructuralFeatures().get(2);
     }
@@ -446,6 +474,7 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getImportedMicroservice() {
         return importedMicroserviceEClass;
     }
@@ -455,6 +484,7 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getImportedMicroservice_Import() {
         return (EReference)importedMicroserviceEClass.getEStructuralFeatures().get(0);
     }
@@ -464,6 +494,7 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getImportedMicroservice_Microservice() {
         return (EReference)importedMicroserviceEClass.getEStructuralFeatures().get(1);
     }
@@ -473,6 +504,7 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getImportedMicroservice_OperationNode() {
         return (EReference)importedMicroserviceEClass.getEStructuralFeatures().get(2);
     }
@@ -482,6 +514,7 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getServiceDeploymentSpecification() {
         return serviceDeploymentSpecificationEClass;
     }
@@ -491,6 +524,7 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getServiceDeploymentSpecification_Import() {
         return (EReference)serviceDeploymentSpecificationEClass.getEStructuralFeatures().get(0);
     }
@@ -500,6 +534,7 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getServiceDeploymentSpecification_Service() {
         return (EReference)serviceDeploymentSpecificationEClass.getEStructuralFeatures().get(1);
     }
@@ -509,6 +544,7 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getServiceDeploymentSpecification_ServicePropertyValues() {
         return (EReference)serviceDeploymentSpecificationEClass.getEStructuralFeatures().get(2);
     }
@@ -518,6 +554,7 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getServiceDeploymentSpecification_BasicEndpoints() {
         return (EReference)serviceDeploymentSpecificationEClass.getEStructuralFeatures().get(3);
     }
@@ -527,6 +564,7 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getServiceDeploymentSpecification_OperationNode() {
         return (EReference)serviceDeploymentSpecificationEClass.getEStructuralFeatures().get(4);
     }
@@ -536,6 +574,7 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getProtocolAndDataFormat() {
         return protocolAndDataFormatEClass;
     }
@@ -545,6 +584,7 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getProtocolAndDataFormat_Technology() {
         return (EReference)protocolAndDataFormatEClass.getEStructuralFeatures().get(0);
     }
@@ -554,6 +594,7 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getProtocolAndDataFormat_Protocol() {
         return (EReference)protocolAndDataFormatEClass.getEStructuralFeatures().get(1);
     }
@@ -563,6 +604,7 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getProtocolAndDataFormat_DataFormat() {
         return (EReference)protocolAndDataFormatEClass.getEStructuralFeatures().get(2);
     }
@@ -572,6 +614,7 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getProtocolAndDataFormat_Endpoint() {
         return (EReference)protocolAndDataFormatEClass.getEStructuralFeatures().get(3);
     }
@@ -581,6 +624,7 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getBasicEndpoint() {
         return basicEndpointEClass;
     }
@@ -590,6 +634,7 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getBasicEndpoint_Addresses() {
         return (EAttribute)basicEndpointEClass.getEStructuralFeatures().get(0);
     }
@@ -599,6 +644,7 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getBasicEndpoint_Protocols() {
         return (EReference)basicEndpointEClass.getEStructuralFeatures().get(1);
     }
@@ -608,6 +654,7 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getBasicEndpoint_Container() {
         return (EReference)basicEndpointEClass.getEStructuralFeatures().get(2);
     }
@@ -617,6 +664,7 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getBasicEndpoint_InfrastructureNode() {
         return (EReference)basicEndpointEClass.getEStructuralFeatures().get(3);
     }
@@ -626,6 +674,7 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getBasicEndpoint_DeploymentSpecification() {
         return (EReference)basicEndpointEClass.getEStructuralFeatures().get(4);
     }
@@ -635,6 +684,7 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getImportedOperationAspect() {
         return importedOperationAspectEClass;
     }
@@ -644,6 +694,7 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getImportedOperationAspect_Technology() {
         return (EReference)importedOperationAspectEClass.getEStructuralFeatures().get(0);
     }
@@ -653,6 +704,7 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getImportedOperationAspect_Aspect() {
         return (EReference)importedOperationAspectEClass.getEStructuralFeatures().get(1);
     }
@@ -662,6 +714,7 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getImportedOperationAspect_SinglePropertyValue() {
         return (EReference)importedOperationAspectEClass.getEStructuralFeatures().get(2);
     }
@@ -671,6 +724,7 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getImportedOperationAspect_Values() {
         return (EReference)importedOperationAspectEClass.getEStructuralFeatures().get(3);
     }
@@ -680,6 +734,7 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getImportedOperationAspect_OperationNode() {
         return (EReference)importedOperationAspectEClass.getEStructuralFeatures().get(4);
     }
@@ -689,6 +744,7 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EEnum getImportType() {
         return importTypeEEnum;
     }
@@ -698,6 +754,7 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public OperationFactory getOperationFactory() {
         return (OperationFactory)getEFactoryInstance();
     }

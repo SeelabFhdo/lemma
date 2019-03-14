@@ -85,6 +85,7 @@ public class IntermediateImportedTechnologySpecificTypeImpl extends Intermediate
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getQualifiedName() {
         return qualifiedName;
     }
@@ -94,6 +95,7 @@ public class IntermediateImportedTechnologySpecificTypeImpl extends Intermediate
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setQualifiedName(String newQualifiedName) {
         String oldQualifiedName = qualifiedName;
         qualifiedName = newQualifiedName;
@@ -106,6 +108,7 @@ public class IntermediateImportedTechnologySpecificTypeImpl extends Intermediate
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public IntermediateImport getImport() {
         if (import_ != null && import_.eIsProxy()) {
             InternalEObject oldImport = (InternalEObject)import_;
@@ -132,6 +135,7 @@ public class IntermediateImportedTechnologySpecificTypeImpl extends Intermediate
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setImport(IntermediateImport newImport) {
         IntermediateImport oldImport = import_;
         import_ = newImport;
@@ -217,7 +221,7 @@ public class IntermediateImportedTechnologySpecificTypeImpl extends Intermediate
     public String toString() {
         if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
+        StringBuilder result = new StringBuilder(super.toString());
         result.append(" (qualifiedName: ");
         result.append(qualifiedName);
         result.append(')');

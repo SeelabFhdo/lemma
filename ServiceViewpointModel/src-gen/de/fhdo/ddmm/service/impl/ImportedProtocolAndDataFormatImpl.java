@@ -94,6 +94,7 @@ public class ImportedProtocolAndDataFormatImpl extends MinimalEObjectImpl.Contai
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Import getImport() {
         if (import_ != null && import_.eIsProxy()) {
             InternalEObject oldImport = (InternalEObject)import_;
@@ -120,6 +121,7 @@ public class ImportedProtocolAndDataFormatImpl extends MinimalEObjectImpl.Contai
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setImport(Import newImport) {
         Import oldImport = import_;
         import_ = newImport;
@@ -132,6 +134,7 @@ public class ImportedProtocolAndDataFormatImpl extends MinimalEObjectImpl.Contai
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Protocol getImportedProtocol() {
         if (importedProtocol != null && importedProtocol.eIsProxy()) {
             InternalEObject oldImportedProtocol = (InternalEObject)importedProtocol;
@@ -158,6 +161,7 @@ public class ImportedProtocolAndDataFormatImpl extends MinimalEObjectImpl.Contai
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setImportedProtocol(Protocol newImportedProtocol) {
         Protocol oldImportedProtocol = importedProtocol;
         importedProtocol = newImportedProtocol;
@@ -170,6 +174,7 @@ public class ImportedProtocolAndDataFormatImpl extends MinimalEObjectImpl.Contai
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public DataFormat getDataFormat() {
         if (dataFormat != null && dataFormat.eIsProxy()) {
             InternalEObject oldDataFormat = (InternalEObject)dataFormat;
@@ -196,6 +201,7 @@ public class ImportedProtocolAndDataFormatImpl extends MinimalEObjectImpl.Contai
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setDataFormat(DataFormat newDataFormat) {
         DataFormat oldDataFormat = dataFormat;
         dataFormat = newDataFormat;
@@ -208,6 +214,7 @@ public class ImportedProtocolAndDataFormatImpl extends MinimalEObjectImpl.Contai
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ProtocolSpecification getSpecification() {
         if (eContainerFeatureID() != ServicePackage.IMPORTED_PROTOCOL_AND_DATA_FORMAT__SPECIFICATION) return null;
         return (ProtocolSpecification)eContainer();
@@ -238,6 +245,7 @@ public class ImportedProtocolAndDataFormatImpl extends MinimalEObjectImpl.Contai
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setSpecification(ProtocolSpecification newSpecification) {
         if (newSpecification != eInternalContainer() || (eContainerFeatureID() != ServicePackage.IMPORTED_PROTOCOL_AND_DATA_FORMAT__SPECIFICATION && newSpecification != null)) {
             if (EcoreUtil.isAncestor(this, newSpecification))
@@ -259,6 +267,7 @@ public class ImportedProtocolAndDataFormatImpl extends MinimalEObjectImpl.Contai
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Endpoint getEndpoint() {
         if (eContainerFeatureID() != ServicePackage.IMPORTED_PROTOCOL_AND_DATA_FORMAT__ENDPOINT) return null;
         return (Endpoint)eContainer();
@@ -289,6 +298,7 @@ public class ImportedProtocolAndDataFormatImpl extends MinimalEObjectImpl.Contai
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setEndpoint(Endpoint newEndpoint) {
         if (newEndpoint != eInternalContainer() || (eContainerFeatureID() != ServicePackage.IMPORTED_PROTOCOL_AND_DATA_FORMAT__ENDPOINT && newEndpoint != null)) {
             if (EcoreUtil.isAncestor(this, newEndpoint))

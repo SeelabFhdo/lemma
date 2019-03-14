@@ -244,6 +244,7 @@ public class OperationImpl extends MinimalEObjectImpl.Container implements Opera
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getName() {
         return name;
     }
@@ -253,6 +254,7 @@ public class OperationImpl extends MinimalEObjectImpl.Container implements Opera
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setName(String newName) {
         String oldName = name;
         name = newName;
@@ -265,6 +267,7 @@ public class OperationImpl extends MinimalEObjectImpl.Container implements Opera
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isNotImplemented() {
         return notImplemented;
     }
@@ -274,6 +277,7 @@ public class OperationImpl extends MinimalEObjectImpl.Container implements Opera
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setNotImplemented(boolean newNotImplemented) {
         boolean oldNotImplemented = notImplemented;
         notImplemented = newNotImplemented;
@@ -286,6 +290,7 @@ public class OperationImpl extends MinimalEObjectImpl.Container implements Opera
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Visibility getVisibility() {
         return visibility;
     }
@@ -295,6 +300,7 @@ public class OperationImpl extends MinimalEObjectImpl.Container implements Opera
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setVisibility(Visibility newVisibility) {
         Visibility oldVisibility = visibility;
         visibility = newVisibility == null ? VISIBILITY_EDEFAULT : newVisibility;
@@ -307,6 +313,7 @@ public class OperationImpl extends MinimalEObjectImpl.Container implements Opera
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Endpoint> getEndpoints() {
         if (endpoints == null) {
             endpoints = new EObjectContainmentWithInverseEList<Endpoint>(Endpoint.class, this, ServicePackage.OPERATION__ENDPOINTS, ServicePackage.ENDPOINT__OPERATION);
@@ -319,6 +326,7 @@ public class OperationImpl extends MinimalEObjectImpl.Container implements Opera
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<ProtocolSpecification> getProtocols() {
         if (protocols == null) {
             protocols = new EObjectContainmentEList<ProtocolSpecification>(ProtocolSpecification.class, this, ServicePackage.OPERATION__PROTOCOLS);
@@ -331,6 +339,7 @@ public class OperationImpl extends MinimalEObjectImpl.Container implements Opera
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Parameter> getParameters() {
         if (parameters == null) {
             parameters = new EObjectContainmentWithInverseEList<Parameter>(Parameter.class, this, ServicePackage.OPERATION__PARAMETERS, ServicePackage.PARAMETER__OPERATION);
@@ -343,6 +352,7 @@ public class OperationImpl extends MinimalEObjectImpl.Container implements Opera
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<ImportedServiceAspect> getAspects() {
         if (aspects == null) {
             aspects = new EObjectContainmentWithInverseEList<ImportedServiceAspect>(ImportedServiceAspect.class, this, ServicePackage.OPERATION__ASPECTS, ServicePackage.IMPORTED_SERVICE_ASPECT__OPERATION);
@@ -355,6 +365,7 @@ public class OperationImpl extends MinimalEObjectImpl.Container implements Opera
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Interface getInterface() {
         if (eContainerFeatureID() != ServicePackage.OPERATION__INTERFACE) return null;
         return (Interface)eContainer();
@@ -385,6 +396,7 @@ public class OperationImpl extends MinimalEObjectImpl.Container implements Opera
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setInterface(Interface newInterface) {
         if (newInterface != eInternalContainer() || (eContainerFeatureID() != ServicePackage.OPERATION__INTERFACE && newInterface != null)) {
             if (EcoreUtil.isAncestor(this, newInterface))
@@ -406,6 +418,7 @@ public class OperationImpl extends MinimalEObjectImpl.Container implements Opera
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isNotImplementedByContainer() {
         Interface _interface = this.getInterface();
         boolean _tripleEquals = (_interface == null);
@@ -420,6 +433,7 @@ public class OperationImpl extends MinimalEObjectImpl.Container implements Opera
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isEffectivelyNotImplemented() {
         return (this.isNotImplemented() || this.isNotImplementedByContainer());
     }
@@ -429,6 +443,7 @@ public class OperationImpl extends MinimalEObjectImpl.Container implements Opera
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Visibility getEffectiveVisibility() {
         Interface _interface = this.getInterface();
         boolean _tripleEquals = (_interface == null);
@@ -498,6 +513,7 @@ public class OperationImpl extends MinimalEObjectImpl.Container implements Opera
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isEffectivelyInternal() {
         Visibility _effectiveVisibility = this.getEffectiveVisibility();
         return (_effectiveVisibility == Visibility.INTERNAL);
@@ -508,6 +524,7 @@ public class OperationImpl extends MinimalEObjectImpl.Container implements Opera
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public List<Map<String, Object>> t_missingEndpointEffectiveProtocols() {
         if (((((this.getInterface() == null) || 
             (this.getInterface().getMicroservice() == null)) || 
@@ -588,6 +605,7 @@ public class OperationImpl extends MinimalEObjectImpl.Container implements Opera
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public List<Map<String, Object>> t_effectiveProtocolSpecifications() {
         if (((((this.getInterface() == null) || 
             (this.getInterface().getMicroservice() == null)) || 
@@ -631,6 +649,7 @@ public class OperationImpl extends MinimalEObjectImpl.Container implements Opera
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<String> getQualifiedNameParts() {
         EList<String> _xblockexpression = null;
         {
@@ -649,6 +668,7 @@ public class OperationImpl extends MinimalEObjectImpl.Container implements Opera
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String buildQualifiedName(final String separator) {
         if ((separator == null)) {
             return null;
@@ -905,7 +925,7 @@ public class OperationImpl extends MinimalEObjectImpl.Container implements Opera
     public String toString() {
         if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
+        StringBuilder result = new StringBuilder(super.toString());
         result.append(" (name: ");
         result.append(name);
         result.append(", notImplemented: ");

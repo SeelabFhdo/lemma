@@ -111,6 +111,7 @@ public class ReferredOperationMappingImpl extends MinimalEObjectImpl.Container i
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ReferredOperation getOperation() {
         if (operation != null && operation.eIsProxy()) {
             InternalEObject oldOperation = (InternalEObject)operation;
@@ -137,6 +138,7 @@ public class ReferredOperationMappingImpl extends MinimalEObjectImpl.Container i
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setOperation(ReferredOperation newOperation) {
         ReferredOperation oldOperation = operation;
         operation = newOperation;
@@ -149,6 +151,7 @@ public class ReferredOperationMappingImpl extends MinimalEObjectImpl.Container i
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<TechnologySpecificEndpoint> getEndpoints() {
         if (endpoints == null) {
             endpoints = new EObjectContainmentWithInverseEList<TechnologySpecificEndpoint>(TechnologySpecificEndpoint.class, this, MappingPackage.REFERRED_OPERATION_MAPPING__ENDPOINTS, MappingPackage.TECHNOLOGY_SPECIFIC_ENDPOINT__REFERRED_OPERATION_MAPPING);
@@ -161,6 +164,7 @@ public class ReferredOperationMappingImpl extends MinimalEObjectImpl.Container i
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<TechnologySpecificProtocolSpecification> getProtocols() {
         if (protocols == null) {
             protocols = new EObjectContainmentEList<TechnologySpecificProtocolSpecification>(TechnologySpecificProtocolSpecification.class, this, MappingPackage.REFERRED_OPERATION_MAPPING__PROTOCOLS);
@@ -173,6 +177,7 @@ public class ReferredOperationMappingImpl extends MinimalEObjectImpl.Container i
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<TechnologySpecificImportedServiceAspect> getAspects() {
         if (aspects == null) {
             aspects = new EObjectContainmentWithInverseEList<TechnologySpecificImportedServiceAspect>(TechnologySpecificImportedServiceAspect.class, this, MappingPackage.REFERRED_OPERATION_MAPPING__ASPECTS, MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__REFERRED_OPERATION_MAPPING);
@@ -185,6 +190,7 @@ public class ReferredOperationMappingImpl extends MinimalEObjectImpl.Container i
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public MicroserviceMapping getMicroserviceMapping() {
         if (eContainerFeatureID() != MappingPackage.REFERRED_OPERATION_MAPPING__MICROSERVICE_MAPPING) return null;
         return (MicroserviceMapping)eContainer();
@@ -215,6 +221,7 @@ public class ReferredOperationMappingImpl extends MinimalEObjectImpl.Container i
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setMicroserviceMapping(MicroserviceMapping newMicroserviceMapping) {
         if (newMicroserviceMapping != eInternalContainer() || (eContainerFeatureID() != MappingPackage.REFERRED_OPERATION_MAPPING__MICROSERVICE_MAPPING && newMicroserviceMapping != null)) {
             if (EcoreUtil.isAncestor(this, newMicroserviceMapping))

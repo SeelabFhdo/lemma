@@ -107,6 +107,7 @@ public class OperationFactoryImpl extends EFactoryImpl implements OperationFacto
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public OperationModel createOperationModel() {
         OperationModelImpl operationModel = new OperationModelImpl();
         return operationModel;
@@ -117,6 +118,7 @@ public class OperationFactoryImpl extends EFactoryImpl implements OperationFacto
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public de.fhdo.ddmm.operation.Container createContainer() {
         ContainerImpl container = new ContainerImpl();
         return container;
@@ -127,6 +129,7 @@ public class OperationFactoryImpl extends EFactoryImpl implements OperationFacto
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public DeploymentTechnologyReference createDeploymentTechnologyReference() {
         DeploymentTechnologyReferenceImpl deploymentTechnologyReference = new DeploymentTechnologyReferenceImpl();
         return deploymentTechnologyReference;
@@ -137,6 +140,7 @@ public class OperationFactoryImpl extends EFactoryImpl implements OperationFacto
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public InfrastructureNode createInfrastructureNode() {
         InfrastructureNodeImpl infrastructureNode = new InfrastructureNodeImpl();
         return infrastructureNode;
@@ -147,6 +151,7 @@ public class OperationFactoryImpl extends EFactoryImpl implements OperationFacto
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public InfrastructureTechnologyReference createInfrastructureTechnologyReference() {
         InfrastructureTechnologyReferenceImpl infrastructureTechnologyReference = new InfrastructureTechnologyReferenceImpl();
         return infrastructureTechnologyReference;
@@ -157,6 +162,7 @@ public class OperationFactoryImpl extends EFactoryImpl implements OperationFacto
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ImportedMicroservice createImportedMicroservice() {
         ImportedMicroserviceImpl importedMicroservice = new ImportedMicroserviceImpl();
         return importedMicroservice;
@@ -167,6 +173,7 @@ public class OperationFactoryImpl extends EFactoryImpl implements OperationFacto
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ServiceDeploymentSpecification createServiceDeploymentSpecification() {
         ServiceDeploymentSpecificationImpl serviceDeploymentSpecification = new ServiceDeploymentSpecificationImpl();
         return serviceDeploymentSpecification;
@@ -177,6 +184,7 @@ public class OperationFactoryImpl extends EFactoryImpl implements OperationFacto
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ProtocolAndDataFormat createProtocolAndDataFormat() {
         ProtocolAndDataFormatImpl protocolAndDataFormat = new ProtocolAndDataFormatImpl();
         return protocolAndDataFormat;
@@ -187,6 +195,7 @@ public class OperationFactoryImpl extends EFactoryImpl implements OperationFacto
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public BasicEndpoint createBasicEndpoint() {
         BasicEndpointImpl basicEndpoint = new BasicEndpointImpl();
         return basicEndpoint;
@@ -197,6 +206,7 @@ public class OperationFactoryImpl extends EFactoryImpl implements OperationFacto
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ImportedOperationAspect createImportedOperationAspect() {
         ImportedOperationAspectImpl importedOperationAspect = new ImportedOperationAspectImpl();
         return importedOperationAspect;
@@ -227,6 +237,7 @@ public class OperationFactoryImpl extends EFactoryImpl implements OperationFacto
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public OperationPackage getOperationPackage() {
         return (OperationPackage)getEPackage();
     }

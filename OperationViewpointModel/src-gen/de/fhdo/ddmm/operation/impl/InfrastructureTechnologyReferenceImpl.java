@@ -81,6 +81,7 @@ public class InfrastructureTechnologyReferenceImpl extends MinimalEObjectImpl.Co
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Import getImport() {
         if (import_ != null && import_.eIsProxy()) {
             InternalEObject oldImport = (InternalEObject)import_;
@@ -107,6 +108,7 @@ public class InfrastructureTechnologyReferenceImpl extends MinimalEObjectImpl.Co
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setImport(Import newImport) {
         Import oldImport = import_;
         import_ = newImport;
@@ -119,6 +121,7 @@ public class InfrastructureTechnologyReferenceImpl extends MinimalEObjectImpl.Co
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public InfrastructureTechnology getInfrastructureTechnology() {
         if (infrastructureTechnology != null && infrastructureTechnology.eIsProxy()) {
             InternalEObject oldInfrastructureTechnology = (InternalEObject)infrastructureTechnology;
@@ -145,6 +148,7 @@ public class InfrastructureTechnologyReferenceImpl extends MinimalEObjectImpl.Co
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setInfrastructureTechnology(InfrastructureTechnology newInfrastructureTechnology) {
         InfrastructureTechnology oldInfrastructureTechnology = infrastructureTechnology;
         infrastructureTechnology = newInfrastructureTechnology;
@@ -157,6 +161,7 @@ public class InfrastructureTechnologyReferenceImpl extends MinimalEObjectImpl.Co
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public InfrastructureNode getInfrastructureNode() {
         if (eContainerFeatureID() != OperationPackage.INFRASTRUCTURE_TECHNOLOGY_REFERENCE__INFRASTRUCTURE_NODE) return null;
         return (InfrastructureNode)eContainer();
@@ -187,6 +192,7 @@ public class InfrastructureTechnologyReferenceImpl extends MinimalEObjectImpl.Co
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setInfrastructureNode(InfrastructureNode newInfrastructureNode) {
         if (newInfrastructureNode != eInternalContainer() || (eContainerFeatureID() != OperationPackage.INFRASTRUCTURE_TECHNOLOGY_REFERENCE__INFRASTRUCTURE_NODE && newInfrastructureNode != null)) {
             if (EcoreUtil.isAncestor(this, newInfrastructureNode))

@@ -54,6 +54,7 @@ public class OperationAspectImpl extends TechnologyAspectImpl implements Operati
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Technology getTechnology() {
         if (eContainerFeatureID() != TechnologyPackage.OPERATION_ASPECT__TECHNOLOGY) return null;
         return (Technology)eContainer();
@@ -84,6 +85,7 @@ public class OperationAspectImpl extends TechnologyAspectImpl implements Operati
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setTechnology(Technology newTechnology) {
         if (newTechnology != eInternalContainer() || (eContainerFeatureID() != TechnologyPackage.OPERATION_ASPECT__TECHNOLOGY && newTechnology != null)) {
             if (EcoreUtil.isAncestor(this, newTechnology))

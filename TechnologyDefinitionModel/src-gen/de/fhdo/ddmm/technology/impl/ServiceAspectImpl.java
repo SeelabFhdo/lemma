@@ -87,6 +87,7 @@ public class ServiceAspectImpl extends TechnologyAspectImpl implements ServiceAs
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<ServiceAspectPointcutSelector> getPointcutSelectors() {
         if (pointcutSelectors == null) {
             pointcutSelectors = new EObjectContainmentWithInverseEList<ServiceAspectPointcutSelector>(ServiceAspectPointcutSelector.class, this, TechnologyPackage.SERVICE_ASPECT__POINTCUT_SELECTORS, TechnologyPackage.SERVICE_ASPECT_POINTCUT_SELECTOR__SERVICE_ASPECT);
@@ -99,6 +100,7 @@ public class ServiceAspectImpl extends TechnologyAspectImpl implements ServiceAs
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Technology getTechnology() {
         if (eContainerFeatureID() != TechnologyPackage.SERVICE_ASPECT__TECHNOLOGY) return null;
         return (Technology)eContainer();
@@ -129,6 +131,7 @@ public class ServiceAspectImpl extends TechnologyAspectImpl implements ServiceAs
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setTechnology(Technology newTechnology) {
         if (newTechnology != eInternalContainer() || (eContainerFeatureID() != TechnologyPackage.SERVICE_ASPECT__TECHNOLOGY && newTechnology != null)) {
             if (EcoreUtil.isAncestor(this, newTechnology))
@@ -150,6 +153,7 @@ public class ServiceAspectImpl extends TechnologyAspectImpl implements ServiceAs
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean hasMatchingSelector(final ExchangePattern forExchangePattern, final CommunicationType forCommunicationType, final Protocol forProtocol, final DataFormat forDataFormat) {
         boolean _isEmpty = this.getPointcutSelectors().isEmpty();
         if (_isEmpty) {

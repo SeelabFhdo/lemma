@@ -76,6 +76,7 @@ public class DataFormatImpl extends MinimalEObjectImpl.Container implements Data
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getFormatName() {
         return formatName;
     }
@@ -85,6 +86,7 @@ public class DataFormatImpl extends MinimalEObjectImpl.Container implements Data
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setFormatName(String newFormatName) {
         String oldFormatName = formatName;
         formatName = newFormatName;
@@ -97,6 +99,7 @@ public class DataFormatImpl extends MinimalEObjectImpl.Container implements Data
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Protocol getProtocol() {
         if (eContainerFeatureID() != TechnologyPackage.DATA_FORMAT__PROTOCOL) return null;
         return (Protocol)eContainer();
@@ -127,6 +130,7 @@ public class DataFormatImpl extends MinimalEObjectImpl.Container implements Data
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setProtocol(Protocol newProtocol) {
         if (newProtocol != eInternalContainer() || (eContainerFeatureID() != TechnologyPackage.DATA_FORMAT__PROTOCOL && newProtocol != null)) {
             if (EcoreUtil.isAncestor(this, newProtocol))
@@ -265,7 +269,7 @@ public class DataFormatImpl extends MinimalEObjectImpl.Container implements Data
     public String toString() {
         if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
+        StringBuilder result = new StringBuilder(super.toString());
         result.append(" (formatName: ");
         result.append(formatName);
         result.append(')');

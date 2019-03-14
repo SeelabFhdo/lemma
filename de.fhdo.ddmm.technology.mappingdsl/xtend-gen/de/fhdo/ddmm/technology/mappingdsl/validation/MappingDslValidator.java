@@ -862,7 +862,6 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
       new TypeChecker().checkTypeCompatibility(originalType, mappedType);
     } catch (final Throwable _t) {
       if (_t instanceof TypesNotCompatibleException) {
-        final TypesNotCompatibleException ex = (TypesNotCompatibleException)_t;
         final String originalTypeName = this.buildMappedTypeQualifiedName(mapping, originalType);
         StringConcatenation _builder = new StringConcatenation();
         _builder.append("Original type ");

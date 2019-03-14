@@ -106,6 +106,7 @@ public class CompatibilityMatrixEntryImpl extends MinimalEObjectImpl.Container i
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public CompatibilityDirection getDirection() {
         return direction;
     }
@@ -115,6 +116,7 @@ public class CompatibilityMatrixEntryImpl extends MinimalEObjectImpl.Container i
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setDirection(CompatibilityDirection newDirection) {
         CompatibilityDirection oldDirection = direction;
         direction = newDirection == null ? DIRECTION_EDEFAULT : newDirection;
@@ -127,6 +129,7 @@ public class CompatibilityMatrixEntryImpl extends MinimalEObjectImpl.Container i
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public PossiblyImportedTechnologySpecificType getMappingType() {
         return mappingType;
     }
@@ -151,6 +154,7 @@ public class CompatibilityMatrixEntryImpl extends MinimalEObjectImpl.Container i
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setMappingType(PossiblyImportedTechnologySpecificType newMappingType) {
         if (newMappingType != mappingType) {
             NotificationChain msgs = null;
@@ -170,6 +174,7 @@ public class CompatibilityMatrixEntryImpl extends MinimalEObjectImpl.Container i
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<PossiblyImportedTechnologySpecificType> getCompatibleTypes() {
         if (compatibleTypes == null) {
             compatibleTypes = new EObjectContainmentWithInverseEList<PossiblyImportedTechnologySpecificType>(PossiblyImportedTechnologySpecificType.class, this, TechnologyPackage.COMPATIBILITY_MATRIX_ENTRY__COMPATIBLE_TYPES, TechnologyPackage.POSSIBLY_IMPORTED_TECHNOLOGY_SPECIFIC_TYPE__COMPATIBLE_ENTRY);
@@ -182,6 +187,7 @@ public class CompatibilityMatrixEntryImpl extends MinimalEObjectImpl.Container i
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Technology getTechnology() {
         if (eContainerFeatureID() != TechnologyPackage.COMPATIBILITY_MATRIX_ENTRY__TECHNOLOGY) return null;
         return (Technology)eContainer();
@@ -212,6 +218,7 @@ public class CompatibilityMatrixEntryImpl extends MinimalEObjectImpl.Container i
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setTechnology(Technology newTechnology) {
         if (newTechnology != eInternalContainer() || (eContainerFeatureID() != TechnologyPackage.COMPATIBILITY_MATRIX_ENTRY__TECHNOLOGY && newTechnology != null)) {
             if (EcoreUtil.isAncestor(this, newTechnology))
@@ -383,7 +390,7 @@ public class CompatibilityMatrixEntryImpl extends MinimalEObjectImpl.Container i
     public String toString() {
         if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
+        StringBuilder result = new StringBuilder(super.toString());
         result.append(" (direction: ");
         result.append(direction);
         result.append(')');

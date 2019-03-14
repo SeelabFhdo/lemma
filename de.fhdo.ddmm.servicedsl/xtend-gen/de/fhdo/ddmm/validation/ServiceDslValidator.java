@@ -827,7 +827,6 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
           compatibleOutTypeFound = true;
         } catch (final Throwable _t) {
           if (_t instanceof TypesNotCompatibleException) {
-            final TypesNotCompatibleException ex = (TypesNotCompatibleException)_t;
             i++;
           } else {
             throw Exceptions.sneakyThrow(_t);

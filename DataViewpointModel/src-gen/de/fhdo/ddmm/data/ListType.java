@@ -81,7 +81,6 @@ public interface ListType extends ComplexType {
      * Convenience method to compare field counts of two lists
      * <!-- end-model-doc -->
      * @model unique="false" listToCompareUnique="false"
-     *        annotation="http://www.eclipse.org/emf/2002/GenModel body='if ((listToCompare == null))\n{\n\treturn 1;\n}\nboolean _isIsPrimitiveList = listToCompare.isIsPrimitiveList();\nif (_isIsPrimitiveList)\n{\n\tif ((this.isIsPrimitiveList() || (this.getDataFields().size() == 1)))\n\t{\n\t\treturn 0;\n\t}\n\telse\n\t{\n\t\treturn 1;\n\t}\n}\nboolean _isIsPrimitiveList_1 = this.isIsPrimitiveList();\nif (_isIsPrimitiveList_1)\n{\n\tif ((listToCompare.isIsPrimitiveList() || (listToCompare.getDataFields().size() == 1)))\n\t{\n\t\treturn 0;\n\t}\n\telse\n\t{\n\t\treturn (-1);\n\t}\n}\nreturn super.compareFieldCounts(this.getDataFields(), listToCompare.getDataFields());'"
      * @generated
      */
     int compareFieldCounts(ListType listToCompare);

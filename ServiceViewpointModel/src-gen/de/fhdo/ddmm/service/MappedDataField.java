@@ -141,7 +141,6 @@ public interface MappedDataField extends EObject {
      * Get parts of the parameter for creating a qualified name
      * <!-- end-model-doc -->
      * @model kind="operation" unique="false"
-     *        annotation="http://www.eclipse.org/emf/2002/GenModel body='&lt;%org.eclipse.emf.common.util.EList%&gt;&lt;&lt;%java.lang.String%&gt;&gt; _xblockexpression = null;\n{\n\tif (((this.getDataField() == null) || this.getDataField().getName().isEmpty()))\n\t{\n\t\treturn &lt;%org.eclipse.emf.common.util.ECollections%&gt;.&lt;&lt;%java.lang.String%&gt;&gt;asEList(&lt;%org.eclipse.xtext.xbase.lib.CollectionLiterals%&gt;.&lt;&lt;%java.lang.String%&gt;&gt;newArrayList());\n\t}\n\tfinal &lt;%org.eclipse.emf.common.util.EList%&gt;&lt;&lt;%java.lang.String%&gt;&gt; nameParts = this.getParameter().getQualifiedNameParts();\n\t&lt;%org.eclipse.xtext.xbase.lib.CollectionExtensions%&gt;.&lt;&lt;%java.lang.String%&gt;&gt;addAll(nameParts, this.getDataField().getName());\n\t_xblockexpression = &lt;%org.eclipse.emf.common.util.ECollections%&gt;.&lt;&lt;%java.lang.String%&gt;&gt;asEList(nameParts);\n}\nreturn _xblockexpression;'"
      * @generated
      */
     EList<String> getQualifiedNameParts();
@@ -154,7 +153,6 @@ public interface MappedDataField extends EObject {
      * Build qualified name from qualified name parts
      * <!-- end-model-doc -->
      * @model unique="false" separatorUnique="false"
-     *        annotation="http://www.eclipse.org/emf/2002/GenModel body='if ((separator == null))\n{\n\treturn null;\n}\n&lt;%java.lang.String%&gt; qualifiedName = \"\";\n&lt;%org.eclipse.emf.common.util.EList%&gt;&lt;&lt;%java.lang.String%&gt;&gt; _qualifiedNameParts = this.getQualifiedNameParts();\nfor (final &lt;%java.lang.String%&gt; part : _qualifiedNameParts)\n{\n\t&lt;%java.lang.String%&gt; _qualifiedName = qualifiedName;\n\tqualifiedName = (_qualifiedName + (separator + part));\n}\nboolean _isEmpty = qualifiedName.isEmpty();\nboolean _not = (!_isEmpty);\nif (_not)\n{\n\tqualifiedName = qualifiedName.substring(separator.length());\n}\nreturn qualifiedName;'"
      * @generated
      */
     String buildQualifiedName(String separator);
@@ -168,7 +166,6 @@ public interface MappedDataField extends EObject {
      * type, if the field has one. Otherwise, it is the effective type of the field itself.
      * <!-- end-model-doc -->
      * @model kind="operation" unique="false"
-     *        annotation="http://www.eclipse.org/emf/2002/GenModel body='&lt;%de.fhdo.ddmm.service.ImportedType%&gt; _mappedType = this.getMappedType();\nboolean _tripleNotEquals = (_mappedType != null);\nif (_tripleNotEquals)\n{\n\treturn this.getMappedType().getType();\n}\nelse\n{\n\t&lt;%de.fhdo.ddmm.data.DataField%&gt; _dataField = this.getDataField();\n\tboolean _tripleNotEquals_1 = (_dataField != null);\n\tif (_tripleNotEquals_1)\n\t{\n\t\treturn this.getDataField().getEffectiveType();\n\t}\n\telse\n\t{\n\t\treturn null;\n\t}\n}'"
      * @generated
      */
     Type getEffectiveType();

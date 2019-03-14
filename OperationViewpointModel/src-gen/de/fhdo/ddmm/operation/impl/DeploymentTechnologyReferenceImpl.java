@@ -80,6 +80,7 @@ public class DeploymentTechnologyReferenceImpl extends MinimalEObjectImpl.Contai
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Import getImport() {
         if (import_ != null && import_.eIsProxy()) {
             InternalEObject oldImport = (InternalEObject)import_;
@@ -106,6 +107,7 @@ public class DeploymentTechnologyReferenceImpl extends MinimalEObjectImpl.Contai
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setImport(Import newImport) {
         Import oldImport = import_;
         import_ = newImport;
@@ -118,6 +120,7 @@ public class DeploymentTechnologyReferenceImpl extends MinimalEObjectImpl.Contai
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public DeploymentTechnology getDeploymentTechnology() {
         if (deploymentTechnology != null && deploymentTechnology.eIsProxy()) {
             InternalEObject oldDeploymentTechnology = (InternalEObject)deploymentTechnology;
@@ -144,6 +147,7 @@ public class DeploymentTechnologyReferenceImpl extends MinimalEObjectImpl.Contai
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setDeploymentTechnology(DeploymentTechnology newDeploymentTechnology) {
         DeploymentTechnology oldDeploymentTechnology = deploymentTechnology;
         deploymentTechnology = newDeploymentTechnology;
@@ -156,6 +160,7 @@ public class DeploymentTechnologyReferenceImpl extends MinimalEObjectImpl.Contai
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public de.fhdo.ddmm.operation.Container getContainer() {
         if (eContainerFeatureID() != OperationPackage.DEPLOYMENT_TECHNOLOGY_REFERENCE__CONTAINER) return null;
         return (de.fhdo.ddmm.operation.Container)eContainer();
@@ -186,6 +191,7 @@ public class DeploymentTechnologyReferenceImpl extends MinimalEObjectImpl.Contai
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setContainer(de.fhdo.ddmm.operation.Container newContainer) {
         if (newContainer != eInternalContainer() || (eContainerFeatureID() != OperationPackage.DEPLOYMENT_TECHNOLOGY_REFERENCE__CONTAINER && newContainer != null)) {
             if (EcoreUtil.isAncestor(this, newContainer))

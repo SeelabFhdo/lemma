@@ -103,6 +103,7 @@ public abstract class OperationTechnologyImpl extends MinimalEObjectImpl.Contain
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getName() {
         return name;
     }
@@ -112,6 +113,7 @@ public abstract class OperationTechnologyImpl extends MinimalEObjectImpl.Contain
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setName(String newName) {
         String oldName = name;
         name = newName;
@@ -124,6 +126,7 @@ public abstract class OperationTechnologyImpl extends MinimalEObjectImpl.Contain
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<OperationEnvironment> getOperationEnvironments() {
         if (operationEnvironments == null) {
             operationEnvironments = new EObjectContainmentWithInverseEList<OperationEnvironment>(OperationEnvironment.class, this, TechnologyPackage.OPERATION_TECHNOLOGY__OPERATION_ENVIRONMENTS, TechnologyPackage.OPERATION_ENVIRONMENT__OPERATION_TECHNOLOGY);
@@ -136,6 +139,7 @@ public abstract class OperationTechnologyImpl extends MinimalEObjectImpl.Contain
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<TechnologySpecificProperty> getServiceProperties() {
         if (serviceProperties == null) {
             serviceProperties = new EObjectContainmentWithInverseEList<TechnologySpecificProperty>(TechnologySpecificProperty.class, this, TechnologyPackage.OPERATION_TECHNOLOGY__SERVICE_PROPERTIES, TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__OPERATION_TECHNOLOGY);
@@ -266,7 +270,7 @@ public abstract class OperationTechnologyImpl extends MinimalEObjectImpl.Contain
     public String toString() {
         if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
+        StringBuilder result = new StringBuilder(super.toString());
         result.append(" (name: ");
         result.append(name);
         result.append(')');

@@ -83,6 +83,7 @@ public class ContainerImpl extends OperationNodeImpl implements de.fhdo.ddmm.ope
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public DeploymentTechnologyReference getDeploymentTechnology() {
         return deploymentTechnology;
     }
@@ -107,6 +108,7 @@ public class ContainerImpl extends OperationNodeImpl implements de.fhdo.ddmm.ope
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setDeploymentTechnology(DeploymentTechnologyReference newDeploymentTechnology) {
         if (newDeploymentTechnology != deploymentTechnology) {
             NotificationChain msgs = null;
@@ -126,6 +128,7 @@ public class ContainerImpl extends OperationNodeImpl implements de.fhdo.ddmm.ope
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<BasicEndpoint> getDefaultBasicEndpoints() {
         if (defaultBasicEndpoints == null) {
             defaultBasicEndpoints = new EObjectContainmentWithInverseEList<BasicEndpoint>(BasicEndpoint.class, this, OperationPackage.CONTAINER__DEFAULT_BASIC_ENDPOINTS, OperationPackage.BASIC_ENDPOINT__CONTAINER);
@@ -138,6 +141,7 @@ public class ContainerImpl extends OperationNodeImpl implements de.fhdo.ddmm.ope
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public OperationModel getOperationModel() {
         if (eContainerFeatureID() != OperationPackage.CONTAINER__OPERATION_MODEL) return null;
         return (OperationModel)eContainer();
@@ -168,6 +172,7 @@ public class ContainerImpl extends OperationNodeImpl implements de.fhdo.ddmm.ope
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setOperationModel(OperationModel newOperationModel) {
         if (newOperationModel != eInternalContainer() || (eContainerFeatureID() != OperationPackage.CONTAINER__OPERATION_MODEL && newOperationModel != null)) {
             if (EcoreUtil.isAncestor(this, newOperationModel))

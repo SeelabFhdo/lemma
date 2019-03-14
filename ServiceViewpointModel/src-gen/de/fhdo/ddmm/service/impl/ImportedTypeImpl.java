@@ -75,6 +75,7 @@ public class ImportedTypeImpl extends MinimalEObjectImpl.Container implements Im
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Import getImport() {
         if (import_ != null && import_.eIsProxy()) {
             InternalEObject oldImport = (InternalEObject)import_;
@@ -101,6 +102,7 @@ public class ImportedTypeImpl extends MinimalEObjectImpl.Container implements Im
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setImport(Import newImport) {
         Import oldImport = import_;
         import_ = newImport;
@@ -113,6 +115,7 @@ public class ImportedTypeImpl extends MinimalEObjectImpl.Container implements Im
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Type getType() {
         if (type != null && type.eIsProxy()) {
             InternalEObject oldType = (InternalEObject)type;
@@ -139,6 +142,7 @@ public class ImportedTypeImpl extends MinimalEObjectImpl.Container implements Im
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setType(Type newType) {
         Type oldType = type;
         type = newType;

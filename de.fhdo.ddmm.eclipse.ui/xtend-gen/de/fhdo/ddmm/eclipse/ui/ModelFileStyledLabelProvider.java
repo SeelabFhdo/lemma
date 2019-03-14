@@ -37,7 +37,6 @@ public class ModelFileStyledLabelProvider extends LabelProvider implements Deleg
   /**
    * Get default styled text for element
    */
-  @Override
   public StyledString getStyledText(final Object element) {
     if ((!(element instanceof ModelFile))) {
       return new StyledString("");
@@ -49,7 +48,6 @@ public class ModelFileStyledLabelProvider extends LabelProvider implements Deleg
   /**
    * Get image for element
    */
-  @Override
   public Image getImage(final Object element) {
     if ((!(element instanceof ModelFile))) {
       return null;
@@ -60,7 +58,6 @@ public class ModelFileStyledLabelProvider extends LabelProvider implements Deleg
   /**
    * Garbage collector callback
    */
-  @Override
   public void dispose() {
     super.dispose();
     this.resourceManager.dispose();

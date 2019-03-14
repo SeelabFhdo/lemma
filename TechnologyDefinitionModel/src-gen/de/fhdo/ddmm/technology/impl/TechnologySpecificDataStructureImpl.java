@@ -68,6 +68,7 @@ public class TechnologySpecificDataStructureImpl extends ComplexTypeImpl impleme
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Technology getTechnology() {
         if (eContainerFeatureID() != TechnologyPackage.TECHNOLOGY_SPECIFIC_DATA_STRUCTURE__TECHNOLOGY) return null;
         return (Technology)eContainer();
@@ -98,6 +99,7 @@ public class TechnologySpecificDataStructureImpl extends ComplexTypeImpl impleme
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setTechnology(Technology newTechnology) {
         if (newTechnology != eInternalContainer() || (eContainerFeatureID() != TechnologyPackage.TECHNOLOGY_SPECIFIC_DATA_STRUCTURE__TECHNOLOGY && newTechnology != null)) {
             if (EcoreUtil.isAncestor(this, newTechnology))
@@ -119,6 +121,7 @@ public class TechnologySpecificDataStructureImpl extends ComplexTypeImpl impleme
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<String> getQualifiedNameParts() {
         EList<String> _xblockexpression = null;
         {
@@ -138,6 +141,7 @@ public class TechnologySpecificDataStructureImpl extends ComplexTypeImpl impleme
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String buildQualifiedName(final String separator) {
         if ((separator == null)) {
             return null;

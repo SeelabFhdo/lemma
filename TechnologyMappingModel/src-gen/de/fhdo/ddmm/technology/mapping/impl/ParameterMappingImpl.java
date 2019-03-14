@@ -86,6 +86,7 @@ public abstract class ParameterMappingImpl extends MinimalEObjectImpl.Container 
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Parameter getParameter() {
         if (parameter != null && parameter.eIsProxy()) {
             InternalEObject oldParameter = (InternalEObject)parameter;
@@ -112,6 +113,7 @@ public abstract class ParameterMappingImpl extends MinimalEObjectImpl.Container 
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setParameter(Parameter newParameter) {
         Parameter oldParameter = parameter;
         parameter = newParameter;
@@ -124,6 +126,7 @@ public abstract class ParameterMappingImpl extends MinimalEObjectImpl.Container 
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<TechnologySpecificImportedServiceAspect> getAspects() {
         if (aspects == null) {
             aspects = new EObjectContainmentWithInverseEList<TechnologySpecificImportedServiceAspect>(TechnologySpecificImportedServiceAspect.class, this, MappingPackage.PARAMETER_MAPPING__ASPECTS, MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__PARAMETER_MAPPING);
@@ -136,6 +139,7 @@ public abstract class ParameterMappingImpl extends MinimalEObjectImpl.Container 
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public OperationMapping getOperationMapping() {
         if (eContainerFeatureID() != MappingPackage.PARAMETER_MAPPING__OPERATION_MAPPING) return null;
         return (OperationMapping)eContainer();
@@ -166,6 +170,7 @@ public abstract class ParameterMappingImpl extends MinimalEObjectImpl.Container 
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setOperationMapping(OperationMapping newOperationMapping) {
         if (newOperationMapping != eInternalContainer() || (eContainerFeatureID() != MappingPackage.PARAMETER_MAPPING__OPERATION_MAPPING && newOperationMapping != null)) {
             if (EcoreUtil.isAncestor(this, newOperationMapping))

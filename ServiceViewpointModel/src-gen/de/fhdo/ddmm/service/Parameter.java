@@ -341,7 +341,6 @@ public interface Parameter extends EObject {
      * Get parts of the parameter for creating a qualified name
      * <!-- end-model-doc -->
      * @model kind="operation" unique="false"
-     *        annotation="http://www.eclipse.org/emf/2002/GenModel body='&lt;%org.eclipse.emf.common.util.EList%&gt;&lt;&lt;%java.lang.String%&gt;&gt; _xblockexpression = null;\n{\n\tif (((this.getName() == null) || this.getName().isEmpty()))\n\t{\n\t\treturn &lt;%org.eclipse.emf.common.util.ECollections%&gt;.&lt;&lt;%java.lang.String%&gt;&gt;asEList(&lt;%org.eclipse.xtext.xbase.lib.CollectionLiterals%&gt;.&lt;&lt;%java.lang.String%&gt;&gt;newArrayList());\n\t}\n\tfinal &lt;%org.eclipse.emf.common.util.EList%&gt;&lt;&lt;%java.lang.String%&gt;&gt; nameParts = this.getOperation().getQualifiedNameParts();\n\t&lt;%org.eclipse.xtext.xbase.lib.CollectionExtensions%&gt;.&lt;&lt;%java.lang.String%&gt;&gt;addAll(nameParts, this.getName());\n\t_xblockexpression = &lt;%org.eclipse.emf.common.util.ECollections%&gt;.&lt;&lt;%java.lang.String%&gt;&gt;asEList(nameParts);\n}\nreturn _xblockexpression;'"
      * @generated
      */
     EList<String> getQualifiedNameParts();
@@ -354,7 +353,6 @@ public interface Parameter extends EObject {
      * Build qualified name from qualified name parts
      * <!-- end-model-doc -->
      * @model unique="false" separatorUnique="false"
-     *        annotation="http://www.eclipse.org/emf/2002/GenModel body='if ((separator == null))\n{\n\treturn null;\n}\n&lt;%java.lang.String%&gt; qualifiedName = \"\";\n&lt;%org.eclipse.emf.common.util.EList%&gt;&lt;&lt;%java.lang.String%&gt;&gt; _qualifiedNameParts = this.getQualifiedNameParts();\nfor (final &lt;%java.lang.String%&gt; part : _qualifiedNameParts)\n{\n\t&lt;%java.lang.String%&gt; _qualifiedName = qualifiedName;\n\tqualifiedName = (_qualifiedName + (separator + part));\n}\nboolean _isEmpty = qualifiedName.isEmpty();\nboolean _not = (!_isEmpty);\nif (_not)\n{\n\tqualifiedName = qualifiedName.substring(separator.length());\n}\nreturn qualifiedName;'"
      * @generated
      */
     String buildQualifiedName(String separator);
@@ -370,7 +368,6 @@ public interface Parameter extends EObject {
      * operation.
      * <!-- end-model-doc -->
      * @model unique="false" initializingOperationUnique="false"
-     *        annotation="http://www.eclipse.org/emf/2002/GenModel body='if ((((this.getOperation() == null) || \n\t(this.getOperation().getInterface() == null)) || \n\t(this.getOperation().getInterface().getMicroservice() == null)))\n{\n\treturn false;\n}\nif ((((initializingOperation == null) || \n\t(initializingOperation.getInterface() == null)) || \n\t(initializingOperation.getInterface().getMicroservice() == null)))\n{\n\treturn false;\n}\nif (((this.getExchangePattern() != &lt;%de.fhdo.ddmm.technology.ExchangePattern%&gt;.IN) &amp;&amp; \n\t(this.getExchangePattern() != &lt;%de.fhdo.ddmm.technology.ExchangePattern%&gt;.INOUT)))\n{\n\treturn false;\n}\n&lt;%de.fhdo.ddmm.service.Operation%&gt; _operation = this.getOperation();\nboolean _equals = &lt;%com.google.common.base.Objects%&gt;.equal(initializingOperation, _operation);\nif (_equals)\n{\n\treturn false;\n}\nboolean _isEffectivelyNotImplemented = initializingOperation.isEffectivelyNotImplemented();\nif (_isEffectivelyNotImplemented)\n{\n\treturn false;\n}\nfinal &lt;%de.fhdo.ddmm.service.Microservice%&gt; thisMicroservice = this.getOperation().getInterface().getMicroservice();\nfinal &lt;%de.fhdo.ddmm.service.Microservice%&gt; initializingMicroservice = initializingOperation.getInterface().getMicroservice();\nfinal boolean initializingOperationFromSameMicroservice = &lt;%com.google.common.base.Objects%&gt;.equal(thisMicroservice, initializingMicroservice);\nif ((initializingOperation.isEffectivelyInternal() &amp;&amp; (!initializingOperationFromSameMicroservice)))\n{\n\treturn false;\n}\nfinal &lt;%org.eclipse.xtext.xbase.lib.Functions.Function1%&gt;&lt;&lt;%de.fhdo.ddmm.service.Parameter%&gt;, &lt;%java.lang.Boolean%&gt;&gt; _function = new &lt;%org.eclipse.xtext.xbase.lib.Functions.Function1%&gt;&lt;&lt;%de.fhdo.ddmm.service.Parameter%&gt;, &lt;%java.lang.Boolean%&gt;&gt;()\n{\n\tpublic &lt;%java.lang.Boolean%&gt; apply(final &lt;%de.fhdo.ddmm.service.Parameter%&gt; it)\n\t{\n\t\treturn &lt;%java.lang.Boolean%&gt;.valueOf(((it.getExchangePattern() == &lt;%de.fhdo.ddmm.technology.ExchangePattern%&gt;.INOUT) || \n\t\t\t(it.getExchangePattern() == &lt;%de.fhdo.ddmm.technology.ExchangePattern%&gt;.OUT)));\n\t}\n};\nfinal boolean operationHasOutgoingParameters = &lt;%org.eclipse.xtext.xbase.lib.IterableExtensions%&gt;.&lt;&lt;%de.fhdo.ddmm.service.Parameter%&gt;&gt;exists(initializingOperation.getParameters(), _function);\nif ((!operationHasOutgoingParameters))\n{\n\treturn false;\n}\nreturn true;'"
      * @generated
      */
     boolean basicallyInitializableBy(Operation initializingOperation);
@@ -383,7 +380,6 @@ public interface Parameter extends EObject {
      * Get effective type of parameter, i.e., the primitive or imported type (null otherwise)
      * <!-- end-model-doc -->
      * @model kind="operation" unique="false"
-     *        annotation="http://www.eclipse.org/emf/2002/GenModel body='&lt;%de.fhdo.ddmm.data.PrimitiveType%&gt; _primitiveType = this.getPrimitiveType();\nboolean _tripleNotEquals = (_primitiveType != null);\nif (_tripleNotEquals)\n{\n\treturn this.getPrimitiveType();\n}\nelse\n{\n\tif (((this.getImportedType() != null) &amp;&amp; (this.getImportedType().getType() != null)))\n\t{\n\t\treturn this.getImportedType().getType();\n\t}\n\telse\n\t{\n\t\treturn null;\n\t}\n}'"
      * @generated
      */
     Type getEffectiveType();
@@ -396,7 +392,6 @@ public interface Parameter extends EObject {
      * Check if the effective type of the parameter is technology-specific
      * <!-- end-model-doc -->
      * @model kind="operation" unique="false"
-     *        annotation="http://www.eclipse.org/emf/2002/GenModel body='final &lt;%de.fhdo.ddmm.data.Type%&gt; effectiveType = this.getEffectiveType();\nif ((effectiveType == null))\n{\n\treturn false;\n}\nreturn (((effectiveType instanceof &lt;%de.fhdo.ddmm.technology.TechnologySpecificDataStructure%&gt;) || \n\t(effectiveType instanceof &lt;%de.fhdo.ddmm.technology.TechnologySpecificListType%&gt;)) || \n\t(effectiveType instanceof &lt;%de.fhdo.ddmm.technology.TechnologySpecificPrimitiveType%&gt;));'"
      * @generated
      */
     boolean isTechnologySpecificEffectiveType();
@@ -409,7 +404,6 @@ public interface Parameter extends EObject {
      * Get parts of the parameter for creating a qualified name depending on its effective type
      * <!-- end-model-doc -->
      * @model kind="operation" unique="false"
-     *        annotation="http://www.eclipse.org/emf/2002/GenModel body='final &lt;%de.fhdo.ddmm.data.Type%&gt; effectiveType = this.getEffectiveType();\nif ((effectiveType == null))\n{\n\treturn null;\n}\nelse\n{\n\tif ((effectiveType instanceof &lt;%de.fhdo.ddmm.technology.TechnologySpecificPrimitiveType%&gt;))\n\t{\n\t\treturn ((&lt;%de.fhdo.ddmm.technology.TechnologySpecificPrimitiveType%&gt;)effectiveType).getQualifiedNameParts();\n\t}\n\telse\n\t{\n\t\tif ((effectiveType instanceof &lt;%de.fhdo.ddmm.data.PrimitiveType%&gt;))\n\t\t{\n\t\t\tfinal &lt;%java.util.ArrayList%&gt;&lt;&lt;%java.lang.String%&gt;&gt; qualifiedNameParts = &lt;%org.eclipse.xtext.xbase.lib.CollectionLiterals%&gt;.&lt;&lt;%java.lang.String%&gt;&gt;newArrayList();\n\t\t\tqualifiedNameParts.add(((&lt;%de.fhdo.ddmm.data.PrimitiveType%&gt;)effectiveType).getTypeName());\n\t\t\treturn &lt;%org.eclipse.emf.common.util.ECollections%&gt;.&lt;&lt;%java.lang.String%&gt;&gt;asEList(qualifiedNameParts);\n\t\t}\n\t\telse\n\t\t{\n\t\t\tif ((effectiveType instanceof &lt;%de.fhdo.ddmm.data.ComplexType%&gt;))\n\t\t\t{\n\t\t\t\treturn ((&lt;%de.fhdo.ddmm.data.ComplexType%&gt;)effectiveType).getQualifiedNameParts();\n\t\t\t}\n\t\t}\n\t}\n}\nreturn null;'"
      * @generated
      */
     EList<String> getEffectiveTypeQualifiedNameParts();

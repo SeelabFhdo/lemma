@@ -190,7 +190,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
 
     /**
      * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-     * 
+     *
      * <p>This method is used to initialize {@link IntermediatePackage#eINSTANCE} when that field is accessed.
      * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
      * <!-- begin-user-doc -->
@@ -204,7 +204,8 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
         if (isInited) return (IntermediatePackage)EPackage.Registry.INSTANCE.getEPackage(IntermediatePackage.eNS_URI);
 
         // Obtain or create and register package
-        IntermediatePackageImpl theIntermediatePackage = (IntermediatePackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof IntermediatePackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new IntermediatePackageImpl());
+        Object registeredIntermediatePackage = EPackage.Registry.INSTANCE.get(eNS_URI);
+        IntermediatePackageImpl theIntermediatePackage = registeredIntermediatePackage instanceof IntermediatePackageImpl ? (IntermediatePackageImpl)registeredIntermediatePackage : new IntermediatePackageImpl();
 
         isInited = true;
 
@@ -224,7 +225,6 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
         // Mark meta-data to indicate it can't be changed
         theIntermediatePackage.freeze();
 
-  
         // Update the registry and return the package
         EPackage.Registry.INSTANCE.put(IntermediatePackage.eNS_URI, theIntermediatePackage);
         return theIntermediatePackage;
@@ -235,6 +235,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getIntermediateServiceModel() {
         return intermediateServiceModelEClass;
     }
@@ -244,6 +245,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getIntermediateServiceModel_SourceModelUri() {
         return (EAttribute)intermediateServiceModelEClass.getEStructuralFeatures().get(0);
     }
@@ -253,6 +255,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getIntermediateServiceModel_Imports() {
         return (EReference)intermediateServiceModelEClass.getEStructuralFeatures().get(1);
     }
@@ -262,6 +265,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getIntermediateServiceModel_Microservices() {
         return (EReference)intermediateServiceModelEClass.getEStructuralFeatures().get(2);
     }
@@ -271,6 +275,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getIntermediateMicroservice() {
         return intermediateMicroserviceEClass;
     }
@@ -280,6 +285,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getIntermediateMicroservice_SourceModelUri() {
         return (EAttribute)intermediateMicroserviceEClass.getEStructuralFeatures().get(0);
     }
@@ -289,6 +295,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getIntermediateMicroservice_Name() {
         return (EAttribute)intermediateMicroserviceEClass.getEStructuralFeatures().get(1);
     }
@@ -298,6 +305,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getIntermediateMicroservice_Version() {
         return (EAttribute)intermediateMicroserviceEClass.getEStructuralFeatures().get(2);
     }
@@ -307,6 +315,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getIntermediateMicroservice_QualifiedName() {
         return (EAttribute)intermediateMicroserviceEClass.getEStructuralFeatures().get(3);
     }
@@ -316,6 +325,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getIntermediateMicroservice_Type() {
         return (EAttribute)intermediateMicroserviceEClass.getEStructuralFeatures().get(4);
     }
@@ -325,6 +335,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getIntermediateMicroservice_Visibility() {
         return (EAttribute)intermediateMicroserviceEClass.getEStructuralFeatures().get(5);
     }
@@ -334,6 +345,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getIntermediateMicroservice_EffectivelyImplemented() {
         return (EAttribute)intermediateMicroserviceEClass.getEStructuralFeatures().get(6);
     }
@@ -343,6 +355,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getIntermediateMicroservice_Technologies() {
         return (EReference)intermediateMicroserviceEClass.getEStructuralFeatures().get(7);
     }
@@ -352,6 +365,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getIntermediateMicroservice_Endpoints() {
         return (EReference)intermediateMicroserviceEClass.getEStructuralFeatures().get(8);
     }
@@ -361,6 +375,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getIntermediateMicroservice_Protocols() {
         return (EReference)intermediateMicroserviceEClass.getEStructuralFeatures().get(9);
     }
@@ -370,6 +385,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getIntermediateMicroservice_RequiredMicroservices() {
         return (EReference)intermediateMicroserviceEClass.getEStructuralFeatures().get(10);
     }
@@ -379,6 +395,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getIntermediateMicroservice_RequiredInterfaces() {
         return (EReference)intermediateMicroserviceEClass.getEStructuralFeatures().get(11);
     }
@@ -388,6 +405,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getIntermediateMicroservice_RequiredOperations() {
         return (EReference)intermediateMicroserviceEClass.getEStructuralFeatures().get(12);
     }
@@ -397,6 +415,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getIntermediateMicroservice_Interfaces() {
         return (EReference)intermediateMicroserviceEClass.getEStructuralFeatures().get(13);
     }
@@ -406,6 +425,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getIntermediateMicroservice_Aspects() {
         return (EReference)intermediateMicroserviceEClass.getEStructuralFeatures().get(14);
     }
@@ -415,6 +435,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getIntermediateMicroservice_ServiceModel() {
         return (EReference)intermediateMicroserviceEClass.getEStructuralFeatures().get(15);
     }
@@ -424,6 +445,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getIntermediateInterface() {
         return intermediateInterfaceEClass;
     }
@@ -433,6 +455,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getIntermediateInterface_Name() {
         return (EAttribute)intermediateInterfaceEClass.getEStructuralFeatures().get(0);
     }
@@ -442,6 +465,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getIntermediateInterface_QualifiedName() {
         return (EAttribute)intermediateInterfaceEClass.getEStructuralFeatures().get(1);
     }
@@ -451,6 +475,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getIntermediateInterface_Visibility() {
         return (EAttribute)intermediateInterfaceEClass.getEStructuralFeatures().get(2);
     }
@@ -460,6 +485,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getIntermediateInterface_NotImplemented() {
         return (EAttribute)intermediateInterfaceEClass.getEStructuralFeatures().get(3);
     }
@@ -469,6 +495,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getIntermediateInterface_HasImplementedOperations() {
         return (EAttribute)intermediateInterfaceEClass.getEStructuralFeatures().get(4);
     }
@@ -478,6 +505,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getIntermediateInterface_Endpoints() {
         return (EReference)intermediateInterfaceEClass.getEStructuralFeatures().get(5);
     }
@@ -487,6 +515,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getIntermediateInterface_Protocols() {
         return (EReference)intermediateInterfaceEClass.getEStructuralFeatures().get(6);
     }
@@ -496,6 +525,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getIntermediateInterface_Operations() {
         return (EReference)intermediateInterfaceEClass.getEStructuralFeatures().get(7);
     }
@@ -505,6 +535,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getIntermediateInterface_ReferredOperations() {
         return (EReference)intermediateInterfaceEClass.getEStructuralFeatures().get(8);
     }
@@ -514,6 +545,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getIntermediateInterface_Aspects() {
         return (EReference)intermediateInterfaceEClass.getEStructuralFeatures().get(9);
     }
@@ -523,6 +555,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getIntermediateInterface_Microservice() {
         return (EReference)intermediateInterfaceEClass.getEStructuralFeatures().get(10);
     }
@@ -532,6 +565,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getIntermediateOperation() {
         return intermediateOperationEClass;
     }
@@ -541,6 +575,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getIntermediateOperation_Name() {
         return (EAttribute)intermediateOperationEClass.getEStructuralFeatures().get(0);
     }
@@ -550,6 +585,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getIntermediateOperation_QualifiedName() {
         return (EAttribute)intermediateOperationEClass.getEStructuralFeatures().get(1);
     }
@@ -559,6 +595,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getIntermediateOperation_Visibility() {
         return (EAttribute)intermediateOperationEClass.getEStructuralFeatures().get(2);
     }
@@ -568,6 +605,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getIntermediateOperation_NotImplemented() {
         return (EAttribute)intermediateOperationEClass.getEStructuralFeatures().get(3);
     }
@@ -577,6 +615,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getIntermediateOperation_Endpoints() {
         return (EReference)intermediateOperationEClass.getEStructuralFeatures().get(4);
     }
@@ -586,6 +625,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getIntermediateOperation_Protocols() {
         return (EReference)intermediateOperationEClass.getEStructuralFeatures().get(5);
     }
@@ -595,6 +635,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getIntermediateOperation_Aspects() {
         return (EReference)intermediateOperationEClass.getEStructuralFeatures().get(6);
     }
@@ -604,6 +645,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getIntermediateOperation_Parameters() {
         return (EReference)intermediateOperationEClass.getEStructuralFeatures().get(7);
     }
@@ -613,6 +655,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getIntermediateOperation_Interface() {
         return (EReference)intermediateOperationEClass.getEStructuralFeatures().get(8);
     }
@@ -622,6 +665,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getIntermediateReferredOperation() {
         return intermediateReferredOperationEClass;
     }
@@ -631,6 +675,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getIntermediateReferredOperation_NameInReferringInterface() {
         return (EAttribute)intermediateReferredOperationEClass.getEStructuralFeatures().get(0);
     }
@@ -640,6 +685,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getIntermediateReferredOperation_QualifiedNameInReferringInterface() {
         return (EAttribute)intermediateReferredOperationEClass.getEStructuralFeatures().get(1);
     }
@@ -649,6 +695,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getIntermediateReferredOperation_Operation() {
         return (EReference)intermediateReferredOperationEClass.getEStructuralFeatures().get(2);
     }
@@ -658,6 +705,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getIntermediateReferredOperation_Endpoints() {
         return (EReference)intermediateReferredOperationEClass.getEStructuralFeatures().get(3);
     }
@@ -667,6 +715,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getIntermediateReferredOperation_Protocols() {
         return (EReference)intermediateReferredOperationEClass.getEStructuralFeatures().get(4);
     }
@@ -676,6 +725,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getIntermediateReferredOperation_Aspects() {
         return (EReference)intermediateReferredOperationEClass.getEStructuralFeatures().get(5);
     }
@@ -685,6 +735,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getIntermediateReferredOperation_ReferringInterface() {
         return (EReference)intermediateReferredOperationEClass.getEStructuralFeatures().get(6);
     }
@@ -694,6 +745,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getIntermediateParameter() {
         return intermediateParameterEClass;
     }
@@ -703,6 +755,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getIntermediateParameter_Name() {
         return (EAttribute)intermediateParameterEClass.getEStructuralFeatures().get(0);
     }
@@ -712,6 +765,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getIntermediateParameter_QualifiedName() {
         return (EAttribute)intermediateParameterEClass.getEStructuralFeatures().get(1);
     }
@@ -721,6 +775,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getIntermediateParameter_ExchangePattern() {
         return (EAttribute)intermediateParameterEClass.getEStructuralFeatures().get(2);
     }
@@ -730,6 +785,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getIntermediateParameter_CommunicationType() {
         return (EAttribute)intermediateParameterEClass.getEStructuralFeatures().get(3);
     }
@@ -739,6 +795,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getIntermediateParameter_CommunicatesFault() {
         return (EAttribute)intermediateParameterEClass.getEStructuralFeatures().get(4);
     }
@@ -748,6 +805,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getIntermediateParameter_Optional() {
         return (EAttribute)intermediateParameterEClass.getEStructuralFeatures().get(5);
     }
@@ -757,6 +815,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getIntermediateParameter_Type() {
         return (EReference)intermediateParameterEClass.getEStructuralFeatures().get(6);
     }
@@ -766,6 +825,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getIntermediateParameter_InitializedByOperation() {
         return (EReference)intermediateParameterEClass.getEStructuralFeatures().get(7);
     }
@@ -775,6 +835,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getIntermediateParameter_Aspects() {
         return (EReference)intermediateParameterEClass.getEStructuralFeatures().get(8);
     }
@@ -784,6 +845,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getIntermediateParameter_MappedDataFields() {
         return (EReference)intermediateParameterEClass.getEStructuralFeatures().get(9);
     }
@@ -793,6 +855,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getIntermediateParameter_Operation() {
         return (EReference)intermediateParameterEClass.getEStructuralFeatures().get(10);
     }
@@ -802,6 +865,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getIntermediateMappedDataField() {
         return intermediateMappedDataFieldEClass;
     }
@@ -811,6 +875,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getIntermediateMappedDataField_MappedDataFieldName() {
         return (EAttribute)intermediateMappedDataFieldEClass.getEStructuralFeatures().get(0);
     }
@@ -820,6 +885,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getIntermediateMappedDataField_QualifiedName() {
         return (EAttribute)intermediateMappedDataFieldEClass.getEStructuralFeatures().get(1);
     }
@@ -829,6 +895,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getIntermediateMappedDataField_MappedType() {
         return (EReference)intermediateMappedDataFieldEClass.getEStructuralFeatures().get(2);
     }
@@ -838,6 +905,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getIntermediateMappedDataField_Aspects() {
         return (EReference)intermediateMappedDataFieldEClass.getEStructuralFeatures().get(3);
     }
@@ -847,6 +915,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getIntermediateMappedDataField_Parameter() {
         return (EReference)intermediateMappedDataFieldEClass.getEStructuralFeatures().get(4);
     }
@@ -856,6 +925,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getMicroserviceReference() {
         return microserviceReferenceEClass;
     }
@@ -865,6 +935,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getMicroserviceReference_Name() {
         return (EAttribute)microserviceReferenceEClass.getEStructuralFeatures().get(0);
     }
@@ -874,6 +945,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getMicroserviceReference_Version() {
         return (EAttribute)microserviceReferenceEClass.getEStructuralFeatures().get(1);
     }
@@ -883,6 +955,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getMicroserviceReference_QualifiedName() {
         return (EAttribute)microserviceReferenceEClass.getEStructuralFeatures().get(2);
     }
@@ -892,6 +965,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getMicroserviceReference_Imported() {
         return (EAttribute)microserviceReferenceEClass.getEStructuralFeatures().get(3);
     }
@@ -901,6 +975,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getMicroserviceReference_Import() {
         return (EReference)microserviceReferenceEClass.getEStructuralFeatures().get(4);
     }
@@ -910,6 +985,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getMicroserviceReference_LocalMicroservice() {
         return (EReference)microserviceReferenceEClass.getEStructuralFeatures().get(5);
     }
@@ -919,6 +995,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getMicroserviceReference_RequiringMicroservice() {
         return (EReference)microserviceReferenceEClass.getEStructuralFeatures().get(6);
     }
@@ -928,6 +1005,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getInterfaceReference() {
         return interfaceReferenceEClass;
     }
@@ -937,6 +1015,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getInterfaceReference_Name() {
         return (EAttribute)interfaceReferenceEClass.getEStructuralFeatures().get(0);
     }
@@ -946,6 +1025,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getInterfaceReference_QualifiedName() {
         return (EAttribute)interfaceReferenceEClass.getEStructuralFeatures().get(1);
     }
@@ -955,6 +1035,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getInterfaceReference_Imported() {
         return (EAttribute)interfaceReferenceEClass.getEStructuralFeatures().get(2);
     }
@@ -964,6 +1045,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getInterfaceReference_Import() {
         return (EReference)interfaceReferenceEClass.getEStructuralFeatures().get(3);
     }
@@ -973,6 +1055,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getInterfaceReference_LocalInterface() {
         return (EReference)interfaceReferenceEClass.getEStructuralFeatures().get(4);
     }
@@ -982,6 +1065,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getInterfaceReference_RequiringMicroservice() {
         return (EReference)interfaceReferenceEClass.getEStructuralFeatures().get(5);
     }
@@ -991,6 +1075,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getOperationReference() {
         return operationReferenceEClass;
     }
@@ -1000,6 +1085,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getOperationReference_Name() {
         return (EAttribute)operationReferenceEClass.getEStructuralFeatures().get(0);
     }
@@ -1009,6 +1095,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getOperationReference_QualifiedName() {
         return (EAttribute)operationReferenceEClass.getEStructuralFeatures().get(1);
     }
@@ -1018,6 +1105,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getOperationReference_Imported() {
         return (EAttribute)operationReferenceEClass.getEStructuralFeatures().get(2);
     }
@@ -1027,6 +1115,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getOperationReference_Import() {
         return (EReference)operationReferenceEClass.getEStructuralFeatures().get(3);
     }
@@ -1036,6 +1125,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getOperationReference_LocalOperation() {
         return (EReference)operationReferenceEClass.getEStructuralFeatures().get(4);
     }
@@ -1045,6 +1135,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getOperationReference_RequiringMicroservice() {
         return (EReference)operationReferenceEClass.getEStructuralFeatures().get(5);
     }
@@ -1054,6 +1145,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getOperationReference_InitializedParameter() {
         return (EReference)operationReferenceEClass.getEStructuralFeatures().get(6);
     }
@@ -1063,6 +1155,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getIntermediateTechnology() {
         return intermediateTechnologyEClass;
     }
@@ -1072,6 +1165,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getIntermediateTechnology_Name() {
         return (EAttribute)intermediateTechnologyEClass.getEStructuralFeatures().get(0);
     }
@@ -1081,6 +1175,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getIntermediateTechnology_Import() {
         return (EReference)intermediateTechnologyEClass.getEStructuralFeatures().get(1);
     }
@@ -1090,6 +1185,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getIntermediateTechnology_Microservice() {
         return (EReference)intermediateTechnologyEClass.getEStructuralFeatures().get(2);
     }
@@ -1099,6 +1195,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getIntermediateEndpoint() {
         return intermediateEndpointEClass;
     }
@@ -1108,6 +1205,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getIntermediateEndpoint_CommunicationType() {
         return (EAttribute)intermediateEndpointEClass.getEStructuralFeatures().get(0);
     }
@@ -1117,6 +1215,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getIntermediateEndpoint_Protocol() {
         return (EAttribute)intermediateEndpointEClass.getEStructuralFeatures().get(1);
     }
@@ -1126,6 +1225,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getIntermediateEndpoint_DataFormat() {
         return (EAttribute)intermediateEndpointEClass.getEStructuralFeatures().get(2);
     }
@@ -1135,6 +1235,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getIntermediateEndpoint_Addresses() {
         return (EAttribute)intermediateEndpointEClass.getEStructuralFeatures().get(3);
     }
@@ -1144,6 +1245,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getIntermediateEndpoint_Technology() {
         return (EReference)intermediateEndpointEClass.getEStructuralFeatures().get(4);
     }
@@ -1153,6 +1255,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getIntermediateEndpoint_Microservice() {
         return (EReference)intermediateEndpointEClass.getEStructuralFeatures().get(5);
     }
@@ -1162,6 +1265,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getIntermediateEndpoint_Interface() {
         return (EReference)intermediateEndpointEClass.getEStructuralFeatures().get(6);
     }
@@ -1171,6 +1275,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getIntermediateEndpoint_Operation() {
         return (EReference)intermediateEndpointEClass.getEStructuralFeatures().get(7);
     }
@@ -1180,6 +1285,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getIntermediateEndpoint_ReferredOperation() {
         return (EReference)intermediateEndpointEClass.getEStructuralFeatures().get(8);
     }
@@ -1189,6 +1295,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getIntermediateProtocolSpecification() {
         return intermediateProtocolSpecificationEClass;
     }
@@ -1198,6 +1305,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getIntermediateProtocolSpecification_CommunicationType() {
         return (EAttribute)intermediateProtocolSpecificationEClass.getEStructuralFeatures().get(0);
     }
@@ -1207,6 +1315,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getIntermediateProtocolSpecification_Protocol() {
         return (EAttribute)intermediateProtocolSpecificationEClass.getEStructuralFeatures().get(1);
     }
@@ -1216,6 +1325,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getIntermediateProtocolSpecification_DataFormat() {
         return (EAttribute)intermediateProtocolSpecificationEClass.getEStructuralFeatures().get(2);
     }
@@ -1225,6 +1335,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getIntermediateImportedAspect() {
         return intermediateImportedAspectEClass;
     }
@@ -1234,6 +1345,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getIntermediateImportedAspect_Name() {
         return (EAttribute)intermediateImportedAspectEClass.getEStructuralFeatures().get(0);
     }
@@ -1243,6 +1355,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getIntermediateImportedAspect_Import() {
         return (EReference)intermediateImportedAspectEClass.getEStructuralFeatures().get(1);
     }
@@ -1252,6 +1365,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getIntermediateImportedAspect_Properties() {
         return (EReference)intermediateImportedAspectEClass.getEStructuralFeatures().get(2);
     }
@@ -1261,6 +1375,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getIntermediateImportedAspect_PropertyValues() {
         return (EReference)intermediateImportedAspectEClass.getEStructuralFeatures().get(3);
     }
@@ -1270,6 +1385,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getIntermediateImportedAspect_Microservice() {
         return (EReference)intermediateImportedAspectEClass.getEStructuralFeatures().get(4);
     }
@@ -1279,6 +1395,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getIntermediateImportedAspect_Interface() {
         return (EReference)intermediateImportedAspectEClass.getEStructuralFeatures().get(5);
     }
@@ -1288,6 +1405,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getIntermediateImportedAspect_Operation() {
         return (EReference)intermediateImportedAspectEClass.getEStructuralFeatures().get(6);
     }
@@ -1297,6 +1415,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getIntermediateImportedAspect_ReferredOperation() {
         return (EReference)intermediateImportedAspectEClass.getEStructuralFeatures().get(7);
     }
@@ -1306,6 +1425,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getIntermediateImportedAspect_Parameter() {
         return (EReference)intermediateImportedAspectEClass.getEStructuralFeatures().get(8);
     }
@@ -1315,6 +1435,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getIntermediateImportedAspect_MappedDataField() {
         return (EReference)intermediateImportedAspectEClass.getEStructuralFeatures().get(9);
     }
@@ -1324,6 +1445,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getIntermediateAspectProperty() {
         return intermediateAspectPropertyEClass;
     }
@@ -1333,6 +1455,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getIntermediateAspectProperty_Name() {
         return (EAttribute)intermediateAspectPropertyEClass.getEStructuralFeatures().get(0);
     }
@@ -1342,6 +1465,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getIntermediateAspectProperty_Type() {
         return (EAttribute)intermediateAspectPropertyEClass.getEStructuralFeatures().get(1);
     }
@@ -1351,6 +1475,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getIntermediateAspectProperty_DefaultValue() {
         return (EAttribute)intermediateAspectPropertyEClass.getEStructuralFeatures().get(2);
     }
@@ -1360,6 +1485,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getIntermediateAspectProperty_Mandatory() {
         return (EAttribute)intermediateAspectPropertyEClass.getEStructuralFeatures().get(3);
     }
@@ -1369,6 +1495,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getIntermediateAspectProperty_Aspect() {
         return (EReference)intermediateAspectPropertyEClass.getEStructuralFeatures().get(4);
     }
@@ -1378,6 +1505,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getIntermediateAspectPropertyValue() {
         return intermediateAspectPropertyValueEClass;
     }
@@ -1387,6 +1515,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getIntermediateAspectPropertyValue_Value() {
         return (EAttribute)intermediateAspectPropertyValueEClass.getEStructuralFeatures().get(0);
     }
@@ -1396,6 +1525,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getIntermediateAspectPropertyValue_Property() {
         return (EReference)intermediateAspectPropertyValueEClass.getEStructuralFeatures().get(1);
     }
@@ -1405,6 +1535,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getIntermediateAspectPropertyValue_Aspect() {
         return (EReference)intermediateAspectPropertyValueEClass.getEStructuralFeatures().get(2);
     }
@@ -1414,6 +1545,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getIntermediateImportedTechnologySpecificType() {
         return intermediateImportedTechnologySpecificTypeEClass;
     }
@@ -1423,6 +1555,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getIntermediateImportedTechnologySpecificType_QualifiedName() {
         return (EAttribute)intermediateImportedTechnologySpecificTypeEClass.getEStructuralFeatures().get(0);
     }
@@ -1432,6 +1565,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getIntermediateImportedTechnologySpecificType_Import() {
         return (EReference)intermediateImportedTechnologySpecificTypeEClass.getEStructuralFeatures().get(1);
     }
@@ -1441,6 +1575,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public IntermediateFactory getIntermediateFactory() {
         return (IntermediateFactory)getEFactoryInstance();
     }

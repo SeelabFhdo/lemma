@@ -130,6 +130,7 @@ public abstract class ComplexTypeImpl extends TypeImpl implements ComplexType {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getName() {
         return name;
     }
@@ -139,6 +140,7 @@ public abstract class ComplexTypeImpl extends TypeImpl implements ComplexType {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setName(String newName) {
         String oldName = name;
         name = newName;
@@ -151,6 +153,7 @@ public abstract class ComplexTypeImpl extends TypeImpl implements ComplexType {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public DataModel getDataModel() {
         if (eContainerFeatureID() != DataPackage.COMPLEX_TYPE__DATA_MODEL) return null;
         return (DataModel)eContainer();
@@ -181,6 +184,7 @@ public abstract class ComplexTypeImpl extends TypeImpl implements ComplexType {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setDataModel(DataModel newDataModel) {
         if (newDataModel != eInternalContainer() || (eContainerFeatureID() != DataPackage.COMPLEX_TYPE__DATA_MODEL && newDataModel != null)) {
             if (EcoreUtil.isAncestor(this, newDataModel))
@@ -202,6 +206,7 @@ public abstract class ComplexTypeImpl extends TypeImpl implements ComplexType {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Version getVersion() {
         if (eContainerFeatureID() != DataPackage.COMPLEX_TYPE__VERSION) return null;
         return (Version)eContainer();
@@ -232,6 +237,7 @@ public abstract class ComplexTypeImpl extends TypeImpl implements ComplexType {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setVersion(Version newVersion) {
         if (newVersion != eInternalContainer() || (eContainerFeatureID() != DataPackage.COMPLEX_TYPE__VERSION && newVersion != null)) {
             if (EcoreUtil.isAncestor(this, newVersion))
@@ -253,6 +259,7 @@ public abstract class ComplexTypeImpl extends TypeImpl implements ComplexType {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Context getContext() {
         if (eContainerFeatureID() != DataPackage.COMPLEX_TYPE__CONTEXT) return null;
         return (Context)eContainer();
@@ -283,6 +290,7 @@ public abstract class ComplexTypeImpl extends TypeImpl implements ComplexType {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setContext(Context newContext) {
         if (newContext != eInternalContainer() || (eContainerFeatureID() != DataPackage.COMPLEX_TYPE__CONTEXT && newContext != null)) {
             if (EcoreUtil.isAncestor(this, newContext))
@@ -304,6 +312,7 @@ public abstract class ComplexTypeImpl extends TypeImpl implements ComplexType {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isIsStructure() {
         return (this instanceof DataStructure);
     }
@@ -313,6 +322,7 @@ public abstract class ComplexTypeImpl extends TypeImpl implements ComplexType {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isIsPrimitiveList() {
         if ((!(this instanceof ListType))) {
             return false;
@@ -326,6 +336,7 @@ public abstract class ComplexTypeImpl extends TypeImpl implements ComplexType {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isIsStructuredList() {
         if ((!(this instanceof ListType))) {
             return false;
@@ -339,6 +350,7 @@ public abstract class ComplexTypeImpl extends TypeImpl implements ComplexType {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<String> getQualifiedNameParts() {
         EList<String> _xblockexpression = null;
         {
@@ -367,6 +379,7 @@ public abstract class ComplexTypeImpl extends TypeImpl implements ComplexType {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String buildQualifiedName(final String separator) {
         if ((separator == null)) {
             return null;
@@ -390,6 +403,7 @@ public abstract class ComplexTypeImpl extends TypeImpl implements ComplexType {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public int compareFieldCounts(final EList<DataField> fields, final EList<DataField> fieldsToCompare) {
         if (((fields == null) && (fieldsToCompare == null))) {
             return 0;
@@ -652,7 +666,7 @@ public abstract class ComplexTypeImpl extends TypeImpl implements ComplexType {
     public String toString() {
         if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
+        StringBuilder result = new StringBuilder(super.toString());
         result.append(" (name: ");
         result.append(name);
         result.append(')');

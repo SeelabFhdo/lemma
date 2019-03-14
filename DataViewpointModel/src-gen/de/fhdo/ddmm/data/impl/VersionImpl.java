@@ -114,6 +114,7 @@ public class VersionImpl extends MinimalEObjectImpl.Container implements Version
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getName() {
         return name;
     }
@@ -123,6 +124,7 @@ public class VersionImpl extends MinimalEObjectImpl.Container implements Version
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setName(String newName) {
         String oldName = name;
         name = newName;
@@ -135,6 +137,7 @@ public class VersionImpl extends MinimalEObjectImpl.Container implements Version
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<ComplexType> getComplexTypes() {
         if (complexTypes == null) {
             complexTypes = new EObjectContainmentWithInverseEList<ComplexType>(ComplexType.class, this, DataPackage.VERSION__COMPLEX_TYPES, DataPackage.COMPLEX_TYPE__VERSION);
@@ -147,6 +150,7 @@ public class VersionImpl extends MinimalEObjectImpl.Container implements Version
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Context> getContexts() {
         if (contexts == null) {
             contexts = new EObjectContainmentWithInverseEList<Context>(Context.class, this, DataPackage.VERSION__CONTEXTS, DataPackage.CONTEXT__VERSION);
@@ -159,6 +163,7 @@ public class VersionImpl extends MinimalEObjectImpl.Container implements Version
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public DataModel getDataModel() {
         if (eContainerFeatureID() != DataPackage.VERSION__DATA_MODEL) return null;
         return (DataModel)eContainer();
@@ -189,6 +194,7 @@ public class VersionImpl extends MinimalEObjectImpl.Container implements Version
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setDataModel(DataModel newDataModel) {
         if (newDataModel != eInternalContainer() || (eContainerFeatureID() != DataPackage.VERSION__DATA_MODEL && newDataModel != null)) {
             if (EcoreUtil.isAncestor(this, newDataModel))
@@ -210,6 +216,7 @@ public class VersionImpl extends MinimalEObjectImpl.Container implements Version
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<ComplexType> getContainedComplexTypes() {
         final ArrayList<ComplexType> containedComplexTypes = CollectionLiterals.<ComplexType>newArrayList();
         EList<Context> _contexts = this.getContexts();
@@ -231,6 +238,7 @@ public class VersionImpl extends MinimalEObjectImpl.Container implements Version
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<String> getQualifiedNameParts() {
         EList<String> _xblockexpression = null;
         {
@@ -414,7 +422,7 @@ public class VersionImpl extends MinimalEObjectImpl.Container implements Version
     public String toString() {
         if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
+        StringBuilder result = new StringBuilder(super.toString());
         result.append(" (name: ");
         result.append(name);
         result.append(')');

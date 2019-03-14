@@ -63,6 +63,7 @@ public class InfrastructureTechnologyImpl extends OperationTechnologyImpl implem
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Technology getTechnology() {
         if (eContainerFeatureID() != TechnologyPackage.INFRASTRUCTURE_TECHNOLOGY__TECHNOLOGY) return null;
         return (Technology)eContainer();
@@ -93,6 +94,7 @@ public class InfrastructureTechnologyImpl extends OperationTechnologyImpl implem
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setTechnology(Technology newTechnology) {
         if (newTechnology != eInternalContainer() || (eContainerFeatureID() != TechnologyPackage.INFRASTRUCTURE_TECHNOLOGY__TECHNOLOGY && newTechnology != null)) {
             if (EcoreUtil.isAncestor(this, newTechnology))
@@ -114,6 +116,7 @@ public class InfrastructureTechnologyImpl extends OperationTechnologyImpl implem
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<String> getQualifiedNameParts() {
         EList<String> _xblockexpression = null;
         {

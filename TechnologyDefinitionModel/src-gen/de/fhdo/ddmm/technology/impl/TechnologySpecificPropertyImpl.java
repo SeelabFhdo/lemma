@@ -124,6 +124,7 @@ public class TechnologySpecificPropertyImpl extends MinimalEObjectImpl.Container
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getName() {
         return name;
     }
@@ -133,6 +134,7 @@ public class TechnologySpecificPropertyImpl extends MinimalEObjectImpl.Container
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setName(String newName) {
         String oldName = name;
         name = newName;
@@ -145,6 +147,7 @@ public class TechnologySpecificPropertyImpl extends MinimalEObjectImpl.Container
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isMandatory() {
         return mandatory;
     }
@@ -154,6 +157,7 @@ public class TechnologySpecificPropertyImpl extends MinimalEObjectImpl.Container
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setMandatory(boolean newMandatory) {
         boolean oldMandatory = mandatory;
         mandatory = newMandatory;
@@ -166,6 +170,7 @@ public class TechnologySpecificPropertyImpl extends MinimalEObjectImpl.Container
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public PrimitiveType getType() {
         return type;
     }
@@ -190,6 +195,7 @@ public class TechnologySpecificPropertyImpl extends MinimalEObjectImpl.Container
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setType(PrimitiveType newType) {
         if (newType != type) {
             NotificationChain msgs = null;
@@ -209,6 +215,7 @@ public class TechnologySpecificPropertyImpl extends MinimalEObjectImpl.Container
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public PrimitiveValue getDefaultValue() {
         return defaultValue;
     }
@@ -233,6 +240,7 @@ public class TechnologySpecificPropertyImpl extends MinimalEObjectImpl.Container
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setDefaultValue(PrimitiveValue newDefaultValue) {
         if (newDefaultValue != defaultValue) {
             NotificationChain msgs = null;
@@ -252,6 +260,7 @@ public class TechnologySpecificPropertyImpl extends MinimalEObjectImpl.Container
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public OperationTechnology getOperationTechnology() {
         if (eContainerFeatureID() != TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__OPERATION_TECHNOLOGY) return null;
         return (OperationTechnology)eContainer();
@@ -282,6 +291,7 @@ public class TechnologySpecificPropertyImpl extends MinimalEObjectImpl.Container
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setOperationTechnology(OperationTechnology newOperationTechnology) {
         if (newOperationTechnology != eInternalContainer() || (eContainerFeatureID() != TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__OPERATION_TECHNOLOGY && newOperationTechnology != null)) {
             if (EcoreUtil.isAncestor(this, newOperationTechnology))
@@ -303,6 +313,7 @@ public class TechnologySpecificPropertyImpl extends MinimalEObjectImpl.Container
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public TechnologyAspect getTechnologyAspect() {
         if (eContainerFeatureID() != TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__TECHNOLOGY_ASPECT) return null;
         return (TechnologyAspect)eContainer();
@@ -333,6 +344,7 @@ public class TechnologySpecificPropertyImpl extends MinimalEObjectImpl.Container
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setTechnologyAspect(TechnologyAspect newTechnologyAspect) {
         if (newTechnologyAspect != eInternalContainer() || (eContainerFeatureID() != TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__TECHNOLOGY_ASPECT && newTechnologyAspect != null)) {
             if (EcoreUtil.isAncestor(this, newTechnologyAspect))
@@ -524,7 +536,7 @@ public class TechnologySpecificPropertyImpl extends MinimalEObjectImpl.Container
     public String toString() {
         if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
+        StringBuilder result = new StringBuilder(super.toString());
         result.append(" (name: ");
         result.append(name);
         result.append(", mandatory: ");

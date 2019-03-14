@@ -27,7 +27,6 @@ public class ModelTreeLabelProvider extends ModelFileStyledLabelProvider {
   /**
    * Get styled text for element
    */
-  @Override
   public StyledString getStyledText(final Object element) {
     StyledString _switchResult = null;
     boolean _matched = false;
@@ -52,7 +51,6 @@ public class ModelTreeLabelProvider extends ModelFileStyledLabelProvider {
   /**
    * Get image for element
    */
-  @Override
   public Image getImage(final Object element) {
     Image _switchResult = null;
     boolean _matched = false;

@@ -79,6 +79,7 @@ public class PossiblyImportedComplexTypeImpl extends MinimalEObjectImpl.Containe
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ComplexTypeImport getImport() {
         if (import_ != null && import_.eIsProxy()) {
             InternalEObject oldImport = (InternalEObject)import_;
@@ -105,6 +106,7 @@ public class PossiblyImportedComplexTypeImpl extends MinimalEObjectImpl.Containe
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setImport(ComplexTypeImport newImport) {
         ComplexTypeImport oldImport = import_;
         import_ = newImport;
@@ -117,6 +119,7 @@ public class PossiblyImportedComplexTypeImpl extends MinimalEObjectImpl.Containe
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ComplexType getComplexType() {
         if (complexType != null && complexType.eIsProxy()) {
             InternalEObject oldComplexType = (InternalEObject)complexType;
@@ -143,6 +146,7 @@ public class PossiblyImportedComplexTypeImpl extends MinimalEObjectImpl.Containe
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setComplexType(ComplexType newComplexType) {
         ComplexType oldComplexType = complexType;
         complexType = newComplexType;
@@ -155,6 +159,7 @@ public class PossiblyImportedComplexTypeImpl extends MinimalEObjectImpl.Containe
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public DataField getDataField() {
         if (eContainerFeatureID() != DataPackage.POSSIBLY_IMPORTED_COMPLEX_TYPE__DATA_FIELD) return null;
         return (DataField)eContainer();
@@ -185,6 +190,7 @@ public class PossiblyImportedComplexTypeImpl extends MinimalEObjectImpl.Containe
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setDataField(DataField newDataField) {
         if (newDataField != eInternalContainer() || (eContainerFeatureID() != DataPackage.POSSIBLY_IMPORTED_COMPLEX_TYPE__DATA_FIELD && newDataField != null)) {
             if (EcoreUtil.isAncestor(this, newDataField))

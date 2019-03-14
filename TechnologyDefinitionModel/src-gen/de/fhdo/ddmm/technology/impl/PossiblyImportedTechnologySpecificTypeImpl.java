@@ -81,6 +81,7 @@ public class PossiblyImportedTechnologySpecificTypeImpl extends MinimalEObjectIm
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public TechnologyImport getImport() {
         if (import_ != null && import_.eIsProxy()) {
             InternalEObject oldImport = (InternalEObject)import_;
@@ -107,6 +108,7 @@ public class PossiblyImportedTechnologySpecificTypeImpl extends MinimalEObjectIm
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setImport(TechnologyImport newImport) {
         TechnologyImport oldImport = import_;
         import_ = newImport;
@@ -119,6 +121,7 @@ public class PossiblyImportedTechnologySpecificTypeImpl extends MinimalEObjectIm
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Type getType() {
         if (type != null && type.eIsProxy()) {
             InternalEObject oldType = (InternalEObject)type;
@@ -145,6 +148,7 @@ public class PossiblyImportedTechnologySpecificTypeImpl extends MinimalEObjectIm
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setType(Type newType) {
         Type oldType = type;
         type = newType;
@@ -157,6 +161,7 @@ public class PossiblyImportedTechnologySpecificTypeImpl extends MinimalEObjectIm
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public CompatibilityMatrixEntry getMappingEntry() {
         if (eContainerFeatureID() != TechnologyPackage.POSSIBLY_IMPORTED_TECHNOLOGY_SPECIFIC_TYPE__MAPPING_ENTRY) return null;
         return (CompatibilityMatrixEntry)eContainer();
@@ -187,6 +192,7 @@ public class PossiblyImportedTechnologySpecificTypeImpl extends MinimalEObjectIm
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setMappingEntry(CompatibilityMatrixEntry newMappingEntry) {
         if (newMappingEntry != eInternalContainer() || (eContainerFeatureID() != TechnologyPackage.POSSIBLY_IMPORTED_TECHNOLOGY_SPECIFIC_TYPE__MAPPING_ENTRY && newMappingEntry != null)) {
             if (EcoreUtil.isAncestor(this, newMappingEntry))
@@ -208,6 +214,7 @@ public class PossiblyImportedTechnologySpecificTypeImpl extends MinimalEObjectIm
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public CompatibilityMatrixEntry getCompatibleEntry() {
         if (eContainerFeatureID() != TechnologyPackage.POSSIBLY_IMPORTED_TECHNOLOGY_SPECIFIC_TYPE__COMPATIBLE_ENTRY) return null;
         return (CompatibilityMatrixEntry)eContainer();
@@ -238,6 +245,7 @@ public class PossiblyImportedTechnologySpecificTypeImpl extends MinimalEObjectIm
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setCompatibleEntry(CompatibilityMatrixEntry newCompatibleEntry) {
         if (newCompatibleEntry != eInternalContainer() || (eContainerFeatureID() != TechnologyPackage.POSSIBLY_IMPORTED_TECHNOLOGY_SPECIFIC_TYPE__COMPATIBLE_ENTRY && newCompatibleEntry != null)) {
             if (EcoreUtil.isAncestor(this, newCompatibleEntry))

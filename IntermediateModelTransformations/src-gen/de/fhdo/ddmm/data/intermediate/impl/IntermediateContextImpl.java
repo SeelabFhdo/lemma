@@ -117,6 +117,7 @@ public class IntermediateContextImpl extends MinimalEObjectImpl.Container implem
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getName() {
         return name;
     }
@@ -126,6 +127,7 @@ public class IntermediateContextImpl extends MinimalEObjectImpl.Container implem
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setName(String newName) {
         String oldName = name;
         name = newName;
@@ -138,6 +140,7 @@ public class IntermediateContextImpl extends MinimalEObjectImpl.Container implem
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getQualifiedName() {
         return qualifiedName;
     }
@@ -147,6 +150,7 @@ public class IntermediateContextImpl extends MinimalEObjectImpl.Container implem
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setQualifiedName(String newQualifiedName) {
         String oldQualifiedName = qualifiedName;
         qualifiedName = newQualifiedName;
@@ -159,6 +163,7 @@ public class IntermediateContextImpl extends MinimalEObjectImpl.Container implem
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<IntermediateComplexType> getComplexTypes() {
         if (complexTypes == null) {
             complexTypes = new EObjectContainmentWithInverseEList<IntermediateComplexType>(IntermediateComplexType.class, this, IntermediatePackage.INTERMEDIATE_CONTEXT__COMPLEX_TYPES, IntermediatePackage.INTERMEDIATE_COMPLEX_TYPE__CONTEXT);
@@ -171,6 +176,7 @@ public class IntermediateContextImpl extends MinimalEObjectImpl.Container implem
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public IntermediateDataModel getDataModel() {
         if (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_CONTEXT__DATA_MODEL) return null;
         return (IntermediateDataModel)eContainer();
@@ -201,6 +207,7 @@ public class IntermediateContextImpl extends MinimalEObjectImpl.Container implem
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setDataModel(IntermediateDataModel newDataModel) {
         if (newDataModel != eInternalContainer() || (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_CONTEXT__DATA_MODEL && newDataModel != null)) {
             if (EcoreUtil.isAncestor(this, newDataModel))
@@ -222,6 +229,7 @@ public class IntermediateContextImpl extends MinimalEObjectImpl.Container implem
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public IntermediateVersion getVersion() {
         if (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_CONTEXT__VERSION) return null;
         return (IntermediateVersion)eContainer();
@@ -252,6 +260,7 @@ public class IntermediateContextImpl extends MinimalEObjectImpl.Container implem
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setVersion(IntermediateVersion newVersion) {
         if (newVersion != eInternalContainer() || (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_CONTEXT__VERSION && newVersion != null)) {
             if (EcoreUtil.isAncestor(this, newVersion))
@@ -436,7 +445,7 @@ public class IntermediateContextImpl extends MinimalEObjectImpl.Container implem
     public String toString() {
         if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
+        StringBuilder result = new StringBuilder(super.toString());
         result.append(" (name: ");
         result.append(name);
         result.append(", qualifiedName: ");

@@ -369,6 +369,7 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getName() {
         return name;
     }
@@ -378,6 +379,7 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setName(String newName) {
         String oldName = name;
         name = newName;
@@ -390,6 +392,7 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getVersion() {
         return version;
     }
@@ -399,6 +402,7 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setVersion(String newVersion) {
         String oldVersion = version;
         version = newVersion;
@@ -411,6 +415,7 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public MicroserviceType getType() {
         return type;
     }
@@ -420,6 +425,7 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setType(MicroserviceType newType) {
         MicroserviceType oldType = type;
         type = newType == null ? TYPE_EDEFAULT : newType;
@@ -432,6 +438,7 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Visibility getVisibility() {
         return visibility;
     }
@@ -441,6 +448,7 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setVisibility(Visibility newVisibility) {
         Visibility oldVisibility = visibility;
         visibility = newVisibility == null ? VISIBILITY_EDEFAULT : newVisibility;
@@ -453,6 +461,7 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Map<CommunicationType, Pair<Import, Protocol>> getT_defaultProtocols() {
         return t_defaultProtocols;
     }
@@ -462,6 +471,7 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setT_defaultProtocols(Map<CommunicationType, Pair<Import, Protocol>> newT_defaultProtocols) {
         Map<CommunicationType, Pair<Import, Protocol>> oldT_defaultProtocols = t_defaultProtocols;
         t_defaultProtocols = newT_defaultProtocols;
@@ -474,6 +484,7 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getT_sourceModelUri() {
         return t_sourceModelUri;
     }
@@ -483,6 +494,7 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setT_sourceModelUri(String newT_sourceModelUri) {
         String oldT_sourceModelUri = t_sourceModelUri;
         t_sourceModelUri = newT_sourceModelUri;
@@ -495,6 +507,7 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Import> getTechnologies() {
         if (technologies == null) {
             technologies = new EObjectResolvingEList<Import>(Import.class, this, ServicePackage.MICROSERVICE__TECHNOLOGIES);
@@ -507,6 +520,7 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Import getT_typeDefinitionTechnologyImport() {
         if (t_typeDefinitionTechnologyImport != null && t_typeDefinitionTechnologyImport.eIsProxy()) {
             InternalEObject oldT_typeDefinitionTechnologyImport = (InternalEObject)t_typeDefinitionTechnologyImport;
@@ -533,6 +547,7 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setT_typeDefinitionTechnologyImport(Import newT_typeDefinitionTechnologyImport) {
         Import oldT_typeDefinitionTechnologyImport = t_typeDefinitionTechnologyImport;
         t_typeDefinitionTechnologyImport = newT_typeDefinitionTechnologyImport;
@@ -545,6 +560,7 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Technology getT_typeDefinitionTechnology() {
         if (t_typeDefinitionTechnology != null && t_typeDefinitionTechnology.eIsProxy()) {
             InternalEObject oldT_typeDefinitionTechnology = (InternalEObject)t_typeDefinitionTechnology;
@@ -571,6 +587,7 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setT_typeDefinitionTechnology(Technology newT_typeDefinitionTechnology) {
         Technology oldT_typeDefinitionTechnology = t_typeDefinitionTechnology;
         t_typeDefinitionTechnology = newT_typeDefinitionTechnology;
@@ -583,6 +600,7 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Endpoint> getEndpoints() {
         if (endpoints == null) {
             endpoints = new EObjectContainmentWithInverseEList<Endpoint>(Endpoint.class, this, ServicePackage.MICROSERVICE__ENDPOINTS, ServicePackage.ENDPOINT__MICROSERVICE);
@@ -595,6 +613,7 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<PossiblyImportedMicroservice> getRequiredMicroservices() {
         if (requiredMicroservices == null) {
             requiredMicroservices = new EObjectContainmentWithInverseEList<PossiblyImportedMicroservice>(PossiblyImportedMicroservice.class, this, ServicePackage.MICROSERVICE__REQUIRED_MICROSERVICES, ServicePackage.POSSIBLY_IMPORTED_MICROSERVICE__REQUIRING_MICROSERVICE);
@@ -607,6 +626,7 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<PossiblyImportedInterface> getRequiredInterfaces() {
         if (requiredInterfaces == null) {
             requiredInterfaces = new EObjectContainmentWithInverseEList<PossiblyImportedInterface>(PossiblyImportedInterface.class, this, ServicePackage.MICROSERVICE__REQUIRED_INTERFACES, ServicePackage.POSSIBLY_IMPORTED_INTERFACE__REQUIRING_MICROSERVICE);
@@ -619,6 +639,7 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<PossiblyImportedOperation> getRequiredOperations() {
         if (requiredOperations == null) {
             requiredOperations = new EObjectContainmentWithInverseEList<PossiblyImportedOperation>(PossiblyImportedOperation.class, this, ServicePackage.MICROSERVICE__REQUIRED_OPERATIONS, ServicePackage.POSSIBLY_IMPORTED_OPERATION__REQUIRING_MICROSERVICE);
@@ -631,6 +652,7 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<ProtocolSpecification> getProtocols() {
         if (protocols == null) {
             protocols = new EObjectContainmentEList<ProtocolSpecification>(ProtocolSpecification.class, this, ServicePackage.MICROSERVICE__PROTOCOLS);
@@ -643,6 +665,7 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Interface> getInterfaces() {
         if (interfaces == null) {
             interfaces = new EObjectContainmentWithInverseEList<Interface>(Interface.class, this, ServicePackage.MICROSERVICE__INTERFACES, ServicePackage.INTERFACE__MICROSERVICE);
@@ -655,6 +678,7 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<ImportedServiceAspect> getAspects() {
         if (aspects == null) {
             aspects = new EObjectContainmentWithInverseEList<ImportedServiceAspect>(ImportedServiceAspect.class, this, ServicePackage.MICROSERVICE__ASPECTS, ServicePackage.IMPORTED_SERVICE_ASPECT__MICROSERVICE);
@@ -667,6 +691,7 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ServiceModel getServiceModel() {
         if (eContainerFeatureID() != ServicePackage.MICROSERVICE__SERVICE_MODEL) return null;
         return (ServiceModel)eContainer();
@@ -697,6 +722,7 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setServiceModel(ServiceModel newServiceModel) {
         if (newServiceModel != eInternalContainer() || (eContainerFeatureID() != ServicePackage.MICROSERVICE__SERVICE_MODEL && newServiceModel != null)) {
             if (EcoreUtil.isAncestor(this, newServiceModel))
@@ -718,6 +744,7 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isEffectivelyImplemented() {
         final Function1<Interface, Boolean> _function = new Function1<Interface, Boolean>() {
             public Boolean apply(final Interface it) {
@@ -732,6 +759,7 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Visibility getEffectiveVisibility() {
         Visibility _visibility = this.getVisibility();
         boolean _tripleEquals = (_visibility == Visibility.NONE);
@@ -746,6 +774,7 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isEffectivelyInternal() {
         Visibility _effectiveVisibility = this.getEffectiveVisibility();
         return (_effectiveVisibility == Visibility.INTERNAL);
@@ -756,6 +785,7 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public List<Map<String, Object>> t_missingEndpointEffectiveProtocols() {
         if (((this.getT_defaultProtocols() == null) || this.getT_defaultProtocols().isEmpty())) {
             return null;
@@ -833,6 +863,7 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public List<Map<String, Object>> t_effectiveProtocolSpecifications() {
         if (((this.getT_defaultProtocols() == null) || this.getT_defaultProtocols().isEmpty())) {
             return null;
@@ -876,6 +907,7 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Import> getTypeDefinitionTechnologyImports() {
         final Function1<Import, Boolean> _function = new Function1<Import, Boolean>() {
             public Boolean apply(final Import it) {
@@ -897,6 +929,7 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Import getTypeDefinitionTechnologyImport() {
         final EList<Import> typeDefinitionTechnologyImports = this.getTypeDefinitionTechnologyImports();
         Import _xifexpression = null;
@@ -916,6 +949,7 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Technology> getTypeDefinitionTechnologies() {
         final Function1<Import, Technology> _function = new Function1<Import, Technology>() {
             public Technology apply(final Import it) {
@@ -930,6 +964,7 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Technology getTypeDefinitionTechnology() {
         final EList<Technology> typeDefinitionTechnologies = this.getTypeDefinitionTechnologies();
         Technology _xifexpression = null;
@@ -949,6 +984,7 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<String> getQualifiedNameParts() {
         EList<String> _xblockexpression = null;
         {
@@ -972,6 +1008,7 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String buildQualifiedName(final String separator) {
         if ((separator == null)) {
             return null;
@@ -995,6 +1032,7 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Operation> getContainedOperations() {
         EList<Interface> _interfaces = this.getInterfaces();
         boolean _tripleEquals = (_interfaces == null);
@@ -1020,6 +1058,7 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<ReferredOperation> getContainedReferredOperations() {
         EList<Interface> _interfaces = this.getInterfaces();
         boolean _tripleEquals = (_interfaces == null);
@@ -1045,6 +1084,7 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Import> getRequiredImports() {
         final HashSet<Import> imports = CollectionLiterals.<Import>newHashSet();
         if (((this.getRequiredMicroservices() != null) && (!this.getRequiredMicroservices().isEmpty()))) {
@@ -1097,6 +1137,7 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Operation> getAllRequiredOperations(final Import fromImport) {
         final HashSet<Operation> operations = CollectionLiterals.<Operation>newHashSet();
         if (((this.getRequiredOperations() != null) && (!this.getRequiredOperations().isEmpty()))) {
@@ -1153,6 +1194,7 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Map<Microservice, Import> getAllRequiredMicroservices() {
         final HashMap<Microservice, Import> microservices = CollectionLiterals.<Microservice, Import>newHashMap();
         EList<PossiblyImportedMicroservice> _requiredMicroservices = this.getRequiredMicroservices();
@@ -1193,6 +1235,7 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Microservice> getAllInitializingMicroservices() {
         final HashSet<Microservice> microservices = CollectionLiterals.<Microservice>newHashSet();
         final Function1<Operation, EList<Parameter>> _function = new Function1<Operation, EList<Parameter>>() {
@@ -1218,6 +1261,7 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean canRequire(final Microservice microservice, final boolean isImportedService) {
         if ((microservice == null)) {
             return false;
@@ -1230,6 +1274,7 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean canRequire(final Interface iface, final boolean isImportedInterface) {
         if (((iface == null) || (iface.getMicroservice() == null))) {
             return false;
@@ -1246,6 +1291,7 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean canRequire(final Operation operation, final boolean isImportedOperation) {
         if ((((operation == null) || (operation.getInterface() == null)) || 
             (operation.getInterface().getMicroservice() == null))) {
@@ -1626,7 +1672,7 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
     public String toString() {
         if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
+        StringBuilder result = new StringBuilder(super.toString());
         result.append(" (name: ");
         result.append(name);
         result.append(", version: ");

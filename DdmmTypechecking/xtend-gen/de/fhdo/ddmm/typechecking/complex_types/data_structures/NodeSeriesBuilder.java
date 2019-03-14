@@ -111,13 +111,13 @@ public class NodeSeriesBuilder {
    */
   private static ArrayList<Pairs<TypeGraphNode>> buildPairSeriesForType(final List<TypeGraphNode> basicNodes, final List<TypeGraphNode> nodesToCheck, final Predicate<TypeGraphNode> typeFilterPredicate, final Pairs<TypeGraphNode> mandatoryPairs) {
     final List<TypeGraphNode> basicNodesOfType = IterableExtensions.<TypeGraphNode>toList(IterableExtensions.<TypeGraphNode>filter(basicNodes, new Function1<TypeGraphNode, Boolean>() {
-        public Boolean apply(TypeGraphNode arg0) {
-          return typeFilterPredicate.apply(arg0);
+        public Boolean apply(TypeGraphNode p) {
+          return typeFilterPredicate.apply(p);
         }
     }));
     final List<TypeGraphNode> nodesToCheckOfType = IterableExtensions.<TypeGraphNode>toList(IterableExtensions.<TypeGraphNode>filter(nodesToCheck, new Function1<TypeGraphNode, Boolean>() {
-        public Boolean apply(TypeGraphNode arg0) {
-          return typeFilterPredicate.apply(arg0);
+        public Boolean apply(TypeGraphNode p) {
+          return typeFilterPredicate.apply(p);
         }
     }));
     if (((!basicNodesOfType.isEmpty()) && (!nodesToCheckOfType.isEmpty()))) {

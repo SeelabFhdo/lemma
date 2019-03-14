@@ -92,14 +92,7 @@ class TransformationDialog  extends TitleAreaDialog {
         )
         transformationThread.start()
 
-        /* Code taken from Window.open() */
-        // Run the event loop if specified
-        while (shell !== null && !shell.disposed)
-            if (!shell.display.readAndDispatch())
-                shell.display.sleep()
-
-        if (!shell.disposed)
-            shell.display.update()
+        DdmmUiUtils.runEventLoop(shell)
 
         return returnCode
     }

@@ -128,6 +128,7 @@ public class IntermediateMappedDataFieldImpl extends MinimalEObjectImpl.Containe
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getMappedDataFieldName() {
         return mappedDataFieldName;
     }
@@ -137,6 +138,7 @@ public class IntermediateMappedDataFieldImpl extends MinimalEObjectImpl.Containe
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setMappedDataFieldName(String newMappedDataFieldName) {
         String oldMappedDataFieldName = mappedDataFieldName;
         mappedDataFieldName = newMappedDataFieldName;
@@ -149,6 +151,7 @@ public class IntermediateMappedDataFieldImpl extends MinimalEObjectImpl.Containe
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getQualifiedName() {
         return qualifiedName;
     }
@@ -158,6 +161,7 @@ public class IntermediateMappedDataFieldImpl extends MinimalEObjectImpl.Containe
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setQualifiedName(String newQualifiedName) {
         String oldQualifiedName = qualifiedName;
         qualifiedName = newQualifiedName;
@@ -170,6 +174,7 @@ public class IntermediateMappedDataFieldImpl extends MinimalEObjectImpl.Containe
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public IntermediateType getMappedType() {
         return mappedType;
     }
@@ -194,6 +199,7 @@ public class IntermediateMappedDataFieldImpl extends MinimalEObjectImpl.Containe
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setMappedType(IntermediateType newMappedType) {
         if (newMappedType != mappedType) {
             NotificationChain msgs = null;
@@ -213,6 +219,7 @@ public class IntermediateMappedDataFieldImpl extends MinimalEObjectImpl.Containe
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<IntermediateImportedAspect> getAspects() {
         if (aspects == null) {
             aspects = new EObjectContainmentWithInverseEList<IntermediateImportedAspect>(IntermediateImportedAspect.class, this, IntermediatePackage.INTERMEDIATE_MAPPED_DATA_FIELD__ASPECTS, IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__MAPPED_DATA_FIELD);
@@ -225,6 +232,7 @@ public class IntermediateMappedDataFieldImpl extends MinimalEObjectImpl.Containe
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public IntermediateParameter getParameter() {
         if (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_MAPPED_DATA_FIELD__PARAMETER) return null;
         return (IntermediateParameter)eContainer();
@@ -255,6 +263,7 @@ public class IntermediateMappedDataFieldImpl extends MinimalEObjectImpl.Containe
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setParameter(IntermediateParameter newParameter) {
         if (newParameter != eInternalContainer() || (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_MAPPED_DATA_FIELD__PARAMETER && newParameter != null)) {
             if (EcoreUtil.isAncestor(this, newParameter))
@@ -432,7 +441,7 @@ public class IntermediateMappedDataFieldImpl extends MinimalEObjectImpl.Containe
     public String toString() {
         if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
+        StringBuilder result = new StringBuilder(super.toString());
         result.append(" (mappedDataFieldName: ");
         result.append(mappedDataFieldName);
         result.append(", qualifiedName: ");

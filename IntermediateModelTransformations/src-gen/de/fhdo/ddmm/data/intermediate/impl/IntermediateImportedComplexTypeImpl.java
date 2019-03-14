@@ -61,6 +61,7 @@ public class IntermediateImportedComplexTypeImpl extends IntermediateComplexType
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public IntermediateImport getImport() {
         if (import_ != null && import_.eIsProxy()) {
             InternalEObject oldImport = (InternalEObject)import_;
@@ -87,6 +88,7 @@ public class IntermediateImportedComplexTypeImpl extends IntermediateComplexType
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setImport(IntermediateImport newImport) {
         IntermediateImport oldImport = import_;
         import_ = newImport;

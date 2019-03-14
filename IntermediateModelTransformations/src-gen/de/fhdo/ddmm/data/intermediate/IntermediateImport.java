@@ -148,7 +148,6 @@ public interface IntermediateImport extends EObject {
      * @return the value of the '<em>Import Type Name For Datatypes</em>' attribute.
      * @see de.fhdo.ddmm.data.intermediate.IntermediatePackage#getIntermediateImport_ImportTypeNameForDatatypes()
      * @model unique="false" transient="true" changeable="false" volatile="true" derived="true"
-     *        annotation="http://www.eclipse.org/emf/2002/GenModel get='return &lt;%de.fhdo.ddmm.service.ImportType%&gt;.DATATYPES.getLiteral();'"
      * @generated
      */
     String getImportTypeNameForDatatypes();

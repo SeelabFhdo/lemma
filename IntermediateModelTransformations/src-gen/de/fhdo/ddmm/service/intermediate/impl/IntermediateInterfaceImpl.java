@@ -229,6 +229,7 @@ public class IntermediateInterfaceImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getName() {
         return name;
     }
@@ -238,6 +239,7 @@ public class IntermediateInterfaceImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setName(String newName) {
         String oldName = name;
         name = newName;
@@ -250,6 +252,7 @@ public class IntermediateInterfaceImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getQualifiedName() {
         return qualifiedName;
     }
@@ -259,6 +262,7 @@ public class IntermediateInterfaceImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setQualifiedName(String newQualifiedName) {
         String oldQualifiedName = qualifiedName;
         qualifiedName = newQualifiedName;
@@ -271,6 +275,7 @@ public class IntermediateInterfaceImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Visibility getVisibility() {
         return visibility;
     }
@@ -280,6 +285,7 @@ public class IntermediateInterfaceImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setVisibility(Visibility newVisibility) {
         Visibility oldVisibility = visibility;
         visibility = newVisibility == null ? VISIBILITY_EDEFAULT : newVisibility;
@@ -292,6 +298,7 @@ public class IntermediateInterfaceImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isNotImplemented() {
         return notImplemented;
     }
@@ -301,6 +308,7 @@ public class IntermediateInterfaceImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setNotImplemented(boolean newNotImplemented) {
         boolean oldNotImplemented = notImplemented;
         notImplemented = newNotImplemented;
@@ -313,6 +321,7 @@ public class IntermediateInterfaceImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isHasImplementedOperations() {
         return hasImplementedOperations;
     }
@@ -322,6 +331,7 @@ public class IntermediateInterfaceImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setHasImplementedOperations(boolean newHasImplementedOperations) {
         boolean oldHasImplementedOperations = hasImplementedOperations;
         hasImplementedOperations = newHasImplementedOperations;
@@ -334,6 +344,7 @@ public class IntermediateInterfaceImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<IntermediateEndpoint> getEndpoints() {
         if (endpoints == null) {
             endpoints = new EObjectContainmentWithInverseEList<IntermediateEndpoint>(IntermediateEndpoint.class, this, IntermediatePackage.INTERMEDIATE_INTERFACE__ENDPOINTS, IntermediatePackage.INTERMEDIATE_ENDPOINT__INTERFACE);
@@ -346,6 +357,7 @@ public class IntermediateInterfaceImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<IntermediateProtocolSpecification> getProtocols() {
         if (protocols == null) {
             protocols = new EObjectContainmentEList<IntermediateProtocolSpecification>(IntermediateProtocolSpecification.class, this, IntermediatePackage.INTERMEDIATE_INTERFACE__PROTOCOLS);
@@ -358,6 +370,7 @@ public class IntermediateInterfaceImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<IntermediateOperation> getOperations() {
         if (operations == null) {
             operations = new EObjectContainmentWithInverseEList<IntermediateOperation>(IntermediateOperation.class, this, IntermediatePackage.INTERMEDIATE_INTERFACE__OPERATIONS, IntermediatePackage.INTERMEDIATE_OPERATION__INTERFACE);
@@ -370,6 +383,7 @@ public class IntermediateInterfaceImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<IntermediateReferredOperation> getReferredOperations() {
         if (referredOperations == null) {
             referredOperations = new EObjectContainmentWithInverseEList<IntermediateReferredOperation>(IntermediateReferredOperation.class, this, IntermediatePackage.INTERMEDIATE_INTERFACE__REFERRED_OPERATIONS, IntermediatePackage.INTERMEDIATE_REFERRED_OPERATION__REFERRING_INTERFACE);
@@ -382,6 +396,7 @@ public class IntermediateInterfaceImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<IntermediateImportedAspect> getAspects() {
         if (aspects == null) {
             aspects = new EObjectContainmentWithInverseEList<IntermediateImportedAspect>(IntermediateImportedAspect.class, this, IntermediatePackage.INTERMEDIATE_INTERFACE__ASPECTS, IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__INTERFACE);
@@ -394,6 +409,7 @@ public class IntermediateInterfaceImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public IntermediateMicroservice getMicroservice() {
         if (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_INTERFACE__MICROSERVICE) return null;
         return (IntermediateMicroservice)eContainer();
@@ -424,6 +440,7 @@ public class IntermediateInterfaceImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setMicroservice(IntermediateMicroservice newMicroservice) {
         if (newMicroservice != eInternalContainer() || (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_INTERFACE__MICROSERVICE && newMicroservice != null)) {
             if (EcoreUtil.isAncestor(this, newMicroservice))
@@ -677,7 +694,7 @@ public class IntermediateInterfaceImpl extends MinimalEObjectImpl.Container impl
     public String toString() {
         if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
+        StringBuilder result = new StringBuilder(super.toString());
         result.append(" (name: ");
         result.append(name);
         result.append(", qualifiedName: ");

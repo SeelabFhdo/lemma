@@ -155,6 +155,7 @@ public abstract class OperationNodeImpl extends MinimalEObjectImpl.Container imp
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getName() {
         return name;
     }
@@ -164,6 +165,7 @@ public abstract class OperationNodeImpl extends MinimalEObjectImpl.Container imp
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setName(String newName) {
         String oldName = name;
         name = newName;
@@ -176,6 +178,7 @@ public abstract class OperationNodeImpl extends MinimalEObjectImpl.Container imp
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Import> getTechnologies() {
         if (technologies == null) {
             technologies = new EObjectResolvingEList<Import>(Import.class, this, OperationPackage.OPERATION_NODE__TECHNOLOGIES);
@@ -188,6 +191,7 @@ public abstract class OperationNodeImpl extends MinimalEObjectImpl.Container imp
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public OperationEnvironment getOperationEnvironment() {
         if (operationEnvironment != null && operationEnvironment.eIsProxy()) {
             InternalEObject oldOperationEnvironment = (InternalEObject)operationEnvironment;
@@ -214,6 +218,7 @@ public abstract class OperationNodeImpl extends MinimalEObjectImpl.Container imp
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setOperationEnvironment(OperationEnvironment newOperationEnvironment) {
         OperationEnvironment oldOperationEnvironment = operationEnvironment;
         operationEnvironment = newOperationEnvironment;
@@ -226,6 +231,7 @@ public abstract class OperationNodeImpl extends MinimalEObjectImpl.Container imp
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<ImportedMicroservice> getDeployedServices() {
         if (deployedServices == null) {
             deployedServices = new EObjectContainmentWithInverseEList<ImportedMicroservice>(ImportedMicroservice.class, this, OperationPackage.OPERATION_NODE__DEPLOYED_SERVICES, OperationPackage.IMPORTED_MICROSERVICE__OPERATION_NODE);
@@ -238,6 +244,7 @@ public abstract class OperationNodeImpl extends MinimalEObjectImpl.Container imp
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<TechnologySpecificPropertyValueAssignment> getDefaultServicePropertyValues() {
         if (defaultServicePropertyValues == null) {
             defaultServicePropertyValues = new EObjectContainmentEList<TechnologySpecificPropertyValueAssignment>(TechnologySpecificPropertyValueAssignment.class, this, OperationPackage.OPERATION_NODE__DEFAULT_SERVICE_PROPERTY_VALUES);
@@ -250,6 +257,7 @@ public abstract class OperationNodeImpl extends MinimalEObjectImpl.Container imp
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<ServiceDeploymentSpecification> getDeploymentSpecifications() {
         if (deploymentSpecifications == null) {
             deploymentSpecifications = new EObjectContainmentWithInverseEList<ServiceDeploymentSpecification>(ServiceDeploymentSpecification.class, this, OperationPackage.OPERATION_NODE__DEPLOYMENT_SPECIFICATIONS, OperationPackage.SERVICE_DEPLOYMENT_SPECIFICATION__OPERATION_NODE);
@@ -262,6 +270,7 @@ public abstract class OperationNodeImpl extends MinimalEObjectImpl.Container imp
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<ImportedOperationAspect> getAspects() {
         if (aspects == null) {
             aspects = new EObjectContainmentWithInverseEList<ImportedOperationAspect>(ImportedOperationAspect.class, this, OperationPackage.OPERATION_NODE__ASPECTS, OperationPackage.IMPORTED_OPERATION_ASPECT__OPERATION_NODE);
@@ -442,7 +451,7 @@ public abstract class OperationNodeImpl extends MinimalEObjectImpl.Container imp
     public String toString() {
         if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
+        StringBuilder result = new StringBuilder(super.toString());
         result.append(" (name: ");
         result.append(name);
         result.append(')');

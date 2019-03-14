@@ -121,7 +121,6 @@ public interface PossiblyImportedInterface extends EObject {
      * @return the value of the '<em>Required</em>' attribute.
      * @see de.fhdo.ddmm.service.ServicePackage#getPossiblyImportedInterface_Required()
      * @model unique="false" transient="true" changeable="false" volatile="true" derived="true"
-     *        annotation="http://www.eclipse.org/emf/2002/GenModel get='&lt;%de.fhdo.ddmm.service.Microservice%&gt; _requiringMicroservice = this.getRequiringMicroservice();\nreturn (_requiringMicroservice != null);'"
      * @generated
      */
     boolean isRequired();
@@ -138,7 +137,6 @@ public interface PossiblyImportedInterface extends EObject {
      * @return the value of the '<em>Required By Container</em>' attribute.
      * @see de.fhdo.ddmm.service.ServicePackage#getPossiblyImportedInterface_RequiredByContainer()
      * @model unique="false" transient="true" changeable="false" volatile="true" derived="true"
-     *        annotation="http://www.eclipse.org/emf/2002/GenModel get='if (((this.getInterface() == null) || (!this.isRequired())))\n{\n\treturn false;\n}\nif (((this.getRequiringMicroservice().getRequiredMicroservices() != null) &amp;&amp; \n\t&lt;%org.eclipse.emf.ecore.xcore.lib.XcoreEListExtensions%&gt;.&lt;&lt;%de.fhdo.ddmm.service.PossiblyImportedMicroservice%&gt;, &lt;%de.fhdo.ddmm.service.Microservice%&gt;&gt;map(this.getRequiringMicroservice().getRequiredMicroservices(), new &lt;%org.eclipse.xtext.xbase.lib.Functions.Function1%&gt;&lt;&lt;%de.fhdo.ddmm.service.PossiblyImportedMicroservice%&gt;, &lt;%de.fhdo.ddmm.service.Microservice%&gt;&gt;()\n\t{\n\t\tpublic &lt;%de.fhdo.ddmm.service.Microservice%&gt; apply(final &lt;%de.fhdo.ddmm.service.PossiblyImportedMicroservice%&gt; it)\n\t\t{\n\t\t\treturn it.getMicroservice();\n\t\t}\n\t}).contains(this.getInterface().getMicroservice())))\n{\n\treturn true;\n}\nreturn false;'"
      * @generated
      */
     boolean isRequiredByContainer();

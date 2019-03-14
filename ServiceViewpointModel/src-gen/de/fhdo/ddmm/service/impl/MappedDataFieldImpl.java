@@ -105,6 +105,7 @@ public class MappedDataFieldImpl extends MinimalEObjectImpl.Container implements
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public DataField getDataField() {
         if (dataField != null && dataField.eIsProxy()) {
             InternalEObject oldDataField = (InternalEObject)dataField;
@@ -131,6 +132,7 @@ public class MappedDataFieldImpl extends MinimalEObjectImpl.Container implements
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setDataField(DataField newDataField) {
         DataField oldDataField = dataField;
         dataField = newDataField;
@@ -143,6 +145,7 @@ public class MappedDataFieldImpl extends MinimalEObjectImpl.Container implements
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ImportedType getMappedType() {
         return mappedType;
     }
@@ -167,6 +170,7 @@ public class MappedDataFieldImpl extends MinimalEObjectImpl.Container implements
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setMappedType(ImportedType newMappedType) {
         if (newMappedType != mappedType) {
             NotificationChain msgs = null;
@@ -186,6 +190,7 @@ public class MappedDataFieldImpl extends MinimalEObjectImpl.Container implements
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<ImportedServiceAspect> getAspects() {
         if (aspects == null) {
             aspects = new EObjectContainmentWithInverseEList<ImportedServiceAspect>(ImportedServiceAspect.class, this, ServicePackage.MAPPED_DATA_FIELD__ASPECTS, ServicePackage.IMPORTED_SERVICE_ASPECT__MAPPED_DATA_FIELD);
@@ -198,6 +203,7 @@ public class MappedDataFieldImpl extends MinimalEObjectImpl.Container implements
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Parameter getParameter() {
         if (eContainerFeatureID() != ServicePackage.MAPPED_DATA_FIELD__PARAMETER) return null;
         return (Parameter)eContainer();
@@ -228,6 +234,7 @@ public class MappedDataFieldImpl extends MinimalEObjectImpl.Container implements
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setParameter(Parameter newParameter) {
         if (newParameter != eInternalContainer() || (eContainerFeatureID() != ServicePackage.MAPPED_DATA_FIELD__PARAMETER && newParameter != null)) {
             if (EcoreUtil.isAncestor(this, newParameter))
@@ -249,6 +256,7 @@ public class MappedDataFieldImpl extends MinimalEObjectImpl.Container implements
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<String> getQualifiedNameParts() {
         EList<String> _xblockexpression = null;
         {
@@ -267,6 +275,7 @@ public class MappedDataFieldImpl extends MinimalEObjectImpl.Container implements
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String buildQualifiedName(final String separator) {
         if ((separator == null)) {
             return null;
@@ -290,6 +299,7 @@ public class MappedDataFieldImpl extends MinimalEObjectImpl.Container implements
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Type getEffectiveType() {
         ImportedType _mappedType = this.getMappedType();
         boolean _tripleNotEquals = (_mappedType != null);

@@ -83,6 +83,7 @@ public class ListTypeImpl extends ComplexTypeImpl implements ListType {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public PrimitiveType getPrimitiveType() {
         return primitiveType;
     }
@@ -107,6 +108,7 @@ public class ListTypeImpl extends ComplexTypeImpl implements ListType {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setPrimitiveType(PrimitiveType newPrimitiveType) {
         if (newPrimitiveType != primitiveType) {
             NotificationChain msgs = null;
@@ -126,6 +128,7 @@ public class ListTypeImpl extends ComplexTypeImpl implements ListType {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<DataField> getDataFields() {
         if (dataFields == null) {
             dataFields = new EObjectContainmentWithInverseEList<DataField>(DataField.class, this, DataPackage.LIST_TYPE__DATA_FIELDS, DataPackage.DATA_FIELD__LIST_TYPE);
@@ -138,6 +141,7 @@ public class ListTypeImpl extends ComplexTypeImpl implements ListType {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public int compareFieldCounts(final ListType listToCompare) {
         if ((listToCompare == null)) {
             return 1;

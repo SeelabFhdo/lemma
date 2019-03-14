@@ -88,6 +88,7 @@ public class IntermediateAspectPropertyValueImpl extends MinimalEObjectImpl.Cont
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getValue() {
         return value;
     }
@@ -97,6 +98,7 @@ public class IntermediateAspectPropertyValueImpl extends MinimalEObjectImpl.Cont
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setValue(String newValue) {
         String oldValue = value;
         value = newValue;
@@ -109,6 +111,7 @@ public class IntermediateAspectPropertyValueImpl extends MinimalEObjectImpl.Cont
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public IntermediateAspectProperty getProperty() {
         if (property != null && property.eIsProxy()) {
             InternalEObject oldProperty = (InternalEObject)property;
@@ -135,6 +138,7 @@ public class IntermediateAspectPropertyValueImpl extends MinimalEObjectImpl.Cont
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setProperty(IntermediateAspectProperty newProperty) {
         IntermediateAspectProperty oldProperty = property;
         property = newProperty;
@@ -147,6 +151,7 @@ public class IntermediateAspectPropertyValueImpl extends MinimalEObjectImpl.Cont
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public IntermediateImportedAspect getAspect() {
         if (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_ASPECT_PROPERTY_VALUE__ASPECT) return null;
         return (IntermediateImportedAspect)eContainer();
@@ -177,6 +182,7 @@ public class IntermediateAspectPropertyValueImpl extends MinimalEObjectImpl.Cont
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setAspect(IntermediateImportedAspect newAspect) {
         if (newAspect != eInternalContainer() || (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_ASPECT_PROPERTY_VALUE__ASPECT && newAspect != null)) {
             if (EcoreUtil.isAncestor(this, newAspect))
@@ -326,7 +332,7 @@ public class IntermediateAspectPropertyValueImpl extends MinimalEObjectImpl.Cont
     public String toString() {
         if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
+        StringBuilder result = new StringBuilder(super.toString());
         result.append(" (value: ");
         result.append(value);
         result.append(')');

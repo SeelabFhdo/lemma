@@ -244,7 +244,6 @@ public interface MicroserviceMapping extends EObject {
      * Get imports of type definition technologies
      * <!-- end-model-doc -->
      * @model kind="operation" unique="false"
-     *        annotation="http://www.eclipse.org/emf/2002/GenModel body='final &lt;%org.eclipse.xtext.xbase.lib.Functions.Function1%&gt;&lt;&lt;%de.fhdo.ddmm.service.Import%&gt;, &lt;%java.lang.Boolean%&gt;&gt; _function = new &lt;%org.eclipse.xtext.xbase.lib.Functions.Function1%&gt;&lt;&lt;%de.fhdo.ddmm.service.Import%&gt;, &lt;%java.lang.Boolean%&gt;&gt;()\n{\n\tpublic &lt;%java.lang.Boolean%&gt; apply(final &lt;%de.fhdo.ddmm.service.Import%&gt; it)\n\t{\n\t\tboolean _xblockexpression = false;\n\t\t{\n\t\t\tfinal &lt;%de.fhdo.ddmm.technology.Technology%&gt; technologyModel = &lt;%de.fhdo.ddmm.utils.DdmmUtils%&gt;.&lt;&lt;%de.fhdo.ddmm.technology.Technology%&gt;&gt;getImportedModelRoot(it.eResource(), it.getImportURI(), &lt;%de.fhdo.ddmm.technology.Technology%&gt;.class);\n\t\t\t_xblockexpression = (((!technologyModel.getPrimitiveTypes().isEmpty()) || \n\t\t\t\t(!technologyModel.getListTypes().isEmpty())) || \n\t\t\t\t(!technologyModel.getDataStructures().isEmpty()));\n\t\t}\n\t\treturn &lt;%java.lang.Boolean%&gt;.valueOf(_xblockexpression);\n\t}\n};\nreturn &lt;%org.eclipse.emf.common.util.ECollections%&gt;.&lt;&lt;%de.fhdo.ddmm.service.Import%&gt;&gt;toEList(&lt;%org.eclipse.xtext.xbase.lib.IterableExtensions%&gt;.&lt;&lt;%de.fhdo.ddmm.service.Import%&gt;&gt;filter(this.getTechnologies(), _function));'"
      * @generated
      */
     EList<Import> getTypeDefinitionTechnologyImports();
@@ -259,7 +258,6 @@ public interface MicroserviceMapping extends EObject {
      * model had been validated to refer to one type definition technology at most.
      * <!-- end-model-doc -->
      * @model kind="operation" unique="false"
-     *        annotation="http://www.eclipse.org/emf/2002/GenModel body='final &lt;%org.eclipse.emf.common.util.EList%&gt;&lt;&lt;%de.fhdo.ddmm.service.Import%&gt;&gt; typeDefinitionTechnologyImports = this.getTypeDefinitionTechnologyImports();\n&lt;%de.fhdo.ddmm.service.Import%&gt; _xifexpression = null;\nboolean _isEmpty = typeDefinitionTechnologyImports.isEmpty();\nboolean _not = (!_isEmpty);\nif (_not)\n{\n\t_xifexpression = typeDefinitionTechnologyImports.get(0);\n}\nelse\n{\n\t_xifexpression = null;\n}\nreturn _xifexpression;'"
      * @generated
      */
     Import getTypeDefinitionTechnologyImport();
@@ -272,7 +270,6 @@ public interface MicroserviceMapping extends EObject {
      * Get type definition technology models
      * <!-- end-model-doc -->
      * @model kind="operation" unique="false"
-     *        annotation="http://www.eclipse.org/emf/2002/GenModel body='final &lt;%org.eclipse.xtext.xbase.lib.Functions.Function1%&gt;&lt;&lt;%de.fhdo.ddmm.service.Import%&gt;, &lt;%de.fhdo.ddmm.technology.Technology%&gt;&gt; _function = new &lt;%org.eclipse.xtext.xbase.lib.Functions.Function1%&gt;&lt;&lt;%de.fhdo.ddmm.service.Import%&gt;, &lt;%de.fhdo.ddmm.technology.Technology%&gt;&gt;()\n{\n\tpublic &lt;%de.fhdo.ddmm.technology.Technology%&gt; apply(final &lt;%de.fhdo.ddmm.service.Import%&gt; it)\n\t{\n\t\treturn &lt;%de.fhdo.ddmm.utils.DdmmUtils%&gt;.&lt;&lt;%de.fhdo.ddmm.technology.Technology%&gt;&gt;getImportedModelRoot(it.eResource(), it.getImportURI(), &lt;%de.fhdo.ddmm.technology.Technology%&gt;.class);\n\t}\n};\nreturn &lt;%org.eclipse.emf.ecore.xcore.lib.XcoreEListExtensions%&gt;.&lt;&lt;%de.fhdo.ddmm.service.Import%&gt;, &lt;%de.fhdo.ddmm.technology.Technology%&gt;&gt;map(this.getTypeDefinitionTechnologyImports(), _function);'"
      * @generated
      */
     EList<Technology> getTypeDefinitionTechnologies();
@@ -287,7 +284,6 @@ public interface MicroserviceMapping extends EObject {
      * model had been validated to refer to one type definition technology at most.
      * <!-- end-model-doc -->
      * @model kind="operation" unique="false"
-     *        annotation="http://www.eclipse.org/emf/2002/GenModel body='final &lt;%org.eclipse.emf.common.util.EList%&gt;&lt;&lt;%de.fhdo.ddmm.technology.Technology%&gt;&gt; typeDefinitionTechnologies = this.getTypeDefinitionTechnologies();\n&lt;%de.fhdo.ddmm.technology.Technology%&gt; _xifexpression = null;\nboolean _isEmpty = typeDefinitionTechnologies.isEmpty();\nboolean _not = (!_isEmpty);\nif (_not)\n{\n\t_xifexpression = typeDefinitionTechnologies.get(0);\n}\nelse\n{\n\t_xifexpression = null;\n}\nreturn _xifexpression;'"
      * @generated
      */
     Technology getTypeDefinitionTechnology();

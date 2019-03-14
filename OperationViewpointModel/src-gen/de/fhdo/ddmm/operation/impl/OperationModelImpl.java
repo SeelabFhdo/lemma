@@ -93,6 +93,7 @@ public class OperationModelImpl extends MinimalEObjectImpl.Container implements 
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Import> getImports() {
         if (imports == null) {
             imports = new EObjectContainmentEList<Import>(Import.class, this, OperationPackage.OPERATION_MODEL__IMPORTS);
@@ -105,6 +106,7 @@ public class OperationModelImpl extends MinimalEObjectImpl.Container implements 
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<de.fhdo.ddmm.operation.Container> getContainers() {
         if (containers == null) {
             containers = new EObjectContainmentWithInverseEList<de.fhdo.ddmm.operation.Container>(de.fhdo.ddmm.operation.Container.class, this, OperationPackage.OPERATION_MODEL__CONTAINERS, OperationPackage.CONTAINER__OPERATION_MODEL);
@@ -117,6 +119,7 @@ public class OperationModelImpl extends MinimalEObjectImpl.Container implements 
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<InfrastructureNode> getInfrastructureNodes() {
         if (infrastructureNodes == null) {
             infrastructureNodes = new EObjectContainmentWithInverseEList<InfrastructureNode>(InfrastructureNode.class, this, OperationPackage.OPERATION_MODEL__INFRASTRUCTURE_NODES, OperationPackage.INFRASTRUCTURE_NODE__OPERATION_MODEL);

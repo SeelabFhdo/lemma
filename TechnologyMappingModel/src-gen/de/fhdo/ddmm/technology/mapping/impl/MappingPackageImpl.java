@@ -175,7 +175,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
 
     /**
      * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-     * 
+     *
      * <p>This method is used to initialize {@link MappingPackage#eINSTANCE} when that field is accessed.
      * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
      * <!-- begin-user-doc -->
@@ -189,7 +189,8 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
         if (isInited) return (MappingPackage)EPackage.Registry.INSTANCE.getEPackage(MappingPackage.eNS_URI);
 
         // Obtain or create and register package
-        MappingPackageImpl theMappingPackage = (MappingPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof MappingPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new MappingPackageImpl());
+        Object registeredMappingPackage = EPackage.Registry.INSTANCE.get(eNS_URI);
+        MappingPackageImpl theMappingPackage = registeredMappingPackage instanceof MappingPackageImpl ? (MappingPackageImpl)registeredMappingPackage : new MappingPackageImpl();
 
         isInited = true;
 
@@ -208,7 +209,6 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
         // Mark meta-data to indicate it can't be changed
         theMappingPackage.freeze();
 
-  
         // Update the registry and return the package
         EPackage.Registry.INSTANCE.put(MappingPackage.eNS_URI, theMappingPackage);
         return theMappingPackage;
@@ -219,6 +219,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getTechnologyMapping() {
         return technologyMappingEClass;
     }
@@ -228,6 +229,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getTechnologyMapping_Imports() {
         return (EReference)technologyMappingEClass.getEStructuralFeatures().get(0);
     }
@@ -237,6 +239,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getTechnologyMapping_Mappings() {
         return (EReference)technologyMappingEClass.getEStructuralFeatures().get(1);
     }
@@ -246,6 +249,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EOperation getTechnologyMapping__GetMappedInterfaces() {
         return technologyMappingEClass.getEOperations().get(0);
     }
@@ -255,6 +259,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EOperation getTechnologyMapping__GetMappedOperations() {
         return technologyMappingEClass.getEOperations().get(1);
     }
@@ -264,6 +269,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EOperation getTechnologyMapping__GetMappedReferredOperations() {
         return technologyMappingEClass.getEOperations().get(2);
     }
@@ -273,6 +279,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getMicroserviceMapping() {
         return microserviceMappingEClass;
     }
@@ -282,6 +289,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getMicroserviceMapping_Technologies() {
         return (EReference)microserviceMappingEClass.getEStructuralFeatures().get(0);
     }
@@ -291,6 +299,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getMicroserviceMapping_Microservice() {
         return (EReference)microserviceMappingEClass.getEStructuralFeatures().get(1);
     }
@@ -300,6 +309,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getMicroserviceMapping_Endpoints() {
         return (EReference)microserviceMappingEClass.getEStructuralFeatures().get(2);
     }
@@ -309,6 +319,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getMicroserviceMapping_Protocols() {
         return (EReference)microserviceMappingEClass.getEStructuralFeatures().get(3);
     }
@@ -318,6 +329,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getMicroserviceMapping_InterfaceMappings() {
         return (EReference)microserviceMappingEClass.getEStructuralFeatures().get(4);
     }
@@ -327,6 +339,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getMicroserviceMapping_OperationMappings() {
         return (EReference)microserviceMappingEClass.getEStructuralFeatures().get(5);
     }
@@ -336,6 +349,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getMicroserviceMapping_ReferredOperationMappings() {
         return (EReference)microserviceMappingEClass.getEStructuralFeatures().get(6);
     }
@@ -345,6 +359,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getMicroserviceMapping_Aspects() {
         return (EReference)microserviceMappingEClass.getEStructuralFeatures().get(7);
     }
@@ -354,6 +369,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getMicroserviceMapping_MappingModel() {
         return (EReference)microserviceMappingEClass.getEStructuralFeatures().get(8);
     }
@@ -363,6 +379,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EOperation getMicroserviceMapping__GetTypeDefinitionTechnologyImports() {
         return microserviceMappingEClass.getEOperations().get(0);
     }
@@ -372,6 +389,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EOperation getMicroserviceMapping__GetTypeDefinitionTechnologyImport() {
         return microserviceMappingEClass.getEOperations().get(1);
     }
@@ -381,6 +399,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EOperation getMicroserviceMapping__GetTypeDefinitionTechnologies() {
         return microserviceMappingEClass.getEOperations().get(2);
     }
@@ -390,6 +409,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EOperation getMicroserviceMapping__GetTypeDefinitionTechnology() {
         return microserviceMappingEClass.getEOperations().get(3);
     }
@@ -399,6 +419,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getImportedMicroservice() {
         return importedMicroserviceEClass;
     }
@@ -408,6 +429,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getImportedMicroservice_Import() {
         return (EReference)importedMicroserviceEClass.getEStructuralFeatures().get(0);
     }
@@ -417,6 +439,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getImportedMicroservice_Microservice() {
         return (EReference)importedMicroserviceEClass.getEStructuralFeatures().get(1);
     }
@@ -426,6 +449,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getImportedMicroservice_MicroserviceMapping() {
         return (EReference)importedMicroserviceEClass.getEStructuralFeatures().get(2);
     }
@@ -435,6 +459,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getInterfaceMapping() {
         return interfaceMappingEClass;
     }
@@ -444,6 +469,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getInterfaceMapping_Interface() {
         return (EReference)interfaceMappingEClass.getEStructuralFeatures().get(0);
     }
@@ -453,6 +479,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getInterfaceMapping_Endpoints() {
         return (EReference)interfaceMappingEClass.getEStructuralFeatures().get(1);
     }
@@ -462,6 +489,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getInterfaceMapping_Protocols() {
         return (EReference)interfaceMappingEClass.getEStructuralFeatures().get(2);
     }
@@ -471,6 +499,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getInterfaceMapping_Aspects() {
         return (EReference)interfaceMappingEClass.getEStructuralFeatures().get(3);
     }
@@ -480,6 +509,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getInterfaceMapping_MicroserviceMapping() {
         return (EReference)interfaceMappingEClass.getEStructuralFeatures().get(4);
     }
@@ -489,6 +519,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getOperationMapping() {
         return operationMappingEClass;
     }
@@ -498,6 +529,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getOperationMapping_Operation() {
         return (EReference)operationMappingEClass.getEStructuralFeatures().get(0);
     }
@@ -507,6 +539,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getOperationMapping_Endpoints() {
         return (EReference)operationMappingEClass.getEStructuralFeatures().get(1);
     }
@@ -516,6 +549,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getOperationMapping_Protocols() {
         return (EReference)operationMappingEClass.getEStructuralFeatures().get(2);
     }
@@ -525,6 +559,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getOperationMapping_ParameterMappings() {
         return (EReference)operationMappingEClass.getEStructuralFeatures().get(3);
     }
@@ -534,6 +569,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getOperationMapping_Aspects() {
         return (EReference)operationMappingEClass.getEStructuralFeatures().get(4);
     }
@@ -543,6 +579,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getOperationMapping_MicroserviceMapping() {
         return (EReference)operationMappingEClass.getEStructuralFeatures().get(5);
     }
@@ -552,6 +589,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getReferredOperationMapping() {
         return referredOperationMappingEClass;
     }
@@ -561,6 +599,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getReferredOperationMapping_Operation() {
         return (EReference)referredOperationMappingEClass.getEStructuralFeatures().get(0);
     }
@@ -570,6 +609,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getReferredOperationMapping_Endpoints() {
         return (EReference)referredOperationMappingEClass.getEStructuralFeatures().get(1);
     }
@@ -579,6 +619,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getReferredOperationMapping_Protocols() {
         return (EReference)referredOperationMappingEClass.getEStructuralFeatures().get(2);
     }
@@ -588,6 +629,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getReferredOperationMapping_Aspects() {
         return (EReference)referredOperationMappingEClass.getEStructuralFeatures().get(3);
     }
@@ -597,6 +639,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getReferredOperationMapping_MicroserviceMapping() {
         return (EReference)referredOperationMappingEClass.getEStructuralFeatures().get(4);
     }
@@ -606,6 +649,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getParameterMapping() {
         return parameterMappingEClass;
     }
@@ -615,6 +659,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getParameterMapping_Parameter() {
         return (EReference)parameterMappingEClass.getEStructuralFeatures().get(0);
     }
@@ -624,6 +669,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getParameterMapping_Aspects() {
         return (EReference)parameterMappingEClass.getEStructuralFeatures().get(1);
     }
@@ -633,6 +679,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getParameterMapping_OperationMapping() {
         return (EReference)parameterMappingEClass.getEStructuralFeatures().get(2);
     }
@@ -642,6 +689,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getPrimitiveParameterMapping() {
         return primitiveParameterMappingEClass;
     }
@@ -651,6 +699,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getPrimitiveParameterMapping_Technology() {
         return (EReference)primitiveParameterMappingEClass.getEStructuralFeatures().get(0);
     }
@@ -660,6 +709,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getPrimitiveParameterMapping_PrimitiveType() {
         return (EReference)primitiveParameterMappingEClass.getEStructuralFeatures().get(1);
     }
@@ -669,6 +719,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getComplexParameterMapping() {
         return complexParameterMappingEClass;
     }
@@ -678,6 +729,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getComplexParameterMapping_Technology() {
         return (EReference)complexParameterMappingEClass.getEStructuralFeatures().get(0);
     }
@@ -687,6 +739,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getComplexParameterMapping_TechnologySpecificComplexType() {
         return (EReference)complexParameterMappingEClass.getEStructuralFeatures().get(1);
     }
@@ -696,6 +749,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getComplexParameterMapping_DataFieldMappings() {
         return (EReference)complexParameterMappingEClass.getEStructuralFeatures().get(2);
     }
@@ -705,6 +759,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getTechnologySpecificDataFieldTypeMapping() {
         return technologySpecificDataFieldTypeMappingEClass;
     }
@@ -714,6 +769,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getTechnologySpecificDataFieldTypeMapping_Technology() {
         return (EReference)technologySpecificDataFieldTypeMappingEClass.getEStructuralFeatures().get(0);
     }
@@ -723,6 +779,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getTechnologySpecificDataFieldTypeMapping_Type() {
         return (EReference)technologySpecificDataFieldTypeMappingEClass.getEStructuralFeatures().get(1);
     }
@@ -732,6 +789,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getTechnologySpecificDataFieldTypeMapping_DataFieldHierarchy() {
         return (EReference)technologySpecificDataFieldTypeMappingEClass.getEStructuralFeatures().get(2);
     }
@@ -741,6 +799,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getTechnologySpecificDataFieldTypeMapping_Aspects() {
         return (EReference)technologySpecificDataFieldTypeMappingEClass.getEStructuralFeatures().get(3);
     }
@@ -750,6 +809,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getTechnologySpecificDataFieldTypeMapping_ParameterMapping() {
         return (EReference)technologySpecificDataFieldTypeMappingEClass.getEStructuralFeatures().get(4);
     }
@@ -759,6 +819,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getDataFieldHierarchy() {
         return dataFieldHierarchyEClass;
     }
@@ -768,6 +829,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getDataFieldHierarchy_DataFields() {
         return (EReference)dataFieldHierarchyEClass.getEStructuralFeatures().get(0);
     }
@@ -777,6 +839,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getDataFieldHierarchy_Previous() {
         return (EReference)dataFieldHierarchyEClass.getEStructuralFeatures().get(1);
     }
@@ -786,6 +849,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getDataFieldHierarchy_Mapping() {
         return (EReference)dataFieldHierarchyEClass.getEStructuralFeatures().get(2);
     }
@@ -795,6 +859,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getTechnologySpecificProtocolSpecification() {
         return technologySpecificProtocolSpecificationEClass;
     }
@@ -804,6 +869,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getTechnologySpecificProtocolSpecification_CommunicationType() {
         return (EAttribute)technologySpecificProtocolSpecificationEClass.getEStructuralFeatures().get(0);
     }
@@ -813,6 +879,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getTechnologySpecificProtocolSpecification_TechnologySpecificProtocol() {
         return (EReference)technologySpecificProtocolSpecificationEClass.getEStructuralFeatures().get(1);
     }
@@ -822,6 +889,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getTechnologySpecificProtocol() {
         return technologySpecificProtocolEClass;
     }
@@ -831,6 +899,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getTechnologySpecificProtocol_Technology() {
         return (EReference)technologySpecificProtocolEClass.getEStructuralFeatures().get(0);
     }
@@ -840,6 +909,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getTechnologySpecificProtocol_Protocol() {
         return (EReference)technologySpecificProtocolEClass.getEStructuralFeatures().get(1);
     }
@@ -849,6 +919,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getTechnologySpecificProtocol_DataFormat() {
         return (EReference)technologySpecificProtocolEClass.getEStructuralFeatures().get(2);
     }
@@ -858,6 +929,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getTechnologySpecificProtocol_ProtocolSpecification() {
         return (EReference)technologySpecificProtocolEClass.getEStructuralFeatures().get(3);
     }
@@ -867,6 +939,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getTechnologySpecificProtocol_Endpoint() {
         return (EReference)technologySpecificProtocolEClass.getEStructuralFeatures().get(4);
     }
@@ -876,6 +949,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getTechnologySpecificEndpoint() {
         return technologySpecificEndpointEClass;
     }
@@ -885,6 +959,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getTechnologySpecificEndpoint_Addresses() {
         return (EAttribute)technologySpecificEndpointEClass.getEStructuralFeatures().get(0);
     }
@@ -894,6 +969,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getTechnologySpecificEndpoint_TechnologySpecificProtocols() {
         return (EReference)technologySpecificEndpointEClass.getEStructuralFeatures().get(1);
     }
@@ -903,6 +979,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getTechnologySpecificEndpoint_MicroserviceMapping() {
         return (EReference)technologySpecificEndpointEClass.getEStructuralFeatures().get(2);
     }
@@ -912,6 +989,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getTechnologySpecificEndpoint_InterfaceMapping() {
         return (EReference)technologySpecificEndpointEClass.getEStructuralFeatures().get(3);
     }
@@ -921,6 +999,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getTechnologySpecificEndpoint_OperationMapping() {
         return (EReference)technologySpecificEndpointEClass.getEStructuralFeatures().get(4);
     }
@@ -930,6 +1009,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getTechnologySpecificEndpoint_ReferredOperationMapping() {
         return (EReference)technologySpecificEndpointEClass.getEStructuralFeatures().get(5);
     }
@@ -939,6 +1019,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getTechnologySpecificImportedServiceAspect() {
         return technologySpecificImportedServiceAspectEClass;
     }
@@ -948,6 +1029,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getTechnologySpecificImportedServiceAspect_Technology() {
         return (EReference)technologySpecificImportedServiceAspectEClass.getEStructuralFeatures().get(0);
     }
@@ -957,6 +1039,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getTechnologySpecificImportedServiceAspect_Aspect() {
         return (EReference)technologySpecificImportedServiceAspectEClass.getEStructuralFeatures().get(1);
     }
@@ -966,6 +1049,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getTechnologySpecificImportedServiceAspect_SinglePropertyValue() {
         return (EReference)technologySpecificImportedServiceAspectEClass.getEStructuralFeatures().get(2);
     }
@@ -975,6 +1059,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getTechnologySpecificImportedServiceAspect_Values() {
         return (EReference)technologySpecificImportedServiceAspectEClass.getEStructuralFeatures().get(3);
     }
@@ -984,6 +1069,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getTechnologySpecificImportedServiceAspect_MicroserviceMapping() {
         return (EReference)technologySpecificImportedServiceAspectEClass.getEStructuralFeatures().get(4);
     }
@@ -993,6 +1079,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getTechnologySpecificImportedServiceAspect_InterfaceMapping() {
         return (EReference)technologySpecificImportedServiceAspectEClass.getEStructuralFeatures().get(5);
     }
@@ -1002,6 +1089,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getTechnologySpecificImportedServiceAspect_OperationMapping() {
         return (EReference)technologySpecificImportedServiceAspectEClass.getEStructuralFeatures().get(6);
     }
@@ -1011,6 +1099,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getTechnologySpecificImportedServiceAspect_ReferredOperationMapping() {
         return (EReference)technologySpecificImportedServiceAspectEClass.getEStructuralFeatures().get(7);
     }
@@ -1020,6 +1109,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getTechnologySpecificImportedServiceAspect_ParameterMapping() {
         return (EReference)technologySpecificImportedServiceAspectEClass.getEStructuralFeatures().get(8);
     }
@@ -1029,6 +1119,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getTechnologySpecificImportedServiceAspect_DataFieldMapping() {
         return (EReference)technologySpecificImportedServiceAspectEClass.getEStructuralFeatures().get(9);
     }
@@ -1038,6 +1129,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public MappingFactory getMappingFactory() {
         return (MappingFactory)getEFactoryInstance();
     }

@@ -87,6 +87,7 @@ public abstract class PrimitiveTypeImpl extends TypeImpl implements PrimitiveTyp
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getTypeName() {
         String _switchResult = null;
         boolean _matched = false;
@@ -159,6 +160,7 @@ public abstract class PrimitiveTypeImpl extends TypeImpl implements PrimitiveTyp
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Integer getTypeSize() {
         Integer _switchResult = null;
         boolean _matched = false;
@@ -231,6 +233,7 @@ public abstract class PrimitiveTypeImpl extends TypeImpl implements PrimitiveTyp
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public int sizeCompare(final PrimitiveType typeToCompare) {
         if ((typeToCompare == null)) {
             return 1;
@@ -278,6 +281,7 @@ public abstract class PrimitiveTypeImpl extends TypeImpl implements PrimitiveTyp
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isCompatibleWith(final PrimitiveType typeToCheck) {
         if (((typeToCheck != null) && Objects.equal(typeToCheck.getTypeName(), this.getTypeName()))) {
             return true;
@@ -422,6 +426,7 @@ public abstract class PrimitiveTypeImpl extends TypeImpl implements PrimitiveTyp
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Class<?>> getBuiltinPrimitiveTypes() {
         final ArrayList<Class<?>> primitiveTypes = CollectionLiterals.<Class<?>>newArrayList();
         primitiveTypes.add(PrimitiveBoolean.class);

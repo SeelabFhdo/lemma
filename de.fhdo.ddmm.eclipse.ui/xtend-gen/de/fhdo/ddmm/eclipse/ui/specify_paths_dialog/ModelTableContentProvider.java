@@ -34,15 +34,16 @@ public class ModelTableContentProvider implements IStructuredContentProvider {
   /**
    * Get elements
    */
-  @Override
   public Object[] getElements(final Object inputElement) {
     final Map<String, List<ModelFile>> inputModelFiles = ((Map<String, List<ModelFile>>) inputElement);
     final LinkedList<ModelFile> tableEntries = CollectionLiterals.<ModelFile>newLinkedList();
     final List<String> modelTypeOrdering = this.strategy.getModelTypeOrdering();
-    final Consumer<String> _function = (String modelType) -> {
-      final List<ModelFile> tableEntriesForType = inputModelFiles.get(modelType);
-      if ((tableEntriesForType != null)) {
-        tableEntries.addAll(IterableExtensions.<ModelFile>sort(tableEntriesForType));
+    final Consumer<String> _function = new Consumer<String>() {
+      public void accept(final String modelType) {
+        final List<ModelFile> tableEntriesForType = inputModelFiles.get(modelType);
+        if ((tableEntriesForType != null)) {
+          tableEntries.addAll(IterableExtensions.<ModelFile>sort(tableEntriesForType));
+        }
       }
     };
     modelTypeOrdering.forEach(_function);

@@ -29,7 +29,7 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
  */
 @SuppressWarnings("all")
 public class MappingModelTransformation extends AbstractIntermediateModelTransformationStrategy {
-  private final static TargetModelInfo TARGET_MODEL_INFO = new TargetModelInfo(
+  private static final TargetModelInfo TARGET_MODEL_INFO = new TargetModelInfo(
     ServicePackage.eNS_URI, 
     ServicePackage.eINSTANCE, 
     ServiceModel.class);

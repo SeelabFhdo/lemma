@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet
 import com.google.common.base.Function
 import org.eclipse.emf.ecore.xmi.XMIResource
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
+import org.eclipse.swt.widgets.Shell
 
 /**
  * Utility class for the DDMM UI plugin.
@@ -208,5 +209,19 @@ final class DdmmUiUtils {
         val fileUri =  URI.createURI(file.fullPath.toString)
         val resourceSetProvider = resourceSetProviderRegistry.getResourceServiceProvider(fileUri)
         return resourceSetProvider.get(ResourceSet)
+    }
+
+    /**
+     * Run UI event loop
+     */
+    static def runEventLoop(Shell shell) {
+        /* Code taken from Window.open() */
+        val display = shell.display
+        while (shell !== null && !shell.disposed)
+            if (!display.readAndDispatch())
+                display.sleep()
+
+        if (!display.disposed)
+            display.update()
     }
 }

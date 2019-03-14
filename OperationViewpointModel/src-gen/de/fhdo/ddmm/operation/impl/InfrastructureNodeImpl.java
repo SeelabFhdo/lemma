@@ -84,6 +84,7 @@ public class InfrastructureNodeImpl extends OperationNodeImpl implements Infrast
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public InfrastructureTechnologyReference getInfrastructureTechnology() {
         return infrastructureTechnology;
     }
@@ -108,6 +109,7 @@ public class InfrastructureNodeImpl extends OperationNodeImpl implements Infrast
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setInfrastructureTechnology(InfrastructureTechnologyReference newInfrastructureTechnology) {
         if (newInfrastructureTechnology != infrastructureTechnology) {
             NotificationChain msgs = null;
@@ -127,6 +129,7 @@ public class InfrastructureNodeImpl extends OperationNodeImpl implements Infrast
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<BasicEndpoint> getEndpoints() {
         if (endpoints == null) {
             endpoints = new EObjectContainmentWithInverseEList<BasicEndpoint>(BasicEndpoint.class, this, OperationPackage.INFRASTRUCTURE_NODE__ENDPOINTS, OperationPackage.BASIC_ENDPOINT__INFRASTRUCTURE_NODE);
@@ -139,6 +142,7 @@ public class InfrastructureNodeImpl extends OperationNodeImpl implements Infrast
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public OperationModel getOperationModel() {
         if (eContainerFeatureID() != OperationPackage.INFRASTRUCTURE_NODE__OPERATION_MODEL) return null;
         return (OperationModel)eContainer();
@@ -169,6 +173,7 @@ public class InfrastructureNodeImpl extends OperationNodeImpl implements Infrast
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setOperationModel(OperationModel newOperationModel) {
         if (newOperationModel != eInternalContainer() || (eContainerFeatureID() != OperationPackage.INFRASTRUCTURE_NODE__OPERATION_MODEL && newOperationModel != null)) {
             if (EcoreUtil.isAncestor(this, newOperationModel))

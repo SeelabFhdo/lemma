@@ -59,7 +59,6 @@ public class SpecifyPathsHandler extends AbstractHandler {
   /**
    * Execute handler
    */
-  @Override
   public Object execute(final ExecutionEvent event) throws ExecutionException {
     LinkedHashMap<String, List<ModelFile>> _createModelTableFiles = this.createModelTableFiles();
     final SpecifyPathsDialog dialog = new SpecifyPathsDialog(this.SHELL, this.strategy, _createModelTableFiles);
@@ -82,11 +81,15 @@ public class SpecifyPathsHandler extends AbstractHandler {
    */
   private LinkedHashMap<String, List<ModelFile>> createModelTableFiles() {
     final LinkedHashMap<String, List<ModelFile>> result = CollectionLiterals.<String, List<ModelFile>>newLinkedHashMap();
-    final Function1<ModelFile, String> _function = (ModelFile it) -> {
-      return it.getFile().getLocation().toString();
+    final Function1<ModelFile, String> _function = new Function1<ModelFile, String>() {
+      public String apply(final ModelFile it) {
+        return it.getFile().getLocation().toString();
+      }
     };
-    final Function1<ModelFile, ModelFile> _function_1 = (ModelFile it) -> {
-      return this.prepareModelFile(it);
+    final Function1<ModelFile, ModelFile> _function_1 = new Function1<ModelFile, ModelFile>() {
+      public ModelFile apply(final ModelFile it) {
+        return SpecifyPathsHandler.this.prepareModelFile(it);
+      }
     };
     final Map<String, ModelFile> modelFilesByFullPath = IterableExtensions.<ModelFile, String, ModelFile>toMap(this.inputModelFiles, _function, _function_1);
     final ArrayDeque<ModelFile> filesTodo = new ArrayDeque<ModelFile>(this.inputModelFiles);
@@ -127,19 +130,23 @@ public class SpecifyPathsHandler extends AbstractHandler {
     List<ModelFile> _xifexpression = null;
     boolean _isScannedForChildren = modelFile.isScannedForChildren();
     if (_isScannedForChildren) {
-      final Function1<ModelFile, ModelFile> _function = (ModelFile it) -> {
-        return this.prepareModelFile(it);
+      final Function1<ModelFile, ModelFile> _function = new Function1<ModelFile, ModelFile>() {
+        public ModelFile apply(final ModelFile it) {
+          return SpecifyPathsHandler.this.prepareModelFile(it);
+        }
       };
       _xifexpression = ListExtensions.<ModelFile, ModelFile>map(modelFile.getChildren(), _function);
     } else {
       ArrayList<ModelFile> _xblockexpression = null;
       {
         final ArrayList<ModelFile> preparedModelFiles = CollectionLiterals.<ModelFile>newArrayList();
-        final BiConsumer<String, IFile> _function_1 = (String importAlias, IFile file) -> {
-          ModelFileTypeDescription _modelFileTypeDescription = this.strategy.getModelFileTypeDescription(file.getFileExtension());
-          final ModelFile newModelFile = new ModelFile(file, _modelFileTypeDescription, 
-            null, importAlias);
-          preparedModelFiles.add(this.prepareModelFile(newModelFile));
+        final BiConsumer<String, IFile> _function_1 = new BiConsumer<String, IFile>() {
+          public void accept(final String importAlias, final IFile file) {
+            ModelFileTypeDescription _modelFileTypeDescription = SpecifyPathsHandler.this.strategy.getModelFileTypeDescription(file.getFileExtension());
+            final ModelFile newModelFile = new ModelFile(file, _modelFileTypeDescription, 
+              null, importAlias);
+            preparedModelFiles.add(SpecifyPathsHandler.this.prepareModelFile(newModelFile));
+          }
         };
         this.strategy.getImportedModelFiles(modelFile).forEach(_function_1);
         _xblockexpression = preparedModelFiles;

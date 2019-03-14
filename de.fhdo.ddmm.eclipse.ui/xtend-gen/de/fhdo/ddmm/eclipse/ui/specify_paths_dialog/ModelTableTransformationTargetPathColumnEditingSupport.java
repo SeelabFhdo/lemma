@@ -33,7 +33,6 @@ public class ModelTableTransformationTargetPathColumnEditingSupport extends Edit
   /**
    * Flag to indicate if column is editable
    */
-  @Override
   protected boolean canEdit(final Object element) {
     return true;
   }
@@ -41,7 +40,6 @@ public class ModelTableTransformationTargetPathColumnEditingSupport extends Edit
   /**
    * Create cell editor for column
    */
-  @Override
   protected CellEditor getCellEditor(final Object element) {
     Control _control = this.tableViewer.getControl();
     return new TextCellEditor(((Composite) _control));
@@ -50,7 +48,6 @@ public class ModelTableTransformationTargetPathColumnEditingSupport extends Edit
   /**
    * Get checkbox value
    */
-  @Override
   protected Object getValue(final Object element) {
     return ((ModelFile) element).getTransformationTargetPath();
   }
@@ -58,7 +55,6 @@ public class ModelTableTransformationTargetPathColumnEditingSupport extends Edit
   /**
    * Set checkbox value
    */
-  @Override
   protected void setValue(final Object element, final Object value) {
     final ModelFile modelFile = ((ModelFile) element);
     final String oldValue = modelFile.getTransformationTargetPath();

@@ -226,7 +226,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 
     /**
      * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-     * 
+     *
      * <p>This method is used to initialize {@link DataPackage#eINSTANCE} when that field is accessed.
      * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
      * <!-- begin-user-doc -->
@@ -240,7 +240,8 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
         if (isInited) return (DataPackage)EPackage.Registry.INSTANCE.getEPackage(DataPackage.eNS_URI);
 
         // Obtain or create and register package
-        DataPackageImpl theDataPackage = (DataPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof DataPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new DataPackageImpl());
+        Object registeredDataPackage = EPackage.Registry.INSTANCE.get(eNS_URI);
+        DataPackageImpl theDataPackage = registeredDataPackage instanceof DataPackageImpl ? (DataPackageImpl)registeredDataPackage : new DataPackageImpl();
 
         isInited = true;
 
@@ -256,7 +257,6 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
         // Mark meta-data to indicate it can't be changed
         theDataPackage.freeze();
 
-  
         // Update the registry and return the package
         EPackage.Registry.INSTANCE.put(DataPackage.eNS_URI, theDataPackage);
         return theDataPackage;
@@ -267,6 +267,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getDataModel() {
         return dataModelEClass;
     }
@@ -276,6 +277,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getDataModel_T_modelUri() {
         return (EAttribute)dataModelEClass.getEStructuralFeatures().get(0);
     }
@@ -285,6 +287,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getDataModel_ComplexTypeImports() {
         return (EReference)dataModelEClass.getEStructuralFeatures().get(1);
     }
@@ -294,6 +297,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getDataModel_Versions() {
         return (EReference)dataModelEClass.getEStructuralFeatures().get(2);
     }
@@ -303,6 +307,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getDataModel_Contexts() {
         return (EReference)dataModelEClass.getEStructuralFeatures().get(3);
     }
@@ -312,6 +317,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getDataModel_ComplexTypes() {
         return (EReference)dataModelEClass.getEStructuralFeatures().get(4);
     }
@@ -321,6 +327,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EOperation getDataModel__GetContainedComplexTypes() {
         return dataModelEClass.getEOperations().get(0);
     }
@@ -330,6 +337,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getComplexTypeImport() {
         return complexTypeImportEClass;
     }
@@ -339,6 +347,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getComplexTypeImport_Name() {
         return (EAttribute)complexTypeImportEClass.getEStructuralFeatures().get(0);
     }
@@ -348,6 +357,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getComplexTypeImport_ImportURI() {
         return (EAttribute)complexTypeImportEClass.getEStructuralFeatures().get(1);
     }
@@ -357,6 +367,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getComplexTypeImport_DataModel() {
         return (EReference)complexTypeImportEClass.getEStructuralFeatures().get(2);
     }
@@ -366,6 +377,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getVersion() {
         return versionEClass;
     }
@@ -375,6 +387,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getVersion_Name() {
         return (EAttribute)versionEClass.getEStructuralFeatures().get(0);
     }
@@ -384,6 +397,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getVersion_ComplexTypes() {
         return (EReference)versionEClass.getEStructuralFeatures().get(1);
     }
@@ -393,6 +407,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getVersion_Contexts() {
         return (EReference)versionEClass.getEStructuralFeatures().get(2);
     }
@@ -402,6 +417,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getVersion_DataModel() {
         return (EReference)versionEClass.getEStructuralFeatures().get(3);
     }
@@ -411,6 +427,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EOperation getVersion__GetContainedComplexTypes() {
         return versionEClass.getEOperations().get(0);
     }
@@ -420,6 +437,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EOperation getVersion__GetQualifiedNameParts() {
         return versionEClass.getEOperations().get(1);
     }
@@ -429,6 +447,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getContext() {
         return contextEClass;
     }
@@ -438,6 +457,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getContext_Name() {
         return (EAttribute)contextEClass.getEStructuralFeatures().get(0);
     }
@@ -447,6 +467,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getContext_ComplexTypes() {
         return (EReference)contextEClass.getEStructuralFeatures().get(1);
     }
@@ -456,6 +477,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getContext_DataModel() {
         return (EReference)contextEClass.getEStructuralFeatures().get(2);
     }
@@ -465,6 +487,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getContext_Version() {
         return (EReference)contextEClass.getEStructuralFeatures().get(3);
     }
@@ -474,6 +497,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EOperation getContext__GetQualifiedNameParts() {
         return contextEClass.getEOperations().get(0);
     }
@@ -483,6 +507,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EOperation getContext__BuildQualifiedName__String() {
         return contextEClass.getEOperations().get(1);
     }
@@ -492,6 +517,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getType() {
         return typeEClass;
     }
@@ -501,6 +527,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getPrimitiveType() {
         return primitiveTypeEClass;
     }
@@ -510,6 +537,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getPrimitiveType_TypeName() {
         return (EAttribute)primitiveTypeEClass.getEStructuralFeatures().get(0);
     }
@@ -519,6 +547,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getPrimitiveType_TypeSize() {
         return (EAttribute)primitiveTypeEClass.getEStructuralFeatures().get(1);
     }
@@ -528,6 +557,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EOperation getPrimitiveType__SizeCompare__PrimitiveType() {
         return primitiveTypeEClass.getEOperations().get(0);
     }
@@ -537,6 +567,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EOperation getPrimitiveType__IsCompatibleWith__PrimitiveType() {
         return primitiveTypeEClass.getEOperations().get(1);
     }
@@ -546,6 +577,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EOperation getPrimitiveType__GetBuiltinPrimitiveTypes() {
         return primitiveTypeEClass.getEOperations().get(2);
     }
@@ -555,6 +587,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getPrimitiveBoolean() {
         return primitiveBooleanEClass;
     }
@@ -564,6 +597,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getPrimitiveByte() {
         return primitiveByteEClass;
     }
@@ -573,6 +607,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getPrimitiveCharacter() {
         return primitiveCharacterEClass;
     }
@@ -582,6 +617,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getPrimitiveDate() {
         return primitiveDateEClass;
     }
@@ -591,6 +627,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getPrimitiveDouble() {
         return primitiveDoubleEClass;
     }
@@ -600,6 +637,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getPrimitiveFloat() {
         return primitiveFloatEClass;
     }
@@ -609,6 +647,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getPrimitiveInteger() {
         return primitiveIntegerEClass;
     }
@@ -618,6 +657,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getPrimitiveLong() {
         return primitiveLongEClass;
     }
@@ -627,6 +667,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getPrimitiveShort() {
         return primitiveShortEClass;
     }
@@ -636,6 +677,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getPrimitiveString() {
         return primitiveStringEClass;
     }
@@ -645,6 +687,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getComplexType() {
         return complexTypeEClass;
     }
@@ -654,6 +697,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getComplexType_Name() {
         return (EAttribute)complexTypeEClass.getEStructuralFeatures().get(0);
     }
@@ -663,6 +707,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getComplexType_DataModel() {
         return (EReference)complexTypeEClass.getEStructuralFeatures().get(1);
     }
@@ -672,6 +717,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getComplexType_Version() {
         return (EReference)complexTypeEClass.getEStructuralFeatures().get(2);
     }
@@ -681,6 +727,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getComplexType_Context() {
         return (EReference)complexTypeEClass.getEStructuralFeatures().get(3);
     }
@@ -690,6 +737,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getComplexType_IsStructure() {
         return (EAttribute)complexTypeEClass.getEStructuralFeatures().get(4);
     }
@@ -699,6 +747,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getComplexType_IsPrimitiveList() {
         return (EAttribute)complexTypeEClass.getEStructuralFeatures().get(5);
     }
@@ -708,6 +757,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getComplexType_IsStructuredList() {
         return (EAttribute)complexTypeEClass.getEStructuralFeatures().get(6);
     }
@@ -717,6 +767,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EOperation getComplexType__GetQualifiedNameParts() {
         return complexTypeEClass.getEOperations().get(0);
     }
@@ -726,6 +777,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EOperation getComplexType__BuildQualifiedName__String() {
         return complexTypeEClass.getEOperations().get(1);
     }
@@ -735,6 +787,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EOperation getComplexType__CompareFieldCounts__EList_EList() {
         return complexTypeEClass.getEOperations().get(2);
     }
@@ -744,6 +797,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getPossiblyImportedComplexType() {
         return possiblyImportedComplexTypeEClass;
     }
@@ -753,6 +807,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getPossiblyImportedComplexType_Import() {
         return (EReference)possiblyImportedComplexTypeEClass.getEStructuralFeatures().get(0);
     }
@@ -762,6 +817,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getPossiblyImportedComplexType_ComplexType() {
         return (EReference)possiblyImportedComplexTypeEClass.getEStructuralFeatures().get(1);
     }
@@ -771,6 +827,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getPossiblyImportedComplexType_DataField() {
         return (EReference)possiblyImportedComplexTypeEClass.getEStructuralFeatures().get(2);
     }
@@ -780,6 +837,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getDataStructure() {
         return dataStructureEClass;
     }
@@ -789,6 +847,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getDataStructure_Super() {
         return (EReference)dataStructureEClass.getEStructuralFeatures().get(0);
     }
@@ -798,6 +857,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getDataStructure_DataFields() {
         return (EReference)dataStructureEClass.getEStructuralFeatures().get(1);
     }
@@ -807,6 +867,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EOperation getDataStructure__GetEffectiveFields() {
         return dataStructureEClass.getEOperations().get(0);
     }
@@ -816,6 +877,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EOperation getDataStructure__IsExtensionOf__DataStructure() {
         return dataStructureEClass.getEOperations().get(1);
     }
@@ -825,6 +887,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EOperation getDataStructure__CompareFieldCounts__DataStructure() {
         return dataStructureEClass.getEOperations().get(2);
     }
@@ -834,6 +897,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getListType() {
         return listTypeEClass;
     }
@@ -843,6 +907,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getListType_PrimitiveType() {
         return (EReference)listTypeEClass.getEStructuralFeatures().get(0);
     }
@@ -852,6 +917,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getListType_DataFields() {
         return (EReference)listTypeEClass.getEStructuralFeatures().get(1);
     }
@@ -861,6 +927,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EOperation getListType__CompareFieldCounts__ListType() {
         return listTypeEClass.getEOperations().get(0);
     }
@@ -870,6 +937,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getDataField() {
         return dataFieldEClass;
     }
@@ -879,6 +947,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getDataField_Name() {
         return (EAttribute)dataFieldEClass.getEStructuralFeatures().get(0);
     }
@@ -888,6 +957,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getDataField_Hidden() {
         return (EAttribute)dataFieldEClass.getEStructuralFeatures().get(1);
     }
@@ -897,6 +967,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getDataField_ComplexType() {
         return (EReference)dataFieldEClass.getEStructuralFeatures().get(2);
     }
@@ -906,6 +977,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getDataField_PrimitiveType() {
         return (EReference)dataFieldEClass.getEStructuralFeatures().get(3);
     }
@@ -915,6 +987,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getDataField_DataStructure() {
         return (EReference)dataFieldEClass.getEStructuralFeatures().get(4);
     }
@@ -924,6 +997,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getDataField_ListType() {
         return (EReference)dataFieldEClass.getEStructuralFeatures().get(5);
     }
@@ -933,6 +1007,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EOperation getDataField__GetEffectiveType() {
         return dataFieldEClass.getEOperations().get(0);
     }
@@ -942,6 +1017,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EOperation getDataField__GetQualifiedNameParts() {
         return dataFieldEClass.getEOperations().get(1);
     }
@@ -951,6 +1027,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EOperation getDataField__BuildQualifiedName__String() {
         return dataFieldEClass.getEOperations().get(2);
     }
@@ -960,6 +1037,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EOperation getDataField__FindEponymousSuperField() {
         return dataFieldEClass.getEOperations().get(3);
     }
@@ -969,6 +1047,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getPrimitiveValue() {
         return primitiveValueEClass;
     }
@@ -978,6 +1057,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getPrimitiveValue_StringValue() {
         return (EAttribute)primitiveValueEClass.getEStructuralFeatures().get(0);
     }
@@ -987,6 +1067,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getPrimitiveValue_BooleanValue() {
         return (EAttribute)primitiveValueEClass.getEStructuralFeatures().get(1);
     }
@@ -996,6 +1077,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getPrimitiveValue_NumericValue() {
         return (EAttribute)primitiveValueEClass.getEStructuralFeatures().get(2);
     }
@@ -1005,6 +1087,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EOperation getPrimitiveValue__IsInClosedSet__BigDecimal_BigDecimal() {
         return primitiveValueEClass.getEOperations().get(0);
     }
@@ -1014,6 +1097,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EOperation getPrimitiveValue__HasDecimals() {
         return primitiveValueEClass.getEOperations().get(1);
     }
@@ -1023,6 +1107,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EOperation getPrimitiveValue__IsOfType__PrimitiveType() {
         return primitiveValueEClass.getEOperations().get(2);
     }
@@ -1032,6 +1117,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EOperation getPrimitiveValue__HasNoValue() {
         return primitiveValueEClass.getEOperations().get(3);
     }
@@ -1041,6 +1127,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EOperation getPrimitiveValue__AsValueOfType__PrimitiveType() {
         return primitiveValueEClass.getEOperations().get(4);
     }
@@ -1050,6 +1137,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EOperation getPrimitiveValue__ValueAsString() {
         return primitiveValueEClass.getEOperations().get(5);
     }
@@ -1059,6 +1147,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EOperation getPrimitiveValue__AsBoolean() {
         return primitiveValueEClass.getEOperations().get(6);
     }
@@ -1068,6 +1157,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EOperation getPrimitiveValue__AsByte() {
         return primitiveValueEClass.getEOperations().get(7);
     }
@@ -1077,6 +1167,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EOperation getPrimitiveValue__AsCharacter() {
         return primitiveValueEClass.getEOperations().get(8);
     }
@@ -1086,6 +1177,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EOperation getPrimitiveValue__AsDate() {
         return primitiveValueEClass.getEOperations().get(9);
     }
@@ -1095,6 +1187,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EOperation getPrimitiveValue__AsDouble() {
         return primitiveValueEClass.getEOperations().get(10);
     }
@@ -1104,6 +1197,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EOperation getPrimitiveValue__AsFloat() {
         return primitiveValueEClass.getEOperations().get(11);
     }
@@ -1113,6 +1207,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EOperation getPrimitiveValue__AsInteger() {
         return primitiveValueEClass.getEOperations().get(12);
     }
@@ -1122,6 +1217,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EOperation getPrimitiveValue__AsLong() {
         return primitiveValueEClass.getEOperations().get(13);
     }
@@ -1131,6 +1227,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EOperation getPrimitiveValue__AsShort() {
         return primitiveValueEClass.getEOperations().get(14);
     }
@@ -1140,6 +1237,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EOperation getPrimitiveValue__AsString() {
         return primitiveValueEClass.getEOperations().get(15);
     }
@@ -1149,6 +1247,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public DataFactory getDataFactory() {
         return (DataFactory)getEFactoryInstance();
     }

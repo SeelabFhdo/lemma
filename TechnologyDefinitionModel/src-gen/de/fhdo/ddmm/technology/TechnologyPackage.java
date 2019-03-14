@@ -2999,6 +2999,10 @@ public interface TechnologyPackage extends EPackage {
      * Returns the meta object for data type '{@link java.util.Map <em>Pointcut Type Strings Map</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * *
+     * Wrapper type for maps that assign a pointcut type to a list of Strings
+     * <!-- end-model-doc -->
      * @return the meta object for data type '<em>Pointcut Type Strings Map</em>'.
      * @see java.util.Map
      * @model instanceClass="java.util.Map&lt;de.fhdo.ddmm.technology.PointcutType, java.util.List&lt;java.lang.String&gt;&gt;"

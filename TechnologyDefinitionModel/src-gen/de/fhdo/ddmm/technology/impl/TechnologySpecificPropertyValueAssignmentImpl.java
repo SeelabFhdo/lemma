@@ -76,6 +76,7 @@ public class TechnologySpecificPropertyValueAssignmentImpl extends MinimalEObjec
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public TechnologySpecificProperty getProperty() {
         if (property != null && property.eIsProxy()) {
             InternalEObject oldProperty = (InternalEObject)property;
@@ -102,6 +103,7 @@ public class TechnologySpecificPropertyValueAssignmentImpl extends MinimalEObjec
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setProperty(TechnologySpecificProperty newProperty) {
         TechnologySpecificProperty oldProperty = property;
         property = newProperty;
@@ -114,6 +116,7 @@ public class TechnologySpecificPropertyValueAssignmentImpl extends MinimalEObjec
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public PrimitiveValue getValue() {
         return value;
     }
@@ -138,6 +141,7 @@ public class TechnologySpecificPropertyValueAssignmentImpl extends MinimalEObjec
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setValue(PrimitiveValue newValue) {
         if (newValue != value) {
             NotificationChain msgs = null;
