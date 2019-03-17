@@ -1,8 +1,8 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: de.fhdo.ddmm.data.datadsl.ui
-Bundle-Vendor: My Company
-Bundle-Version: 1.0.0.qualifier
+Bundle-Vendor: University of Applied Sciences and Arts Dortmund
+Bundle-Version: 0.0.1.qualifier
 Bundle-SymbolicName: de.fhdo.ddmm.data.datadsl.ui; singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: de.fhdo.ddmm.data.datadsl,
@@ -16,11 +16,13 @@ Require-Bundle: de.fhdo.ddmm.data.datadsl,
  org.eclipse.ui,
  org.eclipse.compare,
  org.eclipse.xtext.builder,
- org.eclipse.xtend.lib;resolution:=optional,
- org.eclipse.xtext.xbase.lib
+ org.eclipse.xtend.lib;bundle-version="2.16.0";resolution:=optional,
+ org.eclipse.xtext.xbase.lib;bundle-version="2.16.0",
+ de.fhdo.ddmm.eclipse.ui.editor;bundle-version="0.0.1"
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: de.fhdo.ddmm.data.ui.contentassist,
  de.fhdo.ddmm.data.ui.quickfix,
  de.fhdo.ddmm.data.datadsl.ui.internal
 Bundle-Activator: de.fhdo.ddmm.data.datadsl.ui.internal.DatadslActivator
+Automatic-Module-Name: de.fhdo.ddmm.data.datadsl.ui

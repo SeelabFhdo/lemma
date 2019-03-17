@@ -32,6 +32,7 @@ public class ModelTableCheckboxColumnEditingSupport extends EditingSupport {
   /**
    * Flag to indicate if column is editable
    */
+  @Override
   protected boolean canEdit(final Object element) {
     return true;
   }
@@ -39,6 +40,7 @@ public class ModelTableCheckboxColumnEditingSupport extends EditingSupport {
   /**
    * Create checkbox cell editor for column
    */
+  @Override
   protected CellEditor getCellEditor(final Object element) {
     return new CheckboxCellEditor(null, SWT.CHECK);
   }
@@ -46,6 +48,7 @@ public class ModelTableCheckboxColumnEditingSupport extends EditingSupport {
   /**
    * Get checkbox value
    */
+  @Override
   protected Object getValue(final Object element) {
     return Boolean.valueOf(((ModelFile) element).isSelectedForTransformation());
   }
@@ -53,6 +56,7 @@ public class ModelTableCheckboxColumnEditingSupport extends EditingSupport {
   /**
    * Set checkbox value
    */
+  @Override
   protected void setValue(final Object element, final Object value) {
     final ModelFile modelFile = ((ModelFile) element);
     final boolean oldValue = modelFile.isSelectedForTransformation();

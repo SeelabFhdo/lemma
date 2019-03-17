@@ -62,6 +62,7 @@ public class TransformationThread extends Thread {
   /**
    * Run model transformations on given files
    */
+  @Override
   public void run() {
     int i = 0;
     while (((i < this.modelFiles.size()) && (!this.stopTransformations))) {
@@ -86,34 +87,24 @@ public class TransformationThread extends Thread {
       final String targetPath = modelFile.getTransformationTargetPath();
       final ModelFileTypeDescription fileTypeDescription = modelFile.getFileTypeDescription();
       final AbstractIntermediateModelTransformationStrategy mainTransformationStrategy = fileTypeDescription.getMainTransformationStrategy();
-      final Function1<ModelFile, String> _function = new Function1<ModelFile, String>() {
-        public String apply(final ModelFile it) {
-          return it.getImportAlias();
-        }
+      final Function1<ModelFile, String> _function = (ModelFile it) -> {
+        return it.getImportAlias();
       };
-      final Function1<ModelFile, String> _function_1 = new Function1<ModelFile, String>() {
-        public String apply(final ModelFile it) {
-          return it.getTransformationTargetPath();
-        }
+      final Function1<ModelFile, String> _function_1 = (ModelFile it) -> {
+        return it.getTransformationTargetPath();
       };
       final Map<String, String> importTargetPaths = IterableExtensions.<ModelFile, String, String>toMap(modelFile.getChildren(), _function, _function_1);
-      final Predicate<IntermediateTransformationException> _function_2 = new Predicate<IntermediateTransformationException>() {
-        public boolean apply(final IntermediateTransformationException it) {
-          return TransformationThread.this.internalTransformationWarningCallback(it);
-        }
+      final Predicate<IntermediateTransformationException> _function_2 = (IntermediateTransformationException it) -> {
+        return this.internalTransformationWarningCallback(it);
       };
       mainTransformationStrategy.mainTransformation(sourceModelFile, targetPath, importTargetPaths, _function_2);
-      final Consumer<AbstractIntermediateModelTransformationStrategy> _function_3 = new Consumer<AbstractIntermediateModelTransformationStrategy>() {
-        public void accept(final AbstractIntermediateModelTransformationStrategy it) {
-          final Path sourceFilePath = new Path(targetPath);
-          final IFile sourceFile = ResourcesPlugin.getWorkspace().getRoot().getFile(sourceFilePath);
-          final Predicate<IntermediateTransformationException> _function = new Predicate<IntermediateTransformationException>() {
-            public boolean apply(final IntermediateTransformationException it) {
-              return TransformationThread.this.internalTransformationWarningCallback(it);
-            }
-          };
-          it.refiningTransformation(sourceFile, targetPath, _function);
-        }
+      final Consumer<AbstractIntermediateModelTransformationStrategy> _function_3 = (AbstractIntermediateModelTransformationStrategy it) -> {
+        final Path sourceFilePath = new Path(targetPath);
+        final IFile sourceFile = ResourcesPlugin.getWorkspace().getRoot().getFile(sourceFilePath);
+        final Predicate<IntermediateTransformationException> _function_4 = (IntermediateTransformationException it_1) -> {
+          return this.internalTransformationWarningCallback(it_1);
+        };
+        it.refiningTransformation(sourceFile, targetPath, _function_4);
       };
       fileTypeDescription.getRefiningTransformationStrategies().forEach(_function_3);
     } catch (final Throwable _t) {
@@ -148,6 +139,7 @@ public class TransformationThread extends Thread {
       boolean _xblockexpression = false;
       {
         this.display.syncExec(new Runnable() {
+          @Override
           public void run() {
             TransformationThread.this.continueTransformationAfterWarning = TransformationThread.this.transformationWarningCallback.apply(warning);
           }
@@ -170,6 +162,7 @@ public class TransformationThread extends Thread {
       return;
     }
     this.display.syncExec(new Runnable() {
+      @Override
       public void run() {
         boolean _apply = function.apply(arg);
         boolean _not = (!_apply);
@@ -187,6 +180,7 @@ public class TransformationThread extends Thread {
       return;
     }
     this.display.syncExec(new Runnable() {
+      @Override
       public void run() {
         boolean _apply = function.apply(arg);
         boolean _not = (!_apply);
@@ -204,6 +198,7 @@ public class TransformationThread extends Thread {
       return;
     }
     this.display.syncExec(new Runnable() {
+      @Override
       public void run() {
         boolean _apply = function.apply(null);
         boolean _not = (!_apply);

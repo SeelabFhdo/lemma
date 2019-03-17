@@ -1,11 +1,11 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
+Bundle-Vendor: University of Applied Sciences and Arts Dortmund
 Bundle-SymbolicName: TechnologyDefinitionModel;singleton:=true
 Automatic-Module-Name: TechnologyDefinitionModel
-Bundle-Version: 0.1.0.qualifier
+Bundle-Version: 0.0.1.qualifier
 Bundle-ClassPath: .
-Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: de.fhdo.ddmm.technology,
@@ -16,5 +16,5 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.xtext.xbase.lib,
  org.eclipse.emf.ecore.xcore.lib,
  DataViewpointModel;visibility:=reexport,
- de.fhdo.ddmm.data.datadsl.tests;bundle-version="1.0.0"
+ de.fhdo.ddmm.data.datadsl.tests;bundle-version="0.0.1"
 Bundle-ActivationPolicy: lazy

@@ -76,8 +76,8 @@ class SpecifyPathsDialog extends TitleAreaDialog {
         this.strategy = strategy
         this.inputModelFiles = inputModelFiles
 
-        checkboxActive = DdmmUiUtils.createImage(RESOURCE_MANAGER, "checkboxActive.gif")
-        checkboxInactive = DdmmUiUtils.createImage(RESOURCE_MANAGER, "checkboxInactive.gif")
+        checkboxActive = DdmmUiUtils.createImage(RESOURCE_MANAGER, class, "checkboxActive.gif")
+        checkboxInactive = DdmmUiUtils.createImage(RESOURCE_MANAGER, class, "checkboxInactive.gif")
     }
 
     /**

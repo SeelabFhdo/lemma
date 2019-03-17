@@ -24,8 +24,8 @@ class ModelFileStyledLabelProvider extends LabelProvider implements IStyledLabel
      */
     new() {
         resourceManager = new LocalResourceManager(JFaceResources.getResources())
-        errorIcon = DdmmUiUtils.createImage(resourceManager, "error.gif")
-        warningIcon = DdmmUiUtils.createImage(resourceManager, "warning.gif")
+        errorIcon = DdmmUiUtils.createImage(resourceManager, class, "error.gif")
+        warningIcon = DdmmUiUtils.createImage(resourceManager, class, "warning.gif")
     }
 
     /**

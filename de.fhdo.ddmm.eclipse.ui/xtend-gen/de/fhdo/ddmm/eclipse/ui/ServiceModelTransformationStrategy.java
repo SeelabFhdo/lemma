@@ -101,20 +101,20 @@ public class ServiceModelTransformationStrategy extends AbstractUiModelTransform
    * Helper to setup the map of model file type descriptions
    */
   private LinkedHashMap<String, ModelFileTypeDescription> setupModelFileTypeDescriptions() {
-    Image _createImage = DdmmUiUtils.createImage(ServiceModelTransformationStrategy.RESOURCE_MANAGER, "dataModelFile.gif");
+    Image _createImage = DdmmUiUtils.createImage(ServiceModelTransformationStrategy.RESOURCE_MANAGER, this.getClass(), "dataModelFile.gif");
     IntermediateDataModelTransformation _intermediateDataModelTransformation = new IntermediateDataModelTransformation();
     ModelFileTypeDescription _modelFileTypeDescription = new ModelFileTypeDescription(_createImage, 
       "Data Model", 
       ServiceModelTransformationStrategy.DATA_MODEL_FILE_EXTENSIONS, _intermediateDataModelTransformation);
     Pair<String, ModelFileTypeDescription> _mappedTo = Pair.<String, ModelFileTypeDescription>of(ServiceModelTransformationStrategy.DATA_MODEL_FILE_TYPE_ID, _modelFileTypeDescription);
-    Image _createImage_1 = DdmmUiUtils.createImage(ServiceModelTransformationStrategy.RESOURCE_MANAGER, "mappingModelFile.gif");
+    Image _createImage_1 = DdmmUiUtils.createImage(ServiceModelTransformationStrategy.RESOURCE_MANAGER, this.getClass(), "mappingModelFile.gif");
     MappingModelTransformation _mappingModelTransformation = new MappingModelTransformation();
     IntermediateServiceModelTransformation _intermediateServiceModelTransformation = new IntermediateServiceModelTransformation();
     ModelFileTypeDescription _modelFileTypeDescription_1 = new ModelFileTypeDescription(_createImage_1, 
       "Mapping Model", 
       ServiceModelTransformationStrategy.MAPPING_MODEL_FILE_EXTENSIONS, _mappingModelTransformation, _intermediateServiceModelTransformation);
     Pair<String, ModelFileTypeDescription> _mappedTo_1 = Pair.<String, ModelFileTypeDescription>of(ServiceModelTransformationStrategy.MAPPING_MODEL_FILE_TYPE_ID, _modelFileTypeDescription_1);
-    Image _createImage_2 = DdmmUiUtils.createImage(ServiceModelTransformationStrategy.RESOURCE_MANAGER, "serviceModelFile.gif");
+    Image _createImage_2 = DdmmUiUtils.createImage(ServiceModelTransformationStrategy.RESOURCE_MANAGER, this.getClass(), "serviceModelFile.gif");
     IntermediateServiceModelTransformation _intermediateServiceModelTransformation_1 = new IntermediateServiceModelTransformation();
     ModelFileTypeDescription _modelFileTypeDescription_2 = new ModelFileTypeDescription(_createImage_2, 
       "Service Model", 
@@ -126,6 +126,7 @@ public class ServiceModelTransformationStrategy extends AbstractUiModelTransform
   /**
    * Get string prefix of model type
    */
+  @Override
   public String getModelTypePrefix() {
     return ServiceModelTransformationStrategy.MODEL_TYPE_PREFIX;
   }
@@ -133,6 +134,7 @@ public class ServiceModelTransformationStrategy extends AbstractUiModelTransform
   /**
    * Get model types' ordering
    */
+  @Override
   public List<String> getModelTypeOrdering() {
     return Collections.<String>unmodifiableList(CollectionLiterals.<String>newArrayList(ServiceModelTransformationStrategy.DATA_MODEL_FILE_TYPE_ID, ServiceModelTransformationStrategy.MAPPING_MODEL_FILE_TYPE_ID, ServiceModelTransformationStrategy.SERVICE_MODEL_FILE_TYPE_ID));
   }
@@ -140,6 +142,7 @@ public class ServiceModelTransformationStrategy extends AbstractUiModelTransform
   /**
    * Get file extensions of the model type
    */
+  @Override
   public List<String> getModelFileTypeExtensions() {
     final ArrayList<String> modelTypeFileExtensions = CollectionLiterals.<String>newArrayList();
     modelTypeFileExtensions.addAll(ServiceModelTransformationStrategy.SERVICE_MODEL_FILE_EXTENSIONS);
@@ -150,12 +153,11 @@ public class ServiceModelTransformationStrategy extends AbstractUiModelTransform
   /**
    * Find project-specific model files
    */
+  @Override
   public Map<IProject, List<IFile>> findProjectSpecificModelFiles() {
-    final Function2<IProject, List<IFile>, Boolean> _function = new Function2<IProject, List<IFile>, Boolean>() {
-      public Boolean apply(final IProject project, final List<IFile> files) {
-        boolean _isEmpty = files.isEmpty();
-        return Boolean.valueOf((!_isEmpty));
-      }
+    final Function2<IProject, List<IFile>, Boolean> _function = (IProject project, List<IFile> files) -> {
+      boolean _isEmpty = files.isEmpty();
+      return Boolean.valueOf((!_isEmpty));
     };
     return MapExtensions.<IProject, List<IFile>>filter(DdmmUiUtils.findFilesInWorkspaceProjects(((String[])Conversions.unwrapArray(this.getModelFileTypeExtensions(), String.class))), _function);
   }
@@ -163,6 +165,7 @@ public class ServiceModelTransformationStrategy extends AbstractUiModelTransform
   /**
    * Get descriptions of all relevant model file types
    */
+  @Override
   public LinkedHashMap<String, ModelFileTypeDescription> getModelFileTypeDescriptions() {
     return this.modelFileTypeDescriptions;
   }
@@ -170,6 +173,7 @@ public class ServiceModelTransformationStrategy extends AbstractUiModelTransform
   /**
    * Get model file type description by extension
    */
+  @Override
   public ModelFileTypeDescription getModelFileTypeDescription(final String fileExtension) {
     final Pair<String, ModelFileTypeDescription> typeIdentifierAndDescription = this.getModelFileTypeIdentifierAndDescription(fileExtension);
     if ((typeIdentifierAndDescription == null)) {
@@ -181,6 +185,7 @@ public class ServiceModelTransformationStrategy extends AbstractUiModelTransform
   /**
    * Get model file type identifier and description by extension
    */
+  @Override
   public Pair<String, ModelFileTypeDescription> getModelFileTypeIdentifierAndDescription(final String fileExtension) {
     if (((fileExtension != null) && (!fileExtension.isEmpty()))) {
       Set<Map.Entry<String, ModelFileTypeDescription>> _entrySet = this.modelFileTypeDescriptions.entrySet();
@@ -199,6 +204,7 @@ public class ServiceModelTransformationStrategy extends AbstractUiModelTransform
   /**
    * Get title of model selection dialog
    */
+  @Override
   public String getModelSelectionDialogTitle() {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("Select ");
@@ -213,6 +219,7 @@ public class ServiceModelTransformationStrategy extends AbstractUiModelTransform
   /**
    * Get message of model selection dialog
    */
+  @Override
   public String getModelSelectionDialogMessage() {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("Determine ");
@@ -227,6 +234,7 @@ public class ServiceModelTransformationStrategy extends AbstractUiModelTransform
   /**
    * Get title of dialog for specifying transformation paths
    */
+  @Override
   public String getSpecifyPathsDialogTitle() {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("Specify Paths for Intermediate ");
@@ -239,6 +247,7 @@ public class ServiceModelTransformationStrategy extends AbstractUiModelTransform
   /**
    * Get message of dialog for specifying transformation paths
    */
+  @Override
   public String getSpecifyPathsDialogMessage() {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("Specify target paths for the transformation of ");
@@ -256,6 +265,7 @@ public class ServiceModelTransformationStrategy extends AbstractUiModelTransform
   /**
    * Get transformation strategy
    */
+  @Override
   public AbstractIntermediateModelTransformationStrategy getTransformationStrategyInternal() {
     return new IntermediateServiceModelTransformation();
   }
@@ -263,6 +273,7 @@ public class ServiceModelTransformationStrategy extends AbstractUiModelTransform
   /**
    * Get files being import by a given model file in the form of IFile instances
    */
+  @Override
   public Map<String, IFile> getImportedModelFiles(final ModelFile modelFile) {
     Map<String, String> importAliasesAndUris = null;
     boolean _isEmpty = modelFile.getXtextResource().getContents().isEmpty();
@@ -272,21 +283,15 @@ public class ServiceModelTransformationStrategy extends AbstractUiModelTransform
       if (_hasExtension) {
         EObject _get = modelFile.getXtextResource().getContents().get(0);
         final ServiceModel modelRoot = ((ServiceModel) _get);
-        final Function1<Import, Boolean> _function = new Function1<Import, Boolean>() {
-          public Boolean apply(final Import it) {
-            return Boolean.valueOf(((it.getImportType() == ImportType.DATATYPES) || 
-              (it.getImportType() == ImportType.MICROSERVICES)));
-          }
+        final Function1<Import, Boolean> _function = (Import it) -> {
+          return Boolean.valueOf(((it.getImportType() == ImportType.DATATYPES) || 
+            (it.getImportType() == ImportType.MICROSERVICES)));
         };
-        final Function1<Import, String> _function_1 = new Function1<Import, String>() {
-          public String apply(final Import it) {
-            return it.getName();
-          }
+        final Function1<Import, String> _function_1 = (Import it) -> {
+          return it.getName();
         };
-        final Function1<Import, String> _function_2 = new Function1<Import, String>() {
-          public String apply(final Import it) {
-            return it.getImportURI();
-          }
+        final Function1<Import, String> _function_2 = (Import it) -> {
+          return it.getImportURI();
         };
         importAliasesAndUris = IterableExtensions.<Import, String, String>toMap(IterableExtensions.<Import>filter(modelRoot.getImports(), _function), _function_1, _function_2);
       } else {
@@ -294,21 +299,15 @@ public class ServiceModelTransformationStrategy extends AbstractUiModelTransform
         if (_hasExtension_1) {
           EObject _get_1 = modelFile.getXtextResource().getContents().get(0);
           final TechnologyMapping modelRoot_1 = ((TechnologyMapping) _get_1);
-          final Function1<Import, Boolean> _function_3 = new Function1<Import, Boolean>() {
-            public Boolean apply(final Import it) {
-              return Boolean.valueOf(((it.getImportType() == ImportType.DATATYPES) || 
-                (it.getImportType() == ImportType.MICROSERVICES)));
-            }
+          final Function1<Import, Boolean> _function_3 = (Import it) -> {
+            return Boolean.valueOf(((it.getImportType() == ImportType.DATATYPES) || 
+              (it.getImportType() == ImportType.MICROSERVICES)));
           };
-          final Function1<Import, String> _function_4 = new Function1<Import, String>() {
-            public String apply(final Import it) {
-              return it.getName();
-            }
+          final Function1<Import, String> _function_4 = (Import it) -> {
+            return it.getName();
           };
-          final Function1<Import, String> _function_5 = new Function1<Import, String>() {
-            public String apply(final Import it) {
-              return it.getImportURI();
-            }
+          final Function1<Import, String> _function_5 = (Import it) -> {
+            return it.getImportURI();
           };
           importAliasesAndUris = IterableExtensions.<Import, String, String>toMap(IterableExtensions.<Import>filter(modelRoot_1.getImports(), _function_3), _function_4, _function_5);
         } else {
@@ -316,15 +315,11 @@ public class ServiceModelTransformationStrategy extends AbstractUiModelTransform
           if (_hasExtension_2) {
             EObject _get_2 = modelFile.getXtextResource().getContents().get(0);
             final DataModel modelRoot_2 = ((DataModel) _get_2);
-            final Function1<ComplexTypeImport, String> _function_6 = new Function1<ComplexTypeImport, String>() {
-              public String apply(final ComplexTypeImport it) {
-                return it.getName();
-              }
+            final Function1<ComplexTypeImport, String> _function_6 = (ComplexTypeImport it) -> {
+              return it.getName();
             };
-            final Function1<ComplexTypeImport, String> _function_7 = new Function1<ComplexTypeImport, String>() {
-              public String apply(final ComplexTypeImport it) {
-                return it.getImportURI();
-              }
+            final Function1<ComplexTypeImport, String> _function_7 = (ComplexTypeImport it) -> {
+              return it.getImportURI();
             };
             importAliasesAndUris = IterableExtensions.<ComplexTypeImport, String, String>toMap(modelRoot_2.getComplexTypeImports(), _function_6, _function_7);
           }
@@ -334,17 +329,15 @@ public class ServiceModelTransformationStrategy extends AbstractUiModelTransform
       return Collections.EMPTY_MAP;
     }
     final HashMap<String, IFile> importedModelFiles = CollectionLiterals.<String, IFile>newHashMap();
-    final BiConsumer<String, String> _function_8 = new BiConsumer<String, String>() {
-      public void accept(final String alias, final String importUri) {
-        final String modelFileFullPath = modelFile.getFile().getLocation().toString();
-        final String absoluteImportPath = DdmmUtils.convertToAbsolutePath(importUri, modelFileFullPath);
-        final URI absoluteImportUri = URI.create(DdmmUtils.convertToFileUri(absoluteImportPath));
-        final IFile[] files = ResourcesPlugin.getWorkspace().getRoot().findFilesForLocationURI(absoluteImportUri);
-        boolean _isEmpty = ((List<IFile>)Conversions.doWrapArray(files)).isEmpty();
-        boolean _not = (!_isEmpty);
-        if (_not) {
-          importedModelFiles.put(alias, files[0]);
-        }
+    final BiConsumer<String, String> _function_8 = (String alias, String importUri) -> {
+      final String modelFileFullPath = modelFile.getFile().getLocation().toString();
+      final String absoluteImportPath = DdmmUtils.convertToAbsolutePath(importUri, modelFileFullPath);
+      final URI absoluteImportUri = URI.create(DdmmUtils.convertToFileUri(absoluteImportPath));
+      final IFile[] files = ResourcesPlugin.getWorkspace().getRoot().findFilesForLocationURI(absoluteImportUri);
+      boolean _isEmpty_1 = ((List<IFile>)Conversions.doWrapArray(files)).isEmpty();
+      boolean _not_1 = (!_isEmpty_1);
+      if (_not_1) {
+        importedModelFiles.put(alias, files[0]);
       }
     };
     importAliasesAndUris.forEach(_function_8);
@@ -354,6 +347,7 @@ public class ServiceModelTransformationStrategy extends AbstractUiModelTransform
   /**
    * Return default target path for intermediate model transformation for a given file
    */
+  @Override
   public String getDefaultTransformationTargetPath(final IFile file) {
     String _xifexpression = null;
     boolean _hasExtension = DdmmUiUtils.hasExtension(file, ((String[])Conversions.unwrapArray(ServiceModelTransformationStrategy.DATA_MODEL_FILE_EXTENSIONS, String.class)));
@@ -375,10 +369,8 @@ public class ServiceModelTransformationStrategy extends AbstractUiModelTransform
       _xifexpression = _xifexpression_1;
     }
     final String modelFileTypePathPart = _xifexpression;
-    final Function<IFile, String> _function = new Function<IFile, String>() {
-      public String apply(final IFile it) {
-        return it.getName();
-      }
+    final Function<IFile, String> _function = (IFile it) -> {
+      return it.getName();
     };
     final String filenameWithoutExtension = DdmmUiUtils.removeExtension(file, _function);
     StringConcatenation _builder = new StringConcatenation();

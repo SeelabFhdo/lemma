@@ -36,6 +36,7 @@ public class FileContainerSelectionTreeContentProvider implements ITreeContentPr
   /**
    * Get children of parent element
    */
+  @Override
   public Object[] getChildren(final Object parentElement) {
     try {
       if ((parentElement instanceof IWorkspace)) {
@@ -43,28 +44,24 @@ public class FileContainerSelectionTreeContentProvider implements ITreeContentPr
       } else {
         if (((parentElement instanceof IContainer) && ((IContainer) parentElement).isAccessible())) {
           final IContainer container = ((IContainer) parentElement);
-          final Function1<IResource, Boolean> _function = new Function1<IResource, Boolean>() {
-            public Boolean apply(final IResource it) {
-              int _type = it.getType();
-              return Boolean.valueOf((_type != IResource.FILE));
-            }
+          final Function1<IResource, Boolean> _function = (IResource it) -> {
+            int _type = it.getType();
+            return Boolean.valueOf((_type != IResource.FILE));
           };
           final List<IResource> children = IterableExtensions.<IResource>toList(IterableExtensions.<IResource>filter(((Iterable<IResource>)Conversions.doWrapArray(container.members())), _function));
           Iterable<IResource> _xifexpression = null;
           if ((this.intermediateModelClass != null)) {
-            final Function1<IResource, Boolean> _function_1 = new Function1<IResource, Boolean>() {
-              public Boolean apply(final IResource it) {
-                if (((it.getType() != IResource.FILE) || (!Objects.equal(it.getFileExtension(), "xmi")))) {
-                  return Boolean.valueOf(false);
-                }
-                final XMIResource xmiResource = DdmmUiUtils.loadXmiResource(((IFile) it));
-                boolean _isEmpty = xmiResource.getContents().isEmpty();
-                if (_isEmpty) {
-                  return Boolean.valueOf(false);
-                }
-                final EObject root = xmiResource.getContents().get(0);
-                return Boolean.valueOf(FileContainerSelectionTreeContentProvider.this.intermediateModelClass.isAssignableFrom(root.getClass()));
+            final Function1<IResource, Boolean> _function_1 = (IResource it) -> {
+              if (((it.getType() != IResource.FILE) || (!Objects.equal(it.getFileExtension(), "xmi")))) {
+                return Boolean.valueOf(false);
               }
+              final XMIResource xmiResource = DdmmUiUtils.loadXmiResource(((IFile) it));
+              boolean _isEmpty = xmiResource.getContents().isEmpty();
+              if (_isEmpty) {
+                return Boolean.valueOf(false);
+              }
+              final EObject root = xmiResource.getContents().get(0);
+              return Boolean.valueOf(this.intermediateModelClass.isAssignableFrom(root.getClass()));
             };
             _xifexpression = IterableExtensions.<IResource>filter(((Iterable<IResource>)Conversions.doWrapArray(container.members())), _function_1);
           } else {
@@ -84,6 +81,7 @@ public class FileContainerSelectionTreeContentProvider implements ITreeContentPr
   /**
    * Get root elements
    */
+  @Override
   public Object[] getElements(final Object inputElement) {
     return this.getChildren(inputElement);
   }
@@ -91,6 +89,7 @@ public class FileContainerSelectionTreeContentProvider implements ITreeContentPr
   /**
    * Get parent of an element
    */
+  @Override
   public Object getParent(final Object element) {
     IContainer _xifexpression = null;
     if ((element instanceof IResource)) {
@@ -104,6 +103,7 @@ public class FileContainerSelectionTreeContentProvider implements ITreeContentPr
   /**
    * Determine if the given element has children
    */
+  @Override
   public boolean hasChildren(final Object element) {
     boolean _isEmpty = ((List<Object>)Conversions.doWrapArray(this.getChildren(element))).isEmpty();
     return (!_isEmpty);

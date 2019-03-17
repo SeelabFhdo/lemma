@@ -47,6 +47,7 @@ public class SelectModelsHandler extends AbstractHandler {
   /**
    * Execute handler
    */
+  @Override
   public Object execute(final ExecutionEvent event) throws ExecutionException {
     final Map<IProject, List<IFile>> projectSpecificModelFiles = this.findProjectSpecificModelFiles();
     if (((projectSpecificModelFiles == null) || projectSpecificModelFiles.isEmpty())) {
@@ -139,19 +140,15 @@ public class SelectModelsHandler extends AbstractHandler {
    */
   private HashMap<IProject, List<ModelFile>> convertToModelFiles(final Map<IProject, List<IFile>> sourceModelFiles) {
     final HashMap<IProject, List<ModelFile>> convertedSourceModelFiles = CollectionLiterals.<IProject, List<ModelFile>>newHashMap();
-    final BiConsumer<IProject, List<IFile>> _function = new BiConsumer<IProject, List<IFile>>() {
-      public void accept(final IProject project, final List<IFile> files) {
-        final ArrayList<ModelFile> modelFiles = CollectionLiterals.<ModelFile>newArrayList();
-        final Consumer<IFile> _function = new Consumer<IFile>() {
-          public void accept(final IFile file) {
-            final ModelFileTypeDescription modelFileTypeDescription = SelectModelsHandler.this.transformationStrategy.getModelFileTypeDescription(file.getFileExtension());
-            final ModelFile modelFile = new ModelFile(file, modelFileTypeDescription, project, null);
-            modelFiles.add(modelFile);
-          }
-        };
-        files.forEach(_function);
-        convertedSourceModelFiles.put(project, modelFiles);
-      }
+    final BiConsumer<IProject, List<IFile>> _function = (IProject project, List<IFile> files) -> {
+      final ArrayList<ModelFile> modelFiles = CollectionLiterals.<ModelFile>newArrayList();
+      final Consumer<IFile> _function_1 = (IFile file) -> {
+        final ModelFileTypeDescription modelFileTypeDescription = this.transformationStrategy.getModelFileTypeDescription(file.getFileExtension());
+        final ModelFile modelFile = new ModelFile(file, modelFileTypeDescription, project, null);
+        modelFiles.add(modelFile);
+      };
+      files.forEach(_function_1);
+      convertedSourceModelFiles.put(project, modelFiles);
     };
     sourceModelFiles.forEach(_function);
     return convertedSourceModelFiles;

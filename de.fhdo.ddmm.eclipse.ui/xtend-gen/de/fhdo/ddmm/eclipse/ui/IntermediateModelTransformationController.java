@@ -22,6 +22,7 @@ public class IntermediateModelTransformationController extends AbstractHandler {
   /**
    * Execute controller handler
    */
+  @Override
   public Object execute(final ExecutionEvent event) throws ExecutionException {
     AbstractUiModelTransformationStrategy strategy = null;
     try {

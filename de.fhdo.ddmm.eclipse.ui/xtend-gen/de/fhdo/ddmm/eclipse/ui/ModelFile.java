@@ -130,11 +130,9 @@ public class ModelFile implements Comparable<ModelFile> {
       this.scannedForIssues = true;
     }
     if ((this.issues != null)) {
-      final Function1<Issue, Boolean> _function = new Function1<Issue, Boolean>() {
-        public Boolean apply(final Issue it) {
-          Severity _severity = it.getSeverity();
-          return Boolean.valueOf((_severity == severity));
-        }
+      final Function1<Issue, Boolean> _function = (Issue it) -> {
+        Severity _severity = it.getSeverity();
+        return Boolean.valueOf((_severity == severity));
       };
       result = IterableExtensions.<Issue>exists(this.issues, _function);
     } else {
@@ -146,6 +144,7 @@ public class ModelFile implements Comparable<ModelFile> {
   /**
    * Compare two model files based on their project-relative path strings
    */
+  @Override
   public int compareTo(final ModelFile o) {
     final ModelFile otherModelFile = ((ModelFile) o);
     return this.file.getFullPath().toString().compareTo(otherModelFile.file.getFullPath().toString());
@@ -154,6 +153,7 @@ public class ModelFile implements Comparable<ModelFile> {
   /**
    * Equality comparison
    */
+  @Override
   public boolean equals(final Object o) {
     if ((!(o instanceof ModelFile))) {
       return false;

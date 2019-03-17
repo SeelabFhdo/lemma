@@ -2,22 +2,17 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
-    <groupId>de.fhdo.ddmm.technology</groupId>
+
+    <parent>
+        <relativePath>../de.fhdo.ddmm.technology.technologydsl.parent/pom.xml</relativePath>
+        <groupId>de.fhdo.ddmm.technology.technologydsl</groupId>
+        <artifactId>parent</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>TechnologyDefinitionModel</artifactId>
+    <packaging>eclipse-plugin</packaging>
     <version>0.0.1-SNAPSHOT</version>
-    <artifactId>de.fhdo.ddmm.technology.metamodel</artifactId>
-
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
-
-        <build-helper-maven-plugin-version>3.0.0</build-helper-maven-plugin-version>
-        <data-metamodel-version>0.0.1-SNAPSHOT</data-metamodel-version>
-        <emf-version>2.12.0</emf-version>
-        <maven-compiler-plugin-version>3.8.0</maven-compiler-plugin-version>
-        <xtext-version>2.12.0</xtext-version>
-    </properties>
 
     <dependencies>
         <dependency>
@@ -34,11 +29,6 @@
             <groupId>org.eclipse.xtext</groupId>
             <artifactId>org.eclipse.xtext.xbase.lib</artifactId>
             <version>${xtext-version}</version>
-        </dependency>
-        <dependency>
-            <groupId>de.fhdo.ddmm.data</groupId>
-            <artifactId>de.fhdo.ddmm.data.metamodel</artifactId>
-            <version>${data-metamodel-version}</version>
         </dependency>
     </dependencies>
 

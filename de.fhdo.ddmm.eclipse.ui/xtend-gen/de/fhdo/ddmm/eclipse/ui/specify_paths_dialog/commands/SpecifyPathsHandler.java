@@ -57,6 +57,7 @@ public class SpecifyPathsHandler extends AbstractHandler {
   /**
    * Execute handler
    */
+  @Override
   public Object execute(final ExecutionEvent event) throws ExecutionException {
     LinkedHashMap<String, List<ModelFile>> _createModelTableFiles = this.createModelTableFiles();
     final SpecifyPathsDialog dialog = new SpecifyPathsDialog(this.SHELL, this.strategy, _createModelTableFiles);
@@ -117,23 +118,19 @@ public class SpecifyPathsHandler extends AbstractHandler {
     List<ModelFile> _xifexpression = null;
     boolean _isScannedForChildren = modelFile.isScannedForChildren();
     if (_isScannedForChildren) {
-      final Function1<ModelFile, ModelFile> _function = new Function1<ModelFile, ModelFile>() {
-        public ModelFile apply(final ModelFile it) {
-          return SpecifyPathsHandler.this.prepareModelFile(it);
-        }
+      final Function1<ModelFile, ModelFile> _function = (ModelFile it) -> {
+        return this.prepareModelFile(it);
       };
       _xifexpression = ListExtensions.<ModelFile, ModelFile>map(modelFile.getChildren(), _function);
     } else {
       ArrayList<ModelFile> _xblockexpression = null;
       {
         final ArrayList<ModelFile> preparedModelFiles = CollectionLiterals.<ModelFile>newArrayList();
-        final BiConsumer<String, IFile> _function_1 = new BiConsumer<String, IFile>() {
-          public void accept(final String importAlias, final IFile file) {
-            ModelFileTypeDescription _modelFileTypeDescription = SpecifyPathsHandler.this.strategy.getModelFileTypeDescription(file.getFileExtension());
-            final ModelFile newModelFile = new ModelFile(file, _modelFileTypeDescription, 
-              null, importAlias);
-            preparedModelFiles.add(SpecifyPathsHandler.this.prepareModelFile(newModelFile));
-          }
+        final BiConsumer<String, IFile> _function_1 = (String importAlias, IFile file) -> {
+          ModelFileTypeDescription _modelFileTypeDescription = this.strategy.getModelFileTypeDescription(file.getFileExtension());
+          final ModelFile newModelFile = new ModelFile(file, _modelFileTypeDescription, 
+            null, importAlias);
+          preparedModelFiles.add(this.prepareModelFile(newModelFile));
         };
         this.strategy.getImportedModelFiles(modelFile).forEach(_function_1);
         _xblockexpression = preparedModelFiles;

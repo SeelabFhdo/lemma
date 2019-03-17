@@ -70,14 +70,14 @@ class ServiceModelTransformationStrategy extends AbstractUiModelTransformationSt
     private def setupModelFileTypeDescriptions() {
         modelFileTypeDescriptions = newLinkedHashMap(
             DATA_MODEL_FILE_TYPE_ID -> new ModelFileTypeDescription(
-                DdmmUiUtils.createImage(RESOURCE_MANAGER, "dataModelFile.gif"),
+                DdmmUiUtils.createImage(RESOURCE_MANAGER, class, "dataModelFile.gif"),
                 "Data Model",
                 DATA_MODEL_FILE_EXTENSIONS,
                 new IntermediateDataModelTransformation()
             ),
 
             MAPPING_MODEL_FILE_TYPE_ID -> new ModelFileTypeDescription(
-                DdmmUiUtils.createImage(RESOURCE_MANAGER, "mappingModelFile.gif"),
+                DdmmUiUtils.createImage(RESOURCE_MANAGER, class, "mappingModelFile.gif"),
                 "Mapping Model",
                 MAPPING_MODEL_FILE_EXTENSIONS,
                 new MappingModelTransformation(),
@@ -87,7 +87,7 @@ class ServiceModelTransformationStrategy extends AbstractUiModelTransformationSt
             ),
 
             SERVICE_MODEL_FILE_TYPE_ID -> new ModelFileTypeDescription(
-                DdmmUiUtils.createImage(RESOURCE_MANAGER, "serviceModelFile.gif"),
+                DdmmUiUtils.createImage(RESOURCE_MANAGER, class, "serviceModelFile.gif"),
                 "Service Model",
                 SERVICE_MODEL_FILE_EXTENSIONS,
                 new IntermediateServiceModelTransformation()

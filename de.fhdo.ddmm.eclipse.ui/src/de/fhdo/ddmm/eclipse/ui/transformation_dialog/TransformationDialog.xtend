@@ -282,7 +282,7 @@ class TransformationDialog  extends TitleAreaDialog {
 
         progressTitleLabel = new CLabel(container, SWT.NONE)
         progressTitleLabel.setImage(
-            DdmmUiUtils.createImage(RESOURCE_MANAGER, "transformedFile.gif")
+            DdmmUiUtils.createImage(RESOURCE_MANAGER, class, "transformedFile.gif")
         )
         progressTitleLabel.setLayoutData(new GridData(GridData.FILL, GridData.CENTER, true, false))
         progressTitleLabel.text = PROGRESS_TITLE_TEXT

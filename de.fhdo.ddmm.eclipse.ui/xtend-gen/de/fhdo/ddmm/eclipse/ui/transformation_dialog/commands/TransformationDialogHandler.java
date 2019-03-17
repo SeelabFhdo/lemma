@@ -46,6 +46,7 @@ public class TransformationDialogHandler extends AbstractHandler {
   /**
    * Execute handler
    */
+  @Override
   public Object execute(final ExecutionEvent event) throws ExecutionException {
     final TransformationDialog dialog = new TransformationDialog(this.SHELL, this.strategy, this.inputModelFiles);
     dialog.create();

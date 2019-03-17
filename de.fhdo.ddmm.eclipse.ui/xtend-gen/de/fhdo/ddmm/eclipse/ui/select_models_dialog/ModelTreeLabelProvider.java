@@ -21,12 +21,13 @@ public class ModelTreeLabelProvider extends ModelFileStyledLabelProvider {
    */
   public ModelTreeLabelProvider() {
     super();
-    this.projectIcon = DdmmUiUtils.createImage(this.resourceManager, "project.gif");
+    this.projectIcon = DdmmUiUtils.createImage(this.resourceManager, this.getClass(), "project.gif");
   }
   
   /**
    * Get styled text for element
    */
+  @Override
   public StyledString getStyledText(final Object element) {
     StyledString _switchResult = null;
     boolean _matched = false;
@@ -51,6 +52,7 @@ public class ModelTreeLabelProvider extends ModelFileStyledLabelProvider {
   /**
    * Get image for element
    */
+  @Override
   public Image getImage(final Object element) {
     Image _switchResult = null;
     boolean _matched = false;

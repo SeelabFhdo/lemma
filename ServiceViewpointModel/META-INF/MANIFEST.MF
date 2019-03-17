@@ -1,11 +1,11 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
+Bundle-Vendor: University of Applied Sciences and Arts Dortmund
 Bundle-SymbolicName: ServiceViewpointModel;singleton:=true
 Automatic-Module-Name: ServiceViewpointModel
-Bundle-Version: 0.1.0.qualifier
+Bundle-Version: 0.0.1.qualifier
 Bundle-ClassPath: .
-Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: de.fhdo.ddmm.service,
@@ -16,7 +16,7 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.xtext.xbase.lib,
  org.eclipse.emf.ecore.xcore.lib,
  DataViewpointModel;visibility:=reexport,
- de.fhdo.ddmm.data.datadsl.tests;bundle-version="1.0.0",
- TechnologyDefinitionModel;bundle-version="0.1.0";visibility:=reexport,
- DdmmUtils;bundle-version="0.1.0"
+ de.fhdo.ddmm.data.datadsl.tests;bundle-version="0.0.1",
+ TechnologyDefinitionModel;bundle-version="0.0.1";visibility:=reexport,
+ DdmmUtils;bundle-version="0.0.1"
 Bundle-ActivationPolicy: lazy

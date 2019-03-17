@@ -1,11 +1,11 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
+Bundle-Vendor: University of Applied Sciences and Arts Dortmund
 Bundle-SymbolicName: DataViewpointModel;singleton:=true
 Automatic-Module-Name: DataViewpointModel
-Bundle-Version: 0.1.0.qualifier
+Bundle-Version: 0.0.1.qualifier
 Bundle-ClassPath: .
-Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: de.fhdo.ddmm.data,

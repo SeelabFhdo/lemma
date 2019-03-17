@@ -1,23 +1,23 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: de.fhdo.ddmm.technology.mappingdsl
-Bundle-Vendor: My Company
-Bundle-Version: 1.0.0.qualifier
+Bundle-Vendor: University of Applied Sciences and Arts Dortmund
+Bundle-Version: 0.0.1.qualifier
 Bundle-SymbolicName: de.fhdo.ddmm.technology.mappingdsl; singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: TechnologyMappingModel,
  org.eclipse.xtext,
  org.eclipse.xtext.xbase,
  org.eclipse.equinox.common;bundle-version="3.5.0",
- de.fhdo.ddmm.servicedsl;bundle-version="1.0.0",
- de.fhdo.ddmm.technology.technologydsl;bundle-version="1.0.0",
- de.fhdo.ddmm.data.datadsl;bundle-version="1.0.0",
- org.eclipse.xtext.xbase.lib,
- org.antlr.runtime,
+ de.fhdo.ddmm.servicedsl;bundle-version="0.0.1",
+ de.fhdo.ddmm.technology.technologydsl;bundle-version="0.0.1",
+ de.fhdo.ddmm.data.datadsl;bundle-version="0.0.1",
+ org.eclipse.xtext.xbase.lib;bundle-version="2.16.0",
+ org.antlr.runtime;bundle-version="[3.2.0,3.2.1)",
  org.eclipse.xtext.util,
- org.eclipse.xtend.lib,
- DdmmUtils;bundle-version="0.1.0",
- DdmmTypechecking;bundle-version="0.1.0",
+ org.eclipse.xtend.lib;bundle-version="2.16.0",
+ DdmmUtils;bundle-version="0.0.1",
+ DdmmTypechecking;bundle-version="0.0.1",
  org.eclipse.core.resources;bundle-version="3.12.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: de.fhdo.ddmm.technology.mappingdsl.serializer,
@@ -30,3 +30,4 @@ Export-Package: de.fhdo.ddmm.technology.mappingdsl.serializer,
  de.fhdo.ddmm.technology.mappingdsl.formatting2,
  de.fhdo.ddmm.technology.mappingdsl
 Import-Package: org.apache.log4j
+Automatic-Module-Name: de.fhdo.ddmm.technology.mappingdsl

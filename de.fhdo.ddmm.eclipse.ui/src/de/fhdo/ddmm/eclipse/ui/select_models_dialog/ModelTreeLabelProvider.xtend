@@ -20,7 +20,7 @@ class ModelTreeLabelProvider extends ModelFileStyledLabelProvider {
      */
     new() {
         super()
-        projectIcon = DdmmUiUtils.createImage(resourceManager, "project.gif")
+        projectIcon = DdmmUiUtils.createImage(resourceManager, class, "project.gif")
     }
 
     /**

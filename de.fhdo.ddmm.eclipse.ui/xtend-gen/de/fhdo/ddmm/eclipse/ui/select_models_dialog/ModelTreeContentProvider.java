@@ -44,6 +44,7 @@ public class ModelTreeContentProvider implements ITreeContentProvider {
   /**
    * Get children of parent element
    */
+  @Override
   public Object[] getChildren(final Object parentElement) {
     boolean _hasChildren = this.hasChildren(parentElement);
     boolean _not = (!_hasChildren);
@@ -69,9 +70,11 @@ public class ModelTreeContentProvider implements ITreeContentProvider {
   /**
    * Get root elements
    */
+  @Override
   public Object[] getElements(final Object inputElement) {
     Set<IProject> _keySet = this.inputModelFilesWithProjects.keySet();
     return ((Object[])Conversions.unwrapArray(IterableExtensions.<IProject>sortWith(_keySet, new Comparator<IProject>() {
+      @Override
       public int compare(final IProject p1, final IProject p2) {
         return p1.getFullPath().toString().compareTo(p2.getFullPath().toString());
       }
@@ -81,6 +84,7 @@ public class ModelTreeContentProvider implements ITreeContentProvider {
   /**
    * Get parent of an element
    */
+  @Override
   public Object getParent(final Object element) {
     Object _xifexpression = null;
     if ((element instanceof ModelFile)) {
@@ -94,6 +98,7 @@ public class ModelTreeContentProvider implements ITreeContentProvider {
   /**
    * Determine if the given element has children
    */
+  @Override
   public boolean hasChildren(final Object element) {
     boolean _switchResult = false;
     boolean _matched = false;
@@ -111,10 +116,8 @@ public class ModelTreeContentProvider implements ITreeContentProvider {
           boolean _not = (!_isScannedForChildren);
           if (_not) {
             final Map<String, IFile> importedModelFiles = this.strategy.getImportedModelFiles(((ModelFile)element));
-            final BiConsumer<String, IFile> _function = new BiConsumer<String, IFile>() {
-              public void accept(final String importAlias, final IFile file) {
-                CollectionExtensions.<ModelFile>addAll(((ModelFile)element).getChildren(), ModelTreeContentProvider.this.createModelFile(file, ((ModelFile)element), importAlias));
-              }
+            final BiConsumer<String, IFile> _function = (String importAlias, IFile file) -> {
+              CollectionExtensions.<ModelFile>addAll(((ModelFile)element).getChildren(), this.createModelFile(file, ((ModelFile)element), importAlias));
             };
             importedModelFiles.forEach(_function);
             ((ModelFile)element).setScannedForChildren(true);

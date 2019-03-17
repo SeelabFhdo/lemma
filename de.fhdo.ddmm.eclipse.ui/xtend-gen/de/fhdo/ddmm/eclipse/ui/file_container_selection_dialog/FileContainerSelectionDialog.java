@@ -137,6 +137,7 @@ public class FileContainerSelectionDialog extends TitleAreaDialog {
   /**
    * Create dialog (to be called after constructor and before open())
    */
+  @Override
   public void create() {
     super.create();
     String _elvis = null;
@@ -158,6 +159,7 @@ public class FileContainerSelectionDialog extends TitleAreaDialog {
   /**
    * Treat shell closing event like a press of the abort button
    */
+  @Override
   public void handleShellCloseEvent() {
     this.abortPressed();
   }
@@ -165,6 +167,7 @@ public class FileContainerSelectionDialog extends TitleAreaDialog {
   /**
    * Create buttons for the button bar
    */
+  @Override
   public void createButtonsForButtonBar(final Composite parent) {
     this.createButton(parent, FileContainerSelectionDialog.ABORT, "Abort", false);
     this.createButton(parent, Window.CANCEL, IDialogConstants.CANCEL_LABEL, false);
@@ -197,6 +200,7 @@ public class FileContainerSelectionDialog extends TitleAreaDialog {
   /**
    * Handle click on the cancel button
    */
+  @Override
   public void cancelPressed() {
     Shell _shell = this.getShell();
     StringConcatenation _builder = new StringConcatenation();
@@ -244,6 +248,7 @@ public class FileContainerSelectionDialog extends TitleAreaDialog {
   /**
    * Catch button press
    */
+  @Override
   public void buttonPressed(final int buttonId) {
     switch (buttonId) {
       case FileContainerSelectionDialog.ABORT:
@@ -379,6 +384,7 @@ public class FileContainerSelectionDialog extends TitleAreaDialog {
   /**
    * Create the dialog's content
    */
+  @Override
   public Control createDialogArea(final Composite parent) {
     Control _createDialogArea = super.createDialogArea(parent);
     final Composite area = ((Composite) _createDialogArea);
@@ -416,6 +422,7 @@ public class FileContainerSelectionDialog extends TitleAreaDialog {
     Tree _tree = this.containerSelectionTree.getTree();
     _tree.setLayoutData(treeViewerData);
     this.containerSelectionTree.addDoubleClickListener(new IDoubleClickListener() {
+      @Override
       public void doubleClick(final DoubleClickEvent event) {
         Object _source = event.getSource();
         boolean _not = (!(_source instanceof TreeViewer));
@@ -439,6 +446,7 @@ public class FileContainerSelectionDialog extends TitleAreaDialog {
       }
     });
     this.containerSelectionTree.addSelectionChangedListener(new ISelectionChangedListener() {
+      @Override
       public void selectionChanged(final SelectionChangedEvent event) {
         IResource selectedResource = null;
         if ((FileContainerSelectionDialog.this.initialSelection != null)) {
@@ -451,10 +459,8 @@ public class FileContainerSelectionDialog extends TitleAreaDialog {
           selectedResource = ((IResource) _firstElement);
         }
         if ((selectedResource instanceof IFile)) {
-          final Function<IFile, String> _function = new Function<IFile, String>() {
-            public String apply(final IFile it) {
-              return it.getFullPath().toString();
-            }
+          final Function<IFile, String> _function = (IFile it) -> {
+            return it.getFullPath().toString();
           };
           FileContainerSelectionDialog.this.filepathField.setText(DdmmUiUtils.removeExtension(((IFile)selectedResource), _function));
         } else {
@@ -519,6 +525,7 @@ public class FileContainerSelectionDialog extends TitleAreaDialog {
   /**
    * Flag to indicate that dialog is resizable
    */
+  @Override
   public boolean isResizable() {
     return true;
   }
@@ -526,6 +533,7 @@ public class FileContainerSelectionDialog extends TitleAreaDialog {
   /**
    * Initial size
    */
+  @Override
   public Point getInitialSize() {
     final Point shellSize = super.getInitialSize();
     int _max = Math.max(this.convertHorizontalDLUsToPixels(FileContainerSelectionDialog.MIN_DIALOG_WIDTH), shellSize.x);

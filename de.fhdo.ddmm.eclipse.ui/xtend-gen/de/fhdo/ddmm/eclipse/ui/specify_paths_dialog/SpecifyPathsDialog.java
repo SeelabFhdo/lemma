@@ -106,13 +106,14 @@ public class SpecifyPathsDialog extends TitleAreaDialog {
     this.parentShell = parentShell;
     this.strategy = strategy;
     this.inputModelFiles = inputModelFiles;
-    this.checkboxActive = DdmmUiUtils.createImage(SpecifyPathsDialog.RESOURCE_MANAGER, "checkboxActive.gif");
-    this.checkboxInactive = DdmmUiUtils.createImage(SpecifyPathsDialog.RESOURCE_MANAGER, "checkboxInactive.gif");
+    this.checkboxActive = DdmmUiUtils.createImage(SpecifyPathsDialog.RESOURCE_MANAGER, this.getClass(), "checkboxActive.gif");
+    this.checkboxInactive = DdmmUiUtils.createImage(SpecifyPathsDialog.RESOURCE_MANAGER, this.getClass(), "checkboxInactive.gif");
   }
   
   /**
    * Create dialog (to be called after constructor and before open())
    */
+  @Override
   public void create() {
     super.create();
     String _elvis = null;
@@ -138,6 +139,7 @@ public class SpecifyPathsDialog extends TitleAreaDialog {
   /**
    * Internal callback for dialog area creation
    */
+  @Override
   public Control createDialogArea(final Composite parent) {
     Control _createDialogArea = super.createDialogArea(parent);
     final Composite area = ((Composite) _createDialogArea);
@@ -153,6 +155,7 @@ public class SpecifyPathsDialog extends TitleAreaDialog {
   /**
    * Create buttons for the button bar
    */
+  @Override
   public void createButtonsForButtonBar(final Composite parent) {
     this.createButton(parent, SpecifyPathsDialog.UNSELECT_ALL, "Unselect all", false);
     this.createButton(parent, SpecifyPathsDialog.SELECT_ALL, "Select all", false);
@@ -162,6 +165,7 @@ public class SpecifyPathsDialog extends TitleAreaDialog {
   /**
    * Catch button press
    */
+  @Override
   public void buttonPressed(final int buttonId) {
     switch (buttonId) {
       case SpecifyPathsDialog.UNSELECT_ALL:
@@ -183,10 +187,8 @@ public class SpecifyPathsDialog extends TitleAreaDialog {
    * "Unselect all" was pressed
    */
   private void unselectAllPressed() {
-    final Consumer<ModelFile> _function = new Consumer<ModelFile>() {
-      public void accept(final ModelFile it) {
-        it.setSelectedForTransformation(false);
-      }
+    final Consumer<ModelFile> _function = (ModelFile it) -> {
+      it.setSelectedForTransformation(false);
     };
     Iterables.<ModelFile>concat(this.inputModelFiles.values()).forEach(_function);
     this.tableViewer.refresh();
@@ -196,10 +198,8 @@ public class SpecifyPathsDialog extends TitleAreaDialog {
    * "Select all" was pressed
    */
   private void selectAllPressed() {
-    final Consumer<ModelFile> _function = new Consumer<ModelFile>() {
-      public void accept(final ModelFile it) {
-        it.setSelectedForTransformation(true);
-      }
+    final Consumer<ModelFile> _function = (ModelFile it) -> {
+      it.setSelectedForTransformation(true);
     };
     Iterables.<ModelFile>concat(this.inputModelFiles.values()).forEach(_function);
     this.tableViewer.refresh();
@@ -208,6 +208,7 @@ public class SpecifyPathsDialog extends TitleAreaDialog {
   /**
    * OK button was pressed
    */
+  @Override
   public void okPressed() {
     this.selectedModelFiles = this.filterSelectedModelFiles();
     boolean _isEmpty = this.selectedModelFiles.isEmpty();
@@ -260,33 +261,23 @@ public class SpecifyPathsDialog extends TitleAreaDialog {
    * Distribute specified paths across children of selected model files
    */
   private void distributeSpecifiedPaths(final List<ModelFile> selectedModelFiles, final Map<String, IFile> childrenPaths) {
-    final Function1<ModelFile, String> _function = new Function1<ModelFile, String>() {
-      public String apply(final ModelFile it) {
-        return it.getFile().getFullPath().toString();
-      }
+    final Function1<ModelFile, String> _function = (ModelFile it) -> {
+      return it.getFile().getFullPath().toString();
     };
-    final Function1<ModelFile, String> _function_1 = new Function1<ModelFile, String>() {
-      public String apply(final ModelFile it) {
-        return it.getTransformationTargetPath();
-      }
+    final Function1<ModelFile, String> _function_1 = (ModelFile it) -> {
+      return it.getTransformationTargetPath();
     };
     final Map<String, String> allSpecifiedPaths = IterableExtensions.<ModelFile, String, String>toMap(selectedModelFiles, _function, _function_1);
-    final BiConsumer<String, IFile> _function_2 = new BiConsumer<String, IFile>() {
-      public void accept(final String physicalPath, final IFile specifiedFile) {
-        allSpecifiedPaths.put(physicalPath, specifiedFile.getFullPath().toString());
-      }
+    final BiConsumer<String, IFile> _function_2 = (String physicalPath, IFile specifiedFile) -> {
+      allSpecifiedPaths.put(physicalPath, specifiedFile.getFullPath().toString());
     };
     childrenPaths.forEach(_function_2);
-    final Function1<ModelFile, List<ModelFile>> _function_3 = new Function1<ModelFile, List<ModelFile>>() {
-      public List<ModelFile> apply(final ModelFile it) {
-        return it.getChildren();
-      }
+    final Function1<ModelFile, List<ModelFile>> _function_3 = (ModelFile it) -> {
+      return it.getChildren();
     };
-    final Consumer<ModelFile> _function_4 = new Consumer<ModelFile>() {
-      public void accept(final ModelFile it) {
-        final String childPath = it.getFile().getFullPath().toString();
-        it.setTransformationTargetPath(allSpecifiedPaths.get(childPath));
-      }
+    final Consumer<ModelFile> _function_4 = (ModelFile it) -> {
+      final String childPath = it.getFile().getFullPath().toString();
+      it.setTransformationTargetPath(allSpecifiedPaths.get(childPath));
     };
     Iterables.<ModelFile>concat(ListExtensions.<ModelFile, List<ModelFile>>map(selectedModelFiles, _function_3)).forEach(_function_4);
   }
@@ -295,18 +286,16 @@ public class SpecifyPathsDialog extends TitleAreaDialog {
    * Helper to handle user decision of using the current paths for unselected children
    */
   private Map<String, IFile> useCurrentPathsForUnselectedChildren(final Set<ModelFile> unselectedChildren) {
-    final Function1<ModelFile, Boolean> _function = new Function1<ModelFile, Boolean>() {
-      public Boolean apply(final ModelFile it) {
-        boolean _xblockexpression = false;
-        {
-          String _transformationTargetPath = it.getTransformationTargetPath();
-          final Path transformationTargetPath = new Path(_transformationTargetPath);
-          final IFile unselectedFile = ResourcesPlugin.getWorkspace().getRoot().getFile(transformationTargetPath);
-          boolean _exists = unselectedFile.exists();
-          _xblockexpression = (!_exists);
-        }
-        return Boolean.valueOf(_xblockexpression);
+    final Function1<ModelFile, Boolean> _function = (ModelFile it) -> {
+      boolean _xblockexpression = false;
+      {
+        String _transformationTargetPath = it.getTransformationTargetPath();
+        final Path transformationTargetPath = new Path(_transformationTargetPath);
+        final IFile unselectedFile = ResourcesPlugin.getWorkspace().getRoot().getFile(transformationTargetPath);
+        boolean _exists = unselectedFile.exists();
+        _xblockexpression = (!_exists);
       }
+      return Boolean.valueOf(_xblockexpression);
     };
     final boolean fileNotExisting = IterableExtensions.<ModelFile>exists(unselectedChildren, _function);
     boolean _xifexpression = false;
@@ -320,15 +309,11 @@ public class SpecifyPathsDialog extends TitleAreaDialog {
     final boolean proceedWithTransformation = _xifexpression;
     Map<String, IFile> _xifexpression_1 = null;
     if (proceedWithTransformation) {
-      final Function1<ModelFile, String> _function_1 = new Function1<ModelFile, String>() {
-        public String apply(final ModelFile it) {
-          return it.getFile().getFullPath().toString();
-        }
+      final Function1<ModelFile, String> _function_1 = (ModelFile it) -> {
+        return it.getFile().getFullPath().toString();
       };
-      final Function1<ModelFile, IFile> _function_2 = new Function1<ModelFile, IFile>() {
-        public IFile apply(final ModelFile it) {
-          return it.getFile();
-        }
+      final Function1<ModelFile, IFile> _function_2 = (ModelFile it) -> {
+        return it.getFile();
       };
       _xifexpression_1 = IterableExtensions.<ModelFile, String, IFile>toMap(unselectedChildren, _function_1, _function_2);
     } else {
@@ -342,10 +327,8 @@ public class SpecifyPathsDialog extends TitleAreaDialog {
    * for transformation
    */
   private HashMap<String, IFile> manualPathSpecificationForUnselectedChildren(final Set<ModelFile> unselectedChildren, final List<ModelFile> selectedModelFiles) {
-    final Function1<ModelFile, String> _function = new Function1<ModelFile, String>() {
-      public String apply(final ModelFile it) {
-        return it.getTransformationTargetPath();
-      }
+    final Function1<ModelFile, String> _function = (ModelFile it) -> {
+      return it.getTransformationTargetPath();
     };
     final Map<String, ModelFile> alreadySpecifiedPaths = IterableExtensions.<String, ModelFile>toMap(selectedModelFiles, _function);
     final HashMap<String, IFile> manualPaths = CollectionLiterals.<String, IFile>newHashMap();
@@ -406,19 +389,15 @@ public class SpecifyPathsDialog extends TitleAreaDialog {
    * Helper method to get selected model files
    */
   private List<ModelFile> filterSelectedModelFiles() {
-    final Function1<ModelFile, Boolean> _function = new Function1<ModelFile, Boolean>() {
-      public Boolean apply(final ModelFile it) {
-        return Boolean.valueOf(it.isSelectedForTransformation());
-      }
+    final Function1<ModelFile, Boolean> _function = (ModelFile it) -> {
+      return Boolean.valueOf(it.isSelectedForTransformation());
     };
     final List<ModelFile> selectedModelFiles = IterableExtensions.<ModelFile>toList(IterableExtensions.<ModelFile>filter(Iterables.<ModelFile>concat(this.inputModelFiles.values()), _function));
-    final Consumer<ModelFile> _function_1 = new Consumer<ModelFile>() {
-      public void accept(final ModelFile it) {
-        IPath _fullPath = it.getFile().getProject().getFullPath();
-        String _transformationTargetPath = it.getTransformationTargetPath();
-        String _plus = (_fullPath + _transformationTargetPath);
-        it.setTransformationTargetPath(_plus);
-      }
+    final Consumer<ModelFile> _function_1 = (ModelFile it) -> {
+      IPath _fullPath = it.getFile().getProject().getFullPath();
+      String _transformationTargetPath = it.getTransformationTargetPath();
+      String _plus = (_fullPath + _transformationTargetPath);
+      it.setTransformationTargetPath(_plus);
     };
     selectedModelFiles.forEach(_function_1);
     return selectedModelFiles;
@@ -429,25 +408,19 @@ public class SpecifyPathsDialog extends TitleAreaDialog {
    * "children"
    */
   private Set<ModelFile> filterUnselectedChildren(final List<ModelFile> selectedModelFiles) {
-    final Function1<ModelFile, Iterable<ModelFile>> _function = new Function1<ModelFile, Iterable<ModelFile>>() {
-      public Iterable<ModelFile> apply(final ModelFile it) {
-        final Function1<ModelFile, Boolean> _function = new Function1<ModelFile, Boolean>() {
-          public Boolean apply(final ModelFile it) {
-            boolean _isSelectedForTransformation = it.isSelectedForTransformation();
-            return Boolean.valueOf((!_isSelectedForTransformation));
-          }
-        };
-        return IterableExtensions.<ModelFile>filter(it.getChildren(), _function);
-      }
+    final Function1<ModelFile, Iterable<ModelFile>> _function = (ModelFile it) -> {
+      final Function1<ModelFile, Boolean> _function_1 = (ModelFile it_1) -> {
+        boolean _isSelectedForTransformation = it_1.isSelectedForTransformation();
+        return Boolean.valueOf((!_isSelectedForTransformation));
+      };
+      return IterableExtensions.<ModelFile>filter(it.getChildren(), _function_1);
     };
     final Set<ModelFile> unselectedChildren = IterableExtensions.<ModelFile>toSet(Iterables.<ModelFile>concat(ListExtensions.<ModelFile, Iterable<ModelFile>>map(selectedModelFiles, _function)));
-    final Consumer<ModelFile> _function_1 = new Consumer<ModelFile>() {
-      public void accept(final ModelFile it) {
-        IPath _fullPath = it.getFile().getProject().getFullPath();
-        String _transformationTargetPath = it.getTransformationTargetPath();
-        String _plus = (_fullPath + _transformationTargetPath);
-        it.setTransformationTargetPath(_plus);
-      }
+    final Consumer<ModelFile> _function_1 = (ModelFile it) -> {
+      IPath _fullPath = it.getFile().getProject().getFullPath();
+      String _transformationTargetPath = it.getTransformationTargetPath();
+      String _plus = (_fullPath + _transformationTargetPath);
+      it.setTransformationTargetPath(_plus);
     };
     unselectedChildren.forEach(_function_1);
     return unselectedChildren;
@@ -456,6 +429,7 @@ public class SpecifyPathsDialog extends TitleAreaDialog {
   /**
    * Flag to indicate that dialog is resizable
    */
+  @Override
   public boolean isResizable() {
     return true;
   }
@@ -463,6 +437,7 @@ public class SpecifyPathsDialog extends TitleAreaDialog {
   /**
    * Initial size
    */
+  @Override
   public Point getInitialSize() {
     final Point shellSize = super.getInitialSize();
     int _max = Math.max(this.convertHorizontalDLUsToPixels(SpecifyPathsDialog.MIN_DIALOG_WIDTH), shellSize.x);
@@ -473,6 +448,7 @@ public class SpecifyPathsDialog extends TitleAreaDialog {
   /**
    * Close dialog
    */
+  @Override
   public void closeTray() {
     SpecifyPathsDialog.RESOURCE_MANAGER.dispose();
     super.closeTray();
@@ -508,6 +484,7 @@ public class SpecifyPathsDialog extends TitleAreaDialog {
     this.tableViewer.getTable().setLayoutData(tableViewerData);
     Table _table = this.tableViewer.getTable();
     _table.addListener(SWT.Selection, new Listener() {
+      @Override
       public void handleEvent(final Event event) {
         event.detail = SWT.NONE;
         event.type = SWT.None;
@@ -529,10 +506,12 @@ public class SpecifyPathsDialog extends TitleAreaDialog {
     final TableViewerColumn tableViewerColumnCheckbox = new TableViewerColumn(this.tableViewer, SWT.NONE);
     tableViewerColumnCheckbox.getColumn().setWidth(20);
     tableViewerColumnCheckbox.setLabelProvider(new ColumnLabelProvider() {
+      @Override
       public String getText(final Object element) {
         return null;
       }
       
+      @Override
       public Image getImage(final Object element) {
         Image _xifexpression = null;
         boolean _isSelectedForTransformation = ((ModelFile) element).isSelectedForTransformation();
@@ -544,37 +523,33 @@ public class SpecifyPathsDialog extends TitleAreaDialog {
         return _xifexpression;
       }
     });
-    final Predicate<Pair<ModelFile, Boolean>> _function = new Predicate<Pair<ModelFile, Boolean>>() {
-      public boolean apply(final Pair<ModelFile, Boolean> it) {
-        final Boolean newSelectedForTransformation = it.getValue();
-        if ((!(newSelectedForTransformation).booleanValue())) {
-          return true;
-        }
-        final ModelFile affectedModelFile = it.getKey();
-        final Function1<ModelFile, Boolean> _function = new Function1<ModelFile, Boolean>() {
-          public Boolean apply(final ModelFile it) {
-            return Boolean.valueOf(((it.isSelectedForTransformation() && 
-              (!Objects.equal(it, affectedModelFile))) && 
-              Objects.equal(it.getTransformationTargetPath(), affectedModelFile.getTransformationTargetPath())));
-          }
-        };
-        final boolean duplicatePathExists = IterableExtensions.<ModelFile>exists(Iterables.<ModelFile>concat(SpecifyPathsDialog.this.inputModelFiles.values()), _function);
-        if (duplicatePathExists) {
-          StringConcatenation _builder = new StringConcatenation();
-          _builder.append("The transformation target path ");
-          StringConcatenation _builder_1 = new StringConcatenation();
-          _builder_1.append("\"");
-          String _transformationTargetPath = affectedModelFile.getTransformationTargetPath();
-          _builder_1.append(_transformationTargetPath);
-          _builder_1.append("\" was already specified ");
-          String _plus = (_builder.toString() + _builder_1);
-          StringConcatenation _builder_2 = new StringConcatenation();
-          _builder_2.append("for another file.");
-          String _plus_1 = (_plus + _builder_2);
-          MessageDialog.openError(SpecifyPathsDialog.this.parentShell, "Duplicate transformation target path", _plus_1);
-        }
-        return (!duplicatePathExists);
+    final Predicate<Pair<ModelFile, Boolean>> _function = (Pair<ModelFile, Boolean> it) -> {
+      final Boolean newSelectedForTransformation = it.getValue();
+      if ((!(newSelectedForTransformation).booleanValue())) {
+        return true;
       }
+      final ModelFile affectedModelFile = it.getKey();
+      final Function1<ModelFile, Boolean> _function_1 = (ModelFile it_1) -> {
+        return Boolean.valueOf(((it_1.isSelectedForTransformation() && 
+          (!Objects.equal(it_1, affectedModelFile))) && 
+          Objects.equal(it_1.getTransformationTargetPath(), affectedModelFile.getTransformationTargetPath())));
+      };
+      final boolean duplicatePathExists = IterableExtensions.<ModelFile>exists(Iterables.<ModelFile>concat(this.inputModelFiles.values()), _function_1);
+      if (duplicatePathExists) {
+        StringConcatenation _builder = new StringConcatenation();
+        _builder.append("The transformation target path ");
+        StringConcatenation _builder_1 = new StringConcatenation();
+        _builder_1.append("\"");
+        String _transformationTargetPath = affectedModelFile.getTransformationTargetPath();
+        _builder_1.append(_transformationTargetPath);
+        _builder_1.append("\" was already specified ");
+        String _plus = (_builder.toString() + _builder_1);
+        StringConcatenation _builder_2 = new StringConcatenation();
+        _builder_2.append("for another file.");
+        String _plus_1 = (_plus + _builder_2);
+        MessageDialog.openError(this.parentShell, "Duplicate transformation target path", _plus_1);
+      }
+      return (!duplicatePathExists);
     };
     final Predicate<Pair<ModelFile, Boolean>> checkboxValidator = _function;
     ModelTableCheckboxColumnEditingSupport _modelTableCheckboxColumnEditingSupport = new ModelTableCheckboxColumnEditingSupport(this.tableViewer, checkboxValidator);
@@ -601,6 +576,7 @@ public class SpecifyPathsDialog extends TitleAreaDialog {
     tableViewerColumnModelType.getColumn().setWidth(110);
     tableViewerColumnModelType.getColumn().setText("Model type");
     tableViewerColumnModelType.setLabelProvider(new ColumnLabelProvider() {
+      @Override
       public String getText(final Object element) {
         return ((ModelFile) element).getFileTypeDescription().getDescription();
       }
@@ -616,39 +592,36 @@ public class SpecifyPathsDialog extends TitleAreaDialog {
     tableViewerColumnTransformationTargetPath.getColumn().setText(("Project-related transformation " + 
       "target path"));
     tableViewerColumnTransformationTargetPath.setLabelProvider(new ColumnLabelProvider() {
+      @Override
       public String getText(final Object element) {
         return ((ModelFile) element).getTransformationTargetPath();
       }
     });
-    final Predicate<Pair<ModelFile, String>> _function = new Predicate<Pair<ModelFile, String>>() {
-      public boolean apply(final Pair<ModelFile, String> it) {
-        final ModelFile affectedModelFile = it.getKey();
-        boolean _isSelectedForTransformation = affectedModelFile.isSelectedForTransformation();
-        boolean _not = (!_isSelectedForTransformation);
-        if (_not) {
-          return true;
-        }
-        final String newTransformationTargetPath = it.getValue();
-        final Function1<ModelFile, Boolean> _function = new Function1<ModelFile, Boolean>() {
-          public Boolean apply(final ModelFile it) {
-            return Boolean.valueOf(((it.isSelectedForTransformation() && 
-              (!Objects.equal(it, affectedModelFile))) && 
-              Objects.equal(it.getTransformationTargetPath(), newTransformationTargetPath)));
-          }
-        };
-        final boolean duplicatePathExists = IterableExtensions.<ModelFile>exists(Iterables.<ModelFile>concat(SpecifyPathsDialog.this.inputModelFiles.values()), _function);
-        if (duplicatePathExists) {
-          StringConcatenation _builder = new StringConcatenation();
-          _builder.append("The transformation target path \"");
-          _builder.append(newTransformationTargetPath);
-          _builder.append("\" was ");
-          StringConcatenation _builder_1 = new StringConcatenation();
-          _builder_1.append("already specified for another file. Change aborted.");
-          String _plus = (_builder.toString() + _builder_1);
-          MessageDialog.openError(SpecifyPathsDialog.this.parentShell, "Duplicate transformation target path", _plus);
-        }
-        return (!duplicatePathExists);
+    final Predicate<Pair<ModelFile, String>> _function = (Pair<ModelFile, String> it) -> {
+      final ModelFile affectedModelFile = it.getKey();
+      boolean _isSelectedForTransformation = affectedModelFile.isSelectedForTransformation();
+      boolean _not = (!_isSelectedForTransformation);
+      if (_not) {
+        return true;
       }
+      final String newTransformationTargetPath = it.getValue();
+      final Function1<ModelFile, Boolean> _function_1 = (ModelFile it_1) -> {
+        return Boolean.valueOf(((it_1.isSelectedForTransformation() && 
+          (!Objects.equal(it_1, affectedModelFile))) && 
+          Objects.equal(it_1.getTransformationTargetPath(), newTransformationTargetPath)));
+      };
+      final boolean duplicatePathExists = IterableExtensions.<ModelFile>exists(Iterables.<ModelFile>concat(this.inputModelFiles.values()), _function_1);
+      if (duplicatePathExists) {
+        StringConcatenation _builder = new StringConcatenation();
+        _builder.append("The transformation target path \"");
+        _builder.append(newTransformationTargetPath);
+        _builder.append("\" was ");
+        StringConcatenation _builder_1 = new StringConcatenation();
+        _builder_1.append("already specified for another file. Change aborted.");
+        String _plus = (_builder.toString() + _builder_1);
+        MessageDialog.openError(this.parentShell, "Duplicate transformation target path", _plus);
+      }
+      return (!duplicatePathExists);
     };
     final Predicate<Pair<ModelFile, String>> transformationTargetPathValidator = _function;
     ModelTableTransformationTargetPathColumnEditingSupport _modelTableTransformationTargetPathColumnEditingSupport = new ModelTableTransformationTargetPathColumnEditingSupport(this.tableViewer, transformationTargetPathValidator);

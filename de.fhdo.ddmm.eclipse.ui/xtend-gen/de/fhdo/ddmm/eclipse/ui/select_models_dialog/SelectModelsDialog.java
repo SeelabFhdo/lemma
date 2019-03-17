@@ -79,6 +79,7 @@ public class SelectModelsDialog extends TitleAreaDialog {
   /**
    * OK button was pressed
    */
+  @Override
   public void okPressed() {
     this.selectedModelFiles = this.filterSelectedModelFiles();
     boolean _isEmpty = this.selectedModelFiles.isEmpty();
@@ -95,15 +96,11 @@ public class SelectModelsDialog extends TitleAreaDialog {
    */
   private List<ModelFile> filterSelectedModelFiles() {
     final Iterator iter = this.treeViewer.getStructuredSelection().iterator();
-    final Function1<Object, Boolean> _function = new Function1<Object, Boolean>() {
-      public Boolean apply(final Object it) {
-        return Boolean.valueOf((it instanceof ModelFile));
-      }
+    final Function1<Object, Boolean> _function = (Object it) -> {
+      return Boolean.valueOf((it instanceof ModelFile));
     };
-    final Function1<Object, ModelFile> _function_1 = new Function1<Object, ModelFile>() {
-      public ModelFile apply(final Object it) {
-        return ((ModelFile) it);
-      }
+    final Function1<Object, ModelFile> _function_1 = (Object it) -> {
+      return ((ModelFile) it);
     };
     return IteratorExtensions.<ModelFile>toList(IteratorExtensions.<Object, ModelFile>map(IteratorExtensions.<Object>filter(iter, _function), _function_1));
   }
@@ -111,6 +108,7 @@ public class SelectModelsDialog extends TitleAreaDialog {
   /**
    * Create dialog (to be called after constructor and before open())
    */
+  @Override
   public void create() {
     super.create();
     String _elvis = null;
@@ -136,6 +134,7 @@ public class SelectModelsDialog extends TitleAreaDialog {
   /**
    * Internal callback for dialog area creation
    */
+  @Override
   public Control createDialogArea(final Composite parent) {
     Control _createDialogArea = super.createDialogArea(parent);
     final Composite area = ((Composite) _createDialogArea);
@@ -155,6 +154,7 @@ public class SelectModelsDialog extends TitleAreaDialog {
   /**
    * Flag to indicate that dialog is resizable
    */
+  @Override
   public boolean isResizable() {
     return true;
   }
@@ -162,6 +162,7 @@ public class SelectModelsDialog extends TitleAreaDialog {
   /**
    * Initial size
    */
+  @Override
   public Point getInitialSize() {
     final Point shellSize = super.getInitialSize();
     int _max = Math.max(this.convertHorizontalDLUsToPixels(SelectModelsDialog.MIN_DIALOG_WIDTH), shellSize.x);
@@ -183,6 +184,7 @@ public class SelectModelsDialog extends TitleAreaDialog {
     this.treeViewer.getTree().setHeaderVisible(true);
     this.treeViewer.getTree().setLinesVisible(true);
     this.treeViewer.addDoubleClickListener(new IDoubleClickListener() {
+      @Override
       public void doubleClick(final DoubleClickEvent event) {
         Object _source = event.getSource();
         boolean _not = (!(_source instanceof TreeViewer));
@@ -221,6 +223,7 @@ public class SelectModelsDialog extends TitleAreaDialog {
     treeViewerColumnFilePaths.getColumn().setWidth(600);
     treeViewerColumnFilePaths.getColumn().setText("Model file path");
     treeViewerColumnFilePaths.setLabelProvider(new ColumnLabelProvider() {
+      @Override
       public String getText(final Object element) {
         String _switchResult = null;
         boolean _matched = false;
@@ -246,18 +249,16 @@ public class SelectModelsDialog extends TitleAreaDialog {
     legendGridData.grabExcessHorizontalSpace = true;
     legendGridData.horizontalAlignment = GridData.FILL;
     legend.setLayoutData(legendGridData);
-    final Consumer<ModelFileTypeDescription> _function = new Consumer<ModelFileTypeDescription>() {
-      public void accept(final ModelFileTypeDescription it) {
-        final Composite legendEntry = new Composite(legend, SWT.NONE);
-        RowLayout _rowLayout = new RowLayout(SWT.HORIZONTAL);
-        legendEntry.setLayout(_rowLayout);
-        final Label imageLabel = new Label(legendEntry, SWT.NONE);
-        imageLabel.setImage(it.getIcon());
-        final Label textLabel = new Label(legendEntry, SWT.NONE);
-        String _description = it.getDescription();
-        String _plus = ("-" + _description);
-        textLabel.setText(_plus);
-      }
+    final Consumer<ModelFileTypeDescription> _function = (ModelFileTypeDescription it) -> {
+      final Composite legendEntry = new Composite(legend, SWT.NONE);
+      RowLayout _rowLayout = new RowLayout(SWT.HORIZONTAL);
+      legendEntry.setLayout(_rowLayout);
+      final Label imageLabel = new Label(legendEntry, SWT.NONE);
+      imageLabel.setImage(it.getIcon());
+      final Label textLabel = new Label(legendEntry, SWT.NONE);
+      String _description = it.getDescription();
+      String _plus = ("-" + _description);
+      textLabel.setText(_plus);
     };
     modelFileTypeDescriptions.forEach(_function);
   }

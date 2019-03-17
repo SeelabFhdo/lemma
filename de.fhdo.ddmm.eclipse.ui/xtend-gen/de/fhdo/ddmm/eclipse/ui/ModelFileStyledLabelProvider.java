@@ -30,13 +30,14 @@ public class ModelFileStyledLabelProvider extends LabelProvider implements Deleg
     ResourceManager _resources = JFaceResources.getResources();
     LocalResourceManager _localResourceManager = new LocalResourceManager(_resources);
     this.resourceManager = _localResourceManager;
-    this.errorIcon = DdmmUiUtils.createImage(this.resourceManager, "error.gif");
-    this.warningIcon = DdmmUiUtils.createImage(this.resourceManager, "warning.gif");
+    this.errorIcon = DdmmUiUtils.createImage(this.resourceManager, this.getClass(), "error.gif");
+    this.warningIcon = DdmmUiUtils.createImage(this.resourceManager, this.getClass(), "warning.gif");
   }
   
   /**
    * Get default styled text for element
    */
+  @Override
   public StyledString getStyledText(final Object element) {
     if ((!(element instanceof ModelFile))) {
       return new StyledString("");
@@ -48,6 +49,7 @@ public class ModelFileStyledLabelProvider extends LabelProvider implements Deleg
   /**
    * Get image for element
    */
+  @Override
   public Image getImage(final Object element) {
     if ((!(element instanceof ModelFile))) {
       return null;
@@ -58,6 +60,7 @@ public class ModelFileStyledLabelProvider extends LabelProvider implements Deleg
   /**
    * Garbage collector callback
    */
+  @Override
   public void dispose() {
     super.dispose();
     this.resourceManager.dispose();
