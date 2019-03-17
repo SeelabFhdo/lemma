@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="warn">
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout>
+                <ScriptPatternSelector defaultPattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n">
+                    <Script name="LevelSelector" language="groovy"><![CDATA[
+                        if (logEvent.getLevel() == org.apache.logging.log4j.Level.INFO)
+                            return "INFO"
+                        ]]>
+                    </Script>
+                    <PatternMatch key="INFO" pattern="%msg%n"/>
+                </ScriptPatternSelector>
+            </PatternLayout>
+        </Console>
+    </Appenders>
+    <Loggers>
+        <!-- Print information logging messages to standard output by default -->
+        <Root level="info">
+            <AppenderRef ref="Console"/>
+        </Root>
+    </Loggers>
+</Configuration>
