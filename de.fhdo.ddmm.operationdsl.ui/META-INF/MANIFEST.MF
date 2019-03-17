@@ -26,8 +26,7 @@ Require-Bundle: de.fhdo.ddmm.operationdsl,
  de.fhdo.ddmm.servicedsl.ui;bundle-version="0.0.1",
  de.fhdo.ddmm.technology.technologydsl;bundle-version="0.0.1",
  de.fhdo.ddmm.technology.technologydsl.ide;bundle-version="0.0.1",
- de.fhdo.ddmm.technology.technologydsl.ui;bundle-version="0.0.1",
- de.fhdo.ddmm.eclipse.ui.editor;bundle-version="0.0.1"
+ de.fhdo.ddmm.technology.technologydsl.ui;bundle-version="0.0.1"
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: de.fhdo.ddmm.operationdsl.ui.contentassist,
