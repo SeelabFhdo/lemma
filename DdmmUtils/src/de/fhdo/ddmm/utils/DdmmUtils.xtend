@@ -76,9 +76,14 @@ final class DdmmUtils {
      * Convert a relative file path to an absolute file path that is based on an absolute base path
      */
     def static convertToAbsolutePath(String relativeFilePath, String absoluteBaseFilePath) {
+        // Don't convert if the given relative file path isn't relative at all
+        val relativeFilePathWithoutScheme = removeFileUri(relativeFilePath)
+        if (new File(relativeFilePathWithoutScheme).absolute)
+            return relativeFilePathWithoutScheme
+
         val absoluteBaseFile = new File(absoluteBaseFilePath)
         val absoluteBaseFolder = new File(absoluteBaseFile.getParent())
-        val absoluteFile = new File(absoluteBaseFolder, relativeFilePath)
+        val absoluteFile = new File(absoluteBaseFolder, relativeFilePathWithoutScheme)
         return absoluteFile.getCanonicalPath()
     }
 
@@ -109,7 +114,7 @@ final class DdmmUtils {
     }
 
     /**
-     * Remove "file://" scheme from URI string
+     * Remove "file:" scheme from URI string, leaving any preceding slashes untouched
      */
     def static removeFileUri(String uri) {
         if (!isFileUri(uri))

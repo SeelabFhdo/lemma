@@ -87,10 +87,15 @@ public final class DdmmUtils {
    */
   public static String convertToAbsolutePath(final String relativeFilePath, final String absoluteBaseFilePath) {
     try {
+      final String relativeFilePathWithoutScheme = DdmmUtils.removeFileUri(relativeFilePath);
+      boolean _isAbsolute = new File(relativeFilePathWithoutScheme).isAbsolute();
+      if (_isAbsolute) {
+        return relativeFilePathWithoutScheme;
+      }
       final File absoluteBaseFile = new File(absoluteBaseFilePath);
       String _parent = absoluteBaseFile.getParent();
       final File absoluteBaseFolder = new File(_parent);
-      final File absoluteFile = new File(absoluteBaseFolder, relativeFilePath);
+      final File absoluteFile = new File(absoluteBaseFolder, relativeFilePathWithoutScheme);
       return absoluteFile.getCanonicalPath();
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
@@ -127,7 +132,7 @@ public final class DdmmUtils {
   }
   
   /**
-   * Remove "file://" scheme from URI string
+   * Remove "file:" scheme from URI string, leaving any preceding slashes untouched
    */
   public static String removeFileUri(final String uri) {
     boolean _isFileUri = DdmmUtils.isFileUri(uri);
