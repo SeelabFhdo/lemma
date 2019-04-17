@@ -1,5 +1,5 @@
 -- @path Service=/ServiceViewpointModel/model/ServiceViewpointModel.xcore
--- @path Intermediate=model/IntermediateServiceModel.xcore
+-- @path Intermediate=IntermediateServiceModel/model/IntermediateServiceModel.xcore
 
 -- Author: Florian Rademacher
 -- E-mail: florian.rademacher@fh-dortmund.de

@@ -1,6 +1,6 @@
 -- @path Data=/DataViewpointModel/model/DataViewpointModel.xcore
 -- @path Service=/ServiceViewpointModel/model/ServiceViewpointModel.xcore
--- @path Intermediate=model/IntermediateDataModel.xcore
+-- @path Intermediate=/IntermediateDataModel/model/IntermediateDataModel.xcore
 
 -- Author: Florian Rademacher
 -- E-mail: florian.rademacher@fh-dortmund.de
