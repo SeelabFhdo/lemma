@@ -12,7 +12,6 @@
 
     <artifactId>DataViewpointModel</artifactId>
     <packaging>eclipse-plugin</packaging>
-    <version>0.0.1-SNAPSHOT</version>
 
     <dependencies>
         <dependency>

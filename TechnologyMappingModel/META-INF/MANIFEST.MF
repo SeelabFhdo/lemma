@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
-Bundle-Vendor: University of Applied Sciences and Arts Dortmund
+Bundle-Vendor: %providerName
 Bundle-SymbolicName: TechnologyMappingModel;singleton:=true
 Automatic-Module-Name: TechnologyMappingModel
 Bundle-Version: 0.0.1.qualifier

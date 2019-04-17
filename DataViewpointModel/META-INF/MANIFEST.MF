@@ -1,7 +1,8 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: DataViewpointModel
-Bundle-Vendor: University of Applied Sciences and Arts Dortmund
+Bundle-Name: %pluginName
+Bundle-Vendor: %providerName
+Bundle-Localization: plugin
 Bundle-SymbolicName: DataViewpointModel;singleton:=true
 Automatic-Module-Name: DataViewpointModel
 Bundle-Version: 0.0.1.qualifier

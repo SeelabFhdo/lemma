@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: DdmmTypechecking
-Bundle-Vendor: University of Applied Sciences and Arts Dortmund
+Bundle-Name: %pluginName
+Bundle-Vendor: %providerName
 Bundle-SymbolicName: DdmmTypechecking; singleton:=true
 Bundle-Version: 0.0.1.qualifier
 Require-Bundle: org.eclipse.emf.ecore,

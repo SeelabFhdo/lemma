@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: de.fhdo.ddmm.servicedsl.ide
-Bundle-Vendor: University of Applied Sciences and Arts Dortmund
+Bundle-Name: %pluginName
+Bundle-Vendor: %providerName
 Bundle-Version: 0.0.1.qualifier
 Bundle-SymbolicName: de.fhdo.ddmm.servicedsl.ide; singleton:=true
 Bundle-ActivationPolicy: lazy
