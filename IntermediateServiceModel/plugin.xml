@@ -9,7 +9,7 @@
    <extension point="org.eclipse.emf.ecore.generated_package">
       <!-- @generated IntermediateServiceModel -->
       <package
-            uri="de.fhdo.ddmm.service.intermediate"
+            uri="http://www.fhdo.de/ddmm/service/intermediate"
             class="de.fhdo.ddmm.service.intermediate.IntermediatePackage"
             genModel="model/IntermediateServiceModel.xcore"/>
    </extension>

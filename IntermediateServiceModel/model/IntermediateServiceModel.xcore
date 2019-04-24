@@ -1,3 +1,4 @@
+@Ecore(nsURI="http://www.fhdo.de/ddmm/service/intermediate", nsPrefix="intermediate")
 package de.fhdo.ddmm.service.intermediate
 
 import de.fhdo.ddmm.data.intermediate.IntermediateImport

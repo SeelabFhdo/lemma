@@ -40,7 +40,7 @@ public interface IntermediatePackage extends EPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    String eNS_URI = "de.fhdo.ddmm.data.intermediate";
+    String eNS_URI = "http://www.fhdo.de/ddmm/data/intermediate";
 
     /**
      * The package namespace name.
