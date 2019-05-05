@@ -714,13 +714,21 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
                 val parameter = mapping.parameter
                 forCommunicationType = parameter.communicationType
                 forExchangePattern = parameter.exchangePattern
-                forProtocolsAndDataFormats = #[mapping.effectiveProtocolAndDataFormat]
+                val effectiveProtocolAndDataFormat = mapping.effectiveProtocolAndDataFormat
+                forProtocolsAndDataFormats = if (effectiveProtocolAndDataFormat !== null)
+                        #[effectiveProtocolAndDataFormat]
+                    else
+                        null
 
                 JoinPointType.PARAMETERS
             }
             TechnologySpecificDataFieldTypeMapping: {
                 val parameterMapping = mapping.parameterMapping
-                forProtocolsAndDataFormats = #[parameterMapping.effectiveProtocolAndDataFormat]
+                val effectiveProtocolAndDataFormat = parameterMapping.effectiveProtocolAndDataFormat
+                forProtocolsAndDataFormats = if (effectiveProtocolAndDataFormat !== null)
+                        #[effectiveProtocolAndDataFormat]
+                    else
+                        null
 
                 val parameter = parameterMapping.parameter
                 forCommunicationType = parameter.communicationType

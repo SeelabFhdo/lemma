@@ -898,8 +898,14 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
           final Parameter parameter = ((ParameterMapping)mapping).getParameter();
           forCommunicationType = parameter.getCommunicationType();
           forExchangePattern = parameter.getExchangePattern();
-          Pair<Protocol, DataFormat> _effectiveProtocolAndDataFormat = this.getEffectiveProtocolAndDataFormat(((ParameterMapping)mapping));
-          forProtocolsAndDataFormats = Collections.<Pair<Protocol, DataFormat>>unmodifiableList(CollectionLiterals.<Pair<Protocol, DataFormat>>newArrayList(_effectiveProtocolAndDataFormat));
+          final Pair<Protocol, DataFormat> effectiveProtocolAndDataFormat = this.getEffectiveProtocolAndDataFormat(((ParameterMapping)mapping));
+          List<Pair<Protocol, DataFormat>> _xifexpression = null;
+          if ((effectiveProtocolAndDataFormat != null)) {
+            _xifexpression = Collections.<Pair<Protocol, DataFormat>>unmodifiableList(CollectionLiterals.<Pair<Protocol, DataFormat>>newArrayList(effectiveProtocolAndDataFormat));
+          } else {
+            _xifexpression = null;
+          }
+          forProtocolsAndDataFormats = _xifexpression;
           _xblockexpression = JoinPointType.PARAMETERS;
         }
         _switchResult = _xblockexpression;
@@ -911,8 +917,14 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
         JoinPointType _xblockexpression = null;
         {
           final ComplexParameterMapping parameterMapping = ((TechnologySpecificDataFieldTypeMapping)mapping).getParameterMapping();
-          Pair<Protocol, DataFormat> _effectiveProtocolAndDataFormat = this.getEffectiveProtocolAndDataFormat(parameterMapping);
-          forProtocolsAndDataFormats = Collections.<Pair<Protocol, DataFormat>>unmodifiableList(CollectionLiterals.<Pair<Protocol, DataFormat>>newArrayList(_effectiveProtocolAndDataFormat));
+          final Pair<Protocol, DataFormat> effectiveProtocolAndDataFormat = this.getEffectiveProtocolAndDataFormat(parameterMapping);
+          List<Pair<Protocol, DataFormat>> _xifexpression = null;
+          if ((effectiveProtocolAndDataFormat != null)) {
+            _xifexpression = Collections.<Pair<Protocol, DataFormat>>unmodifiableList(CollectionLiterals.<Pair<Protocol, DataFormat>>newArrayList(effectiveProtocolAndDataFormat));
+          } else {
+            _xifexpression = null;
+          }
+          forProtocolsAndDataFormats = _xifexpression;
           final Parameter parameter = parameterMapping.getParameter();
           forCommunicationType = parameter.getCommunicationType();
           forExchangePattern = parameter.getExchangePattern();

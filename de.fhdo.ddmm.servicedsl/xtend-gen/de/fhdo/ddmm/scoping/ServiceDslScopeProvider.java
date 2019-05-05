@@ -538,8 +538,14 @@ public class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
         {
           forCommunicationType = ((Parameter)aspectContainer).getCommunicationType();
           forExchangePattern = ((Parameter)aspectContainer).getExchangePattern();
-          Pair<Protocol, DataFormat> _effectiveProtocolAndDataFormat = this.getEffectiveProtocolAndDataFormat(((Parameter)aspectContainer));
-          forProtocolsAndDataFormats = Collections.<Pair<Protocol, DataFormat>>unmodifiableList(CollectionLiterals.<Pair<Protocol, DataFormat>>newArrayList(_effectiveProtocolAndDataFormat));
+          final Pair<Protocol, DataFormat> effectiveProtocolAndDataFormat = this.getEffectiveProtocolAndDataFormat(((Parameter)aspectContainer));
+          List<Pair<Protocol, DataFormat>> _xifexpression = null;
+          if ((effectiveProtocolAndDataFormat != null)) {
+            _xifexpression = Collections.<Pair<Protocol, DataFormat>>unmodifiableList(CollectionLiterals.<Pair<Protocol, DataFormat>>newArrayList(effectiveProtocolAndDataFormat));
+          } else {
+            _xifexpression = null;
+          }
+          forProtocolsAndDataFormats = _xifexpression;
           _xblockexpression = JoinPointType.PARAMETERS;
         }
         _switchResult = _xblockexpression;

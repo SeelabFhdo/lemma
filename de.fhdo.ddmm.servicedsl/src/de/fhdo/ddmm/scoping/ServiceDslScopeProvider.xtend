@@ -492,7 +492,11 @@ class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
             Parameter: {
                 forCommunicationType = aspectContainer.communicationType
                 forExchangePattern = aspectContainer.exchangePattern
-                forProtocolsAndDataFormats = #[aspectContainer.effectiveProtocolAndDataFormat]
+                val effectiveProtocolAndDataFormat = aspectContainer.effectiveProtocolAndDataFormat
+                forProtocolsAndDataFormats = if (effectiveProtocolAndDataFormat !== null)
+                        #[effectiveProtocolAndDataFormat]
+                    else
+                        null
 
                 JoinPointType.PARAMETERS
             }
