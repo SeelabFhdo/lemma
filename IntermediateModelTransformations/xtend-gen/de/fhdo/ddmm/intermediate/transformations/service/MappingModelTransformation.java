@@ -119,6 +119,17 @@ public class MappingModelTransformation extends AbstractIntermediateModelTransfo
   }
   
   /**
+   * Consider imports of imported service models to build import target paths. Otherwise the paths
+   * of domain models imported by mapped service models will point to their original destination
+   * instead of those of the intermediate models they get possibly transformed to within the
+   * transformation process.
+   */
+  @Override
+  public boolean considerChildrensChildrenForImportTargetPaths() {
+    return true;
+  }
+  
+  /**
    * Add transformation target paths of imported model files to target model
    */
   @Override

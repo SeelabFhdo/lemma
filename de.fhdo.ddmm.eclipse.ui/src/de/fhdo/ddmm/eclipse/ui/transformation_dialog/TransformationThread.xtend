@@ -76,6 +76,15 @@ class TransformationThread extends Thread {
             val importTargetPaths = modelFile.children.toMap([importAlias],
                 [transformationTargetPath])
 
+            // Depending on strategy, enrich target paths of imports with children's children of
+            // current model
+            if (mainTransformationStrategy.considerChildrensChildrenForImportTargetPaths)
+                modelFile.children.forEach[
+                    importTargetPaths.putAll(
+                        it.children.toMap([importAlias], [transformationTargetPath])
+                    )
+                ]
+
             // Perform main transformation
             mainTransformationStrategy.mainTransformation(sourceModelFile, targetPath,
                 importTargetPaths, [internalTransformationWarningCallback])

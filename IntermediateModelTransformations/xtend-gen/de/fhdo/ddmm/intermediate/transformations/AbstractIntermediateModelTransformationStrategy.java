@@ -124,6 +124,15 @@ public abstract class AbstractIntermediateModelTransformationStrategy {
   }
   
   /**
+   * Flag to indicate if children's children of the current model file, i.e., models that are
+   * imported by imported models of the current model, shall be considered when building the
+   * target paths of imports for the subsequent call to mainTransformation().
+   */
+  public boolean considerChildrensChildrenForImportTargetPaths() {
+    return false;
+  }
+  
+  /**
    * Perform the model-to-model-transformation of a source model, being specified in a specific
    * DSL file, to an intermediate model in the form of an XMI file
    */

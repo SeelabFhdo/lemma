@@ -94,19 +94,33 @@ public class TransformationThread extends Thread {
         return it.getTransformationTargetPath();
       };
       final Map<String, String> importTargetPaths = IterableExtensions.<ModelFile, String, String>toMap(modelFile.getChildren(), _function, _function_1);
-      final Predicate<IntermediateTransformationException> _function_2 = (IntermediateTransformationException it) -> {
+      boolean _considerChildrensChildrenForImportTargetPaths = mainTransformationStrategy.considerChildrensChildrenForImportTargetPaths();
+      if (_considerChildrensChildrenForImportTargetPaths) {
+        final Consumer<ModelFile> _function_2 = (ModelFile it) -> {
+          final Function1<ModelFile, String> _function_3 = (ModelFile it_1) -> {
+            return it_1.getImportAlias();
+          };
+          final Function1<ModelFile, String> _function_4 = (ModelFile it_1) -> {
+            return it_1.getTransformationTargetPath();
+          };
+          importTargetPaths.putAll(
+            IterableExtensions.<ModelFile, String, String>toMap(it.getChildren(), _function_3, _function_4));
+        };
+        modelFile.getChildren().forEach(_function_2);
+      }
+      final Predicate<IntermediateTransformationException> _function_3 = (IntermediateTransformationException it) -> {
         return this.internalTransformationWarningCallback(it);
       };
-      mainTransformationStrategy.mainTransformation(sourceModelFile, targetPath, importTargetPaths, _function_2);
-      final Consumer<AbstractIntermediateModelTransformationStrategy> _function_3 = (AbstractIntermediateModelTransformationStrategy it) -> {
+      mainTransformationStrategy.mainTransformation(sourceModelFile, targetPath, importTargetPaths, _function_3);
+      final Consumer<AbstractIntermediateModelTransformationStrategy> _function_4 = (AbstractIntermediateModelTransformationStrategy it) -> {
         final Path sourceFilePath = new Path(targetPath);
         final IFile sourceFile = ResourcesPlugin.getWorkspace().getRoot().getFile(sourceFilePath);
-        final Predicate<IntermediateTransformationException> _function_4 = (IntermediateTransformationException it_1) -> {
+        final Predicate<IntermediateTransformationException> _function_5 = (IntermediateTransformationException it_1) -> {
           return this.internalTransformationWarningCallback(it_1);
         };
-        it.refiningTransformation(sourceFile, targetPath, _function_4);
+        it.refiningTransformation(sourceFile, targetPath, _function_5);
       };
-      fileTypeDescription.getRefiningTransformationStrategies().forEach(_function_3);
+      fileTypeDescription.getRefiningTransformationStrategies().forEach(_function_4);
     } catch (final Throwable _t) {
       if (_t instanceof IntermediateTransformationException) {
         final IntermediateTransformationException ex = (IntermediateTransformationException)_t;
