@@ -332,7 +332,8 @@ public class ServiceModelTransformationStrategy extends AbstractUiModelTransform
     final BiConsumer<String, String> _function_8 = (String alias, String importUri) -> {
       final String modelFileFullPath = modelFile.getFile().getLocation().toString();
       final String absoluteImportPath = DdmmUtils.convertToAbsolutePath(importUri, modelFileFullPath);
-      final URI absoluteImportUri = URI.create(DdmmUtils.convertToFileUri(absoluteImportPath));
+      final URI absoluteImportUri = URI.create(
+        DdmmUtils.convertToFileUri(absoluteImportPath).replaceAll("\\s", "%20"));
       final IFile[] files = ResourcesPlugin.getWorkspace().getRoot().findFilesForLocationURI(absoluteImportUri);
       boolean _isEmpty_1 = ((List<IFile>)Conversions.doWrapArray(files)).isEmpty();
       boolean _not_1 = (!_isEmpty_1);

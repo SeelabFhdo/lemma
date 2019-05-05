@@ -241,7 +241,9 @@ class ServiceModelTransformationStrategy extends AbstractUiModelTransformationSt
             // Create URI for absolute path of imported model file
             val modelFileFullPath = modelFile.file.location.toString
             val absoluteImportPath = DdmmUtils.convertToAbsolutePath(importUri, modelFileFullPath)
-            val absoluteImportUri = URI.create(DdmmUtils.convertToFileUri(absoluteImportPath))
+            val absoluteImportUri = URI.create(
+                DdmmUtils.convertToFileUri(absoluteImportPath).replaceAll("\\s","%20")
+            )
 
             // Find matching files from workspace and return the first one. There should not be more
             // than one matching file as the URI points to an absolute path.
