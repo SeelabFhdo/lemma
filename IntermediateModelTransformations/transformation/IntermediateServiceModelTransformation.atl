@@ -433,7 +433,7 @@ rule IntermediateParameter {
 				.CreateOperationReference(p.initializedByOperation);
 			i.initializedByOperation.initializedParameter <- i;
 		}
-				
+		
 		-- Create intermediate type for parameter		
 		if (thisModule.hasDefaultPrimitiveTechnologySpecificType(p))
 			i.type <- thisModule.TechnologySpecificPrimitiveIntermediateType(p);
@@ -443,9 +443,9 @@ rule IntermediateParameter {
 		else if (not p.primitiveType.oclIsUndefined())
 			i.type <- thisModule.BuiltinPrimitiveIntermediateType(p);
 		else if (not p.importedType.oclIsUndefined())
-			if (p.importedType.oclIsKindOf(Service!ComplexType))
+			if (p.importedType.type.oclIsKindOf(Service!ComplexType))
 				i.type <- thisModule.DataModelIntermediateType(p);
-		
+
 		-- Link parameter to operation
 		i.operation <- thisModule.getCreatedOperation(p.operation);
 		i.operation.parameters <- i.operation.parameters->append(i);
