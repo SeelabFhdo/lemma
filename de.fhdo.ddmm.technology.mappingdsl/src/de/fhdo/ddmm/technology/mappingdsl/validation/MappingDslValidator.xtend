@@ -349,7 +349,8 @@ class MappingDslValidator extends AbstractMappingDslValidator {
      */
     @Check
     def warnPrimitiveParameterMappingTypeCompatibility(PrimitiveParameterMapping mapping) {
-        warnParameterMappingTypeCompatibility(mapping)
+        if (mapping.primitiveType !== null)
+            warnParameterMappingTypeCompatibility(mapping)
     }
 
     /**
@@ -359,7 +360,8 @@ class MappingDslValidator extends AbstractMappingDslValidator {
      */
     @Check
     def warnComplexParameterMappingTypeCompatibility(ComplexParameterMapping mapping) {
-        warnParameterMappingTypeCompatibility(mapping)
+        if (mapping.technologySpecificComplexType !== null)
+            warnParameterMappingTypeCompatibility(mapping)
     }
 
     /**
@@ -463,6 +465,31 @@ class MappingDslValidator extends AbstractMappingDslValidator {
         if (isEmpty)
             error("Mapping must not be empty", mapping,
                 MappingPackage::Literals.REFERRED_OPERATION_MAPPING__OPERATION)
+    }
+
+    /**
+     * Check that primitive parameter mapping is not empty
+     */
+    @Check
+    def checkNotEmpty(PrimitiveParameterMapping mapping) {
+        val isEmpty = mapping.primitiveType === null && mapping.aspects.empty
+
+        if (isEmpty)
+            error("Mapping must not be empty", mapping,
+                MappingPackage::Literals.PARAMETER_MAPPING__PARAMETER)
+    }
+
+    /**
+     * Check that complex parameter mapping is not empty
+     */
+    @Check
+    def checkNotEmpty(ComplexParameterMapping mapping) {
+        val isEmpty = mapping.technologySpecificComplexType === null &&
+            mapping.aspects.empty
+
+        if (isEmpty)
+            error("Mapping must not be empty", mapping,
+                MappingPackage::Literals.PARAMETER_MAPPING__PARAMETER)
     }
 
     /**

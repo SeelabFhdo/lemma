@@ -92,9 +92,11 @@ ReferredOperationMapping returns ReferredOperationMapping:
 ;
 
 PrimitiveParameterMapping returns PrimitiveParameterMapping:
-    'primitive' parameter=[service::Parameter] ':'
-    technology=[service::Import] '::'
-    primitiveType=[technology::TechnologySpecificPrimitiveType|QualifiedName]
+    'primitive' parameter=[service::Parameter]
+    (
+     ':' technology=[service::Import] '::'
+     primitiveType=[technology::TechnologySpecificPrimitiveType|QualifiedName]
+    )?
     ('{'
         'aspects' '{'
             aspects+=TechnologySpecificImportedServiceAspect+
@@ -105,8 +107,11 @@ PrimitiveParameterMapping returns PrimitiveParameterMapping:
 ComplexParameterMapping returns ComplexParameterMapping:
     'complex' parameter=[service::Parameter]
         (
-            (':' technology=[service::Import] '::'
-             technologySpecificComplexType=[data::ComplexType|QualifiedName]
+            (
+                (
+                  ':' technology=[service::Import] '::'
+                  technologySpecificComplexType=[data::ComplexType|QualifiedName]
+                )?
                 ('{'
                     'aspects' '{'
                         aspects+=TechnologySpecificImportedServiceAspect+

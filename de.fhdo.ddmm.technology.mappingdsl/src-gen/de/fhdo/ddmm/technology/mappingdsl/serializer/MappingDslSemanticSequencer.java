@@ -319,7 +319,7 @@ public class MappingDslSemanticSequencer extends ServiceDslSemanticSequencer {
 	 *     (
 	 *         parameter=[Parameter|ID] 
 	 *         (
-	 *             (technology=[Import|ID] technologySpecificComplexType=[ComplexType|QualifiedName] aspects+=TechnologySpecificImportedServiceAspect*) | 
+	 *             ((technology=[Import|ID] technologySpecificComplexType=[ComplexType|QualifiedName])? aspects+=TechnologySpecificImportedServiceAspect*) | 
 	 *             (
 	 *                 aspects+=TechnologySpecificImportedServiceAspect* 
 	 *                 dataFieldMappings+=TechnologySpecificDataFieldTypeMapping 
@@ -434,8 +434,7 @@ public class MappingDslSemanticSequencer extends ServiceDslSemanticSequencer {
 	 * Constraint:
 	 *     (
 	 *         parameter=[Parameter|ID] 
-	 *         technology=[Import|ID] 
-	 *         primitiveType=[TechnologySpecificPrimitiveType|QualifiedName] 
+	 *         (technology=[Import|ID] primitiveType=[TechnologySpecificPrimitiveType|QualifiedName])? 
 	 *         aspects+=TechnologySpecificImportedServiceAspect*
 	 *     )
 	 */

@@ -497,12 +497,14 @@ rule Parameter(sourceParameter : Service!Parameter, parameterMapping : Mapping!P
 		
 		if (not parameterMapping.oclIsUndefined()) {
 			-- Parameter is mapped to technology-specific primitive type
-			if (parameterMapping.oclIsTypeOf(Mapping!PrimitiveParameterMapping))
-				t.importedType <- thisModule.ImportedType(parameterMapping.technology, 
-					parameterMapping.primitiveType);
+			if (parameterMapping.oclIsTypeOf(Mapping!PrimitiveParameterMapping)) {
+				if (not parameterMapping.technology.oclIsUndefined() and 
+				    not parameterMapping.primitiveType.oclIsUndefined())
+					t.importedType <- thisModule.ImportedType(parameterMapping.technology, 
+						parameterMapping.primitiveType);
 			
 			-- Parameter is mapped to technology-specific complex type
-			else if (parameterMapping.oclIsTypeOf(Mapping!ComplexParameterMapping)) {
+			} else if (parameterMapping.oclIsTypeOf(Mapping!ComplexParameterMapping)) {
 				-- Parameter may either have an imported technology-specific complex type or a
 				-- data field mapping, that specifies deviant types for the data fields of the
 				-- parameter's data structure type
@@ -520,7 +522,15 @@ rule Parameter(sourceParameter : Service!Parameter, parameterMapping : Mapping!P
 			
 			-- Mapped aspects
 			t.aspects <- thisModule.createServiceAspects(parameterMapping.aspects, 'parameter', t);			
-		} else {
+		} else
+			-- Aspects
+			t.aspects <- thisModule.createServiceAspects(sourceParameter.aspects, 'parameter', t);
+
+		-- Type of parameter could not be determined above, which is the case when no parameter
+		-- mapping exists at all or when no type mapping happended within a parameter mapping. The
+		-- latter case occurs when only aspects were assigned to parameters in the mapping model.
+		-- In both cases the target parameter inherits the types of the source parameter.
+		if (t.importedType.oclIsUndefined()) {
 			-- Parameter has a type being imported from a data or technology model
 			if (not sourceParameter.importedType.oclIsUndefined())
 				t.importedType <- thisModule.ImportedType(sourceParameter.importedType.import, 
@@ -529,9 +539,6 @@ rule Parameter(sourceParameter : Service!Parameter, parameterMapping : Mapping!P
 			-- Parameter has a built-in primitive type
 			else if (not sourceParameter.primitiveType.oclIsUndefined())
 				t.primitiveType <- sourceParameter.primitiveType;
-			
-			-- Aspects
-			t.aspects <- thisModule.createServiceAspects(sourceParameter.aspects, 'parameter', t);
 		}
 		
 		t;

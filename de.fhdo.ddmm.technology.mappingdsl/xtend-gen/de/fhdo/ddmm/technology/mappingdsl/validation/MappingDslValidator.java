@@ -493,7 +493,11 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
    */
   @Check
   public void warnPrimitiveParameterMappingTypeCompatibility(final PrimitiveParameterMapping mapping) {
-    this.warnParameterMappingTypeCompatibility(mapping);
+    TechnologySpecificPrimitiveType _primitiveType = mapping.getPrimitiveType();
+    boolean _tripleNotEquals = (_primitiveType != null);
+    if (_tripleNotEquals) {
+      this.warnParameterMappingTypeCompatibility(mapping);
+    }
   }
   
   /**
@@ -503,7 +507,11 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
    */
   @Check
   public void warnComplexParameterMappingTypeCompatibility(final ComplexParameterMapping mapping) {
-    this.warnParameterMappingTypeCompatibility(mapping);
+    ComplexType _technologySpecificComplexType = mapping.getTechnologySpecificComplexType();
+    boolean _tripleNotEquals = (_technologySpecificComplexType != null);
+    if (_tripleNotEquals) {
+      this.warnParameterMappingTypeCompatibility(mapping);
+    }
   }
   
   /**
@@ -629,6 +637,31 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
     if (isEmpty) {
       this.error("Mapping must not be empty", mapping, 
         MappingPackage.Literals.REFERRED_OPERATION_MAPPING__OPERATION);
+    }
+  }
+  
+  /**
+   * Check that primitive parameter mapping is not empty
+   */
+  @Check
+  public void checkNotEmpty(final PrimitiveParameterMapping mapping) {
+    final boolean isEmpty = ((mapping.getPrimitiveType() == null) && mapping.getAspects().isEmpty());
+    if (isEmpty) {
+      this.error("Mapping must not be empty", mapping, 
+        MappingPackage.Literals.PARAMETER_MAPPING__PARAMETER);
+    }
+  }
+  
+  /**
+   * Check that complex parameter mapping is not empty
+   */
+  @Check
+  public void checkNotEmpty(final ComplexParameterMapping mapping) {
+    final boolean isEmpty = ((mapping.getTechnologySpecificComplexType() == null) && 
+      mapping.getAspects().isEmpty());
+    if (isEmpty) {
+      this.error("Mapping must not be empty", mapping, 
+        MappingPackage.Literals.PARAMETER_MAPPING__PARAMETER);
     }
   }
   
