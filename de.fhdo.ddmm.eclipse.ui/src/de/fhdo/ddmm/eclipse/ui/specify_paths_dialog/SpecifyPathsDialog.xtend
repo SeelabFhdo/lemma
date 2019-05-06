@@ -34,6 +34,9 @@ import java.util.Collections
 import org.eclipse.core.resources.ResourcesPlugin
 import org.eclipse.core.runtime.Path
 import org.eclipse.jface.dialogs.IDialogConstants
+import org.eclipse.swt.widgets.Button
+import org.eclipse.swt.events.SelectionListener
+import org.eclipse.swt.events.SelectionEvent
 
 /**
  * Generic dialog to specify paths for subsequent intermediate model transformations.
@@ -57,6 +60,9 @@ class SpecifyPathsDialog extends TitleAreaDialog {
 
     @Accessors(PUBLIC_GETTER)
     List<ModelFile> selectedModelFiles = <ModelFile> newArrayList
+
+    @Accessors(PUBLIC_GETTER)
+    boolean outputRefinementModels
 
     /**
      * Constructor
@@ -104,6 +110,8 @@ class SpecifyPathsDialog extends TitleAreaDialog {
         val layout = new GridLayout(1, false)
         container.setLayout(layout)
         createModelTable(container)
+
+        createRefinementsOutputCheckbox(container)
 
         return area
     }
@@ -537,5 +545,23 @@ class SpecifyPathsDialog extends TitleAreaDialog {
         tableViewerColumnTransformationTargetPath.editingSupport =
             new ModelTableTransformationTargetPathColumnEditingSupport(tableViewer,
                 transformationTargetPathValidator)
+    }
+
+    /**
+     * Create checkbox for outputting generated models of refining transformations
+     */
+    private def createRefinementsOutputCheckbox(Composite parent) {
+        val checkbox = new Button(parent, SWT.CHECK)
+        checkbox.text = "Output models of refinement transformations"
+        checkbox.selection = outputRefinementModels
+        checkbox.addSelectionListener(new SelectionListener {
+            override widgetDefaultSelected(SelectionEvent event) {
+                outputRefinementModels = checkbox.selection
+            }
+
+            override widgetSelected(SelectionEvent event) {
+                outputRefinementModels = checkbox.selection
+            }
+        })
     }
 }

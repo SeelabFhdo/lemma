@@ -34,14 +34,19 @@ class IntermediateModelTransformationController extends AbstractHandler {
         /* Specify paths */
         val selectedModelFiles = selectModelsHandlerResult as List<ModelFile>
         val specifyPathsHandler = new SpecifyPathsHandler(selectedModelFiles, strategy)
-        val specifyPathsHandlerResult = specifyPathsHandler.execute(event)
-        if (specifyPathsHandlerResult === null)
+        val specifyPathsRawResult = specifyPathsHandler.execute(event)
+        if (specifyPathsRawResult === null)
             return null
 
         /* Execute model transformations */
-        val selectedModelFilesWithChildPaths = specifyPathsHandlerResult as List<ModelFile>
-        val transformationHandler =
-            new TransformationDialogHandler(selectedModelFilesWithChildPaths, strategy)
+        val specifyPathsResult = specifyPathsRawResult as Pair<List<ModelFile>, Boolean>
+        val selectedModelFilesWithChildPaths = specifyPathsResult.key
+        val outputRefinementModels = specifyPathsResult.value
+        val transformationHandler = new TransformationDialogHandler(
+            selectedModelFilesWithChildPaths,
+            outputRefinementModels,
+            strategy
+        )
         transformationHandler.execute(event)
 
         return null

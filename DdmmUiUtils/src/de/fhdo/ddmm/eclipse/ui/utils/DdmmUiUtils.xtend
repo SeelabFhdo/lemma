@@ -25,6 +25,7 @@ import org.eclipse.emf.ecore.xmi.XMIResource
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
 import org.eclipse.swt.widgets.Shell
 import org.eclipse.ui.IEditorPart
+import java.io.File
 
 /**
  * Utility class for the DDMM UI plugin.
@@ -185,7 +186,7 @@ final class DdmmUiUtils {
     }
 
     /**
-     * Remove extension from filename and return filename without extension (and path)
+     * Remove extension from filename and return filename without extension
      */
     static def removeExtension(IFile file, Function<IFile, String> getBasePath) {
         if (file === null || getBasePath === null)
@@ -198,8 +199,34 @@ final class DdmmUiUtils {
             return file.name
 
         val basePath = getBasePath.apply(file)
-        val extSeparatorIndex = basePath.lastIndexOf('.')
-        return basePath.substring(0, extSeparatorIndex)
+        return removeExtension(basePath)
+    }
+
+    /**
+     * Remove extension from filename and return filename without extension. The extension starts at
+     * the last occurrence of a dot (".") in the filename.
+     */
+    static def removeExtension(String filename) {
+        if (filename === null)
+            return null
+
+        return filename.substring(0, filename.lastIndexOf("."))
+    }
+
+    /**
+     * Get extension of filename. The extension starts at the last occurrence of a dot (".") in the
+     * filename.
+     */
+    static def getExtension(String filename) {
+        if (filename === null)
+            return null
+
+        val filenameWithoutPath = new File(filename).name
+        val lastIndexOfDot = filenameWithoutPath.lastIndexOf(".")
+        return if (lastIndexOfDot > -1 && filenameWithoutPath.length > 1)
+                filenameWithoutPath.substring(lastIndexOfDot + 1)
+            else
+                ""
     }
 
     /**

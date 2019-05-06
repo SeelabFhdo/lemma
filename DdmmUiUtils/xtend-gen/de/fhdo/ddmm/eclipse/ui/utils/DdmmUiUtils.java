@@ -2,6 +2,7 @@ package de.fhdo.ddmm.eclipse.ui.utils;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Iterables;
+import java.io.File;
 import java.net.URL;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -280,7 +281,7 @@ public final class DdmmUiUtils {
   }
   
   /**
-   * Remove extension from filename and return filename without extension (and path)
+   * Remove extension from filename and return filename without extension
    */
   public static String removeExtension(final IFile file, final Function<IFile, String> getBasePath) {
     if (((file == null) || (getBasePath == null))) {
@@ -293,8 +294,37 @@ public final class DdmmUiUtils {
       return file.getName();
     }
     final String basePath = getBasePath.apply(file);
-    final int extSeparatorIndex = basePath.lastIndexOf(".");
-    return basePath.substring(0, extSeparatorIndex);
+    return DdmmUiUtils.removeExtension(basePath);
+  }
+  
+  /**
+   * Remove extension from filename and return filename without extension. The extension starts at
+   * the last occurrence of a dot (".") in the filename.
+   */
+  public static String removeExtension(final String filename) {
+    if ((filename == null)) {
+      return null;
+    }
+    return filename.substring(0, filename.lastIndexOf("."));
+  }
+  
+  /**
+   * Get extension of filename. The extension starts at the last occurrence of a dot (".") in the
+   * filename.
+   */
+  public static String getExtension(final String filename) {
+    if ((filename == null)) {
+      return null;
+    }
+    final String filenameWithoutPath = new File(filename).getName();
+    final int lastIndexOfDot = filenameWithoutPath.lastIndexOf(".");
+    String _xifexpression = null;
+    if (((lastIndexOfDot > (-1)) && (filenameWithoutPath.length() > 1))) {
+      _xifexpression = filenameWithoutPath.substring((lastIndexOfDot + 1));
+    } else {
+      _xifexpression = "";
+    }
+    return _xifexpression;
   }
   
   /**

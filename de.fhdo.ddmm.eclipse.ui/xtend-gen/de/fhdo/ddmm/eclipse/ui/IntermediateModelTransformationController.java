@@ -11,6 +11,7 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.xtext.xbase.lib.Exceptions;
+import org.eclipse.xtext.xbase.lib.Pair;
 
 /**
  * Controller for handling the intermediate model transformation in the UI.
@@ -43,12 +44,14 @@ public class IntermediateModelTransformationController extends AbstractHandler {
     }
     final List<ModelFile> selectedModelFiles = ((List<ModelFile>) selectModelsHandlerResult);
     final SpecifyPathsHandler specifyPathsHandler = new SpecifyPathsHandler(selectedModelFiles, strategy);
-    final Object specifyPathsHandlerResult = specifyPathsHandler.execute(event);
-    if ((specifyPathsHandlerResult == null)) {
+    final Object specifyPathsRawResult = specifyPathsHandler.execute(event);
+    if ((specifyPathsRawResult == null)) {
       return null;
     }
-    final List<ModelFile> selectedModelFilesWithChildPaths = ((List<ModelFile>) specifyPathsHandlerResult);
-    final TransformationDialogHandler transformationHandler = new TransformationDialogHandler(selectedModelFilesWithChildPaths, strategy);
+    final Pair<List<ModelFile>, Boolean> specifyPathsResult = ((Pair<List<ModelFile>, Boolean>) specifyPathsRawResult);
+    final List<ModelFile> selectedModelFilesWithChildPaths = specifyPathsResult.getKey();
+    final Boolean outputRefinementModels = specifyPathsResult.getValue();
+    final TransformationDialogHandler transformationHandler = new TransformationDialogHandler(selectedModelFilesWithChildPaths, (outputRefinementModels).booleanValue(), strategy);
     transformationHandler.execute(event);
     return null;
   }

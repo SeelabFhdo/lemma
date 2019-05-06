@@ -20,6 +20,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.ListExtensions;
+import org.eclipse.xtext.xbase.lib.Pair;
 
 /**
  * Handler for specifying paths on selected models.
@@ -63,9 +64,11 @@ public class SpecifyPathsHandler extends AbstractHandler {
     final SpecifyPathsDialog dialog = new SpecifyPathsDialog(this.SHELL, this.strategy, _createModelTableFiles);
     dialog.create();
     final int dialogResult = dialog.open();
-    List<ModelFile> _xifexpression = null;
+    Pair<List<ModelFile>, Boolean> _xifexpression = null;
     if ((dialogResult == Window.OK)) {
-      _xifexpression = dialog.getSelectedModelFiles();
+      List<ModelFile> _selectedModelFiles = dialog.getSelectedModelFiles();
+      boolean _isOutputRefinementModels = dialog.isOutputRefinementModels();
+      _xifexpression = Pair.<List<ModelFile>, Boolean>of(_selectedModelFiles, Boolean.valueOf(_isOutputRefinementModels));
     } else {
       _xifexpression = null;
     }

@@ -51,7 +51,7 @@ class SpecifyPathsHandler extends AbstractHandler {
         val dialogResult = dialog.open()
 
         return if (dialogResult === Window.OK)
-            dialog.selectedModelFiles
+            dialog.selectedModelFiles -> dialog.outputRefinementModels
         else
             null
     }

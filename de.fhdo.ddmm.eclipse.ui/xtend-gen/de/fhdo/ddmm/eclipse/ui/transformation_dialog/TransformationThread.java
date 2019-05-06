@@ -3,9 +3,12 @@ package de.fhdo.ddmm.eclipse.ui.transformation_dialog;
 import com.google.common.base.Predicate;
 import de.fhdo.ddmm.eclipse.ui.ModelFile;
 import de.fhdo.ddmm.eclipse.ui.ModelFileTypeDescription;
+import de.fhdo.ddmm.eclipse.ui.utils.DdmmUiUtils;
 import de.fhdo.ddmm.intermediate.transformations.AbstractIntermediateModelTransformationStrategy;
 import de.fhdo.ddmm.intermediate.transformations.IntermediateTransformationException;
 import de.fhdo.ddmm.intermediate.transformations.IntermediateTransformationExceptionKind;
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
@@ -13,7 +16,9 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.Exceptions;
+import org.eclipse.xtext.xbase.lib.ExclusiveRange;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 
@@ -25,6 +30,8 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
 @SuppressWarnings("all")
 public class TransformationThread extends Thread {
   private List<ModelFile> modelFiles;
+  
+  private boolean outputRefinementModels;
   
   private volatile boolean stopTransformations;
   
@@ -45,12 +52,13 @@ public class TransformationThread extends Thread {
   /**
    * Constructor
    */
-  public TransformationThread(final List<ModelFile> modelFiles, final Display display, final Predicate<ModelFile> nextTransformationCallback, final Predicate<IntermediateTransformationException> transformationWarningCallback, final Predicate<Exception> transformationExceptionCallback, final Predicate<Void> currentTransformationFinishedCallback, final Predicate<Void> transformationsFinishedCallback) {
+  public TransformationThread(final List<ModelFile> modelFiles, final boolean outputRefinementModels, final Display display, final Predicate<ModelFile> nextTransformationCallback, final Predicate<IntermediateTransformationException> transformationWarningCallback, final Predicate<Exception> transformationExceptionCallback, final Predicate<Void> currentTransformationFinishedCallback, final Predicate<Void> transformationsFinishedCallback) {
     super();
     if (((modelFiles == null) || modelFiles.isEmpty())) {
       throw new IllegalArgumentException("Input models must not be null or empty");
     }
     this.modelFiles = modelFiles;
+    this.outputRefinementModels = outputRefinementModels;
     this.nextTransformationCallback = nextTransformationCallback;
     this.transformationExceptionCallback = transformationExceptionCallback;
     this.transformationWarningCallback = transformationWarningCallback;
@@ -84,8 +92,8 @@ public class TransformationThread extends Thread {
     boolean _xtrycatchfinallyexpression = false;
     try {
       final IFile sourceModelFile = modelFile.getFile();
-      final String targetPath = modelFile.getTransformationTargetPath();
       final ModelFileTypeDescription fileTypeDescription = modelFile.getFileTypeDescription();
+      final Deque<String> targetPaths = this.buildTransformationTargetPaths(modelFile.getTransformationTargetPath(), fileTypeDescription, this.outputRefinementModels);
       final AbstractIntermediateModelTransformationStrategy mainTransformationStrategy = fileTypeDescription.getMainTransformationStrategy();
       final Function1<ModelFile, String> _function = (ModelFile it) -> {
         return it.getImportAlias();
@@ -108,19 +116,29 @@ public class TransformationThread extends Thread {
         };
         modelFile.getChildren().forEach(_function_2);
       }
+      String targetPath = targetPaths.pop();
       final Predicate<IntermediateTransformationException> _function_3 = (IntermediateTransformationException it) -> {
         return this.internalTransformationWarningCallback(it);
       };
       mainTransformationStrategy.mainTransformation(sourceModelFile, targetPath, importTargetPaths, _function_3);
-      final Consumer<AbstractIntermediateModelTransformationStrategy> _function_4 = (AbstractIntermediateModelTransformationStrategy it) -> {
-        final Path sourceFilePath = new Path(targetPath);
-        final IFile sourceFile = ResourcesPlugin.getWorkspace().getRoot().getFile(sourceFilePath);
-        final Predicate<IntermediateTransformationException> _function_5 = (IntermediateTransformationException it_1) -> {
-          return this.internalTransformationWarningCallback(it_1);
-        };
-        it.refiningTransformation(sourceFile, targetPath, _function_5);
-      };
-      fileTypeDescription.getRefiningTransformationStrategies().forEach(_function_4);
+      String previousTargetPath = targetPath;
+      int _size = fileTypeDescription.getRefiningTransformationStrategies().size();
+      ExclusiveRange _doubleDotLessThan = new ExclusiveRange(0, _size, true);
+      for (final Integer i : _doubleDotLessThan) {
+        {
+          if (this.outputRefinementModels) {
+            targetPath = targetPaths.pop();
+          }
+          final Path sourceFilePath = new Path(previousTargetPath);
+          final IFile sourceFile = ResourcesPlugin.getWorkspace().getRoot().getFile(sourceFilePath);
+          final AbstractIntermediateModelTransformationStrategy refiningStrategy = fileTypeDescription.getRefiningTransformationStrategies().get((i).intValue());
+          final Predicate<IntermediateTransformationException> _function_4 = (IntermediateTransformationException it) -> {
+            return this.internalTransformationWarningCallback(it);
+          };
+          refiningStrategy.refiningTransformation(sourceFile, targetPath, _function_4);
+          previousTargetPath = targetPath;
+        }
+      }
     } catch (final Throwable _t) {
       if (_t instanceof IntermediateTransformationException) {
         final IntermediateTransformationException ex = (IntermediateTransformationException)_t;
@@ -142,6 +160,30 @@ public class TransformationThread extends Thread {
       }
     }
     return Boolean.valueOf(_xtrycatchfinallyexpression);
+  }
+  
+  /**
+   * Build target paths for transformations by considering refining transformations
+   */
+  private Deque<String> buildTransformationTargetPaths(final String initialTargetPath, final ModelFileTypeDescription fileTypeDescription, final boolean outputRefinementModels) {
+    final ArrayDeque<String> targetPaths = new ArrayDeque<String>();
+    final int refiningStrategiesCount = fileTypeDescription.getRefiningTransformationStrategies().size();
+    if (((refiningStrategiesCount > 0) && outputRefinementModels)) {
+      final String basicFilename = DdmmUiUtils.removeExtension(initialTargetPath);
+      final String ext = DdmmUiUtils.getExtension(initialTargetPath);
+      ExclusiveRange _doubleDotLessThan = new ExclusiveRange(0, refiningStrategiesCount, true);
+      for (final Integer i : _doubleDotLessThan) {
+        StringConcatenation _builder = new StringConcatenation();
+        _builder.append("_");
+        _builder.append(((i).intValue() + 1));
+        _builder.append(".");
+        _builder.append(ext);
+        String _plus = (basicFilename + _builder);
+        targetPaths.add(_plus);
+      }
+    }
+    targetPaths.add(initialTargetPath);
+    return targetPaths;
   }
   
   /**

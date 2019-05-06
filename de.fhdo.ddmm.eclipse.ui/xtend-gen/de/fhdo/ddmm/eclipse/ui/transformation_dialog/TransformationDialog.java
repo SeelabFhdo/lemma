@@ -49,6 +49,8 @@ public class TransformationDialog extends TitleAreaDialog {
   
   private List<ModelFile> filesToTransform;
   
+  private boolean outputRefinementModels;
+  
   private ModelFile currentModelFile;
   
   private static final ResourceManager RESOURCE_MANAGER = new LocalResourceManager(JFaceResources.getResources());
@@ -78,7 +80,7 @@ public class TransformationDialog extends TitleAreaDialog {
   /**
    * Constructor
    */
-  public TransformationDialog(final Shell parentShell, final AbstractUiModelTransformationStrategy strategy, final List<ModelFile> inputModelFiles) {
+  public TransformationDialog(final Shell parentShell, final AbstractUiModelTransformationStrategy strategy, final List<ModelFile> inputModelFiles, final boolean outputRefinementModels) {
     super(parentShell);
     if ((parentShell == null)) {
       throw new IllegalArgumentException("Shell must not be null");
@@ -96,6 +98,7 @@ public class TransformationDialog extends TitleAreaDialog {
       return Boolean.valueOf((_mainTransformationStrategy != null));
     };
     this.filesToTransform = IterableExtensions.<ModelFile>toList(IterableExtensions.<ModelFile>filter(inputModelFiles, _function));
+    this.outputRefinementModels = outputRefinementModels;
   }
   
   /**
@@ -120,7 +123,7 @@ public class TransformationDialog extends TitleAreaDialog {
     final Predicate<Void> _function_4 = (Void it) -> {
       return this.transformationsFinished();
     };
-    TransformationThread _transformationThread = new TransformationThread(this.filesToTransform, _display, _function, _function_1, _function_2, _function_3, _function_4);
+    TransformationThread _transformationThread = new TransformationThread(this.filesToTransform, this.outputRefinementModels, _display, _function, _function_1, _function_2, _function_3, _function_4);
     this.transformationThread = _transformationThread;
     this.transformationThread.start();
     DdmmUiUtils.runEventLoop(this.getShell());

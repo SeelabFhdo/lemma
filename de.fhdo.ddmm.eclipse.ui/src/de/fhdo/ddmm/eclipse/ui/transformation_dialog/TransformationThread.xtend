@@ -8,6 +8,10 @@ import de.fhdo.ddmm.intermediate.transformations.IntermediateTransformationExcep
 import de.fhdo.ddmm.intermediate.transformations.IntermediateTransformationExceptionKind
 import org.eclipse.core.resources.ResourcesPlugin
 import org.eclipse.core.runtime.Path
+import de.fhdo.ddmm.eclipse.ui.utils.DdmmUiUtils
+import de.fhdo.ddmm.eclipse.ui.ModelFileTypeDescription
+import java.util.ArrayDeque
+import java.util.Deque
 
 /**
  * Thread to perform actual intermediate model transformations.
@@ -16,6 +20,7 @@ import org.eclipse.core.runtime.Path
  */
 class TransformationThread extends Thread {
     List<ModelFile> modelFiles
+    boolean outputRefinementModels
     volatile boolean stopTransformations
     volatile boolean continueTransformationAfterWarning
     Predicate<ModelFile> nextTransformationCallback
@@ -29,6 +34,7 @@ class TransformationThread extends Thread {
      * Constructor
      */
     new(List<ModelFile> modelFiles,
+        boolean outputRefinementModels,
         Display display,
         Predicate<ModelFile> nextTransformationCallback,
         Predicate<IntermediateTransformationException> transformationWarningCallback,
@@ -41,6 +47,7 @@ class TransformationThread extends Thread {
             throw new IllegalArgumentException("Input models must not be null or empty")
 
         this.modelFiles = modelFiles
+        this.outputRefinementModels = outputRefinementModels
         this.nextTransformationCallback = nextTransformationCallback
         this.transformationExceptionCallback = transformationExceptionCallback
         this.transformationWarningCallback = transformationWarningCallback
@@ -70,8 +77,9 @@ class TransformationThread extends Thread {
     private def doTransformation(ModelFile modelFile) {
         try {
             val sourceModelFile = modelFile.file
-            val targetPath = modelFile.transformationTargetPath
             val fileTypeDescription = modelFile.fileTypeDescription
+            val targetPaths = buildTransformationTargetPaths(modelFile.transformationTargetPath,
+                fileTypeDescription, outputRefinementModels)
             val mainTransformationStrategy = fileTypeDescription.mainTransformationStrategy
             val importTargetPaths = modelFile.children.toMap([importAlias],
                 [transformationTargetPath])
@@ -86,16 +94,29 @@ class TransformationThread extends Thread {
                 ]
 
             // Perform main transformation
+            var targetPath = targetPaths.pop()
             mainTransformationStrategy.mainTransformation(sourceModelFile, targetPath,
                 importTargetPaths, [internalTransformationWarningCallback])
 
-            // Perform optional refining transformation
-            fileTypeDescription.refiningTransformationStrategies.forEach[
-                val sourceFilePath = new Path(targetPath)
+            // Perform optional refining transformations
+            var previousTargetPath = targetPath
+            for (i : 0..<fileTypeDescription.refiningTransformationStrategies.size) {
+                // Get next path for refinement model output, if the user requested it. Otherwise,
+                // each refinement step will overwrite the previous refinement model and the result
+                // of the transformation will be the last refinement model located at the
+                // transformation target path as specified in the dialog.
+                if (outputRefinementModels)
+                    targetPath = targetPaths.pop()
+
+                val sourceFilePath = new Path(previousTargetPath)
                 val sourceFile = ResourcesPlugin.getWorkspace().getRoot().getFile(sourceFilePath)
-                refiningTransformation(sourceFile, targetPath,
+
+                val refiningStrategy = fileTypeDescription.refiningTransformationStrategies.get(i)
+                refiningStrategy.refiningTransformation(sourceFile, targetPath,
                     [internalTransformationWarningCallback])
-            ]
+
+                previousTargetPath = targetPath
+            }
         } catch(IntermediateTransformationException ex) {
             if (ex.kind === IntermediateTransformationExceptionKind.WARNING)
                 internalTransformationWarningCallback(ex)
@@ -105,6 +126,24 @@ class TransformationThread extends Thread {
             ex.printStackTrace
             transformationExceptionCallback.invokeGuiCallbackIfSpecified(ex)
         }
+    }
+
+    /**
+     * Build target paths for transformations by considering refining transformations
+     */
+    private def Deque<String> buildTransformationTargetPaths(String initialTargetPath,
+        ModelFileTypeDescription fileTypeDescription, boolean outputRefinementModels) {
+        val targetPaths = new ArrayDeque()
+        val refiningStrategiesCount = fileTypeDescription.refiningTransformationStrategies.size
+        if (refiningStrategiesCount > 0 && outputRefinementModels) {
+            val basicFilename = DdmmUiUtils.removeExtension(initialTargetPath)
+            val ext = DdmmUiUtils.getExtension(initialTargetPath)
+            for (i : 0..<refiningStrategiesCount)
+                targetPaths.add(basicFilename + '''_«i+1».«ext»''')
+        }
+
+        targetPaths.add(initialTargetPath)
+        return targetPaths
     }
 
     /**

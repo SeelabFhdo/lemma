@@ -35,6 +35,7 @@ class TransformationDialog  extends TitleAreaDialog {
     static final Logger LOGGER = LoggerFactory.getLogger(TransformationDialog)
 
     List<ModelFile> filesToTransform
+    boolean outputRefinementModels
     ModelFile currentModelFile
     static val ResourceManager RESOURCE_MANAGER =
         new LocalResourceManager(JFaceResources.getResources())
@@ -54,7 +55,7 @@ class TransformationDialog  extends TitleAreaDialog {
      * Constructor
      */
     new(Shell parentShell, AbstractUiModelTransformationStrategy strategy,
-        List<ModelFile> inputModelFiles) {
+        List<ModelFile> inputModelFiles, boolean outputRefinementModels) {
         super(parentShell)
 
         if (parentShell === null)
@@ -68,6 +69,8 @@ class TransformationDialog  extends TitleAreaDialog {
         filesToTransform = inputModelFiles
             .filter[fileTypeDescription.mainTransformationStrategy !== null]
             .toList
+
+        this.outputRefinementModels = outputRefinementModels
     }
 
     /**
@@ -82,8 +85,8 @@ class TransformationDialog  extends TitleAreaDialog {
         shell.open()
 
         /* Start transformation before event loop is started */
-        transformationThread = new TransformationThread(filesToTransform, shell.display,
-            [nextTransformation], [transformationWarningOccurred],
+        transformationThread = new TransformationThread(filesToTransform, outputRefinementModels,
+            shell.display, [nextTransformation], [transformationWarningOccurred],
             [transformationExceptionOccurred], [currentTransformationFinished],
             [transformationsFinished]
         )

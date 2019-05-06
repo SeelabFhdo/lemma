@@ -34,10 +34,13 @@ import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
@@ -86,6 +89,9 @@ public class SpecifyPathsDialog extends TitleAreaDialog {
   
   @Accessors(AccessorType.PUBLIC_GETTER)
   private List<ModelFile> selectedModelFiles = CollectionLiterals.<ModelFile>newArrayList();
+  
+  @Accessors(AccessorType.PUBLIC_GETTER)
+  private boolean outputRefinementModels;
   
   /**
    * Constructor
@@ -149,6 +155,7 @@ public class SpecifyPathsDialog extends TitleAreaDialog {
     final GridLayout layout = new GridLayout(1, false);
     container.setLayout(layout);
     this.createModelTable(container);
+    this.createRefinementsOutputCheckbox(container);
     return area;
   }
   
@@ -628,8 +635,33 @@ public class SpecifyPathsDialog extends TitleAreaDialog {
     tableViewerColumnTransformationTargetPath.setEditingSupport(_modelTableTransformationTargetPathColumnEditingSupport);
   }
   
+  /**
+   * Create checkbox for outputting generated models of refining transformations
+   */
+  private void createRefinementsOutputCheckbox(final Composite parent) {
+    final Button checkbox = new Button(parent, SWT.CHECK);
+    checkbox.setText("Output models of refinement transformations");
+    checkbox.setSelection(this.outputRefinementModels);
+    checkbox.addSelectionListener(new SelectionListener() {
+      @Override
+      public void widgetDefaultSelected(final SelectionEvent event) {
+        SpecifyPathsDialog.this.outputRefinementModels = checkbox.getSelection();
+      }
+      
+      @Override
+      public void widgetSelected(final SelectionEvent event) {
+        SpecifyPathsDialog.this.outputRefinementModels = checkbox.getSelection();
+      }
+    });
+  }
+  
   @Pure
   public List<ModelFile> getSelectedModelFiles() {
     return this.selectedModelFiles;
+  }
+  
+  @Pure
+  public boolean isOutputRefinementModels() {
+    return this.outputRefinementModels;
   }
 }
