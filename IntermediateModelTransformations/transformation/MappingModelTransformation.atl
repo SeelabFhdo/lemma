@@ -307,25 +307,29 @@ rule Microservice(sourceMicroservice : Service!Microservice,
 			serviceModel <- thisModule.ServiceModel()
 		)
 	do {
-		-- Assigned technologies
-		for (technology in sourceMicroservice.technologies) {
-			if (thisModule.getCreatedImport(technology).oclIsUndefined())
-				thisModule.Import(technology);
-			t.technologies <- t.technologies->append(thisModule.getCreatedImport(technology));
-		}
-		
 		-- In case a mapping was specified for the element, populate all properties with mapped
-		-- elements. Note that if no mapping was given, none of the properties that may be mapped to
-		-- an alternative technology is populated.
+		-- elements
 		if (not microserviceMapping.oclIsUndefined()) {
+			for (technology in microserviceMapping.technologies) {
+				if (thisModule.getCreatedImport(technology).oclIsUndefined())
+					thisModule.Import(technology);
+				t.technologies <- t.technologies->append(thisModule.getCreatedImport(technology));
+			}
+
 			t.protocols <- thisModule.createProtocolSpecifications(microserviceMapping.protocols);
 			t.endpoints <- thisModule.createEndpoints(microserviceMapping.endpoints, 'microservice',
 				t);
 			t.aspects <- thisModule.createServiceAspects(microserviceMapping.aspects, 
 				'microservice', t);
-		-- If no mapping was specified, the rule behaves copies the contents of the source 
-		-- properties to the target properties
+		-- If no mapping was specified, the rule copies the contents of the source properties to the
+		-- target properties
 		} else {
+			for (technology in sourceMicroservice.technologies) {
+				if (thisModule.getCreatedImport(technology).oclIsUndefined())
+					thisModule.Import(technology);
+				t.technologies <- t.technologies->append(thisModule.getCreatedImport(technology));
+			}
+
 			t.protocols <- thisModule.createProtocolSpecifications(sourceMicroservice.protocols);
 			t.endpoints <- thisModule.createEndpoints(sourceMicroservice.endpoints, 'microservice',
 				t);
