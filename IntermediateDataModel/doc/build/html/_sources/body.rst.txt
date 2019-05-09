@@ -111,7 +111,7 @@ Model Root
 
     .. py:attribute:: String[1] sourceModelUri
 
-        `\"file://\"` URI pointing to the source Data Model file from which this
+        `\"file\"` URI pointing to the source Data Model file from which this
         model was derived.
 
     .. py:attribute:: IntermediateImport [*] imports
@@ -174,7 +174,7 @@ structures.
 
     .. py:attribute:: String[1] importUri
 
-        Unique `"file://"` URI that points to the location of the imported Data 
+        Unique `"file"` URI that points to the location of the imported Data 
         Model, which itself is an Intermediate Data Model instance.
 
     .. _link__IntermediateImport_importTypeName:

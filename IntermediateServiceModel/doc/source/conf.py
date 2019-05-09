@@ -176,7 +176,7 @@ texinfo_documents = [
 
 # Example configuration for intersphinx: refer to the Python standard library.
 intersphinx_mapping = {
-    'data_model' : ('../../../Intermediate Data Model Format Specification/build/html', '../../Intermediate Data Model Format Specification/build/html/objects.inv')
+    'data_model' : ('../../../IntermediateDataModel/doc/build/html', '../../../IntermediateDataModel/doc/build/html/objects.inv')
 }
 
 numfig = True

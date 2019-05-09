@@ -5,7 +5,6 @@ import de.fhdo.ddmm.eclipse.ui.ModelFile;
 import de.fhdo.ddmm.eclipse.ui.file_container_selection_dialog.FileContainerSelectionTreeContentProvider;
 import de.fhdo.ddmm.eclipse.ui.utils.DdmmUiUtils;
 import de.fhdo.ddmm.intermediate.transformations.AbstractIntermediateModelTransformationStrategy;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Map;
 import org.eclipse.core.resources.IContainer;
@@ -466,7 +465,7 @@ public class FileContainerSelectionDialog extends TitleAreaDialog {
         } else {
           if ((selectedResource instanceof IContainer)) {
             String _string = ((IContainer)selectedResource).getFullPath().toString();
-            String _plus = (_string + File.separator);
+            String _plus = (_string + "/");
             FileContainerSelectionDialog.this.filepathField.setText(_plus);
           }
         }

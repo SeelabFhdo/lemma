@@ -16,7 +16,6 @@ import de.fhdo.ddmm.service.ImportType;
 import de.fhdo.ddmm.service.ServiceModel;
 import de.fhdo.ddmm.technology.mapping.TechnologyMapping;
 import de.fhdo.ddmm.utils.DdmmUtils;
-import java.io.File;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -375,14 +374,11 @@ public class ServiceModelTransformationStrategy extends AbstractUiModelTransform
     };
     final String filenameWithoutExtension = DdmmUiUtils.removeExtension(file, _function);
     StringConcatenation _builder = new StringConcatenation();
-    _builder.append(File.separator);
-    _builder.append("intermediate");
-    _builder.append(File.separator);
-    StringConcatenation _builder_1 = new StringConcatenation();
-    _builder_1.append(modelFileTypePathPart);
-    _builder_1.append(File.separator);
-    _builder_1.append(filenameWithoutExtension);
-    _builder_1.append(".xmi");
-    return (_builder.toString() + _builder_1);
+    _builder.append("/intermediate/");
+    _builder.append(modelFileTypePathPart);
+    _builder.append("/");
+    _builder.append(filenameWithoutExtension);
+    _builder.append(".xmi");
+    return _builder.toString();
   }
 }

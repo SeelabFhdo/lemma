@@ -15,7 +15,6 @@ import de.fhdo.ddmm.service.ImportType
 import de.fhdo.ddmm.technology.mapping.TechnologyMapping
 import de.fhdo.ddmm.data.DataModel
 import java.util.LinkedHashMap
-import java.io.File
 import java.util.Collections
 import java.util.Map
 import de.fhdo.ddmm.intermediate.transformations.service.IntermediateDataModelTransformation
@@ -267,7 +266,6 @@ class ServiceModelTransformationStrategy extends AbstractUiModelTransformationSt
                 "mapping models"
 
         val filenameWithoutExtension = DdmmUiUtils.removeExtension(file, [name])
-        return '''«File.separator»intermediate«File.separator»''' +
-            '''«modelFileTypePathPart»«File.separator»«filenameWithoutExtension».xmi'''
+        return '''/intermediate/«modelFileTypePathPart»/«filenameWithoutExtension».xmi'''
     }
 }

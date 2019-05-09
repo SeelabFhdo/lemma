@@ -103,7 +103,7 @@ public final class DdmmUtils {
   }
   
   /**
-   * Check if a URI exhibits the "file://" scheme
+   * Check if a URI exhibits the "file" scheme
    */
   public static boolean isFileUri(final String uri) {
     if ((uri == null)) {
@@ -113,26 +113,71 @@ public final class DdmmUtils {
   }
   
   /**
-   * Add "file://" scheme to URI string. If the string already has a scheme, replace it with
-   * "file://".
+   * Add "file" scheme to URI string. If the string already has a scheme, replace it with "file".
    */
   public static String convertToFileUri(final String uri) {
     if ((uri == null)) {
       return null;
     }
-    final String scheme = URI.createURI(uri).scheme();
+    final String scheme = DdmmUtils.getUriScheme(uri);
+    String _xifexpression = null;
     if ((scheme != null)) {
-      int _length = scheme.length();
-      int _plus = (_length + 1);
-      final String uriWithoutScheme = uri.substring(_plus);
-      return ("file://" + uriWithoutScheme);
+      String _xblockexpression = null;
+      {
+        int _length = scheme.length();
+        int _plus = (_length + 1);
+        final String uriWithoutScheme = uri.substring(_plus);
+        _xblockexpression = ("file://" + uriWithoutScheme);
+      }
+      _xifexpression = _xblockexpression;
     } else {
-      return ("file://" + uri);
+      _xifexpression = ("file://" + uri);
     }
+    final String fileUri = _xifexpression;
+    String _xifexpression_1 = null;
+    boolean _isWindowsOs = DdmmUtils.isWindowsOs();
+    boolean _not = (!_isWindowsOs);
+    if (_not) {
+      _xifexpression_1 = fileUri;
+    } else {
+      _xifexpression_1 = fileUri.replace(File.separator, "/");
+    }
+    return _xifexpression_1;
   }
   
   /**
-   * Remove "file:" scheme from URI string, leaving any preceding slashes untouched
+   * Determine scheme of a URI considering OS-specifics
+   */
+  public static String getUriScheme(final String uri) {
+    String _xifexpression = null;
+    if (((uri == null) || DdmmUtils.startsWithWindowsDriveLetter(uri))) {
+      _xifexpression = null;
+    } else {
+      _xifexpression = URI.createURI(uri).scheme();
+    }
+    return _xifexpression;
+  }
+  
+  /**
+   * Helper to determine if a URI starts with a Windows drive letter
+   */
+  public static boolean startsWithWindowsDriveLetter(final String uri) {
+    if (((uri == null) || (!DdmmUtils.isWindowsOs()))) {
+      return false;
+    }
+    return (uri.matches("[A-Z]:\\\\.*") || uri.matches("[A-Z]:/([^/].*)?"));
+  }
+  
+  /**
+   * Helper to determine if we're on Windows
+   */
+  public static boolean isWindowsOs() {
+    final String osName = System.getProperty("os.name");
+    return osName.toLowerCase().startsWith("windows");
+  }
+  
+  /**
+   * Remove "file" scheme from URI string, leaving any preceding slashes untouched
    */
   public static String removeFileUri(final String uri) {
     boolean _isFileUri = DdmmUtils.isFileUri(uri);
@@ -140,7 +185,7 @@ public final class DdmmUtils {
     if (_not) {
       return uri;
     }
-    final String scheme = URI.createURI(uri).scheme();
+    final String scheme = DdmmUtils.getUriScheme(uri);
     int _length = scheme.length();
     int _plus = (_length + 1);
     return uri.substring(_plus);
@@ -194,7 +239,7 @@ public final class DdmmUtils {
   }
   
   /**
-   * Convenience method to convert a relative path to an absolute "file://" URI
+   * Convenience method to convert a relative path to an absolute "file" URI
    */
   public static String convertToAbsoluteFileUri(final String relativeFilePath, final String absoluteBaseFilePath) {
     String _xifexpression = null;
@@ -209,7 +254,7 @@ public final class DdmmUtils {
   }
   
   /**
-   * Convenience method to convert a relative path to an absolute "file://" URI by using a
+   * Convenience method to convert a relative path to an absolute "file" URI by using a
    * Resource as base
    */
   public static String convertToAbsoluteFileUri(final String relativeFilePath, final Resource base) {

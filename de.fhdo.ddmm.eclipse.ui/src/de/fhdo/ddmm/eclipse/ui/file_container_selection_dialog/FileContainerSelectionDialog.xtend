@@ -24,7 +24,6 @@ import org.eclipse.jface.dialogs.IMessageProvider
 import org.eclipse.swt.widgets.Label
 import org.eclipse.core.resources.IFile
 import de.fhdo.ddmm.eclipse.ui.utils.DdmmUiUtils
-import java.io.File
 import de.fhdo.ddmm.eclipse.ui.ModelFile
 import org.eclipse.jface.dialogs.MessageDialog
 import org.eclipse.jface.dialogs.IDialogConstants
@@ -358,7 +357,7 @@ class FileContainerSelectionDialog extends TitleAreaDialog {
                     filepathField.text = DdmmUiUtils.removeExtension(selectedResource,
                         [fullPath.toString])
                 else if (selectedResource instanceof IContainer)
-                    filepathField.text = selectedResource.fullPath.toString + File.separator
+                    filepathField.text = selectedResource.fullPath.toString + "/"
             }
         })
 

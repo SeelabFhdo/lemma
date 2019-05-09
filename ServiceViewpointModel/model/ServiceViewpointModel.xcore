@@ -26,7 +26,7 @@ import de.fhdo.ddmm.technology.TechnologySpecificListType
  * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
  */
 class ServiceModel {
-    // TRANSFORMATION ONLY: The file path of the model in the form of a "file://" URI
+    // TRANSFORMATION ONLY: The file path of the model in the form of a URI with a "file" scheme
     String t_modelUri
 
     contains Import[] imports opposite serviceModel

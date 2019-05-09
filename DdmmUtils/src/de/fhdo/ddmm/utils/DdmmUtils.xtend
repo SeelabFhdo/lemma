@@ -39,12 +39,12 @@ final class DdmmUtils {
         var EList<EObject> importedContents = null
         var importResource = EcoreUtil2.getResource(context, importUri)
 
-        // Might happen if the resource could not be found, e.g., when the "file://" scheme is
+        // Might happen if the resource could not be found, e.g., when the "file" scheme is
         // missing
         if (importResource !== null)
             importedContents = importResource.contents
 
-        // Try again to get imported model contents with "file://" scheme
+        // Try again to get imported model contents with "file" scheme
         else if (importResource === null || importedContents.empty) {
             importResource = EcoreUtil2.getResource(context, convertToFileUri(importUri))
             if (importResource === null)  // still no chance to retrieve contents
@@ -88,7 +88,7 @@ final class DdmmUtils {
     }
 
     /**
-     * Check if a URI exhibits the "file://" scheme
+     * Check if a URI exhibits the "file" scheme
      */
     def static isFileUri(String uri) {
         if (uri === null)
@@ -98,29 +98,79 @@ final class DdmmUtils {
     }
 
     /**
-     * Add "file://" scheme to URI string. If the string already has a scheme, replace it with
-     * "file://".
+     * Add "file" scheme to URI string. If the string already has a scheme, replace it with "file".
      */
     def static convertToFileUri(String uri) {
         if (uri === null)
             return null
 
-        val scheme = URI.createURI(uri).scheme
-        if (scheme !== null) {
+        val scheme = getUriScheme(uri)
+        val fileUri = if (scheme !== null) {
             val uriWithoutScheme = uri.substring(scheme.length + 1)
-            return "file://" + uriWithoutScheme
+            "file://" + uriWithoutScheme
         } else
-            return "file://" + uri
+            "file://" + uri
+
+        return if (!isWindowsOs)
+                fileUri
+            else
+                // As opposed to Windows, a URI uses slashes instead of backslashes to separate
+                // paths
+                fileUri.replace(File.separator, "/")
     }
 
     /**
-     * Remove "file:" scheme from URI string, leaving any preceding slashes untouched
+     * Determine scheme of a URI considering OS-specifics
+     */
+    def static getUriScheme(String uri) {
+        // Windows paths with drive letters look like at URIs (at least for
+        // org.eclipse.emf.common.util.URI), because they start with a letter followed by a colon.
+        // That is, URI.scheme will return "c" for a path "C:\Users\mymodel.model", i.e., the drive
+        // letter will disappear, which makes the path invalid.
+        return if (uri === null || startsWithWindowsDriveLetter(uri))
+                null
+            else
+                URI.createURI(uri).scheme
+    }
+
+    /**
+     * Helper to determine if a URI starts with a Windows drive letter
+     */
+    def static startsWithWindowsDriveLetter(String uri) {
+        if (uri === null || !isWindowsOs)
+            return false
+
+        // Windows drive letters come in two different shapes (at least in Eclipse):
+        //    (1) A capital letter, followed by a colon and a backslash.
+        //    (2) A capital letter, followed by a colon and a *slash*. This case occurs, e.g., when
+        //        the URI was retrieved from an Ecore Resource instance. For instance, the URI
+        //        representation of a file "C:\Users\mymodel.model" on a Windows machine will be
+        //        "C:/Users/mymodel.model". Unfortunately, this collides with the URI specification
+        //        of a scheme. RFC 3986 defines a scheme to start with a single letter that may or
+        //        may not be followed by additional letters. However, most schemes consists of more
+        //        than one letter, in particular the "file" scheme, which is of most interest to us.
+        //        That is, we take the risk of recognizing a URI beginning with a single-letter
+        //        scheme and recognizing it falsely positive as a URI starting with a Windows drive
+        //        letter for now.
+        return uri.matches("[A-Z]:\\\\.*") || uri.matches("[A-Z]:/([^/].*)?")
+    }
+
+    /**
+     * Helper to determine if we're on Windows
+     */
+    def static isWindowsOs() {
+        val osName = System.getProperty("os.name")
+        return osName.toLowerCase.startsWith("windows")
+    }
+
+    /**
+     * Remove "file" scheme from URI string, leaving any preceding slashes untouched
      */
     def static removeFileUri(String uri) {
         if (!isFileUri(uri))
             return uri
 
-        val scheme = URI.createURI(uri).scheme
+        val scheme = getUriScheme(uri)
         return uri.substring(scheme.length + 1)
     }
 
@@ -150,7 +200,7 @@ final class DdmmUtils {
     }
 
     /**
-     * Convenience method to convert a relative path to an absolute "file://" URI
+     * Convenience method to convert a relative path to an absolute "file" URI
      */
     def static convertToAbsoluteFileUri(String relativeFilePath, String absoluteBaseFilePath) {
         return if (!isFileUri(relativeFilePath))
@@ -160,7 +210,7 @@ final class DdmmUtils {
     }
 
     /**
-     * Convenience method to convert a relative path to an absolute "file://" URI by using a
+     * Convenience method to convert a relative path to an absolute "file" URI by using a
      * Resource as base
      */
     def static convertToAbsoluteFileUri(String relativeFilePath, Resource base) {

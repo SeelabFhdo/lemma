@@ -10,7 +10,7 @@ import de.fhdo.ddmm.service.ImportType
  */
 
 class IntermediateDataModel {
-    // "file://" URI to the source model from which this intermediate model was derived
+    // "file" URI to the source model from which this intermediate model was derived
     String sourceModelUri
 
     contains IntermediateImport[] imports opposite dataModel

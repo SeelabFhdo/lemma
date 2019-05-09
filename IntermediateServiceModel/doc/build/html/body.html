@@ -55,7 +55,7 @@ of models, listed in <a class="reference internal" href="#tab-model-types"><span
 <td>A Domain Data Model describes the domain-specific data
 used by a modeled microservice to specify its
 input/output data. See also the
-<a class="reference external" href="../../../Intermediate Data Model Format Specification/build/html/index.html" title="(in Intermediate Data Model Format Specification v1.0)"><span class="xref std std-doc">Intermediate Data Model Format Specification</span></a>.</td>
+<a class="reference external" href="../../../IntermediateDataModel/doc/build/html/index.html" title="(in Intermediate Data Model Format Specification v1.0)"><span class="xref std std-doc">Intermediate Data Model Format Specification</span></a>.</td>
 </tr>
 <tr class="row-odd"><td>Mapping Model</td>
 <td>A Mapping Model allows for assigning (alternative)
@@ -139,7 +139,7 @@ default value in case it did not receive an explicit value.</p>
 <dl class="attribute">
 <dt>
 <code class="descname">String[1] sourceModelUri</code></dt>
-<dd><p><cite>“file://”</cite> URI pointing to the source Service Model file from which
+<dd><p><cite>“file”</cite> URI pointing to the source Service Model file from which
 this model was derived. Not that this might be an empty string, if the
 <a class="reference internal" href="#IntermediateMicroservice" title="IntermediateMicroservice"><code class="xref java java-type docutils literal notranslate"><span class="pre">IntermediateMicroservice</span></code></a> instances were derived from
 different Service Models. Model processors should then rely on the
@@ -150,10 +150,10 @@ different Service Models. Model processors should then rely on the
 <dl class="attribute">
 <dt>
 <code class="descname">IntermediateImport[*] imports</code></dt>
-<dd><p>References to <a class="reference external" href="../../../Intermediate Data Model Format Specification/build/html/body.html#IntermediateDataModel" title="(in Intermediate Data Model Format Specification v1.0)"><code class="docutils literal notranslate"><span class="pre">IntermediateDataModel</span></code></a>, Technology
+<dd><p>References to <a class="reference external" href="../../../IntermediateDataModel/doc/build/html/body.html#IntermediateDataModel" title="(in Intermediate Data Model Format Specification v1.0)"><code class="docutils literal notranslate"><span class="pre">IntermediateDataModel</span></code></a>, Technology
 Model (cf. <a class="reference internal" href="#tab-model-types"><span class="std std-numref">Table 1</span></a>), or Intermediate Service Model
 instances that were imported into the source Service Model
-(cf. <a class="reference external" href="../../../Intermediate Data Model Format Specification/build/html/body.html#IntermediateImport" title="(in Intermediate Data Model Format Specification v1.0)"><code class="docutils literal notranslate"><span class="pre">IntermediateImport</span></code></a>).</p>
+(cf. <a class="reference external" href="../../../IntermediateDataModel/doc/build/html/body.html#IntermediateImport" title="(in Intermediate Data Model Format Specification v1.0)"><code class="docutils literal notranslate"><span class="pre">IntermediateImport</span></code></a>).</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -175,7 +175,7 @@ source Service Model.</p>
 <span class="target" id="link-intermediatemicroservice-sourcemodeluri"></span><dl class="attribute">
 <dt>
 <code class="descname">String[1] sourceModelUri</code></dt>
-<dd><p><cite>“file://”</cite> URI pointing to the source Service Model file from which
+<dd><p><cite>“file”</cite> URI pointing to the source Service Model file from which
 this microservice originates.</p>
 </dd></dl>
 
@@ -761,7 +761,7 @@ communication type and
 <span class="target" id="link-intermediateparameter-type"></span><dl class="attribute">
 <dt>
 <code class="descname">IntermediateType type</code></dt>
-<dd><p><a class="reference external" href="../../../Intermediate Data Model Format Specification/build/html/body.html#link-intermediatetype" title="(in Intermediate Data Model Format Specification v1.0)"><span class="xref std std-ref">Type</span></a> of the parameter.</p>
+<dd><p><a class="reference external" href="../../../IntermediateDataModel/doc/build/html/body.html#link-intermediatetype" title="(in Intermediate Data Model Format Specification v1.0)"><span class="xref std std-ref">Type</span></a> of the parameter.</p>
 </dd></dl>
 
 <span class="target" id="link-intermediateparameter-initializedbyoperation"></span><dl class="attribute">
@@ -775,7 +775,7 @@ parameter.</p>
 the parameter’s type are compatible. This is due to the Service
 Modeling Language only yielding a warning if a (possible) type
 incompatibility is detected. Moreover, the type check is based on
-the <a class="reference external" href="../../../Intermediate Data Model Format Specification/build/html/body.html#link-built-in-type-system" title="(in Intermediate Data Model Format Specification v1.0)"><span class="xref std std-ref">type system</span></a> of
+the <a class="reference external" href="../../../IntermediateDataModel/doc/build/html/body.html#link-built-in-type-system" title="(in Intermediate Data Model Format Specification v1.0)"><span class="xref std std-ref">type system</span></a> of
 the Domain Data Modeling Language, which may not be applicable to
 all target languages.</p>
 </div>
@@ -796,11 +796,11 @@ parameter.</p>
 <p class="first admonition-title">Hint</p>
 <p>If the parameter has mapped data fields, the corresponding types of
 the fields of the parameter’s
-<a class="reference external" href="../../../Intermediate Data Model Format Specification/build/html/body.html#link-intermediatedatastructure" title="(in Intermediate Data Model Format Specification v1.0)"><span class="xref std std-ref">structure type</span></a>
+<a class="reference external" href="../../../IntermediateDataModel/doc/build/html/body.html#link-intermediatedatastructure" title="(in Intermediate Data Model Format Specification v1.0)"><span class="xref std std-ref">structure type</span></a>
 need to be replaced with the mapped types.</p>
 <p class="last">Furthermore, mapped data fields are the only way to assign
 <a class="reference internal" href="#IntermediateImportedAspect" title="IntermediateImportedAspect"><code class="xref java java-type docutils literal notranslate"><span class="pre">aspects</span></code></a> to the fields of a
-<a class="reference external" href="../../../Intermediate Data Model Format Specification/build/html/body.html#link-intermediatedatastructure" title="(in Intermediate Data Model Format Specification v1.0)"><span class="xref std std-ref">data structure</span></a>.</p>
+<a class="reference external" href="../../../IntermediateDataModel/doc/build/html/body.html#link-intermediatedatastructure" title="(in Intermediate Data Model Format Specification v1.0)"><span class="xref std std-ref">data structure</span></a>.</p>
 </div>
 </dd></dl>
 
@@ -816,7 +816,7 @@ need to be replaced with the mapped types.</p>
 <dt id="IntermediateMappedDataField">
  class <code class="descname">IntermediateMappedDataField</code><a class="headerlink" href="#IntermediateMappedDataField" title="Permalink to this definition">¶</a></dt>
 <dd><p>A data field of a <a class="reference internal" href="#IntermediateParameter" title="IntermediateParameter"><code class="xref java java-type docutils literal notranslate"><span class="pre">parameter's</span></code></a>
-<a class="reference external" href="../../../Intermediate Data Model Format Specification/build/html/body.html#link-intermediatedatastructure" title="(in Intermediate Data Model Format Specification v1.0)"><span class="xref std std-ref">structure type</span></a>, to which
+<a class="reference external" href="../../../IntermediateDataModel/doc/build/html/body.html#link-intermediatedatastructure" title="(in Intermediate Data Model Format Specification v1.0)"><span class="xref std std-ref">structure type</span></a>, to which
 a type differing from its original type and optional aspects were assigned.</p>
 <span class="target" id="link-intermediatemappeddatafield-mappeddatafieldname"></span><dl class="attribute">
 <dt>
@@ -826,9 +826,9 @@ a type differing from its original type and optional aspects were assigned.</p>
 <p class="first admonition-title">Hint</p>
 <p class="last">There is not direct link to the field in the respective
 <a class="reference internal" href="#IntermediateParameter" title="IntermediateParameter"><code class="xref java java-type docutils literal notranslate"><span class="pre">parameter's</span></code></a>
-<a class="reference external" href="../../../Intermediate Data Model Format Specification/build/html/body.html#link-intermediatedatastructure" title="(in Intermediate Data Model Format Specification v1.0)"><span class="xref std std-ref">structure type</span></a>.
+<a class="reference external" href="../../../IntermediateDataModel/doc/build/html/body.html#link-intermediatedatastructure" title="(in Intermediate Data Model Format Specification v1.0)"><span class="xref std std-ref">structure type</span></a>.
 Instead, the
-<a class="reference external" href="../../../Intermediate Data Model Format Specification/build/html/body.html#link-intermediatedatafield" title="(in Intermediate Data Model Format Specification v1.0)"><span class="xref std std-ref">DataField</span></a> instance
+<a class="reference external" href="../../../IntermediateDataModel/doc/build/html/body.html#link-intermediatedatafield" title="(in Intermediate Data Model Format Specification v1.0)"><span class="xref std std-ref">DataField</span></a> instance
 to which the parameter’s
 <a class="reference internal" href="#link-intermediateparameter-type"><span class="std std-ref">type</span></a> attribute links needs
 to be iterated with the <code class="docutils literal notranslate"><span class="pre">mappedDataFieldName</span></code> in order to retrieve
@@ -847,7 +847,7 @@ parameter’s
 <a class="reference internal" href="#link-intermediateparameter-qualifiedname"><span class="std std-ref">qualified name</span></a>.
 The qualified name of the data field itself needs to be derived
 from the corresponding
-<a class="reference external" href="../../../Intermediate Data Model Format Specification/build/html/body.html#link-intermediatedatafield" title="(in Intermediate Data Model Format Specification v1.0)"><span class="xref std std-ref">DataField</span></a> (see
+<a class="reference external" href="../../../IntermediateDataModel/doc/build/html/body.html#link-intermediatedatafield" title="(in Intermediate Data Model Format Specification v1.0)"><span class="xref std std-ref">DataField</span></a> (see
 the documentation of the <a class="reference internal" href="#link-intermediatemappeddatafield-mappeddatafieldname"><span class="std std-ref">mappedDataFieldName</span></a> attribute.</p>
 </div>
 </dd></dl>
@@ -856,7 +856,7 @@ the documentation of the <a class="reference internal" href="#link-intermediatem
 <dt>
 <code class="descname">IntermediateType[1] mappedType</code></dt>
 <dd><p>New (mapped) type of the
-<a class="reference external" href="../../../Intermediate Data Model Format Specification/build/html/body.html#link-intermediatedatafield" title="(in Intermediate Data Model Format Specification v1.0)"><span class="xref std std-ref">data field</span></a>.</p>
+<a class="reference external" href="../../../IntermediateDataModel/doc/build/html/body.html#link-intermediatedatafield" title="(in Intermediate Data Model Format Specification v1.0)"><span class="xref std std-ref">data field</span></a>.</p>
 <div class="admonition hint">
 <p class="first admonition-title">Hint</p>
 <p class="last">Code generators must use this type as the field’s type.</p>
@@ -978,16 +978,16 @@ operation.</p>
 </div>
 <div class="section" id="type-system">
 <h2>3.3&nbsp;&nbsp;&nbsp;Type System<a class="headerlink" href="#type-system" title="Permalink to this headline">¶</a></h2>
-<p><a class="reference external" href="../../../Intermediate Data Model Format Specification/build/html/body.html#link-built-in-type-system" title="(in Intermediate Data Model Format Specification v1.0)"><span class="xref std std-ref">Built-in</span></a> as well as
-<a class="reference external" href="../../../Intermediate Data Model Format Specification/build/html/body.html#link-custom-types" title="(in Intermediate Data Model Format Specification v1.0)"><span class="xref std std-ref">custom types</span></a> are mostly covered within
-the :<a class="reference external" href="../../../Intermediate Data Model Format Specification/build/html/index.html" title="(in Intermediate Data Model Format Specification v1.0)"><span class="xref std std-doc">Intermediate Data Model Format Specification</span></a>.</p>
+<p><a class="reference external" href="../../../IntermediateDataModel/doc/build/html/body.html#link-built-in-type-system" title="(in Intermediate Data Model Format Specification v1.0)"><span class="xref std std-ref">Built-in</span></a> as well as
+<a class="reference external" href="../../../IntermediateDataModel/doc/build/html/body.html#link-custom-types" title="(in Intermediate Data Model Format Specification v1.0)"><span class="xref std std-ref">custom types</span></a> are mostly covered within
+the :<a class="reference external" href="../../../IntermediateDataModel/doc/build/html/index.html" title="(in Intermediate Data Model Format Specification v1.0)"><span class="xref std std-doc">Intermediate Data Model Format Specification</span></a>.</p>
 <p>However, Service Models may import technology-specific types from Technology
 Models that are not known to Domain Data Models (cf.
 <a class="reference internal" href="#tab-model-types"><span class="std std-numref">Table 1</span></a>). Thus, intermediate concepts for technology-specific
 types are needed to allow intermediate service models to refer to them.</p>
 <dl class="type">
 <dt id="IntermediateImportedTechnologySpecificType">
- class <code class="descname">IntermediateImportedTechnologySpecificType</code> extends <a class="reference external" href="../../../Intermediate Data Model Format Specification/build/html/body.html#IntermediateType" title="(in Intermediate Data Model Format Specification v1.0)">IntermediateType</a><a class="headerlink" href="#IntermediateImportedTechnologySpecificType" title="Permalink to this definition">¶</a></dt>
+ class <code class="descname">IntermediateImportedTechnologySpecificType</code> extends <a class="reference external" href="../../../IntermediateDataModel/doc/build/html/body.html#IntermediateType" title="(in Intermediate Data Model Format Specification v1.0)">IntermediateType</a><a class="headerlink" href="#IntermediateImportedTechnologySpecificType" title="Permalink to this definition">¶</a></dt>
 <dd><p>Representation of a type defined in a Technology Model.</p>
 <dl class="attribute">
 <dt>
@@ -1215,7 +1215,7 @@ another Service Model.</p>
 <dl class="attribute">
 <dt>
 <code class="descname">IntermediateImport import</code></dt>
-<dd><p>Link to the <a class="reference external" href="../../../Intermediate Data Model Format Specification/build/html/body.html#IntermediateImport" title="(in Intermediate Data Model Format Specification v1.0)"><code class="docutils literal notranslate"><span class="pre">IntermediateImport</span></code></a> which points to
+<dd><p>Link to the <a class="reference external" href="../../../IntermediateDataModel/doc/build/html/body.html#IntermediateImport" title="(in Intermediate Data Model Format Specification v1.0)"><code class="docutils literal notranslate"><span class="pre">IntermediateImport</span></code></a> which points to
 the imported Service Model. If the
 <a class="reference internal" href="#link-microservicereference-imported"><span class="std std-ref">imported</span></a> flag is <code class="docutils literal notranslate"><span class="pre">true</span></code>
 this attribute contains a value. Otherwise it is <code class="docutils literal notranslate"><span class="pre">null</span></code>.</p>
@@ -1279,7 +1279,7 @@ Service Model.</p>
 <dl class="attribute">
 <dt>
 <code class="descname">IntermediateImport import</code></dt>
-<dd><p>Link to the <a class="reference external" href="../../../Intermediate Data Model Format Specification/build/html/body.html#IntermediateImport" title="(in Intermediate Data Model Format Specification v1.0)"><code class="docutils literal notranslate"><span class="pre">IntermediateImport</span></code></a> which points to
+<dd><p>Link to the <a class="reference external" href="../../../IntermediateDataModel/doc/build/html/body.html#IntermediateImport" title="(in Intermediate Data Model Format Specification v1.0)"><code class="docutils literal notranslate"><span class="pre">IntermediateImport</span></code></a> which points to
 the imported Service Model. If the
 <a class="reference internal" href="#link-interfacereference-imported"><span class="std std-ref">imported</span></a> flag is <code class="docutils literal notranslate"><span class="pre">true</span></code>
 this attribute contains a value. Otherwise it is <code class="docutils literal notranslate"><span class="pre">null</span></code>.</p>
@@ -1343,7 +1343,7 @@ Service Model.</p>
 <dl class="attribute">
 <dt>
 <code class="descname">IntermediateImport import</code></dt>
-<dd><p>Link to the <a class="reference external" href="../../../Intermediate Data Model Format Specification/build/html/body.html#IntermediateImport" title="(in Intermediate Data Model Format Specification v1.0)"><code class="docutils literal notranslate"><span class="pre">IntermediateImport</span></code></a> which points to
+<dd><p>Link to the <a class="reference external" href="../../../IntermediateDataModel/doc/build/html/body.html#IntermediateImport" title="(in Intermediate Data Model Format Specification v1.0)"><code class="docutils literal notranslate"><span class="pre">IntermediateImport</span></code></a> which points to
 the imported Service Model. If the
 <a class="reference internal" href="#link-operationreference-imported"><span class="std std-ref">imported</span></a> flag is <code class="docutils literal notranslate"><span class="pre">true</span></code>
 this attribute contains a value. Otherwise it is <code class="docutils literal notranslate"><span class="pre">null</span></code>.</p>
@@ -1404,7 +1404,7 @@ modeling concepts are described.</p>
 <dl class="attribute">
 <dt>
 <code class="descname">IntermediateImport[1] import</code></dt>
-<dd><p><a class="reference external" href="../../../Intermediate Data Model Format Specification/build/html/body.html#IntermediateImport" title="(in Intermediate Data Model Format Specification v1.0)"><code class="docutils literal notranslate"><span class="pre">IntermediateImport</span></code></a> that points to the imported
+<dd><p><a class="reference external" href="../../../IntermediateDataModel/doc/build/html/body.html#IntermediateImport" title="(in Intermediate Data Model Format Specification v1.0)"><code class="docutils literal notranslate"><span class="pre">IntermediateImport</span></code></a> that points to the imported
 Technology Model.</p>
 </dd></dl>
 
@@ -1440,7 +1440,7 @@ status codes being returned by a service operation’s execution.</p>
 <dl class="attribute">
 <dt>
 <code class="descname">IntermediateImport[1] import</code></dt>
-<dd><p><a class="reference external" href="../../../Intermediate Data Model Format Specification/build/html/body.html#IntermediateImport" title="(in Intermediate Data Model Format Specification v1.0)"><code class="xref java java-type docutils literal notranslate"><span class="pre">Import</span></code></a> of the Technology
+<dd><p><a class="reference external" href="../../../IntermediateDataModel/doc/build/html/body.html#IntermediateImport" title="(in Intermediate Data Model Format Specification v1.0)"><code class="xref java java-type docutils literal notranslate"><span class="pre">Import</span></code></a> of the Technology
 Model which defines the aspect.</p>
 </dd></dl>
 
@@ -1512,7 +1512,7 @@ property.</p>
 <span class="target" id="link-intermediateaspectproperty-type"></span><dl class="attribute">
 <dt>
 <code class="descname">String[1] type</code></dt>
-<dd><p>Name of the <a class="reference external" href="../../../Intermediate Data Model Format Specification/build/html/body.html#link-intermediateprimitivetype" title="(in Intermediate Data Model Format Specification v1.0)"><span class="xref std std-ref">primitive type</span></a> of the property. This can
+<dd><p>Name of the <a class="reference external" href="../../../IntermediateDataModel/doc/build/html/body.html#link-intermediateprimitivetype" title="(in Intermediate Data Model Format Specification v1.0)"><span class="xref std std-ref">primitive type</span></a> of the property. This can
 be one of the values:</p>
 <ul class="simple">
 <li>“boolean”</li>

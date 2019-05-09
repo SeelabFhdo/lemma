@@ -109,7 +109,7 @@ Model Root
 
     .. py:attribute:: String[1] sourceModelUri
 
-        `\"file://\"` URI pointing to the source Service Model file from which 
+        `\"file\"` URI pointing to the source Service Model file from which 
         this model was derived. Not that this might be an empty string, if the
         :java:type:`IntermediateMicroservice` instances were derived from 
         different Service Models. Model processors should then rely on the
@@ -140,7 +140,7 @@ Microservices
 
     .. py:attribute:: String[1] sourceModelUri
 
-        `\"file://\"` URI pointing to the source Service Model file from which 
+        `\"file\"` URI pointing to the source Service Model file from which 
         this microservice originates.
 
     .. _link__IntermediateMicroservice_name:

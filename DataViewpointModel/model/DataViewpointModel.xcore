@@ -19,7 +19,7 @@ class DataModel {
      *          Ensured by: DSL grammar.
      */
 
-     // TRANSFORMATION ONLY: The file path of the model in the form of a "file://" URI
+    // TRANSFORMATION ONLY: The file path of the model in the form of a URI with a "file" scheme
     String t_modelUri
 
     contains ComplexTypeImport[] complexTypeImports opposite dataModel
