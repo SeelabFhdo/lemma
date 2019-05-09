@@ -635,41 +635,4 @@ public final class DdmmUtils {
     }
     return ((List<Class<?>>)Conversions.doWrapArray(rootElement.getClass().getInterfaces())).contains(expectedRootType);
   }
-  
-  /**
-   * Trim path by another. For example, calling this method with
-   *   pathToTrim = "/home/user/folder/file.txt" and
-   *   by = "/home/user/anotherFolder/anotherFile.dat"
-   * will result in
-   *   "/anotherFolder/anotherFile.dat"
-   */
-  public static String trimPathBy(final String pathToTrim, final String by) {
-    final String[] toTrimSegments = pathToTrim.split(File.separator);
-    final String[] bySegments = by.split(File.separator);
-    int equalToIndex = (-1);
-    int currentIndex = 0;
-    while ((((currentIndex < toTrimSegments.length) && (currentIndex < bySegments.length)) && 
-      Objects.equal(toTrimSegments[currentIndex], bySegments[currentIndex]))) {
-      {
-        equalToIndex = currentIndex;
-        currentIndex++;
-      }
-    }
-    if (((equalToIndex > (-1)) && (equalToIndex < (toTrimSegments.length - 1)))) {
-      String trimmedPath = "";
-      int n = (equalToIndex + 1);
-      while ((n < toTrimSegments.length)) {
-        {
-          String _trimmedPath = trimmedPath;
-          String _get = toTrimSegments[n];
-          String _plus = (File.separator + _get);
-          trimmedPath = (_trimmedPath + _plus);
-          n++;
-        }
-      }
-      return trimmedPath;
-    } else {
-      return pathToTrim;
-    }
-  }
 }

@@ -646,35 +646,4 @@ final class DdmmUtils {
 
         return rootElement.class.interfaces.contains(expectedRootType)
     }
-
-    /**
-     * Trim path by another. For example, calling this method with
-     *   pathToTrim = "/home/user/folder/file.txt" and
-     *   by = "/home/user/anotherFolder/anotherFile.dat"
-     * will result in
-     *   "/anotherFolder/anotherFile.dat"
-     */
-    def static trimPathBy(String pathToTrim, String by) {
-        val toTrimSegments = pathToTrim.split(File.separator)
-        val bySegments = by.split(File.separator)
-
-        var equalToIndex = -1
-        var currentIndex = 0
-        while (currentIndex < toTrimSegments.length && currentIndex < bySegments.length &&
-            toTrimSegments.get(currentIndex) == bySegments.get(currentIndex)) {
-            equalToIndex = currentIndex
-            currentIndex++
-        }
-
-        if (equalToIndex > -1 && equalToIndex < toTrimSegments.length - 1) {
-            var trimmedPath = ""
-            var n = equalToIndex + 1
-            while (n < toTrimSegments.length) {
-                trimmedPath += File.separator + toTrimSegments.get(n)
-                n++
-            }
-            return trimmedPath
-        } else
-            return pathToTrim
-    }
 }
