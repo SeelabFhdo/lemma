@@ -1,0 +1,25 @@
+import datatypes from "common.data" as commonData
+import datatypes from "charging.data" as chargingData
+
+version v01 {
+	/* The Payment context encapsulates domain concepts related the booking of charging points */
+	context Payment  {
+		// The invoice concept contains all information regarding the billing of a charging point
+		structure Invoice {
+			int invoiceNumber,
+			float invoiceAmount,
+			date invoiceDate,
+			commonData::v01.Common.User invoiceReceiver,
+			chargingData::v01.Charging.ChargingPoint chargingPoint
+		}
+
+		// The receipt concept contains all information regarding the payment of a invoice
+		structure Receipt {
+			string receiptNumber,
+			boolean isPaid,
+			date paymentDate,
+			Invoice correspondingInvoice,
+			commonData::v01.Common.User receiptReceiver
+		}
+	}
+}

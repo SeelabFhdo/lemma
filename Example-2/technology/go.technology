@@ -1,0 +1,38 @@
+/*
+ * This file contains a technology model for the Go programming language. Please note that this is
+ * part of our current work in implementing technology models to separate the service functionality
+ * from the service technology concern and make technology definitions reusable across microservices
+ * and operation nodes.
+ */
+technology Go {
+	// Go programming language data types mapping
+	types {
+		primitive type uint8;
+		primitive type uint16;
+		primitive type uint32;
+		primitive type uint64;
+
+		primitive type int8 based on byte default;
+		primitive type int16 based on short default;
+		primitive type int32 based on int default;
+		primitive type int64 based on long default;
+
+		primitive type float32 based on float default;
+		primitive type float64 based on double default;
+
+		primitive type ^string based on string, char default;
+
+		primitive type bool based on boolean default;
+		primitive type ^date based on date default;
+
+		primitive type complex64;
+		primitive type complex128;
+	}
+
+	// Technology for the deployment of the service
+	deployment technologies {
+		docker {
+			operation environments = "golang" default;
+		}
+	}
+}

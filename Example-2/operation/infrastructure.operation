@@ -1,0 +1,25 @@
+import microservices from "../microservices/infrastructure.services" as infrastructureServices
+
+/*
+ * Import of a technology model, which defines operation technology. Please note that this is part
+ * of our current work in implementing technology models to separate the service functionality from
+ * the service technology concern and make technology definitions reusable across microservices and
+ * operation nodes. The imported model is assigned to Container instances with the "@technology"
+ * annotation.
+ */
+import technology from "../technology/shared.technology" as infrastructureTech 
+
+// Operation specification for the infrastructural Services 
+@technology(infrastructureTech)
+container InfrastructureContainer 
+	deployment technology infrastructureTech:: _deployment.docker
+	deploys infrastructureServices::v01.de.fhdo.APIGateways,
+			infrastructureServices::v01.de.fhdo.DiscoveryService,
+			infrastructureServices::v01.de.fhdo.SecurityService {
+	default values {
+		basic endpoints {
+			infrastructureTech::_protocols.mqtt, 
+			infrastructureTech::_protocols.rest: "http://www.example.com:8080";
+		}
+	}
+}

@@ -1,7 +1,5 @@
 package de.fhdo.ddmm.intermediate.transformations.service;
 
-import com.google.common.base.Objects;
-import de.fhdo.ddmm.data.intermediate.IntermediateImport;
 import de.fhdo.ddmm.intermediate.transformations.AbstractIntermediateModelTransformationStrategy;
 import de.fhdo.ddmm.intermediate.transformations.AbstractSourceModelValidator;
 import de.fhdo.ddmm.intermediate.transformations.TargetModelInfo;
@@ -18,14 +16,9 @@ import de.fhdo.ddmm.technology.Technology;
 import de.fhdo.ddmm.utils.DdmmUtils;
 import java.util.List;
 import java.util.Map;
-import java.util.function.BiConsumer;
 import java.util.function.Consumer;
-import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.m2m.atl.core.emf.EMFModel;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
-import org.eclipse.xtext.xbase.lib.Functions.Function1;
-import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.Pair;
 
 /**
@@ -160,18 +153,10 @@ public class IntermediateServiceModelTransformation extends AbstractIntermediate
    * Add transformation target paths of imported model files to target model
    */
   @Override
-  public void populateTargetModelWithImportTargetPaths(final EMFModel targetModel, final Map<String, String> targetPaths) {
-    EObject _get = targetModel.getResource().getContents().get(0);
-    final IntermediateServiceModel modelRoot = ((IntermediateServiceModel) _get);
-    final String workspacePath = ResourcesPlugin.getWorkspace().getRoot().getLocation().toString();
-    final BiConsumer<String, String> _function = (String importName, String targetPath) -> {
-      final Function1<IntermediateImport, Boolean> _function_1 = (IntermediateImport it) -> {
-        String _name = it.getName();
-        return Boolean.valueOf(Objects.equal(_name, importName));
-      };
-      final IntermediateImport import_ = IterableExtensions.<IntermediateImport>findFirst(modelRoot.getImports(), _function_1);
-      import_.setImportUri(DdmmUtils.convertToFileUri((workspacePath + targetPath)));
-    };
-    targetPaths.forEach(_function);
+  public void populateTargetModelWithImportTargetPaths(final /* EMFModel */Object targetModel, final Map<String, String> targetPaths) {
+    throw new Error("Unresolved compilation problems:"
+      + "\nresource cannot be resolved"
+      + "\ncontents cannot be resolved"
+      + "\nget cannot be resolved");
   }
 }

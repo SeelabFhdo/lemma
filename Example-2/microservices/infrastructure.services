@@ -1,0 +1,63 @@
+import datatypes from "../domain/common.data" as commonData
+
+/*
+ * Import of a technology model, which defines service-related technology. Please note that this is
+ * part of our current work in implementing technology models to separate the service functionality
+ * from the service technology concern and make technology definitions reusable across microservices
+ * and operation nodes. The imported model is assigned to Microservice instances with the
+ * "@technology" annotation.
+ */
+import technology from "../technology/shared.technology" as infrastructureTech
+
+// The API Gateway is responsible for the forwarding of requests to the designated microservice  
+@technology(infrastructureTech)
+@endpoints(infrastructureTech::_protocols.rest: "/";)
+public infrastructure microservice de.fhdo.APIGateways version v01 {
+	required microservices {
+		DiscoveryService,
+		SecurityService
+	}
+	
+	interface DefaultInterface {
+		LandingPage(sync out login : boolean);
+	}
+}
+
+// The SecurityService is responsible for securing internal and external communication
+@technology(infrastructureTech)
+@endpoints(infrastructureTech::_protocols.rest: "/security";)
+public infrastructure microservice de.fhdo.SecurityService version v01 {
+	@endpoints(infrastructureTech::_protocols.rest: "/token";)
+	interface TokenInterface {
+		@endpoints(infrastructureTech::_protocols.rest: "/AccessToken";)
+		getAccessToken (
+			sync in credentials : commonData::v01.Common.Credentials,
+			sync out accessToken :  string
+		);
+	}
+	
+	@endpoints(infrastructureTech::_protocols.rest: "/access";)
+	interface UserAuthorization {
+		@endpoints(infrastructureTech::_protocols.rest: "/authorize";)
+		authorizeUser (
+			sync in credentials : commonData::v01.Common.Credentials,
+			sync out authorizeInfo : boolean
+		);
+	}
+}
+
+// The ServiceDiscovery is responsible to enable service discovery
+@technology( infrastructureTech )
+@endpoints(infrastructureTech::_protocols.rest: "/servicediscovery";)
+public infrastructure microservice de.fhdo.DiscoveryService version v01 {
+	interface DiscoveryInterface {		
+		@endpoints(infrastructureTech::_protocols.rest: "/get";)
+		getServiceInstance (
+			sync in serviceName : string,
+			sync out serviceInstanceEndpoint : string
+		);
+		
+		@endpoints(infrastructureTech::_protocols.rest: "/register";)
+		registerServiceInstace(sync in serviceEndpoint : string);
+	}
+}

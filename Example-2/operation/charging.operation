@@ -1,0 +1,24 @@
+import microservices from "../microservices/charging.services" as chargingService
+
+/*
+ * Import of a technology model, which defines operation technology. Please note that this is part
+ * of our current work in implementing technology models to separate the service functionality from
+ * the service technology concern and make technology definitions reusable across microservices and
+ * operation nodes. The imported model is assigned to Container instances with the "@technology"
+ * annotation.
+ */
+import technology from "../technology/shared.technology" as operationTech
+
+// Operation specification for the ChargingService
+@technology(operationTech)
+container ChargingContainer 
+	deployment technology operationTech::_deployment.docker
+	with operation environment "golang"
+	deploys chargingService::v01.de.fhdo.ChargingService  {
+	default values {
+		basic endpoints {
+			operationTech::_protocols.rest, 
+			operationTech::_protocols.mqtt: "http://www.example.com:8080";
+		}
+	}
+}

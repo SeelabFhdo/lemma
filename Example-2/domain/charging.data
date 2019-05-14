@@ -1,0 +1,38 @@
+import datatypes from "common.data" as commonData
+
+version v01 {
+	/* The Charging context encapsulates domain concepts related to charging aspects */
+	context Charging {
+
+		// Charging point
+		structure ChargingPoint {
+			string chargingType,
+			float costs
+		}
+
+		// Parking space
+		structure ParkingSpace {
+			string id,
+			string description,
+			boolean isShared,
+			boolean isAvailable,
+			int width,
+			int lenghth,
+			TimeFrames availabilityPeriod,
+			commonData::v01.Common.Address location,
+			commonData::v01.Common.User owner,
+			ChargingPoint chargingPoint
+		}
+
+		// Single time frame
+		structure TimeFrame {
+			date startTime,
+			date endTime
+		}
+
+		// List of time frames
+		list TimeFrames {
+			TimeFrame timeFrame
+		}
+	}
+}

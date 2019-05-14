@@ -1,0 +1,23 @@
+import microservices from "../microservices/environment.services" as environmentService
+
+/*
+ * Import of a technology model, which defines operation technology. Please note that this is part
+ * of our current work in implementing technology models to separate the service functionality from
+ * the service technology concern and make technology definitions reusable across microservices and
+ * operation nodes. The imported model is assigned to Container instances with the "@technology"
+ * annotation.
+ */
+import technology from "../technology/shared.technology" as environmentTech
+
+// Operation specification for the EnvironmentService
+@technology(environmentTech)
+container EnvironmentContainer 
+	deployment technology environmentTech::_deployment.docker
+	deploys environmentService::v01.de.fhdo.EnvironmentService  {
+	default values {
+		basic endpoints {
+			environmentTech::_protocols.rest,
+			environmentTech::_protocols.mqtt: "http://www.example.com:8080";		
+		}
+	}
+}

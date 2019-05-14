@@ -1,0 +1,51 @@
+import datatypes from "../domain/payment.data" as paymentData
+
+/*
+ * Import of a technology model, which defines service-related technology. Please note that this is
+ * part of our current work in implementing technology models to separate the service functionality
+ * from the service technology concern and make technology definitions reusable across microservices
+ * and operation nodes. The imported model is assigned to Microservice instances with the
+ * "@technology" annotation.
+ */
+import technology from "../technology/java.technology" as java
+import technology from "../technology/shared.technology" as shared
+
+import microservices from "charging.services" as chargingServices
+
+/*
+ * Model for the PaymentService. The protocols are defined in the file "shared.technology".
+ */ 
+@technology(java)
+@technology(shared)
+@endpoints(shared::_protocols.rest: "/payment";)
+functional microservice de.fhdo.PaymentService {
+	// The Invoice interface offers functions for payment
+	@endpoints(shared::_protocols.rest: "/invoice";)
+	public interface InvoiceInterface {
+		// Get an invoice
+		@endpoints(shared::_protocols.rest: "/{invoiceNumber}";)
+		getInvoice(
+			sync in invoiceNumber : int,
+			sync out invoice : paymentData::v01.Payment.Invoice
+		);
+		
+		// Create an invoice
+		@endpoints(shared::_protocols.rest: "/create";)
+		createInvoice(sync in invoice : paymentData::v01.Payment.Invoice);
+
+		// Pay an invoice
+		@endpoints(shared::_protocols.rest: "/pay/{invoiceNumber}";)
+		payInvoice(
+			sync in invoiceNumber : int,
+			sync in paymentAmount : float,
+			sync out confirmation : string
+		);
+
+		// Get a receipt for a paid invoice
+		@endpoints(shared::_protocols.rest: "/receipt/{invoiceNumber}";)
+		getReceipt(
+			sync in invoiceNumber : int,
+			sync out receipt : paymentData::v01.Payment.Receipt
+		);
+	}
+}

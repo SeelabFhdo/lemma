@@ -17,7 +17,7 @@ import org.eclipse.xtext.validation.INamesAreUniqueValidationHelper
 class DataDslRuntimeModule extends AbstractDataDslRuntimeModule {
     override bindIScopeProvider() {
          DataDslScopeProvider
-     }
+    }
 
     def Class<? extends IDefaultResourceDescriptionStrategy>
        bindIDefaultResourceDescriptionStrategy() {

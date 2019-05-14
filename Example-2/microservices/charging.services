@@ -1,0 +1,95 @@
+import datatypes from "../domain/charging.data" as chargingData
+import datatypes from "../domain/common.data" as commonData
+import microservices from "infrastructure.services" as infrastructureServices
+
+/*
+ * Import of a technology model, which defines service-related technology. Please note that this is
+ * part of our current work in implementing technology models to separate the service functionality
+ * from the service technology concern and make technology definitions reusable across microservices
+ * and operation nodes. The imported model is assigned to Microservice instances with the
+ * "@technology" annotation.
+ */
+import technology from "../technology/go.technology" as go
+import technology from "../technology/shared.technology" as shared
+
+/*
+ * The ChargingService microservice provides functions regarding the usage of the charging points
+ */
+@technology(go)
+@technology(shared)
+@endpoints(shared::_protocols.rest: "/charging";)
+functional microservice de.fhdo.ChargingService version v01 {
+	/* 
+	 * The infrastructural microservices are required for the provisioning of cross-cutting concerns, 
+	 * e.g., scalability and reliability.
+	 */  
+	required microservices {
+		infrastructureServices::v01.de.fhdo.APIGateways,
+		infrastructureServices::v01.de.fhdo.DiscoveryService,
+		infrastructureServices::v01.de.fhdo.SecurityService
+	}
+	
+	// Interface for the Management of charging spaces
+	@endpoints(shared::_protocols.rest: "/management";)
+	interface ChargingManagamentInterface{		
+		// Create a charging space
+		@endpoints(shared::_protocols.rest: "/create";)
+		public createParkingSpace(
+			sync in parkingSpace : chargingData::v01.Charging.ParkingSpace
+		);
+		
+		// Read a charging space
+		@endpoints(shared::_protocols.rest: "/{id}";)
+		public readParkingSpace(
+			sync in id : string,
+			sync out parkingSpace : chargingData::v01.Charging.ParkingSpace
+		);
+		
+		// Update a charging space
+		@endpoints(shared::_protocols.rest: "/update/{id}";)
+		public updateParkingSpace(
+			sync inout parkingSpace : chargingData::v01.Charging.ParkingSpace
+		);
+		
+		// Delete a charging space
+		@endpoints(shared::_protocols.rest: "/delete/{id}";)
+		public deleteParkingSpace(
+			sync in delete : int,
+			sync out parkingSpace : chargingData::v01.Charging.ParkingSpace
+		);
+		
+		// Share a charging space
+		@endpoints(shared::_protocols.rest: "/share/{id}";)
+		public shareParkingSpace(
+			sync in id : int, 
+			sync out response : boolean
+		);
+	}
+	
+	// Interface for the usage of a charing station
+	@endpoints(shared::_protocols.rest : "/function/";)
+	interface CargingFunction {		
+		// Find a charging space in a specific area
+		@endpoints(shared::_protocols.rest : "/find/{address}";)
+		public findParkingSpace(
+			sync in location : commonData::v01.Common.Address,
+			sync out parkingSpace : chargingData::v01.Charging.ParkingSpace
+		);
+		
+		// Query the actual status of a specific charging space
+		@endpoints(shared::_protocols.rest : "/query/{chargingSpaceId}";)
+		public queryParkingSpace(
+			sync in chargingSpaceId : string,
+			sync out status : boolean 
+		);
+		
+		// Allocate a specific charging space
+		@endpoints(shared::_protocols.rest : "/allocate/{chargingSpaceId}";)
+		public allocateParkingSpace(
+			sync in chargingSpaceId : int,
+			sync out chargingSpace : chargingData::v01.Charging.ParkingSpace
+		);
+	}
+	
+	
+}

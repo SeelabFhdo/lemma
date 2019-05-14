@@ -1,0 +1,58 @@
+import datatypes from "common.data" as commonData
+
+version v01 {
+	/*
+	 * The EnvironmentSensors context encapsulates domain concepts related to environmental sensors
+	 */
+	context EnvironmentalSensors {
+		// Environmental sensor
+		structure Sensor {
+			string id,
+			string name,
+			string type,
+			commonData::v01.Common.Address location
+		}
+
+		// Raw sensor data
+		structure RawSensorData {
+			date timeStamp,
+			string value
+		}
+	}
+
+	/*
+	 * The EnvironmentData context encapsulates domain concepts related to environmental data
+	 * gathering
+	 */
+	context EnvironmentData {
+		// List of Sensor data information
+		list SensorDataList {
+			RawSensorData data
+		}
+
+		// List containing sensor information
+		list SensorInformationList {
+			Sensor sensor,
+			SensorDataList dataValues
+		}
+
+		// Concept of a quarter in a city
+		structure Quarter {
+			string id,
+			string name,
+			SensorDataList sensorDataList
+		}
+
+		// List of quarters
+		list QuarterList {
+			Quarter quarter
+		}
+
+		// City concept, which contains several quarters
+		structure city {
+			string id,
+			string name,
+			QuarterList quarterList
+		}
+	}
+}
