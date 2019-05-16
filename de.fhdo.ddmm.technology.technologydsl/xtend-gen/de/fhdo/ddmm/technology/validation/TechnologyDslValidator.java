@@ -62,12 +62,14 @@ public class TechnologyDslValidator extends AbstractTechnologyDslValidator {
    */
   @Check
   public void checkModelNotEmpty(final Technology technology) {
-    final boolean modelEmpty = (((((technology.getPrimitiveTypes().isEmpty() && 
+    final boolean modelEmpty = (((((((technology.getPrimitiveTypes().isEmpty() && 
       technology.getListTypes().isEmpty()) && 
       technology.getDataStructures().isEmpty()) && 
       technology.getProtocols().isEmpty()) && 
+      technology.getServiceAspects().isEmpty()) && 
       technology.getDeploymentTechnologies().isEmpty()) && 
-      technology.getInfrastructureTechnologies().isEmpty());
+      technology.getInfrastructureTechnologies().isEmpty()) && 
+      technology.getOperationAspects().isEmpty());
     if (modelEmpty) {
       this.error("Model must not be empty", technology, 
         TechnologyPackage.Literals.TECHNOLOGY__NAME);

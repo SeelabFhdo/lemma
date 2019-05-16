@@ -43,8 +43,10 @@ class TechnologyDslValidator extends AbstractTechnologyDslValidator {
             technology.listTypes.empty &&
             technology.dataStructures.empty &&
             technology.protocols.empty &&
+            technology.serviceAspects.empty &&
             technology.deploymentTechnologies.empty &&
-            technology.infrastructureTechnologies.empty
+            technology.infrastructureTechnologies.empty &&
+            technology.operationAspects.empty            
 
         if (modelEmpty)
             error("Model must not be empty", technology,
