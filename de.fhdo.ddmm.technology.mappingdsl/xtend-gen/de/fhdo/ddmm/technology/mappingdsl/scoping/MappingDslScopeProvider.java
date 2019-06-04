@@ -10,6 +10,7 @@ import com.google.common.collect.Iterables;
 import de.fhdo.ddmm.data.ComplexType;
 import de.fhdo.ddmm.data.DataField;
 import de.fhdo.ddmm.data.DataStructure;
+import de.fhdo.ddmm.data.Enumeration;
 import de.fhdo.ddmm.data.ListType;
 import de.fhdo.ddmm.data.PossiblyImportedComplexType;
 import de.fhdo.ddmm.data.PrimitiveType;
@@ -620,6 +621,9 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     }
     Type _type = mapping.getParameter().getImportedType().getType();
     final ComplexType previousType = ((ComplexType) _type);
+    if ((previousType instanceof Enumeration)) {
+      return IScope.NULLSCOPE;
+    }
     final EList<DataField> nextLeveldDataFields = this.nextDataFieldsInHierarchy(previousType);
     if ((nextLeveldDataFields != null)) {
       return Scopes.scopeFor(nextLeveldDataFields);

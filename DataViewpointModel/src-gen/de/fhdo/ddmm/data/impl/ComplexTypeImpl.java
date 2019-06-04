@@ -8,6 +8,7 @@ import de.fhdo.ddmm.data.DataField;
 import de.fhdo.ddmm.data.DataModel;
 import de.fhdo.ddmm.data.DataPackage;
 import de.fhdo.ddmm.data.DataStructure;
+import de.fhdo.ddmm.data.Enumeration;
 import de.fhdo.ddmm.data.ListType;
 import de.fhdo.ddmm.data.PrimitiveType;
 import de.fhdo.ddmm.data.Type;
@@ -51,6 +52,7 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
  *   <li>{@link de.fhdo.ddmm.data.impl.ComplexTypeImpl#isIsStructure <em>Is Structure</em>}</li>
  *   <li>{@link de.fhdo.ddmm.data.impl.ComplexTypeImpl#isIsPrimitiveList <em>Is Primitive List</em>}</li>
  *   <li>{@link de.fhdo.ddmm.data.impl.ComplexTypeImpl#isIsStructuredList <em>Is Structured List</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.data.impl.ComplexTypeImpl#isIsEnumeration <em>Is Enumeration</em>}</li>
  * </ul>
  *
  * @generated
@@ -105,6 +107,16 @@ public abstract class ComplexTypeImpl extends TypeImpl implements ComplexType {
      * @ordered
      */
     protected static final boolean IS_STRUCTURED_LIST_EDEFAULT = false;
+
+    /**
+     * The default value of the '{@link #isIsEnumeration() <em>Is Enumeration</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isIsEnumeration()
+     * @generated
+     * @ordered
+     */
+    protected static final boolean IS_ENUMERATION_EDEFAULT = false;
 
     /**
      * <!-- begin-user-doc -->
@@ -351,6 +363,16 @@ public abstract class ComplexTypeImpl extends TypeImpl implements ComplexType {
      * @generated
      */
     @Override
+    public boolean isIsEnumeration() {
+        return (this instanceof Enumeration);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public EList<String> getQualifiedNameParts() {
         EList<String> _xblockexpression = null;
         {
@@ -560,6 +582,8 @@ public abstract class ComplexTypeImpl extends TypeImpl implements ComplexType {
                 return isIsPrimitiveList();
             case DataPackage.COMPLEX_TYPE__IS_STRUCTURED_LIST:
                 return isIsStructuredList();
+            case DataPackage.COMPLEX_TYPE__IS_ENUMERATION:
+                return isIsEnumeration();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -634,6 +658,8 @@ public abstract class ComplexTypeImpl extends TypeImpl implements ComplexType {
                 return isIsPrimitiveList() != IS_PRIMITIVE_LIST_EDEFAULT;
             case DataPackage.COMPLEX_TYPE__IS_STRUCTURED_LIST:
                 return isIsStructuredList() != IS_STRUCTURED_LIST_EDEFAULT;
+            case DataPackage.COMPLEX_TYPE__IS_ENUMERATION:
+                return isIsEnumeration() != IS_ENUMERATION_EDEFAULT;
         }
         return super.eIsSet(featureID);
     }

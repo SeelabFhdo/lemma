@@ -15,8 +15,8 @@ public abstract class AbstractMappingDslValidator extends ServiceDslValidator {
 		List<EPackage> result = new ArrayList<EPackage>(super.getEPackages());
 		result.add(EPackage.Registry.INSTANCE.getEPackage("de.fhdo.ddmm.technology.mapping"));
 		result.add(EPackage.Registry.INSTANCE.getEPackage("de.fhdo.ddmm.service"));
-		result.add(EPackage.Registry.INSTANCE.getEPackage("de.fhdo.ddmm.data"));
 		result.add(EPackage.Registry.INSTANCE.getEPackage("de.fhdo.ddmm.technology"));
+		result.add(EPackage.Registry.INSTANCE.getEPackage("de.fhdo.ddmm.data"));
 		return result;
 	}
 }

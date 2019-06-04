@@ -14,8 +14,8 @@ public abstract class AbstractServiceDslValidator extends TechnologyDslValidator
 	protected List<EPackage> getEPackages() {
 		List<EPackage> result = new ArrayList<EPackage>(super.getEPackages());
 		result.add(EPackage.Registry.INSTANCE.getEPackage("de.fhdo.ddmm.service"));
-		result.add(EPackage.Registry.INSTANCE.getEPackage("de.fhdo.ddmm.data"));
 		result.add(EPackage.Registry.INSTANCE.getEPackage("de.fhdo.ddmm.technology"));
+		result.add(EPackage.Registry.INSTANCE.getEPackage("de.fhdo.ddmm.data"));
 		return result;
 	}
 }

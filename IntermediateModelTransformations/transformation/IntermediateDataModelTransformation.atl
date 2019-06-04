@@ -26,7 +26,7 @@ rule CreatedImport(createdImport : Intermediate!IntermediateImport) {
 
 --- Convenience helper to get a created IntermediateImport instance from a given source Import  
 --- instance
-helper def : getCreatedImport(sourceImport : Data!ComplexTypeImport) 
+helper def : getCreatedImport(sourceImport : Data!ComplexTypeImport)
 	: Intermediate!IntermediateImport = thisModule.createdImports->get(sourceImport.name) 
 ;
 ----------------------------------------------------------------------------------------------------
@@ -279,7 +279,8 @@ rule IntermediateListType {
 		}
 		
 		if (not s.primitiveType.oclIsUndefined())
-			t.primitiveType <- thisModule.IntermediatePrimitiveType(s.primitiveType);
+			t.primitiveType <- thisModule.IntermediatePrimitiveType(s.primitiveType.typeName, 
+				s.primitiveType.typeSize);
 		else
 			for (dataField in s.dataFields) {
 				t.dataFields->append(thisModule.IntermediateDataField(dataField, t, false));
@@ -317,7 +318,8 @@ rule IntermediateDataField(sourceField : Data!DataField,
 		}
 		
 		if (not sourceField.primitiveType.oclIsUndefined()) {
-			t.type <- thisModule.IntermediatePrimitiveType(sourceField.primitiveType);
+			t.type <- thisModule.IntermediatePrimitiveType(sourceField.primitiveType.typeName,
+				sourceField.primitiveType.typeSize);
 		} else if (not sourceField.complexType.oclIsUndefined()) {
 			if (sourceField.complexType.import.oclIsUndefined()) {
 				t.type <- thisModule.IntermediateComplexType(sourceField.complexType);
@@ -338,12 +340,90 @@ rule IntermediateDataField(sourceField : Data!DataField,
 	}
 }
 
+--- Transform a source Enumeration to a target IntermediateEnumeration
+rule IntermediateEnumeration {
+	from
+		s : Data!Enumeration
+	to
+		t : Intermediate!IntermediateEnumeration(
+			name <- s.name,
+			qualifiedName <- s.buildQualifiedName('.'),
+			origin <- #DATA_MODEL,
+			kind <- #ENUMERATION,
+			fields <- Sequence{}
+		)
+	do {
+		if (not s.dataModel.oclIsUndefined()) {
+			t.dataModel <- thisModule.IntermediateDataModel();
+			t.dataModel.complexTypes->append(t);
+		} else if (not s.version.oclIsUndefined()) {
+			t.version <- thisModule.getCreatedVersion(s.version);
+			t.version.complexTypes->append(t);
+		} else if (not s.context.oclIsUndefined()) {
+			t.context <- thisModule.getCreatedContext(s.context);
+			t.context.complexTypes->append(t);
+		}
+		
+		for (field in s.fields) {
+			t.fields->append(thisModule.IntermediateEnumerationField(field, t));
+		}
+		
+		thisModule.CreatedComplexType(t);
+	}
+}
+
+--- Called rule to create an IntermediateEnumerationField
+rule IntermediateEnumerationField(sourceField : Data!EnumerationField,
+	containingEnumeration : Intermediate!IntermediateEnumeration) {
+	using {
+		compatibleTypes : Map(String, Integer) = 
+			if (not sourceField.initializationValue.oclIsUndefined()) then
+				sourceField.initializationValue.inferCompatibleTypes()
+			else
+				Map{}
+			endif;
+	}
+	to
+		t : Intermediate!IntermediateEnumerationField(
+			name <- sourceField.name,
+			qualifiedName <- sourceField.buildQualifiedName('.'),			
+			initializationValueCompatibleTypes <- Sequence{},
+			enumeration <- containingEnumeration
+		)
+	do {
+		if (not sourceField.initializationValue.oclIsUndefined())
+			t.initializationValue <- sourceField.initializationValue.valueAsString();
+		
+		for (typeName in compatibleTypes.getKeys()) {
+			if (compatibleTypes.get(typeName) > -1)
+				t.initializationValueCompatibleTypes <- 
+					t.initializationValueCompatibleTypes->append(
+						thisModule.IntermediatePrimitiveType(
+							typeName, 
+							compatibleTypes.get(typeName)
+						)
+					);
+			else
+				t.initializationValueCompatibleTypes <- 
+					t.initializationValueCompatibleTypes->append(
+						thisModule.IntermediatePrimitiveType(typeName, OclUndefined)
+					);
+		}
+		
+		for (compatibleType in t.initializationValueCompatibleTypes) {
+			compatibleType.enumerationField <- t;
+		}
+
+		t;
+	}
+}
+
 --- Called rule to create an IntermediatePrimitiveType instance	
-rule IntermediatePrimitiveType(sourceType : Data!PrimitiveType) {
+rule IntermediatePrimitiveType(typeName : String, typeSize : Integer) {
 	to
 		t : Intermediate!IntermediatePrimitiveType(
-			name <- sourceType.typeName,
-			size <- sourceType.typeSize,
+			name <- typeName,
+			size <- typeSize,
 			origin <- #BUILTIN,
 			kind <- #PRIMITIVE
 		)

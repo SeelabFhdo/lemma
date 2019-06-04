@@ -1316,42 +1316,6 @@ public class ServiceDslGrammarAccess extends AbstractGrammarElementFinder {
 		//')'
 		public Keyword getRightParenthesisKeyword_4_2() { return cRightParenthesisKeyword_4_2; }
 	}
-	public class PrimitiveValueElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.fhdo.ddmm.ServiceDsl.PrimitiveValue");
-		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final Assignment cNumericValueAssignment_0 = (Assignment)cAlternatives.eContents().get(0);
-		private final RuleCall cNumericValueBIG_DECIMALTerminalRuleCall_0_0 = (RuleCall)cNumericValueAssignment_0.eContents().get(0);
-		private final Assignment cBooleanValueAssignment_1 = (Assignment)cAlternatives.eContents().get(1);
-		private final RuleCall cBooleanValueBOOLEANTerminalRuleCall_1_0 = (RuleCall)cBooleanValueAssignment_1.eContents().get(0);
-		private final Assignment cStringValueAssignment_2 = (Assignment)cAlternatives.eContents().get(2);
-		private final RuleCall cStringValueSTRINGTerminalRuleCall_2_0 = (RuleCall)cStringValueAssignment_2.eContents().get(0);
-		
-		//@Override
-		//PrimitiveValue data::PrimitiveValue:
-		//	numericValue=BIG_DECIMAL | booleanValue=BOOLEAN | stringValue=STRING;
-		@Override public ParserRule getRule() { return rule; }
-		
-		//numericValue=BIG_DECIMAL | booleanValue=BOOLEAN | stringValue=STRING
-		public Alternatives getAlternatives() { return cAlternatives; }
-		
-		//numericValue=BIG_DECIMAL
-		public Assignment getNumericValueAssignment_0() { return cNumericValueAssignment_0; }
-		
-		//BIG_DECIMAL
-		public RuleCall getNumericValueBIG_DECIMALTerminalRuleCall_0_0() { return cNumericValueBIG_DECIMALTerminalRuleCall_0_0; }
-		
-		//booleanValue=BOOLEAN
-		public Assignment getBooleanValueAssignment_1() { return cBooleanValueAssignment_1; }
-		
-		//BOOLEAN
-		public RuleCall getBooleanValueBOOLEANTerminalRuleCall_1_0() { return cBooleanValueBOOLEANTerminalRuleCall_1_0; }
-		
-		//stringValue=STRING
-		public Assignment getStringValueAssignment_2() { return cStringValueAssignment_2; }
-		
-		//STRING
-		public RuleCall getStringValueSTRINGTerminalRuleCall_2_0() { return cStringValueSTRINGTerminalRuleCall_2_0; }
-	}
 	public class PropertyValueAssignmentElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.fhdo.ddmm.ServiceDsl.PropertyValueAssignment");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -1534,7 +1498,6 @@ public class ServiceDslGrammarAccess extends AbstractGrammarElementFinder {
 	private final ImportedProtocolAndDataFormatElements pImportedProtocolAndDataFormat;
 	private final EndpointElements pEndpoint;
 	private final ImportedServiceAspectElements pImportedServiceAspect;
-	private final PrimitiveValueElements pPrimitiveValue;
 	private final PropertyValueAssignmentElements pPropertyValueAssignment;
 	private final MicroserviceTypeElements eMicroserviceType;
 	private final QualifiedNameWithAtLeastOneLevelElements pQualifiedNameWithAtLeastOneLevel;
@@ -1573,7 +1536,6 @@ public class ServiceDslGrammarAccess extends AbstractGrammarElementFinder {
 		this.pImportedProtocolAndDataFormat = new ImportedProtocolAndDataFormatElements();
 		this.pEndpoint = new EndpointElements();
 		this.pImportedServiceAspect = new ImportedServiceAspectElements();
-		this.pPrimitiveValue = new PrimitiveValueElements();
 		this.pPropertyValueAssignment = new PropertyValueAssignmentElements();
 		this.eMicroserviceType = new MicroserviceTypeElements();
 		this.pQualifiedNameWithAtLeastOneLevel = new QualifiedNameWithAtLeastOneLevelElements();
@@ -1825,17 +1787,6 @@ public class ServiceDslGrammarAccess extends AbstractGrammarElementFinder {
 		return getImportedServiceAspectAccess().getRule();
 	}
 	
-	//@Override
-	//PrimitiveValue data::PrimitiveValue:
-	//	numericValue=BIG_DECIMAL | booleanValue=BOOLEAN | stringValue=STRING;
-	public PrimitiveValueElements getPrimitiveValueAccess() {
-		return pPrimitiveValue;
-	}
-	
-	public ParserRule getPrimitiveValueRule() {
-		return getPrimitiveValueAccess().getRule();
-	}
-	
 	//PropertyValueAssignment technology::TechnologySpecificPropertyValueAssignment:
 	//	property=[technology::TechnologySpecificProperty] '=' value=PrimitiveValue;
 	public PropertyValueAssignmentElements getPropertyValueAssignmentAccess() {
@@ -2057,7 +2008,7 @@ public class ServiceDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//TechnologySpecificProperty:
-	//	type=PrimitiveType name=ID ('=' defaultValue=super::PrimitiveValue | mandatory?='mandatory')?
+	//	type=PrimitiveType name=ID ('=' defaultValue=PrimitiveValue | mandatory?='mandatory')?
 	//	';';
 	public TechnologyDslGrammarAccess.TechnologySpecificPropertyElements getTechnologySpecificPropertyAccess() {
 		return gaTechnologyDsl.getTechnologySpecificPropertyAccess();
@@ -2192,7 +2143,7 @@ public class ServiceDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//ComplexType:
-	//	DataStructure | ListType;
+	//	DataStructure | ListType | Enumeration;
 	public DataDslGrammarAccess.ComplexTypeElements getComplexTypeAccess() {
 		return gaDataDsl.getComplexTypeAccess();
 	}
@@ -2238,6 +2189,38 @@ public class ServiceDslGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getDataFieldRule() {
 		return getDataFieldAccess().getRule();
+	}
+	
+	//Enumeration:
+	//	'enum' name=ID '{'
+	//	fields+=EnumerationField (',' fields+=EnumerationField)*
+	//	'}';
+	public DataDslGrammarAccess.EnumerationElements getEnumerationAccess() {
+		return gaDataDsl.getEnumerationAccess();
+	}
+	
+	public ParserRule getEnumerationRule() {
+		return getEnumerationAccess().getRule();
+	}
+	
+	//EnumerationField:
+	//	name=ID ('(' initializationValue=PrimitiveValue ')')?;
+	public DataDslGrammarAccess.EnumerationFieldElements getEnumerationFieldAccess() {
+		return gaDataDsl.getEnumerationFieldAccess();
+	}
+	
+	public ParserRule getEnumerationFieldRule() {
+		return getEnumerationFieldAccess().getRule();
+	}
+	
+	//PrimitiveValue:
+	//	numericValue=BIG_DECIMAL | booleanValue=BOOLEAN | stringValue=STRING;
+	public DataDslGrammarAccess.PrimitiveValueElements getPrimitiveValueAccess() {
+		return gaDataDsl.getPrimitiveValueAccess();
+	}
+	
+	public ParserRule getPrimitiveValueRule() {
+		return getPrimitiveValueAccess().getRule();
 	}
 	
 	//PossiblyImportedComplexType:

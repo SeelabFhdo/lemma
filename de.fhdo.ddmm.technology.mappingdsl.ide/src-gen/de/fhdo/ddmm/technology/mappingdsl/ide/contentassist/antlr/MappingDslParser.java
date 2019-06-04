@@ -38,7 +38,6 @@ public class MappingDslParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getTechnologySpecificImportedServiceAspectAccess().getAlternatives_3_0_1(), "rule__TechnologySpecificImportedServiceAspect__Alternatives_3_0_1");
 			builder.put(grammarAccess.getParameterAccess().getAlternatives_7(), "rule__Parameter__Alternatives_7");
 			builder.put(grammarAccess.getImportedServiceAspectAccess().getAlternatives_4_1(), "rule__ImportedServiceAspect__Alternatives_4_1");
-			builder.put(grammarAccess.getPrimitiveValueAccess().getAlternatives(), "rule__PrimitiveValue__Alternatives");
 			builder.put(grammarAccess.getTechnologyAccess().getAlternatives_4_2(), "rule__Technology__Alternatives_4_2");
 			builder.put(grammarAccess.getTechnologySpecificPropertyAccess().getAlternatives_2(), "rule__TechnologySpecificProperty__Alternatives_2");
 			builder.put(grammarAccess.getServiceAspectPointcutAccess().getAlternatives(), "rule__ServiceAspectPointcut__Alternatives");
@@ -49,6 +48,7 @@ public class MappingDslParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getComplexTypeAccess().getAlternatives(), "rule__ComplexType__Alternatives");
 			builder.put(grammarAccess.getListTypeAccess().getAlternatives(), "rule__ListType__Alternatives");
 			builder.put(grammarAccess.getDataFieldAccess().getAlternatives_1(), "rule__DataField__Alternatives_1");
+			builder.put(grammarAccess.getPrimitiveValueAccess().getAlternatives(), "rule__PrimitiveValue__Alternatives");
 			builder.put(grammarAccess.getPrimitiveTypeAccess().getAlternatives(), "rule__PrimitiveType__Alternatives");
 			builder.put(grammarAccess.getImportTypeAccess().getAlternatives(), "rule__ImportType__Alternatives");
 			builder.put(grammarAccess.getVisibilityAccess().getAlternatives(), "rule__Visibility__Alternatives");
@@ -199,6 +199,10 @@ public class MappingDslParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getListTypeAccess().getGroup_0_4(), "rule__ListType__Group_0_4__0");
 			builder.put(grammarAccess.getListTypeAccess().getGroup_1(), "rule__ListType__Group_1__0");
 			builder.put(grammarAccess.getDataFieldAccess().getGroup(), "rule__DataField__Group__0");
+			builder.put(grammarAccess.getEnumerationAccess().getGroup(), "rule__Enumeration__Group__0");
+			builder.put(grammarAccess.getEnumerationAccess().getGroup_4(), "rule__Enumeration__Group_4__0");
+			builder.put(grammarAccess.getEnumerationFieldAccess().getGroup(), "rule__EnumerationField__Group__0");
+			builder.put(grammarAccess.getEnumerationFieldAccess().getGroup_1(), "rule__EnumerationField__Group_1__0");
 			builder.put(grammarAccess.getPossiblyImportedComplexTypeAccess().getGroup(), "rule__PossiblyImportedComplexType__Group__0");
 			builder.put(grammarAccess.getPossiblyImportedComplexTypeAccess().getGroup_0(), "rule__PossiblyImportedComplexType__Group_0__0");
 			builder.put(grammarAccess.getPrimitiveTypeAccess().getGroup_0(), "rule__PrimitiveType__Group_0__0");
@@ -344,9 +348,6 @@ public class MappingDslParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getImportedServiceAspectAccess().getSinglePropertyValueAssignment_4_1_0(), "rule__ImportedServiceAspect__SinglePropertyValueAssignment_4_1_0");
 			builder.put(grammarAccess.getImportedServiceAspectAccess().getValuesAssignment_4_1_1_0(), "rule__ImportedServiceAspect__ValuesAssignment_4_1_1_0");
 			builder.put(grammarAccess.getImportedServiceAspectAccess().getValuesAssignment_4_1_1_1_1(), "rule__ImportedServiceAspect__ValuesAssignment_4_1_1_1_1");
-			builder.put(grammarAccess.getPrimitiveValueAccess().getNumericValueAssignment_0(), "rule__PrimitiveValue__NumericValueAssignment_0");
-			builder.put(grammarAccess.getPrimitiveValueAccess().getBooleanValueAssignment_1(), "rule__PrimitiveValue__BooleanValueAssignment_1");
-			builder.put(grammarAccess.getPrimitiveValueAccess().getStringValueAssignment_2(), "rule__PrimitiveValue__StringValueAssignment_2");
 			builder.put(grammarAccess.getPropertyValueAssignmentAccess().getPropertyAssignment_0(), "rule__PropertyValueAssignment__PropertyAssignment_0");
 			builder.put(grammarAccess.getPropertyValueAssignmentAccess().getValueAssignment_2(), "rule__PropertyValueAssignment__ValueAssignment_2");
 			builder.put(grammarAccess.getTechnologyAccess().getImportsAssignment_0(), "rule__Technology__ImportsAssignment_0");
@@ -438,6 +439,14 @@ public class MappingDslParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getDataFieldAccess().getPrimitiveTypeAssignment_1_0(), "rule__DataField__PrimitiveTypeAssignment_1_0");
 			builder.put(grammarAccess.getDataFieldAccess().getComplexTypeAssignment_1_1(), "rule__DataField__ComplexTypeAssignment_1_1");
 			builder.put(grammarAccess.getDataFieldAccess().getNameAssignment_2(), "rule__DataField__NameAssignment_2");
+			builder.put(grammarAccess.getEnumerationAccess().getNameAssignment_1(), "rule__Enumeration__NameAssignment_1");
+			builder.put(grammarAccess.getEnumerationAccess().getFieldsAssignment_3(), "rule__Enumeration__FieldsAssignment_3");
+			builder.put(grammarAccess.getEnumerationAccess().getFieldsAssignment_4_1(), "rule__Enumeration__FieldsAssignment_4_1");
+			builder.put(grammarAccess.getEnumerationFieldAccess().getNameAssignment_0(), "rule__EnumerationField__NameAssignment_0");
+			builder.put(grammarAccess.getEnumerationFieldAccess().getInitializationValueAssignment_1_1(), "rule__EnumerationField__InitializationValueAssignment_1_1");
+			builder.put(grammarAccess.getPrimitiveValueAccess().getNumericValueAssignment_0(), "rule__PrimitiveValue__NumericValueAssignment_0");
+			builder.put(grammarAccess.getPrimitiveValueAccess().getBooleanValueAssignment_1(), "rule__PrimitiveValue__BooleanValueAssignment_1");
+			builder.put(grammarAccess.getPrimitiveValueAccess().getStringValueAssignment_2(), "rule__PrimitiveValue__StringValueAssignment_2");
 			builder.put(grammarAccess.getPossiblyImportedComplexTypeAccess().getImportAssignment_0_0(), "rule__PossiblyImportedComplexType__ImportAssignment_0_0");
 			builder.put(grammarAccess.getPossiblyImportedComplexTypeAccess().getComplexTypeAssignment_1(), "rule__PossiblyImportedComplexType__ComplexTypeAssignment_1");
 		}

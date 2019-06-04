@@ -130,8 +130,3 @@ ImportedOperationAspect returns ImportedOperationAspect:
         ';'
     )
 ;
-
-@Override
-PrimitiveValue returns data::PrimitiveValue:
-    numericValue=BIG_DECIMAL | booleanValue=BOOLEAN | stringValue=STRING
-;

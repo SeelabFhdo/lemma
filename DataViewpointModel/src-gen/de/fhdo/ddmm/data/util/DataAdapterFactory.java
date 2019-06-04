@@ -152,6 +152,14 @@ public class DataAdapterFactory extends AdapterFactoryImpl {
                 return createDataFieldAdapter();
             }
             @Override
+            public Adapter caseEnumeration(Enumeration object) {
+                return createEnumerationAdapter();
+            }
+            @Override
+            public Adapter caseEnumerationField(EnumerationField object) {
+                return createEnumerationFieldAdapter();
+            }
+            @Override
             public Adapter casePrimitiveValue(PrimitiveValue object) {
                 return createPrimitiveValueAdapter();
             }
@@ -466,6 +474,34 @@ public class DataAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createDataFieldAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.fhdo.ddmm.data.Enumeration <em>Enumeration</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.fhdo.ddmm.data.Enumeration
+     * @generated
+     */
+    public Adapter createEnumerationAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.fhdo.ddmm.data.EnumerationField <em>Enumeration Field</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.fhdo.ddmm.data.EnumerationField
+     * @generated
+     */
+    public Adapter createEnumerationFieldAdapter() {
         return null;
     }
 

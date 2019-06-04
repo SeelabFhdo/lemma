@@ -15,6 +15,9 @@ import de.fhdo.ddmm.typechecking.complex_types.data_structures.DataFieldComparat
 import de.fhdo.ddmm.typechecking.TypecheckingUtils
 import de.fhdo.ddmm.technology.TechnologySpecificDataStructure
 import de.fhdo.ddmm.technology.TechnologySpecificListType
+import de.fhdo.ddmm.data.Enumeration
+import com.google.common.base.Function
+import de.fhdo.ddmm.data.PrimitiveValue
 
 /**
  * TypeChecker implementation for ComplexTypes.
@@ -103,7 +106,9 @@ class ComplexTypeChecker implements TypeCheckerI<ComplexType> {
         val structureCheck = basicType.isStructure && typeToCheck.isStructure
         val primitiveListCheck = basicType.isPrimitiveList && typeToCheck.isPrimitiveList
         val structuredListCheck = basicType.isStructuredList && typeToCheck.isStructuredList
-        val nodeTypeKindsEqual = structureCheck || primitiveListCheck || structuredListCheck
+        val enumerationCheck = basicType.isIsEnumeration && typeToCheck.isIsEnumeration
+        val nodeTypeKindsEqual = structureCheck || primitiveListCheck || structuredListCheck ||
+            enumerationCheck
 
         // The current pair is immediately compatible if its nodes encapsulate the same types
         if (typesEqual)
@@ -119,13 +124,18 @@ class ComplexTypeChecker implements TypeCheckerI<ComplexType> {
             iterator.markCurrentPairIncompatible()
 
         // The node pair is incompatible if its nodes encapsulate incompatible primitive lists
-        else if (primitiveListCheck&&
+        else if (primitiveListCheck &&
             !primitiveListsCompatible(basicType as ListType, typeToCheck as ListType))
             iterator.markCurrentPairIncompatible()
 
         // The node pair is incompatible if its nodes encapsulate incompatible structured lists
         else if (structuredListCheck &&
             !structuredListsCompatible(basicType as ListType, typeToCheck as ListType))
+            iterator.markCurrentPairIncompatible()
+
+        // The node pair is incompatible if its nodes encapsulate incompatible enumerations
+        else if (enumerationCheck &&
+            !enumerationsCompatible(basicType as Enumeration, typeToCheck as Enumeration))
             iterator.markCurrentPairIncompatible()
     }
 
@@ -305,6 +315,61 @@ class ComplexTypeChecker implements TypeCheckerI<ComplexType> {
         }
 
         return true
+    }
+
+    /**
+     * Check if two enumerations are compatible
+     */
+    private def enumerationsCompatible(Enumeration basicEnum, Enumeration enumToCheck) {
+        /*
+         * Check if all fields of the enumeration to check, i.e., the value-providing enumeration,
+         * exhibit initialization values. That is, because we then check, if the basic enumeration,
+         * i.e., the value-receiving enumeration exhibits all initialization values of the
+         * enumeration to check. In this case, enumeration fields could be converted by mapping them
+         * to their counterparts with the same initialization values in the basic enumeration.
+         */
+        if (enumToCheck.fields.exists[initializationValue === null])
+            return false
+
+        /*
+         * Compare initialization values. The enumerations are compatible, if the basic enumeration
+         * contains all initialization values of the other enumeration.
+         */
+        if (!containsAllInitializationValues(basicEnum, enumToCheck, [stringValue]) ||
+            !containsAllInitializationValues(basicEnum, enumToCheck, [booleanValue]) ||
+            !containsAllInitializationValues(basicEnum, enumToCheck, [numericValue]))
+            return false
+
+        return true
+    }
+
+    /**
+     * Helper to check if an enumeration contains all initialization values of another enumeration.
+     * Note, that this helper does not consider the types of the values. That is, the
+     * "fieldValueGetter" parameter needs to take care that only values of the same type, e.g.,
+     * string or numeric, are to be compared, in case this is desired.
+     */
+    private def <T> containsAllInitializationValues(Enumeration basicEnum, Enumeration enumToCheck,
+        Function<PrimitiveValue, T> fieldValueGetter) {
+        val basicValues = basicEnum.fields
+            .filter[
+                initializationValue !== null &&
+                fieldValueGetter.apply(initializationValue) !== null
+            ]
+            .map[initializationValue.valueAsString]
+            .toSet()
+
+println(basicEnum.qualifiedNameParts)
+
+        val toCheckValues = enumToCheck.fields
+            .filter[
+                initializationValue !== null &&
+                fieldValueGetter.apply(initializationValue) !== null
+            ]
+            .map[initializationValue.valueAsString]
+            .toSet()
+
+        return basicValues.containsAll(toCheckValues)
     }
 
     /**

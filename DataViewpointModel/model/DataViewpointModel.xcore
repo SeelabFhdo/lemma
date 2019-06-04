@@ -3,6 +3,7 @@ package de.fhdo.ddmm.data
 import java.math.BigDecimal
 import java.text.DateFormat
 import java.text.ParseException
+import java.util.Map
 
 /**
  * This metamodel represents the Data Modeling Viewpoint, which is mainly used for defining custom
@@ -183,6 +184,22 @@ class Context {
 abstract class Type {}
 
 /*
+ * Enumeration for primitive type constants (literal: type name, value: type size)
+ */
+enum PrimitiveTypeConstants {
+    BOOLEAN as "boolean" = 1
+    BYTE as "byte" = 8
+    CHARACTER as "char" = 16
+    DATE as "date" = -1
+    DOUBLE as "double" = 64
+    FLOAT as "float" = 32
+    INTEGER as "int" = 32
+    LONG as "long" = 64
+    SHORT as "short" = 16
+    STRING as "string" = -1
+}
+
+/*
  * Represents built-in primitive types that correspond to Java's primitive types in syntax,
  * semantics, naming and size. Strings and dates, however, are also treated as primitive types.
  */
@@ -192,16 +209,16 @@ abstract class PrimitiveType extends Type {
      */
     derived String typeName get {
         return switch (this) {
-            PrimitiveBoolean: "boolean"
-            PrimitiveByte: "byte"
-            PrimitiveCharacter: "char"
-            PrimitiveDate: "date"
-            PrimitiveDouble: "double"
-            PrimitiveFloat: "float"
-            PrimitiveInteger: "int"
-            PrimitiveLong: "long"
-            PrimitiveShort: "short"
-            PrimitiveString: "string"
+            PrimitiveBoolean: PrimitiveTypeConstants.BOOLEAN.literal
+            PrimitiveByte: PrimitiveTypeConstants.BYTE.literal
+            PrimitiveCharacter: PrimitiveTypeConstants.CHARACTER.literal
+            PrimitiveDate: PrimitiveTypeConstants.DATE.literal
+            PrimitiveDouble: PrimitiveTypeConstants.DOUBLE.literal
+            PrimitiveFloat: PrimitiveTypeConstants.FLOAT.literal
+            PrimitiveInteger: PrimitiveTypeConstants.INTEGER.literal
+            PrimitiveLong: PrimitiveTypeConstants.LONG.literal
+            PrimitiveShort: PrimitiveTypeConstants.SHORT.literal
+            PrimitiveString: PrimitiveTypeConstants.STRING.literal
             default: null
         }
     }
@@ -211,20 +228,20 @@ abstract class PrimitiveType extends Type {
      */
     derived Integer typeSize get {
         return switch (this) {
-            PrimitiveBoolean: 1
-            PrimitiveByte: 8
-            PrimitiveCharacter: 16
+            PrimitiveBoolean: PrimitiveTypeConstants.BOOLEAN.value
+            PrimitiveByte: PrimitiveTypeConstants.BYTE.value
+            PrimitiveCharacter: PrimitiveTypeConstants.CHARACTER.value
             // Date is a built-in (but still "object-based") primitive type. Its size is therefore
             // not determinable and hence set to null. Null will be treated as representing an
             // "inifinite" size, e.g., sizeCompare(PrimitiveDate) on a PrimitiveLong instance will
             // return -1 stating that a Long is smaller than a Date object, that probably consists
             // of a variety of primitively-typed data fields
             PrimitiveDate: null
-            PrimitiveDouble: 64
-            PrimitiveFloat: 32
-            PrimitiveInteger: 32
-            PrimitiveLong: 64
-            PrimitiveShort: 16
+            PrimitiveDouble: PrimitiveTypeConstants.DOUBLE.value
+            PrimitiveFloat: PrimitiveTypeConstants.FLOAT.value
+            PrimitiveInteger: PrimitiveTypeConstants.INTEGER.value
+            PrimitiveLong: PrimitiveTypeConstants.LONG.value
+            PrimitiveShort: PrimitiveTypeConstants.SHORT.value
             // String is a built-in (but still "object-based") primitive type. See the description
             // of Date for details.
             PrimitiveString: null
@@ -407,6 +424,13 @@ abstract class ComplexType extends Type {
 
         return (this as ListType).dataFields !== null &&
             !(this as ListType).dataFields.empty
+    }
+
+    /**
+     * Flag indicating that the ComplexType instance is an Enumeration
+     */
+    derived boolean isEnumeration get {
+        return this instanceof Enumeration
     }
 
     /**
@@ -770,6 +794,56 @@ class DataField {
 }
 
 /**
+ * Represents an enumeration that can have a variety of fields with arbitrary initializing values
+ */
+class Enumeration extends ComplexType {
+    /**
+     * Implicit Constraints:
+     *     (C1) Field names must be unique.
+     *          Ensured by: DSL validator.
+     */
+    contains EnumerationField[1..*] fields opposite enumeration
+}
+
+/**
+ * Represents a field in an enumeration
+ */
+class EnumerationField {
+    String name
+
+    contains PrimitiveValue[0..1] initializationValue
+    container Enumeration enumeration opposite fields
+
+    /**
+     * Get parts of the enumeration field for creating a qualified name
+     */
+    op String[] getQualifiedNameParts() {
+        if (name === null || name.empty)
+            return newArrayList.asEList
+
+        val nameParts = enumeration.qualifiedNameParts
+        nameParts.add(name)
+        nameParts.asEList
+    }
+
+    /**
+     * Build qualified name from qualified name parts
+     */
+    op String buildQualifiedName(String separator) {
+        if (separator === null)
+            return null
+
+        var String qualifiedName = ""
+        for (part : qualifiedNameParts)
+            qualifiedName += separator + part
+        // Remove leading separator
+        if (!qualifiedName.empty)
+            qualifiedName = qualifiedName.substring(separator.length)
+        return qualifiedName
+    }
+}
+
+/**
  * Primitive type value. In general, there are three "kinds" of values supported by the metamodel:
  *      (i) Numbers: Comprises values of primitive types byte, short, integer, long, float, and
  *                   double.
@@ -1011,4 +1085,76 @@ class PrimitiveValue {
     op String asString() {
         return stringValue
     }
+
+    /**
+     * Infer names and sizes of all compatible types into which this value can be converted
+     */
+    op TypeNameSizeMap inferCompatibleTypes() {
+        val compatibleTypes = <String, Integer>newHashMap
+
+        if (asBoolean !== null)
+            compatibleTypes.put(
+                PrimitiveTypeConstants.BOOLEAN.literal,
+                PrimitiveTypeConstants.BOOLEAN.value
+            )
+
+        if (asByte !== null)
+            compatibleTypes.put(
+                PrimitiveTypeConstants.BYTE.literal,
+                PrimitiveTypeConstants.BYTE.value
+            )
+
+        if (asCharacter !== null)
+            compatibleTypes.put(
+                PrimitiveTypeConstants.CHARACTER.literal,
+                PrimitiveTypeConstants.CHARACTER.value
+            )
+
+        if (asShort !== null)
+            compatibleTypes.put(
+                PrimitiveTypeConstants.SHORT.literal,
+                PrimitiveTypeConstants.SHORT.value
+            )
+
+        if (asInteger !== null)
+            compatibleTypes.put(
+                PrimitiveTypeConstants.INTEGER.literal,
+                PrimitiveTypeConstants.INTEGER.value
+            )
+
+        if (asLong !== null)
+            compatibleTypes.put(
+                PrimitiveTypeConstants.LONG.literal,
+                PrimitiveTypeConstants.LONG.value
+            )
+
+        if (asFloat !== null)
+            compatibleTypes.put(
+                PrimitiveTypeConstants.FLOAT.literal,
+                PrimitiveTypeConstants.FLOAT.value
+            )
+
+        if (asDouble !== null)
+            compatibleTypes.put(
+                PrimitiveTypeConstants.DOUBLE.literal,
+                PrimitiveTypeConstants.DOUBLE.value
+            )
+
+        if (asDate !== null)
+            compatibleTypes.put(
+                PrimitiveTypeConstants.DATE.literal,
+                PrimitiveTypeConstants.DATE.value
+            )
+
+        if (asString !== null)
+            compatibleTypes.put(
+                PrimitiveTypeConstants.STRING.literal,
+                PrimitiveTypeConstants.STRING.value
+            )
+
+        return compatibleTypes
+
+    }
 }
+
+type TypeNameSizeMap wraps Map<String, Integer>

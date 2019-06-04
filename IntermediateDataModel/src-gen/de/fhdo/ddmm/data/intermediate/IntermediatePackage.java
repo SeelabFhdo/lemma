@@ -461,13 +461,22 @@ public interface IntermediatePackage extends EPackage {
     int INTERMEDIATE_PRIMITIVE_TYPE__SIZE = INTERMEDIATE_TYPE_FEATURE_COUNT + 0;
 
     /**
+     * The feature id for the '<em><b>Enumeration Field</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_PRIMITIVE_TYPE__ENUMERATION_FIELD = INTERMEDIATE_TYPE_FEATURE_COUNT + 1;
+
+    /**
      * The number of structural features of the '<em>Primitive Type</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_PRIMITIVE_TYPE_FEATURE_COUNT = INTERMEDIATE_TYPE_FEATURE_COUNT + 1;
+    int INTERMEDIATE_PRIMITIVE_TYPE_FEATURE_COUNT = INTERMEDIATE_TYPE_FEATURE_COUNT + 2;
 
     /**
      * The number of operations of the '<em>Primitive Type</em>' class.
@@ -1033,6 +1042,188 @@ public interface IntermediatePackage extends EPackage {
     int INTERMEDIATE_DATA_FIELD_OPERATION_COUNT = 0;
 
     /**
+     * The meta object id for the '{@link de.fhdo.ddmm.data.intermediate.impl.IntermediateEnumerationImpl <em>Enumeration</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.fhdo.ddmm.data.intermediate.impl.IntermediateEnumerationImpl
+     * @see de.fhdo.ddmm.data.intermediate.impl.IntermediatePackageImpl#getIntermediateEnumeration()
+     * @generated
+     */
+    int INTERMEDIATE_ENUMERATION = 11;
+
+    /**
+     * The feature id for the '<em><b>Name</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_ENUMERATION__NAME = INTERMEDIATE_COMPLEX_TYPE__NAME;
+
+    /**
+     * The feature id for the '<em><b>Origin</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_ENUMERATION__ORIGIN = INTERMEDIATE_COMPLEX_TYPE__ORIGIN;
+
+    /**
+     * The feature id for the '<em><b>Kind</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_ENUMERATION__KIND = INTERMEDIATE_COMPLEX_TYPE__KIND;
+
+    /**
+     * The feature id for the '<em><b>Data Field</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_ENUMERATION__DATA_FIELD = INTERMEDIATE_COMPLEX_TYPE__DATA_FIELD;
+
+    /**
+     * The feature id for the '<em><b>Qualified Name</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_ENUMERATION__QUALIFIED_NAME = INTERMEDIATE_COMPLEX_TYPE__QUALIFIED_NAME;
+
+    /**
+     * The feature id for the '<em><b>Data Model</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_ENUMERATION__DATA_MODEL = INTERMEDIATE_COMPLEX_TYPE__DATA_MODEL;
+
+    /**
+     * The feature id for the '<em><b>Version</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_ENUMERATION__VERSION = INTERMEDIATE_COMPLEX_TYPE__VERSION;
+
+    /**
+     * The feature id for the '<em><b>Context</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_ENUMERATION__CONTEXT = INTERMEDIATE_COMPLEX_TYPE__CONTEXT;
+
+    /**
+     * The feature id for the '<em><b>Fields</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_ENUMERATION__FIELDS = INTERMEDIATE_COMPLEX_TYPE_FEATURE_COUNT + 0;
+
+    /**
+     * The number of structural features of the '<em>Enumeration</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_ENUMERATION_FEATURE_COUNT = INTERMEDIATE_COMPLEX_TYPE_FEATURE_COUNT + 1;
+
+    /**
+     * The number of operations of the '<em>Enumeration</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_ENUMERATION_OPERATION_COUNT = INTERMEDIATE_COMPLEX_TYPE_OPERATION_COUNT + 0;
+
+    /**
+     * The meta object id for the '{@link de.fhdo.ddmm.data.intermediate.impl.IntermediateEnumerationFieldImpl <em>Enumeration Field</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.fhdo.ddmm.data.intermediate.impl.IntermediateEnumerationFieldImpl
+     * @see de.fhdo.ddmm.data.intermediate.impl.IntermediatePackageImpl#getIntermediateEnumerationField()
+     * @generated
+     */
+    int INTERMEDIATE_ENUMERATION_FIELD = 12;
+
+    /**
+     * The feature id for the '<em><b>Name</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_ENUMERATION_FIELD__NAME = 0;
+
+    /**
+     * The feature id for the '<em><b>Qualified Name</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_ENUMERATION_FIELD__QUALIFIED_NAME = 1;
+
+    /**
+     * The feature id for the '<em><b>Initialization Value</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_ENUMERATION_FIELD__INITIALIZATION_VALUE = 2;
+
+    /**
+     * The feature id for the '<em><b>Initialization Value Compatible Types</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_ENUMERATION_FIELD__INITIALIZATION_VALUE_COMPATIBLE_TYPES = 3;
+
+    /**
+     * The feature id for the '<em><b>Enumeration</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_ENUMERATION_FIELD__ENUMERATION = 4;
+
+    /**
+     * The number of structural features of the '<em>Enumeration Field</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_ENUMERATION_FIELD_FEATURE_COUNT = 5;
+
+    /**
+     * The number of operations of the '<em>Enumeration Field</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_ENUMERATION_FIELD_OPERATION_COUNT = 0;
+
+    /**
      * The meta object id for the '{@link de.fhdo.ddmm.data.intermediate.IntermediateTypeKind <em>Type Kind</em>}' enum.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1040,7 +1231,7 @@ public interface IntermediatePackage extends EPackage {
      * @see de.fhdo.ddmm.data.intermediate.impl.IntermediatePackageImpl#getIntermediateTypeKind()
      * @generated
      */
-    int INTERMEDIATE_TYPE_KIND = 11;
+    int INTERMEDIATE_TYPE_KIND = 13;
 
     /**
      * The meta object id for the '{@link de.fhdo.ddmm.data.intermediate.IntermediateTypeOrigin <em>Type Origin</em>}' enum.
@@ -1050,7 +1241,7 @@ public interface IntermediatePackage extends EPackage {
      * @see de.fhdo.ddmm.data.intermediate.impl.IntermediatePackageImpl#getIntermediateTypeOrigin()
      * @generated
      */
-    int INTERMEDIATE_TYPE_ORIGIN = 12;
+    int INTERMEDIATE_TYPE_ORIGIN = 14;
 
 
     /**
@@ -1378,6 +1569,17 @@ public interface IntermediatePackage extends EPackage {
     EAttribute getIntermediatePrimitiveType_Size();
 
     /**
+     * Returns the meta object for the container reference '{@link de.fhdo.ddmm.data.intermediate.IntermediatePrimitiveType#getEnumerationField <em>Enumeration Field</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the container reference '<em>Enumeration Field</em>'.
+     * @see de.fhdo.ddmm.data.intermediate.IntermediatePrimitiveType#getEnumerationField()
+     * @see #getIntermediatePrimitiveType()
+     * @generated
+     */
+    EReference getIntermediatePrimitiveType_EnumerationField();
+
+    /**
      * Returns the meta object for class '{@link de.fhdo.ddmm.data.intermediate.IntermediateComplexType <em>Complex Type</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1624,6 +1826,92 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      */
     EReference getIntermediateDataField_ListType();
+
+    /**
+     * Returns the meta object for class '{@link de.fhdo.ddmm.data.intermediate.IntermediateEnumeration <em>Enumeration</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Enumeration</em>'.
+     * @see de.fhdo.ddmm.data.intermediate.IntermediateEnumeration
+     * @generated
+     */
+    EClass getIntermediateEnumeration();
+
+    /**
+     * Returns the meta object for the containment reference list '{@link de.fhdo.ddmm.data.intermediate.IntermediateEnumeration#getFields <em>Fields</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Fields</em>'.
+     * @see de.fhdo.ddmm.data.intermediate.IntermediateEnumeration#getFields()
+     * @see #getIntermediateEnumeration()
+     * @generated
+     */
+    EReference getIntermediateEnumeration_Fields();
+
+    /**
+     * Returns the meta object for class '{@link de.fhdo.ddmm.data.intermediate.IntermediateEnumerationField <em>Enumeration Field</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Enumeration Field</em>'.
+     * @see de.fhdo.ddmm.data.intermediate.IntermediateEnumerationField
+     * @generated
+     */
+    EClass getIntermediateEnumerationField();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.fhdo.ddmm.data.intermediate.IntermediateEnumerationField#getName <em>Name</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Name</em>'.
+     * @see de.fhdo.ddmm.data.intermediate.IntermediateEnumerationField#getName()
+     * @see #getIntermediateEnumerationField()
+     * @generated
+     */
+    EAttribute getIntermediateEnumerationField_Name();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.fhdo.ddmm.data.intermediate.IntermediateEnumerationField#getQualifiedName <em>Qualified Name</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Qualified Name</em>'.
+     * @see de.fhdo.ddmm.data.intermediate.IntermediateEnumerationField#getQualifiedName()
+     * @see #getIntermediateEnumerationField()
+     * @generated
+     */
+    EAttribute getIntermediateEnumerationField_QualifiedName();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.fhdo.ddmm.data.intermediate.IntermediateEnumerationField#getInitializationValue <em>Initialization Value</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Initialization Value</em>'.
+     * @see de.fhdo.ddmm.data.intermediate.IntermediateEnumerationField#getInitializationValue()
+     * @see #getIntermediateEnumerationField()
+     * @generated
+     */
+    EAttribute getIntermediateEnumerationField_InitializationValue();
+
+    /**
+     * Returns the meta object for the containment reference list '{@link de.fhdo.ddmm.data.intermediate.IntermediateEnumerationField#getInitializationValueCompatibleTypes <em>Initialization Value Compatible Types</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Initialization Value Compatible Types</em>'.
+     * @see de.fhdo.ddmm.data.intermediate.IntermediateEnumerationField#getInitializationValueCompatibleTypes()
+     * @see #getIntermediateEnumerationField()
+     * @generated
+     */
+    EReference getIntermediateEnumerationField_InitializationValueCompatibleTypes();
+
+    /**
+     * Returns the meta object for the container reference '{@link de.fhdo.ddmm.data.intermediate.IntermediateEnumerationField#getEnumeration <em>Enumeration</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the container reference '<em>Enumeration</em>'.
+     * @see de.fhdo.ddmm.data.intermediate.IntermediateEnumerationField#getEnumeration()
+     * @see #getIntermediateEnumerationField()
+     * @generated
+     */
+    EReference getIntermediateEnumerationField_Enumeration();
 
     /**
      * Returns the meta object for enum '{@link de.fhdo.ddmm.data.intermediate.IntermediateTypeKind <em>Type Kind</em>}'.
@@ -1921,6 +2209,14 @@ public interface IntermediatePackage extends EPackage {
         EAttribute INTERMEDIATE_PRIMITIVE_TYPE__SIZE = eINSTANCE.getIntermediatePrimitiveType_Size();
 
         /**
+         * The meta object literal for the '<em><b>Enumeration Field</b></em>' container reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference INTERMEDIATE_PRIMITIVE_TYPE__ENUMERATION_FIELD = eINSTANCE.getIntermediatePrimitiveType_EnumerationField();
+
+        /**
          * The meta object literal for the '{@link de.fhdo.ddmm.data.intermediate.impl.IntermediateComplexTypeImpl <em>Complex Type</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -2113,6 +2409,74 @@ public interface IntermediatePackage extends EPackage {
          * @generated
          */
         EReference INTERMEDIATE_DATA_FIELD__LIST_TYPE = eINSTANCE.getIntermediateDataField_ListType();
+
+        /**
+         * The meta object literal for the '{@link de.fhdo.ddmm.data.intermediate.impl.IntermediateEnumerationImpl <em>Enumeration</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.fhdo.ddmm.data.intermediate.impl.IntermediateEnumerationImpl
+         * @see de.fhdo.ddmm.data.intermediate.impl.IntermediatePackageImpl#getIntermediateEnumeration()
+         * @generated
+         */
+        EClass INTERMEDIATE_ENUMERATION = eINSTANCE.getIntermediateEnumeration();
+
+        /**
+         * The meta object literal for the '<em><b>Fields</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference INTERMEDIATE_ENUMERATION__FIELDS = eINSTANCE.getIntermediateEnumeration_Fields();
+
+        /**
+         * The meta object literal for the '{@link de.fhdo.ddmm.data.intermediate.impl.IntermediateEnumerationFieldImpl <em>Enumeration Field</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.fhdo.ddmm.data.intermediate.impl.IntermediateEnumerationFieldImpl
+         * @see de.fhdo.ddmm.data.intermediate.impl.IntermediatePackageImpl#getIntermediateEnumerationField()
+         * @generated
+         */
+        EClass INTERMEDIATE_ENUMERATION_FIELD = eINSTANCE.getIntermediateEnumerationField();
+
+        /**
+         * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute INTERMEDIATE_ENUMERATION_FIELD__NAME = eINSTANCE.getIntermediateEnumerationField_Name();
+
+        /**
+         * The meta object literal for the '<em><b>Qualified Name</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute INTERMEDIATE_ENUMERATION_FIELD__QUALIFIED_NAME = eINSTANCE.getIntermediateEnumerationField_QualifiedName();
+
+        /**
+         * The meta object literal for the '<em><b>Initialization Value</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute INTERMEDIATE_ENUMERATION_FIELD__INITIALIZATION_VALUE = eINSTANCE.getIntermediateEnumerationField_InitializationValue();
+
+        /**
+         * The meta object literal for the '<em><b>Initialization Value Compatible Types</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference INTERMEDIATE_ENUMERATION_FIELD__INITIALIZATION_VALUE_COMPATIBLE_TYPES = eINSTANCE.getIntermediateEnumerationField_InitializationValueCompatibleTypes();
+
+        /**
+         * The meta object literal for the '<em><b>Enumeration</b></em>' container reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference INTERMEDIATE_ENUMERATION_FIELD__ENUMERATION = eINSTANCE.getIntermediateEnumerationField_Enumeration();
 
         /**
          * The meta object literal for the '{@link de.fhdo.ddmm.data.intermediate.IntermediateTypeKind <em>Type Kind</em>}' enum.

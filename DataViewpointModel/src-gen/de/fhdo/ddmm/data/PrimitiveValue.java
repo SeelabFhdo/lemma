@@ -5,6 +5,7 @@ package de.fhdo.ddmm.data;
 import java.math.BigDecimal;
 
 import java.util.Date;
+import java.util.Map;
 
 import org.eclipse.emf.ecore.EObject;
 
@@ -308,5 +309,17 @@ public interface PrimitiveValue extends EObject {
      * @generated
      */
     String asString();
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * *
+     * Infer names and sizes of all compatible types into which this value can be converted
+     * <!-- end-model-doc -->
+     * @model dataType="de.fhdo.ddmm.data.TypeNameSizeMap" unique="false"
+     * @generated
+     */
+    Map<String, Integer> inferCompatibleTypes();
 
 } // PrimitiveValue

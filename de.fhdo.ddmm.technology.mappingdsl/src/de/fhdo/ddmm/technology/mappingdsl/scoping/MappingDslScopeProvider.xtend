@@ -49,6 +49,7 @@ import java.util.Map
 import de.fhdo.ddmm.technology.TechnologyPackage
 import de.fhdo.ddmm.technology.TechnologySpecificPropertyValueAssignment
 import de.fhdo.ddmm.technology.mapping.TechnologySpecificEndpoint
+import de.fhdo.ddmm.data.Enumeration
 
 /**
  * This class implements a custom scope provider for the Mapping DSL.
@@ -490,6 +491,11 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
             return IScope.NULLSCOPE
 
         val previousType = mapping.parameter.importedType.type as ComplexType
+
+        // Enumeration fields cannot be mapped
+        if (previousType instanceof Enumeration)
+            return IScope.NULLSCOPE
+
         val nextLeveldDataFields = nextDataFieldsInHierarchy(previousType)
         if (nextLeveldDataFields !== null)
             return Scopes::scopeFor(nextLeveldDataFields)

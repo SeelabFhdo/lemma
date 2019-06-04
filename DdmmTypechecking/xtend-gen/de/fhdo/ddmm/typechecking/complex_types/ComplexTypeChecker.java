@@ -1,11 +1,15 @@
 package de.fhdo.ddmm.typechecking.complex_types;
 
+import com.google.common.base.Function;
 import com.google.common.base.Objects;
 import de.fhdo.ddmm.data.ComplexType;
 import de.fhdo.ddmm.data.DataField;
 import de.fhdo.ddmm.data.DataStructure;
+import de.fhdo.ddmm.data.Enumeration;
+import de.fhdo.ddmm.data.EnumerationField;
 import de.fhdo.ddmm.data.ListType;
 import de.fhdo.ddmm.data.PrimitiveType;
+import de.fhdo.ddmm.data.PrimitiveValue;
 import de.fhdo.ddmm.data.Type;
 import de.fhdo.ddmm.technology.TechnologySpecificDataStructure;
 import de.fhdo.ddmm.technology.TechnologySpecificListType;
@@ -17,10 +21,14 @@ import de.fhdo.ddmm.typechecking.complex_types.data_structures.NodePair;
 import de.fhdo.ddmm.typechecking.complex_types.data_structures.NodeSeries;
 import de.fhdo.ddmm.typechecking.complex_types.data_structures.TypeGraph;
 import de.fhdo.ddmm.typechecking.complex_types.data_structures.TypeGraphNode;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
+import org.eclipse.xtext.xbase.lib.InputOutput;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 
 /**
@@ -102,7 +110,8 @@ public class ComplexTypeChecker implements TypeCheckerI<ComplexType> {
     final boolean structureCheck = (basicType.isIsStructure() && typeToCheck.isIsStructure());
     final boolean primitiveListCheck = (basicType.isIsPrimitiveList() && typeToCheck.isIsPrimitiveList());
     final boolean structuredListCheck = (basicType.isIsStructuredList() && typeToCheck.isIsStructuredList());
-    final boolean nodeTypeKindsEqual = ((structureCheck || primitiveListCheck) || structuredListCheck);
+    final boolean enumerationCheck = (basicType.isIsEnumeration() && typeToCheck.isIsEnumeration());
+    final boolean nodeTypeKindsEqual = (((structureCheck || primitiveListCheck) || structuredListCheck) || enumerationCheck);
     if (typesEqual) {
       iterator.markCurrentPairCompatible(true);
     } else {
@@ -120,6 +129,11 @@ public class ComplexTypeChecker implements TypeCheckerI<ComplexType> {
             if ((structuredListCheck && 
               (!this.structuredListsCompatible(((ListType) basicType), ((ListType) typeToCheck))))) {
               iterator.markCurrentPairIncompatible();
+            } else {
+              if ((enumerationCheck && 
+                (!this.enumerationsCompatible(((Enumeration) basicType), ((Enumeration) typeToCheck))))) {
+                iterator.markCurrentPairIncompatible();
+              }
             }
           }
         }
@@ -257,6 +271,59 @@ public class ComplexTypeChecker implements TypeCheckerI<ComplexType> {
       }
     }
     return true;
+  }
+  
+  /**
+   * Check if two enumerations are compatible
+   */
+  private boolean enumerationsCompatible(final Enumeration basicEnum, final Enumeration enumToCheck) {
+    final Function1<EnumerationField, Boolean> _function = (EnumerationField it) -> {
+      PrimitiveValue _initializationValue = it.getInitializationValue();
+      return Boolean.valueOf((_initializationValue == null));
+    };
+    boolean _exists = IterableExtensions.<EnumerationField>exists(enumToCheck.getFields(), _function);
+    if (_exists) {
+      return false;
+    }
+    if ((((!this.<String>containsAllInitializationValues(basicEnum, enumToCheck, ((Function<PrimitiveValue, String>) (PrimitiveValue it) -> {
+      return it.getStringValue();
+    }))) || 
+      (!this.<Boolean>containsAllInitializationValues(basicEnum, enumToCheck, ((Function<PrimitiveValue, Boolean>) (PrimitiveValue it) -> {
+        return it.getBooleanValue();
+      })))) || 
+      (!this.<BigDecimal>containsAllInitializationValues(basicEnum, enumToCheck, ((Function<PrimitiveValue, BigDecimal>) (PrimitiveValue it) -> {
+        return it.getNumericValue();
+      }))))) {
+      return false;
+    }
+    return true;
+  }
+  
+  /**
+   * Helper to check if an enumeration contains all initialization values of another enumeration.
+   * Note, that this helper does not consider the types of the values. That is, the
+   * "fieldValueGetter" parameter needs to take care that only values of the same type, e.g.,
+   * string or numeric, are to be compared, in case this is desired.
+   */
+  private <T extends Object> boolean containsAllInitializationValues(final Enumeration basicEnum, final Enumeration enumToCheck, final Function<PrimitiveValue, T> fieldValueGetter) {
+    final Function1<EnumerationField, Boolean> _function = (EnumerationField it) -> {
+      return Boolean.valueOf(((it.getInitializationValue() != null) && 
+        (fieldValueGetter.apply(it.getInitializationValue()) != null)));
+    };
+    final Function1<EnumerationField, String> _function_1 = (EnumerationField it) -> {
+      return it.getInitializationValue().valueAsString();
+    };
+    final Set<String> basicValues = IterableExtensions.<String>toSet(IterableExtensions.<EnumerationField, String>map(IterableExtensions.<EnumerationField>filter(basicEnum.getFields(), _function), _function_1));
+    InputOutput.<EList<String>>println(basicEnum.getQualifiedNameParts());
+    final Function1<EnumerationField, Boolean> _function_2 = (EnumerationField it) -> {
+      return Boolean.valueOf(((it.getInitializationValue() != null) && 
+        (fieldValueGetter.apply(it.getInitializationValue()) != null)));
+    };
+    final Function1<EnumerationField, String> _function_3 = (EnumerationField it) -> {
+      return it.getInitializationValue().valueAsString();
+    };
+    final Set<String> toCheckValues = IterableExtensions.<String>toSet(IterableExtensions.<EnumerationField, String>map(IterableExtensions.<EnumerationField>filter(enumToCheck.getFields(), _function_2), _function_3));
+    return basicValues.containsAll(toCheckValues);
   }
   
   /**

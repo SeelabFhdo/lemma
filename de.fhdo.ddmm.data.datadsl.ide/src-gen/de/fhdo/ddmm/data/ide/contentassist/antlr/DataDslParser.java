@@ -36,6 +36,7 @@ public class DataDslParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getComplexTypeAccess().getAlternatives(), "rule__ComplexType__Alternatives");
 			builder.put(grammarAccess.getListTypeAccess().getAlternatives(), "rule__ListType__Alternatives");
 			builder.put(grammarAccess.getDataFieldAccess().getAlternatives_1(), "rule__DataField__Alternatives_1");
+			builder.put(grammarAccess.getPrimitiveValueAccess().getAlternatives(), "rule__PrimitiveValue__Alternatives");
 			builder.put(grammarAccess.getPrimitiveTypeAccess().getAlternatives(), "rule__PrimitiveType__Alternatives");
 			builder.put(grammarAccess.getDataModelAccess().getGroup(), "rule__DataModel__Group__0");
 			builder.put(grammarAccess.getComplexTypeImportAccess().getGroup(), "rule__ComplexTypeImport__Group__0");
@@ -49,6 +50,10 @@ public class DataDslParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getListTypeAccess().getGroup_0_4(), "rule__ListType__Group_0_4__0");
 			builder.put(grammarAccess.getListTypeAccess().getGroup_1(), "rule__ListType__Group_1__0");
 			builder.put(grammarAccess.getDataFieldAccess().getGroup(), "rule__DataField__Group__0");
+			builder.put(grammarAccess.getEnumerationAccess().getGroup(), "rule__Enumeration__Group__0");
+			builder.put(grammarAccess.getEnumerationAccess().getGroup_4(), "rule__Enumeration__Group_4__0");
+			builder.put(grammarAccess.getEnumerationFieldAccess().getGroup(), "rule__EnumerationField__Group__0");
+			builder.put(grammarAccess.getEnumerationFieldAccess().getGroup_1(), "rule__EnumerationField__Group_1__0");
 			builder.put(grammarAccess.getPossiblyImportedComplexTypeAccess().getGroup(), "rule__PossiblyImportedComplexType__Group__0");
 			builder.put(grammarAccess.getPossiblyImportedComplexTypeAccess().getGroup_0(), "rule__PossiblyImportedComplexType__Group_0__0");
 			builder.put(grammarAccess.getPrimitiveTypeAccess().getGroup_0(), "rule__PrimitiveType__Group_0__0");
@@ -87,6 +92,14 @@ public class DataDslParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getDataFieldAccess().getPrimitiveTypeAssignment_1_0(), "rule__DataField__PrimitiveTypeAssignment_1_0");
 			builder.put(grammarAccess.getDataFieldAccess().getComplexTypeAssignment_1_1(), "rule__DataField__ComplexTypeAssignment_1_1");
 			builder.put(grammarAccess.getDataFieldAccess().getNameAssignment_2(), "rule__DataField__NameAssignment_2");
+			builder.put(grammarAccess.getEnumerationAccess().getNameAssignment_1(), "rule__Enumeration__NameAssignment_1");
+			builder.put(grammarAccess.getEnumerationAccess().getFieldsAssignment_3(), "rule__Enumeration__FieldsAssignment_3");
+			builder.put(grammarAccess.getEnumerationAccess().getFieldsAssignment_4_1(), "rule__Enumeration__FieldsAssignment_4_1");
+			builder.put(grammarAccess.getEnumerationFieldAccess().getNameAssignment_0(), "rule__EnumerationField__NameAssignment_0");
+			builder.put(grammarAccess.getEnumerationFieldAccess().getInitializationValueAssignment_1_1(), "rule__EnumerationField__InitializationValueAssignment_1_1");
+			builder.put(grammarAccess.getPrimitiveValueAccess().getNumericValueAssignment_0(), "rule__PrimitiveValue__NumericValueAssignment_0");
+			builder.put(grammarAccess.getPrimitiveValueAccess().getBooleanValueAssignment_1(), "rule__PrimitiveValue__BooleanValueAssignment_1");
+			builder.put(grammarAccess.getPrimitiveValueAccess().getStringValueAssignment_2(), "rule__PrimitiveValue__StringValueAssignment_2");
 			builder.put(grammarAccess.getPossiblyImportedComplexTypeAccess().getImportAssignment_0_0(), "rule__PossiblyImportedComplexType__ImportAssignment_0_0");
 			builder.put(grammarAccess.getPossiblyImportedComplexTypeAccess().getComplexTypeAssignment_1(), "rule__PossiblyImportedComplexType__ComplexTypeAssignment_1");
 		}

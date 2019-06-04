@@ -184,6 +184,24 @@ public interface DataFactory extends EFactory {
     DataField createDataField();
 
     /**
+     * Returns a new object of class '<em>Enumeration</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Enumeration</em>'.
+     * @generated
+     */
+    Enumeration createEnumeration();
+
+    /**
+     * Returns a new object of class '<em>Enumeration Field</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Enumeration Field</em>'.
+     * @generated
+     */
+    EnumerationField createEnumerationField();
+
+    /**
      * Returns a new object of class '<em>Primitive Value</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

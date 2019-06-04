@@ -10,6 +10,8 @@ import de.fhdo.ddmm.data.DataField;
 import de.fhdo.ddmm.data.DataModel;
 import de.fhdo.ddmm.data.DataPackage;
 import de.fhdo.ddmm.data.DataStructure;
+import de.fhdo.ddmm.data.Enumeration;
+import de.fhdo.ddmm.data.EnumerationField;
 import de.fhdo.ddmm.data.ListType;
 import de.fhdo.ddmm.data.PossiblyImportedComplexType;
 import de.fhdo.ddmm.data.PrimitiveBoolean;
@@ -22,6 +24,7 @@ import de.fhdo.ddmm.data.PrimitiveInteger;
 import de.fhdo.ddmm.data.PrimitiveLong;
 import de.fhdo.ddmm.data.PrimitiveShort;
 import de.fhdo.ddmm.data.PrimitiveString;
+import de.fhdo.ddmm.data.PrimitiveValue;
 import de.fhdo.ddmm.data.Version;
 import de.fhdo.ddmm.data.services.DataDslGrammarAccess;
 import java.util.Set;
@@ -64,6 +67,12 @@ public class DataDslSemanticSequencer extends AbstractDelegatingSemanticSequence
 			case DataPackage.DATA_STRUCTURE:
 				sequence_DataStructure(context, (DataStructure) semanticObject); 
 				return; 
+			case DataPackage.ENUMERATION:
+				sequence_Enumeration(context, (Enumeration) semanticObject); 
+				return; 
+			case DataPackage.ENUMERATION_FIELD:
+				sequence_EnumerationField(context, (EnumerationField) semanticObject); 
+				return; 
 			case DataPackage.LIST_TYPE:
 				sequence_ListType(context, (ListType) semanticObject); 
 				return; 
@@ -99,6 +108,9 @@ public class DataDslSemanticSequencer extends AbstractDelegatingSemanticSequence
 				return; 
 			case DataPackage.PRIMITIVE_STRING:
 				sequence_PrimitiveType(context, (PrimitiveString) semanticObject); 
+				return; 
+			case DataPackage.PRIMITIVE_VALUE:
+				sequence_PrimitiveValue(context, (PrimitiveValue) semanticObject); 
 				return; 
 			case DataPackage.VERSION:
 				sequence_Version(context, (Version) semanticObject); 
@@ -174,6 +186,31 @@ public class DataDslSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *     (name=ID super=[DataStructure|QualifiedName]? (dataFields+=DataField dataFields+=DataField*)?)
 	 */
 	protected void sequence_DataStructure(ISerializationContext context, DataStructure semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     EnumerationField returns EnumerationField
+	 *
+	 * Constraint:
+	 *     (name=ID initializationValue=PrimitiveValue?)
+	 */
+	protected void sequence_EnumerationField(ISerializationContext context, EnumerationField semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     ComplexType returns Enumeration
+	 *     Enumeration returns Enumeration
+	 *
+	 * Constraint:
+	 *     (name=ID fields+=EnumerationField fields+=EnumerationField*)
+	 */
+	protected void sequence_Enumeration(ISerializationContext context, Enumeration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -319,6 +356,18 @@ public class DataDslSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *     {PrimitiveString}
 	 */
 	protected void sequence_PrimitiveType(ISerializationContext context, PrimitiveString semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     PrimitiveValue returns PrimitiveValue
+	 *
+	 * Constraint:
+	 *     (numericValue=BIG_DECIMAL | booleanValue=BOOLEAN | stringValue=STRING)
+	 */
+	protected void sequence_PrimitiveValue(ISerializationContext context, PrimitiveValue semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

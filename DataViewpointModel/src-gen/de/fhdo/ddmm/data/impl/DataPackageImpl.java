@@ -10,6 +10,8 @@ import de.fhdo.ddmm.data.DataField;
 import de.fhdo.ddmm.data.DataModel;
 import de.fhdo.ddmm.data.DataPackage;
 import de.fhdo.ddmm.data.DataStructure;
+import de.fhdo.ddmm.data.Enumeration;
+import de.fhdo.ddmm.data.EnumerationField;
 import de.fhdo.ddmm.data.ListType;
 import de.fhdo.ddmm.data.PossiblyImportedComplexType;
 import de.fhdo.ddmm.data.PrimitiveBoolean;
@@ -23,12 +25,17 @@ import de.fhdo.ddmm.data.PrimitiveLong;
 import de.fhdo.ddmm.data.PrimitiveShort;
 import de.fhdo.ddmm.data.PrimitiveString;
 import de.fhdo.ddmm.data.PrimitiveType;
+import de.fhdo.ddmm.data.PrimitiveTypeConstants;
 import de.fhdo.ddmm.data.PrimitiveValue;
 import de.fhdo.ddmm.data.Type;
 import de.fhdo.ddmm.data.Version;
 
+import java.util.Map;
+
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EDataType;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EGenericType;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
@@ -196,7 +203,35 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    private EClass enumerationEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass enumerationFieldEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     private EClass primitiveValueEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EEnum primitiveTypeConstantsEEnum = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EDataType typeNameSizeMapEDataType = null;
 
     /**
      * Creates an instance of the model <b>Package</b>, registered with
@@ -768,6 +803,16 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * @generated
      */
     @Override
+    public EAttribute getComplexType_IsEnumeration() {
+        return (EAttribute)complexTypeEClass.getEStructuralFeatures().get(7);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public EOperation getComplexType__GetQualifiedNameParts() {
         return complexTypeEClass.getEOperations().get(0);
     }
@@ -1048,6 +1093,86 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * @generated
      */
     @Override
+    public EClass getEnumeration() {
+        return enumerationEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getEnumeration_Fields() {
+        return (EReference)enumerationEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EClass getEnumerationField() {
+        return enumerationFieldEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EAttribute getEnumerationField_Name() {
+        return (EAttribute)enumerationFieldEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getEnumerationField_InitializationValue() {
+        return (EReference)enumerationFieldEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getEnumerationField_Enumeration() {
+        return (EReference)enumerationFieldEClass.getEStructuralFeatures().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EOperation getEnumerationField__GetQualifiedNameParts() {
+        return enumerationFieldEClass.getEOperations().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EOperation getEnumerationField__BuildQualifiedName__String() {
+        return enumerationFieldEClass.getEOperations().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public EClass getPrimitiveValue() {
         return primitiveValueEClass;
     }
@@ -1248,6 +1373,36 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * @generated
      */
     @Override
+    public EOperation getPrimitiveValue__InferCompatibleTypes() {
+        return primitiveValueEClass.getEOperations().get(16);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EEnum getPrimitiveTypeConstants() {
+        return primitiveTypeConstantsEEnum;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EDataType getTypeNameSizeMap() {
+        return typeNameSizeMapEDataType;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public DataFactory getDataFactory() {
         return (DataFactory)getEFactoryInstance();
     }
@@ -1337,6 +1492,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
         createEAttribute(complexTypeEClass, COMPLEX_TYPE__IS_STRUCTURE);
         createEAttribute(complexTypeEClass, COMPLEX_TYPE__IS_PRIMITIVE_LIST);
         createEAttribute(complexTypeEClass, COMPLEX_TYPE__IS_STRUCTURED_LIST);
+        createEAttribute(complexTypeEClass, COMPLEX_TYPE__IS_ENUMERATION);
         createEOperation(complexTypeEClass, COMPLEX_TYPE___GET_QUALIFIED_NAME_PARTS);
         createEOperation(complexTypeEClass, COMPLEX_TYPE___BUILD_QUALIFIED_NAME__STRING);
         createEOperation(complexTypeEClass, COMPLEX_TYPE___COMPARE_FIELD_COUNTS__ELIST_ELIST);
@@ -1370,6 +1526,16 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
         createEOperation(dataFieldEClass, DATA_FIELD___BUILD_QUALIFIED_NAME__STRING);
         createEOperation(dataFieldEClass, DATA_FIELD___FIND_EPONYMOUS_SUPER_FIELD);
 
+        enumerationEClass = createEClass(ENUMERATION);
+        createEReference(enumerationEClass, ENUMERATION__FIELDS);
+
+        enumerationFieldEClass = createEClass(ENUMERATION_FIELD);
+        createEAttribute(enumerationFieldEClass, ENUMERATION_FIELD__NAME);
+        createEReference(enumerationFieldEClass, ENUMERATION_FIELD__INITIALIZATION_VALUE);
+        createEReference(enumerationFieldEClass, ENUMERATION_FIELD__ENUMERATION);
+        createEOperation(enumerationFieldEClass, ENUMERATION_FIELD___GET_QUALIFIED_NAME_PARTS);
+        createEOperation(enumerationFieldEClass, ENUMERATION_FIELD___BUILD_QUALIFIED_NAME__STRING);
+
         primitiveValueEClass = createEClass(PRIMITIVE_VALUE);
         createEAttribute(primitiveValueEClass, PRIMITIVE_VALUE__STRING_VALUE);
         createEAttribute(primitiveValueEClass, PRIMITIVE_VALUE__BOOLEAN_VALUE);
@@ -1390,6 +1556,13 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
         createEOperation(primitiveValueEClass, PRIMITIVE_VALUE___AS_LONG);
         createEOperation(primitiveValueEClass, PRIMITIVE_VALUE___AS_SHORT);
         createEOperation(primitiveValueEClass, PRIMITIVE_VALUE___AS_STRING);
+        createEOperation(primitiveValueEClass, PRIMITIVE_VALUE___INFER_COMPATIBLE_TYPES);
+
+        // Create enums
+        primitiveTypeConstantsEEnum = createEEnum(PRIMITIVE_TYPE_CONSTANTS);
+
+        // Create data types
+        typeNameSizeMapEDataType = createEDataType(TYPE_NAME_SIZE_MAP);
     }
 
     /**
@@ -1437,6 +1610,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
         complexTypeEClass.getESuperTypes().add(this.getType());
         dataStructureEClass.getESuperTypes().add(this.getComplexType());
         listTypeEClass.getESuperTypes().add(this.getComplexType());
+        enumerationEClass.getESuperTypes().add(this.getComplexType());
 
         // Initialize classes, features, and operations; add parameters
         initEClass(dataModelEClass, DataModel.class, "DataModel", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -1520,6 +1694,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
         initEAttribute(getComplexType_IsStructure(), theEcorePackage.getEBoolean(), "isStructure", null, 0, 1, ComplexType.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, IS_DERIVED, IS_ORDERED);
         initEAttribute(getComplexType_IsPrimitiveList(), theEcorePackage.getEBoolean(), "isPrimitiveList", null, 0, 1, ComplexType.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, IS_DERIVED, IS_ORDERED);
         initEAttribute(getComplexType_IsStructuredList(), theEcorePackage.getEBoolean(), "isStructuredList", null, 0, 1, ComplexType.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+        initEAttribute(getComplexType_IsEnumeration(), theEcorePackage.getEBoolean(), "isEnumeration", null, 0, 1, ComplexType.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 
         initEOperation(getComplexType__GetQualifiedNameParts(), theEcorePackage.getEString(), "getQualifiedNameParts", 0, -1, !IS_UNIQUE, IS_ORDERED);
 
@@ -1571,6 +1746,19 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 
         initEOperation(getDataField__FindEponymousSuperField(), this.getDataField(), "findEponymousSuperField", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
+        initEClass(enumerationEClass, Enumeration.class, "Enumeration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEReference(getEnumeration_Fields(), this.getEnumerationField(), this.getEnumerationField_Enumeration(), "fields", null, 1, -1, Enumeration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEClass(enumerationFieldEClass, EnumerationField.class, "EnumerationField", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getEnumerationField_Name(), theEcorePackage.getEString(), "name", null, 0, 1, EnumerationField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getEnumerationField_InitializationValue(), this.getPrimitiveValue(), null, "initializationValue", null, 0, 1, EnumerationField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getEnumerationField_Enumeration(), this.getEnumeration(), this.getEnumeration_Fields(), "enumeration", null, 0, 1, EnumerationField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEOperation(getEnumerationField__GetQualifiedNameParts(), theEcorePackage.getEString(), "getQualifiedNameParts", 0, -1, !IS_UNIQUE, IS_ORDERED);
+
+        op = initEOperation(getEnumerationField__BuildQualifiedName__String(), theEcorePackage.getEString(), "buildQualifiedName", 0, 1, !IS_UNIQUE, IS_ORDERED);
+        addEParameter(op, theEcorePackage.getEString(), "separator", 0, 1, !IS_UNIQUE, IS_ORDERED);
+
         initEClass(primitiveValueEClass, PrimitiveValue.class, "PrimitiveValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getPrimitiveValue_StringValue(), theEcorePackage.getEString(), "stringValue", null, 0, 1, PrimitiveValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getPrimitiveValue_BooleanValue(), theEcorePackage.getEBooleanObject(), "booleanValue", null, 0, 1, PrimitiveValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1611,6 +1799,24 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
         initEOperation(getPrimitiveValue__AsShort(), theEcorePackage.getEShortObject(), "asShort", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
         initEOperation(getPrimitiveValue__AsString(), theEcorePackage.getEString(), "asString", 0, 1, !IS_UNIQUE, IS_ORDERED);
+
+        initEOperation(getPrimitiveValue__InferCompatibleTypes(), this.getTypeNameSizeMap(), "inferCompatibleTypes", 0, 1, !IS_UNIQUE, IS_ORDERED);
+
+        // Initialize enums and add enum literals
+        initEEnum(primitiveTypeConstantsEEnum, PrimitiveTypeConstants.class, "PrimitiveTypeConstants");
+        addEEnumLiteral(primitiveTypeConstantsEEnum, PrimitiveTypeConstants.BOOLEAN);
+        addEEnumLiteral(primitiveTypeConstantsEEnum, PrimitiveTypeConstants.BYTE);
+        addEEnumLiteral(primitiveTypeConstantsEEnum, PrimitiveTypeConstants.CHARACTER);
+        addEEnumLiteral(primitiveTypeConstantsEEnum, PrimitiveTypeConstants.DATE);
+        addEEnumLiteral(primitiveTypeConstantsEEnum, PrimitiveTypeConstants.DOUBLE);
+        addEEnumLiteral(primitiveTypeConstantsEEnum, PrimitiveTypeConstants.FLOAT);
+        addEEnumLiteral(primitiveTypeConstantsEEnum, PrimitiveTypeConstants.INTEGER);
+        addEEnumLiteral(primitiveTypeConstantsEEnum, PrimitiveTypeConstants.LONG);
+        addEEnumLiteral(primitiveTypeConstantsEEnum, PrimitiveTypeConstants.SHORT);
+        addEEnumLiteral(primitiveTypeConstantsEEnum, PrimitiveTypeConstants.STRING);
+
+        // Initialize data types
+        initEDataType(typeNameSizeMapEDataType, Map.class, "TypeNameSizeMap", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS, "java.util.Map<java.lang.String, java.lang.Integer>");
 
         // Create resource
         createResource(eNS_URI);

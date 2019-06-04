@@ -606,8 +606,11 @@ helper def : getTypeKind(type : Service!Type) : Intermediate!IntermediateTypeKin
 			#STRUCTURE
 		else if (type.isPrimitiveList or type.isStructuredList) then
 			#LIST
+		else if (type.isEnumeration) then
+			#ENUMERATION
 		else
 			OclUndefined
+		endif
 		endif
 		endif
 	else

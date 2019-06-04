@@ -16,6 +16,7 @@ import de.fhdo.ddmm.data.PrimitiveLong;
 import de.fhdo.ddmm.data.PrimitiveShort;
 import de.fhdo.ddmm.data.PrimitiveString;
 import de.fhdo.ddmm.data.PrimitiveType;
+import de.fhdo.ddmm.data.PrimitiveTypeConstants;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -93,60 +94,60 @@ public abstract class PrimitiveTypeImpl extends TypeImpl implements PrimitiveTyp
         boolean _matched = false;
         if (this instanceof PrimitiveBoolean) {
             _matched=true;
-            _switchResult = "boolean";
+            _switchResult = PrimitiveTypeConstants.BOOLEAN.getLiteral();
         }
         if (!_matched) {
             if (this instanceof PrimitiveByte) {
                 _matched=true;
-                _switchResult = "byte";
+                _switchResult = PrimitiveTypeConstants.BYTE.getLiteral();
             }
         }
         if (!_matched) {
             if (this instanceof PrimitiveCharacter) {
                 _matched=true;
-                _switchResult = "char";
+                _switchResult = PrimitiveTypeConstants.CHARACTER.getLiteral();
             }
         }
         if (!_matched) {
             if (this instanceof PrimitiveDate) {
                 _matched=true;
-                _switchResult = "date";
+                _switchResult = PrimitiveTypeConstants.DATE.getLiteral();
             }
         }
         if (!_matched) {
             if (this instanceof PrimitiveDouble) {
                 _matched=true;
-                _switchResult = "double";
+                _switchResult = PrimitiveTypeConstants.DOUBLE.getLiteral();
             }
         }
         if (!_matched) {
             if (this instanceof PrimitiveFloat) {
                 _matched=true;
-                _switchResult = "float";
+                _switchResult = PrimitiveTypeConstants.FLOAT.getLiteral();
             }
         }
         if (!_matched) {
             if (this instanceof PrimitiveInteger) {
                 _matched=true;
-                _switchResult = "int";
+                _switchResult = PrimitiveTypeConstants.INTEGER.getLiteral();
             }
         }
         if (!_matched) {
             if (this instanceof PrimitiveLong) {
                 _matched=true;
-                _switchResult = "long";
+                _switchResult = PrimitiveTypeConstants.LONG.getLiteral();
             }
         }
         if (!_matched) {
             if (this instanceof PrimitiveShort) {
                 _matched=true;
-                _switchResult = "short";
+                _switchResult = PrimitiveTypeConstants.SHORT.getLiteral();
             }
         }
         if (!_matched) {
             if (this instanceof PrimitiveString) {
                 _matched=true;
-                _switchResult = "string";
+                _switchResult = PrimitiveTypeConstants.STRING.getLiteral();
             }
         }
         if (!_matched) {
@@ -166,18 +167,18 @@ public abstract class PrimitiveTypeImpl extends TypeImpl implements PrimitiveTyp
         boolean _matched = false;
         if (this instanceof PrimitiveBoolean) {
             _matched=true;
-            _switchResult = Integer.valueOf(1);
+            _switchResult = Integer.valueOf(PrimitiveTypeConstants.BOOLEAN.getValue());
         }
         if (!_matched) {
             if (this instanceof PrimitiveByte) {
                 _matched=true;
-                _switchResult = Integer.valueOf(8);
+                _switchResult = Integer.valueOf(PrimitiveTypeConstants.BYTE.getValue());
             }
         }
         if (!_matched) {
             if (this instanceof PrimitiveCharacter) {
                 _matched=true;
-                _switchResult = Integer.valueOf(16);
+                _switchResult = Integer.valueOf(PrimitiveTypeConstants.CHARACTER.getValue());
             }
         }
         if (!_matched) {
@@ -189,31 +190,31 @@ public abstract class PrimitiveTypeImpl extends TypeImpl implements PrimitiveTyp
         if (!_matched) {
             if (this instanceof PrimitiveDouble) {
                 _matched=true;
-                _switchResult = Integer.valueOf(64);
+                _switchResult = Integer.valueOf(PrimitiveTypeConstants.DOUBLE.getValue());
             }
         }
         if (!_matched) {
             if (this instanceof PrimitiveFloat) {
                 _matched=true;
-                _switchResult = Integer.valueOf(32);
+                _switchResult = Integer.valueOf(PrimitiveTypeConstants.FLOAT.getValue());
             }
         }
         if (!_matched) {
             if (this instanceof PrimitiveInteger) {
                 _matched=true;
-                _switchResult = Integer.valueOf(32);
+                _switchResult = Integer.valueOf(PrimitiveTypeConstants.INTEGER.getValue());
             }
         }
         if (!_matched) {
             if (this instanceof PrimitiveLong) {
                 _matched=true;
-                _switchResult = Integer.valueOf(64);
+                _switchResult = Integer.valueOf(PrimitiveTypeConstants.LONG.getValue());
             }
         }
         if (!_matched) {
             if (this instanceof PrimitiveShort) {
                 _matched=true;
-                _switchResult = Integer.valueOf(16);
+                _switchResult = Integer.valueOf(PrimitiveTypeConstants.SHORT.getValue());
             }
         }
         if (!_matched) {

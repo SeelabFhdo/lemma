@@ -1891,17 +1891,6 @@ public class MappingDslGrammarAccess extends AbstractGrammarElementFinder {
 		return getImportedServiceAspectAccess().getRule();
 	}
 	
-	//@Override
-	//PrimitiveValue data::PrimitiveValue:
-	//	numericValue=BIG_DECIMAL | booleanValue=BOOLEAN | stringValue=STRING;
-	public ServiceDslGrammarAccess.PrimitiveValueElements getPrimitiveValueAccess() {
-		return gaServiceDsl.getPrimitiveValueAccess();
-	}
-	
-	public ParserRule getPrimitiveValueRule() {
-		return getPrimitiveValueAccess().getRule();
-	}
-	
 	//PropertyValueAssignment technology::TechnologySpecificPropertyValueAssignment:
 	//	property=[technology::TechnologySpecificProperty] '=' value=PrimitiveValue;
 	public ServiceDslGrammarAccess.PropertyValueAssignmentElements getPropertyValueAssignmentAccess() {
@@ -2123,7 +2112,7 @@ public class MappingDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//TechnologySpecificProperty:
-	//	type=PrimitiveType name=ID ('=' defaultValue=super::PrimitiveValue | mandatory?='mandatory')?
+	//	type=PrimitiveType name=ID ('=' defaultValue=PrimitiveValue | mandatory?='mandatory')?
 	//	';';
 	public TechnologyDslGrammarAccess.TechnologySpecificPropertyElements getTechnologySpecificPropertyAccess() {
 		return gaTechnologyDsl.getTechnologySpecificPropertyAccess();
@@ -2258,7 +2247,7 @@ public class MappingDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//ComplexType:
-	//	DataStructure | ListType;
+	//	DataStructure | ListType | Enumeration;
 	public DataDslGrammarAccess.ComplexTypeElements getComplexTypeAccess() {
 		return gaDataDsl.getComplexTypeAccess();
 	}
@@ -2304,6 +2293,38 @@ public class MappingDslGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getDataFieldRule() {
 		return getDataFieldAccess().getRule();
+	}
+	
+	//Enumeration:
+	//	'enum' name=ID '{'
+	//	fields+=EnumerationField (',' fields+=EnumerationField)*
+	//	'}';
+	public DataDslGrammarAccess.EnumerationElements getEnumerationAccess() {
+		return gaDataDsl.getEnumerationAccess();
+	}
+	
+	public ParserRule getEnumerationRule() {
+		return getEnumerationAccess().getRule();
+	}
+	
+	//EnumerationField:
+	//	name=ID ('(' initializationValue=PrimitiveValue ')')?;
+	public DataDslGrammarAccess.EnumerationFieldElements getEnumerationFieldAccess() {
+		return gaDataDsl.getEnumerationFieldAccess();
+	}
+	
+	public ParserRule getEnumerationFieldRule() {
+		return getEnumerationFieldAccess().getRule();
+	}
+	
+	//PrimitiveValue:
+	//	numericValue=BIG_DECIMAL | booleanValue=BOOLEAN | stringValue=STRING;
+	public DataDslGrammarAccess.PrimitiveValueElements getPrimitiveValueAccess() {
+		return gaDataDsl.getPrimitiveValueAccess();
+	}
+	
+	public ParserRule getPrimitiveValueRule() {
+		return getPrimitiveValueAccess().getRule();
 	}
 	
 	//PossiblyImportedComplexType:

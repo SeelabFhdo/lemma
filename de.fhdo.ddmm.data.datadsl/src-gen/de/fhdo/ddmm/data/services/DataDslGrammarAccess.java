@@ -216,12 +216,13 @@ public class DataDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final RuleCall cDataStructureParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
 		private final RuleCall cListTypeParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cEnumerationParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
 		
 		//ComplexType:
-		//	DataStructure | ListType;
+		//	DataStructure | ListType | Enumeration;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//DataStructure | ListType
+		//DataStructure | ListType | Enumeration
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
 		//DataStructure
@@ -229,6 +230,9 @@ public class DataDslGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//ListType
 		public RuleCall getListTypeParserRuleCall_1() { return cListTypeParserRuleCall_1; }
+		
+		//Enumeration
+		public RuleCall getEnumerationParserRuleCall_2() { return cEnumerationParserRuleCall_2; }
 	}
 	public class DataStructureElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.fhdo.ddmm.data.DataDsl.DataStructure");
@@ -458,6 +462,137 @@ public class DataDslGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getNameIDTerminalRuleCall_2_0() { return cNameIDTerminalRuleCall_2_0; }
 	}
+	public class EnumerationElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.fhdo.ddmm.data.DataDsl.Enumeration");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cEnumKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cNameIDTerminalRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
+		private final Keyword cLeftCurlyBracketKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Assignment cFieldsAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cFieldsEnumerationFieldParserRuleCall_3_0 = (RuleCall)cFieldsAssignment_3.eContents().get(0);
+		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
+		private final Keyword cCommaKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
+		private final Assignment cFieldsAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
+		private final RuleCall cFieldsEnumerationFieldParserRuleCall_4_1_0 = (RuleCall)cFieldsAssignment_4_1.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_5 = (Keyword)cGroup.eContents().get(5);
+		
+		//Enumeration:
+		//	'enum' name=ID '{'
+		//	fields+=EnumerationField (',' fields+=EnumerationField)*
+		//	'}';
+		@Override public ParserRule getRule() { return rule; }
+		
+		//'enum' name=ID '{' fields+=EnumerationField (',' fields+=EnumerationField)* '}'
+		public Group getGroup() { return cGroup; }
+		
+		//'enum'
+		public Keyword getEnumKeyword_0() { return cEnumKeyword_0; }
+		
+		//name=ID
+		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
+		
+		//ID
+		public RuleCall getNameIDTerminalRuleCall_1_0() { return cNameIDTerminalRuleCall_1_0; }
+		
+		//'{'
+		public Keyword getLeftCurlyBracketKeyword_2() { return cLeftCurlyBracketKeyword_2; }
+		
+		//fields+=EnumerationField
+		public Assignment getFieldsAssignment_3() { return cFieldsAssignment_3; }
+		
+		//EnumerationField
+		public RuleCall getFieldsEnumerationFieldParserRuleCall_3_0() { return cFieldsEnumerationFieldParserRuleCall_3_0; }
+		
+		//(',' fields+=EnumerationField)*
+		public Group getGroup_4() { return cGroup_4; }
+		
+		//','
+		public Keyword getCommaKeyword_4_0() { return cCommaKeyword_4_0; }
+		
+		//fields+=EnumerationField
+		public Assignment getFieldsAssignment_4_1() { return cFieldsAssignment_4_1; }
+		
+		//EnumerationField
+		public RuleCall getFieldsEnumerationFieldParserRuleCall_4_1_0() { return cFieldsEnumerationFieldParserRuleCall_4_1_0; }
+		
+		//'}'
+		public Keyword getRightCurlyBracketKeyword_5() { return cRightCurlyBracketKeyword_5; }
+	}
+	public class EnumerationFieldElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.fhdo.ddmm.data.DataDsl.EnumerationField");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cNameAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cNameIDTerminalRuleCall_0_0 = (RuleCall)cNameAssignment_0.eContents().get(0);
+		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
+		private final Keyword cLeftParenthesisKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
+		private final Assignment cInitializationValueAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
+		private final RuleCall cInitializationValuePrimitiveValueParserRuleCall_1_1_0 = (RuleCall)cInitializationValueAssignment_1_1.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_1_2 = (Keyword)cGroup_1.eContents().get(2);
+		
+		//EnumerationField:
+		//	name=ID ('(' initializationValue=PrimitiveValue ')')?;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//name=ID ('(' initializationValue=PrimitiveValue ')')?
+		public Group getGroup() { return cGroup; }
+		
+		//name=ID
+		public Assignment getNameAssignment_0() { return cNameAssignment_0; }
+		
+		//ID
+		public RuleCall getNameIDTerminalRuleCall_0_0() { return cNameIDTerminalRuleCall_0_0; }
+		
+		//('(' initializationValue=PrimitiveValue ')')?
+		public Group getGroup_1() { return cGroup_1; }
+		
+		//'('
+		public Keyword getLeftParenthesisKeyword_1_0() { return cLeftParenthesisKeyword_1_0; }
+		
+		//initializationValue=PrimitiveValue
+		public Assignment getInitializationValueAssignment_1_1() { return cInitializationValueAssignment_1_1; }
+		
+		//PrimitiveValue
+		public RuleCall getInitializationValuePrimitiveValueParserRuleCall_1_1_0() { return cInitializationValuePrimitiveValueParserRuleCall_1_1_0; }
+		
+		//')'
+		public Keyword getRightParenthesisKeyword_1_2() { return cRightParenthesisKeyword_1_2; }
+	}
+	public class PrimitiveValueElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.fhdo.ddmm.data.DataDsl.PrimitiveValue");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final Assignment cNumericValueAssignment_0 = (Assignment)cAlternatives.eContents().get(0);
+		private final RuleCall cNumericValueBIG_DECIMALTerminalRuleCall_0_0 = (RuleCall)cNumericValueAssignment_0.eContents().get(0);
+		private final Assignment cBooleanValueAssignment_1 = (Assignment)cAlternatives.eContents().get(1);
+		private final RuleCall cBooleanValueBOOLEANTerminalRuleCall_1_0 = (RuleCall)cBooleanValueAssignment_1.eContents().get(0);
+		private final Assignment cStringValueAssignment_2 = (Assignment)cAlternatives.eContents().get(2);
+		private final RuleCall cStringValueSTRINGTerminalRuleCall_2_0 = (RuleCall)cStringValueAssignment_2.eContents().get(0);
+		
+		//PrimitiveValue:
+		//	numericValue=BIG_DECIMAL | booleanValue=BOOLEAN | stringValue=STRING;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//numericValue=BIG_DECIMAL | booleanValue=BOOLEAN | stringValue=STRING
+		public Alternatives getAlternatives() { return cAlternatives; }
+		
+		//numericValue=BIG_DECIMAL
+		public Assignment getNumericValueAssignment_0() { return cNumericValueAssignment_0; }
+		
+		//BIG_DECIMAL
+		public RuleCall getNumericValueBIG_DECIMALTerminalRuleCall_0_0() { return cNumericValueBIG_DECIMALTerminalRuleCall_0_0; }
+		
+		//booleanValue=BOOLEAN
+		public Assignment getBooleanValueAssignment_1() { return cBooleanValueAssignment_1; }
+		
+		//BOOLEAN
+		public RuleCall getBooleanValueBOOLEANTerminalRuleCall_1_0() { return cBooleanValueBOOLEANTerminalRuleCall_1_0; }
+		
+		//stringValue=STRING
+		public Assignment getStringValueAssignment_2() { return cStringValueAssignment_2; }
+		
+		//STRING
+		public RuleCall getStringValueSTRINGTerminalRuleCall_2_0() { return cStringValueSTRINGTerminalRuleCall_2_0; }
+	}
 	public class PossiblyImportedComplexTypeElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.fhdo.ddmm.data.DataDsl.PossiblyImportedComplexType");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -673,6 +808,9 @@ public class DataDslGrammarAccess extends AbstractGrammarElementFinder {
 	private final DataStructureElements pDataStructure;
 	private final ListTypeElements pListType;
 	private final DataFieldElements pDataField;
+	private final EnumerationElements pEnumeration;
+	private final EnumerationFieldElements pEnumerationField;
+	private final PrimitiveValueElements pPrimitiveValue;
 	private final PossiblyImportedComplexTypeElements pPossiblyImportedComplexType;
 	private final PrimitiveTypeElements pPrimitiveType;
 	private final QualifiedNameElements pQualifiedName;
@@ -696,6 +834,9 @@ public class DataDslGrammarAccess extends AbstractGrammarElementFinder {
 		this.pDataStructure = new DataStructureElements();
 		this.pListType = new ListTypeElements();
 		this.pDataField = new DataFieldElements();
+		this.pEnumeration = new EnumerationElements();
+		this.pEnumerationField = new EnumerationFieldElements();
+		this.pPrimitiveValue = new PrimitiveValueElements();
 		this.pPossiblyImportedComplexType = new PossiblyImportedComplexTypeElements();
 		this.pPrimitiveType = new PrimitiveTypeElements();
 		this.pQualifiedName = new QualifiedNameElements();
@@ -778,7 +919,7 @@ public class DataDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//ComplexType:
-	//	DataStructure | ListType;
+	//	DataStructure | ListType | Enumeration;
 	public ComplexTypeElements getComplexTypeAccess() {
 		return pComplexType;
 	}
@@ -824,6 +965,38 @@ public class DataDslGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getDataFieldRule() {
 		return getDataFieldAccess().getRule();
+	}
+	
+	//Enumeration:
+	//	'enum' name=ID '{'
+	//	fields+=EnumerationField (',' fields+=EnumerationField)*
+	//	'}';
+	public EnumerationElements getEnumerationAccess() {
+		return pEnumeration;
+	}
+	
+	public ParserRule getEnumerationRule() {
+		return getEnumerationAccess().getRule();
+	}
+	
+	//EnumerationField:
+	//	name=ID ('(' initializationValue=PrimitiveValue ')')?;
+	public EnumerationFieldElements getEnumerationFieldAccess() {
+		return pEnumerationField;
+	}
+	
+	public ParserRule getEnumerationFieldRule() {
+		return getEnumerationFieldAccess().getRule();
+	}
+	
+	//PrimitiveValue:
+	//	numericValue=BIG_DECIMAL | booleanValue=BOOLEAN | stringValue=STRING;
+	public PrimitiveValueElements getPrimitiveValueAccess() {
+		return pPrimitiveValue;
+	}
+	
+	public ParserRule getPrimitiveValueRule() {
+		return getPrimitiveValueAccess().getRule();
 	}
 	
 	//PossiblyImportedComplexType:

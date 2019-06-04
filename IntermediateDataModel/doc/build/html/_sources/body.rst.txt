@@ -68,7 +68,7 @@ Format Specification
 This document describes the metamodel and thus the structure of XMI files of
 Intermediate Data Models, i.e., instances of Domain Data Models that were
 exported from Eclipse (cf. :ref:`Introduction` and :ref:`ModelProcessing`). It 
-may be used as as reference, when implementing custom model processors for 
+may be used as reference, when implementing custom model processors for 
 microservice-related Domain Data Models.
 
 :numref:`fig_metamodel` shows the structure of the metamodel of the Intermediate
@@ -79,6 +79,7 @@ attributes, and associations, respectively.
 .. _fig_metamodel:
 
 .. figure:: figures/metamodel.png
+    :target: _images/metamodel.png
 
     Metamodel of Intermediate Data Models
 
@@ -134,12 +135,13 @@ Model Root
 
     .. py:attribute:: IntermediateComplexType[*] complexTypes
 
-        :ref:`IntermediateDataStructure <link__IntermediateDataStructure>` and 
-        :ref:`IntermediateListType <link__IntermediateListType>` instances being
-        defined in the source Domain Data Model. If a Domain Data Model has
-        ``versions`` or ``contexts``, it may not have ``complexTypes`` under the
-        model root. They are, instead, encapsulated within the ``versions`` or 
-        ``contexts`` attributes.
+        :ref:`IntermediateDataStructure <link__IntermediateDataStructure>`,
+        :ref:`IntermediateListType <link__IntermediateListType>`, and
+        :ref:`IntermediateEnumeration <link__IntermediateEnumeration>`
+        instances being defined in the source Domain Data Model. If a Domain 
+        Data Model has ``versions`` or ``contexts``, it may not have 
+        ``complexTypes`` under the model root. They are, instead, encapsulated 
+        within the ``versions`` or ``contexts`` attributes.
 
     .. NOTE::
 
@@ -300,7 +302,10 @@ The type conversions observe Java's *widening primitive conversions*
 [#java-type-conversions]_ for primitively typed 
 :ref:`fields <link__IntermediateDataField>`. Two 
 :ref:`data structures <link__IntermediateDataStructure>` are compatible, if
-their fields are compatible, independent of their type ordering.
+their fields are compatible, independent of their type ordering. Two distinct
+:ref:`enumerations <link__IntermediateEnumeration>` are compatible, if the 
+value-receiving enumeration comprises all initialization values of the
+value-providing enumeration.
 
 .. _link__IntermediateTypeKind:
 
@@ -308,6 +313,11 @@ their fields are compatible, independent of their type ordering.
 
     Enumeration to specify the kind of an :py:class:`IntermediateType` instance
     being referenced in some place.
+
+    .. cpp:enumerator:: ENUMERATION
+
+        Referenced type is an 
+        :ref:`IntermediateEnumeration <link__IntermediateEnumeration>`.
 
     .. cpp:enumerator:: LIST
 
@@ -357,13 +367,14 @@ their fields are compatible, independent of their type ordering.
         :cpp:enum:`IntermediateTypeKind` and :cpp:enum:`IntermediateTypeOrigin`
         values are possible:
 
-        =========   ======================
-        **Kind**    **Origin**
-        ---------   ----------------------
-        LIST        DATA_MODEL, TECHNOLOGY
-        PRIMITIVE   BUILTIN, TECHNOLOGY
-        STRUCTURE   DATA_MODEL, TECHNOLOGY
-        =========   ======================
+        ===========   ======================
+        **Kind**      **Origin**
+        -----------   ----------------------
+        ENUMERATION   DATA_MODEL
+        LIST          DATA_MODEL, TECHNOLOGY
+        PRIMITIVE     BUILTIN, TECHNOLOGY
+        STRUCTURE     DATA_MODEL, TECHNOLOGY
+        ===========   ======================
 
 .. _link__IntermediateType:
 
@@ -413,6 +424,12 @@ their fields are compatible, independent of their type ordering.
         short       16
         string      null (object type)
         =========   ==================
+
+    .. py:attribute:: IntermediateEnumerationField enumerationField
+
+        Link to the 
+        :ref:`IntermediateEnumerationField <link__IntermediateEnumerationField>`
+        whose initialization value is compatible with this primitive type.
         
 .. _link__custom_types:
 
@@ -424,8 +441,9 @@ Custom, domain-specific Types
 .. java:type:: class IntermediateComplexType extends IntermediateType
 
     Super class of complex types like 
-    :ref:`IntermediateDataStructure <link__IntermediateDataStructure>` and
-    :ref:`IntermediateListType <link__IntermediateListType>`.
+    :ref:`IntermediateDataStructure <link__IntermediateDataStructure>`,
+    :ref:`IntermediateListType <link__IntermediateListType>`, and
+    :ref:`IntermediateEnumeration <link__IntermediateEnumeration>`.
 
     .. py:attribute:: String[1] qualifiedName
 
@@ -589,6 +607,57 @@ Custom, domain-specific Types
         :ref:`IntermediateDataStructure <link__IntermediateDataStructure>` 
         instances that prescribe the structure of the list's values.
 
+.. _link__IntermediateEnumeration:
+
+.. java:type:: class IntermediateEnumeration extends IntermediateComplexType
+
+    A domain-specific enumeration.
+
+    .. py:attribute:: IntermediateEnumerationField[1..*] fields
+
+    The fields of the enumeration.
+
+.. _link__IntermediateEnumerationField:
+
+.. java:type:: class IntermediateEnumerationField
+
+    A field of an IntermediateEnumeration.
+
+    .. py:attribute:: String[1] name
+
+        Unique name of the field.
+
+    .. py:attribute:: String[1] qualifiedName
+
+        Qualified name of the field. This is the field's name prefixed by
+        the qualified name of the surrounding 
+        :ref:`enumeration <link__IntermediateEnumeration>`. The name
+        fragments are separated by dots.
+
+    .. py:attribute:: String initializationValue
+
+        If the field has an initialization value, it is encoded in this String 
+        attribute. It is guaranteed that the initialization value is compatible
+        to all :ref:`primitive types <link__IntermediatePrimitiveType>` in the
+        ``initializationValueCompatibleTypes`` list.
+
+    .. py:attribute:: IntermediatePrimitiveType[*]
+        initializationValueCompatibleTypes
+
+        If the enumeration field exhibits an initialization value, this list
+        comprises all :ref:`primitive types <link__IntermediatePrimitiveType>`,
+        with which the initialization value is compatible.
+
+        .. NOTE::
+
+            There is no determined order in which the primitive types appear in 
+            the list.
+
+    .. py:attribute:: IntermediateEnumeration enumeration
+
+        Link to the :ref:`enumeration <link__IntermediateEnumeration>` in which
+        this field is defined.
+
 .. rubric:: Footnotes
 
 .. [#eclipse] https://www.eclipse.org
@@ -615,4 +684,4 @@ References
 
 .. bibliography:: references.bib
 
-.. _Domain-driven Microservice Design: https://github.com/frademacher/ddmm
+.. _Domain-driven Microservice Design: https://github.com/SeelabFhdo/ddmm

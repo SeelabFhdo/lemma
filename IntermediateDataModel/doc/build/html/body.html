@@ -36,7 +36,7 @@
   <div class="section" id="introduction">
 <span id="id1"></span><h1>1&nbsp;&nbsp;&nbsp;Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
 <p>This document describes the Intermediate Data Model format from the
-<a class="reference external" href="https://github.com/frademacher/ddmm">Domain-driven Microservice Design</a> project. The project aims to facilitate the
+<a class="reference external" href="https://github.com/SeelabFhdo/ddmm">Domain-driven Microservice Design</a> project. The project aims to facilitate the
 development of <em>microservice-based software systems</em> <a class="reference internal" href="#newman2015" id="id2">[New15]</a> by
 employing Model-driven Development (MDD) <a class="reference internal" href="#combemale2017" id="id3">[CFJezequel+17]</a>.</p>
 <p>In this context, a microservice architecture consists of several different types
@@ -66,7 +66,7 @@ Model.</td>
 their interfaces, and operations. The contents of
 imported Domain Data Models, e.g., data structures, may
 be used to type operations’ parameters. See also the
-<a class="reference external" href="../../../IntermediateServiceModel/doc/build/html/index.html" title="(in Intermediate Service Model Format Specification v1.0)"><span class="xref std std-doc">Intermediate Service Model Format Specification</span></a>.</td>
+<a class="reference external" href="../../../../IntermediateServiceModel/doc/build/html/index.html" title="(in Intermediate Service Model Format Specification v1.0)"><span class="xref std std-doc">Intermediate Service Model Format Specification</span></a>.</td>
 </tr>
 <tr class="row-odd"><td>Operation Model</td>
 <td>An Operation Model expresses the deployment of
@@ -105,14 +105,14 @@ is generally the case for Ecore metamodels and derived model instances.</p>
 <p>This document describes the metamodel and thus the structure of XMI files of
 Intermediate Data Models, i.e., instances of Domain Data Models that were
 exported from Eclipse (cf. <a class="reference internal" href="#introduction"><span class="std std-ref">1&nbsp;&nbsp;&nbsp;Introduction</span></a> and <a class="reference internal" href="#modelprocessing"><span class="std std-ref">2&nbsp;&nbsp;&nbsp;Model Processing</span></a>). It
-may be used as as reference, when implementing custom model processors for
+may be used as reference, when implementing custom model processors for
 microservice-related Domain Data Models.</p>
 <p><a class="reference internal" href="#fig-metamodel"><span class="std std-numref">Fig. 1</span></a> shows the structure of the metamodel of the Intermediate
 Data Models in an object-oriented way in the form of a UML class diagram. The
 modeling concepts, their properties, and relationships are depicted as classes,
 attributes, and associations, respectively.</p>
 <div class="figure" id="id20">
-<span id="fig-metamodel"></span><img alt="_images/metamodel.png" src="_images/metamodel.png" />
+<span id="fig-metamodel"></span><a class="reference external image-reference" href="_images/metamodel.png"><img alt="_images/metamodel.png" src="_images/metamodel.png" /></a>
 <p class="caption"><span class="caption-number">Fig. 1 </span><span class="caption-text">Metamodel of Intermediate Data Models</span></p>
 </div>
 <p>In the following, the document contains a reference of each modeling concept of
@@ -170,12 +170,13 @@ are, instead, encapsulated within the <code class="docutils literal notranslate"
 <dl class="attribute">
 <dt>
 <code class="descname">IntermediateComplexType[*] complexTypes</code></dt>
-<dd><p><a class="reference internal" href="#link-intermediatedatastructure"><span class="std std-ref">IntermediateDataStructure</span></a> and
-<a class="reference internal" href="#link-intermediatelisttype"><span class="std std-ref">IntermediateListType</span></a> instances being
-defined in the source Domain Data Model. If a Domain Data Model has
-<code class="docutils literal notranslate"><span class="pre">versions</span></code> or <code class="docutils literal notranslate"><span class="pre">contexts</span></code>, it may not have <code class="docutils literal notranslate"><span class="pre">complexTypes</span></code> under the
-model root. They are, instead, encapsulated within the <code class="docutils literal notranslate"><span class="pre">versions</span></code> or
-<code class="docutils literal notranslate"><span class="pre">contexts</span></code> attributes.</p>
+<dd><p><a class="reference internal" href="#link-intermediatedatastructure"><span class="std std-ref">IntermediateDataStructure</span></a>,
+<a class="reference internal" href="#link-intermediatelisttype"><span class="std std-ref">IntermediateListType</span></a>, and
+<a class="reference internal" href="#link-intermediateenumeration"><span class="std std-ref">IntermediateEnumeration</span></a>
+instances being defined in the source Domain Data Model. If a Domain
+Data Model has <code class="docutils literal notranslate"><span class="pre">versions</span></code> or <code class="docutils literal notranslate"><span class="pre">contexts</span></code>, it may not have
+<code class="docutils literal notranslate"><span class="pre">complexTypes</span></code> under the model root. They are, instead, encapsulated
+within the <code class="docutils literal notranslate"><span class="pre">versions</span></code> or <code class="docutils literal notranslate"><span class="pre">contexts</span></code> attributes.</p>
 </dd></dl>
 
 <div class="admonition note">
@@ -358,12 +359,22 @@ built-in Java primitive types as well as native <code class="docutils literal no
 <a class="footnote-reference" href="#java-type-conversions" id="id16">[8]</a> for primitively typed
 <a class="reference internal" href="#link-intermediatedatafield"><span class="std std-ref">fields</span></a>. Two
 <a class="reference internal" href="#link-intermediatedatastructure"><span class="std std-ref">data structures</span></a> are compatible, if
-their fields are compatible, independent of their type ordering.</p>
+their fields are compatible, independent of their type ordering. Two distinct
+<a class="reference internal" href="#link-intermediateenumeration"><span class="std std-ref">enumerations</span></a> are compatible, if the
+value-receiving enumeration comprises all initialization values of the
+value-providing enumeration.</p>
 <span class="target" id="link-intermediatetypekind"></span><dl class="enum">
 <dt id="_CPPv320IntermediateTypeKind">
 <span id="_CPPv220IntermediateTypeKind"></span><em class="property">enum </em><code class="descname">IntermediateTypeKind</code><a class="headerlink" href="#_CPPv320IntermediateTypeKind" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Enumeration to specify the kind of an <code class="xref py py-class docutils literal notranslate"><span class="pre">IntermediateType</span></code> instance
 being referenced in some place.</p>
+<dl class="enumerator">
+<dt id="_CPPv3N20IntermediateTypeKind11ENUMERATIONE">
+<span id="_CPPv2N20IntermediateTypeKind11ENUMERATIONE"></span><em class="property">enumerator </em><code class="descname">ENUMERATION</code><a class="headerlink" href="#_CPPv3N20IntermediateTypeKind11ENUMERATIONE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Referenced type is an
+<a class="reference internal" href="#link-intermediateenumeration"><span class="std std-ref">IntermediateEnumeration</span></a>.</p>
+</dd></dl>
+
 <dl class="enumerator">
 <dt id="_CPPv3N20IntermediateTypeKind4LISTE">
 <span id="_CPPv2N20IntermediateTypeKind4LISTE"></span><em class="property">enumerator </em><code class="descname">LIST</code><a class="headerlink" href="#_CPPv3N20IntermediateTypeKind4LISTE" title="Permalink to this definition">¶</a><br /></dt>
@@ -425,20 +436,23 @@ technology-specific types that were defined in a Technology Model (cf.
 values are possible:</p>
 <table border="1" class="last docutils">
 <colgroup>
-<col width="29%" />
-<col width="71%" />
+<col width="33%" />
+<col width="67%" />
 </colgroup>
 <tbody valign="top">
 <tr class="row-odd"><td><strong>Kind</strong></td>
 <td><strong>Origin</strong></td>
 </tr>
-<tr class="row-even"><td>LIST</td>
+<tr class="row-even"><td>ENUMERATION</td>
+<td>DATA_MODEL</td>
+</tr>
+<tr class="row-odd"><td>LIST</td>
 <td>DATA_MODEL, TECHNOLOGY</td>
 </tr>
-<tr class="row-odd"><td>PRIMITIVE</td>
+<tr class="row-even"><td>PRIMITIVE</td>
 <td>BUILTIN, TECHNOLOGY</td>
 </tr>
-<tr class="row-even"><td>STRUCTURE</td>
+<tr class="row-odd"><td>STRUCTURE</td>
 <td>DATA_MODEL, TECHNOLOGY</td>
 </tr>
 </tbody>
@@ -529,6 +543,14 @@ the following sizes:</p>
 </table>
 </dd></dl>
 
+<dl class="attribute">
+<dt>
+<code class="descname">IntermediateEnumerationField enumerationField</code></dt>
+<dd><p>Link to the
+<a class="reference internal" href="#link-intermediateenumerationfield"><span class="std std-ref">IntermediateEnumerationField</span></a>
+whose initialization value is compatible with this primitive type.</p>
+</dd></dl>
+
 </dd></dl>
 
 </div>
@@ -538,8 +560,9 @@ the following sizes:</p>
 <dt id="IntermediateComplexType">
  class <code class="descname">IntermediateComplexType</code> extends <a class="reference internal" href="#IntermediateType" title="IntermediateType">IntermediateType</a><a class="headerlink" href="#IntermediateComplexType" title="Permalink to this definition">¶</a></dt>
 <dd><p>Super class of complex types like
-<a class="reference internal" href="#link-intermediatedatastructure"><span class="std std-ref">IntermediateDataStructure</span></a> and
-<a class="reference internal" href="#link-intermediatelisttype"><span class="std std-ref">IntermediateListType</span></a>.</p>
+<a class="reference internal" href="#link-intermediatedatastructure"><span class="std std-ref">IntermediateDataStructure</span></a>,
+<a class="reference internal" href="#link-intermediatelisttype"><span class="std std-ref">IntermediateListType</span></a>, and
+<a class="reference internal" href="#link-intermediateenumeration"><span class="std std-ref">IntermediateEnumeration</span></a>.</p>
 <dl class="attribute">
 <dt>
 <code class="descname">String[1] qualifiedName</code></dt>
@@ -728,6 +751,70 @@ instance that corresponds to the primitive type of the list’s values.</p>
 attribute contains the
 <a class="reference internal" href="#link-intermediatedatastructure"><span class="std std-ref">IntermediateDataStructure</span></a>
 instances that prescribe the structure of the list’s values.</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="link-intermediateenumeration"></span><dl class="type">
+<dt id="IntermediateEnumeration">
+ class <code class="descname">IntermediateEnumeration</code> extends <a class="reference internal" href="#IntermediateComplexType" title="IntermediateComplexType">IntermediateComplexType</a><a class="headerlink" href="#IntermediateEnumeration" title="Permalink to this definition">¶</a></dt>
+<dd><p>A domain-specific enumeration.</p>
+<dl class="attribute">
+<dt>
+<code class="descname">IntermediateEnumerationField[1..*] fields</code></dt>
+<dd></dd></dl>
+
+<p>The fields of the enumeration.</p>
+</dd></dl>
+
+<span class="target" id="link-intermediateenumerationfield"></span><dl class="type">
+<dt id="IntermediateEnumerationField">
+ class <code class="descname">IntermediateEnumerationField</code><a class="headerlink" href="#IntermediateEnumerationField" title="Permalink to this definition">¶</a></dt>
+<dd><p>A field of an IntermediateEnumeration.</p>
+<dl class="attribute">
+<dt>
+<code class="descname">String[1] name</code></dt>
+<dd><p>Unique name of the field.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">String[1] qualifiedName</code></dt>
+<dd><p>Qualified name of the field. This is the field’s name prefixed by
+the qualified name of the surrounding
+<a class="reference internal" href="#link-intermediateenumeration"><span class="std std-ref">enumeration</span></a>. The name
+fragments are separated by dots.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">String initializationValue</code></dt>
+<dd><p>If the field has an initialization value, it is encoded in this String
+attribute. It is guaranteed that the initialization value is compatible
+to all <a class="reference internal" href="#link-intermediateprimitivetype"><span class="std std-ref">primitive types</span></a> in the
+<code class="docutils literal notranslate"><span class="pre">initializationValueCompatibleTypes</span></code> list.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">IntermediatePrimitiveType[*]</code></dt>
+<dt id="initializationValueCompatibleTypes">
+<code class="descname">initializationValueCompatibleTypes</code><a class="headerlink" href="#initializationValueCompatibleTypes" title="Permalink to this definition">¶</a></dt>
+<dd><p>If the enumeration field exhibits an initialization value, this list
+comprises all <a class="reference internal" href="#link-intermediateprimitivetype"><span class="std std-ref">primitive types</span></a>,
+with which the initialization value is compatible.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">There is no determined order in which the primitive types appear in
+the list.</p>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">IntermediateEnumeration enumeration</code></dt>
+<dd><p>Link to the <a class="reference internal" href="#link-intermediateenumeration"><span class="std std-ref">enumeration</span></a> in which
+this field is defined.</p>
 </dd></dl>
 
 </dd></dl>

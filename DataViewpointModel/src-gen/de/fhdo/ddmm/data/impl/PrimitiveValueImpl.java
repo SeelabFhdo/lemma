@@ -14,6 +14,7 @@ import de.fhdo.ddmm.data.PrimitiveLong;
 import de.fhdo.ddmm.data.PrimitiveShort;
 import de.fhdo.ddmm.data.PrimitiveString;
 import de.fhdo.ddmm.data.PrimitiveType;
+import de.fhdo.ddmm.data.PrimitiveTypeConstants;
 import de.fhdo.ddmm.data.PrimitiveValue;
 
 import java.lang.reflect.InvocationTargetException;
@@ -24,6 +25,8 @@ import java.text.DateFormat;
 import java.text.ParseException;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.eclipse.emf.common.notify.Notification;
 
@@ -34,6 +37,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
+import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 
 /**
@@ -629,6 +633,87 @@ public class PrimitiveValueImpl extends MinimalEObjectImpl.Container implements 
      * @generated
      */
     @Override
+    public Map<String, Integer> inferCompatibleTypes() {
+        final HashMap<String, Integer> compatibleTypes = CollectionLiterals.<String, Integer>newHashMap();
+        Boolean _asBoolean = this.asBoolean();
+        boolean _tripleNotEquals = (_asBoolean != null);
+        if (_tripleNotEquals) {
+            compatibleTypes.put(
+                PrimitiveTypeConstants.BOOLEAN.getLiteral(), 
+                Integer.valueOf(PrimitiveTypeConstants.BOOLEAN.getValue()));
+        }
+        Byte _asByte = this.asByte();
+        boolean _tripleNotEquals_1 = (_asByte != null);
+        if (_tripleNotEquals_1) {
+            compatibleTypes.put(
+                PrimitiveTypeConstants.BYTE.getLiteral(), 
+                Integer.valueOf(PrimitiveTypeConstants.BYTE.getValue()));
+        }
+        Character _asCharacter = this.asCharacter();
+        boolean _tripleNotEquals_2 = (_asCharacter != null);
+        if (_tripleNotEquals_2) {
+            compatibleTypes.put(
+                PrimitiveTypeConstants.CHARACTER.getLiteral(), 
+                Integer.valueOf(PrimitiveTypeConstants.CHARACTER.getValue()));
+        }
+        Short _asShort = this.asShort();
+        boolean _tripleNotEquals_3 = (_asShort != null);
+        if (_tripleNotEquals_3) {
+            compatibleTypes.put(
+                PrimitiveTypeConstants.SHORT.getLiteral(), 
+                Integer.valueOf(PrimitiveTypeConstants.SHORT.getValue()));
+        }
+        Integer _asInteger = this.asInteger();
+        boolean _tripleNotEquals_4 = (_asInteger != null);
+        if (_tripleNotEquals_4) {
+            compatibleTypes.put(
+                PrimitiveTypeConstants.INTEGER.getLiteral(), 
+                Integer.valueOf(PrimitiveTypeConstants.INTEGER.getValue()));
+        }
+        Long _asLong = this.asLong();
+        boolean _tripleNotEquals_5 = (_asLong != null);
+        if (_tripleNotEquals_5) {
+            compatibleTypes.put(
+                PrimitiveTypeConstants.LONG.getLiteral(), 
+                Integer.valueOf(PrimitiveTypeConstants.LONG.getValue()));
+        }
+        Float _asFloat = this.asFloat();
+        boolean _tripleNotEquals_6 = (_asFloat != null);
+        if (_tripleNotEquals_6) {
+            compatibleTypes.put(
+                PrimitiveTypeConstants.FLOAT.getLiteral(), 
+                Integer.valueOf(PrimitiveTypeConstants.FLOAT.getValue()));
+        }
+        Double _asDouble = this.asDouble();
+        boolean _tripleNotEquals_7 = (_asDouble != null);
+        if (_tripleNotEquals_7) {
+            compatibleTypes.put(
+                PrimitiveTypeConstants.DOUBLE.getLiteral(), 
+                Integer.valueOf(PrimitiveTypeConstants.DOUBLE.getValue()));
+        }
+        Date _asDate = this.asDate();
+        boolean _tripleNotEquals_8 = (_asDate != null);
+        if (_tripleNotEquals_8) {
+            compatibleTypes.put(
+                PrimitiveTypeConstants.DATE.getLiteral(), 
+                Integer.valueOf(PrimitiveTypeConstants.DATE.getValue()));
+        }
+        String _asString = this.asString();
+        boolean _tripleNotEquals_9 = (_asString != null);
+        if (_tripleNotEquals_9) {
+            compatibleTypes.put(
+                PrimitiveTypeConstants.STRING.getLiteral(), 
+                Integer.valueOf(PrimitiveTypeConstants.STRING.getValue()));
+        }
+        return compatibleTypes;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
             case DataPackage.PRIMITIVE_VALUE__STRING_VALUE:
@@ -741,6 +826,8 @@ public class PrimitiveValueImpl extends MinimalEObjectImpl.Container implements 
                 return asShort();
             case DataPackage.PRIMITIVE_VALUE___AS_STRING:
                 return asString();
+            case DataPackage.PRIMITIVE_VALUE___INFER_COMPATIBLE_TYPES:
+                return inferCompatibleTypes();
         }
         return super.eInvoke(operationID, arguments);
     }

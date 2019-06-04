@@ -67,6 +67,8 @@ public class IntermediateFactoryImpl extends EFactoryImpl implements Intermediat
             case IntermediatePackage.INTERMEDIATE_DATA_STRUCTURE: return createIntermediateDataStructure();
             case IntermediatePackage.INTERMEDIATE_LIST_TYPE: return createIntermediateListType();
             case IntermediatePackage.INTERMEDIATE_DATA_FIELD: return createIntermediateDataField();
+            case IntermediatePackage.INTERMEDIATE_ENUMERATION: return createIntermediateEnumeration();
+            case IntermediatePackage.INTERMEDIATE_ENUMERATION_FIELD: return createIntermediateEnumerationField();
             default:
                 throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
         }
@@ -214,6 +216,28 @@ public class IntermediateFactoryImpl extends EFactoryImpl implements Intermediat
     public IntermediateDataField createIntermediateDataField() {
         IntermediateDataFieldImpl intermediateDataField = new IntermediateDataFieldImpl();
         return intermediateDataField;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public IntermediateEnumeration createIntermediateEnumeration() {
+        IntermediateEnumerationImpl intermediateEnumeration = new IntermediateEnumerationImpl();
+        return intermediateEnumeration;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public IntermediateEnumerationField createIntermediateEnumerationField() {
+        IntermediateEnumerationFieldImpl intermediateEnumerationField = new IntermediateEnumerationFieldImpl();
+        return intermediateEnumerationField;
     }
 
     /**

@@ -7,6 +7,8 @@ import de.fhdo.ddmm.data.intermediate.IntermediateContext;
 import de.fhdo.ddmm.data.intermediate.IntermediateDataField;
 import de.fhdo.ddmm.data.intermediate.IntermediateDataModel;
 import de.fhdo.ddmm.data.intermediate.IntermediateDataStructure;
+import de.fhdo.ddmm.data.intermediate.IntermediateEnumeration;
+import de.fhdo.ddmm.data.intermediate.IntermediateEnumerationField;
 import de.fhdo.ddmm.data.intermediate.IntermediateFactory;
 import de.fhdo.ddmm.data.intermediate.IntermediateImport;
 import de.fhdo.ddmm.data.intermediate.IntermediateImportedComplexType;
@@ -110,6 +112,20 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * @generated
      */
     private EClass intermediateDataFieldEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass intermediateEnumerationEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass intermediateEnumerationFieldEClass = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -495,6 +511,16 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * @generated
      */
     @Override
+    public EReference getIntermediatePrimitiveType_EnumerationField() {
+        return (EReference)intermediatePrimitiveTypeEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public EClass getIntermediateComplexType() {
         return intermediateComplexTypeEClass;
     }
@@ -725,6 +751,86 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * @generated
      */
     @Override
+    public EClass getIntermediateEnumeration() {
+        return intermediateEnumerationEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getIntermediateEnumeration_Fields() {
+        return (EReference)intermediateEnumerationEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EClass getIntermediateEnumerationField() {
+        return intermediateEnumerationFieldEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EAttribute getIntermediateEnumerationField_Name() {
+        return (EAttribute)intermediateEnumerationFieldEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EAttribute getIntermediateEnumerationField_QualifiedName() {
+        return (EAttribute)intermediateEnumerationFieldEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EAttribute getIntermediateEnumerationField_InitializationValue() {
+        return (EAttribute)intermediateEnumerationFieldEClass.getEStructuralFeatures().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getIntermediateEnumerationField_InitializationValueCompatibleTypes() {
+        return (EReference)intermediateEnumerationFieldEClass.getEStructuralFeatures().get(3);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getIntermediateEnumerationField_Enumeration() {
+        return (EReference)intermediateEnumerationFieldEClass.getEStructuralFeatures().get(4);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public EEnum getIntermediateTypeKind() {
         return intermediateTypeKindEEnum;
     }
@@ -803,6 +909,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
 
         intermediatePrimitiveTypeEClass = createEClass(INTERMEDIATE_PRIMITIVE_TYPE);
         createEAttribute(intermediatePrimitiveTypeEClass, INTERMEDIATE_PRIMITIVE_TYPE__SIZE);
+        createEReference(intermediatePrimitiveTypeEClass, INTERMEDIATE_PRIMITIVE_TYPE__ENUMERATION_FIELD);
 
         intermediateComplexTypeEClass = createEClass(INTERMEDIATE_COMPLEX_TYPE);
         createEAttribute(intermediateComplexTypeEClass, INTERMEDIATE_COMPLEX_TYPE__QUALIFIED_NAME);
@@ -831,6 +938,16 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
         createEReference(intermediateDataFieldEClass, INTERMEDIATE_DATA_FIELD__TYPE);
         createEReference(intermediateDataFieldEClass, INTERMEDIATE_DATA_FIELD__DATA_STRUCTURE);
         createEReference(intermediateDataFieldEClass, INTERMEDIATE_DATA_FIELD__LIST_TYPE);
+
+        intermediateEnumerationEClass = createEClass(INTERMEDIATE_ENUMERATION);
+        createEReference(intermediateEnumerationEClass, INTERMEDIATE_ENUMERATION__FIELDS);
+
+        intermediateEnumerationFieldEClass = createEClass(INTERMEDIATE_ENUMERATION_FIELD);
+        createEAttribute(intermediateEnumerationFieldEClass, INTERMEDIATE_ENUMERATION_FIELD__NAME);
+        createEAttribute(intermediateEnumerationFieldEClass, INTERMEDIATE_ENUMERATION_FIELD__QUALIFIED_NAME);
+        createEAttribute(intermediateEnumerationFieldEClass, INTERMEDIATE_ENUMERATION_FIELD__INITIALIZATION_VALUE);
+        createEReference(intermediateEnumerationFieldEClass, INTERMEDIATE_ENUMERATION_FIELD__INITIALIZATION_VALUE_COMPATIBLE_TYPES);
+        createEReference(intermediateEnumerationFieldEClass, INTERMEDIATE_ENUMERATION_FIELD__ENUMERATION);
 
         // Create enums
         intermediateTypeKindEEnum = createEEnum(INTERMEDIATE_TYPE_KIND);
@@ -873,6 +990,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
         intermediateImportedComplexTypeEClass.getESuperTypes().add(this.getIntermediateComplexType());
         intermediateDataStructureEClass.getESuperTypes().add(this.getIntermediateComplexType());
         intermediateListTypeEClass.getESuperTypes().add(this.getIntermediateComplexType());
+        intermediateEnumerationEClass.getESuperTypes().add(this.getIntermediateComplexType());
 
         // Initialize classes, features, and operations; add parameters
         initEClass(intermediateDataModelEClass, IntermediateDataModel.class, "IntermediateDataModel", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -910,6 +1028,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
 
         initEClass(intermediatePrimitiveTypeEClass, IntermediatePrimitiveType.class, "IntermediatePrimitiveType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getIntermediatePrimitiveType_Size(), theEcorePackage.getEIntegerObject(), "size", null, 0, 1, IntermediatePrimitiveType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getIntermediatePrimitiveType_EnumerationField(), this.getIntermediateEnumerationField(), this.getIntermediateEnumerationField_InitializationValueCompatibleTypes(), "enumerationField", null, 0, 1, IntermediatePrimitiveType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(intermediateComplexTypeEClass, IntermediateComplexType.class, "IntermediateComplexType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getIntermediateComplexType_QualifiedName(), theEcorePackage.getEString(), "qualifiedName", null, 0, 1, IntermediateComplexType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -939,9 +1058,20 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
         initEReference(getIntermediateDataField_DataStructure(), this.getIntermediateDataStructure(), this.getIntermediateDataStructure_DataFields(), "dataStructure", null, 0, 1, IntermediateDataField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getIntermediateDataField_ListType(), this.getIntermediateListType(), this.getIntermediateListType_DataFields(), "listType", null, 0, 1, IntermediateDataField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
+        initEClass(intermediateEnumerationEClass, IntermediateEnumeration.class, "IntermediateEnumeration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEReference(getIntermediateEnumeration_Fields(), this.getIntermediateEnumerationField(), this.getIntermediateEnumerationField_Enumeration(), "fields", null, 1, -1, IntermediateEnumeration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEClass(intermediateEnumerationFieldEClass, IntermediateEnumerationField.class, "IntermediateEnumerationField", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getIntermediateEnumerationField_Name(), theEcorePackage.getEString(), "name", null, 0, 1, IntermediateEnumerationField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getIntermediateEnumerationField_QualifiedName(), theEcorePackage.getEString(), "qualifiedName", null, 0, 1, IntermediateEnumerationField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getIntermediateEnumerationField_InitializationValue(), theEcorePackage.getEString(), "initializationValue", null, 0, 1, IntermediateEnumerationField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getIntermediateEnumerationField_InitializationValueCompatibleTypes(), this.getIntermediatePrimitiveType(), this.getIntermediatePrimitiveType_EnumerationField(), "initializationValueCompatibleTypes", null, 0, -1, IntermediateEnumerationField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getIntermediateEnumerationField_Enumeration(), this.getIntermediateEnumeration(), this.getIntermediateEnumeration_Fields(), "enumeration", null, 0, 1, IntermediateEnumerationField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
         // Initialize enums and add enum literals
         initEEnum(intermediateTypeKindEEnum, IntermediateTypeKind.class, "IntermediateTypeKind");
         addEEnumLiteral(intermediateTypeKindEEnum, IntermediateTypeKind.DUMMY_FOR_XMI_SERIALIZER_BUG);
+        addEEnumLiteral(intermediateTypeKindEEnum, IntermediateTypeKind.ENUMERATION);
         addEEnumLiteral(intermediateTypeKindEEnum, IntermediateTypeKind.LIST);
         addEEnumLiteral(intermediateTypeKindEEnum, IntermediateTypeKind.PRIMITIVE);
         addEEnumLiteral(intermediateTypeKindEEnum, IntermediateTypeKind.STRUCTURE);

@@ -25,6 +25,7 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link de.fhdo.ddmm.data.ComplexType#isIsStructure <em>Is Structure</em>}</li>
  *   <li>{@link de.fhdo.ddmm.data.ComplexType#isIsPrimitiveList <em>Is Primitive List</em>}</li>
  *   <li>{@link de.fhdo.ddmm.data.ComplexType#isIsStructuredList <em>Is Structured List</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.data.ComplexType#isIsEnumeration <em>Is Enumeration</em>}</li>
  * </ul>
  *
  * @see de.fhdo.ddmm.data.DataPackage#getComplexType()
@@ -190,6 +191,21 @@ public interface ComplexType extends Type {
      * @generated
      */
     boolean isIsStructuredList();
+
+    /**
+     * Returns the value of the '<em><b>Is Enumeration</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * *
+     * Flag indicating that the ComplexType instance is an Enumeration
+     * <!-- end-model-doc -->
+     * @return the value of the '<em>Is Enumeration</em>' attribute.
+     * @see de.fhdo.ddmm.data.DataPackage#getComplexType_IsEnumeration()
+     * @model unique="false" transient="true" changeable="false" volatile="true" derived="true"
+     * @generated
+     */
+    boolean isIsEnumeration();
 
     /**
      * <!-- begin-user-doc -->

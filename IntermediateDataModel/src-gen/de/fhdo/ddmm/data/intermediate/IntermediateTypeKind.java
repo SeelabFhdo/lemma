@@ -33,6 +33,16 @@ public enum IntermediateTypeKind implements Enumerator {
     DUMMY_FOR_XMI_SERIALIZER_BUG(0, "DUMMY_FOR_XMI_SERIALIZER_BUG", "DUMMY_FOR_XMI_SERIALIZER_BUG"),
 
     /**
+     * The '<em><b>ENUMERATION</b></em>' literal object.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #ENUMERATION_VALUE
+     * @generated
+     * @ordered
+     */
+    ENUMERATION(0, "ENUMERATION", "ENUMERATION"),
+
+    /**
      * The '<em><b>LIST</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -76,6 +86,21 @@ public enum IntermediateTypeKind implements Enumerator {
      * @ordered
      */
     public static final int DUMMY_FOR_XMI_SERIALIZER_BUG_VALUE = 0;
+
+    /**
+     * The '<em><b>ENUMERATION</b></em>' literal value.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of '<em><b>ENUMERATION</b></em>' literal object isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @see #ENUMERATION
+     * @model
+     * @generated
+     * @ordered
+     */
+    public static final int ENUMERATION_VALUE = 0;
 
     /**
      * The '<em><b>LIST</b></em>' literal value.
@@ -131,6 +156,7 @@ public enum IntermediateTypeKind implements Enumerator {
     private static final IntermediateTypeKind[] VALUES_ARRAY =
         new IntermediateTypeKind[] {
             DUMMY_FOR_XMI_SERIALIZER_BUG,
+            ENUMERATION,
             LIST,
             PRIMITIVE,
             STRUCTURE,

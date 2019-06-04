@@ -582,6 +582,15 @@ public interface TechnologyPackage extends EPackage {
     int TECHNOLOGY_SPECIFIC_LIST_TYPE__IS_STRUCTURED_LIST = DataPackage.COMPLEX_TYPE__IS_STRUCTURED_LIST;
 
     /**
+     * The feature id for the '<em><b>Is Enumeration</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TECHNOLOGY_SPECIFIC_LIST_TYPE__IS_ENUMERATION = DataPackage.COMPLEX_TYPE__IS_ENUMERATION;
+
+    /**
      * The feature id for the '<em><b>Technology</b></em>' container reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -707,6 +716,15 @@ public interface TechnologyPackage extends EPackage {
      * @ordered
      */
     int TECHNOLOGY_SPECIFIC_DATA_STRUCTURE__IS_STRUCTURED_LIST = DataPackage.COMPLEX_TYPE__IS_STRUCTURED_LIST;
+
+    /**
+     * The feature id for the '<em><b>Is Enumeration</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TECHNOLOGY_SPECIFIC_DATA_STRUCTURE__IS_ENUMERATION = DataPackage.COMPLEX_TYPE__IS_ENUMERATION;
 
     /**
      * The feature id for the '<em><b>Technology</b></em>' container reference.

@@ -136,10 +136,6 @@ TechnologySpecificProperty returns TechnologySpecificProperty:
     ';'
 ;
 
-PrimitiveValue returns data::PrimitiveValue:
-    numericValue=BIG_DECIMAL | booleanValue=BOOLEAN | stringValue=STRING
-;
-
 enum ServiceJoinPointType returns JoinPointType:
     MICROSERVICES = 'microservices' |
     INTERFACES = 'interfaces' |

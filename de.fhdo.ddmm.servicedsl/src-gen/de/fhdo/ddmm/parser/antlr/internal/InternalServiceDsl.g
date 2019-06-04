@@ -1957,7 +1957,7 @@ ruleImportedServiceAspect returns [EObject current=null]
 								$current,
 								"singlePropertyValue",
 								lv_singlePropertyValue_5_0,
-								"de.fhdo.ddmm.ServiceDsl.PrimitiveValue");
+								"de.fhdo.ddmm.data.DataDsl.PrimitiveValue");
 							afterParserOrEnumRuleCall();
 						}
 					)
@@ -2018,81 +2018,6 @@ ruleImportedServiceAspect returns [EObject current=null]
 	)
 ;
 
-// Entry rule entryRulePrimitiveValue
-entryRulePrimitiveValue returns [EObject current=null]:
-	{ newCompositeNode(grammarAccess.getPrimitiveValueRule()); }
-	iv_rulePrimitiveValue=rulePrimitiveValue
-	{ $current=$iv_rulePrimitiveValue.current; }
-	EOF;
-
-// Rule PrimitiveValue
-rulePrimitiveValue returns [EObject current=null]
-@init {
-	enterRule();
-}
-@after {
-	leaveRule();
-}:
-	(
-		(
-			(
-				lv_numericValue_0_0=RULE_BIG_DECIMAL
-				{
-					newLeafNode(lv_numericValue_0_0, grammarAccess.getPrimitiveValueAccess().getNumericValueBIG_DECIMALTerminalRuleCall_0_0());
-				}
-				{
-					if ($current==null) {
-						$current = createModelElement(grammarAccess.getPrimitiveValueRule());
-					}
-					setWithLastConsumed(
-						$current,
-						"numericValue",
-						lv_numericValue_0_0,
-						"de.fhdo.ddmm.data.DataDsl.BIG_DECIMAL");
-				}
-			)
-		)
-		    |
-		(
-			(
-				lv_booleanValue_1_0=RULE_BOOLEAN
-				{
-					newLeafNode(lv_booleanValue_1_0, grammarAccess.getPrimitiveValueAccess().getBooleanValueBOOLEANTerminalRuleCall_1_0());
-				}
-				{
-					if ($current==null) {
-						$current = createModelElement(grammarAccess.getPrimitiveValueRule());
-					}
-					setWithLastConsumed(
-						$current,
-						"booleanValue",
-						lv_booleanValue_1_0,
-						"de.fhdo.ddmm.data.DataDsl.BOOLEAN");
-				}
-			)
-		)
-		    |
-		(
-			(
-				lv_stringValue_2_0=RULE_STRING
-				{
-					newLeafNode(lv_stringValue_2_0, grammarAccess.getPrimitiveValueAccess().getStringValueSTRINGTerminalRuleCall_2_0());
-				}
-				{
-					if ($current==null) {
-						$current = createModelElement(grammarAccess.getPrimitiveValueRule());
-					}
-					setWithLastConsumed(
-						$current,
-						"stringValue",
-						lv_stringValue_2_0,
-						"org.eclipse.xtext.common.Terminals.STRING");
-				}
-			)
-		)
-	)
-;
-
 // Entry rule entryRulePropertyValueAssignment
 entryRulePropertyValueAssignment returns [EObject current=null]:
 	{ newCompositeNode(grammarAccess.getPropertyValueAssignmentRule()); }
@@ -2140,7 +2065,7 @@ rulePropertyValueAssignment returns [EObject current=null]
 						$current,
 						"value",
 						lv_value_2_0,
-						"de.fhdo.ddmm.ServiceDsl.PrimitiveValue");
+						"de.fhdo.ddmm.data.DataDsl.PrimitiveValue");
 					afterParserOrEnumRuleCall();
 				}
 			)
@@ -3226,7 +3151,7 @@ ruleTechnologySpecificProperty returns [EObject current=null]
 								$current,
 								"defaultValue",
 								lv_defaultValue_3_0,
-								"de.fhdo.ddmm.ServiceDsl.PrimitiveValue");
+								"de.fhdo.ddmm.data.DataDsl.PrimitiveValue");
 							afterParserOrEnumRuleCall();
 						}
 					)
@@ -4031,6 +3956,15 @@ ruleComplexType returns [EObject current=null]
 			$current = $this_ListType_1.current;
 			afterParserOrEnumRuleCall();
 		}
+		    |
+		{
+			newCompositeNode(grammarAccess.getComplexTypeAccess().getEnumerationParserRuleCall_2());
+		}
+		this_Enumeration_2=ruleEnumeration
+		{
+			$current = $this_Enumeration_2.current;
+			afterParserOrEnumRuleCall();
+		}
 	)
 ;
 
@@ -4384,6 +4318,240 @@ ruleDataField returns [EObject current=null]
 						"name",
 						lv_name_3_0,
 						"org.eclipse.xtext.common.Terminals.ID");
+				}
+			)
+		)
+	)
+;
+
+// Entry rule entryRuleEnumeration
+entryRuleEnumeration returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getEnumerationRule()); }
+	iv_ruleEnumeration=ruleEnumeration
+	{ $current=$iv_ruleEnumeration.current; }
+	EOF;
+
+// Rule Enumeration
+ruleEnumeration returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		otherlv_0='enum'
+		{
+			newLeafNode(otherlv_0, grammarAccess.getEnumerationAccess().getEnumKeyword_0());
+		}
+		(
+			(
+				lv_name_1_0=RULE_ID
+				{
+					newLeafNode(lv_name_1_0, grammarAccess.getEnumerationAccess().getNameIDTerminalRuleCall_1_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getEnumerationRule());
+					}
+					setWithLastConsumed(
+						$current,
+						"name",
+						lv_name_1_0,
+						"org.eclipse.xtext.common.Terminals.ID");
+				}
+			)
+		)
+		otherlv_2='{'
+		{
+			newLeafNode(otherlv_2, grammarAccess.getEnumerationAccess().getLeftCurlyBracketKeyword_2());
+		}
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getEnumerationAccess().getFieldsEnumerationFieldParserRuleCall_3_0());
+				}
+				lv_fields_3_0=ruleEnumerationField
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getEnumerationRule());
+					}
+					add(
+						$current,
+						"fields",
+						lv_fields_3_0,
+						"de.fhdo.ddmm.data.DataDsl.EnumerationField");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)
+		(
+			otherlv_4=','
+			{
+				newLeafNode(otherlv_4, grammarAccess.getEnumerationAccess().getCommaKeyword_4_0());
+			}
+			(
+				(
+					{
+						newCompositeNode(grammarAccess.getEnumerationAccess().getFieldsEnumerationFieldParserRuleCall_4_1_0());
+					}
+					lv_fields_5_0=ruleEnumerationField
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getEnumerationRule());
+						}
+						add(
+							$current,
+							"fields",
+							lv_fields_5_0,
+							"de.fhdo.ddmm.data.DataDsl.EnumerationField");
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)
+		)*
+		otherlv_6='}'
+		{
+			newLeafNode(otherlv_6, grammarAccess.getEnumerationAccess().getRightCurlyBracketKeyword_5());
+		}
+	)
+;
+
+// Entry rule entryRuleEnumerationField
+entryRuleEnumerationField returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getEnumerationFieldRule()); }
+	iv_ruleEnumerationField=ruleEnumerationField
+	{ $current=$iv_ruleEnumerationField.current; }
+	EOF;
+
+// Rule EnumerationField
+ruleEnumerationField returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		(
+			(
+				lv_name_0_0=RULE_ID
+				{
+					newLeafNode(lv_name_0_0, grammarAccess.getEnumerationFieldAccess().getNameIDTerminalRuleCall_0_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getEnumerationFieldRule());
+					}
+					setWithLastConsumed(
+						$current,
+						"name",
+						lv_name_0_0,
+						"org.eclipse.xtext.common.Terminals.ID");
+				}
+			)
+		)
+		(
+			otherlv_1='('
+			{
+				newLeafNode(otherlv_1, grammarAccess.getEnumerationFieldAccess().getLeftParenthesisKeyword_1_0());
+			}
+			(
+				(
+					{
+						newCompositeNode(grammarAccess.getEnumerationFieldAccess().getInitializationValuePrimitiveValueParserRuleCall_1_1_0());
+					}
+					lv_initializationValue_2_0=rulePrimitiveValue
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getEnumerationFieldRule());
+						}
+						set(
+							$current,
+							"initializationValue",
+							lv_initializationValue_2_0,
+							"de.fhdo.ddmm.data.DataDsl.PrimitiveValue");
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)
+			otherlv_3=')'
+			{
+				newLeafNode(otherlv_3, grammarAccess.getEnumerationFieldAccess().getRightParenthesisKeyword_1_2());
+			}
+		)?
+	)
+;
+
+// Entry rule entryRulePrimitiveValue
+entryRulePrimitiveValue returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getPrimitiveValueRule()); }
+	iv_rulePrimitiveValue=rulePrimitiveValue
+	{ $current=$iv_rulePrimitiveValue.current; }
+	EOF;
+
+// Rule PrimitiveValue
+rulePrimitiveValue returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		(
+			(
+				lv_numericValue_0_0=RULE_BIG_DECIMAL
+				{
+					newLeafNode(lv_numericValue_0_0, grammarAccess.getPrimitiveValueAccess().getNumericValueBIG_DECIMALTerminalRuleCall_0_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getPrimitiveValueRule());
+					}
+					setWithLastConsumed(
+						$current,
+						"numericValue",
+						lv_numericValue_0_0,
+						"de.fhdo.ddmm.data.DataDsl.BIG_DECIMAL");
+				}
+			)
+		)
+		    |
+		(
+			(
+				lv_booleanValue_1_0=RULE_BOOLEAN
+				{
+					newLeafNode(lv_booleanValue_1_0, grammarAccess.getPrimitiveValueAccess().getBooleanValueBOOLEANTerminalRuleCall_1_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getPrimitiveValueRule());
+					}
+					setWithLastConsumed(
+						$current,
+						"booleanValue",
+						lv_booleanValue_1_0,
+						"de.fhdo.ddmm.data.DataDsl.BOOLEAN");
+				}
+			)
+		)
+		    |
+		(
+			(
+				lv_stringValue_2_0=RULE_STRING
+				{
+					newLeafNode(lv_stringValue_2_0, grammarAccess.getPrimitiveValueAccess().getStringValueSTRINGTerminalRuleCall_2_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getPrimitiveValueRule());
+					}
+					setWithLastConsumed(
+						$current,
+						"stringValue",
+						lv_stringValue_2_0,
+						"org.eclipse.xtext.common.Terminals.STRING");
 				}
 			)
 		)

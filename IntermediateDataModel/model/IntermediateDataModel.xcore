@@ -69,6 +69,7 @@ class IntermediateContext {
 enum IntermediateTypeKind {
     // Dummy constant due to XMI serializer bug (see comments in Import concept)
     DUMMY_FOR_XMI_SERIALIZER_BUG,
+    ENUMERATION,
     LIST,
     PRIMITIVE,
     STRUCTURE
@@ -108,6 +109,9 @@ abstract class IntermediateType {
  */
 class IntermediatePrimitiveType extends IntermediateType {
     Integer size
+
+    container IntermediateEnumerationField enumerationField
+        opposite initializationValueCompatibleTypes
 }
 
 /**
@@ -160,4 +164,26 @@ class IntermediateDataField {
 
     container IntermediateDataStructure dataStructure opposite dataFields
     container IntermediateListType listType opposite dataFields
+}
+
+/**
+ * Enumeration
+ */
+class IntermediateEnumeration extends IntermediateComplexType {
+    contains IntermediateEnumerationField[1..*] fields opposite enumeration
+}
+
+/**
+ * Enumeration field
+ */
+class IntermediateEnumerationField {
+    String name
+    String qualifiedName
+    // The initialization value is encoded in a single String. However, the validators of the
+    // languages ensure that the value corresponds to the type of the property.
+    String initializationValue
+
+    contains IntermediatePrimitiveType[] initializationValueCompatibleTypes
+        opposite enumerationField
+    container IntermediateEnumeration enumeration opposite fields
 }

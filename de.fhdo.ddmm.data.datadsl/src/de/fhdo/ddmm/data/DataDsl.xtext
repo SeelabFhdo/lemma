@@ -39,7 +39,7 @@ Context returns Context:
 ;
 
 ComplexType returns ComplexType:
-    DataStructure | ListType
+    DataStructure | ListType | Enumeration
 ;
 
 DataStructure returns DataStructure:
@@ -62,6 +62,20 @@ DataField returns DataField:
     ^hidden?='hide'?
     (primitiveType=PrimitiveType | complexType=PossiblyImportedComplexType)?
     name=ID
+;
+
+Enumeration returns Enumeration:
+    'enum' name=ID '{'
+        fields+=EnumerationField (',' fields+=EnumerationField)*
+    '}'
+;
+
+EnumerationField returns EnumerationField:
+    name=ID ('(' initializationValue=PrimitiveValue ')')?
+;
+
+PrimitiveValue returns PrimitiveValue:
+    numericValue=BIG_DECIMAL | booleanValue=BOOLEAN | stringValue=STRING
 ;
 
 PossiblyImportedComplexType returns PossiblyImportedComplexType:

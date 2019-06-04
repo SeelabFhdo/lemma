@@ -112,6 +112,14 @@ public class IntermediateAdapterFactory extends AdapterFactoryImpl {
                 return createIntermediateDataFieldAdapter();
             }
             @Override
+            public Adapter caseIntermediateEnumeration(IntermediateEnumeration object) {
+                return createIntermediateEnumerationAdapter();
+            }
+            @Override
+            public Adapter caseIntermediateEnumerationField(IntermediateEnumerationField object) {
+                return createIntermediateEnumerationFieldAdapter();
+            }
+            @Override
             public Adapter defaultCase(EObject object) {
                 return createEObjectAdapter();
             }
@@ -282,6 +290,34 @@ public class IntermediateAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createIntermediateDataFieldAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.fhdo.ddmm.data.intermediate.IntermediateEnumeration <em>Enumeration</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.fhdo.ddmm.data.intermediate.IntermediateEnumeration
+     * @generated
+     */
+    public Adapter createIntermediateEnumerationAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.fhdo.ddmm.data.intermediate.IntermediateEnumerationField <em>Enumeration Field</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.fhdo.ddmm.data.intermediate.IntermediateEnumerationField
+     * @generated
+     */
+    public Adapter createIntermediateEnumerationFieldAdapter() {
         return null;
     }
 

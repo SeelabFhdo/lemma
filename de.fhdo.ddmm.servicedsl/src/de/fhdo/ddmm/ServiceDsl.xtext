@@ -132,11 +132,6 @@ ImportedServiceAspect returns ImportedServiceAspect:
     ')')?
 ;
 
-@Override
-PrimitiveValue returns data::PrimitiveValue:
-    numericValue=BIG_DECIMAL | booleanValue=BOOLEAN | stringValue=STRING
-;
-
 PropertyValueAssignment returns technology::TechnologySpecificPropertyValueAssignment:
     property=[technology::TechnologySpecificProperty] '=' value=PrimitiveValue
 ;

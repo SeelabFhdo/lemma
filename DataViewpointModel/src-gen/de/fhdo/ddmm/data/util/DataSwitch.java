@@ -218,6 +218,20 @@ public class DataSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
+            case DataPackage.ENUMERATION: {
+                Enumeration enumeration = (Enumeration)theEObject;
+                T result = caseEnumeration(enumeration);
+                if (result == null) result = caseComplexType(enumeration);
+                if (result == null) result = caseType(enumeration);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case DataPackage.ENUMERATION_FIELD: {
+                EnumerationField enumerationField = (EnumerationField)theEObject;
+                T result = caseEnumerationField(enumerationField);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
             case DataPackage.PRIMITIVE_VALUE: {
                 PrimitiveValue primitiveValue = (PrimitiveValue)theEObject;
                 T result = casePrimitiveValue(primitiveValue);
@@ -540,6 +554,36 @@ public class DataSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseDataField(DataField object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Enumeration</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Enumeration</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseEnumeration(Enumeration object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Enumeration Field</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Enumeration Field</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseEnumerationField(EnumerationField object) {
         return null;
     }
 

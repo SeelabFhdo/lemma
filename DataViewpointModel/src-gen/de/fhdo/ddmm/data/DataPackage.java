@@ -4,6 +4,8 @@ package de.fhdo.ddmm.data;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EDataType;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
@@ -1264,13 +1266,22 @@ public interface DataPackage extends EPackage {
     int COMPLEX_TYPE__IS_STRUCTURED_LIST = TYPE_FEATURE_COUNT + 6;
 
     /**
+     * The feature id for the '<em><b>Is Enumeration</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int COMPLEX_TYPE__IS_ENUMERATION = TYPE_FEATURE_COUNT + 7;
+
+    /**
      * The number of structural features of the '<em>Complex Type</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int COMPLEX_TYPE_FEATURE_COUNT = TYPE_FEATURE_COUNT + 7;
+    int COMPLEX_TYPE_FEATURE_COUNT = TYPE_FEATURE_COUNT + 8;
 
     /**
      * The operation id for the '<em>Get Qualified Name Parts</em>' operation.
@@ -1437,6 +1448,15 @@ public interface DataPackage extends EPackage {
     int DATA_STRUCTURE__IS_STRUCTURED_LIST = COMPLEX_TYPE__IS_STRUCTURED_LIST;
 
     /**
+     * The feature id for the '<em><b>Is Enumeration</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATA_STRUCTURE__IS_ENUMERATION = COMPLEX_TYPE__IS_ENUMERATION;
+
+    /**
      * The feature id for the '<em><b>Super</b></em>' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1598,6 +1618,15 @@ public interface DataPackage extends EPackage {
      * @ordered
      */
     int LIST_TYPE__IS_STRUCTURED_LIST = COMPLEX_TYPE__IS_STRUCTURED_LIST;
+
+    /**
+     * The feature id for the '<em><b>Is Enumeration</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LIST_TYPE__IS_ENUMERATION = COMPLEX_TYPE__IS_ENUMERATION;
 
     /**
      * The feature id for the '<em><b>Primitive Type</b></em>' containment reference.
@@ -1790,6 +1819,215 @@ public interface DataPackage extends EPackage {
     int DATA_FIELD_OPERATION_COUNT = 4;
 
     /**
+     * The meta object id for the '{@link de.fhdo.ddmm.data.impl.EnumerationImpl <em>Enumeration</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.fhdo.ddmm.data.impl.EnumerationImpl
+     * @see de.fhdo.ddmm.data.impl.DataPackageImpl#getEnumeration()
+     * @generated
+     */
+    int ENUMERATION = 21;
+
+    /**
+     * The feature id for the '<em><b>Name</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ENUMERATION__NAME = COMPLEX_TYPE__NAME;
+
+    /**
+     * The feature id for the '<em><b>Data Model</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ENUMERATION__DATA_MODEL = COMPLEX_TYPE__DATA_MODEL;
+
+    /**
+     * The feature id for the '<em><b>Version</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ENUMERATION__VERSION = COMPLEX_TYPE__VERSION;
+
+    /**
+     * The feature id for the '<em><b>Context</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ENUMERATION__CONTEXT = COMPLEX_TYPE__CONTEXT;
+
+    /**
+     * The feature id for the '<em><b>Is Structure</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ENUMERATION__IS_STRUCTURE = COMPLEX_TYPE__IS_STRUCTURE;
+
+    /**
+     * The feature id for the '<em><b>Is Primitive List</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ENUMERATION__IS_PRIMITIVE_LIST = COMPLEX_TYPE__IS_PRIMITIVE_LIST;
+
+    /**
+     * The feature id for the '<em><b>Is Structured List</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ENUMERATION__IS_STRUCTURED_LIST = COMPLEX_TYPE__IS_STRUCTURED_LIST;
+
+    /**
+     * The feature id for the '<em><b>Is Enumeration</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ENUMERATION__IS_ENUMERATION = COMPLEX_TYPE__IS_ENUMERATION;
+
+    /**
+     * The feature id for the '<em><b>Fields</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ENUMERATION__FIELDS = COMPLEX_TYPE_FEATURE_COUNT + 0;
+
+    /**
+     * The number of structural features of the '<em>Enumeration</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ENUMERATION_FEATURE_COUNT = COMPLEX_TYPE_FEATURE_COUNT + 1;
+
+    /**
+     * The operation id for the '<em>Get Qualified Name Parts</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ENUMERATION___GET_QUALIFIED_NAME_PARTS = COMPLEX_TYPE___GET_QUALIFIED_NAME_PARTS;
+
+    /**
+     * The operation id for the '<em>Build Qualified Name</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ENUMERATION___BUILD_QUALIFIED_NAME__STRING = COMPLEX_TYPE___BUILD_QUALIFIED_NAME__STRING;
+
+    /**
+     * The operation id for the '<em>Compare Field Counts</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ENUMERATION___COMPARE_FIELD_COUNTS__ELIST_ELIST = COMPLEX_TYPE___COMPARE_FIELD_COUNTS__ELIST_ELIST;
+
+    /**
+     * The number of operations of the '<em>Enumeration</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ENUMERATION_OPERATION_COUNT = COMPLEX_TYPE_OPERATION_COUNT + 0;
+
+    /**
+     * The meta object id for the '{@link de.fhdo.ddmm.data.impl.EnumerationFieldImpl <em>Enumeration Field</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.fhdo.ddmm.data.impl.EnumerationFieldImpl
+     * @see de.fhdo.ddmm.data.impl.DataPackageImpl#getEnumerationField()
+     * @generated
+     */
+    int ENUMERATION_FIELD = 22;
+
+    /**
+     * The feature id for the '<em><b>Name</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ENUMERATION_FIELD__NAME = 0;
+
+    /**
+     * The feature id for the '<em><b>Initialization Value</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ENUMERATION_FIELD__INITIALIZATION_VALUE = 1;
+
+    /**
+     * The feature id for the '<em><b>Enumeration</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ENUMERATION_FIELD__ENUMERATION = 2;
+
+    /**
+     * The number of structural features of the '<em>Enumeration Field</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ENUMERATION_FIELD_FEATURE_COUNT = 3;
+
+    /**
+     * The operation id for the '<em>Get Qualified Name Parts</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ENUMERATION_FIELD___GET_QUALIFIED_NAME_PARTS = 0;
+
+    /**
+     * The operation id for the '<em>Build Qualified Name</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ENUMERATION_FIELD___BUILD_QUALIFIED_NAME__STRING = 1;
+
+    /**
+     * The number of operations of the '<em>Enumeration Field</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ENUMERATION_FIELD_OPERATION_COUNT = 2;
+
+    /**
      * The meta object id for the '{@link de.fhdo.ddmm.data.impl.PrimitiveValueImpl <em>Primitive Value</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1797,7 +2035,7 @@ public interface DataPackage extends EPackage {
      * @see de.fhdo.ddmm.data.impl.DataPackageImpl#getPrimitiveValue()
      * @generated
      */
-    int PRIMITIVE_VALUE = 21;
+    int PRIMITIVE_VALUE = 23;
 
     /**
      * The feature id for the '<em><b>String Value</b></em>' attribute.
@@ -1980,13 +2218,42 @@ public interface DataPackage extends EPackage {
     int PRIMITIVE_VALUE___AS_STRING = 15;
 
     /**
+     * The operation id for the '<em>Infer Compatible Types</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PRIMITIVE_VALUE___INFER_COMPATIBLE_TYPES = 16;
+
+    /**
      * The number of operations of the '<em>Primitive Value</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int PRIMITIVE_VALUE_OPERATION_COUNT = 16;
+    int PRIMITIVE_VALUE_OPERATION_COUNT = 17;
+
+    /**
+     * The meta object id for the '{@link de.fhdo.ddmm.data.PrimitiveTypeConstants <em>Primitive Type Constants</em>}' enum.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.fhdo.ddmm.data.PrimitiveTypeConstants
+     * @see de.fhdo.ddmm.data.impl.DataPackageImpl#getPrimitiveTypeConstants()
+     * @generated
+     */
+    int PRIMITIVE_TYPE_CONSTANTS = 24;
+
+    /**
+     * The meta object id for the '<em>Type Name Size Map</em>' data type.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see java.util.Map
+     * @see de.fhdo.ddmm.data.impl.DataPackageImpl#getTypeNameSizeMap()
+     * @generated
+     */
+    int TYPE_NAME_SIZE_MAP = 25;
 
 
     /**
@@ -2515,6 +2782,17 @@ public interface DataPackage extends EPackage {
     EAttribute getComplexType_IsStructuredList();
 
     /**
+     * Returns the meta object for the attribute '{@link de.fhdo.ddmm.data.ComplexType#isIsEnumeration <em>Is Enumeration</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Is Enumeration</em>'.
+     * @see de.fhdo.ddmm.data.ComplexType#isIsEnumeration()
+     * @see #getComplexType()
+     * @generated
+     */
+    EAttribute getComplexType_IsEnumeration();
+
+    /**
      * Returns the meta object for the '{@link de.fhdo.ddmm.data.ComplexType#getQualifiedNameParts() <em>Get Qualified Name Parts</em>}' operation.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2808,6 +3086,90 @@ public interface DataPackage extends EPackage {
     EOperation getDataField__FindEponymousSuperField();
 
     /**
+     * Returns the meta object for class '{@link de.fhdo.ddmm.data.Enumeration <em>Enumeration</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Enumeration</em>'.
+     * @see de.fhdo.ddmm.data.Enumeration
+     * @generated
+     */
+    EClass getEnumeration();
+
+    /**
+     * Returns the meta object for the containment reference list '{@link de.fhdo.ddmm.data.Enumeration#getFields <em>Fields</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Fields</em>'.
+     * @see de.fhdo.ddmm.data.Enumeration#getFields()
+     * @see #getEnumeration()
+     * @generated
+     */
+    EReference getEnumeration_Fields();
+
+    /**
+     * Returns the meta object for class '{@link de.fhdo.ddmm.data.EnumerationField <em>Enumeration Field</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Enumeration Field</em>'.
+     * @see de.fhdo.ddmm.data.EnumerationField
+     * @generated
+     */
+    EClass getEnumerationField();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.fhdo.ddmm.data.EnumerationField#getName <em>Name</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Name</em>'.
+     * @see de.fhdo.ddmm.data.EnumerationField#getName()
+     * @see #getEnumerationField()
+     * @generated
+     */
+    EAttribute getEnumerationField_Name();
+
+    /**
+     * Returns the meta object for the containment reference '{@link de.fhdo.ddmm.data.EnumerationField#getInitializationValue <em>Initialization Value</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference '<em>Initialization Value</em>'.
+     * @see de.fhdo.ddmm.data.EnumerationField#getInitializationValue()
+     * @see #getEnumerationField()
+     * @generated
+     */
+    EReference getEnumerationField_InitializationValue();
+
+    /**
+     * Returns the meta object for the container reference '{@link de.fhdo.ddmm.data.EnumerationField#getEnumeration <em>Enumeration</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the container reference '<em>Enumeration</em>'.
+     * @see de.fhdo.ddmm.data.EnumerationField#getEnumeration()
+     * @see #getEnumerationField()
+     * @generated
+     */
+    EReference getEnumerationField_Enumeration();
+
+    /**
+     * Returns the meta object for the '{@link de.fhdo.ddmm.data.EnumerationField#getQualifiedNameParts() <em>Get Qualified Name Parts</em>}' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the '<em>Get Qualified Name Parts</em>' operation.
+     * @see de.fhdo.ddmm.data.EnumerationField#getQualifiedNameParts()
+     * @generated
+     */
+    EOperation getEnumerationField__GetQualifiedNameParts();
+
+    /**
+     * Returns the meta object for the '{@link de.fhdo.ddmm.data.EnumerationField#buildQualifiedName(java.lang.String) <em>Build Qualified Name</em>}' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the '<em>Build Qualified Name</em>' operation.
+     * @see de.fhdo.ddmm.data.EnumerationField#buildQualifiedName(java.lang.String)
+     * @generated
+     */
+    EOperation getEnumerationField__BuildQualifiedName__String();
+
+    /**
      * Returns the meta object for class '{@link de.fhdo.ddmm.data.PrimitiveValue <em>Primitive Value</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -3009,6 +3371,37 @@ public interface DataPackage extends EPackage {
      * @generated
      */
     EOperation getPrimitiveValue__AsString();
+
+    /**
+     * Returns the meta object for the '{@link de.fhdo.ddmm.data.PrimitiveValue#inferCompatibleTypes() <em>Infer Compatible Types</em>}' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the '<em>Infer Compatible Types</em>' operation.
+     * @see de.fhdo.ddmm.data.PrimitiveValue#inferCompatibleTypes()
+     * @generated
+     */
+    EOperation getPrimitiveValue__InferCompatibleTypes();
+
+    /**
+     * Returns the meta object for enum '{@link de.fhdo.ddmm.data.PrimitiveTypeConstants <em>Primitive Type Constants</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for enum '<em>Primitive Type Constants</em>'.
+     * @see de.fhdo.ddmm.data.PrimitiveTypeConstants
+     * @generated
+     */
+    EEnum getPrimitiveTypeConstants();
+
+    /**
+     * Returns the meta object for data type '{@link java.util.Map <em>Type Name Size Map</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for data type '<em>Type Name Size Map</em>'.
+     * @see java.util.Map
+     * @model instanceClass="java.util.Map&lt;java.lang.String, java.lang.Integer&gt;"
+     * @generated
+     */
+    EDataType getTypeNameSizeMap();
 
     /**
      * Returns the factory that creates the instances of the model.
@@ -3468,6 +3861,14 @@ public interface DataPackage extends EPackage {
         EAttribute COMPLEX_TYPE__IS_STRUCTURED_LIST = eINSTANCE.getComplexType_IsStructuredList();
 
         /**
+         * The meta object literal for the '<em><b>Is Enumeration</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute COMPLEX_TYPE__IS_ENUMERATION = eINSTANCE.getComplexType_IsEnumeration();
+
+        /**
          * The meta object literal for the '<em><b>Get Qualified Name Parts</b></em>' operation.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -3700,6 +4101,74 @@ public interface DataPackage extends EPackage {
         EOperation DATA_FIELD___FIND_EPONYMOUS_SUPER_FIELD = eINSTANCE.getDataField__FindEponymousSuperField();
 
         /**
+         * The meta object literal for the '{@link de.fhdo.ddmm.data.impl.EnumerationImpl <em>Enumeration</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.fhdo.ddmm.data.impl.EnumerationImpl
+         * @see de.fhdo.ddmm.data.impl.DataPackageImpl#getEnumeration()
+         * @generated
+         */
+        EClass ENUMERATION = eINSTANCE.getEnumeration();
+
+        /**
+         * The meta object literal for the '<em><b>Fields</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference ENUMERATION__FIELDS = eINSTANCE.getEnumeration_Fields();
+
+        /**
+         * The meta object literal for the '{@link de.fhdo.ddmm.data.impl.EnumerationFieldImpl <em>Enumeration Field</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.fhdo.ddmm.data.impl.EnumerationFieldImpl
+         * @see de.fhdo.ddmm.data.impl.DataPackageImpl#getEnumerationField()
+         * @generated
+         */
+        EClass ENUMERATION_FIELD = eINSTANCE.getEnumerationField();
+
+        /**
+         * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute ENUMERATION_FIELD__NAME = eINSTANCE.getEnumerationField_Name();
+
+        /**
+         * The meta object literal for the '<em><b>Initialization Value</b></em>' containment reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference ENUMERATION_FIELD__INITIALIZATION_VALUE = eINSTANCE.getEnumerationField_InitializationValue();
+
+        /**
+         * The meta object literal for the '<em><b>Enumeration</b></em>' container reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference ENUMERATION_FIELD__ENUMERATION = eINSTANCE.getEnumerationField_Enumeration();
+
+        /**
+         * The meta object literal for the '<em><b>Get Qualified Name Parts</b></em>' operation.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EOperation ENUMERATION_FIELD___GET_QUALIFIED_NAME_PARTS = eINSTANCE.getEnumerationField__GetQualifiedNameParts();
+
+        /**
+         * The meta object literal for the '<em><b>Build Qualified Name</b></em>' operation.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EOperation ENUMERATION_FIELD___BUILD_QUALIFIED_NAME__STRING = eINSTANCE.getEnumerationField__BuildQualifiedName__String();
+
+        /**
          * The meta object literal for the '{@link de.fhdo.ddmm.data.impl.PrimitiveValueImpl <em>Primitive Value</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -3860,6 +4329,34 @@ public interface DataPackage extends EPackage {
          * @generated
          */
         EOperation PRIMITIVE_VALUE___AS_STRING = eINSTANCE.getPrimitiveValue__AsString();
+
+        /**
+         * The meta object literal for the '<em><b>Infer Compatible Types</b></em>' operation.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EOperation PRIMITIVE_VALUE___INFER_COMPATIBLE_TYPES = eINSTANCE.getPrimitiveValue__InferCompatibleTypes();
+
+        /**
+         * The meta object literal for the '{@link de.fhdo.ddmm.data.PrimitiveTypeConstants <em>Primitive Type Constants</em>}' enum.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.fhdo.ddmm.data.PrimitiveTypeConstants
+         * @see de.fhdo.ddmm.data.impl.DataPackageImpl#getPrimitiveTypeConstants()
+         * @generated
+         */
+        EEnum PRIMITIVE_TYPE_CONSTANTS = eINSTANCE.getPrimitiveTypeConstants();
+
+        /**
+         * The meta object literal for the '<em>Type Name Size Map</em>' data type.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see java.util.Map
+         * @see de.fhdo.ddmm.data.impl.DataPackageImpl#getTypeNameSizeMap()
+         * @generated
+         */
+        EDataType TYPE_NAME_SIZE_MAP = eINSTANCE.getTypeNameSizeMap();
 
     }
 

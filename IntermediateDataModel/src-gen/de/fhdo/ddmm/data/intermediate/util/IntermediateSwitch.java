@@ -140,6 +140,20 @@ public class IntermediateSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
+            case IntermediatePackage.INTERMEDIATE_ENUMERATION: {
+                IntermediateEnumeration intermediateEnumeration = (IntermediateEnumeration)theEObject;
+                T result = caseIntermediateEnumeration(intermediateEnumeration);
+                if (result == null) result = caseIntermediateComplexType(intermediateEnumeration);
+                if (result == null) result = caseIntermediateType(intermediateEnumeration);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case IntermediatePackage.INTERMEDIATE_ENUMERATION_FIELD: {
+                IntermediateEnumerationField intermediateEnumerationField = (IntermediateEnumerationField)theEObject;
+                T result = caseIntermediateEnumerationField(intermediateEnumerationField);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
             default: return defaultCase(theEObject);
         }
     }
@@ -306,6 +320,36 @@ public class IntermediateSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseIntermediateDataField(IntermediateDataField object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Enumeration</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Enumeration</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseIntermediateEnumeration(IntermediateEnumeration object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Enumeration Field</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Enumeration Field</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseIntermediateEnumerationField(IntermediateEnumerationField object) {
         return null;
     }
 

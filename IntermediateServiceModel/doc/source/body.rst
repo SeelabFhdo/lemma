@@ -68,7 +68,7 @@ Format Specification
 This document describes the metamodel and thus the structure of XMI files of
 Intermediate Service Models, i.e., instances of Domain Data Models that were 
 exported from Eclipse (cf. :ref:`Introduction` and :ref:`ModelProcessing`). It 
-may be used as as reference, when implementing custom model processors for 
+may be used as reference, when implementing custom model processors for 
 microservice-related Service Models.
 
 :numref:`fig_metamodel` shows the structure of the metamodel of the Intermediate
@@ -79,6 +79,7 @@ attributes, and associations, respectively.
 .. _fig_metamodel:
 
 .. figure:: figures/metamodel.png
+    :target: _images/metamodel.png
 
     Metamodel of Intermediate Service Models
 
@@ -698,7 +699,7 @@ Microservices
 
         .. HINT::
 
-            There is not direct link to the field in the respective
+            There is no direct link to the field in the respective
             :java:type:`parameter's <IntermediateParameter>`
             :ref:`structure type <data_model:link__IntermediateDataStructure>`.
             Instead, the 
@@ -837,7 +838,7 @@ Type System
 
 :ref:`Built-in <data_model:link__built_in_type_system>` as well as
 :ref:`custom types <data_model:link__custom_types>` are mostly covered within 
-the ::doc:`Intermediate Data Model Format Specification <data_model:index>`.
+the :doc:`Intermediate Data Model Format Specification <data_model:index>`.
 
 However, Service Models may import technology-specific types from Technology
 Models that are not known to Domain Data Models (cf. 
@@ -1348,4 +1349,4 @@ References
 
 .. bibliography:: references.bib
 
-.. _Domain-driven Microservice Design: https://github.com/frademacher/ddmm
+.. _Domain-driven Microservice Design: https://github.com/SeelabFhdo/ddmm

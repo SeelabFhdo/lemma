@@ -10,6 +10,8 @@ import de.fhdo.ddmm.data.DataField;
 import de.fhdo.ddmm.data.DataModel;
 import de.fhdo.ddmm.data.DataPackage;
 import de.fhdo.ddmm.data.DataStructure;
+import de.fhdo.ddmm.data.Enumeration;
+import de.fhdo.ddmm.data.EnumerationField;
 import de.fhdo.ddmm.data.ListType;
 import de.fhdo.ddmm.data.PossiblyImportedComplexType;
 import de.fhdo.ddmm.data.PrimitiveBoolean;
@@ -109,6 +111,12 @@ public class OperationDslSemanticSequencer extends ServiceDslSemanticSequencer {
 				return; 
 			case DataPackage.DATA_STRUCTURE:
 				sequence_DataStructure(context, (DataStructure) semanticObject); 
+				return; 
+			case DataPackage.ENUMERATION:
+				sequence_Enumeration(context, (Enumeration) semanticObject); 
+				return; 
+			case DataPackage.ENUMERATION_FIELD:
+				sequence_EnumerationField(context, (EnumerationField) semanticObject); 
 				return; 
 			case DataPackage.LIST_TYPE:
 				sequence_ListType(context, (ListType) semanticObject); 
@@ -443,18 +451,6 @@ public class OperationDslSemanticSequencer extends ServiceDslSemanticSequencer {
 	 *     (imports+=Import+ containers+=Container* infrastructureNodes+=InfrastructureNode*)
 	 */
 	protected void sequence_OperationModel(ISerializationContext context, OperationModel semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     PrimitiveValue returns PrimitiveValue
-	 *
-	 * Constraint:
-	 *     (numericValue=BIG_DECIMAL | booleanValue=BOOLEAN | stringValue=STRING)
-	 */
-	protected void sequence_PrimitiveValue(ISerializationContext context, PrimitiveValue semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
