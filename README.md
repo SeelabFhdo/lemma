@@ -3,7 +3,9 @@
 This repository contains modeling languages for the viewpoint-specific model-driven development of microservice architectures. The conceptual foundations of the languages are described in several publications [1&ndash;3].
 
 Please follow these steps if you want to try out the modeling languages on the basis of the case study example described in [3]:
-1. Download the [Eclipse IDE for Java and DSL Developers](https://www.eclipse.org/downloads/packages/release/2018-12/r/eclipse-ide-java-and-dsl-developers).
+1. The easiest way to try out the modeling languages is to download one of the prepackaged [releases](https://github.com/SeelabFhdo/ddmm/releases) for your OS. Then clone the repository to your harddrive, run the ``eclipse`` executable, and go to step 11.  
+
+   If you are interested in the implementations of the modeling languages, either download one of the prepackaged [releases](https://github.com/SeelabFhdo/ddmm/releases) for your OS and go to step 4. Otherwise, if you instead want to setup your own Eclipse environment for both studying the languages' implementations and trying them out, download the [Eclipse IDE for Java and DSL Developers](https://www.eclipse.org/downloads/packages/release/2019-03/r/eclipse-ide-java-and-dsl-developers) first. Then continue with step 2.
 2. Run the downloaded Eclipse package by starting the ``eclipse`` executable.
 3. Install the [ATL Transformation Language](https://marketplace.eclipse.org/content/atl) from the Eclipse Marketplace in the downloaded Eclipse package.
 4. Clone the repository to your harddrive.
