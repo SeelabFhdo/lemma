@@ -94,13 +94,13 @@ public interface MappingFactory extends EFactory {
     ComplexParameterMapping createComplexParameterMapping();
 
     /**
-     * Returns a new object of class '<em>Technology Specific Data Field Type Mapping</em>'.
+     * Returns a new object of class '<em>Technology Specific Field Mapping</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return a new object of class '<em>Technology Specific Data Field Type Mapping</em>'.
+     * @return a new object of class '<em>Technology Specific Field Mapping</em>'.
      * @generated
      */
-    TechnologySpecificDataFieldTypeMapping createTechnologySpecificDataFieldTypeMapping();
+    TechnologySpecificFieldMapping createTechnologySpecificFieldMapping();
 
     /**
      * Returns a new object of class '<em>Data Field Hierarchy</em>'.

@@ -14,7 +14,7 @@ import de.fhdo.ddmm.service.intermediate.IntermediateFactory;
 import de.fhdo.ddmm.service.intermediate.IntermediateImportedAspect;
 import de.fhdo.ddmm.service.intermediate.IntermediateImportedTechnologySpecificType;
 import de.fhdo.ddmm.service.intermediate.IntermediateInterface;
-import de.fhdo.ddmm.service.intermediate.IntermediateMappedDataField;
+import de.fhdo.ddmm.service.intermediate.IntermediateMappedField;
 import de.fhdo.ddmm.service.intermediate.IntermediateMicroservice;
 import de.fhdo.ddmm.service.intermediate.IntermediateOperation;
 import de.fhdo.ddmm.service.intermediate.IntermediatePackage;
@@ -90,7 +90,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
-    private EClass intermediateMappedDataFieldEClass = null;
+    private EClass intermediateMappedFieldEClass = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -846,7 +846,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * @generated
      */
     @Override
-    public EReference getIntermediateParameter_MappedDataFields() {
+    public EReference getIntermediateParameter_MappedFields() {
         return (EReference)intermediateParameterEClass.getEStructuralFeatures().get(9);
     }
 
@@ -866,8 +866,8 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * @generated
      */
     @Override
-    public EClass getIntermediateMappedDataField() {
-        return intermediateMappedDataFieldEClass;
+    public EClass getIntermediateMappedField() {
+        return intermediateMappedFieldEClass;
     }
 
     /**
@@ -876,8 +876,8 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * @generated
      */
     @Override
-    public EAttribute getIntermediateMappedDataField_MappedDataFieldName() {
-        return (EAttribute)intermediateMappedDataFieldEClass.getEStructuralFeatures().get(0);
+    public EAttribute getIntermediateMappedField_MappedFieldName() {
+        return (EAttribute)intermediateMappedFieldEClass.getEStructuralFeatures().get(0);
     }
 
     /**
@@ -886,8 +886,8 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * @generated
      */
     @Override
-    public EAttribute getIntermediateMappedDataField_QualifiedName() {
-        return (EAttribute)intermediateMappedDataFieldEClass.getEStructuralFeatures().get(1);
+    public EAttribute getIntermediateMappedField_QualifiedName() {
+        return (EAttribute)intermediateMappedFieldEClass.getEStructuralFeatures().get(1);
     }
 
     /**
@@ -896,8 +896,8 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * @generated
      */
     @Override
-    public EReference getIntermediateMappedDataField_MappedType() {
-        return (EReference)intermediateMappedDataFieldEClass.getEStructuralFeatures().get(2);
+    public EAttribute getIntermediateMappedField_OriginalTypeKind() {
+        return (EAttribute)intermediateMappedFieldEClass.getEStructuralFeatures().get(2);
     }
 
     /**
@@ -906,8 +906,8 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * @generated
      */
     @Override
-    public EReference getIntermediateMappedDataField_Aspects() {
-        return (EReference)intermediateMappedDataFieldEClass.getEStructuralFeatures().get(3);
+    public EReference getIntermediateMappedField_MappedType() {
+        return (EReference)intermediateMappedFieldEClass.getEStructuralFeatures().get(3);
     }
 
     /**
@@ -916,8 +916,18 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * @generated
      */
     @Override
-    public EReference getIntermediateMappedDataField_Parameter() {
-        return (EReference)intermediateMappedDataFieldEClass.getEStructuralFeatures().get(4);
+    public EReference getIntermediateMappedField_Aspects() {
+        return (EReference)intermediateMappedFieldEClass.getEStructuralFeatures().get(4);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getIntermediateMappedField_Parameter() {
+        return (EReference)intermediateMappedFieldEClass.getEStructuralFeatures().get(5);
     }
 
     /**
@@ -1436,7 +1446,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * @generated
      */
     @Override
-    public EReference getIntermediateImportedAspect_MappedDataField() {
+    public EReference getIntermediateImportedAspect_MappedField() {
         return (EReference)intermediateImportedAspectEClass.getEStructuralFeatures().get(9);
     }
 
@@ -1665,15 +1675,16 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
         createEReference(intermediateParameterEClass, INTERMEDIATE_PARAMETER__TYPE);
         createEReference(intermediateParameterEClass, INTERMEDIATE_PARAMETER__INITIALIZED_BY_OPERATION);
         createEReference(intermediateParameterEClass, INTERMEDIATE_PARAMETER__ASPECTS);
-        createEReference(intermediateParameterEClass, INTERMEDIATE_PARAMETER__MAPPED_DATA_FIELDS);
+        createEReference(intermediateParameterEClass, INTERMEDIATE_PARAMETER__MAPPED_FIELDS);
         createEReference(intermediateParameterEClass, INTERMEDIATE_PARAMETER__OPERATION);
 
-        intermediateMappedDataFieldEClass = createEClass(INTERMEDIATE_MAPPED_DATA_FIELD);
-        createEAttribute(intermediateMappedDataFieldEClass, INTERMEDIATE_MAPPED_DATA_FIELD__MAPPED_DATA_FIELD_NAME);
-        createEAttribute(intermediateMappedDataFieldEClass, INTERMEDIATE_MAPPED_DATA_FIELD__QUALIFIED_NAME);
-        createEReference(intermediateMappedDataFieldEClass, INTERMEDIATE_MAPPED_DATA_FIELD__MAPPED_TYPE);
-        createEReference(intermediateMappedDataFieldEClass, INTERMEDIATE_MAPPED_DATA_FIELD__ASPECTS);
-        createEReference(intermediateMappedDataFieldEClass, INTERMEDIATE_MAPPED_DATA_FIELD__PARAMETER);
+        intermediateMappedFieldEClass = createEClass(INTERMEDIATE_MAPPED_FIELD);
+        createEAttribute(intermediateMappedFieldEClass, INTERMEDIATE_MAPPED_FIELD__MAPPED_FIELD_NAME);
+        createEAttribute(intermediateMappedFieldEClass, INTERMEDIATE_MAPPED_FIELD__QUALIFIED_NAME);
+        createEAttribute(intermediateMappedFieldEClass, INTERMEDIATE_MAPPED_FIELD__ORIGINAL_TYPE_KIND);
+        createEReference(intermediateMappedFieldEClass, INTERMEDIATE_MAPPED_FIELD__MAPPED_TYPE);
+        createEReference(intermediateMappedFieldEClass, INTERMEDIATE_MAPPED_FIELD__ASPECTS);
+        createEReference(intermediateMappedFieldEClass, INTERMEDIATE_MAPPED_FIELD__PARAMETER);
 
         microserviceReferenceEClass = createEClass(MICROSERVICE_REFERENCE);
         createEAttribute(microserviceReferenceEClass, MICROSERVICE_REFERENCE__NAME);
@@ -1732,7 +1743,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
         createEReference(intermediateImportedAspectEClass, INTERMEDIATE_IMPORTED_ASPECT__OPERATION);
         createEReference(intermediateImportedAspectEClass, INTERMEDIATE_IMPORTED_ASPECT__REFERRED_OPERATION);
         createEReference(intermediateImportedAspectEClass, INTERMEDIATE_IMPORTED_ASPECT__PARAMETER);
-        createEReference(intermediateImportedAspectEClass, INTERMEDIATE_IMPORTED_ASPECT__MAPPED_DATA_FIELD);
+        createEReference(intermediateImportedAspectEClass, INTERMEDIATE_IMPORTED_ASPECT__MAPPED_FIELD);
 
         intermediateAspectPropertyEClass = createEClass(INTERMEDIATE_ASPECT_PROPERTY);
         createEAttribute(intermediateAspectPropertyEClass, INTERMEDIATE_ASPECT_PROPERTY__NAME);
@@ -1854,15 +1865,16 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
         initEReference(getIntermediateParameter_Type(), theIntermediatePackage_1.getIntermediateType(), null, "type", null, 0, 1, IntermediateParameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getIntermediateParameter_InitializedByOperation(), this.getOperationReference(), this.getOperationReference_InitializedParameter(), "initializedByOperation", null, 0, 1, IntermediateParameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getIntermediateParameter_Aspects(), this.getIntermediateImportedAspect(), this.getIntermediateImportedAspect_Parameter(), "aspects", null, 0, -1, IntermediateParameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getIntermediateParameter_MappedDataFields(), this.getIntermediateMappedDataField(), this.getIntermediateMappedDataField_Parameter(), "mappedDataFields", null, 0, -1, IntermediateParameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getIntermediateParameter_MappedFields(), this.getIntermediateMappedField(), this.getIntermediateMappedField_Parameter(), "mappedFields", null, 0, -1, IntermediateParameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getIntermediateParameter_Operation(), this.getIntermediateOperation(), this.getIntermediateOperation_Parameters(), "operation", null, 0, 1, IntermediateParameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-        initEClass(intermediateMappedDataFieldEClass, IntermediateMappedDataField.class, "IntermediateMappedDataField", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getIntermediateMappedDataField_MappedDataFieldName(), theEcorePackage.getEString(), "mappedDataFieldName", null, 0, 1, IntermediateMappedDataField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getIntermediateMappedDataField_QualifiedName(), theEcorePackage.getEString(), "qualifiedName", null, 0, 1, IntermediateMappedDataField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getIntermediateMappedDataField_MappedType(), theIntermediatePackage_1.getIntermediateType(), null, "mappedType", null, 0, 1, IntermediateMappedDataField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getIntermediateMappedDataField_Aspects(), this.getIntermediateImportedAspect(), this.getIntermediateImportedAspect_MappedDataField(), "aspects", null, 0, -1, IntermediateMappedDataField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getIntermediateMappedDataField_Parameter(), this.getIntermediateParameter(), this.getIntermediateParameter_MappedDataFields(), "parameter", null, 0, 1, IntermediateMappedDataField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEClass(intermediateMappedFieldEClass, IntermediateMappedField.class, "IntermediateMappedField", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getIntermediateMappedField_MappedFieldName(), theEcorePackage.getEString(), "mappedFieldName", null, 0, 1, IntermediateMappedField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getIntermediateMappedField_QualifiedName(), theEcorePackage.getEString(), "qualifiedName", null, 0, 1, IntermediateMappedField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getIntermediateMappedField_OriginalTypeKind(), theIntermediatePackage_1.getIntermediateTypeKind(), "originalTypeKind", null, 0, 1, IntermediateMappedField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getIntermediateMappedField_MappedType(), theIntermediatePackage_1.getIntermediateType(), null, "mappedType", null, 0, 1, IntermediateMappedField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getIntermediateMappedField_Aspects(), this.getIntermediateImportedAspect(), this.getIntermediateImportedAspect_MappedField(), "aspects", null, 0, -1, IntermediateMappedField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getIntermediateMappedField_Parameter(), this.getIntermediateParameter(), this.getIntermediateParameter_MappedFields(), "parameter", null, 0, 1, IntermediateMappedField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(microserviceReferenceEClass, MicroserviceReference.class, "MicroserviceReference", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getMicroserviceReference_Name(), theEcorePackage.getEString(), "name", null, 0, 1, MicroserviceReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1921,7 +1933,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
         initEReference(getIntermediateImportedAspect_Operation(), this.getIntermediateOperation(), this.getIntermediateOperation_Aspects(), "operation", null, 0, 1, IntermediateImportedAspect.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getIntermediateImportedAspect_ReferredOperation(), this.getIntermediateReferredOperation(), this.getIntermediateReferredOperation_Aspects(), "referredOperation", null, 0, 1, IntermediateImportedAspect.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getIntermediateImportedAspect_Parameter(), this.getIntermediateParameter(), this.getIntermediateParameter_Aspects(), "parameter", null, 0, 1, IntermediateImportedAspect.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getIntermediateImportedAspect_MappedDataField(), this.getIntermediateMappedDataField(), this.getIntermediateMappedDataField_Aspects(), "mappedDataField", null, 0, 1, IntermediateImportedAspect.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getIntermediateImportedAspect_MappedField(), this.getIntermediateMappedField(), this.getIntermediateMappedField_Aspects(), "mappedField", null, 0, 1, IntermediateImportedAspect.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(intermediateAspectPropertyEClass, IntermediateAspectProperty.class, "IntermediateAspectProperty", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getIntermediateAspectProperty_Name(), theEcorePackage.getEString(), "name", null, 0, 1, IntermediateAspectProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

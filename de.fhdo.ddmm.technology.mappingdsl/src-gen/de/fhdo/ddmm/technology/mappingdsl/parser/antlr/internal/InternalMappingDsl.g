@@ -99,17 +99,17 @@ ruleTechnologyMapping returns [EObject current=null]
 		(
 			(
 				{
-					newCompositeNode(grammarAccess.getTechnologyMappingAccess().getMappingsMicroserviceMappingParserRuleCall_1_0());
+					newCompositeNode(grammarAccess.getTechnologyMappingAccess().getServiceMappingsMicroserviceMappingParserRuleCall_1_0());
 				}
-				lv_mappings_1_0=ruleMicroserviceMapping
+				lv_serviceMappings_1_0=ruleMicroserviceMapping
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getTechnologyMappingRule());
 					}
 					add(
 						$current,
-						"mappings",
-						lv_mappings_1_0,
+						"serviceMappings",
+						lv_serviceMappings_1_0,
 						"de.fhdo.ddmm.technology.mappingdsl.MappingDsl.MicroserviceMapping");
 					afterParserOrEnumRuleCall();
 				}
@@ -1162,18 +1162,18 @@ ruleComplexParameterMapping returns [EObject current=null]
 				(
 					(
 						{
-							newCompositeNode(grammarAccess.getComplexParameterMappingAccess().getDataFieldMappingsTechnologySpecificDataFieldTypeMappingParserRuleCall_2_1_3_0());
+							newCompositeNode(grammarAccess.getComplexParameterMappingAccess().getFieldMappingsTechnologySpecificFieldMappingParserRuleCall_2_1_3_0());
 						}
-						lv_dataFieldMappings_18_0=ruleTechnologySpecificDataFieldTypeMapping
+						lv_fieldMappings_18_0=ruleTechnologySpecificFieldMapping
 						{
 							if ($current==null) {
 								$current = createModelElementForParent(grammarAccess.getComplexParameterMappingRule());
 							}
 							add(
 								$current,
-								"dataFieldMappings",
-								lv_dataFieldMappings_18_0,
-								"de.fhdo.ddmm.technology.mappingdsl.MappingDsl.TechnologySpecificDataFieldTypeMapping");
+								"fieldMappings",
+								lv_fieldMappings_18_0,
+								"de.fhdo.ddmm.technology.mappingdsl.MappingDsl.TechnologySpecificFieldMapping");
 							afterParserOrEnumRuleCall();
 						}
 					)
@@ -1186,18 +1186,18 @@ ruleComplexParameterMapping returns [EObject current=null]
 					(
 						(
 							{
-								newCompositeNode(grammarAccess.getComplexParameterMappingAccess().getDataFieldMappingsTechnologySpecificDataFieldTypeMappingParserRuleCall_2_1_4_1_0());
+								newCompositeNode(grammarAccess.getComplexParameterMappingAccess().getFieldMappingsTechnologySpecificFieldMappingParserRuleCall_2_1_4_1_0());
 							}
-							lv_dataFieldMappings_20_0=ruleTechnologySpecificDataFieldTypeMapping
+							lv_fieldMappings_20_0=ruleTechnologySpecificFieldMapping
 							{
 								if ($current==null) {
 									$current = createModelElementForParent(grammarAccess.getComplexParameterMappingRule());
 								}
 								add(
 									$current,
-									"dataFieldMappings",
-									lv_dataFieldMappings_20_0,
-									"de.fhdo.ddmm.technology.mappingdsl.MappingDsl.TechnologySpecificDataFieldTypeMapping");
+									"fieldMappings",
+									lv_fieldMappings_20_0,
+									"de.fhdo.ddmm.technology.mappingdsl.MappingDsl.TechnologySpecificFieldMapping");
 								afterParserOrEnumRuleCall();
 							}
 						)
@@ -1212,15 +1212,15 @@ ruleComplexParameterMapping returns [EObject current=null]
 	)
 ;
 
-// Entry rule entryRuleTechnologySpecificDataFieldTypeMapping
-entryRuleTechnologySpecificDataFieldTypeMapping returns [EObject current=null]:
-	{ newCompositeNode(grammarAccess.getTechnologySpecificDataFieldTypeMappingRule()); }
-	iv_ruleTechnologySpecificDataFieldTypeMapping=ruleTechnologySpecificDataFieldTypeMapping
-	{ $current=$iv_ruleTechnologySpecificDataFieldTypeMapping.current; }
+// Entry rule entryRuleTechnologySpecificFieldMapping
+entryRuleTechnologySpecificFieldMapping returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getTechnologySpecificFieldMappingRule()); }
+	iv_ruleTechnologySpecificFieldMapping=ruleTechnologySpecificFieldMapping
+	{ $current=$iv_ruleTechnologySpecificFieldMapping.current; }
 	EOF;
 
-// Rule TechnologySpecificDataFieldTypeMapping
-ruleTechnologySpecificDataFieldTypeMapping returns [EObject current=null]
+// Rule TechnologySpecificFieldMapping
+ruleTechnologySpecificFieldMapping returns [EObject current=null]
 @init {
 	enterRule();
 }
@@ -1230,99 +1230,117 @@ ruleTechnologySpecificDataFieldTypeMapping returns [EObject current=null]
 	(
 		(
 			(
-				{
-					newCompositeNode(grammarAccess.getTechnologySpecificDataFieldTypeMappingAccess().getDataFieldHierarchyDataFieldHierarchyParserRuleCall_0_0());
-				}
-				lv_dataFieldHierarchy_0_0=ruleDataFieldHierarchy
-				{
-					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getTechnologySpecificDataFieldTypeMappingRule());
+				(
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getTechnologySpecificFieldMappingRule());
+						}
 					}
-					set(
-						$current,
-						"dataFieldHierarchy",
-						lv_dataFieldHierarchy_0_0,
-						"de.fhdo.ddmm.technology.mappingdsl.MappingDsl.DataFieldHierarchy");
-					afterParserOrEnumRuleCall();
-				}
+					otherlv_0=RULE_ID
+					{
+						newLeafNode(otherlv_0, grammarAccess.getTechnologySpecificFieldMappingAccess().getEnumerationFieldEnumerationFieldCrossReference_0_0_0());
+					}
+				)
 			)
-		)
-		otherlv_1=':'
-		{
-			newLeafNode(otherlv_1, grammarAccess.getTechnologySpecificDataFieldTypeMappingAccess().getColonKeyword_1());
-		}
-		(
+			    |
 			(
+				(
+					(
+						{
+							newCompositeNode(grammarAccess.getTechnologySpecificFieldMappingAccess().getDataFieldHierarchyDataFieldHierarchyParserRuleCall_0_1_0_0());
+						}
+						lv_dataFieldHierarchy_1_0=ruleDataFieldHierarchy
+						{
+							if ($current==null) {
+								$current = createModelElementForParent(grammarAccess.getTechnologySpecificFieldMappingRule());
+							}
+							set(
+								$current,
+								"dataFieldHierarchy",
+								lv_dataFieldHierarchy_1_0,
+								"de.fhdo.ddmm.technology.mappingdsl.MappingDsl.DataFieldHierarchy");
+							afterParserOrEnumRuleCall();
+						}
+					)
+				)
+				otherlv_2=':'
 				{
-					if ($current==null) {
-						$current = createModelElement(grammarAccess.getTechnologySpecificDataFieldTypeMappingRule());
-					}
+					newLeafNode(otherlv_2, grammarAccess.getTechnologySpecificFieldMappingAccess().getColonKeyword_0_1_1());
 				}
-				otherlv_2=RULE_ID
+				(
+					(
+						{
+							if ($current==null) {
+								$current = createModelElement(grammarAccess.getTechnologySpecificFieldMappingRule());
+							}
+						}
+						otherlv_3=RULE_ID
+						{
+							newLeafNode(otherlv_3, grammarAccess.getTechnologySpecificFieldMappingAccess().getTechnologyImportCrossReference_0_1_2_0());
+						}
+					)
+				)
+				otherlv_4='::'
 				{
-					newLeafNode(otherlv_2, grammarAccess.getTechnologySpecificDataFieldTypeMappingAccess().getTechnologyImportCrossReference_2_0());
+					newLeafNode(otherlv_4, grammarAccess.getTechnologySpecificFieldMappingAccess().getColonColonKeyword_0_1_3());
 				}
+				(
+					(
+						{
+							if ($current==null) {
+								$current = createModelElement(grammarAccess.getTechnologySpecificFieldMappingRule());
+							}
+						}
+						{
+							newCompositeNode(grammarAccess.getTechnologySpecificFieldMappingAccess().getTypeTypeCrossReference_0_1_4_0());
+						}
+						ruleQualifiedName
+						{
+							afterParserOrEnumRuleCall();
+						}
+					)
+				)
 			)
 		)
-		otherlv_3='::'
-		{
-			newLeafNode(otherlv_3, grammarAccess.getTechnologySpecificDataFieldTypeMappingAccess().getColonColonKeyword_3());
-		}
 		(
-			(
-				{
-					if ($current==null) {
-						$current = createModelElement(grammarAccess.getTechnologySpecificDataFieldTypeMappingRule());
-					}
-				}
-				{
-					newCompositeNode(grammarAccess.getTechnologySpecificDataFieldTypeMappingAccess().getTypeTypeCrossReference_4_0());
-				}
-				ruleQualifiedName
-				{
-					afterParserOrEnumRuleCall();
-				}
-			)
-		)
-		(
-			otherlv_5='{'
+			otherlv_6='{'
 			{
-				newLeafNode(otherlv_5, grammarAccess.getTechnologySpecificDataFieldTypeMappingAccess().getLeftCurlyBracketKeyword_5_0());
+				newLeafNode(otherlv_6, grammarAccess.getTechnologySpecificFieldMappingAccess().getLeftCurlyBracketKeyword_1_0());
 			}
-			otherlv_6='aspects'
+			otherlv_7='aspects'
 			{
-				newLeafNode(otherlv_6, grammarAccess.getTechnologySpecificDataFieldTypeMappingAccess().getAspectsKeyword_5_1());
+				newLeafNode(otherlv_7, grammarAccess.getTechnologySpecificFieldMappingAccess().getAspectsKeyword_1_1());
 			}
-			otherlv_7='{'
+			otherlv_8='{'
 			{
-				newLeafNode(otherlv_7, grammarAccess.getTechnologySpecificDataFieldTypeMappingAccess().getLeftCurlyBracketKeyword_5_2());
+				newLeafNode(otherlv_8, grammarAccess.getTechnologySpecificFieldMappingAccess().getLeftCurlyBracketKeyword_1_2());
 			}
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getTechnologySpecificDataFieldTypeMappingAccess().getAspectsTechnologySpecificImportedServiceAspectParserRuleCall_5_3_0());
+						newCompositeNode(grammarAccess.getTechnologySpecificFieldMappingAccess().getAspectsTechnologySpecificImportedServiceAspectParserRuleCall_1_3_0());
 					}
-					lv_aspects_8_0=ruleTechnologySpecificImportedServiceAspect
+					lv_aspects_9_0=ruleTechnologySpecificImportedServiceAspect
 					{
 						if ($current==null) {
-							$current = createModelElementForParent(grammarAccess.getTechnologySpecificDataFieldTypeMappingRule());
+							$current = createModelElementForParent(grammarAccess.getTechnologySpecificFieldMappingRule());
 						}
 						add(
 							$current,
 							"aspects",
-							lv_aspects_8_0,
+							lv_aspects_9_0,
 							"de.fhdo.ddmm.technology.mappingdsl.MappingDsl.TechnologySpecificImportedServiceAspect");
 						afterParserOrEnumRuleCall();
 					}
 				)
 			)+
-			otherlv_9='}'
-			{
-				newLeafNode(otherlv_9, grammarAccess.getTechnologySpecificDataFieldTypeMappingAccess().getRightCurlyBracketKeyword_5_4());
-			}
 			otherlv_10='}'
 			{
-				newLeafNode(otherlv_10, grammarAccess.getTechnologySpecificDataFieldTypeMappingAccess().getRightCurlyBracketKeyword_5_5());
+				newLeafNode(otherlv_10, grammarAccess.getTechnologySpecificFieldMappingAccess().getRightCurlyBracketKeyword_1_4());
+			}
+			otherlv_11='}'
+			{
+				newLeafNode(otherlv_11, grammarAccess.getTechnologySpecificFieldMappingAccess().getRightCurlyBracketKeyword_1_5());
 			}
 		)?
 	)
@@ -1827,7 +1845,7 @@ ruleImport returns [EObject current=null]
 						$current,
 						"importType",
 						lv_importType_1_0,
-						"de.fhdo.ddmm.technology.mappingdsl.MappingDsl.ImportType");
+						"de.fhdo.ddmm.ServiceDsl.ImportType");
 					afterParserOrEnumRuleCall();
 				}
 			)
@@ -6495,18 +6513,26 @@ ruleImportType returns [Enumerator current=null]
 }:
 	(
 		(
-			enumLiteral_0='technology'
+			enumLiteral_0='datatypes'
 			{
-				$current = grammarAccess.getImportTypeAccess().getTECHNOLOGYEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
-				newLeafNode(enumLiteral_0, grammarAccess.getImportTypeAccess().getTECHNOLOGYEnumLiteralDeclaration_0());
+				$current = grammarAccess.getImportTypeAccess().getDATATYPESEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
+				newLeafNode(enumLiteral_0, grammarAccess.getImportTypeAccess().getDATATYPESEnumLiteralDeclaration_0());
 			}
 		)
 		    |
 		(
-			enumLiteral_1='microservices'
+			enumLiteral_1='technology'
 			{
-				$current = grammarAccess.getImportTypeAccess().getMICROSERVICESEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
-				newLeafNode(enumLiteral_1, grammarAccess.getImportTypeAccess().getMICROSERVICESEnumLiteralDeclaration_1());
+				$current = grammarAccess.getImportTypeAccess().getTECHNOLOGYEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
+				newLeafNode(enumLiteral_1, grammarAccess.getImportTypeAccess().getTECHNOLOGYEnumLiteralDeclaration_1());
+			}
+		)
+		    |
+		(
+			enumLiteral_2='microservices'
+			{
+				$current = grammarAccess.getImportTypeAccess().getMICROSERVICESEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
+				newLeafNode(enumLiteral_2, grammarAccess.getImportTypeAccess().getMICROSERVICESEnumLiteralDeclaration_2());
 			}
 		)
 	)

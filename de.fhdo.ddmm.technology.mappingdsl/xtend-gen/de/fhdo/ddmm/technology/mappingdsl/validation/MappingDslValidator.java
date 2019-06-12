@@ -9,6 +9,7 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import de.fhdo.ddmm.data.ComplexType;
 import de.fhdo.ddmm.data.DataField;
+import de.fhdo.ddmm.data.EnumerationField;
 import de.fhdo.ddmm.data.PrimitiveType;
 import de.fhdo.ddmm.data.PrimitiveValue;
 import de.fhdo.ddmm.data.Type;
@@ -36,8 +37,8 @@ import de.fhdo.ddmm.technology.mapping.ParameterMapping;
 import de.fhdo.ddmm.technology.mapping.PrimitiveParameterMapping;
 import de.fhdo.ddmm.technology.mapping.ReferredOperationMapping;
 import de.fhdo.ddmm.technology.mapping.TechnologyMapping;
-import de.fhdo.ddmm.technology.mapping.TechnologySpecificDataFieldTypeMapping;
 import de.fhdo.ddmm.technology.mapping.TechnologySpecificEndpoint;
+import de.fhdo.ddmm.technology.mapping.TechnologySpecificFieldMapping;
 import de.fhdo.ddmm.technology.mapping.TechnologySpecificImportedServiceAspect;
 import de.fhdo.ddmm.technology.mapping.TechnologySpecificProtocol;
 import de.fhdo.ddmm.technology.mapping.TechnologySpecificProtocolSpecification;
@@ -519,10 +520,13 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
    * warning in case of (suspected) type incompatibility, as we also do it in the service DSL.
    */
   @Check
-  public void warnComplexParameterMappingTypeCompatibility(final TechnologySpecificDataFieldTypeMapping mapping) {
+  public void warnComplexParameterMappingTypeCompatibility(final TechnologySpecificFieldMapping mapping) {
     this.warnParameterMappingTypeCompatibility(mapping);
   }
   
+  /**
+   * Check for differing technology assignments to parameters
+   */
   @Check
   public void checkDifferingParameterTechnologies(final MicroserviceMapping mapping) {
     if (((mapping.getTechnologies().isEmpty() || (mapping.getMicroservice() == null)) || 
@@ -657,8 +661,9 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
    */
   @Check
   public void checkNotEmpty(final ComplexParameterMapping mapping) {
-    final boolean isEmpty = ((mapping.getTechnologySpecificComplexType() == null) && 
-      mapping.getAspects().isEmpty());
+    final boolean isEmpty = (((mapping.getTechnologySpecificComplexType() == null) && 
+      mapping.getAspects().isEmpty()) && 
+      mapping.getFieldMappings().isEmpty());
     if (isEmpty) {
       this.error("Mapping must not be empty", mapping, 
         MappingPackage.Literals.PARAMETER_MAPPING__PARAMETER);
@@ -690,19 +695,53 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
    */
   @Check
   public void checkComplexParameterMappingUniqueFields(final ComplexParameterMapping mapping) {
-    final Function<TechnologySpecificDataFieldTypeMapping, DataField> _function = (TechnologySpecificDataFieldTypeMapping it) -> {
-      return IterableExtensions.<DataField>last(it.getDataFieldHierarchy().getDataFields());
-    };
-    final Integer duplicateIndex = DdmmUtils.<TechnologySpecificDataFieldTypeMapping, DataField>getDuplicateIndex(mapping.getDataFieldMappings(), _function);
+    Type _type = mapping.getParameter().getImportedType().getType();
+    final ComplexType parameterType = ((ComplexType) _type);
+    final boolean parameterIsEnumeration = parameterType.isIsEnumeration();
+    Integer _xifexpression = null;
+    if (parameterIsEnumeration) {
+      final Function<TechnologySpecificFieldMapping, EnumerationField> _function = (TechnologySpecificFieldMapping it) -> {
+        return it.getEnumerationField();
+      };
+      _xifexpression = DdmmUtils.<TechnologySpecificFieldMapping, EnumerationField>getDuplicateIndex(mapping.getFieldMappings(), _function);
+    } else {
+      final Function<TechnologySpecificFieldMapping, DataField> _function_1 = (TechnologySpecificFieldMapping it) -> {
+        return IterableExtensions.<DataField>last(it.getDataFieldHierarchy().getDataFields());
+      };
+      _xifexpression = DdmmUtils.<TechnologySpecificFieldMapping, DataField>getDuplicateIndex(mapping.getFieldMappings(), _function_1);
+    }
+    final Integer duplicateIndex = _xifexpression;
     if (((duplicateIndex).intValue() > (-1))) {
-      final TechnologySpecificDataFieldTypeMapping duplicateMapping = mapping.getDataFieldMappings().get((duplicateIndex).intValue());
-      final DataField duplicateField = IterableExtensions.<DataField>last(duplicateMapping.getDataFieldHierarchy().getDataFields());
+      final TechnologySpecificFieldMapping duplicateMapping = mapping.getFieldMappings().get((duplicateIndex).intValue());
+      String duplicateFieldName = null;
+      EReference duplicateFieldReference = null;
+      if (parameterIsEnumeration) {
+        duplicateFieldName = duplicateMapping.getEnumerationField().getName();
+        duplicateFieldReference = MappingPackage.Literals.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__ENUMERATION_FIELD;
+      } else {
+        duplicateFieldName = IterableExtensions.<DataField>last(duplicateMapping.getDataFieldHierarchy().getDataFields()).getName();
+        duplicateFieldReference = MappingPackage.Literals.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__DATA_FIELD_HIERARCHY;
+      }
       StringConcatenation _builder = new StringConcatenation();
-      _builder.append("Duplicate mapping for data field ");
-      String _name = duplicateField.getName();
-      _builder.append(_name);
-      this.error(_builder.toString(), duplicateMapping, 
-        MappingPackage.Literals.TECHNOLOGY_SPECIFIC_DATA_FIELD_TYPE_MAPPING__DATA_FIELD_HIERARCHY);
+      _builder.append("Duplicate mapping for field ");
+      _builder.append(duplicateFieldName);
+      this.error(_builder.toString(), duplicateMapping, duplicateFieldReference);
+    }
+  }
+  
+  /**
+   * Check that an enumeration field mapping is not empty
+   */
+  @Check
+  public void checkEnumerationFieldMappingNotEmpty(final TechnologySpecificFieldMapping mapping) {
+    EnumerationField _enumerationField = mapping.getEnumerationField();
+    boolean _tripleEquals = (_enumerationField == null);
+    if (_tripleEquals) {
+      return;
+    }
+    boolean _isEmpty = mapping.getAspects().isEmpty();
+    if (_isEmpty) {
+      this.error("Enumeration field mapping must not be empty", mapping, MappingPackage.Literals.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__ENUMERATION_FIELD);
     }
   }
   
@@ -870,9 +909,9 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
       }
     }
     if (!_matched) {
-      if (mapping instanceof TechnologySpecificDataFieldTypeMapping) {
+      if (mapping instanceof TechnologySpecificFieldMapping) {
         _matched=true;
-        mappedType = ((TechnologySpecificDataFieldTypeMapping)mapping).getType();
+        mappedType = ((TechnologySpecificFieldMapping)mapping).getType();
         String _xifexpression = null;
         if ((mappedType instanceof TechnologySpecificPrimitiveType)) {
           _xifexpression = ((TechnologySpecificPrimitiveType)mappedType).getName();
@@ -884,8 +923,8 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
           _xifexpression = _xifexpression_1;
         }
         mappedTypeName = _xifexpression;
-        originalType = IterableExtensions.<DataField>last(((TechnologySpecificDataFieldTypeMapping)mapping).getDataFieldHierarchy().getDataFields()).getEffectiveType();
-        erroneousMappingFeature = MappingPackage.Literals.TECHNOLOGY_SPECIFIC_DATA_FIELD_TYPE_MAPPING__DATA_FIELD_HIERARCHY;
+        originalType = IterableExtensions.<DataField>last(((TechnologySpecificFieldMapping)mapping).getDataFieldHierarchy().getDataFields()).getEffectiveType();
+        erroneousMappingFeature = MappingPackage.Literals.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__DATA_FIELD_HIERARCHY;
       }
     }
     if (((originalType == null) || (mappedType == null))) {
@@ -1056,7 +1095,7 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
       }
     }
     if (!_matched) {
-      if (mapping instanceof TechnologySpecificDataFieldTypeMapping) {
+      if (mapping instanceof TechnologySpecificFieldMapping) {
         _matched=true;
         boolean _matched_1 = false;
         if (type instanceof PrimitiveType) {
@@ -1067,7 +1106,7 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
         if (!_matched_1) {
           if (type instanceof ComplexType) {
             _matched_1=true;
-            importAlias = ((TechnologySpecificDataFieldTypeMapping)mapping).getParameterMapping().getParameter().getImportedType().getImport().getName();
+            importAlias = ((TechnologySpecificFieldMapping)mapping).getParameterMapping().getParameter().getImportedType().getImport().getName();
             nameParts = ((ComplexType)type).getQualifiedNameParts();
           }
         }

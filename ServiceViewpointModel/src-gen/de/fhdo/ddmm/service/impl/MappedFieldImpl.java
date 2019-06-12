@@ -3,11 +3,12 @@
 package de.fhdo.ddmm.service.impl;
 
 import de.fhdo.ddmm.data.DataField;
+import de.fhdo.ddmm.data.EnumerationField;
 import de.fhdo.ddmm.data.Type;
 
 import de.fhdo.ddmm.service.ImportedServiceAspect;
 import de.fhdo.ddmm.service.ImportedType;
-import de.fhdo.ddmm.service.MappedDataField;
+import de.fhdo.ddmm.service.MappedField;
 import de.fhdo.ddmm.service.Parameter;
 import de.fhdo.ddmm.service.ServicePackage;
 
@@ -36,21 +37,22 @@ import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Mapped Data Field</b></em>'.
+ * An implementation of the model object '<em><b>Mapped Field</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.fhdo.ddmm.service.impl.MappedDataFieldImpl#getDataField <em>Data Field</em>}</li>
- *   <li>{@link de.fhdo.ddmm.service.impl.MappedDataFieldImpl#getMappedType <em>Mapped Type</em>}</li>
- *   <li>{@link de.fhdo.ddmm.service.impl.MappedDataFieldImpl#getAspects <em>Aspects</em>}</li>
- *   <li>{@link de.fhdo.ddmm.service.impl.MappedDataFieldImpl#getParameter <em>Parameter</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.service.impl.MappedFieldImpl#getDataField <em>Data Field</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.service.impl.MappedFieldImpl#getEnumerationField <em>Enumeration Field</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.service.impl.MappedFieldImpl#getMappedType <em>Mapped Type</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.service.impl.MappedFieldImpl#getAspects <em>Aspects</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.service.impl.MappedFieldImpl#getParameter <em>Parameter</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class MappedDataFieldImpl extends MinimalEObjectImpl.Container implements MappedDataField {
+public class MappedFieldImpl extends MinimalEObjectImpl.Container implements MappedField {
     /**
      * The cached value of the '{@link #getDataField() <em>Data Field</em>}' reference.
      * <!-- begin-user-doc -->
@@ -60,6 +62,16 @@ public class MappedDataFieldImpl extends MinimalEObjectImpl.Container implements
      * @ordered
      */
     protected DataField dataField;
+
+    /**
+     * The cached value of the '{@link #getEnumerationField() <em>Enumeration Field</em>}' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getEnumerationField()
+     * @generated
+     * @ordered
+     */
+    protected EnumerationField enumerationField;
 
     /**
      * The cached value of the '{@link #getMappedType() <em>Mapped Type</em>}' containment reference.
@@ -86,7 +98,7 @@ public class MappedDataFieldImpl extends MinimalEObjectImpl.Container implements
      * <!-- end-user-doc -->
      * @generated
      */
-    protected MappedDataFieldImpl() {
+    protected MappedFieldImpl() {
         super();
     }
 
@@ -97,7 +109,7 @@ public class MappedDataFieldImpl extends MinimalEObjectImpl.Container implements
      */
     @Override
     protected EClass eStaticClass() {
-        return ServicePackage.Literals.MAPPED_DATA_FIELD;
+        return ServicePackage.Literals.MAPPED_FIELD;
     }
 
     /**
@@ -112,7 +124,7 @@ public class MappedDataFieldImpl extends MinimalEObjectImpl.Container implements
             dataField = (DataField)eResolveProxy(oldDataField);
             if (dataField != oldDataField) {
                 if (eNotificationRequired())
-                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, ServicePackage.MAPPED_DATA_FIELD__DATA_FIELD, oldDataField, dataField));
+                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, ServicePackage.MAPPED_FIELD__DATA_FIELD, oldDataField, dataField));
             }
         }
         return dataField;
@@ -137,7 +149,47 @@ public class MappedDataFieldImpl extends MinimalEObjectImpl.Container implements
         DataField oldDataField = dataField;
         dataField = newDataField;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, ServicePackage.MAPPED_DATA_FIELD__DATA_FIELD, oldDataField, dataField));
+            eNotify(new ENotificationImpl(this, Notification.SET, ServicePackage.MAPPED_FIELD__DATA_FIELD, oldDataField, dataField));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EnumerationField getEnumerationField() {
+        if (enumerationField != null && enumerationField.eIsProxy()) {
+            InternalEObject oldEnumerationField = (InternalEObject)enumerationField;
+            enumerationField = (EnumerationField)eResolveProxy(oldEnumerationField);
+            if (enumerationField != oldEnumerationField) {
+                if (eNotificationRequired())
+                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, ServicePackage.MAPPED_FIELD__ENUMERATION_FIELD, oldEnumerationField, enumerationField));
+            }
+        }
+        return enumerationField;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EnumerationField basicGetEnumerationField() {
+        return enumerationField;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void setEnumerationField(EnumerationField newEnumerationField) {
+        EnumerationField oldEnumerationField = enumerationField;
+        enumerationField = newEnumerationField;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ServicePackage.MAPPED_FIELD__ENUMERATION_FIELD, oldEnumerationField, enumerationField));
     }
 
     /**
@@ -159,7 +211,7 @@ public class MappedDataFieldImpl extends MinimalEObjectImpl.Container implements
         ImportedType oldMappedType = mappedType;
         mappedType = newMappedType;
         if (eNotificationRequired()) {
-            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ServicePackage.MAPPED_DATA_FIELD__MAPPED_TYPE, oldMappedType, newMappedType);
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ServicePackage.MAPPED_FIELD__MAPPED_TYPE, oldMappedType, newMappedType);
             if (msgs == null) msgs = notification; else msgs.add(notification);
         }
         return msgs;
@@ -175,14 +227,14 @@ public class MappedDataFieldImpl extends MinimalEObjectImpl.Container implements
         if (newMappedType != mappedType) {
             NotificationChain msgs = null;
             if (mappedType != null)
-                msgs = ((InternalEObject)mappedType).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ServicePackage.MAPPED_DATA_FIELD__MAPPED_TYPE, null, msgs);
+                msgs = ((InternalEObject)mappedType).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ServicePackage.MAPPED_FIELD__MAPPED_TYPE, null, msgs);
             if (newMappedType != null)
-                msgs = ((InternalEObject)newMappedType).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ServicePackage.MAPPED_DATA_FIELD__MAPPED_TYPE, null, msgs);
+                msgs = ((InternalEObject)newMappedType).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ServicePackage.MAPPED_FIELD__MAPPED_TYPE, null, msgs);
             msgs = basicSetMappedType(newMappedType, msgs);
             if (msgs != null) msgs.dispatch();
         }
         else if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, ServicePackage.MAPPED_DATA_FIELD__MAPPED_TYPE, newMappedType, newMappedType));
+            eNotify(new ENotificationImpl(this, Notification.SET, ServicePackage.MAPPED_FIELD__MAPPED_TYPE, newMappedType, newMappedType));
     }
 
     /**
@@ -193,7 +245,7 @@ public class MappedDataFieldImpl extends MinimalEObjectImpl.Container implements
     @Override
     public EList<ImportedServiceAspect> getAspects() {
         if (aspects == null) {
-            aspects = new EObjectContainmentWithInverseEList<ImportedServiceAspect>(ImportedServiceAspect.class, this, ServicePackage.MAPPED_DATA_FIELD__ASPECTS, ServicePackage.IMPORTED_SERVICE_ASPECT__MAPPED_DATA_FIELD);
+            aspects = new EObjectContainmentWithInverseEList<ImportedServiceAspect>(ImportedServiceAspect.class, this, ServicePackage.MAPPED_FIELD__ASPECTS, ServicePackage.IMPORTED_SERVICE_ASPECT__MAPPED_FIELD);
         }
         return aspects;
     }
@@ -205,7 +257,7 @@ public class MappedDataFieldImpl extends MinimalEObjectImpl.Container implements
      */
     @Override
     public Parameter getParameter() {
-        if (eContainerFeatureID() != ServicePackage.MAPPED_DATA_FIELD__PARAMETER) return null;
+        if (eContainerFeatureID() != ServicePackage.MAPPED_FIELD__PARAMETER) return null;
         return (Parameter)eContainer();
     }
 
@@ -215,7 +267,7 @@ public class MappedDataFieldImpl extends MinimalEObjectImpl.Container implements
      * @generated
      */
     public Parameter basicGetParameter() {
-        if (eContainerFeatureID() != ServicePackage.MAPPED_DATA_FIELD__PARAMETER) return null;
+        if (eContainerFeatureID() != ServicePackage.MAPPED_FIELD__PARAMETER) return null;
         return (Parameter)eInternalContainer();
     }
 
@@ -225,7 +277,7 @@ public class MappedDataFieldImpl extends MinimalEObjectImpl.Container implements
      * @generated
      */
     public NotificationChain basicSetParameter(Parameter newParameter, NotificationChain msgs) {
-        msgs = eBasicSetContainer((InternalEObject)newParameter, ServicePackage.MAPPED_DATA_FIELD__PARAMETER, msgs);
+        msgs = eBasicSetContainer((InternalEObject)newParameter, ServicePackage.MAPPED_FIELD__PARAMETER, msgs);
         return msgs;
     }
 
@@ -236,19 +288,19 @@ public class MappedDataFieldImpl extends MinimalEObjectImpl.Container implements
      */
     @Override
     public void setParameter(Parameter newParameter) {
-        if (newParameter != eInternalContainer() || (eContainerFeatureID() != ServicePackage.MAPPED_DATA_FIELD__PARAMETER && newParameter != null)) {
+        if (newParameter != eInternalContainer() || (eContainerFeatureID() != ServicePackage.MAPPED_FIELD__PARAMETER && newParameter != null)) {
             if (EcoreUtil.isAncestor(this, newParameter))
                 throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
             NotificationChain msgs = null;
             if (eInternalContainer() != null)
                 msgs = eBasicRemoveFromContainer(msgs);
             if (newParameter != null)
-                msgs = ((InternalEObject)newParameter).eInverseAdd(this, ServicePackage.PARAMETER__MAPPED_DATA_FIELDS, Parameter.class, msgs);
+                msgs = ((InternalEObject)newParameter).eInverseAdd(this, ServicePackage.PARAMETER__MAPPED_FIELDS, Parameter.class, msgs);
             msgs = basicSetParameter(newParameter, msgs);
             if (msgs != null) msgs.dispatch();
         }
         else if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, ServicePackage.MAPPED_DATA_FIELD__PARAMETER, newParameter, newParameter));
+            eNotify(new ENotificationImpl(this, Notification.SET, ServicePackage.MAPPED_FIELD__PARAMETER, newParameter, newParameter));
     }
 
     /**
@@ -260,11 +312,27 @@ public class MappedDataFieldImpl extends MinimalEObjectImpl.Container implements
     public EList<String> getQualifiedNameParts() {
         EList<String> _xblockexpression = null;
         {
-            if (((this.getDataField() == null) || this.getDataField().getName().isEmpty())) {
+            String _xifexpression = null;
+            DataField _dataField = this.getDataField();
+            boolean _tripleNotEquals = (_dataField != null);
+            if (_tripleNotEquals) {
+                _xifexpression = this.getDataField().getName();
+            }
+            else {
+                String _xifexpression_1 = null;
+                EnumerationField _enumerationField = this.getEnumerationField();
+                boolean _tripleNotEquals_1 = (_enumerationField != null);
+                if (_tripleNotEquals_1) {
+                    _xifexpression_1 = this.getEnumerationField().getName();
+                }
+                _xifexpression = _xifexpression_1;
+            }
+            final String fieldName = _xifexpression;
+            if (((fieldName == null) || fieldName.isEmpty())) {
                 return ECollections.<String>asEList(CollectionLiterals.<String>newArrayList());
             }
             final EList<String> nameParts = this.getParameter().getQualifiedNameParts();
-            CollectionExtensions.<String>addAll(nameParts, this.getDataField().getName());
+            CollectionExtensions.<String>addAll(nameParts, fieldName);
             _xblockexpression = ECollections.<String>asEList(nameParts);
         }
         return _xblockexpression;
@@ -327,9 +395,9 @@ public class MappedDataFieldImpl extends MinimalEObjectImpl.Container implements
     @Override
     public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
-            case ServicePackage.MAPPED_DATA_FIELD__ASPECTS:
+            case ServicePackage.MAPPED_FIELD__ASPECTS:
                 return ((InternalEList<InternalEObject>)(InternalEList<?>)getAspects()).basicAdd(otherEnd, msgs);
-            case ServicePackage.MAPPED_DATA_FIELD__PARAMETER:
+            case ServicePackage.MAPPED_FIELD__PARAMETER:
                 if (eInternalContainer() != null)
                     msgs = eBasicRemoveFromContainer(msgs);
                 return basicSetParameter((Parameter)otherEnd, msgs);
@@ -345,11 +413,11 @@ public class MappedDataFieldImpl extends MinimalEObjectImpl.Container implements
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
-            case ServicePackage.MAPPED_DATA_FIELD__MAPPED_TYPE:
+            case ServicePackage.MAPPED_FIELD__MAPPED_TYPE:
                 return basicSetMappedType(null, msgs);
-            case ServicePackage.MAPPED_DATA_FIELD__ASPECTS:
+            case ServicePackage.MAPPED_FIELD__ASPECTS:
                 return ((InternalEList<?>)getAspects()).basicRemove(otherEnd, msgs);
-            case ServicePackage.MAPPED_DATA_FIELD__PARAMETER:
+            case ServicePackage.MAPPED_FIELD__PARAMETER:
                 return basicSetParameter(null, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -363,8 +431,8 @@ public class MappedDataFieldImpl extends MinimalEObjectImpl.Container implements
     @Override
     public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
         switch (eContainerFeatureID()) {
-            case ServicePackage.MAPPED_DATA_FIELD__PARAMETER:
-                return eInternalContainer().eInverseRemove(this, ServicePackage.PARAMETER__MAPPED_DATA_FIELDS, Parameter.class, msgs);
+            case ServicePackage.MAPPED_FIELD__PARAMETER:
+                return eInternalContainer().eInverseRemove(this, ServicePackage.PARAMETER__MAPPED_FIELDS, Parameter.class, msgs);
         }
         return super.eBasicRemoveFromContainerFeature(msgs);
     }
@@ -377,14 +445,17 @@ public class MappedDataFieldImpl extends MinimalEObjectImpl.Container implements
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
-            case ServicePackage.MAPPED_DATA_FIELD__DATA_FIELD:
+            case ServicePackage.MAPPED_FIELD__DATA_FIELD:
                 if (resolve) return getDataField();
                 return basicGetDataField();
-            case ServicePackage.MAPPED_DATA_FIELD__MAPPED_TYPE:
+            case ServicePackage.MAPPED_FIELD__ENUMERATION_FIELD:
+                if (resolve) return getEnumerationField();
+                return basicGetEnumerationField();
+            case ServicePackage.MAPPED_FIELD__MAPPED_TYPE:
                 return getMappedType();
-            case ServicePackage.MAPPED_DATA_FIELD__ASPECTS:
+            case ServicePackage.MAPPED_FIELD__ASPECTS:
                 return getAspects();
-            case ServicePackage.MAPPED_DATA_FIELD__PARAMETER:
+            case ServicePackage.MAPPED_FIELD__PARAMETER:
                 if (resolve) return getParameter();
                 return basicGetParameter();
         }
@@ -400,17 +471,20 @@ public class MappedDataFieldImpl extends MinimalEObjectImpl.Container implements
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
-            case ServicePackage.MAPPED_DATA_FIELD__DATA_FIELD:
+            case ServicePackage.MAPPED_FIELD__DATA_FIELD:
                 setDataField((DataField)newValue);
                 return;
-            case ServicePackage.MAPPED_DATA_FIELD__MAPPED_TYPE:
+            case ServicePackage.MAPPED_FIELD__ENUMERATION_FIELD:
+                setEnumerationField((EnumerationField)newValue);
+                return;
+            case ServicePackage.MAPPED_FIELD__MAPPED_TYPE:
                 setMappedType((ImportedType)newValue);
                 return;
-            case ServicePackage.MAPPED_DATA_FIELD__ASPECTS:
+            case ServicePackage.MAPPED_FIELD__ASPECTS:
                 getAspects().clear();
                 getAspects().addAll((Collection<? extends ImportedServiceAspect>)newValue);
                 return;
-            case ServicePackage.MAPPED_DATA_FIELD__PARAMETER:
+            case ServicePackage.MAPPED_FIELD__PARAMETER:
                 setParameter((Parameter)newValue);
                 return;
         }
@@ -425,16 +499,19 @@ public class MappedDataFieldImpl extends MinimalEObjectImpl.Container implements
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
-            case ServicePackage.MAPPED_DATA_FIELD__DATA_FIELD:
+            case ServicePackage.MAPPED_FIELD__DATA_FIELD:
                 setDataField((DataField)null);
                 return;
-            case ServicePackage.MAPPED_DATA_FIELD__MAPPED_TYPE:
+            case ServicePackage.MAPPED_FIELD__ENUMERATION_FIELD:
+                setEnumerationField((EnumerationField)null);
+                return;
+            case ServicePackage.MAPPED_FIELD__MAPPED_TYPE:
                 setMappedType((ImportedType)null);
                 return;
-            case ServicePackage.MAPPED_DATA_FIELD__ASPECTS:
+            case ServicePackage.MAPPED_FIELD__ASPECTS:
                 getAspects().clear();
                 return;
-            case ServicePackage.MAPPED_DATA_FIELD__PARAMETER:
+            case ServicePackage.MAPPED_FIELD__PARAMETER:
                 setParameter((Parameter)null);
                 return;
         }
@@ -449,13 +526,15 @@ public class MappedDataFieldImpl extends MinimalEObjectImpl.Container implements
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
-            case ServicePackage.MAPPED_DATA_FIELD__DATA_FIELD:
+            case ServicePackage.MAPPED_FIELD__DATA_FIELD:
                 return dataField != null;
-            case ServicePackage.MAPPED_DATA_FIELD__MAPPED_TYPE:
+            case ServicePackage.MAPPED_FIELD__ENUMERATION_FIELD:
+                return enumerationField != null;
+            case ServicePackage.MAPPED_FIELD__MAPPED_TYPE:
                 return mappedType != null;
-            case ServicePackage.MAPPED_DATA_FIELD__ASPECTS:
+            case ServicePackage.MAPPED_FIELD__ASPECTS:
                 return aspects != null && !aspects.isEmpty();
-            case ServicePackage.MAPPED_DATA_FIELD__PARAMETER:
+            case ServicePackage.MAPPED_FIELD__PARAMETER:
                 return basicGetParameter() != null;
         }
         return super.eIsSet(featureID);
@@ -469,14 +548,14 @@ public class MappedDataFieldImpl extends MinimalEObjectImpl.Container implements
     @Override
     public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
         switch (operationID) {
-            case ServicePackage.MAPPED_DATA_FIELD___GET_QUALIFIED_NAME_PARTS:
+            case ServicePackage.MAPPED_FIELD___GET_QUALIFIED_NAME_PARTS:
                 return getQualifiedNameParts();
-            case ServicePackage.MAPPED_DATA_FIELD___BUILD_QUALIFIED_NAME__STRING:
+            case ServicePackage.MAPPED_FIELD___BUILD_QUALIFIED_NAME__STRING:
                 return buildQualifiedName((String)arguments.get(0));
-            case ServicePackage.MAPPED_DATA_FIELD___GET_EFFECTIVE_TYPE:
+            case ServicePackage.MAPPED_FIELD___GET_EFFECTIVE_TYPE:
                 return getEffectiveType();
         }
         return super.eInvoke(operationID, arguments);
     }
 
-} //MappedDataFieldImpl
+} //MappedFieldImpl

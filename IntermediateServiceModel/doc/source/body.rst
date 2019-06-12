@@ -665,35 +665,40 @@ Microservices
 
         :java:type:`Aspects <IntermediateImportedAspect>` of the parameter.
 
-    .. py:attribute:: IntermediateMappedDataField[*] mappedDataFields
+    .. py:attribute:: IntermediateMappedField[*] mappedFields
 
-        :java:type:`Mapped data fields <IntermediateMappedDataField>` of the
-        parameter.
+        :java:type:`Mapped fields <IntermediateMappedField>` of the parameter.
 
         .. HINT::
 
-            If the parameter has mapped data fields, the corresponding types of
-            the fields of the parameter's 
+            If the parameter has mapped fields, the corresponding types of the
+            fields of the parameter's 
             :ref:`structure type <data_model:link__IntermediateDataStructure>`
-            need to be replaced with the mapped types.
+            need to be replaced with the mapped types. Note that it is not 
+            possible to assign types to 
+            :ref:`enumeration <data_model:link__IntermediateEnumeration>` 
+            fields.
 
-            Furthermore, mapped data fields are the only way to assign
+            Furthermore, mapped fields are the only way to assign
             :java:type:`aspects <IntermediateImportedAspect>` to the fields of a 
-            :ref:`data structure <data_model:link__IntermediateDataStructure>`.
+            :ref:`data structure <data_model:link__IntermediateDataStructure>`
+            or :ref:`enumeration <data_model:link__IntermediateEnumeration>`.
 
     .. py:attribute:: IntermediateOperation operation
 
         Link to the containing :java:type:`IntermediateOperation` instance.
 
-.. java:type:: class IntermediateMappedDataField
+.. java:type:: class IntermediateMappedField
 
-    A data field of a :java:type:`parameter's <IntermediateParameter>` 
-    :ref:`structure type <data_model:link__IntermediateDataStructure>`, to which 
-    a type differing from its original type and optional aspects were assigned.
+    A field of a :java:type:`parameter's <IntermediateParameter>` 
+    :ref:`structure type <data_model:link__IntermediateDataStructure>` or
+    :ref:`enumeration type <data_model:link__IntermediateEnumeration>` to which 
+    a type differing from its original type (only for fields of data structures)
+    and optional aspects were assigned.
 
-    .. _link__IntermediateMappedDataField_mappedDataFieldName:
+    .. _link__IntermediateMappedField_mappedFieldName:
 
-    .. py:attribute:: String[1] mappedDataFieldName
+    .. py:attribute:: String[1] mappedFieldName
 
         Name of the mapped data field.
 
@@ -701,41 +706,56 @@ Microservices
 
             There is no direct link to the field in the respective
             :java:type:`parameter's <IntermediateParameter>`
-            :ref:`structure type <data_model:link__IntermediateDataStructure>`.
+            :ref:`structure type <data_model:link__IntermediateDataStructure>`
+            or 
+            :ref:`enumeration type <data_model:link__IntermediateEnumeration>`.
             Instead, the 
-            :ref:`DataField <data_model:link__IntermediateDataField>` instance
-            to which the parameter's 
+            :ref:`DataField <data_model:link__IntermediateDataField>` or
+            :ref:`EnumerationField 
+            <data_model:link__IntermediateEnumerationField>` instance to which 
+            the parameter's 
             :ref:`type <link__IntermediateParameter_type>` attribute links needs
-            to be iterated with the ``mappedDataFieldName`` in order to retrieve
+            to be iterated with the ``mappedFieldName`` in order to retrieve
             the instance.
 
     .. py:attribute:: String[1] qualifiedName
 
-        Qualified name of the mapped data field.
+        Qualified name of the mapped field.
 
         .. HINT::
         
-            This is the name of the mapped data field prefixed by the 
-            parameter's 
+            This is the name of the mapped field prefixed by the parameter's 
             :ref:`qualified name <link__IntermediateParameter_qualifiedName>`.
-            The qualified name of the data field itself needs to be derived
-            from the corresponding 
-            :ref:`DataField <data_model:link__IntermediateDataField>` (see
-            the documentation of the :ref:`mappedDataFieldName 
-            <link__IntermediateMappedDataField_mappedDataFieldName>` attribute.
+            The qualified name of the field itself needs to be derived from the
+            corresponding 
+            :ref:`DataField <data_model:link__IntermediateDataField>` or
+            :ref:`EnumerationField 
+            <data_model:link__IntermediateEnumerationField>` (see the
+            documentation of the :ref:`mappedFieldName 
+            <link__IntermediateMappedField_mappedFieldName>` attribute.
 
-    .. py:attribute:: IntermediateType[1] mappedType
+    .. py:attribute:: IntermediateTypeKind[1] originalTypeKind
+
+        Kind of the original 
+        :ref:`type's kind <data_model:link__IntermediateTypeKind>`, i.e., 
+        prior to the mapping.
+
+    .. py:attribute:: IntermediateType mappedType
 
         New (mapped) type of the 
         :ref:`data field <data_model:link__IntermediateDataField>`. 
 
         .. HINT::
 
-            Code generators must use this type as the field's type.
+            Code generators must use this type as the field's type. This 
+            property only exhibits a value for 
+            :ref:`DataFields <data_model:link__IntermediateDataField>` and not
+            for :ref:`EnumerationFields 
+            <data_model:link__IntermediateEnumerationField>`. 
 
     .. py:attribute:: IntermediateImportedAspect[*] aspects
 
-        :java:type:`Aspects <IntermediateImportedAspect>` of the data field.
+        :java:type:`Aspects <IntermediateImportedAspect>` of the field.
 
     .. py:attribute:: IntermediateParameter parameter
 
@@ -1203,9 +1223,9 @@ modeling concepts are described.
     :java:type:`microservices <IntermediateMicroservice>`,
     :java:type:`interfaces <IntermediateInterface>`,
     :java:type:`operations <IntermediateOperation>`,
-    :java:type:`parameters <IntermediateParameter>`, and
-    :java:type:`data fields <IntermediateMappedDataField>` in the sense of 
-    Aspect-oriented Programming (AOP) :cite:`Kiczales1997`.
+    :java:type:`parameters <IntermediateParameter>`,
+    :java:type:`data and enumeration fields <IntermediateMappedField>` in the 
+    sense of Aspect-oriented Programming (AOP) :cite:`Kiczales1997`.
 
     Aspects are defined within Technology Models. An aspect definition might be
     accompanied with properties and constrained to the concepts to which they 
@@ -1252,10 +1272,9 @@ modeling concepts are described.
 
         :java:type:`IntermediateParameter` to which the aspect was assigned.
 
-    .. py:attribute:: IntermediateMappedDataField mappedDataField
+    .. py:attribute:: IntermediateMappedField mappedField
 
-        :java:type:`IntermediateMappedDataField` to which the aspect was 
-        assigned.
+        :java:type:`IntermediateMappedField` to which the aspect was assigned.
 
 .. java:type:: class IntermediateAspectProperty
 

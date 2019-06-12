@@ -24,7 +24,7 @@ import org.eclipse.emf.common.util.EList;
  * <ul>
  *   <li>{@link de.fhdo.ddmm.technology.mapping.ComplexParameterMapping#getTechnology <em>Technology</em>}</li>
  *   <li>{@link de.fhdo.ddmm.technology.mapping.ComplexParameterMapping#getTechnologySpecificComplexType <em>Technology Specific Complex Type</em>}</li>
- *   <li>{@link de.fhdo.ddmm.technology.mapping.ComplexParameterMapping#getDataFieldMappings <em>Data Field Mappings</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.technology.mapping.ComplexParameterMapping#getFieldMappings <em>Field Mappings</em>}</li>
  * </ul>
  *
  * @see de.fhdo.ddmm.technology.mapping.MappingPackage#getComplexParameterMapping()
@@ -89,21 +89,21 @@ public interface ComplexParameterMapping extends ParameterMapping {
     void setTechnologySpecificComplexType(ComplexType value);
 
     /**
-     * Returns the value of the '<em><b>Data Field Mappings</b></em>' containment reference list.
-     * The list contents are of type {@link de.fhdo.ddmm.technology.mapping.TechnologySpecificDataFieldTypeMapping}.
-     * It is bidirectional and its opposite is '{@link de.fhdo.ddmm.technology.mapping.TechnologySpecificDataFieldTypeMapping#getParameterMapping <em>Parameter Mapping</em>}'.
+     * Returns the value of the '<em><b>Field Mappings</b></em>' containment reference list.
+     * The list contents are of type {@link de.fhdo.ddmm.technology.mapping.TechnologySpecificFieldMapping}.
+     * It is bidirectional and its opposite is '{@link de.fhdo.ddmm.technology.mapping.TechnologySpecificFieldMapping#getParameterMapping <em>Parameter Mapping</em>}'.
      * <!-- begin-user-doc -->
      * <p>
-     * If the meaning of the '<em>Data Field Mappings</em>' containment reference list isn't clear,
+     * If the meaning of the '<em>Field Mappings</em>' containment reference list isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Data Field Mappings</em>' containment reference list.
-     * @see de.fhdo.ddmm.technology.mapping.MappingPackage#getComplexParameterMapping_DataFieldMappings()
-     * @see de.fhdo.ddmm.technology.mapping.TechnologySpecificDataFieldTypeMapping#getParameterMapping
+     * @return the value of the '<em>Field Mappings</em>' containment reference list.
+     * @see de.fhdo.ddmm.technology.mapping.MappingPackage#getComplexParameterMapping_FieldMappings()
+     * @see de.fhdo.ddmm.technology.mapping.TechnologySpecificFieldMapping#getParameterMapping
      * @model opposite="parameterMapping" containment="true"
      * @generated
      */
-    EList<TechnologySpecificDataFieldTypeMapping> getDataFieldMappings();
+    EList<TechnologySpecificFieldMapping> getFieldMappings();
 
 } // ComplexParameterMapping

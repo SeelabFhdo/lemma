@@ -513,9 +513,9 @@ rule Parameter(sourceParameter : Service!Parameter, parameterMapping : Mapping!P
 					t.importedType <- thisModule.ImportedType(parameterMapping.technology, 
 						parameterMapping.technologySpecificComplexType);
 				
-				for (dataFieldMapping in parameterMapping.dataFieldMappings) {					
-					t.mappedDataFields <- t.mappedDataFields->append(
-						thisModule.MappedDataField(dataFieldMapping, t)
+				for (fieldMapping in parameterMapping.fieldMappings) {					
+					t.mappedFields <- t.mappedFields->append(
+						thisModule.MappedField(fieldMapping, t)
 					);
 				}
 			}
@@ -545,19 +545,21 @@ rule Parameter(sourceParameter : Service!Parameter, parameterMapping : Mapping!P
 	}
 }
 
---- Generic called rule for creating a MappedDataField 
-rule MappedDataField(dataFieldMapping : Mapping!TechnologySpecificDataFieldTypeMapping,
+--- Generic called rule for creating a MappedField 
+rule MappedField(fieldMapping : Mapping!TechnologySpecificFieldMapping,
 	targetParameter : Service!Parameter) {
 	to
-		t : Service!MappedDataField(
-			dataField <- dataFieldMapping.dataFieldHierarchy.dataFields->last(),
-			parameter <- targetParameter,
-			mappedType <- thisModule.ImportedType(dataFieldMapping.technology, 
-				dataFieldMapping.type),
-			aspects <- thisModule.createServiceAspects(dataFieldMapping.aspects, 'mappedDataField', 
-				t)
+		t : Service!MappedField(
+			parameter <- targetParameter,			
+			aspects <- thisModule.createServiceAspects(fieldMapping.aspects, 'mappedField', t)
 		)
 	do {
+		if (not fieldMapping.dataFieldHierarchy.oclIsUndefined()) {
+			t.dataField <- fieldMapping.dataFieldHierarchy.dataFields->last();
+			t.mappedType <- thisModule.ImportedType(fieldMapping.technology, fieldMapping.type);
+		} else if (not fieldMapping.enumerationField.oclIsUndefined())
+			t.enumerationField <- fieldMapping.enumerationField;		
+		
 		t;
 	}
 }

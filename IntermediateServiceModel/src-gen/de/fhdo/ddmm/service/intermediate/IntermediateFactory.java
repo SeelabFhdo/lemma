@@ -76,13 +76,13 @@ public interface IntermediateFactory extends EFactory {
     IntermediateParameter createIntermediateParameter();
 
     /**
-     * Returns a new object of class '<em>Mapped Data Field</em>'.
+     * Returns a new object of class '<em>Mapped Field</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return a new object of class '<em>Mapped Data Field</em>'.
+     * @return a new object of class '<em>Mapped Field</em>'.
      * @generated
      */
-    IntermediateMappedDataField createIntermediateMappedDataField();
+    IntermediateMappedField createIntermediateMappedField();
 
     /**
      * Returns a new object of class '<em>Microservice Reference</em>'.

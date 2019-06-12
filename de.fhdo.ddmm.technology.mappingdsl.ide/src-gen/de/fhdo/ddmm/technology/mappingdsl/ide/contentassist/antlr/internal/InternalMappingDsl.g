@@ -224,25 +224,25 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-// Entry rule entryRuleTechnologySpecificDataFieldTypeMapping
-entryRuleTechnologySpecificDataFieldTypeMapping
+// Entry rule entryRuleTechnologySpecificFieldMapping
+entryRuleTechnologySpecificFieldMapping
 :
-{ before(grammarAccess.getTechnologySpecificDataFieldTypeMappingRule()); }
-	 ruleTechnologySpecificDataFieldTypeMapping
-{ after(grammarAccess.getTechnologySpecificDataFieldTypeMappingRule()); } 
+{ before(grammarAccess.getTechnologySpecificFieldMappingRule()); }
+	 ruleTechnologySpecificFieldMapping
+{ after(grammarAccess.getTechnologySpecificFieldMappingRule()); } 
 	 EOF 
 ;
 
-// Rule TechnologySpecificDataFieldTypeMapping
-ruleTechnologySpecificDataFieldTypeMapping 
+// Rule TechnologySpecificFieldMapping
+ruleTechnologySpecificFieldMapping 
 	@init {
 		int stackSize = keepStackSize();
 	}
 	:
 	(
-		{ before(grammarAccess.getTechnologySpecificDataFieldTypeMappingAccess().getGroup()); }
-		(rule__TechnologySpecificDataFieldTypeMapping__Group__0)
-		{ after(grammarAccess.getTechnologySpecificDataFieldTypeMappingAccess().getGroup()); }
+		{ before(grammarAccess.getTechnologySpecificFieldMappingAccess().getGroup()); }
+		(rule__TechnologySpecificFieldMapping__Group__0)
+		{ after(grammarAccess.getTechnologySpecificFieldMappingAccess().getGroup()); }
 	)
 ;
 finally {
@@ -1715,6 +1715,27 @@ finally {
 	restoreStackSize(stackSize);
 }
 
+rule__TechnologySpecificFieldMapping__Alternatives_0
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	(
+		{ before(grammarAccess.getTechnologySpecificFieldMappingAccess().getEnumerationFieldAssignment_0_0()); }
+		(rule__TechnologySpecificFieldMapping__EnumerationFieldAssignment_0_0)
+		{ after(grammarAccess.getTechnologySpecificFieldMappingAccess().getEnumerationFieldAssignment_0_0()); }
+	)
+	|
+	(
+		{ before(grammarAccess.getTechnologySpecificFieldMappingAccess().getGroup_0_1()); }
+		(rule__TechnologySpecificFieldMapping__Group_0_1__0)
+		{ after(grammarAccess.getTechnologySpecificFieldMappingAccess().getGroup_0_1()); }
+	)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
 rule__TechnologySpecificImportedServiceAspect__Alternatives_3
 	@init {
 		int stackSize = keepStackSize();
@@ -2101,15 +2122,21 @@ rule__ImportType__Alternatives
 	}
 :
 	(
-		{ before(grammarAccess.getImportTypeAccess().getTECHNOLOGYEnumLiteralDeclaration_0()); }
-		('technology')
-		{ after(grammarAccess.getImportTypeAccess().getTECHNOLOGYEnumLiteralDeclaration_0()); }
+		{ before(grammarAccess.getImportTypeAccess().getDATATYPESEnumLiteralDeclaration_0()); }
+		('datatypes')
+		{ after(grammarAccess.getImportTypeAccess().getDATATYPESEnumLiteralDeclaration_0()); }
 	)
 	|
 	(
-		{ before(grammarAccess.getImportTypeAccess().getMICROSERVICESEnumLiteralDeclaration_1()); }
+		{ before(grammarAccess.getImportTypeAccess().getTECHNOLOGYEnumLiteralDeclaration_1()); }
+		('technology')
+		{ after(grammarAccess.getImportTypeAccess().getTECHNOLOGYEnumLiteralDeclaration_1()); }
+	)
+	|
+	(
+		{ before(grammarAccess.getImportTypeAccess().getMICROSERVICESEnumLiteralDeclaration_2()); }
 		('microservices')
-		{ after(grammarAccess.getImportTypeAccess().getMICROSERVICESEnumLiteralDeclaration_1()); }
+		{ after(grammarAccess.getImportTypeAccess().getMICROSERVICESEnumLiteralDeclaration_2()); }
 	)
 ;
 finally {
@@ -2357,14 +2384,14 @@ rule__TechnologyMapping__Group__1__Impl
 :
 (
 	(
-		{ before(grammarAccess.getTechnologyMappingAccess().getMappingsAssignment_1()); }
-		(rule__TechnologyMapping__MappingsAssignment_1)
-		{ after(grammarAccess.getTechnologyMappingAccess().getMappingsAssignment_1()); }
+		{ before(grammarAccess.getTechnologyMappingAccess().getServiceMappingsAssignment_1()); }
+		(rule__TechnologyMapping__ServiceMappingsAssignment_1)
+		{ after(grammarAccess.getTechnologyMappingAccess().getServiceMappingsAssignment_1()); }
 	)
 	(
-		{ before(grammarAccess.getTechnologyMappingAccess().getMappingsAssignment_1()); }
-		(rule__TechnologyMapping__MappingsAssignment_1)*
-		{ after(grammarAccess.getTechnologyMappingAccess().getMappingsAssignment_1()); }
+		{ before(grammarAccess.getTechnologyMappingAccess().getServiceMappingsAssignment_1()); }
+		(rule__TechnologyMapping__ServiceMappingsAssignment_1)*
+		{ after(grammarAccess.getTechnologyMappingAccess().getServiceMappingsAssignment_1()); }
 	)
 )
 ;
@@ -5864,9 +5891,9 @@ rule__ComplexParameterMapping__Group_2_1__3__Impl
 	}
 :
 (
-	{ before(grammarAccess.getComplexParameterMappingAccess().getDataFieldMappingsAssignment_2_1_3()); }
-	(rule__ComplexParameterMapping__DataFieldMappingsAssignment_2_1_3)
-	{ after(grammarAccess.getComplexParameterMappingAccess().getDataFieldMappingsAssignment_2_1_3()); }
+	{ before(grammarAccess.getComplexParameterMappingAccess().getFieldMappingsAssignment_2_1_3()); }
+	(rule__ComplexParameterMapping__FieldMappingsAssignment_2_1_3)
+	{ after(grammarAccess.getComplexParameterMappingAccess().getFieldMappingsAssignment_2_1_3()); }
 )
 ;
 finally {
@@ -6086,9 +6113,9 @@ rule__ComplexParameterMapping__Group_2_1_4__1__Impl
 	}
 :
 (
-	{ before(grammarAccess.getComplexParameterMappingAccess().getDataFieldMappingsAssignment_2_1_4_1()); }
-	(rule__ComplexParameterMapping__DataFieldMappingsAssignment_2_1_4_1)
-	{ after(grammarAccess.getComplexParameterMappingAccess().getDataFieldMappingsAssignment_2_1_4_1()); }
+	{ before(grammarAccess.getComplexParameterMappingAccess().getFieldMappingsAssignment_2_1_4_1()); }
+	(rule__ComplexParameterMapping__FieldMappingsAssignment_2_1_4_1)
+	{ after(grammarAccess.getComplexParameterMappingAccess().getFieldMappingsAssignment_2_1_4_1()); }
 )
 ;
 finally {
@@ -6096,161 +6123,188 @@ finally {
 }
 
 
-rule__TechnologySpecificDataFieldTypeMapping__Group__0
+rule__TechnologySpecificFieldMapping__Group__0
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
-	rule__TechnologySpecificDataFieldTypeMapping__Group__0__Impl
-	rule__TechnologySpecificDataFieldTypeMapping__Group__1
+	rule__TechnologySpecificFieldMapping__Group__0__Impl
+	rule__TechnologySpecificFieldMapping__Group__1
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__TechnologySpecificDataFieldTypeMapping__Group__0__Impl
+rule__TechnologySpecificFieldMapping__Group__0__Impl
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 (
-	{ before(grammarAccess.getTechnologySpecificDataFieldTypeMappingAccess().getDataFieldHierarchyAssignment_0()); }
-	(rule__TechnologySpecificDataFieldTypeMapping__DataFieldHierarchyAssignment_0)
-	{ after(grammarAccess.getTechnologySpecificDataFieldTypeMappingAccess().getDataFieldHierarchyAssignment_0()); }
+	{ before(grammarAccess.getTechnologySpecificFieldMappingAccess().getAlternatives_0()); }
+	(rule__TechnologySpecificFieldMapping__Alternatives_0)
+	{ after(grammarAccess.getTechnologySpecificFieldMappingAccess().getAlternatives_0()); }
 )
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__TechnologySpecificDataFieldTypeMapping__Group__1
+rule__TechnologySpecificFieldMapping__Group__1
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
-	rule__TechnologySpecificDataFieldTypeMapping__Group__1__Impl
-	rule__TechnologySpecificDataFieldTypeMapping__Group__2
+	rule__TechnologySpecificFieldMapping__Group__1__Impl
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__TechnologySpecificDataFieldTypeMapping__Group__1__Impl
+rule__TechnologySpecificFieldMapping__Group__1__Impl
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 (
-	{ before(grammarAccess.getTechnologySpecificDataFieldTypeMappingAccess().getColonKeyword_1()); }
+	{ before(grammarAccess.getTechnologySpecificFieldMappingAccess().getGroup_1()); }
+	(rule__TechnologySpecificFieldMapping__Group_1__0)?
+	{ after(grammarAccess.getTechnologySpecificFieldMappingAccess().getGroup_1()); }
+)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+
+rule__TechnologySpecificFieldMapping__Group_0_1__0
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	rule__TechnologySpecificFieldMapping__Group_0_1__0__Impl
+	rule__TechnologySpecificFieldMapping__Group_0_1__1
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__TechnologySpecificFieldMapping__Group_0_1__0__Impl
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+(
+	{ before(grammarAccess.getTechnologySpecificFieldMappingAccess().getDataFieldHierarchyAssignment_0_1_0()); }
+	(rule__TechnologySpecificFieldMapping__DataFieldHierarchyAssignment_0_1_0)
+	{ after(grammarAccess.getTechnologySpecificFieldMappingAccess().getDataFieldHierarchyAssignment_0_1_0()); }
+)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__TechnologySpecificFieldMapping__Group_0_1__1
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	rule__TechnologySpecificFieldMapping__Group_0_1__1__Impl
+	rule__TechnologySpecificFieldMapping__Group_0_1__2
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__TechnologySpecificFieldMapping__Group_0_1__1__Impl
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+(
+	{ before(grammarAccess.getTechnologySpecificFieldMappingAccess().getColonKeyword_0_1_1()); }
 	':'
-	{ after(grammarAccess.getTechnologySpecificDataFieldTypeMappingAccess().getColonKeyword_1()); }
+	{ after(grammarAccess.getTechnologySpecificFieldMappingAccess().getColonKeyword_0_1_1()); }
 )
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__TechnologySpecificDataFieldTypeMapping__Group__2
+rule__TechnologySpecificFieldMapping__Group_0_1__2
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
-	rule__TechnologySpecificDataFieldTypeMapping__Group__2__Impl
-	rule__TechnologySpecificDataFieldTypeMapping__Group__3
+	rule__TechnologySpecificFieldMapping__Group_0_1__2__Impl
+	rule__TechnologySpecificFieldMapping__Group_0_1__3
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__TechnologySpecificDataFieldTypeMapping__Group__2__Impl
+rule__TechnologySpecificFieldMapping__Group_0_1__2__Impl
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 (
-	{ before(grammarAccess.getTechnologySpecificDataFieldTypeMappingAccess().getTechnologyAssignment_2()); }
-	(rule__TechnologySpecificDataFieldTypeMapping__TechnologyAssignment_2)
-	{ after(grammarAccess.getTechnologySpecificDataFieldTypeMappingAccess().getTechnologyAssignment_2()); }
+	{ before(grammarAccess.getTechnologySpecificFieldMappingAccess().getTechnologyAssignment_0_1_2()); }
+	(rule__TechnologySpecificFieldMapping__TechnologyAssignment_0_1_2)
+	{ after(grammarAccess.getTechnologySpecificFieldMappingAccess().getTechnologyAssignment_0_1_2()); }
 )
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__TechnologySpecificDataFieldTypeMapping__Group__3
+rule__TechnologySpecificFieldMapping__Group_0_1__3
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
-	rule__TechnologySpecificDataFieldTypeMapping__Group__3__Impl
-	rule__TechnologySpecificDataFieldTypeMapping__Group__4
+	rule__TechnologySpecificFieldMapping__Group_0_1__3__Impl
+	rule__TechnologySpecificFieldMapping__Group_0_1__4
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__TechnologySpecificDataFieldTypeMapping__Group__3__Impl
+rule__TechnologySpecificFieldMapping__Group_0_1__3__Impl
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 (
-	{ before(grammarAccess.getTechnologySpecificDataFieldTypeMappingAccess().getColonColonKeyword_3()); }
+	{ before(grammarAccess.getTechnologySpecificFieldMappingAccess().getColonColonKeyword_0_1_3()); }
 	'::'
-	{ after(grammarAccess.getTechnologySpecificDataFieldTypeMappingAccess().getColonColonKeyword_3()); }
+	{ after(grammarAccess.getTechnologySpecificFieldMappingAccess().getColonColonKeyword_0_1_3()); }
 )
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__TechnologySpecificDataFieldTypeMapping__Group__4
+rule__TechnologySpecificFieldMapping__Group_0_1__4
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
-	rule__TechnologySpecificDataFieldTypeMapping__Group__4__Impl
-	rule__TechnologySpecificDataFieldTypeMapping__Group__5
+	rule__TechnologySpecificFieldMapping__Group_0_1__4__Impl
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__TechnologySpecificDataFieldTypeMapping__Group__4__Impl
+rule__TechnologySpecificFieldMapping__Group_0_1__4__Impl
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 (
-	{ before(grammarAccess.getTechnologySpecificDataFieldTypeMappingAccess().getTypeAssignment_4()); }
-	(rule__TechnologySpecificDataFieldTypeMapping__TypeAssignment_4)
-	{ after(grammarAccess.getTechnologySpecificDataFieldTypeMappingAccess().getTypeAssignment_4()); }
-)
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-rule__TechnologySpecificDataFieldTypeMapping__Group__5
-	@init {
-		int stackSize = keepStackSize();
-	}
-:
-	rule__TechnologySpecificDataFieldTypeMapping__Group__5__Impl
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-rule__TechnologySpecificDataFieldTypeMapping__Group__5__Impl
-	@init {
-		int stackSize = keepStackSize();
-	}
-:
-(
-	{ before(grammarAccess.getTechnologySpecificDataFieldTypeMappingAccess().getGroup_5()); }
-	(rule__TechnologySpecificDataFieldTypeMapping__Group_5__0)?
-	{ after(grammarAccess.getTechnologySpecificDataFieldTypeMappingAccess().getGroup_5()); }
+	{ before(grammarAccess.getTechnologySpecificFieldMappingAccess().getTypeAssignment_0_1_4()); }
+	(rule__TechnologySpecificFieldMapping__TypeAssignment_0_1_4)
+	{ after(grammarAccess.getTechnologySpecificFieldMappingAccess().getTypeAssignment_0_1_4()); }
 )
 ;
 finally {
@@ -6258,114 +6312,114 @@ finally {
 }
 
 
-rule__TechnologySpecificDataFieldTypeMapping__Group_5__0
+rule__TechnologySpecificFieldMapping__Group_1__0
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
-	rule__TechnologySpecificDataFieldTypeMapping__Group_5__0__Impl
-	rule__TechnologySpecificDataFieldTypeMapping__Group_5__1
+	rule__TechnologySpecificFieldMapping__Group_1__0__Impl
+	rule__TechnologySpecificFieldMapping__Group_1__1
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__TechnologySpecificDataFieldTypeMapping__Group_5__0__Impl
+rule__TechnologySpecificFieldMapping__Group_1__0__Impl
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 (
-	{ before(grammarAccess.getTechnologySpecificDataFieldTypeMappingAccess().getLeftCurlyBracketKeyword_5_0()); }
+	{ before(grammarAccess.getTechnologySpecificFieldMappingAccess().getLeftCurlyBracketKeyword_1_0()); }
 	'{'
-	{ after(grammarAccess.getTechnologySpecificDataFieldTypeMappingAccess().getLeftCurlyBracketKeyword_5_0()); }
+	{ after(grammarAccess.getTechnologySpecificFieldMappingAccess().getLeftCurlyBracketKeyword_1_0()); }
 )
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__TechnologySpecificDataFieldTypeMapping__Group_5__1
+rule__TechnologySpecificFieldMapping__Group_1__1
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
-	rule__TechnologySpecificDataFieldTypeMapping__Group_5__1__Impl
-	rule__TechnologySpecificDataFieldTypeMapping__Group_5__2
+	rule__TechnologySpecificFieldMapping__Group_1__1__Impl
+	rule__TechnologySpecificFieldMapping__Group_1__2
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__TechnologySpecificDataFieldTypeMapping__Group_5__1__Impl
+rule__TechnologySpecificFieldMapping__Group_1__1__Impl
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 (
-	{ before(grammarAccess.getTechnologySpecificDataFieldTypeMappingAccess().getAspectsKeyword_5_1()); }
+	{ before(grammarAccess.getTechnologySpecificFieldMappingAccess().getAspectsKeyword_1_1()); }
 	'aspects'
-	{ after(grammarAccess.getTechnologySpecificDataFieldTypeMappingAccess().getAspectsKeyword_5_1()); }
+	{ after(grammarAccess.getTechnologySpecificFieldMappingAccess().getAspectsKeyword_1_1()); }
 )
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__TechnologySpecificDataFieldTypeMapping__Group_5__2
+rule__TechnologySpecificFieldMapping__Group_1__2
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
-	rule__TechnologySpecificDataFieldTypeMapping__Group_5__2__Impl
-	rule__TechnologySpecificDataFieldTypeMapping__Group_5__3
+	rule__TechnologySpecificFieldMapping__Group_1__2__Impl
+	rule__TechnologySpecificFieldMapping__Group_1__3
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__TechnologySpecificDataFieldTypeMapping__Group_5__2__Impl
+rule__TechnologySpecificFieldMapping__Group_1__2__Impl
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 (
-	{ before(grammarAccess.getTechnologySpecificDataFieldTypeMappingAccess().getLeftCurlyBracketKeyword_5_2()); }
+	{ before(grammarAccess.getTechnologySpecificFieldMappingAccess().getLeftCurlyBracketKeyword_1_2()); }
 	'{'
-	{ after(grammarAccess.getTechnologySpecificDataFieldTypeMappingAccess().getLeftCurlyBracketKeyword_5_2()); }
+	{ after(grammarAccess.getTechnologySpecificFieldMappingAccess().getLeftCurlyBracketKeyword_1_2()); }
 )
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__TechnologySpecificDataFieldTypeMapping__Group_5__3
+rule__TechnologySpecificFieldMapping__Group_1__3
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
-	rule__TechnologySpecificDataFieldTypeMapping__Group_5__3__Impl
-	rule__TechnologySpecificDataFieldTypeMapping__Group_5__4
+	rule__TechnologySpecificFieldMapping__Group_1__3__Impl
+	rule__TechnologySpecificFieldMapping__Group_1__4
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__TechnologySpecificDataFieldTypeMapping__Group_5__3__Impl
+rule__TechnologySpecificFieldMapping__Group_1__3__Impl
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 (
 	(
-		{ before(grammarAccess.getTechnologySpecificDataFieldTypeMappingAccess().getAspectsAssignment_5_3()); }
-		(rule__TechnologySpecificDataFieldTypeMapping__AspectsAssignment_5_3)
-		{ after(grammarAccess.getTechnologySpecificDataFieldTypeMappingAccess().getAspectsAssignment_5_3()); }
+		{ before(grammarAccess.getTechnologySpecificFieldMappingAccess().getAspectsAssignment_1_3()); }
+		(rule__TechnologySpecificFieldMapping__AspectsAssignment_1_3)
+		{ after(grammarAccess.getTechnologySpecificFieldMappingAccess().getAspectsAssignment_1_3()); }
 	)
 	(
-		{ before(grammarAccess.getTechnologySpecificDataFieldTypeMappingAccess().getAspectsAssignment_5_3()); }
-		(rule__TechnologySpecificDataFieldTypeMapping__AspectsAssignment_5_3)*
-		{ after(grammarAccess.getTechnologySpecificDataFieldTypeMappingAccess().getAspectsAssignment_5_3()); }
+		{ before(grammarAccess.getTechnologySpecificFieldMappingAccess().getAspectsAssignment_1_3()); }
+		(rule__TechnologySpecificFieldMapping__AspectsAssignment_1_3)*
+		{ after(grammarAccess.getTechnologySpecificFieldMappingAccess().getAspectsAssignment_1_3()); }
 	)
 )
 ;
@@ -6373,53 +6427,53 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__TechnologySpecificDataFieldTypeMapping__Group_5__4
+rule__TechnologySpecificFieldMapping__Group_1__4
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
-	rule__TechnologySpecificDataFieldTypeMapping__Group_5__4__Impl
-	rule__TechnologySpecificDataFieldTypeMapping__Group_5__5
+	rule__TechnologySpecificFieldMapping__Group_1__4__Impl
+	rule__TechnologySpecificFieldMapping__Group_1__5
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__TechnologySpecificDataFieldTypeMapping__Group_5__4__Impl
+rule__TechnologySpecificFieldMapping__Group_1__4__Impl
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 (
-	{ before(grammarAccess.getTechnologySpecificDataFieldTypeMappingAccess().getRightCurlyBracketKeyword_5_4()); }
+	{ before(grammarAccess.getTechnologySpecificFieldMappingAccess().getRightCurlyBracketKeyword_1_4()); }
 	'}'
-	{ after(grammarAccess.getTechnologySpecificDataFieldTypeMappingAccess().getRightCurlyBracketKeyword_5_4()); }
+	{ after(grammarAccess.getTechnologySpecificFieldMappingAccess().getRightCurlyBracketKeyword_1_4()); }
 )
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__TechnologySpecificDataFieldTypeMapping__Group_5__5
+rule__TechnologySpecificFieldMapping__Group_1__5
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
-	rule__TechnologySpecificDataFieldTypeMapping__Group_5__5__Impl
+	rule__TechnologySpecificFieldMapping__Group_1__5__Impl
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__TechnologySpecificDataFieldTypeMapping__Group_5__5__Impl
+rule__TechnologySpecificFieldMapping__Group_1__5__Impl
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 (
-	{ before(grammarAccess.getTechnologySpecificDataFieldTypeMappingAccess().getRightCurlyBracketKeyword_5_5()); }
+	{ before(grammarAccess.getTechnologySpecificFieldMappingAccess().getRightCurlyBracketKeyword_1_5()); }
 	'}'
-	{ after(grammarAccess.getTechnologySpecificDataFieldTypeMappingAccess().getRightCurlyBracketKeyword_5_5()); }
+	{ after(grammarAccess.getTechnologySpecificFieldMappingAccess().getRightCurlyBracketKeyword_1_5()); }
 )
 ;
 finally {
@@ -18108,15 +18162,15 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__TechnologyMapping__MappingsAssignment_1
+rule__TechnologyMapping__ServiceMappingsAssignment_1
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 	(
-		{ before(grammarAccess.getTechnologyMappingAccess().getMappingsMicroserviceMappingParserRuleCall_1_0()); }
+		{ before(grammarAccess.getTechnologyMappingAccess().getServiceMappingsMicroserviceMappingParserRuleCall_1_0()); }
 		ruleMicroserviceMapping
-		{ after(grammarAccess.getTechnologyMappingAccess().getMappingsMicroserviceMappingParserRuleCall_1_0()); }
+		{ after(grammarAccess.getTechnologyMappingAccess().getServiceMappingsMicroserviceMappingParserRuleCall_1_0()); }
 	)
 ;
 finally {
@@ -18628,98 +18682,117 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__ComplexParameterMapping__DataFieldMappingsAssignment_2_1_3
+rule__ComplexParameterMapping__FieldMappingsAssignment_2_1_3
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 	(
-		{ before(grammarAccess.getComplexParameterMappingAccess().getDataFieldMappingsTechnologySpecificDataFieldTypeMappingParserRuleCall_2_1_3_0()); }
-		ruleTechnologySpecificDataFieldTypeMapping
-		{ after(grammarAccess.getComplexParameterMappingAccess().getDataFieldMappingsTechnologySpecificDataFieldTypeMappingParserRuleCall_2_1_3_0()); }
+		{ before(grammarAccess.getComplexParameterMappingAccess().getFieldMappingsTechnologySpecificFieldMappingParserRuleCall_2_1_3_0()); }
+		ruleTechnologySpecificFieldMapping
+		{ after(grammarAccess.getComplexParameterMappingAccess().getFieldMappingsTechnologySpecificFieldMappingParserRuleCall_2_1_3_0()); }
 	)
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__ComplexParameterMapping__DataFieldMappingsAssignment_2_1_4_1
+rule__ComplexParameterMapping__FieldMappingsAssignment_2_1_4_1
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 	(
-		{ before(grammarAccess.getComplexParameterMappingAccess().getDataFieldMappingsTechnologySpecificDataFieldTypeMappingParserRuleCall_2_1_4_1_0()); }
-		ruleTechnologySpecificDataFieldTypeMapping
-		{ after(grammarAccess.getComplexParameterMappingAccess().getDataFieldMappingsTechnologySpecificDataFieldTypeMappingParserRuleCall_2_1_4_1_0()); }
+		{ before(grammarAccess.getComplexParameterMappingAccess().getFieldMappingsTechnologySpecificFieldMappingParserRuleCall_2_1_4_1_0()); }
+		ruleTechnologySpecificFieldMapping
+		{ after(grammarAccess.getComplexParameterMappingAccess().getFieldMappingsTechnologySpecificFieldMappingParserRuleCall_2_1_4_1_0()); }
 	)
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__TechnologySpecificDataFieldTypeMapping__DataFieldHierarchyAssignment_0
+rule__TechnologySpecificFieldMapping__EnumerationFieldAssignment_0_0
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 	(
-		{ before(grammarAccess.getTechnologySpecificDataFieldTypeMappingAccess().getDataFieldHierarchyDataFieldHierarchyParserRuleCall_0_0()); }
-		ruleDataFieldHierarchy
-		{ after(grammarAccess.getTechnologySpecificDataFieldTypeMappingAccess().getDataFieldHierarchyDataFieldHierarchyParserRuleCall_0_0()); }
-	)
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-rule__TechnologySpecificDataFieldTypeMapping__TechnologyAssignment_2
-	@init {
-		int stackSize = keepStackSize();
-	}
-:
-	(
-		{ before(grammarAccess.getTechnologySpecificDataFieldTypeMappingAccess().getTechnologyImportCrossReference_2_0()); }
+		{ before(grammarAccess.getTechnologySpecificFieldMappingAccess().getEnumerationFieldEnumerationFieldCrossReference_0_0_0()); }
 		(
-			{ before(grammarAccess.getTechnologySpecificDataFieldTypeMappingAccess().getTechnologyImportIDTerminalRuleCall_2_0_1()); }
+			{ before(grammarAccess.getTechnologySpecificFieldMappingAccess().getEnumerationFieldEnumerationFieldIDTerminalRuleCall_0_0_0_1()); }
 			RULE_ID
-			{ after(grammarAccess.getTechnologySpecificDataFieldTypeMappingAccess().getTechnologyImportIDTerminalRuleCall_2_0_1()); }
+			{ after(grammarAccess.getTechnologySpecificFieldMappingAccess().getEnumerationFieldEnumerationFieldIDTerminalRuleCall_0_0_0_1()); }
 		)
-		{ after(grammarAccess.getTechnologySpecificDataFieldTypeMappingAccess().getTechnologyImportCrossReference_2_0()); }
+		{ after(grammarAccess.getTechnologySpecificFieldMappingAccess().getEnumerationFieldEnumerationFieldCrossReference_0_0_0()); }
 	)
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__TechnologySpecificDataFieldTypeMapping__TypeAssignment_4
+rule__TechnologySpecificFieldMapping__DataFieldHierarchyAssignment_0_1_0
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 	(
-		{ before(grammarAccess.getTechnologySpecificDataFieldTypeMappingAccess().getTypeTypeCrossReference_4_0()); }
+		{ before(grammarAccess.getTechnologySpecificFieldMappingAccess().getDataFieldHierarchyDataFieldHierarchyParserRuleCall_0_1_0_0()); }
+		ruleDataFieldHierarchy
+		{ after(grammarAccess.getTechnologySpecificFieldMappingAccess().getDataFieldHierarchyDataFieldHierarchyParserRuleCall_0_1_0_0()); }
+	)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__TechnologySpecificFieldMapping__TechnologyAssignment_0_1_2
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	(
+		{ before(grammarAccess.getTechnologySpecificFieldMappingAccess().getTechnologyImportCrossReference_0_1_2_0()); }
 		(
-			{ before(grammarAccess.getTechnologySpecificDataFieldTypeMappingAccess().getTypeTypeQualifiedNameParserRuleCall_4_0_1()); }
-			ruleQualifiedName
-			{ after(grammarAccess.getTechnologySpecificDataFieldTypeMappingAccess().getTypeTypeQualifiedNameParserRuleCall_4_0_1()); }
+			{ before(grammarAccess.getTechnologySpecificFieldMappingAccess().getTechnologyImportIDTerminalRuleCall_0_1_2_0_1()); }
+			RULE_ID
+			{ after(grammarAccess.getTechnologySpecificFieldMappingAccess().getTechnologyImportIDTerminalRuleCall_0_1_2_0_1()); }
 		)
-		{ after(grammarAccess.getTechnologySpecificDataFieldTypeMappingAccess().getTypeTypeCrossReference_4_0()); }
+		{ after(grammarAccess.getTechnologySpecificFieldMappingAccess().getTechnologyImportCrossReference_0_1_2_0()); }
 	)
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__TechnologySpecificDataFieldTypeMapping__AspectsAssignment_5_3
+rule__TechnologySpecificFieldMapping__TypeAssignment_0_1_4
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 	(
-		{ before(grammarAccess.getTechnologySpecificDataFieldTypeMappingAccess().getAspectsTechnologySpecificImportedServiceAspectParserRuleCall_5_3_0()); }
+		{ before(grammarAccess.getTechnologySpecificFieldMappingAccess().getTypeTypeCrossReference_0_1_4_0()); }
+		(
+			{ before(grammarAccess.getTechnologySpecificFieldMappingAccess().getTypeTypeQualifiedNameParserRuleCall_0_1_4_0_1()); }
+			ruleQualifiedName
+			{ after(grammarAccess.getTechnologySpecificFieldMappingAccess().getTypeTypeQualifiedNameParserRuleCall_0_1_4_0_1()); }
+		)
+		{ after(grammarAccess.getTechnologySpecificFieldMappingAccess().getTypeTypeCrossReference_0_1_4_0()); }
+	)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__TechnologySpecificFieldMapping__AspectsAssignment_1_3
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	(
+		{ before(grammarAccess.getTechnologySpecificFieldMappingAccess().getAspectsTechnologySpecificImportedServiceAspectParserRuleCall_1_3_0()); }
 		ruleTechnologySpecificImportedServiceAspect
-		{ after(grammarAccess.getTechnologySpecificDataFieldTypeMappingAccess().getAspectsTechnologySpecificImportedServiceAspectParserRuleCall_5_3_0()); }
+		{ after(grammarAccess.getTechnologySpecificFieldMappingAccess().getAspectsTechnologySpecificImportedServiceAspectParserRuleCall_1_3_0()); }
 	)
 ;
 finally {

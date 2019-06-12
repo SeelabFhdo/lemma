@@ -28,7 +28,7 @@ import de.fhdo.ddmm.technology.TechnologySpecificPrimitiveType
 import de.fhdo.ddmm.data.PrimitiveType
 import de.fhdo.ddmm.technology.mapping.ComplexParameterMapping
 import de.fhdo.ddmm.data.Type
-import de.fhdo.ddmm.technology.mapping.TechnologySpecificDataFieldTypeMapping
+import de.fhdo.ddmm.technology.mapping.TechnologySpecificFieldMapping
 import de.fhdo.ddmm.data.ComplexType
 import org.eclipse.emf.ecore.EStructuralFeature
 import de.fhdo.ddmm.technology.mapping.TechnologySpecificImportedServiceAspect
@@ -369,11 +369,13 @@ class MappingDslValidator extends AbstractMappingDslValidator {
      * warning in case of (suspected) type incompatibility, as we also do it in the service DSL.
      */
     @Check
-    def warnComplexParameterMappingTypeCompatibility(
-        TechnologySpecificDataFieldTypeMapping mapping) {
+    def warnComplexParameterMappingTypeCompatibility(TechnologySpecificFieldMapping mapping) {
         warnParameterMappingTypeCompatibility(mapping)
     }
 
+    /**
+     * Check for differing technology assignments to parameters
+     */
     @Check
     def checkDifferingParameterTechnologies(MicroserviceMapping mapping) {
         if (mapping.technologies.empty || mapping.microservice === null ||
@@ -486,7 +488,7 @@ class MappingDslValidator extends AbstractMappingDslValidator {
     def checkNotEmpty(ComplexParameterMapping mapping) {
         val isEmpty = mapping.technologySpecificComplexType === null &&
             mapping.aspects.empty &&
-            mapping.dataFieldMappings.empty
+            mapping.fieldMappings.empty
 
         if (isEmpty)
             error("Mapping must not be empty", mapping,
@@ -512,15 +514,47 @@ class MappingDslValidator extends AbstractMappingDslValidator {
      */
     @Check
     def checkComplexParameterMappingUniqueFields(ComplexParameterMapping mapping) {
-        val duplicateIndex = DdmmUtils.getDuplicateIndex(mapping.dataFieldMappings,
-            [it.dataFieldHierarchy.dataFields.last])
+        val parameterType = mapping.parameter.importedType.type as ComplexType
+        val parameterIsEnumeration = parameterType.isEnumeration
+
+        val duplicateIndex = if (parameterIsEnumeration)
+                DdmmUtils.getDuplicateIndex(mapping.fieldMappings, [enumerationField])
+            else
+                DdmmUtils.getDuplicateIndex(mapping.fieldMappings,
+                    [dataFieldHierarchy.dataFields.last])
+
         if (duplicateIndex > -1) {
-            val duplicateMapping = mapping.dataFieldMappings.get(duplicateIndex)
-            val duplicateField = duplicateMapping.dataFieldHierarchy.dataFields.last
-            error('''Duplicate mapping for data field «duplicateField.name»''', duplicateMapping,
-                MappingPackage::Literals
-                    .TECHNOLOGY_SPECIFIC_DATA_FIELD_TYPE_MAPPING__DATA_FIELD_HIERARCHY)
+            val duplicateMapping = mapping.fieldMappings.get(duplicateIndex)
+
+            var String duplicateFieldName
+            var EReference duplicateFieldReference
+            if (parameterIsEnumeration) {
+                duplicateFieldName = duplicateMapping.enumerationField.name
+                duplicateFieldReference = MappingPackage::Literals
+                    .TECHNOLOGY_SPECIFIC_FIELD_MAPPING__ENUMERATION_FIELD
+            } else {
+                duplicateFieldName = duplicateMapping.dataFieldHierarchy.dataFields.last.name
+                duplicateFieldReference = MappingPackage::Literals
+                    .TECHNOLOGY_SPECIFIC_FIELD_MAPPING__DATA_FIELD_HIERARCHY
+            }
+
+            error('''Duplicate mapping for field «duplicateFieldName»''', duplicateMapping,
+                duplicateFieldReference)
         }
+    }
+
+    /**
+     * Check that an enumeration field mapping is not empty
+     */
+    @Check
+    def checkEnumerationFieldMappingNotEmpty(TechnologySpecificFieldMapping mapping) {
+        if (mapping.enumerationField === null) {
+            return
+        }
+
+        if (mapping.aspects.empty)
+            error("Enumeration field mapping must not be empty", mapping, MappingPackage::Literals
+                .TECHNOLOGY_SPECIFIC_FIELD_MAPPING__ENUMERATION_FIELD)
     }
 
     /**
@@ -668,7 +702,7 @@ class MappingDslValidator extends AbstractMappingDslValidator {
             }
 
             // Data field mapping
-            TechnologySpecificDataFieldTypeMapping: {
+            TechnologySpecificFieldMapping: {
                 mappedType = mapping.type
                 mappedTypeName = if (mappedType instanceof TechnologySpecificPrimitiveType)
                         mappedType.name
@@ -679,7 +713,7 @@ class MappingDslValidator extends AbstractMappingDslValidator {
                         mappedType.name
                 originalType = mapping.dataFieldHierarchy.dataFields.last.effectiveType
                 erroneousMappingFeature = MappingPackage::Literals
-                    .TECHNOLOGY_SPECIFIC_DATA_FIELD_TYPE_MAPPING__DATA_FIELD_HIERARCHY
+                    .TECHNOLOGY_SPECIFIC_FIELD_MAPPING__DATA_FIELD_HIERARCHY
             }
         }
 
@@ -813,7 +847,7 @@ class MappingDslValidator extends AbstractMappingDslValidator {
              * type from a data model. It may not have a technology-specific type of any kind
              * assigned.
              */
-            TechnologySpecificDataFieldTypeMapping:
+            TechnologySpecificFieldMapping:
                 switch (type) {
                     // Built-in primitive type
                     PrimitiveType: nameParts = #[type.typeName]

@@ -36,7 +36,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.fhdo.ddmm.technology.mapping.TechnologySpecificImportedServiceAspect#getOperationMapping <em>Operation Mapping</em>}</li>
  *   <li>{@link de.fhdo.ddmm.technology.mapping.TechnologySpecificImportedServiceAspect#getReferredOperationMapping <em>Referred Operation Mapping</em>}</li>
  *   <li>{@link de.fhdo.ddmm.technology.mapping.TechnologySpecificImportedServiceAspect#getParameterMapping <em>Parameter Mapping</em>}</li>
- *   <li>{@link de.fhdo.ddmm.technology.mapping.TechnologySpecificImportedServiceAspect#getDataFieldMapping <em>Data Field Mapping</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.technology.mapping.TechnologySpecificImportedServiceAspect#getFieldMapping <em>Field Mapping</em>}</li>
  * </ul>
  *
  * @see de.fhdo.ddmm.technology.mapping.MappingPackage#getTechnologySpecificImportedServiceAspect()
@@ -290,31 +290,31 @@ public interface TechnologySpecificImportedServiceAspect extends EObject {
     void setParameterMapping(ParameterMapping value);
 
     /**
-     * Returns the value of the '<em><b>Data Field Mapping</b></em>' container reference.
-     * It is bidirectional and its opposite is '{@link de.fhdo.ddmm.technology.mapping.TechnologySpecificDataFieldTypeMapping#getAspects <em>Aspects</em>}'.
+     * Returns the value of the '<em><b>Field Mapping</b></em>' container reference.
+     * It is bidirectional and its opposite is '{@link de.fhdo.ddmm.technology.mapping.TechnologySpecificFieldMapping#getAspects <em>Aspects</em>}'.
      * <!-- begin-user-doc -->
      * <p>
-     * If the meaning of the '<em>Data Field Mapping</em>' container reference isn't clear,
+     * If the meaning of the '<em>Field Mapping</em>' container reference isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Data Field Mapping</em>' container reference.
-     * @see #setDataFieldMapping(TechnologySpecificDataFieldTypeMapping)
-     * @see de.fhdo.ddmm.technology.mapping.MappingPackage#getTechnologySpecificImportedServiceAspect_DataFieldMapping()
-     * @see de.fhdo.ddmm.technology.mapping.TechnologySpecificDataFieldTypeMapping#getAspects
+     * @return the value of the '<em>Field Mapping</em>' container reference.
+     * @see #setFieldMapping(TechnologySpecificFieldMapping)
+     * @see de.fhdo.ddmm.technology.mapping.MappingPackage#getTechnologySpecificImportedServiceAspect_FieldMapping()
+     * @see de.fhdo.ddmm.technology.mapping.TechnologySpecificFieldMapping#getAspects
      * @model opposite="aspects" transient="false"
      * @generated
      */
-    TechnologySpecificDataFieldTypeMapping getDataFieldMapping();
+    TechnologySpecificFieldMapping getFieldMapping();
 
     /**
-     * Sets the value of the '{@link de.fhdo.ddmm.technology.mapping.TechnologySpecificImportedServiceAspect#getDataFieldMapping <em>Data Field Mapping</em>}' container reference.
+     * Sets the value of the '{@link de.fhdo.ddmm.technology.mapping.TechnologySpecificImportedServiceAspect#getFieldMapping <em>Field Mapping</em>}' container reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Data Field Mapping</em>' container reference.
-     * @see #getDataFieldMapping()
+     * @param value the new value of the '<em>Field Mapping</em>' container reference.
+     * @see #getFieldMapping()
      * @generated
      */
-    void setDataFieldMapping(TechnologySpecificDataFieldTypeMapping value);
+    void setFieldMapping(TechnologySpecificFieldMapping value);
 
 } // TechnologySpecificImportedServiceAspect

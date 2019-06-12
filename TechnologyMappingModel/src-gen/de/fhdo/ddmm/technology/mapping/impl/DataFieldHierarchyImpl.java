@@ -6,7 +6,7 @@ import de.fhdo.ddmm.data.DataField;
 
 import de.fhdo.ddmm.technology.mapping.DataFieldHierarchy;
 import de.fhdo.ddmm.technology.mapping.MappingPackage;
-import de.fhdo.ddmm.technology.mapping.TechnologySpecificDataFieldTypeMapping;
+import de.fhdo.ddmm.technology.mapping.TechnologySpecificFieldMapping;
 
 import java.util.Collection;
 
@@ -143,9 +143,9 @@ public class DataFieldHierarchyImpl extends MinimalEObjectImpl.Container impleme
      * @generated
      */
     @Override
-    public TechnologySpecificDataFieldTypeMapping getMapping() {
+    public TechnologySpecificFieldMapping getMapping() {
         if (eContainerFeatureID() != MappingPackage.DATA_FIELD_HIERARCHY__MAPPING) return null;
-        return (TechnologySpecificDataFieldTypeMapping)eContainer();
+        return (TechnologySpecificFieldMapping)eContainer();
     }
 
     /**
@@ -153,9 +153,9 @@ public class DataFieldHierarchyImpl extends MinimalEObjectImpl.Container impleme
      * <!-- end-user-doc -->
      * @generated
      */
-    public TechnologySpecificDataFieldTypeMapping basicGetMapping() {
+    public TechnologySpecificFieldMapping basicGetMapping() {
         if (eContainerFeatureID() != MappingPackage.DATA_FIELD_HIERARCHY__MAPPING) return null;
-        return (TechnologySpecificDataFieldTypeMapping)eInternalContainer();
+        return (TechnologySpecificFieldMapping)eInternalContainer();
     }
 
     /**
@@ -163,7 +163,7 @@ public class DataFieldHierarchyImpl extends MinimalEObjectImpl.Container impleme
      * <!-- end-user-doc -->
      * @generated
      */
-    public NotificationChain basicSetMapping(TechnologySpecificDataFieldTypeMapping newMapping, NotificationChain msgs) {
+    public NotificationChain basicSetMapping(TechnologySpecificFieldMapping newMapping, NotificationChain msgs) {
         msgs = eBasicSetContainer((InternalEObject)newMapping, MappingPackage.DATA_FIELD_HIERARCHY__MAPPING, msgs);
         return msgs;
     }
@@ -174,7 +174,7 @@ public class DataFieldHierarchyImpl extends MinimalEObjectImpl.Container impleme
      * @generated
      */
     @Override
-    public void setMapping(TechnologySpecificDataFieldTypeMapping newMapping) {
+    public void setMapping(TechnologySpecificFieldMapping newMapping) {
         if (newMapping != eInternalContainer() || (eContainerFeatureID() != MappingPackage.DATA_FIELD_HIERARCHY__MAPPING && newMapping != null)) {
             if (EcoreUtil.isAncestor(this, newMapping))
                 throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
@@ -182,7 +182,7 @@ public class DataFieldHierarchyImpl extends MinimalEObjectImpl.Container impleme
             if (eInternalContainer() != null)
                 msgs = eBasicRemoveFromContainer(msgs);
             if (newMapping != null)
-                msgs = ((InternalEObject)newMapping).eInverseAdd(this, MappingPackage.TECHNOLOGY_SPECIFIC_DATA_FIELD_TYPE_MAPPING__DATA_FIELD_HIERARCHY, TechnologySpecificDataFieldTypeMapping.class, msgs);
+                msgs = ((InternalEObject)newMapping).eInverseAdd(this, MappingPackage.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__DATA_FIELD_HIERARCHY, TechnologySpecificFieldMapping.class, msgs);
             msgs = basicSetMapping(newMapping, msgs);
             if (msgs != null) msgs.dispatch();
         }
@@ -201,7 +201,7 @@ public class DataFieldHierarchyImpl extends MinimalEObjectImpl.Container impleme
             case MappingPackage.DATA_FIELD_HIERARCHY__MAPPING:
                 if (eInternalContainer() != null)
                     msgs = eBasicRemoveFromContainer(msgs);
-                return basicSetMapping((TechnologySpecificDataFieldTypeMapping)otherEnd, msgs);
+                return basicSetMapping((TechnologySpecificFieldMapping)otherEnd, msgs);
         }
         return super.eInverseAdd(otherEnd, featureID, msgs);
     }
@@ -231,7 +231,7 @@ public class DataFieldHierarchyImpl extends MinimalEObjectImpl.Container impleme
     public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
         switch (eContainerFeatureID()) {
             case MappingPackage.DATA_FIELD_HIERARCHY__MAPPING:
-                return eInternalContainer().eInverseRemove(this, MappingPackage.TECHNOLOGY_SPECIFIC_DATA_FIELD_TYPE_MAPPING__DATA_FIELD_HIERARCHY, TechnologySpecificDataFieldTypeMapping.class, msgs);
+                return eInternalContainer().eInverseRemove(this, MappingPackage.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__DATA_FIELD_HIERARCHY, TechnologySpecificFieldMapping.class, msgs);
         }
         return super.eBasicRemoveFromContainerFeature(msgs);
     }
@@ -272,7 +272,7 @@ public class DataFieldHierarchyImpl extends MinimalEObjectImpl.Container impleme
                 setPrevious((DataFieldHierarchy)newValue);
                 return;
             case MappingPackage.DATA_FIELD_HIERARCHY__MAPPING:
-                setMapping((TechnologySpecificDataFieldTypeMapping)newValue);
+                setMapping((TechnologySpecificFieldMapping)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -293,7 +293,7 @@ public class DataFieldHierarchyImpl extends MinimalEObjectImpl.Container impleme
                 setPrevious((DataFieldHierarchy)null);
                 return;
             case MappingPackage.DATA_FIELD_HIERARCHY__MAPPING:
-                setMapping((TechnologySpecificDataFieldTypeMapping)null);
+                setMapping((TechnologySpecificFieldMapping)null);
                 return;
         }
         super.eUnset(featureID);

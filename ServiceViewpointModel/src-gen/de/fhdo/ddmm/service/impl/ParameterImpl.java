@@ -10,7 +10,7 @@ import de.fhdo.ddmm.data.Type;
 
 import de.fhdo.ddmm.service.ImportedServiceAspect;
 import de.fhdo.ddmm.service.ImportedType;
-import de.fhdo.ddmm.service.MappedDataField;
+import de.fhdo.ddmm.service.MappedField;
 import de.fhdo.ddmm.service.Microservice;
 import de.fhdo.ddmm.service.Operation;
 import de.fhdo.ddmm.service.Parameter;
@@ -68,7 +68,7 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
  *   <li>{@link de.fhdo.ddmm.service.impl.ParameterImpl#getImportedType <em>Imported Type</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.impl.ParameterImpl#getPrimitiveType <em>Primitive Type</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.impl.ParameterImpl#getAspects <em>Aspects</em>}</li>
- *   <li>{@link de.fhdo.ddmm.service.impl.ParameterImpl#getMappedDataFields <em>Mapped Data Fields</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.service.impl.ParameterImpl#getMappedFields <em>Mapped Fields</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.impl.ParameterImpl#getOperation <em>Operation</em>}</li>
  * </ul>
  *
@@ -216,14 +216,14 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
     protected EList<ImportedServiceAspect> aspects;
 
     /**
-     * The cached value of the '{@link #getMappedDataFields() <em>Mapped Data Fields</em>}' containment reference list.
+     * The cached value of the '{@link #getMappedFields() <em>Mapped Fields</em>}' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getMappedDataFields()
+     * @see #getMappedFields()
      * @generated
      * @ordered
      */
-    protected EList<MappedDataField> mappedDataFields;
+    protected EList<MappedField> mappedFields;
 
     /**
      * <!-- begin-user-doc -->
@@ -513,11 +513,11 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
      * @generated
      */
     @Override
-    public EList<MappedDataField> getMappedDataFields() {
-        if (mappedDataFields == null) {
-            mappedDataFields = new EObjectContainmentWithInverseEList<MappedDataField>(MappedDataField.class, this, ServicePackage.PARAMETER__MAPPED_DATA_FIELDS, ServicePackage.MAPPED_DATA_FIELD__PARAMETER);
+    public EList<MappedField> getMappedFields() {
+        if (mappedFields == null) {
+            mappedFields = new EObjectContainmentWithInverseEList<MappedField>(MappedField.class, this, ServicePackage.PARAMETER__MAPPED_FIELDS, ServicePackage.MAPPED_FIELD__PARAMETER);
         }
-        return mappedDataFields;
+        return mappedFields;
     }
 
     /**
@@ -749,8 +749,8 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
                 return basicSetInitializedByOperation((PossiblyImportedOperation)otherEnd, msgs);
             case ServicePackage.PARAMETER__ASPECTS:
                 return ((InternalEList<InternalEObject>)(InternalEList<?>)getAspects()).basicAdd(otherEnd, msgs);
-            case ServicePackage.PARAMETER__MAPPED_DATA_FIELDS:
-                return ((InternalEList<InternalEObject>)(InternalEList<?>)getMappedDataFields()).basicAdd(otherEnd, msgs);
+            case ServicePackage.PARAMETER__MAPPED_FIELDS:
+                return ((InternalEList<InternalEObject>)(InternalEList<?>)getMappedFields()).basicAdd(otherEnd, msgs);
             case ServicePackage.PARAMETER__OPERATION:
                 if (eInternalContainer() != null)
                     msgs = eBasicRemoveFromContainer(msgs);
@@ -775,8 +775,8 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
                 return basicSetPrimitiveType(null, msgs);
             case ServicePackage.PARAMETER__ASPECTS:
                 return ((InternalEList<?>)getAspects()).basicRemove(otherEnd, msgs);
-            case ServicePackage.PARAMETER__MAPPED_DATA_FIELDS:
-                return ((InternalEList<?>)getMappedDataFields()).basicRemove(otherEnd, msgs);
+            case ServicePackage.PARAMETER__MAPPED_FIELDS:
+                return ((InternalEList<?>)getMappedFields()).basicRemove(otherEnd, msgs);
             case ServicePackage.PARAMETER__OPERATION:
                 return basicSetOperation(null, msgs);
         }
@@ -823,8 +823,8 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
                 return getPrimitiveType();
             case ServicePackage.PARAMETER__ASPECTS:
                 return getAspects();
-            case ServicePackage.PARAMETER__MAPPED_DATA_FIELDS:
-                return getMappedDataFields();
+            case ServicePackage.PARAMETER__MAPPED_FIELDS:
+                return getMappedFields();
             case ServicePackage.PARAMETER__OPERATION:
                 if (resolve) return getOperation();
                 return basicGetOperation();
@@ -869,9 +869,9 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
                 getAspects().clear();
                 getAspects().addAll((Collection<? extends ImportedServiceAspect>)newValue);
                 return;
-            case ServicePackage.PARAMETER__MAPPED_DATA_FIELDS:
-                getMappedDataFields().clear();
-                getMappedDataFields().addAll((Collection<? extends MappedDataField>)newValue);
+            case ServicePackage.PARAMETER__MAPPED_FIELDS:
+                getMappedFields().clear();
+                getMappedFields().addAll((Collection<? extends MappedField>)newValue);
                 return;
             case ServicePackage.PARAMETER__OPERATION:
                 setOperation((Operation)newValue);
@@ -915,8 +915,8 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
             case ServicePackage.PARAMETER__ASPECTS:
                 getAspects().clear();
                 return;
-            case ServicePackage.PARAMETER__MAPPED_DATA_FIELDS:
-                getMappedDataFields().clear();
+            case ServicePackage.PARAMETER__MAPPED_FIELDS:
+                getMappedFields().clear();
                 return;
             case ServicePackage.PARAMETER__OPERATION:
                 setOperation((Operation)null);
@@ -951,8 +951,8 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
                 return primitiveType != null;
             case ServicePackage.PARAMETER__ASPECTS:
                 return aspects != null && !aspects.isEmpty();
-            case ServicePackage.PARAMETER__MAPPED_DATA_FIELDS:
-                return mappedDataFields != null && !mappedDataFields.isEmpty();
+            case ServicePackage.PARAMETER__MAPPED_FIELDS:
+                return mappedFields != null && !mappedFields.isEmpty();
             case ServicePackage.PARAMETER__OPERATION:
                 return basicGetOperation() != null;
         }

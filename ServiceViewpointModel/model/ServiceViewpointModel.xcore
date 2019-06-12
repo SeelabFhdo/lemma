@@ -13,6 +13,7 @@ import de.fhdo.ddmm.technology.TechnologySpecificPrimitiveType
 import de.fhdo.ddmm.technology.TechnologySpecificPropertyValueAssignment
 import de.fhdo.ddmm.data.ComplexType
 import de.fhdo.ddmm.data.DataField
+import de.fhdo.ddmm.data.EnumerationField
 import java.util.List
 import java.util.Map
 import org.eclipse.xtext.xbase.lib.Pair
@@ -492,7 +493,7 @@ class Microservice {
         if (containedOperations !== null && !containedOperations.empty)
             canRequire = canRequire && !containedOperations.contains(operation)
 
-        return  canRequire
+        return canRequire
     }
 
     /**
@@ -1074,9 +1075,9 @@ class Parameter {
     contains PrimitiveType[0..1] primitiveType
     contains ImportedServiceAspect[] aspects opposite parameter
     // This property encapsulates the information from the Mapping DSL, which allows to enrich (and/
-    // or map) single data fields (and/or their types) of a parameter's complex type with (to)
-    // technology-specific information (type)
-    contains MappedDataField[] mappedDataFields opposite parameter
+    // or map) single data/enumeration fields (and/or their types) of a parameter's complex type
+    // with (to) technology-specific information (type)
+    contains MappedField[] mappedFields opposite parameter
 
     container Operation operation opposite parameters
 
@@ -1212,25 +1213,31 @@ class Parameter {
 }
 
 /**
- * Concept to express technology-specific information, which was assigned to a data field leveraging
- * the Mapping DSL
+ * Concept to express technology-specific information, which was assigned to a data or enumeration
+ * field leveraging the Mapping DSL
  */
-class MappedDataField {
+class MappedField {
     refers DataField dataField
+    refers EnumerationField enumerationField
     contains ImportedType mappedType
-    contains ImportedServiceAspect[] aspects opposite mappedDataField
+    contains ImportedServiceAspect[] aspects opposite mappedField
 
-    container Parameter parameter opposite mappedDataFields
+    container Parameter parameter opposite mappedFields
 
     /**
      * Get parts of the parameter for creating a qualified name
      */
     op String[] getQualifiedNameParts() {
-        if (dataField === null || dataField.name.empty)
+        val fieldName = if (dataField !== null)
+                dataField.name
+            else if (enumerationField !== null)
+                enumerationField.name
+
+        if (fieldName === null || fieldName.empty)
             return newArrayList.asEList
 
         val nameParts = parameter.qualifiedNameParts
-        nameParts.addAll(dataField.name)
+        nameParts.addAll(fieldName)
         nameParts.asEList
     }
 
@@ -1496,7 +1503,7 @@ class ImportedServiceAspect {
     container Operation operation opposite aspects
     container ReferredOperation referredOperation opposite aspects
     container Parameter parameter opposite aspects
-    container MappedDataField mappedDataField opposite aspects
+    container MappedField mappedField opposite aspects
 }
 
 type TupleList wraps List<Map<String, Object>>

@@ -703,13 +703,13 @@ public interface IntermediatePackage extends EPackage {
     int INTERMEDIATE_PARAMETER__ASPECTS = 8;
 
     /**
-     * The feature id for the '<em><b>Mapped Data Fields</b></em>' containment reference list.
+     * The feature id for the '<em><b>Mapped Fields</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_PARAMETER__MAPPED_DATA_FIELDS = 9;
+    int INTERMEDIATE_PARAMETER__MAPPED_FIELDS = 9;
 
     /**
      * The feature id for the '<em><b>Operation</b></em>' container reference.
@@ -739,23 +739,23 @@ public interface IntermediatePackage extends EPackage {
     int INTERMEDIATE_PARAMETER_OPERATION_COUNT = 0;
 
     /**
-     * The meta object id for the '{@link de.fhdo.ddmm.service.intermediate.impl.IntermediateMappedDataFieldImpl <em>Mapped Data Field</em>}' class.
+     * The meta object id for the '{@link de.fhdo.ddmm.service.intermediate.impl.IntermediateMappedFieldImpl <em>Mapped Field</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.fhdo.ddmm.service.intermediate.impl.IntermediateMappedDataFieldImpl
-     * @see de.fhdo.ddmm.service.intermediate.impl.IntermediatePackageImpl#getIntermediateMappedDataField()
+     * @see de.fhdo.ddmm.service.intermediate.impl.IntermediateMappedFieldImpl
+     * @see de.fhdo.ddmm.service.intermediate.impl.IntermediatePackageImpl#getIntermediateMappedField()
      * @generated
      */
-    int INTERMEDIATE_MAPPED_DATA_FIELD = 6;
+    int INTERMEDIATE_MAPPED_FIELD = 6;
 
     /**
-     * The feature id for the '<em><b>Mapped Data Field Name</b></em>' attribute.
+     * The feature id for the '<em><b>Mapped Field Name</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_MAPPED_DATA_FIELD__MAPPED_DATA_FIELD_NAME = 0;
+    int INTERMEDIATE_MAPPED_FIELD__MAPPED_FIELD_NAME = 0;
 
     /**
      * The feature id for the '<em><b>Qualified Name</b></em>' attribute.
@@ -764,7 +764,16 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_MAPPED_DATA_FIELD__QUALIFIED_NAME = 1;
+    int INTERMEDIATE_MAPPED_FIELD__QUALIFIED_NAME = 1;
+
+    /**
+     * The feature id for the '<em><b>Original Type Kind</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_MAPPED_FIELD__ORIGINAL_TYPE_KIND = 2;
 
     /**
      * The feature id for the '<em><b>Mapped Type</b></em>' containment reference.
@@ -773,7 +782,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_MAPPED_DATA_FIELD__MAPPED_TYPE = 2;
+    int INTERMEDIATE_MAPPED_FIELD__MAPPED_TYPE = 3;
 
     /**
      * The feature id for the '<em><b>Aspects</b></em>' containment reference list.
@@ -782,7 +791,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_MAPPED_DATA_FIELD__ASPECTS = 3;
+    int INTERMEDIATE_MAPPED_FIELD__ASPECTS = 4;
 
     /**
      * The feature id for the '<em><b>Parameter</b></em>' container reference.
@@ -791,25 +800,25 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_MAPPED_DATA_FIELD__PARAMETER = 4;
+    int INTERMEDIATE_MAPPED_FIELD__PARAMETER = 5;
 
     /**
-     * The number of structural features of the '<em>Mapped Data Field</em>' class.
+     * The number of structural features of the '<em>Mapped Field</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_MAPPED_DATA_FIELD_FEATURE_COUNT = 5;
+    int INTERMEDIATE_MAPPED_FIELD_FEATURE_COUNT = 6;
 
     /**
-     * The number of operations of the '<em>Mapped Data Field</em>' class.
+     * The number of operations of the '<em>Mapped Field</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_MAPPED_DATA_FIELD_OPERATION_COUNT = 0;
+    int INTERMEDIATE_MAPPED_FIELD_OPERATION_COUNT = 0;
 
     /**
      * The meta object id for the '{@link de.fhdo.ddmm.service.intermediate.impl.MicroserviceReferenceImpl <em>Microservice Reference</em>}' class.
@@ -1386,13 +1395,13 @@ public interface IntermediatePackage extends EPackage {
     int INTERMEDIATE_IMPORTED_ASPECT__PARAMETER = 8;
 
     /**
-     * The feature id for the '<em><b>Mapped Data Field</b></em>' container reference.
+     * The feature id for the '<em><b>Mapped Field</b></em>' container reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_IMPORTED_ASPECT__MAPPED_DATA_FIELD = 9;
+    int INTERMEDIATE_IMPORTED_ASPECT__MAPPED_FIELD = 9;
 
     /**
      * The number of structural features of the '<em>Imported Aspect</em>' class.
@@ -2289,15 +2298,15 @@ public interface IntermediatePackage extends EPackage {
     EReference getIntermediateParameter_Aspects();
 
     /**
-     * Returns the meta object for the containment reference list '{@link de.fhdo.ddmm.service.intermediate.IntermediateParameter#getMappedDataFields <em>Mapped Data Fields</em>}'.
+     * Returns the meta object for the containment reference list '{@link de.fhdo.ddmm.service.intermediate.IntermediateParameter#getMappedFields <em>Mapped Fields</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the containment reference list '<em>Mapped Data Fields</em>'.
-     * @see de.fhdo.ddmm.service.intermediate.IntermediateParameter#getMappedDataFields()
+     * @return the meta object for the containment reference list '<em>Mapped Fields</em>'.
+     * @see de.fhdo.ddmm.service.intermediate.IntermediateParameter#getMappedFields()
      * @see #getIntermediateParameter()
      * @generated
      */
-    EReference getIntermediateParameter_MappedDataFields();
+    EReference getIntermediateParameter_MappedFields();
 
     /**
      * Returns the meta object for the container reference '{@link de.fhdo.ddmm.service.intermediate.IntermediateParameter#getOperation <em>Operation</em>}'.
@@ -2311,69 +2320,80 @@ public interface IntermediatePackage extends EPackage {
     EReference getIntermediateParameter_Operation();
 
     /**
-     * Returns the meta object for class '{@link de.fhdo.ddmm.service.intermediate.IntermediateMappedDataField <em>Mapped Data Field</em>}'.
+     * Returns the meta object for class '{@link de.fhdo.ddmm.service.intermediate.IntermediateMappedField <em>Mapped Field</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Mapped Data Field</em>'.
-     * @see de.fhdo.ddmm.service.intermediate.IntermediateMappedDataField
+     * @return the meta object for class '<em>Mapped Field</em>'.
+     * @see de.fhdo.ddmm.service.intermediate.IntermediateMappedField
      * @generated
      */
-    EClass getIntermediateMappedDataField();
+    EClass getIntermediateMappedField();
 
     /**
-     * Returns the meta object for the attribute '{@link de.fhdo.ddmm.service.intermediate.IntermediateMappedDataField#getMappedDataFieldName <em>Mapped Data Field Name</em>}'.
+     * Returns the meta object for the attribute '{@link de.fhdo.ddmm.service.intermediate.IntermediateMappedField#getMappedFieldName <em>Mapped Field Name</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Mapped Data Field Name</em>'.
-     * @see de.fhdo.ddmm.service.intermediate.IntermediateMappedDataField#getMappedDataFieldName()
-     * @see #getIntermediateMappedDataField()
+     * @return the meta object for the attribute '<em>Mapped Field Name</em>'.
+     * @see de.fhdo.ddmm.service.intermediate.IntermediateMappedField#getMappedFieldName()
+     * @see #getIntermediateMappedField()
      * @generated
      */
-    EAttribute getIntermediateMappedDataField_MappedDataFieldName();
+    EAttribute getIntermediateMappedField_MappedFieldName();
 
     /**
-     * Returns the meta object for the attribute '{@link de.fhdo.ddmm.service.intermediate.IntermediateMappedDataField#getQualifiedName <em>Qualified Name</em>}'.
+     * Returns the meta object for the attribute '{@link de.fhdo.ddmm.service.intermediate.IntermediateMappedField#getQualifiedName <em>Qualified Name</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Qualified Name</em>'.
-     * @see de.fhdo.ddmm.service.intermediate.IntermediateMappedDataField#getQualifiedName()
-     * @see #getIntermediateMappedDataField()
+     * @see de.fhdo.ddmm.service.intermediate.IntermediateMappedField#getQualifiedName()
+     * @see #getIntermediateMappedField()
      * @generated
      */
-    EAttribute getIntermediateMappedDataField_QualifiedName();
+    EAttribute getIntermediateMappedField_QualifiedName();
 
     /**
-     * Returns the meta object for the containment reference '{@link de.fhdo.ddmm.service.intermediate.IntermediateMappedDataField#getMappedType <em>Mapped Type</em>}'.
+     * Returns the meta object for the attribute '{@link de.fhdo.ddmm.service.intermediate.IntermediateMappedField#getOriginalTypeKind <em>Original Type Kind</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Original Type Kind</em>'.
+     * @see de.fhdo.ddmm.service.intermediate.IntermediateMappedField#getOriginalTypeKind()
+     * @see #getIntermediateMappedField()
+     * @generated
+     */
+    EAttribute getIntermediateMappedField_OriginalTypeKind();
+
+    /**
+     * Returns the meta object for the containment reference '{@link de.fhdo.ddmm.service.intermediate.IntermediateMappedField#getMappedType <em>Mapped Type</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the containment reference '<em>Mapped Type</em>'.
-     * @see de.fhdo.ddmm.service.intermediate.IntermediateMappedDataField#getMappedType()
-     * @see #getIntermediateMappedDataField()
+     * @see de.fhdo.ddmm.service.intermediate.IntermediateMappedField#getMappedType()
+     * @see #getIntermediateMappedField()
      * @generated
      */
-    EReference getIntermediateMappedDataField_MappedType();
+    EReference getIntermediateMappedField_MappedType();
 
     /**
-     * Returns the meta object for the containment reference list '{@link de.fhdo.ddmm.service.intermediate.IntermediateMappedDataField#getAspects <em>Aspects</em>}'.
+     * Returns the meta object for the containment reference list '{@link de.fhdo.ddmm.service.intermediate.IntermediateMappedField#getAspects <em>Aspects</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the containment reference list '<em>Aspects</em>'.
-     * @see de.fhdo.ddmm.service.intermediate.IntermediateMappedDataField#getAspects()
-     * @see #getIntermediateMappedDataField()
+     * @see de.fhdo.ddmm.service.intermediate.IntermediateMappedField#getAspects()
+     * @see #getIntermediateMappedField()
      * @generated
      */
-    EReference getIntermediateMappedDataField_Aspects();
+    EReference getIntermediateMappedField_Aspects();
 
     /**
-     * Returns the meta object for the container reference '{@link de.fhdo.ddmm.service.intermediate.IntermediateMappedDataField#getParameter <em>Parameter</em>}'.
+     * Returns the meta object for the container reference '{@link de.fhdo.ddmm.service.intermediate.IntermediateMappedField#getParameter <em>Parameter</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the container reference '<em>Parameter</em>'.
-     * @see de.fhdo.ddmm.service.intermediate.IntermediateMappedDataField#getParameter()
-     * @see #getIntermediateMappedDataField()
+     * @see de.fhdo.ddmm.service.intermediate.IntermediateMappedField#getParameter()
+     * @see #getIntermediateMappedField()
      * @generated
      */
-    EReference getIntermediateMappedDataField_Parameter();
+    EReference getIntermediateMappedField_Parameter();
 
     /**
      * Returns the meta object for class '{@link de.fhdo.ddmm.service.intermediate.MicroserviceReference <em>Microservice Reference</em>}'.
@@ -2930,15 +2950,15 @@ public interface IntermediatePackage extends EPackage {
     EReference getIntermediateImportedAspect_Parameter();
 
     /**
-     * Returns the meta object for the container reference '{@link de.fhdo.ddmm.service.intermediate.IntermediateImportedAspect#getMappedDataField <em>Mapped Data Field</em>}'.
+     * Returns the meta object for the container reference '{@link de.fhdo.ddmm.service.intermediate.IntermediateImportedAspect#getMappedField <em>Mapped Field</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the container reference '<em>Mapped Data Field</em>'.
-     * @see de.fhdo.ddmm.service.intermediate.IntermediateImportedAspect#getMappedDataField()
+     * @return the meta object for the container reference '<em>Mapped Field</em>'.
+     * @see de.fhdo.ddmm.service.intermediate.IntermediateImportedAspect#getMappedField()
      * @see #getIntermediateImportedAspect()
      * @generated
      */
-    EReference getIntermediateImportedAspect_MappedDataField();
+    EReference getIntermediateImportedAspect_MappedField();
 
     /**
      * Returns the meta object for class '{@link de.fhdo.ddmm.service.intermediate.IntermediateAspectProperty <em>Aspect Property</em>}'.
@@ -3604,12 +3624,12 @@ public interface IntermediatePackage extends EPackage {
         EReference INTERMEDIATE_PARAMETER__ASPECTS = eINSTANCE.getIntermediateParameter_Aspects();
 
         /**
-         * The meta object literal for the '<em><b>Mapped Data Fields</b></em>' containment reference list feature.
+         * The meta object literal for the '<em><b>Mapped Fields</b></em>' containment reference list feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference INTERMEDIATE_PARAMETER__MAPPED_DATA_FIELDS = eINSTANCE.getIntermediateParameter_MappedDataFields();
+        EReference INTERMEDIATE_PARAMETER__MAPPED_FIELDS = eINSTANCE.getIntermediateParameter_MappedFields();
 
         /**
          * The meta object literal for the '<em><b>Operation</b></em>' container reference feature.
@@ -3620,22 +3640,22 @@ public interface IntermediatePackage extends EPackage {
         EReference INTERMEDIATE_PARAMETER__OPERATION = eINSTANCE.getIntermediateParameter_Operation();
 
         /**
-         * The meta object literal for the '{@link de.fhdo.ddmm.service.intermediate.impl.IntermediateMappedDataFieldImpl <em>Mapped Data Field</em>}' class.
+         * The meta object literal for the '{@link de.fhdo.ddmm.service.intermediate.impl.IntermediateMappedFieldImpl <em>Mapped Field</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see de.fhdo.ddmm.service.intermediate.impl.IntermediateMappedDataFieldImpl
-         * @see de.fhdo.ddmm.service.intermediate.impl.IntermediatePackageImpl#getIntermediateMappedDataField()
+         * @see de.fhdo.ddmm.service.intermediate.impl.IntermediateMappedFieldImpl
+         * @see de.fhdo.ddmm.service.intermediate.impl.IntermediatePackageImpl#getIntermediateMappedField()
          * @generated
          */
-        EClass INTERMEDIATE_MAPPED_DATA_FIELD = eINSTANCE.getIntermediateMappedDataField();
+        EClass INTERMEDIATE_MAPPED_FIELD = eINSTANCE.getIntermediateMappedField();
 
         /**
-         * The meta object literal for the '<em><b>Mapped Data Field Name</b></em>' attribute feature.
+         * The meta object literal for the '<em><b>Mapped Field Name</b></em>' attribute feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EAttribute INTERMEDIATE_MAPPED_DATA_FIELD__MAPPED_DATA_FIELD_NAME = eINSTANCE.getIntermediateMappedDataField_MappedDataFieldName();
+        EAttribute INTERMEDIATE_MAPPED_FIELD__MAPPED_FIELD_NAME = eINSTANCE.getIntermediateMappedField_MappedFieldName();
 
         /**
          * The meta object literal for the '<em><b>Qualified Name</b></em>' attribute feature.
@@ -3643,7 +3663,15 @@ public interface IntermediatePackage extends EPackage {
          * <!-- end-user-doc -->
          * @generated
          */
-        EAttribute INTERMEDIATE_MAPPED_DATA_FIELD__QUALIFIED_NAME = eINSTANCE.getIntermediateMappedDataField_QualifiedName();
+        EAttribute INTERMEDIATE_MAPPED_FIELD__QUALIFIED_NAME = eINSTANCE.getIntermediateMappedField_QualifiedName();
+
+        /**
+         * The meta object literal for the '<em><b>Original Type Kind</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute INTERMEDIATE_MAPPED_FIELD__ORIGINAL_TYPE_KIND = eINSTANCE.getIntermediateMappedField_OriginalTypeKind();
 
         /**
          * The meta object literal for the '<em><b>Mapped Type</b></em>' containment reference feature.
@@ -3651,7 +3679,7 @@ public interface IntermediatePackage extends EPackage {
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference INTERMEDIATE_MAPPED_DATA_FIELD__MAPPED_TYPE = eINSTANCE.getIntermediateMappedDataField_MappedType();
+        EReference INTERMEDIATE_MAPPED_FIELD__MAPPED_TYPE = eINSTANCE.getIntermediateMappedField_MappedType();
 
         /**
          * The meta object literal for the '<em><b>Aspects</b></em>' containment reference list feature.
@@ -3659,7 +3687,7 @@ public interface IntermediatePackage extends EPackage {
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference INTERMEDIATE_MAPPED_DATA_FIELD__ASPECTS = eINSTANCE.getIntermediateMappedDataField_Aspects();
+        EReference INTERMEDIATE_MAPPED_FIELD__ASPECTS = eINSTANCE.getIntermediateMappedField_Aspects();
 
         /**
          * The meta object literal for the '<em><b>Parameter</b></em>' container reference feature.
@@ -3667,7 +3695,7 @@ public interface IntermediatePackage extends EPackage {
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference INTERMEDIATE_MAPPED_DATA_FIELD__PARAMETER = eINSTANCE.getIntermediateMappedDataField_Parameter();
+        EReference INTERMEDIATE_MAPPED_FIELD__PARAMETER = eINSTANCE.getIntermediateMappedField_Parameter();
 
         /**
          * The meta object literal for the '{@link de.fhdo.ddmm.service.intermediate.impl.MicroserviceReferenceImpl <em>Microservice Reference</em>}' class.
@@ -4092,12 +4120,12 @@ public interface IntermediatePackage extends EPackage {
         EReference INTERMEDIATE_IMPORTED_ASPECT__PARAMETER = eINSTANCE.getIntermediateImportedAspect_Parameter();
 
         /**
-         * The meta object literal for the '<em><b>Mapped Data Field</b></em>' container reference feature.
+         * The meta object literal for the '<em><b>Mapped Field</b></em>' container reference feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference INTERMEDIATE_IMPORTED_ASPECT__MAPPED_DATA_FIELD = eINSTANCE.getIntermediateImportedAspect_MappedDataField();
+        EReference INTERMEDIATE_IMPORTED_ASPECT__MAPPED_FIELD = eINSTANCE.getIntermediateImportedAspect_MappedField();
 
         /**
          * The meta object literal for the '{@link de.fhdo.ddmm.service.intermediate.impl.IntermediateAspectPropertyImpl <em>Aspect Property</em>}' class.

@@ -77,7 +77,7 @@ public interface DataFieldHierarchy extends EObject {
 
     /**
      * Returns the value of the '<em><b>Mapping</b></em>' container reference.
-     * It is bidirectional and its opposite is '{@link de.fhdo.ddmm.technology.mapping.TechnologySpecificDataFieldTypeMapping#getDataFieldHierarchy <em>Data Field Hierarchy</em>}'.
+     * It is bidirectional and its opposite is '{@link de.fhdo.ddmm.technology.mapping.TechnologySpecificFieldMapping#getDataFieldHierarchy <em>Data Field Hierarchy</em>}'.
      * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Mapping</em>' container reference isn't clear,
@@ -85,13 +85,13 @@ public interface DataFieldHierarchy extends EObject {
      * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Mapping</em>' container reference.
-     * @see #setMapping(TechnologySpecificDataFieldTypeMapping)
+     * @see #setMapping(TechnologySpecificFieldMapping)
      * @see de.fhdo.ddmm.technology.mapping.MappingPackage#getDataFieldHierarchy_Mapping()
-     * @see de.fhdo.ddmm.technology.mapping.TechnologySpecificDataFieldTypeMapping#getDataFieldHierarchy
+     * @see de.fhdo.ddmm.technology.mapping.TechnologySpecificFieldMapping#getDataFieldHierarchy
      * @model opposite="dataFieldHierarchy" transient="false"
      * @generated
      */
-    TechnologySpecificDataFieldTypeMapping getMapping();
+    TechnologySpecificFieldMapping getMapping();
 
     /**
      * Sets the value of the '{@link de.fhdo.ddmm.technology.mapping.DataFieldHierarchy#getMapping <em>Mapping</em>}' container reference.
@@ -101,6 +101,6 @@ public interface DataFieldHierarchy extends EObject {
      * @see #getMapping()
      * @generated
      */
-    void setMapping(TechnologySpecificDataFieldTypeMapping value);
+    void setMapping(TechnologySpecificFieldMapping value);
 
 } // DataFieldHierarchy

@@ -108,9 +108,9 @@ public class ServiceSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case ServicePackage.MAPPED_DATA_FIELD: {
-                MappedDataField mappedDataField = (MappedDataField)theEObject;
-                T result = caseMappedDataField(mappedDataField);
+            case ServicePackage.MAPPED_FIELD: {
+                MappedField mappedField = (MappedField)theEObject;
+                T result = caseMappedField(mappedField);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -272,17 +272,17 @@ public class ServiceSwitch<T> extends Switch<T> {
     }
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>Mapped Data Field</em>'.
+     * Returns the result of interpreting the object as an instance of '<em>Mapped Field</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
      * returning a non-null result will terminate the switch.
      * <!-- end-user-doc -->
      * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Mapped Data Field</em>'.
+     * @return the result of interpreting the object as an instance of '<em>Mapped Field</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-    public T caseMappedDataField(MappedDataField object) {
+    public T caseMappedField(MappedField object) {
         return null;
     }
 

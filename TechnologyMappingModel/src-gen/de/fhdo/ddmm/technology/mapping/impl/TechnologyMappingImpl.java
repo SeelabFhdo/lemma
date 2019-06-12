@@ -63,16 +63,6 @@ public class TechnologyMappingImpl extends MinimalEObjectImpl.Container implemen
     protected EList<Import> imports;
 
     /**
-     * The cached value of the '{@link #getComplexTypeMappings() <em>Complex Type Mappings</em>}' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getComplexTypeMappings()
-     * @generated
-     * @ordered
-     */
-    protected EList<ComplexTypeMapping> complexTypeMappings;
-
-    /**
      * The cached value of the '{@link #getServiceMappings() <em>Service Mappings</em>}' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -112,19 +102,6 @@ public class TechnologyMappingImpl extends MinimalEObjectImpl.Container implemen
             imports = new EObjectContainmentEList<Import>(Import.class, this, MappingPackage.TECHNOLOGY_MAPPING__IMPORTS);
         }
         return imports;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public EList<ComplexTypeMapping> getComplexTypeMappings() {
-        if (complexTypeMappings == null) {
-            complexTypeMappings = new EObjectContainmentWithInverseEList<ComplexTypeMapping>(ComplexTypeMapping.class, this, MappingPackage.TECHNOLOGY_MAPPING__COMPLEX_TYPE_MAPPINGS, MappingPackage.COMPLEX_TYPE_MAPPING__MAPPING_MODEL);
-        }
-        return complexTypeMappings;
     }
 
     /**

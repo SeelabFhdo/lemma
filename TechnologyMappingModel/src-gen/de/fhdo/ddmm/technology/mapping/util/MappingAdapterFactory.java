@@ -104,8 +104,8 @@ public class MappingAdapterFactory extends AdapterFactoryImpl {
                 return createComplexParameterMappingAdapter();
             }
             @Override
-            public Adapter caseTechnologySpecificDataFieldTypeMapping(TechnologySpecificDataFieldTypeMapping object) {
-                return createTechnologySpecificDataFieldTypeMappingAdapter();
+            public Adapter caseTechnologySpecificFieldMapping(TechnologySpecificFieldMapping object) {
+                return createTechnologySpecificFieldMappingAdapter();
             }
             @Override
             public Adapter caseDataFieldHierarchy(DataFieldHierarchy object) {
@@ -274,16 +274,16 @@ public class MappingAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link de.fhdo.ddmm.technology.mapping.TechnologySpecificDataFieldTypeMapping <em>Technology Specific Data Field Type Mapping</em>}'.
+     * Creates a new adapter for an object of class '{@link de.fhdo.ddmm.technology.mapping.TechnologySpecificFieldMapping <em>Technology Specific Field Mapping</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see de.fhdo.ddmm.technology.mapping.TechnologySpecificDataFieldTypeMapping
+     * @see de.fhdo.ddmm.technology.mapping.TechnologySpecificFieldMapping
      * @generated
      */
-    public Adapter createTechnologySpecificDataFieldTypeMappingAdapter() {
+    public Adapter createTechnologySpecificFieldMappingAdapter() {
         return null;
     }
 

@@ -5,7 +5,7 @@ package de.fhdo.ddmm.service.intermediate.impl;
 import de.fhdo.ddmm.data.intermediate.IntermediateType;
 
 import de.fhdo.ddmm.service.intermediate.IntermediateImportedAspect;
-import de.fhdo.ddmm.service.intermediate.IntermediateMappedDataField;
+import de.fhdo.ddmm.service.intermediate.IntermediateMappedField;
 import de.fhdo.ddmm.service.intermediate.IntermediateOperation;
 import de.fhdo.ddmm.service.intermediate.IntermediatePackage;
 import de.fhdo.ddmm.service.intermediate.IntermediateParameter;
@@ -48,7 +48,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.fhdo.ddmm.service.intermediate.impl.IntermediateParameterImpl#getType <em>Type</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.intermediate.impl.IntermediateParameterImpl#getInitializedByOperation <em>Initialized By Operation</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.intermediate.impl.IntermediateParameterImpl#getAspects <em>Aspects</em>}</li>
- *   <li>{@link de.fhdo.ddmm.service.intermediate.impl.IntermediateParameterImpl#getMappedDataFields <em>Mapped Data Fields</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.service.intermediate.impl.IntermediateParameterImpl#getMappedFields <em>Mapped Fields</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.intermediate.impl.IntermediateParameterImpl#getOperation <em>Operation</em>}</li>
  * </ul>
  *
@@ -206,14 +206,14 @@ public class IntermediateParameterImpl extends MinimalEObjectImpl.Container impl
     protected EList<IntermediateImportedAspect> aspects;
 
     /**
-     * The cached value of the '{@link #getMappedDataFields() <em>Mapped Data Fields</em>}' containment reference list.
+     * The cached value of the '{@link #getMappedFields() <em>Mapped Fields</em>}' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getMappedDataFields()
+     * @see #getMappedFields()
      * @generated
      * @ordered
      */
-    protected EList<IntermediateMappedDataField> mappedDataFields;
+    protected EList<IntermediateMappedField> mappedFields;
 
     /**
      * <!-- begin-user-doc -->
@@ -481,11 +481,11 @@ public class IntermediateParameterImpl extends MinimalEObjectImpl.Container impl
      * @generated
      */
     @Override
-    public EList<IntermediateMappedDataField> getMappedDataFields() {
-        if (mappedDataFields == null) {
-            mappedDataFields = new EObjectContainmentWithInverseEList<IntermediateMappedDataField>(IntermediateMappedDataField.class, this, IntermediatePackage.INTERMEDIATE_PARAMETER__MAPPED_DATA_FIELDS, IntermediatePackage.INTERMEDIATE_MAPPED_DATA_FIELD__PARAMETER);
+    public EList<IntermediateMappedField> getMappedFields() {
+        if (mappedFields == null) {
+            mappedFields = new EObjectContainmentWithInverseEList<IntermediateMappedField>(IntermediateMappedField.class, this, IntermediatePackage.INTERMEDIATE_PARAMETER__MAPPED_FIELDS, IntermediatePackage.INTERMEDIATE_MAPPED_FIELD__PARAMETER);
         }
-        return mappedDataFields;
+        return mappedFields;
     }
 
     /**
@@ -556,8 +556,8 @@ public class IntermediateParameterImpl extends MinimalEObjectImpl.Container impl
                 return basicSetInitializedByOperation((OperationReference)otherEnd, msgs);
             case IntermediatePackage.INTERMEDIATE_PARAMETER__ASPECTS:
                 return ((InternalEList<InternalEObject>)(InternalEList<?>)getAspects()).basicAdd(otherEnd, msgs);
-            case IntermediatePackage.INTERMEDIATE_PARAMETER__MAPPED_DATA_FIELDS:
-                return ((InternalEList<InternalEObject>)(InternalEList<?>)getMappedDataFields()).basicAdd(otherEnd, msgs);
+            case IntermediatePackage.INTERMEDIATE_PARAMETER__MAPPED_FIELDS:
+                return ((InternalEList<InternalEObject>)(InternalEList<?>)getMappedFields()).basicAdd(otherEnd, msgs);
             case IntermediatePackage.INTERMEDIATE_PARAMETER__OPERATION:
                 if (eInternalContainer() != null)
                     msgs = eBasicRemoveFromContainer(msgs);
@@ -580,8 +580,8 @@ public class IntermediateParameterImpl extends MinimalEObjectImpl.Container impl
                 return basicSetInitializedByOperation(null, msgs);
             case IntermediatePackage.INTERMEDIATE_PARAMETER__ASPECTS:
                 return ((InternalEList<?>)getAspects()).basicRemove(otherEnd, msgs);
-            case IntermediatePackage.INTERMEDIATE_PARAMETER__MAPPED_DATA_FIELDS:
-                return ((InternalEList<?>)getMappedDataFields()).basicRemove(otherEnd, msgs);
+            case IntermediatePackage.INTERMEDIATE_PARAMETER__MAPPED_FIELDS:
+                return ((InternalEList<?>)getMappedFields()).basicRemove(otherEnd, msgs);
             case IntermediatePackage.INTERMEDIATE_PARAMETER__OPERATION:
                 return basicSetOperation(null, msgs);
         }
@@ -628,8 +628,8 @@ public class IntermediateParameterImpl extends MinimalEObjectImpl.Container impl
                 return getInitializedByOperation();
             case IntermediatePackage.INTERMEDIATE_PARAMETER__ASPECTS:
                 return getAspects();
-            case IntermediatePackage.INTERMEDIATE_PARAMETER__MAPPED_DATA_FIELDS:
-                return getMappedDataFields();
+            case IntermediatePackage.INTERMEDIATE_PARAMETER__MAPPED_FIELDS:
+                return getMappedFields();
             case IntermediatePackage.INTERMEDIATE_PARAMETER__OPERATION:
                 if (resolve) return getOperation();
                 return basicGetOperation();
@@ -674,9 +674,9 @@ public class IntermediateParameterImpl extends MinimalEObjectImpl.Container impl
                 getAspects().clear();
                 getAspects().addAll((Collection<? extends IntermediateImportedAspect>)newValue);
                 return;
-            case IntermediatePackage.INTERMEDIATE_PARAMETER__MAPPED_DATA_FIELDS:
-                getMappedDataFields().clear();
-                getMappedDataFields().addAll((Collection<? extends IntermediateMappedDataField>)newValue);
+            case IntermediatePackage.INTERMEDIATE_PARAMETER__MAPPED_FIELDS:
+                getMappedFields().clear();
+                getMappedFields().addAll((Collection<? extends IntermediateMappedField>)newValue);
                 return;
             case IntermediatePackage.INTERMEDIATE_PARAMETER__OPERATION:
                 setOperation((IntermediateOperation)newValue);
@@ -720,8 +720,8 @@ public class IntermediateParameterImpl extends MinimalEObjectImpl.Container impl
             case IntermediatePackage.INTERMEDIATE_PARAMETER__ASPECTS:
                 getAspects().clear();
                 return;
-            case IntermediatePackage.INTERMEDIATE_PARAMETER__MAPPED_DATA_FIELDS:
-                getMappedDataFields().clear();
+            case IntermediatePackage.INTERMEDIATE_PARAMETER__MAPPED_FIELDS:
+                getMappedFields().clear();
                 return;
             case IntermediatePackage.INTERMEDIATE_PARAMETER__OPERATION:
                 setOperation((IntermediateOperation)null);
@@ -756,8 +756,8 @@ public class IntermediateParameterImpl extends MinimalEObjectImpl.Container impl
                 return initializedByOperation != null;
             case IntermediatePackage.INTERMEDIATE_PARAMETER__ASPECTS:
                 return aspects != null && !aspects.isEmpty();
-            case IntermediatePackage.INTERMEDIATE_PARAMETER__MAPPED_DATA_FIELDS:
-                return mappedDataFields != null && !mappedDataFields.isEmpty();
+            case IntermediatePackage.INTERMEDIATE_PARAMETER__MAPPED_FIELDS:
+                return mappedFields != null && !mappedFields.isEmpty();
             case IntermediatePackage.INTERMEDIATE_PARAMETER__OPERATION:
                 return basicGetOperation() != null;
         }

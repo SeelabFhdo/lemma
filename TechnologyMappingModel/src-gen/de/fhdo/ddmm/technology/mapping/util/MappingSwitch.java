@@ -122,9 +122,9 @@ public class MappingSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case MappingPackage.TECHNOLOGY_SPECIFIC_DATA_FIELD_TYPE_MAPPING: {
-                TechnologySpecificDataFieldTypeMapping technologySpecificDataFieldTypeMapping = (TechnologySpecificDataFieldTypeMapping)theEObject;
-                T result = caseTechnologySpecificDataFieldTypeMapping(technologySpecificDataFieldTypeMapping);
+            case MappingPackage.TECHNOLOGY_SPECIFIC_FIELD_MAPPING: {
+                TechnologySpecificFieldMapping technologySpecificFieldMapping = (TechnologySpecificFieldMapping)theEObject;
+                T result = caseTechnologySpecificFieldMapping(technologySpecificFieldMapping);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -298,17 +298,17 @@ public class MappingSwitch<T> extends Switch<T> {
     }
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>Technology Specific Data Field Type Mapping</em>'.
+     * Returns the result of interpreting the object as an instance of '<em>Technology Specific Field Mapping</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
      * returning a non-null result will terminate the switch.
      * <!-- end-user-doc -->
      * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Technology Specific Data Field Type Mapping</em>'.
+     * @return the result of interpreting the object as an instance of '<em>Technology Specific Field Mapping</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-    public T caseTechnologySpecificDataFieldTypeMapping(TechnologySpecificDataFieldTypeMapping object) {
+    public T caseTechnologySpecificFieldMapping(TechnologySpecificFieldMapping object) {
         return null;
     }
 

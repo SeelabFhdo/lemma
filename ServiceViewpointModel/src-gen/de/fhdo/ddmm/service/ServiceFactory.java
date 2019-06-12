@@ -85,13 +85,13 @@ public interface ServiceFactory extends EFactory {
     Parameter createParameter();
 
     /**
-     * Returns a new object of class '<em>Mapped Data Field</em>'.
+     * Returns a new object of class '<em>Mapped Field</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return a new object of class '<em>Mapped Data Field</em>'.
+     * @return a new object of class '<em>Mapped Field</em>'.
      * @generated
      */
-    MappedDataField createMappedDataField();
+    MappedField createMappedField();
 
     /**
      * Returns a new object of class '<em>Possibly Imported Microservice</em>'.

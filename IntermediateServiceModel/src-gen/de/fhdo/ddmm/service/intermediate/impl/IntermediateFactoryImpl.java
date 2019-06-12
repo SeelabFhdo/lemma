@@ -62,7 +62,7 @@ public class IntermediateFactoryImpl extends EFactoryImpl implements Intermediat
             case IntermediatePackage.INTERMEDIATE_OPERATION: return createIntermediateOperation();
             case IntermediatePackage.INTERMEDIATE_REFERRED_OPERATION: return createIntermediateReferredOperation();
             case IntermediatePackage.INTERMEDIATE_PARAMETER: return createIntermediateParameter();
-            case IntermediatePackage.INTERMEDIATE_MAPPED_DATA_FIELD: return createIntermediateMappedDataField();
+            case IntermediatePackage.INTERMEDIATE_MAPPED_FIELD: return createIntermediateMappedField();
             case IntermediatePackage.MICROSERVICE_REFERENCE: return createMicroserviceReference();
             case IntermediatePackage.INTERFACE_REFERENCE: return createInterfaceReference();
             case IntermediatePackage.OPERATION_REFERENCE: return createOperationReference();
@@ -150,9 +150,9 @@ public class IntermediateFactoryImpl extends EFactoryImpl implements Intermediat
      * @generated
      */
     @Override
-    public IntermediateMappedDataField createIntermediateMappedDataField() {
-        IntermediateMappedDataFieldImpl intermediateMappedDataField = new IntermediateMappedDataFieldImpl();
-        return intermediateMappedDataField;
+    public IntermediateMappedField createIntermediateMappedField() {
+        IntermediateMappedFieldImpl intermediateMappedField = new IntermediateMappedFieldImpl();
+        return intermediateMappedField;
     }
 
     /**

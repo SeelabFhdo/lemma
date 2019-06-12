@@ -71,8 +71,8 @@ import de.fhdo.ddmm.technology.mapping.OperationMapping;
 import de.fhdo.ddmm.technology.mapping.PrimitiveParameterMapping;
 import de.fhdo.ddmm.technology.mapping.ReferredOperationMapping;
 import de.fhdo.ddmm.technology.mapping.TechnologyMapping;
-import de.fhdo.ddmm.technology.mapping.TechnologySpecificDataFieldTypeMapping;
 import de.fhdo.ddmm.technology.mapping.TechnologySpecificEndpoint;
+import de.fhdo.ddmm.technology.mapping.TechnologySpecificFieldMapping;
 import de.fhdo.ddmm.technology.mapping.TechnologySpecificImportedServiceAspect;
 import de.fhdo.ddmm.technology.mapping.TechnologySpecificProtocol;
 import de.fhdo.ddmm.technology.mapping.TechnologySpecificProtocolSpecification;
@@ -194,11 +194,11 @@ public class MappingDslSemanticSequencer extends ServiceDslSemanticSequencer {
 			case MappingPackage.TECHNOLOGY_MAPPING:
 				sequence_TechnologyMapping(context, (TechnologyMapping) semanticObject); 
 				return; 
-			case MappingPackage.TECHNOLOGY_SPECIFIC_DATA_FIELD_TYPE_MAPPING:
-				sequence_TechnologySpecificDataFieldTypeMapping(context, (TechnologySpecificDataFieldTypeMapping) semanticObject); 
-				return; 
 			case MappingPackage.TECHNOLOGY_SPECIFIC_ENDPOINT:
 				sequence_TechnologySpecificEndpoint(context, (TechnologySpecificEndpoint) semanticObject); 
+				return; 
+			case MappingPackage.TECHNOLOGY_SPECIFIC_FIELD_MAPPING:
+				sequence_TechnologySpecificFieldMapping(context, (TechnologySpecificFieldMapping) semanticObject); 
 				return; 
 			case MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT:
 				sequence_TechnologySpecificImportedServiceAspect(context, (TechnologySpecificImportedServiceAspect) semanticObject); 
@@ -328,11 +328,7 @@ public class MappingDslSemanticSequencer extends ServiceDslSemanticSequencer {
 	 *         parameter=[Parameter|ID] 
 	 *         (
 	 *             ((technology=[Import|ID] technologySpecificComplexType=[ComplexType|QualifiedName])? aspects+=TechnologySpecificImportedServiceAspect*) | 
-	 *             (
-	 *                 aspects+=TechnologySpecificImportedServiceAspect* 
-	 *                 dataFieldMappings+=TechnologySpecificDataFieldTypeMapping 
-	 *                 dataFieldMappings+=TechnologySpecificDataFieldTypeMapping*
-	 *             )
+	 *             (aspects+=TechnologySpecificImportedServiceAspect* fieldMappings+=TechnologySpecificFieldMapping fieldMappings+=TechnologySpecificFieldMapping*)
 	 *         )
 	 *     )
 	 */
@@ -482,18 +478,6 @@ public class MappingDslSemanticSequencer extends ServiceDslSemanticSequencer {
 	
 	/**
 	 * Contexts:
-	 *     TechnologySpecificDataFieldTypeMapping returns TechnologySpecificDataFieldTypeMapping
-	 *
-	 * Constraint:
-	 *     (dataFieldHierarchy=DataFieldHierarchy technology=[Import|ID] type=[Type|QualifiedName] aspects+=TechnologySpecificImportedServiceAspect*)
-	 */
-	protected void sequence_TechnologySpecificDataFieldTypeMapping(ISerializationContext context, TechnologySpecificDataFieldTypeMapping semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
 	 *     TechnologySpecificEndpoint returns TechnologySpecificEndpoint
 	 *
 	 * Constraint:
@@ -505,6 +489,21 @@ public class MappingDslSemanticSequencer extends ServiceDslSemanticSequencer {
 	 *     )
 	 */
 	protected void sequence_TechnologySpecificEndpoint(ISerializationContext context, TechnologySpecificEndpoint semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     TechnologySpecificFieldMapping returns TechnologySpecificFieldMapping
+	 *
+	 * Constraint:
+	 *     (
+	 *         (enumerationField=[EnumerationField|ID] | (dataFieldHierarchy=DataFieldHierarchy technology=[Import|ID] type=[Type|QualifiedName])) 
+	 *         aspects+=TechnologySpecificImportedServiceAspect*
+	 *     )
+	 */
+	protected void sequence_TechnologySpecificFieldMapping(ISerializationContext context, TechnologySpecificFieldMapping semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

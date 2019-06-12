@@ -11,7 +11,7 @@ import de.fhdo.ddmm.service.ImportedProtocolAndDataFormat;
 import de.fhdo.ddmm.service.ImportedServiceAspect;
 import de.fhdo.ddmm.service.ImportedType;
 import de.fhdo.ddmm.service.Interface;
-import de.fhdo.ddmm.service.MappedDataField;
+import de.fhdo.ddmm.service.MappedField;
 import de.fhdo.ddmm.service.Microservice;
 import de.fhdo.ddmm.service.MicroserviceType;
 import de.fhdo.ddmm.service.Operation;
@@ -103,7 +103,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    private EClass mappedDataFieldEClass = null;
+    private EClass mappedFieldEClass = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -1315,7 +1315,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     @Override
-    public EReference getParameter_MappedDataFields() {
+    public EReference getParameter_MappedFields() {
         return (EReference)parameterEClass.getEStructuralFeatures().get(9);
     }
 
@@ -1395,8 +1395,8 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     @Override
-    public EClass getMappedDataField() {
-        return mappedDataFieldEClass;
+    public EClass getMappedField() {
+        return mappedFieldEClass;
     }
 
     /**
@@ -1405,8 +1405,8 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     @Override
-    public EReference getMappedDataField_DataField() {
-        return (EReference)mappedDataFieldEClass.getEStructuralFeatures().get(0);
+    public EReference getMappedField_DataField() {
+        return (EReference)mappedFieldEClass.getEStructuralFeatures().get(0);
     }
 
     /**
@@ -1415,8 +1415,8 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     @Override
-    public EReference getMappedDataField_MappedType() {
-        return (EReference)mappedDataFieldEClass.getEStructuralFeatures().get(1);
+    public EReference getMappedField_EnumerationField() {
+        return (EReference)mappedFieldEClass.getEStructuralFeatures().get(1);
     }
 
     /**
@@ -1425,8 +1425,8 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     @Override
-    public EReference getMappedDataField_Aspects() {
-        return (EReference)mappedDataFieldEClass.getEStructuralFeatures().get(2);
+    public EReference getMappedField_MappedType() {
+        return (EReference)mappedFieldEClass.getEStructuralFeatures().get(2);
     }
 
     /**
@@ -1435,8 +1435,8 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     @Override
-    public EReference getMappedDataField_Parameter() {
-        return (EReference)mappedDataFieldEClass.getEStructuralFeatures().get(3);
+    public EReference getMappedField_Aspects() {
+        return (EReference)mappedFieldEClass.getEStructuralFeatures().get(3);
     }
 
     /**
@@ -1445,8 +1445,8 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     @Override
-    public EOperation getMappedDataField__GetQualifiedNameParts() {
-        return mappedDataFieldEClass.getEOperations().get(0);
+    public EReference getMappedField_Parameter() {
+        return (EReference)mappedFieldEClass.getEStructuralFeatures().get(4);
     }
 
     /**
@@ -1455,8 +1455,8 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     @Override
-    public EOperation getMappedDataField__BuildQualifiedName__String() {
-        return mappedDataFieldEClass.getEOperations().get(1);
+    public EOperation getMappedField__GetQualifiedNameParts() {
+        return mappedFieldEClass.getEOperations().get(0);
     }
 
     /**
@@ -1465,8 +1465,18 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     @Override
-    public EOperation getMappedDataField__GetEffectiveType() {
-        return mappedDataFieldEClass.getEOperations().get(2);
+    public EOperation getMappedField__BuildQualifiedName__String() {
+        return mappedFieldEClass.getEOperations().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EOperation getMappedField__GetEffectiveType() {
+        return mappedFieldEClass.getEOperations().get(2);
     }
 
     /**
@@ -1965,7 +1975,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     @Override
-    public EReference getImportedServiceAspect_MappedDataField() {
+    public EReference getImportedServiceAspect_MappedField() {
         return (EReference)importedServiceAspectEClass.getEStructuralFeatures().get(9);
     }
 
@@ -2168,7 +2178,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
         createEReference(parameterEClass, PARAMETER__IMPORTED_TYPE);
         createEReference(parameterEClass, PARAMETER__PRIMITIVE_TYPE);
         createEReference(parameterEClass, PARAMETER__ASPECTS);
-        createEReference(parameterEClass, PARAMETER__MAPPED_DATA_FIELDS);
+        createEReference(parameterEClass, PARAMETER__MAPPED_FIELDS);
         createEReference(parameterEClass, PARAMETER__OPERATION);
         createEOperation(parameterEClass, PARAMETER___GET_QUALIFIED_NAME_PARTS);
         createEOperation(parameterEClass, PARAMETER___BUILD_QUALIFIED_NAME__STRING);
@@ -2177,14 +2187,15 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
         createEOperation(parameterEClass, PARAMETER___IS_TECHNOLOGY_SPECIFIC_EFFECTIVE_TYPE);
         createEOperation(parameterEClass, PARAMETER___GET_EFFECTIVE_TYPE_QUALIFIED_NAME_PARTS);
 
-        mappedDataFieldEClass = createEClass(MAPPED_DATA_FIELD);
-        createEReference(mappedDataFieldEClass, MAPPED_DATA_FIELD__DATA_FIELD);
-        createEReference(mappedDataFieldEClass, MAPPED_DATA_FIELD__MAPPED_TYPE);
-        createEReference(mappedDataFieldEClass, MAPPED_DATA_FIELD__ASPECTS);
-        createEReference(mappedDataFieldEClass, MAPPED_DATA_FIELD__PARAMETER);
-        createEOperation(mappedDataFieldEClass, MAPPED_DATA_FIELD___GET_QUALIFIED_NAME_PARTS);
-        createEOperation(mappedDataFieldEClass, MAPPED_DATA_FIELD___BUILD_QUALIFIED_NAME__STRING);
-        createEOperation(mappedDataFieldEClass, MAPPED_DATA_FIELD___GET_EFFECTIVE_TYPE);
+        mappedFieldEClass = createEClass(MAPPED_FIELD);
+        createEReference(mappedFieldEClass, MAPPED_FIELD__DATA_FIELD);
+        createEReference(mappedFieldEClass, MAPPED_FIELD__ENUMERATION_FIELD);
+        createEReference(mappedFieldEClass, MAPPED_FIELD__MAPPED_TYPE);
+        createEReference(mappedFieldEClass, MAPPED_FIELD__ASPECTS);
+        createEReference(mappedFieldEClass, MAPPED_FIELD__PARAMETER);
+        createEOperation(mappedFieldEClass, MAPPED_FIELD___GET_QUALIFIED_NAME_PARTS);
+        createEOperation(mappedFieldEClass, MAPPED_FIELD___BUILD_QUALIFIED_NAME__STRING);
+        createEOperation(mappedFieldEClass, MAPPED_FIELD___GET_EFFECTIVE_TYPE);
 
         possiblyImportedMicroserviceEClass = createEClass(POSSIBLY_IMPORTED_MICROSERVICE);
         createEReference(possiblyImportedMicroserviceEClass, POSSIBLY_IMPORTED_MICROSERVICE__IMPORT);
@@ -2242,7 +2253,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
         createEReference(importedServiceAspectEClass, IMPORTED_SERVICE_ASPECT__OPERATION);
         createEReference(importedServiceAspectEClass, IMPORTED_SERVICE_ASPECT__REFERRED_OPERATION);
         createEReference(importedServiceAspectEClass, IMPORTED_SERVICE_ASPECT__PARAMETER);
-        createEReference(importedServiceAspectEClass, IMPORTED_SERVICE_ASPECT__MAPPED_DATA_FIELD);
+        createEReference(importedServiceAspectEClass, IMPORTED_SERVICE_ASPECT__MAPPED_FIELD);
 
         // Create enums
         importTypeEEnum = createEEnum(IMPORT_TYPE);
@@ -2443,7 +2454,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
         initEReference(getParameter_ImportedType(), this.getImportedType(), null, "importedType", null, 0, 1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getParameter_PrimitiveType(), theDataPackage.getPrimitiveType(), null, "primitiveType", null, 0, 1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getParameter_Aspects(), this.getImportedServiceAspect(), this.getImportedServiceAspect_Parameter(), "aspects", null, 0, -1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getParameter_MappedDataFields(), this.getMappedDataField(), this.getMappedDataField_Parameter(), "mappedDataFields", null, 0, -1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getParameter_MappedFields(), this.getMappedField(), this.getMappedField_Parameter(), "mappedFields", null, 0, -1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getParameter_Operation(), this.getOperation(), this.getOperation_Parameters(), "operation", null, 0, 1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEOperation(getParameter__GetQualifiedNameParts(), theEcorePackage.getEString(), "getQualifiedNameParts", 0, -1, !IS_UNIQUE, IS_ORDERED);
@@ -2460,18 +2471,19 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
 
         initEOperation(getParameter__GetEffectiveTypeQualifiedNameParts(), theEcorePackage.getEString(), "getEffectiveTypeQualifiedNameParts", 0, -1, !IS_UNIQUE, IS_ORDERED);
 
-        initEClass(mappedDataFieldEClass, MappedDataField.class, "MappedDataField", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getMappedDataField_DataField(), theDataPackage.getDataField(), null, "dataField", null, 0, 1, MappedDataField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getMappedDataField_MappedType(), this.getImportedType(), null, "mappedType", null, 0, 1, MappedDataField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getMappedDataField_Aspects(), this.getImportedServiceAspect(), this.getImportedServiceAspect_MappedDataField(), "aspects", null, 0, -1, MappedDataField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getMappedDataField_Parameter(), this.getParameter(), this.getParameter_MappedDataFields(), "parameter", null, 0, 1, MappedDataField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEClass(mappedFieldEClass, MappedField.class, "MappedField", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEReference(getMappedField_DataField(), theDataPackage.getDataField(), null, "dataField", null, 0, 1, MappedField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getMappedField_EnumerationField(), theDataPackage.getEnumerationField(), null, "enumerationField", null, 0, 1, MappedField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getMappedField_MappedType(), this.getImportedType(), null, "mappedType", null, 0, 1, MappedField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getMappedField_Aspects(), this.getImportedServiceAspect(), this.getImportedServiceAspect_MappedField(), "aspects", null, 0, -1, MappedField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getMappedField_Parameter(), this.getParameter(), this.getParameter_MappedFields(), "parameter", null, 0, 1, MappedField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-        initEOperation(getMappedDataField__GetQualifiedNameParts(), theEcorePackage.getEString(), "getQualifiedNameParts", 0, -1, !IS_UNIQUE, IS_ORDERED);
+        initEOperation(getMappedField__GetQualifiedNameParts(), theEcorePackage.getEString(), "getQualifiedNameParts", 0, -1, !IS_UNIQUE, IS_ORDERED);
 
-        op = initEOperation(getMappedDataField__BuildQualifiedName__String(), theEcorePackage.getEString(), "buildQualifiedName", 0, 1, !IS_UNIQUE, IS_ORDERED);
+        op = initEOperation(getMappedField__BuildQualifiedName__String(), theEcorePackage.getEString(), "buildQualifiedName", 0, 1, !IS_UNIQUE, IS_ORDERED);
         addEParameter(op, theEcorePackage.getEString(), "separator", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
-        initEOperation(getMappedDataField__GetEffectiveType(), theDataPackage.getType(), "getEffectiveType", 0, 1, !IS_UNIQUE, IS_ORDERED);
+        initEOperation(getMappedField__GetEffectiveType(), theDataPackage.getType(), "getEffectiveType", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
         initEClass(possiblyImportedMicroserviceEClass, PossiblyImportedMicroservice.class, "PossiblyImportedMicroservice", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getPossiblyImportedMicroservice_Import(), this.getImport(), null, "import", null, 0, 1, PossiblyImportedMicroservice.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2531,7 +2543,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
         initEReference(getImportedServiceAspect_Operation(), this.getOperation(), this.getOperation_Aspects(), "operation", null, 0, 1, ImportedServiceAspect.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getImportedServiceAspect_ReferredOperation(), this.getReferredOperation(), this.getReferredOperation_Aspects(), "referredOperation", null, 0, 1, ImportedServiceAspect.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getImportedServiceAspect_Parameter(), this.getParameter(), this.getParameter_Aspects(), "parameter", null, 0, 1, ImportedServiceAspect.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getImportedServiceAspect_MappedDataField(), this.getMappedDataField(), this.getMappedDataField_Aspects(), "mappedDataField", null, 0, 1, ImportedServiceAspect.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getImportedServiceAspect_MappedField(), this.getMappedField(), this.getMappedField_Aspects(), "mappedField", null, 0, 1, ImportedServiceAspect.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         // Initialize enums and add enum literals
         initEEnum(importTypeEEnum, ImportType.class, "ImportType");

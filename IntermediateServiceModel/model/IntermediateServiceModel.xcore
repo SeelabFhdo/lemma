@@ -3,6 +3,7 @@ package de.fhdo.ddmm.service.intermediate
 
 import de.fhdo.ddmm.data.intermediate.IntermediateImport
 import de.fhdo.ddmm.data.intermediate.IntermediateType
+import de.fhdo.ddmm.data.intermediate.IntermediateTypeKind
 import de.fhdo.ddmm.service.MicroserviceType
 import de.fhdo.ddmm.service.Visibility
 import de.fhdo.ddmm.technology.CommunicationType
@@ -119,7 +120,7 @@ class IntermediateParameter {
     contains IntermediateType ^type
     contains OperationReference[0..1] initializedByOperation  opposite initializedParameter
     contains IntermediateImportedAspect[] aspects opposite parameter
-    contains IntermediateMappedDataField[] mappedDataFields opposite parameter
+    contains IntermediateMappedField[] mappedFields opposite parameter
 
     container IntermediateOperation operation opposite parameters
 }
@@ -127,14 +128,15 @@ class IntermediateParameter {
 /**
  * Mapped data field
  */
-class IntermediateMappedDataField {
-    String mappedDataFieldName
+class IntermediateMappedField {
+    String mappedFieldName
     String qualifiedName
+    IntermediateTypeKind originalTypeKind
 
     contains IntermediateType mappedType
-    contains IntermediateImportedAspect[] aspects opposite mappedDataField
+    contains IntermediateImportedAspect[] aspects opposite mappedField
 
-    container IntermediateParameter parameter opposite mappedDataFields
+    container IntermediateParameter parameter opposite mappedFields
 }
 
 /**
@@ -238,7 +240,7 @@ class IntermediateImportedAspect {
     container IntermediateOperation operation opposite aspects
     container IntermediateReferredOperation referredOperation opposite aspects
     container IntermediateParameter parameter opposite aspects
-    container IntermediateMappedDataField mappedDataField opposite aspects
+    container IntermediateMappedField mappedField opposite aspects
 }
 
 /**

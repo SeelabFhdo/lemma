@@ -72,7 +72,7 @@ public class ServiceFactoryImpl extends EFactoryImpl implements ServiceFactory {
             case ServicePackage.OPERATION: return createOperation();
             case ServicePackage.REFERRED_OPERATION: return createReferredOperation();
             case ServicePackage.PARAMETER: return createParameter();
-            case ServicePackage.MAPPED_DATA_FIELD: return createMappedDataField();
+            case ServicePackage.MAPPED_FIELD: return createMappedField();
             case ServicePackage.POSSIBLY_IMPORTED_MICROSERVICE: return createPossiblyImportedMicroservice();
             case ServicePackage.POSSIBLY_IMPORTED_INTERFACE: return createPossiblyImportedInterface();
             case ServicePackage.POSSIBLY_IMPORTED_OPERATION: return createPossiblyImportedOperation();
@@ -219,9 +219,9 @@ public class ServiceFactoryImpl extends EFactoryImpl implements ServiceFactory {
      * @generated
      */
     @Override
-    public MappedDataField createMappedDataField() {
-        MappedDataFieldImpl mappedDataField = new MappedDataFieldImpl();
-        return mappedDataField;
+    public MappedField createMappedField() {
+        MappedFieldImpl mappedField = new MappedFieldImpl();
+        return mappedField;
     }
 
     /**

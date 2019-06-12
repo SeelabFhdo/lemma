@@ -26,7 +26,6 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  * <ul>
  *   <li>{@link de.fhdo.ddmm.technology.mapping.TechnologyMapping#getImports <em>Imports</em>}</li>
- *   <li>{@link de.fhdo.ddmm.technology.mapping.TechnologyMapping#getComplexTypeMappings <em>Complex Type Mappings</em>}</li>
  *   <li>{@link de.fhdo.ddmm.technology.mapping.TechnologyMapping#getServiceMappings <em>Service Mappings</em>}</li>
  * </ul>
  *
@@ -54,24 +53,6 @@ public interface TechnologyMapping extends EObject {
      * @generated
      */
     EList<Import> getImports();
-
-    /**
-     * Returns the value of the '<em><b>Complex Type Mappings</b></em>' containment reference list.
-     * The list contents are of type {@link de.fhdo.ddmm.technology.mapping.ComplexTypeMapping}.
-     * It is bidirectional and its opposite is '{@link de.fhdo.ddmm.technology.mapping.ComplexTypeMapping#getMappingModel <em>Mapping Model</em>}'.
-     * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Complex Type Mappings</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
-     * @return the value of the '<em>Complex Type Mappings</em>' containment reference list.
-     * @see de.fhdo.ddmm.technology.mapping.MappingPackage#getTechnologyMapping_ComplexTypeMappings()
-     * @see de.fhdo.ddmm.technology.mapping.ComplexTypeMapping#getMappingModel
-     * @model opposite="mappingModel" containment="true"
-     * @generated
-     */
-    EList<ComplexTypeMapping> getComplexTypeMappings();
 
     /**
      * Returns the value of the '<em><b>Service Mappings</b></em>' containment reference list.

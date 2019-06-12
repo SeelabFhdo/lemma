@@ -104,9 +104,9 @@ public class IntermediateSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case IntermediatePackage.INTERMEDIATE_MAPPED_DATA_FIELD: {
-                IntermediateMappedDataField intermediateMappedDataField = (IntermediateMappedDataField)theEObject;
-                T result = caseIntermediateMappedDataField(intermediateMappedDataField);
+            case IntermediatePackage.INTERMEDIATE_MAPPED_FIELD: {
+                IntermediateMappedField intermediateMappedField = (IntermediateMappedField)theEObject;
+                T result = caseIntermediateMappedField(intermediateMappedField);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -266,17 +266,17 @@ public class IntermediateSwitch<T> extends Switch<T> {
     }
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>Mapped Data Field</em>'.
+     * Returns the result of interpreting the object as an instance of '<em>Mapped Field</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
      * returning a non-null result will terminate the switch.
      * <!-- end-user-doc -->
      * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Mapped Data Field</em>'.
+     * @return the result of interpreting the object as an instance of '<em>Mapped Field</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-    public T caseIntermediateMappedDataField(IntermediateMappedDataField object) {
+    public T caseIntermediateMappedField(IntermediateMappedField object) {
         return null;
     }
 

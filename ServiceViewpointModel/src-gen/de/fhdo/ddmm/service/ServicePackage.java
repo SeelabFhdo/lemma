@@ -1112,13 +1112,13 @@ public interface ServicePackage extends EPackage {
     int PARAMETER__ASPECTS = 8;
 
     /**
-     * The feature id for the '<em><b>Mapped Data Fields</b></em>' containment reference list.
+     * The feature id for the '<em><b>Mapped Fields</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int PARAMETER__MAPPED_DATA_FIELDS = 9;
+    int PARAMETER__MAPPED_FIELDS = 9;
 
     /**
      * The feature id for the '<em><b>Operation</b></em>' container reference.
@@ -1202,14 +1202,14 @@ public interface ServicePackage extends EPackage {
     int PARAMETER_OPERATION_COUNT = 6;
 
     /**
-     * The meta object id for the '{@link de.fhdo.ddmm.service.impl.MappedDataFieldImpl <em>Mapped Data Field</em>}' class.
+     * The meta object id for the '{@link de.fhdo.ddmm.service.impl.MappedFieldImpl <em>Mapped Field</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.fhdo.ddmm.service.impl.MappedDataFieldImpl
-     * @see de.fhdo.ddmm.service.impl.ServicePackageImpl#getMappedDataField()
+     * @see de.fhdo.ddmm.service.impl.MappedFieldImpl
+     * @see de.fhdo.ddmm.service.impl.ServicePackageImpl#getMappedField()
      * @generated
      */
-    int MAPPED_DATA_FIELD = 7;
+    int MAPPED_FIELD = 7;
 
     /**
      * The feature id for the '<em><b>Data Field</b></em>' reference.
@@ -1218,7 +1218,16 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MAPPED_DATA_FIELD__DATA_FIELD = 0;
+    int MAPPED_FIELD__DATA_FIELD = 0;
+
+    /**
+     * The feature id for the '<em><b>Enumeration Field</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MAPPED_FIELD__ENUMERATION_FIELD = 1;
 
     /**
      * The feature id for the '<em><b>Mapped Type</b></em>' containment reference.
@@ -1227,7 +1236,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MAPPED_DATA_FIELD__MAPPED_TYPE = 1;
+    int MAPPED_FIELD__MAPPED_TYPE = 2;
 
     /**
      * The feature id for the '<em><b>Aspects</b></em>' containment reference list.
@@ -1236,7 +1245,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MAPPED_DATA_FIELD__ASPECTS = 2;
+    int MAPPED_FIELD__ASPECTS = 3;
 
     /**
      * The feature id for the '<em><b>Parameter</b></em>' container reference.
@@ -1245,16 +1254,16 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MAPPED_DATA_FIELD__PARAMETER = 3;
+    int MAPPED_FIELD__PARAMETER = 4;
 
     /**
-     * The number of structural features of the '<em>Mapped Data Field</em>' class.
+     * The number of structural features of the '<em>Mapped Field</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int MAPPED_DATA_FIELD_FEATURE_COUNT = 4;
+    int MAPPED_FIELD_FEATURE_COUNT = 5;
 
     /**
      * The operation id for the '<em>Get Qualified Name Parts</em>' operation.
@@ -1263,7 +1272,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MAPPED_DATA_FIELD___GET_QUALIFIED_NAME_PARTS = 0;
+    int MAPPED_FIELD___GET_QUALIFIED_NAME_PARTS = 0;
 
     /**
      * The operation id for the '<em>Build Qualified Name</em>' operation.
@@ -1272,7 +1281,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MAPPED_DATA_FIELD___BUILD_QUALIFIED_NAME__STRING = 1;
+    int MAPPED_FIELD___BUILD_QUALIFIED_NAME__STRING = 1;
 
     /**
      * The operation id for the '<em>Get Effective Type</em>' operation.
@@ -1281,16 +1290,16 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MAPPED_DATA_FIELD___GET_EFFECTIVE_TYPE = 2;
+    int MAPPED_FIELD___GET_EFFECTIVE_TYPE = 2;
 
     /**
-     * The number of operations of the '<em>Mapped Data Field</em>' class.
+     * The number of operations of the '<em>Mapped Field</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int MAPPED_DATA_FIELD_OPERATION_COUNT = 3;
+    int MAPPED_FIELD_OPERATION_COUNT = 3;
 
     /**
      * The meta object id for the '{@link de.fhdo.ddmm.service.impl.PossiblyImportedMicroserviceImpl <em>Possibly Imported Microservice</em>}' class.
@@ -1868,13 +1877,13 @@ public interface ServicePackage extends EPackage {
     int IMPORTED_SERVICE_ASPECT__PARAMETER = 8;
 
     /**
-     * The feature id for the '<em><b>Mapped Data Field</b></em>' container reference.
+     * The feature id for the '<em><b>Mapped Field</b></em>' container reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int IMPORTED_SERVICE_ASPECT__MAPPED_DATA_FIELD = 9;
+    int IMPORTED_SERVICE_ASPECT__MAPPED_FIELD = 9;
 
     /**
      * The number of structural features of the '<em>Imported Service Aspect</em>' class.
@@ -3061,15 +3070,15 @@ public interface ServicePackage extends EPackage {
     EReference getParameter_Aspects();
 
     /**
-     * Returns the meta object for the containment reference list '{@link de.fhdo.ddmm.service.Parameter#getMappedDataFields <em>Mapped Data Fields</em>}'.
+     * Returns the meta object for the containment reference list '{@link de.fhdo.ddmm.service.Parameter#getMappedFields <em>Mapped Fields</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the containment reference list '<em>Mapped Data Fields</em>'.
-     * @see de.fhdo.ddmm.service.Parameter#getMappedDataFields()
+     * @return the meta object for the containment reference list '<em>Mapped Fields</em>'.
+     * @see de.fhdo.ddmm.service.Parameter#getMappedFields()
      * @see #getParameter()
      * @generated
      */
-    EReference getParameter_MappedDataFields();
+    EReference getParameter_MappedFields();
 
     /**
      * Returns the meta object for the container reference '{@link de.fhdo.ddmm.service.Parameter#getOperation <em>Operation</em>}'.
@@ -3143,88 +3152,99 @@ public interface ServicePackage extends EPackage {
     EOperation getParameter__GetEffectiveTypeQualifiedNameParts();
 
     /**
-     * Returns the meta object for class '{@link de.fhdo.ddmm.service.MappedDataField <em>Mapped Data Field</em>}'.
+     * Returns the meta object for class '{@link de.fhdo.ddmm.service.MappedField <em>Mapped Field</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Mapped Data Field</em>'.
-     * @see de.fhdo.ddmm.service.MappedDataField
+     * @return the meta object for class '<em>Mapped Field</em>'.
+     * @see de.fhdo.ddmm.service.MappedField
      * @generated
      */
-    EClass getMappedDataField();
+    EClass getMappedField();
 
     /**
-     * Returns the meta object for the reference '{@link de.fhdo.ddmm.service.MappedDataField#getDataField <em>Data Field</em>}'.
+     * Returns the meta object for the reference '{@link de.fhdo.ddmm.service.MappedField#getDataField <em>Data Field</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the reference '<em>Data Field</em>'.
-     * @see de.fhdo.ddmm.service.MappedDataField#getDataField()
-     * @see #getMappedDataField()
+     * @see de.fhdo.ddmm.service.MappedField#getDataField()
+     * @see #getMappedField()
      * @generated
      */
-    EReference getMappedDataField_DataField();
+    EReference getMappedField_DataField();
 
     /**
-     * Returns the meta object for the containment reference '{@link de.fhdo.ddmm.service.MappedDataField#getMappedType <em>Mapped Type</em>}'.
+     * Returns the meta object for the reference '{@link de.fhdo.ddmm.service.MappedField#getEnumerationField <em>Enumeration Field</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference '<em>Enumeration Field</em>'.
+     * @see de.fhdo.ddmm.service.MappedField#getEnumerationField()
+     * @see #getMappedField()
+     * @generated
+     */
+    EReference getMappedField_EnumerationField();
+
+    /**
+     * Returns the meta object for the containment reference '{@link de.fhdo.ddmm.service.MappedField#getMappedType <em>Mapped Type</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the containment reference '<em>Mapped Type</em>'.
-     * @see de.fhdo.ddmm.service.MappedDataField#getMappedType()
-     * @see #getMappedDataField()
+     * @see de.fhdo.ddmm.service.MappedField#getMappedType()
+     * @see #getMappedField()
      * @generated
      */
-    EReference getMappedDataField_MappedType();
+    EReference getMappedField_MappedType();
 
     /**
-     * Returns the meta object for the containment reference list '{@link de.fhdo.ddmm.service.MappedDataField#getAspects <em>Aspects</em>}'.
+     * Returns the meta object for the containment reference list '{@link de.fhdo.ddmm.service.MappedField#getAspects <em>Aspects</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the containment reference list '<em>Aspects</em>'.
-     * @see de.fhdo.ddmm.service.MappedDataField#getAspects()
-     * @see #getMappedDataField()
+     * @see de.fhdo.ddmm.service.MappedField#getAspects()
+     * @see #getMappedField()
      * @generated
      */
-    EReference getMappedDataField_Aspects();
+    EReference getMappedField_Aspects();
 
     /**
-     * Returns the meta object for the container reference '{@link de.fhdo.ddmm.service.MappedDataField#getParameter <em>Parameter</em>}'.
+     * Returns the meta object for the container reference '{@link de.fhdo.ddmm.service.MappedField#getParameter <em>Parameter</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the container reference '<em>Parameter</em>'.
-     * @see de.fhdo.ddmm.service.MappedDataField#getParameter()
-     * @see #getMappedDataField()
+     * @see de.fhdo.ddmm.service.MappedField#getParameter()
+     * @see #getMappedField()
      * @generated
      */
-    EReference getMappedDataField_Parameter();
+    EReference getMappedField_Parameter();
 
     /**
-     * Returns the meta object for the '{@link de.fhdo.ddmm.service.MappedDataField#getQualifiedNameParts() <em>Get Qualified Name Parts</em>}' operation.
+     * Returns the meta object for the '{@link de.fhdo.ddmm.service.MappedField#getQualifiedNameParts() <em>Get Qualified Name Parts</em>}' operation.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the '<em>Get Qualified Name Parts</em>' operation.
-     * @see de.fhdo.ddmm.service.MappedDataField#getQualifiedNameParts()
+     * @see de.fhdo.ddmm.service.MappedField#getQualifiedNameParts()
      * @generated
      */
-    EOperation getMappedDataField__GetQualifiedNameParts();
+    EOperation getMappedField__GetQualifiedNameParts();
 
     /**
-     * Returns the meta object for the '{@link de.fhdo.ddmm.service.MappedDataField#buildQualifiedName(java.lang.String) <em>Build Qualified Name</em>}' operation.
+     * Returns the meta object for the '{@link de.fhdo.ddmm.service.MappedField#buildQualifiedName(java.lang.String) <em>Build Qualified Name</em>}' operation.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the '<em>Build Qualified Name</em>' operation.
-     * @see de.fhdo.ddmm.service.MappedDataField#buildQualifiedName(java.lang.String)
+     * @see de.fhdo.ddmm.service.MappedField#buildQualifiedName(java.lang.String)
      * @generated
      */
-    EOperation getMappedDataField__BuildQualifiedName__String();
+    EOperation getMappedField__BuildQualifiedName__String();
 
     /**
-     * Returns the meta object for the '{@link de.fhdo.ddmm.service.MappedDataField#getEffectiveType() <em>Get Effective Type</em>}' operation.
+     * Returns the meta object for the '{@link de.fhdo.ddmm.service.MappedField#getEffectiveType() <em>Get Effective Type</em>}' operation.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the '<em>Get Effective Type</em>' operation.
-     * @see de.fhdo.ddmm.service.MappedDataField#getEffectiveType()
+     * @see de.fhdo.ddmm.service.MappedField#getEffectiveType()
      * @generated
      */
-    EOperation getMappedDataField__GetEffectiveType();
+    EOperation getMappedField__GetEffectiveType();
 
     /**
      * Returns the meta object for class '{@link de.fhdo.ddmm.service.PossiblyImportedMicroservice <em>Possibly Imported Microservice</em>}'.
@@ -3757,15 +3777,15 @@ public interface ServicePackage extends EPackage {
     EReference getImportedServiceAspect_Parameter();
 
     /**
-     * Returns the meta object for the container reference '{@link de.fhdo.ddmm.service.ImportedServiceAspect#getMappedDataField <em>Mapped Data Field</em>}'.
+     * Returns the meta object for the container reference '{@link de.fhdo.ddmm.service.ImportedServiceAspect#getMappedField <em>Mapped Field</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the container reference '<em>Mapped Data Field</em>'.
-     * @see de.fhdo.ddmm.service.ImportedServiceAspect#getMappedDataField()
+     * @return the meta object for the container reference '<em>Mapped Field</em>'.
+     * @see de.fhdo.ddmm.service.ImportedServiceAspect#getMappedField()
      * @see #getImportedServiceAspect()
      * @generated
      */
-    EReference getImportedServiceAspect_MappedDataField();
+    EReference getImportedServiceAspect_MappedField();
 
     /**
      * Returns the meta object for enum '{@link de.fhdo.ddmm.service.ImportType <em>Import Type</em>}'.
@@ -4700,12 +4720,12 @@ public interface ServicePackage extends EPackage {
         EReference PARAMETER__ASPECTS = eINSTANCE.getParameter_Aspects();
 
         /**
-         * The meta object literal for the '<em><b>Mapped Data Fields</b></em>' containment reference list feature.
+         * The meta object literal for the '<em><b>Mapped Fields</b></em>' containment reference list feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference PARAMETER__MAPPED_DATA_FIELDS = eINSTANCE.getParameter_MappedDataFields();
+        EReference PARAMETER__MAPPED_FIELDS = eINSTANCE.getParameter_MappedFields();
 
         /**
          * The meta object literal for the '<em><b>Operation</b></em>' container reference feature.
@@ -4764,14 +4784,14 @@ public interface ServicePackage extends EPackage {
         EOperation PARAMETER___GET_EFFECTIVE_TYPE_QUALIFIED_NAME_PARTS = eINSTANCE.getParameter__GetEffectiveTypeQualifiedNameParts();
 
         /**
-         * The meta object literal for the '{@link de.fhdo.ddmm.service.impl.MappedDataFieldImpl <em>Mapped Data Field</em>}' class.
+         * The meta object literal for the '{@link de.fhdo.ddmm.service.impl.MappedFieldImpl <em>Mapped Field</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see de.fhdo.ddmm.service.impl.MappedDataFieldImpl
-         * @see de.fhdo.ddmm.service.impl.ServicePackageImpl#getMappedDataField()
+         * @see de.fhdo.ddmm.service.impl.MappedFieldImpl
+         * @see de.fhdo.ddmm.service.impl.ServicePackageImpl#getMappedField()
          * @generated
          */
-        EClass MAPPED_DATA_FIELD = eINSTANCE.getMappedDataField();
+        EClass MAPPED_FIELD = eINSTANCE.getMappedField();
 
         /**
          * The meta object literal for the '<em><b>Data Field</b></em>' reference feature.
@@ -4779,7 +4799,15 @@ public interface ServicePackage extends EPackage {
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference MAPPED_DATA_FIELD__DATA_FIELD = eINSTANCE.getMappedDataField_DataField();
+        EReference MAPPED_FIELD__DATA_FIELD = eINSTANCE.getMappedField_DataField();
+
+        /**
+         * The meta object literal for the '<em><b>Enumeration Field</b></em>' reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference MAPPED_FIELD__ENUMERATION_FIELD = eINSTANCE.getMappedField_EnumerationField();
 
         /**
          * The meta object literal for the '<em><b>Mapped Type</b></em>' containment reference feature.
@@ -4787,7 +4815,7 @@ public interface ServicePackage extends EPackage {
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference MAPPED_DATA_FIELD__MAPPED_TYPE = eINSTANCE.getMappedDataField_MappedType();
+        EReference MAPPED_FIELD__MAPPED_TYPE = eINSTANCE.getMappedField_MappedType();
 
         /**
          * The meta object literal for the '<em><b>Aspects</b></em>' containment reference list feature.
@@ -4795,7 +4823,7 @@ public interface ServicePackage extends EPackage {
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference MAPPED_DATA_FIELD__ASPECTS = eINSTANCE.getMappedDataField_Aspects();
+        EReference MAPPED_FIELD__ASPECTS = eINSTANCE.getMappedField_Aspects();
 
         /**
          * The meta object literal for the '<em><b>Parameter</b></em>' container reference feature.
@@ -4803,7 +4831,7 @@ public interface ServicePackage extends EPackage {
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference MAPPED_DATA_FIELD__PARAMETER = eINSTANCE.getMappedDataField_Parameter();
+        EReference MAPPED_FIELD__PARAMETER = eINSTANCE.getMappedField_Parameter();
 
         /**
          * The meta object literal for the '<em><b>Get Qualified Name Parts</b></em>' operation.
@@ -4811,7 +4839,7 @@ public interface ServicePackage extends EPackage {
          * <!-- end-user-doc -->
          * @generated
          */
-        EOperation MAPPED_DATA_FIELD___GET_QUALIFIED_NAME_PARTS = eINSTANCE.getMappedDataField__GetQualifiedNameParts();
+        EOperation MAPPED_FIELD___GET_QUALIFIED_NAME_PARTS = eINSTANCE.getMappedField__GetQualifiedNameParts();
 
         /**
          * The meta object literal for the '<em><b>Build Qualified Name</b></em>' operation.
@@ -4819,7 +4847,7 @@ public interface ServicePackage extends EPackage {
          * <!-- end-user-doc -->
          * @generated
          */
-        EOperation MAPPED_DATA_FIELD___BUILD_QUALIFIED_NAME__STRING = eINSTANCE.getMappedDataField__BuildQualifiedName__String();
+        EOperation MAPPED_FIELD___BUILD_QUALIFIED_NAME__STRING = eINSTANCE.getMappedField__BuildQualifiedName__String();
 
         /**
          * The meta object literal for the '<em><b>Get Effective Type</b></em>' operation.
@@ -4827,7 +4855,7 @@ public interface ServicePackage extends EPackage {
          * <!-- end-user-doc -->
          * @generated
          */
-        EOperation MAPPED_DATA_FIELD___GET_EFFECTIVE_TYPE = eINSTANCE.getMappedDataField__GetEffectiveType();
+        EOperation MAPPED_FIELD___GET_EFFECTIVE_TYPE = eINSTANCE.getMappedField__GetEffectiveType();
 
         /**
          * The meta object literal for the '{@link de.fhdo.ddmm.service.impl.PossiblyImportedMicroserviceImpl <em>Possibly Imported Microservice</em>}' class.
@@ -5238,12 +5266,12 @@ public interface ServicePackage extends EPackage {
         EReference IMPORTED_SERVICE_ASPECT__PARAMETER = eINSTANCE.getImportedServiceAspect_Parameter();
 
         /**
-         * The meta object literal for the '<em><b>Mapped Data Field</b></em>' container reference feature.
+         * The meta object literal for the '<em><b>Mapped Field</b></em>' container reference feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference IMPORTED_SERVICE_ASPECT__MAPPED_DATA_FIELD = eINSTANCE.getImportedServiceAspect_MappedDataField();
+        EReference IMPORTED_SERVICE_ASPECT__MAPPED_FIELD = eINSTANCE.getImportedServiceAspect_MappedField();
 
         /**
          * The meta object literal for the '{@link de.fhdo.ddmm.service.ImportType <em>Import Type</em>}' enum.

@@ -64,7 +64,7 @@ public class MappingFactoryImpl extends EFactoryImpl implements MappingFactory {
             case MappingPackage.REFERRED_OPERATION_MAPPING: return createReferredOperationMapping();
             case MappingPackage.PRIMITIVE_PARAMETER_MAPPING: return createPrimitiveParameterMapping();
             case MappingPackage.COMPLEX_PARAMETER_MAPPING: return createComplexParameterMapping();
-            case MappingPackage.TECHNOLOGY_SPECIFIC_DATA_FIELD_TYPE_MAPPING: return createTechnologySpecificDataFieldTypeMapping();
+            case MappingPackage.TECHNOLOGY_SPECIFIC_FIELD_MAPPING: return createTechnologySpecificFieldMapping();
             case MappingPackage.DATA_FIELD_HIERARCHY: return createDataFieldHierarchy();
             case MappingPackage.TECHNOLOGY_SPECIFIC_PROTOCOL_SPECIFICATION: return createTechnologySpecificProtocolSpecification();
             case MappingPackage.TECHNOLOGY_SPECIFIC_PROTOCOL: return createTechnologySpecificProtocol();
@@ -169,9 +169,9 @@ public class MappingFactoryImpl extends EFactoryImpl implements MappingFactory {
      * @generated
      */
     @Override
-    public TechnologySpecificDataFieldTypeMapping createTechnologySpecificDataFieldTypeMapping() {
-        TechnologySpecificDataFieldTypeMappingImpl technologySpecificDataFieldTypeMapping = new TechnologySpecificDataFieldTypeMappingImpl();
-        return technologySpecificDataFieldTypeMapping;
+    public TechnologySpecificFieldMapping createTechnologySpecificFieldMapping() {
+        TechnologySpecificFieldMappingImpl technologySpecificFieldMapping = new TechnologySpecificFieldMappingImpl();
+        return technologySpecificFieldMapping;
     }
 
     /**

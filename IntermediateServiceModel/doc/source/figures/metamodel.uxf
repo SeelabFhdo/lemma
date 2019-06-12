@@ -5,7 +5,7 @@
     <id>UMLClass</id>
     <coordinates>
       <x>400</x>
-      <y>30</y>
+      <y>0</y>
       <w>220</w>
       <h>50</h>
     </coordinates>
@@ -18,7 +18,7 @@ sourceModelUri : String</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>100</x>
-      <y>50</y>
+      <y>20</y>
       <w>220</w>
       <h>30</h>
     </coordinates>
@@ -29,7 +29,7 @@ sourceModelUri : String</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>310</x>
-      <y>50</y>
+      <y>20</y>
       <w>110</w>
       <h>40</h>
     </coordinates>
@@ -41,7 +41,7 @@ m1=*</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>340</x>
-      <y>140</y>
+      <y>110</y>
       <w>290</w>
       <h>140</h>
     </coordinates>
@@ -61,7 +61,7 @@ effectivelyImplemented : Boolean</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>510</x>
-      <y>70</y>
+      <y>40</y>
       <w>40</w>
       <h>90</h>
     </coordinates>
@@ -73,7 +73,7 @@ m1=*</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>30</x>
-      <y>460</y>
+      <y>430</y>
       <w>120</w>
       <h>110</h>
     </coordinates>
@@ -90,7 +90,7 @@ PUBLIC</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>320</x>
-      <y>460</y>
+      <y>430</y>
       <w>150</w>
       <h>100</h>
     </coordinates>
@@ -106,7 +106,7 @@ UTILITY</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>210</x>
-      <y>100</y>
+      <y>70</y>
       <w>120</w>
       <h>60</h>
     </coordinates>
@@ -121,7 +121,7 @@ name : String</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>260</x>
-      <y>70</y>
+      <y>40</y>
       <w>30</w>
       <h>50</h>
     </coordinates>
@@ -132,7 +132,7 @@ name : String</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>320</x>
-      <y>100</y>
+      <y>70</y>
       <w>120</w>
       <h>60</h>
     </coordinates>
@@ -144,7 +144,7 @@ m1=*</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>30</x>
-      <y>100</y>
+      <y>70</y>
       <w>170</w>
       <h>130</h>
     </coordinates>
@@ -163,7 +163,7 @@ addresses : String[*]</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>160</x>
-      <y>460</y>
+      <y>430</y>
       <w>150</w>
       <h>100</h>
     </coordinates>
@@ -179,7 +179,7 @@ ASYNCHRONOUS</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>190</x>
-      <y>150</y>
+      <y>120</y>
       <w>70</w>
       <h>50</h>
     </coordinates>
@@ -191,7 +191,7 @@ m1=1</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>190</x>
-      <y>180</y>
+      <y>150</y>
       <w>170</w>
       <h>40</h>
     </coordinates>
@@ -203,7 +203,7 @@ m1=*</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>30</x>
-      <y>240</y>
+      <y>210</y>
       <w>190</w>
       <h>110</h>
     </coordinates>
@@ -221,7 +221,7 @@ dataFormat : String</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>200</x>
-      <y>200</y>
+      <y>170</y>
       <w>160</w>
       <h>60</h>
     </coordinates>
@@ -233,7 +233,7 @@ m1=0..2</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>230</x>
-      <y>290</y>
+      <y>260</y>
       <w>170</w>
       <h>110</h>
     </coordinates>
@@ -251,7 +251,7 @@ imported : Boolean</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>260</x>
-      <y>220</y>
+      <y>190</y>
       <w>100</w>
       <h>90</h>
     </coordinates>
@@ -263,7 +263,7 @@ m1=*</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>280</x>
-      <y>250</y>
+      <y>220</y>
       <w>80</w>
       <h>60</h>
     </coordinates>
@@ -275,7 +275,7 @@ m1=0..1</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>30</x>
-      <y>410</y>
+      <y>380</y>
       <w>210</w>
       <h>40</h>
     </coordinates>
@@ -286,7 +286,7 @@ m1=0..1</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>230</x>
-      <y>410</y>
+      <y>380</y>
       <w>200</w>
       <h>40</h>
     </coordinates>
@@ -298,7 +298,7 @@ m1=0..1</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>410</x>
-      <y>330</y>
+      <y>300</y>
       <w>170</w>
       <h>100</h>
     </coordinates>
@@ -315,7 +315,7 @@ imported : Boolean</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>130</x>
-      <y>700</y>
+      <y>670</y>
       <w>280</w>
       <h>110</h>
     </coordinates>
@@ -326,15 +326,14 @@ name : String
 qualifiedName : String
 visibility : Visibility
 notImplemented : Boolean
-hasImplementedOperations : Boolean
-group=1</panel_attributes>
+hasImplementedOperations : Boolean</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>230</x>
-      <y>430</y>
+      <y>400</y>
       <w>430</w>
       <h>40</h>
     </coordinates>
@@ -346,7 +345,7 @@ m1=0..1</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>700</x>
-      <y>240</y>
+      <y>210</y>
       <w>30</w>
       <h>60</h>
     </coordinates>
@@ -357,7 +356,7 @@ m1=0..1</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>640</x>
-      <y>400</y>
+      <y>370</y>
       <w>170</w>
       <h>100</h>
     </coordinates>
@@ -374,7 +373,7 @@ imported : Boolean</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>160</x>
-      <y>360</y>
+      <y>330</y>
       <w>90</w>
       <h>70</h>
     </coordinates>
@@ -386,7 +385,7 @@ m1=0..1</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>490</x>
-      <y>270</y>
+      <y>240</y>
       <w>40</w>
       <h>80</h>
     </coordinates>
@@ -398,7 +397,7 @@ m1=*</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>600</x>
-      <y>270</y>
+      <y>240</y>
       <w>60</w>
       <h>180</h>
     </coordinates>
@@ -410,7 +409,7 @@ m1=*</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>630</x>
-      <y>50</y>
+      <y>20</y>
       <w>180</w>
       <h>60</h>
     </coordinates>
@@ -425,7 +424,7 @@ name : String</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>650</x>
-      <y>280</y>
+      <y>250</y>
       <w>160</w>
       <h>110</h>
     </coordinates>
@@ -443,7 +442,7 @@ mandatory : Boolean</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>790</x>
-      <y>100</y>
+      <y>70</y>
       <w>40</w>
       <h>200</h>
     </coordinates>
@@ -455,7 +454,7 @@ m1=*</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>640</x>
-      <y>170</y>
+      <y>140</y>
       <w>150</w>
       <h>80</h>
     </coordinates>
@@ -471,7 +470,7 @@ value : String</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>700</x>
-      <y>100</y>
+      <y>70</y>
       <w>40</w>
       <h>90</h>
     </coordinates>
@@ -483,7 +482,7 @@ m1=*</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>560</x>
-      <y>90</y>
+      <y>60</y>
       <w>90</w>
       <h>70</h>
     </coordinates>
@@ -495,111 +494,103 @@ m1=*</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>510</x>
-      <y>700</y>
+      <y>670</y>
       <w>190</w>
       <h>30</h>
     </coordinates>
     <panel_attributes>*IntermediateEndpoint*
-bg=#CCCCCC
-group=1</panel_attributes>
+bg=#CCCCCC</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>400</x>
-      <y>700</y>
+      <y>670</y>
       <w>130</w>
       <h>40</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;&gt;&gt;
-m1=*
-group=1</panel_attributes>
+m1=*</panel_attributes>
     <additional_attributes>110.0;10.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
       <x>510</x>
-      <y>740</y>
+      <y>710</y>
       <w>280</w>
       <h>30</h>
     </coordinates>
     <panel_attributes>*IntermediateProtocolSpecification*
-bg=#CCCCCC
-group=1</panel_attributes>
+bg=#CCCCCC</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>400</x>
-      <y>740</y>
+      <y>710</y>
       <w>130</w>
       <h>40</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;&gt;&gt;
-m1=0..2
-group=1</panel_attributes>
+m1=0..2</panel_attributes>
     <additional_attributes>110.0;10.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
       <x>510</x>
-      <y>780</y>
+      <y>750</y>
       <w>240</w>
       <h>30</h>
     </coordinates>
     <panel_attributes>*IntermediateImportedAspect*
-bg=#CCCCCC
-group=1</panel_attributes>
+bg=#CCCCCC</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>400</x>
-      <y>780</y>
+      <y>750</y>
       <w>130</w>
       <h>40</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;&gt;&gt;
-m1=*
-group=1</panel_attributes>
+m1=*</panel_attributes>
     <additional_attributes>110.0;10.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
       <x>30</x>
-      <y>660</y>
+      <y>630</y>
       <w>220</w>
       <h>30</h>
     </coordinates>
     <panel_attributes>*IntermediateMicroservice*
-bg=green
-group=1</panel_attributes>
+bg=green</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>50</x>
-      <y>680</y>
+      <y>650</y>
       <w>100</w>
       <h>70</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;&gt;&gt;
-m1=1..*
-group=1</panel_attributes>
+m1=1..*</panel_attributes>
     <additional_attributes>80.0;40.0;10.0;40.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
       <x>130</x>
-      <y>870</y>
+      <y>840</y>
       <w>280</w>
       <h>100</h>
     </coordinates>
@@ -609,106 +600,98 @@ bg=yellow
 name : String
 qualifiedName : String
 visibility : Visibility
-notImplemented : Boolean
-group=1</panel_attributes>
+notImplemented : Boolean</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>260</x>
-      <y>800</y>
+      <y>770</y>
       <w>40</w>
       <h>90</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;&gt;&gt;
-m1=*
-group=1</panel_attributes>
+m1=*</panel_attributes>
     <additional_attributes>10.0;70.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
       <x>510</x>
-      <y>870</y>
+      <y>840</y>
       <w>190</w>
       <h>30</h>
     </coordinates>
     <panel_attributes>*IntermediateEndpoint*
-bg=yellow
-group=1</panel_attributes>
+bg=yellow</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
       <x>510</x>
-      <y>910</y>
+      <y>880</y>
       <w>280</w>
       <h>30</h>
     </coordinates>
     <panel_attributes>*IntermediateProtocolSpecification*
-bg=yellow
-group=1</panel_attributes>
+bg=yellow</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
       <x>510</x>
-      <y>950</y>
+      <y>920</y>
       <w>240</w>
       <h>30</h>
     </coordinates>
     <panel_attributes>*IntermediateImportedAspect*
-bg=yellow
-group=1</panel_attributes>
+bg=yellow</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>400</x>
-      <y>870</y>
+      <y>840</y>
       <w>130</w>
       <h>40</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;&gt;&gt;
-m1=*
-group=1</panel_attributes>
+m1=*</panel_attributes>
     <additional_attributes>110.0;10.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>400</x>
-      <y>910</y>
+      <y>880</y>
       <w>130</w>
       <h>40</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;&gt;&gt;
-m1=0..2
-group=1</panel_attributes>
+m1=0..2</panel_attributes>
     <additional_attributes>110.0;10.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>400</x>
-      <y>950</y>
+      <y>920</y>
       <w>130</w>
       <h>40</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;&gt;&gt;
-m1=*
-group=1</panel_attributes>
+m1=*</panel_attributes>
     <additional_attributes>110.0;10.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
       <x>480</x>
-      <y>460</y>
+      <y>430</y>
       <w>150</w>
       <h>100</h>
     </coordinates>
@@ -724,7 +707,7 @@ INOUT</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>130</x>
-      <y>1030</y>
+      <y>1000</y>
       <w>310</w>
       <h>130</h>
     </coordinates>
@@ -736,187 +719,173 @@ qualifiedName : String
 exchangePattern : ExchangePattern
 communicationType : CommunicationType
 communicatesFault : Boolean
-optional : Boolean
-group=1</panel_attributes>
+optional : Boolean</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
       <x>520</x>
-      <y>1030</y>
+      <y>1000</y>
       <w>210</w>
       <h>30</h>
     </coordinates>
-    <panel_attributes>/*data::IntermediateType*/
-group=1</panel_attributes>
+    <panel_attributes>/*data::IntermediateType*/</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>430</x>
-      <y>1030</y>
+      <y>1000</y>
       <w>110</w>
       <h>40</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;&gt;&gt;
-m1=1
-group=1</panel_attributes>
+m1=1</panel_attributes>
     <additional_attributes>90.0;10.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
       <x>560</x>
-      <y>1070</y>
+      <y>1040</y>
       <w>170</w>
       <h>30</h>
     </coordinates>
     <panel_attributes>*OperationReference*
-bg=yellow
-group=1</panel_attributes>
+bg=yellow</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>430</x>
-      <y>1070</y>
+      <y>1040</y>
       <w>150</w>
       <h>40</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;&gt;&gt;
-m1=0..1
-group=1</panel_attributes>
+m1=0..1</panel_attributes>
     <additional_attributes>130.0;10.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
       <x>580</x>
-      <y>1110</y>
+      <y>1080</y>
       <w>150</w>
       <h>40</h>
     </coordinates>
     <panel_attributes>*Intermediate*
 *ImportedAspect*
-bg=yellow
-group=1</panel_attributes>
+bg=yellow</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>430</x>
-      <y>1110</y>
+      <y>1080</y>
       <w>170</w>
       <h>40</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;&gt;&gt;
-m1=*
-group=1</panel_attributes>
+m1=*</panel_attributes>
     <additional_attributes>150.0;10.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>260</x>
-      <y>960</y>
+      <y>930</y>
       <w>40</w>
       <h>90</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;&gt;&gt;
-m1=*
-group=1</panel_attributes>
+m1=*</panel_attributes>
     <additional_attributes>10.0;70.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
       <x>130</x>
-      <y>1220</y>
-      <w>230</w>
+      <y>1180</y>
+      <w>340</w>
       <h>80</h>
     </coordinates>
-    <panel_attributes>*IntermediateMapped*
-*DataField*
+    <panel_attributes>*IntermediateMappedField*
 bg=yellow
 --
-mappedDataFieldName : String
+mappedFieldName : String
 qualifiedName : String
-group=1</panel_attributes>
+originalTypeKind : data::IntermediateTypeKind</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>520</x>
-      <y>1220</y>
+      <x>590</x>
+      <y>1190</y>
       <w>210</w>
       <h>30</h>
     </coordinates>
-    <panel_attributes>/*data::IntermediateType*/
-group=1</panel_attributes>
+    <panel_attributes>/*data::IntermediateType*/</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>350</x>
-      <y>1220</y>
-      <w>190</w>
+      <x>460</x>
+      <y>1190</y>
+      <w>150</w>
       <h>40</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;&gt;&gt;
-m1=1
-group=1</panel_attributes>
-    <additional_attributes>170.0;10.0;10.0;10.0</additional_attributes>
+m1=0..1</panel_attributes>
+    <additional_attributes>130.0;10.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>260</x>
-      <y>1150</y>
+      <y>1120</y>
       <w>40</w>
-      <h>90</h>
+      <h>80</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;&gt;&gt;
-m1=*
-group=1</panel_attributes>
-    <additional_attributes>10.0;70.0;10.0;10.0</additional_attributes>
+m1=*</panel_attributes>
+    <additional_attributes>10.0;60.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>490</x>
-      <y>1260</y>
+      <x>560</x>
+      <y>1230</y>
       <w>240</w>
       <h>30</h>
     </coordinates>
     <panel_attributes>*IntermediateImportedAspect*
-bg=yellow
-group=1</panel_attributes>
+bg=yellow</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>350</x>
-      <y>1260</y>
-      <w>160</w>
+      <x>460</x>
+      <y>1230</y>
+      <w>120</w>
       <h>40</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;&gt;&gt;
-m1=*
-group=1</panel_attributes>
-    <additional_attributes>140.0;10.0;10.0;10.0</additional_attributes>
+m1=*</panel_attributes>
+    <additional_attributes>100.0;10.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
       <x>30</x>
-      <y>1310</y>
+      <y>1280</y>
       <w>310</w>
       <h>100</h>
     </coordinates>
@@ -925,119 +894,110 @@ group=1</panel_attributes>
 bg=yellow
 --
 nameInReferringInterface : String
-qualifiedNameInReferringInterface : String
-group=1</panel_attributes>
+qualifiedNameInReferringInterface : String</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>30</x>
-      <y>770</y>
+      <y>740</y>
       <w>120</w>
       <h>560</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;&gt;&gt;
-m1=*
-group=1</panel_attributes>
+m1=*</panel_attributes>
     <additional_attributes>10.0;540.0;10.0;10.0;100.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>60</x>
-      <y>870</y>
+      <y>840</y>
       <w>90</w>
       <h>460</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
-m1=1
-group=1</panel_attributes>
+m1=1</panel_attributes>
     <additional_attributes>70.0;10.0;10.0;10.0;10.0;440.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
       <x>440</x>
-      <y>1310</y>
+      <y>1280</y>
       <w>190</w>
       <h>30</h>
     </coordinates>
     <panel_attributes>*IntermediateEndpoint*
-bg=yellow
-group=1</panel_attributes>
+bg=yellow</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
       <x>440</x>
-      <y>1350</y>
+      <y>1320</y>
       <w>280</w>
       <h>30</h>
     </coordinates>
     <panel_attributes>*IntermediateProtocolSpecification*
-bg=yellow
-group=1</panel_attributes>
+bg=yellow</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
       <x>440</x>
-      <y>1390</y>
+      <y>1360</y>
       <w>240</w>
       <h>30</h>
     </coordinates>
     <panel_attributes>*IntermediateImportedAspect*
-bg=yellow
-group=1</panel_attributes>
+bg=yellow</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>330</x>
-      <y>1310</y>
+      <y>1280</y>
       <w>130</w>
       <h>40</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;&gt;&gt;
-m1=*
-group=1</panel_attributes>
+m1=*</panel_attributes>
     <additional_attributes>110.0;10.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>330</x>
-      <y>1350</y>
+      <y>1320</y>
       <w>130</w>
       <h>40</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;&gt;&gt;
-m1=0..2
-group=1</panel_attributes>
+m1=0..2</panel_attributes>
     <additional_attributes>110.0;10.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>330</x>
-      <y>1390</y>
+      <y>1360</y>
       <w>130</w>
       <h>40</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;&gt;&gt;
-m1=*
-group=1</panel_attributes>
+m1=*</panel_attributes>
     <additional_attributes>110.0;10.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
       <x>30</x>
-      <y>580</y>
+      <y>550</y>
       <w>200</w>
       <h>70</h>
     </coordinates>
@@ -1051,7 +1011,7 @@ qualifiedName : String</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>290</x>
-      <y>580</y>
+      <y>550</y>
       <w>210</w>
       <h>30</h>
     </coordinates>
@@ -1062,7 +1022,7 @@ qualifiedName : String</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>290</x>
-      <y>620</y>
+      <y>590</y>
       <w>220</w>
       <h>30</h>
     </coordinates>
@@ -1073,7 +1033,7 @@ qualifiedName : String</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>220</x>
-      <y>580</y>
+      <y>550</y>
       <w>90</w>
       <h>30</h>
     </coordinates>
@@ -1084,7 +1044,7 @@ qualifiedName : String</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>220</x>
-      <y>620</y>
+      <y>590</y>
       <w>90</w>
       <h>40</h>
     </coordinates>

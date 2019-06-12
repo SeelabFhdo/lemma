@@ -2,6 +2,7 @@ package de.fhdo.ddmm.technology.mapping
 
 import de.fhdo.ddmm.data.ComplexType
 import de.fhdo.ddmm.data.DataField
+import de.fhdo.ddmm.data.EnumerationField
 import de.fhdo.ddmm.data.PrimitiveValue
 import de.fhdo.ddmm.data.Type
 import de.fhdo.ddmm.service.Import
@@ -268,19 +269,26 @@ class ComplexParameterMapping extends ParameterMapping {
 
     refers Import technology
     refers ComplexType technologySpecificComplexType
-    contains TechnologySpecificDataFieldTypeMapping[] dataFieldMappings opposite parameterMapping
+    contains TechnologySpecificFieldMapping[] fieldMappings opposite parameterMapping
 }
 
 /**
- * Technology mapping for data fields of complexly typed parameters
+ * Technology mapping for data or enumeration fields
  */
-class TechnologySpecificDataFieldTypeMapping {
-    refers Import technology
-    refers Type ^type
-    contains DataFieldHierarchy dataFieldHierarchy opposite mapping
-    contains TechnologySpecificImportedServiceAspect[] aspects opposite dataFieldMapping
+class TechnologySpecificFieldMapping {
+    /**
+     * Implicit Constraints:
+     *     (C1) Enumeration fields cannot exhibit mapped types.
+     *          Ensured by: DSL validator.
+     */
 
-    container ComplexParameterMapping parameterMapping opposite dataFieldMappings
+    refers Import[0..1] technology
+    refers Type[0..1] ^type
+    refers EnumerationField[0..1] enumerationField
+    contains DataFieldHierarchy[0..1] dataFieldHierarchy opposite mapping
+    contains TechnologySpecificImportedServiceAspect[] aspects opposite fieldMapping
+
+    container ComplexParameterMapping parameterMapping opposite fieldMappings
 }
 
 /**
@@ -291,7 +299,7 @@ class DataFieldHierarchy {
     refers DataField[] dataFields
     contains DataFieldHierarchy previous  // pointer to previous hierarchy level
 
-    container TechnologySpecificDataFieldTypeMapping mapping opposite dataFieldHierarchy
+    container TechnologySpecificFieldMapping mapping opposite dataFieldHierarchy
 }
 
 /**
@@ -374,5 +382,5 @@ class TechnologySpecificImportedServiceAspect {
     container OperationMapping operationMapping opposite aspects
     container ReferredOperationMapping referredOperationMapping opposite aspects
     container ParameterMapping parameterMapping opposite aspects
-    container TechnologySpecificDataFieldTypeMapping dataFieldMapping opposite aspects
+    container TechnologySpecificFieldMapping fieldMapping opposite aspects
 }

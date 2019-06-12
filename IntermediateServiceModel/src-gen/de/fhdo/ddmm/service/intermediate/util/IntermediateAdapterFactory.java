@@ -94,8 +94,8 @@ public class IntermediateAdapterFactory extends AdapterFactoryImpl {
                 return createIntermediateParameterAdapter();
             }
             @Override
-            public Adapter caseIntermediateMappedDataField(IntermediateMappedDataField object) {
-                return createIntermediateMappedDataFieldAdapter();
+            public Adapter caseIntermediateMappedField(IntermediateMappedField object) {
+                return createIntermediateMappedFieldAdapter();
             }
             @Override
             public Adapter caseMicroserviceReference(MicroserviceReference object) {
@@ -246,16 +246,16 @@ public class IntermediateAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link de.fhdo.ddmm.service.intermediate.IntermediateMappedDataField <em>Mapped Data Field</em>}'.
+     * Creates a new adapter for an object of class '{@link de.fhdo.ddmm.service.intermediate.IntermediateMappedField <em>Mapped Field</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see de.fhdo.ddmm.service.intermediate.IntermediateMappedDataField
+     * @see de.fhdo.ddmm.service.intermediate.IntermediateMappedField
      * @generated
      */
-    public Adapter createIntermediateMappedDataFieldAdapter() {
+    public Adapter createIntermediateMappedFieldAdapter() {
         return null;
     }
 

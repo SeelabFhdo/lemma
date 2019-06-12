@@ -8,7 +8,7 @@ import de.fhdo.ddmm.service.intermediate.IntermediateAspectProperty;
 import de.fhdo.ddmm.service.intermediate.IntermediateAspectPropertyValue;
 import de.fhdo.ddmm.service.intermediate.IntermediateImportedAspect;
 import de.fhdo.ddmm.service.intermediate.IntermediateInterface;
-import de.fhdo.ddmm.service.intermediate.IntermediateMappedDataField;
+import de.fhdo.ddmm.service.intermediate.IntermediateMappedField;
 import de.fhdo.ddmm.service.intermediate.IntermediateMicroservice;
 import de.fhdo.ddmm.service.intermediate.IntermediateOperation;
 import de.fhdo.ddmm.service.intermediate.IntermediatePackage;
@@ -49,7 +49,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.fhdo.ddmm.service.intermediate.impl.IntermediateImportedAspectImpl#getOperation <em>Operation</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.intermediate.impl.IntermediateImportedAspectImpl#getReferredOperation <em>Referred Operation</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.intermediate.impl.IntermediateImportedAspectImpl#getParameter <em>Parameter</em>}</li>
- *   <li>{@link de.fhdo.ddmm.service.intermediate.impl.IntermediateImportedAspectImpl#getMappedDataField <em>Mapped Data Field</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.service.intermediate.impl.IntermediateImportedAspectImpl#getMappedField <em>Mapped Field</em>}</li>
  * </ul>
  *
  * @generated
@@ -484,9 +484,9 @@ public class IntermediateImportedAspectImpl extends MinimalEObjectImpl.Container
      * @generated
      */
     @Override
-    public IntermediateMappedDataField getMappedDataField() {
-        if (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__MAPPED_DATA_FIELD) return null;
-        return (IntermediateMappedDataField)eContainer();
+    public IntermediateMappedField getMappedField() {
+        if (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__MAPPED_FIELD) return null;
+        return (IntermediateMappedField)eContainer();
     }
 
     /**
@@ -494,9 +494,9 @@ public class IntermediateImportedAspectImpl extends MinimalEObjectImpl.Container
      * <!-- end-user-doc -->
      * @generated
      */
-    public IntermediateMappedDataField basicGetMappedDataField() {
-        if (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__MAPPED_DATA_FIELD) return null;
-        return (IntermediateMappedDataField)eInternalContainer();
+    public IntermediateMappedField basicGetMappedField() {
+        if (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__MAPPED_FIELD) return null;
+        return (IntermediateMappedField)eInternalContainer();
     }
 
     /**
@@ -504,8 +504,8 @@ public class IntermediateImportedAspectImpl extends MinimalEObjectImpl.Container
      * <!-- end-user-doc -->
      * @generated
      */
-    public NotificationChain basicSetMappedDataField(IntermediateMappedDataField newMappedDataField, NotificationChain msgs) {
-        msgs = eBasicSetContainer((InternalEObject)newMappedDataField, IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__MAPPED_DATA_FIELD, msgs);
+    public NotificationChain basicSetMappedField(IntermediateMappedField newMappedField, NotificationChain msgs) {
+        msgs = eBasicSetContainer((InternalEObject)newMappedField, IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__MAPPED_FIELD, msgs);
         return msgs;
     }
 
@@ -515,20 +515,20 @@ public class IntermediateImportedAspectImpl extends MinimalEObjectImpl.Container
      * @generated
      */
     @Override
-    public void setMappedDataField(IntermediateMappedDataField newMappedDataField) {
-        if (newMappedDataField != eInternalContainer() || (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__MAPPED_DATA_FIELD && newMappedDataField != null)) {
-            if (EcoreUtil.isAncestor(this, newMappedDataField))
+    public void setMappedField(IntermediateMappedField newMappedField) {
+        if (newMappedField != eInternalContainer() || (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__MAPPED_FIELD && newMappedField != null)) {
+            if (EcoreUtil.isAncestor(this, newMappedField))
                 throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
             NotificationChain msgs = null;
             if (eInternalContainer() != null)
                 msgs = eBasicRemoveFromContainer(msgs);
-            if (newMappedDataField != null)
-                msgs = ((InternalEObject)newMappedDataField).eInverseAdd(this, IntermediatePackage.INTERMEDIATE_MAPPED_DATA_FIELD__ASPECTS, IntermediateMappedDataField.class, msgs);
-            msgs = basicSetMappedDataField(newMappedDataField, msgs);
+            if (newMappedField != null)
+                msgs = ((InternalEObject)newMappedField).eInverseAdd(this, IntermediatePackage.INTERMEDIATE_MAPPED_FIELD__ASPECTS, IntermediateMappedField.class, msgs);
+            msgs = basicSetMappedField(newMappedField, msgs);
             if (msgs != null) msgs.dispatch();
         }
         else if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__MAPPED_DATA_FIELD, newMappedDataField, newMappedDataField));
+            eNotify(new ENotificationImpl(this, Notification.SET, IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__MAPPED_FIELD, newMappedField, newMappedField));
     }
 
     /**
@@ -564,10 +564,10 @@ public class IntermediateImportedAspectImpl extends MinimalEObjectImpl.Container
                 if (eInternalContainer() != null)
                     msgs = eBasicRemoveFromContainer(msgs);
                 return basicSetParameter((IntermediateParameter)otherEnd, msgs);
-            case IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__MAPPED_DATA_FIELD:
+            case IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__MAPPED_FIELD:
                 if (eInternalContainer() != null)
                     msgs = eBasicRemoveFromContainer(msgs);
-                return basicSetMappedDataField((IntermediateMappedDataField)otherEnd, msgs);
+                return basicSetMappedField((IntermediateMappedField)otherEnd, msgs);
         }
         return super.eInverseAdd(otherEnd, featureID, msgs);
     }
@@ -594,8 +594,8 @@ public class IntermediateImportedAspectImpl extends MinimalEObjectImpl.Container
                 return basicSetReferredOperation(null, msgs);
             case IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__PARAMETER:
                 return basicSetParameter(null, msgs);
-            case IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__MAPPED_DATA_FIELD:
-                return basicSetMappedDataField(null, msgs);
+            case IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__MAPPED_FIELD:
+                return basicSetMappedField(null, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
@@ -618,8 +618,8 @@ public class IntermediateImportedAspectImpl extends MinimalEObjectImpl.Container
                 return eInternalContainer().eInverseRemove(this, IntermediatePackage.INTERMEDIATE_REFERRED_OPERATION__ASPECTS, IntermediateReferredOperation.class, msgs);
             case IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__PARAMETER:
                 return eInternalContainer().eInverseRemove(this, IntermediatePackage.INTERMEDIATE_PARAMETER__ASPECTS, IntermediateParameter.class, msgs);
-            case IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__MAPPED_DATA_FIELD:
-                return eInternalContainer().eInverseRemove(this, IntermediatePackage.INTERMEDIATE_MAPPED_DATA_FIELD__ASPECTS, IntermediateMappedDataField.class, msgs);
+            case IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__MAPPED_FIELD:
+                return eInternalContainer().eInverseRemove(this, IntermediatePackage.INTERMEDIATE_MAPPED_FIELD__ASPECTS, IntermediateMappedField.class, msgs);
         }
         return super.eBasicRemoveFromContainerFeature(msgs);
     }
@@ -656,9 +656,9 @@ public class IntermediateImportedAspectImpl extends MinimalEObjectImpl.Container
             case IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__PARAMETER:
                 if (resolve) return getParameter();
                 return basicGetParameter();
-            case IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__MAPPED_DATA_FIELD:
-                if (resolve) return getMappedDataField();
-                return basicGetMappedDataField();
+            case IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__MAPPED_FIELD:
+                if (resolve) return getMappedField();
+                return basicGetMappedField();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -701,8 +701,8 @@ public class IntermediateImportedAspectImpl extends MinimalEObjectImpl.Container
             case IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__PARAMETER:
                 setParameter((IntermediateParameter)newValue);
                 return;
-            case IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__MAPPED_DATA_FIELD:
-                setMappedDataField((IntermediateMappedDataField)newValue);
+            case IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__MAPPED_FIELD:
+                setMappedField((IntermediateMappedField)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -743,8 +743,8 @@ public class IntermediateImportedAspectImpl extends MinimalEObjectImpl.Container
             case IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__PARAMETER:
                 setParameter((IntermediateParameter)null);
                 return;
-            case IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__MAPPED_DATA_FIELD:
-                setMappedDataField((IntermediateMappedDataField)null);
+            case IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__MAPPED_FIELD:
+                setMappedField((IntermediateMappedField)null);
                 return;
         }
         super.eUnset(featureID);
@@ -776,8 +776,8 @@ public class IntermediateImportedAspectImpl extends MinimalEObjectImpl.Container
                 return basicGetReferredOperation() != null;
             case IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__PARAMETER:
                 return basicGetParameter() != null;
-            case IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__MAPPED_DATA_FIELD:
-                return basicGetMappedDataField() != null;
+            case IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__MAPPED_FIELD:
+                return basicGetMappedField() != null;
         }
         return super.eIsSet(featureID);
     }

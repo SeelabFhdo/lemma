@@ -15,7 +15,7 @@ import de.fhdo.ddmm.technology.mapping.MicroserviceMapping;
 import de.fhdo.ddmm.technology.mapping.OperationMapping;
 import de.fhdo.ddmm.technology.mapping.ParameterMapping;
 import de.fhdo.ddmm.technology.mapping.ReferredOperationMapping;
-import de.fhdo.ddmm.technology.mapping.TechnologySpecificDataFieldTypeMapping;
+import de.fhdo.ddmm.technology.mapping.TechnologySpecificFieldMapping;
 import de.fhdo.ddmm.technology.mapping.TechnologySpecificImportedServiceAspect;
 
 import java.util.Collection;
@@ -52,7 +52,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.fhdo.ddmm.technology.mapping.impl.TechnologySpecificImportedServiceAspectImpl#getOperationMapping <em>Operation Mapping</em>}</li>
  *   <li>{@link de.fhdo.ddmm.technology.mapping.impl.TechnologySpecificImportedServiceAspectImpl#getReferredOperationMapping <em>Referred Operation Mapping</em>}</li>
  *   <li>{@link de.fhdo.ddmm.technology.mapping.impl.TechnologySpecificImportedServiceAspectImpl#getParameterMapping <em>Parameter Mapping</em>}</li>
- *   <li>{@link de.fhdo.ddmm.technology.mapping.impl.TechnologySpecificImportedServiceAspectImpl#getDataFieldMapping <em>Data Field Mapping</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.technology.mapping.impl.TechnologySpecificImportedServiceAspectImpl#getFieldMapping <em>Field Mapping</em>}</li>
  * </ul>
  *
  * @generated
@@ -526,9 +526,9 @@ public class TechnologySpecificImportedServiceAspectImpl extends MinimalEObjectI
      * @generated
      */
     @Override
-    public TechnologySpecificDataFieldTypeMapping getDataFieldMapping() {
-        if (eContainerFeatureID() != MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__DATA_FIELD_MAPPING) return null;
-        return (TechnologySpecificDataFieldTypeMapping)eContainer();
+    public TechnologySpecificFieldMapping getFieldMapping() {
+        if (eContainerFeatureID() != MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__FIELD_MAPPING) return null;
+        return (TechnologySpecificFieldMapping)eContainer();
     }
 
     /**
@@ -536,9 +536,9 @@ public class TechnologySpecificImportedServiceAspectImpl extends MinimalEObjectI
      * <!-- end-user-doc -->
      * @generated
      */
-    public TechnologySpecificDataFieldTypeMapping basicGetDataFieldMapping() {
-        if (eContainerFeatureID() != MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__DATA_FIELD_MAPPING) return null;
-        return (TechnologySpecificDataFieldTypeMapping)eInternalContainer();
+    public TechnologySpecificFieldMapping basicGetFieldMapping() {
+        if (eContainerFeatureID() != MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__FIELD_MAPPING) return null;
+        return (TechnologySpecificFieldMapping)eInternalContainer();
     }
 
     /**
@@ -546,8 +546,8 @@ public class TechnologySpecificImportedServiceAspectImpl extends MinimalEObjectI
      * <!-- end-user-doc -->
      * @generated
      */
-    public NotificationChain basicSetDataFieldMapping(TechnologySpecificDataFieldTypeMapping newDataFieldMapping, NotificationChain msgs) {
-        msgs = eBasicSetContainer((InternalEObject)newDataFieldMapping, MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__DATA_FIELD_MAPPING, msgs);
+    public NotificationChain basicSetFieldMapping(TechnologySpecificFieldMapping newFieldMapping, NotificationChain msgs) {
+        msgs = eBasicSetContainer((InternalEObject)newFieldMapping, MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__FIELD_MAPPING, msgs);
         return msgs;
     }
 
@@ -557,20 +557,20 @@ public class TechnologySpecificImportedServiceAspectImpl extends MinimalEObjectI
      * @generated
      */
     @Override
-    public void setDataFieldMapping(TechnologySpecificDataFieldTypeMapping newDataFieldMapping) {
-        if (newDataFieldMapping != eInternalContainer() || (eContainerFeatureID() != MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__DATA_FIELD_MAPPING && newDataFieldMapping != null)) {
-            if (EcoreUtil.isAncestor(this, newDataFieldMapping))
+    public void setFieldMapping(TechnologySpecificFieldMapping newFieldMapping) {
+        if (newFieldMapping != eInternalContainer() || (eContainerFeatureID() != MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__FIELD_MAPPING && newFieldMapping != null)) {
+            if (EcoreUtil.isAncestor(this, newFieldMapping))
                 throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
             NotificationChain msgs = null;
             if (eInternalContainer() != null)
                 msgs = eBasicRemoveFromContainer(msgs);
-            if (newDataFieldMapping != null)
-                msgs = ((InternalEObject)newDataFieldMapping).eInverseAdd(this, MappingPackage.TECHNOLOGY_SPECIFIC_DATA_FIELD_TYPE_MAPPING__ASPECTS, TechnologySpecificDataFieldTypeMapping.class, msgs);
-            msgs = basicSetDataFieldMapping(newDataFieldMapping, msgs);
+            if (newFieldMapping != null)
+                msgs = ((InternalEObject)newFieldMapping).eInverseAdd(this, MappingPackage.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__ASPECTS, TechnologySpecificFieldMapping.class, msgs);
+            msgs = basicSetFieldMapping(newFieldMapping, msgs);
             if (msgs != null) msgs.dispatch();
         }
         else if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__DATA_FIELD_MAPPING, newDataFieldMapping, newDataFieldMapping));
+            eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__FIELD_MAPPING, newFieldMapping, newFieldMapping));
     }
 
     /**
@@ -601,10 +601,10 @@ public class TechnologySpecificImportedServiceAspectImpl extends MinimalEObjectI
                 if (eInternalContainer() != null)
                     msgs = eBasicRemoveFromContainer(msgs);
                 return basicSetParameterMapping((ParameterMapping)otherEnd, msgs);
-            case MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__DATA_FIELD_MAPPING:
+            case MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__FIELD_MAPPING:
                 if (eInternalContainer() != null)
                     msgs = eBasicRemoveFromContainer(msgs);
-                return basicSetDataFieldMapping((TechnologySpecificDataFieldTypeMapping)otherEnd, msgs);
+                return basicSetFieldMapping((TechnologySpecificFieldMapping)otherEnd, msgs);
         }
         return super.eInverseAdd(otherEnd, featureID, msgs);
     }
@@ -631,8 +631,8 @@ public class TechnologySpecificImportedServiceAspectImpl extends MinimalEObjectI
                 return basicSetReferredOperationMapping(null, msgs);
             case MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__PARAMETER_MAPPING:
                 return basicSetParameterMapping(null, msgs);
-            case MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__DATA_FIELD_MAPPING:
-                return basicSetDataFieldMapping(null, msgs);
+            case MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__FIELD_MAPPING:
+                return basicSetFieldMapping(null, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
@@ -655,8 +655,8 @@ public class TechnologySpecificImportedServiceAspectImpl extends MinimalEObjectI
                 return eInternalContainer().eInverseRemove(this, MappingPackage.REFERRED_OPERATION_MAPPING__ASPECTS, ReferredOperationMapping.class, msgs);
             case MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__PARAMETER_MAPPING:
                 return eInternalContainer().eInverseRemove(this, MappingPackage.PARAMETER_MAPPING__ASPECTS, ParameterMapping.class, msgs);
-            case MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__DATA_FIELD_MAPPING:
-                return eInternalContainer().eInverseRemove(this, MappingPackage.TECHNOLOGY_SPECIFIC_DATA_FIELD_TYPE_MAPPING__ASPECTS, TechnologySpecificDataFieldTypeMapping.class, msgs);
+            case MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__FIELD_MAPPING:
+                return eInternalContainer().eInverseRemove(this, MappingPackage.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__ASPECTS, TechnologySpecificFieldMapping.class, msgs);
         }
         return super.eBasicRemoveFromContainerFeature(msgs);
     }
@@ -694,9 +694,9 @@ public class TechnologySpecificImportedServiceAspectImpl extends MinimalEObjectI
             case MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__PARAMETER_MAPPING:
                 if (resolve) return getParameterMapping();
                 return basicGetParameterMapping();
-            case MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__DATA_FIELD_MAPPING:
-                if (resolve) return getDataFieldMapping();
-                return basicGetDataFieldMapping();
+            case MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__FIELD_MAPPING:
+                if (resolve) return getFieldMapping();
+                return basicGetFieldMapping();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -738,8 +738,8 @@ public class TechnologySpecificImportedServiceAspectImpl extends MinimalEObjectI
             case MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__PARAMETER_MAPPING:
                 setParameterMapping((ParameterMapping)newValue);
                 return;
-            case MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__DATA_FIELD_MAPPING:
-                setDataFieldMapping((TechnologySpecificDataFieldTypeMapping)newValue);
+            case MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__FIELD_MAPPING:
+                setFieldMapping((TechnologySpecificFieldMapping)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -780,8 +780,8 @@ public class TechnologySpecificImportedServiceAspectImpl extends MinimalEObjectI
             case MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__PARAMETER_MAPPING:
                 setParameterMapping((ParameterMapping)null);
                 return;
-            case MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__DATA_FIELD_MAPPING:
-                setDataFieldMapping((TechnologySpecificDataFieldTypeMapping)null);
+            case MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__FIELD_MAPPING:
+                setFieldMapping((TechnologySpecificFieldMapping)null);
                 return;
         }
         super.eUnset(featureID);
@@ -813,8 +813,8 @@ public class TechnologySpecificImportedServiceAspectImpl extends MinimalEObjectI
                 return basicGetReferredOperationMapping() != null;
             case MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__PARAMETER_MAPPING:
                 return basicGetParameterMapping() != null;
-            case MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__DATA_FIELD_MAPPING:
-                return basicGetDataFieldMapping() != null;
+            case MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__FIELD_MAPPING:
+                return basicGetFieldMapping() != null;
         }
         return super.eIsSet(featureID);
     }

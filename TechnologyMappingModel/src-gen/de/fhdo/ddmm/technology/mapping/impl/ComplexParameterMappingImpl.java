@@ -8,7 +8,7 @@ import de.fhdo.ddmm.service.Import;
 
 import de.fhdo.ddmm.technology.mapping.ComplexParameterMapping;
 import de.fhdo.ddmm.technology.mapping.MappingPackage;
-import de.fhdo.ddmm.technology.mapping.TechnologySpecificDataFieldTypeMapping;
+import de.fhdo.ddmm.technology.mapping.TechnologySpecificFieldMapping;
 
 import java.util.Collection;
 
@@ -35,7 +35,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <ul>
  *   <li>{@link de.fhdo.ddmm.technology.mapping.impl.ComplexParameterMappingImpl#getTechnology <em>Technology</em>}</li>
  *   <li>{@link de.fhdo.ddmm.technology.mapping.impl.ComplexParameterMappingImpl#getTechnologySpecificComplexType <em>Technology Specific Complex Type</em>}</li>
- *   <li>{@link de.fhdo.ddmm.technology.mapping.impl.ComplexParameterMappingImpl#getDataFieldMappings <em>Data Field Mappings</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.technology.mapping.impl.ComplexParameterMappingImpl#getFieldMappings <em>Field Mappings</em>}</li>
  * </ul>
  *
  * @generated
@@ -62,14 +62,14 @@ public class ComplexParameterMappingImpl extends ParameterMappingImpl implements
     protected ComplexType technologySpecificComplexType;
 
     /**
-     * The cached value of the '{@link #getDataFieldMappings() <em>Data Field Mappings</em>}' containment reference list.
+     * The cached value of the '{@link #getFieldMappings() <em>Field Mappings</em>}' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getDataFieldMappings()
+     * @see #getFieldMappings()
      * @generated
      * @ordered
      */
-    protected EList<TechnologySpecificDataFieldTypeMapping> dataFieldMappings;
+    protected EList<TechnologySpecificFieldMapping> fieldMappings;
 
     /**
      * <!-- begin-user-doc -->
@@ -176,11 +176,11 @@ public class ComplexParameterMappingImpl extends ParameterMappingImpl implements
      * @generated
      */
     @Override
-    public EList<TechnologySpecificDataFieldTypeMapping> getDataFieldMappings() {
-        if (dataFieldMappings == null) {
-            dataFieldMappings = new EObjectContainmentWithInverseEList<TechnologySpecificDataFieldTypeMapping>(TechnologySpecificDataFieldTypeMapping.class, this, MappingPackage.COMPLEX_PARAMETER_MAPPING__DATA_FIELD_MAPPINGS, MappingPackage.TECHNOLOGY_SPECIFIC_DATA_FIELD_TYPE_MAPPING__PARAMETER_MAPPING);
+    public EList<TechnologySpecificFieldMapping> getFieldMappings() {
+        if (fieldMappings == null) {
+            fieldMappings = new EObjectContainmentWithInverseEList<TechnologySpecificFieldMapping>(TechnologySpecificFieldMapping.class, this, MappingPackage.COMPLEX_PARAMETER_MAPPING__FIELD_MAPPINGS, MappingPackage.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__PARAMETER_MAPPING);
         }
-        return dataFieldMappings;
+        return fieldMappings;
     }
 
     /**
@@ -192,8 +192,8 @@ public class ComplexParameterMappingImpl extends ParameterMappingImpl implements
     @Override
     public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
-            case MappingPackage.COMPLEX_PARAMETER_MAPPING__DATA_FIELD_MAPPINGS:
-                return ((InternalEList<InternalEObject>)(InternalEList<?>)getDataFieldMappings()).basicAdd(otherEnd, msgs);
+            case MappingPackage.COMPLEX_PARAMETER_MAPPING__FIELD_MAPPINGS:
+                return ((InternalEList<InternalEObject>)(InternalEList<?>)getFieldMappings()).basicAdd(otherEnd, msgs);
         }
         return super.eInverseAdd(otherEnd, featureID, msgs);
     }
@@ -206,8 +206,8 @@ public class ComplexParameterMappingImpl extends ParameterMappingImpl implements
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
-            case MappingPackage.COMPLEX_PARAMETER_MAPPING__DATA_FIELD_MAPPINGS:
-                return ((InternalEList<?>)getDataFieldMappings()).basicRemove(otherEnd, msgs);
+            case MappingPackage.COMPLEX_PARAMETER_MAPPING__FIELD_MAPPINGS:
+                return ((InternalEList<?>)getFieldMappings()).basicRemove(otherEnd, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
@@ -226,8 +226,8 @@ public class ComplexParameterMappingImpl extends ParameterMappingImpl implements
             case MappingPackage.COMPLEX_PARAMETER_MAPPING__TECHNOLOGY_SPECIFIC_COMPLEX_TYPE:
                 if (resolve) return getTechnologySpecificComplexType();
                 return basicGetTechnologySpecificComplexType();
-            case MappingPackage.COMPLEX_PARAMETER_MAPPING__DATA_FIELD_MAPPINGS:
-                return getDataFieldMappings();
+            case MappingPackage.COMPLEX_PARAMETER_MAPPING__FIELD_MAPPINGS:
+                return getFieldMappings();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -247,9 +247,9 @@ public class ComplexParameterMappingImpl extends ParameterMappingImpl implements
             case MappingPackage.COMPLEX_PARAMETER_MAPPING__TECHNOLOGY_SPECIFIC_COMPLEX_TYPE:
                 setTechnologySpecificComplexType((ComplexType)newValue);
                 return;
-            case MappingPackage.COMPLEX_PARAMETER_MAPPING__DATA_FIELD_MAPPINGS:
-                getDataFieldMappings().clear();
-                getDataFieldMappings().addAll((Collection<? extends TechnologySpecificDataFieldTypeMapping>)newValue);
+            case MappingPackage.COMPLEX_PARAMETER_MAPPING__FIELD_MAPPINGS:
+                getFieldMappings().clear();
+                getFieldMappings().addAll((Collection<? extends TechnologySpecificFieldMapping>)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -269,8 +269,8 @@ public class ComplexParameterMappingImpl extends ParameterMappingImpl implements
             case MappingPackage.COMPLEX_PARAMETER_MAPPING__TECHNOLOGY_SPECIFIC_COMPLEX_TYPE:
                 setTechnologySpecificComplexType((ComplexType)null);
                 return;
-            case MappingPackage.COMPLEX_PARAMETER_MAPPING__DATA_FIELD_MAPPINGS:
-                getDataFieldMappings().clear();
+            case MappingPackage.COMPLEX_PARAMETER_MAPPING__FIELD_MAPPINGS:
+                getFieldMappings().clear();
                 return;
         }
         super.eUnset(featureID);
@@ -288,8 +288,8 @@ public class ComplexParameterMappingImpl extends ParameterMappingImpl implements
                 return technology != null;
             case MappingPackage.COMPLEX_PARAMETER_MAPPING__TECHNOLOGY_SPECIFIC_COMPLEX_TYPE:
                 return technologySpecificComplexType != null;
-            case MappingPackage.COMPLEX_PARAMETER_MAPPING__DATA_FIELD_MAPPINGS:
-                return dataFieldMappings != null && !dataFieldMappings.isEmpty();
+            case MappingPackage.COMPLEX_PARAMETER_MAPPING__FIELD_MAPPINGS:
+                return fieldMappings != null && !fieldMappings.isEmpty();
         }
         return super.eIsSet(featureID);
     }

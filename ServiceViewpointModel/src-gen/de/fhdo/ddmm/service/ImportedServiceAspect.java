@@ -34,7 +34,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.fhdo.ddmm.service.ImportedServiceAspect#getOperation <em>Operation</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.ImportedServiceAspect#getReferredOperation <em>Referred Operation</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.ImportedServiceAspect#getParameter <em>Parameter</em>}</li>
- *   <li>{@link de.fhdo.ddmm.service.ImportedServiceAspect#getMappedDataField <em>Mapped Data Field</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.service.ImportedServiceAspect#getMappedField <em>Mapped Field</em>}</li>
  * </ul>
  *
  * @see de.fhdo.ddmm.service.ServicePackage#getImportedServiceAspect()
@@ -288,31 +288,31 @@ public interface ImportedServiceAspect extends EObject {
     void setParameter(Parameter value);
 
     /**
-     * Returns the value of the '<em><b>Mapped Data Field</b></em>' container reference.
-     * It is bidirectional and its opposite is '{@link de.fhdo.ddmm.service.MappedDataField#getAspects <em>Aspects</em>}'.
+     * Returns the value of the '<em><b>Mapped Field</b></em>' container reference.
+     * It is bidirectional and its opposite is '{@link de.fhdo.ddmm.service.MappedField#getAspects <em>Aspects</em>}'.
      * <!-- begin-user-doc -->
      * <p>
-     * If the meaning of the '<em>Mapped Data Field</em>' container reference isn't clear,
+     * If the meaning of the '<em>Mapped Field</em>' container reference isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Mapped Data Field</em>' container reference.
-     * @see #setMappedDataField(MappedDataField)
-     * @see de.fhdo.ddmm.service.ServicePackage#getImportedServiceAspect_MappedDataField()
-     * @see de.fhdo.ddmm.service.MappedDataField#getAspects
+     * @return the value of the '<em>Mapped Field</em>' container reference.
+     * @see #setMappedField(MappedField)
+     * @see de.fhdo.ddmm.service.ServicePackage#getImportedServiceAspect_MappedField()
+     * @see de.fhdo.ddmm.service.MappedField#getAspects
      * @model opposite="aspects" transient="false"
      * @generated
      */
-    MappedDataField getMappedDataField();
+    MappedField getMappedField();
 
     /**
-     * Sets the value of the '{@link de.fhdo.ddmm.service.ImportedServiceAspect#getMappedDataField <em>Mapped Data Field</em>}' container reference.
+     * Sets the value of the '{@link de.fhdo.ddmm.service.ImportedServiceAspect#getMappedField <em>Mapped Field</em>}' container reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Mapped Data Field</em>' container reference.
-     * @see #getMappedDataField()
+     * @param value the new value of the '<em>Mapped Field</em>' container reference.
+     * @see #getMappedField()
      * @generated
      */
-    void setMappedDataField(MappedDataField value);
+    void setMappedField(MappedField value);
 
 } // ImportedServiceAspect

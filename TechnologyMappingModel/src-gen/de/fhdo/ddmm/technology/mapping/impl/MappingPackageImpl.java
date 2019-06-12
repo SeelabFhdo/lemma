@@ -20,8 +20,8 @@ import de.fhdo.ddmm.technology.mapping.ParameterMapping;
 import de.fhdo.ddmm.technology.mapping.PrimitiveParameterMapping;
 import de.fhdo.ddmm.technology.mapping.ReferredOperationMapping;
 import de.fhdo.ddmm.technology.mapping.TechnologyMapping;
-import de.fhdo.ddmm.technology.mapping.TechnologySpecificDataFieldTypeMapping;
 import de.fhdo.ddmm.technology.mapping.TechnologySpecificEndpoint;
+import de.fhdo.ddmm.technology.mapping.TechnologySpecificFieldMapping;
 import de.fhdo.ddmm.technology.mapping.TechnologySpecificImportedServiceAspect;
 import de.fhdo.ddmm.technology.mapping.TechnologySpecificProtocol;
 import de.fhdo.ddmm.technology.mapping.TechnologySpecificProtocolSpecification;
@@ -110,7 +110,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    private EClass technologySpecificDataFieldTypeMappingEClass = null;
+    private EClass technologySpecificFieldMappingEClass = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -240,7 +240,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * @generated
      */
     @Override
-    public EReference getTechnologyMapping_Mappings() {
+    public EReference getTechnologyMapping_ServiceMappings() {
         return (EReference)technologyMappingEClass.getEStructuralFeatures().get(1);
     }
 
@@ -750,7 +750,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * @generated
      */
     @Override
-    public EReference getComplexParameterMapping_DataFieldMappings() {
+    public EReference getComplexParameterMapping_FieldMappings() {
         return (EReference)complexParameterMappingEClass.getEStructuralFeatures().get(2);
     }
 
@@ -760,8 +760,8 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * @generated
      */
     @Override
-    public EClass getTechnologySpecificDataFieldTypeMapping() {
-        return technologySpecificDataFieldTypeMappingEClass;
+    public EClass getTechnologySpecificFieldMapping() {
+        return technologySpecificFieldMappingEClass;
     }
 
     /**
@@ -770,8 +770,8 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * @generated
      */
     @Override
-    public EReference getTechnologySpecificDataFieldTypeMapping_Technology() {
-        return (EReference)technologySpecificDataFieldTypeMappingEClass.getEStructuralFeatures().get(0);
+    public EReference getTechnologySpecificFieldMapping_Technology() {
+        return (EReference)technologySpecificFieldMappingEClass.getEStructuralFeatures().get(0);
     }
 
     /**
@@ -780,8 +780,8 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * @generated
      */
     @Override
-    public EReference getTechnologySpecificDataFieldTypeMapping_Type() {
-        return (EReference)technologySpecificDataFieldTypeMappingEClass.getEStructuralFeatures().get(1);
+    public EReference getTechnologySpecificFieldMapping_Type() {
+        return (EReference)technologySpecificFieldMappingEClass.getEStructuralFeatures().get(1);
     }
 
     /**
@@ -790,8 +790,8 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * @generated
      */
     @Override
-    public EReference getTechnologySpecificDataFieldTypeMapping_DataFieldHierarchy() {
-        return (EReference)technologySpecificDataFieldTypeMappingEClass.getEStructuralFeatures().get(2);
+    public EReference getTechnologySpecificFieldMapping_EnumerationField() {
+        return (EReference)technologySpecificFieldMappingEClass.getEStructuralFeatures().get(2);
     }
 
     /**
@@ -800,8 +800,8 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * @generated
      */
     @Override
-    public EReference getTechnologySpecificDataFieldTypeMapping_Aspects() {
-        return (EReference)technologySpecificDataFieldTypeMappingEClass.getEStructuralFeatures().get(3);
+    public EReference getTechnologySpecificFieldMapping_DataFieldHierarchy() {
+        return (EReference)technologySpecificFieldMappingEClass.getEStructuralFeatures().get(3);
     }
 
     /**
@@ -810,8 +810,18 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * @generated
      */
     @Override
-    public EReference getTechnologySpecificDataFieldTypeMapping_ParameterMapping() {
-        return (EReference)technologySpecificDataFieldTypeMappingEClass.getEStructuralFeatures().get(4);
+    public EReference getTechnologySpecificFieldMapping_Aspects() {
+        return (EReference)technologySpecificFieldMappingEClass.getEStructuralFeatures().get(4);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getTechnologySpecificFieldMapping_ParameterMapping() {
+        return (EReference)technologySpecificFieldMappingEClass.getEStructuralFeatures().get(5);
     }
 
     /**
@@ -1120,7 +1130,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * @generated
      */
     @Override
-    public EReference getTechnologySpecificImportedServiceAspect_DataFieldMapping() {
+    public EReference getTechnologySpecificImportedServiceAspect_FieldMapping() {
         return (EReference)technologySpecificImportedServiceAspectEClass.getEStructuralFeatures().get(9);
     }
 
@@ -1214,14 +1224,15 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
         complexParameterMappingEClass = createEClass(COMPLEX_PARAMETER_MAPPING);
         createEReference(complexParameterMappingEClass, COMPLEX_PARAMETER_MAPPING__TECHNOLOGY);
         createEReference(complexParameterMappingEClass, COMPLEX_PARAMETER_MAPPING__TECHNOLOGY_SPECIFIC_COMPLEX_TYPE);
-        createEReference(complexParameterMappingEClass, COMPLEX_PARAMETER_MAPPING__DATA_FIELD_MAPPINGS);
+        createEReference(complexParameterMappingEClass, COMPLEX_PARAMETER_MAPPING__FIELD_MAPPINGS);
 
-        technologySpecificDataFieldTypeMappingEClass = createEClass(TECHNOLOGY_SPECIFIC_DATA_FIELD_TYPE_MAPPING);
-        createEReference(technologySpecificDataFieldTypeMappingEClass, TECHNOLOGY_SPECIFIC_DATA_FIELD_TYPE_MAPPING__TECHNOLOGY);
-        createEReference(technologySpecificDataFieldTypeMappingEClass, TECHNOLOGY_SPECIFIC_DATA_FIELD_TYPE_MAPPING__TYPE);
-        createEReference(technologySpecificDataFieldTypeMappingEClass, TECHNOLOGY_SPECIFIC_DATA_FIELD_TYPE_MAPPING__DATA_FIELD_HIERARCHY);
-        createEReference(technologySpecificDataFieldTypeMappingEClass, TECHNOLOGY_SPECIFIC_DATA_FIELD_TYPE_MAPPING__ASPECTS);
-        createEReference(technologySpecificDataFieldTypeMappingEClass, TECHNOLOGY_SPECIFIC_DATA_FIELD_TYPE_MAPPING__PARAMETER_MAPPING);
+        technologySpecificFieldMappingEClass = createEClass(TECHNOLOGY_SPECIFIC_FIELD_MAPPING);
+        createEReference(technologySpecificFieldMappingEClass, TECHNOLOGY_SPECIFIC_FIELD_MAPPING__TECHNOLOGY);
+        createEReference(technologySpecificFieldMappingEClass, TECHNOLOGY_SPECIFIC_FIELD_MAPPING__TYPE);
+        createEReference(technologySpecificFieldMappingEClass, TECHNOLOGY_SPECIFIC_FIELD_MAPPING__ENUMERATION_FIELD);
+        createEReference(technologySpecificFieldMappingEClass, TECHNOLOGY_SPECIFIC_FIELD_MAPPING__DATA_FIELD_HIERARCHY);
+        createEReference(technologySpecificFieldMappingEClass, TECHNOLOGY_SPECIFIC_FIELD_MAPPING__ASPECTS);
+        createEReference(technologySpecificFieldMappingEClass, TECHNOLOGY_SPECIFIC_FIELD_MAPPING__PARAMETER_MAPPING);
 
         dataFieldHierarchyEClass = createEClass(DATA_FIELD_HIERARCHY);
         createEReference(dataFieldHierarchyEClass, DATA_FIELD_HIERARCHY__DATA_FIELDS);
@@ -1257,7 +1268,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
         createEReference(technologySpecificImportedServiceAspectEClass, TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__OPERATION_MAPPING);
         createEReference(technologySpecificImportedServiceAspectEClass, TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__REFERRED_OPERATION_MAPPING);
         createEReference(technologySpecificImportedServiceAspectEClass, TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__PARAMETER_MAPPING);
-        createEReference(technologySpecificImportedServiceAspectEClass, TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__DATA_FIELD_MAPPING);
+        createEReference(technologySpecificImportedServiceAspectEClass, TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__FIELD_MAPPING);
     }
 
     /**
@@ -1366,19 +1377,20 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
         initEClass(complexParameterMappingEClass, ComplexParameterMapping.class, "ComplexParameterMapping", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getComplexParameterMapping_Technology(), theServicePackage.getImport(), null, "technology", null, 0, 1, ComplexParameterMapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getComplexParameterMapping_TechnologySpecificComplexType(), theDataPackage.getComplexType(), null, "technologySpecificComplexType", null, 0, 1, ComplexParameterMapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getComplexParameterMapping_DataFieldMappings(), this.getTechnologySpecificDataFieldTypeMapping(), this.getTechnologySpecificDataFieldTypeMapping_ParameterMapping(), "dataFieldMappings", null, 0, -1, ComplexParameterMapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getComplexParameterMapping_FieldMappings(), this.getTechnologySpecificFieldMapping(), this.getTechnologySpecificFieldMapping_ParameterMapping(), "fieldMappings", null, 0, -1, ComplexParameterMapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-        initEClass(technologySpecificDataFieldTypeMappingEClass, TechnologySpecificDataFieldTypeMapping.class, "TechnologySpecificDataFieldTypeMapping", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getTechnologySpecificDataFieldTypeMapping_Technology(), theServicePackage.getImport(), null, "technology", null, 0, 1, TechnologySpecificDataFieldTypeMapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getTechnologySpecificDataFieldTypeMapping_Type(), theDataPackage.getType(), null, "type", null, 0, 1, TechnologySpecificDataFieldTypeMapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getTechnologySpecificDataFieldTypeMapping_DataFieldHierarchy(), this.getDataFieldHierarchy(), this.getDataFieldHierarchy_Mapping(), "dataFieldHierarchy", null, 0, 1, TechnologySpecificDataFieldTypeMapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getTechnologySpecificDataFieldTypeMapping_Aspects(), this.getTechnologySpecificImportedServiceAspect(), this.getTechnologySpecificImportedServiceAspect_DataFieldMapping(), "aspects", null, 0, -1, TechnologySpecificDataFieldTypeMapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getTechnologySpecificDataFieldTypeMapping_ParameterMapping(), this.getComplexParameterMapping(), this.getComplexParameterMapping_DataFieldMappings(), "parameterMapping", null, 0, 1, TechnologySpecificDataFieldTypeMapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEClass(technologySpecificFieldMappingEClass, TechnologySpecificFieldMapping.class, "TechnologySpecificFieldMapping", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEReference(getTechnologySpecificFieldMapping_Technology(), theServicePackage.getImport(), null, "technology", null, 0, 1, TechnologySpecificFieldMapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getTechnologySpecificFieldMapping_Type(), theDataPackage.getType(), null, "type", null, 0, 1, TechnologySpecificFieldMapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getTechnologySpecificFieldMapping_EnumerationField(), theDataPackage.getEnumerationField(), null, "enumerationField", null, 0, 1, TechnologySpecificFieldMapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getTechnologySpecificFieldMapping_DataFieldHierarchy(), this.getDataFieldHierarchy(), this.getDataFieldHierarchy_Mapping(), "dataFieldHierarchy", null, 0, 1, TechnologySpecificFieldMapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getTechnologySpecificFieldMapping_Aspects(), this.getTechnologySpecificImportedServiceAspect(), this.getTechnologySpecificImportedServiceAspect_FieldMapping(), "aspects", null, 0, -1, TechnologySpecificFieldMapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getTechnologySpecificFieldMapping_ParameterMapping(), this.getComplexParameterMapping(), this.getComplexParameterMapping_FieldMappings(), "parameterMapping", null, 0, 1, TechnologySpecificFieldMapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(dataFieldHierarchyEClass, DataFieldHierarchy.class, "DataFieldHierarchy", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getDataFieldHierarchy_DataFields(), theDataPackage.getDataField(), null, "dataFields", null, 0, -1, DataFieldHierarchy.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getDataFieldHierarchy_Previous(), this.getDataFieldHierarchy(), null, "previous", null, 0, 1, DataFieldHierarchy.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getDataFieldHierarchy_Mapping(), this.getTechnologySpecificDataFieldTypeMapping(), this.getTechnologySpecificDataFieldTypeMapping_DataFieldHierarchy(), "mapping", null, 0, 1, DataFieldHierarchy.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getDataFieldHierarchy_Mapping(), this.getTechnologySpecificFieldMapping(), this.getTechnologySpecificFieldMapping_DataFieldHierarchy(), "mapping", null, 0, 1, DataFieldHierarchy.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(technologySpecificProtocolSpecificationEClass, TechnologySpecificProtocolSpecification.class, "TechnologySpecificProtocolSpecification", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getTechnologySpecificProtocolSpecification_CommunicationType(), theTechnologyPackage.getCommunicationType(), "communicationType", null, 0, 1, TechnologySpecificProtocolSpecification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1409,7 +1421,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
         initEReference(getTechnologySpecificImportedServiceAspect_OperationMapping(), this.getOperationMapping(), this.getOperationMapping_Aspects(), "operationMapping", null, 0, 1, TechnologySpecificImportedServiceAspect.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getTechnologySpecificImportedServiceAspect_ReferredOperationMapping(), this.getReferredOperationMapping(), this.getReferredOperationMapping_Aspects(), "referredOperationMapping", null, 0, 1, TechnologySpecificImportedServiceAspect.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getTechnologySpecificImportedServiceAspect_ParameterMapping(), this.getParameterMapping(), this.getParameterMapping_Aspects(), "parameterMapping", null, 0, 1, TechnologySpecificImportedServiceAspect.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getTechnologySpecificImportedServiceAspect_DataFieldMapping(), this.getTechnologySpecificDataFieldTypeMapping(), this.getTechnologySpecificDataFieldTypeMapping_Aspects(), "dataFieldMapping", null, 0, 1, TechnologySpecificImportedServiceAspect.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getTechnologySpecificImportedServiceAspect_FieldMapping(), this.getTechnologySpecificFieldMapping(), this.getTechnologySpecificFieldMapping_Aspects(), "fieldMapping", null, 0, 1, TechnologySpecificImportedServiceAspect.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         // Create resource
         createResource(eNS_URI);

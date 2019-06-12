@@ -171,25 +171,25 @@ helper def : getCreatedParameter(sourceParameter : Service!Parameter)
 ;
 ----------------------------------------------------------------------------------------------------
 
--- Helpers for managing created mapped data field instances-----------------------------------------
---- Helper to store created IntermediateMappedDataField instances
-helper def : createdMappedDataFields : Map(String, Intermediate!IntermediateMappedDataField) 
+-- Helpers for managing created mapped field instances----------------------------------------------
+--- Helper to store created IntermediateMappedField instances
+helper def : createdMappedFields : Map(String, Intermediate!IntermediateMappedField) 
 	= Map{};
 
---- Called helper rule to add a created IntermediateMappedDataField instance to the helper map of 
---- created IntermediateMappedDataField instances
-rule CreatedMappedDataField(createdMappedDataField : Intermediate!IntermediateMappedDataField) {
+--- Called helper rule to add a created IntermediateMappedField instance to the helper map of 
+--- created IntermediateMappedField instances
+rule CreatedMappedField(createdMappedField : Intermediate!IntermediateMappedField) {
 	do {
-		thisModule.createdMappedDataFields <- thisModule.createdMappedDataFields
-			->including(createdMappedDataField.qualifiedName, createdMappedDataField);
+		thisModule.createdMappedFields <- thisModule.createdMappedFields
+			->including(createdMappedField.qualifiedName, createdMappedField);
 	}
 }
 
---- Convenience helper to get a created IntermediateMappedDataField instance from a given source 
---- MappedDataField instance
-helper def : getCreatedMappedDataField(sourceMappedDataField : Service!MappedDataField) 
-	: Intermediate!IntermediateMappedDataField =
-	thisModule.createdMappedDataFields->get(sourceMappedDataField.buildQualifiedName('.'))
+--- Convenience helper to get a created IntermediateMappedField instance from a given source 
+--- MappedField instance
+helper def : getCreatedMappedField(sourceMappedField : Service!MappedField) 
+	: Intermediate!IntermediateMappedField =
+	thisModule.createdMappedFields->get(sourceMappedField.buildQualifiedName('.'))
 ;
 ----------------------------------------------------------------------------------------------------
 
@@ -455,20 +455,27 @@ rule IntermediateParameter {
 	}
 }
 
---- Transform a source MappedDataField to a target IntermediateMappedDataField
-rule IntermediateMappedDataField {
+--- Transform a source MappedField to a target IntermediateMappedField
+rule IntermediateMappedField {
 	from
-		f : Service!MappedDataField
+		f : Service!MappedField
 	to
-		i : Intermediate!IntermediateMappedDataField(
-			mappedDataFieldName <- f.dataField.name,
+		i : Intermediate!IntermediateMappedField(			
 			qualifiedName <- f.buildQualifiedName('.'),
-			mappedType <- thisModule.TechnologySpecificIntermediateType(f.mappedType, 
-				f.parameter.operation.interface.microservice.t_typeDefinitionTechnology.name),
 			parameter <- thisModule.getCreatedParameter(f.parameter)
 		)
 	do {
-		thisModule.CreatedMappedDataField(i);
+		if (not f.dataField.oclIsUndefined()) {			
+			i.mappedFieldName <- f.dataField.name;
+			i.mappedType <- thisModule.TechnologySpecificIntermediateType(f.mappedType, 
+				f.parameter.operation.interface.microservice.t_typeDefinitionTechnology.name);
+			i.originalTypeKind <- thisModule.getTypeKind(f.dataField.getEffectiveType());
+		} else if (not f.enumerationField.oclIsUndefined()) {
+			i.mappedFieldName <- f.enumerationField.name;
+			i.originalTypeKind <- #ENUMERATION;
+		}
+		
+		thisModule.CreatedMappedField(i);
 	}
 }
 
@@ -594,12 +601,12 @@ rule DataModelIntermediateType(p : Service!Parameter) {
 
 --- Helper to determine a type's kind
 helper def : getTypeKind(type : Service!Type) : Intermediate!IntermediateTypeKind =
-	if (type.oclIsTypeOf(Service!TechnologySpecificPrimitiveType)
-		or type.oclIsTypeOf(Service!PrimitiveType)) then
+	if (type.oclIsKindOf(Service!TechnologySpecificPrimitiveType)
+		or type.oclIsKindOf(Service!PrimitiveType)) then
 		#PRIMITIVE
-	else if (type.oclIsTypeOf(Service!TechnologySpecificListType)) then
+	else if (type.oclIsKindOf(Service!TechnologySpecificListType)) then
 		#LIST
-	else if (type.oclIsTypeOf(Service!TechnologySpecificDataStructure)) then
+	else if (type.oclIsKindOf(Service!TechnologySpecificDataStructure)) then
 		#STRUCTURE
 	else if (type.oclIsKindOf(Service!ComplexType)) then		
 		if (type.isStructure) then
@@ -907,8 +914,8 @@ rule IntermediateImportedAspect {
 			i.referredOperation <- thisModule.getCreatedReferredOperation(a.referredOperation);
 		else if (not a.parameter.oclIsUndefined())
 			i.parameter <- thisModule.getCreatedParameter(a.parameter);
-		else if (not a.mappedDataField.oclIsUndefined())
-			i.mappedDataField <- thisModule.getCreatedMappedDataField(a.mappedDataField);
+		else if (not a.mappedField.oclIsUndefined())
+			i.mappedField <- thisModule.getCreatedMappedField(a.mappedField);
 	}
 }
 

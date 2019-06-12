@@ -35,7 +35,7 @@ import de.fhdo.ddmm.technology.TechnologySpecificListType
 import de.fhdo.ddmm.data.DataStructure
 import de.fhdo.ddmm.data.ListType
 import de.fhdo.ddmm.data.DataField
-import de.fhdo.ddmm.technology.mapping.TechnologySpecificDataFieldTypeMapping
+import de.fhdo.ddmm.technology.mapping.TechnologySpecificFieldMapping
 import de.fhdo.ddmm.technology.mapping.DataFieldHierarchy
 import de.fhdo.ddmm.data.Type
 import de.fhdo.ddmm.data.PrimitiveType
@@ -93,7 +93,7 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
             ComplexParameterMapping: context.getScope(reference)
 
             /* Data field mappings */
-            TechnologySpecificDataFieldTypeMapping: context.getScope(reference)
+            TechnologySpecificFieldMapping: context.getScope(reference)
 
             /* Data field hierarchies */
             DataFieldHierarchy: context.getScope(reference)
@@ -315,7 +315,7 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
                 .COMPLEX_PARAMETER_MAPPING__TECHNOLOGY_SPECIFIC_COMPLEX_TYPE:
                 return mapping.getScopeForParameterTypes()
 
-            /* Data fields */
+            /* Enumeration and data fields */
             case MappingPackage::Literals.DATA_FIELD_HIERARCHY__DATA_FIELDS:
                 return mapping.getScopeForComplexDataFields()
         }
@@ -324,16 +324,22 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     }
 
     /**
-     * Build scope for technology-specific data field mappings and the given reference
+     * Build scope for technology-specific field mappings and the given reference
      */
-    private def getScope(TechnologySpecificDataFieldTypeMapping mapping, EReference reference) {
+    private def getScope(TechnologySpecificFieldMapping mapping, EReference reference) {
         switch (reference) {
+            /* Enumeration fields */
+            case MappingPackage::Literals
+                .TECHNOLOGY_SPECIFIC_FIELD_MAPPING__ENUMERATION_FIELD:
+                return (mapping.eContainer as ComplexParameterMapping)
+                    .getScopeForComplexDataFields()
+
             /* Data type technologies */
-            case MappingPackage::Literals.TECHNOLOGY_SPECIFIC_DATA_FIELD_TYPE_MAPPING__TECHNOLOGY:
+            case MappingPackage::Literals.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__TECHNOLOGY:
                 return mapping.getScopeForTypeDefinitionTechnology()
 
             /* Types */
-            case MappingPackage::Literals.TECHNOLOGY_SPECIFIC_DATA_FIELD_TYPE_MAPPING__TYPE:
+            case MappingPackage::Literals.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__TYPE:
                 return mapping.getScopeForParameterTypes()
         }
 
@@ -414,7 +420,7 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
                 parameterType = mapping.parameter.importedType.type
                 technology = mapping.technology
             }
-            TechnologySpecificDataFieldTypeMapping: {
+            TechnologySpecificFieldMapping: {
                 parameterType = mapping.dataFieldHierarchy.dataFields.last.effectiveType
                 technology = mapping.technology
             }
@@ -444,7 +450,9 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
             } else if (parameterType.isStructuredList || parameterType.isPrimitiveList) {
                 getImportedConcepts = [listTypes.map[it as Type]]
                 getConceptNameParts = [(it as TechnologySpecificListType).qualifiedNameParts]
-            }
+            // Types of enum parameters are not changeable via mappings
+            } else if (parameterType.isEnumeration)
+                return IScope.NULLSCOPE
         }
 
         /* Perform actual scope building */
@@ -492,9 +500,8 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
 
         val previousType = mapping.parameter.importedType.type as ComplexType
 
-        // Enumeration fields cannot be mapped
         if (previousType instanceof Enumeration)
-            return IScope.NULLSCOPE
+            return Scopes::scopeFor(previousType.fields)
 
         val nextLeveldDataFields = nextDataFieldsInHierarchy(previousType)
         if (nextLeveldDataFields !== null)
@@ -728,7 +735,7 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
 
                 JoinPointType.PARAMETERS
             }
-            TechnologySpecificDataFieldTypeMapping: {
+            TechnologySpecificFieldMapping: {
                 val parameterMapping = mapping.parameterMapping
                 val effectiveProtocolAndDataFormat = parameterMapping.effectiveProtocolAndDataFormat
                 forProtocolsAndDataFormats = if (effectiveProtocolAndDataFormat !== null)

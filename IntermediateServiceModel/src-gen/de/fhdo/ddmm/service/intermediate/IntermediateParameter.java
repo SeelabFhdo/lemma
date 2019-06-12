@@ -34,7 +34,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.fhdo.ddmm.service.intermediate.IntermediateParameter#getType <em>Type</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.intermediate.IntermediateParameter#getInitializedByOperation <em>Initialized By Operation</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.intermediate.IntermediateParameter#getAspects <em>Aspects</em>}</li>
- *   <li>{@link de.fhdo.ddmm.service.intermediate.IntermediateParameter#getMappedDataFields <em>Mapped Data Fields</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.service.intermediate.IntermediateParameter#getMappedFields <em>Mapped Fields</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.intermediate.IntermediateParameter#getOperation <em>Operation</em>}</li>
  * </ul>
  *
@@ -278,22 +278,22 @@ public interface IntermediateParameter extends EObject {
     EList<IntermediateImportedAspect> getAspects();
 
     /**
-     * Returns the value of the '<em><b>Mapped Data Fields</b></em>' containment reference list.
-     * The list contents are of type {@link de.fhdo.ddmm.service.intermediate.IntermediateMappedDataField}.
-     * It is bidirectional and its opposite is '{@link de.fhdo.ddmm.service.intermediate.IntermediateMappedDataField#getParameter <em>Parameter</em>}'.
+     * Returns the value of the '<em><b>Mapped Fields</b></em>' containment reference list.
+     * The list contents are of type {@link de.fhdo.ddmm.service.intermediate.IntermediateMappedField}.
+     * It is bidirectional and its opposite is '{@link de.fhdo.ddmm.service.intermediate.IntermediateMappedField#getParameter <em>Parameter</em>}'.
      * <!-- begin-user-doc -->
      * <p>
-     * If the meaning of the '<em>Mapped Data Fields</em>' containment reference list isn't clear,
+     * If the meaning of the '<em>Mapped Fields</em>' containment reference list isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Mapped Data Fields</em>' containment reference list.
-     * @see de.fhdo.ddmm.service.intermediate.IntermediatePackage#getIntermediateParameter_MappedDataFields()
-     * @see de.fhdo.ddmm.service.intermediate.IntermediateMappedDataField#getParameter
+     * @return the value of the '<em>Mapped Fields</em>' containment reference list.
+     * @see de.fhdo.ddmm.service.intermediate.IntermediatePackage#getIntermediateParameter_MappedFields()
+     * @see de.fhdo.ddmm.service.intermediate.IntermediateMappedField#getParameter
      * @model opposite="parameter" containment="true"
      * @generated
      */
-    EList<IntermediateMappedDataField> getMappedDataFields();
+    EList<IntermediateMappedField> getMappedFields();
 
     /**
      * Returns the value of the '<em><b>Operation</b></em>' container reference.

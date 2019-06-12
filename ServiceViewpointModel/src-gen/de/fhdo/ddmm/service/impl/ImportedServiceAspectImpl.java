@@ -7,7 +7,7 @@ import de.fhdo.ddmm.data.PrimitiveValue;
 import de.fhdo.ddmm.service.Import;
 import de.fhdo.ddmm.service.ImportedServiceAspect;
 import de.fhdo.ddmm.service.Interface;
-import de.fhdo.ddmm.service.MappedDataField;
+import de.fhdo.ddmm.service.MappedField;
 import de.fhdo.ddmm.service.Microservice;
 import de.fhdo.ddmm.service.Operation;
 import de.fhdo.ddmm.service.Parameter;
@@ -51,7 +51,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.fhdo.ddmm.service.impl.ImportedServiceAspectImpl#getOperation <em>Operation</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.impl.ImportedServiceAspectImpl#getReferredOperation <em>Referred Operation</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.impl.ImportedServiceAspectImpl#getParameter <em>Parameter</em>}</li>
- *   <li>{@link de.fhdo.ddmm.service.impl.ImportedServiceAspectImpl#getMappedDataField <em>Mapped Data Field</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.service.impl.ImportedServiceAspectImpl#getMappedField <em>Mapped Field</em>}</li>
  * </ul>
  *
  * @generated
@@ -525,9 +525,9 @@ public class ImportedServiceAspectImpl extends MinimalEObjectImpl.Container impl
      * @generated
      */
     @Override
-    public MappedDataField getMappedDataField() {
-        if (eContainerFeatureID() != ServicePackage.IMPORTED_SERVICE_ASPECT__MAPPED_DATA_FIELD) return null;
-        return (MappedDataField)eContainer();
+    public MappedField getMappedField() {
+        if (eContainerFeatureID() != ServicePackage.IMPORTED_SERVICE_ASPECT__MAPPED_FIELD) return null;
+        return (MappedField)eContainer();
     }
 
     /**
@@ -535,9 +535,9 @@ public class ImportedServiceAspectImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
-    public MappedDataField basicGetMappedDataField() {
-        if (eContainerFeatureID() != ServicePackage.IMPORTED_SERVICE_ASPECT__MAPPED_DATA_FIELD) return null;
-        return (MappedDataField)eInternalContainer();
+    public MappedField basicGetMappedField() {
+        if (eContainerFeatureID() != ServicePackage.IMPORTED_SERVICE_ASPECT__MAPPED_FIELD) return null;
+        return (MappedField)eInternalContainer();
     }
 
     /**
@@ -545,8 +545,8 @@ public class ImportedServiceAspectImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
-    public NotificationChain basicSetMappedDataField(MappedDataField newMappedDataField, NotificationChain msgs) {
-        msgs = eBasicSetContainer((InternalEObject)newMappedDataField, ServicePackage.IMPORTED_SERVICE_ASPECT__MAPPED_DATA_FIELD, msgs);
+    public NotificationChain basicSetMappedField(MappedField newMappedField, NotificationChain msgs) {
+        msgs = eBasicSetContainer((InternalEObject)newMappedField, ServicePackage.IMPORTED_SERVICE_ASPECT__MAPPED_FIELD, msgs);
         return msgs;
     }
 
@@ -556,20 +556,20 @@ public class ImportedServiceAspectImpl extends MinimalEObjectImpl.Container impl
      * @generated
      */
     @Override
-    public void setMappedDataField(MappedDataField newMappedDataField) {
-        if (newMappedDataField != eInternalContainer() || (eContainerFeatureID() != ServicePackage.IMPORTED_SERVICE_ASPECT__MAPPED_DATA_FIELD && newMappedDataField != null)) {
-            if (EcoreUtil.isAncestor(this, newMappedDataField))
+    public void setMappedField(MappedField newMappedField) {
+        if (newMappedField != eInternalContainer() || (eContainerFeatureID() != ServicePackage.IMPORTED_SERVICE_ASPECT__MAPPED_FIELD && newMappedField != null)) {
+            if (EcoreUtil.isAncestor(this, newMappedField))
                 throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
             NotificationChain msgs = null;
             if (eInternalContainer() != null)
                 msgs = eBasicRemoveFromContainer(msgs);
-            if (newMappedDataField != null)
-                msgs = ((InternalEObject)newMappedDataField).eInverseAdd(this, ServicePackage.MAPPED_DATA_FIELD__ASPECTS, MappedDataField.class, msgs);
-            msgs = basicSetMappedDataField(newMappedDataField, msgs);
+            if (newMappedField != null)
+                msgs = ((InternalEObject)newMappedField).eInverseAdd(this, ServicePackage.MAPPED_FIELD__ASPECTS, MappedField.class, msgs);
+            msgs = basicSetMappedField(newMappedField, msgs);
             if (msgs != null) msgs.dispatch();
         }
         else if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, ServicePackage.IMPORTED_SERVICE_ASPECT__MAPPED_DATA_FIELD, newMappedDataField, newMappedDataField));
+            eNotify(new ENotificationImpl(this, Notification.SET, ServicePackage.IMPORTED_SERVICE_ASPECT__MAPPED_FIELD, newMappedField, newMappedField));
     }
 
     /**
@@ -600,10 +600,10 @@ public class ImportedServiceAspectImpl extends MinimalEObjectImpl.Container impl
                 if (eInternalContainer() != null)
                     msgs = eBasicRemoveFromContainer(msgs);
                 return basicSetParameter((Parameter)otherEnd, msgs);
-            case ServicePackage.IMPORTED_SERVICE_ASPECT__MAPPED_DATA_FIELD:
+            case ServicePackage.IMPORTED_SERVICE_ASPECT__MAPPED_FIELD:
                 if (eInternalContainer() != null)
                     msgs = eBasicRemoveFromContainer(msgs);
-                return basicSetMappedDataField((MappedDataField)otherEnd, msgs);
+                return basicSetMappedField((MappedField)otherEnd, msgs);
         }
         return super.eInverseAdd(otherEnd, featureID, msgs);
     }
@@ -630,8 +630,8 @@ public class ImportedServiceAspectImpl extends MinimalEObjectImpl.Container impl
                 return basicSetReferredOperation(null, msgs);
             case ServicePackage.IMPORTED_SERVICE_ASPECT__PARAMETER:
                 return basicSetParameter(null, msgs);
-            case ServicePackage.IMPORTED_SERVICE_ASPECT__MAPPED_DATA_FIELD:
-                return basicSetMappedDataField(null, msgs);
+            case ServicePackage.IMPORTED_SERVICE_ASPECT__MAPPED_FIELD:
+                return basicSetMappedField(null, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
@@ -654,8 +654,8 @@ public class ImportedServiceAspectImpl extends MinimalEObjectImpl.Container impl
                 return eInternalContainer().eInverseRemove(this, ServicePackage.REFERRED_OPERATION__ASPECTS, ReferredOperation.class, msgs);
             case ServicePackage.IMPORTED_SERVICE_ASPECT__PARAMETER:
                 return eInternalContainer().eInverseRemove(this, ServicePackage.PARAMETER__ASPECTS, Parameter.class, msgs);
-            case ServicePackage.IMPORTED_SERVICE_ASPECT__MAPPED_DATA_FIELD:
-                return eInternalContainer().eInverseRemove(this, ServicePackage.MAPPED_DATA_FIELD__ASPECTS, MappedDataField.class, msgs);
+            case ServicePackage.IMPORTED_SERVICE_ASPECT__MAPPED_FIELD:
+                return eInternalContainer().eInverseRemove(this, ServicePackage.MAPPED_FIELD__ASPECTS, MappedField.class, msgs);
         }
         return super.eBasicRemoveFromContainerFeature(msgs);
     }
@@ -693,9 +693,9 @@ public class ImportedServiceAspectImpl extends MinimalEObjectImpl.Container impl
             case ServicePackage.IMPORTED_SERVICE_ASPECT__PARAMETER:
                 if (resolve) return getParameter();
                 return basicGetParameter();
-            case ServicePackage.IMPORTED_SERVICE_ASPECT__MAPPED_DATA_FIELD:
-                if (resolve) return getMappedDataField();
-                return basicGetMappedDataField();
+            case ServicePackage.IMPORTED_SERVICE_ASPECT__MAPPED_FIELD:
+                if (resolve) return getMappedField();
+                return basicGetMappedField();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -737,8 +737,8 @@ public class ImportedServiceAspectImpl extends MinimalEObjectImpl.Container impl
             case ServicePackage.IMPORTED_SERVICE_ASPECT__PARAMETER:
                 setParameter((Parameter)newValue);
                 return;
-            case ServicePackage.IMPORTED_SERVICE_ASPECT__MAPPED_DATA_FIELD:
-                setMappedDataField((MappedDataField)newValue);
+            case ServicePackage.IMPORTED_SERVICE_ASPECT__MAPPED_FIELD:
+                setMappedField((MappedField)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -779,8 +779,8 @@ public class ImportedServiceAspectImpl extends MinimalEObjectImpl.Container impl
             case ServicePackage.IMPORTED_SERVICE_ASPECT__PARAMETER:
                 setParameter((Parameter)null);
                 return;
-            case ServicePackage.IMPORTED_SERVICE_ASPECT__MAPPED_DATA_FIELD:
-                setMappedDataField((MappedDataField)null);
+            case ServicePackage.IMPORTED_SERVICE_ASPECT__MAPPED_FIELD:
+                setMappedField((MappedField)null);
                 return;
         }
         super.eUnset(featureID);
@@ -812,8 +812,8 @@ public class ImportedServiceAspectImpl extends MinimalEObjectImpl.Container impl
                 return basicGetReferredOperation() != null;
             case ServicePackage.IMPORTED_SERVICE_ASPECT__PARAMETER:
                 return basicGetParameter() != null;
-            case ServicePackage.IMPORTED_SERVICE_ASPECT__MAPPED_DATA_FIELD:
-                return basicGetMappedDataField() != null;
+            case ServicePackage.IMPORTED_SERVICE_ASPECT__MAPPED_FIELD:
+                return basicGetMappedField() != null;
         }
         return super.eIsSet(featureID);
     }
