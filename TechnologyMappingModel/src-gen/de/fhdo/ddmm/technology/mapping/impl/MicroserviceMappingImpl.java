@@ -349,7 +349,7 @@ public class MicroserviceMappingImpl extends MinimalEObjectImpl.Container implem
             if (eInternalContainer() != null)
                 msgs = eBasicRemoveFromContainer(msgs);
             if (newMappingModel != null)
-                msgs = ((InternalEObject)newMappingModel).eInverseAdd(this, MappingPackage.TECHNOLOGY_MAPPING__MAPPINGS, TechnologyMapping.class, msgs);
+                msgs = ((InternalEObject)newMappingModel).eInverseAdd(this, MappingPackage.TECHNOLOGY_MAPPING__SERVICE_MAPPINGS, TechnologyMapping.class, msgs);
             msgs = basicSetMappingModel(newMappingModel, msgs);
             if (msgs != null) msgs.dispatch();
         }
@@ -502,7 +502,7 @@ public class MicroserviceMappingImpl extends MinimalEObjectImpl.Container implem
     public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
         switch (eContainerFeatureID()) {
             case MappingPackage.MICROSERVICE_MAPPING__MAPPING_MODEL:
-                return eInternalContainer().eInverseRemove(this, MappingPackage.TECHNOLOGY_MAPPING__MAPPINGS, TechnologyMapping.class, msgs);
+                return eInternalContainer().eInverseRemove(this, MappingPackage.TECHNOLOGY_MAPPING__SERVICE_MAPPINGS, TechnologyMapping.class, msgs);
         }
         return super.eBasicRemoveFromContainerFeature(msgs);
     }

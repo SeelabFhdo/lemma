@@ -78,13 +78,22 @@ public interface MappingPackage extends EPackage {
     int TECHNOLOGY_MAPPING__IMPORTS = 0;
 
     /**
-     * The feature id for the '<em><b>Mappings</b></em>' containment reference list.
+     * The feature id for the '<em><b>Complex Type Mappings</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int TECHNOLOGY_MAPPING__MAPPINGS = 1;
+    int TECHNOLOGY_MAPPING__COMPLEX_TYPE_MAPPINGS = 1;
+
+    /**
+     * The feature id for the '<em><b>Service Mappings</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TECHNOLOGY_MAPPING__SERVICE_MAPPINGS = 2;
 
     /**
      * The number of structural features of the '<em>Technology Mapping</em>' class.
@@ -1239,15 +1248,26 @@ public interface MappingPackage extends EPackage {
     EReference getTechnologyMapping_Imports();
 
     /**
-     * Returns the meta object for the containment reference list '{@link de.fhdo.ddmm.technology.mapping.TechnologyMapping#getMappings <em>Mappings</em>}'.
+     * Returns the meta object for the containment reference list '{@link de.fhdo.ddmm.technology.mapping.TechnologyMapping#getComplexTypeMappings <em>Complex Type Mappings</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the containment reference list '<em>Mappings</em>'.
-     * @see de.fhdo.ddmm.technology.mapping.TechnologyMapping#getMappings()
+     * @return the meta object for the containment reference list '<em>Complex Type Mappings</em>'.
+     * @see de.fhdo.ddmm.technology.mapping.TechnologyMapping#getComplexTypeMappings()
      * @see #getTechnologyMapping()
      * @generated
      */
-    EReference getTechnologyMapping_Mappings();
+    EReference getTechnologyMapping_ComplexTypeMappings();
+
+    /**
+     * Returns the meta object for the containment reference list '{@link de.fhdo.ddmm.technology.mapping.TechnologyMapping#getServiceMappings <em>Service Mappings</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Service Mappings</em>'.
+     * @see de.fhdo.ddmm.technology.mapping.TechnologyMapping#getServiceMappings()
+     * @see #getTechnologyMapping()
+     * @generated
+     */
+    EReference getTechnologyMapping_ServiceMappings();
 
     /**
      * Returns the meta object for the '{@link de.fhdo.ddmm.technology.mapping.TechnologyMapping#getMappedInterfaces() <em>Get Mapped Interfaces</em>}' operation.
@@ -2238,12 +2258,20 @@ public interface MappingPackage extends EPackage {
         EReference TECHNOLOGY_MAPPING__IMPORTS = eINSTANCE.getTechnologyMapping_Imports();
 
         /**
-         * The meta object literal for the '<em><b>Mappings</b></em>' containment reference list feature.
+         * The meta object literal for the '<em><b>Complex Type Mappings</b></em>' containment reference list feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference TECHNOLOGY_MAPPING__MAPPINGS = eINSTANCE.getTechnologyMapping_Mappings();
+        EReference TECHNOLOGY_MAPPING__COMPLEX_TYPE_MAPPINGS = eINSTANCE.getTechnologyMapping_ComplexTypeMappings();
+
+        /**
+         * The meta object literal for the '<em><b>Service Mappings</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference TECHNOLOGY_MAPPING__SERVICE_MAPPINGS = eINSTANCE.getTechnologyMapping_ServiceMappings();
 
         /**
          * The meta object literal for the '<em><b>Get Mapped Interfaces</b></em>' operation.

@@ -210,7 +210,7 @@ public interface MicroserviceMapping extends EObject {
 
     /**
      * Returns the value of the '<em><b>Mapping Model</b></em>' container reference.
-     * It is bidirectional and its opposite is '{@link de.fhdo.ddmm.technology.mapping.TechnologyMapping#getMappings <em>Mappings</em>}'.
+     * It is bidirectional and its opposite is '{@link de.fhdo.ddmm.technology.mapping.TechnologyMapping#getServiceMappings <em>Service Mappings</em>}'.
      * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Mapping Model</em>' container reference isn't clear,
@@ -220,8 +220,8 @@ public interface MicroserviceMapping extends EObject {
      * @return the value of the '<em>Mapping Model</em>' container reference.
      * @see #setMappingModel(TechnologyMapping)
      * @see de.fhdo.ddmm.technology.mapping.MappingPackage#getMicroserviceMapping_MappingModel()
-     * @see de.fhdo.ddmm.technology.mapping.TechnologyMapping#getMappings
-     * @model opposite="mappings" transient="false"
+     * @see de.fhdo.ddmm.technology.mapping.TechnologyMapping#getServiceMappings
+     * @model opposite="serviceMappings" transient="false"
      * @generated
      */
     TechnologyMapping getMappingModel();

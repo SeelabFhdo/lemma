@@ -218,7 +218,7 @@ public class MappingDslParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getQualifiedNameAccess().getGroup(), "rule__QualifiedName__Group__0");
 			builder.put(grammarAccess.getQualifiedNameAccess().getGroup_1(), "rule__QualifiedName__Group_1__0");
 			builder.put(grammarAccess.getTechnologyMappingAccess().getImportsAssignment_0(), "rule__TechnologyMapping__ImportsAssignment_0");
-			builder.put(grammarAccess.getTechnologyMappingAccess().getMappingsAssignment_1(), "rule__TechnologyMapping__MappingsAssignment_1");
+			builder.put(grammarAccess.getTechnologyMappingAccess().getServiceMappingsAssignment_1(), "rule__TechnologyMapping__ServiceMappingsAssignment_1");
 			builder.put(grammarAccess.getMicroserviceMappingAccess().getTechnologiesAssignment_0_3(), "rule__MicroserviceMapping__TechnologiesAssignment_0_3");
 			builder.put(grammarAccess.getMicroserviceMappingAccess().getMicroserviceAssignment_1(), "rule__MicroserviceMapping__MicroserviceAssignment_1");
 			builder.put(grammarAccess.getMicroserviceMappingAccess().getProtocolsAssignment_3_2(), "rule__MicroserviceMapping__ProtocolsAssignment_3_2");

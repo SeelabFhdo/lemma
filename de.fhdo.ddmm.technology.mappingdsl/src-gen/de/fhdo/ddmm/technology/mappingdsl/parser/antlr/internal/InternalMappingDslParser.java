@@ -198,24 +198,24 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleTechnologyMapping"
-    // InternalMappingDsl.g:72:1: ruleTechnologyMapping returns [EObject current=null] : ( ( (lv_imports_0_0= ruleImport ) )+ ( (lv_mappings_1_0= ruleMicroserviceMapping ) )+ ) ;
+    // InternalMappingDsl.g:72:1: ruleTechnologyMapping returns [EObject current=null] : ( ( (lv_imports_0_0= ruleImport ) )+ ( (lv_serviceMappings_1_0= ruleMicroserviceMapping ) )+ ) ;
     public final EObject ruleTechnologyMapping() throws RecognitionException {
         EObject current = null;
 
         EObject lv_imports_0_0 = null;
 
-        EObject lv_mappings_1_0 = null;
+        EObject lv_serviceMappings_1_0 = null;
 
 
 
         	enterRule();
 
         try {
-            // InternalMappingDsl.g:78:2: ( ( ( (lv_imports_0_0= ruleImport ) )+ ( (lv_mappings_1_0= ruleMicroserviceMapping ) )+ ) )
-            // InternalMappingDsl.g:79:2: ( ( (lv_imports_0_0= ruleImport ) )+ ( (lv_mappings_1_0= ruleMicroserviceMapping ) )+ )
+            // InternalMappingDsl.g:78:2: ( ( ( (lv_imports_0_0= ruleImport ) )+ ( (lv_serviceMappings_1_0= ruleMicroserviceMapping ) )+ ) )
+            // InternalMappingDsl.g:79:2: ( ( (lv_imports_0_0= ruleImport ) )+ ( (lv_serviceMappings_1_0= ruleMicroserviceMapping ) )+ )
             {
-            // InternalMappingDsl.g:79:2: ( ( (lv_imports_0_0= ruleImport ) )+ ( (lv_mappings_1_0= ruleMicroserviceMapping ) )+ )
-            // InternalMappingDsl.g:80:3: ( (lv_imports_0_0= ruleImport ) )+ ( (lv_mappings_1_0= ruleMicroserviceMapping ) )+
+            // InternalMappingDsl.g:79:2: ( ( (lv_imports_0_0= ruleImport ) )+ ( (lv_serviceMappings_1_0= ruleMicroserviceMapping ) )+ )
+            // InternalMappingDsl.g:80:3: ( (lv_imports_0_0= ruleImport ) )+ ( (lv_serviceMappings_1_0= ruleMicroserviceMapping ) )+
             {
             // InternalMappingDsl.g:80:3: ( (lv_imports_0_0= ruleImport ) )+
             int cnt1=0;
@@ -271,7 +271,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                 cnt1++;
             } while (true);
 
-            // InternalMappingDsl.g:99:3: ( (lv_mappings_1_0= ruleMicroserviceMapping ) )+
+            // InternalMappingDsl.g:99:3: ( (lv_serviceMappings_1_0= ruleMicroserviceMapping ) )+
             int cnt2=0;
             loop2:
             do {
@@ -285,16 +285,16 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
                 switch (alt2) {
             	case 1 :
-            	    // InternalMappingDsl.g:100:4: (lv_mappings_1_0= ruleMicroserviceMapping )
+            	    // InternalMappingDsl.g:100:4: (lv_serviceMappings_1_0= ruleMicroserviceMapping )
             	    {
-            	    // InternalMappingDsl.g:100:4: (lv_mappings_1_0= ruleMicroserviceMapping )
-            	    // InternalMappingDsl.g:101:5: lv_mappings_1_0= ruleMicroserviceMapping
+            	    // InternalMappingDsl.g:100:4: (lv_serviceMappings_1_0= ruleMicroserviceMapping )
+            	    // InternalMappingDsl.g:101:5: lv_serviceMappings_1_0= ruleMicroserviceMapping
             	    {
 
-            	    					newCompositeNode(grammarAccess.getTechnologyMappingAccess().getMappingsMicroserviceMappingParserRuleCall_1_0());
+            	    					newCompositeNode(grammarAccess.getTechnologyMappingAccess().getServiceMappingsMicroserviceMappingParserRuleCall_1_0());
             	    				
             	    pushFollow(FOLLOW_4);
-            	    lv_mappings_1_0=ruleMicroserviceMapping();
+            	    lv_serviceMappings_1_0=ruleMicroserviceMapping();
 
             	    state._fsp--;
 
@@ -304,8 +304,8 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	    					}
             	    					add(
             	    						current,
-            	    						"mappings",
-            	    						lv_mappings_1_0,
+            	    						"serviceMappings",
+            	    						lv_serviceMappings_1_0,
             	    						"de.fhdo.ddmm.technology.mappingdsl.MappingDsl.MicroserviceMapping");
             	    					afterParserOrEnumRuleCall();
             	    				

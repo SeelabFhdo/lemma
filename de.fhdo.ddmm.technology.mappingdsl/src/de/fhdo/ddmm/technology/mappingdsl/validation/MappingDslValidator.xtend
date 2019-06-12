@@ -168,7 +168,7 @@ class MappingDslValidator extends AbstractMappingDslValidator {
     @Check
     def checkMappingUniqueness(TechnologyMapping model) {
         // Mapping technologies may be empty if the model contains syntax errors
-        val modelMappingsWithTechnology = model.mappings
+        val modelMappingsWithTechnology = model.serviceMappings
             .filter[!technologies.empty]
             .toList
 
@@ -319,7 +319,7 @@ class MappingDslValidator extends AbstractMappingDslValidator {
     @Check
     def checkUniqueEndpointAddresses(TechnologyMapping model) {
         /* Check for microservices */
-        val microserviceEndpoints = model.mappings.map[endpoints].flatten.toList
+        val microserviceEndpoints = model.serviceMappings.map[endpoints].flatten.toList
         checkUniqueEndpointAddresses(microserviceEndpoints, "microservice", [
             val importedMicroservice = microserviceMapping.microservice
             importedMicroservice.microservice.qualifiedNameParts

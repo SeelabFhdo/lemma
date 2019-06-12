@@ -473,7 +473,7 @@ public class MappingDslSemanticSequencer extends ServiceDslSemanticSequencer {
 	 *     TechnologyMapping returns TechnologyMapping
 	 *
 	 * Constraint:
-	 *     (imports+=Import+ mappings+=MicroserviceMapping+)
+	 *     (imports+=Import+ serviceMappings+=MicroserviceMapping+)
 	 */
 	protected void sequence_TechnologyMapping(ISerializationContext context, TechnologyMapping semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

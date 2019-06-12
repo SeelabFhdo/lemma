@@ -12,23 +12,23 @@ import de.fhdo.ddmm.technology.mappingdsl.services.MappingDslGrammarAccess
 import org.eclipse.xtext.formatting2.IFormattableDocument
 
 class MappingDslFormatter extends ServiceDslFormatter {
-	
-	@Inject extension MappingDslGrammarAccess
 
-	def dispatch void format(TechnologyMapping technologyMapping, extension IFormattableDocument document) {
-		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
-		for (Import _import : technologyMapping.getImports()) {
-			_import.format;
-		}
-		for (MicroserviceMapping microserviceMapping : technologyMapping.getMappings()) {
-			microserviceMapping.format;
-		}
-	}
+    @Inject extension MappingDslGrammarAccess
 
-	def dispatch void format(MicroserviceMapping microserviceMapping, extension IFormattableDocument document) {
-		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
-		microserviceMapping.getMicroservice.format;
-	}
-	
-	// TODO: implement for 
+    def dispatch void format(TechnologyMapping technologyMapping, extension IFormattableDocument document) {
+        // TODO: format HiddenRegions around keywords, attributes, cross references, etc.
+        for (Import _import : technologyMapping.getImports()) {
+            _import.format;
+        }
+        for (MicroserviceMapping microserviceMapping : technologyMapping.getServiceMappings()) {
+            microserviceMapping.format;
+        }
+    }
+
+    def dispatch void format(MicroserviceMapping microserviceMapping, extension IFormattableDocument document) {
+        // TODO: format HiddenRegions around keywords, attributes, cross references, etc.
+        microserviceMapping.getMicroservice.format;
+    }
+
+    // TODO: implement for
 }

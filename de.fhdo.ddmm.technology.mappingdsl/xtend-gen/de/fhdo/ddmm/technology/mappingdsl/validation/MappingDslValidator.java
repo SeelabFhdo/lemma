@@ -263,7 +263,7 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
         boolean _isEmpty = it.getTechnologies().isEmpty();
         return Boolean.valueOf((!_isEmpty));
       };
-      final List<MicroserviceMapping> modelMappingsWithTechnology = IterableExtensions.<MicroserviceMapping>toList(IterableExtensions.<MicroserviceMapping>filter(model.getMappings(), _function));
+      final List<MicroserviceMapping> modelMappingsWithTechnology = IterableExtensions.<MicroserviceMapping>toList(IterableExtensions.<MicroserviceMapping>filter(model.getServiceMappings(), _function));
       final Function<MicroserviceMapping, String> _function_1 = (MicroserviceMapping it) -> {
         String _xblockexpression_1 = null;
         {
@@ -439,7 +439,7 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
     final Function1<MicroserviceMapping, EList<TechnologySpecificEndpoint>> _function = (MicroserviceMapping it) -> {
       return it.getEndpoints();
     };
-    final List<TechnologySpecificEndpoint> microserviceEndpoints = IterableExtensions.<TechnologySpecificEndpoint>toList(Iterables.<TechnologySpecificEndpoint>concat(ListExtensions.<MicroserviceMapping, EList<TechnologySpecificEndpoint>>map(model.getMappings(), _function)));
+    final List<TechnologySpecificEndpoint> microserviceEndpoints = IterableExtensions.<TechnologySpecificEndpoint>toList(Iterables.<TechnologySpecificEndpoint>concat(ListExtensions.<MicroserviceMapping, EList<TechnologySpecificEndpoint>>map(model.getServiceMappings(), _function)));
     final Function<TechnologySpecificEndpoint, List<String>> _function_1 = (TechnologySpecificEndpoint it) -> {
       EList<String> _xblockexpression = null;
       {

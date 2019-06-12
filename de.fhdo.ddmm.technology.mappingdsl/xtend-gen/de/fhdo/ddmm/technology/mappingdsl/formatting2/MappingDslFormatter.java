@@ -29,8 +29,8 @@ public class MappingDslFormatter extends ServiceDslFormatter {
     for (final Import _import : _imports) {
       document.<Import>format(_import);
     }
-    EList<MicroserviceMapping> _mappings = technologyMapping.getMappings();
-    for (final MicroserviceMapping microserviceMapping : _mappings) {
+    EList<MicroserviceMapping> _serviceMappings = technologyMapping.getServiceMappings();
+    for (final MicroserviceMapping microserviceMapping : _serviceMappings) {
       document.<MicroserviceMapping>format(microserviceMapping);
     }
   }

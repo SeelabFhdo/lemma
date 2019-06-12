@@ -1155,7 +1155,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
         // Create classes and their features
         technologyMappingEClass = createEClass(TECHNOLOGY_MAPPING);
         createEReference(technologyMappingEClass, TECHNOLOGY_MAPPING__IMPORTS);
-        createEReference(technologyMappingEClass, TECHNOLOGY_MAPPING__MAPPINGS);
+        createEReference(technologyMappingEClass, TECHNOLOGY_MAPPING__SERVICE_MAPPINGS);
         createEOperation(technologyMappingEClass, TECHNOLOGY_MAPPING___GET_MAPPED_INTERFACES);
         createEOperation(technologyMappingEClass, TECHNOLOGY_MAPPING___GET_MAPPED_OPERATIONS);
         createEOperation(technologyMappingEClass, TECHNOLOGY_MAPPING___GET_MAPPED_REFERRED_OPERATIONS);
@@ -1300,7 +1300,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
         // Initialize classes, features, and operations; add parameters
         initEClass(technologyMappingEClass, TechnologyMapping.class, "TechnologyMapping", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getTechnologyMapping_Imports(), theServicePackage.getImport(), null, "imports", null, 1, -1, TechnologyMapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getTechnologyMapping_Mappings(), this.getMicroserviceMapping(), this.getMicroserviceMapping_MappingModel(), "mappings", null, 1, -1, TechnologyMapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getTechnologyMapping_ServiceMappings(), this.getMicroserviceMapping(), this.getMicroserviceMapping_MappingModel(), "serviceMappings", null, 0, -1, TechnologyMapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEOperation(getTechnologyMapping__GetMappedInterfaces(), this.getInterfaceMapping(), "getMappedInterfaces", 0, -1, !IS_UNIQUE, IS_ORDERED);
 
@@ -1317,7 +1317,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
         initEReference(getMicroserviceMapping_OperationMappings(), this.getOperationMapping(), this.getOperationMapping_MicroserviceMapping(), "operationMappings", null, 0, -1, MicroserviceMapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getMicroserviceMapping_ReferredOperationMappings(), this.getReferredOperationMapping(), this.getReferredOperationMapping_MicroserviceMapping(), "referredOperationMappings", null, 0, -1, MicroserviceMapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getMicroserviceMapping_Aspects(), this.getTechnologySpecificImportedServiceAspect(), this.getTechnologySpecificImportedServiceAspect_MicroserviceMapping(), "aspects", null, 0, -1, MicroserviceMapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getMicroserviceMapping_MappingModel(), this.getTechnologyMapping(), this.getTechnologyMapping_Mappings(), "mappingModel", null, 0, 1, MicroserviceMapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getMicroserviceMapping_MappingModel(), this.getTechnologyMapping(), this.getTechnologyMapping_ServiceMappings(), "mappingModel", null, 0, 1, MicroserviceMapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEOperation(getMicroserviceMapping__GetTypeDefinitionTechnologyImports(), theServicePackage.getImport(), "getTypeDefinitionTechnologyImports", 0, -1, !IS_UNIQUE, IS_ORDERED);
 

@@ -68,7 +68,7 @@ public class MappingModelTransformationValidator extends AbstractSourceModelVali
         };
         return Boolean.valueOf(IterableExtensions.<Microservice>exists(it.getMicroservice().getMicroservice().getAllRequiredMicroservices().keySet(), _function_1));
       };
-      final boolean referencesToMicroservicesWithoutTechnologies = IterableExtensions.<MicroserviceMapping>exists(mappingModel.getMappings(), _function);
+      final boolean referencesToMicroservicesWithoutTechnologies = IterableExtensions.<MicroserviceMapping>exists(mappingModel.getServiceMappings(), _function);
       Void _xifexpression = null;
       if (referencesToMicroservicesWithoutTechnologies) {
         _xifexpression = this.warning(((("The model maps microservices, which refer to services without " + 

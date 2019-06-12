@@ -46,7 +46,7 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
  * </p>
  * <ul>
  *   <li>{@link de.fhdo.ddmm.technology.mapping.impl.TechnologyMappingImpl#getImports <em>Imports</em>}</li>
- *   <li>{@link de.fhdo.ddmm.technology.mapping.impl.TechnologyMappingImpl#getMappings <em>Mappings</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.technology.mapping.impl.TechnologyMappingImpl#getServiceMappings <em>Service Mappings</em>}</li>
  * </ul>
  *
  * @generated
@@ -63,14 +63,24 @@ public class TechnologyMappingImpl extends MinimalEObjectImpl.Container implemen
     protected EList<Import> imports;
 
     /**
-     * The cached value of the '{@link #getMappings() <em>Mappings</em>}' containment reference list.
+     * The cached value of the '{@link #getComplexTypeMappings() <em>Complex Type Mappings</em>}' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getMappings()
+     * @see #getComplexTypeMappings()
      * @generated
      * @ordered
      */
-    protected EList<MicroserviceMapping> mappings;
+    protected EList<ComplexTypeMapping> complexTypeMappings;
+
+    /**
+     * The cached value of the '{@link #getServiceMappings() <em>Service Mappings</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getServiceMappings()
+     * @generated
+     * @ordered
+     */
+    protected EList<MicroserviceMapping> serviceMappings;
 
     /**
      * <!-- begin-user-doc -->
@@ -110,11 +120,24 @@ public class TechnologyMappingImpl extends MinimalEObjectImpl.Container implemen
      * @generated
      */
     @Override
-    public EList<MicroserviceMapping> getMappings() {
-        if (mappings == null) {
-            mappings = new EObjectContainmentWithInverseEList<MicroserviceMapping>(MicroserviceMapping.class, this, MappingPackage.TECHNOLOGY_MAPPING__MAPPINGS, MappingPackage.MICROSERVICE_MAPPING__MAPPING_MODEL);
+    public EList<ComplexTypeMapping> getComplexTypeMappings() {
+        if (complexTypeMappings == null) {
+            complexTypeMappings = new EObjectContainmentWithInverseEList<ComplexTypeMapping>(ComplexTypeMapping.class, this, MappingPackage.TECHNOLOGY_MAPPING__COMPLEX_TYPE_MAPPINGS, MappingPackage.COMPLEX_TYPE_MAPPING__MAPPING_MODEL);
         }
-        return mappings;
+        return complexTypeMappings;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EList<MicroserviceMapping> getServiceMappings() {
+        if (serviceMappings == null) {
+            serviceMappings = new EObjectContainmentWithInverseEList<MicroserviceMapping>(MicroserviceMapping.class, this, MappingPackage.TECHNOLOGY_MAPPING__SERVICE_MAPPINGS, MappingPackage.MICROSERVICE_MAPPING__MAPPING_MODEL);
+        }
+        return serviceMappings;
     }
 
     /**
@@ -129,7 +152,7 @@ public class TechnologyMappingImpl extends MinimalEObjectImpl.Container implemen
                 return it.getInterfaceMappings();
             }
         };
-        return ECollections.<InterfaceMapping>asEList(IterableExtensions.<InterfaceMapping>toList(Iterables.<InterfaceMapping>concat(XcoreEListExtensions.<MicroserviceMapping, EList<InterfaceMapping>>map(this.getMappings(), _function))));
+        return ECollections.<InterfaceMapping>asEList(IterableExtensions.<InterfaceMapping>toList(Iterables.<InterfaceMapping>concat(XcoreEListExtensions.<MicroserviceMapping, EList<InterfaceMapping>>map(this.getServiceMappings(), _function))));
     }
 
     /**
@@ -144,7 +167,7 @@ public class TechnologyMappingImpl extends MinimalEObjectImpl.Container implemen
                 return it.getOperationMappings();
             }
         };
-        return ECollections.<OperationMapping>asEList(IterableExtensions.<OperationMapping>toList(Iterables.<OperationMapping>concat(XcoreEListExtensions.<MicroserviceMapping, EList<OperationMapping>>map(this.getMappings(), _function))));
+        return ECollections.<OperationMapping>asEList(IterableExtensions.<OperationMapping>toList(Iterables.<OperationMapping>concat(XcoreEListExtensions.<MicroserviceMapping, EList<OperationMapping>>map(this.getServiceMappings(), _function))));
     }
 
     /**
@@ -159,7 +182,7 @@ public class TechnologyMappingImpl extends MinimalEObjectImpl.Container implemen
                 return it.getReferredOperationMappings();
             }
         };
-        return ECollections.<ReferredOperationMapping>asEList(IterableExtensions.<ReferredOperationMapping>toList(Iterables.<ReferredOperationMapping>concat(XcoreEListExtensions.<MicroserviceMapping, EList<ReferredOperationMapping>>map(this.getMappings(), _function))));
+        return ECollections.<ReferredOperationMapping>asEList(IterableExtensions.<ReferredOperationMapping>toList(Iterables.<ReferredOperationMapping>concat(XcoreEListExtensions.<MicroserviceMapping, EList<ReferredOperationMapping>>map(this.getServiceMappings(), _function))));
     }
 
     /**
@@ -171,8 +194,8 @@ public class TechnologyMappingImpl extends MinimalEObjectImpl.Container implemen
     @Override
     public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
-            case MappingPackage.TECHNOLOGY_MAPPING__MAPPINGS:
-                return ((InternalEList<InternalEObject>)(InternalEList<?>)getMappings()).basicAdd(otherEnd, msgs);
+            case MappingPackage.TECHNOLOGY_MAPPING__SERVICE_MAPPINGS:
+                return ((InternalEList<InternalEObject>)(InternalEList<?>)getServiceMappings()).basicAdd(otherEnd, msgs);
         }
         return super.eInverseAdd(otherEnd, featureID, msgs);
     }
@@ -187,8 +210,8 @@ public class TechnologyMappingImpl extends MinimalEObjectImpl.Container implemen
         switch (featureID) {
             case MappingPackage.TECHNOLOGY_MAPPING__IMPORTS:
                 return ((InternalEList<?>)getImports()).basicRemove(otherEnd, msgs);
-            case MappingPackage.TECHNOLOGY_MAPPING__MAPPINGS:
-                return ((InternalEList<?>)getMappings()).basicRemove(otherEnd, msgs);
+            case MappingPackage.TECHNOLOGY_MAPPING__SERVICE_MAPPINGS:
+                return ((InternalEList<?>)getServiceMappings()).basicRemove(otherEnd, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
@@ -203,8 +226,8 @@ public class TechnologyMappingImpl extends MinimalEObjectImpl.Container implemen
         switch (featureID) {
             case MappingPackage.TECHNOLOGY_MAPPING__IMPORTS:
                 return getImports();
-            case MappingPackage.TECHNOLOGY_MAPPING__MAPPINGS:
-                return getMappings();
+            case MappingPackage.TECHNOLOGY_MAPPING__SERVICE_MAPPINGS:
+                return getServiceMappings();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -222,9 +245,9 @@ public class TechnologyMappingImpl extends MinimalEObjectImpl.Container implemen
                 getImports().clear();
                 getImports().addAll((Collection<? extends Import>)newValue);
                 return;
-            case MappingPackage.TECHNOLOGY_MAPPING__MAPPINGS:
-                getMappings().clear();
-                getMappings().addAll((Collection<? extends MicroserviceMapping>)newValue);
+            case MappingPackage.TECHNOLOGY_MAPPING__SERVICE_MAPPINGS:
+                getServiceMappings().clear();
+                getServiceMappings().addAll((Collection<? extends MicroserviceMapping>)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -241,8 +264,8 @@ public class TechnologyMappingImpl extends MinimalEObjectImpl.Container implemen
             case MappingPackage.TECHNOLOGY_MAPPING__IMPORTS:
                 getImports().clear();
                 return;
-            case MappingPackage.TECHNOLOGY_MAPPING__MAPPINGS:
-                getMappings().clear();
+            case MappingPackage.TECHNOLOGY_MAPPING__SERVICE_MAPPINGS:
+                getServiceMappings().clear();
                 return;
         }
         super.eUnset(featureID);
@@ -258,8 +281,8 @@ public class TechnologyMappingImpl extends MinimalEObjectImpl.Container implemen
         switch (featureID) {
             case MappingPackage.TECHNOLOGY_MAPPING__IMPORTS:
                 return imports != null && !imports.isEmpty();
-            case MappingPackage.TECHNOLOGY_MAPPING__MAPPINGS:
-                return mappings != null && !mappings.isEmpty();
+            case MappingPackage.TECHNOLOGY_MAPPING__SERVICE_MAPPINGS:
+                return serviceMappings != null && !serviceMappings.isEmpty();
         }
         return super.eIsSet(featureID);
     }

@@ -35,15 +35,15 @@ public class MappingDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cImportsAssignment_0 = (Assignment)cGroup.eContents().get(0);
 		private final RuleCall cImportsImportParserRuleCall_0_0 = (RuleCall)cImportsAssignment_0.eContents().get(0);
-		private final Assignment cMappingsAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cMappingsMicroserviceMappingParserRuleCall_1_0 = (RuleCall)cMappingsAssignment_1.eContents().get(0);
+		private final Assignment cServiceMappingsAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cServiceMappingsMicroserviceMappingParserRuleCall_1_0 = (RuleCall)cServiceMappingsAssignment_1.eContents().get(0);
 		
 		//TechnologyMapping:
 		//	imports+=Import+
-		//	mappings+=MicroserviceMapping+;
+		//	serviceMappings+=MicroserviceMapping+;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//imports+=Import+ mappings+=MicroserviceMapping+
+		//imports+=Import+ serviceMappings+=MicroserviceMapping+
 		public Group getGroup() { return cGroup; }
 		
 		//imports+=Import+
@@ -52,11 +52,11 @@ public class MappingDslGrammarAccess extends AbstractGrammarElementFinder {
 		//Import
 		public RuleCall getImportsImportParserRuleCall_0_0() { return cImportsImportParserRuleCall_0_0; }
 		
-		//mappings+=MicroserviceMapping+
-		public Assignment getMappingsAssignment_1() { return cMappingsAssignment_1; }
+		//serviceMappings+=MicroserviceMapping+
+		public Assignment getServiceMappingsAssignment_1() { return cServiceMappingsAssignment_1; }
 		
 		//MicroserviceMapping
-		public RuleCall getMappingsMicroserviceMappingParserRuleCall_1_0() { return cMappingsMicroserviceMappingParserRuleCall_1_0; }
+		public RuleCall getServiceMappingsMicroserviceMappingParserRuleCall_1_0() { return cServiceMappingsMicroserviceMappingParserRuleCall_1_0; }
 	}
 	public class MicroserviceMappingElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.fhdo.ddmm.technology.mappingdsl.MappingDsl.MicroserviceMapping");
@@ -1477,7 +1477,7 @@ public class MappingDslGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//TechnologyMapping:
 	//	imports+=Import+
-	//	mappings+=MicroserviceMapping+;
+	//	serviceMappings+=MicroserviceMapping+;
 	public TechnologyMappingElements getTechnologyMappingAccess() {
 		return pTechnologyMapping;
 	}

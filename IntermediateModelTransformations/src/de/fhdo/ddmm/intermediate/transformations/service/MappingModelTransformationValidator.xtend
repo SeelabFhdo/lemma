@@ -42,7 +42,7 @@ class MappingModelTransformationValidator extends AbstractSourceModelValidator<T
      * Warn if microservices with technologies refer to microservices without technologies
      */
     private def Void warnReferredMicroserviceTechnologies(TechnologyMapping mappingModel) {
-        val referencesToMicroservicesWithoutTechnologies = mappingModel.mappings
+        val referencesToMicroservicesWithoutTechnologies = mappingModel.serviceMappings
             .exists[
                 microservice.microservice.allRequiredMicroservices.keySet.exists[technologies.empty]
             ]

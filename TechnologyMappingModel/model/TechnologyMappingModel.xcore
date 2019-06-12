@@ -36,27 +36,27 @@ class TechnologyMapping {
      */
 
     contains Import[1..*] imports
-    contains MicroserviceMapping[1..*] mappings opposite mappingModel
+    contains MicroserviceMapping[] serviceMappings opposite mappingModel
 
     /**
      * Get all mapped interfaces of all mapped microservices
      */
     op InterfaceMapping[] getMappedInterfaces() {
-        return mappings.map[interfaceMappings].flatten.toList.asEList
+        return serviceMappings.map[interfaceMappings].flatten.toList.asEList
     }
 
     /**
      * Get all operations of all mapped microservices
      */
     op OperationMapping[] getMappedOperations() {
-        return mappings.map[it.operationMappings].flatten.toList.asEList
+        return serviceMappings.map[it.operationMappings].flatten.toList.asEList
     }
 
     /**
      * Get all mapped referred operations of all mapped microservices
      */
     op ReferredOperationMapping[] getMappedReferredOperations() {
-        return mappings.map[referredOperationMappings].flatten.toList.asEList
+        return serviceMappings.map[referredOperationMappings].flatten.toList.asEList
     }
 }
 
@@ -95,7 +95,7 @@ class MicroserviceMapping {
     contains ReferredOperationMapping[] referredOperationMappings opposite microserviceMapping
     contains TechnologySpecificImportedServiceAspect[] aspects opposite microserviceMapping
 
-    container TechnologyMapping mappingModel opposite mappings
+    container TechnologyMapping mappingModel opposite serviceMappings
 
     /**
      * Get imports of type definition technologies
