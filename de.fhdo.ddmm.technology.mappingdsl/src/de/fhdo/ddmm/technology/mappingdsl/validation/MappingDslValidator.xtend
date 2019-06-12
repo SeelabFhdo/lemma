@@ -485,7 +485,8 @@ class MappingDslValidator extends AbstractMappingDslValidator {
     @Check
     def checkNotEmpty(ComplexParameterMapping mapping) {
         val isEmpty = mapping.technologySpecificComplexType === null &&
-            mapping.aspects.empty
+            mapping.aspects.empty &&
+            mapping.dataFieldMappings.empty
 
         if (isEmpty)
             error("Mapping must not be empty", mapping,
