@@ -678,7 +678,10 @@ class ServiceDslValidator extends AbstractServiceDslValidator {
         }
 
         val propertyCount = importedAspect.importedAspect.properties.size
-        if (propertyCount > 1)
+        if (propertyCount === 0)
+            error("Aspect does not define properties", importedAspect,
+                ServicePackage.Literals::IMPORTED_SERVICE_ASPECT__SINGLE_PROPERTY_VALUE)
+        else if (propertyCount > 1)
             error("Ambiguous value assignment", importedAspect,
                 ServicePackage.Literals::IMPORTED_SERVICE_ASPECT__SINGLE_PROPERTY_VALUE)
         else if (propertyCount === 1) {

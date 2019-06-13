@@ -63,7 +63,7 @@ class MappingDslValidator extends AbstractMappingDslValidator {
     def checkTechnologyUniqueness(MicroserviceMapping mapping) {
         val duplicateIndex = DdmmUtils.getDuplicateIndex(mapping.technologies, [it])
         if (duplicateIndex > -1) {
-            error('''Duplicate technology assignment''',
+            error("Duplicate technology assignment",
                 MappingPackage::Literals.MICROSERVICE_MAPPING__TECHNOLOGIES, duplicateIndex)
         }
     }
@@ -768,7 +768,10 @@ class MappingDslValidator extends AbstractMappingDslValidator {
         }
 
         val propertyCount = importedAspect.aspect.properties.size
-        if (propertyCount > 1)
+        if (propertyCount === 0)
+            error("Aspect does not define properties", importedAspect, MappingPackage
+                .Literals::TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__SINGLE_PROPERTY_VALUE)
+        else if (propertyCount > 1)
             error("Ambiguous value assignment", importedAspect, MappingPackage
                     .Literals::TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__SINGLE_PROPERTY_VALUE)
         else if (propertyCount === 1) {

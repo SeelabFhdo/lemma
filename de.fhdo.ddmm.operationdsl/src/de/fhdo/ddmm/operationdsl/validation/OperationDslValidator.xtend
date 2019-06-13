@@ -603,7 +603,10 @@ class OperationDslValidator extends AbstractOperationDslValidator {
         }
 
         val propertyCount = importedAspect.aspect.properties.size
-        if (propertyCount > 1)
+        if (propertyCount === 0)
+            error("Aspect does not define properties", importedAspect,
+                OperationPackage.Literals::IMPORTED_OPERATION_ASPECT__SINGLE_PROPERTY_VALUE)
+        else if (propertyCount > 1)
             error("Ambiguous value assignment", importedAspect,
                 OperationPackage.Literals::IMPORTED_OPERATION_ASPECT__SINGLE_PROPERTY_VALUE)
         else if (propertyCount === 1) {
