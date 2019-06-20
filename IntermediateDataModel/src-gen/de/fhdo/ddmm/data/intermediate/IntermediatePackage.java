@@ -543,13 +543,22 @@ public interface IntermediatePackage extends EPackage {
     int INTERMEDIATE_COMPLEX_TYPE__QUALIFIED_NAME = INTERMEDIATE_TYPE_FEATURE_COUNT + 0;
 
     /**
+     * The feature id for the '<em><b>Aspects</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_COMPLEX_TYPE__ASPECTS = INTERMEDIATE_TYPE_FEATURE_COUNT + 1;
+
+    /**
      * The feature id for the '<em><b>Data Model</b></em>' container reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_COMPLEX_TYPE__DATA_MODEL = INTERMEDIATE_TYPE_FEATURE_COUNT + 1;
+    int INTERMEDIATE_COMPLEX_TYPE__DATA_MODEL = INTERMEDIATE_TYPE_FEATURE_COUNT + 2;
 
     /**
      * The feature id for the '<em><b>Version</b></em>' container reference.
@@ -558,7 +567,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_COMPLEX_TYPE__VERSION = INTERMEDIATE_TYPE_FEATURE_COUNT + 2;
+    int INTERMEDIATE_COMPLEX_TYPE__VERSION = INTERMEDIATE_TYPE_FEATURE_COUNT + 3;
 
     /**
      * The feature id for the '<em><b>Context</b></em>' container reference.
@@ -567,7 +576,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_COMPLEX_TYPE__CONTEXT = INTERMEDIATE_TYPE_FEATURE_COUNT + 3;
+    int INTERMEDIATE_COMPLEX_TYPE__CONTEXT = INTERMEDIATE_TYPE_FEATURE_COUNT + 4;
 
     /**
      * The number of structural features of the '<em>Complex Type</em>' class.
@@ -576,7 +585,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_COMPLEX_TYPE_FEATURE_COUNT = INTERMEDIATE_TYPE_FEATURE_COUNT + 4;
+    int INTERMEDIATE_COMPLEX_TYPE_FEATURE_COUNT = INTERMEDIATE_TYPE_FEATURE_COUNT + 5;
 
     /**
      * The number of operations of the '<em>Complex Type</em>' class.
@@ -643,6 +652,15 @@ public interface IntermediatePackage extends EPackage {
     int INTERMEDIATE_IMPORTED_COMPLEX_TYPE__QUALIFIED_NAME = INTERMEDIATE_COMPLEX_TYPE__QUALIFIED_NAME;
 
     /**
+     * The feature id for the '<em><b>Aspects</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_IMPORTED_COMPLEX_TYPE__ASPECTS = INTERMEDIATE_COMPLEX_TYPE__ASPECTS;
+
+    /**
      * The feature id for the '<em><b>Data Model</b></em>' container reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -697,6 +715,88 @@ public interface IntermediatePackage extends EPackage {
     int INTERMEDIATE_IMPORTED_COMPLEX_TYPE_OPERATION_COUNT = INTERMEDIATE_COMPLEX_TYPE_OPERATION_COUNT + 0;
 
     /**
+     * The meta object id for the '{@link de.fhdo.ddmm.data.intermediate.impl.IntermediateImportedTechnologySpecificTypeImpl <em>Imported Technology Specific Type</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.fhdo.ddmm.data.intermediate.impl.IntermediateImportedTechnologySpecificTypeImpl
+     * @see de.fhdo.ddmm.data.intermediate.impl.IntermediatePackageImpl#getIntermediateImportedTechnologySpecificType()
+     * @generated
+     */
+    int INTERMEDIATE_IMPORTED_TECHNOLOGY_SPECIFIC_TYPE = 8;
+
+    /**
+     * The feature id for the '<em><b>Name</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_IMPORTED_TECHNOLOGY_SPECIFIC_TYPE__NAME = INTERMEDIATE_TYPE__NAME;
+
+    /**
+     * The feature id for the '<em><b>Origin</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_IMPORTED_TECHNOLOGY_SPECIFIC_TYPE__ORIGIN = INTERMEDIATE_TYPE__ORIGIN;
+
+    /**
+     * The feature id for the '<em><b>Kind</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_IMPORTED_TECHNOLOGY_SPECIFIC_TYPE__KIND = INTERMEDIATE_TYPE__KIND;
+
+    /**
+     * The feature id for the '<em><b>Data Field</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_IMPORTED_TECHNOLOGY_SPECIFIC_TYPE__DATA_FIELD = INTERMEDIATE_TYPE__DATA_FIELD;
+
+    /**
+     * The feature id for the '<em><b>Qualified Name</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_IMPORTED_TECHNOLOGY_SPECIFIC_TYPE__QUALIFIED_NAME = INTERMEDIATE_TYPE_FEATURE_COUNT + 0;
+
+    /**
+     * The feature id for the '<em><b>Import</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_IMPORTED_TECHNOLOGY_SPECIFIC_TYPE__IMPORT = INTERMEDIATE_TYPE_FEATURE_COUNT + 1;
+
+    /**
+     * The number of structural features of the '<em>Imported Technology Specific Type</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_IMPORTED_TECHNOLOGY_SPECIFIC_TYPE_FEATURE_COUNT = INTERMEDIATE_TYPE_FEATURE_COUNT + 2;
+
+    /**
+     * The number of operations of the '<em>Imported Technology Specific Type</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_IMPORTED_TECHNOLOGY_SPECIFIC_TYPE_OPERATION_COUNT = INTERMEDIATE_TYPE_OPERATION_COUNT + 0;
+
+    /**
      * The meta object id for the '{@link de.fhdo.ddmm.data.intermediate.impl.IntermediateDataStructureImpl <em>Data Structure</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -704,7 +804,7 @@ public interface IntermediatePackage extends EPackage {
      * @see de.fhdo.ddmm.data.intermediate.impl.IntermediatePackageImpl#getIntermediateDataStructure()
      * @generated
      */
-    int INTERMEDIATE_DATA_STRUCTURE = 8;
+    int INTERMEDIATE_DATA_STRUCTURE = 9;
 
     /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -750,6 +850,15 @@ public interface IntermediatePackage extends EPackage {
      * @ordered
      */
     int INTERMEDIATE_DATA_STRUCTURE__QUALIFIED_NAME = INTERMEDIATE_COMPLEX_TYPE__QUALIFIED_NAME;
+
+    /**
+     * The feature id for the '<em><b>Aspects</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_DATA_STRUCTURE__ASPECTS = INTERMEDIATE_COMPLEX_TYPE__ASPECTS;
 
     /**
      * The feature id for the '<em><b>Data Model</b></em>' container reference.
@@ -822,7 +931,7 @@ public interface IntermediatePackage extends EPackage {
      * @see de.fhdo.ddmm.data.intermediate.impl.IntermediatePackageImpl#getIntermediateListType()
      * @generated
      */
-    int INTERMEDIATE_LIST_TYPE = 9;
+    int INTERMEDIATE_LIST_TYPE = 10;
 
     /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -868,6 +977,15 @@ public interface IntermediatePackage extends EPackage {
      * @ordered
      */
     int INTERMEDIATE_LIST_TYPE__QUALIFIED_NAME = INTERMEDIATE_COMPLEX_TYPE__QUALIFIED_NAME;
+
+    /**
+     * The feature id for the '<em><b>Aspects</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_LIST_TYPE__ASPECTS = INTERMEDIATE_COMPLEX_TYPE__ASPECTS;
 
     /**
      * The feature id for the '<em><b>Data Model</b></em>' container reference.
@@ -958,7 +1076,7 @@ public interface IntermediatePackage extends EPackage {
      * @see de.fhdo.ddmm.data.intermediate.impl.IntermediatePackageImpl#getIntermediateDataField()
      * @generated
      */
-    int INTERMEDIATE_DATA_FIELD = 10;
+    int INTERMEDIATE_DATA_FIELD = 11;
 
     /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1006,13 +1124,31 @@ public interface IntermediatePackage extends EPackage {
     int INTERMEDIATE_DATA_FIELD__TYPE = 4;
 
     /**
+     * The feature id for the '<em><b>Original Type</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_DATA_FIELD__ORIGINAL_TYPE = 5;
+
+    /**
+     * The feature id for the '<em><b>Aspects</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_DATA_FIELD__ASPECTS = 6;
+
+    /**
      * The feature id for the '<em><b>Data Structure</b></em>' container reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_DATA_FIELD__DATA_STRUCTURE = 5;
+    int INTERMEDIATE_DATA_FIELD__DATA_STRUCTURE = 7;
 
     /**
      * The feature id for the '<em><b>List Type</b></em>' container reference.
@@ -1021,7 +1157,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_DATA_FIELD__LIST_TYPE = 6;
+    int INTERMEDIATE_DATA_FIELD__LIST_TYPE = 8;
 
     /**
      * The number of structural features of the '<em>Data Field</em>' class.
@@ -1030,7 +1166,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_DATA_FIELD_FEATURE_COUNT = 7;
+    int INTERMEDIATE_DATA_FIELD_FEATURE_COUNT = 9;
 
     /**
      * The number of operations of the '<em>Data Field</em>' class.
@@ -1049,7 +1185,7 @@ public interface IntermediatePackage extends EPackage {
      * @see de.fhdo.ddmm.data.intermediate.impl.IntermediatePackageImpl#getIntermediateEnumeration()
      * @generated
      */
-    int INTERMEDIATE_ENUMERATION = 11;
+    int INTERMEDIATE_ENUMERATION = 12;
 
     /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1095,6 +1231,15 @@ public interface IntermediatePackage extends EPackage {
      * @ordered
      */
     int INTERMEDIATE_ENUMERATION__QUALIFIED_NAME = INTERMEDIATE_COMPLEX_TYPE__QUALIFIED_NAME;
+
+    /**
+     * The feature id for the '<em><b>Aspects</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_ENUMERATION__ASPECTS = INTERMEDIATE_COMPLEX_TYPE__ASPECTS;
 
     /**
      * The feature id for the '<em><b>Data Model</b></em>' container reference.
@@ -1158,7 +1303,7 @@ public interface IntermediatePackage extends EPackage {
      * @see de.fhdo.ddmm.data.intermediate.impl.IntermediatePackageImpl#getIntermediateEnumerationField()
      * @generated
      */
-    int INTERMEDIATE_ENUMERATION_FIELD = 12;
+    int INTERMEDIATE_ENUMERATION_FIELD = 13;
 
     /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1224,6 +1369,216 @@ public interface IntermediatePackage extends EPackage {
     int INTERMEDIATE_ENUMERATION_FIELD_OPERATION_COUNT = 0;
 
     /**
+     * The meta object id for the '{@link de.fhdo.ddmm.data.intermediate.impl.IntermediateImportedAspectImpl <em>Imported Aspect</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.fhdo.ddmm.data.intermediate.impl.IntermediateImportedAspectImpl
+     * @see de.fhdo.ddmm.data.intermediate.impl.IntermediatePackageImpl#getIntermediateImportedAspect()
+     * @generated
+     */
+    int INTERMEDIATE_IMPORTED_ASPECT = 14;
+
+    /**
+     * The feature id for the '<em><b>Name</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_IMPORTED_ASPECT__NAME = 0;
+
+    /**
+     * The feature id for the '<em><b>Import</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_IMPORTED_ASPECT__IMPORT = 1;
+
+    /**
+     * The feature id for the '<em><b>Properties</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_IMPORTED_ASPECT__PROPERTIES = 2;
+
+    /**
+     * The feature id for the '<em><b>Property Values</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_IMPORTED_ASPECT__PROPERTY_VALUES = 3;
+
+    /**
+     * The feature id for the '<em><b>Complex Type</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_IMPORTED_ASPECT__COMPLEX_TYPE = 4;
+
+    /**
+     * The feature id for the '<em><b>Data Field</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_IMPORTED_ASPECT__DATA_FIELD = 5;
+
+    /**
+     * The number of structural features of the '<em>Imported Aspect</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_IMPORTED_ASPECT_FEATURE_COUNT = 6;
+
+    /**
+     * The number of operations of the '<em>Imported Aspect</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_IMPORTED_ASPECT_OPERATION_COUNT = 0;
+
+    /**
+     * The meta object id for the '{@link de.fhdo.ddmm.data.intermediate.impl.IntermediateAspectPropertyImpl <em>Aspect Property</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.fhdo.ddmm.data.intermediate.impl.IntermediateAspectPropertyImpl
+     * @see de.fhdo.ddmm.data.intermediate.impl.IntermediatePackageImpl#getIntermediateAspectProperty()
+     * @generated
+     */
+    int INTERMEDIATE_ASPECT_PROPERTY = 15;
+
+    /**
+     * The feature id for the '<em><b>Name</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_ASPECT_PROPERTY__NAME = 0;
+
+    /**
+     * The feature id for the '<em><b>Type</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_ASPECT_PROPERTY__TYPE = 1;
+
+    /**
+     * The feature id for the '<em><b>Default Value</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_ASPECT_PROPERTY__DEFAULT_VALUE = 2;
+
+    /**
+     * The feature id for the '<em><b>Mandatory</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_ASPECT_PROPERTY__MANDATORY = 3;
+
+    /**
+     * The feature id for the '<em><b>Aspect</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_ASPECT_PROPERTY__ASPECT = 4;
+
+    /**
+     * The number of structural features of the '<em>Aspect Property</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_ASPECT_PROPERTY_FEATURE_COUNT = 5;
+
+    /**
+     * The number of operations of the '<em>Aspect Property</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_ASPECT_PROPERTY_OPERATION_COUNT = 0;
+
+    /**
+     * The meta object id for the '{@link de.fhdo.ddmm.data.intermediate.impl.IntermediateAspectPropertyValueImpl <em>Aspect Property Value</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.fhdo.ddmm.data.intermediate.impl.IntermediateAspectPropertyValueImpl
+     * @see de.fhdo.ddmm.data.intermediate.impl.IntermediatePackageImpl#getIntermediateAspectPropertyValue()
+     * @generated
+     */
+    int INTERMEDIATE_ASPECT_PROPERTY_VALUE = 16;
+
+    /**
+     * The feature id for the '<em><b>Value</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_ASPECT_PROPERTY_VALUE__VALUE = 0;
+
+    /**
+     * The feature id for the '<em><b>Property</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_ASPECT_PROPERTY_VALUE__PROPERTY = 1;
+
+    /**
+     * The feature id for the '<em><b>Aspect</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_ASPECT_PROPERTY_VALUE__ASPECT = 2;
+
+    /**
+     * The number of structural features of the '<em>Aspect Property Value</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_ASPECT_PROPERTY_VALUE_FEATURE_COUNT = 3;
+
+    /**
+     * The number of operations of the '<em>Aspect Property Value</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_ASPECT_PROPERTY_VALUE_OPERATION_COUNT = 0;
+
+    /**
      * The meta object id for the '{@link de.fhdo.ddmm.data.intermediate.IntermediateTypeKind <em>Type Kind</em>}' enum.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1231,7 +1586,7 @@ public interface IntermediatePackage extends EPackage {
      * @see de.fhdo.ddmm.data.intermediate.impl.IntermediatePackageImpl#getIntermediateTypeKind()
      * @generated
      */
-    int INTERMEDIATE_TYPE_KIND = 13;
+    int INTERMEDIATE_TYPE_KIND = 17;
 
     /**
      * The meta object id for the '{@link de.fhdo.ddmm.data.intermediate.IntermediateTypeOrigin <em>Type Origin</em>}' enum.
@@ -1241,7 +1596,7 @@ public interface IntermediatePackage extends EPackage {
      * @see de.fhdo.ddmm.data.intermediate.impl.IntermediatePackageImpl#getIntermediateTypeOrigin()
      * @generated
      */
-    int INTERMEDIATE_TYPE_ORIGIN = 14;
+    int INTERMEDIATE_TYPE_ORIGIN = 18;
 
 
     /**
@@ -1601,6 +1956,17 @@ public interface IntermediatePackage extends EPackage {
     EAttribute getIntermediateComplexType_QualifiedName();
 
     /**
+     * Returns the meta object for the containment reference list '{@link de.fhdo.ddmm.data.intermediate.IntermediateComplexType#getAspects <em>Aspects</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Aspects</em>'.
+     * @see de.fhdo.ddmm.data.intermediate.IntermediateComplexType#getAspects()
+     * @see #getIntermediateComplexType()
+     * @generated
+     */
+    EReference getIntermediateComplexType_Aspects();
+
+    /**
      * Returns the meta object for the container reference '{@link de.fhdo.ddmm.data.intermediate.IntermediateComplexType#getDataModel <em>Data Model</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1653,6 +2019,38 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      */
     EReference getIntermediateImportedComplexType_Import();
+
+    /**
+     * Returns the meta object for class '{@link de.fhdo.ddmm.data.intermediate.IntermediateImportedTechnologySpecificType <em>Imported Technology Specific Type</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Imported Technology Specific Type</em>'.
+     * @see de.fhdo.ddmm.data.intermediate.IntermediateImportedTechnologySpecificType
+     * @generated
+     */
+    EClass getIntermediateImportedTechnologySpecificType();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.fhdo.ddmm.data.intermediate.IntermediateImportedTechnologySpecificType#getQualifiedName <em>Qualified Name</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Qualified Name</em>'.
+     * @see de.fhdo.ddmm.data.intermediate.IntermediateImportedTechnologySpecificType#getQualifiedName()
+     * @see #getIntermediateImportedTechnologySpecificType()
+     * @generated
+     */
+    EAttribute getIntermediateImportedTechnologySpecificType_QualifiedName();
+
+    /**
+     * Returns the meta object for the reference '{@link de.fhdo.ddmm.data.intermediate.IntermediateImportedTechnologySpecificType#getImport <em>Import</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference '<em>Import</em>'.
+     * @see de.fhdo.ddmm.data.intermediate.IntermediateImportedTechnologySpecificType#getImport()
+     * @see #getIntermediateImportedTechnologySpecificType()
+     * @generated
+     */
+    EReference getIntermediateImportedTechnologySpecificType_Import();
 
     /**
      * Returns the meta object for class '{@link de.fhdo.ddmm.data.intermediate.IntermediateDataStructure <em>Data Structure</em>}'.
@@ -1806,6 +2204,28 @@ public interface IntermediatePackage extends EPackage {
     EReference getIntermediateDataField_Type();
 
     /**
+     * Returns the meta object for the containment reference '{@link de.fhdo.ddmm.data.intermediate.IntermediateDataField#getOriginalType <em>Original Type</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference '<em>Original Type</em>'.
+     * @see de.fhdo.ddmm.data.intermediate.IntermediateDataField#getOriginalType()
+     * @see #getIntermediateDataField()
+     * @generated
+     */
+    EReference getIntermediateDataField_OriginalType();
+
+    /**
+     * Returns the meta object for the containment reference list '{@link de.fhdo.ddmm.data.intermediate.IntermediateDataField#getAspects <em>Aspects</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Aspects</em>'.
+     * @see de.fhdo.ddmm.data.intermediate.IntermediateDataField#getAspects()
+     * @see #getIntermediateDataField()
+     * @generated
+     */
+    EReference getIntermediateDataField_Aspects();
+
+    /**
      * Returns the meta object for the container reference '{@link de.fhdo.ddmm.data.intermediate.IntermediateDataField#getDataStructure <em>Data Structure</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1912,6 +2332,190 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      */
     EReference getIntermediateEnumerationField_Enumeration();
+
+    /**
+     * Returns the meta object for class '{@link de.fhdo.ddmm.data.intermediate.IntermediateImportedAspect <em>Imported Aspect</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Imported Aspect</em>'.
+     * @see de.fhdo.ddmm.data.intermediate.IntermediateImportedAspect
+     * @generated
+     */
+    EClass getIntermediateImportedAspect();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.fhdo.ddmm.data.intermediate.IntermediateImportedAspect#getName <em>Name</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Name</em>'.
+     * @see de.fhdo.ddmm.data.intermediate.IntermediateImportedAspect#getName()
+     * @see #getIntermediateImportedAspect()
+     * @generated
+     */
+    EAttribute getIntermediateImportedAspect_Name();
+
+    /**
+     * Returns the meta object for the reference '{@link de.fhdo.ddmm.data.intermediate.IntermediateImportedAspect#getImport <em>Import</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference '<em>Import</em>'.
+     * @see de.fhdo.ddmm.data.intermediate.IntermediateImportedAspect#getImport()
+     * @see #getIntermediateImportedAspect()
+     * @generated
+     */
+    EReference getIntermediateImportedAspect_Import();
+
+    /**
+     * Returns the meta object for the containment reference list '{@link de.fhdo.ddmm.data.intermediate.IntermediateImportedAspect#getProperties <em>Properties</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Properties</em>'.
+     * @see de.fhdo.ddmm.data.intermediate.IntermediateImportedAspect#getProperties()
+     * @see #getIntermediateImportedAspect()
+     * @generated
+     */
+    EReference getIntermediateImportedAspect_Properties();
+
+    /**
+     * Returns the meta object for the containment reference list '{@link de.fhdo.ddmm.data.intermediate.IntermediateImportedAspect#getPropertyValues <em>Property Values</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Property Values</em>'.
+     * @see de.fhdo.ddmm.data.intermediate.IntermediateImportedAspect#getPropertyValues()
+     * @see #getIntermediateImportedAspect()
+     * @generated
+     */
+    EReference getIntermediateImportedAspect_PropertyValues();
+
+    /**
+     * Returns the meta object for the container reference '{@link de.fhdo.ddmm.data.intermediate.IntermediateImportedAspect#getComplexType <em>Complex Type</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the container reference '<em>Complex Type</em>'.
+     * @see de.fhdo.ddmm.data.intermediate.IntermediateImportedAspect#getComplexType()
+     * @see #getIntermediateImportedAspect()
+     * @generated
+     */
+    EReference getIntermediateImportedAspect_ComplexType();
+
+    /**
+     * Returns the meta object for the container reference '{@link de.fhdo.ddmm.data.intermediate.IntermediateImportedAspect#getDataField <em>Data Field</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the container reference '<em>Data Field</em>'.
+     * @see de.fhdo.ddmm.data.intermediate.IntermediateImportedAspect#getDataField()
+     * @see #getIntermediateImportedAspect()
+     * @generated
+     */
+    EReference getIntermediateImportedAspect_DataField();
+
+    /**
+     * Returns the meta object for class '{@link de.fhdo.ddmm.data.intermediate.IntermediateAspectProperty <em>Aspect Property</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Aspect Property</em>'.
+     * @see de.fhdo.ddmm.data.intermediate.IntermediateAspectProperty
+     * @generated
+     */
+    EClass getIntermediateAspectProperty();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.fhdo.ddmm.data.intermediate.IntermediateAspectProperty#getName <em>Name</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Name</em>'.
+     * @see de.fhdo.ddmm.data.intermediate.IntermediateAspectProperty#getName()
+     * @see #getIntermediateAspectProperty()
+     * @generated
+     */
+    EAttribute getIntermediateAspectProperty_Name();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.fhdo.ddmm.data.intermediate.IntermediateAspectProperty#getType <em>Type</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Type</em>'.
+     * @see de.fhdo.ddmm.data.intermediate.IntermediateAspectProperty#getType()
+     * @see #getIntermediateAspectProperty()
+     * @generated
+     */
+    EAttribute getIntermediateAspectProperty_Type();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.fhdo.ddmm.data.intermediate.IntermediateAspectProperty#getDefaultValue <em>Default Value</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Default Value</em>'.
+     * @see de.fhdo.ddmm.data.intermediate.IntermediateAspectProperty#getDefaultValue()
+     * @see #getIntermediateAspectProperty()
+     * @generated
+     */
+    EAttribute getIntermediateAspectProperty_DefaultValue();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.fhdo.ddmm.data.intermediate.IntermediateAspectProperty#isMandatory <em>Mandatory</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Mandatory</em>'.
+     * @see de.fhdo.ddmm.data.intermediate.IntermediateAspectProperty#isMandatory()
+     * @see #getIntermediateAspectProperty()
+     * @generated
+     */
+    EAttribute getIntermediateAspectProperty_Mandatory();
+
+    /**
+     * Returns the meta object for the container reference '{@link de.fhdo.ddmm.data.intermediate.IntermediateAspectProperty#getAspect <em>Aspect</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the container reference '<em>Aspect</em>'.
+     * @see de.fhdo.ddmm.data.intermediate.IntermediateAspectProperty#getAspect()
+     * @see #getIntermediateAspectProperty()
+     * @generated
+     */
+    EReference getIntermediateAspectProperty_Aspect();
+
+    /**
+     * Returns the meta object for class '{@link de.fhdo.ddmm.data.intermediate.IntermediateAspectPropertyValue <em>Aspect Property Value</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Aspect Property Value</em>'.
+     * @see de.fhdo.ddmm.data.intermediate.IntermediateAspectPropertyValue
+     * @generated
+     */
+    EClass getIntermediateAspectPropertyValue();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.fhdo.ddmm.data.intermediate.IntermediateAspectPropertyValue#getValue <em>Value</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Value</em>'.
+     * @see de.fhdo.ddmm.data.intermediate.IntermediateAspectPropertyValue#getValue()
+     * @see #getIntermediateAspectPropertyValue()
+     * @generated
+     */
+    EAttribute getIntermediateAspectPropertyValue_Value();
+
+    /**
+     * Returns the meta object for the reference '{@link de.fhdo.ddmm.data.intermediate.IntermediateAspectPropertyValue#getProperty <em>Property</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference '<em>Property</em>'.
+     * @see de.fhdo.ddmm.data.intermediate.IntermediateAspectPropertyValue#getProperty()
+     * @see #getIntermediateAspectPropertyValue()
+     * @generated
+     */
+    EReference getIntermediateAspectPropertyValue_Property();
+
+    /**
+     * Returns the meta object for the container reference '{@link de.fhdo.ddmm.data.intermediate.IntermediateAspectPropertyValue#getAspect <em>Aspect</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the container reference '<em>Aspect</em>'.
+     * @see de.fhdo.ddmm.data.intermediate.IntermediateAspectPropertyValue#getAspect()
+     * @see #getIntermediateAspectPropertyValue()
+     * @generated
+     */
+    EReference getIntermediateAspectPropertyValue_Aspect();
 
     /**
      * Returns the meta object for enum '{@link de.fhdo.ddmm.data.intermediate.IntermediateTypeKind <em>Type Kind</em>}'.
@@ -2235,6 +2839,14 @@ public interface IntermediatePackage extends EPackage {
         EAttribute INTERMEDIATE_COMPLEX_TYPE__QUALIFIED_NAME = eINSTANCE.getIntermediateComplexType_QualifiedName();
 
         /**
+         * The meta object literal for the '<em><b>Aspects</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference INTERMEDIATE_COMPLEX_TYPE__ASPECTS = eINSTANCE.getIntermediateComplexType_Aspects();
+
+        /**
          * The meta object literal for the '<em><b>Data Model</b></em>' container reference feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -2275,6 +2887,32 @@ public interface IntermediatePackage extends EPackage {
          * @generated
          */
         EReference INTERMEDIATE_IMPORTED_COMPLEX_TYPE__IMPORT = eINSTANCE.getIntermediateImportedComplexType_Import();
+
+        /**
+         * The meta object literal for the '{@link de.fhdo.ddmm.data.intermediate.impl.IntermediateImportedTechnologySpecificTypeImpl <em>Imported Technology Specific Type</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.fhdo.ddmm.data.intermediate.impl.IntermediateImportedTechnologySpecificTypeImpl
+         * @see de.fhdo.ddmm.data.intermediate.impl.IntermediatePackageImpl#getIntermediateImportedTechnologySpecificType()
+         * @generated
+         */
+        EClass INTERMEDIATE_IMPORTED_TECHNOLOGY_SPECIFIC_TYPE = eINSTANCE.getIntermediateImportedTechnologySpecificType();
+
+        /**
+         * The meta object literal for the '<em><b>Qualified Name</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute INTERMEDIATE_IMPORTED_TECHNOLOGY_SPECIFIC_TYPE__QUALIFIED_NAME = eINSTANCE.getIntermediateImportedTechnologySpecificType_QualifiedName();
+
+        /**
+         * The meta object literal for the '<em><b>Import</b></em>' reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference INTERMEDIATE_IMPORTED_TECHNOLOGY_SPECIFIC_TYPE__IMPORT = eINSTANCE.getIntermediateImportedTechnologySpecificType_Import();
 
         /**
          * The meta object literal for the '{@link de.fhdo.ddmm.data.intermediate.impl.IntermediateDataStructureImpl <em>Data Structure</em>}' class.
@@ -2395,6 +3033,22 @@ public interface IntermediatePackage extends EPackage {
         EReference INTERMEDIATE_DATA_FIELD__TYPE = eINSTANCE.getIntermediateDataField_Type();
 
         /**
+         * The meta object literal for the '<em><b>Original Type</b></em>' containment reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference INTERMEDIATE_DATA_FIELD__ORIGINAL_TYPE = eINSTANCE.getIntermediateDataField_OriginalType();
+
+        /**
+         * The meta object literal for the '<em><b>Aspects</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference INTERMEDIATE_DATA_FIELD__ASPECTS = eINSTANCE.getIntermediateDataField_Aspects();
+
+        /**
          * The meta object literal for the '<em><b>Data Structure</b></em>' container reference feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -2477,6 +3131,148 @@ public interface IntermediatePackage extends EPackage {
          * @generated
          */
         EReference INTERMEDIATE_ENUMERATION_FIELD__ENUMERATION = eINSTANCE.getIntermediateEnumerationField_Enumeration();
+
+        /**
+         * The meta object literal for the '{@link de.fhdo.ddmm.data.intermediate.impl.IntermediateImportedAspectImpl <em>Imported Aspect</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.fhdo.ddmm.data.intermediate.impl.IntermediateImportedAspectImpl
+         * @see de.fhdo.ddmm.data.intermediate.impl.IntermediatePackageImpl#getIntermediateImportedAspect()
+         * @generated
+         */
+        EClass INTERMEDIATE_IMPORTED_ASPECT = eINSTANCE.getIntermediateImportedAspect();
+
+        /**
+         * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute INTERMEDIATE_IMPORTED_ASPECT__NAME = eINSTANCE.getIntermediateImportedAspect_Name();
+
+        /**
+         * The meta object literal for the '<em><b>Import</b></em>' reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference INTERMEDIATE_IMPORTED_ASPECT__IMPORT = eINSTANCE.getIntermediateImportedAspect_Import();
+
+        /**
+         * The meta object literal for the '<em><b>Properties</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference INTERMEDIATE_IMPORTED_ASPECT__PROPERTIES = eINSTANCE.getIntermediateImportedAspect_Properties();
+
+        /**
+         * The meta object literal for the '<em><b>Property Values</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference INTERMEDIATE_IMPORTED_ASPECT__PROPERTY_VALUES = eINSTANCE.getIntermediateImportedAspect_PropertyValues();
+
+        /**
+         * The meta object literal for the '<em><b>Complex Type</b></em>' container reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference INTERMEDIATE_IMPORTED_ASPECT__COMPLEX_TYPE = eINSTANCE.getIntermediateImportedAspect_ComplexType();
+
+        /**
+         * The meta object literal for the '<em><b>Data Field</b></em>' container reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference INTERMEDIATE_IMPORTED_ASPECT__DATA_FIELD = eINSTANCE.getIntermediateImportedAspect_DataField();
+
+        /**
+         * The meta object literal for the '{@link de.fhdo.ddmm.data.intermediate.impl.IntermediateAspectPropertyImpl <em>Aspect Property</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.fhdo.ddmm.data.intermediate.impl.IntermediateAspectPropertyImpl
+         * @see de.fhdo.ddmm.data.intermediate.impl.IntermediatePackageImpl#getIntermediateAspectProperty()
+         * @generated
+         */
+        EClass INTERMEDIATE_ASPECT_PROPERTY = eINSTANCE.getIntermediateAspectProperty();
+
+        /**
+         * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute INTERMEDIATE_ASPECT_PROPERTY__NAME = eINSTANCE.getIntermediateAspectProperty_Name();
+
+        /**
+         * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute INTERMEDIATE_ASPECT_PROPERTY__TYPE = eINSTANCE.getIntermediateAspectProperty_Type();
+
+        /**
+         * The meta object literal for the '<em><b>Default Value</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute INTERMEDIATE_ASPECT_PROPERTY__DEFAULT_VALUE = eINSTANCE.getIntermediateAspectProperty_DefaultValue();
+
+        /**
+         * The meta object literal for the '<em><b>Mandatory</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute INTERMEDIATE_ASPECT_PROPERTY__MANDATORY = eINSTANCE.getIntermediateAspectProperty_Mandatory();
+
+        /**
+         * The meta object literal for the '<em><b>Aspect</b></em>' container reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference INTERMEDIATE_ASPECT_PROPERTY__ASPECT = eINSTANCE.getIntermediateAspectProperty_Aspect();
+
+        /**
+         * The meta object literal for the '{@link de.fhdo.ddmm.data.intermediate.impl.IntermediateAspectPropertyValueImpl <em>Aspect Property Value</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.fhdo.ddmm.data.intermediate.impl.IntermediateAspectPropertyValueImpl
+         * @see de.fhdo.ddmm.data.intermediate.impl.IntermediatePackageImpl#getIntermediateAspectPropertyValue()
+         * @generated
+         */
+        EClass INTERMEDIATE_ASPECT_PROPERTY_VALUE = eINSTANCE.getIntermediateAspectPropertyValue();
+
+        /**
+         * The meta object literal for the '<em><b>Value</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute INTERMEDIATE_ASPECT_PROPERTY_VALUE__VALUE = eINSTANCE.getIntermediateAspectPropertyValue_Value();
+
+        /**
+         * The meta object literal for the '<em><b>Property</b></em>' reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference INTERMEDIATE_ASPECT_PROPERTY_VALUE__PROPERTY = eINSTANCE.getIntermediateAspectPropertyValue_Property();
+
+        /**
+         * The meta object literal for the '<em><b>Aspect</b></em>' container reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference INTERMEDIATE_ASPECT_PROPERTY_VALUE__ASPECT = eINSTANCE.getIntermediateAspectPropertyValue_Aspect();
 
         /**
          * The meta object literal for the '{@link de.fhdo.ddmm.data.intermediate.IntermediateTypeKind <em>Type Kind</em>}' enum.

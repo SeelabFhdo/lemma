@@ -1,6 +1,6 @@
 /**
  */
-package de.fhdo.ddmm.service.intermediate;
+package de.fhdo.ddmm.data.intermediate;
 
 import org.eclipse.emf.ecore.EObject;
 
@@ -18,12 +18,12 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link de.fhdo.ddmm.service.intermediate.IntermediateAspectPropertyValue#getValue <em>Value</em>}</li>
- *   <li>{@link de.fhdo.ddmm.service.intermediate.IntermediateAspectPropertyValue#getProperty <em>Property</em>}</li>
- *   <li>{@link de.fhdo.ddmm.service.intermediate.IntermediateAspectPropertyValue#getAspect <em>Aspect</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.data.intermediate.IntermediateAspectPropertyValue#getValue <em>Value</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.data.intermediate.IntermediateAspectPropertyValue#getProperty <em>Property</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.data.intermediate.IntermediateAspectPropertyValue#getAspect <em>Aspect</em>}</li>
  * </ul>
  *
- * @see de.fhdo.ddmm.service.intermediate.IntermediatePackage#getIntermediateAspectPropertyValue()
+ * @see de.fhdo.ddmm.data.intermediate.IntermediatePackage#getIntermediateAspectPropertyValue()
  * @model
  * @generated
  */
@@ -38,14 +38,14 @@ public interface IntermediateAspectPropertyValue extends EObject {
      * <!-- end-user-doc -->
      * @return the value of the '<em>Value</em>' attribute.
      * @see #setValue(String)
-     * @see de.fhdo.ddmm.service.intermediate.IntermediatePackage#getIntermediateAspectPropertyValue_Value()
+     * @see de.fhdo.ddmm.data.intermediate.IntermediatePackage#getIntermediateAspectPropertyValue_Value()
      * @model unique="false"
      * @generated
      */
     String getValue();
 
     /**
-     * Sets the value of the '{@link de.fhdo.ddmm.service.intermediate.IntermediateAspectPropertyValue#getValue <em>Value</em>}' attribute.
+     * Sets the value of the '{@link de.fhdo.ddmm.data.intermediate.IntermediateAspectPropertyValue#getValue <em>Value</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @param value the new value of the '<em>Value</em>' attribute.
@@ -64,14 +64,14 @@ public interface IntermediateAspectPropertyValue extends EObject {
      * <!-- end-user-doc -->
      * @return the value of the '<em>Property</em>' reference.
      * @see #setProperty(IntermediateAspectProperty)
-     * @see de.fhdo.ddmm.service.intermediate.IntermediatePackage#getIntermediateAspectPropertyValue_Property()
+     * @see de.fhdo.ddmm.data.intermediate.IntermediatePackage#getIntermediateAspectPropertyValue_Property()
      * @model
      * @generated
      */
     IntermediateAspectProperty getProperty();
 
     /**
-     * Sets the value of the '{@link de.fhdo.ddmm.service.intermediate.IntermediateAspectPropertyValue#getProperty <em>Property</em>}' reference.
+     * Sets the value of the '{@link de.fhdo.ddmm.data.intermediate.IntermediateAspectPropertyValue#getProperty <em>Property</em>}' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @param value the new value of the '<em>Property</em>' reference.
@@ -82,7 +82,7 @@ public interface IntermediateAspectPropertyValue extends EObject {
 
     /**
      * Returns the value of the '<em><b>Aspect</b></em>' container reference.
-     * It is bidirectional and its opposite is '{@link de.fhdo.ddmm.service.intermediate.IntermediateImportedAspect#getPropertyValues <em>Property Values</em>}'.
+     * It is bidirectional and its opposite is '{@link de.fhdo.ddmm.data.intermediate.IntermediateImportedAspect#getPropertyValues <em>Property Values</em>}'.
      * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Aspect</em>' container reference isn't clear,
@@ -91,15 +91,15 @@ public interface IntermediateAspectPropertyValue extends EObject {
      * <!-- end-user-doc -->
      * @return the value of the '<em>Aspect</em>' container reference.
      * @see #setAspect(IntermediateImportedAspect)
-     * @see de.fhdo.ddmm.service.intermediate.IntermediatePackage#getIntermediateAspectPropertyValue_Aspect()
-     * @see de.fhdo.ddmm.service.intermediate.IntermediateImportedAspect#getPropertyValues
+     * @see de.fhdo.ddmm.data.intermediate.IntermediatePackage#getIntermediateAspectPropertyValue_Aspect()
+     * @see de.fhdo.ddmm.data.intermediate.IntermediateImportedAspect#getPropertyValues
      * @model opposite="propertyValues" transient="false"
      * @generated
      */
     IntermediateImportedAspect getAspect();
 
     /**
-     * Sets the value of the '{@link de.fhdo.ddmm.service.intermediate.IntermediateAspectPropertyValue#getAspect <em>Aspect</em>}' container reference.
+     * Sets the value of the '{@link de.fhdo.ddmm.data.intermediate.IntermediateAspectPropertyValue#getAspect <em>Aspect</em>}' container reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @param value the new value of the '<em>Aspect</em>' container reference.

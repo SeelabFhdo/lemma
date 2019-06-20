@@ -2,16 +2,20 @@
  */
 package de.fhdo.ddmm.technology.mapping.impl;
 
+import de.fhdo.ddmm.data.DataField;
+import de.fhdo.ddmm.data.Enumeration;
 import de.fhdo.ddmm.data.EnumerationField;
 import de.fhdo.ddmm.data.Type;
 
 import de.fhdo.ddmm.service.Import;
 
 import de.fhdo.ddmm.technology.mapping.ComplexParameterMapping;
-import de.fhdo.ddmm.technology.mapping.DataFieldHierarchy;
+import de.fhdo.ddmm.technology.mapping.ComplexTypeMapping;
 import de.fhdo.ddmm.technology.mapping.MappingPackage;
 import de.fhdo.ddmm.technology.mapping.TechnologySpecificFieldMapping;
 import de.fhdo.ddmm.technology.mapping.TechnologySpecificImportedServiceAspect;
+
+import java.lang.reflect.InvocationTargetException;
 
 import java.util.Collection;
 
@@ -38,17 +42,39 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link de.fhdo.ddmm.technology.mapping.impl.TechnologySpecificFieldMappingImpl#getT_sourceModelUri <em>Tsource Model Uri</em>}</li>
  *   <li>{@link de.fhdo.ddmm.technology.mapping.impl.TechnologySpecificFieldMappingImpl#getTechnology <em>Technology</em>}</li>
  *   <li>{@link de.fhdo.ddmm.technology.mapping.impl.TechnologySpecificFieldMappingImpl#getType <em>Type</em>}</li>
  *   <li>{@link de.fhdo.ddmm.technology.mapping.impl.TechnologySpecificFieldMappingImpl#getEnumerationField <em>Enumeration Field</em>}</li>
- *   <li>{@link de.fhdo.ddmm.technology.mapping.impl.TechnologySpecificFieldMappingImpl#getDataFieldHierarchy <em>Data Field Hierarchy</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.technology.mapping.impl.TechnologySpecificFieldMappingImpl#getDataField <em>Data Field</em>}</li>
  *   <li>{@link de.fhdo.ddmm.technology.mapping.impl.TechnologySpecificFieldMappingImpl#getAspects <em>Aspects</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.technology.mapping.impl.TechnologySpecificFieldMappingImpl#getTypeMapping <em>Type Mapping</em>}</li>
  *   <li>{@link de.fhdo.ddmm.technology.mapping.impl.TechnologySpecificFieldMappingImpl#getParameterMapping <em>Parameter Mapping</em>}</li>
  * </ul>
  *
  * @generated
  */
 public class TechnologySpecificFieldMappingImpl extends MinimalEObjectImpl.Container implements TechnologySpecificFieldMapping {
+    /**
+     * The default value of the '{@link #getT_sourceModelUri() <em>Tsource Model Uri</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getT_sourceModelUri()
+     * @generated
+     * @ordered
+     */
+    protected static final String TSOURCE_MODEL_URI_EDEFAULT = null;
+
+    /**
+     * The cached value of the '{@link #getT_sourceModelUri() <em>Tsource Model Uri</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getT_sourceModelUri()
+     * @generated
+     * @ordered
+     */
+    protected String t_sourceModelUri = TSOURCE_MODEL_URI_EDEFAULT;
+
     /**
      * The cached value of the '{@link #getTechnology() <em>Technology</em>}' reference.
      * <!-- begin-user-doc -->
@@ -80,14 +106,14 @@ public class TechnologySpecificFieldMappingImpl extends MinimalEObjectImpl.Conta
     protected EnumerationField enumerationField;
 
     /**
-     * The cached value of the '{@link #getDataFieldHierarchy() <em>Data Field Hierarchy</em>}' containment reference.
+     * The cached value of the '{@link #getDataField() <em>Data Field</em>}' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getDataFieldHierarchy()
+     * @see #getDataField()
      * @generated
      * @ordered
      */
-    protected DataFieldHierarchy dataFieldHierarchy;
+    protected DataField dataField;
 
     /**
      * The cached value of the '{@link #getAspects() <em>Aspects</em>}' containment reference list.
@@ -116,6 +142,29 @@ public class TechnologySpecificFieldMappingImpl extends MinimalEObjectImpl.Conta
     @Override
     protected EClass eStaticClass() {
         return MappingPackage.Literals.TECHNOLOGY_SPECIFIC_FIELD_MAPPING;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public String getT_sourceModelUri() {
+        return t_sourceModelUri;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void setT_sourceModelUri(String newT_sourceModelUri) {
+        String oldT_sourceModelUri = t_sourceModelUri;
+        t_sourceModelUri = newT_sourceModelUri;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__TSOURCE_MODEL_URI, oldT_sourceModelUri, t_sourceModelUri));
     }
 
     /**
@@ -244,8 +293,16 @@ public class TechnologySpecificFieldMappingImpl extends MinimalEObjectImpl.Conta
      * @generated
      */
     @Override
-    public DataFieldHierarchy getDataFieldHierarchy() {
-        return dataFieldHierarchy;
+    public DataField getDataField() {
+        if (dataField != null && dataField.eIsProxy()) {
+            InternalEObject oldDataField = (InternalEObject)dataField;
+            dataField = (DataField)eResolveProxy(oldDataField);
+            if (dataField != oldDataField) {
+                if (eNotificationRequired())
+                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, MappingPackage.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__DATA_FIELD, oldDataField, dataField));
+            }
+        }
+        return dataField;
     }
 
     /**
@@ -253,14 +310,8 @@ public class TechnologySpecificFieldMappingImpl extends MinimalEObjectImpl.Conta
      * <!-- end-user-doc -->
      * @generated
      */
-    public NotificationChain basicSetDataFieldHierarchy(DataFieldHierarchy newDataFieldHierarchy, NotificationChain msgs) {
-        DataFieldHierarchy oldDataFieldHierarchy = dataFieldHierarchy;
-        dataFieldHierarchy = newDataFieldHierarchy;
-        if (eNotificationRequired()) {
-            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, MappingPackage.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__DATA_FIELD_HIERARCHY, oldDataFieldHierarchy, newDataFieldHierarchy);
-            if (msgs == null) msgs = notification; else msgs.add(notification);
-        }
-        return msgs;
+    public DataField basicGetDataField() {
+        return dataField;
     }
 
     /**
@@ -269,18 +320,11 @@ public class TechnologySpecificFieldMappingImpl extends MinimalEObjectImpl.Conta
      * @generated
      */
     @Override
-    public void setDataFieldHierarchy(DataFieldHierarchy newDataFieldHierarchy) {
-        if (newDataFieldHierarchy != dataFieldHierarchy) {
-            NotificationChain msgs = null;
-            if (dataFieldHierarchy != null)
-                msgs = ((InternalEObject)dataFieldHierarchy).eInverseRemove(this, MappingPackage.DATA_FIELD_HIERARCHY__MAPPING, DataFieldHierarchy.class, msgs);
-            if (newDataFieldHierarchy != null)
-                msgs = ((InternalEObject)newDataFieldHierarchy).eInverseAdd(this, MappingPackage.DATA_FIELD_HIERARCHY__MAPPING, DataFieldHierarchy.class, msgs);
-            msgs = basicSetDataFieldHierarchy(newDataFieldHierarchy, msgs);
-            if (msgs != null) msgs.dispatch();
-        }
-        else if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__DATA_FIELD_HIERARCHY, newDataFieldHierarchy, newDataFieldHierarchy));
+    public void setDataField(DataField newDataField) {
+        DataField oldDataField = dataField;
+        dataField = newDataField;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__DATA_FIELD, oldDataField, dataField));
     }
 
     /**
@@ -294,6 +338,59 @@ public class TechnologySpecificFieldMappingImpl extends MinimalEObjectImpl.Conta
             aspects = new EObjectContainmentWithInverseEList<TechnologySpecificImportedServiceAspect>(TechnologySpecificImportedServiceAspect.class, this, MappingPackage.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__ASPECTS, MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__FIELD_MAPPING);
         }
         return aspects;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public ComplexTypeMapping getTypeMapping() {
+        if (eContainerFeatureID() != MappingPackage.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__TYPE_MAPPING) return null;
+        return (ComplexTypeMapping)eContainer();
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public ComplexTypeMapping basicGetTypeMapping() {
+        if (eContainerFeatureID() != MappingPackage.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__TYPE_MAPPING) return null;
+        return (ComplexTypeMapping)eInternalContainer();
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public NotificationChain basicSetTypeMapping(ComplexTypeMapping newTypeMapping, NotificationChain msgs) {
+        msgs = eBasicSetContainer((InternalEObject)newTypeMapping, MappingPackage.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__TYPE_MAPPING, msgs);
+        return msgs;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void setTypeMapping(ComplexTypeMapping newTypeMapping) {
+        if (newTypeMapping != eInternalContainer() || (eContainerFeatureID() != MappingPackage.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__TYPE_MAPPING && newTypeMapping != null)) {
+            if (EcoreUtil.isAncestor(this, newTypeMapping))
+                throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
+            NotificationChain msgs = null;
+            if (eInternalContainer() != null)
+                msgs = eBasicRemoveFromContainer(msgs);
+            if (newTypeMapping != null)
+                msgs = ((InternalEObject)newTypeMapping).eInverseAdd(this, MappingPackage.COMPLEX_TYPE_MAPPING__FIELD_MAPPINGS, ComplexTypeMapping.class, msgs);
+            msgs = basicSetTypeMapping(newTypeMapping, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__TYPE_MAPPING, newTypeMapping, newTypeMapping));
     }
 
     /**
@@ -354,16 +451,44 @@ public class TechnologySpecificFieldMappingImpl extends MinimalEObjectImpl.Conta
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
+    public Type getOriginalTypeOfMappedElement() {
+        Type _xifexpression = null;
+        DataField _dataField = this.getDataField();
+        boolean _tripleNotEquals = (_dataField != null);
+        if (_tripleNotEquals) {
+            _xifexpression = this.getDataField().getEffectiveType();
+        }
+        else {
+            Enumeration _xifexpression_1 = null;
+            EnumerationField _enumerationField = this.getEnumerationField();
+            boolean _tripleNotEquals_1 = (_enumerationField != null);
+            if (_tripleNotEquals_1) {
+                _xifexpression_1 = this.getEnumerationField().getEnumeration();
+            }
+            else {
+                return null;
+            }
+            _xifexpression = _xifexpression_1;
+        }
+        return _xifexpression;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     @SuppressWarnings("unchecked")
     @Override
     public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
-            case MappingPackage.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__DATA_FIELD_HIERARCHY:
-                if (dataFieldHierarchy != null)
-                    msgs = ((InternalEObject)dataFieldHierarchy).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - MappingPackage.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__DATA_FIELD_HIERARCHY, null, msgs);
-                return basicSetDataFieldHierarchy((DataFieldHierarchy)otherEnd, msgs);
             case MappingPackage.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__ASPECTS:
                 return ((InternalEList<InternalEObject>)(InternalEList<?>)getAspects()).basicAdd(otherEnd, msgs);
+            case MappingPackage.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__TYPE_MAPPING:
+                if (eInternalContainer() != null)
+                    msgs = eBasicRemoveFromContainer(msgs);
+                return basicSetTypeMapping((ComplexTypeMapping)otherEnd, msgs);
             case MappingPackage.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__PARAMETER_MAPPING:
                 if (eInternalContainer() != null)
                     msgs = eBasicRemoveFromContainer(msgs);
@@ -380,10 +505,10 @@ public class TechnologySpecificFieldMappingImpl extends MinimalEObjectImpl.Conta
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
-            case MappingPackage.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__DATA_FIELD_HIERARCHY:
-                return basicSetDataFieldHierarchy(null, msgs);
             case MappingPackage.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__ASPECTS:
                 return ((InternalEList<?>)getAspects()).basicRemove(otherEnd, msgs);
+            case MappingPackage.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__TYPE_MAPPING:
+                return basicSetTypeMapping(null, msgs);
             case MappingPackage.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__PARAMETER_MAPPING:
                 return basicSetParameterMapping(null, msgs);
         }
@@ -398,6 +523,8 @@ public class TechnologySpecificFieldMappingImpl extends MinimalEObjectImpl.Conta
     @Override
     public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
         switch (eContainerFeatureID()) {
+            case MappingPackage.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__TYPE_MAPPING:
+                return eInternalContainer().eInverseRemove(this, MappingPackage.COMPLEX_TYPE_MAPPING__FIELD_MAPPINGS, ComplexTypeMapping.class, msgs);
             case MappingPackage.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__PARAMETER_MAPPING:
                 return eInternalContainer().eInverseRemove(this, MappingPackage.COMPLEX_PARAMETER_MAPPING__FIELD_MAPPINGS, ComplexParameterMapping.class, msgs);
         }
@@ -412,6 +539,8 @@ public class TechnologySpecificFieldMappingImpl extends MinimalEObjectImpl.Conta
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
+            case MappingPackage.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__TSOURCE_MODEL_URI:
+                return getT_sourceModelUri();
             case MappingPackage.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__TECHNOLOGY:
                 if (resolve) return getTechnology();
                 return basicGetTechnology();
@@ -421,10 +550,14 @@ public class TechnologySpecificFieldMappingImpl extends MinimalEObjectImpl.Conta
             case MappingPackage.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__ENUMERATION_FIELD:
                 if (resolve) return getEnumerationField();
                 return basicGetEnumerationField();
-            case MappingPackage.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__DATA_FIELD_HIERARCHY:
-                return getDataFieldHierarchy();
+            case MappingPackage.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__DATA_FIELD:
+                if (resolve) return getDataField();
+                return basicGetDataField();
             case MappingPackage.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__ASPECTS:
                 return getAspects();
+            case MappingPackage.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__TYPE_MAPPING:
+                if (resolve) return getTypeMapping();
+                return basicGetTypeMapping();
             case MappingPackage.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__PARAMETER_MAPPING:
                 if (resolve) return getParameterMapping();
                 return basicGetParameterMapping();
@@ -441,6 +574,9 @@ public class TechnologySpecificFieldMappingImpl extends MinimalEObjectImpl.Conta
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
+            case MappingPackage.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__TSOURCE_MODEL_URI:
+                setT_sourceModelUri((String)newValue);
+                return;
             case MappingPackage.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__TECHNOLOGY:
                 setTechnology((Import)newValue);
                 return;
@@ -450,12 +586,15 @@ public class TechnologySpecificFieldMappingImpl extends MinimalEObjectImpl.Conta
             case MappingPackage.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__ENUMERATION_FIELD:
                 setEnumerationField((EnumerationField)newValue);
                 return;
-            case MappingPackage.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__DATA_FIELD_HIERARCHY:
-                setDataFieldHierarchy((DataFieldHierarchy)newValue);
+            case MappingPackage.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__DATA_FIELD:
+                setDataField((DataField)newValue);
                 return;
             case MappingPackage.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__ASPECTS:
                 getAspects().clear();
                 getAspects().addAll((Collection<? extends TechnologySpecificImportedServiceAspect>)newValue);
+                return;
+            case MappingPackage.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__TYPE_MAPPING:
+                setTypeMapping((ComplexTypeMapping)newValue);
                 return;
             case MappingPackage.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__PARAMETER_MAPPING:
                 setParameterMapping((ComplexParameterMapping)newValue);
@@ -472,6 +611,9 @@ public class TechnologySpecificFieldMappingImpl extends MinimalEObjectImpl.Conta
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
+            case MappingPackage.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__TSOURCE_MODEL_URI:
+                setT_sourceModelUri(TSOURCE_MODEL_URI_EDEFAULT);
+                return;
             case MappingPackage.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__TECHNOLOGY:
                 setTechnology((Import)null);
                 return;
@@ -481,11 +623,14 @@ public class TechnologySpecificFieldMappingImpl extends MinimalEObjectImpl.Conta
             case MappingPackage.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__ENUMERATION_FIELD:
                 setEnumerationField((EnumerationField)null);
                 return;
-            case MappingPackage.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__DATA_FIELD_HIERARCHY:
-                setDataFieldHierarchy((DataFieldHierarchy)null);
+            case MappingPackage.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__DATA_FIELD:
+                setDataField((DataField)null);
                 return;
             case MappingPackage.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__ASPECTS:
                 getAspects().clear();
+                return;
+            case MappingPackage.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__TYPE_MAPPING:
+                setTypeMapping((ComplexTypeMapping)null);
                 return;
             case MappingPackage.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__PARAMETER_MAPPING:
                 setParameterMapping((ComplexParameterMapping)null);
@@ -502,20 +647,54 @@ public class TechnologySpecificFieldMappingImpl extends MinimalEObjectImpl.Conta
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
+            case MappingPackage.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__TSOURCE_MODEL_URI:
+                return TSOURCE_MODEL_URI_EDEFAULT == null ? t_sourceModelUri != null : !TSOURCE_MODEL_URI_EDEFAULT.equals(t_sourceModelUri);
             case MappingPackage.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__TECHNOLOGY:
                 return technology != null;
             case MappingPackage.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__TYPE:
                 return type != null;
             case MappingPackage.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__ENUMERATION_FIELD:
                 return enumerationField != null;
-            case MappingPackage.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__DATA_FIELD_HIERARCHY:
-                return dataFieldHierarchy != null;
+            case MappingPackage.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__DATA_FIELD:
+                return dataField != null;
             case MappingPackage.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__ASPECTS:
                 return aspects != null && !aspects.isEmpty();
+            case MappingPackage.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__TYPE_MAPPING:
+                return basicGetTypeMapping() != null;
             case MappingPackage.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__PARAMETER_MAPPING:
                 return basicGetParameterMapping() != null;
         }
         return super.eIsSet(featureID);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+        switch (operationID) {
+            case MappingPackage.TECHNOLOGY_SPECIFIC_FIELD_MAPPING___GET_ORIGINAL_TYPE_OF_MAPPED_ELEMENT:
+                return getOriginalTypeOfMappedElement();
+        }
+        return super.eInvoke(operationID, arguments);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public String toString() {
+        if (eIsProxy()) return super.toString();
+
+        StringBuilder result = new StringBuilder(super.toString());
+        result.append(" (t_sourceModelUri: ");
+        result.append(t_sourceModelUri);
+        result.append(')');
+        return result.toString();
     }
 
 } //TechnologySpecificFieldMappingImpl

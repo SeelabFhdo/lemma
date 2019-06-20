@@ -119,6 +119,7 @@ class IntermediatePrimitiveType extends IntermediateType {
  */
 class IntermediateComplexType extends IntermediateType {
     String qualifiedName
+    contains IntermediateImportedAspect[] aspects opposite complexType
 
     container IntermediateDataModel dataModel opposite complexTypes
     container IntermediateVersion version opposite complexTypes
@@ -129,6 +130,14 @@ class IntermediateComplexType extends IntermediateType {
  * Imported complex type
  */
 class IntermediateImportedComplexType extends IntermediateComplexType {
+    refers IntermediateImport ^import
+}
+
+/**
+ * Imported technology-specific type
+ */
+class IntermediateImportedTechnologySpecificType extends IntermediateType {
+    String qualifiedName
     refers IntermediateImport ^import
 }
 
@@ -161,6 +170,8 @@ class IntermediateDataField {
     boolean ^derived
 
     contains IntermediateType ^type opposite dataField
+    contains IntermediateType originalType
+    contains IntermediateImportedAspect[] aspects opposite dataField
 
     container IntermediateDataStructure dataStructure opposite dataFields
     container IntermediateListType listType opposite dataFields
@@ -186,4 +197,45 @@ class IntermediateEnumerationField {
     contains IntermediatePrimitiveType[] initializationValueCompatibleTypes
         opposite enumerationField
     container IntermediateEnumeration enumeration opposite fields
+}
+
+/**
+ * Aspect
+ */
+class IntermediateImportedAspect {
+    String name
+
+    refers IntermediateImport ^import
+    contains IntermediateAspectProperty[] properties opposite aspect
+    contains IntermediateAspectPropertyValue[] propertyValues opposite aspect
+
+    container IntermediateComplexType complexType opposite aspects
+    container IntermediateDataField dataField opposite aspects
+}
+
+/**
+ * Aspect property
+ */
+class IntermediateAspectProperty {
+    String name
+    String ^type
+    // The default value is encoded in a single String. However, the validators of the languages
+    // ensure that the default value corresponds to the type of the property.
+    String defaultValue
+    boolean mandatory = "false"
+
+    container IntermediateImportedAspect aspect opposite properties
+}
+
+/**
+ * Property value
+ */
+class IntermediateAspectPropertyValue {
+    // The value is encoded in a single String. However, the validators of the languages ensure that
+    // the value corresponds to the type of the property.
+    String value
+
+    refers IntermediateAspectProperty property
+
+    container IntermediateImportedAspect aspect opposite propertyValues
 }

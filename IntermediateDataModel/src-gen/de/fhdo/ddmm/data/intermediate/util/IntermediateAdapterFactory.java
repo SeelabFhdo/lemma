@@ -100,6 +100,10 @@ public class IntermediateAdapterFactory extends AdapterFactoryImpl {
                 return createIntermediateImportedComplexTypeAdapter();
             }
             @Override
+            public Adapter caseIntermediateImportedTechnologySpecificType(IntermediateImportedTechnologySpecificType object) {
+                return createIntermediateImportedTechnologySpecificTypeAdapter();
+            }
+            @Override
             public Adapter caseIntermediateDataStructure(IntermediateDataStructure object) {
                 return createIntermediateDataStructureAdapter();
             }
@@ -118,6 +122,18 @@ public class IntermediateAdapterFactory extends AdapterFactoryImpl {
             @Override
             public Adapter caseIntermediateEnumerationField(IntermediateEnumerationField object) {
                 return createIntermediateEnumerationFieldAdapter();
+            }
+            @Override
+            public Adapter caseIntermediateImportedAspect(IntermediateImportedAspect object) {
+                return createIntermediateImportedAspectAdapter();
+            }
+            @Override
+            public Adapter caseIntermediateAspectProperty(IntermediateAspectProperty object) {
+                return createIntermediateAspectPropertyAdapter();
+            }
+            @Override
+            public Adapter caseIntermediateAspectPropertyValue(IntermediateAspectPropertyValue object) {
+                return createIntermediateAspectPropertyValueAdapter();
             }
             @Override
             public Adapter defaultCase(EObject object) {
@@ -252,6 +268,20 @@ public class IntermediateAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
+     * Creates a new adapter for an object of class '{@link de.fhdo.ddmm.data.intermediate.IntermediateImportedTechnologySpecificType <em>Imported Technology Specific Type</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.fhdo.ddmm.data.intermediate.IntermediateImportedTechnologySpecificType
+     * @generated
+     */
+    public Adapter createIntermediateImportedTechnologySpecificTypeAdapter() {
+        return null;
+    }
+
+    /**
      * Creates a new adapter for an object of class '{@link de.fhdo.ddmm.data.intermediate.IntermediateDataStructure <em>Data Structure</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
@@ -318,6 +348,48 @@ public class IntermediateAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createIntermediateEnumerationFieldAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.fhdo.ddmm.data.intermediate.IntermediateImportedAspect <em>Imported Aspect</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.fhdo.ddmm.data.intermediate.IntermediateImportedAspect
+     * @generated
+     */
+    public Adapter createIntermediateImportedAspectAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.fhdo.ddmm.data.intermediate.IntermediateAspectProperty <em>Aspect Property</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.fhdo.ddmm.data.intermediate.IntermediateAspectProperty
+     * @generated
+     */
+    public Adapter createIntermediateAspectPropertyAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.fhdo.ddmm.data.intermediate.IntermediateAspectPropertyValue <em>Aspect Property Value</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.fhdo.ddmm.data.intermediate.IntermediateAspectPropertyValue
+     * @generated
+     */
+    public Adapter createIntermediateAspectPropertyValueAdapter() {
         return null;
     }
 

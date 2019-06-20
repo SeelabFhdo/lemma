@@ -1777,6 +1777,7 @@ public class OperationDslGrammarAccess extends AbstractGrammarElementFinder {
 	//	INTERFACES='interfaces' |
 	//	OPERATIONS='operations' |
 	//	PARAMETERS='parameters' |
+	//	COMPLEX_TYPES='types' |
 	//	DATA_FIELDS='fields';
 	public TechnologyDslGrammarAccess.ServiceJoinPointTypeElements getServiceJoinPointTypeAccess() {
 		return gaTechnologyDsl.getServiceJoinPointTypeAccess();

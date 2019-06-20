@@ -26,8 +26,8 @@ of models, listed in :numref:`tab__model_types`.
                         :doc:`Intermediate Data Model Format Specification 
                         <data_model:index>`.
     Mapping Model       A Mapping Model allows for assigning (alternative) 
-                        technologies to modeled microservices in a Service 
-                        Model.
+                        technologies to, e.g., modeled microservices in a
+                        Service Model and complex types in a Data Model.
     Service Model       A Service Model contains several microservice models, 
                         their interfaces, and operations. The contents of 
                         imported Domain Data Models, e.g., data structures, may 
@@ -665,97 +665,54 @@ Microservices
 
         :java:type:`Aspects <IntermediateImportedAspect>` of the parameter.
 
-    .. py:attribute:: IntermediateMappedField[*] mappedFields
+    .. py:attribute:: DataFieldAspects[*] fieldAspects
 
-        :java:type:`Mapped fields <IntermediateMappedField>` of the parameter.
+        :java:type:`Aspects <IntermediateImportedAspect>` that were assigned to
+        fields of the :ref:`structure type 
+        <data_model:link__IntermediateDataStructure>` or :ref:`enumeration type 
+        <data_model:link__IntermediateEnumeration>` of the parameter within a
+        Mapping Model.
 
         .. HINT::
 
-            If the parameter has mapped fields, the corresponding types of the
-            fields of the parameter's 
-            :ref:`structure type <data_model:link__IntermediateDataStructure>`
-            need to be replaced with the mapped types. Note that it is not 
-            possible to assign types to 
-            :ref:`enumeration <data_model:link__IntermediateEnumeration>` 
-            fields.
-
-            Furthermore, mapped fields are the only way to assign
-            :java:type:`aspects <IntermediateImportedAspect>` to the fields of a 
-            :ref:`data structure <data_model:link__IntermediateDataStructure>`
-            or :ref:`enumeration <data_model:link__IntermediateEnumeration>`.
+            These aspects are relevant only in the context of the parameter 
+            within its defining operation. They are, however, not relevant in
+            the context of the type of that defines the fields in its Data 
+            Model. Aspects that were assigned to fields of the complex type 
+            itself are directly assigned to the type in the corresponding
+            :java:type:`IntermediateDataModel <IntermediateDataModel>`.
 
     .. py:attribute:: IntermediateOperation operation
 
         Link to the containing :java:type:`IntermediateOperation` instance.
 
-.. java:type:: class IntermediateMappedField
+.. java:type:: class DataFieldAspects
 
-    A field of a :java:type:`parameter's <IntermediateParameter>` 
-    :ref:`structure type <data_model:link__IntermediateDataStructure>` or
-    :ref:`enumeration type <data_model:link__IntermediateEnumeration>` to which 
-    a type differing from its original type (only for fields of data structures)
-    and optional aspects were assigned.
+    This concepts contains :java:type:`aspects <IntermediateImportedAspect>` 
+    that were assigned to fields of a :java:type:`parameter's 
+    <IntermediateParameter>` :ref:`structure type 
+    <data_model:link__IntermediateDataStructure>` or :ref:`enumeration type 
+    <data_model:link__IntermediateEnumeration>` within a Mapping Model.
 
-    .. _link__IntermediateMappedField_mappedFieldName:
+    .. _link__DataFieldAspects_name:
 
-    .. py:attribute:: String[1] mappedFieldName
+    .. py:attribute:: String[1] name
 
-        Name of the mapped data field.
-
-        .. HINT::
-
-            There is no direct link to the field in the respective
-            :java:type:`parameter's <IntermediateParameter>`
-            :ref:`structure type <data_model:link__IntermediateDataStructure>`
-            or 
-            :ref:`enumeration type <data_model:link__IntermediateEnumeration>`.
-            Instead, the 
-            :ref:`DataField <data_model:link__IntermediateDataField>` or
-            :ref:`EnumerationField 
-            <data_model:link__IntermediateEnumerationField>` instance to which 
-            the parameter's 
-            :ref:`type <link__IntermediateParameter_type>` attribute links needs
-            to be iterated with the ``mappedFieldName`` in order to retrieve
-            the instance.
+        The name of the :ref:`structure type's
+        <data_model:link__IntermediateDataStructure>` or :ref:`enumeration 
+        type's <data_model:link__IntermediateEnumeration>` field to which the
+        aspects in the context of the parameter were assigned.
 
     .. py:attribute:: String[1] qualifiedName
 
-        Qualified name of the mapped field.
+        Qualified name of the field. It consists of the field's :ref:`name
+        <link__DataFieldAspects_name>` prefixed by the parameter's 
+        :ref:`qualified name <link__IntermediateParameter_qualifiedName>`.
 
-        .. HINT::
-        
-            This is the name of the mapped field prefixed by the parameter's 
-            :ref:`qualified name <link__IntermediateParameter_qualifiedName>`.
-            The qualified name of the field itself needs to be derived from the
-            corresponding 
-            :ref:`DataField <data_model:link__IntermediateDataField>` or
-            :ref:`EnumerationField 
-            <data_model:link__IntermediateEnumerationField>` (see the
-            documentation of the :ref:`mappedFieldName 
-            <link__IntermediateMappedField_mappedFieldName>` attribute.
+    .. py:attribute:: IntermediateImportedAspect[1..*] aspects
 
-    .. py:attribute:: IntermediateTypeKind[1] originalTypeKind
-
-        Kind of the original 
-        :ref:`type's kind <data_model:link__IntermediateTypeKind>`, i.e., 
-        prior to the mapping.
-
-    .. py:attribute:: IntermediateType mappedType
-
-        New (mapped) type of the 
-        :ref:`data field <data_model:link__IntermediateDataField>`. 
-
-        .. HINT::
-
-            Code generators must use this type as the field's type. This 
-            property only exhibits a value for 
-            :ref:`DataFields <data_model:link__IntermediateDataField>` and not
-            for :ref:`EnumerationFields 
-            <data_model:link__IntermediateEnumerationField>`. 
-
-    .. py:attribute:: IntermediateImportedAspect[*] aspects
-
-        :java:type:`Aspects <IntermediateImportedAspect>` of the field.
+        The :java:type:`aspects <IntermediateImportedAspect>` that were assigned
+        to the field in the context of the parameter.
 
     .. py:attribute:: IntermediateParameter parameter
 
@@ -852,34 +809,6 @@ Microservices
     .. py:attribute:: IntermediateInterface referringInterface
 
         Link to the containing :java:type:`IntermediateInterface` instance.
-
-Type System
------------
-
-:ref:`Built-in <data_model:link__built_in_type_system>` as well as
-:ref:`custom types <data_model:link__custom_types>` are mostly covered within 
-the :doc:`Intermediate Data Model Format Specification <data_model:index>`.
-
-However, Service Models may import technology-specific types from Technology
-Models that are not known to Domain Data Models (cf. 
-:numref:`tab__model_types`). Thus, intermediate concepts for technology-specific
-types are needed to allow intermediate service models to refer to them.
-
-.. java:type:: class IntermediateImportedTechnologySpecificType extends \
-    IntermediateType
-
-    Representation of a type defined in a Technology Model.
-
-    .. py:attribute:: String[1] qualifiedName
-
-        Qualified name of the type. It consists of the name of the defining
-        technology, the \"_types\" prefix as internal qualifier within the 
-        Technology Model, and the name of the type.
-
-    .. py:attribute:: IntermediateImport[1] import
-
-        The :java:type:`<data_model:IntermediateImport>` instance that points to
-        the Technology Model from which the type was imported.
 
 Communication
 -------------
@@ -1191,155 +1120,6 @@ imported :java:type:`microservices <IntermediateMicroservice>`,
         :java:type:`IntermediateParameter` that is :ref:`initialized by 
         <link__IntermediateParameter_initializedByOperation>`
         this operation.
-
-Technologies
-------------
-
-In the following, concepts for assigning technologies to microservices and other
-modeling concepts are described.
-
-.. java:type:: class IntermediateTechnology
-
-    Represents a Technology Model, which was assigned to an 
-    :java:type:`IntermediateMicroservice`.
-
-    .. py:attribute:: String[1] name
-
-        Name of the source technology, e.g., \"go\" or \"python\" [#python]_.
-
-    .. py:attribute:: IntermediateImport[1] import
-
-        :java:type:`data_model:IntermediateImport` that points to the imported
-        Technology Model.
-
-    .. py:attribute:: IntermediateMicroservice microservice
-
-        :java:type:`Microservice <IntermediateMicroservice>` to which the
-        technology was assigned.
-
-.. java:type:: class IntermediateImportedAspect
-
-    Aspects enable to semantically reify modeled 
-    :java:type:`microservices <IntermediateMicroservice>`,
-    :java:type:`interfaces <IntermediateInterface>`,
-    :java:type:`operations <IntermediateOperation>`,
-    :java:type:`parameters <IntermediateParameter>`,
-    :java:type:`data and enumeration fields <IntermediateMappedField>` in the 
-    sense of Aspect-oriented Programming (AOP) :cite:`Kiczales1997`.
-
-    Aspects are defined within Technology Models. An aspect definition might be
-    accompanied with properties and constrained to the concepts to which they 
-    apply. With this mechanism it is possible to create, e.g., aspects for HTTP 
-    status codes being returned by a service operation's execution.
-
-    .. py:attribute:: String[1] name
-
-        Name of the aspect.
-
-    .. py:attribute:: IntermediateImport[1] import
-
-        :java:type:`Import <data_model:IntermediateImport>` of the Technology
-        Model which defines the aspect.
-
-    .. py:attribute:: IntermediateAspectProperty[*] properties
-
-        All :java:type:`properties <IntermediateAspectProperty>` of the aspect 
-        as defined in its Technology Model.
-
-    .. py:attribute:: IntermediateAspectPropertyValue[*] propertyValues
-
-        :java:type:`Values <IntermediateAspectPropertyValue>` for aspect 
-        properties specified in the source Service Model.
-
-    .. py:attribute:: IntermediateMicroservice microservice
-
-        :java:type:`IntermediateMicroservice` to which the aspect was assigned.
-
-    .. py:attribute:: IntermediateInterface interface
-
-        :java:type:`IntermediateInterface` to which the aspect was assigned.
-
-    .. py:attribute:: IntermediateOperation operation
-
-        :java:type:`IntermediateOperation` to which the aspect was assigned.
-
-    .. py:attribute:: IntermediateReferredOperation referredOperation
-
-        :java:type:`IntermediateReferredOperation` to which the aspect was 
-        assigned.
-
-    .. py:attribute:: IntermediateParameter parameter
-
-        :java:type:`IntermediateParameter` to which the aspect was assigned.
-
-    .. py:attribute:: IntermediateMappedField mappedField
-
-        :java:type:`IntermediateMappedField` to which the aspect was assigned.
-
-.. java:type:: class IntermediateAspectProperty
-
-    Specification of an :java:type:`aspect's <IntermediateImportedAspect>` 
-    property.
-
-    .. py:attribute:: String[1] name
-    
-        Name of the property.
-
-    .. _link__IntermediateAspectProperty_type:
-
-    .. py:attribute:: String[1] type
-
-        Name of the :ref:`primitive type 
-        <data_model:link__IntermediatePrimitiveType>` of the property. This can
-        be one of the values:
-
-        - \"boolean\"
-        - \"byte\"
-        - \"char\"
-        - \"date\"
-        - \"double\"
-        - \"float\"
-        - \"int\"
-        - \"long\"
-        - \"short\"
-        - \"string\"
-
-    .. py:attribute:: String defaultValue
-
-        If the property has a default value, it is encoded in this String 
-        attribute. However, it is guaranteed that the default value fits the
-        :ref:`type <link__IntermediateAspectProperty_type>` of the property by
-        the Technology Modeling Language validator.
-
-    .. py:attribute:: boolean mandatory
-
-        Flag to indicate if the property needs to receive a value. It is 
-        guaranteed by the Service Modeling Language that all mandatory values of
-        a property receive a value when the respective 
-        :java:type:`IntermediateImportedAspect` is used.
-
-    .. py:attribute:: IntermediateImportedAspect aspect
-
-        The :java:type:`aspect <IntermediateImportedAspect>` to which the
-        property belongs.
-
-.. java:type:: class IntermediateAspectPropertyValue
-
-    Value of an :py:class`IntermediateAspectProperty`.
-
-    .. py:attribute:: String[1] value
-
-        The value.
-
-    .. py:attribute:: IntermediateAspectProperty[1] property
-
-        The :java:type:`property <IntermediateAspectProperty>` for which the
-        value was set.
-
-    .. py:attribute:: IntermediateImportedAspect aspect
-
-        The :java:type:`aspect <IntermediateImportedAspect>` to which the
-        property value belongs.
 
 .. rubric:: Footnotes
 

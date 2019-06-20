@@ -1,11 +1,11 @@
 /**
  */
-package de.fhdo.ddmm.service.intermediate.impl;
+package de.fhdo.ddmm.data.intermediate.impl;
 
-import de.fhdo.ddmm.service.intermediate.IntermediateAspectProperty;
-import de.fhdo.ddmm.service.intermediate.IntermediateAspectPropertyValue;
-import de.fhdo.ddmm.service.intermediate.IntermediateImportedAspect;
-import de.fhdo.ddmm.service.intermediate.IntermediatePackage;
+import de.fhdo.ddmm.data.intermediate.IntermediateAspectProperty;
+import de.fhdo.ddmm.data.intermediate.IntermediateAspectPropertyValue;
+import de.fhdo.ddmm.data.intermediate.IntermediateImportedAspect;
+import de.fhdo.ddmm.data.intermediate.IntermediatePackage;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -26,9 +26,9 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.fhdo.ddmm.service.intermediate.impl.IntermediateAspectPropertyValueImpl#getValue <em>Value</em>}</li>
- *   <li>{@link de.fhdo.ddmm.service.intermediate.impl.IntermediateAspectPropertyValueImpl#getProperty <em>Property</em>}</li>
- *   <li>{@link de.fhdo.ddmm.service.intermediate.impl.IntermediateAspectPropertyValueImpl#getAspect <em>Aspect</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.data.intermediate.impl.IntermediateAspectPropertyValueImpl#getValue <em>Value</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.data.intermediate.impl.IntermediateAspectPropertyValueImpl#getProperty <em>Property</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.data.intermediate.impl.IntermediateAspectPropertyValueImpl#getAspect <em>Aspect</em>}</li>
  * </ul>
  *
  * @generated

@@ -118,6 +118,13 @@ public class IntermediateSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
+            case IntermediatePackage.INTERMEDIATE_IMPORTED_TECHNOLOGY_SPECIFIC_TYPE: {
+                IntermediateImportedTechnologySpecificType intermediateImportedTechnologySpecificType = (IntermediateImportedTechnologySpecificType)theEObject;
+                T result = caseIntermediateImportedTechnologySpecificType(intermediateImportedTechnologySpecificType);
+                if (result == null) result = caseIntermediateType(intermediateImportedTechnologySpecificType);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
             case IntermediatePackage.INTERMEDIATE_DATA_STRUCTURE: {
                 IntermediateDataStructure intermediateDataStructure = (IntermediateDataStructure)theEObject;
                 T result = caseIntermediateDataStructure(intermediateDataStructure);
@@ -151,6 +158,24 @@ public class IntermediateSwitch<T> extends Switch<T> {
             case IntermediatePackage.INTERMEDIATE_ENUMERATION_FIELD: {
                 IntermediateEnumerationField intermediateEnumerationField = (IntermediateEnumerationField)theEObject;
                 T result = caseIntermediateEnumerationField(intermediateEnumerationField);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT: {
+                IntermediateImportedAspect intermediateImportedAspect = (IntermediateImportedAspect)theEObject;
+                T result = caseIntermediateImportedAspect(intermediateImportedAspect);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case IntermediatePackage.INTERMEDIATE_ASPECT_PROPERTY: {
+                IntermediateAspectProperty intermediateAspectProperty = (IntermediateAspectProperty)theEObject;
+                T result = caseIntermediateAspectProperty(intermediateAspectProperty);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case IntermediatePackage.INTERMEDIATE_ASPECT_PROPERTY_VALUE: {
+                IntermediateAspectPropertyValue intermediateAspectPropertyValue = (IntermediateAspectPropertyValue)theEObject;
+                T result = caseIntermediateAspectPropertyValue(intermediateAspectPropertyValue);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -279,6 +304,21 @@ public class IntermediateSwitch<T> extends Switch<T> {
     }
 
     /**
+     * Returns the result of interpreting the object as an instance of '<em>Imported Technology Specific Type</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Imported Technology Specific Type</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseIntermediateImportedTechnologySpecificType(IntermediateImportedTechnologySpecificType object) {
+        return null;
+    }
+
+    /**
      * Returns the result of interpreting the object as an instance of '<em>Data Structure</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
@@ -350,6 +390,51 @@ public class IntermediateSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseIntermediateEnumerationField(IntermediateEnumerationField object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Imported Aspect</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Imported Aspect</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseIntermediateImportedAspect(IntermediateImportedAspect object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Aspect Property</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Aspect Property</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseIntermediateAspectProperty(IntermediateAspectProperty object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Aspect Property Value</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Aspect Property Value</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseIntermediateAspectPropertyValue(IntermediateAspectPropertyValue object) {
         return null;
     }
 

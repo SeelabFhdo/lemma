@@ -1307,9 +1307,15 @@ rule__ServiceJoinPointType__Alternatives
 	)
 	|
 	(
-		{ before(grammarAccess.getServiceJoinPointTypeAccess().getDATA_FIELDSEnumLiteralDeclaration_4()); }
+		{ before(grammarAccess.getServiceJoinPointTypeAccess().getCOMPLEX_TYPESEnumLiteralDeclaration_4()); }
+		('types')
+		{ after(grammarAccess.getServiceJoinPointTypeAccess().getCOMPLEX_TYPESEnumLiteralDeclaration_4()); }
+	)
+	|
+	(
+		{ before(grammarAccess.getServiceJoinPointTypeAccess().getDATA_FIELDSEnumLiteralDeclaration_5()); }
 		('fields')
-		{ after(grammarAccess.getServiceJoinPointTypeAccess().getDATA_FIELDSEnumLiteralDeclaration_4()); }
+		{ after(grammarAccess.getServiceJoinPointTypeAccess().getDATA_FIELDSEnumLiteralDeclaration_5()); }
 	)
 ;
 finally {

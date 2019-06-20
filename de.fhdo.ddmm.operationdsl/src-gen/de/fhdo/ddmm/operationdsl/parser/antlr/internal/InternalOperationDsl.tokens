@@ -25,7 +25,7 @@
 'char'=81
 'communication_type'=68
 'container'=17
-'containers'=105
+'containers'=106
 'context'=75
 'data'=54
 'data_format'=70
@@ -42,7 +42,7 @@
 'exchange_pattern'=67
 'extends'=76
 'fault'=51
-'fields'=104
+'fields'=105
 'float'=84
 'for'=73
 'format'=56
@@ -84,6 +84,7 @@
 'sync'=98
 'technology'=14
 'type'=58
+'types'=104
 'used'=33
 'utility'=93
 'values'=28
@@ -106,6 +107,7 @@ T__102=102
 T__103=103
 T__104=104
 T__105=105
+T__106=106
 T__13=13
 T__14=14
 T__15=15

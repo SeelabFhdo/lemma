@@ -21,7 +21,7 @@
 'byte'=70
 'char'=71
 'communication_type'=58
-'containers'=95
+'containers'=96
 'context'=65
 'data'=41
 'data_format'=60
@@ -35,7 +35,7 @@
 'exchange_pattern'=57
 'extends'=66
 'fault'=35
-'fields'=94
+'fields'=95
 'float'=74
 'for'=63
 'format'=45
@@ -76,6 +76,7 @@
 'sync'=88
 'technology'=17
 'type'=47
+'types'=94
 'utility'=83
 'version'=22
 'with'=44
@@ -173,3 +174,4 @@ T__92=92
 T__93=93
 T__94=94
 T__95=95
+T__96=96

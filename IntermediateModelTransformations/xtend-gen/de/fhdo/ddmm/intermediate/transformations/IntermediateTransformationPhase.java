@@ -7,7 +7,7 @@ package de.fhdo.ddmm.intermediate.transformations;
  */
 @SuppressWarnings("all")
 public enum IntermediateTransformationPhase {
-  SOURCE_MODEL_VALIDATION,
+  INPUT_MODEL_VALIDATION,
   
   TRANSFORMATION_FINISHED;
 }

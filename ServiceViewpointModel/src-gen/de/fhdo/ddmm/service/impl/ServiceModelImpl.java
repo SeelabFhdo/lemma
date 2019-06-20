@@ -6,6 +6,7 @@ import com.google.common.collect.Iterables;
 
 import de.fhdo.ddmm.service.Import;
 import de.fhdo.ddmm.service.Interface;
+import de.fhdo.ddmm.service.MappedComplexType;
 import de.fhdo.ddmm.service.Microservice;
 import de.fhdo.ddmm.service.Operation;
 import de.fhdo.ddmm.service.ReferredOperation;
@@ -47,6 +48,7 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
  * <ul>
  *   <li>{@link de.fhdo.ddmm.service.impl.ServiceModelImpl#getT_modelUri <em>Tmodel Uri</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.impl.ServiceModelImpl#getImports <em>Imports</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.service.impl.ServiceModelImpl#getMappedComplexTypes <em>Mapped Complex Types</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.impl.ServiceModelImpl#getMicroservices <em>Microservices</em>}</li>
  * </ul>
  *
@@ -82,6 +84,16 @@ public class ServiceModelImpl extends MinimalEObjectImpl.Container implements Se
      * @ordered
      */
     protected EList<Import> imports;
+
+    /**
+     * The cached value of the '{@link #getMappedComplexTypes() <em>Mapped Complex Types</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getMappedComplexTypes()
+     * @generated
+     * @ordered
+     */
+    protected EList<MappedComplexType> mappedComplexTypes;
 
     /**
      * The cached value of the '{@link #getMicroservices() <em>Microservices</em>}' containment reference list.
@@ -154,6 +166,19 @@ public class ServiceModelImpl extends MinimalEObjectImpl.Container implements Se
      * @generated
      */
     @Override
+    public EList<MappedComplexType> getMappedComplexTypes() {
+        if (mappedComplexTypes == null) {
+            mappedComplexTypes = new EObjectContainmentWithInverseEList<MappedComplexType>(MappedComplexType.class, this, ServicePackage.SERVICE_MODEL__MAPPED_COMPLEX_TYPES, ServicePackage.MAPPED_COMPLEX_TYPE__SERVICE_MODEL);
+        }
+        return mappedComplexTypes;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public EList<Microservice> getMicroservices() {
         if (microservices == null) {
             microservices = new EObjectContainmentWithInverseEList<Microservice>(Microservice.class, this, ServicePackage.SERVICE_MODEL__MICROSERVICES, ServicePackage.MICROSERVICE__SERVICE_MODEL);
@@ -217,6 +242,8 @@ public class ServiceModelImpl extends MinimalEObjectImpl.Container implements Se
         switch (featureID) {
             case ServicePackage.SERVICE_MODEL__IMPORTS:
                 return ((InternalEList<InternalEObject>)(InternalEList<?>)getImports()).basicAdd(otherEnd, msgs);
+            case ServicePackage.SERVICE_MODEL__MAPPED_COMPLEX_TYPES:
+                return ((InternalEList<InternalEObject>)(InternalEList<?>)getMappedComplexTypes()).basicAdd(otherEnd, msgs);
             case ServicePackage.SERVICE_MODEL__MICROSERVICES:
                 return ((InternalEList<InternalEObject>)(InternalEList<?>)getMicroservices()).basicAdd(otherEnd, msgs);
         }
@@ -233,6 +260,8 @@ public class ServiceModelImpl extends MinimalEObjectImpl.Container implements Se
         switch (featureID) {
             case ServicePackage.SERVICE_MODEL__IMPORTS:
                 return ((InternalEList<?>)getImports()).basicRemove(otherEnd, msgs);
+            case ServicePackage.SERVICE_MODEL__MAPPED_COMPLEX_TYPES:
+                return ((InternalEList<?>)getMappedComplexTypes()).basicRemove(otherEnd, msgs);
             case ServicePackage.SERVICE_MODEL__MICROSERVICES:
                 return ((InternalEList<?>)getMicroservices()).basicRemove(otherEnd, msgs);
         }
@@ -251,6 +280,8 @@ public class ServiceModelImpl extends MinimalEObjectImpl.Container implements Se
                 return getT_modelUri();
             case ServicePackage.SERVICE_MODEL__IMPORTS:
                 return getImports();
+            case ServicePackage.SERVICE_MODEL__MAPPED_COMPLEX_TYPES:
+                return getMappedComplexTypes();
             case ServicePackage.SERVICE_MODEL__MICROSERVICES:
                 return getMicroservices();
         }
@@ -272,6 +303,10 @@ public class ServiceModelImpl extends MinimalEObjectImpl.Container implements Se
             case ServicePackage.SERVICE_MODEL__IMPORTS:
                 getImports().clear();
                 getImports().addAll((Collection<? extends Import>)newValue);
+                return;
+            case ServicePackage.SERVICE_MODEL__MAPPED_COMPLEX_TYPES:
+                getMappedComplexTypes().clear();
+                getMappedComplexTypes().addAll((Collection<? extends MappedComplexType>)newValue);
                 return;
             case ServicePackage.SERVICE_MODEL__MICROSERVICES:
                 getMicroservices().clear();
@@ -295,6 +330,9 @@ public class ServiceModelImpl extends MinimalEObjectImpl.Container implements Se
             case ServicePackage.SERVICE_MODEL__IMPORTS:
                 getImports().clear();
                 return;
+            case ServicePackage.SERVICE_MODEL__MAPPED_COMPLEX_TYPES:
+                getMappedComplexTypes().clear();
+                return;
             case ServicePackage.SERVICE_MODEL__MICROSERVICES:
                 getMicroservices().clear();
                 return;
@@ -314,6 +352,8 @@ public class ServiceModelImpl extends MinimalEObjectImpl.Container implements Se
                 return TMODEL_URI_EDEFAULT == null ? t_modelUri != null : !TMODEL_URI_EDEFAULT.equals(t_modelUri);
             case ServicePackage.SERVICE_MODEL__IMPORTS:
                 return imports != null && !imports.isEmpty();
+            case ServicePackage.SERVICE_MODEL__MAPPED_COMPLEX_TYPES:
+                return mappedComplexTypes != null && !mappedComplexTypes.isEmpty();
             case ServicePackage.SERVICE_MODEL__MICROSERVICES:
                 return microservices != null && !microservices.isEmpty();
         }

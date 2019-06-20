@@ -2,12 +2,13 @@
  */
 package de.fhdo.ddmm.service.intermediate.impl;
 
+import de.fhdo.ddmm.data.intermediate.IntermediateImportedAspect;
+
 import de.fhdo.ddmm.service.MicroserviceType;
 import de.fhdo.ddmm.service.Visibility;
 
 import de.fhdo.ddmm.service.intermediate.InterfaceReference;
 import de.fhdo.ddmm.service.intermediate.IntermediateEndpoint;
-import de.fhdo.ddmm.service.intermediate.IntermediateImportedAspect;
 import de.fhdo.ddmm.service.intermediate.IntermediateInterface;
 import de.fhdo.ddmm.service.intermediate.IntermediateMicroservice;
 import de.fhdo.ddmm.service.intermediate.IntermediatePackage;
@@ -563,7 +564,7 @@ public class IntermediateMicroserviceImpl extends MinimalEObjectImpl.Container i
     @Override
     public EList<IntermediateImportedAspect> getAspects() {
         if (aspects == null) {
-            aspects = new EObjectContainmentWithInverseEList<IntermediateImportedAspect>(IntermediateImportedAspect.class, this, IntermediatePackage.INTERMEDIATE_MICROSERVICE__ASPECTS, IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__MICROSERVICE);
+            aspects = new EObjectContainmentEList<IntermediateImportedAspect>(IntermediateImportedAspect.class, this, IntermediatePackage.INTERMEDIATE_MICROSERVICE__ASPECTS);
         }
         return aspects;
     }
@@ -642,8 +643,6 @@ public class IntermediateMicroserviceImpl extends MinimalEObjectImpl.Container i
                 return ((InternalEList<InternalEObject>)(InternalEList<?>)getRequiredOperations()).basicAdd(otherEnd, msgs);
             case IntermediatePackage.INTERMEDIATE_MICROSERVICE__INTERFACES:
                 return ((InternalEList<InternalEObject>)(InternalEList<?>)getInterfaces()).basicAdd(otherEnd, msgs);
-            case IntermediatePackage.INTERMEDIATE_MICROSERVICE__ASPECTS:
-                return ((InternalEList<InternalEObject>)(InternalEList<?>)getAspects()).basicAdd(otherEnd, msgs);
             case IntermediatePackage.INTERMEDIATE_MICROSERVICE__SERVICE_MODEL:
                 if (eInternalContainer() != null)
                     msgs = eBasicRemoveFromContainer(msgs);

@@ -96,6 +96,10 @@ public class ServiceAdapterFactory extends AdapterFactoryImpl {
                 return createParameterAdapter();
             }
             @Override
+            public Adapter caseMappedComplexType(MappedComplexType object) {
+                return createMappedComplexTypeAdapter();
+            }
+            @Override
             public Adapter caseMappedField(MappedField object) {
                 return createMappedFieldAdapter();
             }
@@ -246,6 +250,20 @@ public class ServiceAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createParameterAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.fhdo.ddmm.service.MappedComplexType <em>Mapped Complex Type</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.fhdo.ddmm.service.MappedComplexType
+     * @generated
+     */
+    public Adapter createMappedComplexTypeAdapter() {
         return null;
     }
 

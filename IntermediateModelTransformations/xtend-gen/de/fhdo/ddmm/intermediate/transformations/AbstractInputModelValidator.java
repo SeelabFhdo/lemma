@@ -11,31 +11,31 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 
 /**
- * Abstract class for implementing validators used in model-to-model transformation from source to
- * target intermediate models.
+ * Abstract class for implementing validators used in model-to-model transformation from input to
+ * output intermediate models.
  * 
  * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
  */
 @SuppressWarnings("all")
-public abstract class AbstractSourceModelValidator<T extends EObject> {
+public abstract class AbstractInputModelValidator<T extends EObject> {
   protected String absoluteModelPath;
   
   private Predicate<IntermediateTransformationException> warningCallback;
   
   /**
-   * Validate source model
+   * Validate input model
    */
-  public boolean validateSourceModel(final String absoluteModelPath, final T modelRoot) {
-    return this.validateSourceModel(absoluteModelPath, modelRoot, null);
+  public boolean validateInputModel(final String absoluteModelPath, final T modelRoot) {
+    return this.validateInputModel(absoluteModelPath, modelRoot, null);
   }
   
   /**
-   * Validate source model with warning callback
+   * Validate input model with warning callback
    */
-  public boolean validateSourceModel(final String absoluteModelPath, final T modelRoot, final Predicate<IntermediateTransformationException> warningCallback) {
+  public boolean validateInputModel(final String absoluteModelPath, final T modelRoot, final Predicate<IntermediateTransformationException> warningCallback) {
     try {
       this.absoluteModelPath = absoluteModelPath;
-      this.checkSourceModelForErrors(modelRoot);
+      this.checkInputModelForErrors(modelRoot);
       final List<Function<T, Void>> warningFunctions = this.registerWarningFunctions();
       if ((warningFunctions == null)) {
         return true;
@@ -62,14 +62,14 @@ public abstract class AbstractSourceModelValidator<T extends EObject> {
   }
   
   /**
-   * Check source model for errors. May be overridden by sub-classes to perform custom error
-   * checks on source model.
+   * Check input model for errors. May be overridden by sub-classes to perform custom error checks
+   * on input model.
    */
-  protected void checkSourceModelForErrors(final T modelRoot) throws IntermediateTransformationException {
+  protected void checkInputModelForErrors(final T modelRoot) throws IntermediateTransformationException {
   }
   
   /**
-   * Get functions to check source model and issue warnings. May be overridden by sub-classes to
+   * Get functions to check input model and issue warnings. May be overridden by sub-classes to
    * register warning functions.
    */
   protected List<Function<T, Void>> registerWarningFunctions() {
@@ -83,7 +83,7 @@ public abstract class AbstractSourceModelValidator<T extends EObject> {
     try {
       throw new IntermediateTransformationException(message, 
         IntermediateTransformationExceptionKind.WARNING, 
-        IntermediateTransformationPhase.SOURCE_MODEL_VALIDATION);
+        IntermediateTransformationPhase.INPUT_MODEL_VALIDATION);
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }
@@ -96,7 +96,7 @@ public abstract class AbstractSourceModelValidator<T extends EObject> {
     try {
       throw new IntermediateTransformationException(message, 
         IntermediateTransformationExceptionKind.ERROR, 
-        IntermediateTransformationPhase.SOURCE_MODEL_VALIDATION);
+        IntermediateTransformationPhase.INPUT_MODEL_VALIDATION);
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }

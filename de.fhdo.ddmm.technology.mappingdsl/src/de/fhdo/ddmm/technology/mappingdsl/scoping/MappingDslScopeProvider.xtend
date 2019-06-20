@@ -34,9 +34,7 @@ import com.google.common.base.Function
 import de.fhdo.ddmm.technology.TechnologySpecificListType
 import de.fhdo.ddmm.data.DataStructure
 import de.fhdo.ddmm.data.ListType
-import de.fhdo.ddmm.data.DataField
 import de.fhdo.ddmm.technology.mapping.TechnologySpecificFieldMapping
-import de.fhdo.ddmm.technology.mapping.DataFieldHierarchy
 import de.fhdo.ddmm.data.Type
 import de.fhdo.ddmm.data.PrimitiveType
 import de.fhdo.ddmm.technology.mapping.TechnologySpecificImportedServiceAspect
@@ -50,6 +48,10 @@ import de.fhdo.ddmm.technology.TechnologyPackage
 import de.fhdo.ddmm.technology.TechnologySpecificPropertyValueAssignment
 import de.fhdo.ddmm.technology.mapping.TechnologySpecificEndpoint
 import de.fhdo.ddmm.data.Enumeration
+import de.fhdo.ddmm.technology.mapping.ImportedComplexType
+import de.fhdo.ddmm.service.ImportType
+import de.fhdo.ddmm.data.DataModel
+import de.fhdo.ddmm.technology.mapping.ComplexTypeMapping
 
 /**
  * This class implements a custom scope provider for the Mapping DSL.
@@ -62,6 +64,12 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
      */
     override getScope(EObject context, EReference reference) {
         val scope = switch (context) {
+            /* Imported complex type */
+            ImportedComplexType: context.getScope(reference)
+
+            /* Complex type mappings */
+            ComplexTypeMapping: context.getScope(reference)
+
             /* Microservice mappings */
             MicroserviceMapping: context.getScope(reference)
 
@@ -95,9 +103,6 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
             /* Data field mappings */
             TechnologySpecificFieldMapping: context.getScope(reference)
 
-            /* Data field hierarchies */
-            DataFieldHierarchy: context.getScope(reference)
-
             /* Imported service aspects */
             TechnologySpecificImportedServiceAspect: context.getScope(reference)
 
@@ -110,6 +115,48 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
         // Try default scope resolution, if no scope could be determined
         else if (scope === null)
             return super.getScope(context, reference)
+    }
+
+    /**
+     * Build scope for imported complex types
+     */
+    private def getScope(ImportedComplexType type, EReference reference) {
+        switch (reference) {
+            /* Scope for service model imports */
+            case MappingPackage::Literals.IMPORTED_COMPLEX_TYPE__SERVICE_MODEL_IMPORT:
+                return type.typeMapping.getScopeForImportsOfType(ServiceModel)
+
+            /* Scope for data model imports */
+            case MappingPackage::Literals.IMPORTED_COMPLEX_TYPE__DATA_MODEL_IMPORT:
+                return type.getScopeForDomainModelImports()
+
+           /* Scope for complex types */
+            case MappingPackage::Literals.IMPORTED_COMPLEX_TYPE__TYPE:
+                return type.getScopeForComplexTypes()
+        }
+
+        return null
+    }
+
+    /**
+     * Build scope for complex type mappings and the given reference
+     */
+    private def getScope(ComplexTypeMapping mapping, EReference reference) {
+        switch (reference) {
+            /* Scope for service model imports */
+            case MappingPackage::Literals.IMPORTED_COMPLEX_TYPE__SERVICE_MODEL_IMPORT:
+                return mapping.getScopeForImportsOfType(ServiceModel)
+
+            /* Aspect technologies */
+            case MappingPackage::Literals.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__TECHNOLOGY:
+                return mapping.getScopeForAnnotatedTechnologies()
+
+            /* Enumeration fields */
+            case MappingPackage::Literals.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__ENUMERATION_FIELD:
+                return mapping.getScopeForComplexFields()
+        }
+
+        return null
     }
 
     /**
@@ -231,8 +278,13 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     /**
      * Build scope that comprises annotated technologies of an annotatable concept instance
      */
-    private def getScopeForAnnotatedTechnologies(MicroserviceMapping mapping) {
-        return Scopes::scopeFor(mapping.technologies)
+    private def getScopeForAnnotatedTechnologies(EObject mapping) {
+        return if (mapping instanceof ComplexTypeMapping)
+                Scopes::scopeFor(mapping.technologies)
+            else if (mapping instanceof MicroserviceMapping)
+                Scopes::scopeFor(mapping.technologies)
+            else
+                null
     }
 
     /**
@@ -277,7 +329,7 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
 
             /* Types */
             case MappingPackage::Literals.PRIMITIVE_PARAMETER_MAPPING__PRIMITIVE_TYPE:
-                return mapping.getScopeForParameterTypes()
+                return mapping.getScopeForMappingTypes()
 
             /* Aspect technologies */
             case MappingPackage::Literals.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__TECHNOLOGY:
@@ -313,11 +365,7 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
             /* Technology-specific complex types for parameters */
             case MappingPackage::Literals
                 .COMPLEX_PARAMETER_MAPPING__TECHNOLOGY_SPECIFIC_COMPLEX_TYPE:
-                return mapping.getScopeForParameterTypes()
-
-            /* Enumeration and data fields */
-            case MappingPackage::Literals.DATA_FIELD_HIERARCHY__DATA_FIELDS:
-                return mapping.getScopeForComplexDataFields()
+                return mapping.getScopeForMappingTypes()
         }
 
         return null
@@ -328,35 +376,52 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
      */
     private def getScope(TechnologySpecificFieldMapping mapping, EReference reference) {
         switch (reference) {
+            /* Data fields */
+            case MappingPackage::Literals.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__DATA_FIELD:
+                return mapping.eContainer.getScopeForComplexFields()
+
             /* Enumeration fields */
-            case MappingPackage::Literals
-                .TECHNOLOGY_SPECIFIC_FIELD_MAPPING__ENUMERATION_FIELD:
-                return (mapping.eContainer as ComplexParameterMapping)
-                    .getScopeForComplexDataFields()
+            case MappingPackage::Literals.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__ENUMERATION_FIELD:
+                return mapping.eContainer.getScopeForComplexFields()
 
             /* Data type technologies */
-            case MappingPackage::Literals.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__TECHNOLOGY:
+            case MappingPackage::Literals.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__TECHNOLOGY,
+            case MappingPackage::Literals.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__TECHNOLOGY:
                 return mapping.getScopeForTypeDefinitionTechnology()
 
             /* Types */
             case MappingPackage::Literals.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__TYPE:
-                return mapping.getScopeForParameterTypes()
+                return mapping.getScopeForMappingTypes()
         }
 
         return null
     }
 
     /**
-     * Build scope for data field hierarchies and the given reference
+     * Build scope for domain model imports of imported complex types
      */
-    private def getScope(DataFieldHierarchy hierarchy, EReference reference) {
-        switch (reference) {
-            /* Data fields */
-            case MappingPackage::Literals.DATA_FIELD_HIERARCHY__DATA_FIELDS:
-                return hierarchy.getScopeForComplexDataFields()
-        }
+    private def getScopeForDomainModelImports(ImportedComplexType type) {
+        val serviceModel = DdmmUtils.getImportedModelRoot(type.eResource,
+            type.serviceModelImport.importURI, ServiceModel)
+        val dataModels = serviceModel.imports.filter[importType == ImportType.DATATYPES]
+        return Scopes::scopeFor(dataModels)
+    }
 
-        return null
+    /**
+     * Build scope for complex types to be imported
+     */
+    private def getScopeForComplexTypes(ImportedComplexType type) {
+        if (type.dataModelImport === null)
+            return IScope.NULLSCOPE
+
+        return DdmmUtils.getScopeForPossiblyImportedConcept(
+            type.dataModelImport,
+            null,
+            DataModel,
+            type.dataModelImport.importURI,
+            [containedComplexTypes.toList],
+            [qualifiedNameParts]
+        )
     }
 
     /**
@@ -405,9 +470,9 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     }
 
     /**
-     * Build scope for technology-specific types for complex parameters
+     * Build scope for technology-specific types of field in complex type mappings or parameters
      */
-    private def getScopeForParameterTypes(EObject mapping) {
+    private def getScopeForMappingTypes(EObject mapping) {
         /* Determine type of mapped parameter */
         var Type parameterType
         var Import technology
@@ -421,7 +486,7 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
                 technology = mapping.technology
             }
             TechnologySpecificFieldMapping: {
-                parameterType = mapping.dataFieldHierarchy.dataFields.last.effectiveType
+                parameterType = mapping.dataField.effectiveType
                 technology = mapping.technology
             }
             default: return IScope.NULLSCOPE
@@ -470,15 +535,19 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
      * Build scope for microservice mapping technology that defines types
      */
     private def getScopeForTypeDefinitionTechnology(EObject context) {
-        val mapping = if (context instanceof MicroserviceMapping)
-                context
-            else
-                EcoreUtil2.getContainerOfType(context, MicroserviceMapping)
+        val technologies = if (context instanceof MicroserviceMapping)
+                context.technologies
+            else if (context instanceof ComplexTypeMapping)
+                context.technologies
+            else {
+                EcoreUtil2.getContainerOfType(context, MicroserviceMapping)?.technologies
+                    ?: EcoreUtil2.getContainerOfType(context, ComplexTypeMapping)?.technologies
+            }
 
-        if (mapping === null)
+        if (technologies === null)
             return IScope.NULLSCOPE
 
-        val typeDefinitionTechnology = mapping.technologies.findFirst[
+        val typeDefinitionTechnology = technologies.findFirst[
             val modelRoot = DdmmUtils.getImportedModelRoot(eResource, importURI, Technology)
             modelRoot !== null && !modelRoot.primitiveTypes.empty
         ]
@@ -490,72 +559,25 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     }
 
     /**
-     * Build scope for data fields of complex parameters' types on the first data field hierarchy
-     * level. It contains all direct children of the complex parameter being mapped.
+     * Build scope for enumeration and data fields in complex type and parameter mappings
      */
-    private def getScopeForComplexDataFields(ComplexParameterMapping mapping) {
-        // May happen if parameter does not exist
-        if (mapping.parameter.importedType === null)
-            return IScope.NULLSCOPE
+    private def getScopeForComplexFields(EObject mapping) {
+        var ComplexType complexType = if (mapping instanceof ComplexParameterMapping) {
+            if (mapping.parameter.importedType !== null)
+                mapping.parameter.importedType.type as ComplexType
+        } else if (mapping instanceof ComplexTypeMapping)
+            mapping.type.type as ComplexType
 
-        val previousType = mapping.parameter.importedType.type as ComplexType
-
-        if (previousType instanceof Enumeration)
-            return Scopes::scopeFor(previousType.fields)
-
-        val nextLeveldDataFields = nextDataFieldsInHierarchy(previousType)
-        if (nextLeveldDataFields !== null)
-            return Scopes::scopeFor(nextLeveldDataFields)
-        else
-            return IScope.NULLSCOPE
-    }
-
-    /**
-     * Build scope for data fields of complex parameters' types on hierarchy levels, i.e., the
-     * context is a data field hierarchy
-     */
-    private def getScopeForComplexDataFields(DataFieldHierarchy hierarchy) {
-        var DataField previousDataField
-        if (hierarchy.previous === null || hierarchy.previous.dataFields.empty)
-            previousDataField = null
-        else
-            previousDataField = hierarchy.previous.dataFields.last
-
-        // If we're on the first hierarchy level, return scope containing all direct children of the
-        // complex parameter being mapped
-        if (previousDataField === null) {
-            val complexMapping = EcoreUtil2.getContainerOfType(hierarchy, ComplexParameterMapping)
-            return getScopeForComplexDataFields(complexMapping)
-        }
-
-        // The complex type of the previous field cannot be resolved if the user entered the name of
-        // a data field that does not exist (anymore) in the data model
-        if (previousDataField.complexType === null)
-            return IScope.NULLSCOPE
-
-        // On all subsequent levels, return the direct children of the previously specified data
-        // field
-        val previousType = previousDataField.complexType.complexType
-        val nextLeveldDataFields = nextDataFieldsInHierarchy(previousType)
-        if (nextLeveldDataFields !== null)
-            return Scopes::scopeFor(nextLeveldDataFields)
-        else
-            return IScope.NULLSCOPE
-    }
-
-    /**
-     * Convenience method to retrieve the data fields of the next level of a data field hierarchy
-     */
-    private def nextDataFieldsInHierarchy(ComplexType previousType) {
-        if (previousType.isPrimitiveList)
-            return null
-
-        val nextDataFields = if (previousType.isStructure)
-                (previousType as DataStructure).effectiveFields
-            else if (previousType.isStructuredList)
-                (previousType as ListType).dataFields
-
-        return if (!nextDataFields.empty) nextDataFields else null
+        return if (complexType === null)
+                IScope.NULLSCOPE
+            else if (complexType instanceof Enumeration)
+                Scopes::scopeFor(complexType.fields)
+            else if (complexType.isStructure)
+                Scopes::scopeFor((complexType as DataStructure).dataFields)
+            else if (complexType.isStructuredList)
+                Scopes::scopeFor((complexType as ListType).dataFields)
+            else
+                IScope.NULLSCOPE
     }
 
     /**
@@ -646,8 +668,7 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
         switch (reference) {
             /* Technologies */
             case MappingPackage::Literals.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__TECHNOLOGY:
-                return EcoreUtil2.getContainerOfType(importedAspect, MicroserviceMapping)
-                    .getScopeForAnnotatedTechnologies()
+                return importedAspect.getScopeForTechnologies()
 
             /* Aspects */
             case MappingPackage.Literals.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__ASPECT:
@@ -683,6 +704,17 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     }
 
     /**
+     * Build scope for technologies of imported service aspect
+     */
+    private def getScopeForTechnologies(TechnologySpecificImportedServiceAspect aspect) {
+        return if (aspect.typeMapping !== null)
+                aspect.typeMapping.getScopeForAnnotatedTechnologies()
+            else
+                EcoreUtil2.getContainerOfType(aspect, MicroserviceMapping)
+                    .getScopeForAnnotatedTechnologies()
+    }
+
+    /**
      * Build scope for aspect of imported service aspect
      */
     private def getScopeForImportedAspect(TechnologySpecificImportedServiceAspect aspect) {
@@ -699,6 +731,9 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
          */
         val mapping = aspect.eContainer
         val joinPoint = switch (mapping) {
+            ComplexTypeMapping: {
+                JoinPointType.COMPLEX_TYPES
+            }
             MicroserviceMapping: {
                 forProtocolsAndDataFormats = mapping.effectiveProtocolsAndDataFormats
                     .values.toList
@@ -736,16 +771,19 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
                 JoinPointType.PARAMETERS
             }
             TechnologySpecificFieldMapping: {
-                val parameterMapping = mapping.parameterMapping
-                val effectiveProtocolAndDataFormat = parameterMapping.effectiveProtocolAndDataFormat
-                forProtocolsAndDataFormats = if (effectiveProtocolAndDataFormat !== null)
-                        #[effectiveProtocolAndDataFormat]
-                    else
-                        null
+                if (mapping.parameterMapping !== null) {
+                    val parameterMapping = mapping.parameterMapping
+                    val effectiveProtocolAndDataFormat = parameterMapping
+                        .effectiveProtocolAndDataFormat
+                    forProtocolsAndDataFormats = if (effectiveProtocolAndDataFormat !== null)
+                            #[effectiveProtocolAndDataFormat]
+                        else
+                            null
 
-                val parameter = parameterMapping.parameter
-                forCommunicationType = parameter.communicationType
-                forExchangePattern = parameter.exchangePattern
+                    val parameter = parameterMapping.parameter
+                    forCommunicationType = parameter.communicationType
+                    forExchangePattern = parameter.exchangePattern
+                }
 
                 JoinPointType.DATA_FIELDS
             }

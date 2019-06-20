@@ -5,6 +5,7 @@ import de.fhdo.ddmm.eclipse.ui.ModelFile;
 import de.fhdo.ddmm.eclipse.ui.file_container_selection_dialog.FileContainerSelectionTreeContentProvider;
 import de.fhdo.ddmm.eclipse.ui.utils.DdmmUiUtils;
 import de.fhdo.ddmm.intermediate.transformations.AbstractIntermediateModelTransformationStrategy;
+import de.fhdo.ddmm.intermediate.transformations.TransformationModelType;
 import java.util.ArrayList;
 import java.util.Map;
 import org.eclipse.core.resources.IContainer;
@@ -351,7 +352,8 @@ public class FileContainerSelectionDialog extends TitleAreaDialog {
         {
           final EObject root = xmiResource.getContents().get(0);
           final AbstractIntermediateModelTransformationStrategy strategy = this.modelFile.getFileTypeDescription().getMainTransformationStrategy();
-          final Class<? extends EObject> expectedRootClass = strategy.getTargetModelInfo().getRootClass();
+          Object _get = strategy.getOutputModelTypes().get(0);
+          final Class<? extends EObject> expectedRootClass = ((TransformationModelType) _get).getRootClass();
           boolean _isAssignableFrom = expectedRootClass.isAssignableFrom(root.getClass());
           _xblockexpression = (!_isAssignableFrom);
         }
@@ -405,7 +407,8 @@ public class FileContainerSelectionDialog extends TitleAreaDialog {
     TreeViewer _treeViewer = new TreeViewer(parent);
     this.containerSelectionTree = _treeViewer;
     final AbstractIntermediateModelTransformationStrategy transformationStrategy = this.modelFile.getFileTypeDescription().getMainTransformationStrategy();
-    final Class<? extends EObject> intermediateModelRootClass = transformationStrategy.getTargetModelInfo().getRootClass();
+    Object _get = transformationStrategy.getOutputModelTypes().get(0);
+    final Class<? extends EObject> intermediateModelRootClass = ((TransformationModelType) _get).getRootClass();
     FileContainerSelectionTreeContentProvider _fileContainerSelectionTreeContentProvider = new FileContainerSelectionTreeContentProvider(intermediateModelRootClass);
     this.containerSelectionTree.setContentProvider(_fileContainerSelectionTreeContentProvider);
     this.containerSelectionTree.setLabelProvider(

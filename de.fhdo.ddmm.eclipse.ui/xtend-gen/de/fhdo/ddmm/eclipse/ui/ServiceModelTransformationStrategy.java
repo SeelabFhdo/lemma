@@ -299,8 +299,8 @@ public class ServiceModelTransformationStrategy extends AbstractUiModelTransform
           EObject _get_1 = modelFile.getXtextResource().getContents().get(0);
           final TechnologyMapping modelRoot_1 = ((TechnologyMapping) _get_1);
           final Function1<Import, Boolean> _function_3 = (Import it) -> {
-            return Boolean.valueOf(((it.getImportType() == ImportType.DATATYPES) || 
-              (it.getImportType() == ImportType.MICROSERVICES)));
+            ImportType _importType = it.getImportType();
+            return Boolean.valueOf((_importType == ImportType.MICROSERVICES));
           };
           final Function1<Import, String> _function_4 = (Import it) -> {
             return it.getName();

@@ -1,6 +1,8 @@
 package de.fhdo.ddmm.technology.mappingdsl.ui.highlighting;
 
 import com.google.common.base.Objects;
+import com.google.common.collect.Iterables;
+import de.fhdo.ddmm.technology.mapping.ComplexTypeMapping;
 import de.fhdo.ddmm.technology.mapping.MappingPackage;
 import de.fhdo.ddmm.technology.mapping.MicroserviceMapping;
 import de.fhdo.ddmm.technology.mappingdsl.ui.highlighting.HighlightingConfiguration;
@@ -37,11 +39,14 @@ public class HighlightingCalculator implements ISemanticHighlightingCalculator {
    */
   private void provideHighlightingForAnnotations(final XtextResource resource, final IHighlightedPositionAcceptor acceptor) {
     final Function1<EObject, Boolean> _function = (EObject it) -> {
-      return Boolean.valueOf((it instanceof MicroserviceMapping));
+      return Boolean.valueOf(((it instanceof ComplexTypeMapping) || (it instanceof MicroserviceMapping)));
     };
     final Procedure1<EObject> _function_1 = (EObject it) -> {
-      final List<INode> nodes = NodeModelUtils.findNodesForFeature(it, 
+      List<INode> _findNodesForFeature = NodeModelUtils.findNodesForFeature(it, 
+        MappingPackage.Literals.COMPLEX_TYPE_MAPPING__TECHNOLOGIES);
+      List<INode> _findNodesForFeature_1 = NodeModelUtils.findNodesForFeature(it, 
         MappingPackage.Literals.MICROSERVICE_MAPPING__TECHNOLOGIES);
+      final Iterable<INode> nodes = Iterables.<INode>concat(_findNodesForFeature, _findNodesForFeature_1);
       final Consumer<INode> _function_2 = (INode it_1) -> {
         INode nodeToHighlight = it_1;
         while ((((nodeToHighlight != null) && 

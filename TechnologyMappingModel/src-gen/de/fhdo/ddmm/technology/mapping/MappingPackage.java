@@ -4,6 +4,7 @@ package de.fhdo.ddmm.technology.mapping;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
@@ -78,13 +79,22 @@ public interface MappingPackage extends EPackage {
     int TECHNOLOGY_MAPPING__IMPORTS = 0;
 
     /**
+     * The feature id for the '<em><b>Type Mappings</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TECHNOLOGY_MAPPING__TYPE_MAPPINGS = 1;
+
+    /**
      * The feature id for the '<em><b>Service Mappings</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int TECHNOLOGY_MAPPING__SERVICE_MAPPINGS = 1;
+    int TECHNOLOGY_MAPPING__SERVICE_MAPPINGS = 2;
 
     /**
      * The number of structural features of the '<em>Technology Mapping</em>' class.
@@ -93,7 +103,7 @@ public interface MappingPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TECHNOLOGY_MAPPING_FEATURE_COUNT = 2;
+    int TECHNOLOGY_MAPPING_FEATURE_COUNT = 3;
 
     /**
      * The operation id for the '<em>Get Mapped Interfaces</em>' operation.
@@ -114,13 +124,22 @@ public interface MappingPackage extends EPackage {
     int TECHNOLOGY_MAPPING___GET_MAPPED_OPERATIONS = 1;
 
     /**
+     * The operation id for the '<em>Get Complex Parameter Mappings</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TECHNOLOGY_MAPPING___GET_COMPLEX_PARAMETER_MAPPINGS = 2;
+
+    /**
      * The operation id for the '<em>Get Mapped Referred Operations</em>' operation.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int TECHNOLOGY_MAPPING___GET_MAPPED_REFERRED_OPERATIONS = 2;
+    int TECHNOLOGY_MAPPING___GET_MAPPED_REFERRED_OPERATIONS = 3;
 
     /**
      * The number of operations of the '<em>Technology Mapping</em>' class.
@@ -129,7 +148,153 @@ public interface MappingPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TECHNOLOGY_MAPPING_OPERATION_COUNT = 3;
+    int TECHNOLOGY_MAPPING_OPERATION_COUNT = 4;
+
+    /**
+     * The meta object id for the '{@link de.fhdo.ddmm.technology.mapping.impl.ComplexTypeMappingImpl <em>Complex Type Mapping</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.fhdo.ddmm.technology.mapping.impl.ComplexTypeMappingImpl
+     * @see de.fhdo.ddmm.technology.mapping.impl.MappingPackageImpl#getComplexTypeMapping()
+     * @generated
+     */
+    int COMPLEX_TYPE_MAPPING = 1;
+
+    /**
+     * The feature id for the '<em><b>Tsource Model Uri</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int COMPLEX_TYPE_MAPPING__TSOURCE_MODEL_URI = 0;
+
+    /**
+     * The feature id for the '<em><b>Technologies</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int COMPLEX_TYPE_MAPPING__TECHNOLOGIES = 1;
+
+    /**
+     * The feature id for the '<em><b>Type</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int COMPLEX_TYPE_MAPPING__TYPE = 2;
+
+    /**
+     * The feature id for the '<em><b>Field Mappings</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int COMPLEX_TYPE_MAPPING__FIELD_MAPPINGS = 3;
+
+    /**
+     * The feature id for the '<em><b>Aspects</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int COMPLEX_TYPE_MAPPING__ASPECTS = 4;
+
+    /**
+     * The feature id for the '<em><b>Mapping Model</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int COMPLEX_TYPE_MAPPING__MAPPING_MODEL = 5;
+
+    /**
+     * The number of structural features of the '<em>Complex Type Mapping</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int COMPLEX_TYPE_MAPPING_FEATURE_COUNT = 6;
+
+    /**
+     * The number of operations of the '<em>Complex Type Mapping</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int COMPLEX_TYPE_MAPPING_OPERATION_COUNT = 0;
+
+    /**
+     * The meta object id for the '{@link de.fhdo.ddmm.technology.mapping.impl.ImportedComplexTypeImpl <em>Imported Complex Type</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.fhdo.ddmm.technology.mapping.impl.ImportedComplexTypeImpl
+     * @see de.fhdo.ddmm.technology.mapping.impl.MappingPackageImpl#getImportedComplexType()
+     * @generated
+     */
+    int IMPORTED_COMPLEX_TYPE = 2;
+
+    /**
+     * The feature id for the '<em><b>Service Model Import</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int IMPORTED_COMPLEX_TYPE__SERVICE_MODEL_IMPORT = 0;
+
+    /**
+     * The feature id for the '<em><b>Data Model Import</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int IMPORTED_COMPLEX_TYPE__DATA_MODEL_IMPORT = 1;
+
+    /**
+     * The feature id for the '<em><b>Type</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int IMPORTED_COMPLEX_TYPE__TYPE = 2;
+
+    /**
+     * The feature id for the '<em><b>Type Mapping</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int IMPORTED_COMPLEX_TYPE__TYPE_MAPPING = 3;
+
+    /**
+     * The number of structural features of the '<em>Imported Complex Type</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int IMPORTED_COMPLEX_TYPE_FEATURE_COUNT = 4;
+
+    /**
+     * The number of operations of the '<em>Imported Complex Type</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int IMPORTED_COMPLEX_TYPE_OPERATION_COUNT = 0;
 
     /**
      * The meta object id for the '{@link de.fhdo.ddmm.technology.mapping.impl.MicroserviceMappingImpl <em>Microservice Mapping</em>}' class.
@@ -139,7 +304,7 @@ public interface MappingPackage extends EPackage {
      * @see de.fhdo.ddmm.technology.mapping.impl.MappingPackageImpl#getMicroserviceMapping()
      * @generated
      */
-    int MICROSERVICE_MAPPING = 1;
+    int MICROSERVICE_MAPPING = 3;
 
     /**
      * The feature id for the '<em><b>Technologies</b></em>' reference list.
@@ -284,7 +449,7 @@ public interface MappingPackage extends EPackage {
      * @see de.fhdo.ddmm.technology.mapping.impl.MappingPackageImpl#getImportedMicroservice()
      * @generated
      */
-    int IMPORTED_MICROSERVICE = 2;
+    int IMPORTED_MICROSERVICE = 4;
 
     /**
      * The feature id for the '<em><b>Import</b></em>' reference.
@@ -339,7 +504,7 @@ public interface MappingPackage extends EPackage {
      * @see de.fhdo.ddmm.technology.mapping.impl.MappingPackageImpl#getInterfaceMapping()
      * @generated
      */
-    int INTERFACE_MAPPING = 3;
+    int INTERFACE_MAPPING = 5;
 
     /**
      * The feature id for the '<em><b>Interface</b></em>' reference.
@@ -412,7 +577,7 @@ public interface MappingPackage extends EPackage {
      * @see de.fhdo.ddmm.technology.mapping.impl.MappingPackageImpl#getOperationMapping()
      * @generated
      */
-    int OPERATION_MAPPING = 4;
+    int OPERATION_MAPPING = 6;
 
     /**
      * The feature id for the '<em><b>Operation</b></em>' reference.
@@ -494,7 +659,7 @@ public interface MappingPackage extends EPackage {
      * @see de.fhdo.ddmm.technology.mapping.impl.MappingPackageImpl#getReferredOperationMapping()
      * @generated
      */
-    int REFERRED_OPERATION_MAPPING = 5;
+    int REFERRED_OPERATION_MAPPING = 7;
 
     /**
      * The feature id for the '<em><b>Operation</b></em>' reference.
@@ -567,7 +732,7 @@ public interface MappingPackage extends EPackage {
      * @see de.fhdo.ddmm.technology.mapping.impl.MappingPackageImpl#getParameterMapping()
      * @generated
      */
-    int PARAMETER_MAPPING = 6;
+    int PARAMETER_MAPPING = 8;
 
     /**
      * The feature id for the '<em><b>Parameter</b></em>' reference.
@@ -622,7 +787,7 @@ public interface MappingPackage extends EPackage {
      * @see de.fhdo.ddmm.technology.mapping.impl.MappingPackageImpl#getPrimitiveParameterMapping()
      * @generated
      */
-    int PRIMITIVE_PARAMETER_MAPPING = 7;
+    int PRIMITIVE_PARAMETER_MAPPING = 9;
 
     /**
      * The feature id for the '<em><b>Parameter</b></em>' reference.
@@ -695,7 +860,7 @@ public interface MappingPackage extends EPackage {
      * @see de.fhdo.ddmm.technology.mapping.impl.MappingPackageImpl#getComplexParameterMapping()
      * @generated
      */
-    int COMPLEX_PARAMETER_MAPPING = 8;
+    int COMPLEX_PARAMETER_MAPPING = 10;
 
     /**
      * The feature id for the '<em><b>Parameter</b></em>' reference.
@@ -777,7 +942,16 @@ public interface MappingPackage extends EPackage {
      * @see de.fhdo.ddmm.technology.mapping.impl.MappingPackageImpl#getTechnologySpecificFieldMapping()
      * @generated
      */
-    int TECHNOLOGY_SPECIFIC_FIELD_MAPPING = 9;
+    int TECHNOLOGY_SPECIFIC_FIELD_MAPPING = 11;
+
+    /**
+     * The feature id for the '<em><b>Tsource Model Uri</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TECHNOLOGY_SPECIFIC_FIELD_MAPPING__TSOURCE_MODEL_URI = 0;
 
     /**
      * The feature id for the '<em><b>Technology</b></em>' reference.
@@ -786,7 +960,7 @@ public interface MappingPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TECHNOLOGY_SPECIFIC_FIELD_MAPPING__TECHNOLOGY = 0;
+    int TECHNOLOGY_SPECIFIC_FIELD_MAPPING__TECHNOLOGY = 1;
 
     /**
      * The feature id for the '<em><b>Type</b></em>' reference.
@@ -795,7 +969,7 @@ public interface MappingPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TECHNOLOGY_SPECIFIC_FIELD_MAPPING__TYPE = 1;
+    int TECHNOLOGY_SPECIFIC_FIELD_MAPPING__TYPE = 2;
 
     /**
      * The feature id for the '<em><b>Enumeration Field</b></em>' reference.
@@ -804,16 +978,16 @@ public interface MappingPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TECHNOLOGY_SPECIFIC_FIELD_MAPPING__ENUMERATION_FIELD = 2;
+    int TECHNOLOGY_SPECIFIC_FIELD_MAPPING__ENUMERATION_FIELD = 3;
 
     /**
-     * The feature id for the '<em><b>Data Field Hierarchy</b></em>' containment reference.
+     * The feature id for the '<em><b>Data Field</b></em>' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int TECHNOLOGY_SPECIFIC_FIELD_MAPPING__DATA_FIELD_HIERARCHY = 3;
+    int TECHNOLOGY_SPECIFIC_FIELD_MAPPING__DATA_FIELD = 4;
 
     /**
      * The feature id for the '<em><b>Aspects</b></em>' containment reference list.
@@ -822,7 +996,16 @@ public interface MappingPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TECHNOLOGY_SPECIFIC_FIELD_MAPPING__ASPECTS = 4;
+    int TECHNOLOGY_SPECIFIC_FIELD_MAPPING__ASPECTS = 5;
+
+    /**
+     * The feature id for the '<em><b>Type Mapping</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TECHNOLOGY_SPECIFIC_FIELD_MAPPING__TYPE_MAPPING = 6;
 
     /**
      * The feature id for the '<em><b>Parameter Mapping</b></em>' container reference.
@@ -831,7 +1014,7 @@ public interface MappingPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TECHNOLOGY_SPECIFIC_FIELD_MAPPING__PARAMETER_MAPPING = 5;
+    int TECHNOLOGY_SPECIFIC_FIELD_MAPPING__PARAMETER_MAPPING = 7;
 
     /**
      * The number of structural features of the '<em>Technology Specific Field Mapping</em>' class.
@@ -840,7 +1023,16 @@ public interface MappingPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TECHNOLOGY_SPECIFIC_FIELD_MAPPING_FEATURE_COUNT = 6;
+    int TECHNOLOGY_SPECIFIC_FIELD_MAPPING_FEATURE_COUNT = 8;
+
+    /**
+     * The operation id for the '<em>Get Original Type Of Mapped Element</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TECHNOLOGY_SPECIFIC_FIELD_MAPPING___GET_ORIGINAL_TYPE_OF_MAPPED_ELEMENT = 0;
 
     /**
      * The number of operations of the '<em>Technology Specific Field Mapping</em>' class.
@@ -849,62 +1041,7 @@ public interface MappingPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TECHNOLOGY_SPECIFIC_FIELD_MAPPING_OPERATION_COUNT = 0;
-
-    /**
-     * The meta object id for the '{@link de.fhdo.ddmm.technology.mapping.impl.DataFieldHierarchyImpl <em>Data Field Hierarchy</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.fhdo.ddmm.technology.mapping.impl.DataFieldHierarchyImpl
-     * @see de.fhdo.ddmm.technology.mapping.impl.MappingPackageImpl#getDataFieldHierarchy()
-     * @generated
-     */
-    int DATA_FIELD_HIERARCHY = 10;
-
-    /**
-     * The feature id for the '<em><b>Data Fields</b></em>' reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int DATA_FIELD_HIERARCHY__DATA_FIELDS = 0;
-
-    /**
-     * The feature id for the '<em><b>Previous</b></em>' containment reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int DATA_FIELD_HIERARCHY__PREVIOUS = 1;
-
-    /**
-     * The feature id for the '<em><b>Mapping</b></em>' container reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int DATA_FIELD_HIERARCHY__MAPPING = 2;
-
-    /**
-     * The number of structural features of the '<em>Data Field Hierarchy</em>' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int DATA_FIELD_HIERARCHY_FEATURE_COUNT = 3;
-
-    /**
-     * The number of operations of the '<em>Data Field Hierarchy</em>' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int DATA_FIELD_HIERARCHY_OPERATION_COUNT = 0;
+    int TECHNOLOGY_SPECIFIC_FIELD_MAPPING_OPERATION_COUNT = 1;
 
     /**
      * The meta object id for the '{@link de.fhdo.ddmm.technology.mapping.impl.TechnologySpecificProtocolSpecificationImpl <em>Technology Specific Protocol Specification</em>}' class.
@@ -914,7 +1051,7 @@ public interface MappingPackage extends EPackage {
      * @see de.fhdo.ddmm.technology.mapping.impl.MappingPackageImpl#getTechnologySpecificProtocolSpecification()
      * @generated
      */
-    int TECHNOLOGY_SPECIFIC_PROTOCOL_SPECIFICATION = 11;
+    int TECHNOLOGY_SPECIFIC_PROTOCOL_SPECIFICATION = 12;
 
     /**
      * The feature id for the '<em><b>Communication Type</b></em>' attribute.
@@ -960,7 +1097,7 @@ public interface MappingPackage extends EPackage {
      * @see de.fhdo.ddmm.technology.mapping.impl.MappingPackageImpl#getTechnologySpecificProtocol()
      * @generated
      */
-    int TECHNOLOGY_SPECIFIC_PROTOCOL = 12;
+    int TECHNOLOGY_SPECIFIC_PROTOCOL = 13;
 
     /**
      * The feature id for the '<em><b>Technology</b></em>' reference.
@@ -1033,7 +1170,7 @@ public interface MappingPackage extends EPackage {
      * @see de.fhdo.ddmm.technology.mapping.impl.MappingPackageImpl#getTechnologySpecificEndpoint()
      * @generated
      */
-    int TECHNOLOGY_SPECIFIC_ENDPOINT = 13;
+    int TECHNOLOGY_SPECIFIC_ENDPOINT = 14;
 
     /**
      * The feature id for the '<em><b>Addresses</b></em>' attribute list.
@@ -1115,7 +1252,7 @@ public interface MappingPackage extends EPackage {
      * @see de.fhdo.ddmm.technology.mapping.impl.MappingPackageImpl#getTechnologySpecificImportedServiceAspect()
      * @generated
      */
-    int TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT = 14;
+    int TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT = 15;
 
     /**
      * The feature id for the '<em><b>Technology</b></em>' reference.
@@ -1154,13 +1291,22 @@ public interface MappingPackage extends EPackage {
     int TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__VALUES = 3;
 
     /**
+     * The feature id for the '<em><b>Type Mapping</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__TYPE_MAPPING = 4;
+
+    /**
      * The feature id for the '<em><b>Microservice Mapping</b></em>' container reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__MICROSERVICE_MAPPING = 4;
+    int TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__MICROSERVICE_MAPPING = 5;
 
     /**
      * The feature id for the '<em><b>Interface Mapping</b></em>' container reference.
@@ -1169,7 +1315,7 @@ public interface MappingPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__INTERFACE_MAPPING = 5;
+    int TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__INTERFACE_MAPPING = 6;
 
     /**
      * The feature id for the '<em><b>Operation Mapping</b></em>' container reference.
@@ -1178,7 +1324,7 @@ public interface MappingPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__OPERATION_MAPPING = 6;
+    int TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__OPERATION_MAPPING = 7;
 
     /**
      * The feature id for the '<em><b>Referred Operation Mapping</b></em>' container reference.
@@ -1187,7 +1333,7 @@ public interface MappingPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__REFERRED_OPERATION_MAPPING = 7;
+    int TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__REFERRED_OPERATION_MAPPING = 8;
 
     /**
      * The feature id for the '<em><b>Parameter Mapping</b></em>' container reference.
@@ -1196,7 +1342,7 @@ public interface MappingPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__PARAMETER_MAPPING = 8;
+    int TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__PARAMETER_MAPPING = 9;
 
     /**
      * The feature id for the '<em><b>Field Mapping</b></em>' container reference.
@@ -1205,7 +1351,7 @@ public interface MappingPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__FIELD_MAPPING = 9;
+    int TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__FIELD_MAPPING = 10;
 
     /**
      * The number of structural features of the '<em>Technology Specific Imported Service Aspect</em>' class.
@@ -1214,7 +1360,7 @@ public interface MappingPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT_FEATURE_COUNT = 10;
+    int TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT_FEATURE_COUNT = 11;
 
     /**
      * The number of operations of the '<em>Technology Specific Imported Service Aspect</em>' class.
@@ -1224,6 +1370,16 @@ public interface MappingPackage extends EPackage {
      * @ordered
      */
     int TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT_OPERATION_COUNT = 0;
+
+    /**
+     * The meta object id for the '<em>Data Field List</em>' data type.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see java.util.List
+     * @see de.fhdo.ddmm.technology.mapping.impl.MappingPackageImpl#getDataFieldList()
+     * @generated
+     */
+    int DATA_FIELD_LIST = 16;
 
 
     /**
@@ -1246,6 +1402,17 @@ public interface MappingPackage extends EPackage {
      * @generated
      */
     EReference getTechnologyMapping_Imports();
+
+    /**
+     * Returns the meta object for the containment reference list '{@link de.fhdo.ddmm.technology.mapping.TechnologyMapping#getTypeMappings <em>Type Mappings</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Type Mappings</em>'.
+     * @see de.fhdo.ddmm.technology.mapping.TechnologyMapping#getTypeMappings()
+     * @see #getTechnologyMapping()
+     * @generated
+     */
+    EReference getTechnologyMapping_TypeMappings();
 
     /**
      * Returns the meta object for the containment reference list '{@link de.fhdo.ddmm.technology.mapping.TechnologyMapping#getServiceMappings <em>Service Mappings</em>}'.
@@ -1279,6 +1446,16 @@ public interface MappingPackage extends EPackage {
     EOperation getTechnologyMapping__GetMappedOperations();
 
     /**
+     * Returns the meta object for the '{@link de.fhdo.ddmm.technology.mapping.TechnologyMapping#getComplexParameterMappings() <em>Get Complex Parameter Mappings</em>}' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the '<em>Get Complex Parameter Mappings</em>' operation.
+     * @see de.fhdo.ddmm.technology.mapping.TechnologyMapping#getComplexParameterMappings()
+     * @generated
+     */
+    EOperation getTechnologyMapping__GetComplexParameterMappings();
+
+    /**
      * Returns the meta object for the '{@link de.fhdo.ddmm.technology.mapping.TechnologyMapping#getMappedReferredOperations() <em>Get Mapped Referred Operations</em>}' operation.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1287,6 +1464,136 @@ public interface MappingPackage extends EPackage {
      * @generated
      */
     EOperation getTechnologyMapping__GetMappedReferredOperations();
+
+    /**
+     * Returns the meta object for class '{@link de.fhdo.ddmm.technology.mapping.ComplexTypeMapping <em>Complex Type Mapping</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Complex Type Mapping</em>'.
+     * @see de.fhdo.ddmm.technology.mapping.ComplexTypeMapping
+     * @generated
+     */
+    EClass getComplexTypeMapping();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.fhdo.ddmm.technology.mapping.ComplexTypeMapping#getT_sourceModelUri <em>Tsource Model Uri</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Tsource Model Uri</em>'.
+     * @see de.fhdo.ddmm.technology.mapping.ComplexTypeMapping#getT_sourceModelUri()
+     * @see #getComplexTypeMapping()
+     * @generated
+     */
+    EAttribute getComplexTypeMapping_T_sourceModelUri();
+
+    /**
+     * Returns the meta object for the reference list '{@link de.fhdo.ddmm.technology.mapping.ComplexTypeMapping#getTechnologies <em>Technologies</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference list '<em>Technologies</em>'.
+     * @see de.fhdo.ddmm.technology.mapping.ComplexTypeMapping#getTechnologies()
+     * @see #getComplexTypeMapping()
+     * @generated
+     */
+    EReference getComplexTypeMapping_Technologies();
+
+    /**
+     * Returns the meta object for the containment reference '{@link de.fhdo.ddmm.technology.mapping.ComplexTypeMapping#getType <em>Type</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference '<em>Type</em>'.
+     * @see de.fhdo.ddmm.technology.mapping.ComplexTypeMapping#getType()
+     * @see #getComplexTypeMapping()
+     * @generated
+     */
+    EReference getComplexTypeMapping_Type();
+
+    /**
+     * Returns the meta object for the containment reference list '{@link de.fhdo.ddmm.technology.mapping.ComplexTypeMapping#getFieldMappings <em>Field Mappings</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Field Mappings</em>'.
+     * @see de.fhdo.ddmm.technology.mapping.ComplexTypeMapping#getFieldMappings()
+     * @see #getComplexTypeMapping()
+     * @generated
+     */
+    EReference getComplexTypeMapping_FieldMappings();
+
+    /**
+     * Returns the meta object for the containment reference list '{@link de.fhdo.ddmm.technology.mapping.ComplexTypeMapping#getAspects <em>Aspects</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Aspects</em>'.
+     * @see de.fhdo.ddmm.technology.mapping.ComplexTypeMapping#getAspects()
+     * @see #getComplexTypeMapping()
+     * @generated
+     */
+    EReference getComplexTypeMapping_Aspects();
+
+    /**
+     * Returns the meta object for the container reference '{@link de.fhdo.ddmm.technology.mapping.ComplexTypeMapping#getMappingModel <em>Mapping Model</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the container reference '<em>Mapping Model</em>'.
+     * @see de.fhdo.ddmm.technology.mapping.ComplexTypeMapping#getMappingModel()
+     * @see #getComplexTypeMapping()
+     * @generated
+     */
+    EReference getComplexTypeMapping_MappingModel();
+
+    /**
+     * Returns the meta object for class '{@link de.fhdo.ddmm.technology.mapping.ImportedComplexType <em>Imported Complex Type</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Imported Complex Type</em>'.
+     * @see de.fhdo.ddmm.technology.mapping.ImportedComplexType
+     * @generated
+     */
+    EClass getImportedComplexType();
+
+    /**
+     * Returns the meta object for the reference '{@link de.fhdo.ddmm.technology.mapping.ImportedComplexType#getServiceModelImport <em>Service Model Import</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference '<em>Service Model Import</em>'.
+     * @see de.fhdo.ddmm.technology.mapping.ImportedComplexType#getServiceModelImport()
+     * @see #getImportedComplexType()
+     * @generated
+     */
+    EReference getImportedComplexType_ServiceModelImport();
+
+    /**
+     * Returns the meta object for the reference '{@link de.fhdo.ddmm.technology.mapping.ImportedComplexType#getDataModelImport <em>Data Model Import</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference '<em>Data Model Import</em>'.
+     * @see de.fhdo.ddmm.technology.mapping.ImportedComplexType#getDataModelImport()
+     * @see #getImportedComplexType()
+     * @generated
+     */
+    EReference getImportedComplexType_DataModelImport();
+
+    /**
+     * Returns the meta object for the reference '{@link de.fhdo.ddmm.technology.mapping.ImportedComplexType#getType <em>Type</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference '<em>Type</em>'.
+     * @see de.fhdo.ddmm.technology.mapping.ImportedComplexType#getType()
+     * @see #getImportedComplexType()
+     * @generated
+     */
+    EReference getImportedComplexType_Type();
+
+    /**
+     * Returns the meta object for the container reference '{@link de.fhdo.ddmm.technology.mapping.ImportedComplexType#getTypeMapping <em>Type Mapping</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the container reference '<em>Type Mapping</em>'.
+     * @see de.fhdo.ddmm.technology.mapping.ImportedComplexType#getTypeMapping()
+     * @see #getImportedComplexType()
+     * @generated
+     */
+    EReference getImportedComplexType_TypeMapping();
 
     /**
      * Returns the meta object for class '{@link de.fhdo.ddmm.technology.mapping.MicroserviceMapping <em>Microservice Mapping</em>}'.
@@ -1815,6 +2122,17 @@ public interface MappingPackage extends EPackage {
     EClass getTechnologySpecificFieldMapping();
 
     /**
+     * Returns the meta object for the attribute '{@link de.fhdo.ddmm.technology.mapping.TechnologySpecificFieldMapping#getT_sourceModelUri <em>Tsource Model Uri</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Tsource Model Uri</em>'.
+     * @see de.fhdo.ddmm.technology.mapping.TechnologySpecificFieldMapping#getT_sourceModelUri()
+     * @see #getTechnologySpecificFieldMapping()
+     * @generated
+     */
+    EAttribute getTechnologySpecificFieldMapping_T_sourceModelUri();
+
+    /**
      * Returns the meta object for the reference '{@link de.fhdo.ddmm.technology.mapping.TechnologySpecificFieldMapping#getTechnology <em>Technology</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1848,15 +2166,15 @@ public interface MappingPackage extends EPackage {
     EReference getTechnologySpecificFieldMapping_EnumerationField();
 
     /**
-     * Returns the meta object for the containment reference '{@link de.fhdo.ddmm.technology.mapping.TechnologySpecificFieldMapping#getDataFieldHierarchy <em>Data Field Hierarchy</em>}'.
+     * Returns the meta object for the reference '{@link de.fhdo.ddmm.technology.mapping.TechnologySpecificFieldMapping#getDataField <em>Data Field</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the containment reference '<em>Data Field Hierarchy</em>'.
-     * @see de.fhdo.ddmm.technology.mapping.TechnologySpecificFieldMapping#getDataFieldHierarchy()
+     * @return the meta object for the reference '<em>Data Field</em>'.
+     * @see de.fhdo.ddmm.technology.mapping.TechnologySpecificFieldMapping#getDataField()
      * @see #getTechnologySpecificFieldMapping()
      * @generated
      */
-    EReference getTechnologySpecificFieldMapping_DataFieldHierarchy();
+    EReference getTechnologySpecificFieldMapping_DataField();
 
     /**
      * Returns the meta object for the containment reference list '{@link de.fhdo.ddmm.technology.mapping.TechnologySpecificFieldMapping#getAspects <em>Aspects</em>}'.
@@ -1870,6 +2188,17 @@ public interface MappingPackage extends EPackage {
     EReference getTechnologySpecificFieldMapping_Aspects();
 
     /**
+     * Returns the meta object for the container reference '{@link de.fhdo.ddmm.technology.mapping.TechnologySpecificFieldMapping#getTypeMapping <em>Type Mapping</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the container reference '<em>Type Mapping</em>'.
+     * @see de.fhdo.ddmm.technology.mapping.TechnologySpecificFieldMapping#getTypeMapping()
+     * @see #getTechnologySpecificFieldMapping()
+     * @generated
+     */
+    EReference getTechnologySpecificFieldMapping_TypeMapping();
+
+    /**
      * Returns the meta object for the container reference '{@link de.fhdo.ddmm.technology.mapping.TechnologySpecificFieldMapping#getParameterMapping <em>Parameter Mapping</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1881,47 +2210,14 @@ public interface MappingPackage extends EPackage {
     EReference getTechnologySpecificFieldMapping_ParameterMapping();
 
     /**
-     * Returns the meta object for class '{@link de.fhdo.ddmm.technology.mapping.DataFieldHierarchy <em>Data Field Hierarchy</em>}'.
+     * Returns the meta object for the '{@link de.fhdo.ddmm.technology.mapping.TechnologySpecificFieldMapping#getOriginalTypeOfMappedElement() <em>Get Original Type Of Mapped Element</em>}' operation.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Data Field Hierarchy</em>'.
-     * @see de.fhdo.ddmm.technology.mapping.DataFieldHierarchy
+     * @return the meta object for the '<em>Get Original Type Of Mapped Element</em>' operation.
+     * @see de.fhdo.ddmm.technology.mapping.TechnologySpecificFieldMapping#getOriginalTypeOfMappedElement()
      * @generated
      */
-    EClass getDataFieldHierarchy();
-
-    /**
-     * Returns the meta object for the reference list '{@link de.fhdo.ddmm.technology.mapping.DataFieldHierarchy#getDataFields <em>Data Fields</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the reference list '<em>Data Fields</em>'.
-     * @see de.fhdo.ddmm.technology.mapping.DataFieldHierarchy#getDataFields()
-     * @see #getDataFieldHierarchy()
-     * @generated
-     */
-    EReference getDataFieldHierarchy_DataFields();
-
-    /**
-     * Returns the meta object for the containment reference '{@link de.fhdo.ddmm.technology.mapping.DataFieldHierarchy#getPrevious <em>Previous</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the containment reference '<em>Previous</em>'.
-     * @see de.fhdo.ddmm.technology.mapping.DataFieldHierarchy#getPrevious()
-     * @see #getDataFieldHierarchy()
-     * @generated
-     */
-    EReference getDataFieldHierarchy_Previous();
-
-    /**
-     * Returns the meta object for the container reference '{@link de.fhdo.ddmm.technology.mapping.DataFieldHierarchy#getMapping <em>Mapping</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the container reference '<em>Mapping</em>'.
-     * @see de.fhdo.ddmm.technology.mapping.DataFieldHierarchy#getMapping()
-     * @see #getDataFieldHierarchy()
-     * @generated
-     */
-    EReference getDataFieldHierarchy_Mapping();
+    EOperation getTechnologySpecificFieldMapping__GetOriginalTypeOfMappedElement();
 
     /**
      * Returns the meta object for class '{@link de.fhdo.ddmm.technology.mapping.TechnologySpecificProtocolSpecification <em>Technology Specific Protocol Specification</em>}'.
@@ -2151,6 +2447,17 @@ public interface MappingPackage extends EPackage {
     EReference getTechnologySpecificImportedServiceAspect_Values();
 
     /**
+     * Returns the meta object for the container reference '{@link de.fhdo.ddmm.technology.mapping.TechnologySpecificImportedServiceAspect#getTypeMapping <em>Type Mapping</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the container reference '<em>Type Mapping</em>'.
+     * @see de.fhdo.ddmm.technology.mapping.TechnologySpecificImportedServiceAspect#getTypeMapping()
+     * @see #getTechnologySpecificImportedServiceAspect()
+     * @generated
+     */
+    EReference getTechnologySpecificImportedServiceAspect_TypeMapping();
+
+    /**
      * Returns the meta object for the container reference '{@link de.fhdo.ddmm.technology.mapping.TechnologySpecificImportedServiceAspect#getMicroserviceMapping <em>Microservice Mapping</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2217,6 +2524,17 @@ public interface MappingPackage extends EPackage {
     EReference getTechnologySpecificImportedServiceAspect_FieldMapping();
 
     /**
+     * Returns the meta object for data type '{@link java.util.List <em>Data Field List</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for data type '<em>Data Field List</em>'.
+     * @see java.util.List
+     * @model instanceClass="java.util.List&lt;de.fhdo.ddmm.data.DataField&gt;"
+     * @generated
+     */
+    EDataType getDataFieldList();
+
+    /**
      * Returns the factory that creates the instances of the model.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2258,6 +2576,14 @@ public interface MappingPackage extends EPackage {
         EReference TECHNOLOGY_MAPPING__IMPORTS = eINSTANCE.getTechnologyMapping_Imports();
 
         /**
+         * The meta object literal for the '<em><b>Type Mappings</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference TECHNOLOGY_MAPPING__TYPE_MAPPINGS = eINSTANCE.getTechnologyMapping_TypeMappings();
+
+        /**
          * The meta object literal for the '<em><b>Service Mappings</b></em>' containment reference list feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -2282,12 +2608,120 @@ public interface MappingPackage extends EPackage {
         EOperation TECHNOLOGY_MAPPING___GET_MAPPED_OPERATIONS = eINSTANCE.getTechnologyMapping__GetMappedOperations();
 
         /**
+         * The meta object literal for the '<em><b>Get Complex Parameter Mappings</b></em>' operation.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EOperation TECHNOLOGY_MAPPING___GET_COMPLEX_PARAMETER_MAPPINGS = eINSTANCE.getTechnologyMapping__GetComplexParameterMappings();
+
+        /**
          * The meta object literal for the '<em><b>Get Mapped Referred Operations</b></em>' operation.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
         EOperation TECHNOLOGY_MAPPING___GET_MAPPED_REFERRED_OPERATIONS = eINSTANCE.getTechnologyMapping__GetMappedReferredOperations();
+
+        /**
+         * The meta object literal for the '{@link de.fhdo.ddmm.technology.mapping.impl.ComplexTypeMappingImpl <em>Complex Type Mapping</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.fhdo.ddmm.technology.mapping.impl.ComplexTypeMappingImpl
+         * @see de.fhdo.ddmm.technology.mapping.impl.MappingPackageImpl#getComplexTypeMapping()
+         * @generated
+         */
+        EClass COMPLEX_TYPE_MAPPING = eINSTANCE.getComplexTypeMapping();
+
+        /**
+         * The meta object literal for the '<em><b>Tsource Model Uri</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute COMPLEX_TYPE_MAPPING__TSOURCE_MODEL_URI = eINSTANCE.getComplexTypeMapping_T_sourceModelUri();
+
+        /**
+         * The meta object literal for the '<em><b>Technologies</b></em>' reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference COMPLEX_TYPE_MAPPING__TECHNOLOGIES = eINSTANCE.getComplexTypeMapping_Technologies();
+
+        /**
+         * The meta object literal for the '<em><b>Type</b></em>' containment reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference COMPLEX_TYPE_MAPPING__TYPE = eINSTANCE.getComplexTypeMapping_Type();
+
+        /**
+         * The meta object literal for the '<em><b>Field Mappings</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference COMPLEX_TYPE_MAPPING__FIELD_MAPPINGS = eINSTANCE.getComplexTypeMapping_FieldMappings();
+
+        /**
+         * The meta object literal for the '<em><b>Aspects</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference COMPLEX_TYPE_MAPPING__ASPECTS = eINSTANCE.getComplexTypeMapping_Aspects();
+
+        /**
+         * The meta object literal for the '<em><b>Mapping Model</b></em>' container reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference COMPLEX_TYPE_MAPPING__MAPPING_MODEL = eINSTANCE.getComplexTypeMapping_MappingModel();
+
+        /**
+         * The meta object literal for the '{@link de.fhdo.ddmm.technology.mapping.impl.ImportedComplexTypeImpl <em>Imported Complex Type</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.fhdo.ddmm.technology.mapping.impl.ImportedComplexTypeImpl
+         * @see de.fhdo.ddmm.technology.mapping.impl.MappingPackageImpl#getImportedComplexType()
+         * @generated
+         */
+        EClass IMPORTED_COMPLEX_TYPE = eINSTANCE.getImportedComplexType();
+
+        /**
+         * The meta object literal for the '<em><b>Service Model Import</b></em>' reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference IMPORTED_COMPLEX_TYPE__SERVICE_MODEL_IMPORT = eINSTANCE.getImportedComplexType_ServiceModelImport();
+
+        /**
+         * The meta object literal for the '<em><b>Data Model Import</b></em>' reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference IMPORTED_COMPLEX_TYPE__DATA_MODEL_IMPORT = eINSTANCE.getImportedComplexType_DataModelImport();
+
+        /**
+         * The meta object literal for the '<em><b>Type</b></em>' reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference IMPORTED_COMPLEX_TYPE__TYPE = eINSTANCE.getImportedComplexType_Type();
+
+        /**
+         * The meta object literal for the '<em><b>Type Mapping</b></em>' container reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference IMPORTED_COMPLEX_TYPE__TYPE_MAPPING = eINSTANCE.getImportedComplexType_TypeMapping();
 
         /**
          * The meta object literal for the '{@link de.fhdo.ddmm.technology.mapping.impl.MicroserviceMappingImpl <em>Microservice Mapping</em>}' class.
@@ -2700,6 +3134,14 @@ public interface MappingPackage extends EPackage {
         EClass TECHNOLOGY_SPECIFIC_FIELD_MAPPING = eINSTANCE.getTechnologySpecificFieldMapping();
 
         /**
+         * The meta object literal for the '<em><b>Tsource Model Uri</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute TECHNOLOGY_SPECIFIC_FIELD_MAPPING__TSOURCE_MODEL_URI = eINSTANCE.getTechnologySpecificFieldMapping_T_sourceModelUri();
+
+        /**
          * The meta object literal for the '<em><b>Technology</b></em>' reference feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -2724,12 +3166,12 @@ public interface MappingPackage extends EPackage {
         EReference TECHNOLOGY_SPECIFIC_FIELD_MAPPING__ENUMERATION_FIELD = eINSTANCE.getTechnologySpecificFieldMapping_EnumerationField();
 
         /**
-         * The meta object literal for the '<em><b>Data Field Hierarchy</b></em>' containment reference feature.
+         * The meta object literal for the '<em><b>Data Field</b></em>' reference feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference TECHNOLOGY_SPECIFIC_FIELD_MAPPING__DATA_FIELD_HIERARCHY = eINSTANCE.getTechnologySpecificFieldMapping_DataFieldHierarchy();
+        EReference TECHNOLOGY_SPECIFIC_FIELD_MAPPING__DATA_FIELD = eINSTANCE.getTechnologySpecificFieldMapping_DataField();
 
         /**
          * The meta object literal for the '<em><b>Aspects</b></em>' containment reference list feature.
@@ -2740,6 +3182,14 @@ public interface MappingPackage extends EPackage {
         EReference TECHNOLOGY_SPECIFIC_FIELD_MAPPING__ASPECTS = eINSTANCE.getTechnologySpecificFieldMapping_Aspects();
 
         /**
+         * The meta object literal for the '<em><b>Type Mapping</b></em>' container reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference TECHNOLOGY_SPECIFIC_FIELD_MAPPING__TYPE_MAPPING = eINSTANCE.getTechnologySpecificFieldMapping_TypeMapping();
+
+        /**
          * The meta object literal for the '<em><b>Parameter Mapping</b></em>' container reference feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -2748,38 +3198,12 @@ public interface MappingPackage extends EPackage {
         EReference TECHNOLOGY_SPECIFIC_FIELD_MAPPING__PARAMETER_MAPPING = eINSTANCE.getTechnologySpecificFieldMapping_ParameterMapping();
 
         /**
-         * The meta object literal for the '{@link de.fhdo.ddmm.technology.mapping.impl.DataFieldHierarchyImpl <em>Data Field Hierarchy</em>}' class.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @see de.fhdo.ddmm.technology.mapping.impl.DataFieldHierarchyImpl
-         * @see de.fhdo.ddmm.technology.mapping.impl.MappingPackageImpl#getDataFieldHierarchy()
-         * @generated
-         */
-        EClass DATA_FIELD_HIERARCHY = eINSTANCE.getDataFieldHierarchy();
-
-        /**
-         * The meta object literal for the '<em><b>Data Fields</b></em>' reference list feature.
+         * The meta object literal for the '<em><b>Get Original Type Of Mapped Element</b></em>' operation.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference DATA_FIELD_HIERARCHY__DATA_FIELDS = eINSTANCE.getDataFieldHierarchy_DataFields();
-
-        /**
-         * The meta object literal for the '<em><b>Previous</b></em>' containment reference feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference DATA_FIELD_HIERARCHY__PREVIOUS = eINSTANCE.getDataFieldHierarchy_Previous();
-
-        /**
-         * The meta object literal for the '<em><b>Mapping</b></em>' container reference feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference DATA_FIELD_HIERARCHY__MAPPING = eINSTANCE.getDataFieldHierarchy_Mapping();
+        EOperation TECHNOLOGY_SPECIFIC_FIELD_MAPPING___GET_ORIGINAL_TYPE_OF_MAPPED_ELEMENT = eINSTANCE.getTechnologySpecificFieldMapping__GetOriginalTypeOfMappedElement();
 
         /**
          * The meta object literal for the '{@link de.fhdo.ddmm.technology.mapping.impl.TechnologySpecificProtocolSpecificationImpl <em>Technology Specific Protocol Specification</em>}' class.
@@ -2958,6 +3382,14 @@ public interface MappingPackage extends EPackage {
         EReference TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__VALUES = eINSTANCE.getTechnologySpecificImportedServiceAspect_Values();
 
         /**
+         * The meta object literal for the '<em><b>Type Mapping</b></em>' container reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__TYPE_MAPPING = eINSTANCE.getTechnologySpecificImportedServiceAspect_TypeMapping();
+
+        /**
          * The meta object literal for the '<em><b>Microservice Mapping</b></em>' container reference feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -3004,6 +3436,16 @@ public interface MappingPackage extends EPackage {
          * @generated
          */
         EReference TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__FIELD_MAPPING = eINSTANCE.getTechnologySpecificImportedServiceAspect_FieldMapping();
+
+        /**
+         * The meta object literal for the '<em>Data Field List</em>' data type.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see java.util.List
+         * @see de.fhdo.ddmm.technology.mapping.impl.MappingPackageImpl#getDataFieldList()
+         * @generated
+         */
+        EDataType DATA_FIELD_LIST = eINSTANCE.getDataFieldList();
 
     }
 

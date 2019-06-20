@@ -7,29 +7,29 @@ import com.google.common.base.Predicate
 import com.google.common.base.Function
 
 /**
- * Abstract class for implementing validators used in model-to-model transformation from source to
- * target intermediate models.
+ * Abstract class for implementing validators used in model-to-model transformation from input to
+ * output intermediate models.
  *
  * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
  */
-abstract class AbstractSourceModelValidator<T extends EObject> {
+abstract class AbstractInputModelValidator<T extends EObject> {
     protected String absoluteModelPath
     Predicate<IntermediateTransformationException> warningCallback
 
     /**
-     * Validate source model
+     * Validate input model
      */
-    def validateSourceModel(String absoluteModelPath, T modelRoot) {
-        return validateSourceModel(absoluteModelPath, modelRoot, null)
+    def validateInputModel(String absoluteModelPath, T modelRoot) {
+        return validateInputModel(absoluteModelPath, modelRoot, null)
     }
 
     /**
-     * Validate source model with warning callback
+     * Validate input model with warning callback
      */
-    def validateSourceModel(String absoluteModelPath, T modelRoot,
+    def validateInputModel(String absoluteModelPath, T modelRoot,
         Predicate<IntermediateTransformationException> warningCallback) {
         this.absoluteModelPath = absoluteModelPath
-        checkSourceModelForErrors(modelRoot)
+        checkInputModelForErrors(modelRoot)
 
         val warningFunctions = registerWarningFunctions()
         if (warningFunctions === null) {
@@ -49,14 +49,14 @@ abstract class AbstractSourceModelValidator<T extends EObject> {
     }
 
     /**
-     * Check source model for errors. May be overridden by sub-classes to perform custom error
-     * checks on source model.
+     * Check input model for errors. May be overridden by sub-classes to perform custom error checks
+     * on input model.
      */
-    protected def void checkSourceModelForErrors(T modelRoot)
+    protected def void checkInputModelForErrors(T modelRoot)
         throws IntermediateTransformationException { }
 
     /**
-     * Get functions to check source model and issue warnings. May be overridden by sub-classes to
+     * Get functions to check input model and issue warnings. May be overridden by sub-classes to
      * register warning functions.
      */
     protected def List<Function<T, Void>> registerWarningFunctions() {
@@ -69,7 +69,7 @@ abstract class AbstractSourceModelValidator<T extends EObject> {
     protected final def Void warning(String message) {
         throw new IntermediateTransformationException(message,
             IntermediateTransformationExceptionKind.WARNING,
-            IntermediateTransformationPhase.SOURCE_MODEL_VALIDATION)
+            IntermediateTransformationPhase.INPUT_MODEL_VALIDATION)
     }
 
     /**
@@ -78,6 +78,6 @@ abstract class AbstractSourceModelValidator<T extends EObject> {
     protected final def Void error(String message) {
         throw new IntermediateTransformationException(message,
             IntermediateTransformationExceptionKind.ERROR,
-            IntermediateTransformationPhase.SOURCE_MODEL_VALIDATION)
+            IntermediateTransformationPhase.INPUT_MODEL_VALIDATION)
     }
 }

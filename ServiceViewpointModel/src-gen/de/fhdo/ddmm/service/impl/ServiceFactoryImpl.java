@@ -72,6 +72,7 @@ public class ServiceFactoryImpl extends EFactoryImpl implements ServiceFactory {
             case ServicePackage.OPERATION: return createOperation();
             case ServicePackage.REFERRED_OPERATION: return createReferredOperation();
             case ServicePackage.PARAMETER: return createParameter();
+            case ServicePackage.MAPPED_COMPLEX_TYPE: return createMappedComplexType();
             case ServicePackage.MAPPED_FIELD: return createMappedField();
             case ServicePackage.POSSIBLY_IMPORTED_MICROSERVICE: return createPossiblyImportedMicroservice();
             case ServicePackage.POSSIBLY_IMPORTED_INTERFACE: return createPossiblyImportedInterface();
@@ -211,6 +212,17 @@ public class ServiceFactoryImpl extends EFactoryImpl implements ServiceFactory {
     public Parameter createParameter() {
         ParameterImpl parameter = new ParameterImpl();
         return parameter;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public MappedComplexType createMappedComplexType() {
+        MappedComplexTypeImpl mappedComplexType = new MappedComplexTypeImpl();
+        return mappedComplexType;
     }
 
     /**

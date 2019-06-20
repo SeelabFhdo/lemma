@@ -25,11 +25,14 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
+ *   <li>{@link de.fhdo.ddmm.service.MappedField#getT_typeDefinitionTechnologyName <em>Ttype Definition Technology Name</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.MappedField#getDataField <em>Data Field</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.MappedField#getEnumerationField <em>Enumeration Field</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.MappedField#getMappedType <em>Mapped Type</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.MappedField#getAspects <em>Aspects</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.MappedField#getParameter <em>Parameter</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.service.MappedField#getMappedComplexType <em>Mapped Complex Type</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.service.MappedField#getName <em>Name</em>}</li>
  * </ul>
  *
  * @see de.fhdo.ddmm.service.ServicePackage#getMappedField()
@@ -37,6 +40,32 @@ import org.eclipse.emf.ecore.EObject;
  * @generated
  */
 public interface MappedField extends EObject {
+    /**
+     * Returns the value of the '<em><b>Ttype Definition Technology Name</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Ttype Definition Technology Name</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Ttype Definition Technology Name</em>' attribute.
+     * @see #setT_typeDefinitionTechnologyName(String)
+     * @see de.fhdo.ddmm.service.ServicePackage#getMappedField_T_typeDefinitionTechnologyName()
+     * @model unique="false"
+     * @generated
+     */
+    String getT_typeDefinitionTechnologyName();
+
+    /**
+     * Sets the value of the '{@link de.fhdo.ddmm.service.MappedField#getT_typeDefinitionTechnologyName <em>Ttype Definition Technology Name</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Ttype Definition Technology Name</em>' attribute.
+     * @see #getT_typeDefinitionTechnologyName()
+     * @generated
+     */
+    void setT_typeDefinitionTechnologyName(String value);
+
     /**
      * Returns the value of the '<em><b>Data Field</b></em>' reference.
      * <!-- begin-user-doc -->
@@ -162,16 +191,59 @@ public interface MappedField extends EObject {
     void setParameter(Parameter value);
 
     /**
+     * Returns the value of the '<em><b>Mapped Complex Type</b></em>' container reference.
+     * It is bidirectional and its opposite is '{@link de.fhdo.ddmm.service.MappedComplexType#getMappedFields <em>Mapped Fields</em>}'.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Mapped Complex Type</em>' container reference isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Mapped Complex Type</em>' container reference.
+     * @see #setMappedComplexType(MappedComplexType)
+     * @see de.fhdo.ddmm.service.ServicePackage#getMappedField_MappedComplexType()
+     * @see de.fhdo.ddmm.service.MappedComplexType#getMappedFields
+     * @model opposite="mappedFields" transient="false"
+     * @generated
+     */
+    MappedComplexType getMappedComplexType();
+
+    /**
+     * Sets the value of the '{@link de.fhdo.ddmm.service.MappedField#getMappedComplexType <em>Mapped Complex Type</em>}' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Mapped Complex Type</em>' container reference.
+     * @see #getMappedComplexType()
+     * @generated
+     */
+    void setMappedComplexType(MappedComplexType value);
+
+    /**
+     * Returns the value of the '<em><b>Name</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
      * *
-     * Get parts of the parameter for creating a qualified name
+     * Get name of mapped field
      * <!-- end-model-doc -->
-     * @model kind="operation" unique="false"
+     * @return the value of the '<em>Name</em>' attribute.
+     * @see de.fhdo.ddmm.service.ServicePackage#getMappedField_Name()
+     * @model unique="false" transient="true" changeable="false" volatile="true" derived="true"
      * @generated
      */
-    EList<String> getQualifiedNameParts();
+    String getName();
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * *
+     * Get parts of the mapped field for creating a fully-qualified name
+     * <!-- end-model-doc -->
+     * @model unique="false" withImportNameUnique="false"
+     * @generated
+     */
+    EList<String> getQualifiedNameParts(boolean withImportName);
 
     /**
      * <!-- begin-user-doc -->
@@ -180,10 +252,10 @@ public interface MappedField extends EObject {
      * *
      * Build qualified name from qualified name parts
      * <!-- end-model-doc -->
-     * @model unique="false" separatorUnique="false"
+     * @model unique="false" separatorUnique="false" withImportNameUnique="false"
      * @generated
      */
-    String buildQualifiedName(String separator);
+    String buildQualifiedName(String separator, boolean withImportName);
 
     /**
      * <!-- begin-user-doc -->
@@ -191,7 +263,8 @@ public interface MappedField extends EObject {
      * <!-- begin-model-doc -->
      * *
      * Get the effective type of the mapped data field. The effective type corresponds to the mapped
-     * type, if the field has one. Otherwise, it is the effective type of the field itself.
+     * type, if the data field or enumeration field has one. Otherwise, it is the effective type of
+     * the data field itself or the enumeration that comprises the enumeration field.
      * <!-- end-model-doc -->
      * @model kind="operation" unique="false"
      * @generated

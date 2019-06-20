@@ -25,10 +25,8 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
-import org.eclipse.xtext.xbase.lib.InputOutput;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 
 /**
@@ -314,7 +312,6 @@ public class ComplexTypeChecker implements TypeCheckerI<ComplexType> {
       return it.getInitializationValue().valueAsString();
     };
     final Set<String> basicValues = IterableExtensions.<String>toSet(IterableExtensions.<EnumerationField, String>map(IterableExtensions.<EnumerationField>filter(basicEnum.getFields(), _function), _function_1));
-    InputOutput.<EList<String>>println(basicEnum.getQualifiedNameParts());
     final Function1<EnumerationField, Boolean> _function_2 = (EnumerationField it) -> {
       return Boolean.valueOf(((it.getInitializationValue() != null) && 
         (fieldValueGetter.apply(it.getInitializationValue()) != null)));

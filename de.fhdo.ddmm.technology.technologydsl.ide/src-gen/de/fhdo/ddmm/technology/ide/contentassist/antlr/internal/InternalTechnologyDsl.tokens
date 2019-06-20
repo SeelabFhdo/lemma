@@ -18,7 +18,7 @@
 'char'=71
 'communication_type'=83
 'compatibility'=33
-'containers'=27
+'containers'=28
 'context'=66
 'data'=44
 'data_format'=85
@@ -31,7 +31,7 @@
 'environments'=56
 'exchange_pattern'=82
 'extends'=67
-'fields'=26
+'fields'=27
 'float'=74
 'for'=63
 'format'=48
@@ -40,7 +40,7 @@
 'hide'=86
 'import'=41
 'in'=14
-'infrastructure'=28
+'infrastructure'=29
 'inout'=16
 'int'=75
 'interfaces'=23
@@ -65,13 +65,13 @@
 'structure'=54
 'sync'=17
 'technologies'=39
-'technology'=29
+'technology'=30
 'type'=50
-'types'=32
+'types'=26
 'version'=65
 'with'=47
-'{'=30
-'}'=31
+'{'=31
+'}'=32
 RULE_ANY_OTHER=12
 RULE_BIG_DECIMAL=6
 RULE_BOOLEAN=7

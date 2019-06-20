@@ -20,9 +20,6 @@ public class IntermediateTransformationException extends Exception {
   @Accessors(AccessorType.PUBLIC_GETTER)
   private IntermediateTransformationPhase phase;
   
-  /**
-   * Constructor
-   */
   public IntermediateTransformationException(final String message, final IntermediateTransformationExceptionKind kind, final IntermediateTransformationPhase phase) {
     super(message);
     this.kind = kind;

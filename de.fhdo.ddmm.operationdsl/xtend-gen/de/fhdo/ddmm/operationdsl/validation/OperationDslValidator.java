@@ -197,7 +197,7 @@ public class OperationDslValidator extends AbstractOperationDslValidator {
       final TechnologySpecificPropertyValueAssignment duplicatePropertyValue = propertyValues.get((duplicateIndex).intValue());
       final TechnologySpecificProperty duplicateProperty = duplicatePropertyValue.getProperty();
       StringConcatenation _builder = new StringConcatenation();
-      _builder.append("Duplicate value assigment to service property ");
+      _builder.append("Duplicate value assignment to service property ");
       String _name = duplicateProperty.getName();
       _builder.append(_name);
       this.error(_builder.toString(), duplicatePropertyValue, 
@@ -816,28 +816,33 @@ public class OperationDslValidator extends AbstractOperationDslValidator {
       return;
     }
     final int propertyCount = importedAspect.getAspect().getProperties().size();
-    if ((propertyCount > 1)) {
-      this.error("Ambiguous value assignment", importedAspect, 
+    if ((propertyCount == 0)) {
+      this.error("Aspect does not define properties", importedAspect, 
         OperationPackage.Literals.IMPORTED_OPERATION_ASPECT__SINGLE_PROPERTY_VALUE);
     } else {
-      if ((propertyCount == 1)) {
-        final TechnologySpecificProperty targetProperty = importedAspect.getAspect().getProperties().get(0);
-        final PrimitiveType targetPropertyType = targetProperty.getType();
-        boolean _isOfType = propertyValue.isOfType(targetPropertyType);
-        boolean _not = (!_isOfType);
-        if (_not) {
-          StringConcatenation _builder = new StringConcatenation();
-          _builder.append("Value is not of type ");
-          String _typeName = targetPropertyType.getTypeName();
-          _builder.append(_typeName);
-          _builder.append(" as expected by ");
-          StringConcatenation _builder_1 = new StringConcatenation();
-          _builder_1.append("property ");
-          String _name = targetProperty.getName();
-          _builder_1.append(_name);
-          String _plus = (_builder.toString() + _builder_1);
-          this.error(_plus, importedAspect, 
-            OperationPackage.Literals.IMPORTED_OPERATION_ASPECT__SINGLE_PROPERTY_VALUE);
+      if ((propertyCount > 1)) {
+        this.error("Ambiguous value assignment", importedAspect, 
+          OperationPackage.Literals.IMPORTED_OPERATION_ASPECT__SINGLE_PROPERTY_VALUE);
+      } else {
+        if ((propertyCount == 1)) {
+          final TechnologySpecificProperty targetProperty = importedAspect.getAspect().getProperties().get(0);
+          final PrimitiveType targetPropertyType = targetProperty.getType();
+          boolean _isOfType = propertyValue.isOfType(targetPropertyType);
+          boolean _not = (!_isOfType);
+          if (_not) {
+            StringConcatenation _builder = new StringConcatenation();
+            _builder.append("Value is not of type ");
+            String _typeName = targetPropertyType.getTypeName();
+            _builder.append(_typeName);
+            _builder.append(" as expected by ");
+            StringConcatenation _builder_1 = new StringConcatenation();
+            _builder_1.append("property ");
+            String _name = targetProperty.getName();
+            _builder_1.append(_name);
+            String _plus = (_builder.toString() + _builder_1);
+            this.error(_plus, importedAspect, 
+              OperationPackage.Literals.IMPORTED_OPERATION_ASPECT__SINGLE_PROPERTY_VALUE);
+          }
         }
       }
     }

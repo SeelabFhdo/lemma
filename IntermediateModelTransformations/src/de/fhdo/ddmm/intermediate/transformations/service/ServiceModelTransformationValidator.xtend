@@ -1,7 +1,7 @@
 package de.fhdo.ddmm.intermediate.transformations.service
 
 import de.fhdo.ddmm.service.ServiceModel
-import de.fhdo.ddmm.intermediate.transformations.AbstractSourceModelValidator
+import de.fhdo.ddmm.intermediate.transformations.AbstractInputModelValidator
 import de.fhdo.ddmm.intermediate.transformations.IntermediateTransformationException
 
 /**
@@ -9,11 +9,11 @@ import de.fhdo.ddmm.intermediate.transformations.IntermediateTransformationExcep
  *
  * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
  */
-class ServiceModelTransformationValidator extends AbstractSourceModelValidator<ServiceModel> {
+class ServiceModelTransformationValidator extends AbstractInputModelValidator<ServiceModel> {
     /**
-     * Validate source models for errors
+     * Validate input models for errors
      */
-    override checkSourceModelForErrors(ServiceModel serviceModel)
+    override checkInputModelForErrors(ServiceModel serviceModel)
         throws IntermediateTransformationException {
         if (serviceModel === null)
             error("Service model is empty")
@@ -27,21 +27,8 @@ class ServiceModelTransformationValidator extends AbstractSourceModelValidator<S
      */
     override registerWarningFunctions() {
         return #[
-            [warnMissingTechnologies],
             [warnReferredMicroserviceTechnologies]
         ]
-    }
-
-    /**
-     * Warn if microservices exist in the model without assigned technologies
-     */
-    private def Void warnMissingTechnologies(ServiceModel serviceModel) {
-        val missingTechnologies = serviceModel.microservices.exists[technologies.empty]
-        if (missingTechnologies)
-            warning("The service model contains microservices without a technology assignment. " +
-                "A technology would have to be explicitly chosen when generating source code for " +
-                "them."
-            )
     }
 
     /**

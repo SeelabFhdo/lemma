@@ -15,10 +15,8 @@ class IntermediateTransformationException extends Exception {
     @Accessors(PUBLIC_GETTER)
     IntermediateTransformationPhase phase
 
-    /**
-     * Constructor
-     */
-    new(String message, IntermediateTransformationExceptionKind kind, IntermediateTransformationPhase phase) {
+    new(String message, IntermediateTransformationExceptionKind kind,
+        IntermediateTransformationPhase phase) {
         super(message)
         this.kind = kind
         this.phase = phase

@@ -142,7 +142,7 @@ class OperationDslValidator extends AbstractOperationDslValidator {
         if (duplicateIndex > -1) {
             val duplicatePropertyValue = propertyValues.get(duplicateIndex)
             val duplicateProperty = duplicatePropertyValue.property
-            error('''Duplicate value assigment to service property «duplicateProperty.name»''',
+            error('''Duplicate value assignment to service property «duplicateProperty.name»''',
                 duplicatePropertyValue,
                 TechnologyPackage::Literals.TECHNOLOGY_SPECIFIC_PROPERTY_VALUE_ASSIGNMENT__PROPERTY)
         }

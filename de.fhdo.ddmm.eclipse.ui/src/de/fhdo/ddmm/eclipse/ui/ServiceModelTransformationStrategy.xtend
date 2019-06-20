@@ -5,7 +5,6 @@ import java.util.List
 import org.eclipse.jface.resource.ResourceManager
 import org.eclipse.jface.resource.LocalResourceManager
 import org.eclipse.jface.resource.JFaceResources
-import de.fhdo.ddmm.intermediate.transformations.service.IntermediateServiceModelTransformation
 import de.fhdo.ddmm.service.ServiceModel
 import de.fhdo.ddmm.utils.DdmmUtils
 import org.eclipse.core.resources.IFile
@@ -18,6 +17,7 @@ import java.util.LinkedHashMap
 import java.util.Collections
 import java.util.Map
 import de.fhdo.ddmm.intermediate.transformations.service.IntermediateDataModelTransformation
+import de.fhdo.ddmm.intermediate.transformations.service.IntermediateServiceModelTransformation
 import de.fhdo.ddmm.intermediate.transformations.service.MappingModelTransformation
 
 /**
@@ -217,10 +217,8 @@ class ServiceModelTransformationStrategy extends AbstractUiModelTransformationSt
             else if (DdmmUiUtils.hasExtension(modelFile.file, MAPPING_MODEL_FILE_EXTENSIONS)) {
                 val modelRoot = modelFile.xtextResource.contents.get(0) as TechnologyMapping
                 importAliasesAndUris = modelRoot.imports
-                    .filter[
-                        importType === ImportType.DATATYPES ||
-                        importType === ImportType.MICROSERVICES
-                    ].toMap([name], [importURI])
+                    .filter[importType === ImportType.MICROSERVICES]
+                    .toMap([name], [importURI])
             }
 
             // Data Models

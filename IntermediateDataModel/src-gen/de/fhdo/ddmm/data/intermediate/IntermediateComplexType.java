@@ -2,6 +2,7 @@
  */
 package de.fhdo.ddmm.data.intermediate;
 
+import org.eclipse.emf.common.util.EList;
 
 /**
  * <!-- begin-user-doc -->
@@ -18,6 +19,7 @@ package de.fhdo.ddmm.data.intermediate;
  * </p>
  * <ul>
  *   <li>{@link de.fhdo.ddmm.data.intermediate.IntermediateComplexType#getQualifiedName <em>Qualified Name</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.data.intermediate.IntermediateComplexType#getAspects <em>Aspects</em>}</li>
  *   <li>{@link de.fhdo.ddmm.data.intermediate.IntermediateComplexType#getDataModel <em>Data Model</em>}</li>
  *   <li>{@link de.fhdo.ddmm.data.intermediate.IntermediateComplexType#getVersion <em>Version</em>}</li>
  *   <li>{@link de.fhdo.ddmm.data.intermediate.IntermediateComplexType#getContext <em>Context</em>}</li>
@@ -53,6 +55,24 @@ public interface IntermediateComplexType extends IntermediateType {
      * @generated
      */
     void setQualifiedName(String value);
+
+    /**
+     * Returns the value of the '<em><b>Aspects</b></em>' containment reference list.
+     * The list contents are of type {@link de.fhdo.ddmm.data.intermediate.IntermediateImportedAspect}.
+     * It is bidirectional and its opposite is '{@link de.fhdo.ddmm.data.intermediate.IntermediateImportedAspect#getComplexType <em>Complex Type</em>}'.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Aspects</em>' containment reference list isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Aspects</em>' containment reference list.
+     * @see de.fhdo.ddmm.data.intermediate.IntermediatePackage#getIntermediateComplexType_Aspects()
+     * @see de.fhdo.ddmm.data.intermediate.IntermediateImportedAspect#getComplexType
+     * @model opposite="complexType" containment="true"
+     * @generated
+     */
+    EList<IntermediateImportedAspect> getAspects();
 
     /**
      * Returns the value of the '<em><b>Data Model</b></em>' container reference.

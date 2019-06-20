@@ -5,18 +5,25 @@ package de.fhdo.ddmm.data.intermediate.impl;
 import de.fhdo.ddmm.data.intermediate.IntermediateComplexType;
 import de.fhdo.ddmm.data.intermediate.IntermediateContext;
 import de.fhdo.ddmm.data.intermediate.IntermediateDataModel;
+import de.fhdo.ddmm.data.intermediate.IntermediateImportedAspect;
 import de.fhdo.ddmm.data.intermediate.IntermediatePackage;
 import de.fhdo.ddmm.data.intermediate.IntermediateVersion;
 
+import java.util.Collection;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+
+import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
+import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -27,6 +34,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  * </p>
  * <ul>
  *   <li>{@link de.fhdo.ddmm.data.intermediate.impl.IntermediateComplexTypeImpl#getQualifiedName <em>Qualified Name</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.data.intermediate.impl.IntermediateComplexTypeImpl#getAspects <em>Aspects</em>}</li>
  *   <li>{@link de.fhdo.ddmm.data.intermediate.impl.IntermediateComplexTypeImpl#getDataModel <em>Data Model</em>}</li>
  *   <li>{@link de.fhdo.ddmm.data.intermediate.impl.IntermediateComplexTypeImpl#getVersion <em>Version</em>}</li>
  *   <li>{@link de.fhdo.ddmm.data.intermediate.impl.IntermediateComplexTypeImpl#getContext <em>Context</em>}</li>
@@ -54,6 +62,16 @@ public class IntermediateComplexTypeImpl extends IntermediateTypeImpl implements
      * @ordered
      */
     protected String qualifiedName = QUALIFIED_NAME_EDEFAULT;
+
+    /**
+     * The cached value of the '{@link #getAspects() <em>Aspects</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getAspects()
+     * @generated
+     * @ordered
+     */
+    protected EList<IntermediateImportedAspect> aspects;
 
     /**
      * <!-- begin-user-doc -->
@@ -95,6 +113,19 @@ public class IntermediateComplexTypeImpl extends IntermediateTypeImpl implements
         qualifiedName = newQualifiedName;
         if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, IntermediatePackage.INTERMEDIATE_COMPLEX_TYPE__QUALIFIED_NAME, oldQualifiedName, qualifiedName));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EList<IntermediateImportedAspect> getAspects() {
+        if (aspects == null) {
+            aspects = new EObjectContainmentWithInverseEList<IntermediateImportedAspect>(IntermediateImportedAspect.class, this, IntermediatePackage.INTERMEDIATE_COMPLEX_TYPE__ASPECTS, IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__COMPLEX_TYPE);
+        }
+        return aspects;
     }
 
     /**
@@ -261,9 +292,12 @@ public class IntermediateComplexTypeImpl extends IntermediateTypeImpl implements
      * <!-- end-user-doc -->
      * @generated
      */
+    @SuppressWarnings("unchecked")
     @Override
     public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
+            case IntermediatePackage.INTERMEDIATE_COMPLEX_TYPE__ASPECTS:
+                return ((InternalEList<InternalEObject>)(InternalEList<?>)getAspects()).basicAdd(otherEnd, msgs);
             case IntermediatePackage.INTERMEDIATE_COMPLEX_TYPE__DATA_MODEL:
                 if (eInternalContainer() != null)
                     msgs = eBasicRemoveFromContainer(msgs);
@@ -288,6 +322,8 @@ public class IntermediateComplexTypeImpl extends IntermediateTypeImpl implements
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
+            case IntermediatePackage.INTERMEDIATE_COMPLEX_TYPE__ASPECTS:
+                return ((InternalEList<?>)getAspects()).basicRemove(otherEnd, msgs);
             case IntermediatePackage.INTERMEDIATE_COMPLEX_TYPE__DATA_MODEL:
                 return basicSetDataModel(null, msgs);
             case IntermediatePackage.INTERMEDIATE_COMPLEX_TYPE__VERSION:
@@ -326,6 +362,8 @@ public class IntermediateComplexTypeImpl extends IntermediateTypeImpl implements
         switch (featureID) {
             case IntermediatePackage.INTERMEDIATE_COMPLEX_TYPE__QUALIFIED_NAME:
                 return getQualifiedName();
+            case IntermediatePackage.INTERMEDIATE_COMPLEX_TYPE__ASPECTS:
+                return getAspects();
             case IntermediatePackage.INTERMEDIATE_COMPLEX_TYPE__DATA_MODEL:
                 if (resolve) return getDataModel();
                 return basicGetDataModel();
@@ -344,11 +382,16 @@ public class IntermediateComplexTypeImpl extends IntermediateTypeImpl implements
      * <!-- end-user-doc -->
      * @generated
      */
+    @SuppressWarnings("unchecked")
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
             case IntermediatePackage.INTERMEDIATE_COMPLEX_TYPE__QUALIFIED_NAME:
                 setQualifiedName((String)newValue);
+                return;
+            case IntermediatePackage.INTERMEDIATE_COMPLEX_TYPE__ASPECTS:
+                getAspects().clear();
+                getAspects().addAll((Collection<? extends IntermediateImportedAspect>)newValue);
                 return;
             case IntermediatePackage.INTERMEDIATE_COMPLEX_TYPE__DATA_MODEL:
                 setDataModel((IntermediateDataModel)newValue);
@@ -374,6 +417,9 @@ public class IntermediateComplexTypeImpl extends IntermediateTypeImpl implements
             case IntermediatePackage.INTERMEDIATE_COMPLEX_TYPE__QUALIFIED_NAME:
                 setQualifiedName(QUALIFIED_NAME_EDEFAULT);
                 return;
+            case IntermediatePackage.INTERMEDIATE_COMPLEX_TYPE__ASPECTS:
+                getAspects().clear();
+                return;
             case IntermediatePackage.INTERMEDIATE_COMPLEX_TYPE__DATA_MODEL:
                 setDataModel((IntermediateDataModel)null);
                 return;
@@ -397,6 +443,8 @@ public class IntermediateComplexTypeImpl extends IntermediateTypeImpl implements
         switch (featureID) {
             case IntermediatePackage.INTERMEDIATE_COMPLEX_TYPE__QUALIFIED_NAME:
                 return QUALIFIED_NAME_EDEFAULT == null ? qualifiedName != null : !QUALIFIED_NAME_EDEFAULT.equals(qualifiedName);
+            case IntermediatePackage.INTERMEDIATE_COMPLEX_TYPE__ASPECTS:
+                return aspects != null && !aspects.isEmpty();
             case IntermediatePackage.INTERMEDIATE_COMPLEX_TYPE__DATA_MODEL:
                 return basicGetDataModel() != null;
             case IntermediatePackage.INTERMEDIATE_COMPLEX_TYPE__VERSION:

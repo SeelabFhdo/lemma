@@ -359,8 +359,6 @@ class ComplexTypeChecker implements TypeCheckerI<ComplexType> {
             .map[initializationValue.valueAsString]
             .toSet()
 
-println(basicEnum.qualifiedNameParts)
-
         val toCheckValues = enumToCheck.fields
             .filter[
                 initializationValue !== null &&

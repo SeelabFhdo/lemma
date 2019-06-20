@@ -22,11 +22,11 @@ import org.eclipse.swt.widgets.Button
 import org.eclipse.swt.custom.StyledText
 import org.eclipse.swt.custom.StyleRange
 import org.eclipse.jface.dialogs.MessageDialog
-import de.fhdo.ddmm.intermediate.transformations.IntermediateTransformationException
 import java.io.StringWriter
 import java.io.PrintWriter
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import de.fhdo.ddmm.intermediate.transformations.IntermediateTransformationException
 
 class TransformationDialog  extends TitleAreaDialog {
     static val MIN_DIALOG_WIDTH = 200
@@ -124,7 +124,7 @@ class TransformationDialog  extends TitleAreaDialog {
      */
     private def boolean transformationWarningOccurred(IntermediateTransformationException warning) {
         return switch (warning.phase) {
-            case SOURCE_MODEL_VALIDATION: sourceModelValidationWarning(warning.message)
+            case INPUT_MODEL_VALIDATION: inputModelValidationWarning(warning.message)
             case TRANSFORMATION_FINISHED: transformationFinishedWarning(warning.message)
             default: true
         }
@@ -133,7 +133,7 @@ class TransformationDialog  extends TitleAreaDialog {
     /**
      * Handle source model validation warning
      */
-    private def boolean sourceModelValidationWarning(String warningMessage) {
+    private def boolean inputModelValidationWarning(String warningMessage) {
         if (ignoreAllTransformationWarnings)
             return true
 
@@ -146,7 +146,7 @@ class TransformationDialog  extends TitleAreaDialog {
         val buttonPressed = dialog.open()
         return switch (buttonPressed) {
             // Abort all transformations
-            case -1,  // User closed dialog via windor bar
+            case -1,  // User closed dialog via window bar
             case 0: {
                 stopTransformations = true
                 false
@@ -218,7 +218,7 @@ class TransformationDialog  extends TitleAreaDialog {
     /**
      * Transformation thread callback: Current transformation finished
      */
-    private def currentTransformationFinished() {
+    private def boolean currentTransformationFinished() {
         return !stopTransformations
     }
 

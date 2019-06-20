@@ -1,13 +1,10 @@
 /**
  */
-package de.fhdo.ddmm.service.intermediate.impl;
+package de.fhdo.ddmm.data.intermediate.impl;
 
 import de.fhdo.ddmm.data.intermediate.IntermediateImport;
-
-import de.fhdo.ddmm.data.intermediate.impl.IntermediateTypeImpl;
-
-import de.fhdo.ddmm.service.intermediate.IntermediateImportedTechnologySpecificType;
-import de.fhdo.ddmm.service.intermediate.IntermediatePackage;
+import de.fhdo.ddmm.data.intermediate.IntermediateImportedTechnologySpecificType;
+import de.fhdo.ddmm.data.intermediate.IntermediatePackage;
 
 import org.eclipse.emf.common.notify.Notification;
 
@@ -24,8 +21,8 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.fhdo.ddmm.service.intermediate.impl.IntermediateImportedTechnologySpecificTypeImpl#getQualifiedName <em>Qualified Name</em>}</li>
- *   <li>{@link de.fhdo.ddmm.service.intermediate.impl.IntermediateImportedTechnologySpecificTypeImpl#getImport <em>Import</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.data.intermediate.impl.IntermediateImportedTechnologySpecificTypeImpl#getQualifiedName <em>Qualified Name</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.data.intermediate.impl.IntermediateImportedTechnologySpecificTypeImpl#getImport <em>Import</em>}</li>
  * </ul>
  *
  * @generated

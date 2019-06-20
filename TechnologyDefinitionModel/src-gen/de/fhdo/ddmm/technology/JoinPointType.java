@@ -63,6 +63,16 @@ public enum JoinPointType implements Enumerator {
     PARAMETERS(0, "PARAMETERS", "PARAMETERS"),
 
     /**
+     * The '<em><b>COMPLEX TYPES</b></em>' literal object.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #COMPLEX_TYPES_VALUE
+     * @generated
+     * @ordered
+     */
+    COMPLEX_TYPES(0, "COMPLEX_TYPES", "COMPLEX_TYPES"),
+
+    /**
      * The '<em><b>DATA FIELDS</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -153,6 +163,21 @@ public enum JoinPointType implements Enumerator {
     public static final int PARAMETERS_VALUE = 0;
 
     /**
+     * The '<em><b>COMPLEX TYPES</b></em>' literal value.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of '<em><b>COMPLEX TYPES</b></em>' literal object isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @see #COMPLEX_TYPES
+     * @model
+     * @generated
+     * @ordered
+     */
+    public static final int COMPLEX_TYPES_VALUE = 0;
+
+    /**
      * The '<em><b>DATA FIELDS</b></em>' literal value.
      * <!-- begin-user-doc -->
      * <p>
@@ -209,6 +234,7 @@ public enum JoinPointType implements Enumerator {
             INTERFACES,
             OPERATIONS,
             PARAMETERS,
+            COMPLEX_TYPES,
             DATA_FIELDS,
             CONTAINERS,
             INFRASTRUCTURE_NODES,

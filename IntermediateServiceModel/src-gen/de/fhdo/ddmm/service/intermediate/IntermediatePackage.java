@@ -703,13 +703,13 @@ public interface IntermediatePackage extends EPackage {
     int INTERMEDIATE_PARAMETER__ASPECTS = 8;
 
     /**
-     * The feature id for the '<em><b>Mapped Fields</b></em>' containment reference list.
+     * The feature id for the '<em><b>Field Aspects</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_PARAMETER__MAPPED_FIELDS = 9;
+    int INTERMEDIATE_PARAMETER__FIELD_ASPECTS = 9;
 
     /**
      * The feature id for the '<em><b>Operation</b></em>' container reference.
@@ -739,23 +739,23 @@ public interface IntermediatePackage extends EPackage {
     int INTERMEDIATE_PARAMETER_OPERATION_COUNT = 0;
 
     /**
-     * The meta object id for the '{@link de.fhdo.ddmm.service.intermediate.impl.IntermediateMappedFieldImpl <em>Mapped Field</em>}' class.
+     * The meta object id for the '{@link de.fhdo.ddmm.service.intermediate.impl.DataFieldAspectsImpl <em>Data Field Aspects</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.fhdo.ddmm.service.intermediate.impl.IntermediateMappedFieldImpl
-     * @see de.fhdo.ddmm.service.intermediate.impl.IntermediatePackageImpl#getIntermediateMappedField()
+     * @see de.fhdo.ddmm.service.intermediate.impl.DataFieldAspectsImpl
+     * @see de.fhdo.ddmm.service.intermediate.impl.IntermediatePackageImpl#getDataFieldAspects()
      * @generated
      */
-    int INTERMEDIATE_MAPPED_FIELD = 6;
+    int DATA_FIELD_ASPECTS = 6;
 
     /**
-     * The feature id for the '<em><b>Mapped Field Name</b></em>' attribute.
+     * The feature id for the '<em><b>Name</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_MAPPED_FIELD__MAPPED_FIELD_NAME = 0;
+    int DATA_FIELD_ASPECTS__NAME = 0;
 
     /**
      * The feature id for the '<em><b>Qualified Name</b></em>' attribute.
@@ -764,25 +764,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_MAPPED_FIELD__QUALIFIED_NAME = 1;
-
-    /**
-     * The feature id for the '<em><b>Original Type Kind</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int INTERMEDIATE_MAPPED_FIELD__ORIGINAL_TYPE_KIND = 2;
-
-    /**
-     * The feature id for the '<em><b>Mapped Type</b></em>' containment reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int INTERMEDIATE_MAPPED_FIELD__MAPPED_TYPE = 3;
+    int DATA_FIELD_ASPECTS__QUALIFIED_NAME = 1;
 
     /**
      * The feature id for the '<em><b>Aspects</b></em>' containment reference list.
@@ -791,7 +773,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_MAPPED_FIELD__ASPECTS = 4;
+    int DATA_FIELD_ASPECTS__ASPECTS = 2;
 
     /**
      * The feature id for the '<em><b>Parameter</b></em>' container reference.
@@ -800,25 +782,25 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_MAPPED_FIELD__PARAMETER = 5;
+    int DATA_FIELD_ASPECTS__PARAMETER = 3;
 
     /**
-     * The number of structural features of the '<em>Mapped Field</em>' class.
+     * The number of structural features of the '<em>Data Field Aspects</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_MAPPED_FIELD_FEATURE_COUNT = 6;
+    int DATA_FIELD_ASPECTS_FEATURE_COUNT = 4;
 
     /**
-     * The number of operations of the '<em>Mapped Field</em>' class.
+     * The number of operations of the '<em>Data Field Aspects</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_MAPPED_FIELD_OPERATION_COUNT = 0;
+    int DATA_FIELD_ASPECTS_OPERATION_COUNT = 0;
 
     /**
      * The meta object id for the '{@link de.fhdo.ddmm.service.intermediate.impl.MicroserviceReferenceImpl <em>Microservice Reference</em>}' class.
@@ -1302,334 +1284,6 @@ public interface IntermediatePackage extends EPackage {
      * @ordered
      */
     int INTERMEDIATE_PROTOCOL_SPECIFICATION_OPERATION_COUNT = 0;
-
-    /**
-     * The meta object id for the '{@link de.fhdo.ddmm.service.intermediate.impl.IntermediateImportedAspectImpl <em>Imported Aspect</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.fhdo.ddmm.service.intermediate.impl.IntermediateImportedAspectImpl
-     * @see de.fhdo.ddmm.service.intermediate.impl.IntermediatePackageImpl#getIntermediateImportedAspect()
-     * @generated
-     */
-    int INTERMEDIATE_IMPORTED_ASPECT = 13;
-
-    /**
-     * The feature id for the '<em><b>Name</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int INTERMEDIATE_IMPORTED_ASPECT__NAME = 0;
-
-    /**
-     * The feature id for the '<em><b>Import</b></em>' reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int INTERMEDIATE_IMPORTED_ASPECT__IMPORT = 1;
-
-    /**
-     * The feature id for the '<em><b>Properties</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int INTERMEDIATE_IMPORTED_ASPECT__PROPERTIES = 2;
-
-    /**
-     * The feature id for the '<em><b>Property Values</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int INTERMEDIATE_IMPORTED_ASPECT__PROPERTY_VALUES = 3;
-
-    /**
-     * The feature id for the '<em><b>Microservice</b></em>' container reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int INTERMEDIATE_IMPORTED_ASPECT__MICROSERVICE = 4;
-
-    /**
-     * The feature id for the '<em><b>Interface</b></em>' container reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int INTERMEDIATE_IMPORTED_ASPECT__INTERFACE = 5;
-
-    /**
-     * The feature id for the '<em><b>Operation</b></em>' container reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int INTERMEDIATE_IMPORTED_ASPECT__OPERATION = 6;
-
-    /**
-     * The feature id for the '<em><b>Referred Operation</b></em>' container reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int INTERMEDIATE_IMPORTED_ASPECT__REFERRED_OPERATION = 7;
-
-    /**
-     * The feature id for the '<em><b>Parameter</b></em>' container reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int INTERMEDIATE_IMPORTED_ASPECT__PARAMETER = 8;
-
-    /**
-     * The feature id for the '<em><b>Mapped Field</b></em>' container reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int INTERMEDIATE_IMPORTED_ASPECT__MAPPED_FIELD = 9;
-
-    /**
-     * The number of structural features of the '<em>Imported Aspect</em>' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int INTERMEDIATE_IMPORTED_ASPECT_FEATURE_COUNT = 10;
-
-    /**
-     * The number of operations of the '<em>Imported Aspect</em>' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int INTERMEDIATE_IMPORTED_ASPECT_OPERATION_COUNT = 0;
-
-    /**
-     * The meta object id for the '{@link de.fhdo.ddmm.service.intermediate.impl.IntermediateAspectPropertyImpl <em>Aspect Property</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.fhdo.ddmm.service.intermediate.impl.IntermediateAspectPropertyImpl
-     * @see de.fhdo.ddmm.service.intermediate.impl.IntermediatePackageImpl#getIntermediateAspectProperty()
-     * @generated
-     */
-    int INTERMEDIATE_ASPECT_PROPERTY = 14;
-
-    /**
-     * The feature id for the '<em><b>Name</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int INTERMEDIATE_ASPECT_PROPERTY__NAME = 0;
-
-    /**
-     * The feature id for the '<em><b>Type</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int INTERMEDIATE_ASPECT_PROPERTY__TYPE = 1;
-
-    /**
-     * The feature id for the '<em><b>Default Value</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int INTERMEDIATE_ASPECT_PROPERTY__DEFAULT_VALUE = 2;
-
-    /**
-     * The feature id for the '<em><b>Mandatory</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int INTERMEDIATE_ASPECT_PROPERTY__MANDATORY = 3;
-
-    /**
-     * The feature id for the '<em><b>Aspect</b></em>' container reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int INTERMEDIATE_ASPECT_PROPERTY__ASPECT = 4;
-
-    /**
-     * The number of structural features of the '<em>Aspect Property</em>' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int INTERMEDIATE_ASPECT_PROPERTY_FEATURE_COUNT = 5;
-
-    /**
-     * The number of operations of the '<em>Aspect Property</em>' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int INTERMEDIATE_ASPECT_PROPERTY_OPERATION_COUNT = 0;
-
-    /**
-     * The meta object id for the '{@link de.fhdo.ddmm.service.intermediate.impl.IntermediateAspectPropertyValueImpl <em>Aspect Property Value</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.fhdo.ddmm.service.intermediate.impl.IntermediateAspectPropertyValueImpl
-     * @see de.fhdo.ddmm.service.intermediate.impl.IntermediatePackageImpl#getIntermediateAspectPropertyValue()
-     * @generated
-     */
-    int INTERMEDIATE_ASPECT_PROPERTY_VALUE = 15;
-
-    /**
-     * The feature id for the '<em><b>Value</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int INTERMEDIATE_ASPECT_PROPERTY_VALUE__VALUE = 0;
-
-    /**
-     * The feature id for the '<em><b>Property</b></em>' reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int INTERMEDIATE_ASPECT_PROPERTY_VALUE__PROPERTY = 1;
-
-    /**
-     * The feature id for the '<em><b>Aspect</b></em>' container reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int INTERMEDIATE_ASPECT_PROPERTY_VALUE__ASPECT = 2;
-
-    /**
-     * The number of structural features of the '<em>Aspect Property Value</em>' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int INTERMEDIATE_ASPECT_PROPERTY_VALUE_FEATURE_COUNT = 3;
-
-    /**
-     * The number of operations of the '<em>Aspect Property Value</em>' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int INTERMEDIATE_ASPECT_PROPERTY_VALUE_OPERATION_COUNT = 0;
-
-    /**
-     * The meta object id for the '{@link de.fhdo.ddmm.service.intermediate.impl.IntermediateImportedTechnologySpecificTypeImpl <em>Imported Technology Specific Type</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.fhdo.ddmm.service.intermediate.impl.IntermediateImportedTechnologySpecificTypeImpl
-     * @see de.fhdo.ddmm.service.intermediate.impl.IntermediatePackageImpl#getIntermediateImportedTechnologySpecificType()
-     * @generated
-     */
-    int INTERMEDIATE_IMPORTED_TECHNOLOGY_SPECIFIC_TYPE = 16;
-
-    /**
-     * The feature id for the '<em><b>Name</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int INTERMEDIATE_IMPORTED_TECHNOLOGY_SPECIFIC_TYPE__NAME = de.fhdo.ddmm.data.intermediate.IntermediatePackage.INTERMEDIATE_TYPE__NAME;
-
-    /**
-     * The feature id for the '<em><b>Origin</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int INTERMEDIATE_IMPORTED_TECHNOLOGY_SPECIFIC_TYPE__ORIGIN = de.fhdo.ddmm.data.intermediate.IntermediatePackage.INTERMEDIATE_TYPE__ORIGIN;
-
-    /**
-     * The feature id for the '<em><b>Kind</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int INTERMEDIATE_IMPORTED_TECHNOLOGY_SPECIFIC_TYPE__KIND = de.fhdo.ddmm.data.intermediate.IntermediatePackage.INTERMEDIATE_TYPE__KIND;
-
-    /**
-     * The feature id for the '<em><b>Data Field</b></em>' container reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int INTERMEDIATE_IMPORTED_TECHNOLOGY_SPECIFIC_TYPE__DATA_FIELD = de.fhdo.ddmm.data.intermediate.IntermediatePackage.INTERMEDIATE_TYPE__DATA_FIELD;
-
-    /**
-     * The feature id for the '<em><b>Qualified Name</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int INTERMEDIATE_IMPORTED_TECHNOLOGY_SPECIFIC_TYPE__QUALIFIED_NAME = de.fhdo.ddmm.data.intermediate.IntermediatePackage.INTERMEDIATE_TYPE_FEATURE_COUNT + 0;
-
-    /**
-     * The feature id for the '<em><b>Import</b></em>' reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int INTERMEDIATE_IMPORTED_TECHNOLOGY_SPECIFIC_TYPE__IMPORT = de.fhdo.ddmm.data.intermediate.IntermediatePackage.INTERMEDIATE_TYPE_FEATURE_COUNT + 1;
-
-    /**
-     * The number of structural features of the '<em>Imported Technology Specific Type</em>' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int INTERMEDIATE_IMPORTED_TECHNOLOGY_SPECIFIC_TYPE_FEATURE_COUNT = de.fhdo.ddmm.data.intermediate.IntermediatePackage.INTERMEDIATE_TYPE_FEATURE_COUNT + 2;
-
-    /**
-     * The number of operations of the '<em>Imported Technology Specific Type</em>' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int INTERMEDIATE_IMPORTED_TECHNOLOGY_SPECIFIC_TYPE_OPERATION_COUNT = de.fhdo.ddmm.data.intermediate.IntermediatePackage.INTERMEDIATE_TYPE_OPERATION_COUNT + 0;
 
 
     /**
@@ -2298,15 +1952,15 @@ public interface IntermediatePackage extends EPackage {
     EReference getIntermediateParameter_Aspects();
 
     /**
-     * Returns the meta object for the containment reference list '{@link de.fhdo.ddmm.service.intermediate.IntermediateParameter#getMappedFields <em>Mapped Fields</em>}'.
+     * Returns the meta object for the containment reference list '{@link de.fhdo.ddmm.service.intermediate.IntermediateParameter#getFieldAspects <em>Field Aspects</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the containment reference list '<em>Mapped Fields</em>'.
-     * @see de.fhdo.ddmm.service.intermediate.IntermediateParameter#getMappedFields()
+     * @return the meta object for the containment reference list '<em>Field Aspects</em>'.
+     * @see de.fhdo.ddmm.service.intermediate.IntermediateParameter#getFieldAspects()
      * @see #getIntermediateParameter()
      * @generated
      */
-    EReference getIntermediateParameter_MappedFields();
+    EReference getIntermediateParameter_FieldAspects();
 
     /**
      * Returns the meta object for the container reference '{@link de.fhdo.ddmm.service.intermediate.IntermediateParameter#getOperation <em>Operation</em>}'.
@@ -2320,80 +1974,58 @@ public interface IntermediatePackage extends EPackage {
     EReference getIntermediateParameter_Operation();
 
     /**
-     * Returns the meta object for class '{@link de.fhdo.ddmm.service.intermediate.IntermediateMappedField <em>Mapped Field</em>}'.
+     * Returns the meta object for class '{@link de.fhdo.ddmm.service.intermediate.DataFieldAspects <em>Data Field Aspects</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Mapped Field</em>'.
-     * @see de.fhdo.ddmm.service.intermediate.IntermediateMappedField
+     * @return the meta object for class '<em>Data Field Aspects</em>'.
+     * @see de.fhdo.ddmm.service.intermediate.DataFieldAspects
      * @generated
      */
-    EClass getIntermediateMappedField();
+    EClass getDataFieldAspects();
 
     /**
-     * Returns the meta object for the attribute '{@link de.fhdo.ddmm.service.intermediate.IntermediateMappedField#getMappedFieldName <em>Mapped Field Name</em>}'.
+     * Returns the meta object for the attribute '{@link de.fhdo.ddmm.service.intermediate.DataFieldAspects#getName <em>Name</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Mapped Field Name</em>'.
-     * @see de.fhdo.ddmm.service.intermediate.IntermediateMappedField#getMappedFieldName()
-     * @see #getIntermediateMappedField()
+     * @return the meta object for the attribute '<em>Name</em>'.
+     * @see de.fhdo.ddmm.service.intermediate.DataFieldAspects#getName()
+     * @see #getDataFieldAspects()
      * @generated
      */
-    EAttribute getIntermediateMappedField_MappedFieldName();
+    EAttribute getDataFieldAspects_Name();
 
     /**
-     * Returns the meta object for the attribute '{@link de.fhdo.ddmm.service.intermediate.IntermediateMappedField#getQualifiedName <em>Qualified Name</em>}'.
+     * Returns the meta object for the attribute '{@link de.fhdo.ddmm.service.intermediate.DataFieldAspects#getQualifiedName <em>Qualified Name</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Qualified Name</em>'.
-     * @see de.fhdo.ddmm.service.intermediate.IntermediateMappedField#getQualifiedName()
-     * @see #getIntermediateMappedField()
+     * @see de.fhdo.ddmm.service.intermediate.DataFieldAspects#getQualifiedName()
+     * @see #getDataFieldAspects()
      * @generated
      */
-    EAttribute getIntermediateMappedField_QualifiedName();
+    EAttribute getDataFieldAspects_QualifiedName();
 
     /**
-     * Returns the meta object for the attribute '{@link de.fhdo.ddmm.service.intermediate.IntermediateMappedField#getOriginalTypeKind <em>Original Type Kind</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Original Type Kind</em>'.
-     * @see de.fhdo.ddmm.service.intermediate.IntermediateMappedField#getOriginalTypeKind()
-     * @see #getIntermediateMappedField()
-     * @generated
-     */
-    EAttribute getIntermediateMappedField_OriginalTypeKind();
-
-    /**
-     * Returns the meta object for the containment reference '{@link de.fhdo.ddmm.service.intermediate.IntermediateMappedField#getMappedType <em>Mapped Type</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the containment reference '<em>Mapped Type</em>'.
-     * @see de.fhdo.ddmm.service.intermediate.IntermediateMappedField#getMappedType()
-     * @see #getIntermediateMappedField()
-     * @generated
-     */
-    EReference getIntermediateMappedField_MappedType();
-
-    /**
-     * Returns the meta object for the containment reference list '{@link de.fhdo.ddmm.service.intermediate.IntermediateMappedField#getAspects <em>Aspects</em>}'.
+     * Returns the meta object for the containment reference list '{@link de.fhdo.ddmm.service.intermediate.DataFieldAspects#getAspects <em>Aspects</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the containment reference list '<em>Aspects</em>'.
-     * @see de.fhdo.ddmm.service.intermediate.IntermediateMappedField#getAspects()
-     * @see #getIntermediateMappedField()
+     * @see de.fhdo.ddmm.service.intermediate.DataFieldAspects#getAspects()
+     * @see #getDataFieldAspects()
      * @generated
      */
-    EReference getIntermediateMappedField_Aspects();
+    EReference getDataFieldAspects_Aspects();
 
     /**
-     * Returns the meta object for the container reference '{@link de.fhdo.ddmm.service.intermediate.IntermediateMappedField#getParameter <em>Parameter</em>}'.
+     * Returns the meta object for the container reference '{@link de.fhdo.ddmm.service.intermediate.DataFieldAspects#getParameter <em>Parameter</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the container reference '<em>Parameter</em>'.
-     * @see de.fhdo.ddmm.service.intermediate.IntermediateMappedField#getParameter()
-     * @see #getIntermediateMappedField()
+     * @see de.fhdo.ddmm.service.intermediate.DataFieldAspects#getParameter()
+     * @see #getDataFieldAspects()
      * @generated
      */
-    EReference getIntermediateMappedField_Parameter();
+    EReference getDataFieldAspects_Parameter();
 
     /**
      * Returns the meta object for class '{@link de.fhdo.ddmm.service.intermediate.MicroserviceReference <em>Microservice Reference</em>}'.
@@ -2839,266 +2471,6 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      */
     EAttribute getIntermediateProtocolSpecification_DataFormat();
-
-    /**
-     * Returns the meta object for class '{@link de.fhdo.ddmm.service.intermediate.IntermediateImportedAspect <em>Imported Aspect</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Imported Aspect</em>'.
-     * @see de.fhdo.ddmm.service.intermediate.IntermediateImportedAspect
-     * @generated
-     */
-    EClass getIntermediateImportedAspect();
-
-    /**
-     * Returns the meta object for the attribute '{@link de.fhdo.ddmm.service.intermediate.IntermediateImportedAspect#getName <em>Name</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Name</em>'.
-     * @see de.fhdo.ddmm.service.intermediate.IntermediateImportedAspect#getName()
-     * @see #getIntermediateImportedAspect()
-     * @generated
-     */
-    EAttribute getIntermediateImportedAspect_Name();
-
-    /**
-     * Returns the meta object for the reference '{@link de.fhdo.ddmm.service.intermediate.IntermediateImportedAspect#getImport <em>Import</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the reference '<em>Import</em>'.
-     * @see de.fhdo.ddmm.service.intermediate.IntermediateImportedAspect#getImport()
-     * @see #getIntermediateImportedAspect()
-     * @generated
-     */
-    EReference getIntermediateImportedAspect_Import();
-
-    /**
-     * Returns the meta object for the containment reference list '{@link de.fhdo.ddmm.service.intermediate.IntermediateImportedAspect#getProperties <em>Properties</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the containment reference list '<em>Properties</em>'.
-     * @see de.fhdo.ddmm.service.intermediate.IntermediateImportedAspect#getProperties()
-     * @see #getIntermediateImportedAspect()
-     * @generated
-     */
-    EReference getIntermediateImportedAspect_Properties();
-
-    /**
-     * Returns the meta object for the containment reference list '{@link de.fhdo.ddmm.service.intermediate.IntermediateImportedAspect#getPropertyValues <em>Property Values</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the containment reference list '<em>Property Values</em>'.
-     * @see de.fhdo.ddmm.service.intermediate.IntermediateImportedAspect#getPropertyValues()
-     * @see #getIntermediateImportedAspect()
-     * @generated
-     */
-    EReference getIntermediateImportedAspect_PropertyValues();
-
-    /**
-     * Returns the meta object for the container reference '{@link de.fhdo.ddmm.service.intermediate.IntermediateImportedAspect#getMicroservice <em>Microservice</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the container reference '<em>Microservice</em>'.
-     * @see de.fhdo.ddmm.service.intermediate.IntermediateImportedAspect#getMicroservice()
-     * @see #getIntermediateImportedAspect()
-     * @generated
-     */
-    EReference getIntermediateImportedAspect_Microservice();
-
-    /**
-     * Returns the meta object for the container reference '{@link de.fhdo.ddmm.service.intermediate.IntermediateImportedAspect#getInterface <em>Interface</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the container reference '<em>Interface</em>'.
-     * @see de.fhdo.ddmm.service.intermediate.IntermediateImportedAspect#getInterface()
-     * @see #getIntermediateImportedAspect()
-     * @generated
-     */
-    EReference getIntermediateImportedAspect_Interface();
-
-    /**
-     * Returns the meta object for the container reference '{@link de.fhdo.ddmm.service.intermediate.IntermediateImportedAspect#getOperation <em>Operation</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the container reference '<em>Operation</em>'.
-     * @see de.fhdo.ddmm.service.intermediate.IntermediateImportedAspect#getOperation()
-     * @see #getIntermediateImportedAspect()
-     * @generated
-     */
-    EReference getIntermediateImportedAspect_Operation();
-
-    /**
-     * Returns the meta object for the container reference '{@link de.fhdo.ddmm.service.intermediate.IntermediateImportedAspect#getReferredOperation <em>Referred Operation</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the container reference '<em>Referred Operation</em>'.
-     * @see de.fhdo.ddmm.service.intermediate.IntermediateImportedAspect#getReferredOperation()
-     * @see #getIntermediateImportedAspect()
-     * @generated
-     */
-    EReference getIntermediateImportedAspect_ReferredOperation();
-
-    /**
-     * Returns the meta object for the container reference '{@link de.fhdo.ddmm.service.intermediate.IntermediateImportedAspect#getParameter <em>Parameter</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the container reference '<em>Parameter</em>'.
-     * @see de.fhdo.ddmm.service.intermediate.IntermediateImportedAspect#getParameter()
-     * @see #getIntermediateImportedAspect()
-     * @generated
-     */
-    EReference getIntermediateImportedAspect_Parameter();
-
-    /**
-     * Returns the meta object for the container reference '{@link de.fhdo.ddmm.service.intermediate.IntermediateImportedAspect#getMappedField <em>Mapped Field</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the container reference '<em>Mapped Field</em>'.
-     * @see de.fhdo.ddmm.service.intermediate.IntermediateImportedAspect#getMappedField()
-     * @see #getIntermediateImportedAspect()
-     * @generated
-     */
-    EReference getIntermediateImportedAspect_MappedField();
-
-    /**
-     * Returns the meta object for class '{@link de.fhdo.ddmm.service.intermediate.IntermediateAspectProperty <em>Aspect Property</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Aspect Property</em>'.
-     * @see de.fhdo.ddmm.service.intermediate.IntermediateAspectProperty
-     * @generated
-     */
-    EClass getIntermediateAspectProperty();
-
-    /**
-     * Returns the meta object for the attribute '{@link de.fhdo.ddmm.service.intermediate.IntermediateAspectProperty#getName <em>Name</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Name</em>'.
-     * @see de.fhdo.ddmm.service.intermediate.IntermediateAspectProperty#getName()
-     * @see #getIntermediateAspectProperty()
-     * @generated
-     */
-    EAttribute getIntermediateAspectProperty_Name();
-
-    /**
-     * Returns the meta object for the attribute '{@link de.fhdo.ddmm.service.intermediate.IntermediateAspectProperty#getType <em>Type</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Type</em>'.
-     * @see de.fhdo.ddmm.service.intermediate.IntermediateAspectProperty#getType()
-     * @see #getIntermediateAspectProperty()
-     * @generated
-     */
-    EAttribute getIntermediateAspectProperty_Type();
-
-    /**
-     * Returns the meta object for the attribute '{@link de.fhdo.ddmm.service.intermediate.IntermediateAspectProperty#getDefaultValue <em>Default Value</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Default Value</em>'.
-     * @see de.fhdo.ddmm.service.intermediate.IntermediateAspectProperty#getDefaultValue()
-     * @see #getIntermediateAspectProperty()
-     * @generated
-     */
-    EAttribute getIntermediateAspectProperty_DefaultValue();
-
-    /**
-     * Returns the meta object for the attribute '{@link de.fhdo.ddmm.service.intermediate.IntermediateAspectProperty#isMandatory <em>Mandatory</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Mandatory</em>'.
-     * @see de.fhdo.ddmm.service.intermediate.IntermediateAspectProperty#isMandatory()
-     * @see #getIntermediateAspectProperty()
-     * @generated
-     */
-    EAttribute getIntermediateAspectProperty_Mandatory();
-
-    /**
-     * Returns the meta object for the container reference '{@link de.fhdo.ddmm.service.intermediate.IntermediateAspectProperty#getAspect <em>Aspect</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the container reference '<em>Aspect</em>'.
-     * @see de.fhdo.ddmm.service.intermediate.IntermediateAspectProperty#getAspect()
-     * @see #getIntermediateAspectProperty()
-     * @generated
-     */
-    EReference getIntermediateAspectProperty_Aspect();
-
-    /**
-     * Returns the meta object for class '{@link de.fhdo.ddmm.service.intermediate.IntermediateAspectPropertyValue <em>Aspect Property Value</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Aspect Property Value</em>'.
-     * @see de.fhdo.ddmm.service.intermediate.IntermediateAspectPropertyValue
-     * @generated
-     */
-    EClass getIntermediateAspectPropertyValue();
-
-    /**
-     * Returns the meta object for the attribute '{@link de.fhdo.ddmm.service.intermediate.IntermediateAspectPropertyValue#getValue <em>Value</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Value</em>'.
-     * @see de.fhdo.ddmm.service.intermediate.IntermediateAspectPropertyValue#getValue()
-     * @see #getIntermediateAspectPropertyValue()
-     * @generated
-     */
-    EAttribute getIntermediateAspectPropertyValue_Value();
-
-    /**
-     * Returns the meta object for the reference '{@link de.fhdo.ddmm.service.intermediate.IntermediateAspectPropertyValue#getProperty <em>Property</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the reference '<em>Property</em>'.
-     * @see de.fhdo.ddmm.service.intermediate.IntermediateAspectPropertyValue#getProperty()
-     * @see #getIntermediateAspectPropertyValue()
-     * @generated
-     */
-    EReference getIntermediateAspectPropertyValue_Property();
-
-    /**
-     * Returns the meta object for the container reference '{@link de.fhdo.ddmm.service.intermediate.IntermediateAspectPropertyValue#getAspect <em>Aspect</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the container reference '<em>Aspect</em>'.
-     * @see de.fhdo.ddmm.service.intermediate.IntermediateAspectPropertyValue#getAspect()
-     * @see #getIntermediateAspectPropertyValue()
-     * @generated
-     */
-    EReference getIntermediateAspectPropertyValue_Aspect();
-
-    /**
-     * Returns the meta object for class '{@link de.fhdo.ddmm.service.intermediate.IntermediateImportedTechnologySpecificType <em>Imported Technology Specific Type</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Imported Technology Specific Type</em>'.
-     * @see de.fhdo.ddmm.service.intermediate.IntermediateImportedTechnologySpecificType
-     * @generated
-     */
-    EClass getIntermediateImportedTechnologySpecificType();
-
-    /**
-     * Returns the meta object for the attribute '{@link de.fhdo.ddmm.service.intermediate.IntermediateImportedTechnologySpecificType#getQualifiedName <em>Qualified Name</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Qualified Name</em>'.
-     * @see de.fhdo.ddmm.service.intermediate.IntermediateImportedTechnologySpecificType#getQualifiedName()
-     * @see #getIntermediateImportedTechnologySpecificType()
-     * @generated
-     */
-    EAttribute getIntermediateImportedTechnologySpecificType_QualifiedName();
-
-    /**
-     * Returns the meta object for the reference '{@link de.fhdo.ddmm.service.intermediate.IntermediateImportedTechnologySpecificType#getImport <em>Import</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the reference '<em>Import</em>'.
-     * @see de.fhdo.ddmm.service.intermediate.IntermediateImportedTechnologySpecificType#getImport()
-     * @see #getIntermediateImportedTechnologySpecificType()
-     * @generated
-     */
-    EReference getIntermediateImportedTechnologySpecificType_Import();
 
     /**
      * Returns the factory that creates the instances of the model.
@@ -3624,12 +2996,12 @@ public interface IntermediatePackage extends EPackage {
         EReference INTERMEDIATE_PARAMETER__ASPECTS = eINSTANCE.getIntermediateParameter_Aspects();
 
         /**
-         * The meta object literal for the '<em><b>Mapped Fields</b></em>' containment reference list feature.
+         * The meta object literal for the '<em><b>Field Aspects</b></em>' containment reference list feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference INTERMEDIATE_PARAMETER__MAPPED_FIELDS = eINSTANCE.getIntermediateParameter_MappedFields();
+        EReference INTERMEDIATE_PARAMETER__FIELD_ASPECTS = eINSTANCE.getIntermediateParameter_FieldAspects();
 
         /**
          * The meta object literal for the '<em><b>Operation</b></em>' container reference feature.
@@ -3640,22 +3012,22 @@ public interface IntermediatePackage extends EPackage {
         EReference INTERMEDIATE_PARAMETER__OPERATION = eINSTANCE.getIntermediateParameter_Operation();
 
         /**
-         * The meta object literal for the '{@link de.fhdo.ddmm.service.intermediate.impl.IntermediateMappedFieldImpl <em>Mapped Field</em>}' class.
+         * The meta object literal for the '{@link de.fhdo.ddmm.service.intermediate.impl.DataFieldAspectsImpl <em>Data Field Aspects</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see de.fhdo.ddmm.service.intermediate.impl.IntermediateMappedFieldImpl
-         * @see de.fhdo.ddmm.service.intermediate.impl.IntermediatePackageImpl#getIntermediateMappedField()
+         * @see de.fhdo.ddmm.service.intermediate.impl.DataFieldAspectsImpl
+         * @see de.fhdo.ddmm.service.intermediate.impl.IntermediatePackageImpl#getDataFieldAspects()
          * @generated
          */
-        EClass INTERMEDIATE_MAPPED_FIELD = eINSTANCE.getIntermediateMappedField();
+        EClass DATA_FIELD_ASPECTS = eINSTANCE.getDataFieldAspects();
 
         /**
-         * The meta object literal for the '<em><b>Mapped Field Name</b></em>' attribute feature.
+         * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EAttribute INTERMEDIATE_MAPPED_FIELD__MAPPED_FIELD_NAME = eINSTANCE.getIntermediateMappedField_MappedFieldName();
+        EAttribute DATA_FIELD_ASPECTS__NAME = eINSTANCE.getDataFieldAspects_Name();
 
         /**
          * The meta object literal for the '<em><b>Qualified Name</b></em>' attribute feature.
@@ -3663,23 +3035,7 @@ public interface IntermediatePackage extends EPackage {
          * <!-- end-user-doc -->
          * @generated
          */
-        EAttribute INTERMEDIATE_MAPPED_FIELD__QUALIFIED_NAME = eINSTANCE.getIntermediateMappedField_QualifiedName();
-
-        /**
-         * The meta object literal for the '<em><b>Original Type Kind</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute INTERMEDIATE_MAPPED_FIELD__ORIGINAL_TYPE_KIND = eINSTANCE.getIntermediateMappedField_OriginalTypeKind();
-
-        /**
-         * The meta object literal for the '<em><b>Mapped Type</b></em>' containment reference feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference INTERMEDIATE_MAPPED_FIELD__MAPPED_TYPE = eINSTANCE.getIntermediateMappedField_MappedType();
+        EAttribute DATA_FIELD_ASPECTS__QUALIFIED_NAME = eINSTANCE.getDataFieldAspects_QualifiedName();
 
         /**
          * The meta object literal for the '<em><b>Aspects</b></em>' containment reference list feature.
@@ -3687,7 +3043,7 @@ public interface IntermediatePackage extends EPackage {
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference INTERMEDIATE_MAPPED_FIELD__ASPECTS = eINSTANCE.getIntermediateMappedField_Aspects();
+        EReference DATA_FIELD_ASPECTS__ASPECTS = eINSTANCE.getDataFieldAspects_Aspects();
 
         /**
          * The meta object literal for the '<em><b>Parameter</b></em>' container reference feature.
@@ -3695,7 +3051,7 @@ public interface IntermediatePackage extends EPackage {
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference INTERMEDIATE_MAPPED_FIELD__PARAMETER = eINSTANCE.getIntermediateMappedField_Parameter();
+        EReference DATA_FIELD_ASPECTS__PARAMETER = eINSTANCE.getDataFieldAspects_Parameter();
 
         /**
          * The meta object literal for the '{@link de.fhdo.ddmm.service.intermediate.impl.MicroserviceReferenceImpl <em>Microservice Reference</em>}' class.
@@ -4036,206 +3392,6 @@ public interface IntermediatePackage extends EPackage {
          * @generated
          */
         EAttribute INTERMEDIATE_PROTOCOL_SPECIFICATION__DATA_FORMAT = eINSTANCE.getIntermediateProtocolSpecification_DataFormat();
-
-        /**
-         * The meta object literal for the '{@link de.fhdo.ddmm.service.intermediate.impl.IntermediateImportedAspectImpl <em>Imported Aspect</em>}' class.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @see de.fhdo.ddmm.service.intermediate.impl.IntermediateImportedAspectImpl
-         * @see de.fhdo.ddmm.service.intermediate.impl.IntermediatePackageImpl#getIntermediateImportedAspect()
-         * @generated
-         */
-        EClass INTERMEDIATE_IMPORTED_ASPECT = eINSTANCE.getIntermediateImportedAspect();
-
-        /**
-         * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute INTERMEDIATE_IMPORTED_ASPECT__NAME = eINSTANCE.getIntermediateImportedAspect_Name();
-
-        /**
-         * The meta object literal for the '<em><b>Import</b></em>' reference feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference INTERMEDIATE_IMPORTED_ASPECT__IMPORT = eINSTANCE.getIntermediateImportedAspect_Import();
-
-        /**
-         * The meta object literal for the '<em><b>Properties</b></em>' containment reference list feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference INTERMEDIATE_IMPORTED_ASPECT__PROPERTIES = eINSTANCE.getIntermediateImportedAspect_Properties();
-
-        /**
-         * The meta object literal for the '<em><b>Property Values</b></em>' containment reference list feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference INTERMEDIATE_IMPORTED_ASPECT__PROPERTY_VALUES = eINSTANCE.getIntermediateImportedAspect_PropertyValues();
-
-        /**
-         * The meta object literal for the '<em><b>Microservice</b></em>' container reference feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference INTERMEDIATE_IMPORTED_ASPECT__MICROSERVICE = eINSTANCE.getIntermediateImportedAspect_Microservice();
-
-        /**
-         * The meta object literal for the '<em><b>Interface</b></em>' container reference feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference INTERMEDIATE_IMPORTED_ASPECT__INTERFACE = eINSTANCE.getIntermediateImportedAspect_Interface();
-
-        /**
-         * The meta object literal for the '<em><b>Operation</b></em>' container reference feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference INTERMEDIATE_IMPORTED_ASPECT__OPERATION = eINSTANCE.getIntermediateImportedAspect_Operation();
-
-        /**
-         * The meta object literal for the '<em><b>Referred Operation</b></em>' container reference feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference INTERMEDIATE_IMPORTED_ASPECT__REFERRED_OPERATION = eINSTANCE.getIntermediateImportedAspect_ReferredOperation();
-
-        /**
-         * The meta object literal for the '<em><b>Parameter</b></em>' container reference feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference INTERMEDIATE_IMPORTED_ASPECT__PARAMETER = eINSTANCE.getIntermediateImportedAspect_Parameter();
-
-        /**
-         * The meta object literal for the '<em><b>Mapped Field</b></em>' container reference feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference INTERMEDIATE_IMPORTED_ASPECT__MAPPED_FIELD = eINSTANCE.getIntermediateImportedAspect_MappedField();
-
-        /**
-         * The meta object literal for the '{@link de.fhdo.ddmm.service.intermediate.impl.IntermediateAspectPropertyImpl <em>Aspect Property</em>}' class.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @see de.fhdo.ddmm.service.intermediate.impl.IntermediateAspectPropertyImpl
-         * @see de.fhdo.ddmm.service.intermediate.impl.IntermediatePackageImpl#getIntermediateAspectProperty()
-         * @generated
-         */
-        EClass INTERMEDIATE_ASPECT_PROPERTY = eINSTANCE.getIntermediateAspectProperty();
-
-        /**
-         * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute INTERMEDIATE_ASPECT_PROPERTY__NAME = eINSTANCE.getIntermediateAspectProperty_Name();
-
-        /**
-         * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute INTERMEDIATE_ASPECT_PROPERTY__TYPE = eINSTANCE.getIntermediateAspectProperty_Type();
-
-        /**
-         * The meta object literal for the '<em><b>Default Value</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute INTERMEDIATE_ASPECT_PROPERTY__DEFAULT_VALUE = eINSTANCE.getIntermediateAspectProperty_DefaultValue();
-
-        /**
-         * The meta object literal for the '<em><b>Mandatory</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute INTERMEDIATE_ASPECT_PROPERTY__MANDATORY = eINSTANCE.getIntermediateAspectProperty_Mandatory();
-
-        /**
-         * The meta object literal for the '<em><b>Aspect</b></em>' container reference feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference INTERMEDIATE_ASPECT_PROPERTY__ASPECT = eINSTANCE.getIntermediateAspectProperty_Aspect();
-
-        /**
-         * The meta object literal for the '{@link de.fhdo.ddmm.service.intermediate.impl.IntermediateAspectPropertyValueImpl <em>Aspect Property Value</em>}' class.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @see de.fhdo.ddmm.service.intermediate.impl.IntermediateAspectPropertyValueImpl
-         * @see de.fhdo.ddmm.service.intermediate.impl.IntermediatePackageImpl#getIntermediateAspectPropertyValue()
-         * @generated
-         */
-        EClass INTERMEDIATE_ASPECT_PROPERTY_VALUE = eINSTANCE.getIntermediateAspectPropertyValue();
-
-        /**
-         * The meta object literal for the '<em><b>Value</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute INTERMEDIATE_ASPECT_PROPERTY_VALUE__VALUE = eINSTANCE.getIntermediateAspectPropertyValue_Value();
-
-        /**
-         * The meta object literal for the '<em><b>Property</b></em>' reference feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference INTERMEDIATE_ASPECT_PROPERTY_VALUE__PROPERTY = eINSTANCE.getIntermediateAspectPropertyValue_Property();
-
-        /**
-         * The meta object literal for the '<em><b>Aspect</b></em>' container reference feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference INTERMEDIATE_ASPECT_PROPERTY_VALUE__ASPECT = eINSTANCE.getIntermediateAspectPropertyValue_Aspect();
-
-        /**
-         * The meta object literal for the '{@link de.fhdo.ddmm.service.intermediate.impl.IntermediateImportedTechnologySpecificTypeImpl <em>Imported Technology Specific Type</em>}' class.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @see de.fhdo.ddmm.service.intermediate.impl.IntermediateImportedTechnologySpecificTypeImpl
-         * @see de.fhdo.ddmm.service.intermediate.impl.IntermediatePackageImpl#getIntermediateImportedTechnologySpecificType()
-         * @generated
-         */
-        EClass INTERMEDIATE_IMPORTED_TECHNOLOGY_SPECIFIC_TYPE = eINSTANCE.getIntermediateImportedTechnologySpecificType();
-
-        /**
-         * The meta object literal for the '<em><b>Qualified Name</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute INTERMEDIATE_IMPORTED_TECHNOLOGY_SPECIFIC_TYPE__QUALIFIED_NAME = eINSTANCE.getIntermediateImportedTechnologySpecificType_QualifiedName();
-
-        /**
-         * The meta object literal for the '<em><b>Import</b></em>' reference feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference INTERMEDIATE_IMPORTED_TECHNOLOGY_SPECIFIC_TYPE__IMPORT = eINSTANCE.getIntermediateImportedTechnologySpecificType_Import();
 
     }
 

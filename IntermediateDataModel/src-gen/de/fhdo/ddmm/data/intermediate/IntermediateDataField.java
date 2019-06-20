@@ -2,6 +2,8 @@
  */
 package de.fhdo.ddmm.data.intermediate;
 
+import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -23,6 +25,8 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.fhdo.ddmm.data.intermediate.IntermediateDataField#isHidden <em>Hidden</em>}</li>
  *   <li>{@link de.fhdo.ddmm.data.intermediate.IntermediateDataField#isDerived <em>Derived</em>}</li>
  *   <li>{@link de.fhdo.ddmm.data.intermediate.IntermediateDataField#getType <em>Type</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.data.intermediate.IntermediateDataField#getOriginalType <em>Original Type</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.data.intermediate.IntermediateDataField#getAspects <em>Aspects</em>}</li>
  *   <li>{@link de.fhdo.ddmm.data.intermediate.IntermediateDataField#getDataStructure <em>Data Structure</em>}</li>
  *   <li>{@link de.fhdo.ddmm.data.intermediate.IntermediateDataField#getListType <em>List Type</em>}</li>
  * </ul>
@@ -163,6 +167,50 @@ public interface IntermediateDataField extends EObject {
      * @generated
      */
     void setType(IntermediateType value);
+
+    /**
+     * Returns the value of the '<em><b>Original Type</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Original Type</em>' containment reference isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Original Type</em>' containment reference.
+     * @see #setOriginalType(IntermediateType)
+     * @see de.fhdo.ddmm.data.intermediate.IntermediatePackage#getIntermediateDataField_OriginalType()
+     * @model containment="true"
+     * @generated
+     */
+    IntermediateType getOriginalType();
+
+    /**
+     * Sets the value of the '{@link de.fhdo.ddmm.data.intermediate.IntermediateDataField#getOriginalType <em>Original Type</em>}' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Original Type</em>' containment reference.
+     * @see #getOriginalType()
+     * @generated
+     */
+    void setOriginalType(IntermediateType value);
+
+    /**
+     * Returns the value of the '<em><b>Aspects</b></em>' containment reference list.
+     * The list contents are of type {@link de.fhdo.ddmm.data.intermediate.IntermediateImportedAspect}.
+     * It is bidirectional and its opposite is '{@link de.fhdo.ddmm.data.intermediate.IntermediateImportedAspect#getDataField <em>Data Field</em>}'.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Aspects</em>' containment reference list isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Aspects</em>' containment reference list.
+     * @see de.fhdo.ddmm.data.intermediate.IntermediatePackage#getIntermediateDataField_Aspects()
+     * @see de.fhdo.ddmm.data.intermediate.IntermediateImportedAspect#getDataField
+     * @model opposite="dataField" containment="true"
+     * @generated
+     */
+    EList<IntermediateImportedAspect> getAspects();
 
     /**
      * Returns the value of the '<em><b>Data Structure</b></em>' container reference.

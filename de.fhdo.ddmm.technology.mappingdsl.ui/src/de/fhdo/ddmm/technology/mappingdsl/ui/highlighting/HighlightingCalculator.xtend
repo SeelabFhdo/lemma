@@ -8,6 +8,7 @@ import org.eclipse.xtext.nodemodel.util.NodeModelUtils
 import de.fhdo.ddmm.technology.mapping.MicroserviceMapping
 import de.fhdo.ddmm.technology.mapping.MappingPackage
 import de.fhdo.ddmm.technology.mappingdsl.ui.highlighting.HighlightingConfiguration
+import de.fhdo.ddmm.technology.mapping.ComplexTypeMapping
 
 /**
  * Provide custom syntax highlighting for certain elements.
@@ -29,10 +30,14 @@ class HighlightingCalculator implements ISemanticHighlightingCalculator {
     private def provideHighlightingForAnnotations(XtextResource resource,
         IHighlightedPositionAcceptor acceptor) {
 
-        /* Color technology annotations on microservice mapping nodes */
-        resource.allContents.filter[it instanceof MicroserviceMapping].forEach[
+        /* Color technology annotations on model-level mapping nodes */
+        resource.allContents.filter[
+            it instanceof ComplexTypeMapping || it instanceof MicroserviceMapping
+        ].forEach[
             val nodes = NodeModelUtils.findNodesForFeature(it,
-                MappingPackage.Literals::MICROSERVICE_MAPPING__TECHNOLOGIES)
+                MappingPackage.Literals::COMPLEX_TYPE_MAPPING__TECHNOLOGIES) +
+                NodeModelUtils.findNodesForFeature(it,
+                    MappingPackage.Literals::MICROSERVICE_MAPPING__TECHNOLOGIES)
 
             nodes.forEach[
                 // Determine node to start highlighting

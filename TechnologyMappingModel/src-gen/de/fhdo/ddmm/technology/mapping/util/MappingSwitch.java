@@ -72,6 +72,18 @@ public class MappingSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
+            case MappingPackage.COMPLEX_TYPE_MAPPING: {
+                ComplexTypeMapping complexTypeMapping = (ComplexTypeMapping)theEObject;
+                T result = caseComplexTypeMapping(complexTypeMapping);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case MappingPackage.IMPORTED_COMPLEX_TYPE: {
+                ImportedComplexType importedComplexType = (ImportedComplexType)theEObject;
+                T result = caseImportedComplexType(importedComplexType);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
             case MappingPackage.MICROSERVICE_MAPPING: {
                 MicroserviceMapping microserviceMapping = (MicroserviceMapping)theEObject;
                 T result = caseMicroserviceMapping(microserviceMapping);
@@ -128,12 +140,6 @@ public class MappingSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case MappingPackage.DATA_FIELD_HIERARCHY: {
-                DataFieldHierarchy dataFieldHierarchy = (DataFieldHierarchy)theEObject;
-                T result = caseDataFieldHierarchy(dataFieldHierarchy);
-                if (result == null) result = defaultCase(theEObject);
-                return result;
-            }
             case MappingPackage.TECHNOLOGY_SPECIFIC_PROTOCOL_SPECIFICATION: {
                 TechnologySpecificProtocolSpecification technologySpecificProtocolSpecification = (TechnologySpecificProtocolSpecification)theEObject;
                 T result = caseTechnologySpecificProtocolSpecification(technologySpecificProtocolSpecification);
@@ -174,6 +180,36 @@ public class MappingSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseTechnologyMapping(TechnologyMapping object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Complex Type Mapping</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Complex Type Mapping</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseComplexTypeMapping(ComplexTypeMapping object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Imported Complex Type</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Imported Complex Type</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseImportedComplexType(ImportedComplexType object) {
         return null;
     }
 
@@ -309,21 +345,6 @@ public class MappingSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseTechnologySpecificFieldMapping(TechnologySpecificFieldMapping object) {
-        return null;
-    }
-
-    /**
-     * Returns the result of interpreting the object as an instance of '<em>Data Field Hierarchy</em>'.
-     * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
-     * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Data Field Hierarchy</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-     * @generated
-     */
-    public T caseDataFieldHierarchy(DataFieldHierarchy object) {
         return null;
     }
 

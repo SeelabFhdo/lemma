@@ -2,6 +2,7 @@
  */
 package de.fhdo.ddmm.technology.mapping;
 
+import de.fhdo.ddmm.data.DataField;
 import de.fhdo.ddmm.data.EnumerationField;
 import de.fhdo.ddmm.data.Type;
 
@@ -25,11 +26,13 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
+ *   <li>{@link de.fhdo.ddmm.technology.mapping.TechnologySpecificFieldMapping#getT_sourceModelUri <em>Tsource Model Uri</em>}</li>
  *   <li>{@link de.fhdo.ddmm.technology.mapping.TechnologySpecificFieldMapping#getTechnology <em>Technology</em>}</li>
  *   <li>{@link de.fhdo.ddmm.technology.mapping.TechnologySpecificFieldMapping#getType <em>Type</em>}</li>
  *   <li>{@link de.fhdo.ddmm.technology.mapping.TechnologySpecificFieldMapping#getEnumerationField <em>Enumeration Field</em>}</li>
- *   <li>{@link de.fhdo.ddmm.technology.mapping.TechnologySpecificFieldMapping#getDataFieldHierarchy <em>Data Field Hierarchy</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.technology.mapping.TechnologySpecificFieldMapping#getDataField <em>Data Field</em>}</li>
  *   <li>{@link de.fhdo.ddmm.technology.mapping.TechnologySpecificFieldMapping#getAspects <em>Aspects</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.technology.mapping.TechnologySpecificFieldMapping#getTypeMapping <em>Type Mapping</em>}</li>
  *   <li>{@link de.fhdo.ddmm.technology.mapping.TechnologySpecificFieldMapping#getParameterMapping <em>Parameter Mapping</em>}</li>
  * </ul>
  *
@@ -39,7 +42,7 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface TechnologySpecificFieldMapping extends EObject {
     /**
-     * Returns the value of the '<em><b>Technology</b></em>' reference.
+     * Returns the value of the '<em><b>Tsource Model Uri</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
@@ -48,6 +51,32 @@ public interface TechnologySpecificFieldMapping extends EObject {
      *     (C1) Enumeration fields cannot exhibit mapped types.
      *          Ensured by: DSL validator.
      * <!-- end-model-doc -->
+     * @return the value of the '<em>Tsource Model Uri</em>' attribute.
+     * @see #setT_sourceModelUri(String)
+     * @see de.fhdo.ddmm.technology.mapping.MappingPackage#getTechnologySpecificFieldMapping_T_sourceModelUri()
+     * @model unique="false"
+     * @generated
+     */
+    String getT_sourceModelUri();
+
+    /**
+     * Sets the value of the '{@link de.fhdo.ddmm.technology.mapping.TechnologySpecificFieldMapping#getT_sourceModelUri <em>Tsource Model Uri</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Tsource Model Uri</em>' attribute.
+     * @see #getT_sourceModelUri()
+     * @generated
+     */
+    void setT_sourceModelUri(String value);
+
+    /**
+     * Returns the value of the '<em><b>Technology</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Technology</em>' reference isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
      * @return the value of the '<em>Technology</em>' reference.
      * @see #setTechnology(Import)
      * @see de.fhdo.ddmm.technology.mapping.MappingPackage#getTechnologySpecificFieldMapping_Technology()
@@ -119,32 +148,30 @@ public interface TechnologySpecificFieldMapping extends EObject {
     void setEnumerationField(EnumerationField value);
 
     /**
-     * Returns the value of the '<em><b>Data Field Hierarchy</b></em>' containment reference.
-     * It is bidirectional and its opposite is '{@link de.fhdo.ddmm.technology.mapping.DataFieldHierarchy#getMapping <em>Mapping</em>}'.
+     * Returns the value of the '<em><b>Data Field</b></em>' reference.
      * <!-- begin-user-doc -->
      * <p>
-     * If the meaning of the '<em>Data Field Hierarchy</em>' containment reference isn't clear,
+     * If the meaning of the '<em>Data Field</em>' reference isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Data Field Hierarchy</em>' containment reference.
-     * @see #setDataFieldHierarchy(DataFieldHierarchy)
-     * @see de.fhdo.ddmm.technology.mapping.MappingPackage#getTechnologySpecificFieldMapping_DataFieldHierarchy()
-     * @see de.fhdo.ddmm.technology.mapping.DataFieldHierarchy#getMapping
-     * @model opposite="mapping" containment="true"
+     * @return the value of the '<em>Data Field</em>' reference.
+     * @see #setDataField(DataField)
+     * @see de.fhdo.ddmm.technology.mapping.MappingPackage#getTechnologySpecificFieldMapping_DataField()
+     * @model
      * @generated
      */
-    DataFieldHierarchy getDataFieldHierarchy();
+    DataField getDataField();
 
     /**
-     * Sets the value of the '{@link de.fhdo.ddmm.technology.mapping.TechnologySpecificFieldMapping#getDataFieldHierarchy <em>Data Field Hierarchy</em>}' containment reference.
+     * Sets the value of the '{@link de.fhdo.ddmm.technology.mapping.TechnologySpecificFieldMapping#getDataField <em>Data Field</em>}' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Data Field Hierarchy</em>' containment reference.
-     * @see #getDataFieldHierarchy()
+     * @param value the new value of the '<em>Data Field</em>' reference.
+     * @see #getDataField()
      * @generated
      */
-    void setDataFieldHierarchy(DataFieldHierarchy value);
+    void setDataField(DataField value);
 
     /**
      * Returns the value of the '<em><b>Aspects</b></em>' containment reference list.
@@ -163,6 +190,34 @@ public interface TechnologySpecificFieldMapping extends EObject {
      * @generated
      */
     EList<TechnologySpecificImportedServiceAspect> getAspects();
+
+    /**
+     * Returns the value of the '<em><b>Type Mapping</b></em>' container reference.
+     * It is bidirectional and its opposite is '{@link de.fhdo.ddmm.technology.mapping.ComplexTypeMapping#getFieldMappings <em>Field Mappings</em>}'.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Type Mapping</em>' container reference isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Type Mapping</em>' container reference.
+     * @see #setTypeMapping(ComplexTypeMapping)
+     * @see de.fhdo.ddmm.technology.mapping.MappingPackage#getTechnologySpecificFieldMapping_TypeMapping()
+     * @see de.fhdo.ddmm.technology.mapping.ComplexTypeMapping#getFieldMappings
+     * @model opposite="fieldMappings" transient="false"
+     * @generated
+     */
+    ComplexTypeMapping getTypeMapping();
+
+    /**
+     * Sets the value of the '{@link de.fhdo.ddmm.technology.mapping.TechnologySpecificFieldMapping#getTypeMapping <em>Type Mapping</em>}' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Type Mapping</em>' container reference.
+     * @see #getTypeMapping()
+     * @generated
+     */
+    void setTypeMapping(ComplexTypeMapping value);
 
     /**
      * Returns the value of the '<em><b>Parameter Mapping</b></em>' container reference.
@@ -191,5 +246,17 @@ public interface TechnologySpecificFieldMapping extends EObject {
      * @generated
      */
     void setParameterMapping(ComplexParameterMapping value);
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * *
+     * Get effective type of mapped element
+     * <!-- end-model-doc -->
+     * @model kind="operation" unique="false"
+     * @generated
+     */
+    Type getOriginalTypeOfMappedElement();
 
 } // TechnologySpecificFieldMapping

@@ -2,8 +2,6 @@
  */
 package de.fhdo.ddmm.service.intermediate.util;
 
-import de.fhdo.ddmm.data.intermediate.IntermediateType;
-
 import de.fhdo.ddmm.service.intermediate.*;
 
 import org.eclipse.emf.common.notify.Adapter;
@@ -94,8 +92,8 @@ public class IntermediateAdapterFactory extends AdapterFactoryImpl {
                 return createIntermediateParameterAdapter();
             }
             @Override
-            public Adapter caseIntermediateMappedField(IntermediateMappedField object) {
-                return createIntermediateMappedFieldAdapter();
+            public Adapter caseDataFieldAspects(DataFieldAspects object) {
+                return createDataFieldAspectsAdapter();
             }
             @Override
             public Adapter caseMicroserviceReference(MicroserviceReference object) {
@@ -120,26 +118,6 @@ public class IntermediateAdapterFactory extends AdapterFactoryImpl {
             @Override
             public Adapter caseIntermediateProtocolSpecification(IntermediateProtocolSpecification object) {
                 return createIntermediateProtocolSpecificationAdapter();
-            }
-            @Override
-            public Adapter caseIntermediateImportedAspect(IntermediateImportedAspect object) {
-                return createIntermediateImportedAspectAdapter();
-            }
-            @Override
-            public Adapter caseIntermediateAspectProperty(IntermediateAspectProperty object) {
-                return createIntermediateAspectPropertyAdapter();
-            }
-            @Override
-            public Adapter caseIntermediateAspectPropertyValue(IntermediateAspectPropertyValue object) {
-                return createIntermediateAspectPropertyValueAdapter();
-            }
-            @Override
-            public Adapter caseIntermediateImportedTechnologySpecificType(IntermediateImportedTechnologySpecificType object) {
-                return createIntermediateImportedTechnologySpecificTypeAdapter();
-            }
-            @Override
-            public Adapter caseIntermediateType(IntermediateType object) {
-                return createIntermediateTypeAdapter();
             }
             @Override
             public Adapter defaultCase(EObject object) {
@@ -246,16 +224,16 @@ public class IntermediateAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link de.fhdo.ddmm.service.intermediate.IntermediateMappedField <em>Mapped Field</em>}'.
+     * Creates a new adapter for an object of class '{@link de.fhdo.ddmm.service.intermediate.DataFieldAspects <em>Data Field Aspects</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see de.fhdo.ddmm.service.intermediate.IntermediateMappedField
+     * @see de.fhdo.ddmm.service.intermediate.DataFieldAspects
      * @generated
      */
-    public Adapter createIntermediateMappedFieldAdapter() {
+    public Adapter createDataFieldAspectsAdapter() {
         return null;
     }
 
@@ -340,76 +318,6 @@ public class IntermediateAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createIntermediateProtocolSpecificationAdapter() {
-        return null;
-    }
-
-    /**
-     * Creates a new adapter for an object of class '{@link de.fhdo.ddmm.service.intermediate.IntermediateImportedAspect <em>Imported Aspect</em>}'.
-     * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see de.fhdo.ddmm.service.intermediate.IntermediateImportedAspect
-     * @generated
-     */
-    public Adapter createIntermediateImportedAspectAdapter() {
-        return null;
-    }
-
-    /**
-     * Creates a new adapter for an object of class '{@link de.fhdo.ddmm.service.intermediate.IntermediateAspectProperty <em>Aspect Property</em>}'.
-     * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see de.fhdo.ddmm.service.intermediate.IntermediateAspectProperty
-     * @generated
-     */
-    public Adapter createIntermediateAspectPropertyAdapter() {
-        return null;
-    }
-
-    /**
-     * Creates a new adapter for an object of class '{@link de.fhdo.ddmm.service.intermediate.IntermediateAspectPropertyValue <em>Aspect Property Value</em>}'.
-     * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see de.fhdo.ddmm.service.intermediate.IntermediateAspectPropertyValue
-     * @generated
-     */
-    public Adapter createIntermediateAspectPropertyValueAdapter() {
-        return null;
-    }
-
-    /**
-     * Creates a new adapter for an object of class '{@link de.fhdo.ddmm.service.intermediate.IntermediateImportedTechnologySpecificType <em>Imported Technology Specific Type</em>}'.
-     * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see de.fhdo.ddmm.service.intermediate.IntermediateImportedTechnologySpecificType
-     * @generated
-     */
-    public Adapter createIntermediateImportedTechnologySpecificTypeAdapter() {
-        return null;
-    }
-
-    /**
-     * Creates a new adapter for an object of class '{@link de.fhdo.ddmm.data.intermediate.IntermediateType <em>Type</em>}'.
-     * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see de.fhdo.ddmm.data.intermediate.IntermediateType
-     * @generated
-     */
-    public Adapter createIntermediateTypeAdapter() {
         return null;
     }
 

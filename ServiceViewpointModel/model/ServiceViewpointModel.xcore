@@ -31,6 +31,7 @@ class ServiceModel {
     String t_modelUri
 
     contains Import[] imports opposite serviceModel
+    contains MappedComplexType[] mappedComplexTypes opposite serviceModel
     contains Microservice[1..*] microservices opposite serviceModel
 
     /**
@@ -1213,43 +1214,111 @@ class Parameter {
 }
 
 /**
- * Concept to express technology-specific information, which was assigned to a data or enumeration
- * field leveraging the Mapping DSL
+ * Concept to express technology-specific information, which was assigned to a complex type
+ * leveraging the Mapping DSL
  */
-class MappedField {
-    refers DataField dataField
-    refers EnumerationField enumerationField
-    contains ImportedType mappedType
-    contains ImportedServiceAspect[] aspects opposite mappedField
+class MappedComplexType {
+    // TRANSFORMATION ONLY: The path to the source Data Model in which the complex type is defined.
+    //                      This property is only filled in transformations of Mapping Models to
+    //                      Service Models and later used in executing refinements of Intermediate
+    //                      Data Models.
+    String t_sourceModelUri
 
-    container Parameter parameter opposite mappedFields
+    refers Import[] technologies
+    contains ImportedType ^type
+    contains MappedField[] mappedFields opposite mappedComplexType
+    contains ImportedServiceAspect[] aspects opposite mappedComplexType
+
+    container ServiceModel serviceModel opposite mappedComplexTypes
 
     /**
-     * Get parts of the parameter for creating a qualified name
+     * Get parts of the mapped complex type for creating a qualified name
      */
-    op String[] getQualifiedNameParts() {
-        val fieldName = if (dataField !== null)
-                dataField.name
-            else if (enumerationField !== null)
-                enumerationField.name
-
-        if (fieldName === null || fieldName.empty)
+    op String[] getQualifiedNameParts(boolean withImportName) {
+        val importName = ^type?.import?.name
+        if (importName === null)
             return newArrayList.asEList
 
-        val nameParts = parameter.qualifiedNameParts
-        nameParts.addAll(fieldName)
+        val typeNameParts = (^type?.^type as ComplexType).qualifiedNameParts
+        if (typeNameParts === null)
+            return newArrayList.asEList
+
+        val nameParts = if (withImportName) newArrayList(importName) else newArrayList()
+        nameParts.addAll(typeNameParts)
         nameParts.asEList
     }
 
     /**
      * Build qualified name from qualified name parts
      */
-    op String buildQualifiedName(String separator) {
+    op String buildQualifiedName(String separator, boolean withImportName) {
         if (separator === null)
             return null
 
         var String qualifiedName = ""
-        for (part : qualifiedNameParts)
+        for (part : getQualifiedNameParts(withImportName))
+            qualifiedName += separator + part
+        // Remove leading separator
+        if (!qualifiedName.empty)
+            qualifiedName = qualifiedName.substring(separator.length)
+        return qualifiedName
+    }
+}
+
+/**
+ * Concept to express technology-specific information, which was assigned to a data or enumeration
+ * field leveraging the Mapping DSL
+ */
+class MappedField {
+    // TRANSFORMATION ONLY: The name (alias) of the technology from which the mapped type
+    //                      originates. It is used in intermediate model refinements as part of the
+    //                      fully-qualified name of an intermediate imported technology-specific
+    //                      type.
+    String t_typeDefinitionTechnologyName
+
+    refers DataField dataField
+    refers EnumerationField enumerationField
+    contains ImportedType mappedType
+    contains ImportedServiceAspect[] aspects opposite mappedField
+
+    container Parameter parameter opposite mappedFields
+    container MappedComplexType mappedComplexType opposite mappedFields
+
+    /**
+     * Get name of mapped field
+     */
+    derived String name get {
+        return if (dataField !== null)
+                dataField.name
+            else if (enumerationField !== null)
+                enumerationField.name
+    }
+
+    /**
+     * Get parts of the mapped field for creating a fully-qualified name
+     */
+    op String[] getQualifiedNameParts(boolean withImportName) {
+        if (name === null || name.empty)
+            return newArrayList.asEList
+
+        val nameParts = if (mappedComplexType !== null)
+                mappedComplexType.getQualifiedNameParts(withImportName)
+            else
+                parameter.qualifiedNameParts
+
+        nameParts.addAll(name)
+        nameParts.asEList
+    }
+
+    /**
+     * Build qualified name from qualified name parts
+     */
+    op String buildQualifiedName(String separator, boolean withImportName) {
+        if (separator === null)
+            return null
+
+        var String qualifiedName = ""
+        for (part : getQualifiedNameParts(withImportName))
             qualifiedName += separator + part
         // Remove leading separator
         if (!qualifiedName.empty)
@@ -1259,13 +1328,16 @@ class MappedField {
 
     /**
      * Get the effective type of the mapped data field. The effective type corresponds to the mapped
-     * type, if the field has one. Otherwise, it is the effective type of the field itself.
+     * type, if the data field or enumeration field has one. Otherwise, it is the effective type of
+     * the data field itself or the enumeration that comprises the enumeration field.
      */
     op Type getEffectiveType() {
-        if (mappedType !== null)
-            return mappedType.^type
+        return if (mappedType !== null)
+            mappedType.^type
         else if (dataField !== null)
-            return dataField.effectiveType
+            dataField.effectiveType
+        else if (enumerationField !== null)
+            enumerationField.enumeration
         else
             return null
     }
@@ -1503,6 +1575,7 @@ class ImportedServiceAspect {
     container Operation operation opposite aspects
     container ReferredOperation referredOperation opposite aspects
     container Parameter parameter opposite aspects
+    container MappedComplexType mappedComplexType opposite aspects
     container MappedField mappedField opposite aspects
 }
 

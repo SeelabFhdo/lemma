@@ -2,8 +2,9 @@
  */
 package de.fhdo.ddmm.service.intermediate.impl;
 
+import de.fhdo.ddmm.data.intermediate.IntermediateImportedAspect;
+
 import de.fhdo.ddmm.service.intermediate.IntermediateEndpoint;
-import de.fhdo.ddmm.service.intermediate.IntermediateImportedAspect;
 import de.fhdo.ddmm.service.intermediate.IntermediateInterface;
 import de.fhdo.ddmm.service.intermediate.IntermediateOperation;
 import de.fhdo.ddmm.service.intermediate.IntermediatePackage;
@@ -267,7 +268,7 @@ public class IntermediateReferredOperationImpl extends MinimalEObjectImpl.Contai
     @Override
     public EList<IntermediateImportedAspect> getAspects() {
         if (aspects == null) {
-            aspects = new EObjectContainmentWithInverseEList<IntermediateImportedAspect>(IntermediateImportedAspect.class, this, IntermediatePackage.INTERMEDIATE_REFERRED_OPERATION__ASPECTS, IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__REFERRED_OPERATION);
+            aspects = new EObjectContainmentEList<IntermediateImportedAspect>(IntermediateImportedAspect.class, this, IntermediatePackage.INTERMEDIATE_REFERRED_OPERATION__ASPECTS);
         }
         return aspects;
     }
@@ -336,8 +337,6 @@ public class IntermediateReferredOperationImpl extends MinimalEObjectImpl.Contai
         switch (featureID) {
             case IntermediatePackage.INTERMEDIATE_REFERRED_OPERATION__ENDPOINTS:
                 return ((InternalEList<InternalEObject>)(InternalEList<?>)getEndpoints()).basicAdd(otherEnd, msgs);
-            case IntermediatePackage.INTERMEDIATE_REFERRED_OPERATION__ASPECTS:
-                return ((InternalEList<InternalEObject>)(InternalEList<?>)getAspects()).basicAdd(otherEnd, msgs);
             case IntermediatePackage.INTERMEDIATE_REFERRED_OPERATION__REFERRING_INTERFACE:
                 if (eInternalContainer() != null)
                     msgs = eBasicRemoveFromContainer(msgs);

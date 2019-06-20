@@ -2,6 +2,8 @@
  */
 package de.fhdo.ddmm.service.intermediate;
 
+import de.fhdo.ddmm.data.intermediate.IntermediateImportedAspect;
+
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EObject;
@@ -148,8 +150,7 @@ public interface IntermediateReferredOperation extends EObject {
 
     /**
      * Returns the value of the '<em><b>Aspects</b></em>' containment reference list.
-     * The list contents are of type {@link de.fhdo.ddmm.service.intermediate.IntermediateImportedAspect}.
-     * It is bidirectional and its opposite is '{@link de.fhdo.ddmm.service.intermediate.IntermediateImportedAspect#getReferredOperation <em>Referred Operation</em>}'.
+     * The list contents are of type {@link de.fhdo.ddmm.data.intermediate.IntermediateImportedAspect}.
      * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Aspects</em>' containment reference list isn't clear,
@@ -158,8 +159,7 @@ public interface IntermediateReferredOperation extends EObject {
      * <!-- end-user-doc -->
      * @return the value of the '<em>Aspects</em>' containment reference list.
      * @see de.fhdo.ddmm.service.intermediate.IntermediatePackage#getIntermediateReferredOperation_Aspects()
-     * @see de.fhdo.ddmm.service.intermediate.IntermediateImportedAspect#getReferredOperation
-     * @model opposite="referredOperation" containment="true"
+     * @model containment="true"
      * @generated
      */
     EList<IntermediateImportedAspect> getAspects();

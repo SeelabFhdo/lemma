@@ -83,6 +83,48 @@ public final class DdmmUtils {
   }
   
   /**
+   * Remove extension from filename and return filename without extension. The extension starts at
+   * the last occurrence of a dot (".") in the filename.
+   */
+  public static String removeExtension(final String filename) {
+    if ((filename == null)) {
+      return null;
+    }
+    return filename.substring(0, filename.lastIndexOf("."));
+  }
+  
+  /**
+   * Join segments to a path specifier separated by the OS-specific file separator. This method is
+   * also capable of dealing with segments that themselves contain OS-specific file separators.
+   * All separators of the resulting joined path will automatically be harmonized.
+   */
+  public static String joinPathSegments(final String... segments) {
+    if ((segments == null)) {
+      return null;
+    } else {
+      boolean _isEmpty = ((List<String>)Conversions.doWrapArray(segments)).isEmpty();
+      if (_isEmpty) {
+        return "";
+      }
+    }
+    final String joinedPath = IterableExtensions.join(((Iterable<?>)Conversions.doWrapArray(segments)), File.separator);
+    String _xifexpression = null;
+    if ((DdmmUtils.isFileUri(joinedPath) && DdmmUtils.isWindowsOs())) {
+      _xifexpression = joinedPath.replaceAll(File.separator, "/");
+    } else {
+      String _xifexpression_1 = null;
+      boolean _isWindowsOs = DdmmUtils.isWindowsOs();
+      if (_isWindowsOs) {
+        _xifexpression_1 = joinedPath.replaceAll("/", File.separator);
+      } else {
+        _xifexpression_1 = joinedPath;
+      }
+      _xifexpression = _xifexpression_1;
+    }
+    return _xifexpression;
+  }
+  
+  /**
    * Convert a relative file path to an absolute file path that is based on an absolute base path
    */
   public static String convertToAbsolutePath(final String relativeFilePath, final String absoluteBaseFilePath) {
@@ -278,6 +320,28 @@ public final class DdmmUtils {
       _xifexpression = _xifexpression_1;
     }
     return _xifexpression;
+  }
+  
+  /**
+   * Convert a path to a file URI located in the current workspace
+   */
+  public static String convertToWorkspaceFileUri(final String path) {
+    final String workspacePath = ResourcesPlugin.getWorkspace().getRoot().getLocation().toString();
+    String _xifexpression = null;
+    boolean _startsWith = path.startsWith(workspacePath);
+    boolean _not = (!_startsWith);
+    if (_not) {
+      _xifexpression = (workspacePath + path);
+    } else {
+      _xifexpression = path;
+    }
+    String workspaceFileUri = _xifexpression;
+    boolean _isFileUri = DdmmUtils.isFileUri(workspaceFileUri);
+    boolean _not_1 = (!_isFileUri);
+    if (_not_1) {
+      workspaceFileUri = DdmmUtils.convertToFileUri(workspaceFileUri);
+    }
+    return workspaceFileUri;
   }
   
   /**

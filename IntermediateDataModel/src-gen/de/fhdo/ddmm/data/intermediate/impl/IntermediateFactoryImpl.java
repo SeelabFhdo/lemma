@@ -64,11 +64,15 @@ public class IntermediateFactoryImpl extends EFactoryImpl implements Intermediat
             case IntermediatePackage.INTERMEDIATE_PRIMITIVE_TYPE: return createIntermediatePrimitiveType();
             case IntermediatePackage.INTERMEDIATE_COMPLEX_TYPE: return createIntermediateComplexType();
             case IntermediatePackage.INTERMEDIATE_IMPORTED_COMPLEX_TYPE: return createIntermediateImportedComplexType();
+            case IntermediatePackage.INTERMEDIATE_IMPORTED_TECHNOLOGY_SPECIFIC_TYPE: return createIntermediateImportedTechnologySpecificType();
             case IntermediatePackage.INTERMEDIATE_DATA_STRUCTURE: return createIntermediateDataStructure();
             case IntermediatePackage.INTERMEDIATE_LIST_TYPE: return createIntermediateListType();
             case IntermediatePackage.INTERMEDIATE_DATA_FIELD: return createIntermediateDataField();
             case IntermediatePackage.INTERMEDIATE_ENUMERATION: return createIntermediateEnumeration();
             case IntermediatePackage.INTERMEDIATE_ENUMERATION_FIELD: return createIntermediateEnumerationField();
+            case IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT: return createIntermediateImportedAspect();
+            case IntermediatePackage.INTERMEDIATE_ASPECT_PROPERTY: return createIntermediateAspectProperty();
+            case IntermediatePackage.INTERMEDIATE_ASPECT_PROPERTY_VALUE: return createIntermediateAspectPropertyValue();
             default:
                 throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
         }
@@ -191,6 +195,17 @@ public class IntermediateFactoryImpl extends EFactoryImpl implements Intermediat
      * @generated
      */
     @Override
+    public IntermediateImportedTechnologySpecificType createIntermediateImportedTechnologySpecificType() {
+        IntermediateImportedTechnologySpecificTypeImpl intermediateImportedTechnologySpecificType = new IntermediateImportedTechnologySpecificTypeImpl();
+        return intermediateImportedTechnologySpecificType;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public IntermediateDataStructure createIntermediateDataStructure() {
         IntermediateDataStructureImpl intermediateDataStructure = new IntermediateDataStructureImpl();
         return intermediateDataStructure;
@@ -238,6 +253,39 @@ public class IntermediateFactoryImpl extends EFactoryImpl implements Intermediat
     public IntermediateEnumerationField createIntermediateEnumerationField() {
         IntermediateEnumerationFieldImpl intermediateEnumerationField = new IntermediateEnumerationFieldImpl();
         return intermediateEnumerationField;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public IntermediateImportedAspect createIntermediateImportedAspect() {
+        IntermediateImportedAspectImpl intermediateImportedAspect = new IntermediateImportedAspectImpl();
+        return intermediateImportedAspect;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public IntermediateAspectProperty createIntermediateAspectProperty() {
+        IntermediateAspectPropertyImpl intermediateAspectProperty = new IntermediateAspectPropertyImpl();
+        return intermediateAspectProperty;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public IntermediateAspectPropertyValue createIntermediateAspectPropertyValue() {
+        IntermediateAspectPropertyValueImpl intermediateAspectPropertyValue = new IntermediateAspectPropertyValueImpl();
+        return intermediateAspectPropertyValue;
     }
 
     /**

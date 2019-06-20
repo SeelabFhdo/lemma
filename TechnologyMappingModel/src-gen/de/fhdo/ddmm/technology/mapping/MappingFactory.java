@@ -31,6 +31,24 @@ public interface MappingFactory extends EFactory {
     TechnologyMapping createTechnologyMapping();
 
     /**
+     * Returns a new object of class '<em>Complex Type Mapping</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Complex Type Mapping</em>'.
+     * @generated
+     */
+    ComplexTypeMapping createComplexTypeMapping();
+
+    /**
+     * Returns a new object of class '<em>Imported Complex Type</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Imported Complex Type</em>'.
+     * @generated
+     */
+    ImportedComplexType createImportedComplexType();
+
+    /**
      * Returns a new object of class '<em>Microservice Mapping</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -101,15 +119,6 @@ public interface MappingFactory extends EFactory {
      * @generated
      */
     TechnologySpecificFieldMapping createTechnologySpecificFieldMapping();
-
-    /**
-     * Returns a new object of class '<em>Data Field Hierarchy</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Data Field Hierarchy</em>'.
-     * @generated
-     */
-    DataFieldHierarchy createDataFieldHierarchy();
 
     /**
      * Returns a new object of class '<em>Technology Specific Protocol Specification</em>'.

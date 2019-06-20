@@ -2,7 +2,7 @@ package de.fhdo.ddmm.intermediate.transformations.service;
 
 import com.google.common.base.Function;
 import com.google.common.base.Objects;
-import de.fhdo.ddmm.intermediate.transformations.AbstractSourceModelValidator;
+import de.fhdo.ddmm.intermediate.transformations.AbstractInputModelValidator;
 import de.fhdo.ddmm.intermediate.transformations.IntermediateTransformationException;
 import de.fhdo.ddmm.service.Import;
 import de.fhdo.ddmm.service.ImportType;
@@ -29,12 +29,12 @@ import org.eclipse.xtext.xbase.lib.IteratorExtensions;
  * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
  */
 @SuppressWarnings("all")
-public class MappingModelTransformationValidator extends AbstractSourceModelValidator<TechnologyMapping> {
+public class MappingModelTransformationValidator extends AbstractInputModelValidator<TechnologyMapping> {
   /**
-   * Validate source models for errors
+   * Validate input models for errors
    */
   @Override
-  public void checkSourceModelForErrors(final TechnologyMapping mappingModel) throws IntermediateTransformationException {
+  public void checkInputModelForErrors(final TechnologyMapping mappingModel) throws IntermediateTransformationException {
     if ((mappingModel == null)) {
       this.error("Mapping model is empty");
     }

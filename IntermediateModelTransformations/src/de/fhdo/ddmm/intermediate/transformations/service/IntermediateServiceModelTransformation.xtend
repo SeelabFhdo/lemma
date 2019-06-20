@@ -2,75 +2,81 @@ package de.fhdo.ddmm.intermediate.transformations.service
 
 import de.fhdo.ddmm.service.ServicePackage
 import de.fhdo.ddmm.service.ServiceModel
-import de.fhdo.ddmm.utils.DdmmUtils
-import de.fhdo.ddmm.technology.Technology
-import org.eclipse.emf.ecore.EObject
 import de.fhdo.ddmm.service.intermediate.IntermediatePackage
-import de.fhdo.ddmm.intermediate.transformations.AbstractIntermediateModelTransformationStrategy
-import de.fhdo.ddmm.intermediate.transformations.TargetModelInfo
 import de.fhdo.ddmm.service.intermediate.IntermediateServiceModel
-import org.eclipse.m2m.atl.core.emf.EMFModel
 import java.util.Map
-import org.eclipse.core.resources.ResourcesPlugin
-import de.fhdo.ddmm.technology.CommunicationType
+import de.fhdo.ddmm.intermediate.transformations.TransformationModelDescription
+import org.eclipse.emf.ecore.EObject
+import de.fhdo.ddmm.utils.DdmmUtils
+import de.fhdo.ddmm.service.Microservice
+import java.util.List
+import de.fhdo.ddmm.technology.Technology
 import de.fhdo.ddmm.technology.Protocol
 import de.fhdo.ddmm.service.Import
-import java.util.List
-import de.fhdo.ddmm.service.Microservice
+import de.fhdo.ddmm.technology.CommunicationType
+import org.eclipse.core.resources.ResourcesPlugin
+import de.fhdo.ddmm.intermediate.transformations.TransformationModelType
+import de.fhdo.ddmm.intermediate.transformations.AbstractAtlInputOutputIntermediateModelTransformationStrategy
 
 /**
- * This class enables access the model-to-model transformation of service models to intermediate
+ * Implementation of the ATL-based model-to-model transformation of service models to intermediate
  * service models.
  *
  * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
  */
 class IntermediateServiceModelTransformation
-    extends AbstractIntermediateModelTransformationStrategy {
-    static val TARGET_MODEL_INFO = new TargetModelInfo(
-        IntermediatePackage.eNS_URI,
-        IntermediatePackage.eINSTANCE,
-        IntermediateServiceModel
-    )
-
-    String absoluteSourceModelPath
+    extends AbstractAtlInputOutputIntermediateModelTransformationStrategy {
+    String absoluteInputModelPath
 
     /**
-     * Get project-relative path to compiled ATL model transformation file
+     * Specify reference name and transformation model type of input model
+     */
+    override getInputModelReferenceNameAndType() {
+        return "Service" ->
+            new TransformationModelType(ServicePackage.eNS_URI, ServicePackage.eINSTANCE,
+                ServiceModel)
+    }
+
+    /**
+     * Specify reference name and transformation model type of output model
+     */
+    override getOutputModelReferenceNameAndType() {
+        return "Intermediate" ->
+            new TransformationModelType(IntermediatePackage.eNS_URI,
+                IntermediatePackage.eINSTANCE, IntermediateServiceModel)
+    }
+
+    /**
+     * Specify path to the compiled ATL transformation file
      */
     override getCompiledModelTransformationFilePath() {
         return "/IntermediateServiceModelTransformation.asm"
     }
 
     /**
-     * Get URI and EPackage of the target intermediate metamodel
+     * Fetch path of input model prior to transformation execution
      */
-    override getTargetModelInfo() {
-        return TARGET_MODEL_INFO
+    override beforeTransformationHook(
+        Map<TransformationModelDescription, String> absoluteInputModelPaths
+    ) {
+        this.absoluteInputModelPath = absoluteInputModelPaths.values.get(0)
     }
 
     /**
-     * Before transformation hook
-     *
+     * Prepare input model
      */
-    override beforeTransformationHook(String absoluteSourceModelPath) {
-        this.absoluteSourceModelPath = absoluteSourceModelPath
-    }
-
-    /**
-     * Prepare source model
-     */
-    override prepareSourceModel(EObject modelRoot) {
+    override prepareInputModel(TransformationModelDescription modelDescription, EObject modelRoot) {
         val serviceModel = modelRoot as ServiceModel
 
         // Set source model URI. Note that the source model URI is only null, if this is not a
         // refining transformation of a Mapping Model, in which case the model URI will be an
         // empty string on the root model level.
         if (serviceModel.t_modelUri === null)
-            serviceModel.t_modelUri = DdmmUtils.convertToFileUri(absoluteSourceModelPath)
+            serviceModel.t_modelUri = DdmmUtils.convertToFileUri(absoluteInputModelPath)
 
         // Convert import URIs to absolute URIs
         serviceModel.imports.forEach[
-            importURI = DdmmUtils.convertToAbsoluteFileUri(importURI, absoluteSourceModelPath)
+            importURI = DdmmUtils.convertToAbsoluteFileUri(importURI, absoluteInputModelPath)
         ]
 
         // Populate the model's Microservices, which specify a technology, with Technology instances
@@ -108,42 +114,24 @@ class IntermediateServiceModelTransformation
     }
 
     /**
-     * Get validator for source model
+     * Specify validator for input model
      */
-    override getSourceModelValidator() {
+    override getInputModelValidator(TransformationModelDescription modelDescription) {
         return new ServiceModelTransformationValidator
-    }
-
-    /**
-     * Get namespace URI of the source metamodel's EPackage
-     */
-    override getSourcePackageNamespaceUri() {
-        return ServicePackage.eNS_URI
-    }
-
-    /**
-     * Get prefix of source model in ATL transformation file
-     */
-    override getTransformationSourceModelPrefix() {
-        return "Service"
-    }
-
-    /**
-     * Get prefix of target model in ATL transformation file
-     */
-    override getTransformationTargetModelPrefix() {
-        return "Intermediate"
     }
 
     /**
      * Add transformation target paths of imported model files to target model
      */
-    override populateTargetModelWithImportTargetPaths(EMFModel targetModel,
-        Map<String, String> targetPaths) {
-        val modelRoot = targetModel.resource.contents.get(0) as IntermediateServiceModel
+    override populateOutputModelWithImportTargetPaths(
+        TransformationModelDescription modelDescription,
+        EObject modelRoot,
+        Map<String, String> targetPaths
+    ) {
+        val serviceModelRoot = modelRoot as IntermediateServiceModel
         val workspacePath = ResourcesPlugin.workspace.root.location.toString
         targetPaths.forEach[importName, targetPath |
-            val import = modelRoot.imports.findFirst[name == importName]
+            val import = serviceModelRoot.imports.findFirst[name == importName]
             import.importUri = DdmmUtils.convertToFileUri(workspacePath + targetPath)
         ]
     }

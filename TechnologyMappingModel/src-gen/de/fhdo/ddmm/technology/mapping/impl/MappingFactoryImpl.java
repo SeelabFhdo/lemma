@@ -2,9 +2,14 @@
  */
 package de.fhdo.ddmm.technology.mapping.impl;
 
+import de.fhdo.ddmm.data.DataField;
+
 import de.fhdo.ddmm.technology.mapping.*;
 
+import java.util.List;
+
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 
@@ -57,6 +62,8 @@ public class MappingFactoryImpl extends EFactoryImpl implements MappingFactory {
     public EObject create(EClass eClass) {
         switch (eClass.getClassifierID()) {
             case MappingPackage.TECHNOLOGY_MAPPING: return createTechnologyMapping();
+            case MappingPackage.COMPLEX_TYPE_MAPPING: return createComplexTypeMapping();
+            case MappingPackage.IMPORTED_COMPLEX_TYPE: return createImportedComplexType();
             case MappingPackage.MICROSERVICE_MAPPING: return createMicroserviceMapping();
             case MappingPackage.IMPORTED_MICROSERVICE: return createImportedMicroservice();
             case MappingPackage.INTERFACE_MAPPING: return createInterfaceMapping();
@@ -65,7 +72,6 @@ public class MappingFactoryImpl extends EFactoryImpl implements MappingFactory {
             case MappingPackage.PRIMITIVE_PARAMETER_MAPPING: return createPrimitiveParameterMapping();
             case MappingPackage.COMPLEX_PARAMETER_MAPPING: return createComplexParameterMapping();
             case MappingPackage.TECHNOLOGY_SPECIFIC_FIELD_MAPPING: return createTechnologySpecificFieldMapping();
-            case MappingPackage.DATA_FIELD_HIERARCHY: return createDataFieldHierarchy();
             case MappingPackage.TECHNOLOGY_SPECIFIC_PROTOCOL_SPECIFICATION: return createTechnologySpecificProtocolSpecification();
             case MappingPackage.TECHNOLOGY_SPECIFIC_PROTOCOL: return createTechnologySpecificProtocol();
             case MappingPackage.TECHNOLOGY_SPECIFIC_ENDPOINT: return createTechnologySpecificEndpoint();
@@ -81,9 +87,61 @@ public class MappingFactoryImpl extends EFactoryImpl implements MappingFactory {
      * @generated
      */
     @Override
+    public Object createFromString(EDataType eDataType, String initialValue) {
+        switch (eDataType.getClassifierID()) {
+            case MappingPackage.DATA_FIELD_LIST:
+                return createDataFieldListFromString(eDataType, initialValue);
+            default:
+                throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+        }
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public String convertToString(EDataType eDataType, Object instanceValue) {
+        switch (eDataType.getClassifierID()) {
+            case MappingPackage.DATA_FIELD_LIST:
+                return convertDataFieldListToString(eDataType, instanceValue);
+            default:
+                throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+        }
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public TechnologyMapping createTechnologyMapping() {
         TechnologyMappingImpl technologyMapping = new TechnologyMappingImpl();
         return technologyMapping;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public ComplexTypeMapping createComplexTypeMapping() {
+        ComplexTypeMappingImpl complexTypeMapping = new ComplexTypeMappingImpl();
+        return complexTypeMapping;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public ImportedComplexType createImportedComplexType() {
+        ImportedComplexTypeImpl importedComplexType = new ImportedComplexTypeImpl();
+        return importedComplexType;
     }
 
     /**
@@ -180,17 +238,6 @@ public class MappingFactoryImpl extends EFactoryImpl implements MappingFactory {
      * @generated
      */
     @Override
-    public DataFieldHierarchy createDataFieldHierarchy() {
-        DataFieldHierarchyImpl dataFieldHierarchy = new DataFieldHierarchyImpl();
-        return dataFieldHierarchy;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
     public TechnologySpecificProtocolSpecification createTechnologySpecificProtocolSpecification() {
         TechnologySpecificProtocolSpecificationImpl technologySpecificProtocolSpecification = new TechnologySpecificProtocolSpecificationImpl();
         return technologySpecificProtocolSpecification;
@@ -227,6 +274,25 @@ public class MappingFactoryImpl extends EFactoryImpl implements MappingFactory {
     public TechnologySpecificImportedServiceAspect createTechnologySpecificImportedServiceAspect() {
         TechnologySpecificImportedServiceAspectImpl technologySpecificImportedServiceAspect = new TechnologySpecificImportedServiceAspectImpl();
         return technologySpecificImportedServiceAspect;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @SuppressWarnings("unchecked")
+    public List<DataField> createDataFieldListFromString(EDataType eDataType, String initialValue) {
+        return (List<DataField>)super.createFromString(initialValue);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public String convertDataFieldListToString(EDataType eDataType, Object instanceValue) {
+        return super.convertToString(instanceValue);
     }
 
     /**

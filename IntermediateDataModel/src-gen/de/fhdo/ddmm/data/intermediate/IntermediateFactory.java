@@ -85,6 +85,15 @@ public interface IntermediateFactory extends EFactory {
     IntermediateImportedComplexType createIntermediateImportedComplexType();
 
     /**
+     * Returns a new object of class '<em>Imported Technology Specific Type</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Imported Technology Specific Type</em>'.
+     * @generated
+     */
+    IntermediateImportedTechnologySpecificType createIntermediateImportedTechnologySpecificType();
+
+    /**
      * Returns a new object of class '<em>Data Structure</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -128,6 +137,33 @@ public interface IntermediateFactory extends EFactory {
      * @generated
      */
     IntermediateEnumerationField createIntermediateEnumerationField();
+
+    /**
+     * Returns a new object of class '<em>Imported Aspect</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Imported Aspect</em>'.
+     * @generated
+     */
+    IntermediateImportedAspect createIntermediateImportedAspect();
+
+    /**
+     * Returns a new object of class '<em>Aspect Property</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Aspect Property</em>'.
+     * @generated
+     */
+    IntermediateAspectProperty createIntermediateAspectProperty();
+
+    /**
+     * Returns a new object of class '<em>Aspect Property Value</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Aspect Property Value</em>'.
+     * @generated
+     */
+    IntermediateAspectPropertyValue createIntermediateAspectPropertyValue();
 
     /**
      * Returns the package supported by this factory.

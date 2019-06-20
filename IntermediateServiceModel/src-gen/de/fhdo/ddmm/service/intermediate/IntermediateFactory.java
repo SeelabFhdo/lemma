@@ -76,13 +76,13 @@ public interface IntermediateFactory extends EFactory {
     IntermediateParameter createIntermediateParameter();
 
     /**
-     * Returns a new object of class '<em>Mapped Field</em>'.
+     * Returns a new object of class '<em>Data Field Aspects</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return a new object of class '<em>Mapped Field</em>'.
+     * @return a new object of class '<em>Data Field Aspects</em>'.
      * @generated
      */
-    IntermediateMappedField createIntermediateMappedField();
+    DataFieldAspects createDataFieldAspects();
 
     /**
      * Returns a new object of class '<em>Microservice Reference</em>'.
@@ -137,42 +137,6 @@ public interface IntermediateFactory extends EFactory {
      * @generated
      */
     IntermediateProtocolSpecification createIntermediateProtocolSpecification();
-
-    /**
-     * Returns a new object of class '<em>Imported Aspect</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Imported Aspect</em>'.
-     * @generated
-     */
-    IntermediateImportedAspect createIntermediateImportedAspect();
-
-    /**
-     * Returns a new object of class '<em>Aspect Property</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Aspect Property</em>'.
-     * @generated
-     */
-    IntermediateAspectProperty createIntermediateAspectProperty();
-
-    /**
-     * Returns a new object of class '<em>Aspect Property Value</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Aspect Property Value</em>'.
-     * @generated
-     */
-    IntermediateAspectPropertyValue createIntermediateAspectPropertyValue();
-
-    /**
-     * Returns a new object of class '<em>Imported Technology Specific Type</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Imported Technology Specific Type</em>'.
-     * @generated
-     */
-    IntermediateImportedTechnologySpecificType createIntermediateImportedTechnologySpecificType();
 
     /**
      * Returns the package supported by this factory.

@@ -950,28 +950,33 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
       return;
     }
     final int propertyCount = importedAspect.getImportedAspect().getProperties().size();
-    if ((propertyCount > 1)) {
-      this.error("Ambiguous value assignment", importedAspect, 
+    if ((propertyCount == 0)) {
+      this.error("Aspect does not define properties", importedAspect, 
         ServicePackage.Literals.IMPORTED_SERVICE_ASPECT__SINGLE_PROPERTY_VALUE);
     } else {
-      if ((propertyCount == 1)) {
-        final TechnologySpecificProperty targetProperty = importedAspect.getImportedAspect().getProperties().get(0);
-        final PrimitiveType targetPropertyType = targetProperty.getType();
-        boolean _isOfType = propertyValue.isOfType(targetPropertyType);
-        boolean _not = (!_isOfType);
-        if (_not) {
-          StringConcatenation _builder = new StringConcatenation();
-          _builder.append("Value is not of type ");
-          String _typeName = targetPropertyType.getTypeName();
-          _builder.append(_typeName);
-          _builder.append(" as expected by ");
-          StringConcatenation _builder_1 = new StringConcatenation();
-          _builder_1.append("property ");
-          String _name = targetProperty.getName();
-          _builder_1.append(_name);
-          String _plus = (_builder.toString() + _builder_1);
-          this.error(_plus, importedAspect, 
-            ServicePackage.Literals.IMPORTED_SERVICE_ASPECT__SINGLE_PROPERTY_VALUE);
+      if ((propertyCount > 1)) {
+        this.error("Ambiguous value assignment", importedAspect, 
+          ServicePackage.Literals.IMPORTED_SERVICE_ASPECT__SINGLE_PROPERTY_VALUE);
+      } else {
+        if ((propertyCount == 1)) {
+          final TechnologySpecificProperty targetProperty = importedAspect.getImportedAspect().getProperties().get(0);
+          final PrimitiveType targetPropertyType = targetProperty.getType();
+          boolean _isOfType = propertyValue.isOfType(targetPropertyType);
+          boolean _not = (!_isOfType);
+          if (_not) {
+            StringConcatenation _builder = new StringConcatenation();
+            _builder.append("Value is not of type ");
+            String _typeName = targetPropertyType.getTypeName();
+            _builder.append(_typeName);
+            _builder.append(" as expected by ");
+            StringConcatenation _builder_1 = new StringConcatenation();
+            _builder_1.append("property ");
+            String _name = targetProperty.getName();
+            _builder_1.append(_name);
+            String _plus = (_builder.toString() + _builder_1);
+            this.error(_plus, importedAspect, 
+              ServicePackage.Literals.IMPORTED_SERVICE_ASPECT__SINGLE_PROPERTY_VALUE);
+          }
         }
       }
     }

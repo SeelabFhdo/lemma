@@ -26,6 +26,7 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  * <ul>
  *   <li>{@link de.fhdo.ddmm.technology.mapping.TechnologyMapping#getImports <em>Imports</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.technology.mapping.TechnologyMapping#getTypeMappings <em>Type Mappings</em>}</li>
  *   <li>{@link de.fhdo.ddmm.technology.mapping.TechnologyMapping#getServiceMappings <em>Service Mappings</em>}</li>
  * </ul>
  *
@@ -53,6 +54,24 @@ public interface TechnologyMapping extends EObject {
      * @generated
      */
     EList<Import> getImports();
+
+    /**
+     * Returns the value of the '<em><b>Type Mappings</b></em>' containment reference list.
+     * The list contents are of type {@link de.fhdo.ddmm.technology.mapping.ComplexTypeMapping}.
+     * It is bidirectional and its opposite is '{@link de.fhdo.ddmm.technology.mapping.ComplexTypeMapping#getMappingModel <em>Mapping Model</em>}'.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Type Mappings</em>' containment reference list isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Type Mappings</em>' containment reference list.
+     * @see de.fhdo.ddmm.technology.mapping.MappingPackage#getTechnologyMapping_TypeMappings()
+     * @see de.fhdo.ddmm.technology.mapping.ComplexTypeMapping#getMappingModel
+     * @model opposite="mappingModel" containment="true"
+     * @generated
+     */
+    EList<ComplexTypeMapping> getTypeMappings();
 
     /**
      * Returns the value of the '<em><b>Service Mappings</b></em>' containment reference list.
@@ -95,6 +114,18 @@ public interface TechnologyMapping extends EObject {
      * @generated
      */
     EList<OperationMapping> getMappedOperations();
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * *
+     * Get all complex parameter mappings of all mapped operations
+     * <!-- end-model-doc -->
+     * @model kind="operation" unique="false"
+     * @generated
+     */
+    EList<ComplexParameterMapping> getComplexParameterMappings();
 
     /**
      * <!-- begin-user-doc -->

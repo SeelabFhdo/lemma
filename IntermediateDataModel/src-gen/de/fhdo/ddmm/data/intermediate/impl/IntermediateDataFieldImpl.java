@@ -4,12 +4,17 @@ package de.fhdo.ddmm.data.intermediate.impl;
 
 import de.fhdo.ddmm.data.intermediate.IntermediateDataField;
 import de.fhdo.ddmm.data.intermediate.IntermediateDataStructure;
+import de.fhdo.ddmm.data.intermediate.IntermediateImportedAspect;
 import de.fhdo.ddmm.data.intermediate.IntermediateListType;
 import de.fhdo.ddmm.data.intermediate.IntermediatePackage;
 import de.fhdo.ddmm.data.intermediate.IntermediateType;
 
+import java.util.Collection;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+
+import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
@@ -17,7 +22,9 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
+import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -32,6 +39,8 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  *   <li>{@link de.fhdo.ddmm.data.intermediate.impl.IntermediateDataFieldImpl#isHidden <em>Hidden</em>}</li>
  *   <li>{@link de.fhdo.ddmm.data.intermediate.impl.IntermediateDataFieldImpl#isDerived <em>Derived</em>}</li>
  *   <li>{@link de.fhdo.ddmm.data.intermediate.impl.IntermediateDataFieldImpl#getType <em>Type</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.data.intermediate.impl.IntermediateDataFieldImpl#getOriginalType <em>Original Type</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.data.intermediate.impl.IntermediateDataFieldImpl#getAspects <em>Aspects</em>}</li>
  *   <li>{@link de.fhdo.ddmm.data.intermediate.impl.IntermediateDataFieldImpl#getDataStructure <em>Data Structure</em>}</li>
  *   <li>{@link de.fhdo.ddmm.data.intermediate.impl.IntermediateDataFieldImpl#getListType <em>List Type</em>}</li>
  * </ul>
@@ -128,6 +137,26 @@ public class IntermediateDataFieldImpl extends MinimalEObjectImpl.Container impl
      * @ordered
      */
     protected IntermediateType type;
+
+    /**
+     * The cached value of the '{@link #getOriginalType() <em>Original Type</em>}' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getOriginalType()
+     * @generated
+     * @ordered
+     */
+    protected IntermediateType originalType;
+
+    /**
+     * The cached value of the '{@link #getAspects() <em>Aspects</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getAspects()
+     * @generated
+     * @ordered
+     */
+    protected EList<IntermediateImportedAspect> aspects;
 
     /**
      * <!-- begin-user-doc -->
@@ -291,6 +320,64 @@ public class IntermediateDataFieldImpl extends MinimalEObjectImpl.Container impl
      * @generated
      */
     @Override
+    public IntermediateType getOriginalType() {
+        return originalType;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public NotificationChain basicSetOriginalType(IntermediateType newOriginalType, NotificationChain msgs) {
+        IntermediateType oldOriginalType = originalType;
+        originalType = newOriginalType;
+        if (eNotificationRequired()) {
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, IntermediatePackage.INTERMEDIATE_DATA_FIELD__ORIGINAL_TYPE, oldOriginalType, newOriginalType);
+            if (msgs == null) msgs = notification; else msgs.add(notification);
+        }
+        return msgs;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void setOriginalType(IntermediateType newOriginalType) {
+        if (newOriginalType != originalType) {
+            NotificationChain msgs = null;
+            if (originalType != null)
+                msgs = ((InternalEObject)originalType).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - IntermediatePackage.INTERMEDIATE_DATA_FIELD__ORIGINAL_TYPE, null, msgs);
+            if (newOriginalType != null)
+                msgs = ((InternalEObject)newOriginalType).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - IntermediatePackage.INTERMEDIATE_DATA_FIELD__ORIGINAL_TYPE, null, msgs);
+            msgs = basicSetOriginalType(newOriginalType, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, IntermediatePackage.INTERMEDIATE_DATA_FIELD__ORIGINAL_TYPE, newOriginalType, newOriginalType));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EList<IntermediateImportedAspect> getAspects() {
+        if (aspects == null) {
+            aspects = new EObjectContainmentWithInverseEList<IntermediateImportedAspect>(IntermediateImportedAspect.class, this, IntermediatePackage.INTERMEDIATE_DATA_FIELD__ASPECTS, IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__DATA_FIELD);
+        }
+        return aspects;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public IntermediateDataStructure getDataStructure() {
         if (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_DATA_FIELD__DATA_STRUCTURE) return null;
         return (IntermediateDataStructure)eContainer();
@@ -396,6 +483,7 @@ public class IntermediateDataFieldImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @SuppressWarnings("unchecked")
     @Override
     public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
@@ -403,6 +491,8 @@ public class IntermediateDataFieldImpl extends MinimalEObjectImpl.Container impl
                 if (type != null)
                     msgs = ((InternalEObject)type).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - IntermediatePackage.INTERMEDIATE_DATA_FIELD__TYPE, null, msgs);
                 return basicSetType((IntermediateType)otherEnd, msgs);
+            case IntermediatePackage.INTERMEDIATE_DATA_FIELD__ASPECTS:
+                return ((InternalEList<InternalEObject>)(InternalEList<?>)getAspects()).basicAdd(otherEnd, msgs);
             case IntermediatePackage.INTERMEDIATE_DATA_FIELD__DATA_STRUCTURE:
                 if (eInternalContainer() != null)
                     msgs = eBasicRemoveFromContainer(msgs);
@@ -425,6 +515,10 @@ public class IntermediateDataFieldImpl extends MinimalEObjectImpl.Container impl
         switch (featureID) {
             case IntermediatePackage.INTERMEDIATE_DATA_FIELD__TYPE:
                 return basicSetType(null, msgs);
+            case IntermediatePackage.INTERMEDIATE_DATA_FIELD__ORIGINAL_TYPE:
+                return basicSetOriginalType(null, msgs);
+            case IntermediatePackage.INTERMEDIATE_DATA_FIELD__ASPECTS:
+                return ((InternalEList<?>)getAspects()).basicRemove(otherEnd, msgs);
             case IntermediatePackage.INTERMEDIATE_DATA_FIELD__DATA_STRUCTURE:
                 return basicSetDataStructure(null, msgs);
             case IntermediatePackage.INTERMEDIATE_DATA_FIELD__LIST_TYPE:
@@ -467,6 +561,10 @@ public class IntermediateDataFieldImpl extends MinimalEObjectImpl.Container impl
                 return isDerived();
             case IntermediatePackage.INTERMEDIATE_DATA_FIELD__TYPE:
                 return getType();
+            case IntermediatePackage.INTERMEDIATE_DATA_FIELD__ORIGINAL_TYPE:
+                return getOriginalType();
+            case IntermediatePackage.INTERMEDIATE_DATA_FIELD__ASPECTS:
+                return getAspects();
             case IntermediatePackage.INTERMEDIATE_DATA_FIELD__DATA_STRUCTURE:
                 if (resolve) return getDataStructure();
                 return basicGetDataStructure();
@@ -482,6 +580,7 @@ public class IntermediateDataFieldImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @SuppressWarnings("unchecked")
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
@@ -499,6 +598,13 @@ public class IntermediateDataFieldImpl extends MinimalEObjectImpl.Container impl
                 return;
             case IntermediatePackage.INTERMEDIATE_DATA_FIELD__TYPE:
                 setType((IntermediateType)newValue);
+                return;
+            case IntermediatePackage.INTERMEDIATE_DATA_FIELD__ORIGINAL_TYPE:
+                setOriginalType((IntermediateType)newValue);
+                return;
+            case IntermediatePackage.INTERMEDIATE_DATA_FIELD__ASPECTS:
+                getAspects().clear();
+                getAspects().addAll((Collection<? extends IntermediateImportedAspect>)newValue);
                 return;
             case IntermediatePackage.INTERMEDIATE_DATA_FIELD__DATA_STRUCTURE:
                 setDataStructure((IntermediateDataStructure)newValue);
@@ -533,6 +639,12 @@ public class IntermediateDataFieldImpl extends MinimalEObjectImpl.Container impl
             case IntermediatePackage.INTERMEDIATE_DATA_FIELD__TYPE:
                 setType((IntermediateType)null);
                 return;
+            case IntermediatePackage.INTERMEDIATE_DATA_FIELD__ORIGINAL_TYPE:
+                setOriginalType((IntermediateType)null);
+                return;
+            case IntermediatePackage.INTERMEDIATE_DATA_FIELD__ASPECTS:
+                getAspects().clear();
+                return;
             case IntermediatePackage.INTERMEDIATE_DATA_FIELD__DATA_STRUCTURE:
                 setDataStructure((IntermediateDataStructure)null);
                 return;
@@ -561,6 +673,10 @@ public class IntermediateDataFieldImpl extends MinimalEObjectImpl.Container impl
                 return derived != DERIVED_EDEFAULT;
             case IntermediatePackage.INTERMEDIATE_DATA_FIELD__TYPE:
                 return type != null;
+            case IntermediatePackage.INTERMEDIATE_DATA_FIELD__ORIGINAL_TYPE:
+                return originalType != null;
+            case IntermediatePackage.INTERMEDIATE_DATA_FIELD__ASPECTS:
+                return aspects != null && !aspects.isEmpty();
             case IntermediatePackage.INTERMEDIATE_DATA_FIELD__DATA_STRUCTURE:
                 return basicGetDataStructure() != null;
             case IntermediatePackage.INTERMEDIATE_DATA_FIELD__LIST_TYPE:

@@ -2,6 +2,7 @@
  */
 package de.fhdo.ddmm.service.intermediate;
 
+import de.fhdo.ddmm.data.intermediate.IntermediateImportedAspect;
 import de.fhdo.ddmm.data.intermediate.IntermediateType;
 
 import de.fhdo.ddmm.technology.CommunicationType;
@@ -34,7 +35,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.fhdo.ddmm.service.intermediate.IntermediateParameter#getType <em>Type</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.intermediate.IntermediateParameter#getInitializedByOperation <em>Initialized By Operation</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.intermediate.IntermediateParameter#getAspects <em>Aspects</em>}</li>
- *   <li>{@link de.fhdo.ddmm.service.intermediate.IntermediateParameter#getMappedFields <em>Mapped Fields</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.service.intermediate.IntermediateParameter#getFieldAspects <em>Field Aspects</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.intermediate.IntermediateParameter#getOperation <em>Operation</em>}</li>
  * </ul>
  *
@@ -261,8 +262,7 @@ public interface IntermediateParameter extends EObject {
 
     /**
      * Returns the value of the '<em><b>Aspects</b></em>' containment reference list.
-     * The list contents are of type {@link de.fhdo.ddmm.service.intermediate.IntermediateImportedAspect}.
-     * It is bidirectional and its opposite is '{@link de.fhdo.ddmm.service.intermediate.IntermediateImportedAspect#getParameter <em>Parameter</em>}'.
+     * The list contents are of type {@link de.fhdo.ddmm.data.intermediate.IntermediateImportedAspect}.
      * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Aspects</em>' containment reference list isn't clear,
@@ -271,29 +271,28 @@ public interface IntermediateParameter extends EObject {
      * <!-- end-user-doc -->
      * @return the value of the '<em>Aspects</em>' containment reference list.
      * @see de.fhdo.ddmm.service.intermediate.IntermediatePackage#getIntermediateParameter_Aspects()
-     * @see de.fhdo.ddmm.service.intermediate.IntermediateImportedAspect#getParameter
-     * @model opposite="parameter" containment="true"
+     * @model containment="true"
      * @generated
      */
     EList<IntermediateImportedAspect> getAspects();
 
     /**
-     * Returns the value of the '<em><b>Mapped Fields</b></em>' containment reference list.
-     * The list contents are of type {@link de.fhdo.ddmm.service.intermediate.IntermediateMappedField}.
-     * It is bidirectional and its opposite is '{@link de.fhdo.ddmm.service.intermediate.IntermediateMappedField#getParameter <em>Parameter</em>}'.
+     * Returns the value of the '<em><b>Field Aspects</b></em>' containment reference list.
+     * The list contents are of type {@link de.fhdo.ddmm.service.intermediate.DataFieldAspects}.
+     * It is bidirectional and its opposite is '{@link de.fhdo.ddmm.service.intermediate.DataFieldAspects#getParameter <em>Parameter</em>}'.
      * <!-- begin-user-doc -->
      * <p>
-     * If the meaning of the '<em>Mapped Fields</em>' containment reference list isn't clear,
+     * If the meaning of the '<em>Field Aspects</em>' containment reference list isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Mapped Fields</em>' containment reference list.
-     * @see de.fhdo.ddmm.service.intermediate.IntermediatePackage#getIntermediateParameter_MappedFields()
-     * @see de.fhdo.ddmm.service.intermediate.IntermediateMappedField#getParameter
+     * @return the value of the '<em>Field Aspects</em>' containment reference list.
+     * @see de.fhdo.ddmm.service.intermediate.IntermediatePackage#getIntermediateParameter_FieldAspects()
+     * @see de.fhdo.ddmm.service.intermediate.DataFieldAspects#getParameter
      * @model opposite="parameter" containment="true"
      * @generated
      */
-    EList<IntermediateMappedField> getMappedFields();
+    EList<DataFieldAspects> getFieldAspects();
 
     /**
      * Returns the value of the '<em><b>Operation</b></em>' container reference.

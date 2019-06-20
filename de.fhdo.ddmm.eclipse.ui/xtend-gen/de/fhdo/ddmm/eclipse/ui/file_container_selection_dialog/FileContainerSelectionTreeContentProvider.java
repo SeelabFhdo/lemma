@@ -3,7 +3,6 @@ package de.fhdo.ddmm.eclipse.ui.file_container_selection_dialog;
 import com.google.common.base.Objects;
 import com.google.common.collect.Iterables;
 import de.fhdo.ddmm.eclipse.ui.utils.DdmmUiUtils;
-import java.util.Collections;
 import java.util.List;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
@@ -12,6 +11,7 @@ import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.xmi.XMIResource;
 import org.eclipse.jface.viewers.ITreeContentProvider;
+import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Conversions;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
@@ -65,7 +65,7 @@ public class FileContainerSelectionTreeContentProvider implements ITreeContentPr
             };
             _xifexpression = IterableExtensions.<IResource>filter(((Iterable<IResource>)Conversions.doWrapArray(container.members())), _function_1);
           } else {
-            _xifexpression = Collections.<IResource>emptyList();
+            _xifexpression = CollectionLiterals.<IResource>emptyList();
           }
           final Iterable<IResource> applicableXmiFiles = _xifexpression;
           Iterables.<IResource>addAll(children, applicableXmiFiles);

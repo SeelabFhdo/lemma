@@ -1,24 +1,25 @@
 package de.fhdo.ddmm.intermediate.transformations.service
 
-import de.fhdo.ddmm.intermediate.transformations.AbstractSourceModelValidator
-import de.fhdo.ddmm.intermediate.transformations.IntermediateTransformationException
 import de.fhdo.ddmm.technology.mapping.TechnologyMapping
 import de.fhdo.ddmm.utils.DdmmUtils
 import de.fhdo.ddmm.service.ServiceModel
 import de.fhdo.ddmm.service.ImportType
 import java.util.ArrayDeque
 import de.fhdo.ddmm.service.Import
+import de.fhdo.ddmm.intermediate.transformations.AbstractInputModelValidator
+import de.fhdo.ddmm.intermediate.transformations.IntermediateTransformationException
 
 /**
  * Validator for technology mapping models that shall be transformed.
  *
  * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
  */
-class MappingModelTransformationValidator extends AbstractSourceModelValidator<TechnologyMapping> {
+class MappingModelTransformationValidator
+    extends AbstractInputModelValidator<TechnologyMapping> {
     /**
-     * Validate source models for errors
+     * Validate input models for errors
      */
-    override checkSourceModelForErrors(TechnologyMapping mappingModel)
+    override checkInputModelForErrors(TechnologyMapping mappingModel)
         throws IntermediateTransformationException {
         if (mappingModel === null)
             error("Mapping model is empty")

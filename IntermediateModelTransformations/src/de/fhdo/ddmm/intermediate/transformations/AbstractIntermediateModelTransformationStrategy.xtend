@@ -1,285 +1,625 @@
 package de.fhdo.ddmm.intermediate.transformations
 
-import org.eclipse.m2m.atl.core.emf.EMFInjector
-import org.eclipse.m2m.atl.core.emf.EMFModelFactory
-import org.eclipse.emf.ecore.EPackage
+import java.util.Map
+import org.eclipse.emf.ecore.EObject
 import org.eclipse.core.resources.IFile
+import java.util.Set
+import com.google.common.base.Predicate
 import org.eclipse.emf.common.util.URI
 import org.eclipse.xtext.resource.IResourceServiceProvider
 import org.eclipse.emf.ecore.resource.ResourceSet
-import org.eclipse.emf.ecore.EObject
-import org.eclipse.emf.ecore.resource.Resource
-import org.eclipse.m2m.atl.core.emf.EMFModel
-import org.eclipse.m2m.atl.core.IModel
-import org.eclipse.m2m.atl.engine.emfvm.launch.EMFVMLauncher
-import org.eclipse.core.runtime.NullProgressMonitor
-import org.eclipse.m2m.atl.core.launch.ILauncher
-import java.util.Map
-import com.google.common.base.Predicate
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl
-import com.google.common.base.Function
+import org.eclipse.emf.ecore.resource.Resource
+import org.eclipse.emf.ecore.EPackage
+import java.util.List
+import java.util.LinkedHashMap
+import org.eclipse.xtend.lib.annotations.Accessors
+import de.fhdo.ddmm.utils.DdmmUtils
+import java.util.function.BiFunction
 
 /**
- * Abstract strategy for model-to-model transformations of DDMM-related source to intermediate
- * target models.
+ * Abstract strategy for model-to-model transformations of input to intermediate output models. The
+ * type parameters are dependent on the concrete transformation technology.
+ *   - TIM_TYPE: Type of input models in the employed transformation technology, e.g.,
+ *               org.eclipse.m2m.atl.emftvm.Model for ATL transformations based on EMFTVM.
+ *   - TOM_TYPE: Type of output models in the employed transformation technology, e.g.,
+ *               org.eclipse.m2m.atl.emftvm.Model for ATL transformations based on EMFTVM.
  *
  * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
  */
-abstract class AbstractIntermediateModelTransformationStrategy {
-    var EMFInjector atlModelInjector
-    var EMFModelFactory atlModelFactory
-    var String targetModelUri
-    var EPackage targetModelPackage
+abstract class AbstractIntermediateModelTransformationStrategy<TIM_TYPE, TOM_TYPE> {
+    protected LinkedHashMap<TransformationModelDescription, TransformationModelType> modelTypes
 
     /**
-     * Get information like URI, EPackage, and root class of the target intermediate metamodel
+     * Register model types, i.e., URIs, EPackages, and root classes, together with their
+     * transformation-specific descriptions, i.e., names in model transformations and directions
      */
-    abstract def TargetModelInfo getTargetModelInfo()
+    abstract def LinkedHashMap<TransformationModelDescription, TransformationModelType>
+        registerModelTypes()
 
     /**
      * Before transformation hook (optional)
      */
-    protected def void beforeTransformationHook(String absoluteSourceModelPath) {}
+    protected def void beforeTransformationHook(
+        Map<TransformationModelDescription, String> absoluteInputModelPaths
+    ) {}
 
     /**
-     * Prepare source model (optional)
+     * Prepare an input model (optional)
      */
-    protected def void prepareSourceModel(EObject modelRoot) {}
+    protected def void prepareInputModel(TransformationModelDescription modelDescription,
+        EObject modelRoot) {}
 
     /**
-     * Get validator for source model. Optional, may return null.
+     * Get validator for input model (optional)
      */
-    protected def AbstractSourceModelValidator getSourceModelValidator() {
+    protected def AbstractInputModelValidator getInputModelValidator(
+        TransformationModelDescription modelDescription
+    ) {
         return null
     }
 
     /**
-     * Get project-relative path to compiled ATL model transformation file
+     * Create transformation-technology-specific input model instance
      */
-    abstract protected def String getCompiledModelTransformationFilePath()
+    abstract protected def TIM_TYPE createTransformationInputModel(
+        TransformationModelDescription modelDescription,
+        Resource resource
+    )
 
     /**
-     * Get namespace URI of the source metamodel's EPackage
+     * Create transformation-technology-specific output model instance
      */
-    abstract protected def String getSourcePackageNamespaceUri()
+    abstract protected def TOM_TYPE createTransformationOutputModel(
+        TransformationModelDescription modelDescription,
+        String outputPath
+    )
 
     /**
-     * Get prefix of source model in ATL transformation file
+     * Execute transformation leveraging a certain transformation technology
      */
-    abstract protected def String getTransformationSourceModelPrefix()
+    abstract protected def Map<TransformationModelDescription, Resource> transformation(
+        Map<TransformationModelDescription, TIM_TYPE> transformationInputModels,
+        Map<TransformationModelDescription, TOM_TYPE> transformationOutputModels
+    )
 
     /**
-     * Get prefix of target model in ATL transformation file
+     * Flag to indicate if children's children of the current model file, i.e., models that are
+     * imported by imported models of the current model, shall be considered when building the
+     * target paths of imports for the subsequent call to transformation().
      */
-    abstract protected def String getTransformationTargetModelPrefix()
+    def boolean considerChildrensChildrenForImportTargetPaths() {
+        return false
+    }
 
     /**
-     * Add transformation target paths of imported model files to target model
+     * Add transformation target paths of imported model files to output model
      */
-    abstract protected def void populateTargetModelWithImportTargetPaths(EMFModel targetModel,
-        Map<String, String> targetPaths)
+    protected def void populateOutputModelWithImportTargetPaths(
+        TransformationModelDescription modelDescription,
+        EObject modelRoot,
+        Map<String, String> targetPaths
+    ) {}
 
     /**
-     * Modify target model (optional)
+     * Modify an output model (optional)
      */
-    protected def void modifyTargetModel(EObject modelRoot) {}
+    protected def void modifyOutputModel(
+        TransformationModelDescription modelDescription,
+        EObject modelRoot
+    ) {}
 
     /**
      * After transformation hook (optional)
      */
-    protected def void afterTransformationHook(String absoluteSourceModelPath) {}
+    protected def void afterTransformationHook(
+        Map<TransformationModelDescription, String> outputModelPaths
+    ) {}
+
+    /**
+     * Register a listener to be invoked after all transformations of a transformation run triggered
+     * by the user were done. This enables a transformation strategy to refer to all results of a
+     * transformation run. This can for instance be helpful, if subsequent refining transformations
+     * need to be run that also depend on other models produced during the transformation run.
+     *
+     * A listener is a function of the following form:
+     *   Void listener(List<TransformationResult>, Predicate<IntermediateTransformationException>)
+     * It takes all results produced by the transformation run as input, as well as a callback
+     * predicate for warnings that may occur within the listener.
+     *
+     * See MappingModelTransformation for a usage example of a listener.
+     */
+    def BiFunction<
+        List<TransformationResult>,
+        Predicate<IntermediateTransformationException>,
+        Void
+    > registerTransformationsFinishedListener() {
+        return null
+    }
 
     /**
      * Constructor
      */
     new() {
-        atlModelFactory = new EMFModelFactory
-        atlModelInjector = new EMFInjector
+        modelTypes = registerModelTypes
+        if (modelTypes === null || modelTypes.empty)
+            throw new IllegalStateException("Model types must not be empty")
 
-        targetModelUri = targetModelInfo.namespaceUri
-        targetModelPackage = targetModelInfo.ecorePackage
-        registerTargetModelEPackage()
+        // Register EPackages of output models
+        val outputModelTypes = modelTypes.filter [ description, value |
+            description.direction == TransformationModelDirection.INOUT ||
+                description.direction == TransformationModelDirection.OUT
+        ].values.toList()
+        registerEPackages(outputModelTypes)
     }
 
     /**
-     * Flag to indicate if children's children of the current model file, i.e., models that are
-     * imported by imported models of the current model, shall be considered when building the
-     * target paths of imports for the subsequent call to mainTransformation().
+     * Helper to register EPackages of a given list of model types
      */
-    def considerChildrensChildrenForImportTargetPaths() {
-        return false
+    private def registerEPackages(List<TransformationModelType> modelTypes) {
+        modelTypes.forEach [
+            if (!EPackage.Registry.INSTANCE.containsKey(namespaceUri))
+                EPackage.Registry.INSTANCE.put(namespaceUri, ecorePackage)
+        ]
     }
 
     /**
-     * Perform the model-to-model-transformation of a source model, being specified in a specific
-     * DSL file, to an intermediate model in the form of an XMI file
+     * Get registered output model types
      */
-    def mainTransformation(IFile sourceModelFile, String targetModelFile,
-        Map<String, String> targetPathsOfImports,
-        Predicate<IntermediateTransformationException> warningCallback) {
-        doTransformation(sourceModelFile, [loadDslSourceModel], targetModelFile,
+    final def List<TransformationModelType> getOutputModelTypes() {
+        return modelTypes.filter [ description, type |
+            description.direction === TransformationModelDirection.OUT ||
+                description.direction === TransformationModelDirection.INOUT
+        ].values.toList()
+    }
+
+    /**
+     * Run a model-to-model transformation on a list of input models expressed as instances of
+     * org.eclipse.core.resources.IFile. To this end, the transformation model description for each
+     * input model is also passed by the caller.
+     */
+    final def Map<TransformationModelDescription, TransformationResult> doTransformationFromFiles(
+        Map<TransformationModelDescription, IFile> inputModelFiles,
+        Map<TransformationModelDescription, String> outputModelPaths,
+        Map<String, Map<String, String>> targetPathsOfImports,
+        Predicate<IntermediateTransformationException> warningCallback
+    ) {
+        val inputModelResources = loadModelResources(inputModelFiles)
+        return doTransformation(inputModelFiles, inputModelResources, outputModelPaths,
             targetPathsOfImports, warningCallback)
     }
 
-     /**
-     * Perform a refining model transformation of a source XMI model to a more specific target XMI
-     * model
+    /**
+     * Helper to load Resource instances of models being expressed as IFile instances
      */
-    def refiningTransformation(IFile sourceModelFile, String targetModelFile,
-        Predicate<IntermediateTransformationException> warningCallback) {
-        doTransformation(sourceModelFile, [loadXmiSourceModel], targetModelFile, null,
-            warningCallback)
+    private def Map<TransformationModelDescription, Resource> loadModelResources(
+        Map<TransformationModelDescription, IFile> models
+    ) {
+        val loadedModels = <TransformationModelDescription, Resource>newHashMap
+
+        models.forEach [ description, file |
+            val fileExtension = file.fileExtension?.toLowerCase
+            if (fileExtension === null || fileExtension.isEmpty)
+                throw new IllegalArgumentException(
+                    '''File «file.absolutePath» does not have a ''' +
+                        "file extension. It can thus not be loaded as a model Resource. Model " +
+                        "transformation not possible.")
+
+            val modelResource = if ("xmi".equals(fileExtension))
+                    loadModelResourceFromXmiFile(file)
+                else
+                    loadModelResourceFromDslFile(file)
+
+            loadedModels.put(description, modelResource)
+        ]
+
+        return loadedModels
     }
 
     /**
-     * Generic helper to perform a model transformation on the given source model file that gets
-     * loaded by a model-format-specific loader
+     * Helper to load a model Resource from an XMI file
      */
-    private def doTransformation(IFile sourceModelFile, Function<IFile, Resource> sourceModelLoader,
-        String targetModelFile, Map<String, String> targetPathsOfImports,
-        Predicate<IntermediateTransformationException> warningCallback) {
-        /* Before transformation hook */
-        val absoluteSourceModelPath = sourceModelFile.rawLocation.makeAbsolute.toString
-        beforeTransformationHook(absoluteSourceModelPath)
-
-        /* Prepare source model */
-        val sourceModelResource = sourceModelLoader.apply(sourceModelFile)
-        val sourceModelRoot = sourceModelResource.contents.get(0)
-        prepareSourceModel(sourceModelRoot)
-
-        /* Validate prepared source model */
-        val sourceModelValidator = getSourceModelValidator()
-        val continueWithTransformation = if (sourceModelValidator !== null)
-                sourceModelValidator.validateSourceModel(absoluteSourceModelPath, sourceModelRoot,
-                    warningCallback)
-            else
-                true
-        if (!continueWithTransformation) {
-            return
-        }
-
-        /* Perform transformation */
-        val sourceTransformationModel = createTransformationSourceModel(sourceModelResource)
-        val targetModel = createEmptyTargetModel
-        launchTransformation(sourceTransformationModel, targetModel)
-        if (targetModel.resource === null || targetModel.resource.contents.empty)
-            throw new IntermediateTransformationException('''No elements created in ''' +
-                '''transformation of "«sourceModelFile.location»". Target model file ''' +
-                '''"«targetModelFile»" was not written.''',
-                IntermediateTransformationExceptionKind.WARNING,
-                IntermediateTransformationPhase.TRANSFORMATION_FINISHED)
-
-        if (targetPathsOfImports !== null && !targetPathsOfImports.empty)
-            populateTargetModelWithImportTargetPaths(targetModel, targetPathsOfImports)
-
-        /* Modify target model */
-        val targetModelRoot = targetModel.resource.contents.get(0)
-        modifyTargetModel(targetModelRoot)
-
-        /* After transformation hook */
-        afterTransformationHook(targetModelFile)
-
-        // Store transformation result in XMI file
-        targetModel.resource.URI = URI.createURI(targetModelFile)
-        targetModel.resource.save(emptyMap())
-    }
-
-    /**
-     * Register the EPackage of the target metamodel. Otherwise, ATL won't find it, when the
-     * transformation gets launched.
-     */
-    private def registerTargetModelEPackage() {
-        if (EPackage.Registry.INSTANCE.containsKey(targetModelUri)) {
-            return
-        }
-
-        EPackage.Registry.INSTANCE.put(targetModelUri, targetModelPackage)
-    }
-
-    /**
-     * Load a source model from a DSL file
-     */
-    private def loadDslSourceModel(IFile dslFile) {
-        val projectRelativeDslFilePath = dslFile.fullPath.toString
-        val sourceDslFileUri = URI.createURI(projectRelativeDslFilePath)
-        val sourceDslFileResourceSet = createResourceSetFor(sourceDslFileUri)
-        val sourceDslFileResource = sourceDslFileResourceSet.getResource(sourceDslFileUri, true)
-        return sourceDslFileResource
-    }
-
-    /**
-     * Load a source model from an XMI file
-     */
-    private def loadXmiSourceModel(IFile modelFile) {
-        val projectRelativeSourceModelFilePath = modelFile.fullPath.toString
-        val sourceModelFileUri = URI.createURI(projectRelativeSourceModelFilePath)
+    private def loadModelResourceFromXmiFile(IFile modelFile) {
+        val projectRelativeModelFilePath = modelFile.fullPath.toString
+        val modelFileUri = URI.createURI(projectRelativeModelFilePath)
         val resourceSet = new ResourceSetImpl()
         resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap()
             .put("xmi", new XMIResourceFactoryImpl())
-        val resource = resourceSet.createResource(sourceModelFileUri);
+        val resource = resourceSet.createResource(modelFileUri);
         resource.load(null)
         return resource
     }
 
     /**
-     * Helper to create ResourceSet for file
+     * Helper to load a model Resource from a DSL file
      */
-    private static def createResourceSetFor(URI fileUri) {
-        val resourceSetProviderRegistry = IResourceServiceProvider.Registry.INSTANCE
-        val resourceSetProvider = resourceSetProviderRegistry.getResourceServiceProvider(fileUri)
-        return resourceSetProvider.get(ResourceSet)
+    private def loadModelResourceFromDslFile(IFile modelFile) {
+        val projectRelativeDslFilePath = modelFile.fullPath.toString
+        val inputDslFileUri = URI.createURI(projectRelativeDslFilePath)
+        val resourceSetProvider = IResourceServiceProvider.Registry.INSTANCE
+            .getResourceServiceProvider(inputDslFileUri)
+        return resourceSetProvider.get(ResourceSet).getResource(inputDslFileUri, true)
     }
 
     /**
-     * Load a source model from a DSL file resource
+     * Run a model-to-model transformation on a list of input models expressed as instances of
+     * org.eclipse.core.resources.IFile and a list of output paths. The transformation model
+     * descriptions are assigned to input files and output paths in the order they were registered
+     * in the implementation of registerModelTypes().
      */
-    private def createTransformationSourceModel(Resource sourceModelResource) {
-        val sourceDslMetamodelReference = createSourceDslMetamodelReference()
-        val sourceModel = atlModelFactory.newModel(sourceDslMetamodelReference)
-        atlModelInjector.inject(sourceModel, sourceModelResource)
-        return sourceModel
+    final def Map<TransformationModelDescription, TransformationResult> doTransformationFromFiles(
+        List<IFile> inputModels,
+        List<String> outputModelPaths,
+        Map<String, Map<String, String>> targetPathsOfImports,
+        Predicate<IntermediateTransformationException> warningCallback
+    ) {
+        val inputModelsWithDescriptions = mapValuesToModelTypeDescriptions(inputModels,
+            "input model", TransformationModelDirection.IN, TransformationModelDirection.INOUT)
+
+        val outputModelsWithDescriptions = mapValuesToModelTypeDescriptions(outputModelPaths,
+            "output model", TransformationModelDirection.OUT, TransformationModelDirection.INOUT)
+
+        return doTransformationFromFiles(inputModelsWithDescriptions, outputModelsWithDescriptions,
+            targetPathsOfImports, warningCallback)
     }
 
     /**
-     * Create an IReferenceModel instance for the Xcore metamodel of the source DSL leveraging
-     * ATL's model factory
+     * Helper to assign input or output models/paths to registered transformation model descriptions
+     * of a given set of directions
      */
-    private def createSourceDslMetamodelReference() {
-        val sourceDslMetamodelReference = atlModelFactory.newReferenceModel
-        atlModelInjector.inject(sourceDslMetamodelReference, getSourcePackageNamespaceUri())
-        return sourceDslMetamodelReference
+    private def <T> Map<TransformationModelDescription, T> mapValuesToModelTypeDescriptions(
+        List<T> values,
+        String valueTypeName,
+        TransformationModelDirection... filterDirections
+    ) {
+        val registeredDescriptions = modelTypes.keySet.filter[filterDirections.contains(direction)]
+        if (values.size != registeredDescriptions.size)
+            throw new IllegalArgumentException('''«valueTypeName.toFirstUpper» count must be ''' +
+                '''equal to «valueTypeName.toFirstLower» description count''')
+
+        val valuesToDescriptions = <TransformationModelDescription, T>newHashMap
+        for (var i = 0; i < registeredDescriptions.size; i++)
+            valuesToDescriptions.put(registeredDescriptions.get(i), values.get(i))
+
+        return valuesToDescriptions
     }
 
     /**
-     * Create an EMFModel instance for the Xcore metamodel of the target models leveraging ATL's
-     * model factory
+     * Run a model-to-model transformation on a list of input models expressed as instances of
+     * org.eclipse.emf.ecore.resource.Resource. To this end, the transformation model description
+     * for each input model is also passed by the caller.
      */
-    private def createEmptyTargetModel() {
-        val targetMetamodelReference = atlModelFactory.newReferenceModel
-        atlModelInjector.inject(targetMetamodelReference, targetModelUri)
-        val targetModel = atlModelFactory.newModel(targetMetamodelReference) as EMFModel
-        return targetModel
+    final def Map<TransformationModelDescription, TransformationResult>
+    doTransformationFromResources(
+        Map<TransformationModelDescription, Resource> inputModelResources,
+        Map<TransformationModelDescription, String> outputModelPaths,
+        Map<String, Map<String, String>> targetPathsOfImports,
+        Predicate<IntermediateTransformationException> warningCallback
+    ) {
+        val inputModelFiles = inputModelResources.mapValues[DdmmUtils.getFileForResource(it)]
+        return doTransformation(inputModelFiles, inputModelResources, outputModelPaths,
+            targetPathsOfImports, warningCallback)
     }
 
     /**
-     * Internal launcher for the actual ATL transformation
+     * Generic method for running a model-to-model transformation. The input models are expressed
+     * on the basis of two maps that assign the transformation model descriptions to the input model
+     * files and resources, respectively.
      */
-    private def launchTransformation(IModel sourceModel, IModel targetModel) {
-        val atlLauncher = new EMFVMLauncher
-        atlLauncher.initialize(emptyMap())
-        atlLauncher.addInModel(sourceModel, "IN", transformationSourceModelPrefix)
-        atlLauncher.addOutModel(targetModel, "OUT", transformationTargetModelPrefix)
-        val launchOptions = #{"allowInterModelReferences" -> true as Object}
-        atlLauncher.launch(ILauncher.RUN_MODE, new NullProgressMonitor(), launchOptions,
-            loadCompiledTransformation)
+    private def Map<TransformationModelDescription, TransformationResult> doTransformation(
+        Map<TransformationModelDescription, IFile> inputModelFiles,
+        Map<TransformationModelDescription, Resource> inputModelResources,
+        Map<TransformationModelDescription, String> outputModelPaths,
+        Map<String, Map<String, String>> targetPathsOfImports,
+        Predicate<IntermediateTransformationException> warningCallback
+    ) {
+        beforeTransformationChecks(inputModelFiles, outputModelPaths)
+
+        beforeTransformationHook(inputModelFiles.mapValues[absolutePath])
+
+        val preparedInputModels = prepareInputModels(inputModelResources)
+
+        if (!validateInputModels(inputModelFiles, preparedInputModels, warningCallback))
+            return null
+
+        val transformationResultResources = executeTransformation(preparedInputModels,
+            outputModelPaths)
+
+        if (targetPathsOfImports !== null)
+            populateOutputModelsWithImportTargetPaths(
+                transformationResultResources,
+                outputModelPaths,
+                targetPathsOfImports
+            )
+
+        modifyOutputModels(transformationResultResources)
+
+        afterTransformationHook(outputModelPaths)
+
+        saveOutputModels(inputModelFiles, transformationResultResources, outputModelPaths)
+
+        return createTransformationResults(inputModelFiles, transformationResultResources,
+            outputModelPaths)
     }
 
     /**
-     * Load compiled ATL transformation, which is stored in a file with the ASM data format
+     * Helper to perform generic checks on input and output models/paths
      */
-    private def loadCompiledTransformation() {
-        return typeof(AbstractIntermediateModelTransformationStrategy)
-            .getResourceAsStream(getCompiledModelTransformationFilePath())
+    private def beforeTransformationChecks(Map<TransformationModelDescription, IFile> inputModels,
+        Map<TransformationModelDescription, String> outputModelPaths) {
+        inputModels.keySet.checkContainsDescriptionsForAllRegisteredModelTypesOfDirection(
+            TransformationModelDirection.IN
+        )
+
+        outputModelPaths.keySet.checkContainsDescriptionsForAllRegisteredModelTypesOfDirection(
+            TransformationModelDirection.OUT
+        )
+
+        // Inout models may be specified in input or output models
+        try {
+            inputModels.keySet.checkContainsDescriptionsForAllRegisteredModelTypesOfDirection(
+                TransformationModelDirection.INOUT
+            )
+        } catch (IllegalArgumentException ex) {
+            outputModelPaths.keySet.checkContainsDescriptionsForAllRegisteredModelTypesOfDirection(
+                TransformationModelDirection.INOUT
+            )
+        }
+    }
+
+    /**
+     * Helper to check that a set of transformation model descriptions contains a description for
+     * each registered model type of a certain direction
+     */
+    private def checkContainsDescriptionsForAllRegisteredModelTypesOfDirection(
+        Set<TransformationModelDescription> descriptions,
+        TransformationModelDirection direction
+    ) {
+        val registeredModelDescriptions = modelTypes.keySet.filter[it.direction == direction].toSet
+        if (!descriptions.containsAll(registeredModelDescriptions))
+            throw new IllegalArgumentException("Missing values for registered model types of " +
+                '''direction «direction»''')
+    }
+
+    /**
+     * Helper to iteratively trigger preparation on a set of input models
+     */
+    private def Map<TransformationModelDescription, Resource> prepareInputModels(
+        Map<TransformationModelDescription, Resource> inputModels
+    ) {
+        val preparedModels = <TransformationModelDescription, Resource>newHashMap
+
+        inputModels.forEach [ description, resource |
+            val modelRoot = resource.contents.get(0)
+            prepareInputModel(description, modelRoot)
+            preparedModels.put(description, resource)
+        ]
+
+        return preparedModels
+    }
+
+    /**
+     * Helper to iteratively validate a set of input models
+     */
+    private def boolean validateInputModels(
+        Map<TransformationModelDescription, IFile> inputModelDescriptions,
+        Map<TransformationModelDescription, Resource> inputModelResources,
+        Predicate<IntermediateTransformationException> warningCallback
+    ) {
+        var continueTransformation = true
+        for (var i = 0; i < inputModelDescriptions.size && continueTransformation; i++) {
+            val description = inputModelDescriptions.keySet.get(i)
+            val file = inputModelDescriptions.get(description)
+            val resource = inputModelResources.get(description)
+            val modelRoot = resource.contents.get(0)
+            val modelValidator = getInputModelValidator(description)
+
+            continueTransformation = if (modelValidator !== null)
+                modelValidator.validateInputModel(file.absolutePath, modelRoot, warningCallback)
+            else
+                true
+        }
+
+        return continueTransformation
+    }
+
+    /**
+     * Helper to execute a model-to-model-transformation
+     */
+    private def Map<TransformationModelDescription, Resource> executeTransformation(
+        Map<TransformationModelDescription, Resource> inputModelResources,
+        Map<TransformationModelDescription, String> outputModelPaths
+    ) {
+        /* Create transformation-technology-specific input and output models */
+        val transformationInputModels = <TransformationModelDescription, TIM_TYPE>newHashMap
+        inputModelResources.forEach [ description, resource |
+            val inputModel = createTransformationInputModel(description, resource)
+            if (inputModel !== null)
+                transformationInputModels.put(description, inputModel)
+        ]
+
+        val transformationOutputModels = <TransformationModelDescription, TOM_TYPE>newHashMap
+        outputModelPaths.forEach [ description, path |
+            val outputModel = createTransformationOutputModel(description, path)
+            if (outputModel !== null)
+                transformationOutputModels.put(description, outputModel)
+        ]
+
+        /*
+         * Invoke technology-specific transformation of an implemented model-to-model transformation
+         * strategy
+         */
+        val transformationResultResources = transformation(
+            transformationInputModels,
+            transformationOutputModels
+        )
+
+        // Warn if the transformation did not produce any result
+        if (transformationResultResources.empty)
+            throw new IntermediateTransformationException("No elements were created during " +
+                "model transformation", IntermediateTransformationExceptionKind.WARNING,
+                IntermediateTransformationPhase.TRANSFORMATION_FINISHED)
+
+        // Warn if one of the expected output models is empty
+        val emptyOutputModel = transformationResultResources.entrySet.findFirst [
+            value === null || value.contents.empty
+        ]
+        if (emptyOutputModel !== null) {
+            val outputModelPath = outputModelPaths.get(emptyOutputModel.key)
+            throw new IntermediateTransformationException("No elements were created in output " +
+                '''model file «outputModelPath».''', IntermediateTransformationExceptionKind.WARNING,
+                IntermediateTransformationPhase.TRANSFORMATION_FINISHED)
+        }
+
+        return transformationResultResources
+    }
+
+    /**
+     * Helper to add transformation target paths of imported model files to all output models
+     */
+    private def populateOutputModelsWithImportTargetPaths(
+        Map<TransformationModelDescription, Resource> outputModelResources,
+        Map<TransformationModelDescription, String> outputModelPaths,
+        Map<String, Map<String, String>> targetPathsOfImports
+    ) {
+        outputModelResources.forEach[description, resource |
+            val outputPath = outputModelPaths.get(description)
+            val targetPaths = targetPathsOfImports.get(outputPath)
+            if (targetPaths !== null)
+                populateOutputModelWithImportTargetPaths(description, resource.contents.get(0),
+                    targetPaths)
+        ]
+    }
+
+    /**
+     * Helper to iteratively trigger modifications of output models
+     */
+    private def modifyOutputModels(
+        Map<TransformationModelDescription, Resource> outputModelResources
+    ) {
+        outputModelResources.forEach[description, resource |
+            val modelRoot = resource.contents.get(0)
+            modifyOutputModel(description, modelRoot)
+        ]
+    }
+
+    /**
+     * Serialize all output model resources into XMI files
+     */
+    private def void saveOutputModels(
+        Map<TransformationModelDescription, IFile> inputModels,
+        Map<TransformationModelDescription, Resource> outputModelResources,
+        Map<TransformationModelDescription, String> outputModelPaths
+    ) {
+        outputModelResources.forEach[description, resource |
+            val outputPath = outputModelPaths.get(description)
+            resource.URI = URI.createURI(outputPath)
+            resource.save(emptyMap())
+        ]
+    }
+
+    /**
+     * Create TransformationResult instances from transformation parameters. For each output model
+     * resource, a TransformationResult is created.
+     */
+    private def Map<TransformationModelDescription, TransformationResult>
+    createTransformationResults(
+        Map<TransformationModelDescription, IFile> inputModels,
+        Map<TransformationModelDescription, Resource> outputModelResources,
+        Map<TransformationModelDescription, String> outputModelPaths
+    ) {
+        val resultMap = <TransformationModelDescription, TransformationResult>newHashMap
+
+        outputModelResources.forEach[description, resource |
+            val outputPath = outputModelPaths.get(description)
+            val transformationResult = createTransformationResult(inputModels, outputPath,
+                description, resource)
+            resultMap.put(description, transformationResult)
+        ]
+
+        return resultMap
+    }
+
+    /**
+     * Helper to create a TransformationResult instance
+     */
+    private def TransformationResult createTransformationResult(
+        Map<TransformationModelDescription, IFile> inputModels,
+        String outputPath,
+        TransformationModelDescription outputModelDescription,
+        Resource outputResource
+    ) {
+        val resultInputModels = inputModels.entrySet.map [
+            new InputModel(value.absolutePath, modelTypes.get(key).namespaceUri)
+        ].toList
+
+        val outputModel = new OutputModel(
+            outputPath,
+            modelTypes.get(outputModelDescription).namespaceUri,
+            outputResource
+        )
+
+        return new TransformationResult(resultInputModels, outputModel)
+    }
+
+    /**
+     * Helper to retrieve the absolute path of an IFile
+     */
+    private def absolutePath(IFile file) {
+        return file.rawLocation.makeAbsolute.toString
+    }
+
+    /**
+     * Class representing a result of a model-to-model transformation. It maps input models to a
+     * certain output model.
+     */
+    static class TransformationResult {
+        @Accessors
+        List<InputModel> inputModels
+
+        @Accessors
+        OutputModel outputModel
+
+        new(List<InputModel> inputModels, OutputModel outputModel) {
+            this.inputModels = inputModels
+            this.outputModel = outputModel
+        }
+    }
+
+    /**
+     * Class representing an input model of a model-to-model transformation
+     */
+    static class InputModel {
+        @Accessors
+        String inputPath
+
+        @Accessors
+        String namespaceUri
+
+        new(String inputPath, String namespaceUri) {
+            this.inputPath = inputPath
+            this.namespaceUri = namespaceUri
+        }
+    }
+
+    /**
+     * Class representing an output model of a model-to-model transformation
+     */
+    static class OutputModel {
+        @Accessors
+        String outputPath
+
+        @Accessors
+        String namespaceUri
+
+        @Accessors
+        Resource resource
+
+        new(String outputPath, String namespaceUri, Resource resource) {
+            this.outputPath = outputPath
+            this.namespaceUri = namespaceUri
+            this.resource = resource
+        }
     }
 }

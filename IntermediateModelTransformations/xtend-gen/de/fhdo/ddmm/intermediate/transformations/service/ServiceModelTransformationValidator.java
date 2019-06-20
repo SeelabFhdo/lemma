@@ -1,7 +1,7 @@
 package de.fhdo.ddmm.intermediate.transformations.service;
 
 import com.google.common.base.Function;
-import de.fhdo.ddmm.intermediate.transformations.AbstractSourceModelValidator;
+import de.fhdo.ddmm.intermediate.transformations.AbstractInputModelValidator;
 import de.fhdo.ddmm.intermediate.transformations.IntermediateTransformationException;
 import de.fhdo.ddmm.service.Microservice;
 import de.fhdo.ddmm.service.ServiceModel;
@@ -18,12 +18,12 @@ import org.eclipse.xtext.xbase.lib.IteratorExtensions;
  * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
  */
 @SuppressWarnings("all")
-public class ServiceModelTransformationValidator extends AbstractSourceModelValidator<ServiceModel> {
+public class ServiceModelTransformationValidator extends AbstractInputModelValidator<ServiceModel> {
   /**
-   * Validate source models for errors
+   * Validate input models for errors
    */
   @Override
-  public void checkSourceModelForErrors(final ServiceModel serviceModel) throws IntermediateTransformationException {
+  public void checkInputModelForErrors(final ServiceModel serviceModel) throws IntermediateTransformationException {
     if ((serviceModel == null)) {
       this.error("Service model is empty");
     }
@@ -39,33 +39,9 @@ public class ServiceModelTransformationValidator extends AbstractSourceModelVali
   @Override
   public List<Function<ServiceModel, Void>> registerWarningFunctions() {
     final Function<ServiceModel, Void> _function = (ServiceModel it) -> {
-      return this.warnMissingTechnologies(it);
-    };
-    final Function<ServiceModel, Void> _function_1 = (ServiceModel it) -> {
       return this.warnReferredMicroserviceTechnologies(it);
     };
-    return Collections.<Function<ServiceModel, Void>>unmodifiableList(CollectionLiterals.<Function<ServiceModel, Void>>newArrayList(_function, _function_1));
-  }
-  
-  /**
-   * Warn if microservices exist in the model without assigned technologies
-   */
-  private Void warnMissingTechnologies(final ServiceModel serviceModel) {
-    Void _xblockexpression = null;
-    {
-      final Function1<Microservice, Boolean> _function = (Microservice it) -> {
-        return Boolean.valueOf(it.getTechnologies().isEmpty());
-      };
-      final boolean missingTechnologies = IterableExtensions.<Microservice>exists(serviceModel.getMicroservices(), _function);
-      Void _xifexpression = null;
-      if (missingTechnologies) {
-        _xifexpression = this.warning((("The service model contains microservices without a technology assignment. " + 
-          "A technology would have to be explicitly chosen when generating source code for ") + 
-          "them."));
-      }
-      _xblockexpression = _xifexpression;
-    }
-    return _xblockexpression;
+    return Collections.<Function<ServiceModel, Void>>unmodifiableList(CollectionLiterals.<Function<ServiceModel, Void>>newArrayList(_function));
   }
   
   /**

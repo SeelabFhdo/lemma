@@ -73,6 +73,37 @@ final class DdmmUtils {
     }
 
     /**
+     * Remove extension from filename and return filename without extension. The extension starts at
+     * the last occurrence of a dot (".") in the filename.
+     */
+    static def removeExtension(String filename) {
+        if (filename === null)
+            return null
+
+        return filename.substring(0, filename.lastIndexOf("."))
+    }
+
+    /**
+     * Join segments to a path specifier separated by the OS-specific file separator. This method is
+     * also capable of dealing with segments that themselves contain OS-specific file separators.
+     * All separators of the resulting joined path will automatically be harmonized.
+     */
+    def static joinPathSegments(String... segments) {
+        if (segments === null)
+            return null
+        else if (segments.empty)
+            return ""
+
+        val joinedPath = segments.join(File.separator)
+        return if (isFileUri(joinedPath) && windowsOs)
+                joinedPath.replaceAll(File.separator, "/")
+            else if (windowsOs)
+                joinedPath.replaceAll("/", File.separator)
+            else
+                joinedPath
+    }
+
+    /**
      * Convert a relative file path to an absolute file path that is based on an absolute base path
      */
     def static convertToAbsolutePath(String relativeFilePath, String absoluteBaseFilePath) {
@@ -223,6 +254,23 @@ final class DdmmUtils {
                 .rawLocation.makeAbsolute.toString
             convertToAbsoluteFileUri(relativeFilePath, absoluteResourceFilePath)
         }
+    }
+
+    /**
+     * Convert a path to a file URI located in the current workspace
+     */
+    static def convertToWorkspaceFileUri(String path) {
+        val workspacePath = ResourcesPlugin.workspace.root.location.toString
+
+        var workspaceFileUri = if (!path.startsWith(workspacePath))
+                workspacePath + path
+            else
+                path
+
+        if (!isFileUri(workspaceFileUri))
+            workspaceFileUri = convertToFileUri(workspaceFileUri)
+
+        return workspaceFileUri
     }
 
     /**
@@ -509,7 +557,7 @@ final class DdmmUtils {
          * Build scope for the imported concepts. The concepts' names within the scope are relative
          * to the specified container.
          */
-        return DdmmUtils.getScopeWithRelativeQualifiedNames(
+        return getScopeWithRelativeQualifiedNames(
             getImportedConcepts.apply(rootModelConcept),
             getConceptNameParts,
             container,

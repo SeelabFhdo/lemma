@@ -7,7 +7,6 @@ import org.eclipse.core.resources.IResource
 import de.fhdo.ddmm.eclipse.ui.utils.DdmmUiUtils
 import org.eclipse.core.resources.IFile
 import org.eclipse.emf.ecore.EObject
-import java.util.Collections
 
 /**
  * Content provider for the tree in file container selection dialog.
@@ -48,7 +47,7 @@ class FileContainerSelectionTreeContentProvider implements ITreeContentProvider 
                         return intermediateModelClass.isAssignableFrom(root.class)
                     ]
                 else
-                    Collections.emptyList
+                    emptyList
 
             children.addAll(applicableXmiFiles)
             return children

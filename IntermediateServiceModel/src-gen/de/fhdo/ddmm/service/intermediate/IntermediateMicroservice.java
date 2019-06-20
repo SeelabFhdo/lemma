@@ -2,6 +2,8 @@
  */
 package de.fhdo.ddmm.service.intermediate;
 
+import de.fhdo.ddmm.data.intermediate.IntermediateImportedAspect;
+
 import de.fhdo.ddmm.service.MicroserviceType;
 import de.fhdo.ddmm.service.Visibility;
 
@@ -360,8 +362,7 @@ public interface IntermediateMicroservice extends EObject {
 
     /**
      * Returns the value of the '<em><b>Aspects</b></em>' containment reference list.
-     * The list contents are of type {@link de.fhdo.ddmm.service.intermediate.IntermediateImportedAspect}.
-     * It is bidirectional and its opposite is '{@link de.fhdo.ddmm.service.intermediate.IntermediateImportedAspect#getMicroservice <em>Microservice</em>}'.
+     * The list contents are of type {@link de.fhdo.ddmm.data.intermediate.IntermediateImportedAspect}.
      * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Aspects</em>' containment reference list isn't clear,
@@ -370,8 +371,7 @@ public interface IntermediateMicroservice extends EObject {
      * <!-- end-user-doc -->
      * @return the value of the '<em>Aspects</em>' containment reference list.
      * @see de.fhdo.ddmm.service.intermediate.IntermediatePackage#getIntermediateMicroservice_Aspects()
-     * @see de.fhdo.ddmm.service.intermediate.IntermediateImportedAspect#getMicroservice
-     * @model opposite="microservice" containment="true"
+     * @model containment="true"
      * @generated
      */
     EList<IntermediateImportedAspect> getAspects();

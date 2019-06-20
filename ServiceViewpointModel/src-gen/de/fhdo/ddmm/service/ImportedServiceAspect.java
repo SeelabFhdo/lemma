@@ -34,6 +34,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.fhdo.ddmm.service.ImportedServiceAspect#getOperation <em>Operation</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.ImportedServiceAspect#getReferredOperation <em>Referred Operation</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.ImportedServiceAspect#getParameter <em>Parameter</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.service.ImportedServiceAspect#getMappedComplexType <em>Mapped Complex Type</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.ImportedServiceAspect#getMappedField <em>Mapped Field</em>}</li>
  * </ul>
  *
@@ -286,6 +287,34 @@ public interface ImportedServiceAspect extends EObject {
      * @generated
      */
     void setParameter(Parameter value);
+
+    /**
+     * Returns the value of the '<em><b>Mapped Complex Type</b></em>' container reference.
+     * It is bidirectional and its opposite is '{@link de.fhdo.ddmm.service.MappedComplexType#getAspects <em>Aspects</em>}'.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Mapped Complex Type</em>' container reference isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Mapped Complex Type</em>' container reference.
+     * @see #setMappedComplexType(MappedComplexType)
+     * @see de.fhdo.ddmm.service.ServicePackage#getImportedServiceAspect_MappedComplexType()
+     * @see de.fhdo.ddmm.service.MappedComplexType#getAspects
+     * @model opposite="aspects" transient="false"
+     * @generated
+     */
+    MappedComplexType getMappedComplexType();
+
+    /**
+     * Sets the value of the '{@link de.fhdo.ddmm.service.ImportedServiceAspect#getMappedComplexType <em>Mapped Complex Type</em>}' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Mapped Complex Type</em>' container reference.
+     * @see #getMappedComplexType()
+     * @generated
+     */
+    void setMappedComplexType(MappedComplexType value);
 
     /**
      * Returns the value of the '<em><b>Mapped Field</b></em>' container reference.

@@ -7,6 +7,7 @@ import de.fhdo.ddmm.data.PrimitiveValue;
 import de.fhdo.ddmm.service.Import;
 import de.fhdo.ddmm.service.ImportedServiceAspect;
 import de.fhdo.ddmm.service.Interface;
+import de.fhdo.ddmm.service.MappedComplexType;
 import de.fhdo.ddmm.service.MappedField;
 import de.fhdo.ddmm.service.Microservice;
 import de.fhdo.ddmm.service.Operation;
@@ -51,6 +52,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.fhdo.ddmm.service.impl.ImportedServiceAspectImpl#getOperation <em>Operation</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.impl.ImportedServiceAspectImpl#getReferredOperation <em>Referred Operation</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.impl.ImportedServiceAspectImpl#getParameter <em>Parameter</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.service.impl.ImportedServiceAspectImpl#getMappedComplexType <em>Mapped Complex Type</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.impl.ImportedServiceAspectImpl#getMappedField <em>Mapped Field</em>}</li>
  * </ul>
  *
@@ -525,6 +527,59 @@ public class ImportedServiceAspectImpl extends MinimalEObjectImpl.Container impl
      * @generated
      */
     @Override
+    public MappedComplexType getMappedComplexType() {
+        if (eContainerFeatureID() != ServicePackage.IMPORTED_SERVICE_ASPECT__MAPPED_COMPLEX_TYPE) return null;
+        return (MappedComplexType)eContainer();
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public MappedComplexType basicGetMappedComplexType() {
+        if (eContainerFeatureID() != ServicePackage.IMPORTED_SERVICE_ASPECT__MAPPED_COMPLEX_TYPE) return null;
+        return (MappedComplexType)eInternalContainer();
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public NotificationChain basicSetMappedComplexType(MappedComplexType newMappedComplexType, NotificationChain msgs) {
+        msgs = eBasicSetContainer((InternalEObject)newMappedComplexType, ServicePackage.IMPORTED_SERVICE_ASPECT__MAPPED_COMPLEX_TYPE, msgs);
+        return msgs;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void setMappedComplexType(MappedComplexType newMappedComplexType) {
+        if (newMappedComplexType != eInternalContainer() || (eContainerFeatureID() != ServicePackage.IMPORTED_SERVICE_ASPECT__MAPPED_COMPLEX_TYPE && newMappedComplexType != null)) {
+            if (EcoreUtil.isAncestor(this, newMappedComplexType))
+                throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
+            NotificationChain msgs = null;
+            if (eInternalContainer() != null)
+                msgs = eBasicRemoveFromContainer(msgs);
+            if (newMappedComplexType != null)
+                msgs = ((InternalEObject)newMappedComplexType).eInverseAdd(this, ServicePackage.MAPPED_COMPLEX_TYPE__ASPECTS, MappedComplexType.class, msgs);
+            msgs = basicSetMappedComplexType(newMappedComplexType, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ServicePackage.IMPORTED_SERVICE_ASPECT__MAPPED_COMPLEX_TYPE, newMappedComplexType, newMappedComplexType));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public MappedField getMappedField() {
         if (eContainerFeatureID() != ServicePackage.IMPORTED_SERVICE_ASPECT__MAPPED_FIELD) return null;
         return (MappedField)eContainer();
@@ -600,6 +655,10 @@ public class ImportedServiceAspectImpl extends MinimalEObjectImpl.Container impl
                 if (eInternalContainer() != null)
                     msgs = eBasicRemoveFromContainer(msgs);
                 return basicSetParameter((Parameter)otherEnd, msgs);
+            case ServicePackage.IMPORTED_SERVICE_ASPECT__MAPPED_COMPLEX_TYPE:
+                if (eInternalContainer() != null)
+                    msgs = eBasicRemoveFromContainer(msgs);
+                return basicSetMappedComplexType((MappedComplexType)otherEnd, msgs);
             case ServicePackage.IMPORTED_SERVICE_ASPECT__MAPPED_FIELD:
                 if (eInternalContainer() != null)
                     msgs = eBasicRemoveFromContainer(msgs);
@@ -630,6 +689,8 @@ public class ImportedServiceAspectImpl extends MinimalEObjectImpl.Container impl
                 return basicSetReferredOperation(null, msgs);
             case ServicePackage.IMPORTED_SERVICE_ASPECT__PARAMETER:
                 return basicSetParameter(null, msgs);
+            case ServicePackage.IMPORTED_SERVICE_ASPECT__MAPPED_COMPLEX_TYPE:
+                return basicSetMappedComplexType(null, msgs);
             case ServicePackage.IMPORTED_SERVICE_ASPECT__MAPPED_FIELD:
                 return basicSetMappedField(null, msgs);
         }
@@ -654,6 +715,8 @@ public class ImportedServiceAspectImpl extends MinimalEObjectImpl.Container impl
                 return eInternalContainer().eInverseRemove(this, ServicePackage.REFERRED_OPERATION__ASPECTS, ReferredOperation.class, msgs);
             case ServicePackage.IMPORTED_SERVICE_ASPECT__PARAMETER:
                 return eInternalContainer().eInverseRemove(this, ServicePackage.PARAMETER__ASPECTS, Parameter.class, msgs);
+            case ServicePackage.IMPORTED_SERVICE_ASPECT__MAPPED_COMPLEX_TYPE:
+                return eInternalContainer().eInverseRemove(this, ServicePackage.MAPPED_COMPLEX_TYPE__ASPECTS, MappedComplexType.class, msgs);
             case ServicePackage.IMPORTED_SERVICE_ASPECT__MAPPED_FIELD:
                 return eInternalContainer().eInverseRemove(this, ServicePackage.MAPPED_FIELD__ASPECTS, MappedField.class, msgs);
         }
@@ -693,6 +756,9 @@ public class ImportedServiceAspectImpl extends MinimalEObjectImpl.Container impl
             case ServicePackage.IMPORTED_SERVICE_ASPECT__PARAMETER:
                 if (resolve) return getParameter();
                 return basicGetParameter();
+            case ServicePackage.IMPORTED_SERVICE_ASPECT__MAPPED_COMPLEX_TYPE:
+                if (resolve) return getMappedComplexType();
+                return basicGetMappedComplexType();
             case ServicePackage.IMPORTED_SERVICE_ASPECT__MAPPED_FIELD:
                 if (resolve) return getMappedField();
                 return basicGetMappedField();
@@ -737,6 +803,9 @@ public class ImportedServiceAspectImpl extends MinimalEObjectImpl.Container impl
             case ServicePackage.IMPORTED_SERVICE_ASPECT__PARAMETER:
                 setParameter((Parameter)newValue);
                 return;
+            case ServicePackage.IMPORTED_SERVICE_ASPECT__MAPPED_COMPLEX_TYPE:
+                setMappedComplexType((MappedComplexType)newValue);
+                return;
             case ServicePackage.IMPORTED_SERVICE_ASPECT__MAPPED_FIELD:
                 setMappedField((MappedField)newValue);
                 return;
@@ -779,6 +848,9 @@ public class ImportedServiceAspectImpl extends MinimalEObjectImpl.Container impl
             case ServicePackage.IMPORTED_SERVICE_ASPECT__PARAMETER:
                 setParameter((Parameter)null);
                 return;
+            case ServicePackage.IMPORTED_SERVICE_ASPECT__MAPPED_COMPLEX_TYPE:
+                setMappedComplexType((MappedComplexType)null);
+                return;
             case ServicePackage.IMPORTED_SERVICE_ASPECT__MAPPED_FIELD:
                 setMappedField((MappedField)null);
                 return;
@@ -812,6 +884,8 @@ public class ImportedServiceAspectImpl extends MinimalEObjectImpl.Container impl
                 return basicGetReferredOperation() != null;
             case ServicePackage.IMPORTED_SERVICE_ASPECT__PARAMETER:
                 return basicGetParameter() != null;
+            case ServicePackage.IMPORTED_SERVICE_ASPECT__MAPPED_COMPLEX_TYPE:
+                return basicGetMappedComplexType() != null;
             case ServicePackage.IMPORTED_SERVICE_ASPECT__MAPPED_FIELD:
                 return basicGetMappedField() != null;
         }

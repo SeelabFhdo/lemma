@@ -8,14 +8,14 @@ import com.google.common.base.Objects;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import de.fhdo.ddmm.data.ComplexType;
-import de.fhdo.ddmm.data.DataField;
+import de.fhdo.ddmm.data.DataModel;
 import de.fhdo.ddmm.data.DataStructure;
 import de.fhdo.ddmm.data.Enumeration;
 import de.fhdo.ddmm.data.ListType;
-import de.fhdo.ddmm.data.PossiblyImportedComplexType;
 import de.fhdo.ddmm.data.PrimitiveType;
 import de.fhdo.ddmm.data.Type;
 import de.fhdo.ddmm.service.Import;
+import de.fhdo.ddmm.service.ImportType;
 import de.fhdo.ddmm.service.ImportedType;
 import de.fhdo.ddmm.service.Interface;
 import de.fhdo.ddmm.service.Microservice;
@@ -36,7 +36,8 @@ import de.fhdo.ddmm.technology.TechnologySpecificListType;
 import de.fhdo.ddmm.technology.TechnologySpecificPrimitiveType;
 import de.fhdo.ddmm.technology.TechnologySpecificPropertyValueAssignment;
 import de.fhdo.ddmm.technology.mapping.ComplexParameterMapping;
-import de.fhdo.ddmm.technology.mapping.DataFieldHierarchy;
+import de.fhdo.ddmm.technology.mapping.ComplexTypeMapping;
+import de.fhdo.ddmm.technology.mapping.ImportedComplexType;
 import de.fhdo.ddmm.technology.mapping.ImportedMicroservice;
 import de.fhdo.ddmm.technology.mapping.InterfaceMapping;
 import de.fhdo.ddmm.technology.mapping.MappingPackage;
@@ -87,9 +88,21 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
   public IScope getScope(final EObject context, final EReference reference) {
     IScope _switchResult = null;
     boolean _matched = false;
-    if (context instanceof MicroserviceMapping) {
+    if (context instanceof ImportedComplexType) {
       _matched=true;
-      _switchResult = this.getScope(((MicroserviceMapping)context), reference);
+      _switchResult = this.getScope(((ImportedComplexType)context), reference);
+    }
+    if (!_matched) {
+      if (context instanceof ComplexTypeMapping) {
+        _matched=true;
+        _switchResult = this.getScope(((ComplexTypeMapping)context), reference);
+      }
+    }
+    if (!_matched) {
+      if (context instanceof MicroserviceMapping) {
+        _matched=true;
+        _switchResult = this.getScope(((MicroserviceMapping)context), reference);
+      }
     }
     if (!_matched) {
       if (context instanceof ImportedMicroservice) {
@@ -152,12 +165,6 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
       }
     }
     if (!_matched) {
-      if (context instanceof DataFieldHierarchy) {
-        _matched=true;
-        _switchResult = this.getScope(((DataFieldHierarchy)context), reference);
-      }
-    }
-    if (!_matched) {
       if (context instanceof TechnologySpecificImportedServiceAspect) {
         _matched=true;
         _switchResult = this.getScope(((TechnologySpecificImportedServiceAspect)context), reference);
@@ -175,6 +182,54 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     } else {
       if ((scope == null)) {
         return super.getScope(context, reference);
+      }
+    }
+    return null;
+  }
+  
+  /**
+   * Build scope for imported complex types
+   */
+  private IScope getScope(final ImportedComplexType type, final EReference reference) {
+    boolean _matched = false;
+    if (Objects.equal(reference, MappingPackage.Literals.IMPORTED_COMPLEX_TYPE__SERVICE_MODEL_IMPORT)) {
+      _matched=true;
+      return this.getScopeForImportsOfType(type.getTypeMapping(), ServiceModel.class);
+    }
+    if (!_matched) {
+      if (Objects.equal(reference, MappingPackage.Literals.IMPORTED_COMPLEX_TYPE__DATA_MODEL_IMPORT)) {
+        _matched=true;
+        return this.getScopeForDomainModelImports(type);
+      }
+    }
+    if (!_matched) {
+      if (Objects.equal(reference, MappingPackage.Literals.IMPORTED_COMPLEX_TYPE__TYPE)) {
+        _matched=true;
+        return this.getScopeForComplexTypes(type);
+      }
+    }
+    return null;
+  }
+  
+  /**
+   * Build scope for complex type mappings and the given reference
+   */
+  private IScope getScope(final ComplexTypeMapping mapping, final EReference reference) {
+    boolean _matched = false;
+    if (Objects.equal(reference, MappingPackage.Literals.IMPORTED_COMPLEX_TYPE__SERVICE_MODEL_IMPORT)) {
+      _matched=true;
+      return this.getScopeForImportsOfType(mapping, ServiceModel.class);
+    }
+    if (!_matched) {
+      if (Objects.equal(reference, MappingPackage.Literals.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__TECHNOLOGY)) {
+        _matched=true;
+        return this.getScopeForAnnotatedTechnologies(mapping);
+      }
+    }
+    if (!_matched) {
+      if (Objects.equal(reference, MappingPackage.Literals.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__ENUMERATION_FIELD)) {
+        _matched=true;
+        return this.getScopeForComplexFields(mapping);
       }
     }
     return null;
@@ -309,8 +364,20 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
   /**
    * Build scope that comprises annotated technologies of an annotatable concept instance
    */
-  private IScope getScopeForAnnotatedTechnologies(final MicroserviceMapping mapping) {
-    return Scopes.scopeFor(mapping.getTechnologies());
+  private IScope getScopeForAnnotatedTechnologies(final EObject mapping) {
+    IScope _xifexpression = null;
+    if ((mapping instanceof ComplexTypeMapping)) {
+      _xifexpression = Scopes.scopeFor(((ComplexTypeMapping)mapping).getTechnologies());
+    } else {
+      IScope _xifexpression_1 = null;
+      if ((mapping instanceof MicroserviceMapping)) {
+        _xifexpression_1 = Scopes.scopeFor(((MicroserviceMapping)mapping).getTechnologies());
+      } else {
+        _xifexpression_1 = null;
+      }
+      _xifexpression = _xifexpression_1;
+    }
+    return _xifexpression;
   }
   
   /**
@@ -355,7 +422,7 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     if (!_matched) {
       if (Objects.equal(reference, MappingPackage.Literals.PRIMITIVE_PARAMETER_MAPPING__PRIMITIVE_TYPE)) {
         _matched=true;
-        return this.getScopeForParameterTypes(mapping);
+        return this.getScopeForMappingTypes(mapping);
       }
     }
     if (!_matched) {
@@ -397,13 +464,7 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     if (!_matched) {
       if (Objects.equal(reference, MappingPackage.Literals.COMPLEX_PARAMETER_MAPPING__TECHNOLOGY_SPECIFIC_COMPLEX_TYPE)) {
         _matched=true;
-        return this.getScopeForParameterTypes(mapping);
-      }
-    }
-    if (!_matched) {
-      if (Objects.equal(reference, MappingPackage.Literals.DATA_FIELD_HIERARCHY__DATA_FIELDS)) {
-        _matched=true;
-        return this.getScopeForComplexDataFields(mapping);
+        return this.getScopeForMappingTypes(mapping);
       }
     }
     return null;
@@ -414,36 +475,72 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
    */
   private IScope getScope(final TechnologySpecificFieldMapping mapping, final EReference reference) {
     boolean _matched = false;
-    if (Objects.equal(reference, MappingPackage.Literals.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__ENUMERATION_FIELD)) {
+    if (Objects.equal(reference, MappingPackage.Literals.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__DATA_FIELD)) {
       _matched=true;
-      EObject _eContainer = mapping.eContainer();
-      return this.getScopeForComplexDataFields(((ComplexParameterMapping) _eContainer));
+      return this.getScopeForComplexFields(mapping.eContainer());
+    }
+    if (!_matched) {
+      if (Objects.equal(reference, MappingPackage.Literals.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__ENUMERATION_FIELD)) {
+        _matched=true;
+        return this.getScopeForComplexFields(mapping.eContainer());
+      }
     }
     if (!_matched) {
       if (Objects.equal(reference, MappingPackage.Literals.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__TECHNOLOGY)) {
         _matched=true;
+      }
+      if (!_matched) {
+        if (Objects.equal(reference, MappingPackage.Literals.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__TECHNOLOGY)) {
+          _matched=true;
+        }
+      }
+      if (_matched) {
         return this.getScopeForTypeDefinitionTechnology(mapping);
       }
     }
     if (!_matched) {
       if (Objects.equal(reference, MappingPackage.Literals.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__TYPE)) {
         _matched=true;
-        return this.getScopeForParameterTypes(mapping);
+        return this.getScopeForMappingTypes(mapping);
       }
     }
     return null;
   }
   
   /**
-   * Build scope for data field hierarchies and the given reference
+   * Build scope for domain model imports of imported complex types
    */
-  private IScope getScope(final DataFieldHierarchy hierarchy, final EReference reference) {
-    boolean _matched = false;
-    if (Objects.equal(reference, MappingPackage.Literals.DATA_FIELD_HIERARCHY__DATA_FIELDS)) {
-      _matched=true;
-      return this.getScopeForComplexDataFields(hierarchy);
+  private IScope getScopeForDomainModelImports(final ImportedComplexType type) {
+    final ServiceModel serviceModel = DdmmUtils.<ServiceModel>getImportedModelRoot(type.eResource(), 
+      type.getServiceModelImport().getImportURI(), ServiceModel.class);
+    final Function1<Import, Boolean> _function = (Import it) -> {
+      ImportType _importType = it.getImportType();
+      return Boolean.valueOf(Objects.equal(_importType, ImportType.DATATYPES));
+    };
+    final Iterable<Import> dataModels = IterableExtensions.<Import>filter(serviceModel.getImports(), _function);
+    return Scopes.scopeFor(dataModels);
+  }
+  
+  /**
+   * Build scope for complex types to be imported
+   */
+  private IScope getScopeForComplexTypes(final ImportedComplexType type) {
+    Import _dataModelImport = type.getDataModelImport();
+    boolean _tripleEquals = (_dataModelImport == null);
+    if (_tripleEquals) {
+      return IScope.NULLSCOPE;
     }
-    return null;
+    final Function<DataModel, List<ComplexType>> _function = (DataModel it) -> {
+      return IterableExtensions.<ComplexType>toList(it.getContainedComplexTypes());
+    };
+    final Function<ComplexType, List<String>> _function_1 = (ComplexType it) -> {
+      return it.getQualifiedNameParts();
+    };
+    return DdmmUtils.<Import, DataModel, ComplexType>getScopeForPossiblyImportedConcept(
+      type.getDataModelImport(), 
+      null, 
+      DataModel.class, 
+      type.getDataModelImport().getImportURI(), _function, _function_1);
   }
   
   /**
@@ -504,9 +601,9 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
   }
   
   /**
-   * Build scope for technology-specific types for complex parameters
+   * Build scope for technology-specific types of field in complex type mappings or parameters
    */
-  private IScope getScopeForParameterTypes(final EObject mapping) {
+  private IScope getScopeForMappingTypes(final EObject mapping) {
     Type parameterType = null;
     Import technology = null;
     boolean _matched = false;
@@ -525,7 +622,7 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     if (!_matched) {
       if (mapping instanceof TechnologySpecificFieldMapping) {
         _matched=true;
-        parameterType = IterableExtensions.<DataField>last(((TechnologySpecificFieldMapping)mapping).getDataFieldHierarchy().getDataFields()).getEffectiveType();
+        parameterType = ((TechnologySpecificFieldMapping)mapping).getDataField().getEffectiveType();
         technology = ((TechnologySpecificFieldMapping)mapping).getTechnology();
       }
     }
@@ -596,14 +693,36 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
    * Build scope for microservice mapping technology that defines types
    */
   private IScope getScopeForTypeDefinitionTechnology(final EObject context) {
-    MicroserviceMapping _xifexpression = null;
+    EList<Import> _xifexpression = null;
     if ((context instanceof MicroserviceMapping)) {
-      _xifexpression = ((MicroserviceMapping)context);
+      _xifexpression = ((MicroserviceMapping)context).getTechnologies();
     } else {
-      _xifexpression = EcoreUtil2.<MicroserviceMapping>getContainerOfType(context, MicroserviceMapping.class);
+      EList<Import> _xifexpression_1 = null;
+      if ((context instanceof ComplexTypeMapping)) {
+        _xifexpression_1 = ((ComplexTypeMapping)context).getTechnologies();
+      } else {
+        EList<Import> _elvis = null;
+        MicroserviceMapping _containerOfType = EcoreUtil2.<MicroserviceMapping>getContainerOfType(context, MicroserviceMapping.class);
+        EList<Import> _technologies = null;
+        if (_containerOfType!=null) {
+          _technologies=_containerOfType.getTechnologies();
+        }
+        if (_technologies != null) {
+          _elvis = _technologies;
+        } else {
+          ComplexTypeMapping _containerOfType_1 = EcoreUtil2.<ComplexTypeMapping>getContainerOfType(context, ComplexTypeMapping.class);
+          EList<Import> _technologies_1 = null;
+          if (_containerOfType_1!=null) {
+            _technologies_1=_containerOfType_1.getTechnologies();
+          }
+          _elvis = _technologies_1;
+        }
+        _xifexpression_1 = _elvis;
+      }
+      _xifexpression = _xifexpression_1;
     }
-    final MicroserviceMapping mapping = _xifexpression;
-    if ((mapping == null)) {
+    final EList<Import> technologies = _xifexpression;
+    if ((technologies == null)) {
       return IScope.NULLSCOPE;
     }
     final Function1<Import, Boolean> _function = (Import it) -> {
@@ -614,7 +733,7 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
       }
       return Boolean.valueOf(_xblockexpression);
     };
-    final Import typeDefinitionTechnology = IterableExtensions.<Import>findFirst(mapping.getTechnologies(), _function);
+    final Import typeDefinitionTechnology = IterableExtensions.<Import>findFirst(technologies, _function);
     if ((typeDefinitionTechnology == null)) {
       return IScope.NULLSCOPE;
     }
@@ -622,87 +741,55 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
   }
   
   /**
-   * Build scope for data fields of complex parameters' types on the first data field hierarchy
-   * level. It contains all direct children of the complex parameter being mapped.
+   * Build scope for enumeration and data fields in complex type and parameter mappings
    */
-  private IScope getScopeForComplexDataFields(final ComplexParameterMapping mapping) {
-    ImportedType _importedType = mapping.getParameter().getImportedType();
-    boolean _tripleEquals = (_importedType == null);
-    if (_tripleEquals) {
-      return IScope.NULLSCOPE;
-    }
-    Type _type = mapping.getParameter().getImportedType().getType();
-    final ComplexType previousType = ((ComplexType) _type);
-    if ((previousType instanceof Enumeration)) {
-      return Scopes.scopeFor(((Enumeration)previousType).getFields());
-    }
-    final EList<DataField> nextLeveldDataFields = this.nextDataFieldsInHierarchy(previousType);
-    if ((nextLeveldDataFields != null)) {
-      return Scopes.scopeFor(nextLeveldDataFields);
-    } else {
-      return IScope.NULLSCOPE;
-    }
-  }
-  
-  /**
-   * Build scope for data fields of complex parameters' types on hierarchy levels, i.e., the
-   * context is a data field hierarchy
-   */
-  private IScope getScopeForComplexDataFields(final DataFieldHierarchy hierarchy) {
-    DataField previousDataField = null;
-    if (((hierarchy.getPrevious() == null) || hierarchy.getPrevious().getDataFields().isEmpty())) {
-      previousDataField = null;
-    } else {
-      previousDataField = IterableExtensions.<DataField>last(hierarchy.getPrevious().getDataFields());
-    }
-    if ((previousDataField == null)) {
-      final ComplexParameterMapping complexMapping = EcoreUtil2.<ComplexParameterMapping>getContainerOfType(hierarchy, ComplexParameterMapping.class);
-      return this.getScopeForComplexDataFields(complexMapping);
-    }
-    PossiblyImportedComplexType _complexType = previousDataField.getComplexType();
-    boolean _tripleEquals = (_complexType == null);
-    if (_tripleEquals) {
-      return IScope.NULLSCOPE;
-    }
-    final ComplexType previousType = previousDataField.getComplexType().getComplexType();
-    final EList<DataField> nextLeveldDataFields = this.nextDataFieldsInHierarchy(previousType);
-    if ((nextLeveldDataFields != null)) {
-      return Scopes.scopeFor(nextLeveldDataFields);
-    } else {
-      return IScope.NULLSCOPE;
-    }
-  }
-  
-  /**
-   * Convenience method to retrieve the data fields of the next level of a data field hierarchy
-   */
-  private EList<DataField> nextDataFieldsInHierarchy(final ComplexType previousType) {
-    boolean _isIsPrimitiveList = previousType.isIsPrimitiveList();
-    if (_isIsPrimitiveList) {
-      return null;
-    }
-    EList<DataField> _xifexpression = null;
-    boolean _isIsStructure = previousType.isIsStructure();
-    if (_isIsStructure) {
-      _xifexpression = ((DataStructure) previousType).getEffectiveFields();
-    } else {
-      EList<DataField> _xifexpression_1 = null;
-      boolean _isIsStructuredList = previousType.isIsStructuredList();
-      if (_isIsStructuredList) {
-        _xifexpression_1 = ((ListType) previousType).getDataFields();
+  private IScope getScopeForComplexFields(final EObject mapping) {
+    ComplexType _xifexpression = null;
+    if ((mapping instanceof ComplexParameterMapping)) {
+      ComplexType _xifexpression_1 = null;
+      ImportedType _importedType = ((ComplexParameterMapping)mapping).getParameter().getImportedType();
+      boolean _tripleNotEquals = (_importedType != null);
+      if (_tripleNotEquals) {
+        Type _type = ((ComplexParameterMapping)mapping).getParameter().getImportedType().getType();
+        _xifexpression_1 = ((ComplexType) _type);
       }
       _xifexpression = _xifexpression_1;
-    }
-    final EList<DataField> nextDataFields = _xifexpression;
-    EList<DataField> _xifexpression_2 = null;
-    boolean _isEmpty = nextDataFields.isEmpty();
-    boolean _not = (!_isEmpty);
-    if (_not) {
-      _xifexpression_2 = nextDataFields;
     } else {
-      _xifexpression_2 = null;
+      ComplexType _xifexpression_2 = null;
+      if ((mapping instanceof ComplexTypeMapping)) {
+        ComplexType _type_1 = ((ComplexTypeMapping)mapping).getType().getType();
+        _xifexpression_2 = ((ComplexType) _type_1);
+      }
+      _xifexpression = _xifexpression_2;
     }
-    return _xifexpression_2;
+    ComplexType complexType = _xifexpression;
+    IScope _xifexpression_3 = null;
+    if ((complexType == null)) {
+      _xifexpression_3 = IScope.NULLSCOPE;
+    } else {
+      IScope _xifexpression_4 = null;
+      if ((complexType instanceof Enumeration)) {
+        _xifexpression_4 = Scopes.scopeFor(((Enumeration)complexType).getFields());
+      } else {
+        IScope _xifexpression_5 = null;
+        boolean _isIsStructure = complexType.isIsStructure();
+        if (_isIsStructure) {
+          _xifexpression_5 = Scopes.scopeFor(((DataStructure) complexType).getDataFields());
+        } else {
+          IScope _xifexpression_6 = null;
+          boolean _isIsStructuredList = complexType.isIsStructuredList();
+          if (_isIsStructuredList) {
+            _xifexpression_6 = Scopes.scopeFor(((ListType) complexType).getDataFields());
+          } else {
+            _xifexpression_6 = IScope.NULLSCOPE;
+          }
+          _xifexpression_5 = _xifexpression_6;
+        }
+        _xifexpression_4 = _xifexpression_5;
+      }
+      _xifexpression_3 = _xifexpression_4;
+    }
+    return _xifexpression_3;
   }
   
   /**
@@ -812,7 +899,7 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     boolean _matched = false;
     if (Objects.equal(reference, MappingPackage.Literals.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__TECHNOLOGY)) {
       _matched=true;
-      return this.getScopeForAnnotatedTechnologies(EcoreUtil2.<MicroserviceMapping>getContainerOfType(importedAspect, MicroserviceMapping.class));
+      return this.getScopeForTechnologies(importedAspect);
     }
     if (!_matched) {
       if (Objects.equal(reference, MappingPackage.Literals.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__ASPECT)) {
@@ -850,6 +937,21 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
   }
   
   /**
+   * Build scope for technologies of imported service aspect
+   */
+  private IScope getScopeForTechnologies(final TechnologySpecificImportedServiceAspect aspect) {
+    IScope _xifexpression = null;
+    ComplexTypeMapping _typeMapping = aspect.getTypeMapping();
+    boolean _tripleNotEquals = (_typeMapping != null);
+    if (_tripleNotEquals) {
+      _xifexpression = this.getScopeForAnnotatedTechnologies(aspect.getTypeMapping());
+    } else {
+      _xifexpression = this.getScopeForAnnotatedTechnologies(EcoreUtil2.<MicroserviceMapping>getContainerOfType(aspect, MicroserviceMapping.class));
+    }
+    return _xifexpression;
+  }
+  
+  /**
    * Build scope for aspect of imported service aspect
    */
   private IScope getScopeForImportedAspect(final TechnologySpecificImportedServiceAspect aspect) {
@@ -864,14 +966,20 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     final EObject mapping = aspect.eContainer();
     JoinPointType _switchResult = null;
     boolean _matched = false;
-    if (mapping instanceof MicroserviceMapping) {
+    if (mapping instanceof ComplexTypeMapping) {
       _matched=true;
-      JoinPointType _xblockexpression = null;
-      {
-        forProtocolsAndDataFormats = IterableExtensions.<Pair<Protocol, DataFormat>>toList(this.getEffectiveProtocolsAndDataFormats(((MicroserviceMapping)mapping)).values());
-        _xblockexpression = JoinPointType.MICROSERVICES;
+      _switchResult = JoinPointType.COMPLEX_TYPES;
+    }
+    if (!_matched) {
+      if (mapping instanceof MicroserviceMapping) {
+        _matched=true;
+        JoinPointType _xblockexpression = null;
+        {
+          forProtocolsAndDataFormats = IterableExtensions.<Pair<Protocol, DataFormat>>toList(this.getEffectiveProtocolsAndDataFormats(((MicroserviceMapping)mapping)).values());
+          _xblockexpression = JoinPointType.MICROSERVICES;
+        }
+        _switchResult = _xblockexpression;
       }
-      _switchResult = _xblockexpression;
     }
     if (!_matched) {
       if (mapping instanceof InterfaceMapping) {
@@ -932,18 +1040,22 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
         _matched=true;
         JoinPointType _xblockexpression = null;
         {
-          final ComplexParameterMapping parameterMapping = ((TechnologySpecificFieldMapping)mapping).getParameterMapping();
-          final Pair<Protocol, DataFormat> effectiveProtocolAndDataFormat = this.getEffectiveProtocolAndDataFormat(parameterMapping);
-          List<Pair<Protocol, DataFormat>> _xifexpression = null;
-          if ((effectiveProtocolAndDataFormat != null)) {
-            _xifexpression = Collections.<Pair<Protocol, DataFormat>>unmodifiableList(CollectionLiterals.<Pair<Protocol, DataFormat>>newArrayList(effectiveProtocolAndDataFormat));
-          } else {
-            _xifexpression = null;
+          ComplexParameterMapping _parameterMapping = ((TechnologySpecificFieldMapping)mapping).getParameterMapping();
+          boolean _tripleNotEquals = (_parameterMapping != null);
+          if (_tripleNotEquals) {
+            final ComplexParameterMapping parameterMapping = ((TechnologySpecificFieldMapping)mapping).getParameterMapping();
+            final Pair<Protocol, DataFormat> effectiveProtocolAndDataFormat = this.getEffectiveProtocolAndDataFormat(parameterMapping);
+            List<Pair<Protocol, DataFormat>> _xifexpression = null;
+            if ((effectiveProtocolAndDataFormat != null)) {
+              _xifexpression = Collections.<Pair<Protocol, DataFormat>>unmodifiableList(CollectionLiterals.<Pair<Protocol, DataFormat>>newArrayList(effectiveProtocolAndDataFormat));
+            } else {
+              _xifexpression = null;
+            }
+            forProtocolsAndDataFormats = _xifexpression;
+            final Parameter parameter = parameterMapping.getParameter();
+            forCommunicationType = parameter.getCommunicationType();
+            forExchangePattern = parameter.getExchangePattern();
           }
-          forProtocolsAndDataFormats = _xifexpression;
-          final Parameter parameter = parameterMapping.getParameter();
-          forCommunicationType = parameter.getCommunicationType();
-          forExchangePattern = parameter.getExchangePattern();
           _xblockexpression = JoinPointType.DATA_FIELDS;
         }
         _switchResult = _xblockexpression;

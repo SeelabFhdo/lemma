@@ -34,6 +34,8 @@ import org.eclipse.emf.ecore.EStructuralFeature
 import de.fhdo.ddmm.technology.mapping.TechnologySpecificImportedServiceAspect
 import org.eclipse.xtext.EcoreUtil2
 import de.fhdo.ddmm.technology.Technology
+import de.fhdo.ddmm.technology.mapping.ComplexTypeMapping
+import de.fhdo.ddmm.service.Import
 
 /**
  * This class contains validation rules for the Mapping DSL.
@@ -57,25 +59,53 @@ class MappingDslValidator extends AbstractMappingDslValidator {
     }
 
     /**
+     * Check that technology is assigned only once to a complex type mapping
+     */
+    @Check
+    def checkTechnologyUniqueness(ComplexTypeMapping mapping) {
+        val duplicateIndex = DdmmUtils.getDuplicateIndex(mapping.technologies, [it])
+        if (duplicateIndex > -1)
+            error("Duplicate technology assignment",
+                MappingPackage::Literals.COMPLEX_TYPE_MAPPING__TECHNOLOGIES, duplicateIndex)
+    }
+
+    /**
      * Check that technology is assigned only once to a microservice mapping
      */
     @Check
     def checkTechnologyUniqueness(MicroserviceMapping mapping) {
         val duplicateIndex = DdmmUtils.getDuplicateIndex(mapping.technologies, [it])
-        if (duplicateIndex > -1) {
+        if (duplicateIndex > -1)
             error("Duplicate technology assignment",
                 MappingPackage::Literals.MICROSERVICE_MAPPING__TECHNOLOGIES, duplicateIndex)
-        }
     }
 
     /**
-     * Check that only one annotated technology contains type definitions
+     * Check that only one annotated technology of a complex type mapping contains type definitions
+     */
+    @Check
+    def checkUniqueTypeDefinitionTechnology(ComplexTypeMapping mapping) {
+        checkUniqueTypeDefinitionTechnology(mapping, mapping.technologies,
+            MappingPackage::Literals.COMPLEX_TYPE_MAPPING__TECHNOLOGIES)
+    }
+
+    /**
+     * Check that only one annotated technology of a microservice mapping contains type definitions
      */
     @Check
     def checkUniqueTypeDefinitionTechnology(MicroserviceMapping mapping) {
+        checkUniqueTypeDefinitionTechnology(mapping, mapping.technologies,
+            MappingPackage::Literals.MICROSERVICE_MAPPING__TECHNOLOGIES)
+    }
+
+    /**
+     * Helper to check that only one annotated technology contains type definitions
+     */
+    private def checkUniqueTypeDefinitionTechnology(EObject mapping, List<Import> technologies,
+        EReference feature) {
         var String typeDefinitionTechnologyName = null
-        for (i : 0..<mapping.technologies.size) {
-            val technologyImport = mapping.technologies.get(i)
+        for (i : 0..<technologies.size) {
+            val technologyImport = technologies.get(i)
             val technologyModel = DdmmUtils.getImportedModelRoot(technologyImport.eResource,
                 technologyImport.importURI, Technology)
             if (!technologyModel.primitiveTypes.empty ||
@@ -85,27 +115,44 @@ class MappingDslValidator extends AbstractMappingDslValidator {
                     typeDefinitionTechnologyName = technologyModel.name
                 else
                     error('''Technology "«typeDefinitionTechnologyName»" already defines ''' +
-                        '''technology-specific types. Only one technology per microservice may ''' +
-                        '''define technology-specific types.''',
-                        MappingPackage::Literals.MICROSERVICE_MAPPING__TECHNOLOGIES, i)
+                        '''technology-specific types''', mapping, feature, i)
             }
         }
     }
 
     /**
-     * Check that annotated technologies define not only deployment-related concepts
+     * Check that annotated technologies of complex type mappings define not only deployment-related
+     * concepts
+     */
+    @Check
+    def checkTechnologiesForServiceConcepts(ComplexTypeMapping mapping) {
+        checkTechnologiesForServiceConcepts(mapping, mapping.technologies,
+            MappingPackage::Literals.COMPLEX_TYPE_MAPPING__TECHNOLOGIES)
+    }
+
+    /**
+     * Check that annotated technologies of microservice mappings define not only deployment-related
+     * concepts
      */
     @Check
     def checkTechnologiesForServiceConcepts(MicroserviceMapping mapping) {
-        for (i : 0..<mapping.technologies.size) {
-            val technologyImport = mapping.technologies.get(i)
+        checkTechnologiesForServiceConcepts(mapping, mapping.technologies,
+            MappingPackage::Literals.MICROSERVICE_MAPPING__TECHNOLOGIES)
+    }
+
+    /**
+     * Helper to check that annotated technologies define not only deployment-related concepts
+     */
+    def checkTechnologiesForServiceConcepts(EObject mapping, List<Import> technologies,
+        EReference feature) {
+        for (i : 0..<technologies.size) {
+            val technologyImport = technologies.get(i)
             val technologyModel = DdmmUtils.getImportedModelRoot(technologyImport.eResource,
                 technologyImport.importURI, Technology)
             if (technologyModel.primitiveTypes.empty &&
                 technologyModel.protocols.empty &&
                 technologyModel.serviceAspects.empty) {
-                error("Technology does not specify service-related concepts",
-                    MappingPackage::Literals.MICROSERVICE_MAPPING__TECHNOLOGIES, i)
+                error("Technology does not specify service-related concepts", mapping, feature, i)
             }
         }
     }
@@ -166,38 +213,79 @@ class MappingDslValidator extends AbstractMappingDslValidator {
      * Check that service mappings are unique
      */
     @Check
-    def checkMappingUniqueness(TechnologyMapping model) {
+    def checkMicroserviceMappingUniqueness(TechnologyMapping model) {
         // Mapping technologies may be empty if the model contains syntax errors
         val modelMappingsWithTechnology = model.serviceMappings
             .filter[!technologies.empty]
             .toList
 
-        // Perform uniqueness check based on import alias and full qualified name of the service in
-        // its source model. This check performs the check for a duplicate mapping of a service from
-        // the same model.
-        val duplicateMappingFound = checkMappingUniqueness(modelMappingsWithTechnology, "Service", [
-                val qualifiedNameSegments = <String> newArrayList
-                // The import or its name may be null in case the model contains errors
-                if (microservice.import !== null && microservice.import.name !== null)
-                    qualifiedNameSegments.add(microservice.import.name)
-                qualifiedNameSegments.addAll(microservice.microservice.qualifiedNameParts)
-                QualifiedName.create(qualifiedNameSegments).toString
-            ], MappingPackage::Literals.MICROSERVICE_MAPPING__MICROSERVICE
+        checkFirstLevelMappingUniqueness(
+            modelMappingsWithTechnology,
+            "Service",
+            [microservice?.import?.name],
+            [microservice.microservice.qualifiedNameParts],
+            MappingPackage::Literals.MICROSERVICE_MAPPING__MICROSERVICE
         )
+    }
 
-        // If no duplicate mapping of the same service has been found, check for duplicate mappings
-        // of services that have the same full qualified name but originate from a different source
-        // model. This check is necessary to prevent duplicate service names in intermediate service
-        // models that result from the intermediate model-to-model transformation.
-        if (!duplicateMappingFound)
-            checkMappingUniqueness(modelMappingsWithTechnology, [
-                val qualifiedNameSegments = <String> newArrayList
-                qualifiedNameSegments.addAll(microservice.microservice.qualifiedNameParts)
-                QualifiedName.create(qualifiedNameSegments).toString
-            ], MappingPackage::Literals.MICROSERVICE_MAPPING__MICROSERVICE,
-            "A service with the same qualified name but from another service model has already " +
-            "been mapped"
+    /**
+     * Check that complex type mappings are unique
+     */
+    @Check
+    def checkComplexTypeMappingUniqueness(TechnologyMapping model) {
+        // Mapping technologies may be empty if the model contains syntax errors
+        val modelMappingsWithTechnology = model.typeMappings
+            .filter[!technologies.empty]
+            .toList
+
+        checkFirstLevelMappingUniqueness(
+            modelMappingsWithTechnology,
+            "Type",
+            [type?.dataModelImport?.name],
+            [type.type.qualifiedNameParts],
+            MappingPackage::Literals.COMPLEX_TYPE_MAPPING__TYPE
         )
+    }
+
+    /**
+     * Helper to check that mappings of elements on the first level of the mapping model like
+     * complex types and microservices are unique. This check considers duplicate mappings of
+     * elements defined in the same source model, as well as duplicate mappings of elements from
+     * different source models.
+     */
+    private def <T extends EObject> checkFirstLevelMappingUniqueness(
+        List<T> mappings,
+        String mappingName,
+        Function<T, String> getImportName,
+        Function<T, List<String>> getQualifiedNameParts,
+        EReference mappedElementFeature
+    ) {
+        // Perform uniqueness check based on import alias and full qualified name of the mapped
+        // element in its source model. This check performs the check for a duplicate mapping of a
+        // mapped element from the same model.
+        val duplicateMappingFound = checkMappingUniqueness(mappings, mappingName,
+            [
+                val qualifiedNameSegments = <String> newArrayList
+                val importName = getImportName.apply(it)
+                // The import name may be null in case the model contains errors
+                if (importName !== null)
+                    qualifiedNameSegments.add(importName)
+                qualifiedNameSegments.addAll(getQualifiedNameParts.apply(it))
+                QualifiedName.create(qualifiedNameSegments).toString
+            ], mappedElementFeature)
+
+        // If no duplicate mapping of the same element has been found, check for duplicate mappings
+        // of elements that have the same full qualified name but originate from a different source
+        // model. This check is necessary to prevent duplicate names in intermediate service models
+        // that result from the intermediate model-to-model transformation.
+        if (!duplicateMappingFound)
+            checkMappingUniqueness(
+                mappings,
+                [QualifiedName.create(getQualifiedNameParts.apply(it)).toString],
+                mappedElementFeature,
+                '''«mappingName» with the same qualified name but from another model has ''' +
+                '''already been mapped'''
+            )
     }
 
     /**
@@ -510,37 +598,51 @@ class MappingDslValidator extends AbstractMappingDslValidator {
     }
 
     /**
-     * Check that a data field is mapped only once in a complex parameter mapping
+     * Check that a field is mapped only once in a complex parameter mapping
      */
     @Check
     def checkComplexParameterMappingUniqueFields(ComplexParameterMapping mapping) {
-        val parameterType = mapping.parameter.importedType.type as ComplexType
-        val parameterIsEnumeration = parameterType.isEnumeration
+        checkFieldMappingUniqueness(mapping.parameter.importedType.type as ComplexType,
+            mapping.fieldMappings)
+    }
 
-        val duplicateIndex = if (parameterIsEnumeration)
-                DdmmUtils.getDuplicateIndex(mapping.fieldMappings, [enumerationField])
+    /**
+     * Check that a field is mapped only once in a complex type mapping
+     */
+    @Check
+    def checkComplexTypeMappingUniqueFields(ComplexTypeMapping mapping) {
+        checkFieldMappingUniqueness(mapping.type.type, mapping.fieldMappings)
+    }
+
+    /**
+     * Helper to check that fields are mapped only once
+     */
+    private def checkFieldMappingUniqueness(ComplexType type,
+        List<TechnologySpecificFieldMapping> mappings) {
+        val duplicateIndex = if (type.isEnumeration)
+                DdmmUtils.getDuplicateIndex(mappings, [enumerationField])
             else
-                DdmmUtils.getDuplicateIndex(mapping.fieldMappings,
-                    [dataFieldHierarchy.dataFields.last])
+                DdmmUtils.getDuplicateIndex(mappings, [dataField])
 
-        if (duplicateIndex > -1) {
-            val duplicateMapping = mapping.fieldMappings.get(duplicateIndex)
-
-            var String duplicateFieldName
-            var EReference duplicateFieldReference
-            if (parameterIsEnumeration) {
-                duplicateFieldName = duplicateMapping.enumerationField.name
-                duplicateFieldReference = MappingPackage::Literals
-                    .TECHNOLOGY_SPECIFIC_FIELD_MAPPING__ENUMERATION_FIELD
-            } else {
-                duplicateFieldName = duplicateMapping.dataFieldHierarchy.dataFields.last.name
-                duplicateFieldReference = MappingPackage::Literals
-                    .TECHNOLOGY_SPECIFIC_FIELD_MAPPING__DATA_FIELD_HIERARCHY
-            }
-
-            error('''Duplicate mapping for field «duplicateFieldName»''', duplicateMapping,
-                duplicateFieldReference)
+        if (duplicateIndex == -1) {
+            return
         }
+
+        val duplicateMapping = mappings.get(duplicateIndex)
+        var String duplicateFieldName
+        var EReference duplicateFieldReference
+        if (type.isEnumeration) {
+            duplicateFieldName = duplicateMapping.enumerationField.name
+            duplicateFieldReference = MappingPackage::Literals
+                .TECHNOLOGY_SPECIFIC_FIELD_MAPPING__ENUMERATION_FIELD
+        } else {
+            duplicateFieldName = duplicateMapping.dataField.name
+            duplicateFieldReference = MappingPackage::Literals
+                .TECHNOLOGY_SPECIFIC_FIELD_MAPPING__DATA_FIELD
+        }
+
+        error('''Duplicate mapping for field «duplicateFieldName»''', duplicateMapping,
+            duplicateFieldReference)
     }
 
     /**
@@ -711,9 +813,9 @@ class MappingDslValidator extends AbstractMappingDslValidator {
                     // variants of list and structure types inherit)
                     else if (mappedType instanceof ComplexType)
                         mappedType.name
-                originalType = mapping.dataFieldHierarchy.dataFields.last.effectiveType
+                originalType = mapping.dataField.effectiveType
                 erroneousMappingFeature = MappingPackage::Literals
-                    .TECHNOLOGY_SPECIFIC_FIELD_MAPPING__DATA_FIELD_HIERARCHY
+                    .TECHNOLOGY_SPECIFIC_FIELD_MAPPING__DATA_FIELD
             }
         }
 

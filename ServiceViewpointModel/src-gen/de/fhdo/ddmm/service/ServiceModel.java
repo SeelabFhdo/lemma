@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link de.fhdo.ddmm.service.ServiceModel#getT_modelUri <em>Tmodel Uri</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.ServiceModel#getImports <em>Imports</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.service.ServiceModel#getMappedComplexTypes <em>Mapped Complex Types</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.ServiceModel#getMicroservices <em>Microservices</em>}</li>
  * </ul>
  *
@@ -74,6 +75,24 @@ public interface ServiceModel extends EObject {
      * @generated
      */
     EList<Import> getImports();
+
+    /**
+     * Returns the value of the '<em><b>Mapped Complex Types</b></em>' containment reference list.
+     * The list contents are of type {@link de.fhdo.ddmm.service.MappedComplexType}.
+     * It is bidirectional and its opposite is '{@link de.fhdo.ddmm.service.MappedComplexType#getServiceModel <em>Service Model</em>}'.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Mapped Complex Types</em>' containment reference list isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Mapped Complex Types</em>' containment reference list.
+     * @see de.fhdo.ddmm.service.ServicePackage#getServiceModel_MappedComplexTypes()
+     * @see de.fhdo.ddmm.service.MappedComplexType#getServiceModel
+     * @model opposite="serviceModel" containment="true"
+     * @generated
+     */
+    EList<MappedComplexType> getMappedComplexTypes();
 
     /**
      * Returns the value of the '<em><b>Microservices</b></em>' containment reference list.

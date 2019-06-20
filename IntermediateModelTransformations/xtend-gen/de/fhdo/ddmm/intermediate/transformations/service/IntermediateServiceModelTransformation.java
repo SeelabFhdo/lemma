@@ -2,9 +2,10 @@ package de.fhdo.ddmm.intermediate.transformations.service;
 
 import com.google.common.base.Objects;
 import de.fhdo.ddmm.data.intermediate.IntermediateImport;
-import de.fhdo.ddmm.intermediate.transformations.AbstractIntermediateModelTransformationStrategy;
-import de.fhdo.ddmm.intermediate.transformations.AbstractSourceModelValidator;
-import de.fhdo.ddmm.intermediate.transformations.TargetModelInfo;
+import de.fhdo.ddmm.intermediate.transformations.AbstractAtlInputOutputIntermediateModelTransformationStrategy;
+import de.fhdo.ddmm.intermediate.transformations.AbstractInputModelValidator;
+import de.fhdo.ddmm.intermediate.transformations.TransformationModelDescription;
+import de.fhdo.ddmm.intermediate.transformations.TransformationModelType;
 import de.fhdo.ddmm.intermediate.transformations.service.ServiceModelTransformationValidator;
 import de.fhdo.ddmm.service.Import;
 import de.fhdo.ddmm.service.Microservice;
@@ -22,29 +23,44 @@ import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.m2m.atl.core.emf.EMFModel;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
+import org.eclipse.xtext.xbase.lib.Conversions;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.Pair;
 
 /**
- * This class enables access the model-to-model transformation of service models to intermediate
+ * Implementation of the ATL-based model-to-model transformation of service models to intermediate
  * service models.
  * 
  * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
  */
 @SuppressWarnings("all")
-public class IntermediateServiceModelTransformation extends AbstractIntermediateModelTransformationStrategy {
-  private static final TargetModelInfo TARGET_MODEL_INFO = new TargetModelInfo(
-    IntermediatePackage.eNS_URI, 
-    IntermediatePackage.eINSTANCE, 
-    IntermediateServiceModel.class);
-  
-  private String absoluteSourceModelPath;
+public class IntermediateServiceModelTransformation extends AbstractAtlInputOutputIntermediateModelTransformationStrategy {
+  private String absoluteInputModelPath;
   
   /**
-   * Get project-relative path to compiled ATL model transformation file
+   * Specify reference name and transformation model type of input model
+   */
+  @Override
+  public Pair<String, TransformationModelType> getInputModelReferenceNameAndType() {
+    TransformationModelType _transformationModelType = new TransformationModelType(ServicePackage.eNS_URI, ServicePackage.eINSTANCE, 
+      ServiceModel.class);
+    return Pair.<String, TransformationModelType>of("Service", _transformationModelType);
+  }
+  
+  /**
+   * Specify reference name and transformation model type of output model
+   */
+  @Override
+  public Pair<String, TransformationModelType> getOutputModelReferenceNameAndType() {
+    TransformationModelType _transformationModelType = new TransformationModelType(IntermediatePackage.eNS_URI, 
+      IntermediatePackage.eINSTANCE, IntermediateServiceModel.class);
+    return Pair.<String, TransformationModelType>of("Intermediate", _transformationModelType);
+  }
+  
+  /**
+   * Specify path to the compiled ATL transformation file
    */
   @Override
   public String getCompiledModelTransformationFilePath() {
@@ -52,34 +68,26 @@ public class IntermediateServiceModelTransformation extends AbstractIntermediate
   }
   
   /**
-   * Get URI and EPackage of the target intermediate metamodel
+   * Fetch path of input model prior to transformation execution
    */
   @Override
-  public TargetModelInfo getTargetModelInfo() {
-    return IntermediateServiceModelTransformation.TARGET_MODEL_INFO;
+  public void beforeTransformationHook(final Map<TransformationModelDescription, String> absoluteInputModelPaths) {
+    this.absoluteInputModelPath = ((String[])Conversions.unwrapArray(absoluteInputModelPaths.values(), String.class))[0];
   }
   
   /**
-   * Before transformation hook
+   * Prepare input model
    */
   @Override
-  public void beforeTransformationHook(final String absoluteSourceModelPath) {
-    this.absoluteSourceModelPath = absoluteSourceModelPath;
-  }
-  
-  /**
-   * Prepare source model
-   */
-  @Override
-  public void prepareSourceModel(final EObject modelRoot) {
+  public void prepareInputModel(final TransformationModelDescription modelDescription, final EObject modelRoot) {
     final ServiceModel serviceModel = ((ServiceModel) modelRoot);
     String _t_modelUri = serviceModel.getT_modelUri();
     boolean _tripleEquals = (_t_modelUri == null);
     if (_tripleEquals) {
-      serviceModel.setT_modelUri(DdmmUtils.convertToFileUri(this.absoluteSourceModelPath));
+      serviceModel.setT_modelUri(DdmmUtils.convertToFileUri(this.absoluteInputModelPath));
     }
     final Consumer<Import> _function = (Import it) -> {
-      it.setImportURI(DdmmUtils.convertToAbsoluteFileUri(it.getImportURI(), this.absoluteSourceModelPath));
+      it.setImportURI(DdmmUtils.convertToAbsoluteFileUri(it.getImportURI(), this.absoluteInputModelPath));
     };
     serviceModel.getImports().forEach(_function);
     this.linkTechnologyModels(serviceModel.getMicroservices());
@@ -125,51 +133,26 @@ public class IntermediateServiceModelTransformation extends AbstractIntermediate
   }
   
   /**
-   * Get validator for source model
+   * Specify validator for input model
    */
   @Override
-  public AbstractSourceModelValidator getSourceModelValidator() {
+  public AbstractInputModelValidator getInputModelValidator(final TransformationModelDescription modelDescription) {
     return new ServiceModelTransformationValidator();
-  }
-  
-  /**
-   * Get namespace URI of the source metamodel's EPackage
-   */
-  @Override
-  public String getSourcePackageNamespaceUri() {
-    return ServicePackage.eNS_URI;
-  }
-  
-  /**
-   * Get prefix of source model in ATL transformation file
-   */
-  @Override
-  public String getTransformationSourceModelPrefix() {
-    return "Service";
-  }
-  
-  /**
-   * Get prefix of target model in ATL transformation file
-   */
-  @Override
-  public String getTransformationTargetModelPrefix() {
-    return "Intermediate";
   }
   
   /**
    * Add transformation target paths of imported model files to target model
    */
   @Override
-  public void populateTargetModelWithImportTargetPaths(final EMFModel targetModel, final Map<String, String> targetPaths) {
-    EObject _get = targetModel.getResource().getContents().get(0);
-    final IntermediateServiceModel modelRoot = ((IntermediateServiceModel) _get);
+  public void populateOutputModelWithImportTargetPaths(final TransformationModelDescription modelDescription, final EObject modelRoot, final Map<String, String> targetPaths) {
+    final IntermediateServiceModel serviceModelRoot = ((IntermediateServiceModel) modelRoot);
     final String workspacePath = ResourcesPlugin.getWorkspace().getRoot().getLocation().toString();
     final BiConsumer<String, String> _function = (String importName, String targetPath) -> {
       final Function1<IntermediateImport, Boolean> _function_1 = (IntermediateImport it) -> {
         String _name = it.getName();
         return Boolean.valueOf(Objects.equal(_name, importName));
       };
-      final IntermediateImport import_ = IterableExtensions.<IntermediateImport>findFirst(modelRoot.getImports(), _function_1);
+      final IntermediateImport import_ = IterableExtensions.<IntermediateImport>findFirst(serviceModelRoot.getImports(), _function_1);
       import_.setImportUri(DdmmUtils.convertToFileUri((workspacePath + targetPath)));
     };
     targetPaths.forEach(_function);

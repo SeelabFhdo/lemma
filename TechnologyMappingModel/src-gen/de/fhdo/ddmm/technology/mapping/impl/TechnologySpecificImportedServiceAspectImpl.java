@@ -9,6 +9,7 @@ import de.fhdo.ddmm.service.Import;
 import de.fhdo.ddmm.technology.ServiceAspect;
 import de.fhdo.ddmm.technology.TechnologySpecificPropertyValueAssignment;
 
+import de.fhdo.ddmm.technology.mapping.ComplexTypeMapping;
 import de.fhdo.ddmm.technology.mapping.InterfaceMapping;
 import de.fhdo.ddmm.technology.mapping.MappingPackage;
 import de.fhdo.ddmm.technology.mapping.MicroserviceMapping;
@@ -47,6 +48,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.fhdo.ddmm.technology.mapping.impl.TechnologySpecificImportedServiceAspectImpl#getAspect <em>Aspect</em>}</li>
  *   <li>{@link de.fhdo.ddmm.technology.mapping.impl.TechnologySpecificImportedServiceAspectImpl#getSinglePropertyValue <em>Single Property Value</em>}</li>
  *   <li>{@link de.fhdo.ddmm.technology.mapping.impl.TechnologySpecificImportedServiceAspectImpl#getValues <em>Values</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.technology.mapping.impl.TechnologySpecificImportedServiceAspectImpl#getTypeMapping <em>Type Mapping</em>}</li>
  *   <li>{@link de.fhdo.ddmm.technology.mapping.impl.TechnologySpecificImportedServiceAspectImpl#getMicroserviceMapping <em>Microservice Mapping</em>}</li>
  *   <li>{@link de.fhdo.ddmm.technology.mapping.impl.TechnologySpecificImportedServiceAspectImpl#getInterfaceMapping <em>Interface Mapping</em>}</li>
  *   <li>{@link de.fhdo.ddmm.technology.mapping.impl.TechnologySpecificImportedServiceAspectImpl#getOperationMapping <em>Operation Mapping</em>}</li>
@@ -253,6 +255,59 @@ public class TechnologySpecificImportedServiceAspectImpl extends MinimalEObjectI
             values = new EObjectContainmentEList<TechnologySpecificPropertyValueAssignment>(TechnologySpecificPropertyValueAssignment.class, this, MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__VALUES);
         }
         return values;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public ComplexTypeMapping getTypeMapping() {
+        if (eContainerFeatureID() != MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__TYPE_MAPPING) return null;
+        return (ComplexTypeMapping)eContainer();
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public ComplexTypeMapping basicGetTypeMapping() {
+        if (eContainerFeatureID() != MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__TYPE_MAPPING) return null;
+        return (ComplexTypeMapping)eInternalContainer();
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public NotificationChain basicSetTypeMapping(ComplexTypeMapping newTypeMapping, NotificationChain msgs) {
+        msgs = eBasicSetContainer((InternalEObject)newTypeMapping, MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__TYPE_MAPPING, msgs);
+        return msgs;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void setTypeMapping(ComplexTypeMapping newTypeMapping) {
+        if (newTypeMapping != eInternalContainer() || (eContainerFeatureID() != MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__TYPE_MAPPING && newTypeMapping != null)) {
+            if (EcoreUtil.isAncestor(this, newTypeMapping))
+                throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
+            NotificationChain msgs = null;
+            if (eInternalContainer() != null)
+                msgs = eBasicRemoveFromContainer(msgs);
+            if (newTypeMapping != null)
+                msgs = ((InternalEObject)newTypeMapping).eInverseAdd(this, MappingPackage.COMPLEX_TYPE_MAPPING__ASPECTS, ComplexTypeMapping.class, msgs);
+            msgs = basicSetTypeMapping(newTypeMapping, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__TYPE_MAPPING, newTypeMapping, newTypeMapping));
     }
 
     /**
@@ -581,6 +636,10 @@ public class TechnologySpecificImportedServiceAspectImpl extends MinimalEObjectI
     @Override
     public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
+            case MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__TYPE_MAPPING:
+                if (eInternalContainer() != null)
+                    msgs = eBasicRemoveFromContainer(msgs);
+                return basicSetTypeMapping((ComplexTypeMapping)otherEnd, msgs);
             case MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__MICROSERVICE_MAPPING:
                 if (eInternalContainer() != null)
                     msgs = eBasicRemoveFromContainer(msgs);
@@ -621,6 +680,8 @@ public class TechnologySpecificImportedServiceAspectImpl extends MinimalEObjectI
                 return basicSetSinglePropertyValue(null, msgs);
             case MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__VALUES:
                 return ((InternalEList<?>)getValues()).basicRemove(otherEnd, msgs);
+            case MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__TYPE_MAPPING:
+                return basicSetTypeMapping(null, msgs);
             case MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__MICROSERVICE_MAPPING:
                 return basicSetMicroserviceMapping(null, msgs);
             case MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__INTERFACE_MAPPING:
@@ -645,6 +706,8 @@ public class TechnologySpecificImportedServiceAspectImpl extends MinimalEObjectI
     @Override
     public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
         switch (eContainerFeatureID()) {
+            case MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__TYPE_MAPPING:
+                return eInternalContainer().eInverseRemove(this, MappingPackage.COMPLEX_TYPE_MAPPING__ASPECTS, ComplexTypeMapping.class, msgs);
             case MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__MICROSERVICE_MAPPING:
                 return eInternalContainer().eInverseRemove(this, MappingPackage.MICROSERVICE_MAPPING__ASPECTS, MicroserviceMapping.class, msgs);
             case MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__INTERFACE_MAPPING:
@@ -679,6 +742,9 @@ public class TechnologySpecificImportedServiceAspectImpl extends MinimalEObjectI
                 return getSinglePropertyValue();
             case MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__VALUES:
                 return getValues();
+            case MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__TYPE_MAPPING:
+                if (resolve) return getTypeMapping();
+                return basicGetTypeMapping();
             case MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__MICROSERVICE_MAPPING:
                 if (resolve) return getMicroserviceMapping();
                 return basicGetMicroserviceMapping();
@@ -723,6 +789,9 @@ public class TechnologySpecificImportedServiceAspectImpl extends MinimalEObjectI
                 getValues().clear();
                 getValues().addAll((Collection<? extends TechnologySpecificPropertyValueAssignment>)newValue);
                 return;
+            case MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__TYPE_MAPPING:
+                setTypeMapping((ComplexTypeMapping)newValue);
+                return;
             case MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__MICROSERVICE_MAPPING:
                 setMicroserviceMapping((MicroserviceMapping)newValue);
                 return;
@@ -765,6 +834,9 @@ public class TechnologySpecificImportedServiceAspectImpl extends MinimalEObjectI
             case MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__VALUES:
                 getValues().clear();
                 return;
+            case MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__TYPE_MAPPING:
+                setTypeMapping((ComplexTypeMapping)null);
+                return;
             case MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__MICROSERVICE_MAPPING:
                 setMicroserviceMapping((MicroserviceMapping)null);
                 return;
@@ -803,6 +875,8 @@ public class TechnologySpecificImportedServiceAspectImpl extends MinimalEObjectI
                 return singlePropertyValue != null;
             case MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__VALUES:
                 return values != null && !values.isEmpty();
+            case MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__TYPE_MAPPING:
+                return basicGetTypeMapping() != null;
             case MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__MICROSERVICE_MAPPING:
                 return basicGetMicroserviceMapping() != null;
             case MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__INTERFACE_MAPPING:

@@ -62,7 +62,8 @@ import de.fhdo.ddmm.technology.TechnologySpecificPrimitiveType;
 import de.fhdo.ddmm.technology.TechnologySpecificProperty;
 import de.fhdo.ddmm.technology.TechnologySpecificPropertyValueAssignment;
 import de.fhdo.ddmm.technology.mapping.ComplexParameterMapping;
-import de.fhdo.ddmm.technology.mapping.DataFieldHierarchy;
+import de.fhdo.ddmm.technology.mapping.ComplexTypeMapping;
+import de.fhdo.ddmm.technology.mapping.ImportedComplexType;
 import de.fhdo.ddmm.technology.mapping.ImportedMicroservice;
 import de.fhdo.ddmm.technology.mapping.InterfaceMapping;
 import de.fhdo.ddmm.technology.mapping.MappingPackage;
@@ -170,8 +171,11 @@ public class MappingDslSemanticSequencer extends ServiceDslSemanticSequencer {
 			case MappingPackage.COMPLEX_PARAMETER_MAPPING:
 				sequence_ComplexParameterMapping(context, (ComplexParameterMapping) semanticObject); 
 				return; 
-			case MappingPackage.DATA_FIELD_HIERARCHY:
-				sequence_DataFieldHierarchy(context, (DataFieldHierarchy) semanticObject); 
+			case MappingPackage.COMPLEX_TYPE_MAPPING:
+				sequence_ComplexTypeMapping(context, (ComplexTypeMapping) semanticObject); 
+				return; 
+			case MappingPackage.IMPORTED_COMPLEX_TYPE:
+				sequence_ImportedComplexType(context, (ImportedComplexType) semanticObject); 
 				return; 
 			case MappingPackage.IMPORTED_MICROSERVICE:
 				sequence_ImportedMicroservice(context, (ImportedMicroservice) semanticObject); 
@@ -339,14 +343,42 @@ public class MappingDslSemanticSequencer extends ServiceDslSemanticSequencer {
 	
 	/**
 	 * Contexts:
-	 *     DataFieldHierarchy returns DataFieldHierarchy
-	 *     DataFieldHierarchy.DataFieldHierarchy_1_0 returns DataFieldHierarchy
+	 *     ComplexTypeMapping returns ComplexTypeMapping
 	 *
 	 * Constraint:
-	 *     (dataFields+=[DataField|ID] | (previous=DataFieldHierarchy_DataFieldHierarchy_1_0 dataFields+=[DataField|ID]))
+	 *     (
+	 *         technologies+=[Import|ID]+ 
+	 *         type=ImportedComplexType 
+	 *         aspects+=TechnologySpecificImportedServiceAspect* 
+	 *         (fieldMappings+=TechnologySpecificFieldMapping fieldMappings+=TechnologySpecificFieldMapping*)?
+	 *     )
 	 */
-	protected void sequence_DataFieldHierarchy(ISerializationContext context, DataFieldHierarchy semanticObject) {
+	protected void sequence_ComplexTypeMapping(ISerializationContext context, ComplexTypeMapping semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     ImportedComplexType returns ImportedComplexType
+	 *
+	 * Constraint:
+	 *     (serviceModelImport=[Import|ID] dataModelImport=[Import|ID] type=[ComplexType|QualifiedName])
+	 */
+	protected void sequence_ImportedComplexType(ISerializationContext context, ImportedComplexType semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, MappingPackage.Literals.IMPORTED_COMPLEX_TYPE__SERVICE_MODEL_IMPORT) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MappingPackage.Literals.IMPORTED_COMPLEX_TYPE__SERVICE_MODEL_IMPORT));
+			if (transientValues.isValueTransient(semanticObject, MappingPackage.Literals.IMPORTED_COMPLEX_TYPE__DATA_MODEL_IMPORT) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MappingPackage.Literals.IMPORTED_COMPLEX_TYPE__DATA_MODEL_IMPORT));
+			if (transientValues.isValueTransient(semanticObject, MappingPackage.Literals.IMPORTED_COMPLEX_TYPE__TYPE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MappingPackage.Literals.IMPORTED_COMPLEX_TYPE__TYPE));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getImportedComplexTypeAccess().getServiceModelImportImportIDTerminalRuleCall_0_0_1(), semanticObject.eGet(MappingPackage.Literals.IMPORTED_COMPLEX_TYPE__SERVICE_MODEL_IMPORT, false));
+		feeder.accept(grammarAccess.getImportedComplexTypeAccess().getDataModelImportImportIDTerminalRuleCall_2_0_1(), semanticObject.eGet(MappingPackage.Literals.IMPORTED_COMPLEX_TYPE__DATA_MODEL_IMPORT, false));
+		feeder.accept(grammarAccess.getImportedComplexTypeAccess().getTypeComplexTypeQualifiedNameParserRuleCall_4_0_1(), semanticObject.eGet(MappingPackage.Literals.IMPORTED_COMPLEX_TYPE__TYPE, false));
+		feeder.finish();
 	}
 	
 	
@@ -469,7 +501,7 @@ public class MappingDslSemanticSequencer extends ServiceDslSemanticSequencer {
 	 *     TechnologyMapping returns TechnologyMapping
 	 *
 	 * Constraint:
-	 *     (imports+=Import+ serviceMappings+=MicroserviceMapping+)
+	 *     (imports+=Import+ typeMappings+=ComplexTypeMapping* serviceMappings+=MicroserviceMapping+)
 	 */
 	protected void sequence_TechnologyMapping(ISerializationContext context, TechnologyMapping semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -499,7 +531,7 @@ public class MappingDslSemanticSequencer extends ServiceDslSemanticSequencer {
 	 *
 	 * Constraint:
 	 *     (
-	 *         (enumerationField=[EnumerationField|ID] | (dataFieldHierarchy=DataFieldHierarchy technology=[Import|ID] type=[Type|QualifiedName])) 
+	 *         (enumerationField=[EnumerationField|ID] | (dataField=[DataField|ID] technology=[Import|ID] type=[Type|QualifiedName])) 
 	 *         aspects+=TechnologySpecificImportedServiceAspect*
 	 *     )
 	 */

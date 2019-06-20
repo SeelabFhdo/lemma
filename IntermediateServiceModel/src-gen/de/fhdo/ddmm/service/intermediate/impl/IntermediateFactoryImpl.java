@@ -62,17 +62,13 @@ public class IntermediateFactoryImpl extends EFactoryImpl implements Intermediat
             case IntermediatePackage.INTERMEDIATE_OPERATION: return createIntermediateOperation();
             case IntermediatePackage.INTERMEDIATE_REFERRED_OPERATION: return createIntermediateReferredOperation();
             case IntermediatePackage.INTERMEDIATE_PARAMETER: return createIntermediateParameter();
-            case IntermediatePackage.INTERMEDIATE_MAPPED_FIELD: return createIntermediateMappedField();
+            case IntermediatePackage.DATA_FIELD_ASPECTS: return createDataFieldAspects();
             case IntermediatePackage.MICROSERVICE_REFERENCE: return createMicroserviceReference();
             case IntermediatePackage.INTERFACE_REFERENCE: return createInterfaceReference();
             case IntermediatePackage.OPERATION_REFERENCE: return createOperationReference();
             case IntermediatePackage.INTERMEDIATE_TECHNOLOGY: return createIntermediateTechnology();
             case IntermediatePackage.INTERMEDIATE_ENDPOINT: return createIntermediateEndpoint();
             case IntermediatePackage.INTERMEDIATE_PROTOCOL_SPECIFICATION: return createIntermediateProtocolSpecification();
-            case IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT: return createIntermediateImportedAspect();
-            case IntermediatePackage.INTERMEDIATE_ASPECT_PROPERTY: return createIntermediateAspectProperty();
-            case IntermediatePackage.INTERMEDIATE_ASPECT_PROPERTY_VALUE: return createIntermediateAspectPropertyValue();
-            case IntermediatePackage.INTERMEDIATE_IMPORTED_TECHNOLOGY_SPECIFIC_TYPE: return createIntermediateImportedTechnologySpecificType();
             default:
                 throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
         }
@@ -150,9 +146,9 @@ public class IntermediateFactoryImpl extends EFactoryImpl implements Intermediat
      * @generated
      */
     @Override
-    public IntermediateMappedField createIntermediateMappedField() {
-        IntermediateMappedFieldImpl intermediateMappedField = new IntermediateMappedFieldImpl();
-        return intermediateMappedField;
+    public DataFieldAspects createDataFieldAspects() {
+        DataFieldAspectsImpl dataFieldAspects = new DataFieldAspectsImpl();
+        return dataFieldAspects;
     }
 
     /**
@@ -219,50 +215,6 @@ public class IntermediateFactoryImpl extends EFactoryImpl implements Intermediat
     public IntermediateProtocolSpecification createIntermediateProtocolSpecification() {
         IntermediateProtocolSpecificationImpl intermediateProtocolSpecification = new IntermediateProtocolSpecificationImpl();
         return intermediateProtocolSpecification;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public IntermediateImportedAspect createIntermediateImportedAspect() {
-        IntermediateImportedAspectImpl intermediateImportedAspect = new IntermediateImportedAspectImpl();
-        return intermediateImportedAspect;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public IntermediateAspectProperty createIntermediateAspectProperty() {
-        IntermediateAspectPropertyImpl intermediateAspectProperty = new IntermediateAspectPropertyImpl();
-        return intermediateAspectProperty;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public IntermediateAspectPropertyValue createIntermediateAspectPropertyValue() {
-        IntermediateAspectPropertyValueImpl intermediateAspectPropertyValue = new IntermediateAspectPropertyValueImpl();
-        return intermediateAspectPropertyValue;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public IntermediateImportedTechnologySpecificType createIntermediateImportedTechnologySpecificType() {
-        IntermediateImportedTechnologySpecificTypeImpl intermediateImportedTechnologySpecificType = new IntermediateImportedTechnologySpecificTypeImpl();
-        return intermediateImportedTechnologySpecificType;
     }
 
     /**

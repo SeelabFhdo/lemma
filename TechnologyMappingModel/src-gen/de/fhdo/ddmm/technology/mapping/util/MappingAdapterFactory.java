@@ -72,6 +72,14 @@ public class MappingAdapterFactory extends AdapterFactoryImpl {
                 return createTechnologyMappingAdapter();
             }
             @Override
+            public Adapter caseComplexTypeMapping(ComplexTypeMapping object) {
+                return createComplexTypeMappingAdapter();
+            }
+            @Override
+            public Adapter caseImportedComplexType(ImportedComplexType object) {
+                return createImportedComplexTypeAdapter();
+            }
+            @Override
             public Adapter caseMicroserviceMapping(MicroserviceMapping object) {
                 return createMicroserviceMappingAdapter();
             }
@@ -106,10 +114,6 @@ public class MappingAdapterFactory extends AdapterFactoryImpl {
             @Override
             public Adapter caseTechnologySpecificFieldMapping(TechnologySpecificFieldMapping object) {
                 return createTechnologySpecificFieldMappingAdapter();
-            }
-            @Override
-            public Adapter caseDataFieldHierarchy(DataFieldHierarchy object) {
-                return createDataFieldHierarchyAdapter();
             }
             @Override
             public Adapter caseTechnologySpecificProtocolSpecification(TechnologySpecificProtocolSpecification object) {
@@ -158,6 +162,34 @@ public class MappingAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createTechnologyMappingAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.fhdo.ddmm.technology.mapping.ComplexTypeMapping <em>Complex Type Mapping</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.fhdo.ddmm.technology.mapping.ComplexTypeMapping
+     * @generated
+     */
+    public Adapter createComplexTypeMappingAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.fhdo.ddmm.technology.mapping.ImportedComplexType <em>Imported Complex Type</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.fhdo.ddmm.technology.mapping.ImportedComplexType
+     * @generated
+     */
+    public Adapter createImportedComplexTypeAdapter() {
         return null;
     }
 
@@ -284,20 +316,6 @@ public class MappingAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createTechnologySpecificFieldMappingAdapter() {
-        return null;
-    }
-
-    /**
-     * Creates a new adapter for an object of class '{@link de.fhdo.ddmm.technology.mapping.DataFieldHierarchy <em>Data Field Hierarchy</em>}'.
-     * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see de.fhdo.ddmm.technology.mapping.DataFieldHierarchy
-     * @generated
-     */
-    public Adapter createDataFieldHierarchyAdapter() {
         return null;
     }
 

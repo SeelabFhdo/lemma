@@ -189,7 +189,7 @@ rule CreatedMappedField(createdMappedField : Intermediate!IntermediateMappedFiel
 --- MappedField instance
 helper def : getCreatedMappedField(sourceMappedField : Service!MappedField) 
 	: Intermediate!IntermediateMappedField =
-	thisModule.createdMappedFields->get(sourceMappedField.buildQualifiedName('.'))
+	thisModule.createdMappedFields->get(sourceMappedField.buildQualifiedName('.', true))
 ;
 ----------------------------------------------------------------------------------------------------
 
@@ -221,7 +221,7 @@ rule IntermediateImport {
 			-- Note that normally this would be a direct mapping between the source and the target
 			-- importType. However, the XMI serlializer seems to be bugged. See the comments in the
 			-- metamodel on why here the name of the import type is used instead.
-			importTypeName <- i.importType.toString()
+			importTypeName <- thisModule.getImportTypeName(i)
 		)
 	do {
 		-- Assign created target instance to the list of imports under the model root
@@ -232,6 +232,18 @@ rule IntermediateImport {
 		thisModule.CreatedImport(t);
 	}
 }	
+
+--- Helper to get the name of an import type without preceding hash sign ('#')
+helper def : getImportTypeName(import : Service!Import) : String =
+	let
+		rawImportTypeName : String = import.importType.toString()
+	in
+	if (rawImportTypeName.startsWith('#')) then
+		rawImportTypeName.substring(2, rawImportTypeName.size())
+	else
+		rawImportTypeName
+	endif
+;
 
 --- Transform a source Microservice, to a target IntermediateMicroservice
 rule IntermediateMicroservice {
@@ -455,30 +467,6 @@ rule IntermediateParameter {
 	}
 }
 
---- Transform a source MappedField to a target IntermediateMappedField
-rule IntermediateMappedField {
-	from
-		f : Service!MappedField
-	to
-		i : Intermediate!IntermediateMappedField(			
-			qualifiedName <- f.buildQualifiedName('.'),
-			parameter <- thisModule.getCreatedParameter(f.parameter)
-		)
-	do {
-		if (not f.dataField.oclIsUndefined()) {			
-			i.mappedFieldName <- f.dataField.name;
-			i.mappedType <- thisModule.TechnologySpecificIntermediateType(f.mappedType, 
-				f.parameter.operation.interface.microservice.t_typeDefinitionTechnology.name);
-			i.originalTypeKind <- thisModule.getTypeKind(f.dataField.getEffectiveType());
-		} else if (not f.enumerationField.oclIsUndefined()) {
-			i.mappedFieldName <- f.enumerationField.name;
-			i.originalTypeKind <- #ENUMERATION;
-		}
-		
-		thisModule.CreatedMappedField(i);
-	}
-}
-
 --- Check if a parameter has a primitive type for which a default technology-specific primitive type
 --- exists in the technology of the microservice (if any)
 helper def : hasDefaultPrimitiveTechnologySpecificType(p : Service!Parameter) : Boolean =
@@ -540,7 +528,7 @@ helper def : hasTechnologySpecificType(p : Service!Parameter) : Boolean =
 	endif
 ;
 
---- Create an intermediate type for a parameter type that was imported from a technoplogy and
+--- Create an intermediate type for a parameter type that was imported from a technoplogy model and
 --- explicitly assigned to the parameter
 rule TechnologySpecificIntermediateType(importedType : Service!ImportedType, 
 	technologyName : String) {
@@ -878,7 +866,21 @@ rule CreateOperationReference(sourceOperation : Service!PossiblyImportedOperatio
 --- Create an IntermediateImportedAspect from an ImportedServiceAspect instance
 rule IntermediateImportedAspect {
 	from
-		a : Service!ImportedServiceAspect
+		a : Service!ImportedServiceAspect (
+			-- Aspects of mapped complex types are part of intermediate data models (not 
+			-- intermediate service models)
+			if (not a.mappedComplexType.oclIsUndefined()) then
+				false
+			-- Aspects of mapped fields are only handled if they are assigned to the fields in the
+			-- context of a parameter. Aspects of mapped fields belonging to mapped complex types
+			-- are reflected in intermediate data models (not intermediate service models).
+			else if (not a.mappedField.oclIsUndefined()) then
+				not a.mappedField.parameter.oclIsUndefined()
+			else 
+				true
+			endif
+			endif
+		)
 	to
 		i : Intermediate!IntermediateImportedAspect(
 			name <- a.importedAspect.name,
@@ -887,7 +889,9 @@ rule IntermediateImportedAspect {
 	do {
 		-- Create properties of aspect and link them with the aspect 
 		for (property in a.importedAspect.properties) {
-			i.properties <- i.properties->append(thisModule.IntermediateAspectProperty(property, i));
+			i.properties <- i.properties->append(
+				thisModule.IntermediateAspectProperty(property, i)
+			);
 		}
 		
 		-- Create values of aspect and link them with the aspect. Therefore, we consider both, the
@@ -905,17 +909,57 @@ rule IntermediateImportedAspect {
 		
 		-- Link created aspect to the corresponding target element
 		if (not a.microservice.oclIsUndefined())
-			i.microservice <- thisModule.getCreatedMicroservice(a.microservice);
+			thisModule.getCreatedMicroservice(a.microservice).aspects <-
+				thisModule.getCreatedMicroservice(a.microservice).aspects->append(i);
 		else if (not a.interface.oclIsUndefined())
-			i.interface <- thisModule.getCreatedInterface(a.interface);
+			thisModule.getCreatedInterface(a.interface).aspects <-
+				thisModule.getCreatedInterface(a.interface).aspects->append(i);
 		else if (not a.operation.oclIsUndefined())
-			i.operation <- thisModule.getCreatedOperation(a.operation);
+			thisModule.getCreatedOperation(a.operation).aspects <-
+				thisModule.getCreatedOperation(a.operation).aspects->append(i);
 		else if (not a.referredOperation.oclIsUndefined())
-			i.referredOperation <- thisModule.getCreatedReferredOperation(a.referredOperation);
+			thisModule.getCreatedReferredOperation(a.referredOperation).aspects <-
+				thisModule.getCreatedReferredOperation(a.referredOperation).aspects->append(i);
 		else if (not a.parameter.oclIsUndefined())
-			i.parameter <- thisModule.getCreatedParameter(a.parameter);
-		else if (not a.mappedField.oclIsUndefined())
-			i.mappedField <- thisModule.getCreatedMappedField(a.mappedField);
+			thisModule.getCreatedParameter(a.parameter).aspects <-
+				thisModule.getCreatedParameter(a.parameter).aspects->append(i);
+		else if (not a.mappedField.oclIsUndefined()) {
+			-- If the aspect is defined as part of a mapped field in a parameter, we append the
+			-- aspect to the field aspects of the parameter. If the aspect is the first aspect for
+			-- the mapped field, we first create a new instance of DataFieldAspects and assign it to
+			-- the parameter.
+			if (thisModule.getFieldAspects(a.mappedField).oclIsUndefined())
+				thisModule.getCreatedParameter(a.mappedField.parameter).fieldAspects <- 
+					thisModule.getCreatedParameter(a.mappedField.parameter).fieldAspects->append(
+						thisModule.DataFieldAspects(a.mappedField)
+					);
+
+			thisModule.getFieldAspects(a.mappedField).aspects <-
+				thisModule.getFieldAspects(a.mappedField).aspects->append(i);
+		}
+		
+		i;
+	}
+}
+
+--- Find DataFieldAspects instance corresponding to a mapped field and the parameter in which 
+--- context is was specified
+helper def : getFieldAspects(mappedField : Service!MappedField) : Intermediate!DataFieldAspects =
+	thisModule.getCreatedParameter(mappedField.parameter).fieldAspects
+		->any(a | a.qualifiedName = mappedField.buildQualifiedName('.', false))
+;
+
+--- Called rule to create a DataFieldAspects instance from a MappedField instance
+rule DataFieldAspects(mappedField : Service!MappedField) {
+	to
+		i : Intermediate!DataFieldAspects(
+			name <- mappedField.name,
+			qualifiedName <- mappedField.buildQualifiedName('.', false),
+			aspects <- Sequence{},
+			parameter <- thisModule.getCreatedParameter(mappedField.parameter)
+		)
+	do {
+		i;
 	}
 }
 

@@ -19,6 +19,7 @@ import de.fhdo.ddmm.technology.TechnologySpecificPrimitiveType
 import de.fhdo.ddmm.technology.TechnologySpecificPropertyValueAssignment
 import de.fhdo.ddmm.utils.DdmmUtils
 import de.fhdo.ddmm.technology.Technology
+import java.util.List
 
 /**
  * Metamodel for technology mappings that provide an alternative to specifying technology in service
@@ -37,6 +38,7 @@ class TechnologyMapping {
      */
 
     contains Import[1..*] imports
+    contains ComplexTypeMapping[] typeMappings opposite mappingModel
     contains MicroserviceMapping[] serviceMappings opposite mappingModel
 
     /**
@@ -50,7 +52,17 @@ class TechnologyMapping {
      * Get all operations of all mapped microservices
      */
     op OperationMapping[] getMappedOperations() {
-        return serviceMappings.map[it.operationMappings].flatten.toList.asEList
+        return serviceMappings.map[operationMappings].flatten.toList.asEList
+    }
+
+    /**
+     * Get all complex parameter mappings of all mapped operations
+     */
+    op ComplexParameterMapping[] getComplexParameterMappings() {
+        val mappings = <ComplexParameterMapping>newArrayList
+        getMappedOperations().map[parameterMappings].flatten
+            .forEach[if (it instanceof ComplexParameterMapping) mappings.add(it)]
+        return mappings.asEList
     }
 
     /**
@@ -59,6 +71,32 @@ class TechnologyMapping {
     op ReferredOperationMapping[] getMappedReferredOperations() {
         return serviceMappings.map[referredOperationMappings].flatten.toList.asEList
     }
+}
+
+/**
+ * Mapping for complex types
+ */
+class ComplexTypeMapping {
+    // TRANSFORMATION ONLY: Source model URI of the data model that defines the mapped complex type
+    String t_sourceModelUri
+
+    refers Import[1..*] technologies
+    contains ImportedComplexType ^type opposite typeMapping
+    contains TechnologySpecificFieldMapping[] fieldMappings opposite typeMapping
+    contains TechnologySpecificImportedServiceAspect[] aspects opposite typeMapping
+
+    container TechnologyMapping mappingModel opposite typeMappings
+}
+
+/**
+ * Represents an imported complex type
+ */
+class ImportedComplexType {
+    refers Import serviceModelImport
+    refers Import dataModelImport
+    refers ComplexType ^type
+
+    container ComplexTypeMapping typeMapping opposite ^type
 }
 
 /**
@@ -282,24 +320,30 @@ class TechnologySpecificFieldMapping {
      *          Ensured by: DSL validator.
      */
 
+    // TRANSFORMATION ONLY: Source model URI of the data model that defines the original type of
+    //                      the mapped element, i.e., the enumeration or data field's type
+    String t_sourceModelUri
+
     refers Import[0..1] technology
     refers Type[0..1] ^type
     refers EnumerationField[0..1] enumerationField
-    contains DataFieldHierarchy[0..1] dataFieldHierarchy opposite mapping
+    refers DataField[0..1] dataField
     contains TechnologySpecificImportedServiceAspect[] aspects opposite fieldMapping
 
+    container ComplexTypeMapping typeMapping opposite fieldMappings
     container ComplexParameterMapping parameterMapping opposite fieldMappings
-}
 
-/**
- * Represents the "hierarchy" of data fields in complexly typed parameters. That is, if a data field
- * itself is again complexly typed then its structure resides on the second level of the hierarchy.
- */
-class DataFieldHierarchy {
-    refers DataField[] dataFields
-    contains DataFieldHierarchy previous  // pointer to previous hierarchy level
-
-    container TechnologySpecificFieldMapping mapping opposite dataFieldHierarchy
+    /**
+     * Get effective type of mapped element
+     */
+    op Type getOriginalTypeOfMappedElement() {
+        return if (dataField !== null)
+            dataField.effectiveType
+        else if (enumerationField !== null)
+            enumerationField.enumeration
+        else
+            return null
+    }
 }
 
 /**
@@ -377,6 +421,7 @@ class TechnologySpecificImportedServiceAspect {
     contains PrimitiveValue singlePropertyValue
     contains TechnologySpecificPropertyValueAssignment[] values
 
+    container ComplexTypeMapping typeMapping opposite aspects
     container MicroserviceMapping microserviceMapping opposite aspects
     container InterfaceMapping interfaceMapping opposite aspects
     container OperationMapping operationMapping opposite aspects
@@ -384,3 +429,5 @@ class TechnologySpecificImportedServiceAspect {
     container ParameterMapping parameterMapping opposite aspects
     container TechnologySpecificFieldMapping fieldMapping opposite aspects
 }
+
+type DataFieldList wraps List<DataField>

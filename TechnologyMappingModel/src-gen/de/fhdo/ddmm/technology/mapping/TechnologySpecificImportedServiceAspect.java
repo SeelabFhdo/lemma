@@ -31,6 +31,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.fhdo.ddmm.technology.mapping.TechnologySpecificImportedServiceAspect#getAspect <em>Aspect</em>}</li>
  *   <li>{@link de.fhdo.ddmm.technology.mapping.TechnologySpecificImportedServiceAspect#getSinglePropertyValue <em>Single Property Value</em>}</li>
  *   <li>{@link de.fhdo.ddmm.technology.mapping.TechnologySpecificImportedServiceAspect#getValues <em>Values</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.technology.mapping.TechnologySpecificImportedServiceAspect#getTypeMapping <em>Type Mapping</em>}</li>
  *   <li>{@link de.fhdo.ddmm.technology.mapping.TechnologySpecificImportedServiceAspect#getMicroserviceMapping <em>Microservice Mapping</em>}</li>
  *   <li>{@link de.fhdo.ddmm.technology.mapping.TechnologySpecificImportedServiceAspect#getInterfaceMapping <em>Interface Mapping</em>}</li>
  *   <li>{@link de.fhdo.ddmm.technology.mapping.TechnologySpecificImportedServiceAspect#getOperationMapping <em>Operation Mapping</em>}</li>
@@ -148,6 +149,34 @@ public interface TechnologySpecificImportedServiceAspect extends EObject {
      * @generated
      */
     EList<TechnologySpecificPropertyValueAssignment> getValues();
+
+    /**
+     * Returns the value of the '<em><b>Type Mapping</b></em>' container reference.
+     * It is bidirectional and its opposite is '{@link de.fhdo.ddmm.technology.mapping.ComplexTypeMapping#getAspects <em>Aspects</em>}'.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Type Mapping</em>' container reference isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Type Mapping</em>' container reference.
+     * @see #setTypeMapping(ComplexTypeMapping)
+     * @see de.fhdo.ddmm.technology.mapping.MappingPackage#getTechnologySpecificImportedServiceAspect_TypeMapping()
+     * @see de.fhdo.ddmm.technology.mapping.ComplexTypeMapping#getAspects
+     * @model opposite="aspects" transient="false"
+     * @generated
+     */
+    ComplexTypeMapping getTypeMapping();
+
+    /**
+     * Sets the value of the '{@link de.fhdo.ddmm.technology.mapping.TechnologySpecificImportedServiceAspect#getTypeMapping <em>Type Mapping</em>}' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Type Mapping</em>' container reference.
+     * @see #getTypeMapping()
+     * @generated
+     */
+    void setTypeMapping(ComplexTypeMapping value);
 
     /**
      * Returns the value of the '<em><b>Microservice Mapping</b></em>' container reference.

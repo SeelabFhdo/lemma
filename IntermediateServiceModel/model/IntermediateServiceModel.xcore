@@ -3,7 +3,7 @@ package de.fhdo.ddmm.service.intermediate
 
 import de.fhdo.ddmm.data.intermediate.IntermediateImport
 import de.fhdo.ddmm.data.intermediate.IntermediateType
-import de.fhdo.ddmm.data.intermediate.IntermediateTypeKind
+import de.fhdo.ddmm.data.intermediate.IntermediateImportedAspect
 import de.fhdo.ddmm.service.MicroserviceType
 import de.fhdo.ddmm.service.Visibility
 import de.fhdo.ddmm.technology.CommunicationType
@@ -48,7 +48,7 @@ class IntermediateMicroservice {
     contains InterfaceReference[] requiredInterfaces opposite requiringMicroservice
     contains OperationReference[] requiredOperations opposite requiringMicroservice
     contains IntermediateInterface[1..*] interfaces opposite microservice
-    contains IntermediateImportedAspect[] aspects opposite microservice
+    contains IntermediateImportedAspect[] aspects
 
     container IntermediateServiceModel serviceModel opposite microservices
 }
@@ -67,7 +67,7 @@ class IntermediateInterface {
     contains IntermediateProtocolSpecification[0..2] protocols
     contains IntermediateOperation[] operations opposite ^interface
     contains IntermediateReferredOperation[] referredOperations opposite referringInterface
-    contains IntermediateImportedAspect[] aspects opposite ^interface
+    contains IntermediateImportedAspect[] aspects
 
     container IntermediateMicroservice microservice opposite interfaces
 }
@@ -83,7 +83,7 @@ class IntermediateOperation {
 
     contains IntermediateEndpoint[] endpoints opposite operation
     contains IntermediateProtocolSpecification[0..2] protocols
-    contains IntermediateImportedAspect[] aspects opposite operation
+    contains IntermediateImportedAspect[] aspects
     contains IntermediateParameter[] parameters opposite operation
 
     container IntermediateInterface ^interface opposite operations
@@ -101,7 +101,7 @@ class IntermediateReferredOperation {
     refers IntermediateOperation operation
     contains IntermediateEndpoint[] endpoints opposite referredOperation
     contains IntermediateProtocolSpecification[0..2] protocols
-    contains IntermediateImportedAspect[] aspects opposite referredOperation
+    contains IntermediateImportedAspect[] aspects
 
     container IntermediateInterface referringInterface opposite referredOperations
 }
@@ -119,24 +119,22 @@ class IntermediateParameter {
 
     contains IntermediateType ^type
     contains OperationReference[0..1] initializedByOperation  opposite initializedParameter
-    contains IntermediateImportedAspect[] aspects opposite parameter
-    contains IntermediateMappedField[] mappedFields opposite parameter
+    contains IntermediateImportedAspect[] aspects
+    contains DataFieldAspects[] fieldAspects opposite parameter
 
     container IntermediateOperation operation opposite parameters
 }
 
 /**
- * Mapped data field
+ * Aspects assigned to a data field of a structured parameter
  */
-class IntermediateMappedField {
-    String mappedFieldName
+class DataFieldAspects {
+    String name
     String qualifiedName
-    IntermediateTypeKind originalTypeKind
 
-    contains IntermediateType mappedType
-    contains IntermediateImportedAspect[] aspects opposite mappedField
+    contains IntermediateImportedAspect[] aspects
 
-    container IntermediateParameter parameter opposite mappedFields
+    container IntermediateParameter parameter opposite fieldAspects
 }
 
 /**
@@ -223,57 +221,4 @@ class IntermediateProtocolSpecification {
     CommunicationType communicationType
     String protocol
     String dataFormat
-}
-
-/**
- * Aspect
- */
-class IntermediateImportedAspect {
-    String name
-
-    refers IntermediateImport ^import
-    contains IntermediateAspectProperty[] properties opposite aspect
-    contains IntermediateAspectPropertyValue[] propertyValues opposite aspect
-
-    container IntermediateMicroservice microservice opposite aspects
-    container IntermediateInterface ^interface opposite aspects
-    container IntermediateOperation operation opposite aspects
-    container IntermediateReferredOperation referredOperation opposite aspects
-    container IntermediateParameter parameter opposite aspects
-    container IntermediateMappedField mappedField opposite aspects
-}
-
-/**
- * Aspect property
- */
-class IntermediateAspectProperty {
-    String name
-    String ^type
-    // The default value is encoded in a single String. However, the validators of the languages
-    // ensure that the default value corresponds to the type of the property.
-    String defaultValue
-    boolean mandatory = "false"
-
-    container IntermediateImportedAspect aspect opposite properties
-}
-
-/**
- * Property value
- */
-class IntermediateAspectPropertyValue {
-    // The value is encoded in a single String. However, the validators of the languages ensure that
-    // the value corresponds to the type of the property.
-    String value
-
-    refers IntermediateAspectProperty property
-
-    container IntermediateImportedAspect aspect opposite propertyValues
-}
-
-/**
- * Imported technology-specific type
- */
-class IntermediateImportedTechnologySpecificType extends IntermediateType {
-    String qualifiedName
-    refers IntermediateImport ^import
 }

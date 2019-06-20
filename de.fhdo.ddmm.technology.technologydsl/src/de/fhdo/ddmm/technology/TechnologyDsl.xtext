@@ -141,6 +141,7 @@ enum ServiceJoinPointType returns JoinPointType:
     INTERFACES = 'interfaces' |
     OPERATIONS = 'operations' |
     PARAMETERS = 'parameters' |
+    COMPLEX_TYPES = 'types' |
     DATA_FIELDS = 'fields'
 ;
 

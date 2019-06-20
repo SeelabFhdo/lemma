@@ -172,8 +172,8 @@ public class TransformationDialog extends TitleAreaDialog {
     IntermediateTransformationPhase _phase = warning.getPhase();
     if (_phase != null) {
       switch (_phase) {
-        case SOURCE_MODEL_VALIDATION:
-          _switchResult = this.sourceModelValidationWarning(warning.getMessage());
+        case INPUT_MODEL_VALIDATION:
+          _switchResult = this.inputModelValidationWarning(warning.getMessage());
           break;
         case TRANSFORMATION_FINISHED:
           _switchResult = this.transformationFinishedWarning(warning.getMessage());
@@ -191,7 +191,7 @@ public class TransformationDialog extends TitleAreaDialog {
   /**
    * Handle source model validation warning
    */
-  private boolean sourceModelValidationWarning(final String warningMessage) {
+  private boolean inputModelValidationWarning(final String warningMessage) {
     if (this.ignoreAllTransformationWarnings) {
       return true;
     }

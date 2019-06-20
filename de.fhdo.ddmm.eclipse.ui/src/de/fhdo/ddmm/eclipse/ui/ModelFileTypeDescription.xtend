@@ -3,8 +3,8 @@ package de.fhdo.ddmm.eclipse.ui
 import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.swt.graphics.Image
-import de.fhdo.ddmm.intermediate.transformations.AbstractIntermediateModelTransformationStrategy
 import java.util.LinkedList
+import de.fhdo.ddmm.intermediate.transformations.AbstractIntermediateModelTransformationStrategy
 
 /**
  * Description of a model file type.

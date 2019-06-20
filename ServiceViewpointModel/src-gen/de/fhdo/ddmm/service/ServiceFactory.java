@@ -85,6 +85,15 @@ public interface ServiceFactory extends EFactory {
     Parameter createParameter();
 
     /**
+     * Returns a new object of class '<em>Mapped Complex Type</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Mapped Complex Type</em>'.
+     * @generated
+     */
+    MappedComplexType createMappedComplexType();
+
+    /**
      * Returns a new object of class '<em>Mapped Field</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

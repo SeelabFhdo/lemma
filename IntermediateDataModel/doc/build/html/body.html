@@ -41,8 +41,8 @@ development of <em>microservice-based software systems</em> <a class="reference 
 employing Model-driven Development (MDD) <a class="reference internal" href="#combemale2017" id="id3">[CFJezequel+17]</a>.</p>
 <p>In this context, a microservice architecture consists of several different types
 of models, listed in <a class="reference internal" href="#tab-model-types"><span class="std std-numref">Table 1</span></a>.</p>
-<span id="tab-model-types"></span><table border="1" class="docutils" id="id19">
-<caption><span class="caption-number">Table 1 </span><span class="caption-text">Model types</span><a class="headerlink" href="#id19" title="Permalink to this table">¶</a></caption>
+<span id="tab-model-types"></span><table border="1" class="docutils" id="id20">
+<caption><span class="caption-number">Table 1 </span><span class="caption-text">Model types</span><a class="headerlink" href="#id20" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col width="23%" />
 <col width="77%" />
@@ -58,8 +58,8 @@ input/output data.</td>
 </tr>
 <tr class="row-odd"><td>Mapping Model</td>
 <td>A Mapping Model allows for assigning (alternative)
-technologies to modeled microservices in a Service
-Model.</td>
+technologies to, e.g., modeled microservices in a
+Service Model and complex types in a Data Model.</td>
 </tr>
 <tr class="row-even"><td>Service Model</td>
 <td>A Service Model contains several microservice models,
@@ -111,7 +111,7 @@ microservice-related Domain Data Models.</p>
 Data Models in an object-oriented way in the form of a UML class diagram. The
 modeling concepts, their properties, and relationships are depicted as classes,
 attributes, and associations, respectively.</p>
-<div class="figure" id="id20">
+<div class="figure" id="id21">
 <span id="fig-metamodel"></span><a class="reference external image-reference" href="_images/metamodel.png"><img alt="_images/metamodel.png" src="_images/metamodel.png" /></a>
 <p class="caption"><span class="caption-number">Fig. 1 </span><span class="caption-text">Metamodel of Intermediate Data Models</span></p>
 </div>
@@ -688,16 +688,41 @@ hierarchy.</p>
 <a class="reference internal" href="#link-intermediatedatastructure"><span class="std std-ref">structure</span></a>.</p>
 </dd></dl>
 
-<dl class="attribute">
+<span class="target" id="link-intermediatedatafield-type"></span><dl class="attribute">
 <dt>
 <code class="descname">IntermediateType[1] type</code></dt>
-<dd><p>The type of the attribute.</p>
+<dd><p>The type of the data field.</p>
 <div class="admonition hint">
 <p class="first admonition-title">Hint</p>
 <p class="last">The <code class="docutils literal notranslate"><span class="pre">type</span></code> attribute always holds a unique instance of
 <code class="xref py py-class docutils literal notranslate"><span class="pre">IntermediateType</span></code>, i.e., instances of the same types are
 not reused for data field typing.</p>
 </div>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">Code generators must use this type as the field’s type and not its
+<a class="reference internal" href="#link-intermediatedatafield-originaltype"><span class="std std-ref">original type</span></a>.</p>
+</div>
+</dd></dl>
+
+<span class="target" id="link-intermediatedatafield-originaltype"></span><dl class="attribute">
+<dt>
+<code class="descname">IntermediateType originalType</code></dt>
+<dd><p>The original type of the data field in case it got mapped within a
+Mapping Model.</p>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">In case this attribute is not null, the <a class="reference internal" href="#link-intermediatedatafield-type"><span class="std std-ref">type</span></a> attribute holds a
+<a class="reference internal" href="#IntermediateImportedTechnologySpecificType" title="IntermediateImportedTechnologySpecificType"><code class="xref java java-type docutils literal notranslate"><span class="pre">IntermediateImportedTechnologySpecificType</span></code></a> instance that points
+to the technology-specific type to which the data field was mapped.</p>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">IntermediateImportedAspect[*] aspects</code></dt>
+<dd><p>The <a class="reference internal" href="#IntermediateImportedAspect" title="IntermediateImportedAspect"><code class="xref java java-type docutils literal notranslate"><span class="pre">aspects</span></code></a> that were assigned
+to the field within a Mapping Model.</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -735,7 +760,7 @@ always <code class="docutils literal notranslate"><span class="pre">true</span><
 </div>
 <dl class="attribute">
 <dt>
-<code class="descname">IntermediatePrimitiveType[0..1] primitiveType</code></dt>
+<code class="descname">IntermediatePrimitiveType primitiveType</code></dt>
 <dd><p>If the list is a
 <a class="reference internal" href="#link-intermediatelisttype-primitivelist"><span class="std std-ref">primitiveList</span></a> this
 attribute contains the
@@ -819,6 +844,174 @@ this field is defined.</p>
 
 </dd></dl>
 
+</div>
+<div class="section" id="technologies">
+<h2>3.6&nbsp;&nbsp;&nbsp;Technologies<a class="headerlink" href="#technologies" title="Permalink to this headline">¶</a></h2>
+<p>In the following, concepts for assigning technologies to, e.g., complex types
+and other modeling concepts such as <a class="reference external" href="../../../../IntermediateServiceModel/doc/build/html/body.html#IntermediateMicroservice" title="(in Intermediate Service Model Format Specification v1.0)"><code class="xref java java-type docutils literal notranslate"><span class="pre">microservices</span></code></a> are described.</p>
+<dl class="type">
+<dt id="IntermediateImportedTechnologySpecificType">
+ class <code class="descname">IntermediateImportedTechnologySpecificType</code> extends <a class="reference internal" href="#IntermediateType" title="IntermediateType">IntermediateType</a><a class="headerlink" href="#IntermediateImportedTechnologySpecificType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Representation of a type defined in a Technology Model.</p>
+<dl class="attribute">
+<dt>
+<code class="descname">String[1] qualifiedName</code></dt>
+<dd><p>Qualified name of the type. It consists of the name of the defining
+technology, the “_types” prefix as internal qualifier within the
+Technology Model, and the name of the type.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">IntermediateImport[1] import</code></dt>
+<dd><p>The <a class="reference internal" href="#IntermediateImport" title="IntermediateImport"><code class="xref java java-type docutils literal notranslate"><span class="pre">IntermediateImport</span></code></a> instance that
+points to the Technology Model from which the type was imported.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="type">
+<dt id="IntermediateImportedAspect">
+ class <code class="descname">IntermediateImportedAspect</code><a class="headerlink" href="#IntermediateImportedAspect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Aspects enable to semantically reify modeled
+<a class="reference internal" href="#link-intermediatecomplextype"><span class="std std-ref">complex types</span></a>,
+<code class="xref java java-type docutils literal notranslate"><span class="pre">data</span> <span class="pre">and</span> <span class="pre">enumeration</span> <span class="pre">fields</span></code>
+<a class="reference external" href="../../../../IntermediateServiceModel/doc/build/html/body.html#IntermediateMicroservice" title="(in Intermediate Service Model Format Specification v1.0)"><code class="xref java java-type docutils literal notranslate"><span class="pre">microservices</span></code></a>,
+<a class="reference external" href="../../../../IntermediateServiceModel/doc/build/html/body.html#IntermediateInterface" title="(in Intermediate Service Model Format Specification v1.0)"><code class="xref java java-type docutils literal notranslate"><span class="pre">interfaces</span></code></a>,
+<a class="reference external" href="../../../../IntermediateServiceModel/doc/build/html/body.html#IntermediateOperation" title="(in Intermediate Service Model Format Specification v1.0)"><code class="xref java java-type docutils literal notranslate"><span class="pre">operations</span></code></a>, and
+<a class="reference external" href="../../../../IntermediateServiceModel/doc/build/html/body.html#IntermediateParameter" title="(in Intermediate Service Model Format Specification v1.0)"><code class="xref java java-type docutils literal notranslate"><span class="pre">parameters</span></code></a>, in the sense of
+Aspect-oriented Programming (AOP) <a class="reference internal" href="#kiczales1997" id="id18">[KLM+97]</a>.</p>
+<p>Aspects are defined within Technology Models. An aspect definition might be
+accompanied with properties and constrained to the concepts to which they
+apply. With this mechanism it is possible to create, e.g., aspects for the
+OR mapping of data structures or HTTP status codes being returned by a
+service operation’s execution.</p>
+<dl class="attribute">
+<dt>
+<code class="descname">String[1] name</code></dt>
+<dd><p>Name of the aspect.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">IntermediateImport[1] import</code></dt>
+<dd><p><a class="reference internal" href="#IntermediateImport" title="IntermediateImport"><code class="xref java java-type docutils literal notranslate"><span class="pre">Import</span></code></a> of the Technology Model which
+defines the aspect.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">IntermediateAspectProperty[*] properties</code></dt>
+<dd><p>All <a class="reference internal" href="#IntermediateAspectProperty" title="IntermediateAspectProperty"><code class="xref java java-type docutils literal notranslate"><span class="pre">properties</span></code></a> of the aspect
+as defined in its Technology Model.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">IntermediateAspectPropertyValue[*] propertyValues</code></dt>
+<dd><p><a class="reference internal" href="#IntermediateAspectPropertyValue" title="IntermediateAspectPropertyValue"><code class="xref java java-type docutils literal notranslate"><span class="pre">Values</span></code></a> for aspect
+properties specified in the source Service Model.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">IntermediateComplexType complexType</code></dt>
+<dd><p><a class="reference internal" href="#link-intermediatecomplextype"><span class="std std-ref">IntermediateComplexType</span></a> to which
+the aspect was assigned.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">IntermediateDataField dataField</code></dt>
+<dd><p><a class="reference internal" href="#link-intermediatedatafield"><span class="std std-ref">IntermediateDataField</span></a> to which the
+aspect was assigned.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="type">
+<dt id="IntermediateAspectProperty">
+ class <code class="descname">IntermediateAspectProperty</code><a class="headerlink" href="#IntermediateAspectProperty" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specification of an <a class="reference internal" href="#IntermediateImportedAspect" title="IntermediateImportedAspect"><code class="xref java java-type docutils literal notranslate"><span class="pre">aspect's</span></code></a>
+property.</p>
+<dl class="attribute">
+<dt>
+<code class="descname">String[1] name</code></dt>
+<dd><p>Name of the property.</p>
+</dd></dl>
+
+<span class="target" id="link-intermediateaspectproperty-type"></span><dl class="attribute">
+<dt>
+<code class="descname">String[1] type</code></dt>
+<dd><p>Name of the <a class="reference internal" href="#link-intermediateprimitivetype"><span class="std std-ref">primitive type</span></a> of
+the property. This can be one of the values:</p>
+<ul class="simple">
+<li>“boolean”</li>
+<li>“byte”</li>
+<li>“char”</li>
+<li>“date”</li>
+<li>“double”</li>
+<li>“float”</li>
+<li>“int”</li>
+<li>“long”</li>
+<li>“short”</li>
+<li>“string”</li>
+</ul>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">String defaultValue</code></dt>
+<dd><p>If the property has a default value, it is encoded in this String
+attribute. However, it is guaranteed that the default value fits the
+<a class="reference internal" href="#link-intermediateaspectproperty-type"><span class="std std-ref">type</span></a> of the property by
+the Technology Modeling Language validator.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">boolean mandatory</code></dt>
+<dd><p>Flag to indicate if the property needs to receive a value. It is
+guaranteed by the Service Modeling Language that all mandatory values of
+a property receive a value when the respective
+<a class="reference internal" href="#IntermediateImportedAspect" title="IntermediateImportedAspect"><code class="xref java java-type docutils literal notranslate"><span class="pre">IntermediateImportedAspect</span></code></a> is used.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">IntermediateImportedAspect aspect</code></dt>
+<dd><p>The <a class="reference internal" href="#IntermediateImportedAspect" title="IntermediateImportedAspect"><code class="xref java java-type docutils literal notranslate"><span class="pre">aspect</span></code></a> to which the
+property belongs.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="type">
+<dt id="IntermediateAspectPropertyValue">
+ class <code class="descname">IntermediateAspectPropertyValue</code><a class="headerlink" href="#IntermediateAspectPropertyValue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Value of an <a class="reference internal" href="#IntermediateAspectProperty" title="IntermediateAspectProperty"><code class="xref java java-type docutils literal notranslate"><span class="pre">IntermediateAspectProperty</span></code></a>.</p>
+<dl class="attribute">
+<dt>
+<code class="descname">String[1] value</code></dt>
+<dd><p>The value.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">IntermediateAspectProperty[1] property</code></dt>
+<dd><p>The <a class="reference internal" href="#IntermediateAspectProperty" title="IntermediateAspectProperty"><code class="xref java java-type docutils literal notranslate"><span class="pre">property</span></code></a> for which the
+value was set.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">IntermediateImportedAspect aspect</code></dt>
+<dd><p>The <a class="reference internal" href="#IntermediateImportedAspect" title="IntermediateImportedAspect"><code class="xref java java-type docutils literal notranslate"><span class="pre">aspect</span></code></a> to which the
+property value belongs.</p>
+</dd></dl>
+
+</dd></dl>
+
 <p class="rubric">Footnotes</p>
 <table class="docutils footnote" frame="void" id="eclipse" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
@@ -848,7 +1041,7 @@ this field is defined.</p>
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
 <tr><td class="label"><a class="fn-backref" href="#id11">[5]</a></td><td>Actually, the models are <em>transformed</em> into the XMI format.
-Please refer to <a class="reference internal" href="#combemale2017" id="id18">[CFJezequel+17]</a> to learn more about <em>model</em>
+Please refer to <a class="reference internal" href="#combemale2017" id="id19">[CFJezequel+17]</a> to learn more about <em>model</em>
 <em>transformation</em>.</td></tr>
 </tbody>
 </table>
@@ -890,7 +1083,7 @@ Please refer to <a class="reference internal" href="#combemale2017" id="id18">[C
 <p id="bibtex-bibliography-body-0"><table class="docutils citation" frame="void" id="combemale2017" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label">[CFJezequel+17]</td><td><em>(<a class="fn-backref" href="#id3">1</a>, <a class="fn-backref" href="#id10">2</a>, <a class="fn-backref" href="#id13">3</a>, <a class="fn-backref" href="#id18">4</a>)</em> Benoit Combemale, Robert&nbsp;B. France, Jean-Marc Jézéquel, Bernhard Rumpe, Jim Steel, and Didier Vojtisek. <em>Engineering Modeling Languages</em>. CRC Press, 2017.</td></tr>
+<tr><td class="label">[CFJezequel+17]</td><td><em>(<a class="fn-backref" href="#id3">1</a>, <a class="fn-backref" href="#id10">2</a>, <a class="fn-backref" href="#id13">3</a>, <a class="fn-backref" href="#id19">4</a>)</em> Benoit Combemale, Robert&nbsp;B. France, Jean-Marc Jézéquel, Bernhard Rumpe, Jim Steel, and Didier Vojtisek. <em>Engineering Modeling Languages</em>. CRC Press, 2017.</td></tr>
 </tbody>
 </table>
 <table class="docutils citation" frame="void" id="evans2004" rules="none">
@@ -902,7 +1095,7 @@ Please refer to <a class="reference internal" href="#combemale2017" id="id18">[C
 <table class="docutils citation" frame="void" id="kiczales1997" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id4">[KLM+97]</a></td><td>Gregor Kiczales, John Lamping, Anurag Mendhekar, Chris Maeda, Cristina Lopes, Jean-Marc Loingtier, and John Irwin. Aspect-oriented programming. In <em>Object-Oriented Programming</em>, 220–242. Springer, 1997.</td></tr>
+<tr><td class="label">[KLM+97]</td><td><em>(<a class="fn-backref" href="#id4">1</a>, <a class="fn-backref" href="#id18">2</a>)</em> Gregor Kiczales, John Lamping, Anurag Mendhekar, Chris Maeda, Cristina Lopes, Jean-Marc Loingtier, and John Irwin. Aspect-oriented programming. In <em>Object-Oriented Programming</em>, 220–242. Springer, 1997.</td></tr>
 </tbody>
 </table>
 <table class="docutils citation" frame="void" id="newman2015" rules="none">

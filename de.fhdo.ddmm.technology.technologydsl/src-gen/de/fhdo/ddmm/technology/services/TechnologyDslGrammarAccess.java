@@ -1454,19 +1454,22 @@ public class TechnologyDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cOPERATIONSOperationsKeyword_2_0 = (Keyword)cOPERATIONSEnumLiteralDeclaration_2.eContents().get(0);
 		private final EnumLiteralDeclaration cPARAMETERSEnumLiteralDeclaration_3 = (EnumLiteralDeclaration)cAlternatives.eContents().get(3);
 		private final Keyword cPARAMETERSParametersKeyword_3_0 = (Keyword)cPARAMETERSEnumLiteralDeclaration_3.eContents().get(0);
-		private final EnumLiteralDeclaration cDATA_FIELDSEnumLiteralDeclaration_4 = (EnumLiteralDeclaration)cAlternatives.eContents().get(4);
-		private final Keyword cDATA_FIELDSFieldsKeyword_4_0 = (Keyword)cDATA_FIELDSEnumLiteralDeclaration_4.eContents().get(0);
+		private final EnumLiteralDeclaration cCOMPLEX_TYPESEnumLiteralDeclaration_4 = (EnumLiteralDeclaration)cAlternatives.eContents().get(4);
+		private final Keyword cCOMPLEX_TYPESTypesKeyword_4_0 = (Keyword)cCOMPLEX_TYPESEnumLiteralDeclaration_4.eContents().get(0);
+		private final EnumLiteralDeclaration cDATA_FIELDSEnumLiteralDeclaration_5 = (EnumLiteralDeclaration)cAlternatives.eContents().get(5);
+		private final Keyword cDATA_FIELDSFieldsKeyword_5_0 = (Keyword)cDATA_FIELDSEnumLiteralDeclaration_5.eContents().get(0);
 		
 		//enum ServiceJoinPointType returns JoinPointType:
 		//	MICROSERVICES='microservices' |
 		//	INTERFACES='interfaces' |
 		//	OPERATIONS='operations' |
 		//	PARAMETERS='parameters' |
+		//	COMPLEX_TYPES='types' |
 		//	DATA_FIELDS='fields';
 		public EnumRule getRule() { return rule; }
 		
 		//MICROSERVICES='microservices' | INTERFACES='interfaces' | OPERATIONS='operations' | PARAMETERS='parameters' |
-		//DATA_FIELDS='fields'
+		//COMPLEX_TYPES='types' | DATA_FIELDS='fields'
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
 		//MICROSERVICES='microservices'
@@ -1493,11 +1496,17 @@ public class TechnologyDslGrammarAccess extends AbstractGrammarElementFinder {
 		//'parameters'
 		public Keyword getPARAMETERSParametersKeyword_3_0() { return cPARAMETERSParametersKeyword_3_0; }
 		
+		//COMPLEX_TYPES='types'
+		public EnumLiteralDeclaration getCOMPLEX_TYPESEnumLiteralDeclaration_4() { return cCOMPLEX_TYPESEnumLiteralDeclaration_4; }
+		
+		//'types'
+		public Keyword getCOMPLEX_TYPESTypesKeyword_4_0() { return cCOMPLEX_TYPESTypesKeyword_4_0; }
+		
 		//DATA_FIELDS='fields'
-		public EnumLiteralDeclaration getDATA_FIELDSEnumLiteralDeclaration_4() { return cDATA_FIELDSEnumLiteralDeclaration_4; }
+		public EnumLiteralDeclaration getDATA_FIELDSEnumLiteralDeclaration_5() { return cDATA_FIELDSEnumLiteralDeclaration_5; }
 		
 		//'fields'
-		public Keyword getDATA_FIELDSFieldsKeyword_4_0() { return cDATA_FIELDSFieldsKeyword_4_0; }
+		public Keyword getDATA_FIELDSFieldsKeyword_5_0() { return cDATA_FIELDSFieldsKeyword_5_0; }
 	}
 	public class OperationJoinPointTypeElements extends AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.fhdo.ddmm.technology.TechnologyDsl.OperationJoinPointType");
@@ -1824,6 +1833,7 @@ public class TechnologyDslGrammarAccess extends AbstractGrammarElementFinder {
 	//	INTERFACES='interfaces' |
 	//	OPERATIONS='operations' |
 	//	PARAMETERS='parameters' |
+	//	COMPLEX_TYPES='types' |
 	//	DATA_FIELDS='fields';
 	public ServiceJoinPointTypeElements getServiceJoinPointTypeAccess() {
 		return eServiceJoinPointType;

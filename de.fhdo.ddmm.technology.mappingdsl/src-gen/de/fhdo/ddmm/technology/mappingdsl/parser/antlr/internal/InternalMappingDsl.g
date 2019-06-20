@@ -99,9 +99,28 @@ ruleTechnologyMapping returns [EObject current=null]
 		(
 			(
 				{
-					newCompositeNode(grammarAccess.getTechnologyMappingAccess().getServiceMappingsMicroserviceMappingParserRuleCall_1_0());
+					newCompositeNode(grammarAccess.getTechnologyMappingAccess().getTypeMappingsComplexTypeMappingParserRuleCall_1_0());
 				}
-				lv_serviceMappings_1_0=ruleMicroserviceMapping
+				lv_typeMappings_1_0=ruleComplexTypeMapping
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getTechnologyMappingRule());
+					}
+					add(
+						$current,
+						"typeMappings",
+						lv_typeMappings_1_0,
+						"de.fhdo.ddmm.technology.mappingdsl.MappingDsl.ComplexTypeMapping");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)*
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getTechnologyMappingAccess().getServiceMappingsMicroserviceMappingParserRuleCall_2_0());
+				}
+				lv_serviceMappings_2_0=ruleMicroserviceMapping
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getTechnologyMappingRule());
@@ -109,12 +128,241 @@ ruleTechnologyMapping returns [EObject current=null]
 					add(
 						$current,
 						"serviceMappings",
-						lv_serviceMappings_1_0,
+						lv_serviceMappings_2_0,
 						"de.fhdo.ddmm.technology.mappingdsl.MappingDsl.MicroserviceMapping");
 					afterParserOrEnumRuleCall();
 				}
 			)
 		)+
+	)
+;
+
+// Entry rule entryRuleComplexTypeMapping
+entryRuleComplexTypeMapping returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getComplexTypeMappingRule()); }
+	iv_ruleComplexTypeMapping=ruleComplexTypeMapping
+	{ $current=$iv_ruleComplexTypeMapping.current; }
+	EOF;
+
+// Rule ComplexTypeMapping
+ruleComplexTypeMapping returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		(
+			otherlv_0='@'
+			{
+				newLeafNode(otherlv_0, grammarAccess.getComplexTypeMappingAccess().getCommercialAtKeyword_0_0());
+			}
+			otherlv_1='technology'
+			{
+				newLeafNode(otherlv_1, grammarAccess.getComplexTypeMappingAccess().getTechnologyKeyword_0_1());
+			}
+			otherlv_2='('
+			{
+				newLeafNode(otherlv_2, grammarAccess.getComplexTypeMappingAccess().getLeftParenthesisKeyword_0_2());
+			}
+			(
+				(
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getComplexTypeMappingRule());
+						}
+					}
+					otherlv_3=RULE_ID
+					{
+						newLeafNode(otherlv_3, grammarAccess.getComplexTypeMappingAccess().getTechnologiesImportCrossReference_0_3_0());
+					}
+				)
+			)
+			otherlv_4=')'
+			{
+				newLeafNode(otherlv_4, grammarAccess.getComplexTypeMappingAccess().getRightParenthesisKeyword_0_4());
+			}
+		)+
+		otherlv_5='type'
+		{
+			newLeafNode(otherlv_5, grammarAccess.getComplexTypeMappingAccess().getTypeKeyword_1());
+		}
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getComplexTypeMappingAccess().getTypeImportedComplexTypeParserRuleCall_2_0());
+				}
+				lv_type_6_0=ruleImportedComplexType
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getComplexTypeMappingRule());
+					}
+					set(
+						$current,
+						"type",
+						lv_type_6_0,
+						"de.fhdo.ddmm.technology.mappingdsl.MappingDsl.ImportedComplexType");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)
+		otherlv_7='{'
+		{
+			newLeafNode(otherlv_7, grammarAccess.getComplexTypeMappingAccess().getLeftCurlyBracketKeyword_3());
+		}
+		(
+			otherlv_8='aspects'
+			{
+				newLeafNode(otherlv_8, grammarAccess.getComplexTypeMappingAccess().getAspectsKeyword_4_0());
+			}
+			otherlv_9='{'
+			{
+				newLeafNode(otherlv_9, grammarAccess.getComplexTypeMappingAccess().getLeftCurlyBracketKeyword_4_1());
+			}
+			(
+				(
+					{
+						newCompositeNode(grammarAccess.getComplexTypeMappingAccess().getAspectsTechnologySpecificImportedServiceAspectParserRuleCall_4_2_0());
+					}
+					lv_aspects_10_0=ruleTechnologySpecificImportedServiceAspect
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getComplexTypeMappingRule());
+						}
+						add(
+							$current,
+							"aspects",
+							lv_aspects_10_0,
+							"de.fhdo.ddmm.technology.mappingdsl.MappingDsl.TechnologySpecificImportedServiceAspect");
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)+
+			otherlv_11='}'
+			{
+				newLeafNode(otherlv_11, grammarAccess.getComplexTypeMappingAccess().getRightCurlyBracketKeyword_4_3());
+			}
+		)?
+		(
+			(
+				(
+					{
+						newCompositeNode(grammarAccess.getComplexTypeMappingAccess().getFieldMappingsTechnologySpecificFieldMappingParserRuleCall_5_0_0());
+					}
+					lv_fieldMappings_12_0=ruleTechnologySpecificFieldMapping
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getComplexTypeMappingRule());
+						}
+						add(
+							$current,
+							"fieldMappings",
+							lv_fieldMappings_12_0,
+							"de.fhdo.ddmm.technology.mappingdsl.MappingDsl.TechnologySpecificFieldMapping");
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)
+			(
+				otherlv_13=','
+				{
+					newLeafNode(otherlv_13, grammarAccess.getComplexTypeMappingAccess().getCommaKeyword_5_1_0());
+				}
+				(
+					(
+						{
+							newCompositeNode(grammarAccess.getComplexTypeMappingAccess().getFieldMappingsTechnologySpecificFieldMappingParserRuleCall_5_1_1_0());
+						}
+						lv_fieldMappings_14_0=ruleTechnologySpecificFieldMapping
+						{
+							if ($current==null) {
+								$current = createModelElementForParent(grammarAccess.getComplexTypeMappingRule());
+							}
+							add(
+								$current,
+								"fieldMappings",
+								lv_fieldMappings_14_0,
+								"de.fhdo.ddmm.technology.mappingdsl.MappingDsl.TechnologySpecificFieldMapping");
+							afterParserOrEnumRuleCall();
+						}
+					)
+				)
+			)*
+		)?
+		otherlv_15='}'
+		{
+			newLeafNode(otherlv_15, grammarAccess.getComplexTypeMappingAccess().getRightCurlyBracketKeyword_6());
+		}
+	)
+;
+
+// Entry rule entryRuleImportedComplexType
+entryRuleImportedComplexType returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getImportedComplexTypeRule()); }
+	iv_ruleImportedComplexType=ruleImportedComplexType
+	{ $current=$iv_ruleImportedComplexType.current; }
+	EOF;
+
+// Rule ImportedComplexType
+ruleImportedComplexType returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		(
+			(
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getImportedComplexTypeRule());
+					}
+				}
+				otherlv_0=RULE_ID
+				{
+					newLeafNode(otherlv_0, grammarAccess.getImportedComplexTypeAccess().getServiceModelImportImportCrossReference_0_0());
+				}
+			)
+		)
+		otherlv_1='::'
+		{
+			newLeafNode(otherlv_1, grammarAccess.getImportedComplexTypeAccess().getColonColonKeyword_1());
+		}
+		(
+			(
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getImportedComplexTypeRule());
+					}
+				}
+				otherlv_2=RULE_ID
+				{
+					newLeafNode(otherlv_2, grammarAccess.getImportedComplexTypeAccess().getDataModelImportImportCrossReference_2_0());
+				}
+			)
+		)
+		otherlv_3='::'
+		{
+			newLeafNode(otherlv_3, grammarAccess.getImportedComplexTypeAccess().getColonColonKeyword_3());
+		}
+		(
+			(
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getImportedComplexTypeRule());
+					}
+				}
+				{
+					newCompositeNode(grammarAccess.getImportedComplexTypeAccess().getTypeComplexTypeCrossReference_4_0());
+				}
+				ruleQualifiedName
+				{
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)
 	)
 ;
 
@@ -1247,19 +1495,13 @@ ruleTechnologySpecificFieldMapping returns [EObject current=null]
 				(
 					(
 						{
-							newCompositeNode(grammarAccess.getTechnologySpecificFieldMappingAccess().getDataFieldHierarchyDataFieldHierarchyParserRuleCall_0_1_0_0());
-						}
-						lv_dataFieldHierarchy_1_0=ruleDataFieldHierarchy
-						{
 							if ($current==null) {
-								$current = createModelElementForParent(grammarAccess.getTechnologySpecificFieldMappingRule());
+								$current = createModelElement(grammarAccess.getTechnologySpecificFieldMappingRule());
 							}
-							set(
-								$current,
-								"dataFieldHierarchy",
-								lv_dataFieldHierarchy_1_0,
-								"de.fhdo.ddmm.technology.mappingdsl.MappingDsl.DataFieldHierarchy");
-							afterParserOrEnumRuleCall();
+						}
+						otherlv_1=RULE_ID
+						{
+							newLeafNode(otherlv_1, grammarAccess.getTechnologySpecificFieldMappingAccess().getDataFieldDataFieldCrossReference_0_1_0_0());
 						}
 					)
 				)
@@ -1343,64 +1585,6 @@ ruleTechnologySpecificFieldMapping returns [EObject current=null]
 				newLeafNode(otherlv_11, grammarAccess.getTechnologySpecificFieldMappingAccess().getRightCurlyBracketKeyword_1_5());
 			}
 		)?
-	)
-;
-
-// Entry rule entryRuleDataFieldHierarchy
-entryRuleDataFieldHierarchy returns [EObject current=null]:
-	{ newCompositeNode(grammarAccess.getDataFieldHierarchyRule()); }
-	iv_ruleDataFieldHierarchy=ruleDataFieldHierarchy
-	{ $current=$iv_ruleDataFieldHierarchy.current; }
-	EOF;
-
-// Rule DataFieldHierarchy
-ruleDataFieldHierarchy returns [EObject current=null]
-@init {
-	enterRule();
-}
-@after {
-	leaveRule();
-}:
-	(
-		(
-			(
-				{
-					if ($current==null) {
-						$current = createModelElement(grammarAccess.getDataFieldHierarchyRule());
-					}
-				}
-				otherlv_0=RULE_ID
-				{
-					newLeafNode(otherlv_0, grammarAccess.getDataFieldHierarchyAccess().getDataFieldsDataFieldCrossReference_0_0());
-				}
-			)
-		)
-		(
-			(
-				{
-					$current = forceCreateModelElementAndSet(
-						grammarAccess.getDataFieldHierarchyAccess().getDataFieldHierarchyPreviousAction_1_0(),
-						$current);
-				}
-			)
-			otherlv_2='.'
-			{
-				newLeafNode(otherlv_2, grammarAccess.getDataFieldHierarchyAccess().getFullStopKeyword_1_1());
-			}
-			(
-				(
-					{
-						if ($current==null) {
-							$current = createModelElement(grammarAccess.getDataFieldHierarchyRule());
-						}
-					}
-					otherlv_3=RULE_ID
-					{
-						newLeafNode(otherlv_3, grammarAccess.getDataFieldHierarchyAccess().getDataFieldsDataFieldCrossReference_1_2_0());
-					}
-				)
-			)
-		)*
 	)
 ;
 
@@ -1845,7 +2029,7 @@ ruleImport returns [EObject current=null]
 						$current,
 						"importType",
 						lv_importType_1_0,
-						"de.fhdo.ddmm.ServiceDsl.ImportType");
+						"de.fhdo.ddmm.technology.mappingdsl.MappingDsl.ImportType");
 					afterParserOrEnumRuleCall();
 				}
 			)
@@ -6513,26 +6697,18 @@ ruleImportType returns [Enumerator current=null]
 }:
 	(
 		(
-			enumLiteral_0='datatypes'
+			enumLiteral_0='technology'
 			{
-				$current = grammarAccess.getImportTypeAccess().getDATATYPESEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
-				newLeafNode(enumLiteral_0, grammarAccess.getImportTypeAccess().getDATATYPESEnumLiteralDeclaration_0());
+				$current = grammarAccess.getImportTypeAccess().getTECHNOLOGYEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
+				newLeafNode(enumLiteral_0, grammarAccess.getImportTypeAccess().getTECHNOLOGYEnumLiteralDeclaration_0());
 			}
 		)
 		    |
 		(
-			enumLiteral_1='technology'
+			enumLiteral_1='microservices'
 			{
-				$current = grammarAccess.getImportTypeAccess().getTECHNOLOGYEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
-				newLeafNode(enumLiteral_1, grammarAccess.getImportTypeAccess().getTECHNOLOGYEnumLiteralDeclaration_1());
-			}
-		)
-		    |
-		(
-			enumLiteral_2='microservices'
-			{
-				$current = grammarAccess.getImportTypeAccess().getMICROSERVICESEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
-				newLeafNode(enumLiteral_2, grammarAccess.getImportTypeAccess().getMICROSERVICESEnumLiteralDeclaration_2());
+				$current = grammarAccess.getImportTypeAccess().getMICROSERVICESEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
+				newLeafNode(enumLiteral_1, grammarAccess.getImportTypeAccess().getMICROSERVICESEnumLiteralDeclaration_1());
 			}
 		)
 	)
@@ -6747,10 +6923,18 @@ ruleServiceJoinPointType returns [Enumerator current=null]
 		)
 		    |
 		(
-			enumLiteral_4='fields'
+			enumLiteral_4='types'
 			{
-				$current = grammarAccess.getServiceJoinPointTypeAccess().getDATA_FIELDSEnumLiteralDeclaration_4().getEnumLiteral().getInstance();
-				newLeafNode(enumLiteral_4, grammarAccess.getServiceJoinPointTypeAccess().getDATA_FIELDSEnumLiteralDeclaration_4());
+				$current = grammarAccess.getServiceJoinPointTypeAccess().getCOMPLEX_TYPESEnumLiteralDeclaration_4().getEnumLiteral().getInstance();
+				newLeafNode(enumLiteral_4, grammarAccess.getServiceJoinPointTypeAccess().getCOMPLEX_TYPESEnumLiteralDeclaration_4());
+			}
+		)
+		    |
+		(
+			enumLiteral_5='fields'
+			{
+				$current = grammarAccess.getServiceJoinPointTypeAccess().getDATA_FIELDSEnumLiteralDeclaration_5().getEnumLiteral().getInstance();
+				newLeafNode(enumLiteral_5, grammarAccess.getServiceJoinPointTypeAccess().getDATA_FIELDSEnumLiteralDeclaration_5());
 			}
 		)
 	)

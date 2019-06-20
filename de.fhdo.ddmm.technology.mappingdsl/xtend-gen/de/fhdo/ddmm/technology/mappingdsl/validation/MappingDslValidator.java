@@ -28,6 +28,8 @@ import de.fhdo.ddmm.technology.TechnologySpecificPrimitiveType;
 import de.fhdo.ddmm.technology.TechnologySpecificProperty;
 import de.fhdo.ddmm.technology.TechnologySpecificPropertyValueAssignment;
 import de.fhdo.ddmm.technology.mapping.ComplexParameterMapping;
+import de.fhdo.ddmm.technology.mapping.ComplexTypeMapping;
+import de.fhdo.ddmm.technology.mapping.ImportedComplexType;
 import de.fhdo.ddmm.technology.mapping.ImportedMicroservice;
 import de.fhdo.ddmm.technology.mapping.InterfaceMapping;
 import de.fhdo.ddmm.technology.mapping.MappingPackage;
@@ -94,6 +96,21 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
   }
   
   /**
+   * Check that technology is assigned only once to a complex type mapping
+   */
+  @Check
+  public void checkTechnologyUniqueness(final ComplexTypeMapping mapping) {
+    final Function<Import, Import> _function = (Import it) -> {
+      return it;
+    };
+    final Integer duplicateIndex = DdmmUtils.<Import, Import>getDuplicateIndex(mapping.getTechnologies(), _function);
+    if (((duplicateIndex).intValue() > (-1))) {
+      this.error("Duplicate technology assignment", 
+        MappingPackage.Literals.COMPLEX_TYPE_MAPPING__TECHNOLOGIES, (duplicateIndex).intValue());
+    }
+  }
+  
+  /**
    * Check that technology is assigned only once to a microservice mapping
    */
   @Check
@@ -103,24 +120,39 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
     };
     final Integer duplicateIndex = DdmmUtils.<Import, Import>getDuplicateIndex(mapping.getTechnologies(), _function);
     if (((duplicateIndex).intValue() > (-1))) {
-      StringConcatenation _builder = new StringConcatenation();
-      _builder.append("Duplicate technology assignment");
-      this.error(_builder.toString(), 
+      this.error("Duplicate technology assignment", 
         MappingPackage.Literals.MICROSERVICE_MAPPING__TECHNOLOGIES, (duplicateIndex).intValue());
     }
   }
   
   /**
-   * Check that only one annotated technology contains type definitions
+   * Check that only one annotated technology of a complex type mapping contains type definitions
+   */
+  @Check
+  public void checkUniqueTypeDefinitionTechnology(final ComplexTypeMapping mapping) {
+    this.checkUniqueTypeDefinitionTechnology(mapping, mapping.getTechnologies(), 
+      MappingPackage.Literals.COMPLEX_TYPE_MAPPING__TECHNOLOGIES);
+  }
+  
+  /**
+   * Check that only one annotated technology of a microservice mapping contains type definitions
    */
   @Check
   public void checkUniqueTypeDefinitionTechnology(final MicroserviceMapping mapping) {
+    this.checkUniqueTypeDefinitionTechnology(mapping, mapping.getTechnologies(), 
+      MappingPackage.Literals.MICROSERVICE_MAPPING__TECHNOLOGIES);
+  }
+  
+  /**
+   * Helper to check that only one annotated technology contains type definitions
+   */
+  private void checkUniqueTypeDefinitionTechnology(final EObject mapping, final List<Import> technologies, final EReference feature) {
     String typeDefinitionTechnologyName = null;
-    int _size = mapping.getTechnologies().size();
+    int _size = technologies.size();
     ExclusiveRange _doubleDotLessThan = new ExclusiveRange(0, _size, true);
     for (final Integer i : _doubleDotLessThan) {
       {
-        final Import technologyImport = mapping.getTechnologies().get((i).intValue());
+        final Import technologyImport = technologies.get((i).intValue());
         final Technology technologyModel = DdmmUtils.<Technology>getImportedModelRoot(technologyImport.eResource(), 
           technologyImport.getImportURI(), Technology.class);
         if ((((!technologyModel.getPrimitiveTypes().isEmpty()) || 
@@ -134,13 +166,9 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
             _builder.append(typeDefinitionTechnologyName);
             _builder.append("\" already defines ");
             StringConcatenation _builder_1 = new StringConcatenation();
-            _builder_1.append("technology-specific types. Only one technology per microservice may ");
+            _builder_1.append("technology-specific types");
             String _plus = (_builder.toString() + _builder_1);
-            StringConcatenation _builder_2 = new StringConcatenation();
-            _builder_2.append("define technology-specific types.");
-            String _plus_1 = (_plus + _builder_2);
-            this.error(_plus_1, 
-              MappingPackage.Literals.MICROSERVICE_MAPPING__TECHNOLOGIES, (i).intValue());
+            this.error(_plus, mapping, feature, (i).intValue());
           }
         }
       }
@@ -148,22 +176,40 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
   }
   
   /**
-   * Check that annotated technologies define not only deployment-related concepts
+   * Check that annotated technologies of complex type mappings define not only deployment-related
+   * concepts
+   */
+  @Check
+  public void checkTechnologiesForServiceConcepts(final ComplexTypeMapping mapping) {
+    this.checkTechnologiesForServiceConcepts(mapping, mapping.getTechnologies(), 
+      MappingPackage.Literals.COMPLEX_TYPE_MAPPING__TECHNOLOGIES);
+  }
+  
+  /**
+   * Check that annotated technologies of microservice mappings define not only deployment-related
+   * concepts
    */
   @Check
   public void checkTechnologiesForServiceConcepts(final MicroserviceMapping mapping) {
-    int _size = mapping.getTechnologies().size();
+    this.checkTechnologiesForServiceConcepts(mapping, mapping.getTechnologies(), 
+      MappingPackage.Literals.MICROSERVICE_MAPPING__TECHNOLOGIES);
+  }
+  
+  /**
+   * Helper to check that annotated technologies define not only deployment-related concepts
+   */
+  public void checkTechnologiesForServiceConcepts(final EObject mapping, final List<Import> technologies, final EReference feature) {
+    int _size = technologies.size();
     ExclusiveRange _doubleDotLessThan = new ExclusiveRange(0, _size, true);
     for (final Integer i : _doubleDotLessThan) {
       {
-        final Import technologyImport = mapping.getTechnologies().get((i).intValue());
+        final Import technologyImport = technologies.get((i).intValue());
         final Technology technologyModel = DdmmUtils.<Technology>getImportedModelRoot(technologyImport.eResource(), 
           technologyImport.getImportURI(), Technology.class);
         if (((technologyModel.getPrimitiveTypes().isEmpty() && 
           technologyModel.getProtocols().isEmpty()) && 
           technologyModel.getServiceAspects().isEmpty())) {
-          this.error("Technology does not specify service-related concepts", 
-            MappingPackage.Literals.MICROSERVICE_MAPPING__TECHNOLOGIES, (i).intValue());
+          this.error("Technology does not specify service-related concepts", mapping, feature, (i).intValue());
         }
       }
     }
@@ -257,7 +303,7 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
    * Check that service mappings are unique
    */
   @Check
-  public boolean checkMappingUniqueness(final TechnologyMapping model) {
+  public boolean checkMicroserviceMappingUniqueness(final TechnologyMapping model) {
     boolean _xblockexpression = false;
     {
       final Function1<MicroserviceMapping, Boolean> _function = (MicroserviceMapping it) -> {
@@ -266,32 +312,96 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
       };
       final List<MicroserviceMapping> modelMappingsWithTechnology = IterableExtensions.<MicroserviceMapping>toList(IterableExtensions.<MicroserviceMapping>filter(model.getServiceMappings(), _function));
       final Function<MicroserviceMapping, String> _function_1 = (MicroserviceMapping it) -> {
+        ImportedMicroservice _microservice = it.getMicroservice();
+        Import _import = null;
+        if (_microservice!=null) {
+          _import=_microservice.getImport();
+        }
+        String _name = null;
+        if (_import!=null) {
+          _name=_import.getName();
+        }
+        return _name;
+      };
+      final Function<MicroserviceMapping, List<String>> _function_2 = (MicroserviceMapping it) -> {
+        return it.getMicroservice().getMicroservice().getQualifiedNameParts();
+      };
+      _xblockexpression = this.<MicroserviceMapping>checkFirstLevelMappingUniqueness(modelMappingsWithTechnology, 
+        "Service", _function_1, _function_2, 
+        MappingPackage.Literals.MICROSERVICE_MAPPING__MICROSERVICE);
+    }
+    return _xblockexpression;
+  }
+  
+  /**
+   * Check that complex type mappings are unique
+   */
+  @Check
+  public boolean checkComplexTypeMappingUniqueness(final TechnologyMapping model) {
+    boolean _xblockexpression = false;
+    {
+      final Function1<ComplexTypeMapping, Boolean> _function = (ComplexTypeMapping it) -> {
+        boolean _isEmpty = it.getTechnologies().isEmpty();
+        return Boolean.valueOf((!_isEmpty));
+      };
+      final List<ComplexTypeMapping> modelMappingsWithTechnology = IterableExtensions.<ComplexTypeMapping>toList(IterableExtensions.<ComplexTypeMapping>filter(model.getTypeMappings(), _function));
+      final Function<ComplexTypeMapping, String> _function_1 = (ComplexTypeMapping it) -> {
+        ImportedComplexType _type = it.getType();
+        Import _dataModelImport = null;
+        if (_type!=null) {
+          _dataModelImport=_type.getDataModelImport();
+        }
+        String _name = null;
+        if (_dataModelImport!=null) {
+          _name=_dataModelImport.getName();
+        }
+        return _name;
+      };
+      final Function<ComplexTypeMapping, List<String>> _function_2 = (ComplexTypeMapping it) -> {
+        return it.getType().getType().getQualifiedNameParts();
+      };
+      _xblockexpression = this.<ComplexTypeMapping>checkFirstLevelMappingUniqueness(modelMappingsWithTechnology, 
+        "Type", _function_1, _function_2, 
+        MappingPackage.Literals.COMPLEX_TYPE_MAPPING__TYPE);
+    }
+    return _xblockexpression;
+  }
+  
+  /**
+   * Helper to check that mappings of elements on the first level of the mapping model like
+   * complex types and microservices are unique. This check considers duplicate mappings of
+   * elements defined in the same source model, as well as duplicate mappings of elements from
+   * different source models.
+   */
+  private <T extends EObject> boolean checkFirstLevelMappingUniqueness(final List<T> mappings, final String mappingName, final Function<T, String> getImportName, final Function<T, List<String>> getQualifiedNameParts, final EReference mappedElementFeature) {
+    boolean _xblockexpression = false;
+    {
+      final Function<T, String> _function = (T it) -> {
         String _xblockexpression_1 = null;
         {
           final ArrayList<String> qualifiedNameSegments = CollectionLiterals.<String>newArrayList();
-          if (((it.getMicroservice().getImport() != null) && (it.getMicroservice().getImport().getName() != null))) {
-            qualifiedNameSegments.add(it.getMicroservice().getImport().getName());
+          final String importName = getImportName.apply(it);
+          if ((importName != null)) {
+            qualifiedNameSegments.add(importName);
           }
-          qualifiedNameSegments.addAll(it.getMicroservice().getMicroservice().getQualifiedNameParts());
+          qualifiedNameSegments.addAll(getQualifiedNameParts.apply(it));
           _xblockexpression_1 = QualifiedName.create(qualifiedNameSegments).toString();
         }
         return _xblockexpression_1;
       };
-      final boolean duplicateMappingFound = this.<MicroserviceMapping>checkMappingUniqueness(modelMappingsWithTechnology, "Service", _function_1, MappingPackage.Literals.MICROSERVICE_MAPPING__MICROSERVICE);
+      final boolean duplicateMappingFound = this.<T>checkMappingUniqueness(mappings, mappingName, _function, mappedElementFeature);
       boolean _xifexpression = false;
       if ((!duplicateMappingFound)) {
-        final Function<MicroserviceMapping, String> _function_2 = (MicroserviceMapping it) -> {
-          String _xblockexpression_1 = null;
-          {
-            final ArrayList<String> qualifiedNameSegments = CollectionLiterals.<String>newArrayList();
-            qualifiedNameSegments.addAll(it.getMicroservice().getMicroservice().getQualifiedNameParts());
-            _xblockexpression_1 = QualifiedName.create(qualifiedNameSegments).toString();
-          }
-          return _xblockexpression_1;
+        final Function<T, String> _function_1 = (T it) -> {
+          return QualifiedName.create(getQualifiedNameParts.apply(it)).toString();
         };
-        _xifexpression = this.<MicroserviceMapping>checkMappingUniqueness(modelMappingsWithTechnology, _function_2, MappingPackage.Literals.MICROSERVICE_MAPPING__MICROSERVICE, 
-          ("A service with the same qualified name but from another service model has already " + 
-            "been mapped"));
+        StringConcatenation _builder = new StringConcatenation();
+        _builder.append(mappingName);
+        _builder.append(" with the same qualified name but from another model has ");
+        StringConcatenation _builder_1 = new StringConcatenation();
+        _builder_1.append("already been mapped");
+        String _plus = (_builder.toString() + _builder_1);
+        _xifexpression = this.<T>checkMappingUniqueness(mappings, _function_1, mappedElementFeature, _plus);
       }
       _xblockexpression = _xifexpression;
     }
@@ -691,42 +801,59 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
   }
   
   /**
-   * Check that a data field is mapped only once in a complex parameter mapping
+   * Check that a field is mapped only once in a complex parameter mapping
    */
   @Check
   public void checkComplexParameterMappingUniqueFields(final ComplexParameterMapping mapping) {
     Type _type = mapping.getParameter().getImportedType().getType();
-    final ComplexType parameterType = ((ComplexType) _type);
-    final boolean parameterIsEnumeration = parameterType.isIsEnumeration();
+    this.checkFieldMappingUniqueness(((ComplexType) _type), 
+      mapping.getFieldMappings());
+  }
+  
+  /**
+   * Check that a field is mapped only once in a complex type mapping
+   */
+  @Check
+  public void checkComplexTypeMappingUniqueFields(final ComplexTypeMapping mapping) {
+    this.checkFieldMappingUniqueness(mapping.getType().getType(), mapping.getFieldMappings());
+  }
+  
+  /**
+   * Helper to check that fields are mapped only once
+   */
+  private void checkFieldMappingUniqueness(final ComplexType type, final List<TechnologySpecificFieldMapping> mappings) {
     Integer _xifexpression = null;
-    if (parameterIsEnumeration) {
+    boolean _isIsEnumeration = type.isIsEnumeration();
+    if (_isIsEnumeration) {
       final Function<TechnologySpecificFieldMapping, EnumerationField> _function = (TechnologySpecificFieldMapping it) -> {
         return it.getEnumerationField();
       };
-      _xifexpression = DdmmUtils.<TechnologySpecificFieldMapping, EnumerationField>getDuplicateIndex(mapping.getFieldMappings(), _function);
+      _xifexpression = DdmmUtils.<TechnologySpecificFieldMapping, EnumerationField>getDuplicateIndex(mappings, _function);
     } else {
       final Function<TechnologySpecificFieldMapping, DataField> _function_1 = (TechnologySpecificFieldMapping it) -> {
-        return IterableExtensions.<DataField>last(it.getDataFieldHierarchy().getDataFields());
+        return it.getDataField();
       };
-      _xifexpression = DdmmUtils.<TechnologySpecificFieldMapping, DataField>getDuplicateIndex(mapping.getFieldMappings(), _function_1);
+      _xifexpression = DdmmUtils.<TechnologySpecificFieldMapping, DataField>getDuplicateIndex(mappings, _function_1);
     }
     final Integer duplicateIndex = _xifexpression;
-    if (((duplicateIndex).intValue() > (-1))) {
-      final TechnologySpecificFieldMapping duplicateMapping = mapping.getFieldMappings().get((duplicateIndex).intValue());
-      String duplicateFieldName = null;
-      EReference duplicateFieldReference = null;
-      if (parameterIsEnumeration) {
-        duplicateFieldName = duplicateMapping.getEnumerationField().getName();
-        duplicateFieldReference = MappingPackage.Literals.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__ENUMERATION_FIELD;
-      } else {
-        duplicateFieldName = IterableExtensions.<DataField>last(duplicateMapping.getDataFieldHierarchy().getDataFields()).getName();
-        duplicateFieldReference = MappingPackage.Literals.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__DATA_FIELD_HIERARCHY;
-      }
-      StringConcatenation _builder = new StringConcatenation();
-      _builder.append("Duplicate mapping for field ");
-      _builder.append(duplicateFieldName);
-      this.error(_builder.toString(), duplicateMapping, duplicateFieldReference);
+    if (((duplicateIndex).intValue() == (-1))) {
+      return;
     }
+    final TechnologySpecificFieldMapping duplicateMapping = mappings.get((duplicateIndex).intValue());
+    String duplicateFieldName = null;
+    EReference duplicateFieldReference = null;
+    boolean _isIsEnumeration_1 = type.isIsEnumeration();
+    if (_isIsEnumeration_1) {
+      duplicateFieldName = duplicateMapping.getEnumerationField().getName();
+      duplicateFieldReference = MappingPackage.Literals.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__ENUMERATION_FIELD;
+    } else {
+      duplicateFieldName = duplicateMapping.getDataField().getName();
+      duplicateFieldReference = MappingPackage.Literals.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__DATA_FIELD;
+    }
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("Duplicate mapping for field ");
+    _builder.append(duplicateFieldName);
+    this.error(_builder.toString(), duplicateMapping, duplicateFieldReference);
   }
   
   /**
@@ -923,8 +1050,8 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
           _xifexpression = _xifexpression_1;
         }
         mappedTypeName = _xifexpression;
-        originalType = IterableExtensions.<DataField>last(((TechnologySpecificFieldMapping)mapping).getDataFieldHierarchy().getDataFields()).getEffectiveType();
-        erroneousMappingFeature = MappingPackage.Literals.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__DATA_FIELD_HIERARCHY;
+        originalType = ((TechnologySpecificFieldMapping)mapping).getDataField().getEffectiveType();
+        erroneousMappingFeature = MappingPackage.Literals.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__DATA_FIELD;
       }
     }
     if (((originalType == null) || (mappedType == null))) {
@@ -987,26 +1114,30 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
       return;
     }
     final int propertyCount = importedAspect.getAspect().getProperties().size();
-    if ((propertyCount > 1)) {
-      this.error("Ambiguous value assignment", importedAspect, MappingPackage.Literals.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__SINGLE_PROPERTY_VALUE);
+    if ((propertyCount == 0)) {
+      this.error("Aspect does not define properties", importedAspect, MappingPackage.Literals.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__SINGLE_PROPERTY_VALUE);
     } else {
-      if ((propertyCount == 1)) {
-        final TechnologySpecificProperty targetProperty = importedAspect.getAspect().getProperties().get(0);
-        final PrimitiveType targetPropertyType = targetProperty.getType();
-        boolean _isOfType = propertyValue.isOfType(targetPropertyType);
-        boolean _not = (!_isOfType);
-        if (_not) {
-          StringConcatenation _builder = new StringConcatenation();
-          _builder.append("Value is not of type ");
-          String _typeName = targetPropertyType.getTypeName();
-          _builder.append(_typeName);
-          _builder.append(" as expected by ");
-          StringConcatenation _builder_1 = new StringConcatenation();
-          _builder_1.append("property ");
-          String _name = targetProperty.getName();
-          _builder_1.append(_name);
-          String _plus = (_builder.toString() + _builder_1);
-          this.error(_plus, importedAspect, MappingPackage.Literals.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__SINGLE_PROPERTY_VALUE);
+      if ((propertyCount > 1)) {
+        this.error("Ambiguous value assignment", importedAspect, MappingPackage.Literals.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__SINGLE_PROPERTY_VALUE);
+      } else {
+        if ((propertyCount == 1)) {
+          final TechnologySpecificProperty targetProperty = importedAspect.getAspect().getProperties().get(0);
+          final PrimitiveType targetPropertyType = targetProperty.getType();
+          boolean _isOfType = propertyValue.isOfType(targetPropertyType);
+          boolean _not = (!_isOfType);
+          if (_not) {
+            StringConcatenation _builder = new StringConcatenation();
+            _builder.append("Value is not of type ");
+            String _typeName = targetPropertyType.getTypeName();
+            _builder.append(_typeName);
+            _builder.append(" as expected by ");
+            StringConcatenation _builder_1 = new StringConcatenation();
+            _builder_1.append("property ");
+            String _name = targetProperty.getName();
+            _builder_1.append(_name);
+            String _plus = (_builder.toString() + _builder_1);
+            this.error(_plus, importedAspect, MappingPackage.Literals.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__SINGLE_PROPERTY_VALUE);
+          }
         }
       }
     }

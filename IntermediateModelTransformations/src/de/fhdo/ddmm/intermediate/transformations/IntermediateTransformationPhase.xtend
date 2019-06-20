@@ -6,6 +6,6 @@ package de.fhdo.ddmm.intermediate.transformations
  * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
  */
 enum IntermediateTransformationPhase {
-    SOURCE_MODEL_VALIDATION,
+    INPUT_MODEL_VALIDATION,
     TRANSFORMATION_FINISHED
 }

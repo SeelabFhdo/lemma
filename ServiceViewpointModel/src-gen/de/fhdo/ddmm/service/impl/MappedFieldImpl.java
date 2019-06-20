@@ -3,11 +3,13 @@
 package de.fhdo.ddmm.service.impl;
 
 import de.fhdo.ddmm.data.DataField;
+import de.fhdo.ddmm.data.Enumeration;
 import de.fhdo.ddmm.data.EnumerationField;
 import de.fhdo.ddmm.data.Type;
 
 import de.fhdo.ddmm.service.ImportedServiceAspect;
 import de.fhdo.ddmm.service.ImportedType;
+import de.fhdo.ddmm.service.MappedComplexType;
 import de.fhdo.ddmm.service.MappedField;
 import de.fhdo.ddmm.service.Parameter;
 import de.fhdo.ddmm.service.ServicePackage;
@@ -43,16 +45,39 @@ import org.eclipse.xtext.xbase.lib.CollectionLiterals;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link de.fhdo.ddmm.service.impl.MappedFieldImpl#getT_typeDefinitionTechnologyName <em>Ttype Definition Technology Name</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.impl.MappedFieldImpl#getDataField <em>Data Field</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.impl.MappedFieldImpl#getEnumerationField <em>Enumeration Field</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.impl.MappedFieldImpl#getMappedType <em>Mapped Type</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.impl.MappedFieldImpl#getAspects <em>Aspects</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.impl.MappedFieldImpl#getParameter <em>Parameter</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.service.impl.MappedFieldImpl#getMappedComplexType <em>Mapped Complex Type</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.service.impl.MappedFieldImpl#getName <em>Name</em>}</li>
  * </ul>
  *
  * @generated
  */
 public class MappedFieldImpl extends MinimalEObjectImpl.Container implements MappedField {
+    /**
+     * The default value of the '{@link #getT_typeDefinitionTechnologyName() <em>Ttype Definition Technology Name</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getT_typeDefinitionTechnologyName()
+     * @generated
+     * @ordered
+     */
+    protected static final String TTYPE_DEFINITION_TECHNOLOGY_NAME_EDEFAULT = null;
+
+    /**
+     * The cached value of the '{@link #getT_typeDefinitionTechnologyName() <em>Ttype Definition Technology Name</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getT_typeDefinitionTechnologyName()
+     * @generated
+     * @ordered
+     */
+    protected String t_typeDefinitionTechnologyName = TTYPE_DEFINITION_TECHNOLOGY_NAME_EDEFAULT;
+
     /**
      * The cached value of the '{@link #getDataField() <em>Data Field</em>}' reference.
      * <!-- begin-user-doc -->
@@ -94,6 +119,16 @@ public class MappedFieldImpl extends MinimalEObjectImpl.Container implements Map
     protected EList<ImportedServiceAspect> aspects;
 
     /**
+     * The default value of the '{@link #getName() <em>Name</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getName()
+     * @generated
+     * @ordered
+     */
+    protected static final String NAME_EDEFAULT = null;
+
+    /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -110,6 +145,29 @@ public class MappedFieldImpl extends MinimalEObjectImpl.Container implements Map
     @Override
     protected EClass eStaticClass() {
         return ServicePackage.Literals.MAPPED_FIELD;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public String getT_typeDefinitionTechnologyName() {
+        return t_typeDefinitionTechnologyName;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void setT_typeDefinitionTechnologyName(String newT_typeDefinitionTechnologyName) {
+        String oldT_typeDefinitionTechnologyName = t_typeDefinitionTechnologyName;
+        t_typeDefinitionTechnologyName = newT_typeDefinitionTechnologyName;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ServicePackage.MAPPED_FIELD__TTYPE_DEFINITION_TECHNOLOGY_NAME, oldT_typeDefinitionTechnologyName, t_typeDefinitionTechnologyName));
     }
 
     /**
@@ -309,30 +367,101 @@ public class MappedFieldImpl extends MinimalEObjectImpl.Container implements Map
      * @generated
      */
     @Override
-    public EList<String> getQualifiedNameParts() {
+    public MappedComplexType getMappedComplexType() {
+        if (eContainerFeatureID() != ServicePackage.MAPPED_FIELD__MAPPED_COMPLEX_TYPE) return null;
+        return (MappedComplexType)eContainer();
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public MappedComplexType basicGetMappedComplexType() {
+        if (eContainerFeatureID() != ServicePackage.MAPPED_FIELD__MAPPED_COMPLEX_TYPE) return null;
+        return (MappedComplexType)eInternalContainer();
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public NotificationChain basicSetMappedComplexType(MappedComplexType newMappedComplexType, NotificationChain msgs) {
+        msgs = eBasicSetContainer((InternalEObject)newMappedComplexType, ServicePackage.MAPPED_FIELD__MAPPED_COMPLEX_TYPE, msgs);
+        return msgs;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void setMappedComplexType(MappedComplexType newMappedComplexType) {
+        if (newMappedComplexType != eInternalContainer() || (eContainerFeatureID() != ServicePackage.MAPPED_FIELD__MAPPED_COMPLEX_TYPE && newMappedComplexType != null)) {
+            if (EcoreUtil.isAncestor(this, newMappedComplexType))
+                throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
+            NotificationChain msgs = null;
+            if (eInternalContainer() != null)
+                msgs = eBasicRemoveFromContainer(msgs);
+            if (newMappedComplexType != null)
+                msgs = ((InternalEObject)newMappedComplexType).eInverseAdd(this, ServicePackage.MAPPED_COMPLEX_TYPE__MAPPED_FIELDS, MappedComplexType.class, msgs);
+            msgs = basicSetMappedComplexType(newMappedComplexType, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ServicePackage.MAPPED_FIELD__MAPPED_COMPLEX_TYPE, newMappedComplexType, newMappedComplexType));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public String getName() {
+        String _xifexpression = null;
+        DataField _dataField = this.getDataField();
+        boolean _tripleNotEquals = (_dataField != null);
+        if (_tripleNotEquals) {
+            _xifexpression = this.getDataField().getName();
+        }
+        else {
+            String _xifexpression_1 = null;
+            EnumerationField _enumerationField = this.getEnumerationField();
+            boolean _tripleNotEquals_1 = (_enumerationField != null);
+            if (_tripleNotEquals_1) {
+                _xifexpression_1 = this.getEnumerationField().getName();
+            }
+            _xifexpression = _xifexpression_1;
+        }
+        return _xifexpression;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EList<String> getQualifiedNameParts(final boolean withImportName) {
         EList<String> _xblockexpression = null;
         {
-            String _xifexpression = null;
-            DataField _dataField = this.getDataField();
-            boolean _tripleNotEquals = (_dataField != null);
-            if (_tripleNotEquals) {
-                _xifexpression = this.getDataField().getName();
-            }
-            else {
-                String _xifexpression_1 = null;
-                EnumerationField _enumerationField = this.getEnumerationField();
-                boolean _tripleNotEquals_1 = (_enumerationField != null);
-                if (_tripleNotEquals_1) {
-                    _xifexpression_1 = this.getEnumerationField().getName();
-                }
-                _xifexpression = _xifexpression_1;
-            }
-            final String fieldName = _xifexpression;
-            if (((fieldName == null) || fieldName.isEmpty())) {
+            if (((this.getName() == null) || this.getName().isEmpty())) {
                 return ECollections.<String>asEList(CollectionLiterals.<String>newArrayList());
             }
-            final EList<String> nameParts = this.getParameter().getQualifiedNameParts();
-            CollectionExtensions.<String>addAll(nameParts, fieldName);
+            EList<String> _xifexpression = null;
+            MappedComplexType _mappedComplexType = this.getMappedComplexType();
+            boolean _tripleNotEquals = (_mappedComplexType != null);
+            if (_tripleNotEquals) {
+                _xifexpression = this.getMappedComplexType().getQualifiedNameParts(withImportName);
+            }
+            else {
+                _xifexpression = this.getParameter().getQualifiedNameParts();
+            }
+            final EList<String> nameParts = _xifexpression;
+            CollectionExtensions.<String>addAll(nameParts, this.getName());
             _xblockexpression = ECollections.<String>asEList(nameParts);
         }
         return _xblockexpression;
@@ -344,12 +473,12 @@ public class MappedFieldImpl extends MinimalEObjectImpl.Container implements Map
      * @generated
      */
     @Override
-    public String buildQualifiedName(final String separator) {
+    public String buildQualifiedName(final String separator, final boolean withImportName) {
         if ((separator == null)) {
             return null;
         }
         String qualifiedName = "";
-        EList<String> _qualifiedNameParts = this.getQualifiedNameParts();
+        EList<String> _qualifiedNameParts = this.getQualifiedNameParts(withImportName);
         for (final String part : _qualifiedNameParts) {
             String _qualifiedName = qualifiedName;
             qualifiedName = (_qualifiedName + (separator + part));
@@ -369,21 +498,34 @@ public class MappedFieldImpl extends MinimalEObjectImpl.Container implements Map
      */
     @Override
     public Type getEffectiveType() {
+        Type _xifexpression = null;
         ImportedType _mappedType = this.getMappedType();
         boolean _tripleNotEquals = (_mappedType != null);
         if (_tripleNotEquals) {
-            return this.getMappedType().getType();
+            _xifexpression = this.getMappedType().getType();
         }
         else {
+            Type _xifexpression_1 = null;
             DataField _dataField = this.getDataField();
             boolean _tripleNotEquals_1 = (_dataField != null);
             if (_tripleNotEquals_1) {
-                return this.getDataField().getEffectiveType();
+                _xifexpression_1 = this.getDataField().getEffectiveType();
             }
             else {
-                return null;
+                Enumeration _xifexpression_2 = null;
+                EnumerationField _enumerationField = this.getEnumerationField();
+                boolean _tripleNotEquals_2 = (_enumerationField != null);
+                if (_tripleNotEquals_2) {
+                    _xifexpression_2 = this.getEnumerationField().getEnumeration();
+                }
+                else {
+                    return null;
+                }
+                _xifexpression_1 = _xifexpression_2;
             }
+            _xifexpression = _xifexpression_1;
         }
+        return _xifexpression;
     }
 
     /**
@@ -401,6 +543,10 @@ public class MappedFieldImpl extends MinimalEObjectImpl.Container implements Map
                 if (eInternalContainer() != null)
                     msgs = eBasicRemoveFromContainer(msgs);
                 return basicSetParameter((Parameter)otherEnd, msgs);
+            case ServicePackage.MAPPED_FIELD__MAPPED_COMPLEX_TYPE:
+                if (eInternalContainer() != null)
+                    msgs = eBasicRemoveFromContainer(msgs);
+                return basicSetMappedComplexType((MappedComplexType)otherEnd, msgs);
         }
         return super.eInverseAdd(otherEnd, featureID, msgs);
     }
@@ -419,6 +565,8 @@ public class MappedFieldImpl extends MinimalEObjectImpl.Container implements Map
                 return ((InternalEList<?>)getAspects()).basicRemove(otherEnd, msgs);
             case ServicePackage.MAPPED_FIELD__PARAMETER:
                 return basicSetParameter(null, msgs);
+            case ServicePackage.MAPPED_FIELD__MAPPED_COMPLEX_TYPE:
+                return basicSetMappedComplexType(null, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
@@ -433,6 +581,8 @@ public class MappedFieldImpl extends MinimalEObjectImpl.Container implements Map
         switch (eContainerFeatureID()) {
             case ServicePackage.MAPPED_FIELD__PARAMETER:
                 return eInternalContainer().eInverseRemove(this, ServicePackage.PARAMETER__MAPPED_FIELDS, Parameter.class, msgs);
+            case ServicePackage.MAPPED_FIELD__MAPPED_COMPLEX_TYPE:
+                return eInternalContainer().eInverseRemove(this, ServicePackage.MAPPED_COMPLEX_TYPE__MAPPED_FIELDS, MappedComplexType.class, msgs);
         }
         return super.eBasicRemoveFromContainerFeature(msgs);
     }
@@ -445,6 +595,8 @@ public class MappedFieldImpl extends MinimalEObjectImpl.Container implements Map
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
+            case ServicePackage.MAPPED_FIELD__TTYPE_DEFINITION_TECHNOLOGY_NAME:
+                return getT_typeDefinitionTechnologyName();
             case ServicePackage.MAPPED_FIELD__DATA_FIELD:
                 if (resolve) return getDataField();
                 return basicGetDataField();
@@ -458,6 +610,11 @@ public class MappedFieldImpl extends MinimalEObjectImpl.Container implements Map
             case ServicePackage.MAPPED_FIELD__PARAMETER:
                 if (resolve) return getParameter();
                 return basicGetParameter();
+            case ServicePackage.MAPPED_FIELD__MAPPED_COMPLEX_TYPE:
+                if (resolve) return getMappedComplexType();
+                return basicGetMappedComplexType();
+            case ServicePackage.MAPPED_FIELD__NAME:
+                return getName();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -471,6 +628,9 @@ public class MappedFieldImpl extends MinimalEObjectImpl.Container implements Map
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
+            case ServicePackage.MAPPED_FIELD__TTYPE_DEFINITION_TECHNOLOGY_NAME:
+                setT_typeDefinitionTechnologyName((String)newValue);
+                return;
             case ServicePackage.MAPPED_FIELD__DATA_FIELD:
                 setDataField((DataField)newValue);
                 return;
@@ -487,6 +647,9 @@ public class MappedFieldImpl extends MinimalEObjectImpl.Container implements Map
             case ServicePackage.MAPPED_FIELD__PARAMETER:
                 setParameter((Parameter)newValue);
                 return;
+            case ServicePackage.MAPPED_FIELD__MAPPED_COMPLEX_TYPE:
+                setMappedComplexType((MappedComplexType)newValue);
+                return;
         }
         super.eSet(featureID, newValue);
     }
@@ -499,6 +662,9 @@ public class MappedFieldImpl extends MinimalEObjectImpl.Container implements Map
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
+            case ServicePackage.MAPPED_FIELD__TTYPE_DEFINITION_TECHNOLOGY_NAME:
+                setT_typeDefinitionTechnologyName(TTYPE_DEFINITION_TECHNOLOGY_NAME_EDEFAULT);
+                return;
             case ServicePackage.MAPPED_FIELD__DATA_FIELD:
                 setDataField((DataField)null);
                 return;
@@ -514,6 +680,9 @@ public class MappedFieldImpl extends MinimalEObjectImpl.Container implements Map
             case ServicePackage.MAPPED_FIELD__PARAMETER:
                 setParameter((Parameter)null);
                 return;
+            case ServicePackage.MAPPED_FIELD__MAPPED_COMPLEX_TYPE:
+                setMappedComplexType((MappedComplexType)null);
+                return;
         }
         super.eUnset(featureID);
     }
@@ -526,6 +695,8 @@ public class MappedFieldImpl extends MinimalEObjectImpl.Container implements Map
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
+            case ServicePackage.MAPPED_FIELD__TTYPE_DEFINITION_TECHNOLOGY_NAME:
+                return TTYPE_DEFINITION_TECHNOLOGY_NAME_EDEFAULT == null ? t_typeDefinitionTechnologyName != null : !TTYPE_DEFINITION_TECHNOLOGY_NAME_EDEFAULT.equals(t_typeDefinitionTechnologyName);
             case ServicePackage.MAPPED_FIELD__DATA_FIELD:
                 return dataField != null;
             case ServicePackage.MAPPED_FIELD__ENUMERATION_FIELD:
@@ -536,6 +707,10 @@ public class MappedFieldImpl extends MinimalEObjectImpl.Container implements Map
                 return aspects != null && !aspects.isEmpty();
             case ServicePackage.MAPPED_FIELD__PARAMETER:
                 return basicGetParameter() != null;
+            case ServicePackage.MAPPED_FIELD__MAPPED_COMPLEX_TYPE:
+                return basicGetMappedComplexType() != null;
+            case ServicePackage.MAPPED_FIELD__NAME:
+                return NAME_EDEFAULT == null ? getName() != null : !NAME_EDEFAULT.equals(getName());
         }
         return super.eIsSet(featureID);
     }
@@ -548,14 +723,30 @@ public class MappedFieldImpl extends MinimalEObjectImpl.Container implements Map
     @Override
     public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
         switch (operationID) {
-            case ServicePackage.MAPPED_FIELD___GET_QUALIFIED_NAME_PARTS:
-                return getQualifiedNameParts();
-            case ServicePackage.MAPPED_FIELD___BUILD_QUALIFIED_NAME__STRING:
-                return buildQualifiedName((String)arguments.get(0));
+            case ServicePackage.MAPPED_FIELD___GET_QUALIFIED_NAME_PARTS__BOOLEAN:
+                return getQualifiedNameParts((Boolean)arguments.get(0));
+            case ServicePackage.MAPPED_FIELD___BUILD_QUALIFIED_NAME__STRING_BOOLEAN:
+                return buildQualifiedName((String)arguments.get(0), (Boolean)arguments.get(1));
             case ServicePackage.MAPPED_FIELD___GET_EFFECTIVE_TYPE:
                 return getEffectiveType();
         }
         return super.eInvoke(operationID, arguments);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public String toString() {
+        if (eIsProxy()) return super.toString();
+
+        StringBuilder result = new StringBuilder(super.toString());
+        result.append(" (t_typeDefinitionTechnologyName: ");
+        result.append(t_typeDefinitionTechnologyName);
+        result.append(')');
+        return result.toString();
     }
 
 } //MappedFieldImpl

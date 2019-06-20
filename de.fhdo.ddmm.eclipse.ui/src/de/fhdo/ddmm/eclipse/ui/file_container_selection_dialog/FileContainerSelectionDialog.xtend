@@ -31,6 +31,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.core.runtime.Path
 import org.eclipse.core.resources.IResource
 import java.util.Map
+import de.fhdo.ddmm.intermediate.transformations.TransformationModelType
 
 /**
  * Generic dialog to select the container for a filename. The dialog is inspired by the
@@ -255,7 +256,11 @@ class FileContainerSelectionDialog extends TitleAreaDialog {
                 else {
                     val root = xmiResource.contents.get(0)
                     val strategy = modelFile.fileTypeDescription.mainTransformationStrategy
-                    val expectedRootClass = strategy.targetModelInfo.rootClass
+
+                    // Currently, we only support model transformation strategies that produce
+                    // exactly one output model
+                    val expectedRootClass =
+                        (strategy.outputModelTypes.get(0) as TransformationModelType).rootClass
                     !expectedRootClass.isAssignableFrom(root.class)
                 }
 
@@ -295,7 +300,10 @@ class FileContainerSelectionDialog extends TitleAreaDialog {
     private def createContainerSelection(Composite parent) {
         containerSelectionTree = new TreeViewer(parent)
         val transformationStrategy = modelFile.fileTypeDescription.mainTransformationStrategy
-        val intermediateModelRootClass = transformationStrategy.targetModelInfo.rootClass
+        // Currently, we only support model transformation strategies that produce exactly one
+        // output model
+        val intermediateModelRootClass =
+            (transformationStrategy.outputModelTypes.get(0) as TransformationModelType).rootClass
         containerSelectionTree.contentProvider =
             new FileContainerSelectionTreeContentProvider(intermediateModelRootClass)
         containerSelectionTree.labelProvider =
