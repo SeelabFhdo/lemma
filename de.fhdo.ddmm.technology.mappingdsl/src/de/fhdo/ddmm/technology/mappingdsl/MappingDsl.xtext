@@ -190,7 +190,13 @@ TechnologySpecificEndpoint returns TechnologySpecificEndpoint:
 TechnologySpecificImportedServiceAspect returns TechnologySpecificImportedServiceAspect:
     technology=[service::Import] '::' aspect=[technology::ServiceAspect|QualifiedName]
     (
-        ('(' (singlePropertyValue=PrimitiveValue | values+=PropertyValueAssignment) ')')
+        '('
+            (
+                singlePropertyValue=PrimitiveValue
+                    |
+                (values+=PropertyValueAssignment (',' values+=PropertyValueAssignment)*)
+            )
+        ')'
     |
         ';'
     )

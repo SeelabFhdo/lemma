@@ -545,7 +545,11 @@ public class MappingDslSemanticSequencer extends ServiceDslSemanticSequencer {
 	 *     TechnologySpecificImportedServiceAspect returns TechnologySpecificImportedServiceAspect
 	 *
 	 * Constraint:
-	 *     (technology=[Import|ID] aspect=[ServiceAspect|QualifiedName] (singlePropertyValue=PrimitiveValue | values+=PropertyValueAssignment)?)
+	 *     (
+	 *         technology=[Import|ID] 
+	 *         aspect=[ServiceAspect|QualifiedName] 
+	 *         (singlePropertyValue=PrimitiveValue | (values+=PropertyValueAssignment values+=PropertyValueAssignment*))?
+	 *     )
 	 */
 	protected void sequence_TechnologySpecificImportedServiceAspect(ISerializationContext context, TechnologySpecificImportedServiceAspect semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

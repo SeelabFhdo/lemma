@@ -1448,19 +1448,28 @@ public class MappingDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Alternatives cAlternatives_3_0_1 = (Alternatives)cGroup_3_0.eContents().get(1);
 		private final Assignment cSinglePropertyValueAssignment_3_0_1_0 = (Assignment)cAlternatives_3_0_1.eContents().get(0);
 		private final RuleCall cSinglePropertyValuePrimitiveValueParserRuleCall_3_0_1_0_0 = (RuleCall)cSinglePropertyValueAssignment_3_0_1_0.eContents().get(0);
-		private final Assignment cValuesAssignment_3_0_1_1 = (Assignment)cAlternatives_3_0_1.eContents().get(1);
-		private final RuleCall cValuesPropertyValueAssignmentParserRuleCall_3_0_1_1_0 = (RuleCall)cValuesAssignment_3_0_1_1.eContents().get(0);
+		private final Group cGroup_3_0_1_1 = (Group)cAlternatives_3_0_1.eContents().get(1);
+		private final Assignment cValuesAssignment_3_0_1_1_0 = (Assignment)cGroup_3_0_1_1.eContents().get(0);
+		private final RuleCall cValuesPropertyValueAssignmentParserRuleCall_3_0_1_1_0_0 = (RuleCall)cValuesAssignment_3_0_1_1_0.eContents().get(0);
+		private final Group cGroup_3_0_1_1_1 = (Group)cGroup_3_0_1_1.eContents().get(1);
+		private final Keyword cCommaKeyword_3_0_1_1_1_0 = (Keyword)cGroup_3_0_1_1_1.eContents().get(0);
+		private final Assignment cValuesAssignment_3_0_1_1_1_1 = (Assignment)cGroup_3_0_1_1_1.eContents().get(1);
+		private final RuleCall cValuesPropertyValueAssignmentParserRuleCall_3_0_1_1_1_1_0 = (RuleCall)cValuesAssignment_3_0_1_1_1_1.eContents().get(0);
 		private final Keyword cRightParenthesisKeyword_3_0_2 = (Keyword)cGroup_3_0.eContents().get(2);
 		private final Keyword cSemicolonKeyword_3_1 = (Keyword)cAlternatives_3.eContents().get(1);
 		
 		//TechnologySpecificImportedServiceAspect:
 		//	technology=[service::Import] '::' aspect=[technology::ServiceAspect|QualifiedName] ('('
-		//	(singlePropertyValue=PrimitiveValue | values+=PropertyValueAssignment) ')' |
+		//	(singlePropertyValue=PrimitiveValue
+		//	| values+=PropertyValueAssignment (',' values+=PropertyValueAssignment)*)
+		//	')'
+		//	|
 		//	';');
 		@Override public ParserRule getRule() { return rule; }
 		
 		//technology=[service::Import] '::' aspect=[technology::ServiceAspect|QualifiedName] ('('
-		//(singlePropertyValue=PrimitiveValue | values+=PropertyValueAssignment) ')' | ';')
+		//(singlePropertyValue=PrimitiveValue | values+=PropertyValueAssignment (',' values+=PropertyValueAssignment)*) ')' |
+		//';')
 		public Group getGroup() { return cGroup; }
 		
 		//technology=[service::Import]
@@ -1484,16 +1493,17 @@ public class MappingDslGrammarAccess extends AbstractGrammarElementFinder {
 		//QualifiedName
 		public RuleCall getAspectServiceAspectQualifiedNameParserRuleCall_2_0_1() { return cAspectServiceAspectQualifiedNameParserRuleCall_2_0_1; }
 		
-		//'(' (singlePropertyValue=PrimitiveValue | values+=PropertyValueAssignment) ')' | ';'
+		//'(' (singlePropertyValue=PrimitiveValue | values+=PropertyValueAssignment (',' values+=PropertyValueAssignment)*) ')' |
+		//';'
 		public Alternatives getAlternatives_3() { return cAlternatives_3; }
 		
-		//'(' (singlePropertyValue=PrimitiveValue | values+=PropertyValueAssignment) ')'
+		//'(' (singlePropertyValue=PrimitiveValue | values+=PropertyValueAssignment (',' values+=PropertyValueAssignment)*) ')'
 		public Group getGroup_3_0() { return cGroup_3_0; }
 		
 		//'('
 		public Keyword getLeftParenthesisKeyword_3_0_0() { return cLeftParenthesisKeyword_3_0_0; }
 		
-		//singlePropertyValue=PrimitiveValue | values+=PropertyValueAssignment
+		//singlePropertyValue=PrimitiveValue | values+=PropertyValueAssignment (',' values+=PropertyValueAssignment)*
 		public Alternatives getAlternatives_3_0_1() { return cAlternatives_3_0_1; }
 		
 		//singlePropertyValue=PrimitiveValue
@@ -1502,11 +1512,26 @@ public class MappingDslGrammarAccess extends AbstractGrammarElementFinder {
 		//PrimitiveValue
 		public RuleCall getSinglePropertyValuePrimitiveValueParserRuleCall_3_0_1_0_0() { return cSinglePropertyValuePrimitiveValueParserRuleCall_3_0_1_0_0; }
 		
+		//values+=PropertyValueAssignment (',' values+=PropertyValueAssignment)*
+		public Group getGroup_3_0_1_1() { return cGroup_3_0_1_1; }
+		
 		//values+=PropertyValueAssignment
-		public Assignment getValuesAssignment_3_0_1_1() { return cValuesAssignment_3_0_1_1; }
+		public Assignment getValuesAssignment_3_0_1_1_0() { return cValuesAssignment_3_0_1_1_0; }
 		
 		//PropertyValueAssignment
-		public RuleCall getValuesPropertyValueAssignmentParserRuleCall_3_0_1_1_0() { return cValuesPropertyValueAssignmentParserRuleCall_3_0_1_1_0; }
+		public RuleCall getValuesPropertyValueAssignmentParserRuleCall_3_0_1_1_0_0() { return cValuesPropertyValueAssignmentParserRuleCall_3_0_1_1_0_0; }
+		
+		//(',' values+=PropertyValueAssignment)*
+		public Group getGroup_3_0_1_1_1() { return cGroup_3_0_1_1_1; }
+		
+		//','
+		public Keyword getCommaKeyword_3_0_1_1_1_0() { return cCommaKeyword_3_0_1_1_1_0; }
+		
+		//values+=PropertyValueAssignment
+		public Assignment getValuesAssignment_3_0_1_1_1_1() { return cValuesAssignment_3_0_1_1_1_1; }
+		
+		//PropertyValueAssignment
+		public RuleCall getValuesPropertyValueAssignmentParserRuleCall_3_0_1_1_1_1_0() { return cValuesPropertyValueAssignmentParserRuleCall_3_0_1_1_1_1_0; }
 		
 		//')'
 		public Keyword getRightParenthesisKeyword_3_0_2() { return cRightParenthesisKeyword_3_0_2; }
@@ -1860,7 +1885,10 @@ public class MappingDslGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//TechnologySpecificImportedServiceAspect:
 	//	technology=[service::Import] '::' aspect=[technology::ServiceAspect|QualifiedName] ('('
-	//	(singlePropertyValue=PrimitiveValue | values+=PropertyValueAssignment) ')' |
+	//	(singlePropertyValue=PrimitiveValue
+	//	| values+=PropertyValueAssignment (',' values+=PropertyValueAssignment)*)
+	//	')'
+	//	|
 	//	';');
 	public TechnologySpecificImportedServiceAspectElements getTechnologySpecificImportedServiceAspectAccess() {
 		return pTechnologySpecificImportedServiceAspect;

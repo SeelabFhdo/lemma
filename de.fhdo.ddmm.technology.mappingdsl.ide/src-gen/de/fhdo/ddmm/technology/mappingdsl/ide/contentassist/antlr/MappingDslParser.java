@@ -107,6 +107,8 @@ public class MappingDslParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getTechnologySpecificEndpointAccess().getGroup_4(), "rule__TechnologySpecificEndpoint__Group_4__0");
 			builder.put(grammarAccess.getTechnologySpecificImportedServiceAspectAccess().getGroup(), "rule__TechnologySpecificImportedServiceAspect__Group__0");
 			builder.put(grammarAccess.getTechnologySpecificImportedServiceAspectAccess().getGroup_3_0(), "rule__TechnologySpecificImportedServiceAspect__Group_3_0__0");
+			builder.put(grammarAccess.getTechnologySpecificImportedServiceAspectAccess().getGroup_3_0_1_1(), "rule__TechnologySpecificImportedServiceAspect__Group_3_0_1_1__0");
+			builder.put(grammarAccess.getTechnologySpecificImportedServiceAspectAccess().getGroup_3_0_1_1_1(), "rule__TechnologySpecificImportedServiceAspect__Group_3_0_1_1_1__0");
 			builder.put(grammarAccess.getServiceModelAccess().getGroup(), "rule__ServiceModel__Group__0");
 			builder.put(grammarAccess.getImportAccess().getGroup(), "rule__Import__Group__0");
 			builder.put(grammarAccess.getMicroserviceAccess().getGroup(), "rule__Microservice__Group__0");
@@ -286,7 +288,8 @@ public class MappingDslParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getTechnologySpecificImportedServiceAspectAccess().getTechnologyAssignment_0(), "rule__TechnologySpecificImportedServiceAspect__TechnologyAssignment_0");
 			builder.put(grammarAccess.getTechnologySpecificImportedServiceAspectAccess().getAspectAssignment_2(), "rule__TechnologySpecificImportedServiceAspect__AspectAssignment_2");
 			builder.put(grammarAccess.getTechnologySpecificImportedServiceAspectAccess().getSinglePropertyValueAssignment_3_0_1_0(), "rule__TechnologySpecificImportedServiceAspect__SinglePropertyValueAssignment_3_0_1_0");
-			builder.put(grammarAccess.getTechnologySpecificImportedServiceAspectAccess().getValuesAssignment_3_0_1_1(), "rule__TechnologySpecificImportedServiceAspect__ValuesAssignment_3_0_1_1");
+			builder.put(grammarAccess.getTechnologySpecificImportedServiceAspectAccess().getValuesAssignment_3_0_1_1_0(), "rule__TechnologySpecificImportedServiceAspect__ValuesAssignment_3_0_1_1_0");
+			builder.put(grammarAccess.getTechnologySpecificImportedServiceAspectAccess().getValuesAssignment_3_0_1_1_1_1(), "rule__TechnologySpecificImportedServiceAspect__ValuesAssignment_3_0_1_1_1_1");
 			builder.put(grammarAccess.getServiceModelAccess().getImportsAssignment_0(), "rule__ServiceModel__ImportsAssignment_0");
 			builder.put(grammarAccess.getServiceModelAccess().getMicroservicesAssignment_1(), "rule__ServiceModel__MicroservicesAssignment_1");
 			builder.put(grammarAccess.getImportAccess().getImportTypeAssignment_1(), "rule__Import__ImportTypeAssignment_1");

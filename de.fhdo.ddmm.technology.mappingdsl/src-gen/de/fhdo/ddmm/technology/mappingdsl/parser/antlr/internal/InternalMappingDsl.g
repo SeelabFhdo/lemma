@@ -1963,33 +1963,60 @@ ruleTechnologySpecificImportedServiceAspect returns [EObject current=null]
 					    |
 					(
 						(
-							{
-								newCompositeNode(grammarAccess.getTechnologySpecificImportedServiceAspectAccess().getValuesPropertyValueAssignmentParserRuleCall_3_0_1_1_0());
-							}
-							lv_values_5_0=rulePropertyValueAssignment
-							{
-								if ($current==null) {
-									$current = createModelElementForParent(grammarAccess.getTechnologySpecificImportedServiceAspectRule());
+							(
+								{
+									newCompositeNode(grammarAccess.getTechnologySpecificImportedServiceAspectAccess().getValuesPropertyValueAssignmentParserRuleCall_3_0_1_1_0_0());
 								}
-								add(
-									$current,
-									"values",
-									lv_values_5_0,
-									"de.fhdo.ddmm.ServiceDsl.PropertyValueAssignment");
-								afterParserOrEnumRuleCall();
-							}
+								lv_values_5_0=rulePropertyValueAssignment
+								{
+									if ($current==null) {
+										$current = createModelElementForParent(grammarAccess.getTechnologySpecificImportedServiceAspectRule());
+									}
+									add(
+										$current,
+										"values",
+										lv_values_5_0,
+										"de.fhdo.ddmm.ServiceDsl.PropertyValueAssignment");
+									afterParserOrEnumRuleCall();
+								}
+							)
 						)
+						(
+							otherlv_6=','
+							{
+								newLeafNode(otherlv_6, grammarAccess.getTechnologySpecificImportedServiceAspectAccess().getCommaKeyword_3_0_1_1_1_0());
+							}
+							(
+								(
+									{
+										newCompositeNode(grammarAccess.getTechnologySpecificImportedServiceAspectAccess().getValuesPropertyValueAssignmentParserRuleCall_3_0_1_1_1_1_0());
+									}
+									lv_values_7_0=rulePropertyValueAssignment
+									{
+										if ($current==null) {
+											$current = createModelElementForParent(grammarAccess.getTechnologySpecificImportedServiceAspectRule());
+										}
+										add(
+											$current,
+											"values",
+											lv_values_7_0,
+											"de.fhdo.ddmm.ServiceDsl.PropertyValueAssignment");
+										afterParserOrEnumRuleCall();
+									}
+								)
+							)
+						)*
 					)
 				)
-				otherlv_6=')'
+				otherlv_8=')'
 				{
-					newLeafNode(otherlv_6, grammarAccess.getTechnologySpecificImportedServiceAspectAccess().getRightParenthesisKeyword_3_0_2());
+					newLeafNode(otherlv_8, grammarAccess.getTechnologySpecificImportedServiceAspectAccess().getRightParenthesisKeyword_3_0_2());
 				}
 			)
 			    |
-			otherlv_7=';'
+			otherlv_9=';'
 			{
-				newLeafNode(otherlv_7, grammarAccess.getTechnologySpecificImportedServiceAspectAccess().getSemicolonKeyword_3_1());
+				newLeafNode(otherlv_9, grammarAccess.getTechnologySpecificImportedServiceAspectAccess().getSemicolonKeyword_3_1());
 			}
 		)
 	)
