@@ -611,7 +611,7 @@ public class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
    */
   protected ArrayList<ServiceAspect> filterMatchingAspects(final List<ServiceAspect> serviceAspects, final ExchangePattern forExchangePattern, final CommunicationType forCommunicationType, final List<Pair<Protocol, DataFormat>> forProtocolsAndDataFormats) {
     final ArrayList<ServiceAspect> matchingAspects = CollectionLiterals.<ServiceAspect>newArrayList();
-    if ((forProtocolsAndDataFormats != null)) {
+    if (((forProtocolsAndDataFormats != null) && (!forProtocolsAndDataFormats.isEmpty()))) {
       for (final Pair<Protocol, DataFormat> protocolAndDataFormat : forProtocolsAndDataFormats) {
         {
           final Protocol forProtocol = protocolAndDataFormat.getKey();

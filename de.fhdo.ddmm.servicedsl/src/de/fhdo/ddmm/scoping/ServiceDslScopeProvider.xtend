@@ -564,7 +564,7 @@ class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
         List<Pair<Protocol, DataFormat>> forProtocolsAndDataFormats) {
         val matchingAspects = <ServiceAspect> newArrayList
         // Match aspects for a variety of protocols and data formats
-        if (forProtocolsAndDataFormats !== null)
+        if (forProtocolsAndDataFormats !== null && !forProtocolsAndDataFormats.empty)
             for (protocolAndDataFormat : forProtocolsAndDataFormats) {
                 val forProtocol = protocolAndDataFormat.key
                 val forDataFormat = protocolAndDataFormat.value ?: forProtocol.defaultFormat
