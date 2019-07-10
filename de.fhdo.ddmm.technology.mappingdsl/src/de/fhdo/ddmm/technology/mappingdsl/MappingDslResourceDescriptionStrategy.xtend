@@ -1,4 +1,4 @@
-package de.fhdo.ddmm
+package de.fhdo.ddmm.technology.mappingdsl
 
 import org.eclipse.xtext.resource.impl.DefaultResourceDescriptionStrategy
 import org.eclipse.emf.ecore.EObject
@@ -7,11 +7,11 @@ import org.eclipse.xtext.resource.IEObjectDescription
 import de.fhdo.ddmm.service.Import
 
 /**
- * Custom resource description strategy for the Service DSL.
+ * Custom resource description strategy for the Mapping DSL.
  *
  * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
  */
-class ServiceDslResourceDescriptionStrategy extends DefaultResourceDescriptionStrategy {
+class MappingDslResourceDescriptionStrategy extends DefaultResourceDescriptionStrategy {
     /**
      * Export selected EObjects from DSL models
      */
