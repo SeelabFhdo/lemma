@@ -1117,18 +1117,28 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
       final Consumer<CommunicationType> _function_1 = (CommunicationType communicationType) -> {
         Protocol defaultProtocol = null;
         DataFormat defaultDataFormat = null;
-        final Function1<Protocol, Boolean> _function_2 = (Protocol it_1) -> {
-          CommunicationType _communicationType = it_1.getCommunicationType();
-          return Boolean.valueOf(Objects.equal(_communicationType, communicationType));
-        };
-        final Function1<Protocol, Boolean> _function_3 = (Protocol it_1) -> {
-          return Boolean.valueOf(it_1.isDefault());
-        };
-        defaultProtocol = IterableExtensions.<Protocol>findFirst(IterableExtensions.<Protocol>filter(technologyModel.getProtocols(), _function_2), _function_3);
+        EList<Protocol> _protocols = null;
+        if (technologyModel!=null) {
+          _protocols=technologyModel.getProtocols();
+        }
+        Iterable<Protocol> _filter = null;
+        if (_protocols!=null) {
+          final Function1<Protocol, Boolean> _function_2 = (Protocol it_1) -> {
+            CommunicationType _communicationType = it_1.getCommunicationType();
+            return Boolean.valueOf(Objects.equal(_communicationType, communicationType));
+          };
+          _filter=IterableExtensions.<Protocol>filter(_protocols, _function_2);
+        }
+        Protocol _findFirst = null;
+        if (_filter!=null) {
+          final Function1<Protocol, Boolean> _function_3 = (Protocol it_1) -> {
+            return Boolean.valueOf(it_1.isDefault());
+          };
+          _findFirst=IterableExtensions.<Protocol>findFirst(_filter, _function_3);
+        }
+        defaultProtocol = _findFirst;
         if ((defaultProtocol != null)) {
           defaultDataFormat = defaultProtocol.getDefaultFormat();
-        }
-        if ((defaultProtocol != null)) {
           results.put(communicationType, Pair.<Protocol, DataFormat>of(defaultProtocol, defaultDataFormat));
         }
       };

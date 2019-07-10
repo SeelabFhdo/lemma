@@ -848,15 +848,14 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
                 var Protocol defaultProtocol
                 var DataFormat defaultDataFormat
 
-                defaultProtocol = technologyModel.protocols
-                    .filter[it.communicationType == communicationType]
-                    .findFirst[^default]
+                defaultProtocol = technologyModel?.protocols
+                    ?.filter[it.communicationType == communicationType]
+                    ?.findFirst[^default]
 
-                if (defaultProtocol !== null)
+                if (defaultProtocol !== null) {
                     defaultDataFormat = defaultProtocol.defaultFormat
-
-                if (defaultProtocol !== null)
                     results.put(communicationType, {defaultProtocol -> defaultDataFormat})
+                }
             ]
         ]
 
