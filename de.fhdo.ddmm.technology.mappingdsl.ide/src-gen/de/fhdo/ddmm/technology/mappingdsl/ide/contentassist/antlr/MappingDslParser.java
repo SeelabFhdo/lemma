@@ -35,6 +35,7 @@ public class MappingDslParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getOperationMappingAccess().getParameterMappingsAlternatives_6_3_1_0(), "rule__OperationMapping__ParameterMappingsAlternatives_6_3_1_0");
 			builder.put(grammarAccess.getComplexParameterMappingAccess().getAlternatives_2(), "rule__ComplexParameterMapping__Alternatives_2");
 			builder.put(grammarAccess.getTechnologySpecificFieldMappingAccess().getAlternatives_0(), "rule__TechnologySpecificFieldMapping__Alternatives_0");
+			builder.put(grammarAccess.getTechnologySpecificFieldMappingAccess().getAlternatives_1(), "rule__TechnologySpecificFieldMapping__Alternatives_1");
 			builder.put(grammarAccess.getTechnologySpecificImportedServiceAspectAccess().getAlternatives_3(), "rule__TechnologySpecificImportedServiceAspect__Alternatives_3");
 			builder.put(grammarAccess.getTechnologySpecificImportedServiceAspectAccess().getAlternatives_3_0_1(), "rule__TechnologySpecificImportedServiceAspect__Alternatives_3_0_1");
 			builder.put(grammarAccess.getParameterAccess().getAlternatives_7(), "rule__Parameter__Alternatives_7");
@@ -63,8 +64,6 @@ public class MappingDslParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getComplexTypeMappingAccess().getGroup(), "rule__ComplexTypeMapping__Group__0");
 			builder.put(grammarAccess.getComplexTypeMappingAccess().getGroup_0(), "rule__ComplexTypeMapping__Group_0__0");
 			builder.put(grammarAccess.getComplexTypeMappingAccess().getGroup_4(), "rule__ComplexTypeMapping__Group_4__0");
-			builder.put(grammarAccess.getComplexTypeMappingAccess().getGroup_5(), "rule__ComplexTypeMapping__Group_5__0");
-			builder.put(grammarAccess.getComplexTypeMappingAccess().getGroup_5_1(), "rule__ComplexTypeMapping__Group_5_1__0");
 			builder.put(grammarAccess.getImportedComplexTypeAccess().getGroup(), "rule__ImportedComplexType__Group__0");
 			builder.put(grammarAccess.getMicroserviceMappingAccess().getGroup(), "rule__MicroserviceMapping__Group__0");
 			builder.put(grammarAccess.getMicroserviceMappingAccess().getGroup_0(), "rule__MicroserviceMapping__Group_0__0");
@@ -97,7 +96,7 @@ public class MappingDslParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getComplexParameterMappingAccess().getGroup_2_1_4(), "rule__ComplexParameterMapping__Group_2_1_4__0");
 			builder.put(grammarAccess.getTechnologySpecificFieldMappingAccess().getGroup(), "rule__TechnologySpecificFieldMapping__Group__0");
 			builder.put(grammarAccess.getTechnologySpecificFieldMappingAccess().getGroup_0_1(), "rule__TechnologySpecificFieldMapping__Group_0_1__0");
-			builder.put(grammarAccess.getTechnologySpecificFieldMappingAccess().getGroup_1(), "rule__TechnologySpecificFieldMapping__Group_1__0");
+			builder.put(grammarAccess.getTechnologySpecificFieldMappingAccess().getGroup_1_0(), "rule__TechnologySpecificFieldMapping__Group_1_0__0");
 			builder.put(grammarAccess.getImportedMicroserviceAccess().getGroup(), "rule__ImportedMicroservice__Group__0");
 			builder.put(grammarAccess.getTechnologySpecificProtocolSpecificationAccess().getGroup(), "rule__TechnologySpecificProtocolSpecification__Group__0");
 			builder.put(grammarAccess.getTechnologySpecificProtocolAccess().getGroup(), "rule__TechnologySpecificProtocol__Group__0");
@@ -231,8 +230,7 @@ public class MappingDslParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getComplexTypeMappingAccess().getTechnologiesAssignment_0_3(), "rule__ComplexTypeMapping__TechnologiesAssignment_0_3");
 			builder.put(grammarAccess.getComplexTypeMappingAccess().getTypeAssignment_2(), "rule__ComplexTypeMapping__TypeAssignment_2");
 			builder.put(grammarAccess.getComplexTypeMappingAccess().getAspectsAssignment_4_2(), "rule__ComplexTypeMapping__AspectsAssignment_4_2");
-			builder.put(grammarAccess.getComplexTypeMappingAccess().getFieldMappingsAssignment_5_0(), "rule__ComplexTypeMapping__FieldMappingsAssignment_5_0");
-			builder.put(grammarAccess.getComplexTypeMappingAccess().getFieldMappingsAssignment_5_1_1(), "rule__ComplexTypeMapping__FieldMappingsAssignment_5_1_1");
+			builder.put(grammarAccess.getComplexTypeMappingAccess().getFieldMappingsAssignment_5(), "rule__ComplexTypeMapping__FieldMappingsAssignment_5");
 			builder.put(grammarAccess.getImportedComplexTypeAccess().getServiceModelImportAssignment_0(), "rule__ImportedComplexType__ServiceModelImportAssignment_0");
 			builder.put(grammarAccess.getImportedComplexTypeAccess().getDataModelImportAssignment_2(), "rule__ImportedComplexType__DataModelImportAssignment_2");
 			builder.put(grammarAccess.getImportedComplexTypeAccess().getTypeAssignment_4(), "rule__ImportedComplexType__TypeAssignment_4");
@@ -273,7 +271,7 @@ public class MappingDslParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getTechnologySpecificFieldMappingAccess().getDataFieldAssignment_0_1_0(), "rule__TechnologySpecificFieldMapping__DataFieldAssignment_0_1_0");
 			builder.put(grammarAccess.getTechnologySpecificFieldMappingAccess().getTechnologyAssignment_0_1_2(), "rule__TechnologySpecificFieldMapping__TechnologyAssignment_0_1_2");
 			builder.put(grammarAccess.getTechnologySpecificFieldMappingAccess().getTypeAssignment_0_1_4(), "rule__TechnologySpecificFieldMapping__TypeAssignment_0_1_4");
-			builder.put(grammarAccess.getTechnologySpecificFieldMappingAccess().getAspectsAssignment_1_3(), "rule__TechnologySpecificFieldMapping__AspectsAssignment_1_3");
+			builder.put(grammarAccess.getTechnologySpecificFieldMappingAccess().getAspectsAssignment_1_0_3(), "rule__TechnologySpecificFieldMapping__AspectsAssignment_1_0_3");
 			builder.put(grammarAccess.getImportedMicroserviceAccess().getImportAssignment_0(), "rule__ImportedMicroservice__ImportAssignment_0");
 			builder.put(grammarAccess.getImportedMicroserviceAccess().getMicroserviceAssignment_2(), "rule__ImportedMicroservice__MicroserviceAssignment_2");
 			builder.put(grammarAccess.getTechnologySpecificProtocolSpecificationAccess().getCommunicationTypeAssignment_0(), "rule__TechnologySpecificProtocolSpecification__CommunicationTypeAssignment_0");

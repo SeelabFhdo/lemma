@@ -25,10 +25,7 @@ ComplexTypeMapping returns ComplexTypeMapping:
             aspects+=TechnologySpecificImportedServiceAspect+
         '}')?
 
-        (
-            fieldMappings+=TechnologySpecificFieldMapping
-            (',' fieldMappings+=TechnologySpecificFieldMapping)*
-        )?
+        fieldMappings+=TechnologySpecificFieldMapping*
     '}'
 ;
 
@@ -158,11 +155,15 @@ TechnologySpecificFieldMapping returns TechnologySpecificFieldMapping:
             type=[data::Type|QualifiedName]
         )
     )
-    ('{'
-        'aspects' '{'
-            aspects+=TechnologySpecificImportedServiceAspect+
+    (
+        '{'
+            'aspects' '{'
+                aspects+=TechnologySpecificImportedServiceAspect+
+            '}'
         '}'
-    '}')?
+    |
+        ';'
+    )
 ;
 
 ImportedMicroservice returns ImportedMicroservice:

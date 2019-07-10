@@ -350,7 +350,7 @@ public class MappingDslSemanticSequencer extends ServiceDslSemanticSequencer {
 	 *         technologies+=[Import|ID]+ 
 	 *         type=ImportedComplexType 
 	 *         aspects+=TechnologySpecificImportedServiceAspect* 
-	 *         (fieldMappings+=TechnologySpecificFieldMapping fieldMappings+=TechnologySpecificFieldMapping*)?
+	 *         fieldMappings+=TechnologySpecificFieldMapping*
 	 *     )
 	 */
 	protected void sequence_ComplexTypeMapping(ISerializationContext context, ComplexTypeMapping semanticObject) {

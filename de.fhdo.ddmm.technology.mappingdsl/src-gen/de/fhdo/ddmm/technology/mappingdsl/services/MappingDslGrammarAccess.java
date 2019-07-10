@@ -87,26 +87,21 @@ public class MappingDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cAspectsAssignment_4_2 = (Assignment)cGroup_4.eContents().get(2);
 		private final RuleCall cAspectsTechnologySpecificImportedServiceAspectParserRuleCall_4_2_0 = (RuleCall)cAspectsAssignment_4_2.eContents().get(0);
 		private final Keyword cRightCurlyBracketKeyword_4_3 = (Keyword)cGroup_4.eContents().get(3);
-		private final Group cGroup_5 = (Group)cGroup.eContents().get(5);
-		private final Assignment cFieldMappingsAssignment_5_0 = (Assignment)cGroup_5.eContents().get(0);
-		private final RuleCall cFieldMappingsTechnologySpecificFieldMappingParserRuleCall_5_0_0 = (RuleCall)cFieldMappingsAssignment_5_0.eContents().get(0);
-		private final Group cGroup_5_1 = (Group)cGroup_5.eContents().get(1);
-		private final Keyword cCommaKeyword_5_1_0 = (Keyword)cGroup_5_1.eContents().get(0);
-		private final Assignment cFieldMappingsAssignment_5_1_1 = (Assignment)cGroup_5_1.eContents().get(1);
-		private final RuleCall cFieldMappingsTechnologySpecificFieldMappingParserRuleCall_5_1_1_0 = (RuleCall)cFieldMappingsAssignment_5_1_1.eContents().get(0);
+		private final Assignment cFieldMappingsAssignment_5 = (Assignment)cGroup.eContents().get(5);
+		private final RuleCall cFieldMappingsTechnologySpecificFieldMappingParserRuleCall_5_0 = (RuleCall)cFieldMappingsAssignment_5.eContents().get(0);
 		private final Keyword cRightCurlyBracketKeyword_6 = (Keyword)cGroup.eContents().get(6);
 		
 		//ComplexTypeMapping:
 		//	('@' 'technology' '(' technologies+=[service::Import] ')')+
 		//	'type' type=ImportedComplexType '{' ('aspects' '{'
 		//	aspects+=TechnologySpecificImportedServiceAspect+
-		//	'}')? (fieldMappings+=TechnologySpecificFieldMapping (',' fieldMappings+=TechnologySpecificFieldMapping)*)?
+		//	'}')?
+		//	fieldMappings+=TechnologySpecificFieldMapping*
 		//	'}';
 		@Override public ParserRule getRule() { return rule; }
 		
 		//('@' 'technology' '(' technologies+=[service::Import] ')')+ 'type' type=ImportedComplexType '{' ('aspects' '{'
-		//aspects+=TechnologySpecificImportedServiceAspect+ '}')? (fieldMappings+=TechnologySpecificFieldMapping (','
-		//fieldMappings+=TechnologySpecificFieldMapping)*)? '}'
+		//aspects+=TechnologySpecificImportedServiceAspect+ '}')? fieldMappings+=TechnologySpecificFieldMapping* '}'
 		public Group getGroup() { return cGroup; }
 		
 		//('@' 'technology' '(' technologies+=[service::Import] ')')+
@@ -163,26 +158,11 @@ public class MappingDslGrammarAccess extends AbstractGrammarElementFinder {
 		//'}'
 		public Keyword getRightCurlyBracketKeyword_4_3() { return cRightCurlyBracketKeyword_4_3; }
 		
-		//(fieldMappings+=TechnologySpecificFieldMapping (',' fieldMappings+=TechnologySpecificFieldMapping)*)?
-		public Group getGroup_5() { return cGroup_5; }
-		
-		//fieldMappings+=TechnologySpecificFieldMapping
-		public Assignment getFieldMappingsAssignment_5_0() { return cFieldMappingsAssignment_5_0; }
+		//fieldMappings+=TechnologySpecificFieldMapping*
+		public Assignment getFieldMappingsAssignment_5() { return cFieldMappingsAssignment_5; }
 		
 		//TechnologySpecificFieldMapping
-		public RuleCall getFieldMappingsTechnologySpecificFieldMappingParserRuleCall_5_0_0() { return cFieldMappingsTechnologySpecificFieldMappingParserRuleCall_5_0_0; }
-		
-		//(',' fieldMappings+=TechnologySpecificFieldMapping)*
-		public Group getGroup_5_1() { return cGroup_5_1; }
-		
-		//','
-		public Keyword getCommaKeyword_5_1_0() { return cCommaKeyword_5_1_0; }
-		
-		//fieldMappings+=TechnologySpecificFieldMapping
-		public Assignment getFieldMappingsAssignment_5_1_1() { return cFieldMappingsAssignment_5_1_1; }
-		
-		//TechnologySpecificFieldMapping
-		public RuleCall getFieldMappingsTechnologySpecificFieldMappingParserRuleCall_5_1_1_0() { return cFieldMappingsTechnologySpecificFieldMappingParserRuleCall_5_1_1_0; }
+		public RuleCall getFieldMappingsTechnologySpecificFieldMappingParserRuleCall_5_0() { return cFieldMappingsTechnologySpecificFieldMappingParserRuleCall_5_0; }
 		
 		//'}'
 		public Keyword getRightCurlyBracketKeyword_6() { return cRightCurlyBracketKeyword_6; }
@@ -1134,14 +1114,16 @@ public class MappingDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cTypeAssignment_0_1_4 = (Assignment)cGroup_0_1.eContents().get(4);
 		private final CrossReference cTypeTypeCrossReference_0_1_4_0 = (CrossReference)cTypeAssignment_0_1_4.eContents().get(0);
 		private final RuleCall cTypeTypeQualifiedNameParserRuleCall_0_1_4_0_1 = (RuleCall)cTypeTypeCrossReference_0_1_4_0.eContents().get(1);
-		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
-		private final Keyword cLeftCurlyBracketKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
-		private final Keyword cAspectsKeyword_1_1 = (Keyword)cGroup_1.eContents().get(1);
-		private final Keyword cLeftCurlyBracketKeyword_1_2 = (Keyword)cGroup_1.eContents().get(2);
-		private final Assignment cAspectsAssignment_1_3 = (Assignment)cGroup_1.eContents().get(3);
-		private final RuleCall cAspectsTechnologySpecificImportedServiceAspectParserRuleCall_1_3_0 = (RuleCall)cAspectsAssignment_1_3.eContents().get(0);
-		private final Keyword cRightCurlyBracketKeyword_1_4 = (Keyword)cGroup_1.eContents().get(4);
-		private final Keyword cRightCurlyBracketKeyword_1_5 = (Keyword)cGroup_1.eContents().get(5);
+		private final Alternatives cAlternatives_1 = (Alternatives)cGroup.eContents().get(1);
+		private final Group cGroup_1_0 = (Group)cAlternatives_1.eContents().get(0);
+		private final Keyword cLeftCurlyBracketKeyword_1_0_0 = (Keyword)cGroup_1_0.eContents().get(0);
+		private final Keyword cAspectsKeyword_1_0_1 = (Keyword)cGroup_1_0.eContents().get(1);
+		private final Keyword cLeftCurlyBracketKeyword_1_0_2 = (Keyword)cGroup_1_0.eContents().get(2);
+		private final Assignment cAspectsAssignment_1_0_3 = (Assignment)cGroup_1_0.eContents().get(3);
+		private final RuleCall cAspectsTechnologySpecificImportedServiceAspectParserRuleCall_1_0_3_0 = (RuleCall)cAspectsAssignment_1_0_3.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_1_0_4 = (Keyword)cGroup_1_0.eContents().get(4);
+		private final Keyword cRightCurlyBracketKeyword_1_0_5 = (Keyword)cGroup_1_0.eContents().get(5);
+		private final Keyword cSemicolonKeyword_1_1 = (Keyword)cAlternatives_1.eContents().get(1);
 		
 		//TechnologySpecificFieldMapping:
 		//	(enumerationField=[data::EnumerationField] | dataField=[data::DataField] ':' technology=[service::Import] '::'
@@ -1149,11 +1131,13 @@ public class MappingDslGrammarAccess extends AbstractGrammarElementFinder {
 		//	'aspects' '{'
 		//	aspects+=TechnologySpecificImportedServiceAspect+
 		//	'}'
-		//	'}')?;
+		//	'}'
+		//	|
+		//	';');
 		@Override public ParserRule getRule() { return rule; }
 		
 		//(enumerationField=[data::EnumerationField] | dataField=[data::DataField] ':' technology=[service::Import] '::'
-		//type=[data::Type|QualifiedName]) ('{' 'aspects' '{' aspects+=TechnologySpecificImportedServiceAspect+ '}' '}')?
+		//type=[data::Type|QualifiedName]) ('{' 'aspects' '{' aspects+=TechnologySpecificImportedServiceAspect+ '}' '}' | ';')
 		public Group getGroup() { return cGroup; }
 		
 		//enumerationField=[data::EnumerationField] | dataField=[data::DataField] ':' technology=[service::Import] '::'
@@ -1205,29 +1189,35 @@ public class MappingDslGrammarAccess extends AbstractGrammarElementFinder {
 		//QualifiedName
 		public RuleCall getTypeTypeQualifiedNameParserRuleCall_0_1_4_0_1() { return cTypeTypeQualifiedNameParserRuleCall_0_1_4_0_1; }
 		
-		//('{' 'aspects' '{' aspects+=TechnologySpecificImportedServiceAspect+ '}' '}')?
-		public Group getGroup_1() { return cGroup_1; }
+		//'{' 'aspects' '{' aspects+=TechnologySpecificImportedServiceAspect+ '}' '}' | ';'
+		public Alternatives getAlternatives_1() { return cAlternatives_1; }
+		
+		//'{' 'aspects' '{' aspects+=TechnologySpecificImportedServiceAspect+ '}' '}'
+		public Group getGroup_1_0() { return cGroup_1_0; }
 		
 		//'{'
-		public Keyword getLeftCurlyBracketKeyword_1_0() { return cLeftCurlyBracketKeyword_1_0; }
+		public Keyword getLeftCurlyBracketKeyword_1_0_0() { return cLeftCurlyBracketKeyword_1_0_0; }
 		
 		//'aspects'
-		public Keyword getAspectsKeyword_1_1() { return cAspectsKeyword_1_1; }
+		public Keyword getAspectsKeyword_1_0_1() { return cAspectsKeyword_1_0_1; }
 		
 		//'{'
-		public Keyword getLeftCurlyBracketKeyword_1_2() { return cLeftCurlyBracketKeyword_1_2; }
+		public Keyword getLeftCurlyBracketKeyword_1_0_2() { return cLeftCurlyBracketKeyword_1_0_2; }
 		
 		//aspects+=TechnologySpecificImportedServiceAspect+
-		public Assignment getAspectsAssignment_1_3() { return cAspectsAssignment_1_3; }
+		public Assignment getAspectsAssignment_1_0_3() { return cAspectsAssignment_1_0_3; }
 		
 		//TechnologySpecificImportedServiceAspect
-		public RuleCall getAspectsTechnologySpecificImportedServiceAspectParserRuleCall_1_3_0() { return cAspectsTechnologySpecificImportedServiceAspectParserRuleCall_1_3_0; }
+		public RuleCall getAspectsTechnologySpecificImportedServiceAspectParserRuleCall_1_0_3_0() { return cAspectsTechnologySpecificImportedServiceAspectParserRuleCall_1_0_3_0; }
 		
 		//'}'
-		public Keyword getRightCurlyBracketKeyword_1_4() { return cRightCurlyBracketKeyword_1_4; }
+		public Keyword getRightCurlyBracketKeyword_1_0_4() { return cRightCurlyBracketKeyword_1_0_4; }
 		
 		//'}'
-		public Keyword getRightCurlyBracketKeyword_1_5() { return cRightCurlyBracketKeyword_1_5; }
+		public Keyword getRightCurlyBracketKeyword_1_0_5() { return cRightCurlyBracketKeyword_1_0_5; }
+		
+		//';'
+		public Keyword getSemicolonKeyword_1_1() { return cSemicolonKeyword_1_1; }
 	}
 	public class ImportedMicroserviceElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.fhdo.ddmm.technology.mappingdsl.MappingDsl.ImportedMicroservice");
@@ -1691,7 +1681,8 @@ public class MappingDslGrammarAccess extends AbstractGrammarElementFinder {
 	//	('@' 'technology' '(' technologies+=[service::Import] ')')+
 	//	'type' type=ImportedComplexType '{' ('aspects' '{'
 	//	aspects+=TechnologySpecificImportedServiceAspect+
-	//	'}')? (fieldMappings+=TechnologySpecificFieldMapping (',' fieldMappings+=TechnologySpecificFieldMapping)*)?
+	//	'}')?
+	//	fieldMappings+=TechnologySpecificFieldMapping*
 	//	'}';
 	public ComplexTypeMappingElements getComplexTypeMappingAccess() {
 		return pComplexTypeMapping;
@@ -1829,7 +1820,9 @@ public class MappingDslGrammarAccess extends AbstractGrammarElementFinder {
 	//	'aspects' '{'
 	//	aspects+=TechnologySpecificImportedServiceAspect+
 	//	'}'
-	//	'}')?;
+	//	'}'
+	//	|
+	//	';');
 	public TechnologySpecificFieldMappingElements getTechnologySpecificFieldMappingAccess() {
 		return pTechnologySpecificFieldMapping;
 	}
