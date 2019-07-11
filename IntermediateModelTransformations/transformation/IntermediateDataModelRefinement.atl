@@ -117,9 +117,14 @@ rule RefineIntermediateDataField {
 	}
 	to
 		t : Intermediate!IntermediateDataField (
-			originalType <- s.type,
-			type <- thisModule.IntermediateImportedTechnologySpecificType(mappedField)
+			originalType <- s.type
 		)
+	do {
+		if (mappedField.mappedType.oclIsUndefined())
+			t.type <- s.type;
+		else
+			t.type <- thisModule.IntermediateImportedTechnologySpecificType(mappedField);
+	}
 }
 
 --- Called rule to create an IntermediateImportedTechnologySpecificType from a MappedField

@@ -155,20 +155,30 @@ ComplexParameterMapping returns ComplexParameterMapping:
 ;
 
 TechnologySpecificFieldMapping returns TechnologySpecificFieldMapping:
-    (enumerationField=[data::EnumerationField] |
-        (
-            dataField=[data::DataField] ':' technology=[service::Import] '::'
-            type=[data::Type|QualifiedName]
-        )
-    )
     (
+        '.' enumerationField=[data::EnumerationField]
         '{'
             'aspects' '{'
                 aspects+=TechnologySpecificImportedServiceAspect+
             '}'
         '}'
+    )
+
     |
-        ';'
+
+    (
+        dataField=[data::DataField]
+        (':' technology=[service::Import] '::' type=[data::Type|QualifiedName])?
+
+        (
+            '{'
+                'aspects' '{'
+                    aspects+=TechnologySpecificImportedServiceAspect+
+                '}'
+            '}'
+            |
+            ';'
+        )
     )
 ;
 

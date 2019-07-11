@@ -640,7 +640,9 @@ rule MappedFieldWithAspects(fieldMapping : Mapping!TechnologySpecificFieldMappin
 	do {
 		if (not fieldMapping.dataField.oclIsUndefined()) {
 			t.dataField <- fieldMapping.dataField;
-			t.mappedType <- thisModule.ImportedType(fieldMapping.technology, fieldMapping.type);
+			if (not fieldMapping.technology.oclIsUndefined() and 
+				not fieldMapping.type.oclIsUndefined())
+				t.mappedType <- thisModule.ImportedType(fieldMapping.technology, fieldMapping.type);
 		} else if (not fieldMapping.enumerationField.oclIsUndefined())
 			t.enumerationField <- fieldMapping.enumerationField;
 		
@@ -682,7 +684,7 @@ rule MappedFieldWithAspects(fieldMapping : Mapping!TechnologySpecificFieldMappin
 
 		t;
 	}
-}
+}		
 
 --- Helper to get the name of a technology
 helper def : getTechnologyName(fieldMapping : Mapping!TechnologySpecificFieldMapping) 

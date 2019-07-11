@@ -846,18 +846,18 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
   }
   
   /**
-   * Check that an enumeration field mapping is not empty
+   * Check that a technology-specific field mapping is not empty
    */
   @Check
-  public void checkEnumerationFieldMappingNotEmpty(final TechnologySpecificFieldMapping mapping) {
-    EnumerationField _enumerationField = mapping.getEnumerationField();
-    boolean _tripleEquals = (_enumerationField == null);
+  public void checkTechnologySpecificFieldMappingNotEmpty(final TechnologySpecificFieldMapping mapping) {
+    DataField _dataField = mapping.getDataField();
+    boolean _tripleEquals = (_dataField == null);
     if (_tripleEquals) {
       return;
     }
-    boolean _isEmpty = mapping.getAspects().isEmpty();
-    if (_isEmpty) {
-      this.error("Enumeration field mapping must not be empty", mapping, MappingPackage.Literals.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__ENUMERATION_FIELD);
+    if (((mapping.getType() == null) && mapping.getAspects().isEmpty())) {
+      this.error("Data field mapping must not be empty", mapping, 
+        MappingPackage.Literals.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__DATA_FIELD);
     }
   }
   

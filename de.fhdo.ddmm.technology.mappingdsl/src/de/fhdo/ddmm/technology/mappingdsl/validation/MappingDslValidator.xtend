@@ -640,17 +640,18 @@ class MappingDslValidator extends AbstractMappingDslValidator {
     }
 
     /**
-     * Check that an enumeration field mapping is not empty
+     * Check that a technology-specific field mapping is not empty
      */
     @Check
-    def checkEnumerationFieldMappingNotEmpty(TechnologySpecificFieldMapping mapping) {
-        if (mapping.enumerationField === null) {
+    def checkTechnologySpecificFieldMappingNotEmpty(TechnologySpecificFieldMapping mapping) {
+        // Enumeration mappings can't be empty per grammar definition
+        if (mapping.dataField === null) {
             return
         }
 
-        if (mapping.aspects.empty)
-            error("Enumeration field mapping must not be empty", mapping, MappingPackage::Literals
-                .TECHNOLOGY_SPECIFIC_FIELD_MAPPING__ENUMERATION_FIELD)
+        if (mapping.type === null && mapping.aspects.empty)
+            error("Data field mapping must not be empty", mapping,
+                MappingPackage::Literals.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__DATA_FIELD)
     }
 
     /**

@@ -153,7 +153,8 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
 
             /* Enumeration fields */
             case MappingPackage::Literals.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__ENUMERATION_FIELD:
-                return mapping.getScopeForComplexFields()
+                if (mapping.type instanceof Enumeration)
+                    return Scopes::scopeFor((mapping.type as Enumeration).fields)
         }
 
         return null
@@ -366,6 +367,10 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
             case MappingPackage::Literals
                 .COMPLEX_PARAMETER_MAPPING__TECHNOLOGY_SPECIFIC_COMPLEX_TYPE:
                 return mapping.getScopeForMappingTypes()
+
+            /* Data fields */
+            case MappingPackage::Literals.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__DATA_FIELD:
+                return mapping.getScopeForDataFields()
         }
 
         return null
@@ -378,11 +383,12 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
         switch (reference) {
             /* Data fields */
             case MappingPackage::Literals.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__DATA_FIELD:
-                return mapping.eContainer.getScopeForComplexFields()
+                return mapping.eContainer.getScopeForDataFields()
 
             /* Enumeration fields */
             case MappingPackage::Literals.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__ENUMERATION_FIELD:
-                return mapping.eContainer.getScopeForComplexFields()
+                if (mapping.type instanceof Enumeration)
+                    return Scopes::scopeFor((mapping.type as Enumeration).fields)
 
             /* Data type technologies */
             case MappingPackage::Literals.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__TECHNOLOGY,
@@ -559,9 +565,9 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     }
 
     /**
-     * Build scope for enumeration and data fields in complex type and parameter mappings
+     * Build scope for data fields in complex type and parameter mappings
      */
-    private def getScopeForComplexFields(EObject mapping) {
+    private def getScopeForDataFields(EObject mapping) {
         var ComplexType complexType = if (mapping instanceof ComplexParameterMapping) {
             if (mapping.parameter.importedType !== null)
                 mapping.parameter.importedType.type as ComplexType
@@ -570,8 +576,6 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
 
         return if (complexType === null)
                 IScope.NULLSCOPE
-            else if (complexType instanceof Enumeration)
-                Scopes::scopeFor(complexType.fields)
             else if (complexType.isStructure)
                 Scopes::scopeFor((complexType as DataStructure).dataFields)
             else if (complexType.isStructuredList)

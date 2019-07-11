@@ -527,8 +527,8 @@ public class MappingDslSemanticSequencer extends ServiceDslSemanticSequencer {
 	 *
 	 * Constraint:
 	 *     (
-	 *         (enumerationField=[EnumerationField|ID] | (dataField=[DataField|ID] technology=[Import|ID] type=[Type|QualifiedName])) 
-	 *         aspects+=TechnologySpecificImportedServiceAspect*
+	 *         (enumerationField=[EnumerationField|ID] aspects+=TechnologySpecificImportedServiceAspect+) | 
+	 *         (dataField=[DataField|ID] (technology=[Import|ID] type=[Type|QualifiedName])? aspects+=TechnologySpecificImportedServiceAspect*)
 	 *     )
 	 */
 	protected void sequence_TechnologySpecificFieldMapping(ISerializationContext context, TechnologySpecificFieldMapping semanticObject) {

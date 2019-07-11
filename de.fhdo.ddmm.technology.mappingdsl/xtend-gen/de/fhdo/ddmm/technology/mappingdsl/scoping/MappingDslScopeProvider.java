@@ -229,7 +229,11 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     if (!_matched) {
       if (Objects.equal(reference, MappingPackage.Literals.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__ENUMERATION_FIELD)) {
         _matched=true;
-        return this.getScopeForComplexFields(mapping);
+        ImportedComplexType _type = mapping.getType();
+        if ((_type instanceof Enumeration)) {
+          ImportedComplexType _type_1 = mapping.getType();
+          return Scopes.scopeFor(((Enumeration) _type_1).getFields());
+        }
       }
     }
     return null;
@@ -467,6 +471,12 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
         return this.getScopeForMappingTypes(mapping);
       }
     }
+    if (!_matched) {
+      if (Objects.equal(reference, MappingPackage.Literals.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__DATA_FIELD)) {
+        _matched=true;
+        return this.getScopeForDataFields(mapping);
+      }
+    }
     return null;
   }
   
@@ -477,12 +487,16 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     boolean _matched = false;
     if (Objects.equal(reference, MappingPackage.Literals.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__DATA_FIELD)) {
       _matched=true;
-      return this.getScopeForComplexFields(mapping.eContainer());
+      return this.getScopeForDataFields(mapping.eContainer());
     }
     if (!_matched) {
       if (Objects.equal(reference, MappingPackage.Literals.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__ENUMERATION_FIELD)) {
         _matched=true;
-        return this.getScopeForComplexFields(mapping.eContainer());
+        Type _type = mapping.getType();
+        if ((_type instanceof Enumeration)) {
+          Type _type_1 = mapping.getType();
+          return Scopes.scopeFor(((Enumeration) _type_1).getFields());
+        }
       }
     }
     if (!_matched) {
@@ -753,9 +767,9 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
   }
   
   /**
-   * Build scope for enumeration and data fields in complex type and parameter mappings
+   * Build scope for data fields in complex type and parameter mappings
    */
-  private IScope getScopeForComplexFields(final EObject mapping) {
+  private IScope getScopeForDataFields(final EObject mapping) {
     ComplexType _xifexpression = null;
     if ((mapping instanceof ComplexParameterMapping)) {
       ComplexType _xifexpression_1 = null;
@@ -780,22 +794,16 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
       _xifexpression_3 = IScope.NULLSCOPE;
     } else {
       IScope _xifexpression_4 = null;
-      if ((complexType instanceof Enumeration)) {
-        _xifexpression_4 = Scopes.scopeFor(((Enumeration)complexType).getFields());
+      boolean _isIsStructure = complexType.isIsStructure();
+      if (_isIsStructure) {
+        _xifexpression_4 = Scopes.scopeFor(((DataStructure) complexType).getDataFields());
       } else {
         IScope _xifexpression_5 = null;
-        boolean _isIsStructure = complexType.isIsStructure();
-        if (_isIsStructure) {
-          _xifexpression_5 = Scopes.scopeFor(((DataStructure) complexType).getDataFields());
+        boolean _isIsStructuredList = complexType.isIsStructuredList();
+        if (_isIsStructuredList) {
+          _xifexpression_5 = Scopes.scopeFor(((ListType) complexType).getDataFields());
         } else {
-          IScope _xifexpression_6 = null;
-          boolean _isIsStructuredList = complexType.isIsStructuredList();
-          if (_isIsStructuredList) {
-            _xifexpression_6 = Scopes.scopeFor(((ListType) complexType).getDataFields());
-          } else {
-            _xifexpression_6 = IScope.NULLSCOPE;
-          }
-          _xifexpression_5 = _xifexpression_6;
+          _xifexpression_5 = IScope.NULLSCOPE;
         }
         _xifexpression_4 = _xifexpression_5;
       }
