@@ -607,21 +607,7 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
     TechnologySpecificPrimitiveType _primitiveType = mapping.getPrimitiveType();
     boolean _tripleNotEquals = (_primitiveType != null);
     if (_tripleNotEquals) {
-      this.warnParameterMappingTypeCompatibility(mapping);
-    }
-  }
-  
-  /**
-   * Check and warn if types of a complex parameter mapping are not compatible. Note that we just
-   * place a warning in case of (suspected) type incompatibility, as we also do it in the service
-   * DSL.
-   */
-  @Check
-  public void warnComplexParameterMappingTypeCompatibility(final ComplexParameterMapping mapping) {
-    ComplexType _technologySpecificComplexType = mapping.getTechnologySpecificComplexType();
-    boolean _tripleNotEquals = (_technologySpecificComplexType != null);
-    if (_tripleNotEquals) {
-      this.warnParameterMappingTypeCompatibility(mapping);
+      this.warnPrimitiveTypeMappingCompatibility(mapping);
     }
   }
   
@@ -631,7 +617,10 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
    */
   @Check
   public void warnComplexParameterMappingTypeCompatibility(final TechnologySpecificFieldMapping mapping) {
-    this.warnParameterMappingTypeCompatibility(mapping);
+    boolean _isPrimitiveTypeMapping = this.isPrimitiveTypeMapping(mapping);
+    if (_isPrimitiveTypeMapping) {
+      this.warnPrimitiveTypeMappingCompatibility(mapping);
+    }
   }
   
   /**
@@ -1013,7 +1002,12 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
    * Convenience method for warning if types of a parameter mapping are not compatible with each
    * other
    */
-  public void warnParameterMappingTypeCompatibility(final EObject mapping) {
+  public void warnPrimitiveTypeMappingCompatibility(final EObject mapping) {
+    boolean _isPrimitiveTypeMapping = this.isPrimitiveTypeMapping(mapping);
+    boolean _not = (!_isPrimitiveTypeMapping);
+    if (_not) {
+      return;
+    }
     Type mappedType = null;
     String mappedTypeName = null;
     Type originalType = null;
@@ -1027,29 +1021,10 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
       erroneousMappingFeature = MappingPackage.Literals.PARAMETER_MAPPING__PARAMETER;
     }
     if (!_matched) {
-      if (mapping instanceof ComplexParameterMapping) {
-        _matched=true;
-        mappedType = ((ComplexParameterMapping)mapping).getTechnologySpecificComplexType();
-        mappedTypeName = ((ComplexParameterMapping)mapping).getTechnologySpecificComplexType().getName();
-        originalType = ((ComplexParameterMapping)mapping).getParameter().getImportedType().getType();
-        erroneousMappingFeature = MappingPackage.Literals.PARAMETER_MAPPING__PARAMETER;
-      }
-    }
-    if (!_matched) {
       if (mapping instanceof TechnologySpecificFieldMapping) {
         _matched=true;
         mappedType = ((TechnologySpecificFieldMapping)mapping).getType();
-        String _xifexpression = null;
-        if ((mappedType instanceof TechnologySpecificPrimitiveType)) {
-          _xifexpression = ((TechnologySpecificPrimitiveType)mappedType).getName();
-        } else {
-          String _xifexpression_1 = null;
-          if ((mappedType instanceof ComplexType)) {
-            _xifexpression_1 = ((ComplexType)mappedType).getName();
-          }
-          _xifexpression = _xifexpression_1;
-        }
-        mappedTypeName = _xifexpression;
+        mappedTypeName = ((TechnologySpecificPrimitiveType) mappedType).getName();
         originalType = ((TechnologySpecificFieldMapping)mapping).getDataField().getEffectiveType();
         erroneousMappingFeature = MappingPackage.Literals.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__DATA_FIELD;
       }
@@ -1076,6 +1051,26 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
         throw Exceptions.sneakyThrow(_t);
       }
     }
+  }
+  
+  /**
+   * Helper to check if a mapping is for a primitive type
+   */
+  private boolean isPrimitiveTypeMapping(final EObject mapping) {
+    boolean _or = false;
+    if ((mapping instanceof PrimitiveParameterMapping)) {
+      _or = true;
+    } else {
+      boolean _xifexpression = false;
+      if ((mapping instanceof TechnologySpecificFieldMapping)) {
+        Type _type = ((TechnologySpecificFieldMapping)mapping).getType();
+        _xifexpression = (_type instanceof TechnologySpecificPrimitiveType);
+      } else {
+        _xifexpression = false;
+      }
+      _or = _xifexpression;
+    }
+    return _or;
   }
   
   /**

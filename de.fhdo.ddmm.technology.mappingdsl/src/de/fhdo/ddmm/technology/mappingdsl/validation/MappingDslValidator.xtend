@@ -438,18 +438,7 @@ class MappingDslValidator extends AbstractMappingDslValidator {
     @Check
     def warnPrimitiveParameterMappingTypeCompatibility(PrimitiveParameterMapping mapping) {
         if (mapping.primitiveType !== null)
-            warnParameterMappingTypeCompatibility(mapping)
-    }
-
-    /**
-     * Check and warn if types of a complex parameter mapping are not compatible. Note that we just
-     * place a warning in case of (suspected) type incompatibility, as we also do it in the service
-     * DSL.
-     */
-    @Check
-    def warnComplexParameterMappingTypeCompatibility(ComplexParameterMapping mapping) {
-        if (mapping.technologySpecificComplexType !== null)
-            warnParameterMappingTypeCompatibility(mapping)
+            warnPrimitiveTypeMappingCompatibility(mapping)
     }
 
     /**
@@ -458,7 +447,12 @@ class MappingDslValidator extends AbstractMappingDslValidator {
      */
     @Check
     def warnComplexParameterMappingTypeCompatibility(TechnologySpecificFieldMapping mapping) {
-        warnParameterMappingTypeCompatibility(mapping)
+        // We only consider primitive mappings for checking type compatibility, because if the
+        // mapped type is a technology-specific complex type, type checking makes not sense at all
+        // because technology-specific complex type don't exhibit any type-checking relevant
+        // information, e.g., a structure consisting of typed fields
+        if (mapping.isPrimitiveTypeMapping)
+            warnPrimitiveTypeMappingCompatibility(mapping)
     }
 
     /**
@@ -777,7 +771,10 @@ class MappingDslValidator extends AbstractMappingDslValidator {
      * Convenience method for warning if types of a parameter mapping are not compatible with each
      * other
      */
-    def warnParameterMappingTypeCompatibility(EObject mapping) {
+    def warnPrimitiveTypeMappingCompatibility(EObject mapping) {
+        if (!mapping.isPrimitiveTypeMapping)
+            return
+
         /*
          * Determine mapped type, its name, the original type, and the feature to place the warning
          * on
@@ -795,24 +792,10 @@ class MappingDslValidator extends AbstractMappingDslValidator {
                 erroneousMappingFeature = MappingPackage::Literals.PARAMETER_MAPPING__PARAMETER
             }
 
-            // Complex parameter mapping
-            ComplexParameterMapping: {
-                mappedType = mapping.technologySpecificComplexType
-                mappedTypeName = mapping.technologySpecificComplexType.name
-                originalType = mapping.parameter.importedType.type
-                erroneousMappingFeature = MappingPackage::Literals.PARAMETER_MAPPING__PARAMETER
-            }
-
-            // Data field mapping
+            // Primitive data field mapping
             TechnologySpecificFieldMapping: {
                 mappedType = mapping.type
-                mappedTypeName = if (mappedType instanceof TechnologySpecificPrimitiveType)
-                        mappedType.name
-                    // The mapped type is, by all means, technology-specific even if here the data
-                    // model-based superclass ComplexType is used (from which the technology-based
-                    // variants of list and structure types inherit)
-                    else if (mappedType instanceof ComplexType)
-                        mappedType.name
+                mappedTypeName = (mappedType as TechnologySpecificPrimitiveType).name
                 originalType = mapping.dataField.effectiveType
                 erroneousMappingFeature = MappingPackage::Literals
                     .TECHNOLOGY_SPECIFIC_FIELD_MAPPING__DATA_FIELD
@@ -834,6 +817,17 @@ class MappingDslValidator extends AbstractMappingDslValidator {
                 '''compatible with mapped type «mappedTypeName» ''', mapping,
                 erroneousMappingFeature)
         }
+    }
+
+    /**
+     * Helper to check if a mapping is for a primitive type
+     */
+    private def isPrimitiveTypeMapping(EObject mapping) {
+        return mapping instanceof PrimitiveParameterMapping ||
+            if (mapping instanceof TechnologySpecificFieldMapping)
+                mapping.type instanceof TechnologySpecificPrimitiveType
+            else
+                false
     }
 
     /**
