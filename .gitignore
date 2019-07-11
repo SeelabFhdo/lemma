@@ -9,3 +9,6 @@ zorg.xtext.example*
 target/
 de.fhdo.ddmm.model_processing/
 releases/
+de.fhdo.ddmm.acceleo/
+de.fhdo.ddmm.live_validation/
+de.fhdo.ddmm.ocl/
