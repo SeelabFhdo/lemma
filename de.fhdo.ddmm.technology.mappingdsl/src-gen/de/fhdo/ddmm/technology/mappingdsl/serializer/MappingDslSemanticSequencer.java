@@ -332,7 +332,7 @@ public class MappingDslSemanticSequencer extends ServiceDslSemanticSequencer {
 	 *         parameter=[Parameter|ID] 
 	 *         (
 	 *             ((technology=[Import|ID] technologySpecificComplexType=[ComplexType|QualifiedName])? aspects+=TechnologySpecificImportedServiceAspect*) | 
-	 *             (aspects+=TechnologySpecificImportedServiceAspect* fieldMappings+=TechnologySpecificFieldMapping fieldMappings+=TechnologySpecificFieldMapping*)
+	 *             (aspects+=TechnologySpecificImportedServiceAspect* fieldMappings+=TechnologySpecificFieldMapping+)
 	 *         )
 	 *     )
 	 */
@@ -451,11 +451,7 @@ public class MappingDslSemanticSequencer extends ServiceDslSemanticSequencer {
 	 *         protocols+=TechnologySpecificProtocolSpecification* 
 	 *         endpoints+=TechnologySpecificEndpoint* 
 	 *         aspects+=TechnologySpecificImportedServiceAspect* 
-	 *         (
-	 *             (parameterMappings+=PrimitiveParameterMapping | parameterMappings+=ComplexParameterMapping) 
-	 *             parameterMappings+=PrimitiveParameterMapping? 
-	 *             (parameterMappings+=ComplexParameterMapping? parameterMappings+=PrimitiveParameterMapping?)*
-	 *         )?
+	 *         (parameterMappings+=PrimitiveParameterMapping | parameterMappings+=ComplexParameterMapping)*
 	 *     )
 	 */
 	protected void sequence_OperationMapping(ISerializationContext context, OperationMapping semanticObject) {

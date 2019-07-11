@@ -87,8 +87,7 @@ OperationMapping returns OperationMapping:
         '}')?
 
         ('parameters' '{'
-            parameterMappings+=(PrimitiveParameterMapping | ComplexParameterMapping)
-            (',' parameterMappings+=(PrimitiveParameterMapping | ComplexParameterMapping))*
+            parameterMappings+=(PrimitiveParameterMapping | ComplexParameterMapping)+
         '}')?
     '}'
 ;
@@ -115,11 +114,15 @@ PrimitiveParameterMapping returns PrimitiveParameterMapping:
      ':' technology=[service::Import] '::'
      primitiveType=[technology::TechnologySpecificPrimitiveType|QualifiedName]
     )?
-    ('{'
-        'aspects' '{'
-            aspects+=TechnologySpecificImportedServiceAspect+
+    (
+        '{'
+            'aspects' '{'
+                aspects+=TechnologySpecificImportedServiceAspect+
+            '}'
         '}'
-    '}')?
+    |
+        ';'
+    )
 ;
 
 ComplexParameterMapping returns ComplexParameterMapping:
@@ -130,11 +133,15 @@ ComplexParameterMapping returns ComplexParameterMapping:
                   ':' technology=[service::Import] '::'
                   technologySpecificComplexType=[data::ComplexType|QualifiedName]
                 )?
-                ('{'
-                    'aspects' '{'
-                        aspects+=TechnologySpecificImportedServiceAspect+
+                (
+                    '{'
+                        'aspects' '{'
+                            aspects+=TechnologySpecificImportedServiceAspect+
+                        '}'
                     '}'
-                '}')?
+                |
+                    ';'
+                )
             )
             |
             ('->' '{'
@@ -142,8 +149,7 @@ ComplexParameterMapping returns ComplexParameterMapping:
                     aspects+=TechnologySpecificImportedServiceAspect+
                 '}')?
 
-                fieldMappings+=TechnologySpecificFieldMapping
-                (',' fieldMappings+=TechnologySpecificFieldMapping)*
+                fieldMappings+=TechnologySpecificFieldMapping+
             '}')
         )
 ;

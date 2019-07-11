@@ -32,8 +32,9 @@ public class MappingDslParser extends AbstractContentAssistParser {
 		
 		private static void init(ImmutableMap.Builder<AbstractElement, String> builder, MappingDslGrammarAccess grammarAccess) {
 			builder.put(grammarAccess.getOperationMappingAccess().getParameterMappingsAlternatives_6_2_0(), "rule__OperationMapping__ParameterMappingsAlternatives_6_2_0");
-			builder.put(grammarAccess.getOperationMappingAccess().getParameterMappingsAlternatives_6_3_1_0(), "rule__OperationMapping__ParameterMappingsAlternatives_6_3_1_0");
+			builder.put(grammarAccess.getPrimitiveParameterMappingAccess().getAlternatives_3(), "rule__PrimitiveParameterMapping__Alternatives_3");
 			builder.put(grammarAccess.getComplexParameterMappingAccess().getAlternatives_2(), "rule__ComplexParameterMapping__Alternatives_2");
+			builder.put(grammarAccess.getComplexParameterMappingAccess().getAlternatives_2_0_1(), "rule__ComplexParameterMapping__Alternatives_2_0_1");
 			builder.put(grammarAccess.getTechnologySpecificFieldMappingAccess().getAlternatives_0(), "rule__TechnologySpecificFieldMapping__Alternatives_0");
 			builder.put(grammarAccess.getTechnologySpecificFieldMappingAccess().getAlternatives_1(), "rule__TechnologySpecificFieldMapping__Alternatives_1");
 			builder.put(grammarAccess.getTechnologySpecificImportedServiceAspectAccess().getAlternatives_3(), "rule__TechnologySpecificImportedServiceAspect__Alternatives_3");
@@ -79,21 +80,19 @@ public class MappingDslParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getOperationMappingAccess().getGroup_4(), "rule__OperationMapping__Group_4__0");
 			builder.put(grammarAccess.getOperationMappingAccess().getGroup_5(), "rule__OperationMapping__Group_5__0");
 			builder.put(grammarAccess.getOperationMappingAccess().getGroup_6(), "rule__OperationMapping__Group_6__0");
-			builder.put(grammarAccess.getOperationMappingAccess().getGroup_6_3(), "rule__OperationMapping__Group_6_3__0");
 			builder.put(grammarAccess.getReferredOperationMappingAccess().getGroup(), "rule__ReferredOperationMapping__Group__0");
 			builder.put(grammarAccess.getReferredOperationMappingAccess().getGroup_4(), "rule__ReferredOperationMapping__Group_4__0");
 			builder.put(grammarAccess.getReferredOperationMappingAccess().getGroup_5(), "rule__ReferredOperationMapping__Group_5__0");
 			builder.put(grammarAccess.getReferredOperationMappingAccess().getGroup_6(), "rule__ReferredOperationMapping__Group_6__0");
 			builder.put(grammarAccess.getPrimitiveParameterMappingAccess().getGroup(), "rule__PrimitiveParameterMapping__Group__0");
 			builder.put(grammarAccess.getPrimitiveParameterMappingAccess().getGroup_2(), "rule__PrimitiveParameterMapping__Group_2__0");
-			builder.put(grammarAccess.getPrimitiveParameterMappingAccess().getGroup_3(), "rule__PrimitiveParameterMapping__Group_3__0");
+			builder.put(grammarAccess.getPrimitiveParameterMappingAccess().getGroup_3_0(), "rule__PrimitiveParameterMapping__Group_3_0__0");
 			builder.put(grammarAccess.getComplexParameterMappingAccess().getGroup(), "rule__ComplexParameterMapping__Group__0");
 			builder.put(grammarAccess.getComplexParameterMappingAccess().getGroup_2_0(), "rule__ComplexParameterMapping__Group_2_0__0");
 			builder.put(grammarAccess.getComplexParameterMappingAccess().getGroup_2_0_0(), "rule__ComplexParameterMapping__Group_2_0_0__0");
-			builder.put(grammarAccess.getComplexParameterMappingAccess().getGroup_2_0_1(), "rule__ComplexParameterMapping__Group_2_0_1__0");
+			builder.put(grammarAccess.getComplexParameterMappingAccess().getGroup_2_0_1_0(), "rule__ComplexParameterMapping__Group_2_0_1_0__0");
 			builder.put(grammarAccess.getComplexParameterMappingAccess().getGroup_2_1(), "rule__ComplexParameterMapping__Group_2_1__0");
 			builder.put(grammarAccess.getComplexParameterMappingAccess().getGroup_2_1_2(), "rule__ComplexParameterMapping__Group_2_1_2__0");
-			builder.put(grammarAccess.getComplexParameterMappingAccess().getGroup_2_1_4(), "rule__ComplexParameterMapping__Group_2_1_4__0");
 			builder.put(grammarAccess.getTechnologySpecificFieldMappingAccess().getGroup(), "rule__TechnologySpecificFieldMapping__Group__0");
 			builder.put(grammarAccess.getTechnologySpecificFieldMappingAccess().getGroup_0_1(), "rule__TechnologySpecificFieldMapping__Group_0_1__0");
 			builder.put(grammarAccess.getTechnologySpecificFieldMappingAccess().getGroup_1_0(), "rule__TechnologySpecificFieldMapping__Group_1_0__0");
@@ -251,7 +250,6 @@ public class MappingDslParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getOperationMappingAccess().getEndpointsAssignment_4_2(), "rule__OperationMapping__EndpointsAssignment_4_2");
 			builder.put(grammarAccess.getOperationMappingAccess().getAspectsAssignment_5_2(), "rule__OperationMapping__AspectsAssignment_5_2");
 			builder.put(grammarAccess.getOperationMappingAccess().getParameterMappingsAssignment_6_2(), "rule__OperationMapping__ParameterMappingsAssignment_6_2");
-			builder.put(grammarAccess.getOperationMappingAccess().getParameterMappingsAssignment_6_3_1(), "rule__OperationMapping__ParameterMappingsAssignment_6_3_1");
 			builder.put(grammarAccess.getReferredOperationMappingAccess().getOperationAssignment_2(), "rule__ReferredOperationMapping__OperationAssignment_2");
 			builder.put(grammarAccess.getReferredOperationMappingAccess().getProtocolsAssignment_4_2(), "rule__ReferredOperationMapping__ProtocolsAssignment_4_2");
 			builder.put(grammarAccess.getReferredOperationMappingAccess().getEndpointsAssignment_5_2(), "rule__ReferredOperationMapping__EndpointsAssignment_5_2");
@@ -259,14 +257,13 @@ public class MappingDslParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getPrimitiveParameterMappingAccess().getParameterAssignment_1(), "rule__PrimitiveParameterMapping__ParameterAssignment_1");
 			builder.put(grammarAccess.getPrimitiveParameterMappingAccess().getTechnologyAssignment_2_1(), "rule__PrimitiveParameterMapping__TechnologyAssignment_2_1");
 			builder.put(grammarAccess.getPrimitiveParameterMappingAccess().getPrimitiveTypeAssignment_2_3(), "rule__PrimitiveParameterMapping__PrimitiveTypeAssignment_2_3");
-			builder.put(grammarAccess.getPrimitiveParameterMappingAccess().getAspectsAssignment_3_3(), "rule__PrimitiveParameterMapping__AspectsAssignment_3_3");
+			builder.put(grammarAccess.getPrimitiveParameterMappingAccess().getAspectsAssignment_3_0_3(), "rule__PrimitiveParameterMapping__AspectsAssignment_3_0_3");
 			builder.put(grammarAccess.getComplexParameterMappingAccess().getParameterAssignment_1(), "rule__ComplexParameterMapping__ParameterAssignment_1");
 			builder.put(grammarAccess.getComplexParameterMappingAccess().getTechnologyAssignment_2_0_0_1(), "rule__ComplexParameterMapping__TechnologyAssignment_2_0_0_1");
 			builder.put(grammarAccess.getComplexParameterMappingAccess().getTechnologySpecificComplexTypeAssignment_2_0_0_3(), "rule__ComplexParameterMapping__TechnologySpecificComplexTypeAssignment_2_0_0_3");
-			builder.put(grammarAccess.getComplexParameterMappingAccess().getAspectsAssignment_2_0_1_3(), "rule__ComplexParameterMapping__AspectsAssignment_2_0_1_3");
+			builder.put(grammarAccess.getComplexParameterMappingAccess().getAspectsAssignment_2_0_1_0_3(), "rule__ComplexParameterMapping__AspectsAssignment_2_0_1_0_3");
 			builder.put(grammarAccess.getComplexParameterMappingAccess().getAspectsAssignment_2_1_2_2(), "rule__ComplexParameterMapping__AspectsAssignment_2_1_2_2");
 			builder.put(grammarAccess.getComplexParameterMappingAccess().getFieldMappingsAssignment_2_1_3(), "rule__ComplexParameterMapping__FieldMappingsAssignment_2_1_3");
-			builder.put(grammarAccess.getComplexParameterMappingAccess().getFieldMappingsAssignment_2_1_4_1(), "rule__ComplexParameterMapping__FieldMappingsAssignment_2_1_4_1");
 			builder.put(grammarAccess.getTechnologySpecificFieldMappingAccess().getEnumerationFieldAssignment_0_0(), "rule__TechnologySpecificFieldMapping__EnumerationFieldAssignment_0_0");
 			builder.put(grammarAccess.getTechnologySpecificFieldMappingAccess().getDataFieldAssignment_0_1_0(), "rule__TechnologySpecificFieldMapping__DataFieldAssignment_0_1_0");
 			builder.put(grammarAccess.getTechnologySpecificFieldMappingAccess().getTechnologyAssignment_0_1_2(), "rule__TechnologySpecificFieldMapping__TechnologyAssignment_0_1_2");

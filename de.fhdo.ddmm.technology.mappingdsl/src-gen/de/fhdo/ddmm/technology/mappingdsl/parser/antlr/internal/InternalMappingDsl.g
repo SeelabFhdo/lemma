@@ -899,58 +899,15 @@ ruleOperationMapping returns [EObject current=null]
 						}
 					)
 				)
-			)
-			(
-				otherlv_18=','
-				{
-					newLeafNode(otherlv_18, grammarAccess.getOperationMappingAccess().getCommaKeyword_6_3_0());
-				}
-				(
-					(
-						(
-							{
-								newCompositeNode(grammarAccess.getOperationMappingAccess().getParameterMappingsPrimitiveParameterMappingParserRuleCall_6_3_1_0_0());
-							}
-							lv_parameterMappings_19_1=rulePrimitiveParameterMapping
-							{
-								if ($current==null) {
-									$current = createModelElementForParent(grammarAccess.getOperationMappingRule());
-								}
-								add(
-									$current,
-									"parameterMappings",
-									lv_parameterMappings_19_1,
-									"de.fhdo.ddmm.technology.mappingdsl.MappingDsl.PrimitiveParameterMapping");
-								afterParserOrEnumRuleCall();
-							}
-							    |
-							{
-								newCompositeNode(grammarAccess.getOperationMappingAccess().getParameterMappingsComplexParameterMappingParserRuleCall_6_3_1_0_1());
-							}
-							lv_parameterMappings_19_2=ruleComplexParameterMapping
-							{
-								if ($current==null) {
-									$current = createModelElementForParent(grammarAccess.getOperationMappingRule());
-								}
-								add(
-									$current,
-									"parameterMappings",
-									lv_parameterMappings_19_2,
-									"de.fhdo.ddmm.technology.mappingdsl.MappingDsl.ComplexParameterMapping");
-								afterParserOrEnumRuleCall();
-							}
-						)
-					)
-				)
-			)*
-			otherlv_20='}'
+			)+
+			otherlv_18='}'
 			{
-				newLeafNode(otherlv_20, grammarAccess.getOperationMappingAccess().getRightCurlyBracketKeyword_6_4());
+				newLeafNode(otherlv_18, grammarAccess.getOperationMappingAccess().getRightCurlyBracketKeyword_6_3());
 			}
 		)?
-		otherlv_21='}'
+		otherlv_19='}'
 		{
-			newLeafNode(otherlv_21, grammarAccess.getOperationMappingAccess().getRightCurlyBracketKeyword_7());
+			newLeafNode(otherlv_19, grammarAccess.getOperationMappingAccess().getRightCurlyBracketKeyword_7());
 		}
 	)
 ;
@@ -1178,46 +1135,53 @@ rulePrimitiveParameterMapping returns [EObject current=null]
 			)
 		)?
 		(
-			otherlv_6='{'
-			{
-				newLeafNode(otherlv_6, grammarAccess.getPrimitiveParameterMappingAccess().getLeftCurlyBracketKeyword_3_0());
-			}
-			otherlv_7='aspects'
-			{
-				newLeafNode(otherlv_7, grammarAccess.getPrimitiveParameterMappingAccess().getAspectsKeyword_3_1());
-			}
-			otherlv_8='{'
-			{
-				newLeafNode(otherlv_8, grammarAccess.getPrimitiveParameterMappingAccess().getLeftCurlyBracketKeyword_3_2());
-			}
 			(
+				otherlv_6='{'
+				{
+					newLeafNode(otherlv_6, grammarAccess.getPrimitiveParameterMappingAccess().getLeftCurlyBracketKeyword_3_0_0());
+				}
+				otherlv_7='aspects'
+				{
+					newLeafNode(otherlv_7, grammarAccess.getPrimitiveParameterMappingAccess().getAspectsKeyword_3_0_1());
+				}
+				otherlv_8='{'
+				{
+					newLeafNode(otherlv_8, grammarAccess.getPrimitiveParameterMappingAccess().getLeftCurlyBracketKeyword_3_0_2());
+				}
 				(
-					{
-						newCompositeNode(grammarAccess.getPrimitiveParameterMappingAccess().getAspectsTechnologySpecificImportedServiceAspectParserRuleCall_3_3_0());
-					}
-					lv_aspects_9_0=ruleTechnologySpecificImportedServiceAspect
-					{
-						if ($current==null) {
-							$current = createModelElementForParent(grammarAccess.getPrimitiveParameterMappingRule());
+					(
+						{
+							newCompositeNode(grammarAccess.getPrimitiveParameterMappingAccess().getAspectsTechnologySpecificImportedServiceAspectParserRuleCall_3_0_3_0());
 						}
-						add(
-							$current,
-							"aspects",
-							lv_aspects_9_0,
-							"de.fhdo.ddmm.technology.mappingdsl.MappingDsl.TechnologySpecificImportedServiceAspect");
-						afterParserOrEnumRuleCall();
-					}
-				)
-			)+
-			otherlv_10='}'
+						lv_aspects_9_0=ruleTechnologySpecificImportedServiceAspect
+						{
+							if ($current==null) {
+								$current = createModelElementForParent(grammarAccess.getPrimitiveParameterMappingRule());
+							}
+							add(
+								$current,
+								"aspects",
+								lv_aspects_9_0,
+								"de.fhdo.ddmm.technology.mappingdsl.MappingDsl.TechnologySpecificImportedServiceAspect");
+							afterParserOrEnumRuleCall();
+						}
+					)
+				)+
+				otherlv_10='}'
+				{
+					newLeafNode(otherlv_10, grammarAccess.getPrimitiveParameterMappingAccess().getRightCurlyBracketKeyword_3_0_4());
+				}
+				otherlv_11='}'
+				{
+					newLeafNode(otherlv_11, grammarAccess.getPrimitiveParameterMappingAccess().getRightCurlyBracketKeyword_3_0_5());
+				}
+			)
+			    |
+			otherlv_12=';'
 			{
-				newLeafNode(otherlv_10, grammarAccess.getPrimitiveParameterMappingAccess().getRightCurlyBracketKeyword_3_4());
+				newLeafNode(otherlv_12, grammarAccess.getPrimitiveParameterMappingAccess().getSemicolonKeyword_3_1());
 			}
-			otherlv_11='}'
-			{
-				newLeafNode(otherlv_11, grammarAccess.getPrimitiveParameterMappingAccess().getRightCurlyBracketKeyword_3_5());
-			}
-		)?
+		)
 	)
 ;
 
@@ -1296,72 +1260,79 @@ ruleComplexParameterMapping returns [EObject current=null]
 					)
 				)?
 				(
-					otherlv_6='{'
-					{
-						newLeafNode(otherlv_6, grammarAccess.getComplexParameterMappingAccess().getLeftCurlyBracketKeyword_2_0_1_0());
-					}
-					otherlv_7='aspects'
-					{
-						newLeafNode(otherlv_7, grammarAccess.getComplexParameterMappingAccess().getAspectsKeyword_2_0_1_1());
-					}
-					otherlv_8='{'
-					{
-						newLeafNode(otherlv_8, grammarAccess.getComplexParameterMappingAccess().getLeftCurlyBracketKeyword_2_0_1_2());
-					}
 					(
+						otherlv_6='{'
+						{
+							newLeafNode(otherlv_6, grammarAccess.getComplexParameterMappingAccess().getLeftCurlyBracketKeyword_2_0_1_0_0());
+						}
+						otherlv_7='aspects'
+						{
+							newLeafNode(otherlv_7, grammarAccess.getComplexParameterMappingAccess().getAspectsKeyword_2_0_1_0_1());
+						}
+						otherlv_8='{'
+						{
+							newLeafNode(otherlv_8, grammarAccess.getComplexParameterMappingAccess().getLeftCurlyBracketKeyword_2_0_1_0_2());
+						}
 						(
-							{
-								newCompositeNode(grammarAccess.getComplexParameterMappingAccess().getAspectsTechnologySpecificImportedServiceAspectParserRuleCall_2_0_1_3_0());
-							}
-							lv_aspects_9_0=ruleTechnologySpecificImportedServiceAspect
-							{
-								if ($current==null) {
-									$current = createModelElementForParent(grammarAccess.getComplexParameterMappingRule());
+							(
+								{
+									newCompositeNode(grammarAccess.getComplexParameterMappingAccess().getAspectsTechnologySpecificImportedServiceAspectParserRuleCall_2_0_1_0_3_0());
 								}
-								add(
-									$current,
-									"aspects",
-									lv_aspects_9_0,
-									"de.fhdo.ddmm.technology.mappingdsl.MappingDsl.TechnologySpecificImportedServiceAspect");
-								afterParserOrEnumRuleCall();
-							}
-						)
-					)+
-					otherlv_10='}'
+								lv_aspects_9_0=ruleTechnologySpecificImportedServiceAspect
+								{
+									if ($current==null) {
+										$current = createModelElementForParent(grammarAccess.getComplexParameterMappingRule());
+									}
+									add(
+										$current,
+										"aspects",
+										lv_aspects_9_0,
+										"de.fhdo.ddmm.technology.mappingdsl.MappingDsl.TechnologySpecificImportedServiceAspect");
+									afterParserOrEnumRuleCall();
+								}
+							)
+						)+
+						otherlv_10='}'
+						{
+							newLeafNode(otherlv_10, grammarAccess.getComplexParameterMappingAccess().getRightCurlyBracketKeyword_2_0_1_0_4());
+						}
+						otherlv_11='}'
+						{
+							newLeafNode(otherlv_11, grammarAccess.getComplexParameterMappingAccess().getRightCurlyBracketKeyword_2_0_1_0_5());
+						}
+					)
+					    |
+					otherlv_12=';'
 					{
-						newLeafNode(otherlv_10, grammarAccess.getComplexParameterMappingAccess().getRightCurlyBracketKeyword_2_0_1_4());
+						newLeafNode(otherlv_12, grammarAccess.getComplexParameterMappingAccess().getSemicolonKeyword_2_0_1_1());
 					}
-					otherlv_11='}'
-					{
-						newLeafNode(otherlv_11, grammarAccess.getComplexParameterMappingAccess().getRightCurlyBracketKeyword_2_0_1_5());
-					}
-				)?
+				)
 			)
 			    |
 			(
-				otherlv_12='->'
+				otherlv_13='->'
 				{
-					newLeafNode(otherlv_12, grammarAccess.getComplexParameterMappingAccess().getHyphenMinusGreaterThanSignKeyword_2_1_0());
+					newLeafNode(otherlv_13, grammarAccess.getComplexParameterMappingAccess().getHyphenMinusGreaterThanSignKeyword_2_1_0());
 				}
-				otherlv_13='{'
+				otherlv_14='{'
 				{
-					newLeafNode(otherlv_13, grammarAccess.getComplexParameterMappingAccess().getLeftCurlyBracketKeyword_2_1_1());
+					newLeafNode(otherlv_14, grammarAccess.getComplexParameterMappingAccess().getLeftCurlyBracketKeyword_2_1_1());
 				}
 				(
-					otherlv_14='aspects'
+					otherlv_15='aspects'
 					{
-						newLeafNode(otherlv_14, grammarAccess.getComplexParameterMappingAccess().getAspectsKeyword_2_1_2_0());
+						newLeafNode(otherlv_15, grammarAccess.getComplexParameterMappingAccess().getAspectsKeyword_2_1_2_0());
 					}
-					otherlv_15='{'
+					otherlv_16='{'
 					{
-						newLeafNode(otherlv_15, grammarAccess.getComplexParameterMappingAccess().getLeftCurlyBracketKeyword_2_1_2_1());
+						newLeafNode(otherlv_16, grammarAccess.getComplexParameterMappingAccess().getLeftCurlyBracketKeyword_2_1_2_1());
 					}
 					(
 						(
 							{
 								newCompositeNode(grammarAccess.getComplexParameterMappingAccess().getAspectsTechnologySpecificImportedServiceAspectParserRuleCall_2_1_2_2_0());
 							}
-							lv_aspects_16_0=ruleTechnologySpecificImportedServiceAspect
+							lv_aspects_17_0=ruleTechnologySpecificImportedServiceAspect
 							{
 								if ($current==null) {
 									$current = createModelElementForParent(grammarAccess.getComplexParameterMappingRule());
@@ -1369,15 +1340,15 @@ ruleComplexParameterMapping returns [EObject current=null]
 								add(
 									$current,
 									"aspects",
-									lv_aspects_16_0,
+									lv_aspects_17_0,
 									"de.fhdo.ddmm.technology.mappingdsl.MappingDsl.TechnologySpecificImportedServiceAspect");
 								afterParserOrEnumRuleCall();
 							}
 						)
 					)+
-					otherlv_17='}'
+					otherlv_18='}'
 					{
-						newLeafNode(otherlv_17, grammarAccess.getComplexParameterMappingAccess().getRightCurlyBracketKeyword_2_1_2_3());
+						newLeafNode(otherlv_18, grammarAccess.getComplexParameterMappingAccess().getRightCurlyBracketKeyword_2_1_2_3());
 					}
 				)?
 				(
@@ -1385,7 +1356,7 @@ ruleComplexParameterMapping returns [EObject current=null]
 						{
 							newCompositeNode(grammarAccess.getComplexParameterMappingAccess().getFieldMappingsTechnologySpecificFieldMappingParserRuleCall_2_1_3_0());
 						}
-						lv_fieldMappings_18_0=ruleTechnologySpecificFieldMapping
+						lv_fieldMappings_19_0=ruleTechnologySpecificFieldMapping
 						{
 							if ($current==null) {
 								$current = createModelElementForParent(grammarAccess.getComplexParameterMappingRule());
@@ -1393,40 +1364,15 @@ ruleComplexParameterMapping returns [EObject current=null]
 							add(
 								$current,
 								"fieldMappings",
-								lv_fieldMappings_18_0,
+								lv_fieldMappings_19_0,
 								"de.fhdo.ddmm.technology.mappingdsl.MappingDsl.TechnologySpecificFieldMapping");
 							afterParserOrEnumRuleCall();
 						}
 					)
-				)
-				(
-					otherlv_19=','
-					{
-						newLeafNode(otherlv_19, grammarAccess.getComplexParameterMappingAccess().getCommaKeyword_2_1_4_0());
-					}
-					(
-						(
-							{
-								newCompositeNode(grammarAccess.getComplexParameterMappingAccess().getFieldMappingsTechnologySpecificFieldMappingParserRuleCall_2_1_4_1_0());
-							}
-							lv_fieldMappings_20_0=ruleTechnologySpecificFieldMapping
-							{
-								if ($current==null) {
-									$current = createModelElementForParent(grammarAccess.getComplexParameterMappingRule());
-								}
-								add(
-									$current,
-									"fieldMappings",
-									lv_fieldMappings_20_0,
-									"de.fhdo.ddmm.technology.mappingdsl.MappingDsl.TechnologySpecificFieldMapping");
-								afterParserOrEnumRuleCall();
-							}
-						)
-					)
-				)*
-				otherlv_21='}'
+				)+
+				otherlv_20='}'
 				{
-					newLeafNode(otherlv_21, grammarAccess.getComplexParameterMappingAccess().getRightCurlyBracketKeyword_2_1_5());
+					newLeafNode(otherlv_20, grammarAccess.getComplexParameterMappingAccess().getRightCurlyBracketKeyword_2_1_4());
 				}
 			)
 		)

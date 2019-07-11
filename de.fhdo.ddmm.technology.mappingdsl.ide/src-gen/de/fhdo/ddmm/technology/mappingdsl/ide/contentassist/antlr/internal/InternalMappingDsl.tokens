@@ -1,10 +1,10 @@
 '('=40
 ')'=41
-','=48
+','=53
 '->'=28
 '.'=62
-'/'=53
-':'=51
+'/'=52
+':'=50
 '::'=43
 ';'=13
 '<-'=27
@@ -22,7 +22,7 @@
 'byte'=82
 'char'=83
 'communication_type'=97
-'complex'=52
+'complex'=51
 'containers'=35
 'context'=78
 'data'=63
@@ -64,12 +64,12 @@
 'operations'=31
 'out'=23
 'parameters'=32
-'primitive'=50
+'primitive'=49
 'properties'=73
 'protocol'=98
 'protocols'=44
 'public'=18
-'referred'=49
+'referred'=48
 'refers'=60
 'required'=59
 'selector'=74
