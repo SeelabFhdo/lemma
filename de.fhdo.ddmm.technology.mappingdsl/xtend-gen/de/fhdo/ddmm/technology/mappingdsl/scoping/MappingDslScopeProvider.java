@@ -615,7 +615,19 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     if (!_matched) {
       if (mapping instanceof ComplexParameterMapping) {
         _matched=true;
-        parameterType = ((ComplexParameterMapping)mapping).getParameter().getImportedType().getType();
+        Parameter _parameter = null;
+        if (((ComplexParameterMapping)mapping)!=null) {
+          _parameter=((ComplexParameterMapping)mapping).getParameter();
+        }
+        ImportedType _importedType = null;
+        if (_parameter!=null) {
+          _importedType=_parameter.getImportedType();
+        }
+        Type _type = null;
+        if (_importedType!=null) {
+          _type=_importedType.getType();
+        }
+        parameterType = _type;
         technology = ((ComplexParameterMapping)mapping).getTechnology();
       }
     }

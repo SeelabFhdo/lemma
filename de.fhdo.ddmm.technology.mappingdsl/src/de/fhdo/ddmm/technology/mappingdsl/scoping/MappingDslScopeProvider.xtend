@@ -482,7 +482,7 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
                 technology = mapping.technology
             }
             ComplexParameterMapping: {
-                parameterType = mapping.parameter.importedType.type
+                parameterType = mapping?.parameter?.importedType?.type
                 technology = mapping.technology
             }
             TechnologySpecificFieldMapping: {
