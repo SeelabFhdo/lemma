@@ -214,7 +214,6 @@ TechnologySpecificImportedServiceAspect returns TechnologySpecificImportedServic
                 (values+=PropertyValueAssignment (',' values+=PropertyValueAssignment)*)
             )
         ')'
-    |
-        ';'
-    )
+    )?
+    ';'
 ;
