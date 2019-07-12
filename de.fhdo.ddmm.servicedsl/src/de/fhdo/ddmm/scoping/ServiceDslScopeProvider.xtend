@@ -42,6 +42,8 @@ import de.fhdo.ddmm.technology.Protocol
 import de.fhdo.ddmm.technology.DataFormat
 import java.util.Map
 import com.google.common.base.Function
+import org.eclipse.xtext.nodemodel.util.NodeModelUtils
+import java.util.regex.Pattern
 
 /**
  * This class implements a custom scope provider for the Service DSL.
@@ -472,10 +474,29 @@ class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
                 JoinPointType.MICROSERVICES
             }
             Interface: {
-                forProtocolsAndDataFormats = aspectContainer
-                    .effectiveProtocolsAndDataFormats.values.toList
+                // Check if the aspect is to be really annotated on an interface or the first
+                // operation _within_ an interface already. This hack is necessary, because due to
+                // the design of the Service DSL grammar, Xtext cannot itself distinguish between
+                // the beginning of an operation or an interface, right after the parser has entered
+                // the interface rule. This resulted in the scope provider returning interface
+                // instead of operation aspects for the first operation within an interface, when
+                // the user requested code completion.
+                if (!importedAspect.onFirstInterfaceOperation) {
+                    forProtocolsAndDataFormats = aspectContainer
+                        .effectiveProtocolsAndDataFormats.values.toList
 
-                JoinPointType.INTERFACES
+                    JoinPointType.INTERFACES
+                } else {
+                    // One disadvantage of the "fix" to prevent wrong aspects when code completion
+                    // on the first operation within an interface is requested is that we do not
+                    // have access to the Operation EObject at this point in time. Hence, if the
+                    // user then selects an operation aspect from the completion suggestions that
+                    // does not match the protocols and data formats of the operation, she will see
+                    // an error immediately after, when the scope provider runs for a second time
+                    // and is then able to recognize that it's inside an operation.
+                    forProtocolsAndDataFormats = emptyList
+                    JoinPointType.OPERATIONS
+                }
             }
             Operation: {
                 forProtocolsAndDataFormats = aspectContainer
@@ -523,6 +544,19 @@ class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
             EObjectDescription.create(protocolName, it)
         ]
         return MapBasedScope.createScope(IScope.NULLSCOPE, scopeElements)
+    }
+
+    /**
+     * Helper to determine if an aspect is to annotated for an interface or for the first operation
+     * _within_ an interface
+     */
+    private def onFirstInterfaceOperation(ImportedServiceAspect aspect) {
+        val textBeforeAspect = NodeModelUtils.getNode(aspect)?.parent?.text
+        if (textBeforeAspect === null)
+            return false
+
+        val interfaceKeywordInText = Pattern.compile("(.*\\s+interface\\s+.*)|(.*\\s+interface)")
+        return !interfaceKeywordInText.matcher(textBeforeAspect).find
     }
 
     /**

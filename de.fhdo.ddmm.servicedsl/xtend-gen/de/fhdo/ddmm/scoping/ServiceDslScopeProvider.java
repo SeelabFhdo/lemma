@@ -46,11 +46,14 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
+import java.util.regex.Pattern;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.xtext.EcoreUtil2;
 import org.eclipse.xtext.naming.QualifiedName;
+import org.eclipse.xtext.nodemodel.ICompositeNode;
+import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
 import org.eclipse.xtext.resource.EObjectDescription;
 import org.eclipse.xtext.resource.IEObjectDescription;
 import org.eclipse.xtext.scoping.IScope;
@@ -501,12 +504,25 @@ public class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
     if (!_matched) {
       if (aspectContainer instanceof Interface) {
         _matched=true;
-        JoinPointType _xblockexpression = null;
-        {
-          forProtocolsAndDataFormats = IterableExtensions.<Pair<Protocol, DataFormat>>toList(this.getEffectiveProtocolsAndDataFormats(((Interface)aspectContainer)).values());
-          _xblockexpression = JoinPointType.INTERFACES;
+        JoinPointType _xifexpression = null;
+        boolean _onFirstInterfaceOperation = this.onFirstInterfaceOperation(importedAspect);
+        boolean _not = (!_onFirstInterfaceOperation);
+        if (_not) {
+          JoinPointType _xblockexpression = null;
+          {
+            forProtocolsAndDataFormats = IterableExtensions.<Pair<Protocol, DataFormat>>toList(this.getEffectiveProtocolsAndDataFormats(((Interface)aspectContainer)).values());
+            _xblockexpression = JoinPointType.INTERFACES;
+          }
+          _xifexpression = _xblockexpression;
+        } else {
+          JoinPointType _xblockexpression_1 = null;
+          {
+            forProtocolsAndDataFormats = CollectionLiterals.<Pair<Protocol, DataFormat>>emptyList();
+            _xblockexpression_1 = JoinPointType.OPERATIONS;
+          }
+          _xifexpression = _xblockexpression_1;
         }
-        _switchResult = _xblockexpression;
+        _switchResult = _xifexpression;
       }
     }
     if (!_matched) {
@@ -573,6 +589,29 @@ public class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
     };
     final List<IEObjectDescription> scopeElements = ListExtensions.<ServiceAspect, IEObjectDescription>map(scopeAspects, _function_1);
     return MapBasedScope.createScope(IScope.NULLSCOPE, scopeElements);
+  }
+  
+  /**
+   * Helper to determine if an aspect is to annotated for an interface or for the first operation
+   * _within_ an interface
+   */
+  private boolean onFirstInterfaceOperation(final ImportedServiceAspect aspect) {
+    ICompositeNode _node = NodeModelUtils.getNode(aspect);
+    ICompositeNode _parent = null;
+    if (_node!=null) {
+      _parent=_node.getParent();
+    }
+    String _text = null;
+    if (_parent!=null) {
+      _text=_parent.getText();
+    }
+    final String textBeforeAspect = _text;
+    if ((textBeforeAspect == null)) {
+      return false;
+    }
+    final Pattern interfaceKeywordInText = Pattern.compile("(.*\\s+interface\\s+.*)|(.*\\s+interface)");
+    boolean _find = interfaceKeywordInText.matcher(textBeforeAspect).find();
+    return (!_find);
   }
   
   /**
