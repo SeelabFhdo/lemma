@@ -343,7 +343,7 @@ rule CreateMappedComplexType(technologies : Sequence(Service!Import), typeImport
 			);
 		}
 
-		t.aspects <- thisModule.createServiceAspects(aspects, 'mappedComplexType', t);
+		t.aspects <- thisModule.createImportedServiceAspects(aspects, 'mappedComplexType', t);
 
 		thisModule.CreatedMappedComplexType(t);
 		t;
@@ -387,7 +387,7 @@ rule Microservice(sourceMicroservice : Service!Microservice,
 			t.protocols <- thisModule.createProtocolSpecifications(microserviceMapping.protocols);
 			t.endpoints <- thisModule.createEndpoints(microserviceMapping.endpoints, 'microservice',
 				t);
-			t.aspects <- thisModule.createServiceAspects(microserviceMapping.aspects,
+			t.aspects <- thisModule.createImportedServiceAspects(microserviceMapping.aspects,
 				'microservice', t);
 		-- If no mapping was specified, the rule copies the contents of the source properties to the
 		-- target properties
@@ -401,8 +401,8 @@ rule Microservice(sourceMicroservice : Service!Microservice,
 			t.protocols <- thisModule.createProtocolSpecifications(sourceMicroservice.protocols);
 			t.endpoints <- thisModule.createEndpoints(sourceMicroservice.endpoints, 'microservice',
 				t);
-			t.aspects <- thisModule.createServiceAspects(sourceMicroservice.aspects, 'microservice',
-				t);
+			t.aspects <- thisModule.createImportedServiceAspects(sourceMicroservice.aspects, 
+				'microservice', t);
 		}
 
 		-- Interfaces
@@ -457,14 +457,16 @@ rule Interface(sourceInterface : Service!Interface, interfaceMapping : Mapping!I
 		if (not interfaceMapping.oclIsUndefined()) {
 			t.protocols <- thisModule.createProtocolSpecifications(interfaceMapping.protocols);
 			t.endpoints <- thisModule.createEndpoints(interfaceMapping.endpoints, 'interface', t);
-			t.aspects <- thisModule.createServiceAspects(interfaceMapping.aspects, 'interface', t);
+			t.aspects <- thisModule.createImportedServiceAspects(interfaceMapping.aspects, 
+				'interface', t);
 
 		-- If no mapping was specified, the rule behaves copies the contents of the source
 		-- properties to the target properties
 		} else {
 			t.protocols <- thisModule.createProtocolSpecifications(sourceInterface.protocols);
 			t.endpoints <- thisModule.createEndpoints(sourceInterface.endpoints, 'interface', t);
-			t.aspects <- thisModule.createServiceAspects(sourceInterface.aspects, 'interface', t);
+			t.aspects <- thisModule.createImportedServiceAspects(sourceInterface.aspects, 
+				'interface', t);
 		}
 
 		-- Operations
@@ -517,14 +519,16 @@ rule Operation(sourceOperation : Service!Operation, operationMapping : Mapping!O
 		if (not operationMapping.oclIsUndefined()) {
 			t.protocols <- thisModule.createProtocolSpecifications(operationMapping.protocols);
 			t.endpoints <- thisModule.createEndpoints(operationMapping.endpoints, 'operation', t);
-			t.aspects <- thisModule.createServiceAspects(operationMapping.aspects, 'operation', t);
+			t.aspects <- thisModule.createImportedServiceAspects(operationMapping.aspects, 
+				'operation', t);
 
-		-- If no mapping was specified, the rule behaves copies the contents of the source
-		-- properties to the target properties
+		-- If no mapping was specified, the rule copies the contents of the source properties to the
+		--- target properties
 		} else {
 			t.protocols <- thisModule.createProtocolSpecifications(sourceOperation.protocols);
 			t.endpoints <- thisModule.createEndpoints(sourceOperation.endpoints, 'operation', t);
-			t.aspects <- thisModule.createServiceAspects(sourceOperation.aspects, 'operation', t);
+			t.aspects <- thisModule.createImportedServiceAspects(sourceOperation.aspects, 
+				'operation', t);
 		}
 
 		-- Parameters
@@ -590,10 +594,12 @@ rule Parameter(sourceParameter : Service!Parameter, parameterMapping : Mapping!P
 			}
 
 			-- Mapped aspects
-			t.aspects <- thisModule.createServiceAspects(parameterMapping.aspects, 'parameter', t);
+			t.aspects <- thisModule.createImportedServiceAspects(parameterMapping.aspects, 
+				'parameter', t);
 		} else
 			-- Aspects
-			t.aspects <- thisModule.createServiceAspects(sourceParameter.aspects, 'parameter', t);
+			t.aspects <- thisModule.createImportedServiceAspects(sourceParameter.aspects, 
+				'parameter', t);
 
 		-- Type of parameter could not be determined above, which is the case when no parameter
 		-- mapping exists at all or when no type mapping happended within a parameter mapping. The
@@ -635,7 +641,7 @@ rule MappedFieldWithAspects(fieldMapping : Mapping!TechnologySpecificFieldMappin
 	to
 		t : Service!MappedField(
 			t_typeDefinitionTechnologyName <- thisModule.getTechnologyName(fieldMapping),
-			aspects <- thisModule.createServiceAspects(explicitAspects, 'mappedField', t)
+			aspects <- thisModule.createImportedServiceAspects(explicitAspects, 'mappedField', t)
 		)
 	do {
 		if (not fieldMapping.dataField.oclIsUndefined()) {
@@ -825,18 +831,19 @@ rule Endpoint(addresses : Sequence(String),
 	}
 }
 
---- Helper to create ServiceAspect instances from a list of either technology-specific aspects (from
---- a mapped instance) or ServiceAspect instances from a source service model (copy)
-helper def : createServiceAspects(sourceAspects : Sequence(OclAny), oppositeProperty : String,
-	oppositeElement : OclAny)
-	: Ocl!OclVoid =
+--- Helper to create ImportedServiceAspect instances from a list of either technology-specific 
+--- aspects (from a mapped instance) or ImportedServiceAspect instances from a source service model 
+--- (copy)
+helper def : createImportedServiceAspects(sourceAspects : Sequence(OclAny), 
+	oppositeProperty : String, oppositeElement : OclAny) : Ocl!OclVoid =
 	sourceAspects->iterate(a;
-		targetSequence : Sequence(Service!ServiceAspect) = Sequence{} |
-		let targetAspect : Service!ServiceAspect =
+		targetSequence : Sequence(Service!ImportedServiceAspect) = Sequence{} |
+		let targetAspect : Service!ImportedServiceAspect =
 			if (a.oclIsTypeOf(Mapping!TechnologySpecificImportedServiceAspect)) then
-				thisModule.ServiceAspect(a.technology, a.aspect, a.singlePropertyValue, a.values)
-			else if a.oclIsTypeOf(Service!ServiceAspect) then
-				thisModule.ServiceAspect(a.import, a.importedAspect, a.singlePropertyValue,
+				thisModule.ImportedServiceAspect(a.technology, a.aspect, a.singlePropertyValue, 
+					a.values)
+			else if a.oclIsTypeOf(Service!ImportedServiceAspect) then
+				thisModule.ImportedServiceAspect(a.import, a.importedAspect, a.singlePropertyValue,
 					a.values)
 			else
 				OclUndefined
@@ -850,8 +857,8 @@ helper def : createServiceAspects(sourceAspects : Sequence(OclAny), oppositeProp
 	)
 ;
 
---- Generic called rule to create a target ServiceAspect instance
-rule ServiceAspect(sourceAspectImport : Service!Import, aspect : Service!ServiceAspect,
+--- Generic called rule to create a target ImportedServiceAspect instance
+rule ImportedServiceAspect(sourceAspectImport : Service!Import, aspect : Service!ServiceAspect,
 	singlePropertyValue : Service!PrimitiveValue,
 	values : Sequence(Service!TechnologySpecificPropertyValueAssignment)) {
 	to
@@ -969,7 +976,7 @@ rule ReferredOperation(sourceOperation : Service!ReferredOperation, importAlias 
 			t.protocols <- thisModule.createProtocolSpecifications(operationMapping.protocols);
 			t.endpoints <- thisModule.createEndpoints(operationMapping.endpoints,
 				'referredOperation', t);
-			t.aspects <- thisModule.createServiceAspects(operationMapping.aspects,
+			t.aspects <- thisModule.createImportedServiceAspects(operationMapping.aspects,
 				'referredOperation', t);
 
 		-- If no mapping was specified, the rule behaves copies the contents of the source
@@ -978,7 +985,7 @@ rule ReferredOperation(sourceOperation : Service!ReferredOperation, importAlias 
 			t.protocols <- thisModule.createProtocolSpecifications(sourceOperation.protocols);
 			t.endpoints <- thisModule.createEndpoints(sourceOperation.endpoints,
 				'referredOperation', t);
-			t.aspects <- thisModule.createServiceAspects(sourceOperation.aspects,
+			t.aspects <- thisModule.createImportedServiceAspects(sourceOperation.aspects,
 				'referredOperation', t);
 		}
 
