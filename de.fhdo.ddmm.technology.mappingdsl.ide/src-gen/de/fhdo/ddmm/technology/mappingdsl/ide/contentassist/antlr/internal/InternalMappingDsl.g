@@ -2456,16 +2456,9 @@ rule__TechnologyMapping__Group__2__Impl
 	}
 :
 (
-	(
-		{ before(grammarAccess.getTechnologyMappingAccess().getServiceMappingsAssignment_2()); }
-		(rule__TechnologyMapping__ServiceMappingsAssignment_2)
-		{ after(grammarAccess.getTechnologyMappingAccess().getServiceMappingsAssignment_2()); }
-	)
-	(
-		{ before(grammarAccess.getTechnologyMappingAccess().getServiceMappingsAssignment_2()); }
-		(rule__TechnologyMapping__ServiceMappingsAssignment_2)*
-		{ after(grammarAccess.getTechnologyMappingAccess().getServiceMappingsAssignment_2()); }
-	)
+	{ before(grammarAccess.getTechnologyMappingAccess().getServiceMappingsAssignment_2()); }
+	(rule__TechnologyMapping__ServiceMappingsAssignment_2)*
+	{ after(grammarAccess.getTechnologyMappingAccess().getServiceMappingsAssignment_2()); }
 )
 ;
 finally {

@@ -79,6 +79,18 @@ import org.eclipse.xtext.xbase.lib.ListExtensions;
 @SuppressWarnings("all")
 public class MappingDslValidator extends AbstractMappingDslValidator {
   /**
+   * Check that model is not empty
+   */
+  @Check
+  public void checkModelNotEmpty(final TechnologyMapping model) {
+    final boolean modelEmpty = (model.getTypeMappings().isEmpty() && model.getServiceMappings().isEmpty());
+    if (modelEmpty) {
+      this.error("Model must define at least one type or service mapping", model, 
+        MappingPackage.Literals.TECHNOLOGY_MAPPING__TYPE_MAPPINGS);
+    }
+  }
+  
+  /**
    * Check that imported file is imported exactly once
    */
   @Check

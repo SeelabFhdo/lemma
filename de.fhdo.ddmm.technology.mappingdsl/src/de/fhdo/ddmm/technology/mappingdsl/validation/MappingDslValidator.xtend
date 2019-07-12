@@ -44,6 +44,18 @@ import de.fhdo.ddmm.service.Import
  */
 class MappingDslValidator extends AbstractMappingDslValidator {
     /**
+     * Check that model is not empty
+     */
+    @Check
+    def checkModelNotEmpty(TechnologyMapping model) {
+        val modelEmpty = model.typeMappings.empty && model.serviceMappings.empty
+
+        if (modelEmpty)
+            error("Model must define at least one type or service mapping", model,
+                MappingPackage::Literals.TECHNOLOGY_MAPPING__TYPE_MAPPINGS)
+    }
+
+    /**
      * Check that imported file is imported exactly once
      */
     @Check

@@ -42,10 +42,10 @@ public class MappingDslGrammarAccess extends AbstractGrammarElementFinder {
 		//TechnologyMapping:
 		//	imports+=Import+
 		//	typeMappings+=ComplexTypeMapping*
-		//	serviceMappings+=MicroserviceMapping+;
+		//	serviceMappings+=MicroserviceMapping*;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//imports+=Import+ typeMappings+=ComplexTypeMapping* serviceMappings+=MicroserviceMapping+
+		//imports+=Import+ typeMappings+=ComplexTypeMapping* serviceMappings+=MicroserviceMapping*
 		public Group getGroup() { return cGroup; }
 		
 		//imports+=Import+
@@ -60,7 +60,7 @@ public class MappingDslGrammarAccess extends AbstractGrammarElementFinder {
 		//ComplexTypeMapping
 		public RuleCall getTypeMappingsComplexTypeMappingParserRuleCall_1_0() { return cTypeMappingsComplexTypeMappingParserRuleCall_1_0; }
 		
-		//serviceMappings+=MicroserviceMapping+
+		//serviceMappings+=MicroserviceMapping*
 		public Assignment getServiceMappingsAssignment_2() { return cServiceMappingsAssignment_2; }
 		
 		//MicroserviceMapping
@@ -1667,7 +1667,7 @@ public class MappingDslGrammarAccess extends AbstractGrammarElementFinder {
 	//TechnologyMapping:
 	//	imports+=Import+
 	//	typeMappings+=ComplexTypeMapping*
-	//	serviceMappings+=MicroserviceMapping+;
+	//	serviceMappings+=MicroserviceMapping*;
 	public TechnologyMappingElements getTechnologyMappingAccess() {
 		return pTechnologyMapping;
 	}

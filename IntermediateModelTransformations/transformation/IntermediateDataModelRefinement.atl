@@ -63,7 +63,7 @@ helper def : findMappedField(field : Intermediate!IntermediateDataField) : Servi
 			f | 
 			f.mappedComplexType.t_sourceModelUri 
 				= thisModule.intermediateDataModel().sourceModelUri and
-			f.buildQualifiedName('.', false) = field.qualifiedName		
+			f.buildQualifiedName('.', false) = field.qualifiedName
 		)
 	in
 	if (not mappedField.oclIsUndefined()) then
@@ -119,16 +119,19 @@ rule RefineIntermediateDataField {
 		t : Intermediate!IntermediateDataField (
 			originalType <- s.type
 		)
-	do {
+	do {		
 		if (mappedField.mappedType.oclIsUndefined())
 			t.type <- s.type;
 		else
-			t.type <- thisModule.IntermediateImportedTechnologySpecificType(mappedField);
+			t.type <- thisModule.IntermediateImportedTechnologySpecificType(t, mappedField);
+
+		t;
 	}
 }
 
 --- Called rule to create an IntermediateImportedTechnologySpecificType from a MappedField
-rule IntermediateImportedTechnologySpecificType(mappedField : Service!MappedField) {
+rule IntermediateImportedTechnologySpecificType(targetField : Intermediate!IntermediateDataField,
+	mappedField : Service!MappedField) {
 	using {
 		mappedType : Service!ImportedType = mappedField.mappedType;
 	}
@@ -139,14 +142,15 @@ rule IntermediateImportedTechnologySpecificType(mappedField : Service!MappedFiel
 								.concat('.')
 								.concat(mappedType.type.buildQualifiedName('.')),
 			origin <- #TECHNOLOGY,
-			kind <- thisModule.getTechnologySpecificTypeKind(mappedType.type)			
+			kind <- thisModule.getTechnologySpecificTypeKind(mappedType.type),
+			dataField <- targetField
 		)
 	do {
 		if (thisModule.getCreatedImport(mappedType.import).oclIsUndefined())
 			thisModule.IntermediateImport(mappedType.import);
 		
 		i.import <- thisModule.getCreatedImport(mappedType.import);
-		
+
 		i;
 	}
 }
@@ -160,13 +164,14 @@ rule IntermediateImport(sourceImport : Service!Import) {
 			-- Note that normally this would be a direct mapping between the source and the target
 			-- importType. However, the XMI serlializer seems to be bugged. See the comments in the
 			-- metamodel on why here the name of the import type is used instead.
-			importTypeName <- thisModule.getImportTypeName(sourceImport)
+			importTypeName <- thisModule.getImportTypeName(sourceImport),
+			dataModel <- thisModule.intermediateDataModel()
 		)
 	do {
 		-- Assign created target instance to the list of imports under the model root
 		thisModule.intermediateDataModel().imports <- thisModule.intermediateDataModel()
 			.imports->append(t);
-		
+
 		-- Populate helper of created IntermediateImport instances
 		thisModule.CreatedImport(sourceImport.name, t);
 		
@@ -207,10 +212,13 @@ rule IntermediateImportedAspect {
 		)
 	to
 		i : Intermediate!IntermediateImportedAspect(
-			name <- a.importedAspect.name,
-			import <- thisModule.getCreatedImport(a.import)
+			name <- a.importedAspect.name
 		)
 	do {
+		if (thisModule.getCreatedImport(a.import).oclIsUndefined())
+			thisModule.IntermediateImport(a.import);
+		i.import <- thisModule.getCreatedImport(a.import);
+		
 		-- Create properties of aspect and link them with the aspect 
 		for (property in a.importedAspect.properties) {
 			i.properties <- i.properties->append(
