@@ -227,6 +227,12 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
       }
     }
     if (!_matched) {
+      if (Objects.equal(reference, MappingPackage.Literals.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__DATA_FIELD)) {
+        _matched=true;
+        return this.getScopeForDataFields(mapping);
+      }
+    }
+    if (!_matched) {
       if (Objects.equal(reference, MappingPackage.Literals.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__ENUMERATION_FIELD)) {
         _matched=true;
         ImportedComplexType _type = mapping.getType();

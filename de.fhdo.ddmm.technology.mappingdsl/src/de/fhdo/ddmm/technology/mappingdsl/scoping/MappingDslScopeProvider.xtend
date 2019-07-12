@@ -151,6 +151,10 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
             case MappingPackage::Literals.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__TECHNOLOGY:
                 return mapping.getScopeForAnnotatedTechnologies()
 
+            /* Data fields */
+            case MappingPackage::Literals.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__DATA_FIELD:
+                return mapping.getScopeForDataFields()
+
             /* Enumeration fields */
             case MappingPackage::Literals.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__ENUMERATION_FIELD:
                 if (mapping.type instanceof Enumeration)
