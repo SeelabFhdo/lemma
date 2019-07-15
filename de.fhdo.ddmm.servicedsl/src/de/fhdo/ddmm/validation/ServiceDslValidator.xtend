@@ -800,7 +800,8 @@ class ServiceDslValidator extends AbstractServiceDslValidator {
                     val valueMap = <String, Object> newHashMap
                     valueMap.put("protocol", protocolName)
                     valueMap.put("endpoint", endpoint)
-                    val duplicate = uniqueAddressMap.putIfAbsent(addressPrefixedByProtocol, valueMap)
+                    val duplicate = uniqueAddressMap.putIfAbsent(addressPrefixedByProtocol,
+                        valueMap)
                     val duplicateEndpoint = if (duplicate !== null)
                         duplicate.get("endpoint") as Endpoint
 

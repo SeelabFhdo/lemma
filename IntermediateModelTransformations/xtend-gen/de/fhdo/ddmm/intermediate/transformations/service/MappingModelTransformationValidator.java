@@ -2,12 +2,16 @@ package de.fhdo.ddmm.intermediate.transformations.service;
 
 import com.google.common.base.Function;
 import com.google.common.base.Objects;
+import com.google.common.collect.Iterables;
 import de.fhdo.ddmm.intermediate.transformations.AbstractInputModelValidator;
 import de.fhdo.ddmm.intermediate.transformations.IntermediateTransformationException;
+import de.fhdo.ddmm.service.Endpoint;
 import de.fhdo.ddmm.service.Import;
 import de.fhdo.ddmm.service.ImportType;
+import de.fhdo.ddmm.service.ImportedProtocolAndDataFormat;
 import de.fhdo.ddmm.service.Microservice;
 import de.fhdo.ddmm.service.ServiceModel;
+import de.fhdo.ddmm.technology.DataFormat;
 import de.fhdo.ddmm.technology.mapping.MicroserviceMapping;
 import de.fhdo.ddmm.technology.mapping.TechnologyMapping;
 import de.fhdo.ddmm.utils.DdmmUtils;
@@ -16,8 +20,12 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Consumer;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.xtend2.lib.StringConcatenation;
+import org.eclipse.xtext.EcoreUtil2;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
@@ -43,6 +51,7 @@ public class MappingModelTransformationValidator extends AbstractInputModelValid
       this.error("Mapping model is empty");
     }
     this.checkImportsInServiceModelsForDuplicateAliases(mappingModel);
+    this.checkServiceModelsForDuplicateEndpointAddresses(mappingModel);
   }
   
   /**
@@ -131,5 +140,85 @@ public class MappingModelTransformationValidator extends AbstractInputModelValid
         }
       }
     }
+  }
+  
+  /**
+   * Check duplicate microservice endpoint addresses across service models
+   */
+  private void checkServiceModelsForDuplicateEndpointAddresses(final TechnologyMapping mappingModel) {
+    final Function1<Import, Boolean> _function = (Import it) -> {
+      ImportType _importType = it.getImportType();
+      return Boolean.valueOf((_importType == ImportType.MICROSERVICES));
+    };
+    final Function1<Import, ServiceModel> _function_1 = (Import it) -> {
+      ServiceModel _xblockexpression = null;
+      {
+        final IFile serviceModelFile = DdmmUtils.getFileForResource(it.eResource());
+        final String modelFileUri = DdmmUtils.convertToAbsoluteFileUri(
+          it.getImportURI(), 
+          serviceModelFile.getRawLocation().makeAbsolute().toString());
+        _xblockexpression = DdmmUtils.<ServiceModel>getImportedModelRoot(it.eResource(), modelFileUri, ServiceModel.class);
+      }
+      return _xblockexpression;
+    };
+    final Function1<Import, String> _function_2 = (Import it) -> {
+      return DdmmUtils.getFileForResource(it.eResource()).getRawLocation().makeAbsolute().toString();
+    };
+    final Map<ServiceModel, String> allImportedServiceModels = IterableExtensions.<Import, ServiceModel, String>toMap(IterableExtensions.<Import>filter(mappingModel.getImports(), _function), _function_1, _function_2);
+    final Function1<ServiceModel, EList<Microservice>> _function_3 = (ServiceModel it) -> {
+      return it.getMicroservices();
+    };
+    final Function1<Microservice, EList<Endpoint>> _function_4 = (Microservice it) -> {
+      return it.getEndpoints();
+    };
+    final List<Endpoint> allMicroserviceEndpoints = IterableExtensions.<Endpoint>toList(Iterables.<Endpoint>concat(IterableExtensions.<Microservice, EList<Endpoint>>map(Iterables.<Microservice>concat(IterableExtensions.<ServiceModel, EList<Microservice>>map(allImportedServiceModels.keySet(), _function_3)), _function_4)));
+    final HashMap<String, Endpoint> endpointAddresses = CollectionLiterals.<String, Endpoint>newHashMap();
+    final Consumer<Endpoint> _function_5 = (Endpoint endpoint) -> {
+      final Consumer<String> _function_6 = (String address) -> {
+        final Consumer<ImportedProtocolAndDataFormat> _function_7 = (ImportedProtocolAndDataFormat protocol) -> {
+          String _name = protocol.getImport().getName();
+          String _plus = (_name + "::");
+          String _name_1 = protocol.getImportedProtocol().getName();
+          String protocolName = (_plus + _name_1);
+          final DataFormat dataFormat = protocol.getDataFormat();
+          if (((dataFormat != null) && (dataFormat.getFormatName() != null))) {
+            String _protocolName = protocolName;
+            String _formatName = dataFormat.getFormatName();
+            String _plus_1 = ("/" + _formatName);
+            protocolName = (_protocolName + _plus_1);
+          }
+          final String addressPrefixedByProtocol = (protocolName + address);
+          final Endpoint duplicateEndpoint = endpointAddresses.get(addressPrefixedByProtocol);
+          if ((duplicateEndpoint != null)) {
+            final Microservice microservice = EcoreUtil2.<Microservice>getContainerOfType(endpoint, Microservice.class);
+            final Microservice duplicateMicroservice = EcoreUtil2.<Microservice>getContainerOfType(duplicateEndpoint, 
+              Microservice.class);
+            boolean _notEquals = (!Objects.equal(duplicateMicroservice, microservice));
+            if (_notEquals) {
+              StringConcatenation _builder = new StringConcatenation();
+              _builder.append("Address ");
+              _builder.append(address);
+              _builder.append(" is already specified for microservice ");
+              StringConcatenation _builder_1 = new StringConcatenation();
+              String _buildQualifiedName = microservice.buildQualifiedName(".");
+              _builder_1.append(_buildQualifiedName);
+              _builder_1.append(" in  service model ");
+              String _plus_2 = (_builder.toString() + _builder_1);
+              StringConcatenation _builder_2 = new StringConcatenation();
+              String _get = allImportedServiceModels.get(microservice.getServiceModel());
+              _builder_2.append(_get);
+              _builder_2.append(".");
+              String _plus_3 = (_plus_2 + _builder_2);
+              this.error(_plus_3);
+            }
+          } else {
+            endpointAddresses.put(addressPrefixedByProtocol, endpoint);
+          }
+        };
+        endpoint.getProtocols().forEach(_function_7);
+      };
+      endpoint.getAddresses().forEach(_function_6);
+    };
+    allMicroserviceEndpoints.forEach(_function_5);
   }
 }

@@ -247,7 +247,10 @@ class MappingModelTransformation
                 refinedModels.filter[path, model | model !== null].forEach[
                     originalModelPath, refinedModel |
                     refinedModelsPerServiceModel
-                        .putIfAbsent(serviceModel, #{originalModelPath -> refinedModel.outputModel})
+                        .putIfAbsent(
+                            serviceModel,
+                            newHashMap(originalModelPath -> refinedModel.outputModel)
+                        )
                         ?.put(originalModelPath, refinedModel.outputModel)
                 ]
             ]

@@ -13,11 +13,16 @@ import de.fhdo.ddmm.data.EnumerationField;
 import de.fhdo.ddmm.data.PrimitiveType;
 import de.fhdo.ddmm.data.PrimitiveValue;
 import de.fhdo.ddmm.data.Type;
+import de.fhdo.ddmm.service.Endpoint;
 import de.fhdo.ddmm.service.Import;
+import de.fhdo.ddmm.service.ImportType;
+import de.fhdo.ddmm.service.ImportedProtocolAndDataFormat;
+import de.fhdo.ddmm.service.Interface;
 import de.fhdo.ddmm.service.Microservice;
 import de.fhdo.ddmm.service.Operation;
 import de.fhdo.ddmm.service.Parameter;
 import de.fhdo.ddmm.service.ReferredOperation;
+import de.fhdo.ddmm.service.ServiceModel;
 import de.fhdo.ddmm.service.ServicePackage;
 import de.fhdo.ddmm.technology.CommunicationType;
 import de.fhdo.ddmm.technology.DataFormat;
@@ -53,8 +58,9 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
+import java.util.Set;
 import java.util.function.Consumer;
+import org.eclipse.core.resources.IFile;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
@@ -105,6 +111,27 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
     final Import duplicate = model.getImports().get((duplicateIndex).intValue());
     this.error("File is already being imported", duplicate, 
       ServicePackage.Literals.IMPORT__IMPORT_URI);
+  }
+  
+  /**
+   * Check import aliases for uniqueness
+   */
+  @Check
+  public void checkImportAlias(final TechnologyMapping model) {
+    final Function<Import, String> _function = (Import it) -> {
+      return it.getName();
+    };
+    final Integer duplicateIndex = DdmmUtils.<Import, String>getDuplicateIndex(model.getImports(), _function);
+    if (((duplicateIndex).intValue() == (-1))) {
+      return;
+    }
+    final Import duplicate = model.getImports().get((duplicateIndex).intValue());
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("Duplicate import alias ");
+    String _name = duplicate.getName();
+    _builder.append(_name);
+    this.error(_builder.toString(), duplicate, 
+      ServicePackage.Literals.IMPORT__NAME);
   }
   
   /**
@@ -554,59 +581,318 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
   }
   
   /**
-   * Check that mapped microservice, interface, and operation technology-specific endpoints'
-   * addresses are unique per protocol/data format combination
+   * Check that microservice endpoints' addresses are unique per protocol/data format combination
    */
   @Check
   public void checkUniqueEndpointAddresses(final TechnologyMapping model) {
-    final Function1<MicroserviceMapping, EList<TechnologySpecificEndpoint>> _function = (MicroserviceMapping it) -> {
-      return it.getEndpoints();
+    final Function1<Import, Boolean> _function = (Import it) -> {
+      ImportType _importType = it.getImportType();
+      return Boolean.valueOf((_importType == ImportType.MICROSERVICES));
     };
-    final List<TechnologySpecificEndpoint> microserviceEndpoints = IterableExtensions.<TechnologySpecificEndpoint>toList(Iterables.<TechnologySpecificEndpoint>concat(ListExtensions.<MicroserviceMapping, EList<TechnologySpecificEndpoint>>map(model.getServiceMappings(), _function)));
-    final Function<TechnologySpecificEndpoint, List<String>> _function_1 = (TechnologySpecificEndpoint it) -> {
-      EList<String> _xblockexpression = null;
+    final Function1<Import, ServiceModel> _function_1 = (Import it) -> {
+      ServiceModel _xblockexpression = null;
       {
-        final ImportedMicroservice importedMicroservice = it.getMicroserviceMapping().getMicroservice();
-        _xblockexpression = importedMicroservice.getMicroservice().getQualifiedNameParts();
+        final IFile serviceModelFile = DdmmUtils.getFileForResource(it.eResource());
+        final String modelFileUri = DdmmUtils.convertToAbsoluteFileUri(
+          it.getImportURI(), 
+          serviceModelFile.getRawLocation().makeAbsolute().toString());
+        _xblockexpression = DdmmUtils.<ServiceModel>getImportedModelRoot(it.eResource(), modelFileUri, ServiceModel.class);
       }
       return _xblockexpression;
     };
-    this.checkUniqueEndpointAddresses(microserviceEndpoints, "microservice", _function_1);
-    final Function1<InterfaceMapping, EList<TechnologySpecificEndpoint>> _function_2 = (InterfaceMapping it) -> {
+    final Iterable<ServiceModel> allImportedServiceModels = IterableExtensions.<Import, ServiceModel>map(IterableExtensions.<Import>filter(model.getImports(), _function), _function_1);
+    final Function1<MicroserviceMapping, Microservice> _function_2 = (MicroserviceMapping it) -> {
+      return it.getMicroservice().getMicroservice();
+    };
+    final List<Microservice> allMappedMicroservices = IterableExtensions.<Microservice>toList(ListExtensions.<MicroserviceMapping, Microservice>map(model.getServiceMappings(), _function_2));
+    final Function1<ServiceModel, EList<Microservice>> _function_3 = (ServiceModel it) -> {
+      return it.getMicroservices();
+    };
+    final Function1<Microservice, Boolean> _function_4 = (Microservice it) -> {
+      boolean _contains = allMappedMicroservices.contains(it);
+      return Boolean.valueOf((!_contains));
+    };
+    final Iterable<Microservice> nonMappedMicroservices = IterableExtensions.<Microservice>filter(Iterables.<Microservice>concat(IterableExtensions.<ServiceModel, EList<Microservice>>map(allImportedServiceModels, _function_3)), _function_4);
+    final Function1<MicroserviceMapping, EList<TechnologySpecificEndpoint>> _function_5 = (MicroserviceMapping it) -> {
       return it.getEndpoints();
     };
-    final List<TechnologySpecificEndpoint> interfaceEndpoints = IterableExtensions.<TechnologySpecificEndpoint>toList(Iterables.<TechnologySpecificEndpoint>concat(ListExtensions.<InterfaceMapping, EList<TechnologySpecificEndpoint>>map(model.getMappedInterfaces(), _function_2)));
-    final Function<TechnologySpecificEndpoint, List<String>> _function_3 = (TechnologySpecificEndpoint it) -> {
-      return it.getInterfaceMapping().getInterface().getQualifiedNameParts();
-    };
-    this.checkUniqueEndpointAddresses(interfaceEndpoints, "interface", _function_3);
-    final List<TechnologySpecificEndpoint> operationEndpoints = CollectionLiterals.<TechnologySpecificEndpoint>newArrayList();
-    final Function1<ReferredOperationMapping, EList<TechnologySpecificEndpoint>> _function_4 = (ReferredOperationMapping it) -> {
+    final List<TechnologySpecificEndpoint> allMappedEndpoints = IterableExtensions.<TechnologySpecificEndpoint>toList(Iterables.<TechnologySpecificEndpoint>concat(ListExtensions.<MicroserviceMapping, EList<TechnologySpecificEndpoint>>map(model.getServiceMappings(), _function_5)));
+    final Function1<Microservice, EList<Endpoint>> _function_6 = (Microservice it) -> {
       return it.getEndpoints();
     };
-    Iterables.<TechnologySpecificEndpoint>addAll(operationEndpoints, Iterables.<TechnologySpecificEndpoint>concat(ListExtensions.<ReferredOperationMapping, EList<TechnologySpecificEndpoint>>map(model.getMappedReferredOperations(), _function_4)));
-    final Function1<OperationMapping, EList<TechnologySpecificEndpoint>> _function_5 = (OperationMapping it) -> {
-      return it.getEndpoints();
-    };
-    Iterables.<TechnologySpecificEndpoint>addAll(operationEndpoints, Iterables.<TechnologySpecificEndpoint>concat(ListExtensions.<OperationMapping, EList<TechnologySpecificEndpoint>>map(model.getMappedOperations(), _function_5)));
-    final Function<TechnologySpecificEndpoint, List<String>> _function_6 = (TechnologySpecificEndpoint it) -> {
-      EList<String> _xifexpression = null;
-      OperationMapping _operationMapping = it.getOperationMapping();
-      boolean _tripleNotEquals = (_operationMapping != null);
-      if (_tripleNotEquals) {
-        _xifexpression = it.getOperationMapping().getOperation().getQualifiedNameParts();
+    final List<Endpoint> nonMappedEndpoints = IterableExtensions.<Endpoint>toList(Iterables.<Endpoint>concat(IterableExtensions.<Microservice, EList<Endpoint>>map(nonMappedMicroservices, _function_6)));
+    final Function<EObject, String> _function_7 = (EObject it) -> {
+      String _xifexpression = null;
+      if ((it instanceof Endpoint)) {
+        _xifexpression = ((Endpoint)it).getMicroservice().buildQualifiedName(".");
       } else {
-        EList<String> _xifexpression_1 = null;
-        ReferredOperationMapping _referredOperationMapping = it.getReferredOperationMapping();
-        boolean _tripleNotEquals_1 = (_referredOperationMapping != null);
-        if (_tripleNotEquals_1) {
-          _xifexpression_1 = it.getReferredOperationMapping().getOperation().getQualifiedNameParts();
+        String _xifexpression_1 = null;
+        if ((it instanceof TechnologySpecificEndpoint)) {
+          _xifexpression_1 = ((TechnologySpecificEndpoint)it).getMicroserviceMapping().getMicroservice().getMicroservice().buildQualifiedName(".");
+        } else {
+          _xifexpression_1 = null;
         }
         _xifexpression = _xifexpression_1;
       }
       return _xifexpression;
     };
-    this.checkUniqueEndpointAddresses(operationEndpoints, "operation", _function_6);
+    this.checkUniqueEndpointAddresses(allMappedEndpoints, nonMappedEndpoints, "microservice", _function_7);
+  }
+  
+  /**
+   * Check that interface endpoints' addresses are unique per protocol/data format combination
+   */
+  @Check
+  public void checkUniqueEndpointAddresses(final MicroserviceMapping serviceMapping) {
+    final Function1<InterfaceMapping, Interface> _function = (InterfaceMapping it) -> {
+      return it.getInterface();
+    };
+    final List<Interface> mappedInterfaces = ListExtensions.<InterfaceMapping, Interface>map(serviceMapping.getInterfaceMappings(), _function);
+    final Function1<Interface, Boolean> _function_1 = (Interface it) -> {
+      boolean _contains = mappedInterfaces.contains(it);
+      return Boolean.valueOf((!_contains));
+    };
+    final Iterable<Interface> nonMappedInterfaces = IterableExtensions.<Interface>filter(serviceMapping.getMicroservice().getMicroservice().getInterfaces(), _function_1);
+    final Function1<InterfaceMapping, EList<TechnologySpecificEndpoint>> _function_2 = (InterfaceMapping it) -> {
+      return it.getEndpoints();
+    };
+    final List<TechnologySpecificEndpoint> allMappedEndpoints = IterableExtensions.<TechnologySpecificEndpoint>toList(Iterables.<TechnologySpecificEndpoint>concat(ListExtensions.<InterfaceMapping, EList<TechnologySpecificEndpoint>>map(serviceMapping.getInterfaceMappings(), _function_2)));
+    final Function1<Interface, EList<Endpoint>> _function_3 = (Interface it) -> {
+      return it.getEndpoints();
+    };
+    final List<Endpoint> nonMappedEndpoints = IterableExtensions.<Endpoint>toList(Iterables.<Endpoint>concat(IterableExtensions.<Interface, EList<Endpoint>>map(nonMappedInterfaces, _function_3)));
+    final Function<EObject, String> _function_4 = (EObject it) -> {
+      String _xifexpression = null;
+      if ((it instanceof Endpoint)) {
+        _xifexpression = ((Endpoint)it).getInterface().buildQualifiedName(".");
+      } else {
+        String _xifexpression_1 = null;
+        if ((it instanceof TechnologySpecificEndpoint)) {
+          _xifexpression_1 = ((TechnologySpecificEndpoint)it).getInterfaceMapping().getInterface().buildQualifiedName(".");
+        } else {
+          _xifexpression_1 = null;
+        }
+        _xifexpression = _xifexpression_1;
+      }
+      return _xifexpression;
+    };
+    this.checkUniqueEndpointAddresses(allMappedEndpoints, nonMappedEndpoints, "interface", _function_4);
+  }
+  
+  /**
+   * Check that operation and referred operation endpoints' addresses are unique per
+   * protocol/data format combination
+   */
+  @Check
+  public void checkUniqueEndpointAddressesOfOperations(final MicroserviceMapping serviceMapping) {
+    final Function1<OperationMapping, Interface> _function = (OperationMapping it) -> {
+      return it.getOperation().getInterface();
+    };
+    Set<Interface> _set = IterableExtensions.<Interface>toSet(ListExtensions.<OperationMapping, Interface>map(serviceMapping.getOperationMappings(), _function));
+    final Function1<ReferredOperationMapping, Interface> _function_1 = (ReferredOperationMapping it) -> {
+      return it.getOperation().getInterface();
+    };
+    Set<Interface> _set_1 = IterableExtensions.<Interface>toSet(ListExtensions.<ReferredOperationMapping, Interface>map(serviceMapping.getReferredOperationMappings(), _function_1));
+    final Iterable<Interface> mappedOperationsInterfaces = Iterables.<Interface>concat(_set, _set_1);
+    final Microservice mappedMicroservice = serviceMapping.getMicroservice().getMicroservice();
+    final Consumer<Interface> _function_2 = (Interface currentInterface) -> {
+      final Function1<OperationMapping, Boolean> _function_3 = (OperationMapping it) -> {
+        Interface _interface = it.getOperation().getInterface();
+        return Boolean.valueOf(Objects.equal(_interface, currentInterface));
+      };
+      Iterable<OperationMapping> _filter = IterableExtensions.<OperationMapping>filter(serviceMapping.getOperationMappings(), _function_3);
+      final Function1<ReferredOperationMapping, Boolean> _function_4 = (ReferredOperationMapping it) -> {
+        Interface _interface = it.getOperation().getInterface();
+        return Boolean.valueOf(Objects.equal(_interface, currentInterface));
+      };
+      Iterable<ReferredOperationMapping> _filter_1 = IterableExtensions.<ReferredOperationMapping>filter(serviceMapping.getReferredOperationMappings(), _function_4);
+      final List<EObject> mappedOperationsOfInterface = IterableExtensions.<EObject>toList(Iterables.<EObject>concat(_filter, _filter_1));
+      final Function1<Operation, Boolean> _function_5 = (Operation it) -> {
+        return Boolean.valueOf((Objects.equal(it.getInterface(), currentInterface) && 
+          (!mappedOperationsOfInterface.contains(it))));
+      };
+      Iterable<Operation> _filter_2 = IterableExtensions.<Operation>filter(mappedMicroservice.getContainedOperations(), _function_5);
+      final Function1<ReferredOperation, Boolean> _function_6 = (ReferredOperation it) -> {
+        return Boolean.valueOf((Objects.equal(it.getInterface(), currentInterface) && 
+          (!mappedOperationsOfInterface.contains(it))));
+      };
+      Iterable<ReferredOperation> _filter_3 = IterableExtensions.<ReferredOperation>filter(mappedMicroservice.getContainedReferredOperations(), _function_6);
+      final List<EObject> nonMappedOperationsOfInterface = IterableExtensions.<EObject>toList(Iterables.<EObject>concat(_filter_2, _filter_3));
+      final Function1<EObject, EList<TechnologySpecificEndpoint>> _function_7 = (EObject it) -> {
+        EList<TechnologySpecificEndpoint> _xifexpression = null;
+        if ((it instanceof OperationMapping)) {
+          _xifexpression = ((OperationMapping)it).getEndpoints();
+        } else {
+          EList<TechnologySpecificEndpoint> _xifexpression_1 = null;
+          if ((it instanceof ReferredOperationMapping)) {
+            _xifexpression_1 = ((ReferredOperationMapping)it).getEndpoints();
+          }
+          _xifexpression = _xifexpression_1;
+        }
+        return _xifexpression;
+      };
+      final List<TechnologySpecificEndpoint> allMappedEndpoints = IterableExtensions.<TechnologySpecificEndpoint>toList(Iterables.<TechnologySpecificEndpoint>concat(ListExtensions.<EObject, EList<TechnologySpecificEndpoint>>map(mappedOperationsOfInterface, _function_7)));
+      final Function1<EObject, EList<Endpoint>> _function_8 = (EObject it) -> {
+        EList<Endpoint> _xifexpression = null;
+        if ((it instanceof Operation)) {
+          _xifexpression = ((Operation)it).getEndpoints();
+        } else {
+          EList<Endpoint> _xifexpression_1 = null;
+          if ((it instanceof ReferredOperation)) {
+            _xifexpression_1 = ((ReferredOperation)it).getEndpoints();
+          }
+          _xifexpression = _xifexpression_1;
+        }
+        return _xifexpression;
+      };
+      final List<Endpoint> nonMappedEndpoints = IterableExtensions.<Endpoint>toList(Iterables.<Endpoint>concat(ListExtensions.<EObject, EList<Endpoint>>map(nonMappedOperationsOfInterface, _function_8)));
+      final Function<EObject, String> _function_9 = (EObject it) -> {
+        String _xifexpression = null;
+        if ((it instanceof Endpoint)) {
+          String _xifexpression_1 = null;
+          Operation _operation = ((Endpoint)it).getOperation();
+          boolean _tripleNotEquals = (_operation != null);
+          if (_tripleNotEquals) {
+            _xifexpression_1 = ((Endpoint)it).getOperation().buildQualifiedName(".");
+          } else {
+            String _xifexpression_2 = null;
+            ReferredOperation _referredOperation = ((Endpoint)it).getReferredOperation();
+            boolean _tripleNotEquals_1 = (_referredOperation != null);
+            if (_tripleNotEquals_1) {
+              _xifexpression_2 = ((Endpoint)it).getReferredOperation().buildQualifiedName(".");
+            }
+            _xifexpression_1 = _xifexpression_2;
+          }
+          _xifexpression = _xifexpression_1;
+        } else {
+          String _xifexpression_3 = null;
+          if ((it instanceof TechnologySpecificEndpoint)) {
+            String _xifexpression_4 = null;
+            OperationMapping _operationMapping = ((TechnologySpecificEndpoint)it).getOperationMapping();
+            boolean _tripleNotEquals_2 = (_operationMapping != null);
+            if (_tripleNotEquals_2) {
+              _xifexpression_4 = ((TechnologySpecificEndpoint)it).getOperationMapping().getOperation().buildQualifiedName(".");
+            } else {
+              String _xifexpression_5 = null;
+              ReferredOperationMapping _referredOperationMapping = ((TechnologySpecificEndpoint)it).getReferredOperationMapping();
+              boolean _tripleNotEquals_3 = (_referredOperationMapping != null);
+              if (_tripleNotEquals_3) {
+                _xifexpression_5 = ((TechnologySpecificEndpoint)it).getReferredOperationMapping().getOperation().buildQualifiedName(".");
+              }
+              _xifexpression_4 = _xifexpression_5;
+            }
+            _xifexpression_3 = _xifexpression_4;
+          } else {
+            _xifexpression_3 = null;
+          }
+          _xifexpression = _xifexpression_3;
+        }
+        return _xifexpression;
+      };
+      this.checkUniqueEndpointAddresses(allMappedEndpoints, nonMappedEndpoints, "operation", _function_9);
+    };
+    mappedOperationsInterfaces.forEach(_function_2);
+  }
+  
+  /**
+   * Helper to check that the addresses of mapped as well as non-mapped endpoints are unique in
+   * the context of a given container, e.g., a microservice
+   */
+  private void checkUniqueEndpointAddresses(final List<TechnologySpecificEndpoint> mappedEndpoints, final List<Endpoint> nonMappedEndpoints, final String containerTypeName, final Function<EObject, String> getContainerName) {
+    final HashMap<String, TechnologySpecificEndpoint> mappedAddressesToEndpoints = CollectionLiterals.<String, TechnologySpecificEndpoint>newHashMap();
+    final Consumer<TechnologySpecificEndpoint> _function = (TechnologySpecificEndpoint endpoint) -> {
+      int _size = endpoint.getAddresses().size();
+      ExclusiveRange _doubleDotLessThan = new ExclusiveRange(0, _size, true);
+      for (final Integer i : _doubleDotLessThan) {
+        final Consumer<TechnologySpecificProtocol> _function_1 = (TechnologySpecificProtocol protocol) -> {
+          final String address = endpoint.getAddresses().get((i).intValue());
+          String _name = protocol.getTechnology().getName();
+          String _plus = (_name + "::");
+          String _name_1 = protocol.getProtocol().getName();
+          String protocolName = (_plus + _name_1);
+          final DataFormat dataFormat = protocol.getDataFormat();
+          if (((dataFormat != null) && (dataFormat.getFormatName() != null))) {
+            String _protocolName = protocolName;
+            String _formatName = dataFormat.getFormatName();
+            String _plus_1 = ("/" + _formatName);
+            protocolName = (_protocolName + _plus_1);
+          }
+          final String addressPrefixedByProtocol = (protocolName + address);
+          boolean _containsKey = mappedAddressesToEndpoints.containsKey(addressPrefixedByProtocol);
+          if (_containsKey) {
+            final String containerName = getContainerName.apply(endpoint);
+            StringConcatenation _builder = new StringConcatenation();
+            _builder.append("Address ");
+            _builder.append(address);
+            _builder.append(" is already specified for protocol ");
+            StringConcatenation _builder_1 = new StringConcatenation();
+            _builder_1.append(protocolName);
+            _builder_1.append(" on ");
+            _builder_1.append(containerTypeName);
+            _builder_1.append(" ");
+            _builder_1.append(containerName);
+            String _plus_2 = (_builder.toString() + _builder_1);
+            this.error(_plus_2, endpoint, 
+              MappingPackage.Literals.TECHNOLOGY_SPECIFIC_ENDPOINT__ADDRESSES, (i).intValue());
+          } else {
+            mappedAddressesToEndpoints.put(addressPrefixedByProtocol, endpoint);
+          }
+        };
+        endpoint.getTechnologySpecificProtocols().forEach(_function_1);
+      }
+    };
+    mappedEndpoints.forEach(_function);
+    final Consumer<Endpoint> _function_1 = (Endpoint nonMappedEndpoint) -> {
+      int _size = nonMappedEndpoint.getAddresses().size();
+      ExclusiveRange _doubleDotLessThan = new ExclusiveRange(0, _size, true);
+      for (final Integer i : _doubleDotLessThan) {
+        final Consumer<ImportedProtocolAndDataFormat> _function_2 = (ImportedProtocolAndDataFormat protocol) -> {
+          final String address = nonMappedEndpoint.getAddresses().get((i).intValue());
+          String _name = protocol.getImport().getName();
+          String _plus = (_name + "::");
+          String _name_1 = protocol.getImportedProtocol().getName();
+          String protocolName = (_plus + _name_1);
+          final DataFormat dataFormat = protocol.getDataFormat();
+          if (((dataFormat != null) && (dataFormat.getFormatName() != null))) {
+            String _protocolName = protocolName;
+            String _formatName = dataFormat.getFormatName();
+            String _plus_1 = ("/" + _formatName);
+            protocolName = (_protocolName + _plus_1);
+          }
+          final String addressPrefixedByProtocol = (protocolName + address);
+          final TechnologySpecificEndpoint duplicateMappedEndpoint = mappedAddressesToEndpoints.get(addressPrefixedByProtocol);
+          if ((duplicateMappedEndpoint != null)) {
+            final int mappedAddressIndex = duplicateMappedEndpoint.getAddresses().indexOf(address);
+            final String mappedContainerName = getContainerName.apply(duplicateMappedEndpoint);
+            final String containerName = getContainerName.apply(nonMappedEndpoint);
+            boolean _notEquals = (!Objects.equal(mappedContainerName, containerName));
+            if (_notEquals) {
+              final String serviceModelUri = DdmmUtils.getFileForResource(nonMappedEndpoint.eResource()).getRawLocation().makeAbsolute().toString();
+              StringConcatenation _builder = new StringConcatenation();
+              _builder.append("Address ");
+              _builder.append(address);
+              _builder.append(" is already specified for protocol ");
+              StringConcatenation _builder_1 = new StringConcatenation();
+              _builder_1.append(protocolName);
+              _builder_1.append(" on ");
+              _builder_1.append(containerTypeName);
+              _builder_1.append(" ");
+              _builder_1.append(containerName);
+              _builder_1.append(" in ");
+              String _plus_2 = (_builder.toString() + _builder_1);
+              StringConcatenation _builder_2 = new StringConcatenation();
+              _builder_2.append("service model ");
+              _builder_2.append(serviceModelUri);
+              String _plus_3 = (_plus_2 + _builder_2);
+              this.error(_plus_3, duplicateMappedEndpoint, 
+                MappingPackage.Literals.TECHNOLOGY_SPECIFIC_ENDPOINT__ADDRESSES, mappedAddressIndex);
+            }
+          }
+        };
+        nonMappedEndpoint.getProtocols().forEach(_function_2);
+      }
+    };
+    nonMappedEndpoints.forEach(_function_1);
   }
   
   /**
@@ -949,65 +1235,6 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
     final T duplicate = mappingsToCheck.get((duplicateIndex).intValue());
     this.error(errorMessage, duplicate, mappingFeature);
     return true;
-  }
-  
-  /**
-   * Convenience method to check uniqueness of endpoint addresses within a list of endpoints
-   */
-  private void checkUniqueEndpointAddresses(final List<TechnologySpecificEndpoint> endpoints, final String containerTypeName, final Function<TechnologySpecificEndpoint, List<String>> getEndpointContainerNameParts) {
-    final HashMap<String, Map<String, Object>> uniqueAddressMap = CollectionLiterals.<String, Map<String, Object>>newHashMap();
-    final Consumer<TechnologySpecificEndpoint> _function = (TechnologySpecificEndpoint endpoint) -> {
-      int _size = endpoint.getAddresses().size();
-      ExclusiveRange _doubleDotLessThan = new ExclusiveRange(0, _size, true);
-      for (final Integer i : _doubleDotLessThan) {
-        final Consumer<TechnologySpecificProtocol> _function_1 = (TechnologySpecificProtocol technologySpecificProtocol) -> {
-          final String address = endpoint.getAddresses().get((i).intValue());
-          final Protocol protocol = technologySpecificProtocol.getProtocol();
-          String protocolName = protocol.getName();
-          final DataFormat dataFormat = technologySpecificProtocol.getDataFormat();
-          if (((dataFormat != null) && (dataFormat.getFormatName() != null))) {
-            String _protocolName = protocolName;
-            String _formatName = dataFormat.getFormatName();
-            String _plus = ("/" + _formatName);
-            protocolName = (_protocolName + _plus);
-          }
-          final String addressPrefixedByProtocol = (protocolName + address);
-          final HashMap<String, Object> valueMap = CollectionLiterals.<String, Object>newHashMap();
-          valueMap.put("protocol", protocolName);
-          valueMap.put("endpoint", endpoint);
-          final Map<String, Object> duplicate = uniqueAddressMap.putIfAbsent(addressPrefixedByProtocol, valueMap);
-          TechnologySpecificEndpoint _xifexpression = null;
-          if ((duplicate != null)) {
-            Object _get = duplicate.get("endpoint");
-            _xifexpression = ((TechnologySpecificEndpoint) _get);
-          }
-          final TechnologySpecificEndpoint duplicateEndpoint = _xifexpression;
-          if (((duplicateEndpoint != null) && (duplicateEndpoint != endpoint))) {
-            Object _get_1 = duplicate.get("protocol");
-            final String duplicateProtocolName = ((String) _get_1);
-            final List<String> duplicateContainerNameParts = getEndpointContainerNameParts.apply(duplicateEndpoint);
-            final List<String> currentEndpointContainerNameParts = getEndpointContainerNameParts.apply(endpoint);
-            final String relativeDuplicateName = QualifiedName.create(
-              DdmmUtils.<TechnologySpecificEndpoint, TechnologyMapping>calculateRelativeQualifiedNameParts(duplicateEndpoint, duplicateContainerNameParts, TechnologyMapping.class, endpoint, currentEndpointContainerNameParts, TechnologyMapping.class)).toString();
-            StringConcatenation _builder = new StringConcatenation();
-            _builder.append("Address is already specified for protocol ");
-            StringConcatenation _builder_1 = new StringConcatenation();
-            _builder_1.append(duplicateProtocolName);
-            _builder_1.append(" on ");
-            String _plus_1 = (_builder.toString() + _builder_1);
-            StringConcatenation _builder_2 = new StringConcatenation();
-            _builder_2.append(containerTypeName);
-            _builder_2.append(" ");
-            _builder_2.append(relativeDuplicateName);
-            String _plus_2 = (_plus_1 + _builder_2);
-            this.error(_plus_2, endpoint, 
-              MappingPackage.Literals.TECHNOLOGY_SPECIFIC_ENDPOINT__ADDRESSES, (i).intValue());
-          }
-        };
-        endpoint.getTechnologySpecificProtocols().forEach(_function_1);
-      }
-    };
-    endpoints.forEach(_function);
   }
   
   /**

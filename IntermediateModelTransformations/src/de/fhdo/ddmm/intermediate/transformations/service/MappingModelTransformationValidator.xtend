@@ -8,6 +8,9 @@ import java.util.ArrayDeque
 import de.fhdo.ddmm.service.Import
 import de.fhdo.ddmm.intermediate.transformations.AbstractInputModelValidator
 import de.fhdo.ddmm.intermediate.transformations.IntermediateTransformationException
+import de.fhdo.ddmm.service.Endpoint
+import org.eclipse.xtext.EcoreUtil2
+import de.fhdo.ddmm.service.Microservice
 
 /**
  * Validator for technology mapping models that shall be transformed.
@@ -28,6 +31,7 @@ class MappingModelTransformationValidator
             error("Mapping model is empty")
 
         checkImportsInServiceModelsForDuplicateAliases(mappingModel)
+        checkServiceModelsForDuplicateEndpointAddresses(mappingModel)
     }
 
     /**
@@ -99,5 +103,52 @@ class MappingModelTransformationValidator
                 urisDone.add(currentAbsoluteUri)
             }
         }
+    }
+
+    /**
+     * Check duplicate microservice endpoint addresses across service models
+     */
+    private def checkServiceModelsForDuplicateEndpointAddresses(TechnologyMapping mappingModel) {
+        val allImportedServiceModels = mappingModel.imports
+            .filter[importType === ImportType.MICROSERVICES]
+            .toMap(
+                [
+                    val serviceModelFile = DdmmUtils.getFileForResource(eResource)
+                    val modelFileUri = DdmmUtils.convertToAbsoluteFileUri(
+                        importURI,
+                        serviceModelFile.rawLocation.makeAbsolute.toString
+                    )
+                    DdmmUtils.getImportedModelRoot(eResource, modelFileUri, ServiceModel)
+                ],[
+                    DdmmUtils.getFileForResource(eResource).rawLocation.makeAbsolute.toString
+                ]
+            )
+        val allMicroserviceEndpoints = allImportedServiceModels.keySet
+            .map[microservices].flatten
+            .map[endpoints].flatten
+            .toList
+
+        val endpointAddresses = <String, Endpoint>newHashMap
+        allMicroserviceEndpoints.forEach[endpoint | endpoint.addresses.forEach[address |
+            endpoint.protocols.forEach[protocol |
+                var protocolName = protocol.import.name + "::" + protocol.importedProtocol.name
+                val dataFormat = protocol.dataFormat
+                if (dataFormat !== null && dataFormat.formatName !== null)
+                    protocolName += "/" + dataFormat.formatName
+                val addressPrefixedByProtocol = protocolName + address
+
+                val duplicateEndpoint = endpointAddresses.get(addressPrefixedByProtocol)
+                if (duplicateEndpoint !== null) {
+                    val microservice = EcoreUtil2.getContainerOfType(endpoint, Microservice)
+                    val duplicateMicroservice = EcoreUtil2.getContainerOfType(duplicateEndpoint,
+                        Microservice)
+                    if (duplicateMicroservice != microservice)
+                        error('''Address «address» is already specified for microservice ''' +
+                            '''«microservice.buildQualifiedName(".")» in  service model ''' +
+                            '''«allImportedServiceModels.get(microservice.serviceModel)».''')
+                } else
+                    endpointAddresses.put(addressPrefixedByProtocol, endpoint)
+            ]
+        ]]
     }
 }

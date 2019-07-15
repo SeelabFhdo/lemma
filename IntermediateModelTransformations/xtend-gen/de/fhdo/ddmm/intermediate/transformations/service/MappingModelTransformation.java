@@ -30,7 +30,6 @@ import de.fhdo.ddmm.technology.mapping.TechnologySpecificFieldMapping;
 import de.fhdo.ddmm.utils.DdmmUtils;
 import java.io.File;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -105,7 +104,8 @@ public class MappingModelTransformation extends AbstractAtlInputOutputIntermedia
         final BiConsumer<String, AbstractIntermediateModelTransformationStrategy.TransformationResult> _function_4 = (String originalModelPath, AbstractIntermediateModelTransformationStrategy.TransformationResult refinedModel) -> {
           AbstractIntermediateModelTransformationStrategy.OutputModel _outputModel = refinedModel.getOutputModel();
           Pair<String, AbstractIntermediateModelTransformationStrategy.OutputModel> _mappedTo = Pair.<String, AbstractIntermediateModelTransformationStrategy.OutputModel>of(originalModelPath, _outputModel);
-          Map<String, AbstractIntermediateModelTransformationStrategy.OutputModel> _putIfAbsent = refinedModelsPerServiceModel.putIfAbsent(serviceModel, Collections.<String, AbstractIntermediateModelTransformationStrategy.OutputModel>unmodifiableMap(CollectionLiterals.<String, AbstractIntermediateModelTransformationStrategy.OutputModel>newHashMap(_mappedTo)));
+          Map<String, AbstractIntermediateModelTransformationStrategy.OutputModel> _putIfAbsent = refinedModelsPerServiceModel.putIfAbsent(serviceModel, 
+            CollectionLiterals.<String, AbstractIntermediateModelTransformationStrategy.OutputModel>newHashMap(_mappedTo));
           if (_putIfAbsent!=null) {
             _putIfAbsent.put(originalModelPath, refinedModel.getOutputModel());
           }

@@ -20,7 +20,6 @@ import de.fhdo.ddmm.technology.mapping.OperationMapping
 import de.fhdo.ddmm.technology.mapping.ReferredOperationMapping
 import de.fhdo.ddmm.technology.mapping.TechnologySpecificProtocolSpecification
 import de.fhdo.ddmm.technology.mapping.TechnologySpecificEndpoint
-import java.util.Map
 import de.fhdo.ddmm.technology.mapping.PrimitiveParameterMapping
 import de.fhdo.ddmm.typechecking.TypeChecker
 import de.fhdo.ddmm.typechecking.TypesNotCompatibleException
@@ -36,6 +35,11 @@ import org.eclipse.xtext.EcoreUtil2
 import de.fhdo.ddmm.technology.Technology
 import de.fhdo.ddmm.technology.mapping.ComplexTypeMapping
 import de.fhdo.ddmm.service.Import
+import de.fhdo.ddmm.service.Endpoint
+import de.fhdo.ddmm.service.ImportType
+import de.fhdo.ddmm.service.ServiceModel
+import de.fhdo.ddmm.service.Operation
+import de.fhdo.ddmm.service.ReferredOperation
 
 /**
  * This class contains validation rules for the Mapping DSL.
@@ -68,6 +72,21 @@ class MappingDslValidator extends AbstractMappingDslValidator {
         val duplicate = model.imports.get(duplicateIndex)
         error("File is already being imported", duplicate,
             ServicePackage::Literals.IMPORT__IMPORT_URI)
+    }
+
+    /**
+     * Check import aliases for uniqueness
+     */
+    @Check
+    def checkImportAlias(TechnologyMapping model) {
+        val duplicateIndex = DdmmUtils.getDuplicateIndex(model.imports, [name])
+        if (duplicateIndex === -1) {
+            return
+        }
+
+        val duplicate = model.imports.get(duplicateIndex)
+        error('''Duplicate import alias «duplicate.name»''', duplicate,
+            ServicePackage::Literals.IMPORT__NAME)
     }
 
     /**
@@ -413,33 +432,205 @@ class MappingDslValidator extends AbstractMappingDslValidator {
     }
 
     /**
-     * Check that mapped microservice, interface, and operation technology-specific endpoints'
-     * addresses are unique per protocol/data format combination
+     * Check that microservice endpoints' addresses are unique per protocol/data format combination
      */
     @Check
     def checkUniqueEndpointAddresses(TechnologyMapping model) {
-        /* Check for microservices */
-        val microserviceEndpoints = model.serviceMappings.map[endpoints].flatten.toList
-        checkUniqueEndpointAddresses(microserviceEndpoints, "microservice", [
-            val importedMicroservice = microserviceMapping.microservice
-            importedMicroservice.microservice.qualifiedNameParts
-        ])
+        val allImportedServiceModels = model.imports
+            .filter[importType === ImportType.MICROSERVICES]
+            .map[
+                    val serviceModelFile = DdmmUtils.getFileForResource(eResource)
+                    val modelFileUri = DdmmUtils.convertToAbsoluteFileUri(
+                        importURI,
+                        serviceModelFile.rawLocation.makeAbsolute.toString
+                    )
+                    DdmmUtils.getImportedModelRoot(eResource, modelFileUri, ServiceModel)
+                ]
+        val allMappedMicroservices = model.serviceMappings.map[microservice.microservice].toList
+        val nonMappedMicroservices = allImportedServiceModels
+            .map[microservices]
+            .flatten
+            .filter[!allMappedMicroservices.contains(it)]
 
-        /* Check for interfaces */
-        val interfaceEndpoints = model.mappedInterfaces.map[endpoints].flatten.toList
-        checkUniqueEndpointAddresses(interfaceEndpoints, "interface",
-            [interfaceMapping.interface.qualifiedNameParts])
+        val allMappedEndpoints = model.serviceMappings.map[endpoints].flatten.toList
+        val nonMappedEndpoints = nonMappedMicroservices.map[endpoints].flatten.toList
 
-        /* Combined check for operations and referred operations */
-        val List<TechnologySpecificEndpoint> operationEndpoints = newArrayList
-        operationEndpoints.addAll(model.mappedReferredOperations.map[endpoints].flatten)
-        operationEndpoints.addAll(model.mappedOperations.map[endpoints].flatten)
-        checkUniqueEndpointAddresses(operationEndpoints, "operation", [
-            if (operationMapping !== null)
-                operationMapping.operation.qualifiedNameParts
-            else if (referredOperationMapping !== null)
-                referredOperationMapping.operation.qualifiedNameParts
-        ])
+        checkUniqueEndpointAddresses(allMappedEndpoints, nonMappedEndpoints, "microservice",
+            [
+                return if (it instanceof Endpoint)
+                    it.microservice.buildQualifiedName(".")
+                else if (it instanceof TechnologySpecificEndpoint)
+                    it.microserviceMapping.microservice.microservice.buildQualifiedName(".")
+                else
+                    null
+            ]
+        )
+    }
+
+    /**
+     * Check that interface endpoints' addresses are unique per protocol/data format combination
+     */
+    @Check
+    def checkUniqueEndpointAddresses(MicroserviceMapping serviceMapping) {
+        val mappedInterfaces = serviceMapping.interfaceMappings.map[interface]
+        val nonMappedInterfaces = serviceMapping.microservice.microservice.interfaces
+            .filter[!mappedInterfaces.contains(it)]
+
+        val allMappedEndpoints = serviceMapping.interfaceMappings.map[endpoints].flatten.toList
+        val nonMappedEndpoints = nonMappedInterfaces.map[endpoints].flatten.toList
+
+        checkUniqueEndpointAddresses(allMappedEndpoints, nonMappedEndpoints, "interface",
+            [
+                return if (it instanceof Endpoint)
+                    it.interface.buildQualifiedName(".")
+                else if (it instanceof TechnologySpecificEndpoint)
+                    it.interfaceMapping.interface.buildQualifiedName(".")
+                else
+                    null
+            ]
+        )
+    }
+
+    /**
+     * Check that operation and referred operation endpoints' addresses are unique per
+     * protocol/data format combination
+     */
+    @Check
+    def checkUniqueEndpointAddressesOfOperations(MicroserviceMapping serviceMapping) {
+        /* Collect all interfaces of mapped operations and referred operation */
+        val mappedOperationsInterfaces = serviceMapping.operationMappings
+            .map[operation.interface].toSet + serviceMapping.referredOperationMappings
+            .map[operation.interface].toSet
+
+        val mappedMicroservice = serviceMapping.microservice.microservice
+        mappedOperationsInterfaces.forEach[currentInterface |
+            /* Collect all mapped operations and referred operations of the current interface */
+            val mappedOperationsOfInterface = (
+                serviceMapping.operationMappings
+                    .filter[operation.interface == currentInterface] +
+                serviceMapping.referredOperationMappings
+                    .filter[operation.interface == currentInterface]
+            ).toList
+
+            val nonMappedOperationsOfInterface = (
+                mappedMicroservice.containedOperations
+                    .filter[
+                        interface == currentInterface &&
+                        !mappedOperationsOfInterface.contains(it)
+                    ] +
+                mappedMicroservice.containedReferredOperations
+                    .filter[
+                        interface == currentInterface &&
+                        !mappedOperationsOfInterface.contains(it)
+                    ]
+            ).toList
+
+            /* Collect all mapped and non-mapped endpoints of operations in the current interface */
+            val allMappedEndpoints = mappedOperationsOfInterface.map[
+                if (it instanceof OperationMapping)
+                    it.endpoints
+                else if (it instanceof ReferredOperationMapping)
+                    it.endpoints
+            ].flatten.toList
+
+            val nonMappedEndpoints = nonMappedOperationsOfInterface.map[
+                if (it instanceof Operation)
+                    it.endpoints
+                else if (it instanceof ReferredOperation)
+                    it.endpoints
+            ].flatten.toList
+
+            /* Perform the uniqueness check on endpoints of operations in the current interface */
+            checkUniqueEndpointAddresses(allMappedEndpoints, nonMappedEndpoints, "operation",
+                [
+                    return if (it instanceof Endpoint) {
+                        if (it.operation !== null)
+                            it.operation.buildQualifiedName(".")
+                        else if (it.referredOperation !== null)
+                            it.referredOperation.buildQualifiedName(".")
+                    } else if (it instanceof TechnologySpecificEndpoint) {
+                        if (it.operationMapping !== null)
+                            it.operationMapping.operation.buildQualifiedName(".")
+                        else if (it.referredOperationMapping !== null)
+                            it.referredOperationMapping.operation.buildQualifiedName(".")
+                    } else
+                        null
+                ]
+            )
+        ]
+    }
+
+    /**
+     * Helper to check that the addresses of mapped as well as non-mapped endpoints are unique in
+     * the context of a given container, e.g., a microservice
+     */
+    private def checkUniqueEndpointAddresses(List<TechnologySpecificEndpoint> mappedEndpoints,
+        List<Endpoint> nonMappedEndpoints, String containerTypeName,
+        Function<EObject, String> getContainerName) {
+        val mappedAddressesToEndpoints = <String, TechnologySpecificEndpoint>newHashMap
+
+        /*
+         * Check uniqueness of mapped endpoints' addresses, i.e., the addresses of endpoints
+         * specified in the mapping model
+         */
+        mappedEndpoints.forEach[endpoint |
+            for (i : 0..<endpoint.addresses.size) {
+                endpoint.technologySpecificProtocols.forEach[protocol |
+                    val address = endpoint.addresses.get(i)
+                    var protocolName = protocol.technology.name + "::" + protocol.protocol.name
+                    val dataFormat = protocol.dataFormat
+                    if (dataFormat !== null && dataFormat.formatName !== null)
+                        protocolName += "/" + dataFormat.formatName
+                    val addressPrefixedByProtocol = protocolName + address
+
+                    if (mappedAddressesToEndpoints.containsKey(addressPrefixedByProtocol)) {
+                        val containerName = getContainerName.apply(endpoint)
+                        error('''Address «address» is already specified for protocol ''' +
+                            '''«protocolName» on «containerTypeName» «containerName»''', endpoint,
+                            MappingPackage::Literals.TECHNOLOGY_SPECIFIC_ENDPOINT__ADDRESSES, i)
+                    } else
+                        mappedAddressesToEndpoints.put(addressPrefixedByProtocol, endpoint)
+                ]
+            }
+        ]
+
+        /*
+         * Check uniqueness of non-mapped endpoints' addresses, i.e., consider also the addresses of
+         * endpoints directly specified in imported service models
+         */
+        nonMappedEndpoints.forEach[nonMappedEndpoint |
+            for (i : 0..<nonMappedEndpoint.addresses.size) {
+                nonMappedEndpoint.protocols.forEach[protocol |
+                    val address = nonMappedEndpoint.addresses.get(i)
+                    var protocolName = protocol.import.name + "::" + protocol.importedProtocol.name
+                    val dataFormat = protocol.dataFormat
+                    if (dataFormat !== null && dataFormat.formatName !== null)
+                        protocolName += "/" + dataFormat.formatName
+                    val addressPrefixedByProtocol = protocolName + address
+
+                    val duplicateMappedEndpoint =
+                        mappedAddressesToEndpoints.get(addressPrefixedByProtocol)
+                    if (duplicateMappedEndpoint !== null) {
+                        val mappedAddressIndex = duplicateMappedEndpoint.addresses.indexOf(address)
+                        val mappedContainerName = getContainerName.apply(duplicateMappedEndpoint)
+                        val containerName = getContainerName.apply(nonMappedEndpoint)
+
+                        // A mapped endpoint address may overwrite the endpoint address of the
+                        // original container
+                        if (mappedContainerName != containerName) {
+                            val serviceModelUri = DdmmUtils
+                                .getFileForResource(nonMappedEndpoint.eResource)
+                                .rawLocation.makeAbsolute.toString
+                            error('''Address «address» is already specified for protocol ''' +
+                                '''«protocolName» on «containerTypeName» «containerName» in ''' +
+                                '''service model «serviceModelUri»''', duplicateMappedEndpoint,
+                                MappingPackage::Literals.TECHNOLOGY_SPECIFIC_ENDPOINT__ADDRESSES,
+                                mappedAddressIndex)
+                        }
+                    }
+                ]
+            }
+        ]
     }
 
     /**
@@ -718,66 +909,6 @@ class MappingDslValidator extends AbstractMappingDslValidator {
         val duplicate = mappingsToCheck.get(duplicateIndex)
         error(errorMessage, duplicate, mappingFeature)
         return true
-    }
-
-    /**
-     * Convenience method to check uniqueness of endpoint addresses within a list of endpoints
-     */
-    private def checkUniqueEndpointAddresses(List<TechnologySpecificEndpoint> endpoints,
-        String containerTypeName,
-        Function<TechnologySpecificEndpoint, List<String>> getEndpointContainerNameParts) {
-        /*
-         * This ensures the uniqueness check. Its key is an address prefixed by its protocol and
-         * data format if modeled. Assigned to each key is a multi-value (in the form of a map),
-         * which stores the "pure" protocol/data format name and the Endpoint instance of the
-         * address.
-         */
-        val uniqueAddressMap = <String, Map<String, Object>> newHashMap
-
-        /* Iterate over endpoints, build map and perform uniqueness checks */
-        endpoints.forEach[endpoint |
-            for (i : 0..<endpoint.addresses.size) {
-                endpoint.technologySpecificProtocols.forEach[technologySpecificProtocol |
-                    val address = endpoint.addresses.get(i)
-                    val protocol = technologySpecificProtocol.protocol
-                    var protocolName = protocol.name
-                    val dataFormat = technologySpecificProtocol.dataFormat
-                    if (dataFormat !== null && dataFormat.formatName !== null)
-                        protocolName += "/" + dataFormat.formatName
-                    val addressPrefixedByProtocol = protocolName + address
-
-                    val valueMap = <String, Object> newHashMap
-                    valueMap.put("protocol", protocolName)
-                    valueMap.put("endpoint", endpoint)
-                    val duplicate = uniqueAddressMap.putIfAbsent(addressPrefixedByProtocol, valueMap)
-                    val duplicateEndpoint = if (duplicate !== null)
-                        duplicate.get("endpoint") as TechnologySpecificEndpoint
-
-                    // If a duplicate was found we first check that it's not the same endpoint as
-                    // being currently iterated. That is, to prevent adding an additional error,
-                    // when an endpoint has a duplicate address. This check is performed separately
-                    // per endpoint.
-                    if (duplicateEndpoint !== null && duplicateEndpoint !== endpoint) {
-                        val duplicateProtocolName = duplicate.get("protocol") as String
-                        val duplicateContainerNameParts = getEndpointContainerNameParts
-                            .apply(duplicateEndpoint)
-                        val currentEndpointContainerNameParts = getEndpointContainerNameParts
-                            .apply(endpoint)
-                        val relativeDuplicateName = QualifiedName.create(
-                            DdmmUtils.calculateRelativeQualifiedNameParts(
-                                duplicateEndpoint, duplicateContainerNameParts, TechnologyMapping,
-                                endpoint, currentEndpointContainerNameParts, TechnologyMapping
-                            )
-                        ).toString
-
-                        error('''Address is already specified for protocol ''' +
-                            '''«duplicateProtocolName» on ''' +
-                            '''«containerTypeName» «relativeDuplicateName»''', endpoint,
-                            MappingPackage::Literals.TECHNOLOGY_SPECIFIC_ENDPOINT__ADDRESSES, i)
-                    }
-                ]
-            }
-        ]
     }
 
     /**
