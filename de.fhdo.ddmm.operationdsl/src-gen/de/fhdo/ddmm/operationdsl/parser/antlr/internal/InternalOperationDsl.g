@@ -1418,39 +1418,62 @@ ruleImportedOperationAspect returns [EObject current=null]
 			)
 		)
 		(
+			otherlv_3='('
+			{
+				newLeafNode(otherlv_3, grammarAccess.getImportedOperationAspectAccess().getLeftParenthesisKeyword_3_0());
+			}
 			(
-				otherlv_3='('
-				{
-					newLeafNode(otherlv_3, grammarAccess.getImportedOperationAspectAccess().getLeftParenthesisKeyword_3_0_0());
-				}
+				(
+					(
+						{
+							newCompositeNode(grammarAccess.getImportedOperationAspectAccess().getSinglePropertyValuePrimitiveValueParserRuleCall_3_1_0_0());
+						}
+						lv_singlePropertyValue_4_0=rulePrimitiveValue
+						{
+							if ($current==null) {
+								$current = createModelElementForParent(grammarAccess.getImportedOperationAspectRule());
+							}
+							set(
+								$current,
+								"singlePropertyValue",
+								lv_singlePropertyValue_4_0,
+								"de.fhdo.ddmm.data.DataDsl.PrimitiveValue");
+							afterParserOrEnumRuleCall();
+						}
+					)
+				)
+				    |
 				(
 					(
 						(
 							{
-								newCompositeNode(grammarAccess.getImportedOperationAspectAccess().getSinglePropertyValuePrimitiveValueParserRuleCall_3_0_1_0_0());
+								newCompositeNode(grammarAccess.getImportedOperationAspectAccess().getValuesPropertyValueAssignmentParserRuleCall_3_1_1_0_0());
 							}
-							lv_singlePropertyValue_4_0=rulePrimitiveValue
+							lv_values_5_0=rulePropertyValueAssignment
 							{
 								if ($current==null) {
 									$current = createModelElementForParent(grammarAccess.getImportedOperationAspectRule());
 								}
-								set(
+								add(
 									$current,
-									"singlePropertyValue",
-									lv_singlePropertyValue_4_0,
-									"de.fhdo.ddmm.data.DataDsl.PrimitiveValue");
+									"values",
+									lv_values_5_0,
+									"de.fhdo.ddmm.operationdsl.OperationDsl.PropertyValueAssignment");
 								afterParserOrEnumRuleCall();
 							}
 						)
 					)
-					    |
 					(
+						otherlv_6=','
+						{
+							newLeafNode(otherlv_6, grammarAccess.getImportedOperationAspectAccess().getCommaKeyword_3_1_1_1_0());
+						}
 						(
 							(
 								{
-									newCompositeNode(grammarAccess.getImportedOperationAspectAccess().getValuesPropertyValueAssignmentParserRuleCall_3_0_1_1_0_0());
+									newCompositeNode(grammarAccess.getImportedOperationAspectAccess().getValuesPropertyValueAssignmentParserRuleCall_3_1_1_1_1_0());
 								}
-								lv_values_5_0=rulePropertyValueAssignment
+								lv_values_7_0=rulePropertyValueAssignment
 								{
 									if ($current==null) {
 										$current = createModelElementForParent(grammarAccess.getImportedOperationAspectRule());
@@ -1458,50 +1481,24 @@ ruleImportedOperationAspect returns [EObject current=null]
 									add(
 										$current,
 										"values",
-										lv_values_5_0,
+										lv_values_7_0,
 										"de.fhdo.ddmm.operationdsl.OperationDsl.PropertyValueAssignment");
 									afterParserOrEnumRuleCall();
 								}
 							)
 						)
-						(
-							otherlv_6=','
-							{
-								newLeafNode(otherlv_6, grammarAccess.getImportedOperationAspectAccess().getCommaKeyword_3_0_1_1_1_0());
-							}
-							(
-								(
-									{
-										newCompositeNode(grammarAccess.getImportedOperationAspectAccess().getValuesPropertyValueAssignmentParserRuleCall_3_0_1_1_1_1_0());
-									}
-									lv_values_7_0=rulePropertyValueAssignment
-									{
-										if ($current==null) {
-											$current = createModelElementForParent(grammarAccess.getImportedOperationAspectRule());
-										}
-										add(
-											$current,
-											"values",
-											lv_values_7_0,
-											"de.fhdo.ddmm.operationdsl.OperationDsl.PropertyValueAssignment");
-										afterParserOrEnumRuleCall();
-									}
-								)
-							)
-						)*
-					)
+					)*
 				)
-				otherlv_8=')'
-				{
-					newLeafNode(otherlv_8, grammarAccess.getImportedOperationAspectAccess().getRightParenthesisKeyword_3_0_2());
-				}
 			)
-			    |
-			otherlv_9=';'
+			otherlv_8=')'
 			{
-				newLeafNode(otherlv_9, grammarAccess.getImportedOperationAspectAccess().getSemicolonKeyword_3_1());
+				newLeafNode(otherlv_8, grammarAccess.getImportedOperationAspectAccess().getRightParenthesisKeyword_3_2());
 			}
-		)
+		)?
+		otherlv_9=';'
+		{
+			newLeafNode(otherlv_9, grammarAccess.getImportedOperationAspectAccess().getSemicolonKeyword_4());
+		}
 	)
 ;
 

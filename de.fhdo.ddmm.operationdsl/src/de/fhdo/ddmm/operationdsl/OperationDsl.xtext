@@ -125,12 +125,13 @@ PropertyValueAssignment returns technology::TechnologySpecificPropertyValueAssig
 ImportedOperationAspect returns ImportedOperationAspect:
     technology=[service::Import] '::' aspect=[technology::OperationAspect|QualifiedName]
     (
-        ('(' (
-            singlePropertyValue=PrimitiveValue
-            |
-            (values+=PropertyValueAssignment (',' values+=PropertyValueAssignment)*)
-        ) ')')
-    |
-        ';'
-    )
+        '('
+            (
+                singlePropertyValue=PrimitiveValue
+                    |
+                (values+=PropertyValueAssignment (',' values+=PropertyValueAssignment)*)
+            )
+        ')'
+    )?
+    ';'
 ;
