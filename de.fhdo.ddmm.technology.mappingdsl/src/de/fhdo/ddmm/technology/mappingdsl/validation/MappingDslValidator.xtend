@@ -1031,7 +1031,7 @@ class MappingDslValidator extends AbstractMappingDslValidator {
     def checkMandatoryAspectProperties(TechnologySpecificImportedServiceAspect importedAspect) {
         val aspect = importedAspect.aspect
         val aspectProperties = aspect.properties
-        val mandatoryProperties = aspectProperties.filter[mandatory]
+        val mandatoryProperties = aspectProperties.filter[isMandatory]
         val mandatoryPropertiesWithoutValues = mandatoryProperties.filter[
             !importedAspect.values.map[property].contains(it)
         ]

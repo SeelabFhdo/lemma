@@ -1008,7 +1008,7 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
     final ServiceAspect aspect = importedAspect.getImportedAspect();
     final EList<TechnologySpecificProperty> aspectProperties = aspect.getProperties();
     final Function1<TechnologySpecificProperty, Boolean> _function = (TechnologySpecificProperty it) -> {
-      return Boolean.valueOf(it.isMandatory());
+      return Boolean.valueOf(it.isIsMandatory());
     };
     final Iterable<TechnologySpecificProperty> mandatoryProperties = IterableExtensions.<TechnologySpecificProperty>filter(aspectProperties, _function);
     final Function1<TechnologySpecificProperty, Boolean> _function_1 = (TechnologySpecificProperty it) -> {

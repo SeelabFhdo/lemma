@@ -5,6 +5,8 @@ package de.fhdo.ddmm.technology;
 import de.fhdo.ddmm.data.PrimitiveType;
 import de.fhdo.ddmm.data.PrimitiveValue;
 
+import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -22,11 +24,12 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  * <ul>
  *   <li>{@link de.fhdo.ddmm.technology.TechnologySpecificProperty#getName <em>Name</em>}</li>
- *   <li>{@link de.fhdo.ddmm.technology.TechnologySpecificProperty#isMandatory <em>Mandatory</em>}</li>
  *   <li>{@link de.fhdo.ddmm.technology.TechnologySpecificProperty#getType <em>Type</em>}</li>
  *   <li>{@link de.fhdo.ddmm.technology.TechnologySpecificProperty#getDefaultValue <em>Default Value</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.technology.TechnologySpecificProperty#getFeatures <em>Features</em>}</li>
  *   <li>{@link de.fhdo.ddmm.technology.TechnologySpecificProperty#getOperationTechnology <em>Operation Technology</em>}</li>
  *   <li>{@link de.fhdo.ddmm.technology.TechnologySpecificProperty#getTechnologyAspect <em>Technology Aspect</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.technology.TechnologySpecificProperty#isIsMandatory <em>Is Mandatory</em>}</li>
  * </ul>
  *
  * @see de.fhdo.ddmm.technology.TechnologyPackage#getTechnologySpecificProperty()
@@ -41,7 +44,7 @@ public interface TechnologySpecificProperty extends EObject {
      * <!-- begin-model-doc -->
      * *
      * Implicit Constraints:
-     *     (C1) A mandatory property may not have a default value.
+     *     (C1) A property with the "mandatory" feature may not have a default value.
      *          Ensured by: DSL grammar.
      *     (C2) The assigned default value must be compatible with the poperty's type.
      *          Ensured by: DSL validator.
@@ -65,33 +68,6 @@ public interface TechnologySpecificProperty extends EObject {
      * @generated
      */
     void setName(String value);
-
-    /**
-     * Returns the value of the '<em><b>Mandatory</b></em>' attribute.
-     * The default value is <code>"false"</code>.
-     * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Mandatory</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
-     * @return the value of the '<em>Mandatory</em>' attribute.
-     * @see #setMandatory(boolean)
-     * @see de.fhdo.ddmm.technology.TechnologyPackage#getTechnologySpecificProperty_Mandatory()
-     * @model default="false" unique="false"
-     * @generated
-     */
-    boolean isMandatory();
-
-    /**
-     * Sets the value of the '{@link de.fhdo.ddmm.technology.TechnologySpecificProperty#isMandatory <em>Mandatory</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Mandatory</em>' attribute.
-     * @see #isMandatory()
-     * @generated
-     */
-    void setMandatory(boolean value);
 
     /**
      * Returns the value of the '<em><b>Type</b></em>' containment reference.
@@ -144,6 +120,24 @@ public interface TechnologySpecificProperty extends EObject {
      * @generated
      */
     void setDefaultValue(PrimitiveValue value);
+
+    /**
+     * Returns the value of the '<em><b>Features</b></em>' attribute list.
+     * The list contents are of type {@link de.fhdo.ddmm.technology.PropertyFeature}.
+     * The literals are from the enumeration {@link de.fhdo.ddmm.technology.PropertyFeature}.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Features</em>' attribute list isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Features</em>' attribute list.
+     * @see de.fhdo.ddmm.technology.PropertyFeature
+     * @see de.fhdo.ddmm.technology.TechnologyPackage#getTechnologySpecificProperty_Features()
+     * @model unique="false"
+     * @generated
+     */
+    EList<PropertyFeature> getFeatures();
 
     /**
      * Returns the value of the '<em><b>Operation Technology</b></em>' container reference.
@@ -200,5 +194,20 @@ public interface TechnologySpecificProperty extends EObject {
      * @generated
      */
     void setTechnologyAspect(TechnologyAspect value);
+
+    /**
+     * Returns the value of the '<em><b>Is Mandatory</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * *
+     * Check if property exhibits the "mandatory" feature
+     * <!-- end-model-doc -->
+     * @return the value of the '<em>Is Mandatory</em>' attribute.
+     * @see de.fhdo.ddmm.technology.TechnologyPackage#getTechnologySpecificProperty_IsMandatory()
+     * @model unique="false" transient="true" changeable="false" volatile="true" derived="true"
+     * @generated
+     */
+    boolean isIsMandatory();
 
 } // TechnologySpecificProperty

@@ -2007,8 +2007,21 @@ public class ServiceDslGrammarAccess extends AbstractGrammarElementFinder {
 		return getOperationEnvironmentAccess().getRule();
 	}
 	
+	//enum PropertyFeature:
+	//	MANDATORY="mandatory" |
+	//	SINGLE_VALUED="singleval";
+	public TechnologyDslGrammarAccess.PropertyFeatureElements getPropertyFeatureAccess() {
+		return gaTechnologyDsl.getPropertyFeatureAccess();
+	}
+	
+	public EnumRule getPropertyFeatureRule() {
+		return getPropertyFeatureAccess().getRule();
+	}
+	
 	//TechnologySpecificProperty:
-	//	type=PrimitiveType name=ID ('=' defaultValue=PrimitiveValue | mandatory?='mandatory')?
+	//	type=PrimitiveType name=ID ('=' defaultValue=PrimitiveValue)? ('{'
+	//	features+=PropertyFeature (',' features+=PropertyFeature)*
+	//	'}')?
 	//	';';
 	public TechnologyDslGrammarAccess.TechnologySpecificPropertyElements getTechnologySpecificPropertyAccess() {
 		return gaTechnologyDsl.getTechnologySpecificPropertyAccess();

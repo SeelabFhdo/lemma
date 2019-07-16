@@ -97,6 +97,8 @@ public class TechnologyFactoryImpl extends EFactoryImpl implements TechnologyFac
                 return createCommunicationTypeFromString(eDataType, initialValue);
             case TechnologyPackage.COMPATIBILITY_DIRECTION:
                 return createCompatibilityDirectionFromString(eDataType, initialValue);
+            case TechnologyPackage.PROPERTY_FEATURE:
+                return createPropertyFeatureFromString(eDataType, initialValue);
             case TechnologyPackage.JOIN_POINT_TYPE:
                 return createJoinPointTypeFromString(eDataType, initialValue);
             case TechnologyPackage.POINTCUT_TYPE:
@@ -122,6 +124,8 @@ public class TechnologyFactoryImpl extends EFactoryImpl implements TechnologyFac
                 return convertCommunicationTypeToString(eDataType, instanceValue);
             case TechnologyPackage.COMPATIBILITY_DIRECTION:
                 return convertCompatibilityDirectionToString(eDataType, instanceValue);
+            case TechnologyPackage.PROPERTY_FEATURE:
+                return convertPropertyFeatureToString(eDataType, instanceValue);
             case TechnologyPackage.JOIN_POINT_TYPE:
                 return convertJoinPointTypeToString(eDataType, instanceValue);
             case TechnologyPackage.POINTCUT_TYPE:
@@ -388,6 +392,26 @@ public class TechnologyFactoryImpl extends EFactoryImpl implements TechnologyFac
      * @generated
      */
     public String convertCompatibilityDirectionToString(EDataType eDataType, Object instanceValue) {
+        return instanceValue == null ? null : instanceValue.toString();
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public PropertyFeature createPropertyFeatureFromString(EDataType eDataType, String initialValue) {
+        PropertyFeature result = PropertyFeature.get(initialValue);
+        if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+        return result;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public String convertPropertyFeatureToString(EDataType eDataType, Object instanceValue) {
         return instanceValue == null ? null : instanceValue.toString();
     }
 

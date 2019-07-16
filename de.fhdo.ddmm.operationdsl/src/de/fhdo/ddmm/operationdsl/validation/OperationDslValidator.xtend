@@ -22,6 +22,7 @@ import de.fhdo.ddmm.operation.ImportedOperationAspect
 import org.eclipse.xtext.EcoreUtil2
 import de.fhdo.ddmm.service.Import
 import java.util.Map
+import de.fhdo.ddmm.technology.PropertyFeature
 
 /**
  * This class contains validation rules for the Operation DSL.
@@ -117,34 +118,39 @@ class OperationDslValidator extends AbstractOperationDslValidator {
     }
 
     /**
-     * Check uniqueness of service property values on containers
+     * Check multiplicities of service property values on containers
      */
     @Check
-    def checkServicePropertiesUniqueNames(Container container) {
-        checkServicePropertiesUniqueNames(container.defaultServicePropertyValues)
+    def checkServicePropertyMultiplicities(Container container) {
+        checkMultiplicities(container.defaultServicePropertyValues)
     }
 
     /**
-     * Check uniqueness of service property values on service deployment specifications
+     * Check multiplicities of service property values on service deployment specifications
      */
     @Check
-    def checkServicePropertiesUniqueNames(ServiceDeploymentSpecification deploymentSpecification) {
-        checkServicePropertiesUniqueNames(deploymentSpecification.servicePropertyValues)
+    def checkServicePropertyMultiplicities(ServiceDeploymentSpecification deploymentSpecification) {
+        checkMultiplicities(deploymentSpecification.servicePropertyValues)
     }
 
     /**
-     * Convenience method to check uniqueness of service property values in a list of service
-     * property values
+     * Convenience method to multiplicities of property values
      */
-    private def checkServicePropertiesUniqueNames(
-        List<TechnologySpecificPropertyValueAssignment> propertyValues) {
-        val duplicateIndex = DdmmUtils.getDuplicateIndex(propertyValues, [property.name])
-        if (duplicateIndex > -1) {
-            val duplicatePropertyValue = propertyValues.get(duplicateIndex)
-            val duplicateProperty = duplicatePropertyValue.property
-            error('''Duplicate value assignment to service property «duplicateProperty.name»''',
-                duplicatePropertyValue,
+    private def checkMultiplicities(List<TechnologySpecificPropertyValueAssignment> values) {
+        val valuesOfSingleValuedProperties = values.filter[
+            property.features.contains(PropertyFeature.SINGLE_VALUED)
+        ].toList()
+
+        for (i : 0..<valuesOfSingleValuedProperties.size) {
+            val remainingList = valuesOfSingleValuedProperties
+                .subList(i, valuesOfSingleValuedProperties.size)
+            val duplicateIndex = DdmmUtils.getDuplicateIndex(remainingList, [property.name])
+            if (duplicateIndex > -1) {
+                val duplicate = remainingList.get(duplicateIndex)
+                error("Duplicate value assignment to single-value service property " +
+                    duplicate.property.name, duplicate,
                 TechnologyPackage::Literals.TECHNOLOGY_SPECIFIC_PROPERTY_VALUE_ASSIGNMENT__PROPERTY)
+            }
         }
     }
 
@@ -333,7 +339,7 @@ class OperationDslValidator extends AbstractOperationDslValidator {
         // service-specific within service deployment specifications
         val mandatoryNonDefaultProperties = operationTechnology.serviceProperties
             .filter[technologyProperty |
-                technologyProperty.mandatory && !operationNode.defaultServicePropertyValues
+                technologyProperty.isMandatory && !operationNode.defaultServicePropertyValues
                     .exists[defaultProperty |
                         defaultProperty.property.name == technologyProperty.name
                     ]
@@ -636,7 +642,7 @@ class OperationDslValidator extends AbstractOperationDslValidator {
     @Check
     def checkMandatoryAspectProperties(ImportedOperationAspect importedAspect) {
         val aspectProperties = importedAspect.aspect.properties
-        val mandatoryProperties = aspectProperties.filter[mandatory]
+        val mandatoryProperties = aspectProperties.filter[isMandatory]
         val mandatoryPropertiesWithoutValues = mandatoryProperties.filter[
             !importedAspect.values.map[property].contains(it)
         ]

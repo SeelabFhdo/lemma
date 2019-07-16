@@ -115,7 +115,7 @@ Model Root
         `\"file\"` URI pointing to the source Data Model file from which this
         model was derived.
 
-    .. py:attribute:: IntermediateImport [*] imports
+    .. py:attribute:: IntermediateImport[*] imports
 
         References to Intermediate Data Model instances that were 
         imported into the source Domain Data Model 
@@ -788,12 +788,26 @@ and other modeling concepts such as :java:type:`microservices
         :ref:`type <link__IntermediateAspectProperty_type>` of the property by
         the Technology Modeling Language validator.
 
-    .. py:attribute:: boolean mandatory
+    .. py:attribute:: String[*] featureNames
 
-        Flag to indicate if the property needs to receive a value. It is 
-        guaranteed by the Service Modeling Language that all mandatory values of
-        a property receive a value when the respective 
-        :java:type:`IntermediateImportedAspect` is used.
+        This attribute contains the names of all features specified for the
+        property. The following values are possible:
+
+        =================   ====================================================
+        **Feature Name**      **Description**
+        -----------------   ----------------------------------------------------
+            MANDATORY       Flag to indicate if the property needs to receive a 
+                            value. It is guaranteed by the languages' validators
+                            that all mandatory values of a property receive a 
+                            value when the respective 
+                            :java:type:`IntermediateImportedAspect` is used.
+          SINGE_VALUED      Flag to indicate that a property may only receive a
+                            value once. Note that for :java:type:`aspects
+                            <IntermediateImportedAspect>` the languages' 
+                            validators guarantee that properties receive values
+                            only once. However, it is not guaranteed that aspect
+                            properties exhibits this feature.
+        =================   ====================================================
 
     .. py:attribute:: IntermediateImportedAspect aspect
 

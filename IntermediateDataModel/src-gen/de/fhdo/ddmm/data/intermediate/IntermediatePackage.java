@@ -1488,13 +1488,13 @@ public interface IntermediatePackage extends EPackage {
     int INTERMEDIATE_ASPECT_PROPERTY__DEFAULT_VALUE = 2;
 
     /**
-     * The feature id for the '<em><b>Mandatory</b></em>' attribute.
+     * The feature id for the '<em><b>Feature Names</b></em>' attribute list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_ASPECT_PROPERTY__MANDATORY = 3;
+    int INTERMEDIATE_ASPECT_PROPERTY__FEATURE_NAMES = 3;
 
     /**
      * The feature id for the '<em><b>Aspect</b></em>' container reference.
@@ -2453,15 +2453,15 @@ public interface IntermediatePackage extends EPackage {
     EAttribute getIntermediateAspectProperty_DefaultValue();
 
     /**
-     * Returns the meta object for the attribute '{@link de.fhdo.ddmm.data.intermediate.IntermediateAspectProperty#isMandatory <em>Mandatory</em>}'.
+     * Returns the meta object for the attribute list '{@link de.fhdo.ddmm.data.intermediate.IntermediateAspectProperty#getFeatureNames <em>Feature Names</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Mandatory</em>'.
-     * @see de.fhdo.ddmm.data.intermediate.IntermediateAspectProperty#isMandatory()
+     * @return the meta object for the attribute list '<em>Feature Names</em>'.
+     * @see de.fhdo.ddmm.data.intermediate.IntermediateAspectProperty#getFeatureNames()
      * @see #getIntermediateAspectProperty()
      * @generated
      */
-    EAttribute getIntermediateAspectProperty_Mandatory();
+    EAttribute getIntermediateAspectProperty_FeatureNames();
 
     /**
      * Returns the meta object for the container reference '{@link de.fhdo.ddmm.data.intermediate.IntermediateAspectProperty#getAspect <em>Aspect</em>}'.
@@ -3225,12 +3225,12 @@ public interface IntermediatePackage extends EPackage {
         EAttribute INTERMEDIATE_ASPECT_PROPERTY__DEFAULT_VALUE = eINSTANCE.getIntermediateAspectProperty_DefaultValue();
 
         /**
-         * The meta object literal for the '<em><b>Mandatory</b></em>' attribute feature.
+         * The meta object literal for the '<em><b>Feature Names</b></em>' attribute list feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EAttribute INTERMEDIATE_ASPECT_PROPERTY__MANDATORY = eINSTANCE.getIntermediateAspectProperty_Mandatory();
+        EAttribute INTERMEDIATE_ASPECT_PROPERTY__FEATURE_NAMES = eINSTANCE.getIntermediateAspectProperty_FeatureNames();
 
         /**
          * The meta object literal for the '<em><b>Aspect</b></em>' container reference feature.

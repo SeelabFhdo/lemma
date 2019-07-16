@@ -32,7 +32,6 @@ public class TechnologyDslParser extends AbstractContentAssistParser {
 		
 		private static void init(ImmutableMap.Builder<AbstractElement, String> builder, TechnologyDslGrammarAccess grammarAccess) {
 			builder.put(grammarAccess.getTechnologyAccess().getAlternatives_4_2(), "rule__Technology__Alternatives_4_2");
-			builder.put(grammarAccess.getTechnologySpecificPropertyAccess().getAlternatives_2(), "rule__TechnologySpecificProperty__Alternatives_2");
 			builder.put(grammarAccess.getServiceAspectPointcutAccess().getAlternatives(), "rule__ServiceAspectPointcut__Alternatives");
 			builder.put(grammarAccess.getServiceAspectAccess().getAlternatives_5(), "rule__ServiceAspect__Alternatives_5");
 			builder.put(grammarAccess.getOperationAspectAccess().getAlternatives_5(), "rule__OperationAspect__Alternatives_5");
@@ -46,6 +45,7 @@ public class TechnologyDslParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getExchangePatternAccess().getAlternatives(), "rule__ExchangePattern__Alternatives");
 			builder.put(grammarAccess.getCommunicationTypeAccess().getAlternatives(), "rule__CommunicationType__Alternatives");
 			builder.put(grammarAccess.getCompatibilityDirectionAccess().getAlternatives(), "rule__CompatibilityDirection__Alternatives");
+			builder.put(grammarAccess.getPropertyFeatureAccess().getAlternatives(), "rule__PropertyFeature__Alternatives");
 			builder.put(grammarAccess.getServiceJoinPointTypeAccess().getAlternatives(), "rule__ServiceJoinPointType__Alternatives");
 			builder.put(grammarAccess.getOperationJoinPointTypeAccess().getAlternatives(), "rule__OperationJoinPointType__Alternatives");
 			builder.put(grammarAccess.getTechnologyAccess().getGroup(), "rule__Technology__Group__0");
@@ -77,7 +77,9 @@ public class TechnologyDslParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getInfrastructureTechnologyAccess().getGroup_8(), "rule__InfrastructureTechnology__Group_8__0");
 			builder.put(grammarAccess.getOperationEnvironmentAccess().getGroup(), "rule__OperationEnvironment__Group__0");
 			builder.put(grammarAccess.getTechnologySpecificPropertyAccess().getGroup(), "rule__TechnologySpecificProperty__Group__0");
-			builder.put(grammarAccess.getTechnologySpecificPropertyAccess().getGroup_2_0(), "rule__TechnologySpecificProperty__Group_2_0__0");
+			builder.put(grammarAccess.getTechnologySpecificPropertyAccess().getGroup_2(), "rule__TechnologySpecificProperty__Group_2__0");
+			builder.put(grammarAccess.getTechnologySpecificPropertyAccess().getGroup_3(), "rule__TechnologySpecificProperty__Group_3__0");
+			builder.put(grammarAccess.getTechnologySpecificPropertyAccess().getGroup_3_2(), "rule__TechnologySpecificProperty__Group_3_2__0");
 			builder.put(grammarAccess.getServiceAspectPointcutAccess().getGroup_0(), "rule__ServiceAspectPointcut__Group_0__0");
 			builder.put(grammarAccess.getServiceAspectPointcutAccess().getGroup_1(), "rule__ServiceAspectPointcut__Group_1__0");
 			builder.put(grammarAccess.getServiceAspectPointcutAccess().getGroup_2(), "rule__ServiceAspectPointcut__Group_2__0");
@@ -164,8 +166,9 @@ public class TechnologyDslParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getOperationEnvironmentAccess().getDefaultAssignment_1(), "rule__OperationEnvironment__DefaultAssignment_1");
 			builder.put(grammarAccess.getTechnologySpecificPropertyAccess().getTypeAssignment_0(), "rule__TechnologySpecificProperty__TypeAssignment_0");
 			builder.put(grammarAccess.getTechnologySpecificPropertyAccess().getNameAssignment_1(), "rule__TechnologySpecificProperty__NameAssignment_1");
-			builder.put(grammarAccess.getTechnologySpecificPropertyAccess().getDefaultValueAssignment_2_0_1(), "rule__TechnologySpecificProperty__DefaultValueAssignment_2_0_1");
-			builder.put(grammarAccess.getTechnologySpecificPropertyAccess().getMandatoryAssignment_2_1(), "rule__TechnologySpecificProperty__MandatoryAssignment_2_1");
+			builder.put(grammarAccess.getTechnologySpecificPropertyAccess().getDefaultValueAssignment_2_1(), "rule__TechnologySpecificProperty__DefaultValueAssignment_2_1");
+			builder.put(grammarAccess.getTechnologySpecificPropertyAccess().getFeaturesAssignment_3_1(), "rule__TechnologySpecificProperty__FeaturesAssignment_3_1");
+			builder.put(grammarAccess.getTechnologySpecificPropertyAccess().getFeaturesAssignment_3_2_1(), "rule__TechnologySpecificProperty__FeaturesAssignment_3_2_1");
 			builder.put(grammarAccess.getServiceAspectPointcutAccess().getForExchangePatternAssignment_0_0(), "rule__ServiceAspectPointcut__ForExchangePatternAssignment_0_0");
 			builder.put(grammarAccess.getServiceAspectPointcutAccess().getExchangePatternAssignment_0_2(), "rule__ServiceAspectPointcut__ExchangePatternAssignment_0_2");
 			builder.put(grammarAccess.getServiceAspectPointcutAccess().getForCommunicationTypeAssignment_1_0(), "rule__ServiceAspectPointcut__ForCommunicationTypeAssignment_1_0");

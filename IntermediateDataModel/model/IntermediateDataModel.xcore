@@ -222,7 +222,7 @@ class IntermediateAspectProperty {
     // The default value is encoded in a single String. However, the validators of the languages
     // ensure that the default value corresponds to the type of the property.
     String defaultValue
-    boolean mandatory = "false"
+    String[] featureNames
 
     container IntermediateImportedAspect aspect opposite properties
 }

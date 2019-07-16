@@ -969,11 +969,14 @@ rule IntermediateAspectProperty(sourceProperty : Service!TechnologySpecificPrope
 	to
 		i : Intermediate!IntermediateAspectProperty(
 			name <- sourceProperty.name,
-			type <- sourceProperty.type.typeName,		
-			mandatory <- sourceProperty.mandatory,
+			type <- sourceProperty.type.typeName,
 			aspect <- aspect
 		)
 	do {
+		for (feature in sourceProperty.features) {
+			i.featureNames <- i.featureNames.append(feature.toString());
+		}
+
 		if (not sourceProperty.defaultValue.oclIsUndefined())
 			i.defaultValue <- sourceProperty.defaultValue.valueAsString();
 		

@@ -27,6 +27,7 @@ import de.fhdo.ddmm.technology.ServiceAspectPointcut
 import de.fhdo.ddmm.technology.PointcutType
 import de.fhdo.ddmm.technology.JoinPointType
 import de.fhdo.ddmm.technology.TechnologyAspect
+import de.fhdo.ddmm.technology.PropertyFeature
 
 /**
  * This class contains custom validation rules.
@@ -46,7 +47,7 @@ class TechnologyDslValidator extends AbstractTechnologyDslValidator {
             technology.serviceAspects.empty &&
             technology.deploymentTechnologies.empty &&
             technology.infrastructureTechnologies.empty &&
-            technology.operationAspects.empty            
+            technology.operationAspects.empty
 
         if (modelEmpty)
             error("Model must not be empty", technology,
@@ -568,6 +569,43 @@ class TechnologyDslValidator extends AbstractTechnologyDslValidator {
         if (property !== null && !defaultValue.isOfType(property.type))
             error('''Value is not of type «property.type.typeName» ''', property,
                 TechnologyPackage::Literals.TECHNOLOGY_SPECIFIC_PROPERTY__DEFAULT_VALUE)
+    }
+
+    /**
+     * Check that mandatory technology-specific properties do not specify a default value
+     */
+    @Check
+    def checkMandatoryPropertyNoDefaultValue(TechnologySpecificProperty property) {
+        if (property.isMandatory && property.defaultValue !== null)
+            error("Mandatory property must not exhibit default value", property,
+                TechnologyPackage::Literals.TECHNOLOGY_SPECIFIC_PROPERTY__DEFAULT_VALUE)
+    }
+
+    /**
+     * Check that features on technology-specific properties are unique
+     */
+    @Check
+    def checkFeatureUniqueness(TechnologySpecificProperty property) {
+        val duplicateIndex = DdmmUtils.getDuplicateIndex(property.features, [it])
+        if (duplicateIndex > -1)
+            error("Duplicate feature", property,
+                TechnologyPackage::Literals.TECHNOLOGY_SPECIFIC_PROPERTY__FEATURES, duplicateIndex)
+    }
+
+    /**
+     * Warn if aspect property exhibits single-valued feature
+     */
+    @Check
+    def warnSingleValuedPropertyOnAspect(TechnologySpecificProperty property) {
+        if (property.technologyAspect === null) {
+            return
+        }
+
+        val singleValuedFeatureIndex = property.features.indexOf(PropertyFeature.SINGLE_VALUED)
+        if (singleValuedFeatureIndex > -1)
+            warning("Aspect properties are inherently single-valued", property,
+                TechnologyPackage::Literals.TECHNOLOGY_SPECIFIC_PROPERTY__FEATURES,
+                singleValuedFeatureIndex)
     }
 
     /**

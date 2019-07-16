@@ -18,6 +18,7 @@ import de.fhdo.ddmm.technology.OperationEnvironment;
 import de.fhdo.ddmm.technology.OperationTechnology;
 import de.fhdo.ddmm.technology.PointcutType;
 import de.fhdo.ddmm.technology.PossiblyImportedTechnologySpecificType;
+import de.fhdo.ddmm.technology.PropertyFeature;
 import de.fhdo.ddmm.technology.Protocol;
 import de.fhdo.ddmm.technology.ServiceAspect;
 import de.fhdo.ddmm.technology.ServiceAspectPointcut;
@@ -590,6 +591,49 @@ public class TechnologyDslValidator extends AbstractTechnologyDslValidator {
       _builder.append(" ");
       this.error(_builder.toString(), property, 
         TechnologyPackage.Literals.TECHNOLOGY_SPECIFIC_PROPERTY__DEFAULT_VALUE);
+    }
+  }
+  
+  /**
+   * Check that mandatory technology-specific properties do not specify a default value
+   */
+  @Check
+  public void checkMandatoryPropertyNoDefaultValue(final TechnologySpecificProperty property) {
+    if ((property.isIsMandatory() && (property.getDefaultValue() != null))) {
+      this.error("Mandatory property must not exhibit default value", property, 
+        TechnologyPackage.Literals.TECHNOLOGY_SPECIFIC_PROPERTY__DEFAULT_VALUE);
+    }
+  }
+  
+  /**
+   * Check that features on technology-specific properties are unique
+   */
+  @Check
+  public void checkFeatureUniqueness(final TechnologySpecificProperty property) {
+    final Function<PropertyFeature, PropertyFeature> _function = (PropertyFeature it) -> {
+      return it;
+    };
+    final Integer duplicateIndex = DdmmUtils.<PropertyFeature, PropertyFeature>getDuplicateIndex(property.getFeatures(), _function);
+    if (((duplicateIndex).intValue() > (-1))) {
+      this.error("Duplicate feature", property, 
+        TechnologyPackage.Literals.TECHNOLOGY_SPECIFIC_PROPERTY__FEATURES, (duplicateIndex).intValue());
+    }
+  }
+  
+  /**
+   * Warn if aspect property exhibits single-valued feature
+   */
+  @Check
+  public void warnSingleValuedPropertyOnAspect(final TechnologySpecificProperty property) {
+    TechnologyAspect _technologyAspect = property.getTechnologyAspect();
+    boolean _tripleEquals = (_technologyAspect == null);
+    if (_tripleEquals) {
+      return;
+    }
+    final int singleValuedFeatureIndex = property.getFeatures().indexOf(PropertyFeature.SINGLE_VALUED);
+    if ((singleValuedFeatureIndex > (-1))) {
+      this.warning("Aspect properties are inherently single-valued", property, 
+        TechnologyPackage.Literals.TECHNOLOGY_SPECIFIC_PROPERTY__FEATURES, singleValuedFeatureIndex);
     }
   }
   

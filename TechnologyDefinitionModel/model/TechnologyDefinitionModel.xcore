@@ -367,12 +367,20 @@ class OperationEnvironment {
 }
 
 /**
+ * Possible features for a technology-specific property
+ */
+enum PropertyFeature {
+    MANDATORY,
+    SINGLE_VALUED
+}
+
+/**
  * A property, e.g., of an operation technology that may be set per associated service or an aspect
  */
 class TechnologySpecificProperty {
     /**
      * Implicit Constraints:
-     *     (C1) A mandatory property may not have a default value.
+     *     (C1) A property with the "mandatory" feature may not have a default value.
      *          Ensured by: DSL grammar.
      *     (C2) The assigned default value must be compatible with the poperty's type.
      *          Ensured by: DSL validator.
@@ -381,13 +389,20 @@ class TechnologySpecificProperty {
      */
 
     String name
-    boolean mandatory = "false"
 
     contains PrimitiveType ^type
     contains PrimitiveValue[0..1] defaultValue
+    PropertyFeature[*] features
 
     container OperationTechnology operationTechnology opposite serviceProperties
     container TechnologyAspect technologyAspect opposite properties
+
+    /**
+     * Check if property exhibits the "mandatory" feature
+     */
+    derived boolean isMandatory get {
+        features.contains(PropertyFeature.MANDATORY)
+    }
 }
 
 /**

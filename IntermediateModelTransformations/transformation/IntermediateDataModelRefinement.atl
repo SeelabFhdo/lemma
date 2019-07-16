@@ -31,6 +31,33 @@ helper def : getCreatedImport(sourceImport : Service!Import)
 ;
 ----------------------------------------------------------------------------------------------------
 
+-- Helpers for managing created aspect property instances ------------------------------------------
+--- Helper to store created IntermediateAspectProperty instances. It maps the source 
+--- TechnologySpecificProperty instance to the created instances and hence enables, e.g., to 
+--- identify a target IntermediateAspectProperty instance from the source TechnologySpecificProperty
+--- instance.
+helper def : createdAspectProperties 
+	: Map(Service!TechnologySpecificProperty, Intermediate!IntermediateAspectProperty) = Map{};
+
+--- Called helper rule to add a created IntermediateAspectProperty instance to the helper map of 
+--- IntermediateAspectProperty instances. Note that we cannot use a "normal" helper here, because we
+--- need to assign the helper map to itself to populate it.
+rule CreatedAspectProperty(sourceProperty : Service!TechnologySpecificProperty, 
+	createdProperty : Intermediate!IntermediateAspectProperty) {
+	do {
+		thisModule.createdAspectProperties <- thisModule.createdAspectProperties
+			->including(sourceProperty, createdProperty);
+	}
+}
+
+--- Convenience helper to get a created IntermediateAspectProperty instance from a given source  
+--- TechnologySpecificProperty instance
+helper def : getCreatedAspectProperty(sourceProperty : Service!TechnologySpecificProperty)
+	: Intermediate!IntermediateAspectProperty 
+	= thisModule.createdAspectProperties->get(sourceProperty)
+;
+----------------------------------------------------------------------------------------------------
+
 --- Retrieve the root of the intermediate data model
 helper def : intermediateDataModel() : Intermediate!IntermediateDataModel =
 	Intermediate!IntermediateDataModel.allInstancesFrom('IN')->first()
@@ -119,7 +146,7 @@ rule RefineIntermediateDataField {
 		t : Intermediate!IntermediateDataField (
 			originalType <- s.type
 		)
-	do {		
+	do {
 		if (mappedField.mappedType.oclIsUndefined())
 			t.type <- s.type;
 		else
@@ -148,7 +175,6 @@ rule IntermediateImportedTechnologySpecificType(targetField : Intermediate!Inter
 	do {
 		if (thisModule.getCreatedImport(mappedType.import).oclIsUndefined())
 			thisModule.IntermediateImport(mappedType.import);
-		
 		i.import <- thisModule.getCreatedImport(mappedType.import);
 
 		i;
@@ -232,11 +258,11 @@ rule IntermediateImportedAspect {
 		-- specified, we map an aspect value to a an IntermediateAspectPropertyValue instance.
 		if (not a.singlePropertyValue.oclIsUndefined())
 			thisModule.IntermediateAspectPropertyValue(a.singlePropertyValue, i, 
-				i.properties->first());
+				thisModule.getCreatedAspectProperty(a.importedAspect.properties->first()));
 		else 
 			for (value in a.values) {
-				thisModule.IntermediateAspectPropertyValue(value.value, i, 
-					i.properties->any(p | p.name = value.property.name));
+				thisModule.IntermediateAspectPropertyValue(value.value, i,
+					thisModule.getCreatedAspectProperty(value.property));
 			}
 
 		-- Link created aspect to the corresponding target element
@@ -257,15 +283,19 @@ rule IntermediateAspectProperty(sourceProperty : Service!TechnologySpecificPrope
 	to
 		i : Intermediate!IntermediateAspectProperty(
 			name <- sourceProperty.name,
-			type <- sourceProperty.type.typeName,		
-			mandatory <- sourceProperty.mandatory,
+			type <- sourceProperty.type.typeName,
 			aspect <- aspect
 		)
 	do {
+		for (feature in sourceProperty.features) {
+			i.featureNames <- i.featureNames.append(feature.toString());
+		}
+
 		if (not sourceProperty.defaultValue.oclIsUndefined())
 			i.defaultValue <- sourceProperty.defaultValue.valueAsString();
 		
 		aspect.properties <- aspect.properties->append(i);
+		thisModule.CreatedAspectProperty(sourceProperty, i);
 		i;
 	}
 }
@@ -281,7 +311,7 @@ rule IntermediateAspectPropertyValue(sourceValue : Service!PrimitiveValue,
 			property <- property
 		)
 	do {
-		aspect.propertyValues->append(i);
+		aspect.propertyValues <- aspect.propertyValues->append(i);
 		i;
 	}
 }

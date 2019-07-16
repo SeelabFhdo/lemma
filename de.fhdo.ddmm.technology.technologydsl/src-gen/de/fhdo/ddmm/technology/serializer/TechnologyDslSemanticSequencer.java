@@ -420,7 +420,7 @@ public class TechnologyDslSemanticSequencer extends DataDslSemanticSequencer {
 	 *     TechnologySpecificProperty returns TechnologySpecificProperty
 	 *
 	 * Constraint:
-	 *     (type=PrimitiveType name=ID (defaultValue=PrimitiveValue | mandatory?='mandatory')?)
+	 *     (type=PrimitiveType name=ID defaultValue=PrimitiveValue? (features+=PropertyFeature features+=PropertyFeature*)?)
 	 */
 	protected void sequence_TechnologySpecificProperty(ISerializationContext context, TechnologySpecificProperty semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

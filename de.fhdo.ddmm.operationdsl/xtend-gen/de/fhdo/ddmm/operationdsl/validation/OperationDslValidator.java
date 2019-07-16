@@ -22,6 +22,7 @@ import de.fhdo.ddmm.service.ServicePackage;
 import de.fhdo.ddmm.technology.DataFormat;
 import de.fhdo.ddmm.technology.InfrastructureTechnology;
 import de.fhdo.ddmm.technology.OperationTechnology;
+import de.fhdo.ddmm.technology.PropertyFeature;
 import de.fhdo.ddmm.technology.Protocol;
 import de.fhdo.ddmm.technology.Technology;
 import de.fhdo.ddmm.technology.TechnologyPackage;
@@ -169,39 +170,46 @@ public class OperationDslValidator extends AbstractOperationDslValidator {
   }
   
   /**
-   * Check uniqueness of service property values on containers
+   * Check multiplicities of service property values on containers
    */
   @Check
-  public void checkServicePropertiesUniqueNames(final Container container) {
-    this.checkServicePropertiesUniqueNames(container.getDefaultServicePropertyValues());
+  public void checkServicePropertyMultiplicities(final Container container) {
+    this.checkMultiplicities(container.getDefaultServicePropertyValues());
   }
   
   /**
-   * Check uniqueness of service property values on service deployment specifications
+   * Check multiplicities of service property values on service deployment specifications
    */
   @Check
-  public void checkServicePropertiesUniqueNames(final ServiceDeploymentSpecification deploymentSpecification) {
-    this.checkServicePropertiesUniqueNames(deploymentSpecification.getServicePropertyValues());
+  public void checkServicePropertyMultiplicities(final ServiceDeploymentSpecification deploymentSpecification) {
+    this.checkMultiplicities(deploymentSpecification.getServicePropertyValues());
   }
   
   /**
-   * Convenience method to check uniqueness of service property values in a list of service
-   * property values
+   * Convenience method to multiplicities of property values
    */
-  private void checkServicePropertiesUniqueNames(final List<TechnologySpecificPropertyValueAssignment> propertyValues) {
-    final Function<TechnologySpecificPropertyValueAssignment, String> _function = (TechnologySpecificPropertyValueAssignment it) -> {
-      return it.getProperty().getName();
+  private void checkMultiplicities(final List<TechnologySpecificPropertyValueAssignment> values) {
+    final Function1<TechnologySpecificPropertyValueAssignment, Boolean> _function = (TechnologySpecificPropertyValueAssignment it) -> {
+      return Boolean.valueOf(it.getProperty().getFeatures().contains(PropertyFeature.SINGLE_VALUED));
     };
-    final Integer duplicateIndex = DdmmUtils.<TechnologySpecificPropertyValueAssignment, String>getDuplicateIndex(propertyValues, _function);
-    if (((duplicateIndex).intValue() > (-1))) {
-      final TechnologySpecificPropertyValueAssignment duplicatePropertyValue = propertyValues.get((duplicateIndex).intValue());
-      final TechnologySpecificProperty duplicateProperty = duplicatePropertyValue.getProperty();
-      StringConcatenation _builder = new StringConcatenation();
-      _builder.append("Duplicate value assignment to service property ");
-      String _name = duplicateProperty.getName();
-      _builder.append(_name);
-      this.error(_builder.toString(), duplicatePropertyValue, 
-        TechnologyPackage.Literals.TECHNOLOGY_SPECIFIC_PROPERTY_VALUE_ASSIGNMENT__PROPERTY);
+    final List<TechnologySpecificPropertyValueAssignment> valuesOfSingleValuedProperties = IterableExtensions.<TechnologySpecificPropertyValueAssignment>toList(IterableExtensions.<TechnologySpecificPropertyValueAssignment>filter(values, _function));
+    int _size = valuesOfSingleValuedProperties.size();
+    ExclusiveRange _doubleDotLessThan = new ExclusiveRange(0, _size, true);
+    for (final Integer i : _doubleDotLessThan) {
+      {
+        final List<TechnologySpecificPropertyValueAssignment> remainingList = valuesOfSingleValuedProperties.subList((i).intValue(), valuesOfSingleValuedProperties.size());
+        final Function<TechnologySpecificPropertyValueAssignment, String> _function_1 = (TechnologySpecificPropertyValueAssignment it) -> {
+          return it.getProperty().getName();
+        };
+        final Integer duplicateIndex = DdmmUtils.<TechnologySpecificPropertyValueAssignment, String>getDuplicateIndex(remainingList, _function_1);
+        if (((duplicateIndex).intValue() > (-1))) {
+          final TechnologySpecificPropertyValueAssignment duplicate = remainingList.get((duplicateIndex).intValue());
+          String _name = duplicate.getProperty().getName();
+          String _plus = ("Duplicate value assignment to single-value service property " + _name);
+          this.error(_plus, duplicate, 
+            TechnologyPackage.Literals.TECHNOLOGY_SPECIFIC_PROPERTY_VALUE_ASSIGNMENT__PROPERTY);
+        }
+      }
     }
   }
   
@@ -469,7 +477,7 @@ public class OperationDslValidator extends AbstractOperationDslValidator {
       return;
     }
     final Function1<TechnologySpecificProperty, Boolean> _function = (TechnologySpecificProperty technologyProperty) -> {
-      return Boolean.valueOf((technologyProperty.isMandatory() && (!IterableExtensions.<TechnologySpecificPropertyValueAssignment>exists(operationNode.getDefaultServicePropertyValues(), ((Function1<TechnologySpecificPropertyValueAssignment, Boolean>) (TechnologySpecificPropertyValueAssignment defaultProperty) -> {
+      return Boolean.valueOf((technologyProperty.isIsMandatory() && (!IterableExtensions.<TechnologySpecificPropertyValueAssignment>exists(operationNode.getDefaultServicePropertyValues(), ((Function1<TechnologySpecificPropertyValueAssignment, Boolean>) (TechnologySpecificPropertyValueAssignment defaultProperty) -> {
         String _name = defaultProperty.getProperty().getName();
         String _name_1 = technologyProperty.getName();
         return Boolean.valueOf(Objects.equal(_name, _name_1));
@@ -873,7 +881,7 @@ public class OperationDslValidator extends AbstractOperationDslValidator {
   public void checkMandatoryAspectProperties(final ImportedOperationAspect importedAspect) {
     final EList<TechnologySpecificProperty> aspectProperties = importedAspect.getAspect().getProperties();
     final Function1<TechnologySpecificProperty, Boolean> _function = (TechnologySpecificProperty it) -> {
-      return Boolean.valueOf(it.isMandatory());
+      return Boolean.valueOf(it.isIsMandatory());
     };
     final Iterable<TechnologySpecificProperty> mandatoryProperties = IterableExtensions.<TechnologySpecificProperty>filter(aspectProperties, _function);
     final Function1<TechnologySpecificProperty, Boolean> _function_1 = (TechnologySpecificProperty it) -> {

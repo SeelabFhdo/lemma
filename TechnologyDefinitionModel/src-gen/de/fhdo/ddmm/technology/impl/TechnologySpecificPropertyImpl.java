@@ -6,12 +6,17 @@ import de.fhdo.ddmm.data.PrimitiveType;
 import de.fhdo.ddmm.data.PrimitiveValue;
 
 import de.fhdo.ddmm.technology.OperationTechnology;
+import de.fhdo.ddmm.technology.PropertyFeature;
 import de.fhdo.ddmm.technology.TechnologyAspect;
 import de.fhdo.ddmm.technology.TechnologyPackage;
 import de.fhdo.ddmm.technology.TechnologySpecificProperty;
 
+import java.util.Collection;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+
+import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
@@ -19,6 +24,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
+import org.eclipse.emf.ecore.util.EDataTypeEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
 /**
@@ -30,11 +36,12 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  * </p>
  * <ul>
  *   <li>{@link de.fhdo.ddmm.technology.impl.TechnologySpecificPropertyImpl#getName <em>Name</em>}</li>
- *   <li>{@link de.fhdo.ddmm.technology.impl.TechnologySpecificPropertyImpl#isMandatory <em>Mandatory</em>}</li>
  *   <li>{@link de.fhdo.ddmm.technology.impl.TechnologySpecificPropertyImpl#getType <em>Type</em>}</li>
  *   <li>{@link de.fhdo.ddmm.technology.impl.TechnologySpecificPropertyImpl#getDefaultValue <em>Default Value</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.technology.impl.TechnologySpecificPropertyImpl#getFeatures <em>Features</em>}</li>
  *   <li>{@link de.fhdo.ddmm.technology.impl.TechnologySpecificPropertyImpl#getOperationTechnology <em>Operation Technology</em>}</li>
  *   <li>{@link de.fhdo.ddmm.technology.impl.TechnologySpecificPropertyImpl#getTechnologyAspect <em>Technology Aspect</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.technology.impl.TechnologySpecificPropertyImpl#isIsMandatory <em>Is Mandatory</em>}</li>
  * </ul>
  *
  * @generated
@@ -61,26 +68,6 @@ public class TechnologySpecificPropertyImpl extends MinimalEObjectImpl.Container
     protected String name = NAME_EDEFAULT;
 
     /**
-     * The default value of the '{@link #isMandatory() <em>Mandatory</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #isMandatory()
-     * @generated
-     * @ordered
-     */
-    protected static final boolean MANDATORY_EDEFAULT = false;
-
-    /**
-     * The cached value of the '{@link #isMandatory() <em>Mandatory</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #isMandatory()
-     * @generated
-     * @ordered
-     */
-    protected boolean mandatory = MANDATORY_EDEFAULT;
-
-    /**
      * The cached value of the '{@link #getType() <em>Type</em>}' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -99,6 +86,26 @@ public class TechnologySpecificPropertyImpl extends MinimalEObjectImpl.Container
      * @ordered
      */
     protected PrimitiveValue defaultValue;
+
+    /**
+     * The cached value of the '{@link #getFeatures() <em>Features</em>}' attribute list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getFeatures()
+     * @generated
+     * @ordered
+     */
+    protected EList<PropertyFeature> features;
+
+    /**
+     * The default value of the '{@link #isIsMandatory() <em>Is Mandatory</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isIsMandatory()
+     * @generated
+     * @ordered
+     */
+    protected static final boolean IS_MANDATORY_EDEFAULT = false;
 
     /**
      * <!-- begin-user-doc -->
@@ -140,29 +147,6 @@ public class TechnologySpecificPropertyImpl extends MinimalEObjectImpl.Container
         name = newName;
         if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__NAME, oldName, name));
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public boolean isMandatory() {
-        return mandatory;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public void setMandatory(boolean newMandatory) {
-        boolean oldMandatory = mandatory;
-        mandatory = newMandatory;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__MANDATORY, oldMandatory, mandatory));
     }
 
     /**
@@ -253,6 +237,19 @@ public class TechnologySpecificPropertyImpl extends MinimalEObjectImpl.Container
         }
         else if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__DEFAULT_VALUE, newDefaultValue, newDefaultValue));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EList<PropertyFeature> getFeatures() {
+        if (features == null) {
+            features = new EDataTypeEList<PropertyFeature>(PropertyFeature.class, this, TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__FEATURES);
+        }
+        return features;
     }
 
     /**
@@ -367,6 +364,16 @@ public class TechnologySpecificPropertyImpl extends MinimalEObjectImpl.Container
      * @generated
      */
     @Override
+    public boolean isIsMandatory() {
+        return this.getFeatures().contains(PropertyFeature.MANDATORY);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
             case TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__OPERATION_TECHNOLOGY:
@@ -427,18 +434,20 @@ public class TechnologySpecificPropertyImpl extends MinimalEObjectImpl.Container
         switch (featureID) {
             case TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__NAME:
                 return getName();
-            case TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__MANDATORY:
-                return isMandatory();
             case TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__TYPE:
                 return getType();
             case TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__DEFAULT_VALUE:
                 return getDefaultValue();
+            case TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__FEATURES:
+                return getFeatures();
             case TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__OPERATION_TECHNOLOGY:
                 if (resolve) return getOperationTechnology();
                 return basicGetOperationTechnology();
             case TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__TECHNOLOGY_ASPECT:
                 if (resolve) return getTechnologyAspect();
                 return basicGetTechnologyAspect();
+            case TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__IS_MANDATORY:
+                return isIsMandatory();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -448,20 +457,22 @@ public class TechnologySpecificPropertyImpl extends MinimalEObjectImpl.Container
      * <!-- end-user-doc -->
      * @generated
      */
+    @SuppressWarnings("unchecked")
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
             case TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__NAME:
                 setName((String)newValue);
                 return;
-            case TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__MANDATORY:
-                setMandatory((Boolean)newValue);
-                return;
             case TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__TYPE:
                 setType((PrimitiveType)newValue);
                 return;
             case TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__DEFAULT_VALUE:
                 setDefaultValue((PrimitiveValue)newValue);
+                return;
+            case TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__FEATURES:
+                getFeatures().clear();
+                getFeatures().addAll((Collection<? extends PropertyFeature>)newValue);
                 return;
             case TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__OPERATION_TECHNOLOGY:
                 setOperationTechnology((OperationTechnology)newValue);
@@ -484,14 +495,14 @@ public class TechnologySpecificPropertyImpl extends MinimalEObjectImpl.Container
             case TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__NAME:
                 setName(NAME_EDEFAULT);
                 return;
-            case TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__MANDATORY:
-                setMandatory(MANDATORY_EDEFAULT);
-                return;
             case TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__TYPE:
                 setType((PrimitiveType)null);
                 return;
             case TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__DEFAULT_VALUE:
                 setDefaultValue((PrimitiveValue)null);
+                return;
+            case TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__FEATURES:
+                getFeatures().clear();
                 return;
             case TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__OPERATION_TECHNOLOGY:
                 setOperationTechnology((OperationTechnology)null);
@@ -513,16 +524,18 @@ public class TechnologySpecificPropertyImpl extends MinimalEObjectImpl.Container
         switch (featureID) {
             case TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__NAME:
                 return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-            case TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__MANDATORY:
-                return mandatory != MANDATORY_EDEFAULT;
             case TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__TYPE:
                 return type != null;
             case TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__DEFAULT_VALUE:
                 return defaultValue != null;
+            case TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__FEATURES:
+                return features != null && !features.isEmpty();
             case TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__OPERATION_TECHNOLOGY:
                 return basicGetOperationTechnology() != null;
             case TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__TECHNOLOGY_ASPECT:
                 return basicGetTechnologyAspect() != null;
+            case TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__IS_MANDATORY:
+                return isIsMandatory() != IS_MANDATORY_EDEFAULT;
         }
         return super.eIsSet(featureID);
     }
@@ -539,8 +552,8 @@ public class TechnologySpecificPropertyImpl extends MinimalEObjectImpl.Container
         StringBuilder result = new StringBuilder(super.toString());
         result.append(" (name: ");
         result.append(name);
-        result.append(", mandatory: ");
-        result.append(mandatory);
+        result.append(", features: ");
+        result.append(features);
         result.append(')');
         return result.toString();
     }

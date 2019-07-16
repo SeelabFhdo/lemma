@@ -2,6 +2,8 @@
  */
 package de.fhdo.ddmm.data.intermediate;
 
+import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -21,7 +23,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.fhdo.ddmm.data.intermediate.IntermediateAspectProperty#getName <em>Name</em>}</li>
  *   <li>{@link de.fhdo.ddmm.data.intermediate.IntermediateAspectProperty#getType <em>Type</em>}</li>
  *   <li>{@link de.fhdo.ddmm.data.intermediate.IntermediateAspectProperty#getDefaultValue <em>Default Value</em>}</li>
- *   <li>{@link de.fhdo.ddmm.data.intermediate.IntermediateAspectProperty#isMandatory <em>Mandatory</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.data.intermediate.IntermediateAspectProperty#getFeatureNames <em>Feature Names</em>}</li>
  *   <li>{@link de.fhdo.ddmm.data.intermediate.IntermediateAspectProperty#getAspect <em>Aspect</em>}</li>
  * </ul>
  *
@@ -109,31 +111,20 @@ public interface IntermediateAspectProperty extends EObject {
     void setDefaultValue(String value);
 
     /**
-     * Returns the value of the '<em><b>Mandatory</b></em>' attribute.
-     * The default value is <code>"false"</code>.
+     * Returns the value of the '<em><b>Feature Names</b></em>' attribute list.
+     * The list contents are of type {@link java.lang.String}.
      * <!-- begin-user-doc -->
      * <p>
-     * If the meaning of the '<em>Mandatory</em>' attribute isn't clear,
+     * If the meaning of the '<em>Feature Names</em>' attribute list isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Mandatory</em>' attribute.
-     * @see #setMandatory(boolean)
-     * @see de.fhdo.ddmm.data.intermediate.IntermediatePackage#getIntermediateAspectProperty_Mandatory()
-     * @model default="false" unique="false"
+     * @return the value of the '<em>Feature Names</em>' attribute list.
+     * @see de.fhdo.ddmm.data.intermediate.IntermediatePackage#getIntermediateAspectProperty_FeatureNames()
+     * @model unique="false"
      * @generated
      */
-    boolean isMandatory();
-
-    /**
-     * Sets the value of the '{@link de.fhdo.ddmm.data.intermediate.IntermediateAspectProperty#isMandatory <em>Mandatory</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Mandatory</em>' attribute.
-     * @see #isMandatory()
-     * @generated
-     */
-    void setMandatory(boolean value);
+    EList<String> getFeatureNames();
 
     /**
      * Returns the value of the '<em><b>Aspect</b></em>' container reference.

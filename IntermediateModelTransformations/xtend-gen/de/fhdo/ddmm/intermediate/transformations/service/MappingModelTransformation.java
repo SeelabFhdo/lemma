@@ -33,6 +33,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
@@ -90,7 +91,7 @@ public class MappingModelTransformation extends AbstractAtlInputOutputIntermedia
      */
     private static Void executeRefinements(final List<AbstractIntermediateModelTransformationStrategy.TransformationResult> results, final Predicate<IntermediateTransformationException> warningCallback) {
       final HashMap<AbstractIntermediateModelTransformationStrategy.OutputModel, Map<String, AbstractIntermediateModelTransformationStrategy.OutputModel>> refinedModelsPerServiceModel = CollectionLiterals.<AbstractIntermediateModelTransformationStrategy.OutputModel, Map<String, AbstractIntermediateModelTransformationStrategy.OutputModel>>newHashMap();
-      final BiConsumer<AbstractIntermediateModelTransformationStrategy.OutputModel, List<AbstractIntermediateModelTransformationStrategy.OutputModel>> _function = (AbstractIntermediateModelTransformationStrategy.OutputModel serviceModel, List<AbstractIntermediateModelTransformationStrategy.OutputModel> intermediateDataModels) -> {
+      final BiConsumer<AbstractIntermediateModelTransformationStrategy.OutputModel, Set<AbstractIntermediateModelTransformationStrategy.OutputModel>> _function = (AbstractIntermediateModelTransformationStrategy.OutputModel serviceModel, Set<AbstractIntermediateModelTransformationStrategy.OutputModel> intermediateDataModels) -> {
         final Function1<AbstractIntermediateModelTransformationStrategy.OutputModel, String> _function_1 = (AbstractIntermediateModelTransformationStrategy.OutputModel it) -> {
           return it.getOutputPath();
         };
@@ -139,7 +140,7 @@ public class MappingModelTransformation extends AbstractAtlInputOutputIntermedia
      * complex type mappings expressed in mapping models, while the intermediate service model
      * does not.
      */
-    private static Map<AbstractIntermediateModelTransformationStrategy.OutputModel, List<AbstractIntermediateModelTransformationStrategy.OutputModel>> intermediateDataModelsPerServiceModel(final List<AbstractIntermediateModelTransformationStrategy.TransformationResult> results) {
+    private static Map<AbstractIntermediateModelTransformationStrategy.OutputModel, Set<AbstractIntermediateModelTransformationStrategy.OutputModel>> intermediateDataModelsPerServiceModel(final List<AbstractIntermediateModelTransformationStrategy.TransformationResult> results) {
       final Function1<AbstractIntermediateModelTransformationStrategy.TransformationResult, Boolean> _function = (AbstractIntermediateModelTransformationStrategy.TransformationResult it) -> {
         final Function1<AbstractIntermediateModelTransformationStrategy.InputModel, Boolean> _function_1 = (AbstractIntermediateModelTransformationStrategy.InputModel it_1) -> {
           String _namespaceUri = it_1.getNamespaceUri();
@@ -159,7 +160,7 @@ public class MappingModelTransformation extends AbstractAtlInputOutputIntermedia
         return ((ServiceModel) _get).getMappedComplexTypes();
       };
       final Map<AbstractIntermediateModelTransformationStrategy.OutputModel, EList<MappedComplexType>> mappedComplexTypesPerServiceModel = IterableExtensions.<AbstractIntermediateModelTransformationStrategy.OutputModel, AbstractIntermediateModelTransformationStrategy.OutputModel, EList<MappedComplexType>>toMap(serviceModelsCreatedFromMappingModels, _function_2, _function_3);
-      final HashMap<AbstractIntermediateModelTransformationStrategy.OutputModel, List<AbstractIntermediateModelTransformationStrategy.OutputModel>> resultMap = CollectionLiterals.<AbstractIntermediateModelTransformationStrategy.OutputModel, List<AbstractIntermediateModelTransformationStrategy.OutputModel>>newHashMap();
+      final HashMap<AbstractIntermediateModelTransformationStrategy.OutputModel, Set<AbstractIntermediateModelTransformationStrategy.OutputModel>> resultMap = CollectionLiterals.<AbstractIntermediateModelTransformationStrategy.OutputModel, Set<AbstractIntermediateModelTransformationStrategy.OutputModel>>newHashMap();
       final BiConsumer<AbstractIntermediateModelTransformationStrategy.OutputModel, EList<MappedComplexType>> _function_4 = (AbstractIntermediateModelTransformationStrategy.OutputModel serviceModel, EList<MappedComplexType> mappedComplexTypes) -> {
         final Consumer<MappedComplexType> _function_5 = (MappedComplexType mappedComplexType) -> {
           final Function1<AbstractIntermediateModelTransformationStrategy.TransformationResult, Boolean> _function_6 = (AbstractIntermediateModelTransformationStrategy.TransformationResult it) -> {
@@ -167,7 +168,7 @@ public class MappingModelTransformation extends AbstractAtlInputOutputIntermedia
               Objects.equal(it.getOutputModel().getOutputPath(), mappedComplexType.getType().getImport().getImportURI())));
           };
           final Consumer<AbstractIntermediateModelTransformationStrategy.TransformationResult> _function_7 = (AbstractIntermediateModelTransformationStrategy.TransformationResult it) -> {
-            List<AbstractIntermediateModelTransformationStrategy.OutputModel> _putIfAbsent = resultMap.putIfAbsent(serviceModel, CollectionLiterals.<AbstractIntermediateModelTransformationStrategy.OutputModel>newArrayList(it.getOutputModel()));
+            Set<AbstractIntermediateModelTransformationStrategy.OutputModel> _putIfAbsent = resultMap.putIfAbsent(serviceModel, CollectionLiterals.<AbstractIntermediateModelTransformationStrategy.OutputModel>newHashSet(it.getOutputModel()));
             if (_putIfAbsent!=null) {
               _putIfAbsent.add(it.getOutputModel());
             }

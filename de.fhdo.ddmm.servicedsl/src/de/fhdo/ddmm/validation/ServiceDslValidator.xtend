@@ -716,7 +716,7 @@ class ServiceDslValidator extends AbstractServiceDslValidator {
     def checkMandatoryAspectProperties(ImportedServiceAspect importedAspect) {
         val aspect = importedAspect.importedAspect
         val aspectProperties = aspect.properties
-        val mandatoryProperties = aspectProperties.filter[mandatory]
+        val mandatoryProperties = aspectProperties.filter[isMandatory]
         val mandatoryPropertiesWithoutValues = mandatoryProperties.filter[
             !importedAspect.values.map[property].contains(it)
         ]

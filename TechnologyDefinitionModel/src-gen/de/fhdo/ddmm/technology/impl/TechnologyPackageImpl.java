@@ -17,6 +17,7 @@ import de.fhdo.ddmm.technology.OperationEnvironment;
 import de.fhdo.ddmm.technology.OperationTechnology;
 import de.fhdo.ddmm.technology.PointcutType;
 import de.fhdo.ddmm.technology.PossiblyImportedTechnologySpecificType;
+import de.fhdo.ddmm.technology.PropertyFeature;
 import de.fhdo.ddmm.technology.Protocol;
 import de.fhdo.ddmm.technology.ServiceAspect;
 import de.fhdo.ddmm.technology.ServiceAspectPointcut;
@@ -212,6 +213,13 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * @generated
      */
     private EEnum compatibilityDirectionEEnum = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EEnum propertyFeatureEEnum = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -925,18 +933,8 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * @generated
      */
     @Override
-    public EAttribute getTechnologySpecificProperty_Mandatory() {
-        return (EAttribute)technologySpecificPropertyEClass.getEStructuralFeatures().get(1);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
     public EReference getTechnologySpecificProperty_Type() {
-        return (EReference)technologySpecificPropertyEClass.getEStructuralFeatures().get(2);
+        return (EReference)technologySpecificPropertyEClass.getEStructuralFeatures().get(1);
     }
 
     /**
@@ -946,7 +944,17 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      */
     @Override
     public EReference getTechnologySpecificProperty_DefaultValue() {
-        return (EReference)technologySpecificPropertyEClass.getEStructuralFeatures().get(3);
+        return (EReference)technologySpecificPropertyEClass.getEStructuralFeatures().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EAttribute getTechnologySpecificProperty_Features() {
+        return (EAttribute)technologySpecificPropertyEClass.getEStructuralFeatures().get(3);
     }
 
     /**
@@ -967,6 +975,16 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
     @Override
     public EReference getTechnologySpecificProperty_TechnologyAspect() {
         return (EReference)technologySpecificPropertyEClass.getEStructuralFeatures().get(5);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EAttribute getTechnologySpecificProperty_IsMandatory() {
+        return (EAttribute)technologySpecificPropertyEClass.getEStructuralFeatures().get(6);
     }
 
     /**
@@ -1415,6 +1433,16 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * @generated
      */
     @Override
+    public EEnum getPropertyFeature() {
+        return propertyFeatureEEnum;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public EEnum getJoinPointType() {
         return joinPointTypeEEnum;
     }
@@ -1541,11 +1569,12 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
 
         technologySpecificPropertyEClass = createEClass(TECHNOLOGY_SPECIFIC_PROPERTY);
         createEAttribute(technologySpecificPropertyEClass, TECHNOLOGY_SPECIFIC_PROPERTY__NAME);
-        createEAttribute(technologySpecificPropertyEClass, TECHNOLOGY_SPECIFIC_PROPERTY__MANDATORY);
         createEReference(technologySpecificPropertyEClass, TECHNOLOGY_SPECIFIC_PROPERTY__TYPE);
         createEReference(technologySpecificPropertyEClass, TECHNOLOGY_SPECIFIC_PROPERTY__DEFAULT_VALUE);
+        createEAttribute(technologySpecificPropertyEClass, TECHNOLOGY_SPECIFIC_PROPERTY__FEATURES);
         createEReference(technologySpecificPropertyEClass, TECHNOLOGY_SPECIFIC_PROPERTY__OPERATION_TECHNOLOGY);
         createEReference(technologySpecificPropertyEClass, TECHNOLOGY_SPECIFIC_PROPERTY__TECHNOLOGY_ASPECT);
+        createEAttribute(technologySpecificPropertyEClass, TECHNOLOGY_SPECIFIC_PROPERTY__IS_MANDATORY);
 
         technologySpecificPropertyValueAssignmentEClass = createEClass(TECHNOLOGY_SPECIFIC_PROPERTY_VALUE_ASSIGNMENT);
         createEReference(technologySpecificPropertyValueAssignmentEClass, TECHNOLOGY_SPECIFIC_PROPERTY_VALUE_ASSIGNMENT__PROPERTY);
@@ -1600,6 +1629,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
         exchangePatternEEnum = createEEnum(EXCHANGE_PATTERN);
         communicationTypeEEnum = createEEnum(COMMUNICATION_TYPE);
         compatibilityDirectionEEnum = createEEnum(COMPATIBILITY_DIRECTION);
+        propertyFeatureEEnum = createEEnum(PROPERTY_FEATURE);
         joinPointTypeEEnum = createEEnum(JOIN_POINT_TYPE);
         pointcutTypeEEnum = createEEnum(POINTCUT_TYPE);
 
@@ -1731,11 +1761,12 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
 
         initEClass(technologySpecificPropertyEClass, TechnologySpecificProperty.class, "TechnologySpecificProperty", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getTechnologySpecificProperty_Name(), theEcorePackage.getEString(), "name", null, 0, 1, TechnologySpecificProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getTechnologySpecificProperty_Mandatory(), theEcorePackage.getEBoolean(), "mandatory", "false", 0, 1, TechnologySpecificProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getTechnologySpecificProperty_Type(), theDataPackage.getPrimitiveType(), null, "type", null, 0, 1, TechnologySpecificProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getTechnologySpecificProperty_DefaultValue(), theDataPackage.getPrimitiveValue(), null, "defaultValue", null, 0, 1, TechnologySpecificProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getTechnologySpecificProperty_Features(), this.getPropertyFeature(), "features", null, 0, -1, TechnologySpecificProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getTechnologySpecificProperty_OperationTechnology(), this.getOperationTechnology(), this.getOperationTechnology_ServiceProperties(), "operationTechnology", null, 0, 1, TechnologySpecificProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getTechnologySpecificProperty_TechnologyAspect(), this.getTechnologyAspect(), this.getTechnologyAspect_Properties(), "technologyAspect", null, 0, 1, TechnologySpecificProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getTechnologySpecificProperty_IsMandatory(), theEcorePackage.getEBoolean(), "isMandatory", null, 0, 1, TechnologySpecificProperty.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 
         initEClass(technologySpecificPropertyValueAssignmentEClass, TechnologySpecificPropertyValueAssignment.class, "TechnologySpecificPropertyValueAssignment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getTechnologySpecificPropertyValueAssignment_Property(), this.getTechnologySpecificProperty(), null, "property", null, 0, 1, TechnologySpecificPropertyValueAssignment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1811,6 +1842,10 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
         addEEnumLiteral(compatibilityDirectionEEnum, CompatibilityDirection.MAPPING_TO_COMPATIBLE_TYPES);
         addEEnumLiteral(compatibilityDirectionEEnum, CompatibilityDirection.COMPATIBLE_TYPES_TO_MAPPING);
         addEEnumLiteral(compatibilityDirectionEEnum, CompatibilityDirection.BIDIRECTIONAL);
+
+        initEEnum(propertyFeatureEEnum, PropertyFeature.class, "PropertyFeature");
+        addEEnumLiteral(propertyFeatureEEnum, PropertyFeature.MANDATORY);
+        addEEnumLiteral(propertyFeatureEEnum, PropertyFeature.SINGLE_VALUED);
 
         initEEnum(joinPointTypeEEnum, JoinPointType.class, "JoinPointType");
         addEEnumLiteral(joinPointTypeEEnum, JoinPointType.MICROSERVICES);

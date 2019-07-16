@@ -4464,50 +4464,87 @@ ruleTechnologySpecificProperty returns [EObject current=null]
 			)
 		)
 		(
-			(
-				otherlv_2='='
-				{
-					newLeafNode(otherlv_2, grammarAccess.getTechnologySpecificPropertyAccess().getEqualsSignKeyword_2_0_0());
-				}
-				(
-					(
-						{
-							newCompositeNode(grammarAccess.getTechnologySpecificPropertyAccess().getDefaultValuePrimitiveValueParserRuleCall_2_0_1_0());
-						}
-						lv_defaultValue_3_0=rulePrimitiveValue
-						{
-							if ($current==null) {
-								$current = createModelElementForParent(grammarAccess.getTechnologySpecificPropertyRule());
-							}
-							set(
-								$current,
-								"defaultValue",
-								lv_defaultValue_3_0,
-								"de.fhdo.ddmm.data.DataDsl.PrimitiveValue");
-							afterParserOrEnumRuleCall();
-						}
-					)
-				)
-			)
-			    |
+			otherlv_2='='
+			{
+				newLeafNode(otherlv_2, grammarAccess.getTechnologySpecificPropertyAccess().getEqualsSignKeyword_2_0());
+			}
 			(
 				(
-					lv_mandatory_4_0='mandatory'
 					{
-						newLeafNode(lv_mandatory_4_0, grammarAccess.getTechnologySpecificPropertyAccess().getMandatoryMandatoryKeyword_2_1_0());
+						newCompositeNode(grammarAccess.getTechnologySpecificPropertyAccess().getDefaultValuePrimitiveValueParserRuleCall_2_1_0());
 					}
+					lv_defaultValue_3_0=rulePrimitiveValue
 					{
 						if ($current==null) {
-							$current = createModelElement(grammarAccess.getTechnologySpecificPropertyRule());
+							$current = createModelElementForParent(grammarAccess.getTechnologySpecificPropertyRule());
 						}
-						setWithLastConsumed($current, "mandatory", true, "mandatory");
+						set(
+							$current,
+							"defaultValue",
+							lv_defaultValue_3_0,
+							"de.fhdo.ddmm.data.DataDsl.PrimitiveValue");
+						afterParserOrEnumRuleCall();
 					}
 				)
 			)
 		)?
-		otherlv_5=';'
+		(
+			otherlv_4='{'
+			{
+				newLeafNode(otherlv_4, grammarAccess.getTechnologySpecificPropertyAccess().getLeftCurlyBracketKeyword_3_0());
+			}
+			(
+				(
+					{
+						newCompositeNode(grammarAccess.getTechnologySpecificPropertyAccess().getFeaturesPropertyFeatureEnumRuleCall_3_1_0());
+					}
+					lv_features_5_0=rulePropertyFeature
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getTechnologySpecificPropertyRule());
+						}
+						add(
+							$current,
+							"features",
+							lv_features_5_0,
+							"de.fhdo.ddmm.technology.TechnologyDsl.PropertyFeature");
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)
+			(
+				otherlv_6=','
+				{
+					newLeafNode(otherlv_6, grammarAccess.getTechnologySpecificPropertyAccess().getCommaKeyword_3_2_0());
+				}
+				(
+					(
+						{
+							newCompositeNode(grammarAccess.getTechnologySpecificPropertyAccess().getFeaturesPropertyFeatureEnumRuleCall_3_2_1_0());
+						}
+						lv_features_7_0=rulePropertyFeature
+						{
+							if ($current==null) {
+								$current = createModelElementForParent(grammarAccess.getTechnologySpecificPropertyRule());
+							}
+							add(
+								$current,
+								"features",
+								lv_features_7_0,
+								"de.fhdo.ddmm.technology.TechnologyDsl.PropertyFeature");
+							afterParserOrEnumRuleCall();
+						}
+					)
+				)
+			)*
+			otherlv_8='}'
+			{
+				newLeafNode(otherlv_8, grammarAccess.getTechnologySpecificPropertyAccess().getRightCurlyBracketKeyword_3_3());
+			}
+		)?
+		otherlv_9=';'
 		{
-			newLeafNode(otherlv_5, grammarAccess.getTechnologySpecificPropertyAccess().getSemicolonKeyword_3());
+			newLeafNode(otherlv_9, grammarAccess.getTechnologySpecificPropertyAccess().getSemicolonKeyword_4());
 		}
 	)
 ;
@@ -6331,6 +6368,33 @@ ruleCompatibilityDirection returns [Enumerator current=null]
 			{
 				$current = grammarAccess.getCompatibilityDirectionAccess().getBIDIRECTIONALEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
 				newLeafNode(enumLiteral_2, grammarAccess.getCompatibilityDirectionAccess().getBIDIRECTIONALEnumLiteralDeclaration_2());
+			}
+		)
+	)
+;
+
+// Rule PropertyFeature
+rulePropertyFeature returns [Enumerator current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		(
+			enumLiteral_0='mandatory'
+			{
+				$current = grammarAccess.getPropertyFeatureAccess().getMANDATORYEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
+				newLeafNode(enumLiteral_0, grammarAccess.getPropertyFeatureAccess().getMANDATORYEnumLiteralDeclaration_0());
+			}
+		)
+		    |
+		(
+			enumLiteral_1='singleval'
+			{
+				$current = grammarAccess.getPropertyFeatureAccess().getSINGLE_VALUEDEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
+				newLeafNode(enumLiteral_1, grammarAccess.getPropertyFeatureAccess().getSINGLE_VALUEDEnumLiteralDeclaration_1());
 			}
 		)
 	)

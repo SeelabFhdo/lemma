@@ -6,8 +6,12 @@ import de.fhdo.ddmm.data.intermediate.IntermediateAspectProperty;
 import de.fhdo.ddmm.data.intermediate.IntermediateImportedAspect;
 import de.fhdo.ddmm.data.intermediate.IntermediatePackage;
 
+import java.util.Collection;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+
+import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
@@ -15,6 +19,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
+import org.eclipse.emf.ecore.util.EDataTypeEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
 /**
@@ -28,7 +33,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  *   <li>{@link de.fhdo.ddmm.data.intermediate.impl.IntermediateAspectPropertyImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.fhdo.ddmm.data.intermediate.impl.IntermediateAspectPropertyImpl#getType <em>Type</em>}</li>
  *   <li>{@link de.fhdo.ddmm.data.intermediate.impl.IntermediateAspectPropertyImpl#getDefaultValue <em>Default Value</em>}</li>
- *   <li>{@link de.fhdo.ddmm.data.intermediate.impl.IntermediateAspectPropertyImpl#isMandatory <em>Mandatory</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.data.intermediate.impl.IntermediateAspectPropertyImpl#getFeatureNames <em>Feature Names</em>}</li>
  *   <li>{@link de.fhdo.ddmm.data.intermediate.impl.IntermediateAspectPropertyImpl#getAspect <em>Aspect</em>}</li>
  * </ul>
  *
@@ -96,24 +101,14 @@ public class IntermediateAspectPropertyImpl extends MinimalEObjectImpl.Container
     protected String defaultValue = DEFAULT_VALUE_EDEFAULT;
 
     /**
-     * The default value of the '{@link #isMandatory() <em>Mandatory</em>}' attribute.
+     * The cached value of the '{@link #getFeatureNames() <em>Feature Names</em>}' attribute list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #isMandatory()
+     * @see #getFeatureNames()
      * @generated
      * @ordered
      */
-    protected static final boolean MANDATORY_EDEFAULT = false;
-
-    /**
-     * The cached value of the '{@link #isMandatory() <em>Mandatory</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #isMandatory()
-     * @generated
-     * @ordered
-     */
-    protected boolean mandatory = MANDATORY_EDEFAULT;
+    protected EList<String> featureNames;
 
     /**
      * <!-- begin-user-doc -->
@@ -209,21 +204,11 @@ public class IntermediateAspectPropertyImpl extends MinimalEObjectImpl.Container
      * @generated
      */
     @Override
-    public boolean isMandatory() {
-        return mandatory;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public void setMandatory(boolean newMandatory) {
-        boolean oldMandatory = mandatory;
-        mandatory = newMandatory;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, IntermediatePackage.INTERMEDIATE_ASPECT_PROPERTY__MANDATORY, oldMandatory, mandatory));
+    public EList<String> getFeatureNames() {
+        if (featureNames == null) {
+            featureNames = new EDataTypeEList<String>(String.class, this, IntermediatePackage.INTERMEDIATE_ASPECT_PROPERTY__FEATURE_NAMES);
+        }
+        return featureNames;
     }
 
     /**
@@ -337,8 +322,8 @@ public class IntermediateAspectPropertyImpl extends MinimalEObjectImpl.Container
                 return getType();
             case IntermediatePackage.INTERMEDIATE_ASPECT_PROPERTY__DEFAULT_VALUE:
                 return getDefaultValue();
-            case IntermediatePackage.INTERMEDIATE_ASPECT_PROPERTY__MANDATORY:
-                return isMandatory();
+            case IntermediatePackage.INTERMEDIATE_ASPECT_PROPERTY__FEATURE_NAMES:
+                return getFeatureNames();
             case IntermediatePackage.INTERMEDIATE_ASPECT_PROPERTY__ASPECT:
                 if (resolve) return getAspect();
                 return basicGetAspect();
@@ -351,6 +336,7 @@ public class IntermediateAspectPropertyImpl extends MinimalEObjectImpl.Container
      * <!-- end-user-doc -->
      * @generated
      */
+    @SuppressWarnings("unchecked")
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
@@ -363,8 +349,9 @@ public class IntermediateAspectPropertyImpl extends MinimalEObjectImpl.Container
             case IntermediatePackage.INTERMEDIATE_ASPECT_PROPERTY__DEFAULT_VALUE:
                 setDefaultValue((String)newValue);
                 return;
-            case IntermediatePackage.INTERMEDIATE_ASPECT_PROPERTY__MANDATORY:
-                setMandatory((Boolean)newValue);
+            case IntermediatePackage.INTERMEDIATE_ASPECT_PROPERTY__FEATURE_NAMES:
+                getFeatureNames().clear();
+                getFeatureNames().addAll((Collection<? extends String>)newValue);
                 return;
             case IntermediatePackage.INTERMEDIATE_ASPECT_PROPERTY__ASPECT:
                 setAspect((IntermediateImportedAspect)newValue);
@@ -390,8 +377,8 @@ public class IntermediateAspectPropertyImpl extends MinimalEObjectImpl.Container
             case IntermediatePackage.INTERMEDIATE_ASPECT_PROPERTY__DEFAULT_VALUE:
                 setDefaultValue(DEFAULT_VALUE_EDEFAULT);
                 return;
-            case IntermediatePackage.INTERMEDIATE_ASPECT_PROPERTY__MANDATORY:
-                setMandatory(MANDATORY_EDEFAULT);
+            case IntermediatePackage.INTERMEDIATE_ASPECT_PROPERTY__FEATURE_NAMES:
+                getFeatureNames().clear();
                 return;
             case IntermediatePackage.INTERMEDIATE_ASPECT_PROPERTY__ASPECT:
                 setAspect((IntermediateImportedAspect)null);
@@ -414,8 +401,8 @@ public class IntermediateAspectPropertyImpl extends MinimalEObjectImpl.Container
                 return TYPE_EDEFAULT == null ? type != null : !TYPE_EDEFAULT.equals(type);
             case IntermediatePackage.INTERMEDIATE_ASPECT_PROPERTY__DEFAULT_VALUE:
                 return DEFAULT_VALUE_EDEFAULT == null ? defaultValue != null : !DEFAULT_VALUE_EDEFAULT.equals(defaultValue);
-            case IntermediatePackage.INTERMEDIATE_ASPECT_PROPERTY__MANDATORY:
-                return mandatory != MANDATORY_EDEFAULT;
+            case IntermediatePackage.INTERMEDIATE_ASPECT_PROPERTY__FEATURE_NAMES:
+                return featureNames != null && !featureNames.isEmpty();
             case IntermediatePackage.INTERMEDIATE_ASPECT_PROPERTY__ASPECT:
                 return basicGetAspect() != null;
         }
@@ -438,8 +425,8 @@ public class IntermediateAspectPropertyImpl extends MinimalEObjectImpl.Container
         result.append(type);
         result.append(", defaultValue: ");
         result.append(defaultValue);
-        result.append(", mandatory: ");
-        result.append(mandatory);
+        result.append(", featureNames: ");
+        result.append(featureNames);
         result.append(')');
         return result.toString();
     }

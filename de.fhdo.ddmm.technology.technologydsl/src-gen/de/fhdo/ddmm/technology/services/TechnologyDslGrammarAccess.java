@@ -941,21 +941,30 @@ public class TechnologyDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cTypePrimitiveTypeParserRuleCall_0_0 = (RuleCall)cTypeAssignment_0.eContents().get(0);
 		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cNameIDTerminalRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
-		private final Alternatives cAlternatives_2 = (Alternatives)cGroup.eContents().get(2);
-		private final Group cGroup_2_0 = (Group)cAlternatives_2.eContents().get(0);
-		private final Keyword cEqualsSignKeyword_2_0_0 = (Keyword)cGroup_2_0.eContents().get(0);
-		private final Assignment cDefaultValueAssignment_2_0_1 = (Assignment)cGroup_2_0.eContents().get(1);
-		private final RuleCall cDefaultValuePrimitiveValueParserRuleCall_2_0_1_0 = (RuleCall)cDefaultValueAssignment_2_0_1.eContents().get(0);
-		private final Assignment cMandatoryAssignment_2_1 = (Assignment)cAlternatives_2.eContents().get(1);
-		private final Keyword cMandatoryMandatoryKeyword_2_1_0 = (Keyword)cMandatoryAssignment_2_1.eContents().get(0);
-		private final Keyword cSemicolonKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
+		private final Keyword cEqualsSignKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Assignment cDefaultValueAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
+		private final RuleCall cDefaultValuePrimitiveValueParserRuleCall_2_1_0 = (RuleCall)cDefaultValueAssignment_2_1.eContents().get(0);
+		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
+		private final Keyword cLeftCurlyBracketKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
+		private final Assignment cFeaturesAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
+		private final RuleCall cFeaturesPropertyFeatureEnumRuleCall_3_1_0 = (RuleCall)cFeaturesAssignment_3_1.eContents().get(0);
+		private final Group cGroup_3_2 = (Group)cGroup_3.eContents().get(2);
+		private final Keyword cCommaKeyword_3_2_0 = (Keyword)cGroup_3_2.eContents().get(0);
+		private final Assignment cFeaturesAssignment_3_2_1 = (Assignment)cGroup_3_2.eContents().get(1);
+		private final RuleCall cFeaturesPropertyFeatureEnumRuleCall_3_2_1_0 = (RuleCall)cFeaturesAssignment_3_2_1.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_3_3 = (Keyword)cGroup_3.eContents().get(3);
+		private final Keyword cSemicolonKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		
 		//TechnologySpecificProperty:
-		//	type=PrimitiveType name=ID ('=' defaultValue=PrimitiveValue | mandatory?='mandatory')?
+		//	type=PrimitiveType name=ID ('=' defaultValue=PrimitiveValue)? ('{'
+		//	features+=PropertyFeature (',' features+=PropertyFeature)*
+		//	'}')?
 		//	';';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//type=PrimitiveType name=ID ('=' defaultValue=PrimitiveValue | mandatory?='mandatory')? ';'
+		//type=PrimitiveType name=ID ('=' defaultValue=PrimitiveValue)? ('{' features+=PropertyFeature (','
+		//features+=PropertyFeature)* '}')? ';'
 		public Group getGroup() { return cGroup; }
 		
 		//type=PrimitiveType
@@ -970,29 +979,47 @@ public class TechnologyDslGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getNameIDTerminalRuleCall_1_0() { return cNameIDTerminalRuleCall_1_0; }
 		
-		//('=' defaultValue=PrimitiveValue | mandatory?='mandatory')?
-		public Alternatives getAlternatives_2() { return cAlternatives_2; }
-		
-		//'=' defaultValue=PrimitiveValue
-		public Group getGroup_2_0() { return cGroup_2_0; }
+		//('=' defaultValue=PrimitiveValue)?
+		public Group getGroup_2() { return cGroup_2; }
 		
 		//'='
-		public Keyword getEqualsSignKeyword_2_0_0() { return cEqualsSignKeyword_2_0_0; }
+		public Keyword getEqualsSignKeyword_2_0() { return cEqualsSignKeyword_2_0; }
 		
 		//defaultValue=PrimitiveValue
-		public Assignment getDefaultValueAssignment_2_0_1() { return cDefaultValueAssignment_2_0_1; }
+		public Assignment getDefaultValueAssignment_2_1() { return cDefaultValueAssignment_2_1; }
 		
 		//PrimitiveValue
-		public RuleCall getDefaultValuePrimitiveValueParserRuleCall_2_0_1_0() { return cDefaultValuePrimitiveValueParserRuleCall_2_0_1_0; }
+		public RuleCall getDefaultValuePrimitiveValueParserRuleCall_2_1_0() { return cDefaultValuePrimitiveValueParserRuleCall_2_1_0; }
 		
-		//mandatory?='mandatory'
-		public Assignment getMandatoryAssignment_2_1() { return cMandatoryAssignment_2_1; }
+		//('{' features+=PropertyFeature (',' features+=PropertyFeature)* '}')?
+		public Group getGroup_3() { return cGroup_3; }
 		
-		//'mandatory'
-		public Keyword getMandatoryMandatoryKeyword_2_1_0() { return cMandatoryMandatoryKeyword_2_1_0; }
+		//'{'
+		public Keyword getLeftCurlyBracketKeyword_3_0() { return cLeftCurlyBracketKeyword_3_0; }
+		
+		//features+=PropertyFeature
+		public Assignment getFeaturesAssignment_3_1() { return cFeaturesAssignment_3_1; }
+		
+		//PropertyFeature
+		public RuleCall getFeaturesPropertyFeatureEnumRuleCall_3_1_0() { return cFeaturesPropertyFeatureEnumRuleCall_3_1_0; }
+		
+		//(',' features+=PropertyFeature)*
+		public Group getGroup_3_2() { return cGroup_3_2; }
+		
+		//','
+		public Keyword getCommaKeyword_3_2_0() { return cCommaKeyword_3_2_0; }
+		
+		//features+=PropertyFeature
+		public Assignment getFeaturesAssignment_3_2_1() { return cFeaturesAssignment_3_2_1; }
+		
+		//PropertyFeature
+		public RuleCall getFeaturesPropertyFeatureEnumRuleCall_3_2_1_0() { return cFeaturesPropertyFeatureEnumRuleCall_3_2_1_0; }
+		
+		//'}'
+		public Keyword getRightCurlyBracketKeyword_3_3() { return cRightCurlyBracketKeyword_3_3; }
 		
 		//';'
-		public Keyword getSemicolonKeyword_3() { return cSemicolonKeyword_3; }
+		public Keyword getSemicolonKeyword_4() { return cSemicolonKeyword_4; }
 	}
 	public class ServiceAspectPointcutElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.fhdo.ddmm.technology.TechnologyDsl.ServiceAspectPointcut");
@@ -1443,6 +1470,34 @@ public class TechnologyDslGrammarAccess extends AbstractGrammarElementFinder {
 		//'<->'
 		public Keyword getBIDIRECTIONALLessThanSignHyphenMinusGreaterThanSignKeyword_2_0() { return cBIDIRECTIONALLessThanSignHyphenMinusGreaterThanSignKeyword_2_0; }
 	}
+	public class PropertyFeatureElements extends AbstractEnumRuleElementFinder {
+		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.fhdo.ddmm.technology.TechnologyDsl.PropertyFeature");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final EnumLiteralDeclaration cMANDATORYEnumLiteralDeclaration_0 = (EnumLiteralDeclaration)cAlternatives.eContents().get(0);
+		private final Keyword cMANDATORYMandatoryKeyword_0_0 = (Keyword)cMANDATORYEnumLiteralDeclaration_0.eContents().get(0);
+		private final EnumLiteralDeclaration cSINGLE_VALUEDEnumLiteralDeclaration_1 = (EnumLiteralDeclaration)cAlternatives.eContents().get(1);
+		private final Keyword cSINGLE_VALUEDSinglevalKeyword_1_0 = (Keyword)cSINGLE_VALUEDEnumLiteralDeclaration_1.eContents().get(0);
+		
+		//enum PropertyFeature:
+		//	MANDATORY="mandatory" |
+		//	SINGLE_VALUED="singleval";
+		public EnumRule getRule() { return rule; }
+		
+		//MANDATORY="mandatory" | SINGLE_VALUED="singleval"
+		public Alternatives getAlternatives() { return cAlternatives; }
+		
+		//MANDATORY="mandatory"
+		public EnumLiteralDeclaration getMANDATORYEnumLiteralDeclaration_0() { return cMANDATORYEnumLiteralDeclaration_0; }
+		
+		//"mandatory"
+		public Keyword getMANDATORYMandatoryKeyword_0_0() { return cMANDATORYMandatoryKeyword_0_0; }
+		
+		//SINGLE_VALUED="singleval"
+		public EnumLiteralDeclaration getSINGLE_VALUEDEnumLiteralDeclaration_1() { return cSINGLE_VALUEDEnumLiteralDeclaration_1; }
+		
+		//"singleval"
+		public Keyword getSINGLE_VALUEDSinglevalKeyword_1_0() { return cSINGLE_VALUEDSinglevalKeyword_1_0; }
+	}
 	public class ServiceJoinPointTypeElements extends AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.fhdo.ddmm.technology.TechnologyDsl.ServiceJoinPointType");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
@@ -1551,6 +1606,7 @@ public class TechnologyDslGrammarAccess extends AbstractGrammarElementFinder {
 	private final DeploymentTechnologyElements pDeploymentTechnology;
 	private final InfrastructureTechnologyElements pInfrastructureTechnology;
 	private final OperationEnvironmentElements pOperationEnvironment;
+	private final PropertyFeatureElements ePropertyFeature;
 	private final TechnologySpecificPropertyElements pTechnologySpecificProperty;
 	private final ServiceJoinPointTypeElements eServiceJoinPointType;
 	private final OperationJoinPointTypeElements eOperationJoinPointType;
@@ -1587,6 +1643,7 @@ public class TechnologyDslGrammarAccess extends AbstractGrammarElementFinder {
 		this.pDeploymentTechnology = new DeploymentTechnologyElements();
 		this.pInfrastructureTechnology = new InfrastructureTechnologyElements();
 		this.pOperationEnvironment = new OperationEnvironmentElements();
+		this.ePropertyFeature = new PropertyFeatureElements();
 		this.pTechnologySpecificProperty = new TechnologySpecificPropertyElements();
 		this.eServiceJoinPointType = new ServiceJoinPointTypeElements();
 		this.eOperationJoinPointType = new OperationJoinPointTypeElements();
@@ -1817,8 +1874,21 @@ public class TechnologyDslGrammarAccess extends AbstractGrammarElementFinder {
 		return getOperationEnvironmentAccess().getRule();
 	}
 	
+	//enum PropertyFeature:
+	//	MANDATORY="mandatory" |
+	//	SINGLE_VALUED="singleval";
+	public PropertyFeatureElements getPropertyFeatureAccess() {
+		return ePropertyFeature;
+	}
+	
+	public EnumRule getPropertyFeatureRule() {
+		return getPropertyFeatureAccess().getRule();
+	}
+	
 	//TechnologySpecificProperty:
-	//	type=PrimitiveType name=ID ('=' defaultValue=PrimitiveValue | mandatory?='mandatory')?
+	//	type=PrimitiveType name=ID ('=' defaultValue=PrimitiveValue)? ('{'
+	//	features+=PropertyFeature (',' features+=PropertyFeature)*
+	//	'}')?
 	//	';';
 	public TechnologySpecificPropertyElements getTechnologySpecificPropertyAccess() {
 		return pTechnologySpecificProperty;

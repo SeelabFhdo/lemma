@@ -507,7 +507,7 @@ value : String</panel_attributes>
 name : String
 type : String
 defaultValue : String
-mandatory : Boolean</panel_attributes>
+featureNames : String[*]</panel_attributes>
     <additional_attributes/>
   </element>
   <element>

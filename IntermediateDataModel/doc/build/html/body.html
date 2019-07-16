@@ -145,7 +145,7 @@ model was derived.</p>
 
 <dl class="attribute">
 <dt>
-<code class="descname">IntermediateImport [*] imports</code></dt>
+<code class="descname">IntermediateImport[*] imports</code></dt>
 <dd><p>References to Intermediate Data Model instances that were
 imported into the source Domain Data Model
 (cf. <code class="xref py py-class docutils literal notranslate"><span class="pre">IntermediateImport</span></code>).</p>
@@ -970,11 +970,34 @@ the Technology Modeling Language validator.</p>
 
 <dl class="attribute">
 <dt>
-<code class="descname">boolean mandatory</code></dt>
-<dd><p>Flag to indicate if the property needs to receive a value. It is
-guaranteed by the Service Modeling Language that all mandatory values of
-a property receive a value when the respective
-<a class="reference internal" href="#IntermediateImportedAspect" title="IntermediateImportedAspect"><code class="xref java java-type docutils literal notranslate"><span class="pre">IntermediateImportedAspect</span></code></a> is used.</p>
+<code class="descname">String[*] featureNames</code></dt>
+<dd><p>This attribute contains the names of all features specified for the
+property. The following values are possible:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="25%" />
+<col width="75%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>Feature Name</strong></td>
+<td><strong>Description</strong></td>
+</tr>
+<tr class="row-even"><td>MANDATORY</td>
+<td>Flag to indicate if the property needs to receive a
+value. It is guaranteed by the languages’ validators
+that all mandatory values of a property receive a
+value when the respective
+<a class="reference internal" href="#IntermediateImportedAspect" title="IntermediateImportedAspect"><code class="xref java java-type docutils literal notranslate"><span class="pre">IntermediateImportedAspect</span></code></a> is used.</td>
+</tr>
+<tr class="row-odd"><td>SINGE_VALUED</td>
+<td>Flag to indicate that a property may only receive a
+value once. Note that for <a class="reference internal" href="#IntermediateImportedAspect" title="IntermediateImportedAspect"><code class="xref java java-type docutils literal notranslate"><span class="pre">aspects</span></code></a> the languages’
+validators guarantee that properties receive values
+only once. However, it is not guaranteed that aspect
+properties exhibits this feature.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">

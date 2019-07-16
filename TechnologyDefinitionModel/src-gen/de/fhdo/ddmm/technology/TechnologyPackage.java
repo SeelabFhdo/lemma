@@ -1038,22 +1038,13 @@ public interface TechnologyPackage extends EPackage {
     int TECHNOLOGY_SPECIFIC_PROPERTY__NAME = 0;
 
     /**
-     * The feature id for the '<em><b>Mandatory</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int TECHNOLOGY_SPECIFIC_PROPERTY__MANDATORY = 1;
-
-    /**
      * The feature id for the '<em><b>Type</b></em>' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int TECHNOLOGY_SPECIFIC_PROPERTY__TYPE = 2;
+    int TECHNOLOGY_SPECIFIC_PROPERTY__TYPE = 1;
 
     /**
      * The feature id for the '<em><b>Default Value</b></em>' containment reference.
@@ -1062,7 +1053,16 @@ public interface TechnologyPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TECHNOLOGY_SPECIFIC_PROPERTY__DEFAULT_VALUE = 3;
+    int TECHNOLOGY_SPECIFIC_PROPERTY__DEFAULT_VALUE = 2;
+
+    /**
+     * The feature id for the '<em><b>Features</b></em>' attribute list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TECHNOLOGY_SPECIFIC_PROPERTY__FEATURES = 3;
 
     /**
      * The feature id for the '<em><b>Operation Technology</b></em>' container reference.
@@ -1083,13 +1083,22 @@ public interface TechnologyPackage extends EPackage {
     int TECHNOLOGY_SPECIFIC_PROPERTY__TECHNOLOGY_ASPECT = 5;
 
     /**
+     * The feature id for the '<em><b>Is Mandatory</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TECHNOLOGY_SPECIFIC_PROPERTY__IS_MANDATORY = 6;
+
+    /**
      * The number of structural features of the '<em>Specific Property</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int TECHNOLOGY_SPECIFIC_PROPERTY_FEATURE_COUNT = 6;
+    int TECHNOLOGY_SPECIFIC_PROPERTY_FEATURE_COUNT = 7;
 
     /**
      * The number of operations of the '<em>Specific Property</em>' class.
@@ -1778,6 +1787,16 @@ public interface TechnologyPackage extends EPackage {
     int COMPATIBILITY_DIRECTION = 22;
 
     /**
+     * The meta object id for the '{@link de.fhdo.ddmm.technology.PropertyFeature <em>Property Feature</em>}' enum.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.fhdo.ddmm.technology.PropertyFeature
+     * @see de.fhdo.ddmm.technology.impl.TechnologyPackageImpl#getPropertyFeature()
+     * @generated
+     */
+    int PROPERTY_FEATURE = 23;
+
+    /**
      * The meta object id for the '{@link de.fhdo.ddmm.technology.JoinPointType <em>Join Point Type</em>}' enum.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1785,7 +1804,7 @@ public interface TechnologyPackage extends EPackage {
      * @see de.fhdo.ddmm.technology.impl.TechnologyPackageImpl#getJoinPointType()
      * @generated
      */
-    int JOIN_POINT_TYPE = 23;
+    int JOIN_POINT_TYPE = 24;
 
     /**
      * The meta object id for the '{@link de.fhdo.ddmm.technology.PointcutType <em>Pointcut Type</em>}' enum.
@@ -1795,7 +1814,7 @@ public interface TechnologyPackage extends EPackage {
      * @see de.fhdo.ddmm.technology.impl.TechnologyPackageImpl#getPointcutType()
      * @generated
      */
-    int POINTCUT_TYPE = 24;
+    int POINTCUT_TYPE = 25;
 
     /**
      * The meta object id for the '<em>Pointcut Type Strings Map</em>' data type.
@@ -1805,7 +1824,7 @@ public interface TechnologyPackage extends EPackage {
      * @see de.fhdo.ddmm.technology.impl.TechnologyPackageImpl#getPointcutTypeStringsMap()
      * @generated
      */
-    int POINTCUT_TYPE_STRINGS_MAP = 25;
+    int POINTCUT_TYPE_STRINGS_MAP = 26;
 
 
     /**
@@ -2472,17 +2491,6 @@ public interface TechnologyPackage extends EPackage {
     EAttribute getTechnologySpecificProperty_Name();
 
     /**
-     * Returns the meta object for the attribute '{@link de.fhdo.ddmm.technology.TechnologySpecificProperty#isMandatory <em>Mandatory</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Mandatory</em>'.
-     * @see de.fhdo.ddmm.technology.TechnologySpecificProperty#isMandatory()
-     * @see #getTechnologySpecificProperty()
-     * @generated
-     */
-    EAttribute getTechnologySpecificProperty_Mandatory();
-
-    /**
      * Returns the meta object for the containment reference '{@link de.fhdo.ddmm.technology.TechnologySpecificProperty#getType <em>Type</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2505,6 +2513,17 @@ public interface TechnologyPackage extends EPackage {
     EReference getTechnologySpecificProperty_DefaultValue();
 
     /**
+     * Returns the meta object for the attribute list '{@link de.fhdo.ddmm.technology.TechnologySpecificProperty#getFeatures <em>Features</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute list '<em>Features</em>'.
+     * @see de.fhdo.ddmm.technology.TechnologySpecificProperty#getFeatures()
+     * @see #getTechnologySpecificProperty()
+     * @generated
+     */
+    EAttribute getTechnologySpecificProperty_Features();
+
+    /**
      * Returns the meta object for the container reference '{@link de.fhdo.ddmm.technology.TechnologySpecificProperty#getOperationTechnology <em>Operation Technology</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2525,6 +2544,17 @@ public interface TechnologyPackage extends EPackage {
      * @generated
      */
     EReference getTechnologySpecificProperty_TechnologyAspect();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.fhdo.ddmm.technology.TechnologySpecificProperty#isIsMandatory <em>Is Mandatory</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Is Mandatory</em>'.
+     * @see de.fhdo.ddmm.technology.TechnologySpecificProperty#isIsMandatory()
+     * @see #getTechnologySpecificProperty()
+     * @generated
+     */
+    EAttribute getTechnologySpecificProperty_IsMandatory();
 
     /**
      * Returns the meta object for class '{@link de.fhdo.ddmm.technology.TechnologySpecificPropertyValueAssignment <em>Specific Property Value Assignment</em>}'.
@@ -2992,6 +3022,16 @@ public interface TechnologyPackage extends EPackage {
      * @generated
      */
     EEnum getCompatibilityDirection();
+
+    /**
+     * Returns the meta object for enum '{@link de.fhdo.ddmm.technology.PropertyFeature <em>Property Feature</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for enum '<em>Property Feature</em>'.
+     * @see de.fhdo.ddmm.technology.PropertyFeature
+     * @generated
+     */
+    EEnum getPropertyFeature();
 
     /**
      * Returns the meta object for enum '{@link de.fhdo.ddmm.technology.JoinPointType <em>Join Point Type</em>}'.
@@ -3572,14 +3612,6 @@ public interface TechnologyPackage extends EPackage {
         EAttribute TECHNOLOGY_SPECIFIC_PROPERTY__NAME = eINSTANCE.getTechnologySpecificProperty_Name();
 
         /**
-         * The meta object literal for the '<em><b>Mandatory</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute TECHNOLOGY_SPECIFIC_PROPERTY__MANDATORY = eINSTANCE.getTechnologySpecificProperty_Mandatory();
-
-        /**
          * The meta object literal for the '<em><b>Type</b></em>' containment reference feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -3596,6 +3628,14 @@ public interface TechnologyPackage extends EPackage {
         EReference TECHNOLOGY_SPECIFIC_PROPERTY__DEFAULT_VALUE = eINSTANCE.getTechnologySpecificProperty_DefaultValue();
 
         /**
+         * The meta object literal for the '<em><b>Features</b></em>' attribute list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute TECHNOLOGY_SPECIFIC_PROPERTY__FEATURES = eINSTANCE.getTechnologySpecificProperty_Features();
+
+        /**
          * The meta object literal for the '<em><b>Operation Technology</b></em>' container reference feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -3610,6 +3650,14 @@ public interface TechnologyPackage extends EPackage {
          * @generated
          */
         EReference TECHNOLOGY_SPECIFIC_PROPERTY__TECHNOLOGY_ASPECT = eINSTANCE.getTechnologySpecificProperty_TechnologyAspect();
+
+        /**
+         * The meta object literal for the '<em><b>Is Mandatory</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute TECHNOLOGY_SPECIFIC_PROPERTY__IS_MANDATORY = eINSTANCE.getTechnologySpecificProperty_IsMandatory();
 
         /**
          * The meta object literal for the '{@link de.fhdo.ddmm.technology.impl.TechnologySpecificPropertyValueAssignmentImpl <em>Specific Property Value Assignment</em>}' class.
@@ -3984,6 +4032,16 @@ public interface TechnologyPackage extends EPackage {
          * @generated
          */
         EEnum COMPATIBILITY_DIRECTION = eINSTANCE.getCompatibilityDirection();
+
+        /**
+         * The meta object literal for the '{@link de.fhdo.ddmm.technology.PropertyFeature <em>Property Feature</em>}' enum.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.fhdo.ddmm.technology.PropertyFeature
+         * @see de.fhdo.ddmm.technology.impl.TechnologyPackageImpl#getPropertyFeature()
+         * @generated
+         */
+        EEnum PROPERTY_FEATURE = eINSTANCE.getPropertyFeature();
 
         /**
          * The meta object literal for the '{@link de.fhdo.ddmm.technology.JoinPointType <em>Join Point Type</em>}' enum.
