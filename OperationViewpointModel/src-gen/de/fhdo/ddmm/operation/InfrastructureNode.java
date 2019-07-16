@@ -19,6 +19,7 @@ import org.eclipse.emf.common.util.EList;
  * The following features are supported:
  * </p>
  * <ul>
+ *   <li>{@link de.fhdo.ddmm.operation.InfrastructureNode#getUsedByNodes <em>Used By Nodes</em>}</li>
  *   <li>{@link de.fhdo.ddmm.operation.InfrastructureNode#getInfrastructureTechnology <em>Infrastructure Technology</em>}</li>
  *   <li>{@link de.fhdo.ddmm.operation.InfrastructureNode#getEndpoints <em>Endpoints</em>}</li>
  *   <li>{@link de.fhdo.ddmm.operation.InfrastructureNode#getOperationModel <em>Operation Model</em>}</li>
@@ -30,8 +31,8 @@ import org.eclipse.emf.common.util.EList;
  */
 public interface InfrastructureNode extends OperationNode {
     /**
-     * Returns the value of the '<em><b>Infrastructure Technology</b></em>' containment reference.
-     * It is bidirectional and its opposite is '{@link de.fhdo.ddmm.operation.InfrastructureTechnologyReference#getInfrastructureNode <em>Infrastructure Node</em>}'.
+     * Returns the value of the '<em><b>Used By Nodes</b></em>' reference list.
+     * The list contents are of type {@link de.fhdo.ddmm.operation.OperationNode}.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
@@ -45,7 +46,25 @@ public interface InfrastructureNode extends OperationNode {
      *          Ensured by: DSL scope provider.
      *     (C3) Endpoints must be unique for protocol and data format combination.
      *          Ensured by: DSL validator.
+     *     (C4) Nodes using this node must be unique.
+     *          Ensured by: DSL validator.
      * <!-- end-model-doc -->
+     * @return the value of the '<em>Used By Nodes</em>' reference list.
+     * @see de.fhdo.ddmm.operation.OperationPackage#getInfrastructureNode_UsedByNodes()
+     * @model
+     * @generated
+     */
+    EList<OperationNode> getUsedByNodes();
+
+    /**
+     * Returns the value of the '<em><b>Infrastructure Technology</b></em>' containment reference.
+     * It is bidirectional and its opposite is '{@link de.fhdo.ddmm.operation.InfrastructureTechnologyReference#getInfrastructureNode <em>Infrastructure Node</em>}'.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Infrastructure Technology</em>' containment reference isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
      * @return the value of the '<em>Infrastructure Technology</em>' containment reference.
      * @see #setInfrastructureTechnology(InfrastructureTechnologyReference)
      * @see de.fhdo.ddmm.operation.OperationPackage#getInfrastructureNode_InfrastructureTechnology()

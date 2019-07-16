@@ -669,6 +669,23 @@ public class OperationDslValidator extends AbstractOperationDslValidator {
   }
   
   /**
+   * Check that node is used by unique nodes
+   */
+  @Check
+  public void checkUsingNodesUniqueness(final InfrastructureNode infrastructureNode) {
+    final Function<OperationNode, String> _function = (OperationNode it) -> {
+      return it.getName();
+    };
+    final Integer duplicateIndex = DdmmUtils.<OperationNode, String>getDuplicateIndex(infrastructureNode.getUsedByNodes(), _function);
+    if (((duplicateIndex).intValue() > (-1))) {
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("Duplicate node");
+      this.error(_builder.toString(), infrastructureNode, 
+        OperationPackage.Literals.INFRASTRUCTURE_NODE__USED_BY_NODES, (duplicateIndex).intValue());
+    }
+  }
+  
+  /**
    * Warn, if required microservices are not deployed in the same model
    */
   @Check
@@ -761,7 +778,8 @@ public class OperationDslValidator extends AbstractOperationDslValidator {
       boolean _not = (!_contains);
       if (_not) {
         final Consumer<ImportedMicroservice> _function_5 = (ImportedMicroservice it) -> {
-          this.warning("Service is only deployed to infrastructure node but not to container", it, OperationPackage.Literals.IMPORTED_MICROSERVICE__OPERATION_NODE);
+          this.warning("Service is not deployed to container", it, 
+            OperationPackage.Literals.IMPORTED_MICROSERVICE__OPERATION_NODE);
         };
         associatedImportedServices.forEach(_function_5);
       }

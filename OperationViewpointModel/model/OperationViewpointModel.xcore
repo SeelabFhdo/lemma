@@ -129,8 +129,11 @@ class InfrastructureNode extends OperationNode {
      *          Ensured by: DSL scope provider.
      *     (C3) Endpoints must be unique for protocol and data format combination.
      *          Ensured by: DSL validator.
+     *     (C4) Nodes using this node must be unique.
+     *          Ensured by: DSL validator.
      */
 
+    refers OperationNode[] usedByNodes
     contains InfrastructureTechnologyReference infrastructureTechnology opposite infrastructureNode
     contains BasicEndpoint[] endpoints opposite infrastructureNode
 

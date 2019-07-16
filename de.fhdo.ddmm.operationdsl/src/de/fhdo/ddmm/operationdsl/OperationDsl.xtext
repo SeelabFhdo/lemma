@@ -65,7 +65,11 @@ InfrastructureNode returns InfrastructureNode:
     ('with' 'operation' 'environment'
         operationEnvironment=[technology::OperationEnvironment|STRING]
     )?
-    'used' 'by' deployedServices+=ImportedMicroservice (',' deployedServices+=ImportedMicroservice)*
+    (
+        'used' 'by' 'services' deployedServices+=ImportedMicroservice
+        (',' deployedServices+=ImportedMicroservice)*
+    )?
+    ('used' 'by' 'nodes' usedByNodes+=[OperationNode] (',' usedByNodes+=[OperationNode])*)?
     '{'
         ('aspects' '{'
             aspects+=ImportedOperationAspect+

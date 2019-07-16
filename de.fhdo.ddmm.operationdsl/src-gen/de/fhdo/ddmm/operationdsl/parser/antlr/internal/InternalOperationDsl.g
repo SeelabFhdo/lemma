@@ -672,44 +672,25 @@ ruleInfrastructureNode returns [EObject current=null]
 				)
 			)
 		)?
-		otherlv_12='used'
-		{
-			newLeafNode(otherlv_12, grammarAccess.getInfrastructureNodeAccess().getUsedKeyword_5());
-		}
-		otherlv_13='by'
-		{
-			newLeafNode(otherlv_13, grammarAccess.getInfrastructureNodeAccess().getByKeyword_6());
-		}
 		(
-			(
-				{
-					newCompositeNode(grammarAccess.getInfrastructureNodeAccess().getDeployedServicesImportedMicroserviceParserRuleCall_7_0());
-				}
-				lv_deployedServices_14_0=ruleImportedMicroservice
-				{
-					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getInfrastructureNodeRule());
-					}
-					add(
-						$current,
-						"deployedServices",
-						lv_deployedServices_14_0,
-						"de.fhdo.ddmm.operationdsl.OperationDsl.ImportedMicroservice");
-					afterParserOrEnumRuleCall();
-				}
-			)
-		)
-		(
-			otherlv_15=','
+			otherlv_12='used'
 			{
-				newLeafNode(otherlv_15, grammarAccess.getInfrastructureNodeAccess().getCommaKeyword_8_0());
+				newLeafNode(otherlv_12, grammarAccess.getInfrastructureNodeAccess().getUsedKeyword_5_0());
+			}
+			otherlv_13='by'
+			{
+				newLeafNode(otherlv_13, grammarAccess.getInfrastructureNodeAccess().getByKeyword_5_1());
+			}
+			otherlv_14='services'
+			{
+				newLeafNode(otherlv_14, grammarAccess.getInfrastructureNodeAccess().getServicesKeyword_5_2());
 			}
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getInfrastructureNodeAccess().getDeployedServicesImportedMicroserviceParserRuleCall_8_1_0());
+						newCompositeNode(grammarAccess.getInfrastructureNodeAccess().getDeployedServicesImportedMicroserviceParserRuleCall_5_3_0());
 					}
-					lv_deployedServices_16_0=ruleImportedMicroservice
+					lv_deployedServices_15_0=ruleImportedMicroservice
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getInfrastructureNodeRule());
@@ -717,32 +698,103 @@ ruleInfrastructureNode returns [EObject current=null]
 						add(
 							$current,
 							"deployedServices",
-							lv_deployedServices_16_0,
+							lv_deployedServices_15_0,
 							"de.fhdo.ddmm.operationdsl.OperationDsl.ImportedMicroservice");
 						afterParserOrEnumRuleCall();
 					}
 				)
 			)
-		)*
-		otherlv_17='{'
-		{
-			newLeafNode(otherlv_17, grammarAccess.getInfrastructureNodeAccess().getLeftCurlyBracketKeyword_9());
-		}
+			(
+				otherlv_16=','
+				{
+					newLeafNode(otherlv_16, grammarAccess.getInfrastructureNodeAccess().getCommaKeyword_5_4_0());
+				}
+				(
+					(
+						{
+							newCompositeNode(grammarAccess.getInfrastructureNodeAccess().getDeployedServicesImportedMicroserviceParserRuleCall_5_4_1_0());
+						}
+						lv_deployedServices_17_0=ruleImportedMicroservice
+						{
+							if ($current==null) {
+								$current = createModelElementForParent(grammarAccess.getInfrastructureNodeRule());
+							}
+							add(
+								$current,
+								"deployedServices",
+								lv_deployedServices_17_0,
+								"de.fhdo.ddmm.operationdsl.OperationDsl.ImportedMicroservice");
+							afterParserOrEnumRuleCall();
+						}
+					)
+				)
+			)*
+		)?
 		(
-			otherlv_18='aspects'
+			otherlv_18='used'
 			{
-				newLeafNode(otherlv_18, grammarAccess.getInfrastructureNodeAccess().getAspectsKeyword_10_0());
+				newLeafNode(otherlv_18, grammarAccess.getInfrastructureNodeAccess().getUsedKeyword_6_0());
 			}
-			otherlv_19='{'
+			otherlv_19='by'
 			{
-				newLeafNode(otherlv_19, grammarAccess.getInfrastructureNodeAccess().getLeftCurlyBracketKeyword_10_1());
+				newLeafNode(otherlv_19, grammarAccess.getInfrastructureNodeAccess().getByKeyword_6_1());
+			}
+			otherlv_20='nodes'
+			{
+				newLeafNode(otherlv_20, grammarAccess.getInfrastructureNodeAccess().getNodesKeyword_6_2());
 			}
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getInfrastructureNodeAccess().getAspectsImportedOperationAspectParserRuleCall_10_2_0());
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getInfrastructureNodeRule());
+						}
 					}
-					lv_aspects_20_0=ruleImportedOperationAspect
+					otherlv_21=RULE_ID
+					{
+						newLeafNode(otherlv_21, grammarAccess.getInfrastructureNodeAccess().getUsedByNodesOperationNodeCrossReference_6_3_0());
+					}
+				)
+			)
+			(
+				otherlv_22=','
+				{
+					newLeafNode(otherlv_22, grammarAccess.getInfrastructureNodeAccess().getCommaKeyword_6_4_0());
+				}
+				(
+					(
+						{
+							if ($current==null) {
+								$current = createModelElement(grammarAccess.getInfrastructureNodeRule());
+							}
+						}
+						otherlv_23=RULE_ID
+						{
+							newLeafNode(otherlv_23, grammarAccess.getInfrastructureNodeAccess().getUsedByNodesOperationNodeCrossReference_6_4_1_0());
+						}
+					)
+				)
+			)*
+		)?
+		otherlv_24='{'
+		{
+			newLeafNode(otherlv_24, grammarAccess.getInfrastructureNodeAccess().getLeftCurlyBracketKeyword_7());
+		}
+		(
+			otherlv_25='aspects'
+			{
+				newLeafNode(otherlv_25, grammarAccess.getInfrastructureNodeAccess().getAspectsKeyword_8_0());
+			}
+			otherlv_26='{'
+			{
+				newLeafNode(otherlv_26, grammarAccess.getInfrastructureNodeAccess().getLeftCurlyBracketKeyword_8_1());
+			}
+			(
+				(
+					{
+						newCompositeNode(grammarAccess.getInfrastructureNodeAccess().getAspectsImportedOperationAspectParserRuleCall_8_2_0());
+					}
+					lv_aspects_27_0=ruleImportedOperationAspect
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getInfrastructureNodeRule());
@@ -750,36 +802,36 @@ ruleInfrastructureNode returns [EObject current=null]
 						add(
 							$current,
 							"aspects",
-							lv_aspects_20_0,
+							lv_aspects_27_0,
 							"de.fhdo.ddmm.operationdsl.OperationDsl.ImportedOperationAspect");
 						afterParserOrEnumRuleCall();
 					}
 				)
 			)+
-			otherlv_21='}'
+			otherlv_28='}'
 			{
-				newLeafNode(otherlv_21, grammarAccess.getInfrastructureNodeAccess().getRightCurlyBracketKeyword_10_3());
+				newLeafNode(otherlv_28, grammarAccess.getInfrastructureNodeAccess().getRightCurlyBracketKeyword_8_3());
 			}
 		)?
 		(
-			otherlv_22='default'
+			otherlv_29='default'
 			{
-				newLeafNode(otherlv_22, grammarAccess.getInfrastructureNodeAccess().getDefaultKeyword_11_0());
+				newLeafNode(otherlv_29, grammarAccess.getInfrastructureNodeAccess().getDefaultKeyword_9_0());
 			}
-			otherlv_23='values'
+			otherlv_30='values'
 			{
-				newLeafNode(otherlv_23, grammarAccess.getInfrastructureNodeAccess().getValuesKeyword_11_1());
+				newLeafNode(otherlv_30, grammarAccess.getInfrastructureNodeAccess().getValuesKeyword_9_1());
 			}
-			otherlv_24='{'
+			otherlv_31='{'
 			{
-				newLeafNode(otherlv_24, grammarAccess.getInfrastructureNodeAccess().getLeftCurlyBracketKeyword_11_2());
+				newLeafNode(otherlv_31, grammarAccess.getInfrastructureNodeAccess().getLeftCurlyBracketKeyword_9_2());
 			}
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getInfrastructureNodeAccess().getDefaultServicePropertyValuesPropertyValueAssignmentParserRuleCall_11_3_0());
+						newCompositeNode(grammarAccess.getInfrastructureNodeAccess().getDefaultServicePropertyValuesPropertyValueAssignmentParserRuleCall_9_3_0());
 					}
-					lv_defaultServicePropertyValues_25_0=rulePropertyValueAssignment
+					lv_defaultServicePropertyValues_32_0=rulePropertyValueAssignment
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getInfrastructureNodeRule());
@@ -787,32 +839,32 @@ ruleInfrastructureNode returns [EObject current=null]
 						add(
 							$current,
 							"defaultServicePropertyValues",
-							lv_defaultServicePropertyValues_25_0,
+							lv_defaultServicePropertyValues_32_0,
 							"de.fhdo.ddmm.operationdsl.OperationDsl.PropertyValueAssignment");
 						afterParserOrEnumRuleCall();
 					}
 				)
 			)+
-			otherlv_26='}'
+			otherlv_33='}'
 			{
-				newLeafNode(otherlv_26, grammarAccess.getInfrastructureNodeAccess().getRightCurlyBracketKeyword_11_4());
+				newLeafNode(otherlv_33, grammarAccess.getInfrastructureNodeAccess().getRightCurlyBracketKeyword_9_4());
 			}
 		)?
 		(
-			otherlv_27='endpoints'
+			otherlv_34='endpoints'
 			{
-				newLeafNode(otherlv_27, grammarAccess.getInfrastructureNodeAccess().getEndpointsKeyword_12_0());
+				newLeafNode(otherlv_34, grammarAccess.getInfrastructureNodeAccess().getEndpointsKeyword_10_0());
 			}
-			otherlv_28='{'
+			otherlv_35='{'
 			{
-				newLeafNode(otherlv_28, grammarAccess.getInfrastructureNodeAccess().getLeftCurlyBracketKeyword_12_1());
+				newLeafNode(otherlv_35, grammarAccess.getInfrastructureNodeAccess().getLeftCurlyBracketKeyword_10_1());
 			}
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getInfrastructureNodeAccess().getEndpointsBasicEndpointParserRuleCall_12_2_0());
+						newCompositeNode(grammarAccess.getInfrastructureNodeAccess().getEndpointsBasicEndpointParserRuleCall_10_2_0());
 					}
-					lv_endpoints_29_0=ruleBasicEndpoint
+					lv_endpoints_36_0=ruleBasicEndpoint
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getInfrastructureNodeRule());
@@ -820,23 +872,23 @@ ruleInfrastructureNode returns [EObject current=null]
 						add(
 							$current,
 							"endpoints",
-							lv_endpoints_29_0,
+							lv_endpoints_36_0,
 							"de.fhdo.ddmm.operationdsl.OperationDsl.BasicEndpoint");
 						afterParserOrEnumRuleCall();
 					}
 				)
 			)+
-			otherlv_30='}'
+			otherlv_37='}'
 			{
-				newLeafNode(otherlv_30, grammarAccess.getInfrastructureNodeAccess().getRightCurlyBracketKeyword_12_3());
+				newLeafNode(otherlv_37, grammarAccess.getInfrastructureNodeAccess().getRightCurlyBracketKeyword_10_3());
 			}
 		)?
 		(
 			(
 				{
-					newCompositeNode(grammarAccess.getInfrastructureNodeAccess().getDeploymentSpecificationsServiceDeploymentSpecificationParserRuleCall_13_0());
+					newCompositeNode(grammarAccess.getInfrastructureNodeAccess().getDeploymentSpecificationsServiceDeploymentSpecificationParserRuleCall_11_0());
 				}
-				lv_deploymentSpecifications_31_0=ruleServiceDeploymentSpecification
+				lv_deploymentSpecifications_38_0=ruleServiceDeploymentSpecification
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getInfrastructureNodeRule());
@@ -844,15 +896,15 @@ ruleInfrastructureNode returns [EObject current=null]
 					add(
 						$current,
 						"deploymentSpecifications",
-						lv_deploymentSpecifications_31_0,
+						lv_deploymentSpecifications_38_0,
 						"de.fhdo.ddmm.operationdsl.OperationDsl.ServiceDeploymentSpecification");
 					afterParserOrEnumRuleCall();
 				}
 			)
 		)*
-		otherlv_32='}'
+		otherlv_39='}'
 		{
-			newLeafNode(otherlv_32, grammarAccess.getInfrastructureNodeAccess().getRightCurlyBracketKeyword_14());
+			newLeafNode(otherlv_39, grammarAccess.getInfrastructureNodeAccess().getRightCurlyBracketKeyword_12());
 		}
 	)
 ;

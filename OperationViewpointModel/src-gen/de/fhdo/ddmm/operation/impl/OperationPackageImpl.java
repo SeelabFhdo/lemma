@@ -405,7 +405,7 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
      * @generated
      */
     @Override
-    public EReference getInfrastructureNode_InfrastructureTechnology() {
+    public EReference getInfrastructureNode_UsedByNodes() {
         return (EReference)infrastructureNodeEClass.getEStructuralFeatures().get(0);
     }
 
@@ -415,7 +415,7 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
      * @generated
      */
     @Override
-    public EReference getInfrastructureNode_Endpoints() {
+    public EReference getInfrastructureNode_InfrastructureTechnology() {
         return (EReference)infrastructureNodeEClass.getEStructuralFeatures().get(1);
     }
 
@@ -425,8 +425,18 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
      * @generated
      */
     @Override
-    public EReference getInfrastructureNode_OperationModel() {
+    public EReference getInfrastructureNode_Endpoints() {
         return (EReference)infrastructureNodeEClass.getEStructuralFeatures().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getInfrastructureNode_OperationModel() {
+        return (EReference)infrastructureNodeEClass.getEStructuralFeatures().get(3);
     }
 
     /**
@@ -803,6 +813,7 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
         createEReference(deploymentTechnologyReferenceEClass, DEPLOYMENT_TECHNOLOGY_REFERENCE__CONTAINER);
 
         infrastructureNodeEClass = createEClass(INFRASTRUCTURE_NODE);
+        createEReference(infrastructureNodeEClass, INFRASTRUCTURE_NODE__USED_BY_NODES);
         createEReference(infrastructureNodeEClass, INFRASTRUCTURE_NODE__INFRASTRUCTURE_TECHNOLOGY);
         createEReference(infrastructureNodeEClass, INFRASTRUCTURE_NODE__ENDPOINTS);
         createEReference(infrastructureNodeEClass, INFRASTRUCTURE_NODE__OPERATION_MODEL);
@@ -911,6 +922,7 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
         initEReference(getDeploymentTechnologyReference_Container(), this.getContainer(), this.getContainer_DeploymentTechnology(), "container", null, 0, 1, DeploymentTechnologyReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(infrastructureNodeEClass, InfrastructureNode.class, "InfrastructureNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEReference(getInfrastructureNode_UsedByNodes(), this.getOperationNode(), null, "usedByNodes", null, 0, -1, InfrastructureNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getInfrastructureNode_InfrastructureTechnology(), this.getInfrastructureTechnologyReference(), this.getInfrastructureTechnologyReference_InfrastructureNode(), "infrastructureTechnology", null, 0, 1, InfrastructureNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getInfrastructureNode_Endpoints(), this.getBasicEndpoint(), this.getBasicEndpoint_InfrastructureNode(), "endpoints", null, 0, -1, InfrastructureNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getInfrastructureNode_OperationModel(), this.getOperationModel(), this.getOperationModel_InfrastructureNodes(), "operationModel", null, 0, 1, InfrastructureNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

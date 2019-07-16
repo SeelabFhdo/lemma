@@ -6,6 +6,7 @@ import de.fhdo.ddmm.operation.BasicEndpoint;
 import de.fhdo.ddmm.operation.InfrastructureNode;
 import de.fhdo.ddmm.operation.InfrastructureTechnologyReference;
 import de.fhdo.ddmm.operation.OperationModel;
+import de.fhdo.ddmm.operation.OperationNode;
 import de.fhdo.ddmm.operation.OperationPackage;
 
 import java.util.Collection;
@@ -21,6 +22,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
+import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -32,6 +34,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link de.fhdo.ddmm.operation.impl.InfrastructureNodeImpl#getUsedByNodes <em>Used By Nodes</em>}</li>
  *   <li>{@link de.fhdo.ddmm.operation.impl.InfrastructureNodeImpl#getInfrastructureTechnology <em>Infrastructure Technology</em>}</li>
  *   <li>{@link de.fhdo.ddmm.operation.impl.InfrastructureNodeImpl#getEndpoints <em>Endpoints</em>}</li>
  *   <li>{@link de.fhdo.ddmm.operation.impl.InfrastructureNodeImpl#getOperationModel <em>Operation Model</em>}</li>
@@ -40,6 +43,16 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * @generated
  */
 public class InfrastructureNodeImpl extends OperationNodeImpl implements InfrastructureNode {
+    /**
+     * The cached value of the '{@link #getUsedByNodes() <em>Used By Nodes</em>}' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getUsedByNodes()
+     * @generated
+     * @ordered
+     */
+    protected EList<OperationNode> usedByNodes;
+
     /**
      * The cached value of the '{@link #getInfrastructureTechnology() <em>Infrastructure Technology</em>}' containment reference.
      * <!-- begin-user-doc -->
@@ -77,6 +90,19 @@ public class InfrastructureNodeImpl extends OperationNodeImpl implements Infrast
     @Override
     protected EClass eStaticClass() {
         return OperationPackage.Literals.INFRASTRUCTURE_NODE;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EList<OperationNode> getUsedByNodes() {
+        if (usedByNodes == null) {
+            usedByNodes = new EObjectResolvingEList<OperationNode>(OperationNode.class, this, OperationPackage.INFRASTRUCTURE_NODE__USED_BY_NODES);
+        }
+        return usedByNodes;
     }
 
     /**
@@ -253,6 +279,8 @@ public class InfrastructureNodeImpl extends OperationNodeImpl implements Infrast
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
+            case OperationPackage.INFRASTRUCTURE_NODE__USED_BY_NODES:
+                return getUsedByNodes();
             case OperationPackage.INFRASTRUCTURE_NODE__INFRASTRUCTURE_TECHNOLOGY:
                 return getInfrastructureTechnology();
             case OperationPackage.INFRASTRUCTURE_NODE__ENDPOINTS:
@@ -273,6 +301,10 @@ public class InfrastructureNodeImpl extends OperationNodeImpl implements Infrast
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
+            case OperationPackage.INFRASTRUCTURE_NODE__USED_BY_NODES:
+                getUsedByNodes().clear();
+                getUsedByNodes().addAll((Collection<? extends OperationNode>)newValue);
+                return;
             case OperationPackage.INFRASTRUCTURE_NODE__INFRASTRUCTURE_TECHNOLOGY:
                 setInfrastructureTechnology((InfrastructureTechnologyReference)newValue);
                 return;
@@ -295,6 +327,9 @@ public class InfrastructureNodeImpl extends OperationNodeImpl implements Infrast
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
+            case OperationPackage.INFRASTRUCTURE_NODE__USED_BY_NODES:
+                getUsedByNodes().clear();
+                return;
             case OperationPackage.INFRASTRUCTURE_NODE__INFRASTRUCTURE_TECHNOLOGY:
                 setInfrastructureTechnology((InfrastructureTechnologyReference)null);
                 return;
@@ -316,6 +351,8 @@ public class InfrastructureNodeImpl extends OperationNodeImpl implements Infrast
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
+            case OperationPackage.INFRASTRUCTURE_NODE__USED_BY_NODES:
+                return usedByNodes != null && !usedByNodes.isEmpty();
             case OperationPackage.INFRASTRUCTURE_NODE__INFRASTRUCTURE_TECHNOLOGY:
                 return infrastructureTechnology != null;
             case OperationPackage.INFRASTRUCTURE_NODE__ENDPOINTS:

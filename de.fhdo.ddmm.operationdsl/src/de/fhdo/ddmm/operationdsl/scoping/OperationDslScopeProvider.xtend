@@ -216,6 +216,10 @@ class OperationDslScopeProvider extends AbstractOperationDslScopeProvider {
             /* Infrastructure technology imports */
             case OperationPackage::Literals.INFRASTRUCTURE_TECHNOLOGY_REFERENCE__IMPORT:
                 return infrastructureNode.getScopeForAnnotatedTechnologies()
+
+            /* Other nodes using this node */
+            case OperationPackage::Literals.INFRASTRUCTURE_NODE__USED_BY_NODES:
+                return infrastructureNode.getScopeForUsedByNodes()
         }
 
         // If the feature is not InfrastructureNode-specific, delegate scope resolution to
@@ -282,6 +286,14 @@ class OperationDslScopeProvider extends AbstractOperationDslScopeProvider {
      */
     private def getScopeForAnnotatedTechnologies(OperationNode operationNode) {
         return Scopes::scopeFor(operationNode.technologies)
+    }
+
+    /**
+     * Build scope that comprises nodes that can use other nodes
+     */
+    private def getScopeForUsedByNodes(OperationNode operationNode) {
+        // Currently we only allow infrastructure nodes to use other nodes
+        return Scopes::scopeFor(EcoreUtil2.getSiblingsOfType(operationNode, InfrastructureNode))
     }
 
     /**

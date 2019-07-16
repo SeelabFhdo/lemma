@@ -283,6 +283,12 @@ public class OperationDslScopeProvider extends AbstractOperationDslScopeProvider
         return this.getScopeForAnnotatedTechnologies(infrastructureNode);
       }
     }
+    if (!_matched) {
+      if (Objects.equal(reference, OperationPackage.Literals.INFRASTRUCTURE_NODE__USED_BY_NODES)) {
+        _matched=true;
+        return this.getScopeForUsedByNodes(infrastructureNode);
+      }
+    }
     return this.getScope(((OperationNode) infrastructureNode), reference);
   }
   
@@ -351,6 +357,13 @@ public class OperationDslScopeProvider extends AbstractOperationDslScopeProvider
    */
   private IScope getScopeForAnnotatedTechnologies(final OperationNode operationNode) {
     return Scopes.scopeFor(operationNode.getTechnologies());
+  }
+  
+  /**
+   * Build scope that comprises nodes that can use other nodes
+   */
+  private IScope getScopeForUsedByNodes(final OperationNode operationNode) {
+    return Scopes.scopeFor(EcoreUtil2.<InfrastructureNode>getSiblingsOfType(operationNode, InfrastructureNode.class));
   }
   
   /**

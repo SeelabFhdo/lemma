@@ -474,6 +474,17 @@ class OperationDslValidator extends AbstractOperationDslValidator {
     }
 
     /**
+     * Check that node is used by unique nodes
+     */
+    @Check
+    def checkUsingNodesUniqueness(InfrastructureNode infrastructureNode) {
+        val duplicateIndex = DdmmUtils.getDuplicateIndex(infrastructureNode.usedByNodes, [name])
+        if (duplicateIndex > -1)
+            error('''Duplicate node''', infrastructureNode,
+                OperationPackage::Literals.INFRASTRUCTURE_NODE__USED_BY_NODES, duplicateIndex)
+    }
+
+    /**
      * Warn, if required microservices are not deployed in the same model
      */
     @Check
@@ -555,8 +566,8 @@ class OperationDslValidator extends AbstractOperationDslValidator {
         infrastructureServices.forEach[infrastructureService, associatedImportedServices |
             if (!containerServices.contains(infrastructureService))
                 associatedImportedServices.forEach[
-                    warning("Service is only deployed to infrastructure node but not to container",
-                        it, OperationPackage::Literals.IMPORTED_MICROSERVICE__OPERATION_NODE)
+                    warning("Service is not deployed to container", it,
+                        OperationPackage::Literals.IMPORTED_MICROSERVICE__OPERATION_NODE)
                 ]
         ]
     }
