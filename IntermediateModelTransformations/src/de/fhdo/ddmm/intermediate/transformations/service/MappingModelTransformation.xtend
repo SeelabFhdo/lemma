@@ -26,6 +26,7 @@ import com.google.common.base.Function
 import de.fhdo.ddmm.data.intermediate.IntermediateImport
 import de.fhdo.ddmm.technology.mapping.TechnologySpecificFieldMapping
 import de.fhdo.ddmm.technology.mapping.MicroserviceMapping
+import java.util.Set
 
 /**
  * Implementation of the ATL-based model-to-model transformation of mapping models to intermediate
@@ -287,7 +288,7 @@ class MappingModelTransformation
          * complex type mappings expressed in mapping models, while the intermediate service model
          * does not.
          */
-        private static def Map<OutputModel, List<OutputModel>>
+        private static def Map<OutputModel, Set<OutputModel>>
         intermediateDataModelsPerServiceModel(List<TransformationResult> results) {
             val serviceModelsCreatedFromMappingModels = results
                 .filter[inputModels.exists[namespaceUri == MappingPackage.eNS_URI]]
@@ -296,7 +297,7 @@ class MappingModelTransformation
             val mappedComplexTypesPerServiceModel = serviceModelsCreatedFromMappingModels
                 .toMap([it], [(resource.contents.get(0) as ServiceModel).mappedComplexTypes])
 
-            val resultMap = <OutputModel, List<OutputModel>>newHashMap
+            val resultMap = <OutputModel, Set<OutputModel>>newHashMap
             mappedComplexTypesPerServiceModel.forEach[serviceModel, mappedComplexTypes |
                 mappedComplexTypes.forEach[mappedComplexType |
                     // Filter transformation results for intermediate data models that are imported
@@ -309,7 +310,7 @@ class MappingModelTransformation
                         // Assign intermediate data models to those service models, whose derived
                         // intermediate service models import the data models
                         resultMap
-                            .putIfAbsent(serviceModel, newArrayList(outputModel))
+                            .putIfAbsent(serviceModel, newHashSet(outputModel))
                             ?.add(outputModel)
                     ]
                 ]
