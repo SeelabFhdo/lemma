@@ -3,6 +3,7 @@ package de.fhdo.ddmm.operationdsl.scoping;
 import com.google.common.base.Function;
 import com.google.common.base.Objects;
 import com.google.common.base.Predicate;
+import com.google.common.collect.Iterables;
 import de.fhdo.ddmm.data.PrimitiveValue;
 import de.fhdo.ddmm.operation.Container;
 import de.fhdo.ddmm.operation.DeploymentTechnologyReference;
@@ -369,7 +370,17 @@ public class OperationDslScopeProvider extends AbstractOperationDslScopeProvider
    * Build scope that comprises nodes that can use other nodes
    */
   private IScope getScopeForUsedByNodes(final OperationNode operationNode) {
-    return Scopes.scopeFor(EcoreUtil2.<InfrastructureNode>getSiblingsOfType(operationNode, InfrastructureNode.class));
+    final OperationModel modelRoot = EcoreUtil2.<OperationModel>getContainerOfType(operationNode, OperationModel.class);
+    final Function1<Container, Boolean> _function = (Container it) -> {
+      return Boolean.valueOf((!Objects.equal(it, operationNode)));
+    };
+    Iterable<Container> _filter = IterableExtensions.<Container>filter(modelRoot.getContainers(), _function);
+    final Function1<InfrastructureNode, Boolean> _function_1 = (InfrastructureNode it) -> {
+      return Boolean.valueOf((!Objects.equal(it, operationNode)));
+    };
+    Iterable<InfrastructureNode> _filter_1 = IterableExtensions.<InfrastructureNode>filter(modelRoot.getInfrastructureNodes(), _function_1);
+    Iterable<OperationNode> _plus = Iterables.<OperationNode>concat(_filter, _filter_1);
+    return Scopes.scopeFor(_plus);
   }
   
   /**

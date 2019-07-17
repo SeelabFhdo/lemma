@@ -297,8 +297,11 @@ class OperationDslScopeProvider extends AbstractOperationDslScopeProvider {
      * Build scope that comprises nodes that can use other nodes
      */
     private def getScopeForUsedByNodes(OperationNode operationNode) {
-        // Currently we only allow infrastructure nodes to use other nodes
-        return Scopes::scopeFor(EcoreUtil2.getSiblingsOfType(operationNode, InfrastructureNode))
+        val modelRoot = EcoreUtil2.getContainerOfType(operationNode, OperationModel)
+        return Scopes::scopeFor(
+            modelRoot.containers.filter[it != operationNode] +
+            modelRoot.infrastructureNodes.filter[it != operationNode]
+        )
     }
 
     /**
