@@ -183,9 +183,15 @@ public class OperationDslScopeProvider extends AbstractOperationDslScopeProvider
    */
   private IScope getScope(final ImportedOperationAspect importedAspect, final EReference reference) {
     boolean _matched = false;
-    if (Objects.equal(reference, OperationPackage.Literals.IMPORTED_OPERATION_ASPECT__ASPECT)) {
+    if (Objects.equal(reference, OperationPackage.Literals.IMPORTED_OPERATION_ASPECT__TECHNOLOGY)) {
       _matched=true;
-      return this.getScopeForImportedAspect(importedAspect);
+      return this.getScopeForAnnotatedTechnologies(EcoreUtil2.<OperationNode>getContainerOfType(importedAspect, OperationNode.class));
+    }
+    if (!_matched) {
+      if (Objects.equal(reference, OperationPackage.Literals.IMPORTED_OPERATION_ASPECT__ASPECT)) {
+        _matched=true;
+        return this.getScopeForImportedAspect(importedAspect);
+      }
     }
     if (!_matched) {
       if (Objects.equal(reference, TechnologyPackage.Literals.TECHNOLOGY_SPECIFIC_PROPERTY_VALUE_ASSIGNMENT__PROPERTY)) {

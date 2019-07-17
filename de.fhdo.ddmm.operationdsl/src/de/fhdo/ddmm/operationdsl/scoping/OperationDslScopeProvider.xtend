@@ -137,6 +137,11 @@ class OperationDslScopeProvider extends AbstractOperationDslScopeProvider {
      */
     private def getScope(ImportedOperationAspect importedAspect, EReference reference) {
         switch (reference) {
+            /* Technologies */
+            case OperationPackage::Literals.IMPORTED_OPERATION_ASPECT__TECHNOLOGY:
+                return EcoreUtil2.getContainerOfType(importedAspect, OperationNode)
+                    .getScopeForAnnotatedTechnologies()
+
             /* Imported aspects */
             case OperationPackage.Literals.IMPORTED_OPERATION_ASPECT__ASPECT:
                 return importedAspect.getScopeForImportedAspect()
