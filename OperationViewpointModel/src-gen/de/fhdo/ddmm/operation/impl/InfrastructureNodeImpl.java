@@ -35,6 +35,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * </p>
  * <ul>
  *   <li>{@link de.fhdo.ddmm.operation.impl.InfrastructureNodeImpl#getUsedByNodes <em>Used By Nodes</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.operation.impl.InfrastructureNodeImpl#getDependsOnNodes <em>Depends On Nodes</em>}</li>
  *   <li>{@link de.fhdo.ddmm.operation.impl.InfrastructureNodeImpl#getInfrastructureTechnology <em>Infrastructure Technology</em>}</li>
  *   <li>{@link de.fhdo.ddmm.operation.impl.InfrastructureNodeImpl#getEndpoints <em>Endpoints</em>}</li>
  *   <li>{@link de.fhdo.ddmm.operation.impl.InfrastructureNodeImpl#getOperationModel <em>Operation Model</em>}</li>
@@ -52,6 +53,16 @@ public class InfrastructureNodeImpl extends OperationNodeImpl implements Infrast
      * @ordered
      */
     protected EList<OperationNode> usedByNodes;
+
+    /**
+     * The cached value of the '{@link #getDependsOnNodes() <em>Depends On Nodes</em>}' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getDependsOnNodes()
+     * @generated
+     * @ordered
+     */
+    protected EList<OperationNode> dependsOnNodes;
 
     /**
      * The cached value of the '{@link #getInfrastructureTechnology() <em>Infrastructure Technology</em>}' containment reference.
@@ -103,6 +114,19 @@ public class InfrastructureNodeImpl extends OperationNodeImpl implements Infrast
             usedByNodes = new EObjectResolvingEList<OperationNode>(OperationNode.class, this, OperationPackage.INFRASTRUCTURE_NODE__USED_BY_NODES);
         }
         return usedByNodes;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EList<OperationNode> getDependsOnNodes() {
+        if (dependsOnNodes == null) {
+            dependsOnNodes = new EObjectResolvingEList<OperationNode>(OperationNode.class, this, OperationPackage.INFRASTRUCTURE_NODE__DEPENDS_ON_NODES);
+        }
+        return dependsOnNodes;
     }
 
     /**
@@ -281,6 +305,8 @@ public class InfrastructureNodeImpl extends OperationNodeImpl implements Infrast
         switch (featureID) {
             case OperationPackage.INFRASTRUCTURE_NODE__USED_BY_NODES:
                 return getUsedByNodes();
+            case OperationPackage.INFRASTRUCTURE_NODE__DEPENDS_ON_NODES:
+                return getDependsOnNodes();
             case OperationPackage.INFRASTRUCTURE_NODE__INFRASTRUCTURE_TECHNOLOGY:
                 return getInfrastructureTechnology();
             case OperationPackage.INFRASTRUCTURE_NODE__ENDPOINTS:
@@ -304,6 +330,10 @@ public class InfrastructureNodeImpl extends OperationNodeImpl implements Infrast
             case OperationPackage.INFRASTRUCTURE_NODE__USED_BY_NODES:
                 getUsedByNodes().clear();
                 getUsedByNodes().addAll((Collection<? extends OperationNode>)newValue);
+                return;
+            case OperationPackage.INFRASTRUCTURE_NODE__DEPENDS_ON_NODES:
+                getDependsOnNodes().clear();
+                getDependsOnNodes().addAll((Collection<? extends OperationNode>)newValue);
                 return;
             case OperationPackage.INFRASTRUCTURE_NODE__INFRASTRUCTURE_TECHNOLOGY:
                 setInfrastructureTechnology((InfrastructureTechnologyReference)newValue);
@@ -330,6 +360,9 @@ public class InfrastructureNodeImpl extends OperationNodeImpl implements Infrast
             case OperationPackage.INFRASTRUCTURE_NODE__USED_BY_NODES:
                 getUsedByNodes().clear();
                 return;
+            case OperationPackage.INFRASTRUCTURE_NODE__DEPENDS_ON_NODES:
+                getDependsOnNodes().clear();
+                return;
             case OperationPackage.INFRASTRUCTURE_NODE__INFRASTRUCTURE_TECHNOLOGY:
                 setInfrastructureTechnology((InfrastructureTechnologyReference)null);
                 return;
@@ -353,6 +386,8 @@ public class InfrastructureNodeImpl extends OperationNodeImpl implements Infrast
         switch (featureID) {
             case OperationPackage.INFRASTRUCTURE_NODE__USED_BY_NODES:
                 return usedByNodes != null && !usedByNodes.isEmpty();
+            case OperationPackage.INFRASTRUCTURE_NODE__DEPENDS_ON_NODES:
+                return dependsOnNodes != null && !dependsOnNodes.isEmpty();
             case OperationPackage.INFRASTRUCTURE_NODE__INFRASTRUCTURE_TECHNOLOGY:
                 return infrastructureTechnology != null;
             case OperationPackage.INFRASTRUCTURE_NODE__ENDPOINTS:

@@ -409,6 +409,7 @@ public class OperationDslSemanticSequencer extends ServiceDslSemanticSequencer {
 	 *         name=ID 
 	 *         infrastructureTechnology=InfrastructureTechnologyReference 
 	 *         operationEnvironment=[OperationEnvironment|STRING]? 
+	 *         (dependsOnNodes+=[OperationNode|ID] dependsOnNodes+=[OperationNode|ID]*)? 
 	 *         (deployedServices+=ImportedMicroservice deployedServices+=ImportedMicroservice*)? 
 	 *         (usedByNodes+=[OperationNode|ID] usedByNodes+=[OperationNode|ID]*)? 
 	 *         aspects+=ImportedOperationAspect* 

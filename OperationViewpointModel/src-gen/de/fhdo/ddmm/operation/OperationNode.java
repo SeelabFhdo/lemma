@@ -143,7 +143,7 @@ public interface OperationNode extends EObject {
      * @return the value of the '<em>Deployed Services</em>' containment reference list.
      * @see de.fhdo.ddmm.operation.OperationPackage#getOperationNode_DeployedServices()
      * @see de.fhdo.ddmm.operation.ImportedMicroservice#getOperationNode
-     * @model opposite="operationNode" containment="true" required="true"
+     * @model opposite="operationNode" containment="true"
      * @generated
      */
     EList<ImportedMicroservice> getDeployedServices();

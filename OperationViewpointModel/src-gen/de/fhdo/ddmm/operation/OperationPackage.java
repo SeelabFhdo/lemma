@@ -460,13 +460,22 @@ public interface OperationPackage extends EPackage {
     int INFRASTRUCTURE_NODE__USED_BY_NODES = OPERATION_NODE_FEATURE_COUNT + 0;
 
     /**
+     * The feature id for the '<em><b>Depends On Nodes</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INFRASTRUCTURE_NODE__DEPENDS_ON_NODES = OPERATION_NODE_FEATURE_COUNT + 1;
+
+    /**
      * The feature id for the '<em><b>Infrastructure Technology</b></em>' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int INFRASTRUCTURE_NODE__INFRASTRUCTURE_TECHNOLOGY = OPERATION_NODE_FEATURE_COUNT + 1;
+    int INFRASTRUCTURE_NODE__INFRASTRUCTURE_TECHNOLOGY = OPERATION_NODE_FEATURE_COUNT + 2;
 
     /**
      * The feature id for the '<em><b>Endpoints</b></em>' containment reference list.
@@ -475,7 +484,7 @@ public interface OperationPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INFRASTRUCTURE_NODE__ENDPOINTS = OPERATION_NODE_FEATURE_COUNT + 2;
+    int INFRASTRUCTURE_NODE__ENDPOINTS = OPERATION_NODE_FEATURE_COUNT + 3;
 
     /**
      * The feature id for the '<em><b>Operation Model</b></em>' container reference.
@@ -484,7 +493,7 @@ public interface OperationPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INFRASTRUCTURE_NODE__OPERATION_MODEL = OPERATION_NODE_FEATURE_COUNT + 3;
+    int INFRASTRUCTURE_NODE__OPERATION_MODEL = OPERATION_NODE_FEATURE_COUNT + 4;
 
     /**
      * The number of structural features of the '<em>Infrastructure Node</em>' class.
@@ -493,7 +502,7 @@ public interface OperationPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INFRASTRUCTURE_NODE_FEATURE_COUNT = OPERATION_NODE_FEATURE_COUNT + 4;
+    int INFRASTRUCTURE_NODE_FEATURE_COUNT = OPERATION_NODE_FEATURE_COUNT + 5;
 
     /**
      * The number of operations of the '<em>Infrastructure Node</em>' class.
@@ -1146,6 +1155,17 @@ public interface OperationPackage extends EPackage {
     EReference getInfrastructureNode_UsedByNodes();
 
     /**
+     * Returns the meta object for the reference list '{@link de.fhdo.ddmm.operation.InfrastructureNode#getDependsOnNodes <em>Depends On Nodes</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference list '<em>Depends On Nodes</em>'.
+     * @see de.fhdo.ddmm.operation.InfrastructureNode#getDependsOnNodes()
+     * @see #getInfrastructureNode()
+     * @generated
+     */
+    EReference getInfrastructureNode_DependsOnNodes();
+
+    /**
      * Returns the meta object for the containment reference '{@link de.fhdo.ddmm.operation.InfrastructureNode#getInfrastructureTechnology <em>Infrastructure Technology</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1731,6 +1751,14 @@ public interface OperationPackage extends EPackage {
          * @generated
          */
         EReference INFRASTRUCTURE_NODE__USED_BY_NODES = eINSTANCE.getInfrastructureNode_UsedByNodes();
+
+        /**
+         * The meta object literal for the '<em><b>Depends On Nodes</b></em>' reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference INFRASTRUCTURE_NODE__DEPENDS_ON_NODES = eINSTANCE.getInfrastructureNode_DependsOnNodes();
 
         /**
          * The meta object literal for the '<em><b>Infrastructure Technology</b></em>' containment reference feature.

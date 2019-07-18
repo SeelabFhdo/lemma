@@ -65,6 +65,7 @@ InfrastructureNode returns InfrastructureNode:
     ('with' 'operation' 'environment'
         operationEnvironment=[technology::OperationEnvironment|STRING]
     )?
+    ('depends' 'on' 'nodes' dependsOnNodes+=[OperationNode] (',' dependsOnNodes+=[OperationNode])*)?
     (
         'used' 'by' 'services' deployedServices+=ImportedMicroservice
         (',' deployedServices+=ImportedMicroservice)*

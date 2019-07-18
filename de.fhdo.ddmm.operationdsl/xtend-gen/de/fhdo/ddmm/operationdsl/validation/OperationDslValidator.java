@@ -677,6 +677,25 @@ public class OperationDslValidator extends AbstractOperationDslValidator {
   }
   
   /**
+   * Warn if an infrastructure node does seemingly not fulfill an actual purpose, i.e., when it
+   * does not have deployed services assigned, is not used by other nodes, and no other nodes
+   * depend on it
+   */
+  @Check
+  public void warnNodeHasPurpose(final InfrastructureNode infrastructureNode) {
+    if (((!infrastructureNode.getDeployedServices().isEmpty()) || (!infrastructureNode.getUsedByNodes().isEmpty()))) {
+      return;
+    }
+    final Function1<InfrastructureNode, Boolean> _function = (InfrastructureNode it) -> {
+      return Boolean.valueOf(it.getDependsOnNodes().contains(infrastructureNode));
+    };
+    final boolean dependentNodesExist = IterableExtensions.<InfrastructureNode>exists(EcoreUtil2.<InfrastructureNode>getSiblingsOfType(infrastructureNode, InfrastructureNode.class), _function);
+    if ((!dependentNodesExist)) {
+      this.warning("Node is not used by services or nodes, and no other node depends on it", infrastructureNode, OperationPackage.Literals.OPERATION_NODE__NAME);
+    }
+  }
+  
+  /**
    * Check that node is used by unique nodes
    */
   @Check
@@ -686,10 +705,23 @@ public class OperationDslValidator extends AbstractOperationDslValidator {
     };
     final Integer duplicateIndex = DdmmUtils.<OperationNode, String>getDuplicateIndex(infrastructureNode.getUsedByNodes(), _function);
     if (((duplicateIndex).intValue() > (-1))) {
-      StringConcatenation _builder = new StringConcatenation();
-      _builder.append("Duplicate node");
-      this.error(_builder.toString(), infrastructureNode, 
+      this.error("Duplicate node", infrastructureNode, 
         OperationPackage.Literals.INFRASTRUCTURE_NODE__USED_BY_NODES, (duplicateIndex).intValue());
+    }
+  }
+  
+  /**
+   * Check that node depends on unique nodes
+   */
+  @Check
+  public void checkDependingNodesUniqueness(final InfrastructureNode infrastructureNode) {
+    final Function<OperationNode, String> _function = (OperationNode it) -> {
+      return it.getName();
+    };
+    final Integer duplicateIndex = DdmmUtils.<OperationNode, String>getDuplicateIndex(infrastructureNode.getDependsOnNodes(), _function);
+    if (((duplicateIndex).intValue() > (-1))) {
+      this.error("Duplicate node", infrastructureNode, 
+        OperationPackage.Literals.INFRASTRUCTURE_NODE__DEPENDS_ON_NODES, (duplicateIndex).intValue());
     }
   }
   

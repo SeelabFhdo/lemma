@@ -72,7 +72,7 @@ abstract class OperationNode {
 
     refers Import[1..*] technologies
     refers OperationEnvironment operationEnvironment
-    contains ImportedMicroservice[1..*] deployedServices opposite operationNode
+    contains ImportedMicroservice[*] deployedServices opposite operationNode
     contains TechnologySpecificPropertyValueAssignment[] defaultServicePropertyValues
     contains ServiceDeploymentSpecification[] deploymentSpecifications opposite operationNode
     contains ImportedOperationAspect[] aspects opposite operationNode
@@ -131,9 +131,15 @@ class InfrastructureNode extends OperationNode {
      *          Ensured by: DSL validator.
      *     (C4) Nodes using this node must be unique.
      *          Ensured by: DSL validator.
+     *     (C5) Nodes on which this node depends must be unique.
+     *          Ensured by: DSL validator.
+     *     (C6) The infrastructure node must exhibit at least one deployed service, being used by at
+     *          least one node, or another node must depend on it.
+     *          Ensured by: DSL validator.
      */
 
     refers OperationNode[] usedByNodes
+    refers OperationNode[] dependsOnNodes
     contains InfrastructureTechnologyReference infrastructureTechnology opposite infrastructureNode
     contains BasicEndpoint[] endpoints opposite infrastructureNode
 

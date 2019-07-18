@@ -20,6 +20,7 @@ import org.eclipse.emf.common.util.EList;
  * </p>
  * <ul>
  *   <li>{@link de.fhdo.ddmm.operation.InfrastructureNode#getUsedByNodes <em>Used By Nodes</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.operation.InfrastructureNode#getDependsOnNodes <em>Depends On Nodes</em>}</li>
  *   <li>{@link de.fhdo.ddmm.operation.InfrastructureNode#getInfrastructureTechnology <em>Infrastructure Technology</em>}</li>
  *   <li>{@link de.fhdo.ddmm.operation.InfrastructureNode#getEndpoints <em>Endpoints</em>}</li>
  *   <li>{@link de.fhdo.ddmm.operation.InfrastructureNode#getOperationModel <em>Operation Model</em>}</li>
@@ -48,6 +49,11 @@ public interface InfrastructureNode extends OperationNode {
      *          Ensured by: DSL validator.
      *     (C4) Nodes using this node must be unique.
      *          Ensured by: DSL validator.
+     *     (C5) Nodes on which this node depends must be unique.
+     *          Ensured by: DSL validator.
+     *     (C6) The infrastructure node must exhibit at least one deployed service, being used by at
+     *          least one node, or another node must depend on it.
+     *          Ensured by: DSL validator.
      * <!-- end-model-doc -->
      * @return the value of the '<em>Used By Nodes</em>' reference list.
      * @see de.fhdo.ddmm.operation.OperationPackage#getInfrastructureNode_UsedByNodes()
@@ -55,6 +61,22 @@ public interface InfrastructureNode extends OperationNode {
      * @generated
      */
     EList<OperationNode> getUsedByNodes();
+
+    /**
+     * Returns the value of the '<em><b>Depends On Nodes</b></em>' reference list.
+     * The list contents are of type {@link de.fhdo.ddmm.operation.OperationNode}.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Depends On Nodes</em>' reference list isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Depends On Nodes</em>' reference list.
+     * @see de.fhdo.ddmm.operation.OperationPackage#getInfrastructureNode_DependsOnNodes()
+     * @model
+     * @generated
+     */
+    EList<OperationNode> getDependsOnNodes();
 
     /**
      * Returns the value of the '<em><b>Infrastructure Technology</b></em>' containment reference.

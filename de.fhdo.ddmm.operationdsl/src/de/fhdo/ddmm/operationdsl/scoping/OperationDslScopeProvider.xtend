@@ -224,7 +224,11 @@ class OperationDslScopeProvider extends AbstractOperationDslScopeProvider {
 
             /* Other nodes using this node */
             case OperationPackage::Literals.INFRASTRUCTURE_NODE__USED_BY_NODES:
-                return infrastructureNode.getScopeForUsedByNodes()
+                return infrastructureNode.getScopeForOtherNodes()
+
+            /* Other nodes on which this node depends */
+            case OperationPackage::Literals.INFRASTRUCTURE_NODE__DEPENDS_ON_NODES:
+                return infrastructureNode.getScopeForOtherNodes()
         }
 
         // If the feature is not InfrastructureNode-specific, delegate scope resolution to
@@ -294,9 +298,9 @@ class OperationDslScopeProvider extends AbstractOperationDslScopeProvider {
     }
 
     /**
-     * Build scope that comprises nodes that can use other nodes
+     * Build scope that comprises all nodes of the model except a given one
      */
-    private def getScopeForUsedByNodes(OperationNode operationNode) {
+    private def getScopeForOtherNodes(OperationNode operationNode) {
         val modelRoot = EcoreUtil2.getContainerOfType(operationNode, OperationModel)
         return Scopes::scopeFor(
             modelRoot.containers.filter[it != operationNode] +

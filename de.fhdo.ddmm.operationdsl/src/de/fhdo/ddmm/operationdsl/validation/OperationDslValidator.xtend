@@ -480,14 +480,45 @@ class OperationDslValidator extends AbstractOperationDslValidator {
     }
 
     /**
+     * Warn if an infrastructure node does seemingly not fulfill an actual purpose, i.e., when it
+     * does not have deployed services assigned, is not used by other nodes, and no other nodes
+     * depend on it
+     */
+    @Check
+    def warnNodeHasPurpose(InfrastructureNode infrastructureNode) {
+        if (!infrastructureNode.deployedServices.empty || !infrastructureNode.usedByNodes.empty) {
+            return
+        }
+
+        val dependentNodesExist = EcoreUtil2
+            .getSiblingsOfType(infrastructureNode, InfrastructureNode)
+            .exists[dependsOnNodes.contains(infrastructureNode)]
+        if (!dependentNodesExist) {
+            warning("Node is not used by services or nodes, and no other node depends on it",
+                infrastructureNode, OperationPackage::Literals.OPERATION_NODE__NAME)
+        }
+    }
+
+    /**
      * Check that node is used by unique nodes
      */
     @Check
     def checkUsingNodesUniqueness(InfrastructureNode infrastructureNode) {
         val duplicateIndex = DdmmUtils.getDuplicateIndex(infrastructureNode.usedByNodes, [name])
         if (duplicateIndex > -1)
-            error('''Duplicate node''', infrastructureNode,
+            error("Duplicate node", infrastructureNode,
                 OperationPackage::Literals.INFRASTRUCTURE_NODE__USED_BY_NODES, duplicateIndex)
+    }
+
+    /**
+     * Check that node depends on unique nodes
+     */
+    @Check
+    def checkDependingNodesUniqueness(InfrastructureNode infrastructureNode) {
+        val duplicateIndex = DdmmUtils.getDuplicateIndex(infrastructureNode.dependsOnNodes, [name])
+        if (duplicateIndex > -1)
+            error("Duplicate node", infrastructureNode,
+                OperationPackage::Literals.INFRASTRUCTURE_NODE__DEPENDS_ON_NODES, duplicateIndex)
     }
 
     /**

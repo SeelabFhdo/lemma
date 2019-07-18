@@ -293,7 +293,13 @@ public class OperationDslScopeProvider extends AbstractOperationDslScopeProvider
     if (!_matched) {
       if (Objects.equal(reference, OperationPackage.Literals.INFRASTRUCTURE_NODE__USED_BY_NODES)) {
         _matched=true;
-        return this.getScopeForUsedByNodes(infrastructureNode);
+        return this.getScopeForOtherNodes(infrastructureNode);
+      }
+    }
+    if (!_matched) {
+      if (Objects.equal(reference, OperationPackage.Literals.INFRASTRUCTURE_NODE__DEPENDS_ON_NODES)) {
+        _matched=true;
+        return this.getScopeForOtherNodes(infrastructureNode);
       }
     }
     return this.getScope(((OperationNode) infrastructureNode), reference);
@@ -367,9 +373,9 @@ public class OperationDslScopeProvider extends AbstractOperationDslScopeProvider
   }
   
   /**
-   * Build scope that comprises nodes that can use other nodes
+   * Build scope that comprises all nodes of the model except a given one
    */
-  private IScope getScopeForUsedByNodes(final OperationNode operationNode) {
+  private IScope getScopeForOtherNodes(final OperationNode operationNode) {
     final OperationModel modelRoot = EcoreUtil2.<OperationModel>getContainerOfType(operationNode, OperationModel.class);
     final Function1<Container, Boolean> _function = (Container it) -> {
       return Boolean.valueOf((!Objects.equal(it, operationNode)));
