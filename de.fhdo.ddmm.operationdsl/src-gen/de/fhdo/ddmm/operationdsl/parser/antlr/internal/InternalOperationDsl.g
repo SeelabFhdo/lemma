@@ -418,43 +418,24 @@ ruleContainer returns [EObject current=null]
 				)
 				    |
 				(
-					(
-						(
-							{
-								newCompositeNode(grammarAccess.getContainerAccess().getDefaultServicePropertyValuesPropertyValueAssignmentParserRuleCall_12_3_2_0_0());
-							}
-							lv_defaultServicePropertyValues_32_0=rulePropertyValueAssignment
-							{
-								if ($current==null) {
-									$current = createModelElementForParent(grammarAccess.getContainerRule());
-								}
-								add(
-									$current,
-									"defaultServicePropertyValues",
-									lv_defaultServicePropertyValues_32_0,
-									"de.fhdo.ddmm.operationdsl.OperationDsl.PropertyValueAssignment");
-								afterParserOrEnumRuleCall();
-							}
-						)
-					)+
-					otherlv_33='basic'
+					otherlv_32='basic'
 					{
-						newLeafNode(otherlv_33, grammarAccess.getContainerAccess().getBasicKeyword_12_3_2_1());
+						newLeafNode(otherlv_32, grammarAccess.getContainerAccess().getBasicKeyword_12_3_2_0());
 					}
-					otherlv_34='endpoints'
+					otherlv_33='endpoints'
 					{
-						newLeafNode(otherlv_34, grammarAccess.getContainerAccess().getEndpointsKeyword_12_3_2_2());
+						newLeafNode(otherlv_33, grammarAccess.getContainerAccess().getEndpointsKeyword_12_3_2_1());
 					}
-					otherlv_35='{'
+					otherlv_34='{'
 					{
-						newLeafNode(otherlv_35, grammarAccess.getContainerAccess().getLeftCurlyBracketKeyword_12_3_2_3());
+						newLeafNode(otherlv_34, grammarAccess.getContainerAccess().getLeftCurlyBracketKeyword_12_3_2_2());
 					}
 					(
 						(
 							{
-								newCompositeNode(grammarAccess.getContainerAccess().getDefaultBasicEndpointsBasicEndpointParserRuleCall_12_3_2_4_0());
+								newCompositeNode(grammarAccess.getContainerAccess().getDefaultBasicEndpointsBasicEndpointParserRuleCall_12_3_2_3_0());
 							}
-							lv_defaultBasicEndpoints_36_0=ruleBasicEndpoint
+							lv_defaultBasicEndpoints_35_0=ruleBasicEndpoint
 							{
 								if ($current==null) {
 									$current = createModelElementForParent(grammarAccess.getContainerRule());
@@ -462,16 +443,35 @@ ruleContainer returns [EObject current=null]
 								add(
 									$current,
 									"defaultBasicEndpoints",
-									lv_defaultBasicEndpoints_36_0,
+									lv_defaultBasicEndpoints_35_0,
 									"de.fhdo.ddmm.operationdsl.OperationDsl.BasicEndpoint");
 								afterParserOrEnumRuleCall();
 							}
 						)
 					)+
-					otherlv_37='}'
+					otherlv_36='}'
 					{
-						newLeafNode(otherlv_37, grammarAccess.getContainerAccess().getRightCurlyBracketKeyword_12_3_2_5());
+						newLeafNode(otherlv_36, grammarAccess.getContainerAccess().getRightCurlyBracketKeyword_12_3_2_4());
 					}
+					(
+						(
+							{
+								newCompositeNode(grammarAccess.getContainerAccess().getDefaultServicePropertyValuesPropertyValueAssignmentParserRuleCall_12_3_2_5_0());
+							}
+							lv_defaultServicePropertyValues_37_0=rulePropertyValueAssignment
+							{
+								if ($current==null) {
+									$current = createModelElementForParent(grammarAccess.getContainerRule());
+								}
+								add(
+									$current,
+									"defaultServicePropertyValues",
+									lv_defaultServicePropertyValues_37_0,
+									"de.fhdo.ddmm.operationdsl.OperationDsl.PropertyValueAssignment");
+								afterParserOrEnumRuleCall();
+							}
+						)
+					)+
 				)
 			)
 			otherlv_38='}'
