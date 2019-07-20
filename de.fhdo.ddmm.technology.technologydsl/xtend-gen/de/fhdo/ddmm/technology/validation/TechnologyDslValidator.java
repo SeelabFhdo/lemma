@@ -14,6 +14,9 @@ import de.fhdo.ddmm.technology.CompatibilityDirection;
 import de.fhdo.ddmm.technology.CompatibilityMatrixEntry;
 import de.fhdo.ddmm.technology.DataFormat;
 import de.fhdo.ddmm.technology.JoinPointType;
+import de.fhdo.ddmm.technology.OperationAspect;
+import de.fhdo.ddmm.technology.OperationAspectPointcut;
+import de.fhdo.ddmm.technology.OperationAspectPointcutSelector;
 import de.fhdo.ddmm.technology.OperationEnvironment;
 import de.fhdo.ddmm.technology.OperationTechnology;
 import de.fhdo.ddmm.technology.PointcutType;
@@ -736,6 +739,26 @@ public class TechnologyDslValidator extends AbstractTechnologyDslValidator {
   }
   
   /**
+   * Check that per type only one pointcut exists in an operation aspect selector
+   */
+  @Check
+  public void checkPointcutUniqueness(final OperationAspectPointcutSelector selector) {
+    final Function<OperationAspectPointcut, PointcutType> _function = (OperationAspectPointcut it) -> {
+      return it.getEffectiveType();
+    };
+    final Integer duplicateIndex = DdmmUtils.<OperationAspectPointcut, PointcutType>getDuplicateIndex(selector.getPointcuts(), _function);
+    if (((duplicateIndex).intValue() > (-1))) {
+      final OperationAspectPointcut duplicatePoincut = selector.getPointcuts().get((duplicateIndex).intValue());
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("Duplicate pointcut ");
+      String _effectiveSelectorName = duplicatePoincut.getEffectiveSelectorName();
+      _builder.append(_effectiveSelectorName);
+      this.error(_builder.toString(), 
+        TechnologyPackage.Literals.OPERATION_ASPECT_POINTCUT_SELECTOR__POINTCUTS, (duplicateIndex).intValue());
+    }
+  }
+  
+  /**
    * Check aspect uniqueness considering different types of aspects and join points
    */
   @Check
@@ -845,6 +868,21 @@ public class TechnologyDslValidator extends AbstractTechnologyDslValidator {
   }
   
   /**
+   * Check that selectors of an operation aspect are unique
+   */
+  @Check
+  public void checkSelectorUniqueness(final OperationAspect aspect) {
+    final Function<OperationAspectPointcutSelector, String> _function = (OperationAspectPointcutSelector it) -> {
+      return it.getSelectorString();
+    };
+    final Integer duplicateIndex = DdmmUtils.<OperationAspectPointcutSelector, String>getDuplicateIndex(aspect.getPointcutSelectors(), _function);
+    if (((duplicateIndex).intValue() > (-1))) {
+      this.error("Duplicate selector", 
+        TechnologyPackage.Literals.OPERATION_ASPECT__POINTCUT_SELECTORS, (duplicateIndex).intValue());
+    }
+  }
+  
+  /**
    * Check that "exchange pattern" or "communication type" pointcut is specified in conjunction
    * with "parameters" or "data fields" join point
    */
@@ -876,10 +914,10 @@ public class TechnologyDslValidator extends AbstractTechnologyDslValidator {
   }
   
   /**
-   * Warn if pointcut selector is more generic than other
+   * Warn if service aspect pointcut selector is more generic than other
    */
   @Check
-  public void warnIfSelectorsIsMoreGeneric(final ServiceAspectPointcutSelector selector) {
+  public void warnIfSelectorIsMoreGeneric(final ServiceAspectPointcutSelector selector) {
     final Function1<ServiceAspectPointcutSelector, Boolean> _function = (ServiceAspectPointcutSelector it) -> {
       return Boolean.valueOf((!Objects.equal(it, selector)));
     };
@@ -894,6 +932,30 @@ public class TechnologyDslValidator extends AbstractTechnologyDslValidator {
         _builder.append("\" is more generic");
         this.warning(_builder.toString(), it, 
           TechnologyPackage.Literals.SERVICE_ASPECT_POINTCUT_SELECTOR__SELECTOR_STRING);
+      }
+    };
+    otherSelectors.forEach(_function_1);
+  }
+  
+  /**
+   * Warn if operation aspect pointcut selector is more generic than other
+   */
+  @Check
+  public void warnIfSelectorIsMoreGeneric(final OperationAspectPointcutSelector selector) {
+    final Function1<OperationAspectPointcutSelector, Boolean> _function = (OperationAspectPointcutSelector it) -> {
+      return Boolean.valueOf((!Objects.equal(it, selector)));
+    };
+    final Iterable<OperationAspectPointcutSelector> otherSelectors = IterableExtensions.<OperationAspectPointcutSelector>filter(selector.getOperationAspect().getPointcutSelectors(), _function);
+    final Consumer<OperationAspectPointcutSelector> _function_1 = (OperationAspectPointcutSelector it) -> {
+      boolean _isMoreGenericThan = selector.isMoreGenericThan(it);
+      if (_isMoreGenericThan) {
+        StringConcatenation _builder = new StringConcatenation();
+        _builder.append("Selector \"");
+        String _selectorString = selector.getSelectorString();
+        _builder.append(_selectorString);
+        _builder.append("\" is more generic");
+        this.warning(_builder.toString(), it, 
+          TechnologyPackage.Literals.OPERATION_ASPECT_POINTCUT_SELECTOR__SELECTOR_STRING);
       }
     };
     otherSelectors.forEach(_function_1);

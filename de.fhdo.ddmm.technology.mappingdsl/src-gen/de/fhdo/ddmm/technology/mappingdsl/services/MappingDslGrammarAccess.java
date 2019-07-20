@@ -2368,16 +2368,6 @@ public class MappingDslGrammarAccess extends AbstractGrammarElementFinder {
 		return getServiceJoinPointTypeAccess().getRule();
 	}
 	
-	//enum OperationJoinPointType returns JoinPointType:
-	//	CONTAINERS='containers' | INFRASTRUCTURE_NODES='infrastructure';
-	public TechnologyDslGrammarAccess.OperationJoinPointTypeElements getOperationJoinPointTypeAccess() {
-		return gaTechnologyDsl.getOperationJoinPointTypeAccess();
-	}
-	
-	public EnumRule getOperationJoinPointTypeRule() {
-		return getOperationJoinPointTypeAccess().getRule();
-	}
-	
 	//ServiceAspectPointcut:
 	//	forExchangePattern?='exchange_pattern' '=' exchangePattern=ExchangePattern |
 	//	forCommunicationType?='communication_type' '=' communicationType=CommunicationType | forProtocol?='protocol' '='
@@ -2417,9 +2407,42 @@ public class MappingDslGrammarAccess extends AbstractGrammarElementFinder {
 		return getServiceAspectAccess().getRule();
 	}
 	
+	//enum OperationJoinPointType returns JoinPointType:
+	//	CONTAINERS='containers' | INFRASTRUCTURE_NODES='infrastructure';
+	public TechnologyDslGrammarAccess.OperationJoinPointTypeElements getOperationJoinPointTypeAccess() {
+		return gaTechnologyDsl.getOperationJoinPointTypeAccess();
+	}
+	
+	public EnumRule getOperationJoinPointTypeRule() {
+		return getOperationJoinPointTypeAccess().getRule();
+	}
+	
+	//OperationAspectPointcut:
+	//	forTechnology?='technology' '=' technology=[ecore::EObject];
+	public TechnologyDslGrammarAccess.OperationAspectPointcutElements getOperationAspectPointcutAccess() {
+		return gaTechnologyDsl.getOperationAspectPointcutAccess();
+	}
+	
+	public ParserRule getOperationAspectPointcutRule() {
+		return getOperationAspectPointcutAccess().getRule();
+	}
+	
+	//OperationAspectPointcutSelector:
+	//	'selector' '('
+	//	pointcuts+=OperationAspectPointcut (',' pointcuts+=OperationAspectPointcut)*
+	//	')' ';';
+	public TechnologyDslGrammarAccess.OperationAspectPointcutSelectorElements getOperationAspectPointcutSelectorAccess() {
+		return gaTechnologyDsl.getOperationAspectPointcutSelectorAccess();
+	}
+	
+	public ParserRule getOperationAspectPointcutSelectorRule() {
+		return getOperationAspectPointcutSelectorAccess().getRule();
+	}
+	
 	//OperationAspect:
 	//	'aspect' name=ID
 	//	'for' joinPoints+=OperationJoinPointType (',' joinPoints+=OperationJoinPointType)* ('{'
+	//	pointcutSelectors+=OperationAspectPointcutSelector*
 	//	properties+=TechnologySpecificProperty*
 	//	'}' |
 	//	';');

@@ -152,6 +152,14 @@ public class TechnologyAdapterFactory extends AdapterFactoryImpl {
                 return createOperationAspectAdapter();
             }
             @Override
+            public Adapter caseOperationAspectPointcut(OperationAspectPointcut object) {
+                return createOperationAspectPointcutAdapter();
+            }
+            @Override
+            public Adapter caseOperationAspectPointcutSelector(OperationAspectPointcutSelector object) {
+                return createOperationAspectPointcutSelectorAdapter();
+            }
+            @Override
             public Adapter caseType(Type object) {
                 return createTypeAdapter();
             }
@@ -460,6 +468,34 @@ public class TechnologyAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createOperationAspectAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.fhdo.ddmm.technology.OperationAspectPointcut <em>Operation Aspect Pointcut</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.fhdo.ddmm.technology.OperationAspectPointcut
+     * @generated
+     */
+    public Adapter createOperationAspectPointcutAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.fhdo.ddmm.technology.OperationAspectPointcutSelector <em>Operation Aspect Pointcut Selector</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.fhdo.ddmm.technology.OperationAspectPointcutSelector
+     * @generated
+     */
+    public Adapter createOperationAspectPointcutSelectorAdapter() {
         return null;
     }
 

@@ -21,6 +21,9 @@ import de.fhdo.ddmm.technology.TechnologyPackage
 import de.fhdo.ddmm.technology.ServiceAspectPointcut
 import org.eclipse.xtext.scoping.Scopes
 import org.eclipse.xtext.naming.QualifiedName
+import de.fhdo.ddmm.technology.OperationAspectPointcut
+import de.fhdo.ddmm.technology.OperationAspect
+import de.fhdo.ddmm.technology.JoinPointType
 
 /**
  * This class implements a custom scope provider for the Technology DSL.
@@ -44,6 +47,9 @@ class TechnologyDslScopeProvider extends AbstractTechnologyDslScopeProvider {
 
             /* Service aspect pointcuts */
             ServiceAspectPointcut: context.getScope(reference)
+
+            /* Operation aspect pointcuts */
+            OperationAspectPointcut: context.getScope(reference)
         }
 
         if (scope !== null)
@@ -132,6 +138,39 @@ class TechnologyDslScopeProvider extends AbstractTechnologyDslScopeProvider {
 
         return Scopes::scopeFor(scopeElements, [QualifiedName.create(formatName)],
             IScope.NULLSCOPE)
+    }
+
+    /**
+     * Build scope for operation aspect pointcuts
+     */
+    private def getScope(OperationAspectPointcut pointcut, EReference reference) {
+        switch (reference) {
+            /* Technologies */
+            case TechnologyPackage.Literals::OPERATION_ASPECT_POINTCUT__TECHNOLOGY:
+                return pointcut.getScopeForOperationAspectPointcutTechnologies()
+        }
+
+        return null
+    }
+
+    /**
+     * Build scope for technologies of operation aspects pointcuts
+     */
+    private def getScopeForOperationAspectPointcutTechnologies(OperationAspectPointcut pointcut) {
+        if (pointcut === null)
+            return null
+
+        val joinPoints = EcoreUtil2.getContainerOfType(pointcut, OperationAspect).joinPoints
+        val modelRoot = EcoreUtil2.getContainerOfType(pointcut, Technology)
+        val scopeElements = <EObject>newArrayList
+
+        if (joinPoints.contains(JoinPointType.CONTAINERS))
+            scopeElements.addAll(modelRoot.deploymentTechnologies)
+
+        if (joinPoints.contains(JoinPointType.INFRASTRUCTURE_NODES))
+            scopeElements.addAll(modelRoot.infrastructureTechnologies)
+
+        return Scopes::scopeFor(scopeElements)
     }
 
     /**

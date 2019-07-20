@@ -212,8 +212,12 @@ public class ServiceAspectImpl extends TechnologyAspectImpl implements ServiceAs
                                     _switchResult = _xifexpression_3;
                                     break;
                                 default:
+                                    _switchResult = null;
                                     break;
                             }
+                        }
+                        else {
+                            _switchResult = null;
                         }
                         String forValue = _switchResult;
                         boolean _isEmpty_1 = pointcutValuesOfType.isEmpty();

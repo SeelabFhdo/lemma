@@ -32,6 +32,8 @@ import de.fhdo.ddmm.technology.DataFormat;
 import de.fhdo.ddmm.technology.DeploymentTechnology;
 import de.fhdo.ddmm.technology.InfrastructureTechnology;
 import de.fhdo.ddmm.technology.OperationAspect;
+import de.fhdo.ddmm.technology.OperationAspectPointcut;
+import de.fhdo.ddmm.technology.OperationAspectPointcutSelector;
 import de.fhdo.ddmm.technology.OperationEnvironment;
 import de.fhdo.ddmm.technology.PossiblyImportedTechnologySpecificType;
 import de.fhdo.ddmm.technology.Protocol;
@@ -151,6 +153,12 @@ public class TechnologyDslSemanticSequencer extends DataDslSemanticSequencer {
 			case TechnologyPackage.OPERATION_ASPECT:
 				sequence_OperationAspect(context, (OperationAspect) semanticObject); 
 				return; 
+			case TechnologyPackage.OPERATION_ASPECT_POINTCUT:
+				sequence_OperationAspectPointcut(context, (OperationAspectPointcut) semanticObject); 
+				return; 
+			case TechnologyPackage.OPERATION_ASPECT_POINTCUT_SELECTOR:
+				sequence_OperationAspectPointcutSelector(context, (OperationAspectPointcutSelector) semanticObject); 
+				return; 
 			case TechnologyPackage.OPERATION_ENVIRONMENT:
 				sequence_OperationEnvironment(context, (OperationEnvironment) semanticObject); 
 				return; 
@@ -253,10 +261,49 @@ public class TechnologyDslSemanticSequencer extends DataDslSemanticSequencer {
 	
 	/**
 	 * Contexts:
+	 *     OperationAspectPointcutSelector returns OperationAspectPointcutSelector
+	 *
+	 * Constraint:
+	 *     (pointcuts+=OperationAspectPointcut pointcuts+=OperationAspectPointcut*)
+	 */
+	protected void sequence_OperationAspectPointcutSelector(ISerializationContext context, OperationAspectPointcutSelector semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     OperationAspectPointcut returns OperationAspectPointcut
+	 *
+	 * Constraint:
+	 *     (forTechnology?='technology' technology=[EObject|ID])
+	 */
+	protected void sequence_OperationAspectPointcut(ISerializationContext context, OperationAspectPointcut semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, TechnologyPackage.Literals.OPERATION_ASPECT_POINTCUT__FOR_TECHNOLOGY) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, TechnologyPackage.Literals.OPERATION_ASPECT_POINTCUT__FOR_TECHNOLOGY));
+			if (transientValues.isValueTransient(semanticObject, TechnologyPackage.Literals.OPERATION_ASPECT_POINTCUT__TECHNOLOGY) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, TechnologyPackage.Literals.OPERATION_ASPECT_POINTCUT__TECHNOLOGY));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getOperationAspectPointcutAccess().getForTechnologyTechnologyKeyword_0_0(), semanticObject.isForTechnology());
+		feeder.accept(grammarAccess.getOperationAspectPointcutAccess().getTechnologyEObjectIDTerminalRuleCall_2_0_1(), semanticObject.eGet(TechnologyPackage.Literals.OPERATION_ASPECT_POINTCUT__TECHNOLOGY, false));
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     OperationAspect returns OperationAspect
 	 *
 	 * Constraint:
-	 *     (name=ID joinPoints+=OperationJoinPointType joinPoints+=OperationJoinPointType* properties+=TechnologySpecificProperty*)
+	 *     (
+	 *         name=ID 
+	 *         joinPoints+=OperationJoinPointType 
+	 *         joinPoints+=OperationJoinPointType* 
+	 *         pointcutSelectors+=OperationAspectPointcutSelector* 
+	 *         properties+=TechnologySpecificProperty*
+	 *     )
 	 */
 	protected void sequence_OperationAspect(ISerializationContext context, OperationAspect semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

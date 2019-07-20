@@ -200,6 +200,18 @@ public class TechnologySwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
+            case TechnologyPackage.OPERATION_ASPECT_POINTCUT: {
+                OperationAspectPointcut operationAspectPointcut = (OperationAspectPointcut)theEObject;
+                T result = caseOperationAspectPointcut(operationAspectPointcut);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case TechnologyPackage.OPERATION_ASPECT_POINTCUT_SELECTOR: {
+                OperationAspectPointcutSelector operationAspectPointcutSelector = (OperationAspectPointcutSelector)theEObject;
+                T result = caseOperationAspectPointcutSelector(operationAspectPointcutSelector);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
             default: return defaultCase(theEObject);
         }
     }
@@ -501,6 +513,36 @@ public class TechnologySwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseOperationAspect(OperationAspect object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Operation Aspect Pointcut</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Operation Aspect Pointcut</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseOperationAspectPointcut(OperationAspectPointcut object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Operation Aspect Pointcut Selector</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Operation Aspect Pointcut Selector</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseOperationAspectPointcutSelector(OperationAspectPointcutSelector object) {
         return null;
     }
 

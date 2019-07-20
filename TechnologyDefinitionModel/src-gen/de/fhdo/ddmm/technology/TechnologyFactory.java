@@ -184,6 +184,24 @@ public interface TechnologyFactory extends EFactory {
     OperationAspect createOperationAspect();
 
     /**
+     * Returns a new object of class '<em>Operation Aspect Pointcut</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Operation Aspect Pointcut</em>'.
+     * @generated
+     */
+    OperationAspectPointcut createOperationAspectPointcut();
+
+    /**
+     * Returns a new object of class '<em>Operation Aspect Pointcut Selector</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Operation Aspect Pointcut Selector</em>'.
+     * @generated
+     */
+    OperationAspectPointcutSelector createOperationAspectPointcutSelector();
+
+    /**
      * Returns the package supported by this factory.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

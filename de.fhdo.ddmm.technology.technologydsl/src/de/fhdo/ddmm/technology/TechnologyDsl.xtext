@@ -153,10 +153,6 @@ enum ServiceJoinPointType returns JoinPointType:
     DATA_FIELDS = 'fields'
 ;
 
-enum OperationJoinPointType returns JoinPointType:
-    CONTAINERS = 'containers' | INFRASTRUCTURE_NODES = 'infrastructure'
-;
-
 ServiceAspectPointcut returns ServiceAspectPointcut:
     forExchangePattern?='exchange_pattern' '=' exchangePattern=ExchangePattern |
     forCommunicationType?='communication_type' '=' communicationType=CommunicationType |
@@ -183,11 +179,26 @@ ServiceAspect returns ServiceAspect:
     )
 ;
 
+enum OperationJoinPointType returns JoinPointType:
+    CONTAINERS = 'containers' | INFRASTRUCTURE_NODES = 'infrastructure'
+;
+
+OperationAspectPointcut returns OperationAspectPointcut:
+    forTechnology?='technology' '=' technology=[ecore::EObject|ID]
+;
+
+OperationAspectPointcutSelector returns OperationAspectPointcutSelector:
+    'selector' '('
+        pointcuts+=OperationAspectPointcut (',' pointcuts+=OperationAspectPointcut)*
+    ')' ';'
+;
+
 OperationAspect returns OperationAspect:
     'aspect' name=ID
     'for' joinPoints+=OperationJoinPointType (',' joinPoints+=OperationJoinPointType)*
     (
         ('{'
+            pointcutSelectors+=OperationAspectPointcutSelector*
             properties+=TechnologySpecificProperty*
         '}')
         |

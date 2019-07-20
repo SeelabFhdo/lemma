@@ -161,11 +161,28 @@ class OperationDslScopeProvider extends AbstractOperationDslScopeProvider {
         if (importedAspect.technology === null)
             return IScope.NULLSCOPE
 
-        val joinPoint = switch(importedAspect.eContainer) {
+        val aspectContainer = importedAspect.eContainer
+
+        val joinPoint = switch(aspectContainer) {
             Container: JoinPointType.CONTAINERS
             InfrastructureNode: JoinPointType.INFRASTRUCTURE_NODES
         }
 
+        // Determine the technology in case the aspect has pointcut selectors that constrain the
+        // technology to be used. Note that this is null, if the technology that defines the aspect
+        // and the technology of the operation node that employs the aspect are not equal. This
+        // leads to the selector filter function hasMatchingSelector() to return false in case the
+        // aspect exhibits a constraining technology selector, which results in aspects defined and
+        // constrained to one technology but assigned to an operation node using another technology
+        // to not be assignable, i.e., the editor will show an error marker that it cannot find the
+        // aspect.
+        val technology = if (aspectContainer instanceof Container) {
+                if (importedAspect.technology == aspectContainer.deploymentTechnology.import)
+                    aspectContainer.deploymentTechnology.deploymentTechnology
+            } else if (aspectContainer instanceof InfrastructureNode) {
+                if (importedAspect.technology == aspectContainer.infrastructureTechnology.import)
+                    aspectContainer.infrastructureTechnology.infrastructureTechnology
+            }
         return DdmmUtils.getScopeForPossiblyImportedConcept(
             importedAspect.technology,
             null,
@@ -173,7 +190,10 @@ class OperationDslScopeProvider extends AbstractOperationDslScopeProvider {
             importedAspect.technology.importURI,
             [operationAspects.toList],
             [qualifiedNameParts],
-            [joinPoints.contains(joinPoint)]
+            [
+                joinPoints.contains(joinPoint) &&
+                hasMatchingSelector(technology)
+            ]
         )
     }
 

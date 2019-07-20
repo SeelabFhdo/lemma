@@ -194,6 +194,9 @@ public class MappingDslParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getServiceAspectAccess().getGroup(), "rule__ServiceAspect__Group__0");
 			builder.put(grammarAccess.getServiceAspectAccess().getGroup_4(), "rule__ServiceAspect__Group_4__0");
 			builder.put(grammarAccess.getServiceAspectAccess().getGroup_5_0(), "rule__ServiceAspect__Group_5_0__0");
+			builder.put(grammarAccess.getOperationAspectPointcutAccess().getGroup(), "rule__OperationAspectPointcut__Group__0");
+			builder.put(grammarAccess.getOperationAspectPointcutSelectorAccess().getGroup(), "rule__OperationAspectPointcutSelector__Group__0");
+			builder.put(grammarAccess.getOperationAspectPointcutSelectorAccess().getGroup_3(), "rule__OperationAspectPointcutSelector__Group_3__0");
 			builder.put(grammarAccess.getOperationAspectAccess().getGroup(), "rule__OperationAspect__Group__0");
 			builder.put(grammarAccess.getOperationAspectAccess().getGroup_4(), "rule__OperationAspect__Group_4__0");
 			builder.put(grammarAccess.getOperationAspectAccess().getGroup_5_0(), "rule__OperationAspect__Group_5_0__0");
@@ -431,10 +434,15 @@ public class MappingDslParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getServiceAspectAccess().getJoinPointsAssignment_4_1(), "rule__ServiceAspect__JoinPointsAssignment_4_1");
 			builder.put(grammarAccess.getServiceAspectAccess().getPointcutSelectorsAssignment_5_0_1(), "rule__ServiceAspect__PointcutSelectorsAssignment_5_0_1");
 			builder.put(grammarAccess.getServiceAspectAccess().getPropertiesAssignment_5_0_2(), "rule__ServiceAspect__PropertiesAssignment_5_0_2");
+			builder.put(grammarAccess.getOperationAspectPointcutAccess().getForTechnologyAssignment_0(), "rule__OperationAspectPointcut__ForTechnologyAssignment_0");
+			builder.put(grammarAccess.getOperationAspectPointcutAccess().getTechnologyAssignment_2(), "rule__OperationAspectPointcut__TechnologyAssignment_2");
+			builder.put(grammarAccess.getOperationAspectPointcutSelectorAccess().getPointcutsAssignment_2(), "rule__OperationAspectPointcutSelector__PointcutsAssignment_2");
+			builder.put(grammarAccess.getOperationAspectPointcutSelectorAccess().getPointcutsAssignment_3_1(), "rule__OperationAspectPointcutSelector__PointcutsAssignment_3_1");
 			builder.put(grammarAccess.getOperationAspectAccess().getNameAssignment_1(), "rule__OperationAspect__NameAssignment_1");
 			builder.put(grammarAccess.getOperationAspectAccess().getJoinPointsAssignment_3(), "rule__OperationAspect__JoinPointsAssignment_3");
 			builder.put(grammarAccess.getOperationAspectAccess().getJoinPointsAssignment_4_1(), "rule__OperationAspect__JoinPointsAssignment_4_1");
-			builder.put(grammarAccess.getOperationAspectAccess().getPropertiesAssignment_5_0_1(), "rule__OperationAspect__PropertiesAssignment_5_0_1");
+			builder.put(grammarAccess.getOperationAspectAccess().getPointcutSelectorsAssignment_5_0_1(), "rule__OperationAspect__PointcutSelectorsAssignment_5_0_1");
+			builder.put(grammarAccess.getOperationAspectAccess().getPropertiesAssignment_5_0_2(), "rule__OperationAspect__PropertiesAssignment_5_0_2");
 			builder.put(grammarAccess.getDataModelAccess().getComplexTypeImportsAssignment_0(), "rule__DataModel__ComplexTypeImportsAssignment_0");
 			builder.put(grammarAccess.getDataModelAccess().getVersionsAssignment_1_0(), "rule__DataModel__VersionsAssignment_1_0");
 			builder.put(grammarAccess.getDataModelAccess().getContextsAssignment_1_1(), "rule__DataModel__ContextsAssignment_1_1");

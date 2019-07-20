@@ -13,6 +13,8 @@ import de.fhdo.ddmm.technology.ExchangePattern;
 import de.fhdo.ddmm.technology.InfrastructureTechnology;
 import de.fhdo.ddmm.technology.JoinPointType;
 import de.fhdo.ddmm.technology.OperationAspect;
+import de.fhdo.ddmm.technology.OperationAspectPointcut;
+import de.fhdo.ddmm.technology.OperationAspectPointcutSelector;
 import de.fhdo.ddmm.technology.OperationEnvironment;
 import de.fhdo.ddmm.technology.OperationTechnology;
 import de.fhdo.ddmm.technology.PointcutType;
@@ -192,6 +194,20 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * @generated
      */
     private EClass operationAspectEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass operationAspectPointcutEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass operationAspectPointcutSelectorEClass = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -1393,8 +1409,178 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * @generated
      */
     @Override
-    public EReference getOperationAspect_Technology() {
+    public EReference getOperationAspect_PointcutSelectors() {
         return (EReference)operationAspectEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getOperationAspect_Technology() {
+        return (EReference)operationAspectEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EOperation getOperationAspect__HasMatchingSelector__EObject() {
+        return operationAspectEClass.getEOperations().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EClass getOperationAspectPointcut() {
+        return operationAspectPointcutEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EAttribute getOperationAspectPointcut_ForTechnology() {
+        return (EAttribute)operationAspectPointcutEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getOperationAspectPointcut_Technology() {
+        return (EReference)operationAspectPointcutEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getOperationAspectPointcut_Selector() {
+        return (EReference)operationAspectPointcutEClass.getEStructuralFeatures().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EAttribute getOperationAspectPointcut_EffectiveType() {
+        return (EAttribute)operationAspectPointcutEClass.getEStructuralFeatures().get(3);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EAttribute getOperationAspectPointcut_EffectiveSelectorName() {
+        return (EAttribute)operationAspectPointcutEClass.getEStructuralFeatures().get(4);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EAttribute getOperationAspectPointcut_EffectiveValue() {
+        return (EAttribute)operationAspectPointcutEClass.getEStructuralFeatures().get(5);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EAttribute getOperationAspectPointcut_PrintableEffectiveValue() {
+        return (EAttribute)operationAspectPointcutEClass.getEStructuralFeatures().get(6);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EAttribute getOperationAspectPointcut_OrderedPointcutTypes() {
+        return (EAttribute)operationAspectPointcutEClass.getEStructuralFeatures().get(7);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EClass getOperationAspectPointcutSelector() {
+        return operationAspectPointcutSelectorEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getOperationAspectPointcutSelector_Pointcuts() {
+        return (EReference)operationAspectPointcutSelectorEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getOperationAspectPointcutSelector_OperationAspect() {
+        return (EReference)operationAspectPointcutSelectorEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EAttribute getOperationAspectPointcutSelector_SelectorString() {
+        return (EAttribute)operationAspectPointcutSelectorEClass.getEStructuralFeatures().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EOperation getOperationAspectPointcutSelector__IsMoreGenericThan__OperationAspectPointcutSelector() {
+        return operationAspectPointcutSelectorEClass.getEOperations().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EOperation getOperationAspectPointcutSelector__OrderedSelectorValues() {
+        return operationAspectPointcutSelectorEClass.getEOperations().get(1);
     }
 
     /**
@@ -1623,7 +1809,26 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
         createEOperation(serviceAspectPointcutSelectorEClass, SERVICE_ASPECT_POINTCUT_SELECTOR___ORDERED_SELECTOR_VALUES);
 
         operationAspectEClass = createEClass(OPERATION_ASPECT);
+        createEReference(operationAspectEClass, OPERATION_ASPECT__POINTCUT_SELECTORS);
         createEReference(operationAspectEClass, OPERATION_ASPECT__TECHNOLOGY);
+        createEOperation(operationAspectEClass, OPERATION_ASPECT___HAS_MATCHING_SELECTOR__EOBJECT);
+
+        operationAspectPointcutEClass = createEClass(OPERATION_ASPECT_POINTCUT);
+        createEAttribute(operationAspectPointcutEClass, OPERATION_ASPECT_POINTCUT__FOR_TECHNOLOGY);
+        createEReference(operationAspectPointcutEClass, OPERATION_ASPECT_POINTCUT__TECHNOLOGY);
+        createEReference(operationAspectPointcutEClass, OPERATION_ASPECT_POINTCUT__SELECTOR);
+        createEAttribute(operationAspectPointcutEClass, OPERATION_ASPECT_POINTCUT__EFFECTIVE_TYPE);
+        createEAttribute(operationAspectPointcutEClass, OPERATION_ASPECT_POINTCUT__EFFECTIVE_SELECTOR_NAME);
+        createEAttribute(operationAspectPointcutEClass, OPERATION_ASPECT_POINTCUT__EFFECTIVE_VALUE);
+        createEAttribute(operationAspectPointcutEClass, OPERATION_ASPECT_POINTCUT__PRINTABLE_EFFECTIVE_VALUE);
+        createEAttribute(operationAspectPointcutEClass, OPERATION_ASPECT_POINTCUT__ORDERED_POINTCUT_TYPES);
+
+        operationAspectPointcutSelectorEClass = createEClass(OPERATION_ASPECT_POINTCUT_SELECTOR);
+        createEReference(operationAspectPointcutSelectorEClass, OPERATION_ASPECT_POINTCUT_SELECTOR__POINTCUTS);
+        createEReference(operationAspectPointcutSelectorEClass, OPERATION_ASPECT_POINTCUT_SELECTOR__OPERATION_ASPECT);
+        createEAttribute(operationAspectPointcutSelectorEClass, OPERATION_ASPECT_POINTCUT_SELECTOR__SELECTOR_STRING);
+        createEOperation(operationAspectPointcutSelectorEClass, OPERATION_ASPECT_POINTCUT_SELECTOR___IS_MORE_GENERIC_THAN__OPERATIONASPECTPOINTCUTSELECTOR);
+        createEOperation(operationAspectPointcutSelectorEClass, OPERATION_ASPECT_POINTCUT_SELECTOR___ORDERED_SELECTOR_VALUES);
 
         // Create enums
         exchangePatternEEnum = createEEnum(EXCHANGE_PATTERN);
@@ -1826,7 +2031,31 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
         initEOperation(getServiceAspectPointcutSelector__OrderedSelectorValues(), this.getPointcutTypeStringsMap(), "orderedSelectorValues", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
         initEClass(operationAspectEClass, OperationAspect.class, "OperationAspect", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEReference(getOperationAspect_PointcutSelectors(), this.getOperationAspectPointcutSelector(), this.getOperationAspectPointcutSelector_OperationAspect(), "pointcutSelectors", null, 0, -1, OperationAspect.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getOperationAspect_Technology(), this.getTechnology(), this.getTechnology_OperationAspects(), "technology", null, 0, 1, OperationAspect.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        op = initEOperation(getOperationAspect__HasMatchingSelector__EObject(), theEcorePackage.getEBoolean(), "hasMatchingSelector", 0, 1, !IS_UNIQUE, IS_ORDERED);
+        addEParameter(op, theEcorePackage.getEObject(), "forTechnology", 0, 1, !IS_UNIQUE, IS_ORDERED);
+
+        initEClass(operationAspectPointcutEClass, OperationAspectPointcut.class, "OperationAspectPointcut", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getOperationAspectPointcut_ForTechnology(), theEcorePackage.getEBoolean(), "forTechnology", null, 0, 1, OperationAspectPointcut.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getOperationAspectPointcut_Technology(), theEcorePackage.getEObject(), null, "technology", null, 0, 1, OperationAspectPointcut.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getOperationAspectPointcut_Selector(), this.getOperationAspectPointcutSelector(), this.getOperationAspectPointcutSelector_Pointcuts(), "selector", null, 0, 1, OperationAspectPointcut.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getOperationAspectPointcut_EffectiveType(), this.getPointcutType(), "effectiveType", null, 0, 1, OperationAspectPointcut.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+        initEAttribute(getOperationAspectPointcut_EffectiveSelectorName(), theEcorePackage.getEString(), "effectiveSelectorName", null, 0, 1, OperationAspectPointcut.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+        initEAttribute(getOperationAspectPointcut_EffectiveValue(), theEcorePackage.getEString(), "effectiveValue", null, 0, 1, OperationAspectPointcut.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+        initEAttribute(getOperationAspectPointcut_PrintableEffectiveValue(), theEcorePackage.getEString(), "printableEffectiveValue", null, 0, 1, OperationAspectPointcut.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+        initEAttribute(getOperationAspectPointcut_OrderedPointcutTypes(), this.getPointcutType(), "orderedPointcutTypes", null, 0, -1, OperationAspectPointcut.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+
+        initEClass(operationAspectPointcutSelectorEClass, OperationAspectPointcutSelector.class, "OperationAspectPointcutSelector", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEReference(getOperationAspectPointcutSelector_Pointcuts(), this.getOperationAspectPointcut(), this.getOperationAspectPointcut_Selector(), "pointcuts", null, 1, -1, OperationAspectPointcutSelector.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getOperationAspectPointcutSelector_OperationAspect(), this.getOperationAspect(), this.getOperationAspect_PointcutSelectors(), "operationAspect", null, 0, 1, OperationAspectPointcutSelector.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getOperationAspectPointcutSelector_SelectorString(), theEcorePackage.getEString(), "selectorString", null, 0, 1, OperationAspectPointcutSelector.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+
+        op = initEOperation(getOperationAspectPointcutSelector__IsMoreGenericThan__OperationAspectPointcutSelector(), theEcorePackage.getEBoolean(), "isMoreGenericThan", 0, 1, !IS_UNIQUE, IS_ORDERED);
+        addEParameter(op, this.getOperationAspectPointcutSelector(), "otherSelector", 0, 1, !IS_UNIQUE, IS_ORDERED);
+
+        initEOperation(getOperationAspectPointcutSelector__OrderedSelectorValues(), this.getPointcutTypeStringsMap(), "orderedSelectorValues", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
         // Initialize enums and add enum literals
         initEEnum(exchangePatternEEnum, ExchangePattern.class, "ExchangePattern");
@@ -1862,6 +2091,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
         addEEnumLiteral(pointcutTypeEEnum, PointcutType.COMMUNICATION_TYPE);
         addEEnumLiteral(pointcutTypeEEnum, PointcutType.PROTOCOL);
         addEEnumLiteral(pointcutTypeEEnum, PointcutType.DATA_FORMAT);
+        addEEnumLiteral(pointcutTypeEEnum, PointcutType.TECHNOLOGY);
 
         // Initialize data types
         initEDataType(pointcutTypeStringsMapEDataType, Map.class, "PointcutTypeStringsMap", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS, "java.util.Map<de.fhdo.ddmm.technology.PointcutType, java.util.List<java.lang.String>>");

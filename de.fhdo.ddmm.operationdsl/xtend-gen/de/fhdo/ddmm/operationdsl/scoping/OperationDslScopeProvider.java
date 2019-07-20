@@ -212,20 +212,45 @@ public class OperationDslScopeProvider extends AbstractOperationDslScopeProvider
     if (_tripleEquals) {
       return IScope.NULLSCOPE;
     }
+    final EObject aspectContainer = importedAspect.eContainer();
     JoinPointType _switchResult = null;
-    EObject _eContainer = importedAspect.eContainer();
     boolean _matched = false;
-    if (_eContainer instanceof Container) {
+    if (aspectContainer instanceof Container) {
       _matched=true;
       _switchResult = JoinPointType.CONTAINERS;
     }
     if (!_matched) {
-      if (_eContainer instanceof InfrastructureNode) {
+      if (aspectContainer instanceof InfrastructureNode) {
         _matched=true;
         _switchResult = JoinPointType.INFRASTRUCTURE_NODES;
       }
     }
     final JoinPointType joinPoint = _switchResult;
+    OperationTechnology _xifexpression = null;
+    if ((aspectContainer instanceof Container)) {
+      DeploymentTechnology _xifexpression_1 = null;
+      Import _technology_1 = importedAspect.getTechnology();
+      Import _import = ((Container)aspectContainer).getDeploymentTechnology().getImport();
+      boolean _equals = Objects.equal(_technology_1, _import);
+      if (_equals) {
+        _xifexpression_1 = ((Container)aspectContainer).getDeploymentTechnology().getDeploymentTechnology();
+      }
+      _xifexpression = _xifexpression_1;
+    } else {
+      InfrastructureTechnology _xifexpression_2 = null;
+      if ((aspectContainer instanceof InfrastructureNode)) {
+        InfrastructureTechnology _xifexpression_3 = null;
+        Import _technology_2 = importedAspect.getTechnology();
+        Import _import_1 = ((InfrastructureNode)aspectContainer).getInfrastructureTechnology().getImport();
+        boolean _equals_1 = Objects.equal(_technology_2, _import_1);
+        if (_equals_1) {
+          _xifexpression_3 = ((InfrastructureNode)aspectContainer).getInfrastructureTechnology().getInfrastructureTechnology();
+        }
+        _xifexpression_2 = _xifexpression_3;
+      }
+      _xifexpression = _xifexpression_2;
+    }
+    final OperationTechnology technology = _xifexpression;
     final Function<Technology, List<OperationAspect>> _function = (Technology it) -> {
       return IterableExtensions.<OperationAspect>toList(it.getOperationAspects());
     };
@@ -233,7 +258,8 @@ public class OperationDslScopeProvider extends AbstractOperationDslScopeProvider
       return it.getQualifiedNameParts();
     };
     final Predicate<OperationAspect> _function_2 = (OperationAspect it) -> {
-      return it.getJoinPoints().contains(joinPoint);
+      return (it.getJoinPoints().contains(joinPoint) && 
+        it.hasMatchingSelector(technology));
     };
     return DdmmUtils.<Import, Technology, OperationAspect>getScopeForPossiblyImportedConcept(
       importedAspect.getTechnology(), 

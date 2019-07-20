@@ -1721,13 +1721,22 @@ public interface TechnologyPackage extends EPackage {
     int OPERATION_ASPECT__PROPERTIES = TECHNOLOGY_ASPECT__PROPERTIES;
 
     /**
+     * The feature id for the '<em><b>Pointcut Selectors</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int OPERATION_ASPECT__POINTCUT_SELECTORS = TECHNOLOGY_ASPECT_FEATURE_COUNT + 0;
+
+    /**
      * The feature id for the '<em><b>Technology</b></em>' container reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int OPERATION_ASPECT__TECHNOLOGY = TECHNOLOGY_ASPECT_FEATURE_COUNT + 0;
+    int OPERATION_ASPECT__TECHNOLOGY = TECHNOLOGY_ASPECT_FEATURE_COUNT + 1;
 
     /**
      * The number of structural features of the '<em>Operation Aspect</em>' class.
@@ -1736,7 +1745,7 @@ public interface TechnologyPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int OPERATION_ASPECT_FEATURE_COUNT = TECHNOLOGY_ASPECT_FEATURE_COUNT + 1;
+    int OPERATION_ASPECT_FEATURE_COUNT = TECHNOLOGY_ASPECT_FEATURE_COUNT + 2;
 
     /**
      * The operation id for the '<em>Get Qualified Name Parts</em>' operation.
@@ -1748,13 +1757,195 @@ public interface TechnologyPackage extends EPackage {
     int OPERATION_ASPECT___GET_QUALIFIED_NAME_PARTS = TECHNOLOGY_ASPECT___GET_QUALIFIED_NAME_PARTS;
 
     /**
+     * The operation id for the '<em>Has Matching Selector</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int OPERATION_ASPECT___HAS_MATCHING_SELECTOR__EOBJECT = TECHNOLOGY_ASPECT_OPERATION_COUNT + 0;
+
+    /**
      * The number of operations of the '<em>Operation Aspect</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int OPERATION_ASPECT_OPERATION_COUNT = TECHNOLOGY_ASPECT_OPERATION_COUNT + 0;
+    int OPERATION_ASPECT_OPERATION_COUNT = TECHNOLOGY_ASPECT_OPERATION_COUNT + 1;
+
+    /**
+     * The meta object id for the '{@link de.fhdo.ddmm.technology.impl.OperationAspectPointcutImpl <em>Operation Aspect Pointcut</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.fhdo.ddmm.technology.impl.OperationAspectPointcutImpl
+     * @see de.fhdo.ddmm.technology.impl.TechnologyPackageImpl#getOperationAspectPointcut()
+     * @generated
+     */
+    int OPERATION_ASPECT_POINTCUT = 20;
+
+    /**
+     * The feature id for the '<em><b>For Technology</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int OPERATION_ASPECT_POINTCUT__FOR_TECHNOLOGY = 0;
+
+    /**
+     * The feature id for the '<em><b>Technology</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int OPERATION_ASPECT_POINTCUT__TECHNOLOGY = 1;
+
+    /**
+     * The feature id for the '<em><b>Selector</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int OPERATION_ASPECT_POINTCUT__SELECTOR = 2;
+
+    /**
+     * The feature id for the '<em><b>Effective Type</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int OPERATION_ASPECT_POINTCUT__EFFECTIVE_TYPE = 3;
+
+    /**
+     * The feature id for the '<em><b>Effective Selector Name</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int OPERATION_ASPECT_POINTCUT__EFFECTIVE_SELECTOR_NAME = 4;
+
+    /**
+     * The feature id for the '<em><b>Effective Value</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int OPERATION_ASPECT_POINTCUT__EFFECTIVE_VALUE = 5;
+
+    /**
+     * The feature id for the '<em><b>Printable Effective Value</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int OPERATION_ASPECT_POINTCUT__PRINTABLE_EFFECTIVE_VALUE = 6;
+
+    /**
+     * The feature id for the '<em><b>Ordered Pointcut Types</b></em>' attribute list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int OPERATION_ASPECT_POINTCUT__ORDERED_POINTCUT_TYPES = 7;
+
+    /**
+     * The number of structural features of the '<em>Operation Aspect Pointcut</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int OPERATION_ASPECT_POINTCUT_FEATURE_COUNT = 8;
+
+    /**
+     * The number of operations of the '<em>Operation Aspect Pointcut</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int OPERATION_ASPECT_POINTCUT_OPERATION_COUNT = 0;
+
+    /**
+     * The meta object id for the '{@link de.fhdo.ddmm.technology.impl.OperationAspectPointcutSelectorImpl <em>Operation Aspect Pointcut Selector</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.fhdo.ddmm.technology.impl.OperationAspectPointcutSelectorImpl
+     * @see de.fhdo.ddmm.technology.impl.TechnologyPackageImpl#getOperationAspectPointcutSelector()
+     * @generated
+     */
+    int OPERATION_ASPECT_POINTCUT_SELECTOR = 21;
+
+    /**
+     * The feature id for the '<em><b>Pointcuts</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int OPERATION_ASPECT_POINTCUT_SELECTOR__POINTCUTS = 0;
+
+    /**
+     * The feature id for the '<em><b>Operation Aspect</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int OPERATION_ASPECT_POINTCUT_SELECTOR__OPERATION_ASPECT = 1;
+
+    /**
+     * The feature id for the '<em><b>Selector String</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int OPERATION_ASPECT_POINTCUT_SELECTOR__SELECTOR_STRING = 2;
+
+    /**
+     * The number of structural features of the '<em>Operation Aspect Pointcut Selector</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int OPERATION_ASPECT_POINTCUT_SELECTOR_FEATURE_COUNT = 3;
+
+    /**
+     * The operation id for the '<em>Is More Generic Than</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int OPERATION_ASPECT_POINTCUT_SELECTOR___IS_MORE_GENERIC_THAN__OPERATIONASPECTPOINTCUTSELECTOR = 0;
+
+    /**
+     * The operation id for the '<em>Ordered Selector Values</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int OPERATION_ASPECT_POINTCUT_SELECTOR___ORDERED_SELECTOR_VALUES = 1;
+
+    /**
+     * The number of operations of the '<em>Operation Aspect Pointcut Selector</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int OPERATION_ASPECT_POINTCUT_SELECTOR_OPERATION_COUNT = 2;
 
     /**
      * The meta object id for the '{@link de.fhdo.ddmm.technology.ExchangePattern <em>Exchange Pattern</em>}' enum.
@@ -1764,7 +1955,7 @@ public interface TechnologyPackage extends EPackage {
      * @see de.fhdo.ddmm.technology.impl.TechnologyPackageImpl#getExchangePattern()
      * @generated
      */
-    int EXCHANGE_PATTERN = 20;
+    int EXCHANGE_PATTERN = 22;
 
     /**
      * The meta object id for the '{@link de.fhdo.ddmm.technology.CommunicationType <em>Communication Type</em>}' enum.
@@ -1774,7 +1965,7 @@ public interface TechnologyPackage extends EPackage {
      * @see de.fhdo.ddmm.technology.impl.TechnologyPackageImpl#getCommunicationType()
      * @generated
      */
-    int COMMUNICATION_TYPE = 21;
+    int COMMUNICATION_TYPE = 23;
 
     /**
      * The meta object id for the '{@link de.fhdo.ddmm.technology.CompatibilityDirection <em>Compatibility Direction</em>}' enum.
@@ -1784,7 +1975,7 @@ public interface TechnologyPackage extends EPackage {
      * @see de.fhdo.ddmm.technology.impl.TechnologyPackageImpl#getCompatibilityDirection()
      * @generated
      */
-    int COMPATIBILITY_DIRECTION = 22;
+    int COMPATIBILITY_DIRECTION = 24;
 
     /**
      * The meta object id for the '{@link de.fhdo.ddmm.technology.PropertyFeature <em>Property Feature</em>}' enum.
@@ -1794,7 +1985,7 @@ public interface TechnologyPackage extends EPackage {
      * @see de.fhdo.ddmm.technology.impl.TechnologyPackageImpl#getPropertyFeature()
      * @generated
      */
-    int PROPERTY_FEATURE = 23;
+    int PROPERTY_FEATURE = 25;
 
     /**
      * The meta object id for the '{@link de.fhdo.ddmm.technology.JoinPointType <em>Join Point Type</em>}' enum.
@@ -1804,7 +1995,7 @@ public interface TechnologyPackage extends EPackage {
      * @see de.fhdo.ddmm.technology.impl.TechnologyPackageImpl#getJoinPointType()
      * @generated
      */
-    int JOIN_POINT_TYPE = 24;
+    int JOIN_POINT_TYPE = 26;
 
     /**
      * The meta object id for the '{@link de.fhdo.ddmm.technology.PointcutType <em>Pointcut Type</em>}' enum.
@@ -1814,7 +2005,7 @@ public interface TechnologyPackage extends EPackage {
      * @see de.fhdo.ddmm.technology.impl.TechnologyPackageImpl#getPointcutType()
      * @generated
      */
-    int POINTCUT_TYPE = 25;
+    int POINTCUT_TYPE = 27;
 
     /**
      * The meta object id for the '<em>Pointcut Type Strings Map</em>' data type.
@@ -1824,7 +2015,7 @@ public interface TechnologyPackage extends EPackage {
      * @see de.fhdo.ddmm.technology.impl.TechnologyPackageImpl#getPointcutTypeStringsMap()
      * @generated
      */
-    int POINTCUT_TYPE_STRINGS_MAP = 26;
+    int POINTCUT_TYPE_STRINGS_MAP = 28;
 
 
     /**
@@ -2983,6 +3174,17 @@ public interface TechnologyPackage extends EPackage {
     EClass getOperationAspect();
 
     /**
+     * Returns the meta object for the containment reference list '{@link de.fhdo.ddmm.technology.OperationAspect#getPointcutSelectors <em>Pointcut Selectors</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Pointcut Selectors</em>'.
+     * @see de.fhdo.ddmm.technology.OperationAspect#getPointcutSelectors()
+     * @see #getOperationAspect()
+     * @generated
+     */
+    EReference getOperationAspect_PointcutSelectors();
+
+    /**
      * Returns the meta object for the container reference '{@link de.fhdo.ddmm.technology.OperationAspect#getTechnology <em>Technology</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2992,6 +3194,177 @@ public interface TechnologyPackage extends EPackage {
      * @generated
      */
     EReference getOperationAspect_Technology();
+
+    /**
+     * Returns the meta object for the '{@link de.fhdo.ddmm.technology.OperationAspect#hasMatchingSelector(org.eclipse.emf.ecore.EObject) <em>Has Matching Selector</em>}' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the '<em>Has Matching Selector</em>' operation.
+     * @see de.fhdo.ddmm.technology.OperationAspect#hasMatchingSelector(org.eclipse.emf.ecore.EObject)
+     * @generated
+     */
+    EOperation getOperationAspect__HasMatchingSelector__EObject();
+
+    /**
+     * Returns the meta object for class '{@link de.fhdo.ddmm.technology.OperationAspectPointcut <em>Operation Aspect Pointcut</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Operation Aspect Pointcut</em>'.
+     * @see de.fhdo.ddmm.technology.OperationAspectPointcut
+     * @generated
+     */
+    EClass getOperationAspectPointcut();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.fhdo.ddmm.technology.OperationAspectPointcut#isForTechnology <em>For Technology</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>For Technology</em>'.
+     * @see de.fhdo.ddmm.technology.OperationAspectPointcut#isForTechnology()
+     * @see #getOperationAspectPointcut()
+     * @generated
+     */
+    EAttribute getOperationAspectPointcut_ForTechnology();
+
+    /**
+     * Returns the meta object for the reference '{@link de.fhdo.ddmm.technology.OperationAspectPointcut#getTechnology <em>Technology</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference '<em>Technology</em>'.
+     * @see de.fhdo.ddmm.technology.OperationAspectPointcut#getTechnology()
+     * @see #getOperationAspectPointcut()
+     * @generated
+     */
+    EReference getOperationAspectPointcut_Technology();
+
+    /**
+     * Returns the meta object for the container reference '{@link de.fhdo.ddmm.technology.OperationAspectPointcut#getSelector <em>Selector</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the container reference '<em>Selector</em>'.
+     * @see de.fhdo.ddmm.technology.OperationAspectPointcut#getSelector()
+     * @see #getOperationAspectPointcut()
+     * @generated
+     */
+    EReference getOperationAspectPointcut_Selector();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.fhdo.ddmm.technology.OperationAspectPointcut#getEffectiveType <em>Effective Type</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Effective Type</em>'.
+     * @see de.fhdo.ddmm.technology.OperationAspectPointcut#getEffectiveType()
+     * @see #getOperationAspectPointcut()
+     * @generated
+     */
+    EAttribute getOperationAspectPointcut_EffectiveType();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.fhdo.ddmm.technology.OperationAspectPointcut#getEffectiveSelectorName <em>Effective Selector Name</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Effective Selector Name</em>'.
+     * @see de.fhdo.ddmm.technology.OperationAspectPointcut#getEffectiveSelectorName()
+     * @see #getOperationAspectPointcut()
+     * @generated
+     */
+    EAttribute getOperationAspectPointcut_EffectiveSelectorName();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.fhdo.ddmm.technology.OperationAspectPointcut#getEffectiveValue <em>Effective Value</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Effective Value</em>'.
+     * @see de.fhdo.ddmm.technology.OperationAspectPointcut#getEffectiveValue()
+     * @see #getOperationAspectPointcut()
+     * @generated
+     */
+    EAttribute getOperationAspectPointcut_EffectiveValue();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.fhdo.ddmm.technology.OperationAspectPointcut#getPrintableEffectiveValue <em>Printable Effective Value</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Printable Effective Value</em>'.
+     * @see de.fhdo.ddmm.technology.OperationAspectPointcut#getPrintableEffectiveValue()
+     * @see #getOperationAspectPointcut()
+     * @generated
+     */
+    EAttribute getOperationAspectPointcut_PrintableEffectiveValue();
+
+    /**
+     * Returns the meta object for the attribute list '{@link de.fhdo.ddmm.technology.OperationAspectPointcut#getOrderedPointcutTypes <em>Ordered Pointcut Types</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute list '<em>Ordered Pointcut Types</em>'.
+     * @see de.fhdo.ddmm.technology.OperationAspectPointcut#getOrderedPointcutTypes()
+     * @see #getOperationAspectPointcut()
+     * @generated
+     */
+    EAttribute getOperationAspectPointcut_OrderedPointcutTypes();
+
+    /**
+     * Returns the meta object for class '{@link de.fhdo.ddmm.technology.OperationAspectPointcutSelector <em>Operation Aspect Pointcut Selector</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Operation Aspect Pointcut Selector</em>'.
+     * @see de.fhdo.ddmm.technology.OperationAspectPointcutSelector
+     * @generated
+     */
+    EClass getOperationAspectPointcutSelector();
+
+    /**
+     * Returns the meta object for the containment reference list '{@link de.fhdo.ddmm.technology.OperationAspectPointcutSelector#getPointcuts <em>Pointcuts</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Pointcuts</em>'.
+     * @see de.fhdo.ddmm.technology.OperationAspectPointcutSelector#getPointcuts()
+     * @see #getOperationAspectPointcutSelector()
+     * @generated
+     */
+    EReference getOperationAspectPointcutSelector_Pointcuts();
+
+    /**
+     * Returns the meta object for the container reference '{@link de.fhdo.ddmm.technology.OperationAspectPointcutSelector#getOperationAspect <em>Operation Aspect</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the container reference '<em>Operation Aspect</em>'.
+     * @see de.fhdo.ddmm.technology.OperationAspectPointcutSelector#getOperationAspect()
+     * @see #getOperationAspectPointcutSelector()
+     * @generated
+     */
+    EReference getOperationAspectPointcutSelector_OperationAspect();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.fhdo.ddmm.technology.OperationAspectPointcutSelector#getSelectorString <em>Selector String</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Selector String</em>'.
+     * @see de.fhdo.ddmm.technology.OperationAspectPointcutSelector#getSelectorString()
+     * @see #getOperationAspectPointcutSelector()
+     * @generated
+     */
+    EAttribute getOperationAspectPointcutSelector_SelectorString();
+
+    /**
+     * Returns the meta object for the '{@link de.fhdo.ddmm.technology.OperationAspectPointcutSelector#isMoreGenericThan(de.fhdo.ddmm.technology.OperationAspectPointcutSelector) <em>Is More Generic Than</em>}' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the '<em>Is More Generic Than</em>' operation.
+     * @see de.fhdo.ddmm.technology.OperationAspectPointcutSelector#isMoreGenericThan(de.fhdo.ddmm.technology.OperationAspectPointcutSelector)
+     * @generated
+     */
+    EOperation getOperationAspectPointcutSelector__IsMoreGenericThan__OperationAspectPointcutSelector();
+
+    /**
+     * Returns the meta object for the '{@link de.fhdo.ddmm.technology.OperationAspectPointcutSelector#orderedSelectorValues() <em>Ordered Selector Values</em>}' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the '<em>Ordered Selector Values</em>' operation.
+     * @see de.fhdo.ddmm.technology.OperationAspectPointcutSelector#orderedSelectorValues()
+     * @generated
+     */
+    EOperation getOperationAspectPointcutSelector__OrderedSelectorValues();
 
     /**
      * Returns the meta object for enum '{@link de.fhdo.ddmm.technology.ExchangePattern <em>Exchange Pattern</em>}'.
@@ -3996,12 +4369,152 @@ public interface TechnologyPackage extends EPackage {
         EClass OPERATION_ASPECT = eINSTANCE.getOperationAspect();
 
         /**
+         * The meta object literal for the '<em><b>Pointcut Selectors</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference OPERATION_ASPECT__POINTCUT_SELECTORS = eINSTANCE.getOperationAspect_PointcutSelectors();
+
+        /**
          * The meta object literal for the '<em><b>Technology</b></em>' container reference feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
         EReference OPERATION_ASPECT__TECHNOLOGY = eINSTANCE.getOperationAspect_Technology();
+
+        /**
+         * The meta object literal for the '<em><b>Has Matching Selector</b></em>' operation.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EOperation OPERATION_ASPECT___HAS_MATCHING_SELECTOR__EOBJECT = eINSTANCE.getOperationAspect__HasMatchingSelector__EObject();
+
+        /**
+         * The meta object literal for the '{@link de.fhdo.ddmm.technology.impl.OperationAspectPointcutImpl <em>Operation Aspect Pointcut</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.fhdo.ddmm.technology.impl.OperationAspectPointcutImpl
+         * @see de.fhdo.ddmm.technology.impl.TechnologyPackageImpl#getOperationAspectPointcut()
+         * @generated
+         */
+        EClass OPERATION_ASPECT_POINTCUT = eINSTANCE.getOperationAspectPointcut();
+
+        /**
+         * The meta object literal for the '<em><b>For Technology</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute OPERATION_ASPECT_POINTCUT__FOR_TECHNOLOGY = eINSTANCE.getOperationAspectPointcut_ForTechnology();
+
+        /**
+         * The meta object literal for the '<em><b>Technology</b></em>' reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference OPERATION_ASPECT_POINTCUT__TECHNOLOGY = eINSTANCE.getOperationAspectPointcut_Technology();
+
+        /**
+         * The meta object literal for the '<em><b>Selector</b></em>' container reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference OPERATION_ASPECT_POINTCUT__SELECTOR = eINSTANCE.getOperationAspectPointcut_Selector();
+
+        /**
+         * The meta object literal for the '<em><b>Effective Type</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute OPERATION_ASPECT_POINTCUT__EFFECTIVE_TYPE = eINSTANCE.getOperationAspectPointcut_EffectiveType();
+
+        /**
+         * The meta object literal for the '<em><b>Effective Selector Name</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute OPERATION_ASPECT_POINTCUT__EFFECTIVE_SELECTOR_NAME = eINSTANCE.getOperationAspectPointcut_EffectiveSelectorName();
+
+        /**
+         * The meta object literal for the '<em><b>Effective Value</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute OPERATION_ASPECT_POINTCUT__EFFECTIVE_VALUE = eINSTANCE.getOperationAspectPointcut_EffectiveValue();
+
+        /**
+         * The meta object literal for the '<em><b>Printable Effective Value</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute OPERATION_ASPECT_POINTCUT__PRINTABLE_EFFECTIVE_VALUE = eINSTANCE.getOperationAspectPointcut_PrintableEffectiveValue();
+
+        /**
+         * The meta object literal for the '<em><b>Ordered Pointcut Types</b></em>' attribute list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute OPERATION_ASPECT_POINTCUT__ORDERED_POINTCUT_TYPES = eINSTANCE.getOperationAspectPointcut_OrderedPointcutTypes();
+
+        /**
+         * The meta object literal for the '{@link de.fhdo.ddmm.technology.impl.OperationAspectPointcutSelectorImpl <em>Operation Aspect Pointcut Selector</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.fhdo.ddmm.technology.impl.OperationAspectPointcutSelectorImpl
+         * @see de.fhdo.ddmm.technology.impl.TechnologyPackageImpl#getOperationAspectPointcutSelector()
+         * @generated
+         */
+        EClass OPERATION_ASPECT_POINTCUT_SELECTOR = eINSTANCE.getOperationAspectPointcutSelector();
+
+        /**
+         * The meta object literal for the '<em><b>Pointcuts</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference OPERATION_ASPECT_POINTCUT_SELECTOR__POINTCUTS = eINSTANCE.getOperationAspectPointcutSelector_Pointcuts();
+
+        /**
+         * The meta object literal for the '<em><b>Operation Aspect</b></em>' container reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference OPERATION_ASPECT_POINTCUT_SELECTOR__OPERATION_ASPECT = eINSTANCE.getOperationAspectPointcutSelector_OperationAspect();
+
+        /**
+         * The meta object literal for the '<em><b>Selector String</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute OPERATION_ASPECT_POINTCUT_SELECTOR__SELECTOR_STRING = eINSTANCE.getOperationAspectPointcutSelector_SelectorString();
+
+        /**
+         * The meta object literal for the '<em><b>Is More Generic Than</b></em>' operation.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EOperation OPERATION_ASPECT_POINTCUT_SELECTOR___IS_MORE_GENERIC_THAN__OPERATIONASPECTPOINTCUTSELECTOR = eINSTANCE.getOperationAspectPointcutSelector__IsMoreGenericThan__OperationAspectPointcutSelector();
+
+        /**
+         * The meta object literal for the '<em><b>Ordered Selector Values</b></em>' operation.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EOperation OPERATION_ASPECT_POINTCUT_SELECTOR___ORDERED_SELECTOR_VALUES = eINSTANCE.getOperationAspectPointcutSelector__OrderedSelectorValues();
 
         /**
          * The meta object literal for the '{@link de.fhdo.ddmm.technology.ExchangePattern <em>Exchange Pattern</em>}' enum.

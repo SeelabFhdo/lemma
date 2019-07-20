@@ -2,6 +2,9 @@
  */
 package de.fhdo.ddmm.technology;
 
+import org.eclipse.emf.common.util.EList;
+
+import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
@@ -17,6 +20,7 @@ package de.fhdo.ddmm.technology;
  * The following features are supported:
  * </p>
  * <ul>
+ *   <li>{@link de.fhdo.ddmm.technology.OperationAspect#getPointcutSelectors <em>Pointcut Selectors</em>}</li>
  *   <li>{@link de.fhdo.ddmm.technology.OperationAspect#getTechnology <em>Technology</em>}</li>
  * </ul>
  *
@@ -25,6 +29,26 @@ package de.fhdo.ddmm.technology;
  * @generated
  */
 public interface OperationAspect extends TechnologyAspect {
+    /**
+     * Returns the value of the '<em><b>Pointcut Selectors</b></em>' containment reference list.
+     * The list contents are of type {@link de.fhdo.ddmm.technology.OperationAspectPointcutSelector}.
+     * It is bidirectional and its opposite is '{@link de.fhdo.ddmm.technology.OperationAspectPointcutSelector#getOperationAspect <em>Operation Aspect</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * *
+     * Implicit Constraints:
+     *     (C1) Selectors must be unique.
+     *          Ensured by: DSL validator.
+     * <!-- end-model-doc -->
+     * @return the value of the '<em>Pointcut Selectors</em>' containment reference list.
+     * @see de.fhdo.ddmm.technology.TechnologyPackage#getOperationAspect_PointcutSelectors()
+     * @see de.fhdo.ddmm.technology.OperationAspectPointcutSelector#getOperationAspect
+     * @model opposite="operationAspect" containment="true"
+     * @generated
+     */
+    EList<OperationAspectPointcutSelector> getPointcutSelectors();
+
     /**
      * Returns the value of the '<em><b>Technology</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.ddmm.technology.Technology#getOperationAspects <em>Operation Aspects</em>}'.
@@ -52,5 +76,23 @@ public interface OperationAspect extends TechnologyAspect {
      * @generated
      */
     void setTechnology(Technology value);
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * *
+     * Check if the aspect has a matching selector for the given pointcuts and their values.
+     * Therefore, all pointcut values of a selector must be equal to the given values, i.e., the
+     * matching is based on the logical conjunction of all pointcuts ("AND" semantics) as long as
+     * their types differ. For pointcuts that receive more than one value in a selector (currently
+     * prevented on the language-level by the validator), logical disjunction ("OR" semantics) is
+     * applied. The pointcut values themselves are compared with the given values on the basis of
+     * identity matching ("equal" semantics).
+     * <!-- end-model-doc -->
+     * @model unique="false" forTechnologyUnique="false"
+     * @generated
+     */
+    boolean hasMatchingSelector(EObject forTechnology);
 
 } // OperationAspect

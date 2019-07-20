@@ -10,6 +10,9 @@ import de.fhdo.ddmm.data.Type;
 import de.fhdo.ddmm.technology.CommunicationType;
 import de.fhdo.ddmm.technology.CompatibilityMatrixEntry;
 import de.fhdo.ddmm.technology.DataFormat;
+import de.fhdo.ddmm.technology.JoinPointType;
+import de.fhdo.ddmm.technology.OperationAspect;
+import de.fhdo.ddmm.technology.OperationAspectPointcut;
 import de.fhdo.ddmm.technology.PossiblyImportedTechnologySpecificType;
 import de.fhdo.ddmm.technology.Protocol;
 import de.fhdo.ddmm.technology.ServiceAspectPointcut;
@@ -19,6 +22,7 @@ import de.fhdo.ddmm.technology.TechnologyPackage;
 import de.fhdo.ddmm.technology.scoping.AbstractTechnologyDslScopeProvider;
 import de.fhdo.ddmm.typechecking.TypecheckingUtils;
 import de.fhdo.ddmm.utils.DdmmUtils;
+import java.util.ArrayList;
 import java.util.List;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
@@ -69,6 +73,12 @@ public class TechnologyDslScopeProvider extends AbstractTechnologyDslScopeProvid
       if (context instanceof ServiceAspectPointcut) {
         _matched=true;
         _switchResult = this.getScope(((ServiceAspectPointcut)context), reference);
+      }
+    }
+    if (!_matched) {
+      if (context instanceof OperationAspectPointcut) {
+        _matched=true;
+        _switchResult = this.getScope(((OperationAspectPointcut)context), reference);
       }
     }
     final IScope scope = _switchResult;
@@ -198,6 +208,39 @@ public class TechnologyDslScopeProvider extends AbstractTechnologyDslScopeProvid
     };
     return Scopes.<DataFormat>scopeFor(scopeElements, _function_3, 
       IScope.NULLSCOPE);
+  }
+  
+  /**
+   * Build scope for operation aspect pointcuts
+   */
+  private IScope getScope(final OperationAspectPointcut pointcut, final EReference reference) {
+    boolean _matched = false;
+    if (Objects.equal(reference, TechnologyPackage.Literals.OPERATION_ASPECT_POINTCUT__TECHNOLOGY)) {
+      _matched=true;
+      return this.getScopeForOperationAspectPointcutTechnologies(pointcut);
+    }
+    return null;
+  }
+  
+  /**
+   * Build scope for technologies of operation aspects pointcuts
+   */
+  private IScope getScopeForOperationAspectPointcutTechnologies(final OperationAspectPointcut pointcut) {
+    if ((pointcut == null)) {
+      return null;
+    }
+    final EList<JoinPointType> joinPoints = EcoreUtil2.<OperationAspect>getContainerOfType(pointcut, OperationAspect.class).getJoinPoints();
+    final Technology modelRoot = EcoreUtil2.<Technology>getContainerOfType(pointcut, Technology.class);
+    final ArrayList<EObject> scopeElements = CollectionLiterals.<EObject>newArrayList();
+    boolean _contains = joinPoints.contains(JoinPointType.CONTAINERS);
+    if (_contains) {
+      scopeElements.addAll(modelRoot.getDeploymentTechnologies());
+    }
+    boolean _contains_1 = joinPoints.contains(JoinPointType.INFRASTRUCTURE_NODES);
+    if (_contains_1) {
+      scopeElements.addAll(modelRoot.getInfrastructureTechnologies());
+    }
+    return Scopes.scopeFor(scopeElements);
   }
   
   /**

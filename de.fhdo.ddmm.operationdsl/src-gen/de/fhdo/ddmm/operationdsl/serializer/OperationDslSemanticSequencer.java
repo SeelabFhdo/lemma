@@ -59,6 +59,8 @@ import de.fhdo.ddmm.technology.DataFormat;
 import de.fhdo.ddmm.technology.DeploymentTechnology;
 import de.fhdo.ddmm.technology.InfrastructureTechnology;
 import de.fhdo.ddmm.technology.OperationAspect;
+import de.fhdo.ddmm.technology.OperationAspectPointcut;
+import de.fhdo.ddmm.technology.OperationAspectPointcutSelector;
 import de.fhdo.ddmm.technology.OperationEnvironment;
 import de.fhdo.ddmm.technology.PossiblyImportedTechnologySpecificType;
 import de.fhdo.ddmm.technology.Protocol;
@@ -258,6 +260,12 @@ public class OperationDslSemanticSequencer extends ServiceDslSemanticSequencer {
 				return; 
 			case TechnologyPackage.OPERATION_ASPECT:
 				sequence_OperationAspect(context, (OperationAspect) semanticObject); 
+				return; 
+			case TechnologyPackage.OPERATION_ASPECT_POINTCUT:
+				sequence_OperationAspectPointcut(context, (OperationAspectPointcut) semanticObject); 
+				return; 
+			case TechnologyPackage.OPERATION_ASPECT_POINTCUT_SELECTOR:
+				sequence_OperationAspectPointcutSelector(context, (OperationAspectPointcutSelector) semanticObject); 
 				return; 
 			case TechnologyPackage.OPERATION_ENVIRONMENT:
 				sequence_OperationEnvironment(context, (OperationEnvironment) semanticObject); 

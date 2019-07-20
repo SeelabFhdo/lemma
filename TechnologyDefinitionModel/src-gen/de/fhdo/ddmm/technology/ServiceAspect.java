@@ -86,7 +86,7 @@ public interface ServiceAspect extends TechnologyAspect {
      * their types differ. For pointcuts that receive more than one value in a selector (currently
      * prevented on the language-level by the validator), logical disjunction ("OR" semantics) is
      * applied. The pointcut values themselves are compared with the given values on the basis of
-     * identify matching ("equal" semantics).
+     * identity matching ("equal" semantics).
      * <!-- end-model-doc -->
      * @model unique="false" forExchangePatternUnique="false" forCommunicationTypeUnique="false" forProtocolUnique="false" forDataFormatUnique="false"
      * @generated

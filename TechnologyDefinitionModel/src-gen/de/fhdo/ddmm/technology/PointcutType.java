@@ -60,7 +60,17 @@ public enum PointcutType implements Enumerator {
      * @generated
      * @ordered
      */
-    DATA_FORMAT(0, "DATA_FORMAT", "DATA_FORMAT");
+    DATA_FORMAT(0, "DATA_FORMAT", "DATA_FORMAT"),
+
+    /**
+     * The '<em><b>TECHNOLOGY</b></em>' literal object.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #TECHNOLOGY_VALUE
+     * @generated
+     * @ordered
+     */
+    TECHNOLOGY(0, "TECHNOLOGY", "TECHNOLOGY");
 
     /**
      * The '<em><b>EXCHANGE PATTERN</b></em>' literal value.
@@ -123,6 +133,21 @@ public enum PointcutType implements Enumerator {
     public static final int DATA_FORMAT_VALUE = 0;
 
     /**
+     * The '<em><b>TECHNOLOGY</b></em>' literal value.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of '<em><b>TECHNOLOGY</b></em>' literal object isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @see #TECHNOLOGY
+     * @model
+     * @generated
+     * @ordered
+     */
+    public static final int TECHNOLOGY_VALUE = 0;
+
+    /**
      * An array of all the '<em><b>Pointcut Type</b></em>' enumerators.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -134,6 +159,7 @@ public enum PointcutType implements Enumerator {
             COMMUNICATION_TYPE,
             PROTOCOL,
             DATA_FORMAT,
+            TECHNOLOGY,
         };
 
     /**

@@ -3651,6 +3651,135 @@ ruleServiceAspect returns [EObject current=null]
 	)
 ;
 
+// Entry rule entryRuleOperationAspectPointcut
+entryRuleOperationAspectPointcut returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getOperationAspectPointcutRule()); }
+	iv_ruleOperationAspectPointcut=ruleOperationAspectPointcut
+	{ $current=$iv_ruleOperationAspectPointcut.current; }
+	EOF;
+
+// Rule OperationAspectPointcut
+ruleOperationAspectPointcut returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		(
+			(
+				lv_forTechnology_0_0='technology'
+				{
+					newLeafNode(lv_forTechnology_0_0, grammarAccess.getOperationAspectPointcutAccess().getForTechnologyTechnologyKeyword_0_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getOperationAspectPointcutRule());
+					}
+					setWithLastConsumed($current, "forTechnology", true, "technology");
+				}
+			)
+		)
+		otherlv_1='='
+		{
+			newLeafNode(otherlv_1, grammarAccess.getOperationAspectPointcutAccess().getEqualsSignKeyword_1());
+		}
+		(
+			(
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getOperationAspectPointcutRule());
+					}
+				}
+				otherlv_2=RULE_ID
+				{
+					newLeafNode(otherlv_2, grammarAccess.getOperationAspectPointcutAccess().getTechnologyEObjectCrossReference_2_0());
+				}
+			)
+		)
+	)
+;
+
+// Entry rule entryRuleOperationAspectPointcutSelector
+entryRuleOperationAspectPointcutSelector returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getOperationAspectPointcutSelectorRule()); }
+	iv_ruleOperationAspectPointcutSelector=ruleOperationAspectPointcutSelector
+	{ $current=$iv_ruleOperationAspectPointcutSelector.current; }
+	EOF;
+
+// Rule OperationAspectPointcutSelector
+ruleOperationAspectPointcutSelector returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		otherlv_0='selector'
+		{
+			newLeafNode(otherlv_0, grammarAccess.getOperationAspectPointcutSelectorAccess().getSelectorKeyword_0());
+		}
+		otherlv_1='('
+		{
+			newLeafNode(otherlv_1, grammarAccess.getOperationAspectPointcutSelectorAccess().getLeftParenthesisKeyword_1());
+		}
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getOperationAspectPointcutSelectorAccess().getPointcutsOperationAspectPointcutParserRuleCall_2_0());
+				}
+				lv_pointcuts_2_0=ruleOperationAspectPointcut
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getOperationAspectPointcutSelectorRule());
+					}
+					add(
+						$current,
+						"pointcuts",
+						lv_pointcuts_2_0,
+						"de.fhdo.ddmm.technology.TechnologyDsl.OperationAspectPointcut");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)
+		(
+			otherlv_3=','
+			{
+				newLeafNode(otherlv_3, grammarAccess.getOperationAspectPointcutSelectorAccess().getCommaKeyword_3_0());
+			}
+			(
+				(
+					{
+						newCompositeNode(grammarAccess.getOperationAspectPointcutSelectorAccess().getPointcutsOperationAspectPointcutParserRuleCall_3_1_0());
+					}
+					lv_pointcuts_4_0=ruleOperationAspectPointcut
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getOperationAspectPointcutSelectorRule());
+						}
+						add(
+							$current,
+							"pointcuts",
+							lv_pointcuts_4_0,
+							"de.fhdo.ddmm.technology.TechnologyDsl.OperationAspectPointcut");
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)
+		)*
+		otherlv_5=')'
+		{
+			newLeafNode(otherlv_5, grammarAccess.getOperationAspectPointcutSelectorAccess().getRightParenthesisKeyword_4());
+		}
+		otherlv_6=';'
+		{
+			newLeafNode(otherlv_6, grammarAccess.getOperationAspectPointcutSelectorAccess().getSemicolonKeyword_5());
+		}
+	)
+;
+
 // Entry rule entryRuleOperationAspect
 entryRuleOperationAspect returns [EObject current=null]:
 	{ newCompositeNode(grammarAccess.getOperationAspectRule()); }
@@ -3746,9 +3875,28 @@ ruleOperationAspect returns [EObject current=null]
 				(
 					(
 						{
-							newCompositeNode(grammarAccess.getOperationAspectAccess().getPropertiesTechnologySpecificPropertyParserRuleCall_5_0_1_0());
+							newCompositeNode(grammarAccess.getOperationAspectAccess().getPointcutSelectorsOperationAspectPointcutSelectorParserRuleCall_5_0_1_0());
 						}
-						lv_properties_7_0=ruleTechnologySpecificProperty
+						lv_pointcutSelectors_7_0=ruleOperationAspectPointcutSelector
+						{
+							if ($current==null) {
+								$current = createModelElementForParent(grammarAccess.getOperationAspectRule());
+							}
+							add(
+								$current,
+								"pointcutSelectors",
+								lv_pointcutSelectors_7_0,
+								"de.fhdo.ddmm.technology.TechnologyDsl.OperationAspectPointcutSelector");
+							afterParserOrEnumRuleCall();
+						}
+					)
+				)*
+				(
+					(
+						{
+							newCompositeNode(grammarAccess.getOperationAspectAccess().getPropertiesTechnologySpecificPropertyParserRuleCall_5_0_2_0());
+						}
+						lv_properties_8_0=ruleTechnologySpecificProperty
 						{
 							if ($current==null) {
 								$current = createModelElementForParent(grammarAccess.getOperationAspectRule());
@@ -3756,21 +3904,21 @@ ruleOperationAspect returns [EObject current=null]
 							add(
 								$current,
 								"properties",
-								lv_properties_7_0,
+								lv_properties_8_0,
 								"de.fhdo.ddmm.technology.TechnologyDsl.TechnologySpecificProperty");
 							afterParserOrEnumRuleCall();
 						}
 					)
 				)*
-				otherlv_8='}'
+				otherlv_9='}'
 				{
-					newLeafNode(otherlv_8, grammarAccess.getOperationAspectAccess().getRightCurlyBracketKeyword_5_0_2());
+					newLeafNode(otherlv_9, grammarAccess.getOperationAspectAccess().getRightCurlyBracketKeyword_5_0_3());
 				}
 			)
 			    |
-			otherlv_9=';'
+			otherlv_10=';'
 			{
-				newLeafNode(otherlv_9, grammarAccess.getOperationAspectAccess().getSemicolonKeyword_5_1());
+				newLeafNode(otherlv_10, grammarAccess.getOperationAspectAccess().getSemicolonKeyword_5_1());
 			}
 		)
 	)

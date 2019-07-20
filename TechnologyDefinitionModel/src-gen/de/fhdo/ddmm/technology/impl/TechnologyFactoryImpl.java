@@ -78,6 +78,8 @@ public class TechnologyFactoryImpl extends EFactoryImpl implements TechnologyFac
             case TechnologyPackage.SERVICE_ASPECT_POINTCUT: return createServiceAspectPointcut();
             case TechnologyPackage.SERVICE_ASPECT_POINTCUT_SELECTOR: return createServiceAspectPointcutSelector();
             case TechnologyPackage.OPERATION_ASPECT: return createOperationAspect();
+            case TechnologyPackage.OPERATION_ASPECT_POINTCUT: return createOperationAspectPointcut();
+            case TechnologyPackage.OPERATION_ASPECT_POINTCUT_SELECTOR: return createOperationAspectPointcutSelector();
             default:
                 throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
         }
@@ -333,6 +335,28 @@ public class TechnologyFactoryImpl extends EFactoryImpl implements TechnologyFac
     public OperationAspect createOperationAspect() {
         OperationAspectImpl operationAspect = new OperationAspectImpl();
         return operationAspect;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public OperationAspectPointcut createOperationAspectPointcut() {
+        OperationAspectPointcutImpl operationAspectPointcut = new OperationAspectPointcutImpl();
+        return operationAspectPointcut;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public OperationAspectPointcutSelector createOperationAspectPointcutSelector() {
+        OperationAspectPointcutSelectorImpl operationAspectPointcutSelector = new OperationAspectPointcutSelectorImpl();
+        return operationAspectPointcutSelector;
     }
 
     /**

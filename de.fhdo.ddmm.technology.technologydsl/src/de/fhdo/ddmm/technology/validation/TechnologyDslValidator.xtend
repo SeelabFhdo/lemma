@@ -28,6 +28,8 @@ import de.fhdo.ddmm.technology.PointcutType
 import de.fhdo.ddmm.technology.JoinPointType
 import de.fhdo.ddmm.technology.TechnologyAspect
 import de.fhdo.ddmm.technology.PropertyFeature
+import de.fhdo.ddmm.technology.OperationAspectPointcutSelector
+import de.fhdo.ddmm.technology.OperationAspect
 
 /**
  * This class contains custom validation rules.
@@ -678,6 +680,20 @@ class TechnologyDslValidator extends AbstractTechnologyDslValidator {
     }
 
     /**
+     * Check that per type only one pointcut exists in an operation aspect selector
+     */
+    @Check
+    def checkPointcutUniqueness(OperationAspectPointcutSelector selector) {
+        val duplicateIndex = DdmmUtils.getDuplicateIndex(selector.pointcuts, [effectiveType])
+        if (duplicateIndex > -1) {
+            val duplicatePoincut = selector.pointcuts.get(duplicateIndex)
+            error('''Duplicate pointcut «duplicatePoincut.effectiveSelectorName»''',
+                TechnologyPackage::Literals.OPERATION_ASPECT_POINTCUT_SELECTOR__POINTCUTS,
+                duplicateIndex)
+        }
+    }
+
+    /**
      * Check aspect uniqueness considering different types of aspects and join points
      */
     @Check
@@ -750,6 +766,17 @@ class TechnologyDslValidator extends AbstractTechnologyDslValidator {
     }
 
     /**
+     * Check that selectors of an operation aspect are unique
+     */
+    @Check
+    def checkSelectorUniqueness(OperationAspect aspect) {
+        val duplicateIndex = DdmmUtils.getDuplicateIndex(aspect.pointcutSelectors, [selectorString])
+        if (duplicateIndex > -1)
+            error("Duplicate selector",
+                TechnologyPackage::Literals.OPERATION_ASPECT__POINTCUT_SELECTORS, duplicateIndex)
+    }
+
+    /**
      * Check that "exchange pattern" or "communication type" pointcut is specified in conjunction
      * with "parameters" or "data fields" join point
      */
@@ -771,15 +798,28 @@ class TechnologyDslValidator extends AbstractTechnologyDslValidator {
     }
 
     /**
-     * Warn if pointcut selector is more generic than other
+     * Warn if service aspect pointcut selector is more generic than other
      */
     @Check
-    def warnIfSelectorsIsMoreGeneric(ServiceAspectPointcutSelector selector) {
+    def warnIfSelectorIsMoreGeneric(ServiceAspectPointcutSelector selector) {
         val otherSelectors = selector.serviceAspect.pointcutSelectors.filter[it != selector]
         otherSelectors.forEach[
             if (selector.isMoreGenericThan(it))
                 warning('''Selector "«selector.selectorString»" is more generic''', it,
                 TechnologyPackage::Literals.SERVICE_ASPECT_POINTCUT_SELECTOR__SELECTOR_STRING)
+        ]
+    }
+
+    /**
+     * Warn if operation aspect pointcut selector is more generic than other
+     */
+    @Check
+    def warnIfSelectorIsMoreGeneric(OperationAspectPointcutSelector selector) {
+        val otherSelectors = selector.operationAspect.pointcutSelectors.filter[it != selector]
+        otherSelectors.forEach[
+            if (selector.isMoreGenericThan(it))
+                warning('''Selector "«selector.selectorString»" is more generic''', it,
+                TechnologyPackage::Literals.OPERATION_ASPECT_POINTCUT_SELECTOR__SELECTOR_STRING)
         ]
     }
 }
