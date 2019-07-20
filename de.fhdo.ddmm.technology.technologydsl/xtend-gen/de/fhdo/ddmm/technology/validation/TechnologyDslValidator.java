@@ -244,12 +244,10 @@ public class TechnologyDslValidator extends AbstractTechnologyDslValidator {
    */
   @Check
   public void checkPrimitiveDefaults(final Technology technology) {
-    final boolean technologySpecifiesOtherTypes = (((!technology.getListTypes().isEmpty()) || 
+    final boolean typeSectionIsPresent = (((!technology.getListTypes().isEmpty()) || 
       (!technology.getDataStructures().isEmpty())) || 
-      (!(technology.getPrimitiveTypes().isEmpty() || IterableExtensions.<TechnologySpecificPrimitiveType>exists(technology.getPrimitiveTypes(), ((Function1<TechnologySpecificPrimitiveType, Boolean>) (TechnologySpecificPrimitiveType it) -> {
-        return Boolean.valueOf(it.isDefault());
-      })))));
-    if ((!technologySpecifiesOtherTypes)) {
+      (!technology.getPrimitiveTypes().isEmpty()));
+    if ((!typeSectionIsPresent)) {
       return;
     }
     final Function1<TechnologySpecificPrimitiveType, Boolean> _function = (TechnologySpecificPrimitiveType it) -> {

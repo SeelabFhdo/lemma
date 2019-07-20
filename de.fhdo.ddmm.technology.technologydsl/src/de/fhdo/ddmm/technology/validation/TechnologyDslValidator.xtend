@@ -207,11 +207,11 @@ class TechnologyDslValidator extends AbstractTechnologyDslValidator {
          * the root concept Technology. Hence, checking for the existence of the "types" section "as
          * a whole" is not possible.
          */
-        val technologySpecifiesOtherTypes = !technology.listTypes.empty ||
+        val typeSectionIsPresent = !technology.listTypes.empty ||
             !technology.dataStructures.empty ||
-            !(technology.primitiveTypes.empty || technology.primitiveTypes.exists[^default])
+            !technology.primitiveTypes.empty
 
-        if (!technologySpecifiesOtherTypes) {
+        if (!typeSectionIsPresent) {
             return
         }
 
