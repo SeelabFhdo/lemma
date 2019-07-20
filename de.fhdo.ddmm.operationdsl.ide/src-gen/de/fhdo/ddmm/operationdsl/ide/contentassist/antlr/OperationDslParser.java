@@ -32,6 +32,7 @@ public class OperationDslParser extends AbstractContentAssistParser {
 		
 		private static void init(ImmutableMap.Builder<AbstractElement, String> builder, OperationDslGrammarAccess grammarAccess) {
 			builder.put(grammarAccess.getContainerAccess().getAlternatives_12_3(), "rule__Container__Alternatives_12_3");
+			builder.put(grammarAccess.getPropertyValueAssignmentAccess().getAlternatives(), "rule__PropertyValueAssignment__Alternatives");
 			builder.put(grammarAccess.getImportedOperationAspectAccess().getAlternatives_3_1(), "rule__ImportedOperationAspect__Alternatives_3_1");
 			builder.put(grammarAccess.getParameterAccess().getAlternatives_7(), "rule__Parameter__Alternatives_7");
 			builder.put(grammarAccess.getImportedServiceAspectAccess().getAlternatives_4_1(), "rule__ImportedServiceAspect__Alternatives_4_1");
@@ -86,7 +87,8 @@ public class OperationDslParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getServiceDeploymentSpecificationAccess().getGroup(), "rule__ServiceDeploymentSpecification__Group__0");
 			builder.put(grammarAccess.getServiceDeploymentSpecificationAccess().getGroup_5(), "rule__ServiceDeploymentSpecification__Group_5__0");
 			builder.put(grammarAccess.getImportedMicroserviceAccess().getGroup(), "rule__ImportedMicroservice__Group__0");
-			builder.put(grammarAccess.getPropertyValueAssignmentAccess().getGroup(), "rule__PropertyValueAssignment__Group__0");
+			builder.put(grammarAccess.getPropertyValueAssignmentAccess().getGroup_0(), "rule__PropertyValueAssignment__Group_0__0");
+			builder.put(grammarAccess.getPropertyValueAssignmentAccess().getGroup_1(), "rule__PropertyValueAssignment__Group_1__0");
 			builder.put(grammarAccess.getImportedOperationAspectAccess().getGroup(), "rule__ImportedOperationAspect__Group__0");
 			builder.put(grammarAccess.getImportedOperationAspectAccess().getGroup_3(), "rule__ImportedOperationAspect__Group_3__0");
 			builder.put(grammarAccess.getImportedOperationAspectAccess().getGroup_3_1_1(), "rule__ImportedOperationAspect__Group_3_1_1__0");
@@ -254,8 +256,10 @@ public class OperationDslParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getServiceDeploymentSpecificationAccess().getBasicEndpointsAssignment_5_3(), "rule__ServiceDeploymentSpecification__BasicEndpointsAssignment_5_3");
 			builder.put(grammarAccess.getImportedMicroserviceAccess().getImportAssignment_0(), "rule__ImportedMicroservice__ImportAssignment_0");
 			builder.put(grammarAccess.getImportedMicroserviceAccess().getMicroserviceAssignment_2(), "rule__ImportedMicroservice__MicroserviceAssignment_2");
-			builder.put(grammarAccess.getPropertyValueAssignmentAccess().getPropertyAssignment_0(), "rule__PropertyValueAssignment__PropertyAssignment_0");
-			builder.put(grammarAccess.getPropertyValueAssignmentAccess().getValueAssignment_2(), "rule__PropertyValueAssignment__ValueAssignment_2");
+			builder.put(grammarAccess.getPropertyValueAssignmentAccess().getPropertyAssignment_0_0(), "rule__PropertyValueAssignment__PropertyAssignment_0_0");
+			builder.put(grammarAccess.getPropertyValueAssignmentAccess().getValueAssignment_0_2(), "rule__PropertyValueAssignment__ValueAssignment_0_2");
+			builder.put(grammarAccess.getPropertyValueAssignmentAccess().getPropertyAssignment_1_0(), "rule__PropertyValueAssignment__PropertyAssignment_1_0");
+			builder.put(grammarAccess.getPropertyValueAssignmentAccess().getValueAssignment_1_2(), "rule__PropertyValueAssignment__ValueAssignment_1_2");
 			builder.put(grammarAccess.getImportedOperationAspectAccess().getTechnologyAssignment_0(), "rule__ImportedOperationAspect__TechnologyAssignment_0");
 			builder.put(grammarAccess.getImportedOperationAspectAccess().getAspectAssignment_2(), "rule__ImportedOperationAspect__AspectAssignment_2");
 			builder.put(grammarAccess.getImportedOperationAspectAccess().getSinglePropertyValueAssignment_3_1_0(), "rule__ImportedOperationAspect__SinglePropertyValueAssignment_3_1_0");

@@ -3908,39 +3908,84 @@ rulePropertyValueAssignment returns [EObject current=null]
 	(
 		(
 			(
-				{
-					if ($current==null) {
-						$current = createModelElement(grammarAccess.getPropertyValueAssignmentRule());
+				(
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getPropertyValueAssignmentRule());
+						}
 					}
-				}
-				otherlv_0=RULE_ID
-				{
-					newLeafNode(otherlv_0, grammarAccess.getPropertyValueAssignmentAccess().getPropertyTechnologySpecificPropertyCrossReference_0_0());
-				}
+					otherlv_0=RULE_ID
+					{
+						newLeafNode(otherlv_0, grammarAccess.getPropertyValueAssignmentAccess().getPropertyTechnologySpecificPropertyCrossReference_0_0_0());
+					}
+				)
+			)
+			otherlv_1='='
+			{
+				newLeafNode(otherlv_1, grammarAccess.getPropertyValueAssignmentAccess().getEqualsSignKeyword_0_1());
+			}
+			(
+				(
+					{
+						newCompositeNode(grammarAccess.getPropertyValueAssignmentAccess().getValuePrimitiveValueParserRuleCall_0_2_0());
+					}
+					lv_value_2_0=rulePrimitiveValue
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getPropertyValueAssignmentRule());
+						}
+						set(
+							$current,
+							"value",
+							lv_value_2_0,
+							"de.fhdo.ddmm.data.DataDsl.PrimitiveValue");
+						afterParserOrEnumRuleCall();
+					}
+				)
 			)
 		)
-		otherlv_1='='
-		{
-			newLeafNode(otherlv_1, grammarAccess.getPropertyValueAssignmentAccess().getEqualsSignKeyword_1());
-		}
+		    |
 		(
 			(
-				{
-					newCompositeNode(grammarAccess.getPropertyValueAssignmentAccess().getValuePrimitiveValueParserRuleCall_2_0());
-				}
-				lv_value_2_0=rulePrimitiveValue
-				{
-					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getPropertyValueAssignmentRule());
+				(
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getPropertyValueAssignmentRule());
+						}
 					}
-					set(
-						$current,
-						"value",
-						lv_value_2_0,
-						"de.fhdo.ddmm.data.DataDsl.PrimitiveValue");
-					afterParserOrEnumRuleCall();
-				}
+					otherlv_3=RULE_ID
+					{
+						newLeafNode(otherlv_3, grammarAccess.getPropertyValueAssignmentAccess().getPropertyTechnologySpecificPropertyCrossReference_1_0_0());
+					}
+				)
 			)
+			otherlv_4='('
+			{
+				newLeafNode(otherlv_4, grammarAccess.getPropertyValueAssignmentAccess().getLeftParenthesisKeyword_1_1());
+			}
+			(
+				(
+					{
+						newCompositeNode(grammarAccess.getPropertyValueAssignmentAccess().getValuePrimitiveValueParserRuleCall_1_2_0());
+					}
+					lv_value_5_0=rulePrimitiveValue
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getPropertyValueAssignmentRule());
+						}
+						set(
+							$current,
+							"value",
+							lv_value_5_0,
+							"de.fhdo.ddmm.data.DataDsl.PrimitiveValue");
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)
+			otherlv_6=')'
+			{
+				newLeafNode(otherlv_6, grammarAccess.getPropertyValueAssignmentAccess().getRightParenthesisKeyword_1_3());
+			}
 		)
 	)
 ;

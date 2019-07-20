@@ -133,7 +133,8 @@ ImportedServiceAspect returns ImportedServiceAspect:
 ;
 
 PropertyValueAssignment returns technology::TechnologySpecificPropertyValueAssignment:
-    property=[technology::TechnologySpecificProperty] '=' value=PrimitiveValue
+    (property=[technology::TechnologySpecificProperty] '=' value=PrimitiveValue) |
+    (property=[technology::TechnologySpecificProperty] '(' value=PrimitiveValue ')')
 ;
 
 enum MicroserviceType returns MicroserviceType:

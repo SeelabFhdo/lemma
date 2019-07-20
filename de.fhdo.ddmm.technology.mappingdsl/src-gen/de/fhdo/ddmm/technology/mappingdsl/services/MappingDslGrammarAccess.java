@@ -2109,7 +2109,8 @@ public class MappingDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//PropertyValueAssignment technology::TechnologySpecificPropertyValueAssignment:
-	//	property=[technology::TechnologySpecificProperty] '=' value=PrimitiveValue;
+	//	property=[technology::TechnologySpecificProperty] '=' value=PrimitiveValue |
+	//	property=[technology::TechnologySpecificProperty] '(' value=PrimitiveValue ')';
 	public ServiceDslGrammarAccess.PropertyValueAssignmentElements getPropertyValueAssignmentAccess() {
 		return gaServiceDsl.getPropertyValueAssignmentAccess();
 	}

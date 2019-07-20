@@ -120,7 +120,8 @@ ImportedMicroservice returns ImportedMicroservice:
 
 @Override
 PropertyValueAssignment returns technology::TechnologySpecificPropertyValueAssignment:
-    property=[technology::TechnologySpecificProperty] '=' value=PrimitiveValue
+    (property=[technology::TechnologySpecificProperty] '=' value=PrimitiveValue) |
+    (property=[technology::TechnologySpecificProperty] '(' value=PrimitiveValue ')')
 ;
 
 ImportedOperationAspect returns ImportedOperationAspect:

@@ -1318,38 +1318,76 @@ public class ServiceDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	public class PropertyValueAssignmentElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.fhdo.ddmm.ServiceDsl.PropertyValueAssignment");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Assignment cPropertyAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final CrossReference cPropertyTechnologySpecificPropertyCrossReference_0_0 = (CrossReference)cPropertyAssignment_0.eContents().get(0);
-		private final RuleCall cPropertyTechnologySpecificPropertyIDTerminalRuleCall_0_0_1 = (RuleCall)cPropertyTechnologySpecificPropertyCrossReference_0_0.eContents().get(1);
-		private final Keyword cEqualsSignKeyword_1 = (Keyword)cGroup.eContents().get(1);
-		private final Assignment cValueAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cValuePrimitiveValueParserRuleCall_2_0 = (RuleCall)cValueAssignment_2.eContents().get(0);
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final Group cGroup_0 = (Group)cAlternatives.eContents().get(0);
+		private final Assignment cPropertyAssignment_0_0 = (Assignment)cGroup_0.eContents().get(0);
+		private final CrossReference cPropertyTechnologySpecificPropertyCrossReference_0_0_0 = (CrossReference)cPropertyAssignment_0_0.eContents().get(0);
+		private final RuleCall cPropertyTechnologySpecificPropertyIDTerminalRuleCall_0_0_0_1 = (RuleCall)cPropertyTechnologySpecificPropertyCrossReference_0_0_0.eContents().get(1);
+		private final Keyword cEqualsSignKeyword_0_1 = (Keyword)cGroup_0.eContents().get(1);
+		private final Assignment cValueAssignment_0_2 = (Assignment)cGroup_0.eContents().get(2);
+		private final RuleCall cValuePrimitiveValueParserRuleCall_0_2_0 = (RuleCall)cValueAssignment_0_2.eContents().get(0);
+		private final Group cGroup_1 = (Group)cAlternatives.eContents().get(1);
+		private final Assignment cPropertyAssignment_1_0 = (Assignment)cGroup_1.eContents().get(0);
+		private final CrossReference cPropertyTechnologySpecificPropertyCrossReference_1_0_0 = (CrossReference)cPropertyAssignment_1_0.eContents().get(0);
+		private final RuleCall cPropertyTechnologySpecificPropertyIDTerminalRuleCall_1_0_0_1 = (RuleCall)cPropertyTechnologySpecificPropertyCrossReference_1_0_0.eContents().get(1);
+		private final Keyword cLeftParenthesisKeyword_1_1 = (Keyword)cGroup_1.eContents().get(1);
+		private final Assignment cValueAssignment_1_2 = (Assignment)cGroup_1.eContents().get(2);
+		private final RuleCall cValuePrimitiveValueParserRuleCall_1_2_0 = (RuleCall)cValueAssignment_1_2.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_1_3 = (Keyword)cGroup_1.eContents().get(3);
 		
 		//PropertyValueAssignment technology::TechnologySpecificPropertyValueAssignment:
-		//	property=[technology::TechnologySpecificProperty] '=' value=PrimitiveValue;
+		//	property=[technology::TechnologySpecificProperty] '=' value=PrimitiveValue |
+		//	property=[technology::TechnologySpecificProperty] '(' value=PrimitiveValue ')';
 		@Override public ParserRule getRule() { return rule; }
 		
+		//property=[technology::TechnologySpecificProperty] '=' value=PrimitiveValue |
+		//property=[technology::TechnologySpecificProperty] '(' value=PrimitiveValue ')'
+		public Alternatives getAlternatives() { return cAlternatives; }
+		
 		//property=[technology::TechnologySpecificProperty] '=' value=PrimitiveValue
-		public Group getGroup() { return cGroup; }
+		public Group getGroup_0() { return cGroup_0; }
 		
 		//property=[technology::TechnologySpecificProperty]
-		public Assignment getPropertyAssignment_0() { return cPropertyAssignment_0; }
+		public Assignment getPropertyAssignment_0_0() { return cPropertyAssignment_0_0; }
 		
 		//[technology::TechnologySpecificProperty]
-		public CrossReference getPropertyTechnologySpecificPropertyCrossReference_0_0() { return cPropertyTechnologySpecificPropertyCrossReference_0_0; }
+		public CrossReference getPropertyTechnologySpecificPropertyCrossReference_0_0_0() { return cPropertyTechnologySpecificPropertyCrossReference_0_0_0; }
 		
 		//ID
-		public RuleCall getPropertyTechnologySpecificPropertyIDTerminalRuleCall_0_0_1() { return cPropertyTechnologySpecificPropertyIDTerminalRuleCall_0_0_1; }
+		public RuleCall getPropertyTechnologySpecificPropertyIDTerminalRuleCall_0_0_0_1() { return cPropertyTechnologySpecificPropertyIDTerminalRuleCall_0_0_0_1; }
 		
 		//'='
-		public Keyword getEqualsSignKeyword_1() { return cEqualsSignKeyword_1; }
+		public Keyword getEqualsSignKeyword_0_1() { return cEqualsSignKeyword_0_1; }
 		
 		//value=PrimitiveValue
-		public Assignment getValueAssignment_2() { return cValueAssignment_2; }
+		public Assignment getValueAssignment_0_2() { return cValueAssignment_0_2; }
 		
 		//PrimitiveValue
-		public RuleCall getValuePrimitiveValueParserRuleCall_2_0() { return cValuePrimitiveValueParserRuleCall_2_0; }
+		public RuleCall getValuePrimitiveValueParserRuleCall_0_2_0() { return cValuePrimitiveValueParserRuleCall_0_2_0; }
+		
+		//property=[technology::TechnologySpecificProperty] '(' value=PrimitiveValue ')'
+		public Group getGroup_1() { return cGroup_1; }
+		
+		//property=[technology::TechnologySpecificProperty]
+		public Assignment getPropertyAssignment_1_0() { return cPropertyAssignment_1_0; }
+		
+		//[technology::TechnologySpecificProperty]
+		public CrossReference getPropertyTechnologySpecificPropertyCrossReference_1_0_0() { return cPropertyTechnologySpecificPropertyCrossReference_1_0_0; }
+		
+		//ID
+		public RuleCall getPropertyTechnologySpecificPropertyIDTerminalRuleCall_1_0_0_1() { return cPropertyTechnologySpecificPropertyIDTerminalRuleCall_1_0_0_1; }
+		
+		//'('
+		public Keyword getLeftParenthesisKeyword_1_1() { return cLeftParenthesisKeyword_1_1; }
+		
+		//value=PrimitiveValue
+		public Assignment getValueAssignment_1_2() { return cValueAssignment_1_2; }
+		
+		//PrimitiveValue
+		public RuleCall getValuePrimitiveValueParserRuleCall_1_2_0() { return cValuePrimitiveValueParserRuleCall_1_2_0; }
+		
+		//')'
+		public Keyword getRightParenthesisKeyword_1_3() { return cRightParenthesisKeyword_1_3; }
 	}
 	public class QualifiedNameWithAtLeastOneLevelElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.fhdo.ddmm.ServiceDsl.QualifiedNameWithAtLeastOneLevel");
@@ -1788,7 +1826,8 @@ public class ServiceDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//PropertyValueAssignment technology::TechnologySpecificPropertyValueAssignment:
-	//	property=[technology::TechnologySpecificProperty] '=' value=PrimitiveValue;
+	//	property=[technology::TechnologySpecificProperty] '=' value=PrimitiveValue |
+	//	property=[technology::TechnologySpecificProperty] '(' value=PrimitiveValue ')';
 	public PropertyValueAssignmentElements getPropertyValueAssignmentAccess() {
 		return pPropertyValueAssignment;
 	}

@@ -473,19 +473,10 @@ public class ServiceDslSemanticSequencer extends TechnologyDslSemanticSequencer 
 	 *     PropertyValueAssignment returns TechnologySpecificPropertyValueAssignment
 	 *
 	 * Constraint:
-	 *     (property=[TechnologySpecificProperty|ID] value=PrimitiveValue)
+	 *     ((property=[TechnologySpecificProperty|ID] value=PrimitiveValue) | (property=[TechnologySpecificProperty|ID] value=PrimitiveValue))
 	 */
 	protected void sequence_PropertyValueAssignment(ISerializationContext context, TechnologySpecificPropertyValueAssignment semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, TechnologyPackage.Literals.TECHNOLOGY_SPECIFIC_PROPERTY_VALUE_ASSIGNMENT__PROPERTY) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, TechnologyPackage.Literals.TECHNOLOGY_SPECIFIC_PROPERTY_VALUE_ASSIGNMENT__PROPERTY));
-			if (transientValues.isValueTransient(semanticObject, TechnologyPackage.Literals.TECHNOLOGY_SPECIFIC_PROPERTY_VALUE_ASSIGNMENT__VALUE) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, TechnologyPackage.Literals.TECHNOLOGY_SPECIFIC_PROPERTY_VALUE_ASSIGNMENT__VALUE));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getPropertyValueAssignmentAccess().getPropertyTechnologySpecificPropertyIDTerminalRuleCall_0_0_1(), semanticObject.eGet(TechnologyPackage.Literals.TECHNOLOGY_SPECIFIC_PROPERTY_VALUE_ASSIGNMENT__PROPERTY, false));
-		feeder.accept(grammarAccess.getPropertyValueAssignmentAccess().getValuePrimitiveValueParserRuleCall_2_0(), semanticObject.getValue());
-		feeder.finish();
+		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
