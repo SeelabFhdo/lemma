@@ -196,11 +196,11 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
 
             /* Protocol technologies */
             case MappingPackage::Literals.TECHNOLOGY_SPECIFIC_PROTOCOL__TECHNOLOGY:
-                return mapping.microserviceMapping.getScopeForAnnotatedTechnologies()
+                return mapping.getScopeForAnnotatedTechnologies()
 
             /* Aspect technologies */
             case MappingPackage::Literals.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__TECHNOLOGY:
-                return mapping.microserviceMapping.getScopeForAnnotatedTechnologies()
+                return mapping.getScopeForAnnotatedTechnologies()
         }
 
         return null
@@ -217,11 +217,11 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
 
             /* Protocol technologies */
             case MappingPackage::Literals.TECHNOLOGY_SPECIFIC_PROTOCOL__TECHNOLOGY:
-                return mapping.microserviceMapping.getScopeForAnnotatedTechnologies()
+                return mapping.getScopeForAnnotatedTechnologies()
 
             /* Aspect technologies */
             case MappingPackage::Literals.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__TECHNOLOGY:
-                return mapping.microserviceMapping.getScopeForAnnotatedTechnologies()
+                return mapping.getScopeForAnnotatedTechnologies()
         }
 
         return null
@@ -238,7 +238,7 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
 
             /* Protocol technologies */
             case MappingPackage::Literals.TECHNOLOGY_SPECIFIC_PROTOCOL__TECHNOLOGY:
-                return mapping.microserviceMapping.getScopeForAnnotatedTechnologies()
+                return mapping.getScopeForAnnotatedTechnologies()
 
             /* Aspect technologies */
             case MappingPackage::Literals.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__TECHNOLOGY:
@@ -273,23 +273,27 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
         switch (reference) {
             /* Technologies */
             case MappingPackage::Literals.TECHNOLOGY_SPECIFIC_PROTOCOL__TECHNOLOGY:
-                return EcoreUtil2.getContainerOfType(protocolSpecification, MicroserviceMapping)
-                    .getScopeForAnnotatedTechnologies()
+                return protocolSpecification.getScopeForAnnotatedTechnologies()
         }
 
         return null
     }
 
     /**
-     * Build scope that comprises annotated technologies of an annotatable concept instance
+     * Build scope that comprises annotated technologies of a technology-annotatable concept
+     * instance or its technology-annotatable container
      */
     private def getScopeForAnnotatedTechnologies(EObject mapping) {
-        return if (mapping instanceof ComplexTypeMapping)
-                Scopes::scopeFor(mapping.technologies)
-            else if (mapping instanceof MicroserviceMapping)
-                Scopes::scopeFor(mapping.technologies)
-            else
-                null
+        val EObject parentMapping = EcoreUtil2.getContainerOfType(mapping, ComplexTypeMapping) ?:
+            EcoreUtil2.getContainerOfType(mapping, MicroserviceMapping)
+
+        if (parentMapping === null)
+            return null
+
+        return if (parentMapping instanceof ComplexTypeMapping)
+                Scopes::scopeFor(parentMapping.technologies)
+            else if (parentMapping instanceof MicroserviceMapping)
+                Scopes::scopeFor(parentMapping.technologies)
     }
 
     /**
@@ -316,8 +320,7 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
         switch (reference) {
             /* Technologies */
             case MappingPackage::Literals.TECHNOLOGY_SPECIFIC_PROTOCOL__TECHNOLOGY:
-                return EcoreUtil2.getContainerOfType(endpoint, MicroserviceMapping)
-                    .getScopeForAnnotatedTechnologies()
+                return endpoint.getScopeForAnnotatedTechnologies()
         }
 
         return null
@@ -338,8 +341,7 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
 
             /* Aspect technologies */
             case MappingPackage::Literals.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__TECHNOLOGY:
-                return EcoreUtil2.getContainerOfType(mapping, MicroserviceMapping)
-                    .getScopeForAnnotatedTechnologies()
+                return mapping.getScopeForAnnotatedTechnologies()
 
             /* Data type technologies */
             case MappingPackage::Literals.PRIMITIVE_PARAMETER_MAPPING__TECHNOLOGY:
@@ -360,8 +362,7 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
 
             /* Aspect technologies */
             case MappingPackage::Literals.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__TECHNOLOGY:
-                return EcoreUtil2.getContainerOfType(mapping, MicroserviceMapping)
-                    .getScopeForAnnotatedTechnologies()
+                return mapping.getScopeForAnnotatedTechnologies()
 
             /* Data type technologies */
             case MappingPackage::Literals.COMPLEX_PARAMETER_MAPPING__TECHNOLOGY:
@@ -397,7 +398,7 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
             /* Data type technologies */
             case MappingPackage::Literals.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__TECHNOLOGY,
             case MappingPackage::Literals.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__TECHNOLOGY:
-                return mapping.getScopeForTypeDefinitionTechnology()
+                return mapping.getScopeForAnnotatedTechnologies()
 
             /* Types */
             case MappingPackage::Literals.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__TYPE:
@@ -716,7 +717,7 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
      */
     private def getScopeForTechnologies(TechnologySpecificImportedServiceAspect aspect) {
         return if (aspect.typeMapping !== null)
-                aspect.typeMapping.getScopeForAnnotatedTechnologies()
+                aspect.getScopeForAnnotatedTechnologies()
             else
                 EcoreUtil2.getContainerOfType(aspect, MicroserviceMapping)
                     .getScopeForAnnotatedTechnologies()

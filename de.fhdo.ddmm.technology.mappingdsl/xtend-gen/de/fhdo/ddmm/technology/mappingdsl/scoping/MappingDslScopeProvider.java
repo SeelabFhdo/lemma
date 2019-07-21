@@ -281,13 +281,13 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     if (!_matched) {
       if (Objects.equal(reference, MappingPackage.Literals.TECHNOLOGY_SPECIFIC_PROTOCOL__TECHNOLOGY)) {
         _matched=true;
-        return this.getScopeForAnnotatedTechnologies(mapping.getMicroserviceMapping());
+        return this.getScopeForAnnotatedTechnologies(mapping);
       }
     }
     if (!_matched) {
       if (Objects.equal(reference, MappingPackage.Literals.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__TECHNOLOGY)) {
         _matched=true;
-        return this.getScopeForAnnotatedTechnologies(mapping.getMicroserviceMapping());
+        return this.getScopeForAnnotatedTechnologies(mapping);
       }
     }
     return null;
@@ -305,13 +305,13 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     if (!_matched) {
       if (Objects.equal(reference, MappingPackage.Literals.TECHNOLOGY_SPECIFIC_PROTOCOL__TECHNOLOGY)) {
         _matched=true;
-        return this.getScopeForAnnotatedTechnologies(mapping.getMicroserviceMapping());
+        return this.getScopeForAnnotatedTechnologies(mapping);
       }
     }
     if (!_matched) {
       if (Objects.equal(reference, MappingPackage.Literals.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__TECHNOLOGY)) {
         _matched=true;
-        return this.getScopeForAnnotatedTechnologies(mapping.getMicroserviceMapping());
+        return this.getScopeForAnnotatedTechnologies(mapping);
       }
     }
     return null;
@@ -329,7 +329,7 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     if (!_matched) {
       if (Objects.equal(reference, MappingPackage.Literals.TECHNOLOGY_SPECIFIC_PROTOCOL__TECHNOLOGY)) {
         _matched=true;
-        return this.getScopeForAnnotatedTechnologies(mapping.getMicroserviceMapping());
+        return this.getScopeForAnnotatedTechnologies(mapping);
       }
     }
     if (!_matched) {
@@ -366,24 +366,35 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     boolean _matched = false;
     if (Objects.equal(reference, MappingPackage.Literals.TECHNOLOGY_SPECIFIC_PROTOCOL__TECHNOLOGY)) {
       _matched=true;
-      return this.getScopeForAnnotatedTechnologies(EcoreUtil2.<MicroserviceMapping>getContainerOfType(protocolSpecification, MicroserviceMapping.class));
+      return this.getScopeForAnnotatedTechnologies(protocolSpecification);
     }
     return null;
   }
   
   /**
-   * Build scope that comprises annotated technologies of an annotatable concept instance
+   * Build scope that comprises annotated technologies of a technology-annotatable concept
+   * instance or its technology-annotatable container
    */
   private IScope getScopeForAnnotatedTechnologies(final EObject mapping) {
+    EObject _elvis = null;
+    ComplexTypeMapping _containerOfType = EcoreUtil2.<ComplexTypeMapping>getContainerOfType(mapping, ComplexTypeMapping.class);
+    if (_containerOfType != null) {
+      _elvis = _containerOfType;
+    } else {
+      MicroserviceMapping _containerOfType_1 = EcoreUtil2.<MicroserviceMapping>getContainerOfType(mapping, MicroserviceMapping.class);
+      _elvis = _containerOfType_1;
+    }
+    final EObject parentMapping = _elvis;
+    if ((parentMapping == null)) {
+      return null;
+    }
     IScope _xifexpression = null;
-    if ((mapping instanceof ComplexTypeMapping)) {
-      _xifexpression = Scopes.scopeFor(((ComplexTypeMapping)mapping).getTechnologies());
+    if ((parentMapping instanceof ComplexTypeMapping)) {
+      _xifexpression = Scopes.scopeFor(((ComplexTypeMapping)parentMapping).getTechnologies());
     } else {
       IScope _xifexpression_1 = null;
-      if ((mapping instanceof MicroserviceMapping)) {
-        _xifexpression_1 = Scopes.scopeFor(((MicroserviceMapping)mapping).getTechnologies());
-      } else {
-        _xifexpression_1 = null;
+      if ((parentMapping instanceof MicroserviceMapping)) {
+        _xifexpression_1 = Scopes.scopeFor(((MicroserviceMapping)parentMapping).getTechnologies());
       }
       _xifexpression = _xifexpression_1;
     }
@@ -415,7 +426,7 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     boolean _matched = false;
     if (Objects.equal(reference, MappingPackage.Literals.TECHNOLOGY_SPECIFIC_PROTOCOL__TECHNOLOGY)) {
       _matched=true;
-      return this.getScopeForAnnotatedTechnologies(EcoreUtil2.<MicroserviceMapping>getContainerOfType(endpoint, MicroserviceMapping.class));
+      return this.getScopeForAnnotatedTechnologies(endpoint);
     }
     return null;
   }
@@ -438,7 +449,7 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     if (!_matched) {
       if (Objects.equal(reference, MappingPackage.Literals.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__TECHNOLOGY)) {
         _matched=true;
-        return this.getScopeForAnnotatedTechnologies(EcoreUtil2.<MicroserviceMapping>getContainerOfType(mapping, MicroserviceMapping.class));
+        return this.getScopeForAnnotatedTechnologies(mapping);
       }
     }
     if (!_matched) {
@@ -462,7 +473,7 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     if (!_matched) {
       if (Objects.equal(reference, MappingPackage.Literals.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__TECHNOLOGY)) {
         _matched=true;
-        return this.getScopeForAnnotatedTechnologies(EcoreUtil2.<MicroserviceMapping>getContainerOfType(mapping, MicroserviceMapping.class));
+        return this.getScopeForAnnotatedTechnologies(mapping);
       }
     }
     if (!_matched) {
@@ -515,7 +526,7 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
         }
       }
       if (_matched) {
-        return this.getScopeForTypeDefinitionTechnology(mapping);
+        return this.getScopeForAnnotatedTechnologies(mapping);
       }
     }
     if (!_matched) {
@@ -970,7 +981,7 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     ComplexTypeMapping _typeMapping = aspect.getTypeMapping();
     boolean _tripleNotEquals = (_typeMapping != null);
     if (_tripleNotEquals) {
-      _xifexpression = this.getScopeForAnnotatedTechnologies(aspect.getTypeMapping());
+      _xifexpression = this.getScopeForAnnotatedTechnologies(aspect);
     } else {
       _xifexpression = this.getScopeForAnnotatedTechnologies(EcoreUtil2.<MicroserviceMapping>getContainerOfType(aspect, MicroserviceMapping.class));
     }
