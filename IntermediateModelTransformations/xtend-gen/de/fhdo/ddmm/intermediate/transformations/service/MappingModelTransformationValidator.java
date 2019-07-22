@@ -73,7 +73,7 @@ public class MappingModelTransformationValidator extends AbstractInputModelValid
     {
       final Function1<MicroserviceMapping, Boolean> _function = (MicroserviceMapping it) -> {
         final Function1<Microservice, Boolean> _function_1 = (Microservice it_1) -> {
-          return Boolean.valueOf(it_1.getTechnologies().isEmpty());
+          return Boolean.valueOf(it_1.getTechnologyReferences().isEmpty());
         };
         return Boolean.valueOf(IterableExtensions.<Microservice>exists(it.getMicroservice().getMicroservice().getAllRequiredMicroservices().keySet(), _function_1));
       };

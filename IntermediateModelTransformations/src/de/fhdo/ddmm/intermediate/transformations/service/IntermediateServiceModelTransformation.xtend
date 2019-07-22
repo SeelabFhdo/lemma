@@ -98,7 +98,7 @@ class IntermediateServiceModelTransformation
             }
 
             // Default protocols per communication type
-            microservice.technologies.forEach[technologyImport |
+            microservice.technologyReferences.map[technology].forEach[technologyImport |
                 val technologyModel = DdmmUtils.getImportedModelRoot(technologyImport.eResource,
                     technologyImport.importURI, Technology)
                 if (microservice.t_defaultProtocols === null)

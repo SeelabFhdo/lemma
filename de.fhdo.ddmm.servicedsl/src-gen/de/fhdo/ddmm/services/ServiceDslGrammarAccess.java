@@ -106,14 +106,8 @@ public class ServiceDslGrammarAccess extends AbstractGrammarElementFinder {
 	public class MicroserviceElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.fhdo.ddmm.ServiceDsl.Microservice");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Group cGroup_0 = (Group)cGroup.eContents().get(0);
-		private final Keyword cCommercialAtKeyword_0_0 = (Keyword)cGroup_0.eContents().get(0);
-		private final Keyword cTechnologyKeyword_0_1 = (Keyword)cGroup_0.eContents().get(1);
-		private final Keyword cLeftParenthesisKeyword_0_2 = (Keyword)cGroup_0.eContents().get(2);
-		private final Assignment cTechnologiesAssignment_0_3 = (Assignment)cGroup_0.eContents().get(3);
-		private final CrossReference cTechnologiesImportCrossReference_0_3_0 = (CrossReference)cTechnologiesAssignment_0_3.eContents().get(0);
-		private final RuleCall cTechnologiesImportIDTerminalRuleCall_0_3_0_1 = (RuleCall)cTechnologiesImportCrossReference_0_3_0.eContents().get(1);
-		private final Keyword cRightParenthesisKeyword_0_4 = (Keyword)cGroup_0.eContents().get(4);
+		private final Assignment cTechnologyReferencesAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cTechnologyReferencesTechnologyReferenceParserRuleCall_0_0 = (RuleCall)cTechnologyReferencesAssignment_0.eContents().get(0);
 		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
 		private final Assignment cProtocolsAssignment_1_0 = (Assignment)cGroup_1.eContents().get(0);
 		private final RuleCall cProtocolsProtocolSpecificationParserRuleCall_1_0_0 = (RuleCall)cProtocolsAssignment_1_0.eContents().get(0);
@@ -178,8 +172,8 @@ public class ServiceDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightCurlyBracketKeyword_14 = (Keyword)cGroup.eContents().get(14);
 		
 		//Microservice:
-		//	('@' 'technology' '(' technologies+=[Import] ')')* (protocols+=ProtocolSpecification
-		//	protocols+=ProtocolSpecification?)? ('@' 'endpoints' '(' endpoints+=Endpoint+ ')')?
+		//	technologyReferences+=TechnologyReference* (protocols+=ProtocolSpecification protocols+=ProtocolSpecification?)? ('@'
+		//	'endpoints' '(' endpoints+=Endpoint+ ')')?
 		//	aspects+=ImportedServiceAspect*
 		//	visibility=Visibility?
 		//	type=MicroserviceType
@@ -197,9 +191,9 @@ public class ServiceDslGrammarAccess extends AbstractGrammarElementFinder {
 		//	'}';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//('@' 'technology' '(' technologies+=[Import] ')')* (protocols+=ProtocolSpecification protocols+=ProtocolSpecification?)?
-		//('@' 'endpoints' '(' endpoints+=Endpoint+ ')')? aspects+=ImportedServiceAspect* visibility=Visibility?
-		//type=MicroserviceType 'microservice' name=QualifiedNameWithAtLeastOneLevel ('version' version=ID)? // TODO: Inheritance of microservices
+		//technologyReferences+=TechnologyReference* (protocols+=ProtocolSpecification protocols+=ProtocolSpecification?)? ('@'
+		//'endpoints' '(' endpoints+=Endpoint+ ')')? aspects+=ImportedServiceAspect* visibility=Visibility? type=MicroserviceType
+		//'microservice' name=QualifiedNameWithAtLeastOneLevel ('version' version=ID)? // TODO: Inheritance of microservices
 		////('extends' super=[Microservice|QualifiedNameWithAtLeastOneLevel])?
 		//'{' ('required' 'microservices' '{' requiredMicroservices+=PossiblyImportedMicroservice (','
 		//requiredMicroservices+=PossiblyImportedMicroservice)* '}')? ('required' 'interfaces' '{'
@@ -208,29 +202,11 @@ public class ServiceDslGrammarAccess extends AbstractGrammarElementFinder {
 		//'}')? interfaces+=Interface+ '}'
 		public Group getGroup() { return cGroup; }
 		
-		//('@' 'technology' '(' technologies+=[Import] ')')*
-		public Group getGroup_0() { return cGroup_0; }
+		//technologyReferences+=TechnologyReference*
+		public Assignment getTechnologyReferencesAssignment_0() { return cTechnologyReferencesAssignment_0; }
 		
-		//'@'
-		public Keyword getCommercialAtKeyword_0_0() { return cCommercialAtKeyword_0_0; }
-		
-		//'technology'
-		public Keyword getTechnologyKeyword_0_1() { return cTechnologyKeyword_0_1; }
-		
-		//'('
-		public Keyword getLeftParenthesisKeyword_0_2() { return cLeftParenthesisKeyword_0_2; }
-		
-		//technologies+=[Import]
-		public Assignment getTechnologiesAssignment_0_3() { return cTechnologiesAssignment_0_3; }
-		
-		//[Import]
-		public CrossReference getTechnologiesImportCrossReference_0_3_0() { return cTechnologiesImportCrossReference_0_3_0; }
-		
-		//ID
-		public RuleCall getTechnologiesImportIDTerminalRuleCall_0_3_0_1() { return cTechnologiesImportIDTerminalRuleCall_0_3_0_1; }
-		
-		//')'
-		public Keyword getRightParenthesisKeyword_0_4() { return cRightParenthesisKeyword_0_4; }
+		//TechnologyReference
+		public RuleCall getTechnologyReferencesTechnologyReferenceParserRuleCall_0_0() { return cTechnologyReferencesTechnologyReferenceParserRuleCall_0_0; }
 		
 		//(protocols+=ProtocolSpecification protocols+=ProtocolSpecification?)?
 		public Group getGroup_1() { return cGroup_1; }
@@ -422,6 +398,72 @@ public class ServiceDslGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//'}'
 		public Keyword getRightCurlyBracketKeyword_14() { return cRightCurlyBracketKeyword_14; }
+	}
+	public class TechnologyReferenceElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.fhdo.ddmm.ServiceDsl.TechnologyReference");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cCommercialAtKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Keyword cTechnologyKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Keyword cLeftParenthesisKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Assignment cTechnologyAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final CrossReference cTechnologyImportCrossReference_3_0 = (CrossReference)cTechnologyAssignment_3.eContents().get(0);
+		private final RuleCall cTechnologyImportIDTerminalRuleCall_3_0_1 = (RuleCall)cTechnologyImportCrossReference_3_0.eContents().get(1);
+		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
+		private final Keyword cCommaKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
+		private final Keyword cTypedefKeyword_4_1 = (Keyword)cGroup_4.eContents().get(1);
+		private final Keyword cEqualsSignKeyword_4_2 = (Keyword)cGroup_4.eContents().get(2);
+		private final Assignment cIsTypeDefinitionTechnologyAssignment_4_3 = (Assignment)cGroup_4.eContents().get(3);
+		private final RuleCall cIsTypeDefinitionTechnologyBOOLEANTerminalRuleCall_4_3_0 = (RuleCall)cIsTypeDefinitionTechnologyAssignment_4_3.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_5 = (Keyword)cGroup.eContents().get(5);
+		
+		//TechnologyReference:
+		//	'@' 'technology'
+		//	'('
+		//	technology=[Import] (',' 'typedef' '=' isTypeDefinitionTechnology=BOOLEAN)?
+		//	')';
+		@Override public ParserRule getRule() { return rule; }
+		
+		//'@' 'technology' '(' technology=[Import] (',' 'typedef' '=' isTypeDefinitionTechnology=BOOLEAN)? ')'
+		public Group getGroup() { return cGroup; }
+		
+		//'@'
+		public Keyword getCommercialAtKeyword_0() { return cCommercialAtKeyword_0; }
+		
+		//'technology'
+		public Keyword getTechnologyKeyword_1() { return cTechnologyKeyword_1; }
+		
+		//'('
+		public Keyword getLeftParenthesisKeyword_2() { return cLeftParenthesisKeyword_2; }
+		
+		//technology=[Import]
+		public Assignment getTechnologyAssignment_3() { return cTechnologyAssignment_3; }
+		
+		//[Import]
+		public CrossReference getTechnologyImportCrossReference_3_0() { return cTechnologyImportCrossReference_3_0; }
+		
+		//ID
+		public RuleCall getTechnologyImportIDTerminalRuleCall_3_0_1() { return cTechnologyImportIDTerminalRuleCall_3_0_1; }
+		
+		//(',' 'typedef' '=' isTypeDefinitionTechnology=BOOLEAN)?
+		public Group getGroup_4() { return cGroup_4; }
+		
+		//','
+		public Keyword getCommaKeyword_4_0() { return cCommaKeyword_4_0; }
+		
+		//'typedef'
+		public Keyword getTypedefKeyword_4_1() { return cTypedefKeyword_4_1; }
+		
+		//'='
+		public Keyword getEqualsSignKeyword_4_2() { return cEqualsSignKeyword_4_2; }
+		
+		//isTypeDefinitionTechnology=BOOLEAN
+		public Assignment getIsTypeDefinitionTechnologyAssignment_4_3() { return cIsTypeDefinitionTechnologyAssignment_4_3; }
+		
+		//BOOLEAN
+		public RuleCall getIsTypeDefinitionTechnologyBOOLEANTerminalRuleCall_4_3_0() { return cIsTypeDefinitionTechnologyBOOLEANTerminalRuleCall_4_3_0; }
+		
+		//')'
+		public Keyword getRightParenthesisKeyword_5() { return cRightParenthesisKeyword_5; }
 	}
 	public class PossiblyImportedMicroserviceElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.fhdo.ddmm.ServiceDsl.PossiblyImportedMicroservice");
@@ -1524,6 +1566,7 @@ public class ServiceDslGrammarAccess extends AbstractGrammarElementFinder {
 	private final ImportTypeElements eImportType;
 	private final VisibilityElements eVisibility;
 	private final MicroserviceElements pMicroservice;
+	private final TechnologyReferenceElements pTechnologyReference;
 	private final PossiblyImportedMicroserviceElements pPossiblyImportedMicroservice;
 	private final PossiblyImportedInterfaceElements pPossiblyImportedInterface;
 	private final PossiblyImportedOperationElements pPossiblyImportedOperation;
@@ -1562,6 +1605,7 @@ public class ServiceDslGrammarAccess extends AbstractGrammarElementFinder {
 		this.eImportType = new ImportTypeElements();
 		this.eVisibility = new VisibilityElements();
 		this.pMicroservice = new MicroserviceElements();
+		this.pTechnologyReference = new TechnologyReferenceElements();
 		this.pPossiblyImportedMicroservice = new PossiblyImportedMicroserviceElements();
 		this.pPossiblyImportedInterface = new PossiblyImportedInterfaceElements();
 		this.pPossiblyImportedOperation = new PossiblyImportedOperationElements();
@@ -1656,8 +1700,8 @@ public class ServiceDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//Microservice:
-	//	('@' 'technology' '(' technologies+=[Import] ')')* (protocols+=ProtocolSpecification
-	//	protocols+=ProtocolSpecification?)? ('@' 'endpoints' '(' endpoints+=Endpoint+ ')')?
+	//	technologyReferences+=TechnologyReference* (protocols+=ProtocolSpecification protocols+=ProtocolSpecification?)? ('@'
+	//	'endpoints' '(' endpoints+=Endpoint+ ')')?
 	//	aspects+=ImportedServiceAspect*
 	//	visibility=Visibility?
 	//	type=MicroserviceType
@@ -1679,6 +1723,19 @@ public class ServiceDslGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getMicroserviceRule() {
 		return getMicroserviceAccess().getRule();
+	}
+	
+	//TechnologyReference:
+	//	'@' 'technology'
+	//	'('
+	//	technology=[Import] (',' 'typedef' '=' isTypeDefinitionTechnology=BOOLEAN)?
+	//	')';
+	public TechnologyReferenceElements getTechnologyReferenceAccess() {
+		return pTechnologyReference;
+	}
+	
+	public ParserRule getTechnologyReferenceRule() {
+		return getTechnologyReferenceAccess().getRule();
 	}
 	
 	//PossiblyImportedMicroservice:

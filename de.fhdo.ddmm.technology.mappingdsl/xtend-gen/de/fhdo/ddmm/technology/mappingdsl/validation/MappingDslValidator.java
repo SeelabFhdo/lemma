@@ -24,6 +24,7 @@ import de.fhdo.ddmm.service.Parameter;
 import de.fhdo.ddmm.service.ReferredOperation;
 import de.fhdo.ddmm.service.ServiceModel;
 import de.fhdo.ddmm.service.ServicePackage;
+import de.fhdo.ddmm.service.TechnologyReference;
 import de.fhdo.ddmm.technology.CommunicationType;
 import de.fhdo.ddmm.technology.DataFormat;
 import de.fhdo.ddmm.technology.Protocol;
@@ -139,79 +140,115 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
    */
   @Check
   public void checkTechnologyUniqueness(final ComplexTypeMapping mapping) {
-    final Function<Import, Import> _function = (Import it) -> {
+    final Function1<TechnologyReference, Import> _function = (TechnologyReference it) -> {
+      return it.getTechnology();
+    };
+    final Function<Import, Import> _function_1 = (Import it) -> {
       return it;
     };
-    final Integer duplicateIndex = DdmmUtils.<Import, Import>getDuplicateIndex(mapping.getTechnologies(), _function);
+    final Integer duplicateIndex = DdmmUtils.<Import, Import>getDuplicateIndex(
+      ListExtensions.<TechnologyReference, Import>map(mapping.getTechnologyReferences(), _function), _function_1);
     if (((duplicateIndex).intValue() > (-1))) {
-      this.error("Duplicate technology assignment", 
-        MappingPackage.Literals.COMPLEX_TYPE_MAPPING__TECHNOLOGIES, (duplicateIndex).intValue());
+      this.error(
+        "Duplicate technology assignment", 
+        MappingPackage.Literals.COMPLEX_TYPE_MAPPING__TECHNOLOGY_REFERENCES, (duplicateIndex).intValue());
     }
   }
   
   /**
-   * Check that technology is assigned only once to a microservice mapping
+   * Check that technology is assigned only once to a microservice
    */
   @Check
   public void checkTechnologyUniqueness(final MicroserviceMapping mapping) {
-    final Function<Import, Import> _function = (Import it) -> {
+    final Function1<TechnologyReference, Import> _function = (TechnologyReference it) -> {
+      return it.getTechnology();
+    };
+    final Function<Import, Import> _function_1 = (Import it) -> {
       return it;
     };
-    final Integer duplicateIndex = DdmmUtils.<Import, Import>getDuplicateIndex(mapping.getTechnologies(), _function);
+    final Integer duplicateIndex = DdmmUtils.<Import, Import>getDuplicateIndex(
+      ListExtensions.<TechnologyReference, Import>map(mapping.getTechnologyReferences(), _function), _function_1);
     if (((duplicateIndex).intValue() > (-1))) {
-      this.error("Duplicate technology assignment", 
-        MappingPackage.Literals.MICROSERVICE_MAPPING__TECHNOLOGIES, (duplicateIndex).intValue());
+      this.error(
+        "Duplicate technology assignment", 
+        MappingPackage.Literals.MICROSERVICE_MAPPING__TECHNOLOGY_REFERENCES, (duplicateIndex).intValue());
     }
-  }
-  
-  /**
-   * Check that only one annotated technology of a complex type mapping contains type definitions
-   */
-  @Check
-  public void checkUniqueTypeDefinitionTechnology(final ComplexTypeMapping mapping) {
-    this.checkUniqueTypeDefinitionTechnology(mapping, mapping.getTechnologies(), 
-      MappingPackage.Literals.COMPLEX_TYPE_MAPPING__TECHNOLOGIES);
   }
   
   /**
    * Check that only one annotated technology of a microservice mapping contains type definitions
    */
   @Check
-  public void checkUniqueTypeDefinitionTechnology(final MicroserviceMapping mapping) {
-    this.checkUniqueTypeDefinitionTechnology(mapping, mapping.getTechnologies(), 
-      MappingPackage.Literals.MICROSERVICE_MAPPING__TECHNOLOGIES);
+  public void checkUniqueTypeDefinitionTechnologyForMicroserviceMapping(final MicroserviceMapping mapping) {
+    this.checkUniqueTypeDefinitionTechnology(mapping);
   }
   
   /**
-   * Helper to check that only one annotated technology contains type definitions
+   * Check that only one annotated technology of a complex type mapping contains type definitions
    */
-  private void checkUniqueTypeDefinitionTechnology(final EObject mapping, final List<Import> technologies, final EReference feature) {
-    String typeDefinitionTechnologyName = null;
-    int _size = technologies.size();
-    ExclusiveRange _doubleDotLessThan = new ExclusiveRange(0, _size, true);
-    for (final Integer i : _doubleDotLessThan) {
-      {
-        final Import technologyImport = technologies.get((i).intValue());
-        final Technology technologyModel = DdmmUtils.<Technology>getImportedModelRoot(technologyImport.eResource(), 
-          technologyImport.getImportURI(), Technology.class);
-        if ((((!technologyModel.getPrimitiveTypes().isEmpty()) || 
-          (!technologyModel.getListTypes().isEmpty())) || 
-          (!technologyModel.getDataStructures().isEmpty()))) {
-          if ((typeDefinitionTechnologyName == null)) {
-            typeDefinitionTechnologyName = technologyModel.getName();
-          } else {
-            StringConcatenation _builder = new StringConcatenation();
-            _builder.append("Technology \"");
-            _builder.append(typeDefinitionTechnologyName);
-            _builder.append("\" already defines ");
-            StringConcatenation _builder_1 = new StringConcatenation();
-            _builder_1.append("technology-specific types");
-            String _plus = (_builder.toString() + _builder_1);
-            this.error(_plus, mapping, feature, (i).intValue());
-          }
-        }
+  @Check
+  public void checkUniqueTypeDefinitionTechnologyForComplexTypeMapping(final ComplexTypeMapping mapping) {
+    this.checkUniqueTypeDefinitionTechnology(mapping);
+  }
+  
+  /**
+   * Helper for complex type and microservice mappings to check that only one annotated technology
+   * contains type definitions or that one type definition technology is marked as the default one
+   */
+  public void checkUniqueTypeDefinitionTechnology(final EObject mapping) {
+    List<TechnologyReference> technologyReferences = null;
+    List<TechnologyReference> typeDefinitionTechnologyReferences = null;
+    EReference technologyReferenceFeature = null;
+    boolean _matched = false;
+    if (mapping instanceof ComplexTypeMapping) {
+      _matched=true;
+      technologyReferences = ((ComplexTypeMapping)mapping).getTechnologyReferences();
+      typeDefinitionTechnologyReferences = ((ComplexTypeMapping)mapping).getAllTypeDefinitionTechnologyReferences();
+      technologyReferenceFeature = MappingPackage.Literals.COMPLEX_TYPE_MAPPING__TECHNOLOGY_REFERENCES;
+    }
+    if (!_matched) {
+      if (mapping instanceof MicroserviceMapping) {
+        _matched=true;
+        technologyReferences = ((MicroserviceMapping)mapping).getTechnologyReferences();
+        typeDefinitionTechnologyReferences = ((MicroserviceMapping)mapping).getAllTypeDefinitionTechnologyReferences();
+        technologyReferenceFeature = MappingPackage.Literals.MICROSERVICE_MAPPING__TECHNOLOGY_REFERENCES;
       }
     }
+    if (!_matched) {
+      return;
+    }
+    final Function1<TechnologyReference, Boolean> _function = (TechnologyReference it) -> {
+      return Boolean.valueOf(it.isIsTypeDefinitionTechnology());
+    };
+    final Function<Boolean, Boolean> _function_1 = (Boolean it) -> {
+      return it;
+    };
+    final Predicate<Boolean> _function_2 = (Boolean it) -> {
+      return (it == Boolean.valueOf(true));
+    };
+    final Integer duplicateIndex = DdmmUtils.<Boolean, Boolean>getDuplicateIndex(
+      ListExtensions.<TechnologyReference, Boolean>map(technologyReferences, _function), _function_1, _function_2);
+    if (((duplicateIndex).intValue() > (-1))) {
+      this.error("Only one technology can be the default type definition technology", technologyReferenceFeature, (duplicateIndex).intValue());
+      return;
+    }
+    final Function1<TechnologyReference, Boolean> _function_3 = (TechnologyReference it) -> {
+      return Boolean.valueOf(it.isIsTypeDefinitionTechnology());
+    };
+    boolean _exists = IterableExtensions.<TechnologyReference>exists(technologyReferences, _function_3);
+    if (_exists) {
+      return;
+    }
+    if ((typeDefinitionTechnologyReferences.isEmpty() || 
+      (typeDefinitionTechnologyReferences.size() == 1))) {
+      return;
+    }
+    final Consumer<TechnologyReference> _function_4 = (TechnologyReference it) -> {
+      this.error(("More than one type definition technology detected. One of them needs to " + 
+        "explicitly be selected as the default type definition technology."), it, 
+        ServicePackage.Literals.TECHNOLOGY_REFERENCE__TECHNOLOGY);
+    };
+    typeDefinitionTechnologyReferences.forEach(_function_4);
   }
   
   /**
@@ -220,8 +257,11 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
    */
   @Check
   public void checkTechnologiesForServiceConcepts(final ComplexTypeMapping mapping) {
-    this.checkTechnologiesForServiceConcepts(mapping, mapping.getTechnologies(), 
-      MappingPackage.Literals.COMPLEX_TYPE_MAPPING__TECHNOLOGIES);
+    final Function1<TechnologyReference, Import> _function = (TechnologyReference it) -> {
+      return it.getTechnology();
+    };
+    this.checkTechnologiesForServiceConcepts(mapping, ListExtensions.<TechnologyReference, Import>map(mapping.getTechnologyReferences(), _function), 
+      MappingPackage.Literals.COMPLEX_TYPE_MAPPING__TECHNOLOGY_REFERENCES);
   }
   
   /**
@@ -230,8 +270,11 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
    */
   @Check
   public void checkTechnologiesForServiceConcepts(final MicroserviceMapping mapping) {
-    this.checkTechnologiesForServiceConcepts(mapping, mapping.getTechnologies(), 
-      MappingPackage.Literals.MICROSERVICE_MAPPING__TECHNOLOGIES);
+    final Function1<TechnologyReference, Import> _function = (TechnologyReference it) -> {
+      return it.getTechnology();
+    };
+    this.checkTechnologiesForServiceConcepts(mapping, ListExtensions.<TechnologyReference, Import>map(mapping.getTechnologyReferences(), _function), 
+      MappingPackage.Literals.MICROSERVICE_MAPPING__TECHNOLOGY_REFERENCES);
   }
   
   /**
@@ -260,7 +303,7 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
    */
   @Check
   public void checkTechnologiesForUniqueDefaultProtocols(final MicroserviceMapping mapping) {
-    boolean _isEmpty = mapping.getTechnologies().isEmpty();
+    boolean _isEmpty = mapping.getTechnologyReferences().isEmpty();
     if (_isEmpty) {
       return;
     }
@@ -317,15 +360,18 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
    */
   private boolean isDefaultProtocolUnique(final MicroserviceMapping mapping, final CommunicationType communicationType) {
     boolean alreadyFoundDefaultProtocolForCommunicationType = false;
-    EList<Import> _technologies = mapping.getTechnologies();
-    for (final Import technologyImport : _technologies) {
+    final Function1<TechnologyReference, Import> _function = (TechnologyReference it) -> {
+      return it.getTechnology();
+    };
+    List<Import> _map = ListExtensions.<TechnologyReference, Import>map(mapping.getTechnologyReferences(), _function);
+    for (final Import technologyImport : _map) {
       {
         final Technology technologyModel = DdmmUtils.<Technology>getImportedModelRoot(technologyImport.eResource(), 
           technologyImport.getImportURI(), Technology.class);
-        final Function1<Protocol, Boolean> _function = (Protocol it) -> {
+        final Function1<Protocol, Boolean> _function_1 = (Protocol it) -> {
           return Boolean.valueOf((it.isDefault() && (it.getCommunicationType() == communicationType)));
         };
-        final boolean hasDefaultProtocolForCommunicationType = IterableExtensions.<Protocol>exists(technologyModel.getProtocols(), _function);
+        final boolean hasDefaultProtocolForCommunicationType = IterableExtensions.<Protocol>exists(technologyModel.getProtocols(), _function_1);
         if (hasDefaultProtocolForCommunicationType) {
           if (alreadyFoundDefaultProtocolForCommunicationType) {
             return false;
@@ -346,7 +392,7 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
     boolean _xblockexpression = false;
     {
       final Function1<MicroserviceMapping, Boolean> _function = (MicroserviceMapping it) -> {
-        boolean _isEmpty = it.getTechnologies().isEmpty();
+        boolean _isEmpty = it.getTechnologyReferences().isEmpty();
         return Boolean.valueOf((!_isEmpty));
       };
       final List<MicroserviceMapping> modelMappingsWithTechnology = IterableExtensions.<MicroserviceMapping>toList(IterableExtensions.<MicroserviceMapping>filter(model.getServiceMappings(), _function));
@@ -380,7 +426,7 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
     boolean _xblockexpression = false;
     {
       final Function1<ComplexTypeMapping, Boolean> _function = (ComplexTypeMapping it) -> {
-        boolean _isEmpty = it.getTechnologies().isEmpty();
+        boolean _isEmpty = it.getTechnologyReferences().isEmpty();
         return Boolean.valueOf((!_isEmpty));
       };
       final List<ComplexTypeMapping> modelMappingsWithTechnology = IterableExtensions.<ComplexTypeMapping>toList(IterableExtensions.<ComplexTypeMapping>filter(model.getTypeMappings(), _function));
@@ -926,12 +972,12 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
    */
   @Check
   public void checkDifferingParameterTechnologies(final MicroserviceMapping mapping) {
-    if (((mapping.getTechnologies().isEmpty() || (mapping.getMicroservice() == null)) || 
+    if (((mapping.getTechnologyReferences().isEmpty() || (mapping.getMicroservice() == null)) || 
       (mapping.getMicroservice().getMicroservice() == null))) {
       return;
     }
     final Microservice mappedService = mapping.getMicroservice().getMicroservice();
-    boolean _isEmpty = mappedService.getTechnologies().isEmpty();
+    boolean _isEmpty = mappedService.getTechnologyReferences().isEmpty();
     if (_isEmpty) {
       return;
     }

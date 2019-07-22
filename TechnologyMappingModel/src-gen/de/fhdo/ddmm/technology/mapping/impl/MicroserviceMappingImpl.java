@@ -3,6 +3,7 @@
 package de.fhdo.ddmm.technology.mapping.impl;
 
 import de.fhdo.ddmm.service.Import;
+import de.fhdo.ddmm.service.TechnologyReference;
 
 import de.fhdo.ddmm.technology.Technology;
 
@@ -35,13 +36,12 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
+import org.eclipse.emf.ecore.resource.Resource;
+
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
-import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
-
-import org.eclipse.emf.ecore.xcore.lib.XcoreEListExtensions;
 
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 
@@ -55,7 +55,7 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.fhdo.ddmm.technology.mapping.impl.MicroserviceMappingImpl#getTechnologies <em>Technologies</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.technology.mapping.impl.MicroserviceMappingImpl#getTechnologyReferences <em>Technology References</em>}</li>
  *   <li>{@link de.fhdo.ddmm.technology.mapping.impl.MicroserviceMappingImpl#getMicroservice <em>Microservice</em>}</li>
  *   <li>{@link de.fhdo.ddmm.technology.mapping.impl.MicroserviceMappingImpl#getEndpoints <em>Endpoints</em>}</li>
  *   <li>{@link de.fhdo.ddmm.technology.mapping.impl.MicroserviceMappingImpl#getProtocols <em>Protocols</em>}</li>
@@ -70,14 +70,14 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
  */
 public class MicroserviceMappingImpl extends MinimalEObjectImpl.Container implements MicroserviceMapping {
     /**
-     * The cached value of the '{@link #getTechnologies() <em>Technologies</em>}' reference list.
+     * The cached value of the '{@link #getTechnologyReferences() <em>Technology References</em>}' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getTechnologies()
+     * @see #getTechnologyReferences()
      * @generated
      * @ordered
      */
-    protected EList<Import> technologies;
+    protected EList<TechnologyReference> technologyReferences;
 
     /**
      * The cached value of the '{@link #getMicroservice() <em>Microservice</em>}' containment reference.
@@ -174,11 +174,11 @@ public class MicroserviceMappingImpl extends MinimalEObjectImpl.Container implem
      * @generated
      */
     @Override
-    public EList<Import> getTechnologies() {
-        if (technologies == null) {
-            technologies = new EObjectResolvingEList<Import>(Import.class, this, MappingPackage.MICROSERVICE_MAPPING__TECHNOLOGIES);
+    public EList<TechnologyReference> getTechnologyReferences() {
+        if (technologyReferences == null) {
+            technologyReferences = new EObjectContainmentEList<TechnologyReference>(TechnologyReference.class, this, MappingPackage.MICROSERVICE_MAPPING__TECHNOLOGY_REFERENCES);
         }
-        return technologies;
+        return technologyReferences;
     }
 
     /**
@@ -363,12 +363,14 @@ public class MicroserviceMappingImpl extends MinimalEObjectImpl.Container implem
      * @generated
      */
     @Override
-    public EList<Import> getTypeDefinitionTechnologyImports() {
-        final Function1<Import, Boolean> _function = new Function1<Import, Boolean>() {
-            public Boolean apply(final Import it) {
+    public EList<TechnologyReference> getAllTypeDefinitionTechnologyReferences() {
+        final Function1<TechnologyReference, Boolean> _function = new Function1<TechnologyReference, Boolean>() {
+            public Boolean apply(final TechnologyReference it) {
                 boolean _xblockexpression = false;
                 {
-                    final Technology technologyModel = DdmmUtils.<Technology>getImportedModelRoot(it.eResource(), it.getImportURI(), Technology.class);
+                    final Resource resource = it.getTechnology().eResource();
+                    final String importURI = it.getTechnology().getImportURI();
+                    final Technology technologyModel = DdmmUtils.<Technology>getImportedModelRoot(resource, importURI, Technology.class);
                     _xblockexpression = (((!technologyModel.getPrimitiveTypes().isEmpty()) || 
                         (!technologyModel.getListTypes().isEmpty())) || 
                         (!technologyModel.getDataStructures().isEmpty()));
@@ -376,7 +378,7 @@ public class MicroserviceMappingImpl extends MinimalEObjectImpl.Container implem
                 return Boolean.valueOf(_xblockexpression);
             }
         };
-        return ECollections.<Import>toEList(IterableExtensions.<Import>filter(this.getTechnologies(), _function));
+        return ECollections.<TechnologyReference>toEList(IterableExtensions.<TechnologyReference>filter(this.getTechnologyReferences(), _function));
     }
 
     /**
@@ -386,12 +388,26 @@ public class MicroserviceMappingImpl extends MinimalEObjectImpl.Container implem
      */
     @Override
     public Import getTypeDefinitionTechnologyImport() {
-        final EList<Import> typeDefinitionTechnologyImports = this.getTypeDefinitionTechnologyImports();
+        final Function1<TechnologyReference, Boolean> _function = new Function1<TechnologyReference, Boolean>() {
+            public Boolean apply(final TechnologyReference it) {
+                return Boolean.valueOf(it.isIsTypeDefinitionTechnology());
+            }
+        };
+        TechnologyReference _findFirst = IterableExtensions.<TechnologyReference>findFirst(this.getTechnologyReferences(), _function);
+        Import _technology = null;
+        if (_findFirst!=null) {
+            _technology=_findFirst.getTechnology();
+        }
+        final Import explicitTypeDefinitionTechnologyImport = _technology;
+        if ((explicitTypeDefinitionTechnologyImport != null)) {
+            return explicitTypeDefinitionTechnologyImport;
+        }
+        final EList<TechnologyReference> allTypeDefinitionTechnologyReferences = this.getAllTypeDefinitionTechnologyReferences();
         Import _xifexpression = null;
-        boolean _isEmpty = typeDefinitionTechnologyImports.isEmpty();
+        boolean _isEmpty = allTypeDefinitionTechnologyReferences.isEmpty();
         boolean _not = (!_isEmpty);
         if (_not) {
-            _xifexpression = typeDefinitionTechnologyImports.get(0);
+            _xifexpression = allTypeDefinitionTechnologyReferences.get(0).getTechnology();
         }
         else {
             _xifexpression = null;
@@ -405,28 +421,14 @@ public class MicroserviceMappingImpl extends MinimalEObjectImpl.Container implem
      * @generated
      */
     @Override
-    public EList<Technology> getTypeDefinitionTechnologies() {
-        final Function1<Import, Technology> _function = new Function1<Import, Technology>() {
-            public Technology apply(final Import it) {
-                return DdmmUtils.<Technology>getImportedModelRoot(it.eResource(), it.getImportURI(), Technology.class);
-            }
-        };
-        return XcoreEListExtensions.<Import, Technology>map(this.getTypeDefinitionTechnologyImports(), _function);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
     public Technology getTypeDefinitionTechnology() {
-        final EList<Technology> typeDefinitionTechnologies = this.getTypeDefinitionTechnologies();
+        final Import typeDefinitionTechnologyImport = this.getTypeDefinitionTechnologyImport();
         Technology _xifexpression = null;
-        boolean _isEmpty = typeDefinitionTechnologies.isEmpty();
-        boolean _not = (!_isEmpty);
-        if (_not) {
-            _xifexpression = typeDefinitionTechnologies.get(0);
+        if ((typeDefinitionTechnologyImport != null)) {
+            _xifexpression = DdmmUtils.<Technology>getImportedModelRoot(
+                typeDefinitionTechnologyImport.eResource(), 
+                typeDefinitionTechnologyImport.getImportURI(), 
+                Technology.class);
         }
         else {
             _xifexpression = null;
@@ -473,6 +475,8 @@ public class MicroserviceMappingImpl extends MinimalEObjectImpl.Container implem
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
+            case MappingPackage.MICROSERVICE_MAPPING__TECHNOLOGY_REFERENCES:
+                return ((InternalEList<?>)getTechnologyReferences()).basicRemove(otherEnd, msgs);
             case MappingPackage.MICROSERVICE_MAPPING__MICROSERVICE:
                 return basicSetMicroservice(null, msgs);
             case MappingPackage.MICROSERVICE_MAPPING__ENDPOINTS:
@@ -515,8 +519,8 @@ public class MicroserviceMappingImpl extends MinimalEObjectImpl.Container implem
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
-            case MappingPackage.MICROSERVICE_MAPPING__TECHNOLOGIES:
-                return getTechnologies();
+            case MappingPackage.MICROSERVICE_MAPPING__TECHNOLOGY_REFERENCES:
+                return getTechnologyReferences();
             case MappingPackage.MICROSERVICE_MAPPING__MICROSERVICE:
                 return getMicroservice();
             case MappingPackage.MICROSERVICE_MAPPING__ENDPOINTS:
@@ -547,9 +551,9 @@ public class MicroserviceMappingImpl extends MinimalEObjectImpl.Container implem
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
-            case MappingPackage.MICROSERVICE_MAPPING__TECHNOLOGIES:
-                getTechnologies().clear();
-                getTechnologies().addAll((Collection<? extends Import>)newValue);
+            case MappingPackage.MICROSERVICE_MAPPING__TECHNOLOGY_REFERENCES:
+                getTechnologyReferences().clear();
+                getTechnologyReferences().addAll((Collection<? extends TechnologyReference>)newValue);
                 return;
             case MappingPackage.MICROSERVICE_MAPPING__MICROSERVICE:
                 setMicroservice((ImportedMicroservice)newValue);
@@ -593,8 +597,8 @@ public class MicroserviceMappingImpl extends MinimalEObjectImpl.Container implem
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
-            case MappingPackage.MICROSERVICE_MAPPING__TECHNOLOGIES:
-                getTechnologies().clear();
+            case MappingPackage.MICROSERVICE_MAPPING__TECHNOLOGY_REFERENCES:
+                getTechnologyReferences().clear();
                 return;
             case MappingPackage.MICROSERVICE_MAPPING__MICROSERVICE:
                 setMicroservice((ImportedMicroservice)null);
@@ -632,8 +636,8 @@ public class MicroserviceMappingImpl extends MinimalEObjectImpl.Container implem
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
-            case MappingPackage.MICROSERVICE_MAPPING__TECHNOLOGIES:
-                return technologies != null && !technologies.isEmpty();
+            case MappingPackage.MICROSERVICE_MAPPING__TECHNOLOGY_REFERENCES:
+                return technologyReferences != null && !technologyReferences.isEmpty();
             case MappingPackage.MICROSERVICE_MAPPING__MICROSERVICE:
                 return microservice != null;
             case MappingPackage.MICROSERVICE_MAPPING__ENDPOINTS:
@@ -662,12 +666,10 @@ public class MicroserviceMappingImpl extends MinimalEObjectImpl.Container implem
     @Override
     public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
         switch (operationID) {
-            case MappingPackage.MICROSERVICE_MAPPING___GET_TYPE_DEFINITION_TECHNOLOGY_IMPORTS:
-                return getTypeDefinitionTechnologyImports();
+            case MappingPackage.MICROSERVICE_MAPPING___GET_ALL_TYPE_DEFINITION_TECHNOLOGY_REFERENCES:
+                return getAllTypeDefinitionTechnologyReferences();
             case MappingPackage.MICROSERVICE_MAPPING___GET_TYPE_DEFINITION_TECHNOLOGY_IMPORT:
                 return getTypeDefinitionTechnologyImport();
-            case MappingPackage.MICROSERVICE_MAPPING___GET_TYPE_DEFINITION_TECHNOLOGIES:
-                return getTypeDefinitionTechnologies();
             case MappingPackage.MICROSERVICE_MAPPING___GET_TYPE_DEFINITION_TECHNOLOGY:
                 return getTypeDefinitionTechnology();
         }

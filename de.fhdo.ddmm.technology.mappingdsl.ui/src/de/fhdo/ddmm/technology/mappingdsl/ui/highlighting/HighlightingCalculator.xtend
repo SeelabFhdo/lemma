@@ -5,10 +5,12 @@ import org.eclipse.xtext.resource.XtextResource
 import org.eclipse.xtext.ide.editor.syntaxcoloring.IHighlightedPositionAcceptor
 import org.eclipse.xtext.util.CancelIndicator
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils
-import de.fhdo.ddmm.technology.mapping.MicroserviceMapping
-import de.fhdo.ddmm.technology.mapping.MappingPackage
 import de.fhdo.ddmm.technology.mappingdsl.ui.highlighting.HighlightingConfiguration
 import de.fhdo.ddmm.technology.mapping.ComplexTypeMapping
+import de.fhdo.ddmm.service.TechnologyReference
+import de.fhdo.ddmm.service.ServicePackage
+import org.eclipse.xtext.nodemodel.INode
+import org.eclipse.xtext.Keyword
 
 /**
  * Provide custom syntax highlighting for certain elements.
@@ -22,6 +24,7 @@ class HighlightingCalculator implements ISemanticHighlightingCalculator {
     override provideHighlightingFor(XtextResource resource, IHighlightedPositionAcceptor acceptor,
         CancelIndicator cancelIndicator) {
         resource.provideHighlightingForAnnotations(acceptor)
+        resource.provideHighlightingForDefaultTypeDefinitionFlag(acceptor)
     }
 
     /**
@@ -32,12 +35,10 @@ class HighlightingCalculator implements ISemanticHighlightingCalculator {
 
         /* Color technology annotations on model-level mapping nodes */
         resource.allContents.filter[
-            it instanceof ComplexTypeMapping || it instanceof MicroserviceMapping
+            it instanceof ComplexTypeMapping || it instanceof TechnologyReference
         ].forEach[
             val nodes = NodeModelUtils.findNodesForFeature(it,
-                MappingPackage.Literals::COMPLEX_TYPE_MAPPING__TECHNOLOGIES) +
-                NodeModelUtils.findNodesForFeature(it,
-                    MappingPackage.Literals::MICROSERVICE_MAPPING__TECHNOLOGIES)
+                ServicePackage.Literals::TECHNOLOGY_REFERENCE__TECHNOLOGY)
 
             nodes.forEach[
                 // Determine node to start highlighting
@@ -61,5 +62,40 @@ class HighlightingCalculator implements ISemanticHighlightingCalculator {
                 }
             ]
         ]
+    }
+
+    /**
+     * Provide highlighting for default type definition flag of built-in @technology annotation
+     */
+    private def provideHighlightingForDefaultTypeDefinitionFlag(XtextResource resource,
+        IHighlightedPositionAcceptor acceptor) {
+        for (eObject : resource.allContents.toList) {
+            val relevantFeatures = NodeModelUtils.findNodesForFeature(eObject,
+                ServicePackage.Literals::TECHNOLOGY_REFERENCE__IS_TYPE_DEFINITION_TECHNOLOGY)
+            if (!relevantFeatures.empty) {
+                var currentNode = relevantFeatures.get(0).previousSibling
+                var typedefKeywordColored = false
+                while (currentNode !== null && !typedefKeywordColored) {
+                    if ("typedef" == currentNode.keywordValue) {
+                        acceptor.addPosition(currentNode.offset, currentNode.length,
+                            HighlightingConfiguration.DEFAULT_ID)
+                        typedefKeywordColored = true
+                    } else
+                        currentNode = currentNode.previousSibling
+                }
+            }
+        }
+    }
+
+    /**
+     * Helper to return the value of a Keyword INode. Returns an empty string if the passed node is
+     * not a Keyword.
+     */
+    private def String keywordValue(INode node) {
+        val grammarElement = node.grammarElement
+        return if (grammarElement instanceof Keyword)
+                grammarElement.value
+            else
+                ""
     }
 }

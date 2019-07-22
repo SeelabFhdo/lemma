@@ -269,6 +269,10 @@ public class TechnologyDslValidator extends AbstractTechnologyDslValidator {
         "primitive type"), technology, TechnologyPackage.Literals.TECHNOLOGY__NAME);
       return;
     }
+    boolean _isEmpty_1 = technology.getPrimitiveTypes().isEmpty();
+    if (_isEmpty_1) {
+      return;
+    }
     final PrimitiveType primitiveTypeInstance = technology.getPrimitiveTypes().get(0).getBasicBuiltinPrimitiveTypes().get(0);
     final EList<Class<?>> builtinPrimitives = primitiveTypeInstance.getBuiltinPrimitiveTypes();
     boolean _containsAll = specificDefaultPrimitivesBasics.containsAll(builtinPrimitives);

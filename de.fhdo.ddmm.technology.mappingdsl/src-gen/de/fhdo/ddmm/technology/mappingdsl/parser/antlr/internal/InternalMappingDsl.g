@@ -154,46 +154,34 @@ ruleComplexTypeMapping returns [EObject current=null]
 }:
 	(
 		(
-			otherlv_0='@'
-			{
-				newLeafNode(otherlv_0, grammarAccess.getComplexTypeMappingAccess().getCommercialAtKeyword_0_0());
-			}
-			otherlv_1='technology'
-			{
-				newLeafNode(otherlv_1, grammarAccess.getComplexTypeMappingAccess().getTechnologyKeyword_0_1());
-			}
-			otherlv_2='('
-			{
-				newLeafNode(otherlv_2, grammarAccess.getComplexTypeMappingAccess().getLeftParenthesisKeyword_0_2());
-			}
 			(
-				(
-					{
-						if ($current==null) {
-							$current = createModelElement(grammarAccess.getComplexTypeMappingRule());
-						}
+				{
+					newCompositeNode(grammarAccess.getComplexTypeMappingAccess().getTechnologyReferencesTechnologyReferenceParserRuleCall_0_0());
+				}
+				lv_technologyReferences_0_0=ruleTechnologyReference
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getComplexTypeMappingRule());
 					}
-					otherlv_3=RULE_ID
-					{
-						newLeafNode(otherlv_3, grammarAccess.getComplexTypeMappingAccess().getTechnologiesImportCrossReference_0_3_0());
-					}
-				)
+					add(
+						$current,
+						"technologyReferences",
+						lv_technologyReferences_0_0,
+						"de.fhdo.ddmm.ServiceDsl.TechnologyReference");
+					afterParserOrEnumRuleCall();
+				}
 			)
-			otherlv_4=')'
-			{
-				newLeafNode(otherlv_4, grammarAccess.getComplexTypeMappingAccess().getRightParenthesisKeyword_0_4());
-			}
-		)+
-		otherlv_5='type'
+		)*
+		otherlv_1='type'
 		{
-			newLeafNode(otherlv_5, grammarAccess.getComplexTypeMappingAccess().getTypeKeyword_1());
+			newLeafNode(otherlv_1, grammarAccess.getComplexTypeMappingAccess().getTypeKeyword_1());
 		}
 		(
 			(
 				{
 					newCompositeNode(grammarAccess.getComplexTypeMappingAccess().getTypeImportedComplexTypeParserRuleCall_2_0());
 				}
-				lv_type_6_0=ruleImportedComplexType
+				lv_type_2_0=ruleImportedComplexType
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getComplexTypeMappingRule());
@@ -201,31 +189,31 @@ ruleComplexTypeMapping returns [EObject current=null]
 					set(
 						$current,
 						"type",
-						lv_type_6_0,
+						lv_type_2_0,
 						"de.fhdo.ddmm.technology.mappingdsl.MappingDsl.ImportedComplexType");
 					afterParserOrEnumRuleCall();
 				}
 			)
 		)
-		otherlv_7='{'
+		otherlv_3='{'
 		{
-			newLeafNode(otherlv_7, grammarAccess.getComplexTypeMappingAccess().getLeftCurlyBracketKeyword_3());
+			newLeafNode(otherlv_3, grammarAccess.getComplexTypeMappingAccess().getLeftCurlyBracketKeyword_3());
 		}
 		(
-			otherlv_8='aspects'
+			otherlv_4='aspects'
 			{
-				newLeafNode(otherlv_8, grammarAccess.getComplexTypeMappingAccess().getAspectsKeyword_4_0());
+				newLeafNode(otherlv_4, grammarAccess.getComplexTypeMappingAccess().getAspectsKeyword_4_0());
 			}
-			otherlv_9='{'
+			otherlv_5='{'
 			{
-				newLeafNode(otherlv_9, grammarAccess.getComplexTypeMappingAccess().getLeftCurlyBracketKeyword_4_1());
+				newLeafNode(otherlv_5, grammarAccess.getComplexTypeMappingAccess().getLeftCurlyBracketKeyword_4_1());
 			}
 			(
 				(
 					{
 						newCompositeNode(grammarAccess.getComplexTypeMappingAccess().getAspectsTechnologySpecificImportedServiceAspectParserRuleCall_4_2_0());
 					}
-					lv_aspects_10_0=ruleTechnologySpecificImportedServiceAspect
+					lv_aspects_6_0=ruleTechnologySpecificImportedServiceAspect
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getComplexTypeMappingRule());
@@ -233,15 +221,15 @@ ruleComplexTypeMapping returns [EObject current=null]
 						add(
 							$current,
 							"aspects",
-							lv_aspects_10_0,
+							lv_aspects_6_0,
 							"de.fhdo.ddmm.technology.mappingdsl.MappingDsl.TechnologySpecificImportedServiceAspect");
 						afterParserOrEnumRuleCall();
 					}
 				)
 			)+
-			otherlv_11='}'
+			otherlv_7='}'
 			{
-				newLeafNode(otherlv_11, grammarAccess.getComplexTypeMappingAccess().getRightCurlyBracketKeyword_4_3());
+				newLeafNode(otherlv_7, grammarAccess.getComplexTypeMappingAccess().getRightCurlyBracketKeyword_4_3());
 			}
 		)?
 		(
@@ -249,7 +237,7 @@ ruleComplexTypeMapping returns [EObject current=null]
 				{
 					newCompositeNode(grammarAccess.getComplexTypeMappingAccess().getFieldMappingsTechnologySpecificFieldMappingParserRuleCall_5_0());
 				}
-				lv_fieldMappings_12_0=ruleTechnologySpecificFieldMapping
+				lv_fieldMappings_8_0=ruleTechnologySpecificFieldMapping
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getComplexTypeMappingRule());
@@ -257,15 +245,15 @@ ruleComplexTypeMapping returns [EObject current=null]
 					add(
 						$current,
 						"fieldMappings",
-						lv_fieldMappings_12_0,
+						lv_fieldMappings_8_0,
 						"de.fhdo.ddmm.technology.mappingdsl.MappingDsl.TechnologySpecificFieldMapping");
 					afterParserOrEnumRuleCall();
 				}
 			)
 		)*
-		otherlv_13='}'
+		otherlv_9='}'
 		{
-			newLeafNode(otherlv_13, grammarAccess.getComplexTypeMappingAccess().getRightCurlyBracketKeyword_6());
+			newLeafNode(otherlv_9, grammarAccess.getComplexTypeMappingAccess().getRightCurlyBracketKeyword_6());
 		}
 	)
 ;
@@ -356,42 +344,30 @@ ruleMicroserviceMapping returns [EObject current=null]
 }:
 	(
 		(
-			otherlv_0='@'
-			{
-				newLeafNode(otherlv_0, grammarAccess.getMicroserviceMappingAccess().getCommercialAtKeyword_0_0());
-			}
-			otherlv_1='technology'
-			{
-				newLeafNode(otherlv_1, grammarAccess.getMicroserviceMappingAccess().getTechnologyKeyword_0_1());
-			}
-			otherlv_2='('
-			{
-				newLeafNode(otherlv_2, grammarAccess.getMicroserviceMappingAccess().getLeftParenthesisKeyword_0_2());
-			}
 			(
-				(
-					{
-						if ($current==null) {
-							$current = createModelElement(grammarAccess.getMicroserviceMappingRule());
-						}
+				{
+					newCompositeNode(grammarAccess.getMicroserviceMappingAccess().getTechnologyReferencesTechnologyReferenceParserRuleCall_0_0());
+				}
+				lv_technologyReferences_0_0=ruleTechnologyReference
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getMicroserviceMappingRule());
 					}
-					otherlv_3=RULE_ID
-					{
-						newLeafNode(otherlv_3, grammarAccess.getMicroserviceMappingAccess().getTechnologiesImportCrossReference_0_3_0());
-					}
-				)
+					add(
+						$current,
+						"technologyReferences",
+						lv_technologyReferences_0_0,
+						"de.fhdo.ddmm.ServiceDsl.TechnologyReference");
+					afterParserOrEnumRuleCall();
+				}
 			)
-			otherlv_4=')'
-			{
-				newLeafNode(otherlv_4, grammarAccess.getMicroserviceMappingAccess().getRightParenthesisKeyword_0_4());
-			}
-		)+
+		)*
 		(
 			(
 				{
 					newCompositeNode(grammarAccess.getMicroserviceMappingAccess().getMicroserviceImportedMicroserviceParserRuleCall_1_0());
 				}
-				lv_microservice_5_0=ruleImportedMicroservice
+				lv_microservice_1_0=ruleImportedMicroservice
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getMicroserviceMappingRule());
@@ -399,31 +375,31 @@ ruleMicroserviceMapping returns [EObject current=null]
 					set(
 						$current,
 						"microservice",
-						lv_microservice_5_0,
+						lv_microservice_1_0,
 						"de.fhdo.ddmm.technology.mappingdsl.MappingDsl.ImportedMicroservice");
 					afterParserOrEnumRuleCall();
 				}
 			)
 		)
-		otherlv_6='{'
+		otherlv_2='{'
 		{
-			newLeafNode(otherlv_6, grammarAccess.getMicroserviceMappingAccess().getLeftCurlyBracketKeyword_2());
+			newLeafNode(otherlv_2, grammarAccess.getMicroserviceMappingAccess().getLeftCurlyBracketKeyword_2());
 		}
 		(
-			otherlv_7='protocols'
+			otherlv_3='protocols'
 			{
-				newLeafNode(otherlv_7, grammarAccess.getMicroserviceMappingAccess().getProtocolsKeyword_3_0());
+				newLeafNode(otherlv_3, grammarAccess.getMicroserviceMappingAccess().getProtocolsKeyword_3_0());
 			}
-			otherlv_8='{'
+			otherlv_4='{'
 			{
-				newLeafNode(otherlv_8, grammarAccess.getMicroserviceMappingAccess().getLeftCurlyBracketKeyword_3_1());
+				newLeafNode(otherlv_4, grammarAccess.getMicroserviceMappingAccess().getLeftCurlyBracketKeyword_3_1());
 			}
 			(
 				(
 					{
 						newCompositeNode(grammarAccess.getMicroserviceMappingAccess().getProtocolsTechnologySpecificProtocolSpecificationParserRuleCall_3_2_0());
 					}
-					lv_protocols_9_0=ruleTechnologySpecificProtocolSpecification
+					lv_protocols_5_0=ruleTechnologySpecificProtocolSpecification
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getMicroserviceMappingRule());
@@ -431,32 +407,32 @@ ruleMicroserviceMapping returns [EObject current=null]
 						add(
 							$current,
 							"protocols",
-							lv_protocols_9_0,
+							lv_protocols_5_0,
 							"de.fhdo.ddmm.technology.mappingdsl.MappingDsl.TechnologySpecificProtocolSpecification");
 						afterParserOrEnumRuleCall();
 					}
 				)
 			)+
-			otherlv_10='}'
+			otherlv_6='}'
 			{
-				newLeafNode(otherlv_10, grammarAccess.getMicroserviceMappingAccess().getRightCurlyBracketKeyword_3_3());
+				newLeafNode(otherlv_6, grammarAccess.getMicroserviceMappingAccess().getRightCurlyBracketKeyword_3_3());
 			}
 		)?
 		(
-			otherlv_11='endpoints'
+			otherlv_7='endpoints'
 			{
-				newLeafNode(otherlv_11, grammarAccess.getMicroserviceMappingAccess().getEndpointsKeyword_4_0());
+				newLeafNode(otherlv_7, grammarAccess.getMicroserviceMappingAccess().getEndpointsKeyword_4_0());
 			}
-			otherlv_12='{'
+			otherlv_8='{'
 			{
-				newLeafNode(otherlv_12, grammarAccess.getMicroserviceMappingAccess().getLeftCurlyBracketKeyword_4_1());
+				newLeafNode(otherlv_8, grammarAccess.getMicroserviceMappingAccess().getLeftCurlyBracketKeyword_4_1());
 			}
 			(
 				(
 					{
 						newCompositeNode(grammarAccess.getMicroserviceMappingAccess().getEndpointsTechnologySpecificEndpointParserRuleCall_4_2_0());
 					}
-					lv_endpoints_13_0=ruleTechnologySpecificEndpoint
+					lv_endpoints_9_0=ruleTechnologySpecificEndpoint
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getMicroserviceMappingRule());
@@ -464,32 +440,32 @@ ruleMicroserviceMapping returns [EObject current=null]
 						add(
 							$current,
 							"endpoints",
-							lv_endpoints_13_0,
+							lv_endpoints_9_0,
 							"de.fhdo.ddmm.technology.mappingdsl.MappingDsl.TechnologySpecificEndpoint");
 						afterParserOrEnumRuleCall();
 					}
 				)
 			)*
-			otherlv_14='}'
+			otherlv_10='}'
 			{
-				newLeafNode(otherlv_14, grammarAccess.getMicroserviceMappingAccess().getRightCurlyBracketKeyword_4_3());
+				newLeafNode(otherlv_10, grammarAccess.getMicroserviceMappingAccess().getRightCurlyBracketKeyword_4_3());
 			}
 		)?
 		(
-			otherlv_15='aspects'
+			otherlv_11='aspects'
 			{
-				newLeafNode(otherlv_15, grammarAccess.getMicroserviceMappingAccess().getAspectsKeyword_5_0());
+				newLeafNode(otherlv_11, grammarAccess.getMicroserviceMappingAccess().getAspectsKeyword_5_0());
 			}
-			otherlv_16='{'
+			otherlv_12='{'
 			{
-				newLeafNode(otherlv_16, grammarAccess.getMicroserviceMappingAccess().getLeftCurlyBracketKeyword_5_1());
+				newLeafNode(otherlv_12, grammarAccess.getMicroserviceMappingAccess().getLeftCurlyBracketKeyword_5_1());
 			}
 			(
 				(
 					{
 						newCompositeNode(grammarAccess.getMicroserviceMappingAccess().getAspectsTechnologySpecificImportedServiceAspectParserRuleCall_5_2_0());
 					}
-					lv_aspects_17_0=ruleTechnologySpecificImportedServiceAspect
+					lv_aspects_13_0=ruleTechnologySpecificImportedServiceAspect
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getMicroserviceMappingRule());
@@ -497,15 +473,15 @@ ruleMicroserviceMapping returns [EObject current=null]
 						add(
 							$current,
 							"aspects",
-							lv_aspects_17_0,
+							lv_aspects_13_0,
 							"de.fhdo.ddmm.technology.mappingdsl.MappingDsl.TechnologySpecificImportedServiceAspect");
 						afterParserOrEnumRuleCall();
 					}
 				)
 			)+
-			otherlv_18='}'
+			otherlv_14='}'
 			{
-				newLeafNode(otherlv_18, grammarAccess.getMicroserviceMappingAccess().getRightCurlyBracketKeyword_5_3());
+				newLeafNode(otherlv_14, grammarAccess.getMicroserviceMappingAccess().getRightCurlyBracketKeyword_5_3());
 			}
 		)?
 		(
@@ -513,7 +489,7 @@ ruleMicroserviceMapping returns [EObject current=null]
 				{
 					newCompositeNode(grammarAccess.getMicroserviceMappingAccess().getInterfaceMappingsInterfaceMappingParserRuleCall_6_0());
 				}
-				lv_interfaceMappings_19_0=ruleInterfaceMapping
+				lv_interfaceMappings_15_0=ruleInterfaceMapping
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getMicroserviceMappingRule());
@@ -521,7 +497,7 @@ ruleMicroserviceMapping returns [EObject current=null]
 					add(
 						$current,
 						"interfaceMappings",
-						lv_interfaceMappings_19_0,
+						lv_interfaceMappings_15_0,
 						"de.fhdo.ddmm.technology.mappingdsl.MappingDsl.InterfaceMapping");
 					afterParserOrEnumRuleCall();
 				}
@@ -532,7 +508,7 @@ ruleMicroserviceMapping returns [EObject current=null]
 				{
 					newCompositeNode(grammarAccess.getMicroserviceMappingAccess().getReferredOperationMappingsReferredOperationMappingParserRuleCall_7_0());
 				}
-				lv_referredOperationMappings_20_0=ruleReferredOperationMapping
+				lv_referredOperationMappings_16_0=ruleReferredOperationMapping
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getMicroserviceMappingRule());
@@ -540,7 +516,7 @@ ruleMicroserviceMapping returns [EObject current=null]
 					add(
 						$current,
 						"referredOperationMappings",
-						lv_referredOperationMappings_20_0,
+						lv_referredOperationMappings_16_0,
 						"de.fhdo.ddmm.technology.mappingdsl.MappingDsl.ReferredOperationMapping");
 					afterParserOrEnumRuleCall();
 				}
@@ -551,7 +527,7 @@ ruleMicroserviceMapping returns [EObject current=null]
 				{
 					newCompositeNode(grammarAccess.getMicroserviceMappingAccess().getOperationMappingsOperationMappingParserRuleCall_8_0());
 				}
-				lv_operationMappings_21_0=ruleOperationMapping
+				lv_operationMappings_17_0=ruleOperationMapping
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getMicroserviceMappingRule());
@@ -559,15 +535,15 @@ ruleMicroserviceMapping returns [EObject current=null]
 					add(
 						$current,
 						"operationMappings",
-						lv_operationMappings_21_0,
+						lv_operationMappings_17_0,
 						"de.fhdo.ddmm.technology.mappingdsl.MappingDsl.OperationMapping");
 					afterParserOrEnumRuleCall();
 				}
 			)
 		)*
-		otherlv_22='}'
+		otherlv_18='}'
 		{
-			newLeafNode(otherlv_22, grammarAccess.getMicroserviceMappingAccess().getRightCurlyBracketKeyword_9());
+			newLeafNode(otherlv_18, grammarAccess.getMicroserviceMappingAccess().getRightCurlyBracketKeyword_9());
 		}
 	)
 ;
@@ -2093,35 +2069,23 @@ ruleMicroservice returns [EObject current=null]
 }:
 	(
 		(
-			otherlv_0='@'
-			{
-				newLeafNode(otherlv_0, grammarAccess.getMicroserviceAccess().getCommercialAtKeyword_0_0());
-			}
-			otherlv_1='technology'
-			{
-				newLeafNode(otherlv_1, grammarAccess.getMicroserviceAccess().getTechnologyKeyword_0_1());
-			}
-			otherlv_2='('
-			{
-				newLeafNode(otherlv_2, grammarAccess.getMicroserviceAccess().getLeftParenthesisKeyword_0_2());
-			}
 			(
-				(
-					{
-						if ($current==null) {
-							$current = createModelElement(grammarAccess.getMicroserviceRule());
-						}
+				{
+					newCompositeNode(grammarAccess.getMicroserviceAccess().getTechnologyReferencesTechnologyReferenceParserRuleCall_0_0());
+				}
+				lv_technologyReferences_0_0=ruleTechnologyReference
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getMicroserviceRule());
 					}
-					otherlv_3=RULE_ID
-					{
-						newLeafNode(otherlv_3, grammarAccess.getMicroserviceAccess().getTechnologiesImportCrossReference_0_3_0());
-					}
-				)
+					add(
+						$current,
+						"technologyReferences",
+						lv_technologyReferences_0_0,
+						"de.fhdo.ddmm.ServiceDsl.TechnologyReference");
+					afterParserOrEnumRuleCall();
+				}
 			)
-			otherlv_4=')'
-			{
-				newLeafNode(otherlv_4, grammarAccess.getMicroserviceAccess().getRightParenthesisKeyword_0_4());
-			}
 		)*
 		(
 			(
@@ -2129,7 +2093,7 @@ ruleMicroservice returns [EObject current=null]
 					{
 						newCompositeNode(grammarAccess.getMicroserviceAccess().getProtocolsProtocolSpecificationParserRuleCall_1_0_0());
 					}
-					lv_protocols_5_0=ruleProtocolSpecification
+					lv_protocols_1_0=ruleProtocolSpecification
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getMicroserviceRule());
@@ -2137,7 +2101,7 @@ ruleMicroservice returns [EObject current=null]
 						add(
 							$current,
 							"protocols",
-							lv_protocols_5_0,
+							lv_protocols_1_0,
 							"de.fhdo.ddmm.ServiceDsl.ProtocolSpecification");
 						afterParserOrEnumRuleCall();
 					}
@@ -2148,7 +2112,7 @@ ruleMicroservice returns [EObject current=null]
 					{
 						newCompositeNode(grammarAccess.getMicroserviceAccess().getProtocolsProtocolSpecificationParserRuleCall_1_1_0());
 					}
-					lv_protocols_6_0=ruleProtocolSpecification
+					lv_protocols_2_0=ruleProtocolSpecification
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getMicroserviceRule());
@@ -2156,7 +2120,7 @@ ruleMicroservice returns [EObject current=null]
 						add(
 							$current,
 							"protocols",
-							lv_protocols_6_0,
+							lv_protocols_2_0,
 							"de.fhdo.ddmm.ServiceDsl.ProtocolSpecification");
 						afterParserOrEnumRuleCall();
 					}
@@ -2164,24 +2128,24 @@ ruleMicroservice returns [EObject current=null]
 			)?
 		)?
 		(
-			otherlv_7='@'
+			otherlv_3='@'
 			{
-				newLeafNode(otherlv_7, grammarAccess.getMicroserviceAccess().getCommercialAtKeyword_2_0());
+				newLeafNode(otherlv_3, grammarAccess.getMicroserviceAccess().getCommercialAtKeyword_2_0());
 			}
-			otherlv_8='endpoints'
+			otherlv_4='endpoints'
 			{
-				newLeafNode(otherlv_8, grammarAccess.getMicroserviceAccess().getEndpointsKeyword_2_1());
+				newLeafNode(otherlv_4, grammarAccess.getMicroserviceAccess().getEndpointsKeyword_2_1());
 			}
-			otherlv_9='('
+			otherlv_5='('
 			{
-				newLeafNode(otherlv_9, grammarAccess.getMicroserviceAccess().getLeftParenthesisKeyword_2_2());
+				newLeafNode(otherlv_5, grammarAccess.getMicroserviceAccess().getLeftParenthesisKeyword_2_2());
 			}
 			(
 				(
 					{
 						newCompositeNode(grammarAccess.getMicroserviceAccess().getEndpointsEndpointParserRuleCall_2_3_0());
 					}
-					lv_endpoints_10_0=ruleEndpoint
+					lv_endpoints_6_0=ruleEndpoint
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getMicroserviceRule());
@@ -2189,15 +2153,15 @@ ruleMicroservice returns [EObject current=null]
 						add(
 							$current,
 							"endpoints",
-							lv_endpoints_10_0,
+							lv_endpoints_6_0,
 							"de.fhdo.ddmm.ServiceDsl.Endpoint");
 						afterParserOrEnumRuleCall();
 					}
 				)
 			)+
-			otherlv_11=')'
+			otherlv_7=')'
 			{
-				newLeafNode(otherlv_11, grammarAccess.getMicroserviceAccess().getRightParenthesisKeyword_2_4());
+				newLeafNode(otherlv_7, grammarAccess.getMicroserviceAccess().getRightParenthesisKeyword_2_4());
 			}
 		)?
 		(
@@ -2205,7 +2169,7 @@ ruleMicroservice returns [EObject current=null]
 				{
 					newCompositeNode(grammarAccess.getMicroserviceAccess().getAspectsImportedServiceAspectParserRuleCall_3_0());
 				}
-				lv_aspects_12_0=ruleImportedServiceAspect
+				lv_aspects_8_0=ruleImportedServiceAspect
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getMicroserviceRule());
@@ -2213,7 +2177,7 @@ ruleMicroservice returns [EObject current=null]
 					add(
 						$current,
 						"aspects",
-						lv_aspects_12_0,
+						lv_aspects_8_0,
 						"de.fhdo.ddmm.ServiceDsl.ImportedServiceAspect");
 					afterParserOrEnumRuleCall();
 				}
@@ -2224,7 +2188,7 @@ ruleMicroservice returns [EObject current=null]
 				{
 					newCompositeNode(grammarAccess.getMicroserviceAccess().getVisibilityVisibilityEnumRuleCall_4_0());
 				}
-				lv_visibility_13_0=ruleVisibility
+				lv_visibility_9_0=ruleVisibility
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getMicroserviceRule());
@@ -2232,7 +2196,7 @@ ruleMicroservice returns [EObject current=null]
 					set(
 						$current,
 						"visibility",
-						lv_visibility_13_0,
+						lv_visibility_9_0,
 						"de.fhdo.ddmm.ServiceDsl.Visibility");
 					afterParserOrEnumRuleCall();
 				}
@@ -2243,7 +2207,7 @@ ruleMicroservice returns [EObject current=null]
 				{
 					newCompositeNode(grammarAccess.getMicroserviceAccess().getTypeMicroserviceTypeEnumRuleCall_5_0());
 				}
-				lv_type_14_0=ruleMicroserviceType
+				lv_type_10_0=ruleMicroserviceType
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getMicroserviceRule());
@@ -2251,22 +2215,22 @@ ruleMicroservice returns [EObject current=null]
 					set(
 						$current,
 						"type",
-						lv_type_14_0,
+						lv_type_10_0,
 						"de.fhdo.ddmm.ServiceDsl.MicroserviceType");
 					afterParserOrEnumRuleCall();
 				}
 			)
 		)
-		otherlv_15='microservice'
+		otherlv_11='microservice'
 		{
-			newLeafNode(otherlv_15, grammarAccess.getMicroserviceAccess().getMicroserviceKeyword_6());
+			newLeafNode(otherlv_11, grammarAccess.getMicroserviceAccess().getMicroserviceKeyword_6());
 		}
 		(
 			(
 				{
 					newCompositeNode(grammarAccess.getMicroserviceAccess().getNameQualifiedNameWithAtLeastOneLevelParserRuleCall_7_0());
 				}
-				lv_name_16_0=ruleQualifiedNameWithAtLeastOneLevel
+				lv_name_12_0=ruleQualifiedNameWithAtLeastOneLevel
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getMicroserviceRule());
@@ -2274,22 +2238,22 @@ ruleMicroservice returns [EObject current=null]
 					set(
 						$current,
 						"name",
-						lv_name_16_0,
+						lv_name_12_0,
 						"de.fhdo.ddmm.ServiceDsl.QualifiedNameWithAtLeastOneLevel");
 					afterParserOrEnumRuleCall();
 				}
 			)
 		)
 		(
-			otherlv_17='version'
+			otherlv_13='version'
 			{
-				newLeafNode(otherlv_17, grammarAccess.getMicroserviceAccess().getVersionKeyword_8_0());
+				newLeafNode(otherlv_13, grammarAccess.getMicroserviceAccess().getVersionKeyword_8_0());
 			}
 			(
 				(
-					lv_version_18_0=RULE_ID
+					lv_version_14_0=RULE_ID
 					{
-						newLeafNode(lv_version_18_0, grammarAccess.getMicroserviceAccess().getVersionIDTerminalRuleCall_8_1_0());
+						newLeafNode(lv_version_14_0, grammarAccess.getMicroserviceAccess().getVersionIDTerminalRuleCall_8_1_0());
 					}
 					{
 						if ($current==null) {
@@ -2298,35 +2262,35 @@ ruleMicroservice returns [EObject current=null]
 						setWithLastConsumed(
 							$current,
 							"version",
-							lv_version_18_0,
+							lv_version_14_0,
 							"org.eclipse.xtext.common.Terminals.ID");
 					}
 				)
 			)
 		)?
-		otherlv_19='{'
+		otherlv_15='{'
 		{
-			newLeafNode(otherlv_19, grammarAccess.getMicroserviceAccess().getLeftCurlyBracketKeyword_9());
+			newLeafNode(otherlv_15, grammarAccess.getMicroserviceAccess().getLeftCurlyBracketKeyword_9());
 		}
 		(
-			otherlv_20='required'
+			otherlv_16='required'
 			{
-				newLeafNode(otherlv_20, grammarAccess.getMicroserviceAccess().getRequiredKeyword_10_0());
+				newLeafNode(otherlv_16, grammarAccess.getMicroserviceAccess().getRequiredKeyword_10_0());
 			}
-			otherlv_21='microservices'
+			otherlv_17='microservices'
 			{
-				newLeafNode(otherlv_21, grammarAccess.getMicroserviceAccess().getMicroservicesKeyword_10_1());
+				newLeafNode(otherlv_17, grammarAccess.getMicroserviceAccess().getMicroservicesKeyword_10_1());
 			}
-			otherlv_22='{'
+			otherlv_18='{'
 			{
-				newLeafNode(otherlv_22, grammarAccess.getMicroserviceAccess().getLeftCurlyBracketKeyword_10_2());
+				newLeafNode(otherlv_18, grammarAccess.getMicroserviceAccess().getLeftCurlyBracketKeyword_10_2());
 			}
 			(
 				(
 					{
 						newCompositeNode(grammarAccess.getMicroserviceAccess().getRequiredMicroservicesPossiblyImportedMicroserviceParserRuleCall_10_3_0());
 					}
-					lv_requiredMicroservices_23_0=rulePossiblyImportedMicroservice
+					lv_requiredMicroservices_19_0=rulePossiblyImportedMicroservice
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getMicroserviceRule());
@@ -2334,23 +2298,23 @@ ruleMicroservice returns [EObject current=null]
 						add(
 							$current,
 							"requiredMicroservices",
-							lv_requiredMicroservices_23_0,
+							lv_requiredMicroservices_19_0,
 							"de.fhdo.ddmm.ServiceDsl.PossiblyImportedMicroservice");
 						afterParserOrEnumRuleCall();
 					}
 				)
 			)
 			(
-				otherlv_24=','
+				otherlv_20=','
 				{
-					newLeafNode(otherlv_24, grammarAccess.getMicroserviceAccess().getCommaKeyword_10_4_0());
+					newLeafNode(otherlv_20, grammarAccess.getMicroserviceAccess().getCommaKeyword_10_4_0());
 				}
 				(
 					(
 						{
 							newCompositeNode(grammarAccess.getMicroserviceAccess().getRequiredMicroservicesPossiblyImportedMicroserviceParserRuleCall_10_4_1_0());
 						}
-						lv_requiredMicroservices_25_0=rulePossiblyImportedMicroservice
+						lv_requiredMicroservices_21_0=rulePossiblyImportedMicroservice
 						{
 							if ($current==null) {
 								$current = createModelElementForParent(grammarAccess.getMicroserviceRule());
@@ -2358,37 +2322,37 @@ ruleMicroservice returns [EObject current=null]
 							add(
 								$current,
 								"requiredMicroservices",
-								lv_requiredMicroservices_25_0,
+								lv_requiredMicroservices_21_0,
 								"de.fhdo.ddmm.ServiceDsl.PossiblyImportedMicroservice");
 							afterParserOrEnumRuleCall();
 						}
 					)
 				)
 			)*
-			otherlv_26='}'
+			otherlv_22='}'
 			{
-				newLeafNode(otherlv_26, grammarAccess.getMicroserviceAccess().getRightCurlyBracketKeyword_10_5());
+				newLeafNode(otherlv_22, grammarAccess.getMicroserviceAccess().getRightCurlyBracketKeyword_10_5());
 			}
 		)?
 		(
-			otherlv_27='required'
+			otherlv_23='required'
 			{
-				newLeafNode(otherlv_27, grammarAccess.getMicroserviceAccess().getRequiredKeyword_11_0());
+				newLeafNode(otherlv_23, grammarAccess.getMicroserviceAccess().getRequiredKeyword_11_0());
 			}
-			otherlv_28='interfaces'
+			otherlv_24='interfaces'
 			{
-				newLeafNode(otherlv_28, grammarAccess.getMicroserviceAccess().getInterfacesKeyword_11_1());
+				newLeafNode(otherlv_24, grammarAccess.getMicroserviceAccess().getInterfacesKeyword_11_1());
 			}
-			otherlv_29='{'
+			otherlv_25='{'
 			{
-				newLeafNode(otherlv_29, grammarAccess.getMicroserviceAccess().getLeftCurlyBracketKeyword_11_2());
+				newLeafNode(otherlv_25, grammarAccess.getMicroserviceAccess().getLeftCurlyBracketKeyword_11_2());
 			}
 			(
 				(
 					{
 						newCompositeNode(grammarAccess.getMicroserviceAccess().getRequiredInterfacesPossiblyImportedInterfaceParserRuleCall_11_3_0());
 					}
-					lv_requiredInterfaces_30_0=rulePossiblyImportedInterface
+					lv_requiredInterfaces_26_0=rulePossiblyImportedInterface
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getMicroserviceRule());
@@ -2396,23 +2360,23 @@ ruleMicroservice returns [EObject current=null]
 						add(
 							$current,
 							"requiredInterfaces",
-							lv_requiredInterfaces_30_0,
+							lv_requiredInterfaces_26_0,
 							"de.fhdo.ddmm.ServiceDsl.PossiblyImportedInterface");
 						afterParserOrEnumRuleCall();
 					}
 				)
 			)
 			(
-				otherlv_31=','
+				otherlv_27=','
 				{
-					newLeafNode(otherlv_31, grammarAccess.getMicroserviceAccess().getCommaKeyword_11_4_0());
+					newLeafNode(otherlv_27, grammarAccess.getMicroserviceAccess().getCommaKeyword_11_4_0());
 				}
 				(
 					(
 						{
 							newCompositeNode(grammarAccess.getMicroserviceAccess().getRequiredInterfacesPossiblyImportedInterfaceParserRuleCall_11_4_1_0());
 						}
-						lv_requiredInterfaces_32_0=rulePossiblyImportedInterface
+						lv_requiredInterfaces_28_0=rulePossiblyImportedInterface
 						{
 							if ($current==null) {
 								$current = createModelElementForParent(grammarAccess.getMicroserviceRule());
@@ -2420,37 +2384,37 @@ ruleMicroservice returns [EObject current=null]
 							add(
 								$current,
 								"requiredInterfaces",
-								lv_requiredInterfaces_32_0,
+								lv_requiredInterfaces_28_0,
 								"de.fhdo.ddmm.ServiceDsl.PossiblyImportedInterface");
 							afterParserOrEnumRuleCall();
 						}
 					)
 				)
 			)*
-			otherlv_33='}'
+			otherlv_29='}'
 			{
-				newLeafNode(otherlv_33, grammarAccess.getMicroserviceAccess().getRightCurlyBracketKeyword_11_5());
+				newLeafNode(otherlv_29, grammarAccess.getMicroserviceAccess().getRightCurlyBracketKeyword_11_5());
 			}
 		)?
 		(
-			otherlv_34='required'
+			otherlv_30='required'
 			{
-				newLeafNode(otherlv_34, grammarAccess.getMicroserviceAccess().getRequiredKeyword_12_0());
+				newLeafNode(otherlv_30, grammarAccess.getMicroserviceAccess().getRequiredKeyword_12_0());
 			}
-			otherlv_35='operations'
+			otherlv_31='operations'
 			{
-				newLeafNode(otherlv_35, grammarAccess.getMicroserviceAccess().getOperationsKeyword_12_1());
+				newLeafNode(otherlv_31, grammarAccess.getMicroserviceAccess().getOperationsKeyword_12_1());
 			}
-			otherlv_36='{'
+			otherlv_32='{'
 			{
-				newLeafNode(otherlv_36, grammarAccess.getMicroserviceAccess().getLeftCurlyBracketKeyword_12_2());
+				newLeafNode(otherlv_32, grammarAccess.getMicroserviceAccess().getLeftCurlyBracketKeyword_12_2());
 			}
 			(
 				(
 					{
 						newCompositeNode(grammarAccess.getMicroserviceAccess().getRequiredOperationsPossiblyImportedOperationParserRuleCall_12_3_0());
 					}
-					lv_requiredOperations_37_0=rulePossiblyImportedOperation
+					lv_requiredOperations_33_0=rulePossiblyImportedOperation
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getMicroserviceRule());
@@ -2458,23 +2422,23 @@ ruleMicroservice returns [EObject current=null]
 						add(
 							$current,
 							"requiredOperations",
-							lv_requiredOperations_37_0,
+							lv_requiredOperations_33_0,
 							"de.fhdo.ddmm.ServiceDsl.PossiblyImportedOperation");
 						afterParserOrEnumRuleCall();
 					}
 				)
 			)
 			(
-				otherlv_38=','
+				otherlv_34=','
 				{
-					newLeafNode(otherlv_38, grammarAccess.getMicroserviceAccess().getCommaKeyword_12_4_0());
+					newLeafNode(otherlv_34, grammarAccess.getMicroserviceAccess().getCommaKeyword_12_4_0());
 				}
 				(
 					(
 						{
 							newCompositeNode(grammarAccess.getMicroserviceAccess().getRequiredOperationsPossiblyImportedOperationParserRuleCall_12_4_1_0());
 						}
-						lv_requiredOperations_39_0=rulePossiblyImportedOperation
+						lv_requiredOperations_35_0=rulePossiblyImportedOperation
 						{
 							if ($current==null) {
 								$current = createModelElementForParent(grammarAccess.getMicroserviceRule());
@@ -2482,16 +2446,16 @@ ruleMicroservice returns [EObject current=null]
 							add(
 								$current,
 								"requiredOperations",
-								lv_requiredOperations_39_0,
+								lv_requiredOperations_35_0,
 								"de.fhdo.ddmm.ServiceDsl.PossiblyImportedOperation");
 							afterParserOrEnumRuleCall();
 						}
 					)
 				)
 			)*
-			otherlv_40='}'
+			otherlv_36='}'
 			{
-				newLeafNode(otherlv_40, grammarAccess.getMicroserviceAccess().getRightCurlyBracketKeyword_12_5());
+				newLeafNode(otherlv_36, grammarAccess.getMicroserviceAccess().getRightCurlyBracketKeyword_12_5());
 			}
 		)?
 		(
@@ -2499,7 +2463,7 @@ ruleMicroservice returns [EObject current=null]
 				{
 					newCompositeNode(grammarAccess.getMicroserviceAccess().getInterfacesInterfaceParserRuleCall_13_0());
 				}
-				lv_interfaces_41_0=ruleInterface
+				lv_interfaces_37_0=ruleInterface
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getMicroserviceRule());
@@ -2507,15 +2471,95 @@ ruleMicroservice returns [EObject current=null]
 					add(
 						$current,
 						"interfaces",
-						lv_interfaces_41_0,
+						lv_interfaces_37_0,
 						"de.fhdo.ddmm.ServiceDsl.Interface");
 					afterParserOrEnumRuleCall();
 				}
 			)
 		)+
-		otherlv_42='}'
+		otherlv_38='}'
 		{
-			newLeafNode(otherlv_42, grammarAccess.getMicroserviceAccess().getRightCurlyBracketKeyword_14());
+			newLeafNode(otherlv_38, grammarAccess.getMicroserviceAccess().getRightCurlyBracketKeyword_14());
+		}
+	)
+;
+
+// Entry rule entryRuleTechnologyReference
+entryRuleTechnologyReference returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getTechnologyReferenceRule()); }
+	iv_ruleTechnologyReference=ruleTechnologyReference
+	{ $current=$iv_ruleTechnologyReference.current; }
+	EOF;
+
+// Rule TechnologyReference
+ruleTechnologyReference returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		otherlv_0='@'
+		{
+			newLeafNode(otherlv_0, grammarAccess.getTechnologyReferenceAccess().getCommercialAtKeyword_0());
+		}
+		otherlv_1='technology'
+		{
+			newLeafNode(otherlv_1, grammarAccess.getTechnologyReferenceAccess().getTechnologyKeyword_1());
+		}
+		otherlv_2='('
+		{
+			newLeafNode(otherlv_2, grammarAccess.getTechnologyReferenceAccess().getLeftParenthesisKeyword_2());
+		}
+		(
+			(
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getTechnologyReferenceRule());
+					}
+				}
+				otherlv_3=RULE_ID
+				{
+					newLeafNode(otherlv_3, grammarAccess.getTechnologyReferenceAccess().getTechnologyImportCrossReference_3_0());
+				}
+			)
+		)
+		(
+			otherlv_4=','
+			{
+				newLeafNode(otherlv_4, grammarAccess.getTechnologyReferenceAccess().getCommaKeyword_4_0());
+			}
+			otherlv_5='typedef'
+			{
+				newLeafNode(otherlv_5, grammarAccess.getTechnologyReferenceAccess().getTypedefKeyword_4_1());
+			}
+			otherlv_6='='
+			{
+				newLeafNode(otherlv_6, grammarAccess.getTechnologyReferenceAccess().getEqualsSignKeyword_4_2());
+			}
+			(
+				(
+					lv_isTypeDefinitionTechnology_7_0=RULE_BOOLEAN
+					{
+						newLeafNode(lv_isTypeDefinitionTechnology_7_0, grammarAccess.getTechnologyReferenceAccess().getIsTypeDefinitionTechnologyBOOLEANTerminalRuleCall_4_3_0());
+					}
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getTechnologyReferenceRule());
+						}
+						setWithLastConsumed(
+							$current,
+							"isTypeDefinitionTechnology",
+							lv_isTypeDefinitionTechnology_7_0,
+							"de.fhdo.ddmm.data.DataDsl.BOOLEAN");
+					}
+				)
+			)
+		)?
+		otherlv_8=')'
+		{
+			newLeafNode(otherlv_8, grammarAccess.getTechnologyReferenceAccess().getRightParenthesisKeyword_5());
 		}
 	)
 ;

@@ -2,6 +2,8 @@
  */
 package de.fhdo.ddmm.service;
 
+import de.fhdo.ddmm.technology.Technology;
+
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EObject;
@@ -22,7 +24,7 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  * <ul>
  *   <li>{@link de.fhdo.ddmm.service.MappedComplexType#getT_sourceModelUri <em>Tsource Model Uri</em>}</li>
- *   <li>{@link de.fhdo.ddmm.service.MappedComplexType#getTechnologies <em>Technologies</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.service.MappedComplexType#getTechnologyReferences <em>Technology References</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.MappedComplexType#getType <em>Type</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.MappedComplexType#getMappedFields <em>Mapped Fields</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.MappedComplexType#getAspects <em>Aspects</em>}</li>
@@ -61,20 +63,22 @@ public interface MappedComplexType extends EObject {
     void setT_sourceModelUri(String value);
 
     /**
-     * Returns the value of the '<em><b>Technologies</b></em>' reference list.
-     * The list contents are of type {@link de.fhdo.ddmm.service.Import}.
+     * Returns the value of the '<em><b>Technology References</b></em>' containment reference list.
+     * The list contents are of type {@link de.fhdo.ddmm.service.TechnologyReference}.
+     * It is bidirectional and its opposite is '{@link de.fhdo.ddmm.service.TechnologyReference#getMappedComplexType <em>Mapped Complex Type</em>}'.
      * <!-- begin-user-doc -->
      * <p>
-     * If the meaning of the '<em>Technologies</em>' reference list isn't clear,
+     * If the meaning of the '<em>Technology References</em>' containment reference list isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Technologies</em>' reference list.
-     * @see de.fhdo.ddmm.service.ServicePackage#getMappedComplexType_Technologies()
-     * @model
+     * @return the value of the '<em>Technology References</em>' containment reference list.
+     * @see de.fhdo.ddmm.service.ServicePackage#getMappedComplexType_TechnologyReferences()
+     * @see de.fhdo.ddmm.service.TechnologyReference#getMappedComplexType
+     * @model opposite="mappedComplexType" containment="true"
      * @generated
      */
-    EList<Import> getTechnologies();
+    EList<TechnologyReference> getTechnologyReferences();
 
     /**
      * Returns the value of the '<em><b>Type</b></em>' containment reference.
@@ -189,5 +193,44 @@ public interface MappedComplexType extends EObject {
      * @generated
      */
     String buildQualifiedName(String separator, boolean withImportName);
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * *
+     * Get all technology references that point to technology models defining types
+     * <!-- end-model-doc -->
+     * @model kind="operation" unique="false"
+     * @generated
+     */
+    EList<TechnologyReference> getAllTypeDefinitionTechnologyReferences();
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * *
+     * Get import of type definition technology. If no explicit technology reference was marked as
+     * pointing to the default type definition technology, this corresponds to the first technology
+     * import in the list of type definition technology imports. This operation should only be
+     * executed if the model had been validated to refer to one type definition technology at most.
+     * <!-- end-model-doc -->
+     * @model kind="operation" unique="false"
+     * @generated
+     */
+    Import getTypeDefinitionTechnologyImport();
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * *
+     * Get type definition technology
+     * <!-- end-model-doc -->
+     * @model kind="operation" unique="false"
+     * @generated
+     */
+    Technology getTypeDefinitionTechnology();
 
 } // MappedComplexType

@@ -51,13 +51,13 @@ public class ServiceModelTransformationValidator extends AbstractInputModelValid
     Void _xblockexpression = null;
     {
       final Function1<Microservice, Boolean> _function = (Microservice it) -> {
-        boolean _isEmpty = it.getTechnologies().isEmpty();
+        boolean _isEmpty = it.getTechnologyReferences().isEmpty();
         return Boolean.valueOf((!_isEmpty));
       };
       final Iterable<Microservice> microservicesWithTechnologies = IterableExtensions.<Microservice>filter(serviceModel.getMicroservices(), _function);
       final Function1<Microservice, Boolean> _function_1 = (Microservice it) -> {
         final Function1<Microservice, Boolean> _function_2 = (Microservice it_1) -> {
-          return Boolean.valueOf(it_1.getTechnologies().isEmpty());
+          return Boolean.valueOf(it_1.getTechnologyReferences().isEmpty());
         };
         return Boolean.valueOf(IterableExtensions.<Microservice>exists(it.getAllRequiredMicroservices().keySet(), _function_2));
       };

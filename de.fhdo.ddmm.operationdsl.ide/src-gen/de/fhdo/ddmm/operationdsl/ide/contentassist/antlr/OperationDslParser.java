@@ -96,7 +96,6 @@ public class OperationDslParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getServiceModelAccess().getGroup(), "rule__ServiceModel__Group__0");
 			builder.put(grammarAccess.getImportAccess().getGroup(), "rule__Import__Group__0");
 			builder.put(grammarAccess.getMicroserviceAccess().getGroup(), "rule__Microservice__Group__0");
-			builder.put(grammarAccess.getMicroserviceAccess().getGroup_0(), "rule__Microservice__Group_0__0");
 			builder.put(grammarAccess.getMicroserviceAccess().getGroup_1(), "rule__Microservice__Group_1__0");
 			builder.put(grammarAccess.getMicroserviceAccess().getGroup_2(), "rule__Microservice__Group_2__0");
 			builder.put(grammarAccess.getMicroserviceAccess().getGroup_8(), "rule__Microservice__Group_8__0");
@@ -106,6 +105,8 @@ public class OperationDslParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getMicroserviceAccess().getGroup_11_4(), "rule__Microservice__Group_11_4__0");
 			builder.put(grammarAccess.getMicroserviceAccess().getGroup_12(), "rule__Microservice__Group_12__0");
 			builder.put(grammarAccess.getMicroserviceAccess().getGroup_12_4(), "rule__Microservice__Group_12_4__0");
+			builder.put(grammarAccess.getTechnologyReferenceAccess().getGroup(), "rule__TechnologyReference__Group__0");
+			builder.put(grammarAccess.getTechnologyReferenceAccess().getGroup_4(), "rule__TechnologyReference__Group_4__0");
 			builder.put(grammarAccess.getPossiblyImportedMicroserviceAccess().getGroup(), "rule__PossiblyImportedMicroservice__Group__0");
 			builder.put(grammarAccess.getPossiblyImportedMicroserviceAccess().getGroup_0(), "rule__PossiblyImportedMicroservice__Group_0__0");
 			builder.put(grammarAccess.getPossiblyImportedInterfaceAccess().getGroup(), "rule__PossiblyImportedInterface__Group__0");
@@ -273,7 +274,7 @@ public class OperationDslParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getImportAccess().getImportTypeAssignment_1(), "rule__Import__ImportTypeAssignment_1");
 			builder.put(grammarAccess.getImportAccess().getImportURIAssignment_3(), "rule__Import__ImportURIAssignment_3");
 			builder.put(grammarAccess.getImportAccess().getNameAssignment_5(), "rule__Import__NameAssignment_5");
-			builder.put(grammarAccess.getMicroserviceAccess().getTechnologiesAssignment_0_3(), "rule__Microservice__TechnologiesAssignment_0_3");
+			builder.put(grammarAccess.getMicroserviceAccess().getTechnologyReferencesAssignment_0(), "rule__Microservice__TechnologyReferencesAssignment_0");
 			builder.put(grammarAccess.getMicroserviceAccess().getProtocolsAssignment_1_0(), "rule__Microservice__ProtocolsAssignment_1_0");
 			builder.put(grammarAccess.getMicroserviceAccess().getProtocolsAssignment_1_1(), "rule__Microservice__ProtocolsAssignment_1_1");
 			builder.put(grammarAccess.getMicroserviceAccess().getEndpointsAssignment_2_3(), "rule__Microservice__EndpointsAssignment_2_3");
@@ -289,6 +290,8 @@ public class OperationDslParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getMicroserviceAccess().getRequiredOperationsAssignment_12_3(), "rule__Microservice__RequiredOperationsAssignment_12_3");
 			builder.put(grammarAccess.getMicroserviceAccess().getRequiredOperationsAssignment_12_4_1(), "rule__Microservice__RequiredOperationsAssignment_12_4_1");
 			builder.put(grammarAccess.getMicroserviceAccess().getInterfacesAssignment_13(), "rule__Microservice__InterfacesAssignment_13");
+			builder.put(grammarAccess.getTechnologyReferenceAccess().getTechnologyAssignment_3(), "rule__TechnologyReference__TechnologyAssignment_3");
+			builder.put(grammarAccess.getTechnologyReferenceAccess().getIsTypeDefinitionTechnologyAssignment_4_3(), "rule__TechnologyReference__IsTypeDefinitionTechnologyAssignment_4_3");
 			builder.put(grammarAccess.getPossiblyImportedMicroserviceAccess().getImportAssignment_0_0(), "rule__PossiblyImportedMicroservice__ImportAssignment_0_0");
 			builder.put(grammarAccess.getPossiblyImportedMicroserviceAccess().getMicroserviceAssignment_1(), "rule__PossiblyImportedMicroservice__MicroserviceAssignment_1");
 			builder.put(grammarAccess.getPossiblyImportedInterfaceAccess().getImportAssignment_0_0(), "rule__PossiblyImportedInterface__ImportAssignment_0_0");

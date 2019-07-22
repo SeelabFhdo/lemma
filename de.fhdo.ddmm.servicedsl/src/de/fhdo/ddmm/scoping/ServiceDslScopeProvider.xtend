@@ -44,6 +44,7 @@ import java.util.Map
 import com.google.common.base.Function
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils
 import java.util.regex.Pattern
+import de.fhdo.ddmm.service.TechnologyReference
 
 /**
  * This class implements a custom scope provider for the Service DSL.
@@ -62,6 +63,9 @@ class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
         val scope = switch (context) {
             /* Microservices */
             Microservice: context.getScope(reference)
+
+            /* Technology references */
+            TechnologyReference: context.getScope(reference)
 
             /* Interfaces */
             Interface: context.getScope(reference)
@@ -150,13 +154,22 @@ class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
             case ServicePackage::Literals.POSSIBLY_IMPORTED_OPERATION__OPERATION:
                 return microservice.getScopeForPossiblyImportedOperation()
 
-            /* Annotated technology */
-            case ServicePackage::Literals.MICROSERVICE__TECHNOLOGIES:
-                return microservice.getScopeForImportsOfType(Technology)
-
             /* Import aliases of annotated endpoints */
             case ServicePackage::Literals.IMPORTED_PROTOCOL_AND_DATA_FORMAT__IMPORT:
                 return microservice.getServiceTechnologyImportAliasesAsScope()
+        }
+
+        return null
+    }
+
+    /**
+     * Build scope for technology references and the given reference
+     */
+    private def getScope(TechnologyReference technologyReference, EReference reference) {
+        switch (reference) {
+            /* Technology */
+            case ServicePackage::Literals.TECHNOLOGY_REFERENCE__TECHNOLOGY:
+                return technologyReference.getScopeForImportsOfType(Technology)
         }
 
         return null
@@ -626,10 +639,10 @@ class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
      */
     private def getServiceTechnologyImportAliasesAsScope(EObject context) {
         val microservice = EcoreUtil2.getContainerOfType(context, Microservice)
-        if (microservice === null || microservice.technologies.empty)
+        if (microservice === null || microservice.technologyReferences.empty)
             return IScope::NULLSCOPE
 
-        return Scopes::scopeFor(microservice.technologies)
+        return Scopes::scopeFor(microservice.technologyReferences.map[technology])
     }
 
     /**
@@ -970,14 +983,14 @@ class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
         if (!results.containsKey(CommunicationType.SYNCHRONOUS))
             missingCommunicationTypes.add(CommunicationType.SYNCHRONOUS)
 
-        if (missingCommunicationTypes.empty ||  microservice.technologies.empty)
+        if (missingCommunicationTypes.empty ||  microservice.technologyReferences.empty)
             return results
 
         /*
          * Complement effective protocols and data formats with the default protocols and data
          * formats of the annotated technology (if any) for missing communication types
          */
-        microservice.technologies.forEach[
+        microservice.technologyReferences.map[technology].forEach[
             val resourceContents = DdmmUtils.getImportedModelContents(eResource, importURI)
             if (resourceContents !== null && !resourceContents.empty) {
                 val technologyModel = resourceContents.get(0) as Technology

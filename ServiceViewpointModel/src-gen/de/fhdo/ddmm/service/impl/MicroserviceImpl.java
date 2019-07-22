@@ -22,6 +22,7 @@ import de.fhdo.ddmm.service.ProtocolSpecification;
 import de.fhdo.ddmm.service.ReferredOperation;
 import de.fhdo.ddmm.service.ServiceModel;
 import de.fhdo.ddmm.service.ServicePackage;
+import de.fhdo.ddmm.service.TechnologyReference;
 import de.fhdo.ddmm.service.Visibility;
 
 import de.fhdo.ddmm.technology.CommunicationType;
@@ -56,9 +57,10 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
+import org.eclipse.emf.ecore.resource.Resource;
+
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
-import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -86,7 +88,7 @@ import org.eclipse.xtext.xbase.lib.Pair;
  *   <li>{@link de.fhdo.ddmm.service.impl.MicroserviceImpl#getVisibility <em>Visibility</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.impl.MicroserviceImpl#getT_defaultProtocols <em>Tdefault Protocols</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.impl.MicroserviceImpl#getT_sourceModelUri <em>Tsource Model Uri</em>}</li>
- *   <li>{@link de.fhdo.ddmm.service.impl.MicroserviceImpl#getTechnologies <em>Technologies</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.service.impl.MicroserviceImpl#getTechnologyReferences <em>Technology References</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.impl.MicroserviceImpl#getT_typeDefinitionTechnologyImport <em>Ttype Definition Technology Import</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.impl.MicroserviceImpl#getT_typeDefinitionTechnology <em>Ttype Definition Technology</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.impl.MicroserviceImpl#getEndpoints <em>Endpoints</em>}</li>
@@ -216,14 +218,14 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
     protected String t_sourceModelUri = TSOURCE_MODEL_URI_EDEFAULT;
 
     /**
-     * The cached value of the '{@link #getTechnologies() <em>Technologies</em>}' reference list.
+     * The cached value of the '{@link #getTechnologyReferences() <em>Technology References</em>}' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getTechnologies()
+     * @see #getTechnologyReferences()
      * @generated
      * @ordered
      */
-    protected EList<Import> technologies;
+    protected EList<TechnologyReference> technologyReferences;
 
     /**
      * The cached value of the '{@link #getT_typeDefinitionTechnologyImport() <em>Ttype Definition Technology Import</em>}' reference.
@@ -508,11 +510,11 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
      * @generated
      */
     @Override
-    public EList<Import> getTechnologies() {
-        if (technologies == null) {
-            technologies = new EObjectResolvingEList<Import>(Import.class, this, ServicePackage.MICROSERVICE__TECHNOLOGIES);
+    public EList<TechnologyReference> getTechnologyReferences() {
+        if (technologyReferences == null) {
+            technologyReferences = new EObjectContainmentWithInverseEList<TechnologyReference>(TechnologyReference.class, this, ServicePackage.MICROSERVICE__TECHNOLOGY_REFERENCES, ServicePackage.TECHNOLOGY_REFERENCE__MICROSERVICE);
         }
-        return technologies;
+        return technologyReferences;
     }
 
     /**
@@ -908,12 +910,14 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
      * @generated
      */
     @Override
-    public EList<Import> getTypeDefinitionTechnologyImports() {
-        final Function1<Import, Boolean> _function = new Function1<Import, Boolean>() {
-            public Boolean apply(final Import it) {
+    public EList<TechnologyReference> getAllTypeDefinitionTechnologyReferences() {
+        final Function1<TechnologyReference, Boolean> _function = new Function1<TechnologyReference, Boolean>() {
+            public Boolean apply(final TechnologyReference it) {
                 boolean _xblockexpression = false;
                 {
-                    final Technology technologyModel = DdmmUtils.<Technology>getImportedModelRoot(it.eResource(), it.getImportURI(), Technology.class);
+                    final Resource resource = it.getTechnology().eResource();
+                    final String importURI = it.getTechnology().getImportURI();
+                    final Technology technologyModel = DdmmUtils.<Technology>getImportedModelRoot(resource, importURI, Technology.class);
                     _xblockexpression = (((!technologyModel.getPrimitiveTypes().isEmpty()) || 
                         (!technologyModel.getListTypes().isEmpty())) || 
                         (!technologyModel.getDataStructures().isEmpty()));
@@ -921,7 +925,7 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
                 return Boolean.valueOf(_xblockexpression);
             }
         };
-        return ECollections.<Import>toEList(IterableExtensions.<Import>filter(this.getTechnologies(), _function));
+        return ECollections.<TechnologyReference>toEList(IterableExtensions.<TechnologyReference>filter(this.getTechnologyReferences(), _function));
     }
 
     /**
@@ -931,12 +935,26 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
      */
     @Override
     public Import getTypeDefinitionTechnologyImport() {
-        final EList<Import> typeDefinitionTechnologyImports = this.getTypeDefinitionTechnologyImports();
+        final Function1<TechnologyReference, Boolean> _function = new Function1<TechnologyReference, Boolean>() {
+            public Boolean apply(final TechnologyReference it) {
+                return Boolean.valueOf(it.isIsTypeDefinitionTechnology());
+            }
+        };
+        TechnologyReference _findFirst = IterableExtensions.<TechnologyReference>findFirst(this.getTechnologyReferences(), _function);
+        Import _technology = null;
+        if (_findFirst!=null) {
+            _technology=_findFirst.getTechnology();
+        }
+        final Import explicitTypeDefinitionTechnologyImport = _technology;
+        if ((explicitTypeDefinitionTechnologyImport != null)) {
+            return explicitTypeDefinitionTechnologyImport;
+        }
+        final EList<TechnologyReference> allTypeDefinitionTechnologyReferences = this.getAllTypeDefinitionTechnologyReferences();
         Import _xifexpression = null;
-        boolean _isEmpty = typeDefinitionTechnologyImports.isEmpty();
+        boolean _isEmpty = allTypeDefinitionTechnologyReferences.isEmpty();
         boolean _not = (!_isEmpty);
         if (_not) {
-            _xifexpression = typeDefinitionTechnologyImports.get(0);
+            _xifexpression = allTypeDefinitionTechnologyReferences.get(0).getTechnology();
         }
         else {
             _xifexpression = null;
@@ -950,28 +968,14 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
      * @generated
      */
     @Override
-    public EList<Technology> getTypeDefinitionTechnologies() {
-        final Function1<Import, Technology> _function = new Function1<Import, Technology>() {
-            public Technology apply(final Import it) {
-                return DdmmUtils.<Technology>getImportedModelRoot(it.eResource(), it.getImportURI(), Technology.class);
-            }
-        };
-        return XcoreEListExtensions.<Import, Technology>map(this.getTypeDefinitionTechnologyImports(), _function);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
     public Technology getTypeDefinitionTechnology() {
-        final EList<Technology> typeDefinitionTechnologies = this.getTypeDefinitionTechnologies();
+        final Import typeDefinitionTechnologyImport = this.getTypeDefinitionTechnologyImport();
         Technology _xifexpression = null;
-        boolean _isEmpty = typeDefinitionTechnologies.isEmpty();
-        boolean _not = (!_isEmpty);
-        if (_not) {
-            _xifexpression = typeDefinitionTechnologies.get(0);
+        if ((typeDefinitionTechnologyImport != null)) {
+            _xifexpression = DdmmUtils.<Technology>getImportedModelRoot(
+                typeDefinitionTechnologyImport.eResource(), 
+                typeDefinitionTechnologyImport.getImportURI(), 
+                Technology.class);
         }
         else {
             _xifexpression = null;
@@ -1313,6 +1317,8 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
     @Override
     public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
+            case ServicePackage.MICROSERVICE__TECHNOLOGY_REFERENCES:
+                return ((InternalEList<InternalEObject>)(InternalEList<?>)getTechnologyReferences()).basicAdd(otherEnd, msgs);
             case ServicePackage.MICROSERVICE__ENDPOINTS:
                 return ((InternalEList<InternalEObject>)(InternalEList<?>)getEndpoints()).basicAdd(otherEnd, msgs);
             case ServicePackage.MICROSERVICE__REQUIRED_MICROSERVICES:
@@ -1341,6 +1347,8 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
+            case ServicePackage.MICROSERVICE__TECHNOLOGY_REFERENCES:
+                return ((InternalEList<?>)getTechnologyReferences()).basicRemove(otherEnd, msgs);
             case ServicePackage.MICROSERVICE__ENDPOINTS:
                 return ((InternalEList<?>)getEndpoints()).basicRemove(otherEnd, msgs);
             case ServicePackage.MICROSERVICE__REQUIRED_MICROSERVICES:
@@ -1395,8 +1403,8 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
                 return getT_defaultProtocols();
             case ServicePackage.MICROSERVICE__TSOURCE_MODEL_URI:
                 return getT_sourceModelUri();
-            case ServicePackage.MICROSERVICE__TECHNOLOGIES:
-                return getTechnologies();
+            case ServicePackage.MICROSERVICE__TECHNOLOGY_REFERENCES:
+                return getTechnologyReferences();
             case ServicePackage.MICROSERVICE__TTYPE_DEFINITION_TECHNOLOGY_IMPORT:
                 if (resolve) return getT_typeDefinitionTechnologyImport();
                 return basicGetT_typeDefinitionTechnologyImport();
@@ -1457,9 +1465,9 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
             case ServicePackage.MICROSERVICE__TSOURCE_MODEL_URI:
                 setT_sourceModelUri((String)newValue);
                 return;
-            case ServicePackage.MICROSERVICE__TECHNOLOGIES:
-                getTechnologies().clear();
-                getTechnologies().addAll((Collection<? extends Import>)newValue);
+            case ServicePackage.MICROSERVICE__TECHNOLOGY_REFERENCES:
+                getTechnologyReferences().clear();
+                getTechnologyReferences().addAll((Collection<? extends TechnologyReference>)newValue);
                 return;
             case ServicePackage.MICROSERVICE__TTYPE_DEFINITION_TECHNOLOGY_IMPORT:
                 setT_typeDefinitionTechnologyImport((Import)newValue);
@@ -1528,8 +1536,8 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
             case ServicePackage.MICROSERVICE__TSOURCE_MODEL_URI:
                 setT_sourceModelUri(TSOURCE_MODEL_URI_EDEFAULT);
                 return;
-            case ServicePackage.MICROSERVICE__TECHNOLOGIES:
-                getTechnologies().clear();
+            case ServicePackage.MICROSERVICE__TECHNOLOGY_REFERENCES:
+                getTechnologyReferences().clear();
                 return;
             case ServicePackage.MICROSERVICE__TTYPE_DEFINITION_TECHNOLOGY_IMPORT:
                 setT_typeDefinitionTechnologyImport((Import)null);
@@ -1585,8 +1593,8 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
                 return t_defaultProtocols != null;
             case ServicePackage.MICROSERVICE__TSOURCE_MODEL_URI:
                 return TSOURCE_MODEL_URI_EDEFAULT == null ? t_sourceModelUri != null : !TSOURCE_MODEL_URI_EDEFAULT.equals(t_sourceModelUri);
-            case ServicePackage.MICROSERVICE__TECHNOLOGIES:
-                return technologies != null && !technologies.isEmpty();
+            case ServicePackage.MICROSERVICE__TECHNOLOGY_REFERENCES:
+                return technologyReferences != null && !technologyReferences.isEmpty();
             case ServicePackage.MICROSERVICE__TTYPE_DEFINITION_TECHNOLOGY_IMPORT:
                 return t_typeDefinitionTechnologyImport != null;
             case ServicePackage.MICROSERVICE__TTYPE_DEFINITION_TECHNOLOGY:
@@ -1629,12 +1637,10 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
                 return t_missingEndpointEffectiveProtocols();
             case ServicePackage.MICROSERVICE___TEFFECTIVE_PROTOCOL_SPECIFICATIONS:
                 return t_effectiveProtocolSpecifications();
-            case ServicePackage.MICROSERVICE___GET_TYPE_DEFINITION_TECHNOLOGY_IMPORTS:
-                return getTypeDefinitionTechnologyImports();
+            case ServicePackage.MICROSERVICE___GET_ALL_TYPE_DEFINITION_TECHNOLOGY_REFERENCES:
+                return getAllTypeDefinitionTechnologyReferences();
             case ServicePackage.MICROSERVICE___GET_TYPE_DEFINITION_TECHNOLOGY_IMPORT:
                 return getTypeDefinitionTechnologyImport();
-            case ServicePackage.MICROSERVICE___GET_TYPE_DEFINITION_TECHNOLOGIES:
-                return getTypeDefinitionTechnologies();
             case ServicePackage.MICROSERVICE___GET_TYPE_DEFINITION_TECHNOLOGY:
                 return getTypeDefinitionTechnology();
             case ServicePackage.MICROSERVICE___GET_QUALIFIED_NAME_PARTS:

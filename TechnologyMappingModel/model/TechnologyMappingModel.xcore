@@ -11,6 +11,7 @@ import de.fhdo.ddmm.service.Microservice
 import de.fhdo.ddmm.service.Operation
 import de.fhdo.ddmm.service.Parameter
 import de.fhdo.ddmm.service.ReferredOperation
+import de.fhdo.ddmm.service.TechnologyReference
 import de.fhdo.ddmm.technology.CommunicationType
 import de.fhdo.ddmm.technology.DataFormat
 import de.fhdo.ddmm.technology.Protocol
@@ -80,12 +81,63 @@ class ComplexTypeMapping {
     // TRANSFORMATION ONLY: Source model URI of the data model that defines the mapped complex type
     String t_sourceModelUri
 
-    refers Import[1..*] technologies
+    contains TechnologyReference[] technologyReferences
     contains ImportedComplexType ^type opposite typeMapping
     contains TechnologySpecificFieldMapping[] fieldMappings opposite typeMapping
     contains TechnologySpecificImportedServiceAspect[] aspects opposite typeMapping
 
     container TechnologyMapping mappingModel opposite typeMappings
+
+    /**
+     * Get all technology references that point to technology models defining types
+     */
+    op TechnologyReference[] getAllTypeDefinitionTechnologyReferences() {
+        return technologyReferences.filter[
+            val resource = technology.eResource
+            val importURI = technology.importURI
+            val technologyModel = DdmmUtils.getImportedModelRoot(resource, importURI, Technology)
+            !technologyModel.primitiveTypes.empty ||
+            !technologyModel.listTypes.empty ||
+            !technologyModel.dataStructures.empty
+        ].toEList
+    }
+
+    /**
+     * Get import of type definition technology. If no explicit technology reference was marked as
+     * pointing to the default type definition technology, this corresponds to the first technology
+     * import in the list of type definition technology imports. This operation should only be
+     * executed if the model had been validated to refer to one type definition technology at most.
+     */
+    op Import getTypeDefinitionTechnologyImport() {
+        val explicitTypeDefinitionTechnologyImport = technologyReferences
+            .findFirst[isIsTypeDefinitionTechnology]
+            ?.technology
+        if (explicitTypeDefinitionTechnologyImport !== null)
+            return explicitTypeDefinitionTechnologyImport
+
+        // No technology explicitly marked as being the one with the default type definitions. We
+        // then take the first one with type definitions, if any.
+        val allTypeDefinitionTechnologyReferences = getAllTypeDefinitionTechnologyReferences()
+        return if (!allTypeDefinitionTechnologyReferences.empty)
+                allTypeDefinitionTechnologyReferences.get(0).technology
+            else
+                null
+    }
+
+    /**
+     * Get type definition technology
+     */
+    op Technology getTypeDefinitionTechnology() {
+        val typeDefinitionTechnologyImport = getTypeDefinitionTechnologyImport()
+        return if (typeDefinitionTechnologyImport !== null)
+                DdmmUtils.getImportedModelRoot(
+                    typeDefinitionTechnologyImport.eResource,
+                    typeDefinitionTechnologyImport.importURI,
+                    Technology
+                )
+            else
+                null
+    }
 }
 
 /**
@@ -113,11 +165,12 @@ class MicroserviceMapping {
      *          Ensured by: DSL validator.
      *     (C4) A technology might be assigned exactly once to a microservice mapping.
      *          Ensured by: DSL validator.
-     *     (C5) Only one assigned technology might comprise technology-specific types.
+     *     (C5) If more than one technology comprises technology-specific types, it must be declared
+     *          as the default type definition technology.
      *          Ensured by: DSL validator.
      *     (C6) Assigned technologies may not only define deployment-specific concepts.
      *          Ensured by: DSL validator.
-     *     (C7) Type definition technologies of microservice cannot differ in service and mapping
+     *     (C7) Type definition technologies of microservices cannot differ in service and mapping
      *          model in case the service model refers to technology-specific types. Otherwise, the
      *          transformation of the mapping to a service model would not be possible, because the
      *          technology-specific types could not be mapped, as both service and mapping model
@@ -125,7 +178,7 @@ class MicroserviceMapping {
      *          Ensured by: DSL validator.
      */
 
-    refers Import[1..*] technologies
+    contains TechnologyReference[] technologyReferences
     contains ImportedMicroservice microservice opposite microserviceMapping
     contains TechnologySpecificEndpoint[] endpoints opposite microserviceMapping
     contains TechnologySpecificProtocolSpecification[] protocols
@@ -137,11 +190,13 @@ class MicroserviceMapping {
     container TechnologyMapping mappingModel opposite serviceMappings
 
     /**
-     * Get imports of type definition technologies
+     * Get all technology references that point to technology models defining types
      */
-    op Import[] getTypeDefinitionTechnologyImports() {
-        return technologies.filter[
-            val technologyModel = DdmmUtils.getImportedModelRoot(eResource, importURI, Technology)
+    op TechnologyReference[] getAllTypeDefinitionTechnologyReferences() {
+        return technologyReferences.filter[
+            val resource = technology.eResource
+            val importURI = technology.importURI
+            val technologyModel = DdmmUtils.getImportedModelRoot(resource, importURI, Technology)
             !technologyModel.primitiveTypes.empty ||
             !technologyModel.listTypes.empty ||
             !technologyModel.dataStructures.empty
@@ -149,36 +204,38 @@ class MicroserviceMapping {
     }
 
     /**
-     * Get import of type definition technology. Note that this corresponds to the first technology
-     * import in the list of type definition technology imports and should only be executed if the
-     * model had been validated to refer to one type definition technology at most.
+     * Get import of type definition technology. If no explicit technology reference was marked as
+     * pointing to the default type definition technology, this corresponds to the first technology
+     * import in the list of type definition technology imports. This operation should only be
+     * executed if the model had been validated to refer to one type definition technology at most.
      */
     op Import getTypeDefinitionTechnologyImport() {
-        val typeDefinitionTechnologyImports = getTypeDefinitionTechnologyImports()
-        return if (!typeDefinitionTechnologyImports.empty)
-                typeDefinitionTechnologyImports.get(0)
+        val explicitTypeDefinitionTechnologyImport = technologyReferences
+            .findFirst[isIsTypeDefinitionTechnology]
+            ?.technology
+        if (explicitTypeDefinitionTechnologyImport !== null)
+            return explicitTypeDefinitionTechnologyImport
+
+        // No technology explicitly marked as being the one with the default type definitions. We
+        // then take the first one with type definitions, if any.
+        val allTypeDefinitionTechnologyReferences = getAllTypeDefinitionTechnologyReferences()
+        return if (!allTypeDefinitionTechnologyReferences.empty)
+                allTypeDefinitionTechnologyReferences.get(0).technology
             else
                 null
     }
 
     /**
-     * Get type definition technology models
-     */
-    op Technology[] getTypeDefinitionTechnologies() {
-        return typeDefinitionTechnologyImports.map[
-            DdmmUtils.getImportedModelRoot(eResource, importURI, Technology)
-        ]
-    }
-
-    /**
-     * Get type definition technology. Note that this corresponds to the first technology model in
-     * the list of type definition technology models and should only be executed if the service
-     * model had been validated to refer to one type definition technology at most.
+     * Get type definition technology
      */
     op Technology getTypeDefinitionTechnology() {
-        val typeDefinitionTechnologies = getTypeDefinitionTechnologies()
-        return if (!typeDefinitionTechnologies.empty)
-                typeDefinitionTechnologies.get(0)
+        val typeDefinitionTechnologyImport = getTypeDefinitionTechnologyImport()
+        return if (typeDefinitionTechnologyImport !== null)
+                DdmmUtils.getImportedModelRoot(
+                    typeDefinitionTechnologyImport.eResource,
+                    typeDefinitionTechnologyImport.importURI,
+                    Technology
+                )
             else
                 null
     }

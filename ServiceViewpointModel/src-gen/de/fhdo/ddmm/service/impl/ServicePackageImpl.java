@@ -25,6 +25,7 @@ import de.fhdo.ddmm.service.ReferredOperation;
 import de.fhdo.ddmm.service.ServiceFactory;
 import de.fhdo.ddmm.service.ServiceModel;
 import de.fhdo.ddmm.service.ServicePackage;
+import de.fhdo.ddmm.service.TechnologyReference;
 import de.fhdo.ddmm.service.Visibility;
 
 import de.fhdo.ddmm.technology.TechnologyPackage;
@@ -69,7 +70,28 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    private EClass mappedComplexTypeEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass mappedFieldEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     private EClass microserviceEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass technologyReferenceEClass = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -98,20 +120,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     private EClass parameterEClass = null;
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    private EClass mappedComplexTypeEClass = null;
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    private EClass mappedFieldEClass = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -413,6 +421,246 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     @Override
+    public EClass getMappedComplexType() {
+        return mappedComplexTypeEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EAttribute getMappedComplexType_T_sourceModelUri() {
+        return (EAttribute)mappedComplexTypeEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getMappedComplexType_TechnologyReferences() {
+        return (EReference)mappedComplexTypeEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getMappedComplexType_Type() {
+        return (EReference)mappedComplexTypeEClass.getEStructuralFeatures().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getMappedComplexType_MappedFields() {
+        return (EReference)mappedComplexTypeEClass.getEStructuralFeatures().get(3);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getMappedComplexType_Aspects() {
+        return (EReference)mappedComplexTypeEClass.getEStructuralFeatures().get(4);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getMappedComplexType_ServiceModel() {
+        return (EReference)mappedComplexTypeEClass.getEStructuralFeatures().get(5);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EOperation getMappedComplexType__GetQualifiedNameParts__boolean() {
+        return mappedComplexTypeEClass.getEOperations().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EOperation getMappedComplexType__BuildQualifiedName__String_boolean() {
+        return mappedComplexTypeEClass.getEOperations().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EOperation getMappedComplexType__GetAllTypeDefinitionTechnologyReferences() {
+        return mappedComplexTypeEClass.getEOperations().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EOperation getMappedComplexType__GetTypeDefinitionTechnologyImport() {
+        return mappedComplexTypeEClass.getEOperations().get(3);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EOperation getMappedComplexType__GetTypeDefinitionTechnology() {
+        return mappedComplexTypeEClass.getEOperations().get(4);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EClass getMappedField() {
+        return mappedFieldEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EAttribute getMappedField_T_typeDefinitionTechnologyName() {
+        return (EAttribute)mappedFieldEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getMappedField_DataField() {
+        return (EReference)mappedFieldEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getMappedField_EnumerationField() {
+        return (EReference)mappedFieldEClass.getEStructuralFeatures().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getMappedField_MappedType() {
+        return (EReference)mappedFieldEClass.getEStructuralFeatures().get(3);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getMappedField_Aspects() {
+        return (EReference)mappedFieldEClass.getEStructuralFeatures().get(4);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getMappedField_Parameter() {
+        return (EReference)mappedFieldEClass.getEStructuralFeatures().get(5);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getMappedField_MappedComplexType() {
+        return (EReference)mappedFieldEClass.getEStructuralFeatures().get(6);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EAttribute getMappedField_Name() {
+        return (EAttribute)mappedFieldEClass.getEStructuralFeatures().get(7);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EOperation getMappedField__GetQualifiedNameParts__boolean() {
+        return mappedFieldEClass.getEOperations().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EOperation getMappedField__BuildQualifiedName__String_boolean() {
+        return mappedFieldEClass.getEOperations().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EOperation getMappedField__GetEffectiveType() {
+        return mappedFieldEClass.getEOperations().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public EClass getMicroservice() {
         return microserviceEClass;
     }
@@ -483,7 +731,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     @Override
-    public EReference getMicroservice_Technologies() {
+    public EReference getMicroservice_TechnologyReferences() {
         return (EReference)microserviceEClass.getEStructuralFeatures().get(6);
     }
 
@@ -643,7 +891,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     @Override
-    public EOperation getMicroservice__GetTypeDefinitionTechnologyImports() {
+    public EOperation getMicroservice__GetAllTypeDefinitionTechnologyReferences() {
         return microserviceEClass.getEOperations().get(2);
     }
 
@@ -663,7 +911,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     @Override
-    public EOperation getMicroservice__GetTypeDefinitionTechnologies() {
+    public EOperation getMicroservice__GetTypeDefinitionTechnology() {
         return microserviceEClass.getEOperations().get(4);
     }
 
@@ -673,7 +921,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     @Override
-    public EOperation getMicroservice__GetTypeDefinitionTechnology() {
+    public EOperation getMicroservice__GetQualifiedNameParts() {
         return microserviceEClass.getEOperations().get(5);
     }
 
@@ -683,7 +931,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     @Override
-    public EOperation getMicroservice__GetQualifiedNameParts() {
+    public EOperation getMicroservice__BuildQualifiedName__String() {
         return microserviceEClass.getEOperations().get(6);
     }
 
@@ -693,7 +941,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     @Override
-    public EOperation getMicroservice__BuildQualifiedName__String() {
+    public EOperation getMicroservice__GetContainedOperations() {
         return microserviceEClass.getEOperations().get(7);
     }
 
@@ -703,7 +951,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     @Override
-    public EOperation getMicroservice__GetContainedOperations() {
+    public EOperation getMicroservice__GetContainedReferredOperations() {
         return microserviceEClass.getEOperations().get(8);
     }
 
@@ -713,7 +961,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     @Override
-    public EOperation getMicroservice__GetContainedReferredOperations() {
+    public EOperation getMicroservice__GetRequiredImports() {
         return microserviceEClass.getEOperations().get(9);
     }
 
@@ -723,7 +971,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     @Override
-    public EOperation getMicroservice__GetRequiredImports() {
+    public EOperation getMicroservice__GetAllRequiredOperations__Import() {
         return microserviceEClass.getEOperations().get(10);
     }
 
@@ -733,7 +981,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     @Override
-    public EOperation getMicroservice__GetAllRequiredOperations__Import() {
+    public EOperation getMicroservice__GetAllRequiredMicroservices() {
         return microserviceEClass.getEOperations().get(11);
     }
 
@@ -743,7 +991,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     @Override
-    public EOperation getMicroservice__GetAllRequiredMicroservices() {
+    public EOperation getMicroservice__GetAllInitializingMicroservices() {
         return microserviceEClass.getEOperations().get(12);
     }
 
@@ -753,7 +1001,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     @Override
-    public EOperation getMicroservice__GetAllInitializingMicroservices() {
+    public EOperation getMicroservice__CanRequire__Microservice_boolean() {
         return microserviceEClass.getEOperations().get(13);
     }
 
@@ -763,7 +1011,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     @Override
-    public EOperation getMicroservice__CanRequire__Microservice_boolean() {
+    public EOperation getMicroservice__CanRequire__Interface_boolean() {
         return microserviceEClass.getEOperations().get(14);
     }
 
@@ -773,7 +1021,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     @Override
-    public EOperation getMicroservice__CanRequire__Interface_boolean() {
+    public EOperation getMicroservice__CanRequire__Operation_boolean() {
         return microserviceEClass.getEOperations().get(15);
     }
 
@@ -783,8 +1031,48 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     @Override
-    public EOperation getMicroservice__CanRequire__Operation_boolean() {
-        return microserviceEClass.getEOperations().get(16);
+    public EClass getTechnologyReference() {
+        return technologyReferenceEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EAttribute getTechnologyReference_IsTypeDefinitionTechnology() {
+        return (EAttribute)technologyReferenceEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getTechnologyReference_Technology() {
+        return (EReference)technologyReferenceEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getTechnologyReference_Microservice() {
+        return (EReference)technologyReferenceEClass.getEStructuralFeatures().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getTechnologyReference_MappedComplexType() {
+        return (EReference)technologyReferenceEClass.getEStructuralFeatures().get(3);
     }
 
     /**
@@ -1413,216 +1701,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     @Override
-    public EClass getMappedComplexType() {
-        return mappedComplexTypeEClass;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public EAttribute getMappedComplexType_T_sourceModelUri() {
-        return (EAttribute)mappedComplexTypeEClass.getEStructuralFeatures().get(0);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public EReference getMappedComplexType_Technologies() {
-        return (EReference)mappedComplexTypeEClass.getEStructuralFeatures().get(1);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public EReference getMappedComplexType_Type() {
-        return (EReference)mappedComplexTypeEClass.getEStructuralFeatures().get(2);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public EReference getMappedComplexType_MappedFields() {
-        return (EReference)mappedComplexTypeEClass.getEStructuralFeatures().get(3);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public EReference getMappedComplexType_Aspects() {
-        return (EReference)mappedComplexTypeEClass.getEStructuralFeatures().get(4);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public EReference getMappedComplexType_ServiceModel() {
-        return (EReference)mappedComplexTypeEClass.getEStructuralFeatures().get(5);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public EOperation getMappedComplexType__GetQualifiedNameParts__boolean() {
-        return mappedComplexTypeEClass.getEOperations().get(0);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public EOperation getMappedComplexType__BuildQualifiedName__String_boolean() {
-        return mappedComplexTypeEClass.getEOperations().get(1);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public EClass getMappedField() {
-        return mappedFieldEClass;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public EAttribute getMappedField_T_typeDefinitionTechnologyName() {
-        return (EAttribute)mappedFieldEClass.getEStructuralFeatures().get(0);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public EReference getMappedField_DataField() {
-        return (EReference)mappedFieldEClass.getEStructuralFeatures().get(1);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public EReference getMappedField_EnumerationField() {
-        return (EReference)mappedFieldEClass.getEStructuralFeatures().get(2);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public EReference getMappedField_MappedType() {
-        return (EReference)mappedFieldEClass.getEStructuralFeatures().get(3);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public EReference getMappedField_Aspects() {
-        return (EReference)mappedFieldEClass.getEStructuralFeatures().get(4);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public EReference getMappedField_Parameter() {
-        return (EReference)mappedFieldEClass.getEStructuralFeatures().get(5);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public EReference getMappedField_MappedComplexType() {
-        return (EReference)mappedFieldEClass.getEStructuralFeatures().get(6);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public EAttribute getMappedField_Name() {
-        return (EAttribute)mappedFieldEClass.getEStructuralFeatures().get(7);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public EOperation getMappedField__GetQualifiedNameParts__boolean() {
-        return mappedFieldEClass.getEOperations().get(0);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public EOperation getMappedField__BuildQualifiedName__String_boolean() {
-        return mappedFieldEClass.getEOperations().get(1);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public EOperation getMappedField__GetEffectiveType() {
-        return mappedFieldEClass.getEOperations().get(2);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
     public EClass getPossiblyImportedMicroservice() {
         return possiblyImportedMicroserviceEClass;
     }
@@ -2231,6 +2309,32 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
         createEAttribute(importEClass, IMPORT__IMPORT_TYPE);
         createEReference(importEClass, IMPORT__SERVICE_MODEL);
 
+        mappedComplexTypeEClass = createEClass(MAPPED_COMPLEX_TYPE);
+        createEAttribute(mappedComplexTypeEClass, MAPPED_COMPLEX_TYPE__TSOURCE_MODEL_URI);
+        createEReference(mappedComplexTypeEClass, MAPPED_COMPLEX_TYPE__TECHNOLOGY_REFERENCES);
+        createEReference(mappedComplexTypeEClass, MAPPED_COMPLEX_TYPE__TYPE);
+        createEReference(mappedComplexTypeEClass, MAPPED_COMPLEX_TYPE__MAPPED_FIELDS);
+        createEReference(mappedComplexTypeEClass, MAPPED_COMPLEX_TYPE__ASPECTS);
+        createEReference(mappedComplexTypeEClass, MAPPED_COMPLEX_TYPE__SERVICE_MODEL);
+        createEOperation(mappedComplexTypeEClass, MAPPED_COMPLEX_TYPE___GET_QUALIFIED_NAME_PARTS__BOOLEAN);
+        createEOperation(mappedComplexTypeEClass, MAPPED_COMPLEX_TYPE___BUILD_QUALIFIED_NAME__STRING_BOOLEAN);
+        createEOperation(mappedComplexTypeEClass, MAPPED_COMPLEX_TYPE___GET_ALL_TYPE_DEFINITION_TECHNOLOGY_REFERENCES);
+        createEOperation(mappedComplexTypeEClass, MAPPED_COMPLEX_TYPE___GET_TYPE_DEFINITION_TECHNOLOGY_IMPORT);
+        createEOperation(mappedComplexTypeEClass, MAPPED_COMPLEX_TYPE___GET_TYPE_DEFINITION_TECHNOLOGY);
+
+        mappedFieldEClass = createEClass(MAPPED_FIELD);
+        createEAttribute(mappedFieldEClass, MAPPED_FIELD__TTYPE_DEFINITION_TECHNOLOGY_NAME);
+        createEReference(mappedFieldEClass, MAPPED_FIELD__DATA_FIELD);
+        createEReference(mappedFieldEClass, MAPPED_FIELD__ENUMERATION_FIELD);
+        createEReference(mappedFieldEClass, MAPPED_FIELD__MAPPED_TYPE);
+        createEReference(mappedFieldEClass, MAPPED_FIELD__ASPECTS);
+        createEReference(mappedFieldEClass, MAPPED_FIELD__PARAMETER);
+        createEReference(mappedFieldEClass, MAPPED_FIELD__MAPPED_COMPLEX_TYPE);
+        createEAttribute(mappedFieldEClass, MAPPED_FIELD__NAME);
+        createEOperation(mappedFieldEClass, MAPPED_FIELD___GET_QUALIFIED_NAME_PARTS__BOOLEAN);
+        createEOperation(mappedFieldEClass, MAPPED_FIELD___BUILD_QUALIFIED_NAME__STRING_BOOLEAN);
+        createEOperation(mappedFieldEClass, MAPPED_FIELD___GET_EFFECTIVE_TYPE);
+
         microserviceEClass = createEClass(MICROSERVICE);
         createEAttribute(microserviceEClass, MICROSERVICE__NAME);
         createEAttribute(microserviceEClass, MICROSERVICE__VERSION);
@@ -2238,7 +2342,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
         createEAttribute(microserviceEClass, MICROSERVICE__VISIBILITY);
         createEAttribute(microserviceEClass, MICROSERVICE__TDEFAULT_PROTOCOLS);
         createEAttribute(microserviceEClass, MICROSERVICE__TSOURCE_MODEL_URI);
-        createEReference(microserviceEClass, MICROSERVICE__TECHNOLOGIES);
+        createEReference(microserviceEClass, MICROSERVICE__TECHNOLOGY_REFERENCES);
         createEReference(microserviceEClass, MICROSERVICE__TTYPE_DEFINITION_TECHNOLOGY_IMPORT);
         createEReference(microserviceEClass, MICROSERVICE__TTYPE_DEFINITION_TECHNOLOGY);
         createEReference(microserviceEClass, MICROSERVICE__ENDPOINTS);
@@ -2254,9 +2358,8 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
         createEAttribute(microserviceEClass, MICROSERVICE__EFFECTIVELY_INTERNAL);
         createEOperation(microserviceEClass, MICROSERVICE___TMISSING_ENDPOINT_EFFECTIVE_PROTOCOLS);
         createEOperation(microserviceEClass, MICROSERVICE___TEFFECTIVE_PROTOCOL_SPECIFICATIONS);
-        createEOperation(microserviceEClass, MICROSERVICE___GET_TYPE_DEFINITION_TECHNOLOGY_IMPORTS);
+        createEOperation(microserviceEClass, MICROSERVICE___GET_ALL_TYPE_DEFINITION_TECHNOLOGY_REFERENCES);
         createEOperation(microserviceEClass, MICROSERVICE___GET_TYPE_DEFINITION_TECHNOLOGY_IMPORT);
-        createEOperation(microserviceEClass, MICROSERVICE___GET_TYPE_DEFINITION_TECHNOLOGIES);
         createEOperation(microserviceEClass, MICROSERVICE___GET_TYPE_DEFINITION_TECHNOLOGY);
         createEOperation(microserviceEClass, MICROSERVICE___GET_QUALIFIED_NAME_PARTS);
         createEOperation(microserviceEClass, MICROSERVICE___BUILD_QUALIFIED_NAME__STRING);
@@ -2269,6 +2372,12 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
         createEOperation(microserviceEClass, MICROSERVICE___CAN_REQUIRE__MICROSERVICE_BOOLEAN);
         createEOperation(microserviceEClass, MICROSERVICE___CAN_REQUIRE__INTERFACE_BOOLEAN);
         createEOperation(microserviceEClass, MICROSERVICE___CAN_REQUIRE__OPERATION_BOOLEAN);
+
+        technologyReferenceEClass = createEClass(TECHNOLOGY_REFERENCE);
+        createEAttribute(technologyReferenceEClass, TECHNOLOGY_REFERENCE__IS_TYPE_DEFINITION_TECHNOLOGY);
+        createEReference(technologyReferenceEClass, TECHNOLOGY_REFERENCE__TECHNOLOGY);
+        createEReference(technologyReferenceEClass, TECHNOLOGY_REFERENCE__MICROSERVICE);
+        createEReference(technologyReferenceEClass, TECHNOLOGY_REFERENCE__MAPPED_COMPLEX_TYPE);
 
         interfaceEClass = createEClass(INTERFACE);
         createEAttribute(interfaceEClass, INTERFACE__NAME);
@@ -2335,29 +2444,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
         createEOperation(parameterEClass, PARAMETER___GET_EFFECTIVE_TYPE);
         createEOperation(parameterEClass, PARAMETER___IS_TECHNOLOGY_SPECIFIC_EFFECTIVE_TYPE);
         createEOperation(parameterEClass, PARAMETER___GET_EFFECTIVE_TYPE_QUALIFIED_NAME_PARTS);
-
-        mappedComplexTypeEClass = createEClass(MAPPED_COMPLEX_TYPE);
-        createEAttribute(mappedComplexTypeEClass, MAPPED_COMPLEX_TYPE__TSOURCE_MODEL_URI);
-        createEReference(mappedComplexTypeEClass, MAPPED_COMPLEX_TYPE__TECHNOLOGIES);
-        createEReference(mappedComplexTypeEClass, MAPPED_COMPLEX_TYPE__TYPE);
-        createEReference(mappedComplexTypeEClass, MAPPED_COMPLEX_TYPE__MAPPED_FIELDS);
-        createEReference(mappedComplexTypeEClass, MAPPED_COMPLEX_TYPE__ASPECTS);
-        createEReference(mappedComplexTypeEClass, MAPPED_COMPLEX_TYPE__SERVICE_MODEL);
-        createEOperation(mappedComplexTypeEClass, MAPPED_COMPLEX_TYPE___GET_QUALIFIED_NAME_PARTS__BOOLEAN);
-        createEOperation(mappedComplexTypeEClass, MAPPED_COMPLEX_TYPE___BUILD_QUALIFIED_NAME__STRING_BOOLEAN);
-
-        mappedFieldEClass = createEClass(MAPPED_FIELD);
-        createEAttribute(mappedFieldEClass, MAPPED_FIELD__TTYPE_DEFINITION_TECHNOLOGY_NAME);
-        createEReference(mappedFieldEClass, MAPPED_FIELD__DATA_FIELD);
-        createEReference(mappedFieldEClass, MAPPED_FIELD__ENUMERATION_FIELD);
-        createEReference(mappedFieldEClass, MAPPED_FIELD__MAPPED_TYPE);
-        createEReference(mappedFieldEClass, MAPPED_FIELD__ASPECTS);
-        createEReference(mappedFieldEClass, MAPPED_FIELD__PARAMETER);
-        createEReference(mappedFieldEClass, MAPPED_FIELD__MAPPED_COMPLEX_TYPE);
-        createEAttribute(mappedFieldEClass, MAPPED_FIELD__NAME);
-        createEOperation(mappedFieldEClass, MAPPED_FIELD___GET_QUALIFIED_NAME_PARTS__BOOLEAN);
-        createEOperation(mappedFieldEClass, MAPPED_FIELD___BUILD_QUALIFIED_NAME__STRING_BOOLEAN);
-        createEOperation(mappedFieldEClass, MAPPED_FIELD___GET_EFFECTIVE_TYPE);
 
         possiblyImportedMicroserviceEClass = createEClass(POSSIBLY_IMPORTED_MICROSERVICE);
         createEReference(possiblyImportedMicroserviceEClass, POSSIBLY_IMPORTED_MICROSERVICE__IMPORT);
@@ -2482,6 +2568,46 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
         initEAttribute(getImport_ImportType(), this.getImportType(), "importType", null, 0, 1, Import.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getImport_ServiceModel(), this.getServiceModel(), this.getServiceModel_Imports(), "serviceModel", null, 0, 1, Import.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
+        initEClass(mappedComplexTypeEClass, MappedComplexType.class, "MappedComplexType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getMappedComplexType_T_sourceModelUri(), theEcorePackage.getEString(), "t_sourceModelUri", null, 0, 1, MappedComplexType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getMappedComplexType_TechnologyReferences(), this.getTechnologyReference(), this.getTechnologyReference_MappedComplexType(), "technologyReferences", null, 0, -1, MappedComplexType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getMappedComplexType_Type(), this.getImportedType(), null, "type", null, 0, 1, MappedComplexType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getMappedComplexType_MappedFields(), this.getMappedField(), this.getMappedField_MappedComplexType(), "mappedFields", null, 0, -1, MappedComplexType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getMappedComplexType_Aspects(), this.getImportedServiceAspect(), this.getImportedServiceAspect_MappedComplexType(), "aspects", null, 0, -1, MappedComplexType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getMappedComplexType_ServiceModel(), this.getServiceModel(), this.getServiceModel_MappedComplexTypes(), "serviceModel", null, 0, 1, MappedComplexType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        EOperation op = initEOperation(getMappedComplexType__GetQualifiedNameParts__boolean(), theEcorePackage.getEString(), "getQualifiedNameParts", 0, -1, !IS_UNIQUE, IS_ORDERED);
+        addEParameter(op, theEcorePackage.getEBoolean(), "withImportName", 0, 1, !IS_UNIQUE, IS_ORDERED);
+
+        op = initEOperation(getMappedComplexType__BuildQualifiedName__String_boolean(), theEcorePackage.getEString(), "buildQualifiedName", 0, 1, !IS_UNIQUE, IS_ORDERED);
+        addEParameter(op, theEcorePackage.getEString(), "separator", 0, 1, !IS_UNIQUE, IS_ORDERED);
+        addEParameter(op, theEcorePackage.getEBoolean(), "withImportName", 0, 1, !IS_UNIQUE, IS_ORDERED);
+
+        initEOperation(getMappedComplexType__GetAllTypeDefinitionTechnologyReferences(), this.getTechnologyReference(), "getAllTypeDefinitionTechnologyReferences", 0, -1, !IS_UNIQUE, IS_ORDERED);
+
+        initEOperation(getMappedComplexType__GetTypeDefinitionTechnologyImport(), this.getImport(), "getTypeDefinitionTechnologyImport", 0, 1, !IS_UNIQUE, IS_ORDERED);
+
+        initEOperation(getMappedComplexType__GetTypeDefinitionTechnology(), theTechnologyPackage.getTechnology(), "getTypeDefinitionTechnology", 0, 1, !IS_UNIQUE, IS_ORDERED);
+
+        initEClass(mappedFieldEClass, MappedField.class, "MappedField", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getMappedField_T_typeDefinitionTechnologyName(), theEcorePackage.getEString(), "t_typeDefinitionTechnologyName", null, 0, 1, MappedField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getMappedField_DataField(), theDataPackage.getDataField(), null, "dataField", null, 0, 1, MappedField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getMappedField_EnumerationField(), theDataPackage.getEnumerationField(), null, "enumerationField", null, 0, 1, MappedField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getMappedField_MappedType(), this.getImportedType(), null, "mappedType", null, 0, 1, MappedField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getMappedField_Aspects(), this.getImportedServiceAspect(), this.getImportedServiceAspect_MappedField(), "aspects", null, 0, -1, MappedField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getMappedField_Parameter(), this.getParameter(), this.getParameter_MappedFields(), "parameter", null, 0, 1, MappedField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getMappedField_MappedComplexType(), this.getMappedComplexType(), this.getMappedComplexType_MappedFields(), "mappedComplexType", null, 0, 1, MappedField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getMappedField_Name(), theEcorePackage.getEString(), "name", null, 0, 1, MappedField.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+
+        op = initEOperation(getMappedField__GetQualifiedNameParts__boolean(), theEcorePackage.getEString(), "getQualifiedNameParts", 0, -1, !IS_UNIQUE, IS_ORDERED);
+        addEParameter(op, theEcorePackage.getEBoolean(), "withImportName", 0, 1, !IS_UNIQUE, IS_ORDERED);
+
+        op = initEOperation(getMappedField__BuildQualifiedName__String_boolean(), theEcorePackage.getEString(), "buildQualifiedName", 0, 1, !IS_UNIQUE, IS_ORDERED);
+        addEParameter(op, theEcorePackage.getEString(), "separator", 0, 1, !IS_UNIQUE, IS_ORDERED);
+        addEParameter(op, theEcorePackage.getEBoolean(), "withImportName", 0, 1, !IS_UNIQUE, IS_ORDERED);
+
+        initEOperation(getMappedField__GetEffectiveType(), theDataPackage.getType(), "getEffectiveType", 0, 1, !IS_UNIQUE, IS_ORDERED);
+
         initEClass(microserviceEClass, Microservice.class, "Microservice", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getMicroservice_Name(), theEcorePackage.getEString(), "name", null, 0, 1, Microservice.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getMicroservice_Version(), theEcorePackage.getEString(), "version", null, 0, 1, Microservice.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2489,7 +2615,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
         initEAttribute(getMicroservice_Visibility(), this.getVisibility(), "visibility", "NONE", 0, 1, Microservice.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getMicroservice_T_defaultProtocols(), this.getDefaultProtocols(), "t_defaultProtocols", null, 0, 1, Microservice.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getMicroservice_T_sourceModelUri(), theEcorePackage.getEString(), "t_sourceModelUri", null, 0, 1, Microservice.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getMicroservice_Technologies(), this.getImport(), null, "technologies", null, 0, -1, Microservice.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getMicroservice_TechnologyReferences(), this.getTechnologyReference(), this.getTechnologyReference_Microservice(), "technologyReferences", null, 0, -1, Microservice.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getMicroservice_T_typeDefinitionTechnologyImport(), this.getImport(), null, "t_typeDefinitionTechnologyImport", null, 0, 1, Microservice.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getMicroservice_T_typeDefinitionTechnology(), theTechnologyPackage.getTechnology(), null, "t_typeDefinitionTechnology", null, 0, 1, Microservice.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getMicroservice_Endpoints(), this.getEndpoint(), this.getEndpoint_Microservice(), "endpoints", null, 0, -1, Microservice.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2508,17 +2634,15 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
 
         initEOperation(getMicroservice__T_effectiveProtocolSpecifications(), this.getTupleList(), "t_effectiveProtocolSpecifications", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
-        initEOperation(getMicroservice__GetTypeDefinitionTechnologyImports(), this.getImport(), "getTypeDefinitionTechnologyImports", 0, -1, !IS_UNIQUE, IS_ORDERED);
+        initEOperation(getMicroservice__GetAllTypeDefinitionTechnologyReferences(), this.getTechnologyReference(), "getAllTypeDefinitionTechnologyReferences", 0, -1, !IS_UNIQUE, IS_ORDERED);
 
         initEOperation(getMicroservice__GetTypeDefinitionTechnologyImport(), this.getImport(), "getTypeDefinitionTechnologyImport", 0, 1, !IS_UNIQUE, IS_ORDERED);
-
-        initEOperation(getMicroservice__GetTypeDefinitionTechnologies(), theTechnologyPackage.getTechnology(), "getTypeDefinitionTechnologies", 0, -1, !IS_UNIQUE, IS_ORDERED);
 
         initEOperation(getMicroservice__GetTypeDefinitionTechnology(), theTechnologyPackage.getTechnology(), "getTypeDefinitionTechnology", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
         initEOperation(getMicroservice__GetQualifiedNameParts(), theEcorePackage.getEString(), "getQualifiedNameParts", 0, -1, !IS_UNIQUE, IS_ORDERED);
 
-        EOperation op = initEOperation(getMicroservice__BuildQualifiedName__String(), theEcorePackage.getEString(), "buildQualifiedName", 0, 1, !IS_UNIQUE, IS_ORDERED);
+        op = initEOperation(getMicroservice__BuildQualifiedName__String(), theEcorePackage.getEString(), "buildQualifiedName", 0, 1, !IS_UNIQUE, IS_ORDERED);
         addEParameter(op, theEcorePackage.getEString(), "separator", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
         initEOperation(getMicroservice__GetContainedOperations(), this.getOperation(), "getContainedOperations", 0, -1, !IS_UNIQUE, IS_ORDERED);
@@ -2545,6 +2669,12 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
         op = initEOperation(getMicroservice__CanRequire__Operation_boolean(), theEcorePackage.getEBoolean(), "canRequire", 0, 1, !IS_UNIQUE, IS_ORDERED);
         addEParameter(op, this.getOperation(), "operation", 0, 1, !IS_UNIQUE, IS_ORDERED);
         addEParameter(op, theEcorePackage.getEBoolean(), "isImportedOperation", 0, 1, !IS_UNIQUE, IS_ORDERED);
+
+        initEClass(technologyReferenceEClass, TechnologyReference.class, "TechnologyReference", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getTechnologyReference_IsTypeDefinitionTechnology(), theEcorePackage.getEBoolean(), "isTypeDefinitionTechnology", null, 0, 1, TechnologyReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getTechnologyReference_Technology(), this.getImport(), null, "technology", null, 0, 1, TechnologyReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getTechnologyReference_Microservice(), this.getMicroservice(), this.getMicroservice_TechnologyReferences(), "microservice", null, 0, 1, TechnologyReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getTechnologyReference_MappedComplexType(), this.getMappedComplexType(), this.getMappedComplexType_TechnologyReferences(), "mappedComplexType", null, 0, 1, TechnologyReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(interfaceEClass, Interface.class, "Interface", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getInterface_Name(), theEcorePackage.getEString(), "name", null, 0, 1, Interface.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2634,40 +2764,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
         initEOperation(getParameter__IsTechnologySpecificEffectiveType(), theEcorePackage.getEBoolean(), "isTechnologySpecificEffectiveType", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
         initEOperation(getParameter__GetEffectiveTypeQualifiedNameParts(), theEcorePackage.getEString(), "getEffectiveTypeQualifiedNameParts", 0, -1, !IS_UNIQUE, IS_ORDERED);
-
-        initEClass(mappedComplexTypeEClass, MappedComplexType.class, "MappedComplexType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getMappedComplexType_T_sourceModelUri(), theEcorePackage.getEString(), "t_sourceModelUri", null, 0, 1, MappedComplexType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getMappedComplexType_Technologies(), this.getImport(), null, "technologies", null, 0, -1, MappedComplexType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getMappedComplexType_Type(), this.getImportedType(), null, "type", null, 0, 1, MappedComplexType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getMappedComplexType_MappedFields(), this.getMappedField(), this.getMappedField_MappedComplexType(), "mappedFields", null, 0, -1, MappedComplexType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getMappedComplexType_Aspects(), this.getImportedServiceAspect(), this.getImportedServiceAspect_MappedComplexType(), "aspects", null, 0, -1, MappedComplexType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getMappedComplexType_ServiceModel(), this.getServiceModel(), this.getServiceModel_MappedComplexTypes(), "serviceModel", null, 0, 1, MappedComplexType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-        op = initEOperation(getMappedComplexType__GetQualifiedNameParts__boolean(), theEcorePackage.getEString(), "getQualifiedNameParts", 0, -1, !IS_UNIQUE, IS_ORDERED);
-        addEParameter(op, theEcorePackage.getEBoolean(), "withImportName", 0, 1, !IS_UNIQUE, IS_ORDERED);
-
-        op = initEOperation(getMappedComplexType__BuildQualifiedName__String_boolean(), theEcorePackage.getEString(), "buildQualifiedName", 0, 1, !IS_UNIQUE, IS_ORDERED);
-        addEParameter(op, theEcorePackage.getEString(), "separator", 0, 1, !IS_UNIQUE, IS_ORDERED);
-        addEParameter(op, theEcorePackage.getEBoolean(), "withImportName", 0, 1, !IS_UNIQUE, IS_ORDERED);
-
-        initEClass(mappedFieldEClass, MappedField.class, "MappedField", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getMappedField_T_typeDefinitionTechnologyName(), theEcorePackage.getEString(), "t_typeDefinitionTechnologyName", null, 0, 1, MappedField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getMappedField_DataField(), theDataPackage.getDataField(), null, "dataField", null, 0, 1, MappedField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getMappedField_EnumerationField(), theDataPackage.getEnumerationField(), null, "enumerationField", null, 0, 1, MappedField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getMappedField_MappedType(), this.getImportedType(), null, "mappedType", null, 0, 1, MappedField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getMappedField_Aspects(), this.getImportedServiceAspect(), this.getImportedServiceAspect_MappedField(), "aspects", null, 0, -1, MappedField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getMappedField_Parameter(), this.getParameter(), this.getParameter_MappedFields(), "parameter", null, 0, 1, MappedField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getMappedField_MappedComplexType(), this.getMappedComplexType(), this.getMappedComplexType_MappedFields(), "mappedComplexType", null, 0, 1, MappedField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getMappedField_Name(), theEcorePackage.getEString(), "name", null, 0, 1, MappedField.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, IS_DERIVED, IS_ORDERED);
-
-        op = initEOperation(getMappedField__GetQualifiedNameParts__boolean(), theEcorePackage.getEString(), "getQualifiedNameParts", 0, -1, !IS_UNIQUE, IS_ORDERED);
-        addEParameter(op, theEcorePackage.getEBoolean(), "withImportName", 0, 1, !IS_UNIQUE, IS_ORDERED);
-
-        op = initEOperation(getMappedField__BuildQualifiedName__String_boolean(), theEcorePackage.getEString(), "buildQualifiedName", 0, 1, !IS_UNIQUE, IS_ORDERED);
-        addEParameter(op, theEcorePackage.getEString(), "separator", 0, 1, !IS_UNIQUE, IS_ORDERED);
-        addEParameter(op, theEcorePackage.getEBoolean(), "withImportName", 0, 1, !IS_UNIQUE, IS_ORDERED);
-
-        initEOperation(getMappedField__GetEffectiveType(), theDataPackage.getType(), "getEffectiveType", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
         initEClass(possiblyImportedMicroserviceEClass, PossiblyImportedMicroservice.class, "PossiblyImportedMicroservice", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getPossiblyImportedMicroservice_Import(), this.getImport(), null, "import", null, 0, 1, PossiblyImportedMicroservice.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

@@ -19,7 +19,7 @@ enum ImportType returns service::ImportType:
 ;
 
 ComplexTypeMapping returns ComplexTypeMapping:
-    ('@' 'technology' '(' technologies+=[service::Import] ')')+
+    (technologyReferences+=TechnologyReference)*
     'type' type=ImportedComplexType '{'
         ('aspects' '{'
             aspects+=TechnologySpecificImportedServiceAspect+
@@ -36,7 +36,7 @@ ImportedComplexType:
 ;
 
 MicroserviceMapping returns MicroserviceMapping:
-    ('@' 'technology' '(' technologies+=[service::Import] ')')+
+    (technologyReferences+=TechnologyReference)*
     microservice=ImportedMicroservice '{'
         ('protocols' '{'
             protocols+=TechnologySpecificProtocolSpecification+

@@ -35,7 +35,7 @@ import org.eclipse.xtext.xbase.lib.Pair;
  *   <li>{@link de.fhdo.ddmm.service.Microservice#getVisibility <em>Visibility</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.Microservice#getT_defaultProtocols <em>Tdefault Protocols</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.Microservice#getT_sourceModelUri <em>Tsource Model Uri</em>}</li>
- *   <li>{@link de.fhdo.ddmm.service.Microservice#getTechnologies <em>Technologies</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.service.Microservice#getTechnologyReferences <em>Technology References</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.Microservice#getT_typeDefinitionTechnologyImport <em>Ttype Definition Technology Import</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.Microservice#getT_typeDefinitionTechnology <em>Ttype Definition Technology</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.Microservice#getEndpoints <em>Endpoints</em>}</li>
@@ -75,7 +75,7 @@ public interface Microservice extends EObject {
      *          imported models.
      *          Ensured by: DSL scope provider.
      *     (C5) If a technology is assigned to the service, it must exhibit specifications for types
-     *          and protocols. The rationale if this constraint is, that a technology might be
+     *          and protocols. The rationale of this constraint is, that a technology might be
      *          assigned, but technology-specific types or protocols must not be explicitly assigned
      *          for convenience reasons. If they are missing, the defaults from the assigned
      *          technology are taken instead.
@@ -84,7 +84,8 @@ public interface Microservice extends EObject {
      *          Ensured by: DSL validator.
      *     (C7) A technology might be assigned exactly once to a microservice.
      *          Ensured by: DSL validator.
-     *     (C8) Only one assigned technology might comprise technology-specific types.
+     *     (C8) If more than one technology comprises technology-specific types, it must be declared
+     *          as the default type definition technology.
      *          Ensured by: DSL validator.
      *     (C9) Assigned technologies may not only define deployment-specific concepts.
      *          Ensured by: DSL validator.
@@ -248,20 +249,22 @@ public interface Microservice extends EObject {
     void setT_sourceModelUri(String value);
 
     /**
-     * Returns the value of the '<em><b>Technologies</b></em>' reference list.
-     * The list contents are of type {@link de.fhdo.ddmm.service.Import}.
+     * Returns the value of the '<em><b>Technology References</b></em>' containment reference list.
+     * The list contents are of type {@link de.fhdo.ddmm.service.TechnologyReference}.
+     * It is bidirectional and its opposite is '{@link de.fhdo.ddmm.service.TechnologyReference#getMicroservice <em>Microservice</em>}'.
      * <!-- begin-user-doc -->
      * <p>
-     * If the meaning of the '<em>Technologies</em>' reference list isn't clear,
+     * If the meaning of the '<em>Technology References</em>' containment reference list isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Technologies</em>' reference list.
-     * @see de.fhdo.ddmm.service.ServicePackage#getMicroservice_Technologies()
-     * @model
+     * @return the value of the '<em>Technology References</em>' containment reference list.
+     * @see de.fhdo.ddmm.service.ServicePackage#getMicroservice_TechnologyReferences()
+     * @see de.fhdo.ddmm.service.TechnologyReference#getMicroservice
+     * @model opposite="microservice" containment="true"
      * @generated
      */
-    EList<Import> getTechnologies();
+    EList<TechnologyReference> getTechnologyReferences();
 
     /**
      * Returns the value of the '<em><b>Ttype Definition Technology Import</b></em>' reference.
@@ -548,21 +551,22 @@ public interface Microservice extends EObject {
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
      * *
-     * Get imports of type definition technologies
+     * Get all technology references that point to technology models defining types
      * <!-- end-model-doc -->
      * @model kind="operation" unique="false"
      * @generated
      */
-    EList<Import> getTypeDefinitionTechnologyImports();
+    EList<TechnologyReference> getAllTypeDefinitionTechnologyReferences();
 
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
      * *
-     * Get import of type definition technology. Note that this corresponds to the first technology
-     * import in the list of type definition technology imports and should only be executed if the
-     * model had been validated to refer to one type definition technology at most.
+     * Get import of type definition technology. If no explicit technology reference was marked as
+     * pointing to the default type definition technology, this corresponds to the first technology
+     * import in the list of type definition technology imports. This operation should only be
+     * executed if the model had been validated to refer to one type definition technology at most.
      * <!-- end-model-doc -->
      * @model kind="operation" unique="false"
      * @generated
@@ -574,21 +578,7 @@ public interface Microservice extends EObject {
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
      * *
-     * Get type definition technology models
-     * <!-- end-model-doc -->
-     * @model kind="operation" unique="false"
-     * @generated
-     */
-    EList<Technology> getTypeDefinitionTechnologies();
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * *
-     * Get type definition technology. Note that this corresponds to the first technology model in
-     * the list of type definition technology models and should only be executed if the service
-     * model had been validated to refer to one type definition technology at most.
+     * Get type definition technology
      * <!-- end-model-doc -->
      * @model kind="operation" unique="false"
      * @generated

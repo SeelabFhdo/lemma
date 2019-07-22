@@ -40,6 +40,24 @@ public interface ServiceFactory extends EFactory {
     Import createImport();
 
     /**
+     * Returns a new object of class '<em>Mapped Complex Type</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Mapped Complex Type</em>'.
+     * @generated
+     */
+    MappedComplexType createMappedComplexType();
+
+    /**
+     * Returns a new object of class '<em>Mapped Field</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Mapped Field</em>'.
+     * @generated
+     */
+    MappedField createMappedField();
+
+    /**
      * Returns a new object of class '<em>Microservice</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -47,6 +65,15 @@ public interface ServiceFactory extends EFactory {
      * @generated
      */
     Microservice createMicroservice();
+
+    /**
+     * Returns a new object of class '<em>Technology Reference</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Technology Reference</em>'.
+     * @generated
+     */
+    TechnologyReference createTechnologyReference();
 
     /**
      * Returns a new object of class '<em>Interface</em>'.
@@ -83,24 +110,6 @@ public interface ServiceFactory extends EFactory {
      * @generated
      */
     Parameter createParameter();
-
-    /**
-     * Returns a new object of class '<em>Mapped Complex Type</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Mapped Complex Type</em>'.
-     * @generated
-     */
-    MappedComplexType createMappedComplexType();
-
-    /**
-     * Returns a new object of class '<em>Mapped Field</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Mapped Field</em>'.
-     * @generated
-     */
-    MappedField createMappedField();
 
     /**
      * Returns a new object of class '<em>Possibly Imported Microservice</em>'.

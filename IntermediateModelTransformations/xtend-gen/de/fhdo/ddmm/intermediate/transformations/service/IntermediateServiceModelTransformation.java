@@ -11,6 +11,7 @@ import de.fhdo.ddmm.service.Import;
 import de.fhdo.ddmm.service.Microservice;
 import de.fhdo.ddmm.service.ServiceModel;
 import de.fhdo.ddmm.service.ServicePackage;
+import de.fhdo.ddmm.service.TechnologyReference;
 import de.fhdo.ddmm.service.intermediate.IntermediatePackage;
 import de.fhdo.ddmm.service.intermediate.IntermediateServiceModel;
 import de.fhdo.ddmm.technology.CommunicationType;
@@ -27,6 +28,7 @@ import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Conversions;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
+import org.eclipse.xtext.xbase.lib.ListExtensions;
 import org.eclipse.xtext.xbase.lib.Pair;
 
 /**
@@ -107,7 +109,10 @@ public class IntermediateServiceModelTransformation extends AbstractAtlInputOutp
           microservice.getTypeDefinitionTechnologyImport());
         microservice.setT_typeDefinitionTechnology(microservice.getTypeDefinitionTechnology());
       }
-      final Consumer<Import> _function_1 = (Import technologyImport) -> {
+      final Function1<TechnologyReference, Import> _function_1 = (TechnologyReference it) -> {
+        return it.getTechnology();
+      };
+      final Consumer<Import> _function_2 = (Import technologyImport) -> {
         final Technology technologyModel = DdmmUtils.<Technology>getImportedModelRoot(technologyImport.eResource(), 
           technologyImport.getImportURI(), Technology.class);
         Map<CommunicationType, Pair<Import, Protocol>> _t_defaultProtocols = microservice.getT_defaultProtocols();
@@ -116,7 +121,7 @@ public class IntermediateServiceModelTransformation extends AbstractAtlInputOutp
           microservice.setT_defaultProtocols(
             CollectionLiterals.<CommunicationType, Pair<Import, Protocol>>newHashMap());
         }
-        final Consumer<Protocol> _function_2 = (Protocol it) -> {
+        final Consumer<Protocol> _function_3 = (Protocol it) -> {
           boolean _isDefault = it.isDefault();
           if (_isDefault) {
             Map<CommunicationType, Pair<Import, Protocol>> _t_defaultProtocols_1 = microservice.getT_defaultProtocols();
@@ -125,9 +130,9 @@ public class IntermediateServiceModelTransformation extends AbstractAtlInputOutp
             _t_defaultProtocols_1.putIfAbsent(_communicationType, _mappedTo);
           }
         };
-        technologyModel.getProtocols().forEach(_function_2);
+        technologyModel.getProtocols().forEach(_function_3);
       };
-      microservice.getTechnologies().forEach(_function_1);
+      ListExtensions.<TechnologyReference, Import>map(microservice.getTechnologyReferences(), _function_1).forEach(_function_2);
     };
     microservices.forEach(_function);
   }

@@ -41,6 +41,7 @@ import de.fhdo.ddmm.service.ProtocolSpecification;
 import de.fhdo.ddmm.service.ReferredOperation;
 import de.fhdo.ddmm.service.ServiceModel;
 import de.fhdo.ddmm.service.ServicePackage;
+import de.fhdo.ddmm.service.TechnologyReference;
 import de.fhdo.ddmm.services.ServiceDslGrammarAccess;
 import de.fhdo.ddmm.technology.CompatibilityMatrixEntry;
 import de.fhdo.ddmm.technology.DataFormat;
@@ -198,6 +199,9 @@ public class ServiceDslSemanticSequencer extends TechnologyDslSemanticSequencer 
 				return; 
 			case ServicePackage.SERVICE_MODEL:
 				sequence_ServiceModel(context, (ServiceModel) semanticObject); 
+				return; 
+			case ServicePackage.TECHNOLOGY_REFERENCE:
+				sequence_TechnologyReference(context, (TechnologyReference) semanticObject); 
 				return; 
 			}
 		else if (epackage == TechnologyPackage.eINSTANCE)
@@ -379,7 +383,7 @@ public class ServiceDslSemanticSequencer extends TechnologyDslSemanticSequencer 
 	 *
 	 * Constraint:
 	 *     (
-	 *         technologies+=[Import|ID]* 
+	 *         technologyReferences+=TechnologyReference* 
 	 *         (protocols+=ProtocolSpecification protocols+=ProtocolSpecification?)? 
 	 *         endpoints+=Endpoint* 
 	 *         aspects+=ImportedServiceAspect* 
@@ -534,6 +538,18 @@ public class ServiceDslSemanticSequencer extends TechnologyDslSemanticSequencer 
 	 *     (imports+=Import* microservices+=Microservice+)
 	 */
 	protected void sequence_ServiceModel(ISerializationContext context, ServiceModel semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     TechnologyReference returns TechnologyReference
+	 *
+	 * Constraint:
+	 *     (technology=[Import|ID] isTypeDefinitionTechnology=BOOLEAN?)
+	 */
+	protected void sequence_TechnologyReference(ISerializationContext context, TechnologyReference semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

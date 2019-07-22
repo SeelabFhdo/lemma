@@ -52,6 +52,8 @@ import de.fhdo.ddmm.technology.mapping.ImportedComplexType
 import de.fhdo.ddmm.service.ImportType
 import de.fhdo.ddmm.data.DataModel
 import de.fhdo.ddmm.technology.mapping.ComplexTypeMapping
+import de.fhdo.ddmm.service.TechnologyReference
+import de.fhdo.ddmm.service.ServicePackage
 
 /**
  * This class implements a custom scope provider for the Mapping DSL.
@@ -72,6 +74,9 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
 
             /* Microservice mappings */
             MicroserviceMapping: context.getScope(reference)
+
+            /* Technology references */
+            TechnologyReference: context.getScope(reference)
 
             /* Imported microservices */
             ImportedMicroservice: context.getScope(reference)
@@ -186,6 +191,19 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     }
 
     /**
+     * Build scope for technology references and the given reference
+     */
+    private def getScope(TechnologyReference technologyReference, EReference reference) {
+        switch (reference) {
+            /* Technology */
+            case ServicePackage::Literals.TECHNOLOGY_REFERENCE__TECHNOLOGY:
+                return technologyReference.getScopeForImportsOfType(Technology)
+        }
+
+        return null
+    }
+
+    /**
      * Build scope for interface mappings and the given reference
      */
     private def getScope(InterfaceMapping mapping, EReference reference) {
@@ -291,9 +309,9 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
             return null
 
         return if (parentMapping instanceof ComplexTypeMapping)
-                Scopes::scopeFor(parentMapping.technologies)
+                Scopes::scopeFor(parentMapping.technologyReferences.map[technology])
             else if (parentMapping instanceof MicroserviceMapping)
-                Scopes::scopeFor(parentMapping.technologies)
+                Scopes::scopeFor(parentMapping.technologyReferences.map[technology])
     }
 
     /**
@@ -546,14 +564,14 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
      * Build scope for microservice mapping technology that defines types
      */
     private def getScopeForTypeDefinitionTechnology(EObject context) {
-        val technologies = if (context instanceof MicroserviceMapping)
-                context.technologies
-            else if (context instanceof ComplexTypeMapping)
-                context.technologies
-            else {
-                EcoreUtil2.getContainerOfType(context, MicroserviceMapping)?.technologies
-                    ?: EcoreUtil2.getContainerOfType(context, ComplexTypeMapping)?.technologies
-            }
+        val technologies = switch (context) {
+            ComplexTypeMapping: context.technologyReferences.map[technology]
+            MicroserviceMapping: context.technologyReferences.map[technology]
+            default: EcoreUtil2.getContainerOfType(context, MicroserviceMapping)
+                    ?.technologyReferences.map[technology]
+                ?: EcoreUtil2.getContainerOfType(context, ComplexTypeMapping)
+                    ?.technologyReferences.map[technology]
+        }
 
         if (technologies === null)
             return IScope.NULLSCOPE
@@ -851,7 +869,7 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
          * Complement effective protocols and data formats with the default protocols and data
          * formats of the annotated technologies for missing communication types
          */
-        mapping.technologies.forEach[
+        mapping.technologyReferences.map[technology].forEach[
             val technologyModel = DdmmUtils.getImportedModelRoot(eResource, importURI, Technology)
             missingCommunicationTypes.forEach[communicationType |
                 var Protocol defaultProtocol

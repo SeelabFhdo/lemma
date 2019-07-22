@@ -315,14 +315,21 @@ rule MappedComplexType {
 	from
 		m : Mapping!ComplexTypeMapping
 	do {
-		thisModule.CreateMappedComplexType(m.technologies, m.type.dataModelImport, m.type.type,
-			m.fieldMappings, m.aspects, m.t_sourceModelUri);
+		thisModule.CreateMappedComplexType(
+			m.technologyReferences,
+			m.type.dataModelImport, 
+			m.type.type,
+			m.fieldMappings, 
+			m.aspects,
+			m.t_sourceModelUri
+		);
 	}
 }
 
 --- Generic called rule to create a MappedComplexType instance
-rule CreateMappedComplexType(technologies : Sequence(Service!Import), typeImport : Service!Import,
-	type : Service!ComplexType, fieldMappings : Sequence(Mapping!TechnologySpecificFieldMapping),
+rule CreateMappedComplexType(technologyReferences : Sequence(Service!TechnologyReference), 
+	typeImport : Service!Import, type : Service!ComplexType, 
+	fieldMappings : Sequence(Mapping!TechnologySpecificFieldMapping), 
 	aspects : Sequence(Mapping!TechnologySpecificImportedServiceAspect), sourceModelUri : String) {
 	to
 		t : Service!MappedComplexType(
@@ -331,10 +338,10 @@ rule CreateMappedComplexType(technologies : Sequence(Service!Import), typeImport
 			t_sourceModelUri <- sourceModelUri
 		)
 	do {
-		for (technology in technologies) {
-			if (thisModule.getCreatedImport(technology).oclIsUndefined())
-				thisModule.Import(technology);
-			t.technologies <- t.technologies->append(thisModule.getCreatedImport(technology));
+		for (technologyReference in technologyReferences) {
+			t.technologyReferences <- t.technologyReferences->append(
+				thisModule.TechnologyReference(technologyReference)
+			);
 		}
 
 		for (fieldMapping in fieldMappings) {
@@ -378,10 +385,10 @@ rule Microservice(sourceMicroservice : Service!Microservice,
 		-- In case a mapping was specified for the element, populate all properties with mapped
 		-- elements
 		if (not microserviceMapping.oclIsUndefined()) {
-			for (technology in microserviceMapping.technologies) {
-				if (thisModule.getCreatedImport(technology).oclIsUndefined())
-					thisModule.Import(technology);
-				t.technologies <- t.technologies->append(thisModule.getCreatedImport(technology));
+			for (technologyReference in microserviceMapping.technologyReferences) {
+				t.technologyReferences <- t.technologyReferences->append(
+					thisModule.TechnologyReference(technologyReference)
+				);
 			}
 
 			t.protocols <- thisModule.createProtocolSpecifications(microserviceMapping.protocols);
@@ -392,10 +399,10 @@ rule Microservice(sourceMicroservice : Service!Microservice,
 		-- If no mapping was specified, the rule copies the contents of the source properties to the
 		-- target properties
 		} else {
-			for (technology in sourceMicroservice.technologies) {
-				if (thisModule.getCreatedImport(technology).oclIsUndefined())
-					thisModule.Import(technology);
-				t.technologies <- t.technologies->append(thisModule.getCreatedImport(technology));
+			for (technologyReference in sourceMicroservice.technologyReferences) {
+				t.technologyReferences <- t.technologyReferences->append(
+					thisModule.TechnologyReference(technologyReference)
+				);
 			}
 
 			t.protocols <- thisModule.createProtocolSpecifications(sourceMicroservice.protocols);
@@ -436,6 +443,22 @@ rule Microservice(sourceMicroservice : Service!Microservice,
 		thisModule.CreatedMicroservice(t, importAlias);
 
 		t;
+	}
+}
+
+--- Generic called rule to create a target TechnologyReference from a source TechnologyReference
+--- (copy semantics). This also takes care of creating target Import instances if necessary.
+rule TechnologyReference(sourceReference : Service!TechnologyReference) {
+	to
+		r : Service!TechnologyReference(
+			isTypeDefinitionTechnology <- sourceReference.isTypeDefinitionTechnology
+		)
+	do {
+		if (thisModule.getCreatedImport(sourceReference.technology).oclIsUndefined())
+			thisModule.Import(sourceReference.technology);
+
+		r.technology <- thisModule.getCreatedImport(sourceReference.technology);
+		r;
 	}
 }
 
@@ -662,7 +685,7 @@ rule MappedFieldWithAspects(fieldMapping : Mapping!TechnologySpecificFieldMappin
 			if (thisModule.getCreatedMappedComplexType(sourceType, sourceTypeImport.name)
 					.oclIsUndefined())
 				thisModule.CreateMappedComplexType(
-					parent.operation.interface.microservice.technologies,
+					parent.operation.interface.microservice.technologyReferences,
 					sourceTypeImport,
 					sourceType,
 					Sequence{},

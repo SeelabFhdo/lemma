@@ -5,6 +5,7 @@ package de.fhdo.ddmm.validation;
 
 import com.google.common.base.Function;
 import com.google.common.base.Objects;
+import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.inject.Inject;
 import de.fhdo.ddmm.ServiceDslQualifiedNameProvider;
@@ -28,6 +29,7 @@ import de.fhdo.ddmm.service.ProtocolSpecification;
 import de.fhdo.ddmm.service.ReferredOperation;
 import de.fhdo.ddmm.service.ServiceModel;
 import de.fhdo.ddmm.service.ServicePackage;
+import de.fhdo.ddmm.service.TechnologyReference;
 import de.fhdo.ddmm.service.Visibility;
 import de.fhdo.ddmm.technology.CommunicationType;
 import de.fhdo.ddmm.technology.DataFormat;
@@ -251,15 +253,17 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
    */
   @Check
   public void checkTechnologyUniqueness(final Microservice microservice) {
-    final Function<Import, Import> _function = (Import it) -> {
+    final Function1<TechnologyReference, Import> _function = (TechnologyReference it) -> {
+      return it.getTechnology();
+    };
+    final Function<Import, Import> _function_1 = (Import it) -> {
       return it;
     };
-    final Integer duplicateIndex = DdmmUtils.<Import, Import>getDuplicateIndex(microservice.getTechnologies(), _function);
+    final Integer duplicateIndex = DdmmUtils.<Import, Import>getDuplicateIndex(
+      ListExtensions.<TechnologyReference, Import>map(microservice.getTechnologyReferences(), _function), _function_1);
     if (((duplicateIndex).intValue() > (-1))) {
-      StringConcatenation _builder = new StringConcatenation();
-      _builder.append("Duplicate technology assignment");
-      this.error(_builder.toString(), 
-        ServicePackage.Literals.MICROSERVICE__TECHNOLOGIES, (duplicateIndex).intValue());
+      this.error("Duplicate technology assignment", 
+        ServicePackage.Literals.MICROSERVICE__TECHNOLOGY_REFERENCES, (duplicateIndex).intValue());
     }
   }
   
@@ -268,36 +272,39 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
    */
   @Check
   public void checkUniqueTypeDefinitionTechnology(final Microservice microservice) {
-    String typeDefinitionTechnologyName = null;
-    int _size = microservice.getTechnologies().size();
-    ExclusiveRange _doubleDotLessThan = new ExclusiveRange(0, _size, true);
-    for (final Integer i : _doubleDotLessThan) {
-      {
-        final Import technologyImport = microservice.getTechnologies().get((i).intValue());
-        final Technology technologyModel = DdmmUtils.<Technology>getImportedModelRoot(technologyImport.eResource(), 
-          technologyImport.getImportURI(), Technology.class);
-        if ((((!technologyModel.getPrimitiveTypes().isEmpty()) || 
-          (!technologyModel.getListTypes().isEmpty())) || 
-          (!technologyModel.getDataStructures().isEmpty()))) {
-          if ((typeDefinitionTechnologyName == null)) {
-            typeDefinitionTechnologyName = technologyModel.getName();
-          } else {
-            StringConcatenation _builder = new StringConcatenation();
-            _builder.append("Technology \"");
-            _builder.append(typeDefinitionTechnologyName);
-            _builder.append("\" already defines ");
-            StringConcatenation _builder_1 = new StringConcatenation();
-            _builder_1.append("technology-specific types. Only one technology per microservice may ");
-            String _plus = (_builder.toString() + _builder_1);
-            StringConcatenation _builder_2 = new StringConcatenation();
-            _builder_2.append("define technology-specific types.");
-            String _plus_1 = (_plus + _builder_2);
-            this.error(_plus_1, 
-              ServicePackage.Literals.MICROSERVICE__TECHNOLOGIES, (i).intValue());
-          }
-        }
-      }
+    final Function1<TechnologyReference, Boolean> _function = (TechnologyReference it) -> {
+      return Boolean.valueOf(it.isIsTypeDefinitionTechnology());
+    };
+    final Function<Boolean, Boolean> _function_1 = (Boolean it) -> {
+      return it;
+    };
+    final Predicate<Boolean> _function_2 = (Boolean it) -> {
+      return (it == Boolean.valueOf(true));
+    };
+    final Integer duplicateIndex = DdmmUtils.<Boolean, Boolean>getDuplicateIndex(
+      ListExtensions.<TechnologyReference, Boolean>map(microservice.getTechnologyReferences(), _function), _function_1, _function_2);
+    if (((duplicateIndex).intValue() > (-1))) {
+      this.error("Only one technology can be the default type definition technology", 
+        ServicePackage.Literals.MICROSERVICE__TECHNOLOGY_REFERENCES, (duplicateIndex).intValue());
+      return;
     }
+    final Function1<TechnologyReference, Boolean> _function_3 = (TechnologyReference it) -> {
+      return Boolean.valueOf(it.isIsTypeDefinitionTechnology());
+    };
+    boolean _exists = IterableExtensions.<TechnologyReference>exists(microservice.getTechnologyReferences(), _function_3);
+    if (_exists) {
+      return;
+    }
+    final EList<TechnologyReference> typeDefinitionTechnologyReference = microservice.getAllTypeDefinitionTechnologyReferences();
+    if ((typeDefinitionTechnologyReference.isEmpty() || (typeDefinitionTechnologyReference.size() == 1))) {
+      return;
+    }
+    final Consumer<TechnologyReference> _function_4 = (TechnologyReference it) -> {
+      this.error(("More than one type definition technology detected. You need to explicitly " + 
+        "select one as the default type definition technology."), it, 
+        ServicePackage.Literals.TECHNOLOGY_REFERENCE__TECHNOLOGY);
+    };
+    typeDefinitionTechnologyReference.forEach(_function_4);
   }
   
   /**
@@ -305,18 +312,18 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
    */
   @Check
   public void checkTechnologiesForServiceConcepts(final Microservice microservice) {
-    int _size = microservice.getTechnologies().size();
+    int _size = microservice.getTechnologyReferences().size();
     ExclusiveRange _doubleDotLessThan = new ExclusiveRange(0, _size, true);
     for (final Integer i : _doubleDotLessThan) {
       {
-        final Import technologyImport = microservice.getTechnologies().get((i).intValue());
+        final Import technologyImport = microservice.getTechnologyReferences().get((i).intValue()).getTechnology();
         final Technology technologyModel = DdmmUtils.<Technology>getImportedModelRoot(technologyImport.eResource(), 
           technologyImport.getImportURI(), Technology.class);
         if (((technologyModel.getPrimitiveTypes().isEmpty() && 
           technologyModel.getProtocols().isEmpty()) && 
           technologyModel.getServiceAspects().isEmpty())) {
           this.error("Technology does not specify service-related concepts", 
-            ServicePackage.Literals.MICROSERVICE__TECHNOLOGIES, (i).intValue());
+            ServicePackage.Literals.MICROSERVICE__TECHNOLOGY_REFERENCES, (i).intValue());
         }
       }
     }
@@ -327,7 +334,7 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
    */
   @Check
   public void checkTechnologiesForUniqueDefaultProtocols(final Microservice microservice) {
-    boolean _isEmpty = microservice.getTechnologies().isEmpty();
+    boolean _isEmpty = microservice.getTechnologyReferences().isEmpty();
     if (_isEmpty) {
       return;
     }
@@ -383,15 +390,18 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
    */
   private boolean isDefaultProtocolUnique(final Microservice microservice, final CommunicationType communicationType) {
     boolean alreadyFoundDefaultProtocolForCommunicationType = false;
-    EList<Import> _technologies = microservice.getTechnologies();
-    for (final Import technologyImport : _technologies) {
+    final Function1<TechnologyReference, Import> _function = (TechnologyReference it) -> {
+      return it.getTechnology();
+    };
+    List<Import> _map = ListExtensions.<TechnologyReference, Import>map(microservice.getTechnologyReferences(), _function);
+    for (final Import technologyImport : _map) {
       {
         final Technology technologyModel = DdmmUtils.<Technology>getImportedModelRoot(technologyImport.eResource(), 
           technologyImport.getImportURI(), Technology.class);
-        final Function1<Protocol, Boolean> _function = (Protocol it) -> {
+        final Function1<Protocol, Boolean> _function_1 = (Protocol it) -> {
           return Boolean.valueOf((it.isDefault() && (it.getCommunicationType() == communicationType)));
         };
-        final boolean hasDefaultProtocolForCommunicationType = IterableExtensions.<Protocol>exists(technologyModel.getProtocols(), _function);
+        final boolean hasDefaultProtocolForCommunicationType = IterableExtensions.<Protocol>exists(technologyModel.getProtocols(), _function_1);
         if (hasDefaultProtocolForCommunicationType) {
           if (alreadyFoundDefaultProtocolForCommunicationType) {
             return false;
@@ -402,6 +412,28 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
       }
     }
     return true;
+  }
+  
+  /**
+   * Check that default type definition technology can be marked as such
+   */
+  @Check
+  public void checkDefaultTypeDefinitionTechnology(final TechnologyReference technologyReference) {
+    boolean _isIsTypeDefinitionTechnology = technologyReference.isIsTypeDefinitionTechnology();
+    boolean _not = (!_isIsTypeDefinitionTechnology);
+    if (_not) {
+      return;
+    }
+    final Import importImport = technologyReference.getTechnology();
+    final Technology technologyModel = DdmmUtils.<Technology>getImportedModelRoot(importImport.eResource(), 
+      importImport.getImportURI(), Technology.class);
+    final boolean technologyDefinesTypes = (((!technologyModel.getPrimitiveTypes().isEmpty()) || 
+      (!technologyModel.getListTypes().isEmpty())) || (!technologyModel.getDataStructures().isEmpty()));
+    if ((!technologyDefinesTypes)) {
+      this.error(("Technology does not specify types and cannot be marked as default type " + 
+        "definition technology"), 
+        ServicePackage.Literals.TECHNOLOGY_REFERENCE__IS_TYPE_DEFINITION_TECHNOLOGY);
+    }
   }
   
   /**

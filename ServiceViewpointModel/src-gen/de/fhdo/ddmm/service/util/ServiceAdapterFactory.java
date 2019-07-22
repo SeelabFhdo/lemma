@@ -76,8 +76,20 @@ public class ServiceAdapterFactory extends AdapterFactoryImpl {
                 return createImportAdapter();
             }
             @Override
+            public Adapter caseMappedComplexType(MappedComplexType object) {
+                return createMappedComplexTypeAdapter();
+            }
+            @Override
+            public Adapter caseMappedField(MappedField object) {
+                return createMappedFieldAdapter();
+            }
+            @Override
             public Adapter caseMicroservice(Microservice object) {
                 return createMicroserviceAdapter();
+            }
+            @Override
+            public Adapter caseTechnologyReference(TechnologyReference object) {
+                return createTechnologyReferenceAdapter();
             }
             @Override
             public Adapter caseInterface(Interface object) {
@@ -94,14 +106,6 @@ public class ServiceAdapterFactory extends AdapterFactoryImpl {
             @Override
             public Adapter caseParameter(Parameter object) {
                 return createParameterAdapter();
-            }
-            @Override
-            public Adapter caseMappedComplexType(MappedComplexType object) {
-                return createMappedComplexTypeAdapter();
-            }
-            @Override
-            public Adapter caseMappedField(MappedField object) {
-                return createMappedFieldAdapter();
             }
             @Override
             public Adapter casePossiblyImportedMicroservice(PossiblyImportedMicroservice object) {
@@ -184,6 +188,34 @@ public class ServiceAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
+     * Creates a new adapter for an object of class '{@link de.fhdo.ddmm.service.MappedComplexType <em>Mapped Complex Type</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.fhdo.ddmm.service.MappedComplexType
+     * @generated
+     */
+    public Adapter createMappedComplexTypeAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.fhdo.ddmm.service.MappedField <em>Mapped Field</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.fhdo.ddmm.service.MappedField
+     * @generated
+     */
+    public Adapter createMappedFieldAdapter() {
+        return null;
+    }
+
+    /**
      * Creates a new adapter for an object of class '{@link de.fhdo.ddmm.service.Microservice <em>Microservice</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
@@ -194,6 +226,20 @@ public class ServiceAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createMicroserviceAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.fhdo.ddmm.service.TechnologyReference <em>Technology Reference</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.fhdo.ddmm.service.TechnologyReference
+     * @generated
+     */
+    public Adapter createTechnologyReferenceAdapter() {
         return null;
     }
 
@@ -250,34 +296,6 @@ public class ServiceAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createParameterAdapter() {
-        return null;
-    }
-
-    /**
-     * Creates a new adapter for an object of class '{@link de.fhdo.ddmm.service.MappedComplexType <em>Mapped Complex Type</em>}'.
-     * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see de.fhdo.ddmm.service.MappedComplexType
-     * @generated
-     */
-    public Adapter createMappedComplexTypeAdapter() {
-        return null;
-    }
-
-    /**
-     * Creates a new adapter for an object of class '{@link de.fhdo.ddmm.service.MappedField <em>Mapped Field</em>}'.
-     * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see de.fhdo.ddmm.service.MappedField
-     * @generated
-     */
-    public Adapter createMappedFieldAdapter() {
         return null;
     }
 

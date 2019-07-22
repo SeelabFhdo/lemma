@@ -216,6 +216,260 @@ public interface ServicePackage extends EPackage {
     int IMPORT_OPERATION_COUNT = 0;
 
     /**
+     * The meta object id for the '{@link de.fhdo.ddmm.service.impl.MappedComplexTypeImpl <em>Mapped Complex Type</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.fhdo.ddmm.service.impl.MappedComplexTypeImpl
+     * @see de.fhdo.ddmm.service.impl.ServicePackageImpl#getMappedComplexType()
+     * @generated
+     */
+    int MAPPED_COMPLEX_TYPE = 2;
+
+    /**
+     * The feature id for the '<em><b>Tsource Model Uri</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MAPPED_COMPLEX_TYPE__TSOURCE_MODEL_URI = 0;
+
+    /**
+     * The feature id for the '<em><b>Technology References</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MAPPED_COMPLEX_TYPE__TECHNOLOGY_REFERENCES = 1;
+
+    /**
+     * The feature id for the '<em><b>Type</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MAPPED_COMPLEX_TYPE__TYPE = 2;
+
+    /**
+     * The feature id for the '<em><b>Mapped Fields</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MAPPED_COMPLEX_TYPE__MAPPED_FIELDS = 3;
+
+    /**
+     * The feature id for the '<em><b>Aspects</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MAPPED_COMPLEX_TYPE__ASPECTS = 4;
+
+    /**
+     * The feature id for the '<em><b>Service Model</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MAPPED_COMPLEX_TYPE__SERVICE_MODEL = 5;
+
+    /**
+     * The number of structural features of the '<em>Mapped Complex Type</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MAPPED_COMPLEX_TYPE_FEATURE_COUNT = 6;
+
+    /**
+     * The operation id for the '<em>Get Qualified Name Parts</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MAPPED_COMPLEX_TYPE___GET_QUALIFIED_NAME_PARTS__BOOLEAN = 0;
+
+    /**
+     * The operation id for the '<em>Build Qualified Name</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MAPPED_COMPLEX_TYPE___BUILD_QUALIFIED_NAME__STRING_BOOLEAN = 1;
+
+    /**
+     * The operation id for the '<em>Get All Type Definition Technology References</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MAPPED_COMPLEX_TYPE___GET_ALL_TYPE_DEFINITION_TECHNOLOGY_REFERENCES = 2;
+
+    /**
+     * The operation id for the '<em>Get Type Definition Technology Import</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MAPPED_COMPLEX_TYPE___GET_TYPE_DEFINITION_TECHNOLOGY_IMPORT = 3;
+
+    /**
+     * The operation id for the '<em>Get Type Definition Technology</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MAPPED_COMPLEX_TYPE___GET_TYPE_DEFINITION_TECHNOLOGY = 4;
+
+    /**
+     * The number of operations of the '<em>Mapped Complex Type</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MAPPED_COMPLEX_TYPE_OPERATION_COUNT = 5;
+
+    /**
+     * The meta object id for the '{@link de.fhdo.ddmm.service.impl.MappedFieldImpl <em>Mapped Field</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.fhdo.ddmm.service.impl.MappedFieldImpl
+     * @see de.fhdo.ddmm.service.impl.ServicePackageImpl#getMappedField()
+     * @generated
+     */
+    int MAPPED_FIELD = 3;
+
+    /**
+     * The feature id for the '<em><b>Ttype Definition Technology Name</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MAPPED_FIELD__TTYPE_DEFINITION_TECHNOLOGY_NAME = 0;
+
+    /**
+     * The feature id for the '<em><b>Data Field</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MAPPED_FIELD__DATA_FIELD = 1;
+
+    /**
+     * The feature id for the '<em><b>Enumeration Field</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MAPPED_FIELD__ENUMERATION_FIELD = 2;
+
+    /**
+     * The feature id for the '<em><b>Mapped Type</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MAPPED_FIELD__MAPPED_TYPE = 3;
+
+    /**
+     * The feature id for the '<em><b>Aspects</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MAPPED_FIELD__ASPECTS = 4;
+
+    /**
+     * The feature id for the '<em><b>Parameter</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MAPPED_FIELD__PARAMETER = 5;
+
+    /**
+     * The feature id for the '<em><b>Mapped Complex Type</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MAPPED_FIELD__MAPPED_COMPLEX_TYPE = 6;
+
+    /**
+     * The feature id for the '<em><b>Name</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MAPPED_FIELD__NAME = 7;
+
+    /**
+     * The number of structural features of the '<em>Mapped Field</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MAPPED_FIELD_FEATURE_COUNT = 8;
+
+    /**
+     * The operation id for the '<em>Get Qualified Name Parts</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MAPPED_FIELD___GET_QUALIFIED_NAME_PARTS__BOOLEAN = 0;
+
+    /**
+     * The operation id for the '<em>Build Qualified Name</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MAPPED_FIELD___BUILD_QUALIFIED_NAME__STRING_BOOLEAN = 1;
+
+    /**
+     * The operation id for the '<em>Get Effective Type</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MAPPED_FIELD___GET_EFFECTIVE_TYPE = 2;
+
+    /**
+     * The number of operations of the '<em>Mapped Field</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MAPPED_FIELD_OPERATION_COUNT = 3;
+
+    /**
      * The meta object id for the '{@link de.fhdo.ddmm.service.impl.MicroserviceImpl <em>Microservice</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -223,7 +477,7 @@ public interface ServicePackage extends EPackage {
      * @see de.fhdo.ddmm.service.impl.ServicePackageImpl#getMicroservice()
      * @generated
      */
-    int MICROSERVICE = 2;
+    int MICROSERVICE = 4;
 
     /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -280,13 +534,13 @@ public interface ServicePackage extends EPackage {
     int MICROSERVICE__TSOURCE_MODEL_URI = 5;
 
     /**
-     * The feature id for the '<em><b>Technologies</b></em>' reference list.
+     * The feature id for the '<em><b>Technology References</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int MICROSERVICE__TECHNOLOGIES = 6;
+    int MICROSERVICE__TECHNOLOGY_REFERENCES = 6;
 
     /**
      * The feature id for the '<em><b>Ttype Definition Technology Import</b></em>' reference.
@@ -433,13 +687,13 @@ public interface ServicePackage extends EPackage {
     int MICROSERVICE___TEFFECTIVE_PROTOCOL_SPECIFICATIONS = 1;
 
     /**
-     * The operation id for the '<em>Get Type Definition Technology Imports</em>' operation.
+     * The operation id for the '<em>Get All Type Definition Technology References</em>' operation.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int MICROSERVICE___GET_TYPE_DEFINITION_TECHNOLOGY_IMPORTS = 2;
+    int MICROSERVICE___GET_ALL_TYPE_DEFINITION_TECHNOLOGY_REFERENCES = 2;
 
     /**
      * The operation id for the '<em>Get Type Definition Technology Import</em>' operation.
@@ -451,22 +705,13 @@ public interface ServicePackage extends EPackage {
     int MICROSERVICE___GET_TYPE_DEFINITION_TECHNOLOGY_IMPORT = 3;
 
     /**
-     * The operation id for the '<em>Get Type Definition Technologies</em>' operation.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int MICROSERVICE___GET_TYPE_DEFINITION_TECHNOLOGIES = 4;
-
-    /**
      * The operation id for the '<em>Get Type Definition Technology</em>' operation.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int MICROSERVICE___GET_TYPE_DEFINITION_TECHNOLOGY = 5;
+    int MICROSERVICE___GET_TYPE_DEFINITION_TECHNOLOGY = 4;
 
     /**
      * The operation id for the '<em>Get Qualified Name Parts</em>' operation.
@@ -475,7 +720,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MICROSERVICE___GET_QUALIFIED_NAME_PARTS = 6;
+    int MICROSERVICE___GET_QUALIFIED_NAME_PARTS = 5;
 
     /**
      * The operation id for the '<em>Build Qualified Name</em>' operation.
@@ -484,7 +729,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MICROSERVICE___BUILD_QUALIFIED_NAME__STRING = 7;
+    int MICROSERVICE___BUILD_QUALIFIED_NAME__STRING = 6;
 
     /**
      * The operation id for the '<em>Get Contained Operations</em>' operation.
@@ -493,7 +738,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MICROSERVICE___GET_CONTAINED_OPERATIONS = 8;
+    int MICROSERVICE___GET_CONTAINED_OPERATIONS = 7;
 
     /**
      * The operation id for the '<em>Get Contained Referred Operations</em>' operation.
@@ -502,7 +747,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MICROSERVICE___GET_CONTAINED_REFERRED_OPERATIONS = 9;
+    int MICROSERVICE___GET_CONTAINED_REFERRED_OPERATIONS = 8;
 
     /**
      * The operation id for the '<em>Get Required Imports</em>' operation.
@@ -511,7 +756,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MICROSERVICE___GET_REQUIRED_IMPORTS = 10;
+    int MICROSERVICE___GET_REQUIRED_IMPORTS = 9;
 
     /**
      * The operation id for the '<em>Get All Required Operations</em>' operation.
@@ -520,7 +765,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MICROSERVICE___GET_ALL_REQUIRED_OPERATIONS__IMPORT = 11;
+    int MICROSERVICE___GET_ALL_REQUIRED_OPERATIONS__IMPORT = 10;
 
     /**
      * The operation id for the '<em>Get All Required Microservices</em>' operation.
@@ -529,7 +774,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MICROSERVICE___GET_ALL_REQUIRED_MICROSERVICES = 12;
+    int MICROSERVICE___GET_ALL_REQUIRED_MICROSERVICES = 11;
 
     /**
      * The operation id for the '<em>Get All Initializing Microservices</em>' operation.
@@ -538,7 +783,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MICROSERVICE___GET_ALL_INITIALIZING_MICROSERVICES = 13;
+    int MICROSERVICE___GET_ALL_INITIALIZING_MICROSERVICES = 12;
 
     /**
      * The operation id for the '<em>Can Require</em>' operation.
@@ -547,7 +792,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MICROSERVICE___CAN_REQUIRE__MICROSERVICE_BOOLEAN = 14;
+    int MICROSERVICE___CAN_REQUIRE__MICROSERVICE_BOOLEAN = 13;
 
     /**
      * The operation id for the '<em>Can Require</em>' operation.
@@ -556,7 +801,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MICROSERVICE___CAN_REQUIRE__INTERFACE_BOOLEAN = 15;
+    int MICROSERVICE___CAN_REQUIRE__INTERFACE_BOOLEAN = 14;
 
     /**
      * The operation id for the '<em>Can Require</em>' operation.
@@ -565,7 +810,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MICROSERVICE___CAN_REQUIRE__OPERATION_BOOLEAN = 16;
+    int MICROSERVICE___CAN_REQUIRE__OPERATION_BOOLEAN = 15;
 
     /**
      * The number of operations of the '<em>Microservice</em>' class.
@@ -574,7 +819,71 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MICROSERVICE_OPERATION_COUNT = 17;
+    int MICROSERVICE_OPERATION_COUNT = 16;
+
+    /**
+     * The meta object id for the '{@link de.fhdo.ddmm.service.impl.TechnologyReferenceImpl <em>Technology Reference</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.fhdo.ddmm.service.impl.TechnologyReferenceImpl
+     * @see de.fhdo.ddmm.service.impl.ServicePackageImpl#getTechnologyReference()
+     * @generated
+     */
+    int TECHNOLOGY_REFERENCE = 5;
+
+    /**
+     * The feature id for the '<em><b>Is Type Definition Technology</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TECHNOLOGY_REFERENCE__IS_TYPE_DEFINITION_TECHNOLOGY = 0;
+
+    /**
+     * The feature id for the '<em><b>Technology</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TECHNOLOGY_REFERENCE__TECHNOLOGY = 1;
+
+    /**
+     * The feature id for the '<em><b>Microservice</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TECHNOLOGY_REFERENCE__MICROSERVICE = 2;
+
+    /**
+     * The feature id for the '<em><b>Mapped Complex Type</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TECHNOLOGY_REFERENCE__MAPPED_COMPLEX_TYPE = 3;
+
+    /**
+     * The number of structural features of the '<em>Technology Reference</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TECHNOLOGY_REFERENCE_FEATURE_COUNT = 4;
+
+    /**
+     * The number of operations of the '<em>Technology Reference</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TECHNOLOGY_REFERENCE_OPERATION_COUNT = 0;
 
     /**
      * The meta object id for the '{@link de.fhdo.ddmm.service.impl.InterfaceImpl <em>Interface</em>}' class.
@@ -584,7 +893,7 @@ public interface ServicePackage extends EPackage {
      * @see de.fhdo.ddmm.service.impl.ServicePackageImpl#getInterface()
      * @generated
      */
-    int INTERFACE = 3;
+    int INTERFACE = 6;
 
     /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -756,7 +1065,7 @@ public interface ServicePackage extends EPackage {
      * @see de.fhdo.ddmm.service.impl.ServicePackageImpl#getOperation()
      * @generated
      */
-    int OPERATION = 4;
+    int OPERATION = 7;
 
     /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -928,7 +1237,7 @@ public interface ServicePackage extends EPackage {
      * @see de.fhdo.ddmm.service.impl.ServicePackageImpl#getReferredOperation()
      * @generated
      */
-    int REFERRED_OPERATION = 5;
+    int REFERRED_OPERATION = 8;
 
     /**
      * The feature id for the '<em><b>Operation</b></em>' reference.
@@ -1037,7 +1346,7 @@ public interface ServicePackage extends EPackage {
      * @see de.fhdo.ddmm.service.impl.ServicePackageImpl#getParameter()
      * @generated
      */
-    int PARAMETER = 6;
+    int PARAMETER = 9;
 
     /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1211,233 +1520,6 @@ public interface ServicePackage extends EPackage {
     int PARAMETER_OPERATION_COUNT = 6;
 
     /**
-     * The meta object id for the '{@link de.fhdo.ddmm.service.impl.MappedComplexTypeImpl <em>Mapped Complex Type</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.fhdo.ddmm.service.impl.MappedComplexTypeImpl
-     * @see de.fhdo.ddmm.service.impl.ServicePackageImpl#getMappedComplexType()
-     * @generated
-     */
-    int MAPPED_COMPLEX_TYPE = 7;
-
-    /**
-     * The feature id for the '<em><b>Tsource Model Uri</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int MAPPED_COMPLEX_TYPE__TSOURCE_MODEL_URI = 0;
-
-    /**
-     * The feature id for the '<em><b>Technologies</b></em>' reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int MAPPED_COMPLEX_TYPE__TECHNOLOGIES = 1;
-
-    /**
-     * The feature id for the '<em><b>Type</b></em>' containment reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int MAPPED_COMPLEX_TYPE__TYPE = 2;
-
-    /**
-     * The feature id for the '<em><b>Mapped Fields</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int MAPPED_COMPLEX_TYPE__MAPPED_FIELDS = 3;
-
-    /**
-     * The feature id for the '<em><b>Aspects</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int MAPPED_COMPLEX_TYPE__ASPECTS = 4;
-
-    /**
-     * The feature id for the '<em><b>Service Model</b></em>' container reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int MAPPED_COMPLEX_TYPE__SERVICE_MODEL = 5;
-
-    /**
-     * The number of structural features of the '<em>Mapped Complex Type</em>' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int MAPPED_COMPLEX_TYPE_FEATURE_COUNT = 6;
-
-    /**
-     * The operation id for the '<em>Get Qualified Name Parts</em>' operation.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int MAPPED_COMPLEX_TYPE___GET_QUALIFIED_NAME_PARTS__BOOLEAN = 0;
-
-    /**
-     * The operation id for the '<em>Build Qualified Name</em>' operation.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int MAPPED_COMPLEX_TYPE___BUILD_QUALIFIED_NAME__STRING_BOOLEAN = 1;
-
-    /**
-     * The number of operations of the '<em>Mapped Complex Type</em>' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int MAPPED_COMPLEX_TYPE_OPERATION_COUNT = 2;
-
-    /**
-     * The meta object id for the '{@link de.fhdo.ddmm.service.impl.MappedFieldImpl <em>Mapped Field</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.fhdo.ddmm.service.impl.MappedFieldImpl
-     * @see de.fhdo.ddmm.service.impl.ServicePackageImpl#getMappedField()
-     * @generated
-     */
-    int MAPPED_FIELD = 8;
-
-    /**
-     * The feature id for the '<em><b>Ttype Definition Technology Name</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int MAPPED_FIELD__TTYPE_DEFINITION_TECHNOLOGY_NAME = 0;
-
-    /**
-     * The feature id for the '<em><b>Data Field</b></em>' reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int MAPPED_FIELD__DATA_FIELD = 1;
-
-    /**
-     * The feature id for the '<em><b>Enumeration Field</b></em>' reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int MAPPED_FIELD__ENUMERATION_FIELD = 2;
-
-    /**
-     * The feature id for the '<em><b>Mapped Type</b></em>' containment reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int MAPPED_FIELD__MAPPED_TYPE = 3;
-
-    /**
-     * The feature id for the '<em><b>Aspects</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int MAPPED_FIELD__ASPECTS = 4;
-
-    /**
-     * The feature id for the '<em><b>Parameter</b></em>' container reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int MAPPED_FIELD__PARAMETER = 5;
-
-    /**
-     * The feature id for the '<em><b>Mapped Complex Type</b></em>' container reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int MAPPED_FIELD__MAPPED_COMPLEX_TYPE = 6;
-
-    /**
-     * The feature id for the '<em><b>Name</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int MAPPED_FIELD__NAME = 7;
-
-    /**
-     * The number of structural features of the '<em>Mapped Field</em>' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int MAPPED_FIELD_FEATURE_COUNT = 8;
-
-    /**
-     * The operation id for the '<em>Get Qualified Name Parts</em>' operation.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int MAPPED_FIELD___GET_QUALIFIED_NAME_PARTS__BOOLEAN = 0;
-
-    /**
-     * The operation id for the '<em>Build Qualified Name</em>' operation.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int MAPPED_FIELD___BUILD_QUALIFIED_NAME__STRING_BOOLEAN = 1;
-
-    /**
-     * The operation id for the '<em>Get Effective Type</em>' operation.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int MAPPED_FIELD___GET_EFFECTIVE_TYPE = 2;
-
-    /**
-     * The number of operations of the '<em>Mapped Field</em>' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int MAPPED_FIELD_OPERATION_COUNT = 3;
-
-    /**
      * The meta object id for the '{@link de.fhdo.ddmm.service.impl.PossiblyImportedMicroserviceImpl <em>Possibly Imported Microservice</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1445,7 +1527,7 @@ public interface ServicePackage extends EPackage {
      * @see de.fhdo.ddmm.service.impl.ServicePackageImpl#getPossiblyImportedMicroservice()
      * @generated
      */
-    int POSSIBLY_IMPORTED_MICROSERVICE = 9;
+    int POSSIBLY_IMPORTED_MICROSERVICE = 10;
 
     /**
      * The feature id for the '<em><b>Import</b></em>' reference.
@@ -1500,7 +1582,7 @@ public interface ServicePackage extends EPackage {
      * @see de.fhdo.ddmm.service.impl.ServicePackageImpl#getPossiblyImportedInterface()
      * @generated
      */
-    int POSSIBLY_IMPORTED_INTERFACE = 10;
+    int POSSIBLY_IMPORTED_INTERFACE = 11;
 
     /**
      * The feature id for the '<em><b>Import</b></em>' reference.
@@ -1573,7 +1655,7 @@ public interface ServicePackage extends EPackage {
      * @see de.fhdo.ddmm.service.impl.ServicePackageImpl#getPossiblyImportedOperation()
      * @generated
      */
-    int POSSIBLY_IMPORTED_OPERATION = 11;
+    int POSSIBLY_IMPORTED_OPERATION = 12;
 
     /**
      * The feature id for the '<em><b>Import</b></em>' reference.
@@ -1673,7 +1755,7 @@ public interface ServicePackage extends EPackage {
      * @see de.fhdo.ddmm.service.impl.ServicePackageImpl#getImportedType()
      * @generated
      */
-    int IMPORTED_TYPE = 12;
+    int IMPORTED_TYPE = 13;
 
     /**
      * The feature id for the '<em><b>Import</b></em>' reference.
@@ -1719,7 +1801,7 @@ public interface ServicePackage extends EPackage {
      * @see de.fhdo.ddmm.service.impl.ServicePackageImpl#getImportedProtocolAndDataFormat()
      * @generated
      */
-    int IMPORTED_PROTOCOL_AND_DATA_FORMAT = 13;
+    int IMPORTED_PROTOCOL_AND_DATA_FORMAT = 14;
 
     /**
      * The feature id for the '<em><b>Import</b></em>' reference.
@@ -1792,7 +1874,7 @@ public interface ServicePackage extends EPackage {
      * @see de.fhdo.ddmm.service.impl.ServicePackageImpl#getProtocolSpecification()
      * @generated
      */
-    int PROTOCOL_SPECIFICATION = 14;
+    int PROTOCOL_SPECIFICATION = 15;
 
     /**
      * The feature id for the '<em><b>Communication Type</b></em>' attribute.
@@ -1847,7 +1929,7 @@ public interface ServicePackage extends EPackage {
      * @see de.fhdo.ddmm.service.impl.ServicePackageImpl#getEndpoint()
      * @generated
      */
-    int ENDPOINT = 15;
+    int ENDPOINT = 16;
 
     /**
      * The feature id for the '<em><b>Addresses</b></em>' attribute list.
@@ -1929,7 +2011,7 @@ public interface ServicePackage extends EPackage {
      * @see de.fhdo.ddmm.service.impl.ServicePackageImpl#getImportedServiceAspect()
      * @generated
      */
-    int IMPORTED_SERVICE_ASPECT = 16;
+    int IMPORTED_SERVICE_ASPECT = 17;
 
     /**
      * The feature id for the '<em><b>Import</b></em>' reference.
@@ -2056,7 +2138,7 @@ public interface ServicePackage extends EPackage {
      * @see de.fhdo.ddmm.service.impl.ServicePackageImpl#getImportType()
      * @generated
      */
-    int IMPORT_TYPE = 17;
+    int IMPORT_TYPE = 18;
 
     /**
      * The meta object id for the '{@link de.fhdo.ddmm.service.MicroserviceType <em>Microservice Type</em>}' enum.
@@ -2066,7 +2148,7 @@ public interface ServicePackage extends EPackage {
      * @see de.fhdo.ddmm.service.impl.ServicePackageImpl#getMicroserviceType()
      * @generated
      */
-    int MICROSERVICE_TYPE = 18;
+    int MICROSERVICE_TYPE = 19;
 
     /**
      * The meta object id for the '{@link de.fhdo.ddmm.service.Visibility <em>Visibility</em>}' enum.
@@ -2076,7 +2158,7 @@ public interface ServicePackage extends EPackage {
      * @see de.fhdo.ddmm.service.impl.ServicePackageImpl#getVisibility()
      * @generated
      */
-    int VISIBILITY = 19;
+    int VISIBILITY = 20;
 
     /**
      * The meta object id for the '<em>Tuple List</em>' data type.
@@ -2086,7 +2168,7 @@ public interface ServicePackage extends EPackage {
      * @see de.fhdo.ddmm.service.impl.ServicePackageImpl#getTupleList()
      * @generated
      */
-    int TUPLE_LIST = 20;
+    int TUPLE_LIST = 21;
 
     /**
      * The meta object id for the '<em>Microservice Import Map</em>' data type.
@@ -2096,7 +2178,7 @@ public interface ServicePackage extends EPackage {
      * @see de.fhdo.ddmm.service.impl.ServicePackageImpl#getMicroserviceImportMap()
      * @generated
      */
-    int MICROSERVICE_IMPORT_MAP = 21;
+    int MICROSERVICE_IMPORT_MAP = 22;
 
     /**
      * The meta object id for the '<em>Default Protocols</em>' data type.
@@ -2106,7 +2188,7 @@ public interface ServicePackage extends EPackage {
      * @see de.fhdo.ddmm.service.impl.ServicePackageImpl#getDefaultProtocols()
      * @generated
      */
-    int DEFAULT_PROTOCOLS = 22;
+    int DEFAULT_PROTOCOLS = 23;
 
 
     /**
@@ -2248,6 +2330,260 @@ public interface ServicePackage extends EPackage {
     EReference getImport_ServiceModel();
 
     /**
+     * Returns the meta object for class '{@link de.fhdo.ddmm.service.MappedComplexType <em>Mapped Complex Type</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Mapped Complex Type</em>'.
+     * @see de.fhdo.ddmm.service.MappedComplexType
+     * @generated
+     */
+    EClass getMappedComplexType();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.fhdo.ddmm.service.MappedComplexType#getT_sourceModelUri <em>Tsource Model Uri</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Tsource Model Uri</em>'.
+     * @see de.fhdo.ddmm.service.MappedComplexType#getT_sourceModelUri()
+     * @see #getMappedComplexType()
+     * @generated
+     */
+    EAttribute getMappedComplexType_T_sourceModelUri();
+
+    /**
+     * Returns the meta object for the containment reference list '{@link de.fhdo.ddmm.service.MappedComplexType#getTechnologyReferences <em>Technology References</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Technology References</em>'.
+     * @see de.fhdo.ddmm.service.MappedComplexType#getTechnologyReferences()
+     * @see #getMappedComplexType()
+     * @generated
+     */
+    EReference getMappedComplexType_TechnologyReferences();
+
+    /**
+     * Returns the meta object for the containment reference '{@link de.fhdo.ddmm.service.MappedComplexType#getType <em>Type</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference '<em>Type</em>'.
+     * @see de.fhdo.ddmm.service.MappedComplexType#getType()
+     * @see #getMappedComplexType()
+     * @generated
+     */
+    EReference getMappedComplexType_Type();
+
+    /**
+     * Returns the meta object for the containment reference list '{@link de.fhdo.ddmm.service.MappedComplexType#getMappedFields <em>Mapped Fields</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Mapped Fields</em>'.
+     * @see de.fhdo.ddmm.service.MappedComplexType#getMappedFields()
+     * @see #getMappedComplexType()
+     * @generated
+     */
+    EReference getMappedComplexType_MappedFields();
+
+    /**
+     * Returns the meta object for the containment reference list '{@link de.fhdo.ddmm.service.MappedComplexType#getAspects <em>Aspects</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Aspects</em>'.
+     * @see de.fhdo.ddmm.service.MappedComplexType#getAspects()
+     * @see #getMappedComplexType()
+     * @generated
+     */
+    EReference getMappedComplexType_Aspects();
+
+    /**
+     * Returns the meta object for the container reference '{@link de.fhdo.ddmm.service.MappedComplexType#getServiceModel <em>Service Model</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the container reference '<em>Service Model</em>'.
+     * @see de.fhdo.ddmm.service.MappedComplexType#getServiceModel()
+     * @see #getMappedComplexType()
+     * @generated
+     */
+    EReference getMappedComplexType_ServiceModel();
+
+    /**
+     * Returns the meta object for the '{@link de.fhdo.ddmm.service.MappedComplexType#getQualifiedNameParts(boolean) <em>Get Qualified Name Parts</em>}' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the '<em>Get Qualified Name Parts</em>' operation.
+     * @see de.fhdo.ddmm.service.MappedComplexType#getQualifiedNameParts(boolean)
+     * @generated
+     */
+    EOperation getMappedComplexType__GetQualifiedNameParts__boolean();
+
+    /**
+     * Returns the meta object for the '{@link de.fhdo.ddmm.service.MappedComplexType#buildQualifiedName(java.lang.String, boolean) <em>Build Qualified Name</em>}' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the '<em>Build Qualified Name</em>' operation.
+     * @see de.fhdo.ddmm.service.MappedComplexType#buildQualifiedName(java.lang.String, boolean)
+     * @generated
+     */
+    EOperation getMappedComplexType__BuildQualifiedName__String_boolean();
+
+    /**
+     * Returns the meta object for the '{@link de.fhdo.ddmm.service.MappedComplexType#getAllTypeDefinitionTechnologyReferences() <em>Get All Type Definition Technology References</em>}' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the '<em>Get All Type Definition Technology References</em>' operation.
+     * @see de.fhdo.ddmm.service.MappedComplexType#getAllTypeDefinitionTechnologyReferences()
+     * @generated
+     */
+    EOperation getMappedComplexType__GetAllTypeDefinitionTechnologyReferences();
+
+    /**
+     * Returns the meta object for the '{@link de.fhdo.ddmm.service.MappedComplexType#getTypeDefinitionTechnologyImport() <em>Get Type Definition Technology Import</em>}' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the '<em>Get Type Definition Technology Import</em>' operation.
+     * @see de.fhdo.ddmm.service.MappedComplexType#getTypeDefinitionTechnologyImport()
+     * @generated
+     */
+    EOperation getMappedComplexType__GetTypeDefinitionTechnologyImport();
+
+    /**
+     * Returns the meta object for the '{@link de.fhdo.ddmm.service.MappedComplexType#getTypeDefinitionTechnology() <em>Get Type Definition Technology</em>}' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the '<em>Get Type Definition Technology</em>' operation.
+     * @see de.fhdo.ddmm.service.MappedComplexType#getTypeDefinitionTechnology()
+     * @generated
+     */
+    EOperation getMappedComplexType__GetTypeDefinitionTechnology();
+
+    /**
+     * Returns the meta object for class '{@link de.fhdo.ddmm.service.MappedField <em>Mapped Field</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Mapped Field</em>'.
+     * @see de.fhdo.ddmm.service.MappedField
+     * @generated
+     */
+    EClass getMappedField();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.fhdo.ddmm.service.MappedField#getT_typeDefinitionTechnologyName <em>Ttype Definition Technology Name</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Ttype Definition Technology Name</em>'.
+     * @see de.fhdo.ddmm.service.MappedField#getT_typeDefinitionTechnologyName()
+     * @see #getMappedField()
+     * @generated
+     */
+    EAttribute getMappedField_T_typeDefinitionTechnologyName();
+
+    /**
+     * Returns the meta object for the reference '{@link de.fhdo.ddmm.service.MappedField#getDataField <em>Data Field</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference '<em>Data Field</em>'.
+     * @see de.fhdo.ddmm.service.MappedField#getDataField()
+     * @see #getMappedField()
+     * @generated
+     */
+    EReference getMappedField_DataField();
+
+    /**
+     * Returns the meta object for the reference '{@link de.fhdo.ddmm.service.MappedField#getEnumerationField <em>Enumeration Field</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference '<em>Enumeration Field</em>'.
+     * @see de.fhdo.ddmm.service.MappedField#getEnumerationField()
+     * @see #getMappedField()
+     * @generated
+     */
+    EReference getMappedField_EnumerationField();
+
+    /**
+     * Returns the meta object for the containment reference '{@link de.fhdo.ddmm.service.MappedField#getMappedType <em>Mapped Type</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference '<em>Mapped Type</em>'.
+     * @see de.fhdo.ddmm.service.MappedField#getMappedType()
+     * @see #getMappedField()
+     * @generated
+     */
+    EReference getMappedField_MappedType();
+
+    /**
+     * Returns the meta object for the containment reference list '{@link de.fhdo.ddmm.service.MappedField#getAspects <em>Aspects</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Aspects</em>'.
+     * @see de.fhdo.ddmm.service.MappedField#getAspects()
+     * @see #getMappedField()
+     * @generated
+     */
+    EReference getMappedField_Aspects();
+
+    /**
+     * Returns the meta object for the container reference '{@link de.fhdo.ddmm.service.MappedField#getParameter <em>Parameter</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the container reference '<em>Parameter</em>'.
+     * @see de.fhdo.ddmm.service.MappedField#getParameter()
+     * @see #getMappedField()
+     * @generated
+     */
+    EReference getMappedField_Parameter();
+
+    /**
+     * Returns the meta object for the container reference '{@link de.fhdo.ddmm.service.MappedField#getMappedComplexType <em>Mapped Complex Type</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the container reference '<em>Mapped Complex Type</em>'.
+     * @see de.fhdo.ddmm.service.MappedField#getMappedComplexType()
+     * @see #getMappedField()
+     * @generated
+     */
+    EReference getMappedField_MappedComplexType();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.fhdo.ddmm.service.MappedField#getName <em>Name</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Name</em>'.
+     * @see de.fhdo.ddmm.service.MappedField#getName()
+     * @see #getMappedField()
+     * @generated
+     */
+    EAttribute getMappedField_Name();
+
+    /**
+     * Returns the meta object for the '{@link de.fhdo.ddmm.service.MappedField#getQualifiedNameParts(boolean) <em>Get Qualified Name Parts</em>}' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the '<em>Get Qualified Name Parts</em>' operation.
+     * @see de.fhdo.ddmm.service.MappedField#getQualifiedNameParts(boolean)
+     * @generated
+     */
+    EOperation getMappedField__GetQualifiedNameParts__boolean();
+
+    /**
+     * Returns the meta object for the '{@link de.fhdo.ddmm.service.MappedField#buildQualifiedName(java.lang.String, boolean) <em>Build Qualified Name</em>}' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the '<em>Build Qualified Name</em>' operation.
+     * @see de.fhdo.ddmm.service.MappedField#buildQualifiedName(java.lang.String, boolean)
+     * @generated
+     */
+    EOperation getMappedField__BuildQualifiedName__String_boolean();
+
+    /**
+     * Returns the meta object for the '{@link de.fhdo.ddmm.service.MappedField#getEffectiveType() <em>Get Effective Type</em>}' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the '<em>Get Effective Type</em>' operation.
+     * @see de.fhdo.ddmm.service.MappedField#getEffectiveType()
+     * @generated
+     */
+    EOperation getMappedField__GetEffectiveType();
+
+    /**
      * Returns the meta object for class '{@link de.fhdo.ddmm.service.Microservice <em>Microservice</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2324,15 +2660,15 @@ public interface ServicePackage extends EPackage {
     EAttribute getMicroservice_T_sourceModelUri();
 
     /**
-     * Returns the meta object for the reference list '{@link de.fhdo.ddmm.service.Microservice#getTechnologies <em>Technologies</em>}'.
+     * Returns the meta object for the containment reference list '{@link de.fhdo.ddmm.service.Microservice#getTechnologyReferences <em>Technology References</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the reference list '<em>Technologies</em>'.
-     * @see de.fhdo.ddmm.service.Microservice#getTechnologies()
+     * @return the meta object for the containment reference list '<em>Technology References</em>'.
+     * @see de.fhdo.ddmm.service.Microservice#getTechnologyReferences()
      * @see #getMicroservice()
      * @generated
      */
-    EReference getMicroservice_Technologies();
+    EReference getMicroservice_TechnologyReferences();
 
     /**
      * Returns the meta object for the reference '{@link de.fhdo.ddmm.service.Microservice#getT_typeDefinitionTechnologyImport <em>Ttype Definition Technology Import</em>}'.
@@ -2498,14 +2834,14 @@ public interface ServicePackage extends EPackage {
     EOperation getMicroservice__T_effectiveProtocolSpecifications();
 
     /**
-     * Returns the meta object for the '{@link de.fhdo.ddmm.service.Microservice#getTypeDefinitionTechnologyImports() <em>Get Type Definition Technology Imports</em>}' operation.
+     * Returns the meta object for the '{@link de.fhdo.ddmm.service.Microservice#getAllTypeDefinitionTechnologyReferences() <em>Get All Type Definition Technology References</em>}' operation.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the '<em>Get Type Definition Technology Imports</em>' operation.
-     * @see de.fhdo.ddmm.service.Microservice#getTypeDefinitionTechnologyImports()
+     * @return the meta object for the '<em>Get All Type Definition Technology References</em>' operation.
+     * @see de.fhdo.ddmm.service.Microservice#getAllTypeDefinitionTechnologyReferences()
      * @generated
      */
-    EOperation getMicroservice__GetTypeDefinitionTechnologyImports();
+    EOperation getMicroservice__GetAllTypeDefinitionTechnologyReferences();
 
     /**
      * Returns the meta object for the '{@link de.fhdo.ddmm.service.Microservice#getTypeDefinitionTechnologyImport() <em>Get Type Definition Technology Import</em>}' operation.
@@ -2516,16 +2852,6 @@ public interface ServicePackage extends EPackage {
      * @generated
      */
     EOperation getMicroservice__GetTypeDefinitionTechnologyImport();
-
-    /**
-     * Returns the meta object for the '{@link de.fhdo.ddmm.service.Microservice#getTypeDefinitionTechnologies() <em>Get Type Definition Technologies</em>}' operation.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the '<em>Get Type Definition Technologies</em>' operation.
-     * @see de.fhdo.ddmm.service.Microservice#getTypeDefinitionTechnologies()
-     * @generated
-     */
-    EOperation getMicroservice__GetTypeDefinitionTechnologies();
 
     /**
      * Returns the meta object for the '{@link de.fhdo.ddmm.service.Microservice#getTypeDefinitionTechnology() <em>Get Type Definition Technology</em>}' operation.
@@ -2646,6 +2972,60 @@ public interface ServicePackage extends EPackage {
      * @generated
      */
     EOperation getMicroservice__CanRequire__Operation_boolean();
+
+    /**
+     * Returns the meta object for class '{@link de.fhdo.ddmm.service.TechnologyReference <em>Technology Reference</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Technology Reference</em>'.
+     * @see de.fhdo.ddmm.service.TechnologyReference
+     * @generated
+     */
+    EClass getTechnologyReference();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.fhdo.ddmm.service.TechnologyReference#isIsTypeDefinitionTechnology <em>Is Type Definition Technology</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Is Type Definition Technology</em>'.
+     * @see de.fhdo.ddmm.service.TechnologyReference#isIsTypeDefinitionTechnology()
+     * @see #getTechnologyReference()
+     * @generated
+     */
+    EAttribute getTechnologyReference_IsTypeDefinitionTechnology();
+
+    /**
+     * Returns the meta object for the reference '{@link de.fhdo.ddmm.service.TechnologyReference#getTechnology <em>Technology</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference '<em>Technology</em>'.
+     * @see de.fhdo.ddmm.service.TechnologyReference#getTechnology()
+     * @see #getTechnologyReference()
+     * @generated
+     */
+    EReference getTechnologyReference_Technology();
+
+    /**
+     * Returns the meta object for the container reference '{@link de.fhdo.ddmm.service.TechnologyReference#getMicroservice <em>Microservice</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the container reference '<em>Microservice</em>'.
+     * @see de.fhdo.ddmm.service.TechnologyReference#getMicroservice()
+     * @see #getTechnologyReference()
+     * @generated
+     */
+    EReference getTechnologyReference_Microservice();
+
+    /**
+     * Returns the meta object for the container reference '{@link de.fhdo.ddmm.service.TechnologyReference#getMappedComplexType <em>Mapped Complex Type</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the container reference '<em>Mapped Complex Type</em>'.
+     * @see de.fhdo.ddmm.service.TechnologyReference#getMappedComplexType()
+     * @see #getTechnologyReference()
+     * @generated
+     */
+    EReference getTechnologyReference_MappedComplexType();
 
     /**
      * Returns the meta object for class '{@link de.fhdo.ddmm.service.Interface <em>Interface</em>}'.
@@ -3306,230 +3686,6 @@ public interface ServicePackage extends EPackage {
      * @generated
      */
     EOperation getParameter__GetEffectiveTypeQualifiedNameParts();
-
-    /**
-     * Returns the meta object for class '{@link de.fhdo.ddmm.service.MappedComplexType <em>Mapped Complex Type</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Mapped Complex Type</em>'.
-     * @see de.fhdo.ddmm.service.MappedComplexType
-     * @generated
-     */
-    EClass getMappedComplexType();
-
-    /**
-     * Returns the meta object for the attribute '{@link de.fhdo.ddmm.service.MappedComplexType#getT_sourceModelUri <em>Tsource Model Uri</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Tsource Model Uri</em>'.
-     * @see de.fhdo.ddmm.service.MappedComplexType#getT_sourceModelUri()
-     * @see #getMappedComplexType()
-     * @generated
-     */
-    EAttribute getMappedComplexType_T_sourceModelUri();
-
-    /**
-     * Returns the meta object for the reference list '{@link de.fhdo.ddmm.service.MappedComplexType#getTechnologies <em>Technologies</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the reference list '<em>Technologies</em>'.
-     * @see de.fhdo.ddmm.service.MappedComplexType#getTechnologies()
-     * @see #getMappedComplexType()
-     * @generated
-     */
-    EReference getMappedComplexType_Technologies();
-
-    /**
-     * Returns the meta object for the containment reference '{@link de.fhdo.ddmm.service.MappedComplexType#getType <em>Type</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the containment reference '<em>Type</em>'.
-     * @see de.fhdo.ddmm.service.MappedComplexType#getType()
-     * @see #getMappedComplexType()
-     * @generated
-     */
-    EReference getMappedComplexType_Type();
-
-    /**
-     * Returns the meta object for the containment reference list '{@link de.fhdo.ddmm.service.MappedComplexType#getMappedFields <em>Mapped Fields</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the containment reference list '<em>Mapped Fields</em>'.
-     * @see de.fhdo.ddmm.service.MappedComplexType#getMappedFields()
-     * @see #getMappedComplexType()
-     * @generated
-     */
-    EReference getMappedComplexType_MappedFields();
-
-    /**
-     * Returns the meta object for the containment reference list '{@link de.fhdo.ddmm.service.MappedComplexType#getAspects <em>Aspects</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the containment reference list '<em>Aspects</em>'.
-     * @see de.fhdo.ddmm.service.MappedComplexType#getAspects()
-     * @see #getMappedComplexType()
-     * @generated
-     */
-    EReference getMappedComplexType_Aspects();
-
-    /**
-     * Returns the meta object for the container reference '{@link de.fhdo.ddmm.service.MappedComplexType#getServiceModel <em>Service Model</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the container reference '<em>Service Model</em>'.
-     * @see de.fhdo.ddmm.service.MappedComplexType#getServiceModel()
-     * @see #getMappedComplexType()
-     * @generated
-     */
-    EReference getMappedComplexType_ServiceModel();
-
-    /**
-     * Returns the meta object for the '{@link de.fhdo.ddmm.service.MappedComplexType#getQualifiedNameParts(boolean) <em>Get Qualified Name Parts</em>}' operation.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the '<em>Get Qualified Name Parts</em>' operation.
-     * @see de.fhdo.ddmm.service.MappedComplexType#getQualifiedNameParts(boolean)
-     * @generated
-     */
-    EOperation getMappedComplexType__GetQualifiedNameParts__boolean();
-
-    /**
-     * Returns the meta object for the '{@link de.fhdo.ddmm.service.MappedComplexType#buildQualifiedName(java.lang.String, boolean) <em>Build Qualified Name</em>}' operation.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the '<em>Build Qualified Name</em>' operation.
-     * @see de.fhdo.ddmm.service.MappedComplexType#buildQualifiedName(java.lang.String, boolean)
-     * @generated
-     */
-    EOperation getMappedComplexType__BuildQualifiedName__String_boolean();
-
-    /**
-     * Returns the meta object for class '{@link de.fhdo.ddmm.service.MappedField <em>Mapped Field</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Mapped Field</em>'.
-     * @see de.fhdo.ddmm.service.MappedField
-     * @generated
-     */
-    EClass getMappedField();
-
-    /**
-     * Returns the meta object for the attribute '{@link de.fhdo.ddmm.service.MappedField#getT_typeDefinitionTechnologyName <em>Ttype Definition Technology Name</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Ttype Definition Technology Name</em>'.
-     * @see de.fhdo.ddmm.service.MappedField#getT_typeDefinitionTechnologyName()
-     * @see #getMappedField()
-     * @generated
-     */
-    EAttribute getMappedField_T_typeDefinitionTechnologyName();
-
-    /**
-     * Returns the meta object for the reference '{@link de.fhdo.ddmm.service.MappedField#getDataField <em>Data Field</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the reference '<em>Data Field</em>'.
-     * @see de.fhdo.ddmm.service.MappedField#getDataField()
-     * @see #getMappedField()
-     * @generated
-     */
-    EReference getMappedField_DataField();
-
-    /**
-     * Returns the meta object for the reference '{@link de.fhdo.ddmm.service.MappedField#getEnumerationField <em>Enumeration Field</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the reference '<em>Enumeration Field</em>'.
-     * @see de.fhdo.ddmm.service.MappedField#getEnumerationField()
-     * @see #getMappedField()
-     * @generated
-     */
-    EReference getMappedField_EnumerationField();
-
-    /**
-     * Returns the meta object for the containment reference '{@link de.fhdo.ddmm.service.MappedField#getMappedType <em>Mapped Type</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the containment reference '<em>Mapped Type</em>'.
-     * @see de.fhdo.ddmm.service.MappedField#getMappedType()
-     * @see #getMappedField()
-     * @generated
-     */
-    EReference getMappedField_MappedType();
-
-    /**
-     * Returns the meta object for the containment reference list '{@link de.fhdo.ddmm.service.MappedField#getAspects <em>Aspects</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the containment reference list '<em>Aspects</em>'.
-     * @see de.fhdo.ddmm.service.MappedField#getAspects()
-     * @see #getMappedField()
-     * @generated
-     */
-    EReference getMappedField_Aspects();
-
-    /**
-     * Returns the meta object for the container reference '{@link de.fhdo.ddmm.service.MappedField#getParameter <em>Parameter</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the container reference '<em>Parameter</em>'.
-     * @see de.fhdo.ddmm.service.MappedField#getParameter()
-     * @see #getMappedField()
-     * @generated
-     */
-    EReference getMappedField_Parameter();
-
-    /**
-     * Returns the meta object for the container reference '{@link de.fhdo.ddmm.service.MappedField#getMappedComplexType <em>Mapped Complex Type</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the container reference '<em>Mapped Complex Type</em>'.
-     * @see de.fhdo.ddmm.service.MappedField#getMappedComplexType()
-     * @see #getMappedField()
-     * @generated
-     */
-    EReference getMappedField_MappedComplexType();
-
-    /**
-     * Returns the meta object for the attribute '{@link de.fhdo.ddmm.service.MappedField#getName <em>Name</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Name</em>'.
-     * @see de.fhdo.ddmm.service.MappedField#getName()
-     * @see #getMappedField()
-     * @generated
-     */
-    EAttribute getMappedField_Name();
-
-    /**
-     * Returns the meta object for the '{@link de.fhdo.ddmm.service.MappedField#getQualifiedNameParts(boolean) <em>Get Qualified Name Parts</em>}' operation.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the '<em>Get Qualified Name Parts</em>' operation.
-     * @see de.fhdo.ddmm.service.MappedField#getQualifiedNameParts(boolean)
-     * @generated
-     */
-    EOperation getMappedField__GetQualifiedNameParts__boolean();
-
-    /**
-     * Returns the meta object for the '{@link de.fhdo.ddmm.service.MappedField#buildQualifiedName(java.lang.String, boolean) <em>Build Qualified Name</em>}' operation.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the '<em>Build Qualified Name</em>' operation.
-     * @see de.fhdo.ddmm.service.MappedField#buildQualifiedName(java.lang.String, boolean)
-     * @generated
-     */
-    EOperation getMappedField__BuildQualifiedName__String_boolean();
-
-    /**
-     * Returns the meta object for the '{@link de.fhdo.ddmm.service.MappedField#getEffectiveType() <em>Get Effective Type</em>}' operation.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the '<em>Get Effective Type</em>' operation.
-     * @see de.fhdo.ddmm.service.MappedField#getEffectiveType()
-     * @generated
-     */
-    EOperation getMappedField__GetEffectiveType();
 
     /**
      * Returns the meta object for class '{@link de.fhdo.ddmm.service.PossiblyImportedMicroservice <em>Possibly Imported Microservice</em>}'.
@@ -4278,6 +4434,202 @@ public interface ServicePackage extends EPackage {
         EReference IMPORT__SERVICE_MODEL = eINSTANCE.getImport_ServiceModel();
 
         /**
+         * The meta object literal for the '{@link de.fhdo.ddmm.service.impl.MappedComplexTypeImpl <em>Mapped Complex Type</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.fhdo.ddmm.service.impl.MappedComplexTypeImpl
+         * @see de.fhdo.ddmm.service.impl.ServicePackageImpl#getMappedComplexType()
+         * @generated
+         */
+        EClass MAPPED_COMPLEX_TYPE = eINSTANCE.getMappedComplexType();
+
+        /**
+         * The meta object literal for the '<em><b>Tsource Model Uri</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute MAPPED_COMPLEX_TYPE__TSOURCE_MODEL_URI = eINSTANCE.getMappedComplexType_T_sourceModelUri();
+
+        /**
+         * The meta object literal for the '<em><b>Technology References</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference MAPPED_COMPLEX_TYPE__TECHNOLOGY_REFERENCES = eINSTANCE.getMappedComplexType_TechnologyReferences();
+
+        /**
+         * The meta object literal for the '<em><b>Type</b></em>' containment reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference MAPPED_COMPLEX_TYPE__TYPE = eINSTANCE.getMappedComplexType_Type();
+
+        /**
+         * The meta object literal for the '<em><b>Mapped Fields</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference MAPPED_COMPLEX_TYPE__MAPPED_FIELDS = eINSTANCE.getMappedComplexType_MappedFields();
+
+        /**
+         * The meta object literal for the '<em><b>Aspects</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference MAPPED_COMPLEX_TYPE__ASPECTS = eINSTANCE.getMappedComplexType_Aspects();
+
+        /**
+         * The meta object literal for the '<em><b>Service Model</b></em>' container reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference MAPPED_COMPLEX_TYPE__SERVICE_MODEL = eINSTANCE.getMappedComplexType_ServiceModel();
+
+        /**
+         * The meta object literal for the '<em><b>Get Qualified Name Parts</b></em>' operation.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EOperation MAPPED_COMPLEX_TYPE___GET_QUALIFIED_NAME_PARTS__BOOLEAN = eINSTANCE.getMappedComplexType__GetQualifiedNameParts__boolean();
+
+        /**
+         * The meta object literal for the '<em><b>Build Qualified Name</b></em>' operation.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EOperation MAPPED_COMPLEX_TYPE___BUILD_QUALIFIED_NAME__STRING_BOOLEAN = eINSTANCE.getMappedComplexType__BuildQualifiedName__String_boolean();
+
+        /**
+         * The meta object literal for the '<em><b>Get All Type Definition Technology References</b></em>' operation.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EOperation MAPPED_COMPLEX_TYPE___GET_ALL_TYPE_DEFINITION_TECHNOLOGY_REFERENCES = eINSTANCE.getMappedComplexType__GetAllTypeDefinitionTechnologyReferences();
+
+        /**
+         * The meta object literal for the '<em><b>Get Type Definition Technology Import</b></em>' operation.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EOperation MAPPED_COMPLEX_TYPE___GET_TYPE_DEFINITION_TECHNOLOGY_IMPORT = eINSTANCE.getMappedComplexType__GetTypeDefinitionTechnologyImport();
+
+        /**
+         * The meta object literal for the '<em><b>Get Type Definition Technology</b></em>' operation.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EOperation MAPPED_COMPLEX_TYPE___GET_TYPE_DEFINITION_TECHNOLOGY = eINSTANCE.getMappedComplexType__GetTypeDefinitionTechnology();
+
+        /**
+         * The meta object literal for the '{@link de.fhdo.ddmm.service.impl.MappedFieldImpl <em>Mapped Field</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.fhdo.ddmm.service.impl.MappedFieldImpl
+         * @see de.fhdo.ddmm.service.impl.ServicePackageImpl#getMappedField()
+         * @generated
+         */
+        EClass MAPPED_FIELD = eINSTANCE.getMappedField();
+
+        /**
+         * The meta object literal for the '<em><b>Ttype Definition Technology Name</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute MAPPED_FIELD__TTYPE_DEFINITION_TECHNOLOGY_NAME = eINSTANCE.getMappedField_T_typeDefinitionTechnologyName();
+
+        /**
+         * The meta object literal for the '<em><b>Data Field</b></em>' reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference MAPPED_FIELD__DATA_FIELD = eINSTANCE.getMappedField_DataField();
+
+        /**
+         * The meta object literal for the '<em><b>Enumeration Field</b></em>' reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference MAPPED_FIELD__ENUMERATION_FIELD = eINSTANCE.getMappedField_EnumerationField();
+
+        /**
+         * The meta object literal for the '<em><b>Mapped Type</b></em>' containment reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference MAPPED_FIELD__MAPPED_TYPE = eINSTANCE.getMappedField_MappedType();
+
+        /**
+         * The meta object literal for the '<em><b>Aspects</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference MAPPED_FIELD__ASPECTS = eINSTANCE.getMappedField_Aspects();
+
+        /**
+         * The meta object literal for the '<em><b>Parameter</b></em>' container reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference MAPPED_FIELD__PARAMETER = eINSTANCE.getMappedField_Parameter();
+
+        /**
+         * The meta object literal for the '<em><b>Mapped Complex Type</b></em>' container reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference MAPPED_FIELD__MAPPED_COMPLEX_TYPE = eINSTANCE.getMappedField_MappedComplexType();
+
+        /**
+         * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute MAPPED_FIELD__NAME = eINSTANCE.getMappedField_Name();
+
+        /**
+         * The meta object literal for the '<em><b>Get Qualified Name Parts</b></em>' operation.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EOperation MAPPED_FIELD___GET_QUALIFIED_NAME_PARTS__BOOLEAN = eINSTANCE.getMappedField__GetQualifiedNameParts__boolean();
+
+        /**
+         * The meta object literal for the '<em><b>Build Qualified Name</b></em>' operation.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EOperation MAPPED_FIELD___BUILD_QUALIFIED_NAME__STRING_BOOLEAN = eINSTANCE.getMappedField__BuildQualifiedName__String_boolean();
+
+        /**
+         * The meta object literal for the '<em><b>Get Effective Type</b></em>' operation.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EOperation MAPPED_FIELD___GET_EFFECTIVE_TYPE = eINSTANCE.getMappedField__GetEffectiveType();
+
+        /**
          * The meta object literal for the '{@link de.fhdo.ddmm.service.impl.MicroserviceImpl <em>Microservice</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -4336,12 +4688,12 @@ public interface ServicePackage extends EPackage {
         EAttribute MICROSERVICE__TSOURCE_MODEL_URI = eINSTANCE.getMicroservice_T_sourceModelUri();
 
         /**
-         * The meta object literal for the '<em><b>Technologies</b></em>' reference list feature.
+         * The meta object literal for the '<em><b>Technology References</b></em>' containment reference list feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference MICROSERVICE__TECHNOLOGIES = eINSTANCE.getMicroservice_Technologies();
+        EReference MICROSERVICE__TECHNOLOGY_REFERENCES = eINSTANCE.getMicroservice_TechnologyReferences();
 
         /**
          * The meta object literal for the '<em><b>Ttype Definition Technology Import</b></em>' reference feature.
@@ -4464,12 +4816,12 @@ public interface ServicePackage extends EPackage {
         EOperation MICROSERVICE___TEFFECTIVE_PROTOCOL_SPECIFICATIONS = eINSTANCE.getMicroservice__T_effectiveProtocolSpecifications();
 
         /**
-         * The meta object literal for the '<em><b>Get Type Definition Technology Imports</b></em>' operation.
+         * The meta object literal for the '<em><b>Get All Type Definition Technology References</b></em>' operation.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EOperation MICROSERVICE___GET_TYPE_DEFINITION_TECHNOLOGY_IMPORTS = eINSTANCE.getMicroservice__GetTypeDefinitionTechnologyImports();
+        EOperation MICROSERVICE___GET_ALL_TYPE_DEFINITION_TECHNOLOGY_REFERENCES = eINSTANCE.getMicroservice__GetAllTypeDefinitionTechnologyReferences();
 
         /**
          * The meta object literal for the '<em><b>Get Type Definition Technology Import</b></em>' operation.
@@ -4478,14 +4830,6 @@ public interface ServicePackage extends EPackage {
          * @generated
          */
         EOperation MICROSERVICE___GET_TYPE_DEFINITION_TECHNOLOGY_IMPORT = eINSTANCE.getMicroservice__GetTypeDefinitionTechnologyImport();
-
-        /**
-         * The meta object literal for the '<em><b>Get Type Definition Technologies</b></em>' operation.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EOperation MICROSERVICE___GET_TYPE_DEFINITION_TECHNOLOGIES = eINSTANCE.getMicroservice__GetTypeDefinitionTechnologies();
 
         /**
          * The meta object literal for the '<em><b>Get Type Definition Technology</b></em>' operation.
@@ -4582,6 +4926,48 @@ public interface ServicePackage extends EPackage {
          * @generated
          */
         EOperation MICROSERVICE___CAN_REQUIRE__OPERATION_BOOLEAN = eINSTANCE.getMicroservice__CanRequire__Operation_boolean();
+
+        /**
+         * The meta object literal for the '{@link de.fhdo.ddmm.service.impl.TechnologyReferenceImpl <em>Technology Reference</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.fhdo.ddmm.service.impl.TechnologyReferenceImpl
+         * @see de.fhdo.ddmm.service.impl.ServicePackageImpl#getTechnologyReference()
+         * @generated
+         */
+        EClass TECHNOLOGY_REFERENCE = eINSTANCE.getTechnologyReference();
+
+        /**
+         * The meta object literal for the '<em><b>Is Type Definition Technology</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute TECHNOLOGY_REFERENCE__IS_TYPE_DEFINITION_TECHNOLOGY = eINSTANCE.getTechnologyReference_IsTypeDefinitionTechnology();
+
+        /**
+         * The meta object literal for the '<em><b>Technology</b></em>' reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference TECHNOLOGY_REFERENCE__TECHNOLOGY = eINSTANCE.getTechnologyReference_Technology();
+
+        /**
+         * The meta object literal for the '<em><b>Microservice</b></em>' container reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference TECHNOLOGY_REFERENCE__MICROSERVICE = eINSTANCE.getTechnologyReference_Microservice();
+
+        /**
+         * The meta object literal for the '<em><b>Mapped Complex Type</b></em>' container reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference TECHNOLOGY_REFERENCE__MAPPED_COMPLEX_TYPE = eINSTANCE.getTechnologyReference_MappedComplexType();
 
         /**
          * The meta object literal for the '{@link de.fhdo.ddmm.service.impl.InterfaceImpl <em>Interface</em>}' class.
@@ -5086,178 +5472,6 @@ public interface ServicePackage extends EPackage {
          * @generated
          */
         EOperation PARAMETER___GET_EFFECTIVE_TYPE_QUALIFIED_NAME_PARTS = eINSTANCE.getParameter__GetEffectiveTypeQualifiedNameParts();
-
-        /**
-         * The meta object literal for the '{@link de.fhdo.ddmm.service.impl.MappedComplexTypeImpl <em>Mapped Complex Type</em>}' class.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @see de.fhdo.ddmm.service.impl.MappedComplexTypeImpl
-         * @see de.fhdo.ddmm.service.impl.ServicePackageImpl#getMappedComplexType()
-         * @generated
-         */
-        EClass MAPPED_COMPLEX_TYPE = eINSTANCE.getMappedComplexType();
-
-        /**
-         * The meta object literal for the '<em><b>Tsource Model Uri</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute MAPPED_COMPLEX_TYPE__TSOURCE_MODEL_URI = eINSTANCE.getMappedComplexType_T_sourceModelUri();
-
-        /**
-         * The meta object literal for the '<em><b>Technologies</b></em>' reference list feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference MAPPED_COMPLEX_TYPE__TECHNOLOGIES = eINSTANCE.getMappedComplexType_Technologies();
-
-        /**
-         * The meta object literal for the '<em><b>Type</b></em>' containment reference feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference MAPPED_COMPLEX_TYPE__TYPE = eINSTANCE.getMappedComplexType_Type();
-
-        /**
-         * The meta object literal for the '<em><b>Mapped Fields</b></em>' containment reference list feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference MAPPED_COMPLEX_TYPE__MAPPED_FIELDS = eINSTANCE.getMappedComplexType_MappedFields();
-
-        /**
-         * The meta object literal for the '<em><b>Aspects</b></em>' containment reference list feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference MAPPED_COMPLEX_TYPE__ASPECTS = eINSTANCE.getMappedComplexType_Aspects();
-
-        /**
-         * The meta object literal for the '<em><b>Service Model</b></em>' container reference feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference MAPPED_COMPLEX_TYPE__SERVICE_MODEL = eINSTANCE.getMappedComplexType_ServiceModel();
-
-        /**
-         * The meta object literal for the '<em><b>Get Qualified Name Parts</b></em>' operation.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EOperation MAPPED_COMPLEX_TYPE___GET_QUALIFIED_NAME_PARTS__BOOLEAN = eINSTANCE.getMappedComplexType__GetQualifiedNameParts__boolean();
-
-        /**
-         * The meta object literal for the '<em><b>Build Qualified Name</b></em>' operation.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EOperation MAPPED_COMPLEX_TYPE___BUILD_QUALIFIED_NAME__STRING_BOOLEAN = eINSTANCE.getMappedComplexType__BuildQualifiedName__String_boolean();
-
-        /**
-         * The meta object literal for the '{@link de.fhdo.ddmm.service.impl.MappedFieldImpl <em>Mapped Field</em>}' class.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @see de.fhdo.ddmm.service.impl.MappedFieldImpl
-         * @see de.fhdo.ddmm.service.impl.ServicePackageImpl#getMappedField()
-         * @generated
-         */
-        EClass MAPPED_FIELD = eINSTANCE.getMappedField();
-
-        /**
-         * The meta object literal for the '<em><b>Ttype Definition Technology Name</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute MAPPED_FIELD__TTYPE_DEFINITION_TECHNOLOGY_NAME = eINSTANCE.getMappedField_T_typeDefinitionTechnologyName();
-
-        /**
-         * The meta object literal for the '<em><b>Data Field</b></em>' reference feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference MAPPED_FIELD__DATA_FIELD = eINSTANCE.getMappedField_DataField();
-
-        /**
-         * The meta object literal for the '<em><b>Enumeration Field</b></em>' reference feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference MAPPED_FIELD__ENUMERATION_FIELD = eINSTANCE.getMappedField_EnumerationField();
-
-        /**
-         * The meta object literal for the '<em><b>Mapped Type</b></em>' containment reference feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference MAPPED_FIELD__MAPPED_TYPE = eINSTANCE.getMappedField_MappedType();
-
-        /**
-         * The meta object literal for the '<em><b>Aspects</b></em>' containment reference list feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference MAPPED_FIELD__ASPECTS = eINSTANCE.getMappedField_Aspects();
-
-        /**
-         * The meta object literal for the '<em><b>Parameter</b></em>' container reference feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference MAPPED_FIELD__PARAMETER = eINSTANCE.getMappedField_Parameter();
-
-        /**
-         * The meta object literal for the '<em><b>Mapped Complex Type</b></em>' container reference feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference MAPPED_FIELD__MAPPED_COMPLEX_TYPE = eINSTANCE.getMappedField_MappedComplexType();
-
-        /**
-         * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute MAPPED_FIELD__NAME = eINSTANCE.getMappedField_Name();
-
-        /**
-         * The meta object literal for the '<em><b>Get Qualified Name Parts</b></em>' operation.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EOperation MAPPED_FIELD___GET_QUALIFIED_NAME_PARTS__BOOLEAN = eINSTANCE.getMappedField__GetQualifiedNameParts__boolean();
-
-        /**
-         * The meta object literal for the '<em><b>Build Qualified Name</b></em>' operation.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EOperation MAPPED_FIELD___BUILD_QUALIFIED_NAME__STRING_BOOLEAN = eINSTANCE.getMappedField__BuildQualifiedName__String_boolean();
-
-        /**
-         * The meta object literal for the '<em><b>Get Effective Type</b></em>' operation.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EOperation MAPPED_FIELD___GET_EFFECTIVE_TYPE = eINSTANCE.getMappedField__GetEffectiveType();
 
         /**
          * The meta object literal for the '{@link de.fhdo.ddmm.service.impl.PossiblyImportedMicroserviceImpl <em>Possibly Imported Microservice</em>}' class.

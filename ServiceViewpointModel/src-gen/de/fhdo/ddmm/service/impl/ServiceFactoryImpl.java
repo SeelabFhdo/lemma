@@ -67,13 +67,14 @@ public class ServiceFactoryImpl extends EFactoryImpl implements ServiceFactory {
         switch (eClass.getClassifierID()) {
             case ServicePackage.SERVICE_MODEL: return createServiceModel();
             case ServicePackage.IMPORT: return createImport();
+            case ServicePackage.MAPPED_COMPLEX_TYPE: return createMappedComplexType();
+            case ServicePackage.MAPPED_FIELD: return createMappedField();
             case ServicePackage.MICROSERVICE: return createMicroservice();
+            case ServicePackage.TECHNOLOGY_REFERENCE: return createTechnologyReference();
             case ServicePackage.INTERFACE: return createInterface();
             case ServicePackage.OPERATION: return createOperation();
             case ServicePackage.REFERRED_OPERATION: return createReferredOperation();
             case ServicePackage.PARAMETER: return createParameter();
-            case ServicePackage.MAPPED_COMPLEX_TYPE: return createMappedComplexType();
-            case ServicePackage.MAPPED_FIELD: return createMappedField();
             case ServicePackage.POSSIBLY_IMPORTED_MICROSERVICE: return createPossiblyImportedMicroservice();
             case ServicePackage.POSSIBLY_IMPORTED_INTERFACE: return createPossiblyImportedInterface();
             case ServicePackage.POSSIBLY_IMPORTED_OPERATION: return createPossiblyImportedOperation();
@@ -165,9 +166,42 @@ public class ServiceFactoryImpl extends EFactoryImpl implements ServiceFactory {
      * @generated
      */
     @Override
+    public MappedComplexType createMappedComplexType() {
+        MappedComplexTypeImpl mappedComplexType = new MappedComplexTypeImpl();
+        return mappedComplexType;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public MappedField createMappedField() {
+        MappedFieldImpl mappedField = new MappedFieldImpl();
+        return mappedField;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public Microservice createMicroservice() {
         MicroserviceImpl microservice = new MicroserviceImpl();
         return microservice;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public TechnologyReference createTechnologyReference() {
+        TechnologyReferenceImpl technologyReference = new TechnologyReferenceImpl();
+        return technologyReference;
     }
 
     /**
@@ -212,28 +246,6 @@ public class ServiceFactoryImpl extends EFactoryImpl implements ServiceFactory {
     public Parameter createParameter() {
         ParameterImpl parameter = new ParameterImpl();
         return parameter;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public MappedComplexType createMappedComplexType() {
-        MappedComplexTypeImpl mappedComplexType = new MappedComplexTypeImpl();
-        return mappedComplexType;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public MappedField createMappedField() {
-        MappedFieldImpl mappedField = new MappedFieldImpl();
-        return mappedField;
     }
 
     /**

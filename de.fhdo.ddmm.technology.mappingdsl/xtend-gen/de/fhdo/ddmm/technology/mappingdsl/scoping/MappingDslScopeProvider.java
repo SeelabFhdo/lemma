@@ -23,6 +23,8 @@ import de.fhdo.ddmm.service.Operation;
 import de.fhdo.ddmm.service.Parameter;
 import de.fhdo.ddmm.service.ReferredOperation;
 import de.fhdo.ddmm.service.ServiceModel;
+import de.fhdo.ddmm.service.ServicePackage;
+import de.fhdo.ddmm.service.TechnologyReference;
 import de.fhdo.ddmm.technology.CommunicationType;
 import de.fhdo.ddmm.technology.DataFormat;
 import de.fhdo.ddmm.technology.ExchangePattern;
@@ -102,6 +104,12 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
       if (context instanceof MicroserviceMapping) {
         _matched=true;
         _switchResult = this.getScope(((MicroserviceMapping)context), reference);
+      }
+    }
+    if (!_matched) {
+      if (context instanceof TechnologyReference) {
+        _matched=true;
+        _switchResult = this.getScope(((TechnologyReference)context), reference);
       }
     }
     if (!_matched) {
@@ -270,6 +278,18 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
   }
   
   /**
+   * Build scope for technology references and the given reference
+   */
+  private IScope getScope(final TechnologyReference technologyReference, final EReference reference) {
+    boolean _matched = false;
+    if (Objects.equal(reference, ServicePackage.Literals.TECHNOLOGY_REFERENCE__TECHNOLOGY)) {
+      _matched=true;
+      return this.getScopeForImportsOfType(technologyReference, Technology.class);
+    }
+    return null;
+  }
+  
+  /**
    * Build scope for interface mappings and the given reference
    */
   private IScope getScope(final InterfaceMapping mapping, final EReference reference) {
@@ -390,11 +410,17 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     }
     IScope _xifexpression = null;
     if ((parentMapping instanceof ComplexTypeMapping)) {
-      _xifexpression = Scopes.scopeFor(((ComplexTypeMapping)parentMapping).getTechnologies());
+      final Function1<TechnologyReference, Import> _function = (TechnologyReference it) -> {
+        return it.getTechnology();
+      };
+      _xifexpression = Scopes.scopeFor(ListExtensions.<TechnologyReference, Import>map(((ComplexTypeMapping)parentMapping).getTechnologyReferences(), _function));
     } else {
       IScope _xifexpression_1 = null;
       if ((parentMapping instanceof MicroserviceMapping)) {
-        _xifexpression_1 = Scopes.scopeFor(((MicroserviceMapping)parentMapping).getTechnologies());
+        final Function1<TechnologyReference, Import> _function_1 = (TechnologyReference it) -> {
+          return it.getTechnology();
+        };
+        _xifexpression_1 = Scopes.scopeFor(ListExtensions.<TechnologyReference, Import>map(((MicroserviceMapping)parentMapping).getTechnologyReferences(), _function_1));
       }
       _xifexpression = _xifexpression_1;
     }
@@ -736,39 +762,56 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
    * Build scope for microservice mapping technology that defines types
    */
   private IScope getScopeForTypeDefinitionTechnology(final EObject context) {
-    EList<Import> _xifexpression = null;
-    if ((context instanceof MicroserviceMapping)) {
-      _xifexpression = ((MicroserviceMapping)context).getTechnologies();
-    } else {
-      EList<Import> _xifexpression_1 = null;
-      if ((context instanceof ComplexTypeMapping)) {
-        _xifexpression_1 = ((ComplexTypeMapping)context).getTechnologies();
-      } else {
-        EList<Import> _elvis = null;
-        MicroserviceMapping _containerOfType = EcoreUtil2.<MicroserviceMapping>getContainerOfType(context, MicroserviceMapping.class);
-        EList<Import> _technologies = null;
-        if (_containerOfType!=null) {
-          _technologies=_containerOfType.getTechnologies();
-        }
-        if (_technologies != null) {
-          _elvis = _technologies;
-        } else {
-          ComplexTypeMapping _containerOfType_1 = EcoreUtil2.<ComplexTypeMapping>getContainerOfType(context, ComplexTypeMapping.class);
-          EList<Import> _technologies_1 = null;
-          if (_containerOfType_1!=null) {
-            _technologies_1=_containerOfType_1.getTechnologies();
-          }
-          _elvis = _technologies_1;
-        }
-        _xifexpression_1 = _elvis;
-      }
-      _xifexpression = _xifexpression_1;
+    List<Import> _switchResult = null;
+    boolean _matched = false;
+    if (context instanceof ComplexTypeMapping) {
+      _matched=true;
+      final Function1<TechnologyReference, Import> _function = (TechnologyReference it) -> {
+        return it.getTechnology();
+      };
+      _switchResult = ListExtensions.<TechnologyReference, Import>map(((ComplexTypeMapping)context).getTechnologyReferences(), _function);
     }
-    final EList<Import> technologies = _xifexpression;
+    if (!_matched) {
+      if (context instanceof MicroserviceMapping) {
+        _matched=true;
+        final Function1<TechnologyReference, Import> _function = (TechnologyReference it) -> {
+          return it.getTechnology();
+        };
+        _switchResult = ListExtensions.<TechnologyReference, Import>map(((MicroserviceMapping)context).getTechnologyReferences(), _function);
+      }
+    }
+    if (!_matched) {
+      List<Import> _elvis = null;
+      MicroserviceMapping _containerOfType = EcoreUtil2.<MicroserviceMapping>getContainerOfType(context, MicroserviceMapping.class);
+      EList<TechnologyReference> _technologyReferences = null;
+      if (_containerOfType!=null) {
+        _technologyReferences=_containerOfType.getTechnologyReferences();
+      }
+      final Function1<TechnologyReference, Import> _function = (TechnologyReference it) -> {
+        return it.getTechnology();
+      };
+      List<Import> _map = ListExtensions.<TechnologyReference, Import>map(_technologyReferences, _function);
+      if (_map != null) {
+        _elvis = _map;
+      } else {
+        ComplexTypeMapping _containerOfType_1 = EcoreUtil2.<ComplexTypeMapping>getContainerOfType(context, ComplexTypeMapping.class);
+        EList<TechnologyReference> _technologyReferences_1 = null;
+        if (_containerOfType_1!=null) {
+          _technologyReferences_1=_containerOfType_1.getTechnologyReferences();
+        }
+        final Function1<TechnologyReference, Import> _function_1 = (TechnologyReference it) -> {
+          return it.getTechnology();
+        };
+        List<Import> _map_1 = ListExtensions.<TechnologyReference, Import>map(_technologyReferences_1, _function_1);
+        _elvis = _map_1;
+      }
+      _switchResult = _elvis;
+    }
+    final List<Import> technologies = _switchResult;
     if ((technologies == null)) {
       return IScope.NULLSCOPE;
     }
-    final Function1<Import, Boolean> _function = (Import it) -> {
+    final Function1<Import, Boolean> _function_2 = (Import it) -> {
       boolean _xblockexpression = false;
       {
         final Technology modelRoot = DdmmUtils.<Technology>getImportedModelRoot(it.eResource(), it.getImportURI(), Technology.class);
@@ -776,7 +819,7 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
       }
       return Boolean.valueOf(_xblockexpression);
     };
-    final Import typeDefinitionTechnology = IterableExtensions.<Import>findFirst(technologies, _function);
+    final Import typeDefinitionTechnology = IterableExtensions.<Import>findFirst(technologies, _function_2);
     if ((typeDefinitionTechnology == null)) {
       return IScope.NULLSCOPE;
     }
@@ -1149,9 +1192,12 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     if (_isEmpty) {
       return results;
     }
-    final Consumer<Import> _function = (Import it) -> {
+    final Function1<TechnologyReference, Import> _function = (TechnologyReference it) -> {
+      return it.getTechnology();
+    };
+    final Consumer<Import> _function_1 = (Import it) -> {
       final Technology technologyModel = DdmmUtils.<Technology>getImportedModelRoot(it.eResource(), it.getImportURI(), Technology.class);
-      final Consumer<CommunicationType> _function_1 = (CommunicationType communicationType) -> {
+      final Consumer<CommunicationType> _function_2 = (CommunicationType communicationType) -> {
         Protocol defaultProtocol = null;
         DataFormat defaultDataFormat = null;
         EList<Protocol> _protocols = null;
@@ -1160,18 +1206,18 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
         }
         Iterable<Protocol> _filter = null;
         if (_protocols!=null) {
-          final Function1<Protocol, Boolean> _function_2 = (Protocol it_1) -> {
+          final Function1<Protocol, Boolean> _function_3 = (Protocol it_1) -> {
             CommunicationType _communicationType = it_1.getCommunicationType();
             return Boolean.valueOf(Objects.equal(_communicationType, communicationType));
           };
-          _filter=IterableExtensions.<Protocol>filter(_protocols, _function_2);
+          _filter=IterableExtensions.<Protocol>filter(_protocols, _function_3);
         }
         Protocol _findFirst = null;
         if (_filter!=null) {
-          final Function1<Protocol, Boolean> _function_3 = (Protocol it_1) -> {
+          final Function1<Protocol, Boolean> _function_4 = (Protocol it_1) -> {
             return Boolean.valueOf(it_1.isDefault());
           };
-          _findFirst=IterableExtensions.<Protocol>findFirst(_filter, _function_3);
+          _findFirst=IterableExtensions.<Protocol>findFirst(_filter, _function_4);
         }
         defaultProtocol = _findFirst;
         if ((defaultProtocol != null)) {
@@ -1179,9 +1225,9 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
           results.put(communicationType, Pair.<Protocol, DataFormat>of(defaultProtocol, defaultDataFormat));
         }
       };
-      missingCommunicationTypes.forEach(_function_1);
+      missingCommunicationTypes.forEach(_function_2);
     };
-    mapping.getTechnologies().forEach(_function);
+    ListExtensions.<TechnologyReference, Import>map(mapping.getTechnologyReferences(), _function).forEach(_function_1);
     return results;
   }
   

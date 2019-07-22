@@ -78,9 +78,27 @@ public class ServiceSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
+            case ServicePackage.MAPPED_COMPLEX_TYPE: {
+                MappedComplexType mappedComplexType = (MappedComplexType)theEObject;
+                T result = caseMappedComplexType(mappedComplexType);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case ServicePackage.MAPPED_FIELD: {
+                MappedField mappedField = (MappedField)theEObject;
+                T result = caseMappedField(mappedField);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
             case ServicePackage.MICROSERVICE: {
                 Microservice microservice = (Microservice)theEObject;
                 T result = caseMicroservice(microservice);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case ServicePackage.TECHNOLOGY_REFERENCE: {
+                TechnologyReference technologyReference = (TechnologyReference)theEObject;
+                T result = caseTechnologyReference(technologyReference);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -105,18 +123,6 @@ public class ServiceSwitch<T> extends Switch<T> {
             case ServicePackage.PARAMETER: {
                 Parameter parameter = (Parameter)theEObject;
                 T result = caseParameter(parameter);
-                if (result == null) result = defaultCase(theEObject);
-                return result;
-            }
-            case ServicePackage.MAPPED_COMPLEX_TYPE: {
-                MappedComplexType mappedComplexType = (MappedComplexType)theEObject;
-                T result = caseMappedComplexType(mappedComplexType);
-                if (result == null) result = defaultCase(theEObject);
-                return result;
-            }
-            case ServicePackage.MAPPED_FIELD: {
-                MappedField mappedField = (MappedField)theEObject;
-                T result = caseMappedField(mappedField);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -203,6 +209,36 @@ public class ServiceSwitch<T> extends Switch<T> {
     }
 
     /**
+     * Returns the result of interpreting the object as an instance of '<em>Mapped Complex Type</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Mapped Complex Type</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseMappedComplexType(MappedComplexType object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Mapped Field</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Mapped Field</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseMappedField(MappedField object) {
+        return null;
+    }
+
+    /**
      * Returns the result of interpreting the object as an instance of '<em>Microservice</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
@@ -214,6 +250,21 @@ public class ServiceSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseMicroservice(Microservice object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Technology Reference</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Technology Reference</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseTechnologyReference(TechnologyReference object) {
         return null;
     }
 
@@ -274,36 +325,6 @@ public class ServiceSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseParameter(Parameter object) {
-        return null;
-    }
-
-    /**
-     * Returns the result of interpreting the object as an instance of '<em>Mapped Complex Type</em>'.
-     * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
-     * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Mapped Complex Type</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-     * @generated
-     */
-    public T caseMappedComplexType(MappedComplexType object) {
-        return null;
-    }
-
-    /**
-     * Returns the result of interpreting the object as an instance of '<em>Mapped Field</em>'.
-     * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
-     * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Mapped Field</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-     * @generated
-     */
-    public T caseMappedField(MappedField object) {
         return null;
     }
 

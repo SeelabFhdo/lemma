@@ -49,7 +49,8 @@ class MappingModelTransformationValidator
     private def Void warnReferredMicroserviceTechnologies(TechnologyMapping mappingModel) {
         val referencesToMicroservicesWithoutTechnologies = mappingModel.serviceMappings
             .exists[
-                microservice.microservice.allRequiredMicroservices.keySet.exists[technologies.empty]
+                microservice.microservice
+                    .allRequiredMicroservices.keySet.exists[technologyReferences.empty]
             ]
 
         if (referencesToMicroservicesWithoutTechnologies)

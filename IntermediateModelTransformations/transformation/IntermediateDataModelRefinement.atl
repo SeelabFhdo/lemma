@@ -63,21 +63,32 @@ helper def : intermediateDataModel() : Intermediate!IntermediateDataModel =
 	Intermediate!IntermediateDataModel.allInstancesFrom('IN')->first()
 ;
 
---- Find an IntermediateComplexType from a MappedComplexType instance based on their fully-qualified
---- names
+--- Find a MappedComplexType from an IntermediateComplexType instance
+helper def : findMappedComplexType(type : Intermediate!IntermediateComplexType) 
+	: Service!MappedComplexType =
+	let allMappedComplexTypes : Sequence(Service!MappedComplexType)
+		= Service!MappedComplexType.allInstancesFrom('SERVICE') in
+	let mappedComplexType : Service!MappedComplexType = allMappedComplexTypes
+		->any(
+			t | 
+			t.t_sourceModelUri = thisModule.intermediateDataModel().sourceModelUri and
+			t.buildQualifiedName('.', false) = type.qualifiedName
+		)
+	in
+	mappedComplexType	
+;
+
+--- Find an IntermediateComplexType from a MappedComplexType instance
 helper def : findIntermediateComplexType(complexType : Service!MappedComplexType) 
 	: Intermediate!IntermediateComplexType =
 	let allIntermediateComplexTypes : Sequence(Intermediate!IntermediateComplexType)
 		= Intermediate!IntermediateComplexType.allInstancesFrom('IN') in
 	let intermediateType : Intermediate!IntermediateComplexType = allIntermediateComplexTypes->any(
 		t | 
-		t.qualifiedName = complexType.buildQualifiedName('.', false)		
+		t.qualifiedName = complexType.buildQualifiedName('.', false) and
+		t.dataField.oclIsUndefined()
 	) in
-	if (not intermediateType.oclIsUndefined()) then
-		intermediateType
-	else
-		OclUndefined
-	endif
+	intermediateType
 ;
 
 --- Find a MappedField from an IntermediateDataField instance based on their fully-qualified names
@@ -93,11 +104,7 @@ helper def : findMappedField(field : Intermediate!IntermediateDataField) : Servi
 			f.buildQualifiedName('.', false) = field.qualifiedName
 		)
 	in
-	if (not mappedField.oclIsUndefined()) then
-		mappedField
-	else
-		OclUndefined
-	endif
+	mappedField
 ;
 
 --- Find an IntermediateDataField from a MappedField instance based on their fully-qualified names
@@ -109,11 +116,7 @@ helper def : findIntermediateDataField(field : Service!MappedField)
 		f | 
 		f.qualifiedName = field.buildQualifiedName('.', false)		
 	) in
-	if (not intermediateField.oclIsUndefined()) then
-		intermediateField
-	else
-		OclUndefined
-	endif
+	intermediateField
 ;
 
 --- Determine the kind of a technology-specific type
@@ -152,7 +155,81 @@ rule RefineIntermediateDataField {
 		else
 			t.type <- thisModule.IntermediateImportedTechnologySpecificType(t, mappedField);
 
+		for (aspect in mappedField.aspects) {
+			t.aspects <- t.aspects->append(
+				thisModule.IntermediateImportedAspect(aspect, t, 'dataField')
+			);
+		}
+		
 		t;
+	}
+}
+
+--- Refine an IntermediateComplexType for which a technology-specific type mapping exists
+rule RefineIntermediateComplexType {
+	from
+		s : Intermediate!IntermediateComplexType (
+			-- Only consider IntermediateComplexType instances that are not used as data field 
+			-- types
+			s.dataField.oclIsUndefined() 
+		)
+	using {
+		mappedComplexType : Service!MappedComplexType = thisModule.findMappedComplexType(s);
+	}
+	to
+		t : Intermediate!IntermediateComplexType
+	do {
+		for (aspect in mappedComplexType.aspects) {
+			t.aspects <- t.aspects->append(
+				thisModule.IntermediateImportedAspect(aspect, t, 'complexType')
+			);
+		}
+		
+		t;
+	}
+}
+
+--- Create an IntermediateImportedAspect from an ImportedServiceAspect instance
+rule IntermediateImportedAspect(sourceAspect : Service!ImportedServiceAspect, container : OclAny, 
+	containerFeatureName : String) {
+	using {
+		import : Service!Import = sourceAspect.import;
+		importedAspect : Service!ServiceAspect = sourceAspect.importedAspect;
+	}
+	to
+		i : Intermediate!IntermediateImportedAspect(
+			name <- sourceAspect.importedAspect.name
+		)
+	do {
+		-- Establish reference to container. Note that this cannot be done in the to-clause via 
+		-- containerFeatureName <- container. Honestly, I have no clue why this is...
+		i.refSetValue(containerFeatureName, container);
+		
+		if (thisModule.getCreatedImport(import).oclIsUndefined())
+			thisModule.IntermediateImport(import);
+		i.import <- thisModule.getCreatedImport(import);
+		
+		-- Create properties of aspect and link them with the aspect 
+		for (property in importedAspect.properties) {
+			i.properties <- i.properties->append(
+				thisModule.IntermediateAspectProperty(property, i)
+			);
+		}
+		
+		-- Create values of aspect and link them with the aspect. Therefore, we consider both, the
+		-- syntactically shorter initialization of a single property aspect and the "normal" case of
+		-- "named" property initialization. Independent of how the aspect and its values were 
+		-- specified, we map an aspect value to a an IntermediateAspectPropertyValue instance.
+		if (not sourceAspect.singlePropertyValue.oclIsUndefined())
+			thisModule.IntermediateAspectPropertyValue(sourceAspect.singlePropertyValue, i, 
+				thisModule.getCreatedAspectProperty(importedAspect.properties->first()));
+		else 
+			for (value in sourceAspect.values) {
+				thisModule.IntermediateAspectPropertyValue(value.value, i,
+					thisModule.getCreatedAspectProperty(value.property));
+			}
+
+		i;
 	}
 }
 
@@ -217,76 +294,17 @@ helper def : getImportTypeName(import : Service!Import) : String =
 	endif
 ;
 
---- Create an IntermediateImportedAspect from an ImportedServiceAspect instance
-rule IntermediateImportedAspect {
-	from
-		a : Service!ImportedServiceAspect (				
-			if (not a.mappedComplexType.oclIsUndefined()) then
-				a.mappedComplexType.t_sourceModelUri 
-					= thisModule.intermediateDataModel().sourceModelUri
-			else if (not a.mappedField.oclIsUndefined()) then
-				if (not a.mappedField.mappedComplexType.oclIsUndefined()) then
-					a.mappedField.mappedComplexType.t_sourceModelUri 
-						= thisModule.intermediateDataModel().sourceModelUri
-				else
-					false
-				endif
-			else 
-				false
-			endif
-			endif	
-		)
-	to
-		i : Intermediate!IntermediateImportedAspect(
-			name <- a.importedAspect.name
-		)
-	do {
-		if (thisModule.getCreatedImport(a.import).oclIsUndefined())
-			thisModule.IntermediateImport(a.import);
-		i.import <- thisModule.getCreatedImport(a.import);
-		
-		-- Create properties of aspect and link them with the aspect 
-		for (property in a.importedAspect.properties) {
-			i.properties <- i.properties->append(
-				thisModule.IntermediateAspectProperty(property, i)
-			);
-		}
-		
-		-- Create values of aspect and link them with the aspect. Therefore, we consider both, the
-		-- syntactically shorter initialization of a single property aspect and the "normal" case of
-		-- "named" property initialization. Independent of how the aspect and its values were 
-		-- specified, we map an aspect value to a an IntermediateAspectPropertyValue instance.
-		if (not a.singlePropertyValue.oclIsUndefined())
-			thisModule.IntermediateAspectPropertyValue(a.singlePropertyValue, i, 
-				thisModule.getCreatedAspectProperty(a.importedAspect.properties->first()));
-		else 
-			for (value in a.values) {
-				thisModule.IntermediateAspectPropertyValue(value.value, i,
-					thisModule.getCreatedAspectProperty(value.property));
-			}
-
-		-- Link created aspect to the corresponding target element
-		if (not a.mappedComplexType.oclIsUndefined())
-			thisModule.findIntermediateComplexType(a.mappedComplexType).aspects <-
-				thisModule.findIntermediateComplexType(a.mappedComplexType).aspects->append(i);
-		else
-			thisModule.findIntermediateDataField(a.mappedField).aspects <- 
-				thisModule.findIntermediateDataField(a.mappedField).aspects->append(i);
-		
-		i;
-	}	
-}
-
 --- Called rule to create an IntermediateAspectProperty instance
 rule IntermediateAspectProperty(sourceProperty : Service!TechnologySpecificProperty,
 	aspect : Intermediate!IntermediateImportedAspect) {
 	to
 		i : Intermediate!IntermediateAspectProperty(
 			name <- sourceProperty.name,
-			type <- sourceProperty.type.typeName,
-			aspect <- aspect
+			type <- sourceProperty.type.typeName
 		)
 	do {
+		i.refSetValue('aspect', aspect);
+		
 		for (feature in sourceProperty.features) {
 			i.featureNames <- i.featureNames.append(feature.toString());
 		}
@@ -306,11 +324,12 @@ rule IntermediateAspectPropertyValue(sourceValue : Service!PrimitiveValue,
 	property : Intermediate!IntermediateAspectProperty) {
 	to
 		i : Intermediate!IntermediateAspectPropertyValue(
-			value <- sourceValue.valueAsString(),
-			aspect <- aspect,
-			property <- property
+			value <- sourceValue.valueAsString()
 		)
 	do {
+		i.refSetValue('aspect', aspect);
+		i.refSetValue('property', property);
+		
 		aspect.propertyValues <- aspect.propertyValues->append(i);
 		i;
 	}

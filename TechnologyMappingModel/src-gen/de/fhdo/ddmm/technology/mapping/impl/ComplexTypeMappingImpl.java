@@ -3,6 +3,9 @@
 package de.fhdo.ddmm.technology.mapping.impl;
 
 import de.fhdo.ddmm.service.Import;
+import de.fhdo.ddmm.service.TechnologyReference;
+
+import de.fhdo.ddmm.technology.Technology;
 
 import de.fhdo.ddmm.technology.mapping.ComplexTypeMapping;
 import de.fhdo.ddmm.technology.mapping.ImportedComplexType;
@@ -11,11 +14,16 @@ import de.fhdo.ddmm.technology.mapping.TechnologyMapping;
 import de.fhdo.ddmm.technology.mapping.TechnologySpecificFieldMapping;
 import de.fhdo.ddmm.technology.mapping.TechnologySpecificImportedServiceAspect;
 
+import de.fhdo.ddmm.utils.DdmmUtils;
+
+import java.lang.reflect.InvocationTargetException;
+
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
+import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
@@ -24,10 +32,16 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
+import org.eclipse.emf.ecore.resource.Resource;
+
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
-import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
+
+import org.eclipse.xtext.xbase.lib.Functions.Function1;
+
+import org.eclipse.xtext.xbase.lib.IterableExtensions;
 
 /**
  * <!-- begin-user-doc -->
@@ -38,7 +52,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * </p>
  * <ul>
  *   <li>{@link de.fhdo.ddmm.technology.mapping.impl.ComplexTypeMappingImpl#getT_sourceModelUri <em>Tsource Model Uri</em>}</li>
- *   <li>{@link de.fhdo.ddmm.technology.mapping.impl.ComplexTypeMappingImpl#getTechnologies <em>Technologies</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.technology.mapping.impl.ComplexTypeMappingImpl#getTechnologyReferences <em>Technology References</em>}</li>
  *   <li>{@link de.fhdo.ddmm.technology.mapping.impl.ComplexTypeMappingImpl#getType <em>Type</em>}</li>
  *   <li>{@link de.fhdo.ddmm.technology.mapping.impl.ComplexTypeMappingImpl#getFieldMappings <em>Field Mappings</em>}</li>
  *   <li>{@link de.fhdo.ddmm.technology.mapping.impl.ComplexTypeMappingImpl#getAspects <em>Aspects</em>}</li>
@@ -69,14 +83,14 @@ public class ComplexTypeMappingImpl extends MinimalEObjectImpl.Container impleme
     protected String t_sourceModelUri = TSOURCE_MODEL_URI_EDEFAULT;
 
     /**
-     * The cached value of the '{@link #getTechnologies() <em>Technologies</em>}' reference list.
+     * The cached value of the '{@link #getTechnologyReferences() <em>Technology References</em>}' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getTechnologies()
+     * @see #getTechnologyReferences()
      * @generated
      * @ordered
      */
-    protected EList<Import> technologies;
+    protected EList<TechnologyReference> technologyReferences;
 
     /**
      * The cached value of the '{@link #getType() <em>Type</em>}' containment reference.
@@ -156,11 +170,11 @@ public class ComplexTypeMappingImpl extends MinimalEObjectImpl.Container impleme
      * @generated
      */
     @Override
-    public EList<Import> getTechnologies() {
-        if (technologies == null) {
-            technologies = new EObjectResolvingEList<Import>(Import.class, this, MappingPackage.COMPLEX_TYPE_MAPPING__TECHNOLOGIES);
+    public EList<TechnologyReference> getTechnologyReferences() {
+        if (technologyReferences == null) {
+            technologyReferences = new EObjectContainmentEList<TechnologyReference>(TechnologyReference.class, this, MappingPackage.COMPLEX_TYPE_MAPPING__TECHNOLOGY_REFERENCES);
         }
-        return technologies;
+        return technologyReferences;
     }
 
     /**
@@ -292,6 +306,85 @@ public class ComplexTypeMappingImpl extends MinimalEObjectImpl.Container impleme
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
+    public EList<TechnologyReference> getAllTypeDefinitionTechnologyReferences() {
+        final Function1<TechnologyReference, Boolean> _function = new Function1<TechnologyReference, Boolean>() {
+            public Boolean apply(final TechnologyReference it) {
+                boolean _xblockexpression = false;
+                {
+                    final Resource resource = it.getTechnology().eResource();
+                    final String importURI = it.getTechnology().getImportURI();
+                    final Technology technologyModel = DdmmUtils.<Technology>getImportedModelRoot(resource, importURI, Technology.class);
+                    _xblockexpression = (((!technologyModel.getPrimitiveTypes().isEmpty()) || 
+                        (!technologyModel.getListTypes().isEmpty())) || 
+                        (!technologyModel.getDataStructures().isEmpty()));
+                }
+                return Boolean.valueOf(_xblockexpression);
+            }
+        };
+        return ECollections.<TechnologyReference>toEList(IterableExtensions.<TechnologyReference>filter(this.getTechnologyReferences(), _function));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Import getTypeDefinitionTechnologyImport() {
+        final Function1<TechnologyReference, Boolean> _function = new Function1<TechnologyReference, Boolean>() {
+            public Boolean apply(final TechnologyReference it) {
+                return Boolean.valueOf(it.isIsTypeDefinitionTechnology());
+            }
+        };
+        TechnologyReference _findFirst = IterableExtensions.<TechnologyReference>findFirst(this.getTechnologyReferences(), _function);
+        Import _technology = null;
+        if (_findFirst!=null) {
+            _technology=_findFirst.getTechnology();
+        }
+        final Import explicitTypeDefinitionTechnologyImport = _technology;
+        if ((explicitTypeDefinitionTechnologyImport != null)) {
+            return explicitTypeDefinitionTechnologyImport;
+        }
+        final EList<TechnologyReference> allTypeDefinitionTechnologyReferences = this.getAllTypeDefinitionTechnologyReferences();
+        Import _xifexpression = null;
+        boolean _isEmpty = allTypeDefinitionTechnologyReferences.isEmpty();
+        boolean _not = (!_isEmpty);
+        if (_not) {
+            _xifexpression = allTypeDefinitionTechnologyReferences.get(0).getTechnology();
+        }
+        else {
+            _xifexpression = null;
+        }
+        return _xifexpression;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Technology getTypeDefinitionTechnology() {
+        final Import typeDefinitionTechnologyImport = this.getTypeDefinitionTechnologyImport();
+        Technology _xifexpression = null;
+        if ((typeDefinitionTechnologyImport != null)) {
+            _xifexpression = DdmmUtils.<Technology>getImportedModelRoot(
+                typeDefinitionTechnologyImport.eResource(), 
+                typeDefinitionTechnologyImport.getImportURI(), 
+                Technology.class);
+        }
+        else {
+            _xifexpression = null;
+        }
+        return _xifexpression;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     @SuppressWarnings("unchecked")
     @Override
     public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
@@ -320,6 +413,8 @@ public class ComplexTypeMappingImpl extends MinimalEObjectImpl.Container impleme
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
+            case MappingPackage.COMPLEX_TYPE_MAPPING__TECHNOLOGY_REFERENCES:
+                return ((InternalEList<?>)getTechnologyReferences()).basicRemove(otherEnd, msgs);
             case MappingPackage.COMPLEX_TYPE_MAPPING__TYPE:
                 return basicSetType(null, msgs);
             case MappingPackage.COMPLEX_TYPE_MAPPING__FIELD_MAPPINGS:
@@ -356,8 +451,8 @@ public class ComplexTypeMappingImpl extends MinimalEObjectImpl.Container impleme
         switch (featureID) {
             case MappingPackage.COMPLEX_TYPE_MAPPING__TSOURCE_MODEL_URI:
                 return getT_sourceModelUri();
-            case MappingPackage.COMPLEX_TYPE_MAPPING__TECHNOLOGIES:
-                return getTechnologies();
+            case MappingPackage.COMPLEX_TYPE_MAPPING__TECHNOLOGY_REFERENCES:
+                return getTechnologyReferences();
             case MappingPackage.COMPLEX_TYPE_MAPPING__TYPE:
                 return getType();
             case MappingPackage.COMPLEX_TYPE_MAPPING__FIELD_MAPPINGS:
@@ -383,9 +478,9 @@ public class ComplexTypeMappingImpl extends MinimalEObjectImpl.Container impleme
             case MappingPackage.COMPLEX_TYPE_MAPPING__TSOURCE_MODEL_URI:
                 setT_sourceModelUri((String)newValue);
                 return;
-            case MappingPackage.COMPLEX_TYPE_MAPPING__TECHNOLOGIES:
-                getTechnologies().clear();
-                getTechnologies().addAll((Collection<? extends Import>)newValue);
+            case MappingPackage.COMPLEX_TYPE_MAPPING__TECHNOLOGY_REFERENCES:
+                getTechnologyReferences().clear();
+                getTechnologyReferences().addAll((Collection<? extends TechnologyReference>)newValue);
                 return;
             case MappingPackage.COMPLEX_TYPE_MAPPING__TYPE:
                 setType((ImportedComplexType)newValue);
@@ -416,8 +511,8 @@ public class ComplexTypeMappingImpl extends MinimalEObjectImpl.Container impleme
             case MappingPackage.COMPLEX_TYPE_MAPPING__TSOURCE_MODEL_URI:
                 setT_sourceModelUri(TSOURCE_MODEL_URI_EDEFAULT);
                 return;
-            case MappingPackage.COMPLEX_TYPE_MAPPING__TECHNOLOGIES:
-                getTechnologies().clear();
+            case MappingPackage.COMPLEX_TYPE_MAPPING__TECHNOLOGY_REFERENCES:
+                getTechnologyReferences().clear();
                 return;
             case MappingPackage.COMPLEX_TYPE_MAPPING__TYPE:
                 setType((ImportedComplexType)null);
@@ -445,8 +540,8 @@ public class ComplexTypeMappingImpl extends MinimalEObjectImpl.Container impleme
         switch (featureID) {
             case MappingPackage.COMPLEX_TYPE_MAPPING__TSOURCE_MODEL_URI:
                 return TSOURCE_MODEL_URI_EDEFAULT == null ? t_sourceModelUri != null : !TSOURCE_MODEL_URI_EDEFAULT.equals(t_sourceModelUri);
-            case MappingPackage.COMPLEX_TYPE_MAPPING__TECHNOLOGIES:
-                return technologies != null && !technologies.isEmpty();
+            case MappingPackage.COMPLEX_TYPE_MAPPING__TECHNOLOGY_REFERENCES:
+                return technologyReferences != null && !technologyReferences.isEmpty();
             case MappingPackage.COMPLEX_TYPE_MAPPING__TYPE:
                 return type != null;
             case MappingPackage.COMPLEX_TYPE_MAPPING__FIELD_MAPPINGS:
@@ -457,6 +552,24 @@ public class ComplexTypeMappingImpl extends MinimalEObjectImpl.Container impleme
                 return basicGetMappingModel() != null;
         }
         return super.eIsSet(featureID);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+        switch (operationID) {
+            case MappingPackage.COMPLEX_TYPE_MAPPING___GET_ALL_TYPE_DEFINITION_TECHNOLOGY_REFERENCES:
+                return getAllTypeDefinitionTechnologyReferences();
+            case MappingPackage.COMPLEX_TYPE_MAPPING___GET_TYPE_DEFINITION_TECHNOLOGY_IMPORT:
+                return getTypeDefinitionTechnologyImport();
+            case MappingPackage.COMPLEX_TYPE_MAPPING___GET_TYPE_DEFINITION_TECHNOLOGY:
+                return getTypeDefinitionTechnology();
+        }
+        return super.eInvoke(operationID, arguments);
     }
 
     /**

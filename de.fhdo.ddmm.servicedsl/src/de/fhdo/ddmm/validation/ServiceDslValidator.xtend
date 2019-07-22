@@ -38,6 +38,7 @@ import de.fhdo.ddmm.service.ImportedServiceAspect
 import de.fhdo.ddmm.technology.TechnologySpecificPropertyValueAssignment
 import de.fhdo.ddmm.technology.TechnologyPackage
 import org.eclipse.xtext.EcoreUtil2
+import de.fhdo.ddmm.service.TechnologyReference
 
 /**
  * This class contains custom validation rules for service models.
@@ -174,11 +175,14 @@ class ServiceDslValidator extends AbstractServiceDslValidator {
      */
     @Check
     def checkTechnologyUniqueness(Microservice microservice) {
-        val duplicateIndex = DdmmUtils.getDuplicateIndex(microservice.technologies, [it])
-        if (duplicateIndex > -1) {
-            error('''Duplicate technology assignment''',
-                ServicePackage::Literals.MICROSERVICE__TECHNOLOGIES, duplicateIndex)
-        }
+        val duplicateIndex = DdmmUtils.getDuplicateIndex(
+            microservice.technologyReferences.map[technology],
+            [it]
+        )
+
+        if (duplicateIndex > -1)
+            error("Duplicate technology assignment",
+                ServicePackage::Literals.MICROSERVICE__TECHNOLOGY_REFERENCES, duplicateIndex)
     }
 
     /**
@@ -186,23 +190,39 @@ class ServiceDslValidator extends AbstractServiceDslValidator {
      */
     @Check
     def checkUniqueTypeDefinitionTechnology(Microservice microservice) {
-        var String typeDefinitionTechnologyName = null
-        for (i : 0..<microservice.technologies.size) {
-            val technologyImport = microservice.technologies.get(i)
-            val technologyModel = DdmmUtils.getImportedModelRoot(technologyImport.eResource,
-                technologyImport.importURI, Technology)
-            if (!technologyModel.primitiveTypes.empty ||
-                !technologyModel.listTypes.empty ||
-                !technologyModel.dataStructures.empty) {
-                if (typeDefinitionTechnologyName === null)
-                    typeDefinitionTechnologyName = technologyModel.name
-                else
-                    error('''Technology "«typeDefinitionTechnologyName»" already defines ''' +
-                        '''technology-specific types. Only one technology per microservice may ''' +
-                        '''define technology-specific types.''',
-                        ServicePackage::Literals.MICROSERVICE__TECHNOLOGIES, i)
-            }
+        /*
+         * Check that only one technology is explicitly marked as containing default type
+         * definitions
+         */
+        val duplicateIndex = DdmmUtils.getDuplicateIndex(
+            microservice.technologyReferences.map[isTypeDefinitionTechnology],
+            [it], [it === true]
+        )
+        if (duplicateIndex > -1) {
+            error("Only one technology can be the default type definition technology",
+                ServicePackage::Literals.MICROSERVICE__TECHNOLOGY_REFERENCES, duplicateIndex)
+            return
         }
+
+        /*
+         * Check that one technology is explicitly marked as containing default definitions, if more
+         * than one technology defines types
+         */
+        // If one technology has been chosen to provide default types, no ambiguity regarding
+        // the default types exists
+        if (microservice.technologyReferences.exists[isIsTypeDefinitionTechnology]) {
+            return
+        }
+
+        val typeDefinitionTechnologyReference = microservice.allTypeDefinitionTechnologyReferences
+        if (typeDefinitionTechnologyReference.empty || typeDefinitionTechnologyReference.size == 1) {
+            return
+        }
+        typeDefinitionTechnologyReference.forEach[
+            error("More than one type definition technology detected. You need to explicitly " +
+                "select one as the default type definition technology.", it,
+                ServicePackage::Literals.TECHNOLOGY_REFERENCE__TECHNOLOGY)
+        ]
     }
 
     /**
@@ -210,15 +230,15 @@ class ServiceDslValidator extends AbstractServiceDslValidator {
      */
     @Check
     def checkTechnologiesForServiceConcepts(Microservice microservice) {
-        for (i : 0..<microservice.technologies.size) {
-            val technologyImport = microservice.technologies.get(i)
+        for (i : 0..<microservice.technologyReferences.size) {
+            val technologyImport = microservice.technologyReferences.get(i).technology
             val technologyModel = DdmmUtils.getImportedModelRoot(technologyImport.eResource,
                 technologyImport.importURI, Technology)
             if (technologyModel.primitiveTypes.empty &&
                 technologyModel.protocols.empty &&
                 technologyModel.serviceAspects.empty) {
                 error("Technology does not specify service-related concepts",
-                    ServicePackage::Literals.MICROSERVICE__TECHNOLOGIES, i)
+                    ServicePackage::Literals.MICROSERVICE__TECHNOLOGY_REFERENCES, i)
             }
         }
     }
@@ -228,7 +248,7 @@ class ServiceDslValidator extends AbstractServiceDslValidator {
      */
     @Check
     def checkTechnologiesForUniqueDefaultProtocols(Microservice microservice) {
-        if (microservice.technologies.empty) {
+        if (microservice.technologyReferences.empty) {
             return
         }
 
@@ -256,7 +276,7 @@ class ServiceDslValidator extends AbstractServiceDslValidator {
     private def isDefaultProtocolUnique(Microservice microservice,
         CommunicationType communicationType) {
         var boolean alreadyFoundDefaultProtocolForCommunicationType
-        for (technologyImport : microservice.technologies) {
+        for (technologyImport : microservice.technologyReferences.map[technology]) {
             val technologyModel = DdmmUtils.getImportedModelRoot(technologyImport.eResource,
                 technologyImport.importURI, Technology)
             val hasDefaultProtocolForCommunicationType = technologyModel.protocols.exists[
@@ -272,6 +292,27 @@ class ServiceDslValidator extends AbstractServiceDslValidator {
 
         return true
     }
+
+    /**
+     * Check that default type definition technology can be marked as such
+     */
+    @Check
+    def checkDefaultTypeDefinitionTechnology(TechnologyReference technologyReference) {
+        if (!technologyReference.isTypeDefinitionTechnology) {
+            return
+        }
+
+        val importImport = technologyReference.technology
+        val technologyModel = DdmmUtils.getImportedModelRoot(importImport.eResource,
+            importImport.importURI, Technology)
+        val technologyDefinesTypes = !technologyModel.primitiveTypes.empty ||
+            !technologyModel.listTypes.empty || !technologyModel.dataStructures.empty
+        if (!technologyDefinesTypes)
+            error("Technology does not specify types and cannot be marked as default type " +
+                "definition technology",
+                ServicePackage.Literals::TECHNOLOGY_REFERENCE__IS_TYPE_DEFINITION_TECHNOLOGY)
+    }
+
 
     /**
      * Check that interfaces are not empty, i.e., that they define or refer to at least one

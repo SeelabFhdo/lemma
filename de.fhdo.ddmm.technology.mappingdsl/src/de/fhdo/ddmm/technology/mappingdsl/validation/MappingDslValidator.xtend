@@ -40,6 +40,7 @@ import de.fhdo.ddmm.service.ImportType
 import de.fhdo.ddmm.service.ServiceModel
 import de.fhdo.ddmm.service.Operation
 import de.fhdo.ddmm.service.ReferredOperation
+import de.fhdo.ddmm.service.TechnologyReference
 
 /**
  * This class contains validation rules for the Mapping DSL.
@@ -94,61 +95,115 @@ class MappingDslValidator extends AbstractMappingDslValidator {
      */
     @Check
     def checkTechnologyUniqueness(ComplexTypeMapping mapping) {
-        val duplicateIndex = DdmmUtils.getDuplicateIndex(mapping.technologies, [it])
+        val duplicateIndex = DdmmUtils.getDuplicateIndex(
+            mapping.technologyReferences.map[technology],
+            [it]
+        )
+
         if (duplicateIndex > -1)
-            error("Duplicate technology assignment",
-                MappingPackage::Literals.COMPLEX_TYPE_MAPPING__TECHNOLOGIES, duplicateIndex)
+            error(
+                "Duplicate technology assignment",
+                MappingPackage::Literals.COMPLEX_TYPE_MAPPING__TECHNOLOGY_REFERENCES,
+                duplicateIndex
+            )
     }
 
     /**
-     * Check that technology is assigned only once to a microservice mapping
+     * Check that technology is assigned only once to a microservice
      */
     @Check
     def checkTechnologyUniqueness(MicroserviceMapping mapping) {
-        val duplicateIndex = DdmmUtils.getDuplicateIndex(mapping.technologies, [it])
-        if (duplicateIndex > -1)
-            error("Duplicate technology assignment",
-                MappingPackage::Literals.MICROSERVICE_MAPPING__TECHNOLOGIES, duplicateIndex)
-    }
+        val duplicateIndex = DdmmUtils.getDuplicateIndex(
+            mapping.technologyReferences.map[technology],
+            [it]
+        )
 
-    /**
-     * Check that only one annotated technology of a complex type mapping contains type definitions
-     */
-    @Check
-    def checkUniqueTypeDefinitionTechnology(ComplexTypeMapping mapping) {
-        checkUniqueTypeDefinitionTechnology(mapping, mapping.technologies,
-            MappingPackage::Literals.COMPLEX_TYPE_MAPPING__TECHNOLOGIES)
+        if (duplicateIndex > -1)
+            error(
+                "Duplicate technology assignment",
+                MappingPackage::Literals.MICROSERVICE_MAPPING__TECHNOLOGY_REFERENCES,
+                duplicateIndex
+            )
     }
 
     /**
      * Check that only one annotated technology of a microservice mapping contains type definitions
      */
     @Check
-    def checkUniqueTypeDefinitionTechnology(MicroserviceMapping mapping) {
-        checkUniqueTypeDefinitionTechnology(mapping, mapping.technologies,
-            MappingPackage::Literals.MICROSERVICE_MAPPING__TECHNOLOGIES)
+    def checkUniqueTypeDefinitionTechnologyForMicroserviceMapping(MicroserviceMapping mapping) {
+        checkUniqueTypeDefinitionTechnology(mapping)
     }
 
     /**
-     * Helper to check that only one annotated technology contains type definitions
+     * Check that only one annotated technology of a complex type mapping contains type definitions
      */
-    private def checkUniqueTypeDefinitionTechnology(EObject mapping, List<Import> technologies,
-        EReference feature) {
-        var String typeDefinitionTechnologyName = null
-        for (i : 0..<technologies.size) {
-            val technologyImport = technologies.get(i)
-            val technologyModel = DdmmUtils.getImportedModelRoot(technologyImport.eResource,
-                technologyImport.importURI, Technology)
-            if (!technologyModel.primitiveTypes.empty ||
-                !technologyModel.listTypes.empty ||
-                !technologyModel.dataStructures.empty) {
-                if (typeDefinitionTechnologyName === null)
-                    typeDefinitionTechnologyName = technologyModel.name
-                else
-                    error('''Technology "«typeDefinitionTechnologyName»" already defines ''' +
-                        '''technology-specific types''', mapping, feature, i)
+    @Check
+    def checkUniqueTypeDefinitionTechnologyForComplexTypeMapping(ComplexTypeMapping mapping) {
+        checkUniqueTypeDefinitionTechnology(mapping)
+    }
+
+    /**
+     * Helper for complex type and microservice mappings to check that only one annotated technology
+     * contains type definitions or that one type definition technology is marked as the default one
+     */
+    def checkUniqueTypeDefinitionTechnology(EObject mapping) {
+        var List<TechnologyReference> technologyReferences
+        var List<TechnologyReference> typeDefinitionTechnologyReferences
+        var EReference technologyReferenceFeature
+
+        switch (mapping) {
+            ComplexTypeMapping: {
+                technologyReferences = mapping.technologyReferences
+                typeDefinitionTechnologyReferences = mapping.allTypeDefinitionTechnologyReferences
+                technologyReferenceFeature = MappingPackage::Literals
+                    .COMPLEX_TYPE_MAPPING__TECHNOLOGY_REFERENCES
             }
+
+            MicroserviceMapping: {
+                technologyReferences = mapping.technologyReferences
+                typeDefinitionTechnologyReferences = mapping.allTypeDefinitionTechnologyReferences
+                technologyReferenceFeature = MappingPackage::Literals
+                    .MICROSERVICE_MAPPING__TECHNOLOGY_REFERENCES
+            }
+
+            default:
+                return
         }
+
+        /*
+         * Check that only one technology is explicitly marked as containing default type
+         * definitions
+         */
+        val duplicateIndex = DdmmUtils.getDuplicateIndex(
+            technologyReferences.map[isTypeDefinitionTechnology],
+            [it],
+            [it === true]
+        )
+        if (duplicateIndex > -1) {
+            error("Only one technology can be the default type definition technology",
+                technologyReferenceFeature, duplicateIndex)
+            return
+        }
+
+        /*
+         * Check that one technology is explicitly marked as containing default definitions, if more
+         * than one technology defines types
+         */
+        // If one technology has been chosen to provide default types, no ambiguity regarding
+        // the default types exists
+        if (technologyReferences.exists[isIsTypeDefinitionTechnology]) {
+            return
+        }
+
+        if (typeDefinitionTechnologyReferences.empty ||
+            typeDefinitionTechnologyReferences.size == 1) {
+            return
+        }
+        typeDefinitionTechnologyReferences.forEach[
+            error("More than one type definition technology detected. One of them needs to " +
+                "explicitly be selected as the default type definition technology.", it,
+                ServicePackage::Literals.TECHNOLOGY_REFERENCE__TECHNOLOGY)
+        ]
     }
 
     /**
@@ -157,8 +212,8 @@ class MappingDslValidator extends AbstractMappingDslValidator {
      */
     @Check
     def checkTechnologiesForServiceConcepts(ComplexTypeMapping mapping) {
-        checkTechnologiesForServiceConcepts(mapping, mapping.technologies,
-            MappingPackage::Literals.COMPLEX_TYPE_MAPPING__TECHNOLOGIES)
+        checkTechnologiesForServiceConcepts(mapping, mapping.technologyReferences.map[technology],
+            MappingPackage::Literals.COMPLEX_TYPE_MAPPING__TECHNOLOGY_REFERENCES)
     }
 
     /**
@@ -167,8 +222,8 @@ class MappingDslValidator extends AbstractMappingDslValidator {
      */
     @Check
     def checkTechnologiesForServiceConcepts(MicroserviceMapping mapping) {
-        checkTechnologiesForServiceConcepts(mapping, mapping.technologies,
-            MappingPackage::Literals.MICROSERVICE_MAPPING__TECHNOLOGIES)
+        checkTechnologiesForServiceConcepts(mapping, mapping.technologyReferences.map[technology],
+            MappingPackage::Literals.MICROSERVICE_MAPPING__TECHNOLOGY_REFERENCES)
     }
 
     /**
@@ -194,7 +249,7 @@ class MappingDslValidator extends AbstractMappingDslValidator {
      */
     @Check
     def checkTechnologiesForUniqueDefaultProtocols(MicroserviceMapping mapping) {
-        if (mapping.technologies.empty) {
+        if (mapping.technologyReferences.empty) {
             return
         }
 
@@ -223,7 +278,7 @@ class MappingDslValidator extends AbstractMappingDslValidator {
     private def isDefaultProtocolUnique(MicroserviceMapping mapping,
         CommunicationType communicationType) {
         var boolean alreadyFoundDefaultProtocolForCommunicationType
-        for (technologyImport : mapping.technologies) {
+        for (technologyImport : mapping.technologyReferences.map[technology]) {
             val technologyModel = DdmmUtils.getImportedModelRoot(technologyImport.eResource,
                 technologyImport.importURI, Technology)
             val hasDefaultProtocolForCommunicationType = technologyModel.protocols.exists[
@@ -247,7 +302,7 @@ class MappingDslValidator extends AbstractMappingDslValidator {
     def checkMicroserviceMappingUniqueness(TechnologyMapping model) {
         // Mapping technologies may be empty if the model contains syntax errors
         val modelMappingsWithTechnology = model.serviceMappings
-            .filter[!technologies.empty]
+            .filter[!technologyReferences.empty]
             .toList
 
         checkFirstLevelMappingUniqueness(
@@ -266,7 +321,7 @@ class MappingDslValidator extends AbstractMappingDslValidator {
     def checkComplexTypeMappingUniqueness(TechnologyMapping model) {
         // Mapping technologies may be empty if the model contains syntax errors
         val modelMappingsWithTechnology = model.typeMappings
-            .filter[!technologies.empty]
+            .filter[!technologyReferences.empty]
             .toList
 
         checkFirstLevelMappingUniqueness(
@@ -663,13 +718,13 @@ class MappingDslValidator extends AbstractMappingDslValidator {
      */
     @Check
     def checkDifferingParameterTechnologies(MicroserviceMapping mapping) {
-        if (mapping.technologies.empty || mapping.microservice === null ||
+        if (mapping.technologyReferences.empty || mapping.microservice === null ||
             mapping.microservice.microservice === null) {
             return
         }
 
         val mappedService = mapping.microservice.microservice
-        if (mappedService.technologies.empty) {
+        if (mappedService.technologyReferences.empty) {
             return
         }
 

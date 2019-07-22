@@ -267,7 +267,7 @@ rule IntermediateMicroservice {
 		)
 	do {
 		-- Create intermediate technologies
-		for (technology in m.technologies) {
+		for (technology in m.technologyReferences->collect(r | r.technology)) {
 			thisModule.IntermediateTechnology(technology, i);
 		}
 		

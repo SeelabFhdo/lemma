@@ -35,9 +35,10 @@ class ServiceModelTransformationValidator extends AbstractInputModelValidator<Se
      * Warn if microservices with technologies refer to microservices without technologies
      */
     private def Void warnReferredMicroserviceTechnologies(ServiceModel serviceModel) {
-        val microservicesWithTechnologies = serviceModel.microservices.filter[!technologies.empty]
+        val microservicesWithTechnologies = serviceModel.microservices
+            .filter[!technologyReferences.empty]
         val referencesToMicroservicesWithoutTechnologies = microservicesWithTechnologies
-            .exists[allRequiredMicroservices.keySet.exists[technologies.empty]]
+            .exists[allRequiredMicroservices.keySet.exists[technologyReferences.empty]]
 
         if (referencesToMicroservicesWithoutTechnologies)
             warning("The model contains microservices with technology assignments, which refer " +

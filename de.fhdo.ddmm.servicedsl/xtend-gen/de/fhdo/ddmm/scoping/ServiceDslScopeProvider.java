@@ -26,6 +26,7 @@ import de.fhdo.ddmm.service.ProtocolSpecification;
 import de.fhdo.ddmm.service.ReferredOperation;
 import de.fhdo.ddmm.service.ServiceModel;
 import de.fhdo.ddmm.service.ServicePackage;
+import de.fhdo.ddmm.service.TechnologyReference;
 import de.fhdo.ddmm.technology.CommunicationType;
 import de.fhdo.ddmm.technology.DataFormat;
 import de.fhdo.ddmm.technology.ExchangePattern;
@@ -84,6 +85,12 @@ public class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
     if (context instanceof Microservice) {
       _matched=true;
       _switchResult = this.getScope(((Microservice)context), reference);
+    }
+    if (!_matched) {
+      if (context instanceof TechnologyReference) {
+        _matched=true;
+        _switchResult = this.getScope(((TechnologyReference)context), reference);
+      }
     }
     if (!_matched) {
       if (context instanceof Interface) {
@@ -208,16 +215,22 @@ public class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
       }
     }
     if (!_matched) {
-      if (Objects.equal(reference, ServicePackage.Literals.MICROSERVICE__TECHNOLOGIES)) {
-        _matched=true;
-        return this.getScopeForImportsOfType(microservice, Technology.class);
-      }
-    }
-    if (!_matched) {
       if (Objects.equal(reference, ServicePackage.Literals.IMPORTED_PROTOCOL_AND_DATA_FORMAT__IMPORT)) {
         _matched=true;
         return this.getServiceTechnologyImportAliasesAsScope(microservice);
       }
+    }
+    return null;
+  }
+  
+  /**
+   * Build scope for technology references and the given reference
+   */
+  private IScope getScope(final TechnologyReference technologyReference, final EReference reference) {
+    boolean _matched = false;
+    if (Objects.equal(reference, ServicePackage.Literals.TECHNOLOGY_REFERENCE__TECHNOLOGY)) {
+      _matched=true;
+      return this.getScopeForImportsOfType(technologyReference, Technology.class);
     }
     return null;
   }
@@ -686,10 +699,13 @@ public class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
    */
   private IScope getServiceTechnologyImportAliasesAsScope(final EObject context) {
     final Microservice microservice = EcoreUtil2.<Microservice>getContainerOfType(context, Microservice.class);
-    if (((microservice == null) || microservice.getTechnologies().isEmpty())) {
+    if (((microservice == null) || microservice.getTechnologyReferences().isEmpty())) {
       return IScope.NULLSCOPE;
     }
-    return Scopes.scopeFor(microservice.getTechnologies());
+    final Function1<TechnologyReference, Import> _function = (TechnologyReference it) -> {
+      return it.getTechnology();
+    };
+    return Scopes.scopeFor(ListExtensions.<TechnologyReference, Import>map(microservice.getTechnologyReferences(), _function));
   }
   
   /**
@@ -1061,25 +1077,28 @@ public class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
     if (_not_1) {
       missingCommunicationTypes.add(CommunicationType.SYNCHRONOUS);
     }
-    if ((missingCommunicationTypes.isEmpty() || microservice.getTechnologies().isEmpty())) {
+    if ((missingCommunicationTypes.isEmpty() || microservice.getTechnologyReferences().isEmpty())) {
       return results;
     }
-    final Consumer<Import> _function = (Import it) -> {
+    final Function1<TechnologyReference, Import> _function = (TechnologyReference it) -> {
+      return it.getTechnology();
+    };
+    final Consumer<Import> _function_1 = (Import it) -> {
       final EList<EObject> resourceContents = DdmmUtils.getImportedModelContents(it.eResource(), it.getImportURI());
       if (((resourceContents != null) && (!resourceContents.isEmpty()))) {
         EObject _get = resourceContents.get(0);
         final Technology technologyModel = ((Technology) _get);
-        final Consumer<CommunicationType> _function_1 = (CommunicationType communicationType) -> {
+        final Consumer<CommunicationType> _function_2 = (CommunicationType communicationType) -> {
           Protocol defaultProtocol = null;
           DataFormat defaultDataFormat = null;
-          final Function1<Protocol, Boolean> _function_2 = (Protocol it_1) -> {
+          final Function1<Protocol, Boolean> _function_3 = (Protocol it_1) -> {
             CommunicationType _communicationType = it_1.getCommunicationType();
             return Boolean.valueOf(Objects.equal(_communicationType, communicationType));
           };
-          final Function1<Protocol, Boolean> _function_3 = (Protocol it_1) -> {
+          final Function1<Protocol, Boolean> _function_4 = (Protocol it_1) -> {
             return Boolean.valueOf(it_1.isDefault());
           };
-          defaultProtocol = IterableExtensions.<Protocol>findFirst(IterableExtensions.<Protocol>filter(technologyModel.getProtocols(), _function_2), _function_3);
+          defaultProtocol = IterableExtensions.<Protocol>findFirst(IterableExtensions.<Protocol>filter(technologyModel.getProtocols(), _function_3), _function_4);
           if ((defaultProtocol != null)) {
             defaultDataFormat = defaultProtocol.getDefaultFormat();
           }
@@ -1087,10 +1106,10 @@ public class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
             results.put(communicationType, Pair.<Protocol, DataFormat>of(defaultProtocol, defaultDataFormat));
           }
         };
-        missingCommunicationTypes.forEach(_function_1);
+        missingCommunicationTypes.forEach(_function_2);
       }
     };
-    microservice.getTechnologies().forEach(_function);
+    ListExtensions.<TechnologyReference, Import>map(microservice.getTechnologyReferences(), _function).forEach(_function_1);
     return results;
   }
   

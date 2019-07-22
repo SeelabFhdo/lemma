@@ -1530,8 +1530,8 @@ public class OperationDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//Microservice:
-	//	('@' 'technology' '(' technologies+=[Import] ')')* (protocols+=ProtocolSpecification
-	//	protocols+=ProtocolSpecification?)? ('@' 'endpoints' '(' endpoints+=Endpoint+ ')')?
+	//	technologyReferences+=TechnologyReference* (protocols+=ProtocolSpecification protocols+=ProtocolSpecification?)? ('@'
+	//	'endpoints' '(' endpoints+=Endpoint+ ')')?
 	//	aspects+=ImportedServiceAspect*
 	//	visibility=Visibility?
 	//	type=MicroserviceType
@@ -1553,6 +1553,19 @@ public class OperationDslGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getMicroserviceRule() {
 		return getMicroserviceAccess().getRule();
+	}
+	
+	//TechnologyReference:
+	//	'@' 'technology'
+	//	'('
+	//	technology=[Import] (',' 'typedef' '=' isTypeDefinitionTechnology=BOOLEAN)?
+	//	')';
+	public ServiceDslGrammarAccess.TechnologyReferenceElements getTechnologyReferenceAccess() {
+		return gaServiceDsl.getTechnologyReferenceAccess();
+	}
+	
+	public ParserRule getTechnologyReferenceRule() {
+		return getTechnologyReferenceAccess().getRule();
 	}
 	
 	//PossiblyImportedMicroservice:

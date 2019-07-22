@@ -12,6 +12,11 @@ import de.fhdo.ddmm.service.MappedComplexType;
 import de.fhdo.ddmm.service.MappedField;
 import de.fhdo.ddmm.service.ServiceModel;
 import de.fhdo.ddmm.service.ServicePackage;
+import de.fhdo.ddmm.service.TechnologyReference;
+
+import de.fhdo.ddmm.technology.Technology;
+
+import de.fhdo.ddmm.utils.DdmmUtils;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -30,12 +35,17 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
+import org.eclipse.emf.ecore.resource.Resource;
+
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
-import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
+
+import org.eclipse.xtext.xbase.lib.Functions.Function1;
+
+import org.eclipse.xtext.xbase.lib.IterableExtensions;
 
 /**
  * <!-- begin-user-doc -->
@@ -46,7 +56,7 @@ import org.eclipse.xtext.xbase.lib.CollectionLiterals;
  * </p>
  * <ul>
  *   <li>{@link de.fhdo.ddmm.service.impl.MappedComplexTypeImpl#getT_sourceModelUri <em>Tsource Model Uri</em>}</li>
- *   <li>{@link de.fhdo.ddmm.service.impl.MappedComplexTypeImpl#getTechnologies <em>Technologies</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.service.impl.MappedComplexTypeImpl#getTechnologyReferences <em>Technology References</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.impl.MappedComplexTypeImpl#getType <em>Type</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.impl.MappedComplexTypeImpl#getMappedFields <em>Mapped Fields</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.impl.MappedComplexTypeImpl#getAspects <em>Aspects</em>}</li>
@@ -77,14 +87,14 @@ public class MappedComplexTypeImpl extends MinimalEObjectImpl.Container implemen
     protected String t_sourceModelUri = TSOURCE_MODEL_URI_EDEFAULT;
 
     /**
-     * The cached value of the '{@link #getTechnologies() <em>Technologies</em>}' reference list.
+     * The cached value of the '{@link #getTechnologyReferences() <em>Technology References</em>}' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getTechnologies()
+     * @see #getTechnologyReferences()
      * @generated
      * @ordered
      */
-    protected EList<Import> technologies;
+    protected EList<TechnologyReference> technologyReferences;
 
     /**
      * The cached value of the '{@link #getType() <em>Type</em>}' containment reference.
@@ -164,11 +174,11 @@ public class MappedComplexTypeImpl extends MinimalEObjectImpl.Container implemen
      * @generated
      */
     @Override
-    public EList<Import> getTechnologies() {
-        if (technologies == null) {
-            technologies = new EObjectResolvingEList<Import>(Import.class, this, ServicePackage.MAPPED_COMPLEX_TYPE__TECHNOLOGIES);
+    public EList<TechnologyReference> getTechnologyReferences() {
+        if (technologyReferences == null) {
+            technologyReferences = new EObjectContainmentWithInverseEList<TechnologyReference>(TechnologyReference.class, this, ServicePackage.MAPPED_COMPLEX_TYPE__TECHNOLOGY_REFERENCES, ServicePackage.TECHNOLOGY_REFERENCE__MAPPED_COMPLEX_TYPE);
         }
-        return technologies;
+        return technologyReferences;
     }
 
     /**
@@ -369,10 +379,91 @@ public class MappedComplexTypeImpl extends MinimalEObjectImpl.Container implemen
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
+    public EList<TechnologyReference> getAllTypeDefinitionTechnologyReferences() {
+        final Function1<TechnologyReference, Boolean> _function = new Function1<TechnologyReference, Boolean>() {
+            public Boolean apply(final TechnologyReference it) {
+                boolean _xblockexpression = false;
+                {
+                    final Resource resource = it.getTechnology().eResource();
+                    final String importURI = it.getTechnology().getImportURI();
+                    final Technology technologyModel = DdmmUtils.<Technology>getImportedModelRoot(resource, importURI, Technology.class);
+                    _xblockexpression = (((!technologyModel.getPrimitiveTypes().isEmpty()) || 
+                        (!technologyModel.getListTypes().isEmpty())) || 
+                        (!technologyModel.getDataStructures().isEmpty()));
+                }
+                return Boolean.valueOf(_xblockexpression);
+            }
+        };
+        return ECollections.<TechnologyReference>toEList(IterableExtensions.<TechnologyReference>filter(this.getTechnologyReferences(), _function));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Import getTypeDefinitionTechnologyImport() {
+        final Function1<TechnologyReference, Boolean> _function = new Function1<TechnologyReference, Boolean>() {
+            public Boolean apply(final TechnologyReference it) {
+                return Boolean.valueOf(it.isIsTypeDefinitionTechnology());
+            }
+        };
+        TechnologyReference _findFirst = IterableExtensions.<TechnologyReference>findFirst(this.getTechnologyReferences(), _function);
+        Import _technology = null;
+        if (_findFirst!=null) {
+            _technology=_findFirst.getTechnology();
+        }
+        final Import explicitTypeDefinitionTechnologyImport = _technology;
+        if ((explicitTypeDefinitionTechnologyImport != null)) {
+            return explicitTypeDefinitionTechnologyImport;
+        }
+        final EList<TechnologyReference> allTypeDefinitionTechnologyReferences = this.getAllTypeDefinitionTechnologyReferences();
+        Import _xifexpression = null;
+        boolean _isEmpty = allTypeDefinitionTechnologyReferences.isEmpty();
+        boolean _not = (!_isEmpty);
+        if (_not) {
+            _xifexpression = allTypeDefinitionTechnologyReferences.get(0).getTechnology();
+        }
+        else {
+            _xifexpression = null;
+        }
+        return _xifexpression;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Technology getTypeDefinitionTechnology() {
+        final Import typeDefinitionTechnologyImport = this.getTypeDefinitionTechnologyImport();
+        Technology _xifexpression = null;
+        if ((typeDefinitionTechnologyImport != null)) {
+            _xifexpression = DdmmUtils.<Technology>getImportedModelRoot(
+                typeDefinitionTechnologyImport.eResource(), 
+                typeDefinitionTechnologyImport.getImportURI(), 
+                Technology.class);
+        }
+        else {
+            _xifexpression = null;
+        }
+        return _xifexpression;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     @SuppressWarnings("unchecked")
     @Override
     public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
+            case ServicePackage.MAPPED_COMPLEX_TYPE__TECHNOLOGY_REFERENCES:
+                return ((InternalEList<InternalEObject>)(InternalEList<?>)getTechnologyReferences()).basicAdd(otherEnd, msgs);
             case ServicePackage.MAPPED_COMPLEX_TYPE__MAPPED_FIELDS:
                 return ((InternalEList<InternalEObject>)(InternalEList<?>)getMappedFields()).basicAdd(otherEnd, msgs);
             case ServicePackage.MAPPED_COMPLEX_TYPE__ASPECTS:
@@ -393,6 +484,8 @@ public class MappedComplexTypeImpl extends MinimalEObjectImpl.Container implemen
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
+            case ServicePackage.MAPPED_COMPLEX_TYPE__TECHNOLOGY_REFERENCES:
+                return ((InternalEList<?>)getTechnologyReferences()).basicRemove(otherEnd, msgs);
             case ServicePackage.MAPPED_COMPLEX_TYPE__TYPE:
                 return basicSetType(null, msgs);
             case ServicePackage.MAPPED_COMPLEX_TYPE__MAPPED_FIELDS:
@@ -429,8 +522,8 @@ public class MappedComplexTypeImpl extends MinimalEObjectImpl.Container implemen
         switch (featureID) {
             case ServicePackage.MAPPED_COMPLEX_TYPE__TSOURCE_MODEL_URI:
                 return getT_sourceModelUri();
-            case ServicePackage.MAPPED_COMPLEX_TYPE__TECHNOLOGIES:
-                return getTechnologies();
+            case ServicePackage.MAPPED_COMPLEX_TYPE__TECHNOLOGY_REFERENCES:
+                return getTechnologyReferences();
             case ServicePackage.MAPPED_COMPLEX_TYPE__TYPE:
                 return getType();
             case ServicePackage.MAPPED_COMPLEX_TYPE__MAPPED_FIELDS:
@@ -456,9 +549,9 @@ public class MappedComplexTypeImpl extends MinimalEObjectImpl.Container implemen
             case ServicePackage.MAPPED_COMPLEX_TYPE__TSOURCE_MODEL_URI:
                 setT_sourceModelUri((String)newValue);
                 return;
-            case ServicePackage.MAPPED_COMPLEX_TYPE__TECHNOLOGIES:
-                getTechnologies().clear();
-                getTechnologies().addAll((Collection<? extends Import>)newValue);
+            case ServicePackage.MAPPED_COMPLEX_TYPE__TECHNOLOGY_REFERENCES:
+                getTechnologyReferences().clear();
+                getTechnologyReferences().addAll((Collection<? extends TechnologyReference>)newValue);
                 return;
             case ServicePackage.MAPPED_COMPLEX_TYPE__TYPE:
                 setType((ImportedType)newValue);
@@ -489,8 +582,8 @@ public class MappedComplexTypeImpl extends MinimalEObjectImpl.Container implemen
             case ServicePackage.MAPPED_COMPLEX_TYPE__TSOURCE_MODEL_URI:
                 setT_sourceModelUri(TSOURCE_MODEL_URI_EDEFAULT);
                 return;
-            case ServicePackage.MAPPED_COMPLEX_TYPE__TECHNOLOGIES:
-                getTechnologies().clear();
+            case ServicePackage.MAPPED_COMPLEX_TYPE__TECHNOLOGY_REFERENCES:
+                getTechnologyReferences().clear();
                 return;
             case ServicePackage.MAPPED_COMPLEX_TYPE__TYPE:
                 setType((ImportedType)null);
@@ -518,8 +611,8 @@ public class MappedComplexTypeImpl extends MinimalEObjectImpl.Container implemen
         switch (featureID) {
             case ServicePackage.MAPPED_COMPLEX_TYPE__TSOURCE_MODEL_URI:
                 return TSOURCE_MODEL_URI_EDEFAULT == null ? t_sourceModelUri != null : !TSOURCE_MODEL_URI_EDEFAULT.equals(t_sourceModelUri);
-            case ServicePackage.MAPPED_COMPLEX_TYPE__TECHNOLOGIES:
-                return technologies != null && !technologies.isEmpty();
+            case ServicePackage.MAPPED_COMPLEX_TYPE__TECHNOLOGY_REFERENCES:
+                return technologyReferences != null && !technologyReferences.isEmpty();
             case ServicePackage.MAPPED_COMPLEX_TYPE__TYPE:
                 return type != null;
             case ServicePackage.MAPPED_COMPLEX_TYPE__MAPPED_FIELDS:
@@ -544,6 +637,12 @@ public class MappedComplexTypeImpl extends MinimalEObjectImpl.Container implemen
                 return getQualifiedNameParts((Boolean)arguments.get(0));
             case ServicePackage.MAPPED_COMPLEX_TYPE___BUILD_QUALIFIED_NAME__STRING_BOOLEAN:
                 return buildQualifiedName((String)arguments.get(0), (Boolean)arguments.get(1));
+            case ServicePackage.MAPPED_COMPLEX_TYPE___GET_ALL_TYPE_DEFINITION_TECHNOLOGY_REFERENCES:
+                return getAllTypeDefinitionTechnologyReferences();
+            case ServicePackage.MAPPED_COMPLEX_TYPE___GET_TYPE_DEFINITION_TECHNOLOGY_IMPORT:
+                return getTypeDefinitionTechnologyImport();
+            case ServicePackage.MAPPED_COMPLEX_TYPE___GET_TYPE_DEFINITION_TECHNOLOGY:
+                return getTypeDefinitionTechnology();
         }
         return super.eInvoke(operationID, arguments);
     }

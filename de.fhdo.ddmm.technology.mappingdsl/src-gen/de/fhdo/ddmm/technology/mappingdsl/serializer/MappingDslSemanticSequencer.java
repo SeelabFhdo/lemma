@@ -42,6 +42,7 @@ import de.fhdo.ddmm.service.ProtocolSpecification;
 import de.fhdo.ddmm.service.ReferredOperation;
 import de.fhdo.ddmm.service.ServiceModel;
 import de.fhdo.ddmm.service.ServicePackage;
+import de.fhdo.ddmm.service.TechnologyReference;
 import de.fhdo.ddmm.technology.CompatibilityMatrixEntry;
 import de.fhdo.ddmm.technology.DataFormat;
 import de.fhdo.ddmm.technology.DeploymentTechnology;
@@ -263,6 +264,9 @@ public class MappingDslSemanticSequencer extends ServiceDslSemanticSequencer {
 			case ServicePackage.SERVICE_MODEL:
 				sequence_ServiceModel(context, (ServiceModel) semanticObject); 
 				return; 
+			case ServicePackage.TECHNOLOGY_REFERENCE:
+				sequence_TechnologyReference(context, (TechnologyReference) semanticObject); 
+				return; 
 			}
 		else if (epackage == TechnologyPackage.eINSTANCE)
 			switch (semanticObject.eClass().getClassifierID()) {
@@ -355,7 +359,7 @@ public class MappingDslSemanticSequencer extends ServiceDslSemanticSequencer {
 	 *
 	 * Constraint:
 	 *     (
-	 *         technologies+=[Import|ID]+ 
+	 *         technologyReferences+=TechnologyReference* 
 	 *         type=ImportedComplexType 
 	 *         aspects+=TechnologySpecificImportedServiceAspect* 
 	 *         fieldMappings+=TechnologySpecificFieldMapping*
@@ -434,7 +438,7 @@ public class MappingDslSemanticSequencer extends ServiceDslSemanticSequencer {
 	 *
 	 * Constraint:
 	 *     (
-	 *         technologies+=[Import|ID]+ 
+	 *         technologyReferences+=TechnologyReference* 
 	 *         microservice=ImportedMicroservice 
 	 *         protocols+=TechnologySpecificProtocolSpecification* 
 	 *         endpoints+=TechnologySpecificEndpoint* 

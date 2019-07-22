@@ -90,6 +90,187 @@ class Import {
 }
 
 /**
+ * Concept to express technology-specific information, which was assigned to a complex type
+ * leveraging the Mapping DSL
+ */
+class MappedComplexType {
+    // TRANSFORMATION ONLY: The path to the source Data Model in which the complex type is defined.
+    //                      This property is only filled in transformations of Mapping Models to
+    //                      Service Models and later used in executing refinements of Intermediate
+    //                      Data Models.
+    String t_sourceModelUri
+
+    contains TechnologyReference[] technologyReferences opposite mappedComplexType
+    contains ImportedType ^type
+    contains MappedField[] mappedFields opposite mappedComplexType
+    contains ImportedServiceAspect[] aspects opposite mappedComplexType
+
+    container ServiceModel serviceModel opposite mappedComplexTypes
+
+    /**
+     * Get parts of the mapped complex type for creating a qualified name
+     */
+    op String[] getQualifiedNameParts(boolean withImportName) {
+        val importName = ^type?.import?.name
+        if (importName === null)
+            return newArrayList.asEList
+
+        val typeNameParts = (^type?.^type as ComplexType).qualifiedNameParts
+        if (typeNameParts === null)
+            return newArrayList.asEList
+
+        val nameParts = if (withImportName) newArrayList(importName) else newArrayList()
+        nameParts.addAll(typeNameParts)
+        nameParts.asEList
+    }
+
+    /**
+     * Build qualified name from qualified name parts
+     */
+    op String buildQualifiedName(String separator, boolean withImportName) {
+        if (separator === null)
+            return null
+
+        var String qualifiedName = ""
+        for (part : getQualifiedNameParts(withImportName))
+            qualifiedName += separator + part
+        // Remove leading separator
+        if (!qualifiedName.empty)
+            qualifiedName = qualifiedName.substring(separator.length)
+        return qualifiedName
+    }
+
+    /**
+     * Get all technology references that point to technology models defining types
+     */
+    op TechnologyReference[] getAllTypeDefinitionTechnologyReferences() {
+        return technologyReferences.filter[
+            val resource = technology.eResource
+            val importURI = technology.importURI
+            val technologyModel = DdmmUtils.getImportedModelRoot(resource, importURI, Technology)
+            !technologyModel.primitiveTypes.empty ||
+            !technologyModel.listTypes.empty ||
+            !technologyModel.dataStructures.empty
+        ].toEList
+    }
+
+    /**
+     * Get import of type definition technology. If no explicit technology reference was marked as
+     * pointing to the default type definition technology, this corresponds to the first technology
+     * import in the list of type definition technology imports. This operation should only be
+     * executed if the model had been validated to refer to one type definition technology at most.
+     */
+    op Import getTypeDefinitionTechnologyImport() {
+        val explicitTypeDefinitionTechnologyImport = technologyReferences
+            .findFirst[isIsTypeDefinitionTechnology]
+            ?.technology
+        if (explicitTypeDefinitionTechnologyImport !== null)
+            return explicitTypeDefinitionTechnologyImport
+
+        // No technology explicitly marked as being the one with the default type definitions. We
+        // then take the first one with type definitions, if any.
+        val allTypeDefinitionTechnologyReferences = getAllTypeDefinitionTechnologyReferences()
+        return if (!allTypeDefinitionTechnologyReferences.empty)
+                allTypeDefinitionTechnologyReferences.get(0).technology
+            else
+                null
+    }
+
+    /**
+     * Get type definition technology
+     */
+    op Technology getTypeDefinitionTechnology() {
+        val typeDefinitionTechnologyImport = getTypeDefinitionTechnologyImport()
+        return if (typeDefinitionTechnologyImport !== null)
+                DdmmUtils.getImportedModelRoot(
+                    typeDefinitionTechnologyImport.eResource,
+                    typeDefinitionTechnologyImport.importURI,
+                    Technology
+                )
+            else
+                null
+    }
+}
+
+/**
+ * Concept to express technology-specific information, which was assigned to a data or enumeration
+ * field leveraging the Mapping DSL
+ */
+class MappedField {
+    // TRANSFORMATION ONLY: The name (alias) of the technology from which the mapped type
+    //                      originates. It is used in intermediate model refinements as part of the
+    //                      fully-qualified name of an intermediate imported technology-specific
+    //                      type.
+    String t_typeDefinitionTechnologyName
+
+    refers DataField dataField
+    refers EnumerationField enumerationField
+    contains ImportedType mappedType
+    contains ImportedServiceAspect[] aspects opposite mappedField
+
+    container Parameter parameter opposite mappedFields
+    container MappedComplexType mappedComplexType opposite mappedFields
+
+    /**
+     * Get name of mapped field
+     */
+    derived String name get {
+        return if (dataField !== null)
+                dataField.name
+            else if (enumerationField !== null)
+                enumerationField.name
+    }
+
+    /**
+     * Get parts of the mapped field for creating a fully-qualified name
+     */
+    op String[] getQualifiedNameParts(boolean withImportName) {
+        if (name === null || name.empty)
+            return newArrayList.asEList
+
+        val nameParts = if (mappedComplexType !== null)
+                mappedComplexType.getQualifiedNameParts(withImportName)
+            else
+                parameter.qualifiedNameParts
+
+        nameParts.addAll(name)
+        nameParts.asEList
+    }
+
+    /**
+     * Build qualified name from qualified name parts
+     */
+    op String buildQualifiedName(String separator, boolean withImportName) {
+        if (separator === null)
+            return null
+
+        var String qualifiedName = ""
+        for (part : getQualifiedNameParts(withImportName))
+            qualifiedName += separator + part
+        // Remove leading separator
+        if (!qualifiedName.empty)
+            qualifiedName = qualifiedName.substring(separator.length)
+        return qualifiedName
+    }
+
+    /**
+     * Get the effective type of the mapped data field. The effective type corresponds to the mapped
+     * type, if the data field or enumeration field has one. Otherwise, it is the effective type of
+     * the data field itself or the enumeration that comprises the enumeration field.
+     */
+    op Type getEffectiveType() {
+        return if (mappedType !== null)
+            mappedType.^type
+        else if (dataField !== null)
+            dataField.effectiveType
+        else if (enumerationField !== null)
+            enumerationField.enumeration
+        else
+            return null
+    }
+}
+
+/**
  * Type of a microservice
  */
 enum MicroserviceType {
@@ -133,7 +314,7 @@ class Microservice {
      *          imported models.
      *          Ensured by: DSL scope provider.
      *     (C5) If a technology is assigned to the service, it must exhibit specifications for types
-     *          and protocols. The rationale if this constraint is, that a technology might be
+     *          and protocols. The rationale of this constraint is, that a technology might be
      *          assigned, but technology-specific types or protocols must not be explicitly assigned
      *          for convenience reasons. If they are missing, the defaults from the assigned
      *          technology are taken instead.
@@ -142,7 +323,8 @@ class Microservice {
      *          Ensured by: DSL validator.
      *     (C7) A technology might be assigned exactly once to a microservice.
      *          Ensured by: DSL validator.
-     *     (C8) Only one assigned technology might comprise technology-specific types.
+     *     (C8) If more than one technology comprises technology-specific types, it must be declared
+     *          as the default type definition technology.
      *          Ensured by: DSL validator.
      *     (C9) Assigned technologies may not only define deployment-specific concepts.
      *          Ensured by: DSL validator.
@@ -167,7 +349,7 @@ class Microservice {
 
     // TODO: Inheritance of microservices
     //refers Microservice[0..1] ^super
-    refers Import[] technologies
+    contains TechnologyReference[] technologyReferences opposite microservice
     // TRANSFORMATION ONLY: Import of technology that contains the default types (there can only be
     //                      one)
     refers Import t_typeDefinitionTechnologyImport
@@ -254,11 +436,13 @@ class Microservice {
     }
 
     /**
-     * Get imports of type definition technologies
+     * Get all technology references that point to technology models defining types
      */
-    op Import[] getTypeDefinitionTechnologyImports() {
-        return technologies.filter[
-            val technologyModel = DdmmUtils.getImportedModelRoot(eResource, importURI, Technology)
+    op TechnologyReference[] getAllTypeDefinitionTechnologyReferences() {
+        return technologyReferences.filter[
+            val resource = technology.eResource
+            val importURI = technology.importURI
+            val technologyModel = DdmmUtils.getImportedModelRoot(resource, importURI, Technology)
             !technologyModel.primitiveTypes.empty ||
             !technologyModel.listTypes.empty ||
             !technologyModel.dataStructures.empty
@@ -266,36 +450,38 @@ class Microservice {
     }
 
     /**
-     * Get import of type definition technology. Note that this corresponds to the first technology
-     * import in the list of type definition technology imports and should only be executed if the
-     * model had been validated to refer to one type definition technology at most.
+     * Get import of type definition technology. If no explicit technology reference was marked as
+     * pointing to the default type definition technology, this corresponds to the first technology
+     * import in the list of type definition technology imports. This operation should only be
+     * executed if the model had been validated to refer to one type definition technology at most.
      */
     op Import getTypeDefinitionTechnologyImport() {
-        val typeDefinitionTechnologyImports = getTypeDefinitionTechnologyImports()
-        return if (!typeDefinitionTechnologyImports.empty)
-                typeDefinitionTechnologyImports.get(0)
+        val explicitTypeDefinitionTechnologyImport = technologyReferences
+            .findFirst[isIsTypeDefinitionTechnology]
+            ?.technology
+        if (explicitTypeDefinitionTechnologyImport !== null)
+            return explicitTypeDefinitionTechnologyImport
+
+        // No technology explicitly marked as being the one with the default type definitions. We
+        // then take the first one with type definitions, if any.
+        val allTypeDefinitionTechnologyReferences = getAllTypeDefinitionTechnologyReferences()
+        return if (!allTypeDefinitionTechnologyReferences.empty)
+                allTypeDefinitionTechnologyReferences.get(0).technology
             else
                 null
     }
 
     /**
-     * Get type definition technology models
-     */
-    op Technology[] getTypeDefinitionTechnologies() {
-        return typeDefinitionTechnologyImports.map[
-            DdmmUtils.getImportedModelRoot(eResource, importURI, Technology)
-        ]
-    }
-
-    /**
-     * Get type definition technology. Note that this corresponds to the first technology model in
-     * the list of type definition technology models and should only be executed if the service
-     * model had been validated to refer to one type definition technology at most.
+     * Get type definition technology
      */
     op Technology getTypeDefinitionTechnology() {
-        val typeDefinitionTechnologies = getTypeDefinitionTechnologies()
-        return if (!typeDefinitionTechnologies.empty)
-                typeDefinitionTechnologies.get(0)
+        val typeDefinitionTechnologyImport = getTypeDefinitionTechnologyImport()
+        return if (typeDefinitionTechnologyImport !== null)
+                DdmmUtils.getImportedModelRoot(
+                    typeDefinitionTechnologyImport.eResource,
+                    typeDefinitionTechnologyImport.importURI,
+                    Technology
+                )
             else
                 null
     }
@@ -534,6 +720,29 @@ class Microservice {
     derived boolean effectivelyInternal get {
         return effectiveVisibility === Visibility.INTERNAL
     }
+}
+
+/**
+ * Represents a reference to a technology
+ */
+class TechnologyReference {
+    /**
+     * Implicit Constraints:
+     *     (C1) Only one technology reference can be marked for pointing to the default type
+     *          definition technology.
+     *          Ensured by: DSL validator.
+     *     (C2) Only technology models that define types can be marked for pointing to the default
+                type definition.
+     *          technology.
+     *          Ensured by: DSL validator.
+     */
+
+    boolean isTypeDefinitionTechnology
+
+    refers Import technology
+
+    container Microservice microservice opposite technologyReferences
+    container MappedComplexType mappedComplexType opposite technologyReferences
 }
 
 /**
@@ -1210,136 +1419,6 @@ class Parameter {
             return effectiveType.qualifiedNameParts
 
         return null
-    }
-}
-
-/**
- * Concept to express technology-specific information, which was assigned to a complex type
- * leveraging the Mapping DSL
- */
-class MappedComplexType {
-    // TRANSFORMATION ONLY: The path to the source Data Model in which the complex type is defined.
-    //                      This property is only filled in transformations of Mapping Models to
-    //                      Service Models and later used in executing refinements of Intermediate
-    //                      Data Models.
-    String t_sourceModelUri
-
-    refers Import[] technologies
-    contains ImportedType ^type
-    contains MappedField[] mappedFields opposite mappedComplexType
-    contains ImportedServiceAspect[] aspects opposite mappedComplexType
-
-    container ServiceModel serviceModel opposite mappedComplexTypes
-
-    /**
-     * Get parts of the mapped complex type for creating a qualified name
-     */
-    op String[] getQualifiedNameParts(boolean withImportName) {
-        val importName = ^type?.import?.name
-        if (importName === null)
-            return newArrayList.asEList
-
-        val typeNameParts = (^type?.^type as ComplexType).qualifiedNameParts
-        if (typeNameParts === null)
-            return newArrayList.asEList
-
-        val nameParts = if (withImportName) newArrayList(importName) else newArrayList()
-        nameParts.addAll(typeNameParts)
-        nameParts.asEList
-    }
-
-    /**
-     * Build qualified name from qualified name parts
-     */
-    op String buildQualifiedName(String separator, boolean withImportName) {
-        if (separator === null)
-            return null
-
-        var String qualifiedName = ""
-        for (part : getQualifiedNameParts(withImportName))
-            qualifiedName += separator + part
-        // Remove leading separator
-        if (!qualifiedName.empty)
-            qualifiedName = qualifiedName.substring(separator.length)
-        return qualifiedName
-    }
-}
-
-/**
- * Concept to express technology-specific information, which was assigned to a data or enumeration
- * field leveraging the Mapping DSL
- */
-class MappedField {
-    // TRANSFORMATION ONLY: The name (alias) of the technology from which the mapped type
-    //                      originates. It is used in intermediate model refinements as part of the
-    //                      fully-qualified name of an intermediate imported technology-specific
-    //                      type.
-    String t_typeDefinitionTechnologyName
-
-    refers DataField dataField
-    refers EnumerationField enumerationField
-    contains ImportedType mappedType
-    contains ImportedServiceAspect[] aspects opposite mappedField
-
-    container Parameter parameter opposite mappedFields
-    container MappedComplexType mappedComplexType opposite mappedFields
-
-    /**
-     * Get name of mapped field
-     */
-    derived String name get {
-        return if (dataField !== null)
-                dataField.name
-            else if (enumerationField !== null)
-                enumerationField.name
-    }
-
-    /**
-     * Get parts of the mapped field for creating a fully-qualified name
-     */
-    op String[] getQualifiedNameParts(boolean withImportName) {
-        if (name === null || name.empty)
-            return newArrayList.asEList
-
-        val nameParts = if (mappedComplexType !== null)
-                mappedComplexType.getQualifiedNameParts(withImportName)
-            else
-                parameter.qualifiedNameParts
-
-        nameParts.addAll(name)
-        nameParts.asEList
-    }
-
-    /**
-     * Build qualified name from qualified name parts
-     */
-    op String buildQualifiedName(String separator, boolean withImportName) {
-        if (separator === null)
-            return null
-
-        var String qualifiedName = ""
-        for (part : getQualifiedNameParts(withImportName))
-            qualifiedName += separator + part
-        // Remove leading separator
-        if (!qualifiedName.empty)
-            qualifiedName = qualifiedName.substring(separator.length)
-        return qualifiedName
-    }
-
-    /**
-     * Get the effective type of the mapped data field. The effective type corresponds to the mapped
-     * type, if the data field or enumeration field has one. Otherwise, it is the effective type of
-     * the data field itself or the enumeration that comprises the enumeration field.
-     */
-    op Type getEffectiveType() {
-        return if (mappedType !== null)
-            mappedType.^type
-        else if (dataField !== null)
-            dataField.effectiveType
-        else if (enumerationField !== null)
-            enumerationField.enumeration
-        else
-            return null
     }
 }
 

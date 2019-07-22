@@ -3,6 +3,7 @@
 package de.fhdo.ddmm.technology.mapping;
 
 import de.fhdo.ddmm.service.Import;
+import de.fhdo.ddmm.service.TechnologyReference;
 
 import de.fhdo.ddmm.technology.Technology;
 
@@ -24,7 +25,7 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link de.fhdo.ddmm.technology.mapping.MicroserviceMapping#getTechnologies <em>Technologies</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.technology.mapping.MicroserviceMapping#getTechnologyReferences <em>Technology References</em>}</li>
  *   <li>{@link de.fhdo.ddmm.technology.mapping.MicroserviceMapping#getMicroservice <em>Microservice</em>}</li>
  *   <li>{@link de.fhdo.ddmm.technology.mapping.MicroserviceMapping#getEndpoints <em>Endpoints</em>}</li>
  *   <li>{@link de.fhdo.ddmm.technology.mapping.MicroserviceMapping#getProtocols <em>Protocols</em>}</li>
@@ -41,8 +42,8 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface MicroserviceMapping extends EObject {
     /**
-     * Returns the value of the '<em><b>Technologies</b></em>' reference list.
-     * The list contents are of type {@link de.fhdo.ddmm.service.Import}.
+     * Returns the value of the '<em><b>Technology References</b></em>' containment reference list.
+     * The list contents are of type {@link de.fhdo.ddmm.service.TechnologyReference}.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
@@ -56,23 +57,24 @@ public interface MicroserviceMapping extends EObject {
      *          Ensured by: DSL validator.
      *     (C4) A technology might be assigned exactly once to a microservice mapping.
      *          Ensured by: DSL validator.
-     *     (C5) Only one assigned technology might comprise technology-specific types.
+     *     (C5) If more than one technology comprises technology-specific types, it must be declared
+     *          as the default type definition technology.
      *          Ensured by: DSL validator.
      *     (C6) Assigned technologies may not only define deployment-specific concepts.
      *          Ensured by: DSL validator.
-     *     (C7) Type definition technologies of microservice cannot differ in service and mapping
+     *     (C7) Type definition technologies of microservices cannot differ in service and mapping
      *          model in case the service model refers to technology-specific types. Otherwise, the
      *          transformation of the mapping to a service model would not be possible, because the
      *          technology-specific types could not be mapped, as both service and mapping model
      *          refer to different technologies for the service.
      *          Ensured by: DSL validator.
      * <!-- end-model-doc -->
-     * @return the value of the '<em>Technologies</em>' reference list.
-     * @see de.fhdo.ddmm.technology.mapping.MappingPackage#getMicroserviceMapping_Technologies()
-     * @model required="true"
+     * @return the value of the '<em>Technology References</em>' containment reference list.
+     * @see de.fhdo.ddmm.technology.mapping.MappingPackage#getMicroserviceMapping_TechnologyReferences()
+     * @model containment="true"
      * @generated
      */
-    EList<Import> getTechnologies();
+    EList<TechnologyReference> getTechnologyReferences();
 
     /**
      * Returns the value of the '<em><b>Microservice</b></em>' containment reference.
@@ -241,21 +243,22 @@ public interface MicroserviceMapping extends EObject {
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
      * *
-     * Get imports of type definition technologies
+     * Get all technology references that point to technology models defining types
      * <!-- end-model-doc -->
      * @model kind="operation" unique="false"
      * @generated
      */
-    EList<Import> getTypeDefinitionTechnologyImports();
+    EList<TechnologyReference> getAllTypeDefinitionTechnologyReferences();
 
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
      * *
-     * Get import of type definition technology. Note that this corresponds to the first technology
-     * import in the list of type definition technology imports and should only be executed if the
-     * model had been validated to refer to one type definition technology at most.
+     * Get import of type definition technology. If no explicit technology reference was marked as
+     * pointing to the default type definition technology, this corresponds to the first technology
+     * import in the list of type definition technology imports. This operation should only be
+     * executed if the model had been validated to refer to one type definition technology at most.
      * <!-- end-model-doc -->
      * @model kind="operation" unique="false"
      * @generated
@@ -267,21 +270,7 @@ public interface MicroserviceMapping extends EObject {
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
      * *
-     * Get type definition technology models
-     * <!-- end-model-doc -->
-     * @model kind="operation" unique="false"
-     * @generated
-     */
-    EList<Technology> getTypeDefinitionTechnologies();
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * *
-     * Get type definition technology. Note that this corresponds to the first technology model in
-     * the list of type definition technology models and should only be executed if the service
-     * model had been validated to refer to one type definition technology at most.
+     * Get type definition technology
      * <!-- end-model-doc -->
      * @model kind="operation" unique="false"
      * @generated

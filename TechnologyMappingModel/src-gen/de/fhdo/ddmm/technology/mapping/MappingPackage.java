@@ -170,13 +170,13 @@ public interface MappingPackage extends EPackage {
     int COMPLEX_TYPE_MAPPING__TSOURCE_MODEL_URI = 0;
 
     /**
-     * The feature id for the '<em><b>Technologies</b></em>' reference list.
+     * The feature id for the '<em><b>Technology References</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int COMPLEX_TYPE_MAPPING__TECHNOLOGIES = 1;
+    int COMPLEX_TYPE_MAPPING__TECHNOLOGY_REFERENCES = 1;
 
     /**
      * The feature id for the '<em><b>Type</b></em>' containment reference.
@@ -224,13 +224,40 @@ public interface MappingPackage extends EPackage {
     int COMPLEX_TYPE_MAPPING_FEATURE_COUNT = 6;
 
     /**
+     * The operation id for the '<em>Get All Type Definition Technology References</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int COMPLEX_TYPE_MAPPING___GET_ALL_TYPE_DEFINITION_TECHNOLOGY_REFERENCES = 0;
+
+    /**
+     * The operation id for the '<em>Get Type Definition Technology Import</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int COMPLEX_TYPE_MAPPING___GET_TYPE_DEFINITION_TECHNOLOGY_IMPORT = 1;
+
+    /**
+     * The operation id for the '<em>Get Type Definition Technology</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int COMPLEX_TYPE_MAPPING___GET_TYPE_DEFINITION_TECHNOLOGY = 2;
+
+    /**
      * The number of operations of the '<em>Complex Type Mapping</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int COMPLEX_TYPE_MAPPING_OPERATION_COUNT = 0;
+    int COMPLEX_TYPE_MAPPING_OPERATION_COUNT = 3;
 
     /**
      * The meta object id for the '{@link de.fhdo.ddmm.technology.mapping.impl.ImportedComplexTypeImpl <em>Imported Complex Type</em>}' class.
@@ -307,13 +334,13 @@ public interface MappingPackage extends EPackage {
     int MICROSERVICE_MAPPING = 3;
 
     /**
-     * The feature id for the '<em><b>Technologies</b></em>' reference list.
+     * The feature id for the '<em><b>Technology References</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int MICROSERVICE_MAPPING__TECHNOLOGIES = 0;
+    int MICROSERVICE_MAPPING__TECHNOLOGY_REFERENCES = 0;
 
     /**
      * The feature id for the '<em><b>Microservice</b></em>' containment reference.
@@ -397,13 +424,13 @@ public interface MappingPackage extends EPackage {
     int MICROSERVICE_MAPPING_FEATURE_COUNT = 9;
 
     /**
-     * The operation id for the '<em>Get Type Definition Technology Imports</em>' operation.
+     * The operation id for the '<em>Get All Type Definition Technology References</em>' operation.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int MICROSERVICE_MAPPING___GET_TYPE_DEFINITION_TECHNOLOGY_IMPORTS = 0;
+    int MICROSERVICE_MAPPING___GET_ALL_TYPE_DEFINITION_TECHNOLOGY_REFERENCES = 0;
 
     /**
      * The operation id for the '<em>Get Type Definition Technology Import</em>' operation.
@@ -415,22 +442,13 @@ public interface MappingPackage extends EPackage {
     int MICROSERVICE_MAPPING___GET_TYPE_DEFINITION_TECHNOLOGY_IMPORT = 1;
 
     /**
-     * The operation id for the '<em>Get Type Definition Technologies</em>' operation.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int MICROSERVICE_MAPPING___GET_TYPE_DEFINITION_TECHNOLOGIES = 2;
-
-    /**
      * The operation id for the '<em>Get Type Definition Technology</em>' operation.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int MICROSERVICE_MAPPING___GET_TYPE_DEFINITION_TECHNOLOGY = 3;
+    int MICROSERVICE_MAPPING___GET_TYPE_DEFINITION_TECHNOLOGY = 2;
 
     /**
      * The number of operations of the '<em>Microservice Mapping</em>' class.
@@ -439,7 +457,7 @@ public interface MappingPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MICROSERVICE_MAPPING_OPERATION_COUNT = 4;
+    int MICROSERVICE_MAPPING_OPERATION_COUNT = 3;
 
     /**
      * The meta object id for the '{@link de.fhdo.ddmm.technology.mapping.impl.ImportedMicroserviceImpl <em>Imported Microservice</em>}' class.
@@ -1487,15 +1505,15 @@ public interface MappingPackage extends EPackage {
     EAttribute getComplexTypeMapping_T_sourceModelUri();
 
     /**
-     * Returns the meta object for the reference list '{@link de.fhdo.ddmm.technology.mapping.ComplexTypeMapping#getTechnologies <em>Technologies</em>}'.
+     * Returns the meta object for the containment reference list '{@link de.fhdo.ddmm.technology.mapping.ComplexTypeMapping#getTechnologyReferences <em>Technology References</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the reference list '<em>Technologies</em>'.
-     * @see de.fhdo.ddmm.technology.mapping.ComplexTypeMapping#getTechnologies()
+     * @return the meta object for the containment reference list '<em>Technology References</em>'.
+     * @see de.fhdo.ddmm.technology.mapping.ComplexTypeMapping#getTechnologyReferences()
      * @see #getComplexTypeMapping()
      * @generated
      */
-    EReference getComplexTypeMapping_Technologies();
+    EReference getComplexTypeMapping_TechnologyReferences();
 
     /**
      * Returns the meta object for the containment reference '{@link de.fhdo.ddmm.technology.mapping.ComplexTypeMapping#getType <em>Type</em>}'.
@@ -1540,6 +1558,36 @@ public interface MappingPackage extends EPackage {
      * @generated
      */
     EReference getComplexTypeMapping_MappingModel();
+
+    /**
+     * Returns the meta object for the '{@link de.fhdo.ddmm.technology.mapping.ComplexTypeMapping#getAllTypeDefinitionTechnologyReferences() <em>Get All Type Definition Technology References</em>}' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the '<em>Get All Type Definition Technology References</em>' operation.
+     * @see de.fhdo.ddmm.technology.mapping.ComplexTypeMapping#getAllTypeDefinitionTechnologyReferences()
+     * @generated
+     */
+    EOperation getComplexTypeMapping__GetAllTypeDefinitionTechnologyReferences();
+
+    /**
+     * Returns the meta object for the '{@link de.fhdo.ddmm.technology.mapping.ComplexTypeMapping#getTypeDefinitionTechnologyImport() <em>Get Type Definition Technology Import</em>}' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the '<em>Get Type Definition Technology Import</em>' operation.
+     * @see de.fhdo.ddmm.technology.mapping.ComplexTypeMapping#getTypeDefinitionTechnologyImport()
+     * @generated
+     */
+    EOperation getComplexTypeMapping__GetTypeDefinitionTechnologyImport();
+
+    /**
+     * Returns the meta object for the '{@link de.fhdo.ddmm.technology.mapping.ComplexTypeMapping#getTypeDefinitionTechnology() <em>Get Type Definition Technology</em>}' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the '<em>Get Type Definition Technology</em>' operation.
+     * @see de.fhdo.ddmm.technology.mapping.ComplexTypeMapping#getTypeDefinitionTechnology()
+     * @generated
+     */
+    EOperation getComplexTypeMapping__GetTypeDefinitionTechnology();
 
     /**
      * Returns the meta object for class '{@link de.fhdo.ddmm.technology.mapping.ImportedComplexType <em>Imported Complex Type</em>}'.
@@ -1606,15 +1654,15 @@ public interface MappingPackage extends EPackage {
     EClass getMicroserviceMapping();
 
     /**
-     * Returns the meta object for the reference list '{@link de.fhdo.ddmm.technology.mapping.MicroserviceMapping#getTechnologies <em>Technologies</em>}'.
+     * Returns the meta object for the containment reference list '{@link de.fhdo.ddmm.technology.mapping.MicroserviceMapping#getTechnologyReferences <em>Technology References</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the reference list '<em>Technologies</em>'.
-     * @see de.fhdo.ddmm.technology.mapping.MicroserviceMapping#getTechnologies()
+     * @return the meta object for the containment reference list '<em>Technology References</em>'.
+     * @see de.fhdo.ddmm.technology.mapping.MicroserviceMapping#getTechnologyReferences()
      * @see #getMicroserviceMapping()
      * @generated
      */
-    EReference getMicroserviceMapping_Technologies();
+    EReference getMicroserviceMapping_TechnologyReferences();
 
     /**
      * Returns the meta object for the containment reference '{@link de.fhdo.ddmm.technology.mapping.MicroserviceMapping#getMicroservice <em>Microservice</em>}'.
@@ -1705,14 +1753,14 @@ public interface MappingPackage extends EPackage {
     EReference getMicroserviceMapping_MappingModel();
 
     /**
-     * Returns the meta object for the '{@link de.fhdo.ddmm.technology.mapping.MicroserviceMapping#getTypeDefinitionTechnologyImports() <em>Get Type Definition Technology Imports</em>}' operation.
+     * Returns the meta object for the '{@link de.fhdo.ddmm.technology.mapping.MicroserviceMapping#getAllTypeDefinitionTechnologyReferences() <em>Get All Type Definition Technology References</em>}' operation.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the '<em>Get Type Definition Technology Imports</em>' operation.
-     * @see de.fhdo.ddmm.technology.mapping.MicroserviceMapping#getTypeDefinitionTechnologyImports()
+     * @return the meta object for the '<em>Get All Type Definition Technology References</em>' operation.
+     * @see de.fhdo.ddmm.technology.mapping.MicroserviceMapping#getAllTypeDefinitionTechnologyReferences()
      * @generated
      */
-    EOperation getMicroserviceMapping__GetTypeDefinitionTechnologyImports();
+    EOperation getMicroserviceMapping__GetAllTypeDefinitionTechnologyReferences();
 
     /**
      * Returns the meta object for the '{@link de.fhdo.ddmm.technology.mapping.MicroserviceMapping#getTypeDefinitionTechnologyImport() <em>Get Type Definition Technology Import</em>}' operation.
@@ -1723,16 +1771,6 @@ public interface MappingPackage extends EPackage {
      * @generated
      */
     EOperation getMicroserviceMapping__GetTypeDefinitionTechnologyImport();
-
-    /**
-     * Returns the meta object for the '{@link de.fhdo.ddmm.technology.mapping.MicroserviceMapping#getTypeDefinitionTechnologies() <em>Get Type Definition Technologies</em>}' operation.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the '<em>Get Type Definition Technologies</em>' operation.
-     * @see de.fhdo.ddmm.technology.mapping.MicroserviceMapping#getTypeDefinitionTechnologies()
-     * @generated
-     */
-    EOperation getMicroserviceMapping__GetTypeDefinitionTechnologies();
 
     /**
      * Returns the meta object for the '{@link de.fhdo.ddmm.technology.mapping.MicroserviceMapping#getTypeDefinitionTechnology() <em>Get Type Definition Technology</em>}' operation.
@@ -2642,12 +2680,12 @@ public interface MappingPackage extends EPackage {
         EAttribute COMPLEX_TYPE_MAPPING__TSOURCE_MODEL_URI = eINSTANCE.getComplexTypeMapping_T_sourceModelUri();
 
         /**
-         * The meta object literal for the '<em><b>Technologies</b></em>' reference list feature.
+         * The meta object literal for the '<em><b>Technology References</b></em>' containment reference list feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference COMPLEX_TYPE_MAPPING__TECHNOLOGIES = eINSTANCE.getComplexTypeMapping_Technologies();
+        EReference COMPLEX_TYPE_MAPPING__TECHNOLOGY_REFERENCES = eINSTANCE.getComplexTypeMapping_TechnologyReferences();
 
         /**
          * The meta object literal for the '<em><b>Type</b></em>' containment reference feature.
@@ -2680,6 +2718,30 @@ public interface MappingPackage extends EPackage {
          * @generated
          */
         EReference COMPLEX_TYPE_MAPPING__MAPPING_MODEL = eINSTANCE.getComplexTypeMapping_MappingModel();
+
+        /**
+         * The meta object literal for the '<em><b>Get All Type Definition Technology References</b></em>' operation.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EOperation COMPLEX_TYPE_MAPPING___GET_ALL_TYPE_DEFINITION_TECHNOLOGY_REFERENCES = eINSTANCE.getComplexTypeMapping__GetAllTypeDefinitionTechnologyReferences();
+
+        /**
+         * The meta object literal for the '<em><b>Get Type Definition Technology Import</b></em>' operation.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EOperation COMPLEX_TYPE_MAPPING___GET_TYPE_DEFINITION_TECHNOLOGY_IMPORT = eINSTANCE.getComplexTypeMapping__GetTypeDefinitionTechnologyImport();
+
+        /**
+         * The meta object literal for the '<em><b>Get Type Definition Technology</b></em>' operation.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EOperation COMPLEX_TYPE_MAPPING___GET_TYPE_DEFINITION_TECHNOLOGY = eINSTANCE.getComplexTypeMapping__GetTypeDefinitionTechnology();
 
         /**
          * The meta object literal for the '{@link de.fhdo.ddmm.technology.mapping.impl.ImportedComplexTypeImpl <em>Imported Complex Type</em>}' class.
@@ -2734,12 +2796,12 @@ public interface MappingPackage extends EPackage {
         EClass MICROSERVICE_MAPPING = eINSTANCE.getMicroserviceMapping();
 
         /**
-         * The meta object literal for the '<em><b>Technologies</b></em>' reference list feature.
+         * The meta object literal for the '<em><b>Technology References</b></em>' containment reference list feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference MICROSERVICE_MAPPING__TECHNOLOGIES = eINSTANCE.getMicroserviceMapping_Technologies();
+        EReference MICROSERVICE_MAPPING__TECHNOLOGY_REFERENCES = eINSTANCE.getMicroserviceMapping_TechnologyReferences();
 
         /**
          * The meta object literal for the '<em><b>Microservice</b></em>' containment reference feature.
@@ -2806,12 +2868,12 @@ public interface MappingPackage extends EPackage {
         EReference MICROSERVICE_MAPPING__MAPPING_MODEL = eINSTANCE.getMicroserviceMapping_MappingModel();
 
         /**
-         * The meta object literal for the '<em><b>Get Type Definition Technology Imports</b></em>' operation.
+         * The meta object literal for the '<em><b>Get All Type Definition Technology References</b></em>' operation.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EOperation MICROSERVICE_MAPPING___GET_TYPE_DEFINITION_TECHNOLOGY_IMPORTS = eINSTANCE.getMicroserviceMapping__GetTypeDefinitionTechnologyImports();
+        EOperation MICROSERVICE_MAPPING___GET_ALL_TYPE_DEFINITION_TECHNOLOGY_REFERENCES = eINSTANCE.getMicroserviceMapping__GetAllTypeDefinitionTechnologyReferences();
 
         /**
          * The meta object literal for the '<em><b>Get Type Definition Technology Import</b></em>' operation.
@@ -2820,14 +2882,6 @@ public interface MappingPackage extends EPackage {
          * @generated
          */
         EOperation MICROSERVICE_MAPPING___GET_TYPE_DEFINITION_TECHNOLOGY_IMPORT = eINSTANCE.getMicroserviceMapping__GetTypeDefinitionTechnologyImport();
-
-        /**
-         * The meta object literal for the '<em><b>Get Type Definition Technologies</b></em>' operation.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EOperation MICROSERVICE_MAPPING___GET_TYPE_DEFINITION_TECHNOLOGIES = eINSTANCE.getMicroserviceMapping__GetTypeDefinitionTechnologies();
 
         /**
          * The meta object literal for the '<em><b>Get Type Definition Technology</b></em>' operation.

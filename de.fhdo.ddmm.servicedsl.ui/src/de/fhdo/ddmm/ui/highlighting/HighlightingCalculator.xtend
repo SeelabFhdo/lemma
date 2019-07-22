@@ -12,6 +12,9 @@ import de.fhdo.ddmm.service.ImportedServiceAspect
 import de.fhdo.ddmm.service.Interface
 import de.fhdo.ddmm.service.ReferredOperation
 import de.fhdo.ddmm.service.Operation
+import de.fhdo.ddmm.service.TechnologyReference
+import org.eclipse.xtext.nodemodel.INode
+import org.eclipse.xtext.Keyword
 
 /**
  * Provide custom syntax highlighting for certain elements.
@@ -25,6 +28,7 @@ class HighlightingCalculator implements ISemanticHighlightingCalculator {
     override provideHighlightingFor(XtextResource resource, IHighlightedPositionAcceptor acceptor,
         CancelIndicator cancelIndicator) {
         resource.provideHighlightingForAnnotations(acceptor)
+        resource.provideHighlightingForDefaultTypeDefinitionFlag(acceptor)
     }
 
     /**
@@ -56,8 +60,10 @@ class HighlightingCalculator implements ISemanticHighlightingCalculator {
          */
         val annotatableConcepts = #{
             Microservice -> #[
-                ServicePackage.Literals::MICROSERVICE__TECHNOLOGIES -> false,
                 ServicePackage.Literals::MICROSERVICE__ENDPOINTS -> false
+            ],
+            TechnologyReference -> #[
+                ServicePackage.Literals::TECHNOLOGY_REFERENCE__TECHNOLOGY -> false
             ],
             Interface -> #[
                 ServicePackage.Literals::INTERFACE__ENDPOINTS -> false
@@ -115,5 +121,40 @@ class HighlightingCalculator implements ISemanticHighlightingCalculator {
                     ]
                 ]]
         ]
+    }
+
+    /**
+     * Provide highlighting for default type definition flag of built-in @technology annotation
+     */
+    private def provideHighlightingForDefaultTypeDefinitionFlag(XtextResource resource,
+        IHighlightedPositionAcceptor acceptor) {
+        for (eObject : resource.allContents.toList) {
+            val relevantFeatures = NodeModelUtils.findNodesForFeature(eObject,
+                ServicePackage.Literals::TECHNOLOGY_REFERENCE__IS_TYPE_DEFINITION_TECHNOLOGY)
+            if (!relevantFeatures.empty) {
+                var currentNode = relevantFeatures.get(0).previousSibling
+                var typedefKeywordColored = false
+                while (currentNode !== null && !typedefKeywordColored) {
+                    if ("typedef" == currentNode.keywordValue) {
+                        acceptor.addPosition(currentNode.offset, currentNode.length,
+                            HighlightingConfiguration.DEFAULT_ID)
+                        typedefKeywordColored = true
+                    } else
+                        currentNode = currentNode.previousSibling
+                }
+            }
+        }
+    }
+
+    /**
+     * Helper to return the value of a Keyword INode. Returns an empty string if the passed node is
+     * not a Keyword.
+     */
+    private def String keywordValue(INode node) {
+        val grammarElement = node.grammarElement
+        return if (grammarElement instanceof Keyword)
+                grammarElement.value
+            else
+                ""
     }
 }

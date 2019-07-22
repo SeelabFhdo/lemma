@@ -242,6 +242,10 @@ class TechnologyDslValidator extends AbstractTechnologyDslValidator {
          * to retrieve the list from the metamodel, we need an instance of a PrimitiveType to be
          * able to call getBuiltinPrimitiveTypes() as Xcore does not allow static methods.
          */
+        if (technology.primitiveTypes.empty) {
+            return
+        }
+
         val primitiveTypeInstance = technology
             .primitiveTypes.get(0)
             .basicBuiltinPrimitiveTypes.get(0)
