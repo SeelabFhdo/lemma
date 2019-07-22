@@ -171,7 +171,8 @@ rule RefineIntermediateComplexType {
 		s : Intermediate!IntermediateComplexType (
 			-- Only consider IntermediateComplexType instances that are not used as data field 
 			-- types
-			s.dataField.oclIsUndefined() 
+			s.dataField.oclIsUndefined() and
+			not thisModule.findMappedComplexType(s).oclIsUndefined()
 		)
 	using {
 		mappedComplexType : Service!MappedComplexType = thisModule.findMappedComplexType(s);
@@ -267,10 +268,11 @@ rule IntermediateImport(sourceImport : Service!Import) {
 			-- Note that normally this would be a direct mapping between the source and the target
 			-- importType. However, the XMI serlializer seems to be bugged. See the comments in the
 			-- metamodel on why here the name of the import type is used instead.
-			importTypeName <- thisModule.getImportTypeName(sourceImport),
-			dataModel <- thisModule.intermediateDataModel()
+			importTypeName <- thisModule.getImportTypeName(sourceImport) 
 		)
 	do {
+		t.refSetValue('dataModel', thisModule.intermediateDataModel());
+		
 		-- Assign created target instance to the list of imports under the model root
 		thisModule.intermediateDataModel().imports <- thisModule.intermediateDataModel()
 			.imports->append(t);
