@@ -487,10 +487,10 @@ class MappingDslValidator extends AbstractMappingDslValidator {
     }
 
     /**
-     * Check that microservice endpoints' addresses are unique per protocol/data format combination
+     * Warn about non-unique microservice endpoints' addresses per protocol/data format combination
      */
     @Check
-    def checkUniqueEndpointAddresses(TechnologyMapping model) {
+    def warnkUniqueEndpointAddresses(TechnologyMapping model) {
         val allImportedServiceModels = model.imports
             .filter[importType === ImportType.MICROSERVICES]
             .map[
@@ -510,7 +510,7 @@ class MappingDslValidator extends AbstractMappingDslValidator {
         val allMappedEndpoints = model.serviceMappings.map[endpoints].flatten.toList
         val nonMappedEndpoints = nonMappedMicroservices.map[endpoints].flatten.toList
 
-        checkUniqueEndpointAddresses(allMappedEndpoints, nonMappedEndpoints, "microservice",
+        warnUniqueEndpointAddresses(allMappedEndpoints, nonMappedEndpoints, "microservice",
             [
                 return if (it instanceof Endpoint)
                     it.microservice.buildQualifiedName(".")
@@ -523,10 +523,10 @@ class MappingDslValidator extends AbstractMappingDslValidator {
     }
 
     /**
-     * Check that interface endpoints' addresses are unique per protocol/data format combination
+     * Warn about non-unique interface endpoints' addresses per protocol/data format combination
      */
     @Check
-    def checkUniqueEndpointAddresses(MicroserviceMapping serviceMapping) {
+    def warnUniqueEndpointAddresses(MicroserviceMapping serviceMapping) {
         val mappedInterfaces = serviceMapping.interfaceMappings.map[interface]
         val nonMappedInterfaces = serviceMapping.microservice.microservice.interfaces
             .filter[!mappedInterfaces.contains(it)]
@@ -534,7 +534,7 @@ class MappingDslValidator extends AbstractMappingDslValidator {
         val allMappedEndpoints = serviceMapping.interfaceMappings.map[endpoints].flatten.toList
         val nonMappedEndpoints = nonMappedInterfaces.map[endpoints].flatten.toList
 
-        checkUniqueEndpointAddresses(allMappedEndpoints, nonMappedEndpoints, "interface",
+        warnUniqueEndpointAddresses(allMappedEndpoints, nonMappedEndpoints, "interface",
             [
                 return if (it instanceof Endpoint)
                     it.interface.buildQualifiedName(".")
@@ -547,11 +547,11 @@ class MappingDslValidator extends AbstractMappingDslValidator {
     }
 
     /**
-     * Check that operation and referred operation endpoints' addresses are unique per
+     * Warn if operation and referred operation endpoints' addresses are not unique per
      * protocol/data format combination
      */
     @Check
-    def checkUniqueEndpointAddressesOfOperations(MicroserviceMapping serviceMapping) {
+    def warnUniqueEndpointAddressesOfOperations(MicroserviceMapping serviceMapping) {
         /* Collect all interfaces of mapped operations and referred operation */
         val mappedOperationsInterfaces = serviceMapping.operationMappings
             .map[operation.interface].toSet + serviceMapping.referredOperationMappings
@@ -595,8 +595,8 @@ class MappingDslValidator extends AbstractMappingDslValidator {
                     it.endpoints
             ].flatten.toList
 
-            /* Perform the uniqueness check on endpoints of operations in the current interface */
-            checkUniqueEndpointAddresses(allMappedEndpoints, nonMappedEndpoints, "operation",
+            /* Warn about non-unique endpoints of operations in the current interface */
+            warnUniqueEndpointAddresses(allMappedEndpoints, nonMappedEndpoints, "operation",
                 [
                     return if (it instanceof Endpoint) {
                         if (it.operation !== null)
@@ -616,10 +616,10 @@ class MappingDslValidator extends AbstractMappingDslValidator {
     }
 
     /**
-     * Helper to check that the addresses of mapped as well as non-mapped endpoints are unique in
-     * the context of a given container, e.g., a microservice
+     * Helper to warn if addresses of mapped as well as non-mapped endpoints are not unique in the
+     * context of a given container, e.g., a microservice
      */
-    private def checkUniqueEndpointAddresses(List<TechnologySpecificEndpoint> mappedEndpoints,
+    private def warnUniqueEndpointAddresses(List<TechnologySpecificEndpoint> mappedEndpoints,
         List<Endpoint> nonMappedEndpoints, String containerTypeName,
         Function<EObject, String> getContainerName) {
         val mappedAddressesToEndpoints = <String, TechnologySpecificEndpoint>newHashMap
@@ -676,7 +676,7 @@ class MappingDslValidator extends AbstractMappingDslValidator {
                             val serviceModelUri = DdmmUtils
                                 .getFileForResource(nonMappedEndpoint.eResource)
                                 .rawLocation.makeAbsolute.toString
-                            error('''Address «address» is already specified for protocol ''' +
+                            warning('''Address «address» is already specified for protocol ''' +
                                 '''«protocolName» on «containerTypeName» «containerName» in ''' +
                                 '''service model «serviceModelUri»''', duplicateMappedEndpoint,
                                 MappingPackage::Literals.TECHNOLOGY_SPECIFIC_ENDPOINT__ADDRESSES,

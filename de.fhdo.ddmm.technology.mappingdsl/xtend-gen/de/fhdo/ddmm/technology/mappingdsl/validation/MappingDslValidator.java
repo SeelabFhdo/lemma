@@ -627,10 +627,10 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
   }
   
   /**
-   * Check that microservice endpoints' addresses are unique per protocol/data format combination
+   * Warn about non-unique microservice endpoints' addresses per protocol/data format combination
    */
   @Check
-  public void checkUniqueEndpointAddresses(final TechnologyMapping model) {
+  public void warnkUniqueEndpointAddresses(final TechnologyMapping model) {
     final Function1<Import, Boolean> _function = (Import it) -> {
       ImportType _importType = it.getImportType();
       return Boolean.valueOf((_importType == ImportType.MICROSERVICES));
@@ -682,14 +682,14 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
       }
       return _xifexpression;
     };
-    this.checkUniqueEndpointAddresses(allMappedEndpoints, nonMappedEndpoints, "microservice", _function_7);
+    this.warnUniqueEndpointAddresses(allMappedEndpoints, nonMappedEndpoints, "microservice", _function_7);
   }
   
   /**
-   * Check that interface endpoints' addresses are unique per protocol/data format combination
+   * Warn about non-unique interface endpoints' addresses per protocol/data format combination
    */
   @Check
-  public void checkUniqueEndpointAddresses(final MicroserviceMapping serviceMapping) {
+  public void warnUniqueEndpointAddresses(final MicroserviceMapping serviceMapping) {
     final Function1<InterfaceMapping, Interface> _function = (InterfaceMapping it) -> {
       return it.getInterface();
     };
@@ -722,15 +722,15 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
       }
       return _xifexpression;
     };
-    this.checkUniqueEndpointAddresses(allMappedEndpoints, nonMappedEndpoints, "interface", _function_4);
+    this.warnUniqueEndpointAddresses(allMappedEndpoints, nonMappedEndpoints, "interface", _function_4);
   }
   
   /**
-   * Check that operation and referred operation endpoints' addresses are unique per
+   * Warn if operation and referred operation endpoints' addresses are not unique per
    * protocol/data format combination
    */
   @Check
-  public void checkUniqueEndpointAddressesOfOperations(final MicroserviceMapping serviceMapping) {
+  public void warnUniqueEndpointAddressesOfOperations(final MicroserviceMapping serviceMapping) {
     final Function1<OperationMapping, Interface> _function = (OperationMapping it) -> {
       return it.getOperation().getInterface();
     };
@@ -835,16 +835,16 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
         }
         return _xifexpression;
       };
-      this.checkUniqueEndpointAddresses(allMappedEndpoints, nonMappedEndpoints, "operation", _function_9);
+      this.warnUniqueEndpointAddresses(allMappedEndpoints, nonMappedEndpoints, "operation", _function_9);
     };
     mappedOperationsInterfaces.forEach(_function_2);
   }
   
   /**
-   * Helper to check that the addresses of mapped as well as non-mapped endpoints are unique in
-   * the context of a given container, e.g., a microservice
+   * Helper to warn if addresses of mapped as well as non-mapped endpoints are not unique in the
+   * context of a given container, e.g., a microservice
    */
-  private void checkUniqueEndpointAddresses(final List<TechnologySpecificEndpoint> mappedEndpoints, final List<Endpoint> nonMappedEndpoints, final String containerTypeName, final Function<EObject, String> getContainerName) {
+  private void warnUniqueEndpointAddresses(final List<TechnologySpecificEndpoint> mappedEndpoints, final List<Endpoint> nonMappedEndpoints, final String containerTypeName, final Function<EObject, String> getContainerName) {
     final HashMap<String, TechnologySpecificEndpoint> mappedAddressesToEndpoints = CollectionLiterals.<String, TechnologySpecificEndpoint>newHashMap();
     final Consumer<TechnologySpecificEndpoint> _function = (TechnologySpecificEndpoint endpoint) -> {
       int _size = endpoint.getAddresses().size();
@@ -930,7 +930,7 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
               _builder_2.append("service model ");
               _builder_2.append(serviceModelUri);
               String _plus_3 = (_plus_2 + _builder_2);
-              this.error(_plus_3, duplicateMappedEndpoint, 
+              this.warning(_plus_3, duplicateMappedEndpoint, 
                 MappingPackage.Literals.TECHNOLOGY_SPECIFIC_ENDPOINT__ADDRESSES, mappedAddressIndex);
             }
           }

@@ -51,43 +51,6 @@ public class MappingModelTransformationValidator extends AbstractInputModelValid
       this.error("Mapping model is empty");
     }
     this.checkImportsInServiceModelsForDuplicateAliases(mappingModel);
-    this.checkServiceModelsForDuplicateEndpointAddresses(mappingModel);
-  }
-  
-  /**
-   * Register warning functions
-   */
-  @Override
-  public List<Function<TechnologyMapping, Void>> registerWarningFunctions() {
-    final Function<TechnologyMapping, Void> _function = (TechnologyMapping it) -> {
-      return this.warnReferredMicroserviceTechnologies(it);
-    };
-    return Collections.<Function<TechnologyMapping, Void>>unmodifiableList(CollectionLiterals.<Function<TechnologyMapping, Void>>newArrayList(_function));
-  }
-  
-  /**
-   * Warn if microservices with technologies refer to microservices without technologies
-   */
-  private Void warnReferredMicroserviceTechnologies(final TechnologyMapping mappingModel) {
-    Void _xblockexpression = null;
-    {
-      final Function1<MicroserviceMapping, Boolean> _function = (MicroserviceMapping it) -> {
-        final Function1<Microservice, Boolean> _function_1 = (Microservice it_1) -> {
-          return Boolean.valueOf(it_1.getTechnologyReferences().isEmpty());
-        };
-        return Boolean.valueOf(IterableExtensions.<Microservice>exists(it.getMicroservice().getMicroservice().getAllRequiredMicroservices().keySet(), _function_1));
-      };
-      final boolean referencesToMicroservicesWithoutTechnologies = IterableExtensions.<MicroserviceMapping>exists(mappingModel.getServiceMappings(), _function);
-      Void _xifexpression = null;
-      if (referencesToMicroservicesWithoutTechnologies) {
-        _xifexpression = this.warning(((("The model maps microservices, which refer to services without " + 
-          "technology assignments. For the services without technology assignments, a code ") + 
-          "generation involving explicit technology specifications would have to be ") + 
-          "performed."));
-      }
-      _xblockexpression = _xifexpression;
-    }
-    return _xblockexpression;
   }
   
   /**
@@ -143,9 +106,48 @@ public class MappingModelTransformationValidator extends AbstractInputModelValid
   }
   
   /**
-   * Check duplicate microservice endpoint addresses across service models
+   * Register warning functions
    */
-  private void checkServiceModelsForDuplicateEndpointAddresses(final TechnologyMapping mappingModel) {
+  @Override
+  public List<Function<TechnologyMapping, Void>> registerWarningFunctions() {
+    final Function<TechnologyMapping, Void> _function = (TechnologyMapping it) -> {
+      return this.warnReferredMicroserviceTechnologies(it);
+    };
+    final Function<TechnologyMapping, Void> _function_1 = (TechnologyMapping it) -> {
+      return this.warnServiceModelsForDuplicateEndpointAddresses(it);
+    };
+    return Collections.<Function<TechnologyMapping, Void>>unmodifiableList(CollectionLiterals.<Function<TechnologyMapping, Void>>newArrayList(_function, _function_1));
+  }
+  
+  /**
+   * Warn if microservices with technologies refer to microservices without technologies
+   */
+  private Void warnReferredMicroserviceTechnologies(final TechnologyMapping mappingModel) {
+    Void _xblockexpression = null;
+    {
+      final Function1<MicroserviceMapping, Boolean> _function = (MicroserviceMapping it) -> {
+        final Function1<Microservice, Boolean> _function_1 = (Microservice it_1) -> {
+          return Boolean.valueOf(it_1.getTechnologyReferences().isEmpty());
+        };
+        return Boolean.valueOf(IterableExtensions.<Microservice>exists(it.getMicroservice().getMicroservice().getAllRequiredMicroservices().keySet(), _function_1));
+      };
+      final boolean referencesToMicroservicesWithoutTechnologies = IterableExtensions.<MicroserviceMapping>exists(mappingModel.getServiceMappings(), _function);
+      Void _xifexpression = null;
+      if (referencesToMicroservicesWithoutTechnologies) {
+        _xifexpression = this.warning(((("The model maps microservices, which refer to services without " + 
+          "technology assignments. For the services without technology assignments, a code ") + 
+          "generation involving explicit technology specifications would have to be ") + 
+          "performed."));
+      }
+      _xblockexpression = _xifexpression;
+    }
+    return _xblockexpression;
+  }
+  
+  /**
+   * Warn about duplicate microservice endpoint addresses across service models
+   */
+  private Void warnServiceModelsForDuplicateEndpointAddresses(final TechnologyMapping mappingModel) {
     final Function1<Import, Boolean> _function = (Import it) -> {
       ImportType _importType = it.getImportType();
       return Boolean.valueOf((_importType == ImportType.MICROSERVICES));
@@ -209,7 +211,7 @@ public class MappingModelTransformationValidator extends AbstractInputModelValid
               _builder_2.append(_get);
               _builder_2.append(".");
               String _plus_3 = (_plus_2 + _builder_2);
-              this.error(_plus_3);
+              this.warning(_plus_3);
             }
           } else {
             endpointAddresses.put(addressPrefixedByProtocol, endpoint);
@@ -220,5 +222,6 @@ public class MappingModelTransformationValidator extends AbstractInputModelValid
       endpoint.getAddresses().forEach(_function_6);
     };
     allMicroserviceEndpoints.forEach(_function_5);
+    return null;
   }
 }

@@ -31,33 +31,6 @@ class MappingModelTransformationValidator
             error("Mapping model is empty")
 
         checkImportsInServiceModelsForDuplicateAliases(mappingModel)
-        checkServiceModelsForDuplicateEndpointAddresses(mappingModel)
-    }
-
-    /**
-     * Register warning functions
-     */
-    override registerWarningFunctions() {
-        return #[
-            [warnReferredMicroserviceTechnologies]
-        ]
-    }
-
-    /**
-     * Warn if microservices with technologies refer to microservices without technologies
-     */
-    private def Void warnReferredMicroserviceTechnologies(TechnologyMapping mappingModel) {
-        val referencesToMicroservicesWithoutTechnologies = mappingModel.serviceMappings
-            .exists[
-                microservice.microservice
-                    .allRequiredMicroservices.keySet.exists[technologyReferences.empty]
-            ]
-
-        if (referencesToMicroservicesWithoutTechnologies)
-            warning("The model maps microservices, which refer to services without " +
-                "technology assignments. For the services without technology assignments, a code " +
-                "generation involving explicit technology specifications would have to be " +
-                "performed.")
     }
 
     /**
@@ -107,9 +80,38 @@ class MappingModelTransformationValidator
     }
 
     /**
-     * Check duplicate microservice endpoint addresses across service models
+     * Register warning functions
      */
-    private def checkServiceModelsForDuplicateEndpointAddresses(TechnologyMapping mappingModel) {
+    override registerWarningFunctions() {
+        return #[
+            [warnReferredMicroserviceTechnologies],
+            [warnServiceModelsForDuplicateEndpointAddresses]
+        ]
+    }
+
+    /**
+     * Warn if microservices with technologies refer to microservices without technologies
+     */
+    private def Void warnReferredMicroserviceTechnologies(TechnologyMapping mappingModel) {
+        val referencesToMicroservicesWithoutTechnologies = mappingModel.serviceMappings
+            .exists[
+                microservice.microservice
+                    .allRequiredMicroservices.keySet.exists[technologyReferences.empty]
+            ]
+
+        if (referencesToMicroservicesWithoutTechnologies)
+            warning("The model maps microservices, which refer to services without " +
+                "technology assignments. For the services without technology assignments, a code " +
+                "generation involving explicit technology specifications would have to be " +
+                "performed.")
+    }
+
+    /**
+     * Warn about duplicate microservice endpoint addresses across service models
+     */
+    private def Void warnServiceModelsForDuplicateEndpointAddresses(
+        TechnologyMapping mappingModel
+    ) {
         val allImportedServiceModels = mappingModel.imports
             .filter[importType === ImportType.MICROSERVICES]
             .toMap(
@@ -144,12 +146,14 @@ class MappingModelTransformationValidator
                     val duplicateMicroservice = EcoreUtil2.getContainerOfType(duplicateEndpoint,
                         Microservice)
                     if (duplicateMicroservice != microservice)
-                        error('''Address «address» is already specified for microservice ''' +
+                        warning('''Address «address» is already specified for microservice ''' +
                             '''«microservice.buildQualifiedName(".")» in  service model ''' +
                             '''«allImportedServiceModels.get(microservice.serviceModel)».''')
                 } else
                     endpointAddresses.put(addressPrefixedByProtocol, endpoint)
             ]
         ]]
+
+        return null
     }
 }

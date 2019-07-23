@@ -134,35 +134,35 @@ class ServiceDslValidator extends AbstractServiceDslValidator {
     }
 
     /**
-     * Check that microservice endpoints' addresses are unique per protocol/data format combination
+     * Warn about non-unique microservice endpoints' addresses per protocol/data format combination
      */
     @Check
-    def checkUniqueEndpointAddresses(ServiceModel serviceModel) {
+    def warnUniqueEndpointAddresses(ServiceModel serviceModel) {
         val microserviceEndpoints = serviceModel.microservices.map[endpoints].flatten.toList
-        checkUniqueEndpointAddresses(microserviceEndpoints, "microservice",
+        warnUniqueEndpointAddresses(microserviceEndpoints, "microservice",
             [microservice.qualifiedNameParts])
     }
 
     /**
-     * Check that interface endpoints' addresses are unique per protocol/data format combination
+     * Warn about non-unique interface endpoints' addresses per protocol/data format combination
      */
     @Check
-    def checkUniqueEndpointAddresses(Microservice microservice) {
+    def warnUniqueEndpointAddresses(Microservice microservice) {
         val interfaceEndpoints = microservice.interfaces.map[endpoints].flatten.toList
-        checkUniqueEndpointAddresses(interfaceEndpoints, "interface",
+        warnUniqueEndpointAddresses(interfaceEndpoints, "interface",
             [interface.qualifiedNameParts])
     }
 
     /**
-     * Check that operation endpoints' addresses are unique per protocol/data format combination
+     * Warn about non-unique operation endpoints' addresses per protocol/data format combination
      */
     @Check
-    def checkUniqueEndpointAddresses(Interface ^interface) {
+    def warnUniqueEndpointAddresses(Interface ^interface) {
         // Combined check for operations and referred operations
         val List<Endpoint> operationEndpoints = newArrayList
         operationEndpoints.addAll(interface.referredOperations.map[endpoints].flatten)
         operationEndpoints.addAll(interface.operations.map[endpoints].flatten)
-        checkUniqueEndpointAddresses(operationEndpoints, "operation", [
+        warnUniqueEndpointAddresses(operationEndpoints, "operation", [
             if (operation !== null)
                 operation.qualifiedNameParts
             else if (referredOperation !== null)
@@ -816,9 +816,9 @@ class ServiceDslValidator extends AbstractServiceDslValidator {
     }
 
     /**
-     * Convenience method to check uniqueness of endpoint addresses within a list of endpoints
+     * Convenience method to warn about non-unique endpoint addresses within a list of endpoints
      */
-    private def checkUniqueEndpointAddresses(List<Endpoint> endpoints, String containerTypeName,
+    private def warnUniqueEndpointAddresses(List<Endpoint> endpoints, String containerTypeName,
         Function<Endpoint, List<String>> getEndpointContainerNameParts) {
         /*
          * This ensures the uniqueness check. Its key is an address prefixed by protocol and data
@@ -863,7 +863,7 @@ class ServiceDslValidator extends AbstractServiceDslValidator {
                             )
                         ).toString
 
-                        error('''Address is already specified for protocol ''' +
+                        warning('''Address is already specified for protocol ''' +
                             '''«duplicateProtocolName» on «containerTypeName» ''' +
                             '''«relativeDuplicateName»''', endpoint,
                             ServicePackage::Literals.ENDPOINT__ADDRESSES, i)

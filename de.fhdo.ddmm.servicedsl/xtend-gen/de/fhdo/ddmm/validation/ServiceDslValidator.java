@@ -185,10 +185,10 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
   }
   
   /**
-   * Check that microservice endpoints' addresses are unique per protocol/data format combination
+   * Warn about non-unique microservice endpoints' addresses per protocol/data format combination
    */
   @Check
-  public void checkUniqueEndpointAddresses(final ServiceModel serviceModel) {
+  public void warnUniqueEndpointAddresses(final ServiceModel serviceModel) {
     final Function1<Microservice, EList<Endpoint>> _function = (Microservice it) -> {
       return it.getEndpoints();
     };
@@ -196,14 +196,14 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
     final Function<Endpoint, List<String>> _function_1 = (Endpoint it) -> {
       return it.getMicroservice().getQualifiedNameParts();
     };
-    this.checkUniqueEndpointAddresses(microserviceEndpoints, "microservice", _function_1);
+    this.warnUniqueEndpointAddresses(microserviceEndpoints, "microservice", _function_1);
   }
   
   /**
-   * Check that interface endpoints' addresses are unique per protocol/data format combination
+   * Warn about non-unique interface endpoints' addresses per protocol/data format combination
    */
   @Check
-  public void checkUniqueEndpointAddresses(final Microservice microservice) {
+  public void warnUniqueEndpointAddresses(final Microservice microservice) {
     final Function1<Interface, EList<Endpoint>> _function = (Interface it) -> {
       return it.getEndpoints();
     };
@@ -211,14 +211,14 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
     final Function<Endpoint, List<String>> _function_1 = (Endpoint it) -> {
       return it.getInterface().getQualifiedNameParts();
     };
-    this.checkUniqueEndpointAddresses(interfaceEndpoints, "interface", _function_1);
+    this.warnUniqueEndpointAddresses(interfaceEndpoints, "interface", _function_1);
   }
   
   /**
-   * Check that operation endpoints' addresses are unique per protocol/data format combination
+   * Warn about non-unique operation endpoints' addresses per protocol/data format combination
    */
   @Check
-  public void checkUniqueEndpointAddresses(final Interface interface_) {
+  public void warnUniqueEndpointAddresses(final Interface interface_) {
     final List<Endpoint> operationEndpoints = CollectionLiterals.<Endpoint>newArrayList();
     final Function1<ReferredOperation, EList<Endpoint>> _function = (ReferredOperation it) -> {
       return it.getEndpoints();
@@ -245,7 +245,7 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
       }
       return _xifexpression;
     };
-    this.checkUniqueEndpointAddresses(operationEndpoints, "operation", _function_2);
+    this.warnUniqueEndpointAddresses(operationEndpoints, "operation", _function_2);
   }
   
   /**
@@ -1143,9 +1143,9 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
   }
   
   /**
-   * Convenience method to check uniqueness of endpoint addresses within a list of endpoints
+   * Convenience method to warn about non-unique endpoint addresses within a list of endpoints
    */
-  private void checkUniqueEndpointAddresses(final List<Endpoint> endpoints, final String containerTypeName, final Function<Endpoint, List<String>> getEndpointContainerNameParts) {
+  private void warnUniqueEndpointAddresses(final List<Endpoint> endpoints, final String containerTypeName, final Function<Endpoint, List<String>> getEndpointContainerNameParts) {
     final HashMap<String, Map<String, Object>> uniqueAddressMap = CollectionLiterals.<String, Map<String, Object>>newHashMap();
     final Consumer<Endpoint> _function = (Endpoint endpoint) -> {
       int _size = endpoint.getAddresses().size();
@@ -1193,7 +1193,7 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
             StringConcatenation _builder_2 = new StringConcatenation();
             _builder_2.append(relativeDuplicateName);
             String _plus_3 = (_plus_2 + _builder_2);
-            this.error(_plus_3, endpoint, 
+            this.warning(_plus_3, endpoint, 
               ServicePackage.Literals.ENDPOINT__ADDRESSES, (i).intValue());
           }
         };
