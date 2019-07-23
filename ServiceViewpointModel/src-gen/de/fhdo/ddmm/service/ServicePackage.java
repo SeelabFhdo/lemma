@@ -235,13 +235,31 @@ public interface ServicePackage extends EPackage {
     int MAPPED_COMPLEX_TYPE__TSOURCE_MODEL_URI = 0;
 
     /**
+     * The feature id for the '<em><b>Ttype Definition Technology Import</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MAPPED_COMPLEX_TYPE__TTYPE_DEFINITION_TECHNOLOGY_IMPORT = 1;
+
+    /**
+     * The feature id for the '<em><b>Ttype Definition Technology</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MAPPED_COMPLEX_TYPE__TTYPE_DEFINITION_TECHNOLOGY = 2;
+
+    /**
      * The feature id for the '<em><b>Technology References</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int MAPPED_COMPLEX_TYPE__TECHNOLOGY_REFERENCES = 1;
+    int MAPPED_COMPLEX_TYPE__TECHNOLOGY_REFERENCES = 3;
 
     /**
      * The feature id for the '<em><b>Type</b></em>' containment reference.
@@ -250,7 +268,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MAPPED_COMPLEX_TYPE__TYPE = 2;
+    int MAPPED_COMPLEX_TYPE__TYPE = 4;
 
     /**
      * The feature id for the '<em><b>Mapped Fields</b></em>' containment reference list.
@@ -259,7 +277,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MAPPED_COMPLEX_TYPE__MAPPED_FIELDS = 3;
+    int MAPPED_COMPLEX_TYPE__MAPPED_FIELDS = 5;
 
     /**
      * The feature id for the '<em><b>Aspects</b></em>' containment reference list.
@@ -268,7 +286,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MAPPED_COMPLEX_TYPE__ASPECTS = 4;
+    int MAPPED_COMPLEX_TYPE__ASPECTS = 6;
 
     /**
      * The feature id for the '<em><b>Service Model</b></em>' container reference.
@@ -277,7 +295,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MAPPED_COMPLEX_TYPE__SERVICE_MODEL = 5;
+    int MAPPED_COMPLEX_TYPE__SERVICE_MODEL = 7;
 
     /**
      * The number of structural features of the '<em>Mapped Complex Type</em>' class.
@@ -286,7 +304,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MAPPED_COMPLEX_TYPE_FEATURE_COUNT = 6;
+    int MAPPED_COMPLEX_TYPE_FEATURE_COUNT = 8;
 
     /**
      * The operation id for the '<em>Get Qualified Name Parts</em>' operation.
@@ -353,22 +371,13 @@ public interface ServicePackage extends EPackage {
     int MAPPED_FIELD = 3;
 
     /**
-     * The feature id for the '<em><b>Ttype Definition Technology Name</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int MAPPED_FIELD__TTYPE_DEFINITION_TECHNOLOGY_NAME = 0;
-
-    /**
      * The feature id for the '<em><b>Data Field</b></em>' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int MAPPED_FIELD__DATA_FIELD = 1;
+    int MAPPED_FIELD__DATA_FIELD = 0;
 
     /**
      * The feature id for the '<em><b>Enumeration Field</b></em>' reference.
@@ -377,7 +386,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MAPPED_FIELD__ENUMERATION_FIELD = 2;
+    int MAPPED_FIELD__ENUMERATION_FIELD = 1;
 
     /**
      * The feature id for the '<em><b>Mapped Type</b></em>' containment reference.
@@ -386,7 +395,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MAPPED_FIELD__MAPPED_TYPE = 3;
+    int MAPPED_FIELD__MAPPED_TYPE = 2;
 
     /**
      * The feature id for the '<em><b>Aspects</b></em>' containment reference list.
@@ -395,7 +404,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MAPPED_FIELD__ASPECTS = 4;
+    int MAPPED_FIELD__ASPECTS = 3;
 
     /**
      * The feature id for the '<em><b>Parameter</b></em>' container reference.
@@ -404,7 +413,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MAPPED_FIELD__PARAMETER = 5;
+    int MAPPED_FIELD__PARAMETER = 4;
 
     /**
      * The feature id for the '<em><b>Mapped Complex Type</b></em>' container reference.
@@ -413,7 +422,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MAPPED_FIELD__MAPPED_COMPLEX_TYPE = 6;
+    int MAPPED_FIELD__MAPPED_COMPLEX_TYPE = 5;
 
     /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -422,7 +431,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MAPPED_FIELD__NAME = 7;
+    int MAPPED_FIELD__NAME = 6;
 
     /**
      * The number of structural features of the '<em>Mapped Field</em>' class.
@@ -431,7 +440,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MAPPED_FIELD_FEATURE_COUNT = 8;
+    int MAPPED_FIELD_FEATURE_COUNT = 7;
 
     /**
      * The operation id for the '<em>Get Qualified Name Parts</em>' operation.
@@ -2351,6 +2360,28 @@ public interface ServicePackage extends EPackage {
     EAttribute getMappedComplexType_T_sourceModelUri();
 
     /**
+     * Returns the meta object for the reference '{@link de.fhdo.ddmm.service.MappedComplexType#getT_typeDefinitionTechnologyImport <em>Ttype Definition Technology Import</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference '<em>Ttype Definition Technology Import</em>'.
+     * @see de.fhdo.ddmm.service.MappedComplexType#getT_typeDefinitionTechnologyImport()
+     * @see #getMappedComplexType()
+     * @generated
+     */
+    EReference getMappedComplexType_T_typeDefinitionTechnologyImport();
+
+    /**
+     * Returns the meta object for the reference '{@link de.fhdo.ddmm.service.MappedComplexType#getT_typeDefinitionTechnology <em>Ttype Definition Technology</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference '<em>Ttype Definition Technology</em>'.
+     * @see de.fhdo.ddmm.service.MappedComplexType#getT_typeDefinitionTechnology()
+     * @see #getMappedComplexType()
+     * @generated
+     */
+    EReference getMappedComplexType_T_typeDefinitionTechnology();
+
+    /**
      * Returns the meta object for the containment reference list '{@link de.fhdo.ddmm.service.MappedComplexType#getTechnologyReferences <em>Technology References</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2464,17 +2495,6 @@ public interface ServicePackage extends EPackage {
      * @generated
      */
     EClass getMappedField();
-
-    /**
-     * Returns the meta object for the attribute '{@link de.fhdo.ddmm.service.MappedField#getT_typeDefinitionTechnologyName <em>Ttype Definition Technology Name</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Ttype Definition Technology Name</em>'.
-     * @see de.fhdo.ddmm.service.MappedField#getT_typeDefinitionTechnologyName()
-     * @see #getMappedField()
-     * @generated
-     */
-    EAttribute getMappedField_T_typeDefinitionTechnologyName();
 
     /**
      * Returns the meta object for the reference '{@link de.fhdo.ddmm.service.MappedField#getDataField <em>Data Field</em>}'.
@@ -4452,6 +4472,22 @@ public interface ServicePackage extends EPackage {
         EAttribute MAPPED_COMPLEX_TYPE__TSOURCE_MODEL_URI = eINSTANCE.getMappedComplexType_T_sourceModelUri();
 
         /**
+         * The meta object literal for the '<em><b>Ttype Definition Technology Import</b></em>' reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference MAPPED_COMPLEX_TYPE__TTYPE_DEFINITION_TECHNOLOGY_IMPORT = eINSTANCE.getMappedComplexType_T_typeDefinitionTechnologyImport();
+
+        /**
+         * The meta object literal for the '<em><b>Ttype Definition Technology</b></em>' reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference MAPPED_COMPLEX_TYPE__TTYPE_DEFINITION_TECHNOLOGY = eINSTANCE.getMappedComplexType_T_typeDefinitionTechnology();
+
+        /**
          * The meta object literal for the '<em><b>Technology References</b></em>' containment reference list feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -4540,14 +4576,6 @@ public interface ServicePackage extends EPackage {
          * @generated
          */
         EClass MAPPED_FIELD = eINSTANCE.getMappedField();
-
-        /**
-         * The meta object literal for the '<em><b>Ttype Definition Technology Name</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute MAPPED_FIELD__TTYPE_DEFINITION_TECHNOLOGY_NAME = eINSTANCE.getMappedField_T_typeDefinitionTechnologyName();
 
         /**
          * The meta object literal for the '<em><b>Data Field</b></em>' reference feature.

@@ -56,6 +56,8 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
  * </p>
  * <ul>
  *   <li>{@link de.fhdo.ddmm.service.impl.MappedComplexTypeImpl#getT_sourceModelUri <em>Tsource Model Uri</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.service.impl.MappedComplexTypeImpl#getT_typeDefinitionTechnologyImport <em>Ttype Definition Technology Import</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.service.impl.MappedComplexTypeImpl#getT_typeDefinitionTechnology <em>Ttype Definition Technology</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.impl.MappedComplexTypeImpl#getTechnologyReferences <em>Technology References</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.impl.MappedComplexTypeImpl#getType <em>Type</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.impl.MappedComplexTypeImpl#getMappedFields <em>Mapped Fields</em>}</li>
@@ -85,6 +87,26 @@ public class MappedComplexTypeImpl extends MinimalEObjectImpl.Container implemen
      * @ordered
      */
     protected String t_sourceModelUri = TSOURCE_MODEL_URI_EDEFAULT;
+
+    /**
+     * The cached value of the '{@link #getT_typeDefinitionTechnologyImport() <em>Ttype Definition Technology Import</em>}' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getT_typeDefinitionTechnologyImport()
+     * @generated
+     * @ordered
+     */
+    protected Import t_typeDefinitionTechnologyImport;
+
+    /**
+     * The cached value of the '{@link #getT_typeDefinitionTechnology() <em>Ttype Definition Technology</em>}' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getT_typeDefinitionTechnology()
+     * @generated
+     * @ordered
+     */
+    protected Technology t_typeDefinitionTechnology;
 
     /**
      * The cached value of the '{@link #getTechnologyReferences() <em>Technology References</em>}' containment reference list.
@@ -166,6 +188,86 @@ public class MappedComplexTypeImpl extends MinimalEObjectImpl.Container implemen
         t_sourceModelUri = newT_sourceModelUri;
         if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, ServicePackage.MAPPED_COMPLEX_TYPE__TSOURCE_MODEL_URI, oldT_sourceModelUri, t_sourceModelUri));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Import getT_typeDefinitionTechnologyImport() {
+        if (t_typeDefinitionTechnologyImport != null && t_typeDefinitionTechnologyImport.eIsProxy()) {
+            InternalEObject oldT_typeDefinitionTechnologyImport = (InternalEObject)t_typeDefinitionTechnologyImport;
+            t_typeDefinitionTechnologyImport = (Import)eResolveProxy(oldT_typeDefinitionTechnologyImport);
+            if (t_typeDefinitionTechnologyImport != oldT_typeDefinitionTechnologyImport) {
+                if (eNotificationRequired())
+                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, ServicePackage.MAPPED_COMPLEX_TYPE__TTYPE_DEFINITION_TECHNOLOGY_IMPORT, oldT_typeDefinitionTechnologyImport, t_typeDefinitionTechnologyImport));
+            }
+        }
+        return t_typeDefinitionTechnologyImport;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public Import basicGetT_typeDefinitionTechnologyImport() {
+        return t_typeDefinitionTechnologyImport;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void setT_typeDefinitionTechnologyImport(Import newT_typeDefinitionTechnologyImport) {
+        Import oldT_typeDefinitionTechnologyImport = t_typeDefinitionTechnologyImport;
+        t_typeDefinitionTechnologyImport = newT_typeDefinitionTechnologyImport;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ServicePackage.MAPPED_COMPLEX_TYPE__TTYPE_DEFINITION_TECHNOLOGY_IMPORT, oldT_typeDefinitionTechnologyImport, t_typeDefinitionTechnologyImport));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Technology getT_typeDefinitionTechnology() {
+        if (t_typeDefinitionTechnology != null && t_typeDefinitionTechnology.eIsProxy()) {
+            InternalEObject oldT_typeDefinitionTechnology = (InternalEObject)t_typeDefinitionTechnology;
+            t_typeDefinitionTechnology = (Technology)eResolveProxy(oldT_typeDefinitionTechnology);
+            if (t_typeDefinitionTechnology != oldT_typeDefinitionTechnology) {
+                if (eNotificationRequired())
+                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, ServicePackage.MAPPED_COMPLEX_TYPE__TTYPE_DEFINITION_TECHNOLOGY, oldT_typeDefinitionTechnology, t_typeDefinitionTechnology));
+            }
+        }
+        return t_typeDefinitionTechnology;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public Technology basicGetT_typeDefinitionTechnology() {
+        return t_typeDefinitionTechnology;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void setT_typeDefinitionTechnology(Technology newT_typeDefinitionTechnology) {
+        Technology oldT_typeDefinitionTechnology = t_typeDefinitionTechnology;
+        t_typeDefinitionTechnology = newT_typeDefinitionTechnology;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ServicePackage.MAPPED_COMPLEX_TYPE__TTYPE_DEFINITION_TECHNOLOGY, oldT_typeDefinitionTechnology, t_typeDefinitionTechnology));
     }
 
     /**
@@ -522,6 +624,12 @@ public class MappedComplexTypeImpl extends MinimalEObjectImpl.Container implemen
         switch (featureID) {
             case ServicePackage.MAPPED_COMPLEX_TYPE__TSOURCE_MODEL_URI:
                 return getT_sourceModelUri();
+            case ServicePackage.MAPPED_COMPLEX_TYPE__TTYPE_DEFINITION_TECHNOLOGY_IMPORT:
+                if (resolve) return getT_typeDefinitionTechnologyImport();
+                return basicGetT_typeDefinitionTechnologyImport();
+            case ServicePackage.MAPPED_COMPLEX_TYPE__TTYPE_DEFINITION_TECHNOLOGY:
+                if (resolve) return getT_typeDefinitionTechnology();
+                return basicGetT_typeDefinitionTechnology();
             case ServicePackage.MAPPED_COMPLEX_TYPE__TECHNOLOGY_REFERENCES:
                 return getTechnologyReferences();
             case ServicePackage.MAPPED_COMPLEX_TYPE__TYPE:
@@ -548,6 +656,12 @@ public class MappedComplexTypeImpl extends MinimalEObjectImpl.Container implemen
         switch (featureID) {
             case ServicePackage.MAPPED_COMPLEX_TYPE__TSOURCE_MODEL_URI:
                 setT_sourceModelUri((String)newValue);
+                return;
+            case ServicePackage.MAPPED_COMPLEX_TYPE__TTYPE_DEFINITION_TECHNOLOGY_IMPORT:
+                setT_typeDefinitionTechnologyImport((Import)newValue);
+                return;
+            case ServicePackage.MAPPED_COMPLEX_TYPE__TTYPE_DEFINITION_TECHNOLOGY:
+                setT_typeDefinitionTechnology((Technology)newValue);
                 return;
             case ServicePackage.MAPPED_COMPLEX_TYPE__TECHNOLOGY_REFERENCES:
                 getTechnologyReferences().clear();
@@ -582,6 +696,12 @@ public class MappedComplexTypeImpl extends MinimalEObjectImpl.Container implemen
             case ServicePackage.MAPPED_COMPLEX_TYPE__TSOURCE_MODEL_URI:
                 setT_sourceModelUri(TSOURCE_MODEL_URI_EDEFAULT);
                 return;
+            case ServicePackage.MAPPED_COMPLEX_TYPE__TTYPE_DEFINITION_TECHNOLOGY_IMPORT:
+                setT_typeDefinitionTechnologyImport((Import)null);
+                return;
+            case ServicePackage.MAPPED_COMPLEX_TYPE__TTYPE_DEFINITION_TECHNOLOGY:
+                setT_typeDefinitionTechnology((Technology)null);
+                return;
             case ServicePackage.MAPPED_COMPLEX_TYPE__TECHNOLOGY_REFERENCES:
                 getTechnologyReferences().clear();
                 return;
@@ -611,6 +731,10 @@ public class MappedComplexTypeImpl extends MinimalEObjectImpl.Container implemen
         switch (featureID) {
             case ServicePackage.MAPPED_COMPLEX_TYPE__TSOURCE_MODEL_URI:
                 return TSOURCE_MODEL_URI_EDEFAULT == null ? t_sourceModelUri != null : !TSOURCE_MODEL_URI_EDEFAULT.equals(t_sourceModelUri);
+            case ServicePackage.MAPPED_COMPLEX_TYPE__TTYPE_DEFINITION_TECHNOLOGY_IMPORT:
+                return t_typeDefinitionTechnologyImport != null;
+            case ServicePackage.MAPPED_COMPLEX_TYPE__TTYPE_DEFINITION_TECHNOLOGY:
+                return t_typeDefinitionTechnology != null;
             case ServicePackage.MAPPED_COMPLEX_TYPE__TECHNOLOGY_REFERENCES:
                 return technologyReferences != null && !technologyReferences.isEmpty();
             case ServicePackage.MAPPED_COMPLEX_TYPE__TYPE:

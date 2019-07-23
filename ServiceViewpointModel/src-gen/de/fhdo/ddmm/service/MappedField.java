@@ -25,7 +25,6 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link de.fhdo.ddmm.service.MappedField#getT_typeDefinitionTechnologyName <em>Ttype Definition Technology Name</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.MappedField#getDataField <em>Data Field</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.MappedField#getEnumerationField <em>Enumeration Field</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.MappedField#getMappedType <em>Mapped Type</em>}</li>
@@ -40,32 +39,6 @@ import org.eclipse.emf.ecore.EObject;
  * @generated
  */
 public interface MappedField extends EObject {
-    /**
-     * Returns the value of the '<em><b>Ttype Definition Technology Name</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Ttype Definition Technology Name</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
-     * @return the value of the '<em>Ttype Definition Technology Name</em>' attribute.
-     * @see #setT_typeDefinitionTechnologyName(String)
-     * @see de.fhdo.ddmm.service.ServicePackage#getMappedField_T_typeDefinitionTechnologyName()
-     * @model unique="false"
-     * @generated
-     */
-    String getT_typeDefinitionTechnologyName();
-
-    /**
-     * Sets the value of the '{@link de.fhdo.ddmm.service.MappedField#getT_typeDefinitionTechnologyName <em>Ttype Definition Technology Name</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Ttype Definition Technology Name</em>' attribute.
-     * @see #getT_typeDefinitionTechnologyName()
-     * @generated
-     */
-    void setT_typeDefinitionTechnologyName(String value);
-
     /**
      * Returns the value of the '<em><b>Data Field</b></em>' reference.
      * <!-- begin-user-doc -->

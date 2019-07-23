@@ -268,4 +268,16 @@ public interface IntermediateDataField extends EObject {
      */
     void setListType(IntermediateListType value);
 
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * *
+     * Get the effective containing complex type of this data field
+     * <!-- end-model-doc -->
+     * @model kind="operation" unique="false"
+     * @generated
+     */
+    IntermediateComplexType getEffectiveComplexType();
+
 } // IntermediateDataField

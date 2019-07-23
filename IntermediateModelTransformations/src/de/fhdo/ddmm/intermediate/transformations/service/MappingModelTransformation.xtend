@@ -46,6 +46,7 @@ import java.util.Set
 class MappingModelTransformation
     extends AbstractAtlInputOutputIntermediateModelTransformationStrategy {
     String absoluteInputModelPath
+    TechnologyMapping inputMappingModel
 
     /**
      * Specify reference name and transformation model type of input model
@@ -85,14 +86,14 @@ class MappingModelTransformation
      * Prepare input model
      */
     override prepareInputModel(TransformationModelDescription modelDescription, EObject modelRoot) {
-        val mappingModel = modelRoot as TechnologyMapping
+        inputMappingModel = modelRoot as TechnologyMapping
 
         // Convert import URIs to absolute URIs
-        convertImportUrisToAbsoluteFileUris(mappingModel.imports, absoluteInputModelPath)
+        convertImportUrisToAbsoluteFileUris(inputMappingModel.imports, absoluteInputModelPath)
 
         // Set source model URIs on complex type mappings so that the mapped fields are identifiable
         // by their fully-qualified names in the context of the data models that define them
-        mappingModel.setSourceModelUris
+        inputMappingModel.setSourceModelUris
     }
 
     /**
@@ -205,7 +206,8 @@ class MappingModelTransformation
     override registerTransformationsFinishedListener() {
         return [
             results, warningCallback |
-            MappingModelRefinementExecutor.executeRefinements(results, warningCallback)
+            MappingModelRefinementExecutor.executeRefinements(inputMappingModel, results,
+                warningCallback)
         ]
     }
 
@@ -228,8 +230,11 @@ class MappingModelTransformation
         /**
          * Execute the refinements
          */
-        private static def Void executeRefinements(List<TransformationResult> results,
-            Predicate<IntermediateTransformationException> warningCallback) {
+        private static def Void executeRefinements(
+            TechnologyMapping inputMappingModel,
+            List<TransformationResult> results,
+            Predicate<IntermediateTransformationException> warningCallback
+        ) {
             /*
              * Execute refinements and collect refined models in a map that assigns the path of
              * the original intermediate data model to its refined version. This map is then
@@ -240,6 +245,8 @@ class MappingModelTransformation
             val refinedModelsPerServiceModel = <OutputModel, Map<String, OutputModel>>newHashMap
             results.intermediateDataModelsPerServiceModel.forEach[
                 serviceModel, intermediateDataModels |
+                linkTechnologyModels(serviceModel, inputMappingModel)
+
                 val refinedModels = intermediateDataModels.toMap(
                     [outputPath],
                     [runRefininingTransformation(serviceModel, it, warningCallback)]
@@ -278,6 +285,30 @@ class MappingModelTransformation
             ]
 
             return null
+        }
+
+        /**
+         * Link technology models to MappedComplexType instances in service models. This would
+         * normally be done by the transformation strategy implementation, i.e., the
+         * IntermediateDataModelRefinement class in this case. However,
+         * MappedComplexType.getTypeDefinitionTechnology() passes the eResource of the result of
+         * MappedComplexType.getTypeDefinitionTechnologyImport() to
+         * DdmmUtils.getImportedModelRoot(), which returns null when the input model is in the XMI
+         * format as is the case for the refining transformation of intermediate data models.
+         */
+        private static def linkTechnologyModels(OutputModel serviceModel,
+            TechnologyMapping inputMappingModel) {
+            val serviceModelRoot = serviceModel.resource.contents.get(0) as ServiceModel
+            serviceModelRoot.mappedComplexTypes.forEach[mappedType |
+                val sourceMapping = inputMappingModel.typeMappings.findFirst[mapping |
+                    mapping.type.dataModelImport.name == mappedType.type.import.name &&
+                    mapping.type.type == mappedType.type.type
+                ]
+
+                mappedType.t_typeDefinitionTechnology = sourceMapping.typeDefinitionTechnology
+                mappedType.t_typeDefinitionTechnologyImport
+                    = sourceMapping.typeDefinitionTechnologyImport
+            ]
         }
 
         /**

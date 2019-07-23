@@ -99,6 +99,11 @@ class MappedComplexType {
     //                      Service Models and later used in executing refinements of Intermediate
     //                      Data Models.
     String t_sourceModelUri
+    // TRANSFORMATION ONLY: Import of technology that contains the default types (there can only be
+    //                      one)
+    refers Import t_typeDefinitionTechnologyImport
+    // TRANSFORMATION ONLY: Technology that contains the default types (there can only be one)
+    refers Technology t_typeDefinitionTechnology
 
     contains TechnologyReference[] technologyReferences opposite mappedComplexType
     contains ImportedType ^type
@@ -197,12 +202,6 @@ class MappedComplexType {
  * field leveraging the Mapping DSL
  */
 class MappedField {
-    // TRANSFORMATION ONLY: The name (alias) of the technology from which the mapped type
-    //                      originates. It is used in intermediate model refinements as part of the
-    //                      fully-qualified name of an intermediate imported technology-specific
-    //                      type.
-    String t_typeDefinitionTechnologyName
-
     refers DataField dataField
     refers EnumerationField enumerationField
     contains ImportedType mappedType

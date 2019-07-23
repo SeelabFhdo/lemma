@@ -24,6 +24,8 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  * <ul>
  *   <li>{@link de.fhdo.ddmm.service.MappedComplexType#getT_sourceModelUri <em>Tsource Model Uri</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.service.MappedComplexType#getT_typeDefinitionTechnologyImport <em>Ttype Definition Technology Import</em>}</li>
+ *   <li>{@link de.fhdo.ddmm.service.MappedComplexType#getT_typeDefinitionTechnology <em>Ttype Definition Technology</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.MappedComplexType#getTechnologyReferences <em>Technology References</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.MappedComplexType#getType <em>Type</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.MappedComplexType#getMappedFields <em>Mapped Fields</em>}</li>
@@ -61,6 +63,58 @@ public interface MappedComplexType extends EObject {
      * @generated
      */
     void setT_sourceModelUri(String value);
+
+    /**
+     * Returns the value of the '<em><b>Ttype Definition Technology Import</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Ttype Definition Technology Import</em>' reference isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Ttype Definition Technology Import</em>' reference.
+     * @see #setT_typeDefinitionTechnologyImport(Import)
+     * @see de.fhdo.ddmm.service.ServicePackage#getMappedComplexType_T_typeDefinitionTechnologyImport()
+     * @model
+     * @generated
+     */
+    Import getT_typeDefinitionTechnologyImport();
+
+    /**
+     * Sets the value of the '{@link de.fhdo.ddmm.service.MappedComplexType#getT_typeDefinitionTechnologyImport <em>Ttype Definition Technology Import</em>}' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Ttype Definition Technology Import</em>' reference.
+     * @see #getT_typeDefinitionTechnologyImport()
+     * @generated
+     */
+    void setT_typeDefinitionTechnologyImport(Import value);
+
+    /**
+     * Returns the value of the '<em><b>Ttype Definition Technology</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Ttype Definition Technology</em>' reference isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Ttype Definition Technology</em>' reference.
+     * @see #setT_typeDefinitionTechnology(Technology)
+     * @see de.fhdo.ddmm.service.ServicePackage#getMappedComplexType_T_typeDefinitionTechnology()
+     * @model
+     * @generated
+     */
+    Technology getT_typeDefinitionTechnology();
+
+    /**
+     * Sets the value of the '{@link de.fhdo.ddmm.service.MappedComplexType#getT_typeDefinitionTechnology <em>Ttype Definition Technology</em>}' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Ttype Definition Technology</em>' reference.
+     * @see #getT_typeDefinitionTechnology()
+     * @generated
+     */
+    void setT_typeDefinitionTechnology(Technology value);
 
     /**
      * Returns the value of the '<em><b>Technology References</b></em>' containment reference list.

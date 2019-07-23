@@ -441,7 +441,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     @Override
-    public EReference getMappedComplexType_TechnologyReferences() {
+    public EReference getMappedComplexType_T_typeDefinitionTechnologyImport() {
         return (EReference)mappedComplexTypeEClass.getEStructuralFeatures().get(1);
     }
 
@@ -451,7 +451,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     @Override
-    public EReference getMappedComplexType_Type() {
+    public EReference getMappedComplexType_T_typeDefinitionTechnology() {
         return (EReference)mappedComplexTypeEClass.getEStructuralFeatures().get(2);
     }
 
@@ -461,7 +461,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     @Override
-    public EReference getMappedComplexType_MappedFields() {
+    public EReference getMappedComplexType_TechnologyReferences() {
         return (EReference)mappedComplexTypeEClass.getEStructuralFeatures().get(3);
     }
 
@@ -471,7 +471,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     @Override
-    public EReference getMappedComplexType_Aspects() {
+    public EReference getMappedComplexType_Type() {
         return (EReference)mappedComplexTypeEClass.getEStructuralFeatures().get(4);
     }
 
@@ -481,8 +481,28 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     @Override
-    public EReference getMappedComplexType_ServiceModel() {
+    public EReference getMappedComplexType_MappedFields() {
         return (EReference)mappedComplexTypeEClass.getEStructuralFeatures().get(5);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getMappedComplexType_Aspects() {
+        return (EReference)mappedComplexTypeEClass.getEStructuralFeatures().get(6);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getMappedComplexType_ServiceModel() {
+        return (EReference)mappedComplexTypeEClass.getEStructuralFeatures().get(7);
     }
 
     /**
@@ -551,18 +571,8 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     @Override
-    public EAttribute getMappedField_T_typeDefinitionTechnologyName() {
-        return (EAttribute)mappedFieldEClass.getEStructuralFeatures().get(0);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
     public EReference getMappedField_DataField() {
-        return (EReference)mappedFieldEClass.getEStructuralFeatures().get(1);
+        return (EReference)mappedFieldEClass.getEStructuralFeatures().get(0);
     }
 
     /**
@@ -572,7 +582,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      */
     @Override
     public EReference getMappedField_EnumerationField() {
-        return (EReference)mappedFieldEClass.getEStructuralFeatures().get(2);
+        return (EReference)mappedFieldEClass.getEStructuralFeatures().get(1);
     }
 
     /**
@@ -582,7 +592,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      */
     @Override
     public EReference getMappedField_MappedType() {
-        return (EReference)mappedFieldEClass.getEStructuralFeatures().get(3);
+        return (EReference)mappedFieldEClass.getEStructuralFeatures().get(2);
     }
 
     /**
@@ -592,7 +602,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      */
     @Override
     public EReference getMappedField_Aspects() {
-        return (EReference)mappedFieldEClass.getEStructuralFeatures().get(4);
+        return (EReference)mappedFieldEClass.getEStructuralFeatures().get(3);
     }
 
     /**
@@ -602,7 +612,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      */
     @Override
     public EReference getMappedField_Parameter() {
-        return (EReference)mappedFieldEClass.getEStructuralFeatures().get(5);
+        return (EReference)mappedFieldEClass.getEStructuralFeatures().get(4);
     }
 
     /**
@@ -612,7 +622,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      */
     @Override
     public EReference getMappedField_MappedComplexType() {
-        return (EReference)mappedFieldEClass.getEStructuralFeatures().get(6);
+        return (EReference)mappedFieldEClass.getEStructuralFeatures().get(5);
     }
 
     /**
@@ -622,7 +632,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      */
     @Override
     public EAttribute getMappedField_Name() {
-        return (EAttribute)mappedFieldEClass.getEStructuralFeatures().get(7);
+        return (EAttribute)mappedFieldEClass.getEStructuralFeatures().get(6);
     }
 
     /**
@@ -2311,6 +2321,8 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
 
         mappedComplexTypeEClass = createEClass(MAPPED_COMPLEX_TYPE);
         createEAttribute(mappedComplexTypeEClass, MAPPED_COMPLEX_TYPE__TSOURCE_MODEL_URI);
+        createEReference(mappedComplexTypeEClass, MAPPED_COMPLEX_TYPE__TTYPE_DEFINITION_TECHNOLOGY_IMPORT);
+        createEReference(mappedComplexTypeEClass, MAPPED_COMPLEX_TYPE__TTYPE_DEFINITION_TECHNOLOGY);
         createEReference(mappedComplexTypeEClass, MAPPED_COMPLEX_TYPE__TECHNOLOGY_REFERENCES);
         createEReference(mappedComplexTypeEClass, MAPPED_COMPLEX_TYPE__TYPE);
         createEReference(mappedComplexTypeEClass, MAPPED_COMPLEX_TYPE__MAPPED_FIELDS);
@@ -2323,7 +2335,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
         createEOperation(mappedComplexTypeEClass, MAPPED_COMPLEX_TYPE___GET_TYPE_DEFINITION_TECHNOLOGY);
 
         mappedFieldEClass = createEClass(MAPPED_FIELD);
-        createEAttribute(mappedFieldEClass, MAPPED_FIELD__TTYPE_DEFINITION_TECHNOLOGY_NAME);
         createEReference(mappedFieldEClass, MAPPED_FIELD__DATA_FIELD);
         createEReference(mappedFieldEClass, MAPPED_FIELD__ENUMERATION_FIELD);
         createEReference(mappedFieldEClass, MAPPED_FIELD__MAPPED_TYPE);
@@ -2570,6 +2581,8 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
 
         initEClass(mappedComplexTypeEClass, MappedComplexType.class, "MappedComplexType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getMappedComplexType_T_sourceModelUri(), theEcorePackage.getEString(), "t_sourceModelUri", null, 0, 1, MappedComplexType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getMappedComplexType_T_typeDefinitionTechnologyImport(), this.getImport(), null, "t_typeDefinitionTechnologyImport", null, 0, 1, MappedComplexType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getMappedComplexType_T_typeDefinitionTechnology(), theTechnologyPackage.getTechnology(), null, "t_typeDefinitionTechnology", null, 0, 1, MappedComplexType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getMappedComplexType_TechnologyReferences(), this.getTechnologyReference(), this.getTechnologyReference_MappedComplexType(), "technologyReferences", null, 0, -1, MappedComplexType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getMappedComplexType_Type(), this.getImportedType(), null, "type", null, 0, 1, MappedComplexType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getMappedComplexType_MappedFields(), this.getMappedField(), this.getMappedField_MappedComplexType(), "mappedFields", null, 0, -1, MappedComplexType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2590,7 +2603,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
         initEOperation(getMappedComplexType__GetTypeDefinitionTechnology(), theTechnologyPackage.getTechnology(), "getTypeDefinitionTechnology", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
         initEClass(mappedFieldEClass, MappedField.class, "MappedField", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getMappedField_T_typeDefinitionTechnologyName(), theEcorePackage.getEString(), "t_typeDefinitionTechnologyName", null, 0, 1, MappedField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getMappedField_DataField(), theDataPackage.getDataField(), null, "dataField", null, 0, 1, MappedField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getMappedField_EnumerationField(), theDataPackage.getEnumerationField(), null, "enumerationField", null, 0, 1, MappedField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getMappedField_MappedType(), this.getImportedType(), null, "mappedType", null, 0, 1, MappedField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

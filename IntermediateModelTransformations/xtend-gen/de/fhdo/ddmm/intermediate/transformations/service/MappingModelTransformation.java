@@ -89,9 +89,10 @@ public class MappingModelTransformation extends AbstractAtlInputOutputIntermedia
     /**
      * Execute the refinements
      */
-    private static Void executeRefinements(final List<AbstractIntermediateModelTransformationStrategy.TransformationResult> results, final Predicate<IntermediateTransformationException> warningCallback) {
+    private static Void executeRefinements(final TechnologyMapping inputMappingModel, final List<AbstractIntermediateModelTransformationStrategy.TransformationResult> results, final Predicate<IntermediateTransformationException> warningCallback) {
       final HashMap<AbstractIntermediateModelTransformationStrategy.OutputModel, Map<String, AbstractIntermediateModelTransformationStrategy.OutputModel>> refinedModelsPerServiceModel = CollectionLiterals.<AbstractIntermediateModelTransformationStrategy.OutputModel, Map<String, AbstractIntermediateModelTransformationStrategy.OutputModel>>newHashMap();
       final BiConsumer<AbstractIntermediateModelTransformationStrategy.OutputModel, Set<AbstractIntermediateModelTransformationStrategy.OutputModel>> _function = (AbstractIntermediateModelTransformationStrategy.OutputModel serviceModel, Set<AbstractIntermediateModelTransformationStrategy.OutputModel> intermediateDataModels) -> {
+        MappingModelTransformation.MappingModelRefinementExecutor.linkTechnologyModels(serviceModel, inputMappingModel);
         final Function1<AbstractIntermediateModelTransformationStrategy.OutputModel, String> _function_1 = (AbstractIntermediateModelTransformationStrategy.OutputModel it) -> {
           return it.getOutputPath();
         };
@@ -130,6 +131,30 @@ public class MappingModelTransformation extends AbstractAtlInputOutputIntermedia
       };
       refinedModelsPerServiceModel.forEach(_function_1);
       return null;
+    }
+    
+    /**
+     * Link technology models to MappedComplexType instances in service models. This would
+     * normally be done by the transformation strategy implementation, i.e., the
+     * IntermediateDataModelRefinement class in this case. However,
+     * MappedComplexType.getTypeDefinitionTechnology() passes the eResource of the result of
+     * MappedComplexType.getTypeDefinitionTechnologyImport() to
+     * DdmmUtils.getImportedModelRoot(), which returns null when the input model is in the XMI
+     * format as is the case for the refining transformation of intermediate data models.
+     */
+    private static void linkTechnologyModels(final AbstractIntermediateModelTransformationStrategy.OutputModel serviceModel, final TechnologyMapping inputMappingModel) {
+      EObject _get = serviceModel.getResource().getContents().get(0);
+      final ServiceModel serviceModelRoot = ((ServiceModel) _get);
+      final Consumer<MappedComplexType> _function = (MappedComplexType mappedType) -> {
+        final Function1<ComplexTypeMapping, Boolean> _function_1 = (ComplexTypeMapping mapping) -> {
+          return Boolean.valueOf((Objects.equal(mapping.getType().getDataModelImport().getName(), mappedType.getType().getImport().getName()) && 
+            Objects.equal(mapping.getType().getType(), mappedType.getType().getType())));
+        };
+        final ComplexTypeMapping sourceMapping = IterableExtensions.<ComplexTypeMapping>findFirst(inputMappingModel.getTypeMappings(), _function_1);
+        mappedType.setT_typeDefinitionTechnology(sourceMapping.getTypeDefinitionTechnology());
+        mappedType.setT_typeDefinitionTechnologyImport(sourceMapping.getTypeDefinitionTechnologyImport());
+      };
+      serviceModelRoot.getMappedComplexTypes().forEach(_function);
     }
     
     /**
@@ -285,6 +310,8 @@ public class MappingModelTransformation extends AbstractAtlInputOutputIntermedia
   
   private String absoluteInputModelPath;
   
+  private TechnologyMapping inputMappingModel;
+  
   /**
    * Specify reference name and transformation model type of input model
    */
@@ -326,9 +353,9 @@ public class MappingModelTransformation extends AbstractAtlInputOutputIntermedia
    */
   @Override
   public void prepareInputModel(final TransformationModelDescription modelDescription, final EObject modelRoot) {
-    final TechnologyMapping mappingModel = ((TechnologyMapping) modelRoot);
-    this.convertImportUrisToAbsoluteFileUris(mappingModel.getImports(), this.absoluteInputModelPath);
-    this.setSourceModelUris(mappingModel);
+    this.inputMappingModel = ((TechnologyMapping) modelRoot);
+    this.convertImportUrisToAbsoluteFileUris(this.inputMappingModel.getImports(), this.absoluteInputModelPath);
+    this.setSourceModelUris(this.inputMappingModel);
   }
   
   /**
@@ -474,7 +501,7 @@ public class MappingModelTransformation extends AbstractAtlInputOutputIntermedia
   @Override
   public BiFunction<List<AbstractIntermediateModelTransformationStrategy.TransformationResult>, Predicate<IntermediateTransformationException>, Void> registerTransformationsFinishedListener() {
     final BiFunction<List<AbstractIntermediateModelTransformationStrategy.TransformationResult>, Predicate<IntermediateTransformationException>, Void> _function = (List<AbstractIntermediateModelTransformationStrategy.TransformationResult> results, Predicate<IntermediateTransformationException> warningCallback) -> {
-      return MappingModelTransformation.MappingModelRefinementExecutor.executeRefinements(results, warningCallback);
+      return MappingModelTransformation.MappingModelRefinementExecutor.executeRefinements(this.inputMappingModel, results, warningCallback);
     };
     return _function;
   }

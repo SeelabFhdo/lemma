@@ -175,6 +175,18 @@ class IntermediateDataField {
 
     container IntermediateDataStructure dataStructure opposite dataFields
     container IntermediateListType listType opposite dataFields
+
+    /**
+     * Get the effective containing complex type of this data field
+     */
+    op IntermediateComplexType getEffectiveComplexType() {
+        return if (dataStructure !== null)
+                dataStructure
+            else if (listType !== null)
+                listType
+            else
+                null
+    }
 }
 
 /**

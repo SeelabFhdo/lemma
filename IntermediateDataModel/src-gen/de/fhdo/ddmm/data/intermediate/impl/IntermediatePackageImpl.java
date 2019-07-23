@@ -27,6 +27,7 @@ import de.fhdo.ddmm.data.intermediate.IntermediateVersion;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EEnum;
+import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EcorePackage;
@@ -843,6 +844,16 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * @generated
      */
     @Override
+    public EOperation getIntermediateDataField__GetEffectiveComplexType() {
+        return intermediateDataFieldEClass.getEOperations().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public EClass getIntermediateEnumeration() {
         return intermediateEnumerationEClass;
     }
@@ -1207,6 +1218,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
         createEReference(intermediateDataFieldEClass, INTERMEDIATE_DATA_FIELD__ASPECTS);
         createEReference(intermediateDataFieldEClass, INTERMEDIATE_DATA_FIELD__DATA_STRUCTURE);
         createEReference(intermediateDataFieldEClass, INTERMEDIATE_DATA_FIELD__LIST_TYPE);
+        createEOperation(intermediateDataFieldEClass, INTERMEDIATE_DATA_FIELD___GET_EFFECTIVE_COMPLEX_TYPE);
 
         intermediateEnumerationEClass = createEClass(INTERMEDIATE_ENUMERATION);
         createEReference(intermediateEnumerationEClass, INTERMEDIATE_ENUMERATION__FIELDS);
@@ -1354,6 +1366,8 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
         initEReference(getIntermediateDataField_Aspects(), this.getIntermediateImportedAspect(), this.getIntermediateImportedAspect_DataField(), "aspects", null, 0, -1, IntermediateDataField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getIntermediateDataField_DataStructure(), this.getIntermediateDataStructure(), this.getIntermediateDataStructure_DataFields(), "dataStructure", null, 0, 1, IntermediateDataField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getIntermediateDataField_ListType(), this.getIntermediateListType(), this.getIntermediateListType_DataFields(), "listType", null, 0, 1, IntermediateDataField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEOperation(getIntermediateDataField__GetEffectiveComplexType(), this.getIntermediateComplexType(), "getEffectiveComplexType", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
         initEClass(intermediateEnumerationEClass, IntermediateEnumeration.class, "IntermediateEnumeration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getIntermediateEnumeration_Fields(), this.getIntermediateEnumerationField(), this.getIntermediateEnumerationField_Enumeration(), "fields", null, 1, -1, IntermediateEnumeration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

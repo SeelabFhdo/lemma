@@ -45,7 +45,6 @@ import org.eclipse.xtext.xbase.lib.CollectionLiterals;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.fhdo.ddmm.service.impl.MappedFieldImpl#getT_typeDefinitionTechnologyName <em>Ttype Definition Technology Name</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.impl.MappedFieldImpl#getDataField <em>Data Field</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.impl.MappedFieldImpl#getEnumerationField <em>Enumeration Field</em>}</li>
  *   <li>{@link de.fhdo.ddmm.service.impl.MappedFieldImpl#getMappedType <em>Mapped Type</em>}</li>
@@ -58,26 +57,6 @@ import org.eclipse.xtext.xbase.lib.CollectionLiterals;
  * @generated
  */
 public class MappedFieldImpl extends MinimalEObjectImpl.Container implements MappedField {
-    /**
-     * The default value of the '{@link #getT_typeDefinitionTechnologyName() <em>Ttype Definition Technology Name</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getT_typeDefinitionTechnologyName()
-     * @generated
-     * @ordered
-     */
-    protected static final String TTYPE_DEFINITION_TECHNOLOGY_NAME_EDEFAULT = null;
-
-    /**
-     * The cached value of the '{@link #getT_typeDefinitionTechnologyName() <em>Ttype Definition Technology Name</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getT_typeDefinitionTechnologyName()
-     * @generated
-     * @ordered
-     */
-    protected String t_typeDefinitionTechnologyName = TTYPE_DEFINITION_TECHNOLOGY_NAME_EDEFAULT;
-
     /**
      * The cached value of the '{@link #getDataField() <em>Data Field</em>}' reference.
      * <!-- begin-user-doc -->
@@ -145,29 +124,6 @@ public class MappedFieldImpl extends MinimalEObjectImpl.Container implements Map
     @Override
     protected EClass eStaticClass() {
         return ServicePackage.Literals.MAPPED_FIELD;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public String getT_typeDefinitionTechnologyName() {
-        return t_typeDefinitionTechnologyName;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public void setT_typeDefinitionTechnologyName(String newT_typeDefinitionTechnologyName) {
-        String oldT_typeDefinitionTechnologyName = t_typeDefinitionTechnologyName;
-        t_typeDefinitionTechnologyName = newT_typeDefinitionTechnologyName;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, ServicePackage.MAPPED_FIELD__TTYPE_DEFINITION_TECHNOLOGY_NAME, oldT_typeDefinitionTechnologyName, t_typeDefinitionTechnologyName));
     }
 
     /**
@@ -595,8 +551,6 @@ public class MappedFieldImpl extends MinimalEObjectImpl.Container implements Map
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
-            case ServicePackage.MAPPED_FIELD__TTYPE_DEFINITION_TECHNOLOGY_NAME:
-                return getT_typeDefinitionTechnologyName();
             case ServicePackage.MAPPED_FIELD__DATA_FIELD:
                 if (resolve) return getDataField();
                 return basicGetDataField();
@@ -628,9 +582,6 @@ public class MappedFieldImpl extends MinimalEObjectImpl.Container implements Map
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
-            case ServicePackage.MAPPED_FIELD__TTYPE_DEFINITION_TECHNOLOGY_NAME:
-                setT_typeDefinitionTechnologyName((String)newValue);
-                return;
             case ServicePackage.MAPPED_FIELD__DATA_FIELD:
                 setDataField((DataField)newValue);
                 return;
@@ -662,9 +613,6 @@ public class MappedFieldImpl extends MinimalEObjectImpl.Container implements Map
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
-            case ServicePackage.MAPPED_FIELD__TTYPE_DEFINITION_TECHNOLOGY_NAME:
-                setT_typeDefinitionTechnologyName(TTYPE_DEFINITION_TECHNOLOGY_NAME_EDEFAULT);
-                return;
             case ServicePackage.MAPPED_FIELD__DATA_FIELD:
                 setDataField((DataField)null);
                 return;
@@ -695,8 +643,6 @@ public class MappedFieldImpl extends MinimalEObjectImpl.Container implements Map
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
-            case ServicePackage.MAPPED_FIELD__TTYPE_DEFINITION_TECHNOLOGY_NAME:
-                return TTYPE_DEFINITION_TECHNOLOGY_NAME_EDEFAULT == null ? t_typeDefinitionTechnologyName != null : !TTYPE_DEFINITION_TECHNOLOGY_NAME_EDEFAULT.equals(t_typeDefinitionTechnologyName);
             case ServicePackage.MAPPED_FIELD__DATA_FIELD:
                 return dataField != null;
             case ServicePackage.MAPPED_FIELD__ENUMERATION_FIELD:
@@ -731,22 +677,6 @@ public class MappedFieldImpl extends MinimalEObjectImpl.Container implements Map
                 return getEffectiveType();
         }
         return super.eInvoke(operationID, arguments);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public String toString() {
-        if (eIsProxy()) return super.toString();
-
-        StringBuilder result = new StringBuilder(super.toString());
-        result.append(" (t_typeDefinitionTechnologyName: ");
-        result.append(t_typeDefinitionTechnologyName);
-        result.append(')');
-        return result.toString();
     }
 
 } //MappedFieldImpl

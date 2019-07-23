@@ -2,12 +2,15 @@
  */
 package de.fhdo.ddmm.data.intermediate.impl;
 
+import de.fhdo.ddmm.data.intermediate.IntermediateComplexType;
 import de.fhdo.ddmm.data.intermediate.IntermediateDataField;
 import de.fhdo.ddmm.data.intermediate.IntermediateDataStructure;
 import de.fhdo.ddmm.data.intermediate.IntermediateImportedAspect;
 import de.fhdo.ddmm.data.intermediate.IntermediateListType;
 import de.fhdo.ddmm.data.intermediate.IntermediatePackage;
 import de.fhdo.ddmm.data.intermediate.IntermediateType;
+
+import java.lang.reflect.InvocationTargetException;
 
 import java.util.Collection;
 
@@ -483,6 +486,34 @@ public class IntermediateDataFieldImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
+    public IntermediateComplexType getEffectiveComplexType() {
+        IntermediateComplexType _xifexpression = null;
+        IntermediateDataStructure _dataStructure = this.getDataStructure();
+        boolean _tripleNotEquals = (_dataStructure != null);
+        if (_tripleNotEquals) {
+            _xifexpression = this.getDataStructure();
+        }
+        else {
+            IntermediateListType _xifexpression_1 = null;
+            IntermediateListType _listType = this.getListType();
+            boolean _tripleNotEquals_1 = (_listType != null);
+            if (_tripleNotEquals_1) {
+                _xifexpression_1 = this.getListType();
+            }
+            else {
+                _xifexpression_1 = null;
+            }
+            _xifexpression = _xifexpression_1;
+        }
+        return _xifexpression;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     @SuppressWarnings("unchecked")
     @Override
     public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
@@ -683,6 +714,20 @@ public class IntermediateDataFieldImpl extends MinimalEObjectImpl.Container impl
                 return basicGetListType() != null;
         }
         return super.eIsSet(featureID);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+        switch (operationID) {
+            case IntermediatePackage.INTERMEDIATE_DATA_FIELD___GET_EFFECTIVE_COMPLEX_TYPE:
+                return getEffectiveComplexType();
+        }
+        return super.eInvoke(operationID, arguments);
     }
 
     /**

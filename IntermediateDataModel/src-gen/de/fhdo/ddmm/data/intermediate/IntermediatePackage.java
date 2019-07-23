@@ -5,6 +5,7 @@ package de.fhdo.ddmm.data.intermediate;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EEnum;
+import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
@@ -1169,13 +1170,22 @@ public interface IntermediatePackage extends EPackage {
     int INTERMEDIATE_DATA_FIELD_FEATURE_COUNT = 9;
 
     /**
+     * The operation id for the '<em>Get Effective Complex Type</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_DATA_FIELD___GET_EFFECTIVE_COMPLEX_TYPE = 0;
+
+    /**
      * The number of operations of the '<em>Data Field</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_DATA_FIELD_OPERATION_COUNT = 0;
+    int INTERMEDIATE_DATA_FIELD_OPERATION_COUNT = 1;
 
     /**
      * The meta object id for the '{@link de.fhdo.ddmm.data.intermediate.impl.IntermediateEnumerationImpl <em>Enumeration</em>}' class.
@@ -2248,6 +2258,16 @@ public interface IntermediatePackage extends EPackage {
     EReference getIntermediateDataField_ListType();
 
     /**
+     * Returns the meta object for the '{@link de.fhdo.ddmm.data.intermediate.IntermediateDataField#getEffectiveComplexType() <em>Get Effective Complex Type</em>}' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the '<em>Get Effective Complex Type</em>' operation.
+     * @see de.fhdo.ddmm.data.intermediate.IntermediateDataField#getEffectiveComplexType()
+     * @generated
+     */
+    EOperation getIntermediateDataField__GetEffectiveComplexType();
+
+    /**
      * Returns the meta object for class '{@link de.fhdo.ddmm.data.intermediate.IntermediateEnumeration <em>Enumeration</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -3063,6 +3083,14 @@ public interface IntermediatePackage extends EPackage {
          * @generated
          */
         EReference INTERMEDIATE_DATA_FIELD__LIST_TYPE = eINSTANCE.getIntermediateDataField_ListType();
+
+        /**
+         * The meta object literal for the '<em><b>Get Effective Complex Type</b></em>' operation.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EOperation INTERMEDIATE_DATA_FIELD___GET_EFFECTIVE_COMPLEX_TYPE = eINSTANCE.getIntermediateDataField__GetEffectiveComplexType();
 
         /**
          * The meta object literal for the '{@link de.fhdo.ddmm.data.intermediate.impl.IntermediateEnumerationImpl <em>Enumeration</em>}' class.
