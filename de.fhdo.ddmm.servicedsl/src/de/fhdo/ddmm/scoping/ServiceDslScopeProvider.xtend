@@ -479,6 +479,7 @@ class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
          * Determine the join point and relevant pointcut values depending on the container in which
          * the aspect is used
          */
+        var bypassFilter = false
         val joinPoint = switch (aspectContainer) {
             Microservice: {
                 forProtocolsAndDataFormats = aspectContainer
@@ -502,12 +503,14 @@ class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
                 } else {
                     // One disadvantage of the "fix" to prevent wrong aspects when code completion
                     // on the first operation within an interface is requested is that we do not
-                    // have access to the Operation EObject at this point in time. Hence, if the
-                    // user then selects an operation aspect from the completion suggestions that
-                    // does not match the protocols and data formats of the operation, she will see
-                    // an error immediately after, when the scope provider runs for a second time
-                    // and is then able to recognize that it's inside an operation.
-                    forProtocolsAndDataFormats = emptyList
+                    // have access to the Operation EObject at this point in time. Hence, is is
+                    // possible that the user won't see any aspects in the completion suggestions,
+                    // when all aspects in the technology model exhibit selectors. Therefore, we
+                    // bypass the filter for now and show the user all operation aspects of the
+                    // technology model. If the user then selects a non-matching aspect, this will
+                    // lead to a reference error. However, this error is better than to show
+                    // no selection (and thus no possibly matching aspects) at all.
+                    bypassFilter = true
                     JoinPointType.OPERATIONS
                 }
             }
@@ -550,8 +553,11 @@ class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
          */
         val declaredAspectsForJoinPoint = (resourceContents.get(0) as Technology).serviceAspects
             .filter[joinPoints.contains(joinPoint)].toList
-        val scopeAspects = filterMatchingAspects(declaredAspectsForJoinPoint, forExchangePattern,
-            forCommunicationType, forProtocolsAndDataFormats)
+        val scopeAspects = if (!bypassFilter)
+                filterMatchingAspects(declaredAspectsForJoinPoint, forExchangePattern,
+                    forCommunicationType, forProtocolsAndDataFormats)
+            else
+                declaredAspectsForJoinPoint
         val scopeElements = scopeAspects.map[
             val protocolName = QualifiedName.create(it.qualifiedNameParts)
             EObjectDescription.create(protocolName, it)

@@ -503,6 +503,7 @@ public class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
     CommunicationType forCommunicationType = null;
     List<Pair<Protocol, DataFormat>> forProtocolsAndDataFormats = null;
     final EObject aspectContainer = importedAspect.eContainer();
+    boolean bypassFilter = false;
     JoinPointType _switchResult = null;
     boolean _matched = false;
     if (aspectContainer instanceof Microservice) {
@@ -530,7 +531,7 @@ public class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
         } else {
           JoinPointType _xblockexpression_1 = null;
           {
-            forProtocolsAndDataFormats = CollectionLiterals.<Pair<Protocol, DataFormat>>emptyList();
+            bypassFilter = true;
             _xblockexpression_1 = JoinPointType.OPERATIONS;
           }
           _xifexpression = _xblockexpression_1;
@@ -591,7 +592,13 @@ public class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
       return Boolean.valueOf(it.getJoinPoints().contains(joinPoint));
     };
     final List<ServiceAspect> declaredAspectsForJoinPoint = IterableExtensions.<ServiceAspect>toList(IterableExtensions.<ServiceAspect>filter(((Technology) _get).getServiceAspects(), _function));
-    final ArrayList<ServiceAspect> scopeAspects = this.filterMatchingAspects(declaredAspectsForJoinPoint, forExchangePattern, forCommunicationType, forProtocolsAndDataFormats);
+    List<ServiceAspect> _xifexpression = null;
+    if ((!bypassFilter)) {
+      _xifexpression = this.filterMatchingAspects(declaredAspectsForJoinPoint, forExchangePattern, forCommunicationType, forProtocolsAndDataFormats);
+    } else {
+      _xifexpression = declaredAspectsForJoinPoint;
+    }
+    final List<ServiceAspect> scopeAspects = _xifexpression;
     final Function1<ServiceAspect, IEObjectDescription> _function_1 = (ServiceAspect it) -> {
       IEObjectDescription _xblockexpression = null;
       {
