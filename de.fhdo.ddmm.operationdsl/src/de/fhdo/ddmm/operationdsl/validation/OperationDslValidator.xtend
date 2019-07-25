@@ -80,7 +80,8 @@ class OperationDslValidator extends AbstractOperationDslValidator {
             val technologyImport = operationNode.technologies.get(i)
             val technologyModel = DdmmUtils.getImportedModelRoot(technologyImport.eResource,
                 technologyImport.importURI, Technology)
-            if (technologyModel.deploymentTechnologies.empty &&
+            if (technologyModel.protocols.empty &&
+                technologyModel.deploymentTechnologies.empty &&
                 technologyModel.infrastructureTechnologies.empty &&
                 technologyModel.operationAspects.empty) {
                 error("Technology does not specify operation-related concepts",

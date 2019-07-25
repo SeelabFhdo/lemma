@@ -116,7 +116,8 @@ public class OperationDslValidator extends AbstractOperationDslValidator {
         final Import technologyImport = operationNode.getTechnologies().get((i).intValue());
         final Technology technologyModel = DdmmUtils.<Technology>getImportedModelRoot(technologyImport.eResource(), 
           technologyImport.getImportURI(), Technology.class);
-        if (((technologyModel.getDeploymentTechnologies().isEmpty() && 
+        if ((((technologyModel.getProtocols().isEmpty() && 
+          technologyModel.getDeploymentTechnologies().isEmpty()) && 
           technologyModel.getInfrastructureTechnologies().isEmpty()) && 
           technologyModel.getOperationAspects().isEmpty())) {
           this.error("Technology does not specify operation-related concepts", 
