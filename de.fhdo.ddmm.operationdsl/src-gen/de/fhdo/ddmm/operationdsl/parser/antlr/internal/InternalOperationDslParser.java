@@ -436,7 +436,7 @@ public class InternalOperationDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleContainer"
-    // InternalOperationDsl.g:148:1: ruleContainer returns [EObject current=null] : ( (otherlv_0= '@' otherlv_1= 'technology' otherlv_2= '(' ( (otherlv_3= RULE_ID ) ) otherlv_4= ')' )+ otherlv_5= 'container' ( (lv_name_6_0= RULE_ID ) ) otherlv_7= 'deployment' otherlv_8= 'technology' ( (lv_deploymentTechnology_9_0= ruleDeploymentTechnologyReference ) ) (otherlv_10= 'with' otherlv_11= 'operation' otherlv_12= 'environment' ( (otherlv_13= RULE_STRING ) ) )? otherlv_14= 'deploys' ( (lv_deployedServices_15_0= ruleImportedMicroservice ) ) (otherlv_16= ',' ( (lv_deployedServices_17_0= ruleImportedMicroservice ) ) )* otherlv_18= '{' (otherlv_19= 'aspects' otherlv_20= '{' ( (lv_aspects_21_0= ruleImportedOperationAspect ) )+ otherlv_22= '}' )? (otherlv_23= 'default' otherlv_24= 'values' otherlv_25= '{' ( ( (lv_defaultServicePropertyValues_26_0= rulePropertyValueAssignment ) )+ | (otherlv_27= 'basic' otherlv_28= 'endpoints' otherlv_29= '{' ( (lv_defaultBasicEndpoints_30_0= ruleBasicEndpoint ) )+ otherlv_31= '}' ) | (otherlv_32= 'basic' otherlv_33= 'endpoints' otherlv_34= '{' ( (lv_defaultBasicEndpoints_35_0= ruleBasicEndpoint ) )+ otherlv_36= '}' ( (lv_defaultServicePropertyValues_37_0= rulePropertyValueAssignment ) )+ ) ) otherlv_38= '}' )? ( (lv_deploymentSpecifications_39_0= ruleServiceDeploymentSpecification ) )* otherlv_40= '}' ) ;
+    // InternalOperationDsl.g:148:1: ruleContainer returns [EObject current=null] : ( (otherlv_0= '@' otherlv_1= 'technology' otherlv_2= '(' ( (otherlv_3= RULE_ID ) ) otherlv_4= ')' )+ otherlv_5= 'container' ( (lv_name_6_0= RULE_ID ) ) otherlv_7= 'deployment' otherlv_8= 'technology' ( (lv_deploymentTechnology_9_0= ruleDeploymentTechnologyReference ) ) (otherlv_10= 'with' otherlv_11= 'operation' otherlv_12= 'environment' ( (otherlv_13= RULE_STRING ) ) )? otherlv_14= 'deploys' ( (lv_deployedServices_15_0= ruleImportedMicroservice ) ) (otherlv_16= ',' ( (lv_deployedServices_17_0= ruleImportedMicroservice ) ) )* otherlv_18= '{' (otherlv_19= 'aspects' otherlv_20= '{' ( (lv_aspects_21_0= ruleImportedOperationAspect ) )+ otherlv_22= '}' )? (otherlv_23= 'default' otherlv_24= 'values' otherlv_25= '{' ( ( (lv_defaultServicePropertyValues_26_0= rulePropertyValueAssignment ) )+ | (otherlv_27= 'basic' otherlv_28= 'endpoints' otherlv_29= '{' ( (lv_defaultBasicEndpoints_30_0= ruleBasicEndpoint ) )+ otherlv_31= '}' ) | ( ( (lv_defaultServicePropertyValues_32_0= rulePropertyValueAssignment ) )+ otherlv_33= 'basic' otherlv_34= 'endpoints' otherlv_35= '{' ( (lv_defaultBasicEndpoints_36_0= ruleBasicEndpoint ) )+ otherlv_37= '}' ) ) otherlv_38= '}' )? ( (lv_deploymentSpecifications_39_0= ruleServiceDeploymentSpecification ) )* otherlv_40= '}' ) ;
     public final EObject ruleContainer() throws RecognitionException {
         EObject current = null;
 
@@ -466,10 +466,10 @@ public class InternalOperationDslParser extends AbstractInternalAntlrParser {
         Token otherlv_28=null;
         Token otherlv_29=null;
         Token otherlv_31=null;
-        Token otherlv_32=null;
         Token otherlv_33=null;
         Token otherlv_34=null;
-        Token otherlv_36=null;
+        Token otherlv_35=null;
+        Token otherlv_37=null;
         Token otherlv_38=null;
         Token otherlv_40=null;
         EObject lv_deploymentTechnology_9_0 = null;
@@ -484,9 +484,9 @@ public class InternalOperationDslParser extends AbstractInternalAntlrParser {
 
         EObject lv_defaultBasicEndpoints_30_0 = null;
 
-        EObject lv_defaultBasicEndpoints_35_0 = null;
+        EObject lv_defaultServicePropertyValues_32_0 = null;
 
-        EObject lv_defaultServicePropertyValues_37_0 = null;
+        EObject lv_defaultBasicEndpoints_36_0 = null;
 
         EObject lv_deploymentSpecifications_39_0 = null;
 
@@ -495,11 +495,11 @@ public class InternalOperationDslParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalOperationDsl.g:154:2: ( ( (otherlv_0= '@' otherlv_1= 'technology' otherlv_2= '(' ( (otherlv_3= RULE_ID ) ) otherlv_4= ')' )+ otherlv_5= 'container' ( (lv_name_6_0= RULE_ID ) ) otherlv_7= 'deployment' otherlv_8= 'technology' ( (lv_deploymentTechnology_9_0= ruleDeploymentTechnologyReference ) ) (otherlv_10= 'with' otherlv_11= 'operation' otherlv_12= 'environment' ( (otherlv_13= RULE_STRING ) ) )? otherlv_14= 'deploys' ( (lv_deployedServices_15_0= ruleImportedMicroservice ) ) (otherlv_16= ',' ( (lv_deployedServices_17_0= ruleImportedMicroservice ) ) )* otherlv_18= '{' (otherlv_19= 'aspects' otherlv_20= '{' ( (lv_aspects_21_0= ruleImportedOperationAspect ) )+ otherlv_22= '}' )? (otherlv_23= 'default' otherlv_24= 'values' otherlv_25= '{' ( ( (lv_defaultServicePropertyValues_26_0= rulePropertyValueAssignment ) )+ | (otherlv_27= 'basic' otherlv_28= 'endpoints' otherlv_29= '{' ( (lv_defaultBasicEndpoints_30_0= ruleBasicEndpoint ) )+ otherlv_31= '}' ) | (otherlv_32= 'basic' otherlv_33= 'endpoints' otherlv_34= '{' ( (lv_defaultBasicEndpoints_35_0= ruleBasicEndpoint ) )+ otherlv_36= '}' ( (lv_defaultServicePropertyValues_37_0= rulePropertyValueAssignment ) )+ ) ) otherlv_38= '}' )? ( (lv_deploymentSpecifications_39_0= ruleServiceDeploymentSpecification ) )* otherlv_40= '}' ) )
-            // InternalOperationDsl.g:155:2: ( (otherlv_0= '@' otherlv_1= 'technology' otherlv_2= '(' ( (otherlv_3= RULE_ID ) ) otherlv_4= ')' )+ otherlv_5= 'container' ( (lv_name_6_0= RULE_ID ) ) otherlv_7= 'deployment' otherlv_8= 'technology' ( (lv_deploymentTechnology_9_0= ruleDeploymentTechnologyReference ) ) (otherlv_10= 'with' otherlv_11= 'operation' otherlv_12= 'environment' ( (otherlv_13= RULE_STRING ) ) )? otherlv_14= 'deploys' ( (lv_deployedServices_15_0= ruleImportedMicroservice ) ) (otherlv_16= ',' ( (lv_deployedServices_17_0= ruleImportedMicroservice ) ) )* otherlv_18= '{' (otherlv_19= 'aspects' otherlv_20= '{' ( (lv_aspects_21_0= ruleImportedOperationAspect ) )+ otherlv_22= '}' )? (otherlv_23= 'default' otherlv_24= 'values' otherlv_25= '{' ( ( (lv_defaultServicePropertyValues_26_0= rulePropertyValueAssignment ) )+ | (otherlv_27= 'basic' otherlv_28= 'endpoints' otherlv_29= '{' ( (lv_defaultBasicEndpoints_30_0= ruleBasicEndpoint ) )+ otherlv_31= '}' ) | (otherlv_32= 'basic' otherlv_33= 'endpoints' otherlv_34= '{' ( (lv_defaultBasicEndpoints_35_0= ruleBasicEndpoint ) )+ otherlv_36= '}' ( (lv_defaultServicePropertyValues_37_0= rulePropertyValueAssignment ) )+ ) ) otherlv_38= '}' )? ( (lv_deploymentSpecifications_39_0= ruleServiceDeploymentSpecification ) )* otherlv_40= '}' )
+            // InternalOperationDsl.g:154:2: ( ( (otherlv_0= '@' otherlv_1= 'technology' otherlv_2= '(' ( (otherlv_3= RULE_ID ) ) otherlv_4= ')' )+ otherlv_5= 'container' ( (lv_name_6_0= RULE_ID ) ) otherlv_7= 'deployment' otherlv_8= 'technology' ( (lv_deploymentTechnology_9_0= ruleDeploymentTechnologyReference ) ) (otherlv_10= 'with' otherlv_11= 'operation' otherlv_12= 'environment' ( (otherlv_13= RULE_STRING ) ) )? otherlv_14= 'deploys' ( (lv_deployedServices_15_0= ruleImportedMicroservice ) ) (otherlv_16= ',' ( (lv_deployedServices_17_0= ruleImportedMicroservice ) ) )* otherlv_18= '{' (otherlv_19= 'aspects' otherlv_20= '{' ( (lv_aspects_21_0= ruleImportedOperationAspect ) )+ otherlv_22= '}' )? (otherlv_23= 'default' otherlv_24= 'values' otherlv_25= '{' ( ( (lv_defaultServicePropertyValues_26_0= rulePropertyValueAssignment ) )+ | (otherlv_27= 'basic' otherlv_28= 'endpoints' otherlv_29= '{' ( (lv_defaultBasicEndpoints_30_0= ruleBasicEndpoint ) )+ otherlv_31= '}' ) | ( ( (lv_defaultServicePropertyValues_32_0= rulePropertyValueAssignment ) )+ otherlv_33= 'basic' otherlv_34= 'endpoints' otherlv_35= '{' ( (lv_defaultBasicEndpoints_36_0= ruleBasicEndpoint ) )+ otherlv_37= '}' ) ) otherlv_38= '}' )? ( (lv_deploymentSpecifications_39_0= ruleServiceDeploymentSpecification ) )* otherlv_40= '}' ) )
+            // InternalOperationDsl.g:155:2: ( (otherlv_0= '@' otherlv_1= 'technology' otherlv_2= '(' ( (otherlv_3= RULE_ID ) ) otherlv_4= ')' )+ otherlv_5= 'container' ( (lv_name_6_0= RULE_ID ) ) otherlv_7= 'deployment' otherlv_8= 'technology' ( (lv_deploymentTechnology_9_0= ruleDeploymentTechnologyReference ) ) (otherlv_10= 'with' otherlv_11= 'operation' otherlv_12= 'environment' ( (otherlv_13= RULE_STRING ) ) )? otherlv_14= 'deploys' ( (lv_deployedServices_15_0= ruleImportedMicroservice ) ) (otherlv_16= ',' ( (lv_deployedServices_17_0= ruleImportedMicroservice ) ) )* otherlv_18= '{' (otherlv_19= 'aspects' otherlv_20= '{' ( (lv_aspects_21_0= ruleImportedOperationAspect ) )+ otherlv_22= '}' )? (otherlv_23= 'default' otherlv_24= 'values' otherlv_25= '{' ( ( (lv_defaultServicePropertyValues_26_0= rulePropertyValueAssignment ) )+ | (otherlv_27= 'basic' otherlv_28= 'endpoints' otherlv_29= '{' ( (lv_defaultBasicEndpoints_30_0= ruleBasicEndpoint ) )+ otherlv_31= '}' ) | ( ( (lv_defaultServicePropertyValues_32_0= rulePropertyValueAssignment ) )+ otherlv_33= 'basic' otherlv_34= 'endpoints' otherlv_35= '{' ( (lv_defaultBasicEndpoints_36_0= ruleBasicEndpoint ) )+ otherlv_37= '}' ) ) otherlv_38= '}' )? ( (lv_deploymentSpecifications_39_0= ruleServiceDeploymentSpecification ) )* otherlv_40= '}' )
             {
-            // InternalOperationDsl.g:155:2: ( (otherlv_0= '@' otherlv_1= 'technology' otherlv_2= '(' ( (otherlv_3= RULE_ID ) ) otherlv_4= ')' )+ otherlv_5= 'container' ( (lv_name_6_0= RULE_ID ) ) otherlv_7= 'deployment' otherlv_8= 'technology' ( (lv_deploymentTechnology_9_0= ruleDeploymentTechnologyReference ) ) (otherlv_10= 'with' otherlv_11= 'operation' otherlv_12= 'environment' ( (otherlv_13= RULE_STRING ) ) )? otherlv_14= 'deploys' ( (lv_deployedServices_15_0= ruleImportedMicroservice ) ) (otherlv_16= ',' ( (lv_deployedServices_17_0= ruleImportedMicroservice ) ) )* otherlv_18= '{' (otherlv_19= 'aspects' otherlv_20= '{' ( (lv_aspects_21_0= ruleImportedOperationAspect ) )+ otherlv_22= '}' )? (otherlv_23= 'default' otherlv_24= 'values' otherlv_25= '{' ( ( (lv_defaultServicePropertyValues_26_0= rulePropertyValueAssignment ) )+ | (otherlv_27= 'basic' otherlv_28= 'endpoints' otherlv_29= '{' ( (lv_defaultBasicEndpoints_30_0= ruleBasicEndpoint ) )+ otherlv_31= '}' ) | (otherlv_32= 'basic' otherlv_33= 'endpoints' otherlv_34= '{' ( (lv_defaultBasicEndpoints_35_0= ruleBasicEndpoint ) )+ otherlv_36= '}' ( (lv_defaultServicePropertyValues_37_0= rulePropertyValueAssignment ) )+ ) ) otherlv_38= '}' )? ( (lv_deploymentSpecifications_39_0= ruleServiceDeploymentSpecification ) )* otherlv_40= '}' )
-            // InternalOperationDsl.g:156:3: (otherlv_0= '@' otherlv_1= 'technology' otherlv_2= '(' ( (otherlv_3= RULE_ID ) ) otherlv_4= ')' )+ otherlv_5= 'container' ( (lv_name_6_0= RULE_ID ) ) otherlv_7= 'deployment' otherlv_8= 'technology' ( (lv_deploymentTechnology_9_0= ruleDeploymentTechnologyReference ) ) (otherlv_10= 'with' otherlv_11= 'operation' otherlv_12= 'environment' ( (otherlv_13= RULE_STRING ) ) )? otherlv_14= 'deploys' ( (lv_deployedServices_15_0= ruleImportedMicroservice ) ) (otherlv_16= ',' ( (lv_deployedServices_17_0= ruleImportedMicroservice ) ) )* otherlv_18= '{' (otherlv_19= 'aspects' otherlv_20= '{' ( (lv_aspects_21_0= ruleImportedOperationAspect ) )+ otherlv_22= '}' )? (otherlv_23= 'default' otherlv_24= 'values' otherlv_25= '{' ( ( (lv_defaultServicePropertyValues_26_0= rulePropertyValueAssignment ) )+ | (otherlv_27= 'basic' otherlv_28= 'endpoints' otherlv_29= '{' ( (lv_defaultBasicEndpoints_30_0= ruleBasicEndpoint ) )+ otherlv_31= '}' ) | (otherlv_32= 'basic' otherlv_33= 'endpoints' otherlv_34= '{' ( (lv_defaultBasicEndpoints_35_0= ruleBasicEndpoint ) )+ otherlv_36= '}' ( (lv_defaultServicePropertyValues_37_0= rulePropertyValueAssignment ) )+ ) ) otherlv_38= '}' )? ( (lv_deploymentSpecifications_39_0= ruleServiceDeploymentSpecification ) )* otherlv_40= '}'
+            // InternalOperationDsl.g:155:2: ( (otherlv_0= '@' otherlv_1= 'technology' otherlv_2= '(' ( (otherlv_3= RULE_ID ) ) otherlv_4= ')' )+ otherlv_5= 'container' ( (lv_name_6_0= RULE_ID ) ) otherlv_7= 'deployment' otherlv_8= 'technology' ( (lv_deploymentTechnology_9_0= ruleDeploymentTechnologyReference ) ) (otherlv_10= 'with' otherlv_11= 'operation' otherlv_12= 'environment' ( (otherlv_13= RULE_STRING ) ) )? otherlv_14= 'deploys' ( (lv_deployedServices_15_0= ruleImportedMicroservice ) ) (otherlv_16= ',' ( (lv_deployedServices_17_0= ruleImportedMicroservice ) ) )* otherlv_18= '{' (otherlv_19= 'aspects' otherlv_20= '{' ( (lv_aspects_21_0= ruleImportedOperationAspect ) )+ otherlv_22= '}' )? (otherlv_23= 'default' otherlv_24= 'values' otherlv_25= '{' ( ( (lv_defaultServicePropertyValues_26_0= rulePropertyValueAssignment ) )+ | (otherlv_27= 'basic' otherlv_28= 'endpoints' otherlv_29= '{' ( (lv_defaultBasicEndpoints_30_0= ruleBasicEndpoint ) )+ otherlv_31= '}' ) | ( ( (lv_defaultServicePropertyValues_32_0= rulePropertyValueAssignment ) )+ otherlv_33= 'basic' otherlv_34= 'endpoints' otherlv_35= '{' ( (lv_defaultBasicEndpoints_36_0= ruleBasicEndpoint ) )+ otherlv_37= '}' ) ) otherlv_38= '}' )? ( (lv_deploymentSpecifications_39_0= ruleServiceDeploymentSpecification ) )* otherlv_40= '}' )
+            // InternalOperationDsl.g:156:3: (otherlv_0= '@' otherlv_1= 'technology' otherlv_2= '(' ( (otherlv_3= RULE_ID ) ) otherlv_4= ')' )+ otherlv_5= 'container' ( (lv_name_6_0= RULE_ID ) ) otherlv_7= 'deployment' otherlv_8= 'technology' ( (lv_deploymentTechnology_9_0= ruleDeploymentTechnologyReference ) ) (otherlv_10= 'with' otherlv_11= 'operation' otherlv_12= 'environment' ( (otherlv_13= RULE_STRING ) ) )? otherlv_14= 'deploys' ( (lv_deployedServices_15_0= ruleImportedMicroservice ) ) (otherlv_16= ',' ( (lv_deployedServices_17_0= ruleImportedMicroservice ) ) )* otherlv_18= '{' (otherlv_19= 'aspects' otherlv_20= '{' ( (lv_aspects_21_0= ruleImportedOperationAspect ) )+ otherlv_22= '}' )? (otherlv_23= 'default' otherlv_24= 'values' otherlv_25= '{' ( ( (lv_defaultServicePropertyValues_26_0= rulePropertyValueAssignment ) )+ | (otherlv_27= 'basic' otherlv_28= 'endpoints' otherlv_29= '{' ( (lv_defaultBasicEndpoints_30_0= ruleBasicEndpoint ) )+ otherlv_31= '}' ) | ( ( (lv_defaultServicePropertyValues_32_0= rulePropertyValueAssignment ) )+ otherlv_33= 'basic' otherlv_34= 'endpoints' otherlv_35= '{' ( (lv_defaultBasicEndpoints_36_0= ruleBasicEndpoint ) )+ otherlv_37= '}' ) ) otherlv_38= '}' )? ( (lv_deploymentSpecifications_39_0= ruleServiceDeploymentSpecification ) )* otherlv_40= '}'
             {
             // InternalOperationDsl.g:156:3: (otherlv_0= '@' otherlv_1= 'technology' otherlv_2= '(' ( (otherlv_3= RULE_ID ) ) otherlv_4= ')' )+
             int cnt4=0;
@@ -867,7 +867,7 @@ public class InternalOperationDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalOperationDsl.g:348:3: (otherlv_23= 'default' otherlv_24= 'values' otherlv_25= '{' ( ( (lv_defaultServicePropertyValues_26_0= rulePropertyValueAssignment ) )+ | (otherlv_27= 'basic' otherlv_28= 'endpoints' otherlv_29= '{' ( (lv_defaultBasicEndpoints_30_0= ruleBasicEndpoint ) )+ otherlv_31= '}' ) | (otherlv_32= 'basic' otherlv_33= 'endpoints' otherlv_34= '{' ( (lv_defaultBasicEndpoints_35_0= ruleBasicEndpoint ) )+ otherlv_36= '}' ( (lv_defaultServicePropertyValues_37_0= rulePropertyValueAssignment ) )+ ) ) otherlv_38= '}' )?
+            // InternalOperationDsl.g:348:3: (otherlv_23= 'default' otherlv_24= 'values' otherlv_25= '{' ( ( (lv_defaultServicePropertyValues_26_0= rulePropertyValueAssignment ) )+ | (otherlv_27= 'basic' otherlv_28= 'endpoints' otherlv_29= '{' ( (lv_defaultBasicEndpoints_30_0= ruleBasicEndpoint ) )+ otherlv_31= '}' ) | ( ( (lv_defaultServicePropertyValues_32_0= rulePropertyValueAssignment ) )+ otherlv_33= 'basic' otherlv_34= 'endpoints' otherlv_35= '{' ( (lv_defaultBasicEndpoints_36_0= ruleBasicEndpoint ) )+ otherlv_37= '}' ) ) otherlv_38= '}' )?
             int alt14=2;
             int LA14_0 = input.LA(1);
 
@@ -876,7 +876,7 @@ public class InternalOperationDslParser extends AbstractInternalAntlrParser {
             }
             switch (alt14) {
                 case 1 :
-                    // InternalOperationDsl.g:349:4: otherlv_23= 'default' otherlv_24= 'values' otherlv_25= '{' ( ( (lv_defaultServicePropertyValues_26_0= rulePropertyValueAssignment ) )+ | (otherlv_27= 'basic' otherlv_28= 'endpoints' otherlv_29= '{' ( (lv_defaultBasicEndpoints_30_0= ruleBasicEndpoint ) )+ otherlv_31= '}' ) | (otherlv_32= 'basic' otherlv_33= 'endpoints' otherlv_34= '{' ( (lv_defaultBasicEndpoints_35_0= ruleBasicEndpoint ) )+ otherlv_36= '}' ( (lv_defaultServicePropertyValues_37_0= rulePropertyValueAssignment ) )+ ) ) otherlv_38= '}'
+                    // InternalOperationDsl.g:349:4: otherlv_23= 'default' otherlv_24= 'values' otherlv_25= '{' ( ( (lv_defaultServicePropertyValues_26_0= rulePropertyValueAssignment ) )+ | (otherlv_27= 'basic' otherlv_28= 'endpoints' otherlv_29= '{' ( (lv_defaultBasicEndpoints_30_0= ruleBasicEndpoint ) )+ otherlv_31= '}' ) | ( ( (lv_defaultServicePropertyValues_32_0= rulePropertyValueAssignment ) )+ otherlv_33= 'basic' otherlv_34= 'endpoints' otherlv_35= '{' ( (lv_defaultBasicEndpoints_36_0= ruleBasicEndpoint ) )+ otherlv_37= '}' ) ) otherlv_38= '}'
                     {
                     otherlv_23=(Token)match(input,27,FOLLOW_21); 
 
@@ -890,7 +890,7 @@ public class InternalOperationDslParser extends AbstractInternalAntlrParser {
 
                     				newLeafNode(otherlv_25, grammarAccess.getContainerAccess().getLeftCurlyBracketKeyword_12_2());
                     			
-                    // InternalOperationDsl.g:361:4: ( ( (lv_defaultServicePropertyValues_26_0= rulePropertyValueAssignment ) )+ | (otherlv_27= 'basic' otherlv_28= 'endpoints' otherlv_29= '{' ( (lv_defaultBasicEndpoints_30_0= ruleBasicEndpoint ) )+ otherlv_31= '}' ) | (otherlv_32= 'basic' otherlv_33= 'endpoints' otherlv_34= '{' ( (lv_defaultBasicEndpoints_35_0= ruleBasicEndpoint ) )+ otherlv_36= '}' ( (lv_defaultServicePropertyValues_37_0= rulePropertyValueAssignment ) )+ ) )
+                    // InternalOperationDsl.g:361:4: ( ( (lv_defaultServicePropertyValues_26_0= rulePropertyValueAssignment ) )+ | (otherlv_27= 'basic' otherlv_28= 'endpoints' otherlv_29= '{' ( (lv_defaultBasicEndpoints_30_0= ruleBasicEndpoint ) )+ otherlv_31= '}' ) | ( ( (lv_defaultServicePropertyValues_32_0= rulePropertyValueAssignment ) )+ otherlv_33= 'basic' otherlv_34= 'endpoints' otherlv_35= '{' ( (lv_defaultBasicEndpoints_36_0= ruleBasicEndpoint ) )+ otherlv_37= '}' ) )
                     int alt13=3;
                     alt13 = dfa13.predict(input);
                     switch (alt13) {
@@ -1037,24 +1037,12 @@ public class InternalOperationDslParser extends AbstractInternalAntlrParser {
                             }
                             break;
                         case 3 :
-                            // InternalOperationDsl.g:420:5: (otherlv_32= 'basic' otherlv_33= 'endpoints' otherlv_34= '{' ( (lv_defaultBasicEndpoints_35_0= ruleBasicEndpoint ) )+ otherlv_36= '}' ( (lv_defaultServicePropertyValues_37_0= rulePropertyValueAssignment ) )+ )
+                            // InternalOperationDsl.g:420:5: ( ( (lv_defaultServicePropertyValues_32_0= rulePropertyValueAssignment ) )+ otherlv_33= 'basic' otherlv_34= 'endpoints' otherlv_35= '{' ( (lv_defaultBasicEndpoints_36_0= ruleBasicEndpoint ) )+ otherlv_37= '}' )
                             {
-                            // InternalOperationDsl.g:420:5: (otherlv_32= 'basic' otherlv_33= 'endpoints' otherlv_34= '{' ( (lv_defaultBasicEndpoints_35_0= ruleBasicEndpoint ) )+ otherlv_36= '}' ( (lv_defaultServicePropertyValues_37_0= rulePropertyValueAssignment ) )+ )
-                            // InternalOperationDsl.g:421:6: otherlv_32= 'basic' otherlv_33= 'endpoints' otherlv_34= '{' ( (lv_defaultBasicEndpoints_35_0= ruleBasicEndpoint ) )+ otherlv_36= '}' ( (lv_defaultServicePropertyValues_37_0= rulePropertyValueAssignment ) )+
+                            // InternalOperationDsl.g:420:5: ( ( (lv_defaultServicePropertyValues_32_0= rulePropertyValueAssignment ) )+ otherlv_33= 'basic' otherlv_34= 'endpoints' otherlv_35= '{' ( (lv_defaultBasicEndpoints_36_0= ruleBasicEndpoint ) )+ otherlv_37= '}' )
+                            // InternalOperationDsl.g:421:6: ( (lv_defaultServicePropertyValues_32_0= rulePropertyValueAssignment ) )+ otherlv_33= 'basic' otherlv_34= 'endpoints' otherlv_35= '{' ( (lv_defaultBasicEndpoints_36_0= ruleBasicEndpoint ) )+ otherlv_37= '}'
                             {
-                            otherlv_32=(Token)match(input,29,FOLLOW_23); 
-
-                            						newLeafNode(otherlv_32, grammarAccess.getContainerAccess().getBasicKeyword_12_3_2_0());
-                            					
-                            otherlv_33=(Token)match(input,30,FOLLOW_18); 
-
-                            						newLeafNode(otherlv_33, grammarAccess.getContainerAccess().getEndpointsKeyword_12_3_2_1());
-                            					
-                            otherlv_34=(Token)match(input,24,FOLLOW_7); 
-
-                            						newLeafNode(otherlv_34, grammarAccess.getContainerAccess().getLeftCurlyBracketKeyword_12_3_2_2());
-                            					
-                            // InternalOperationDsl.g:433:6: ( (lv_defaultBasicEndpoints_35_0= ruleBasicEndpoint ) )+
+                            // InternalOperationDsl.g:421:6: ( (lv_defaultServicePropertyValues_32_0= rulePropertyValueAssignment ) )+
                             int cnt11=0;
                             loop11:
                             do {
@@ -1068,16 +1056,16 @@ public class InternalOperationDslParser extends AbstractInternalAntlrParser {
 
                                 switch (alt11) {
                             	case 1 :
-                            	    // InternalOperationDsl.g:434:7: (lv_defaultBasicEndpoints_35_0= ruleBasicEndpoint )
+                            	    // InternalOperationDsl.g:422:7: (lv_defaultServicePropertyValues_32_0= rulePropertyValueAssignment )
                             	    {
-                            	    // InternalOperationDsl.g:434:7: (lv_defaultBasicEndpoints_35_0= ruleBasicEndpoint )
-                            	    // InternalOperationDsl.g:435:8: lv_defaultBasicEndpoints_35_0= ruleBasicEndpoint
+                            	    // InternalOperationDsl.g:422:7: (lv_defaultServicePropertyValues_32_0= rulePropertyValueAssignment )
+                            	    // InternalOperationDsl.g:423:8: lv_defaultServicePropertyValues_32_0= rulePropertyValueAssignment
                             	    {
 
-                            	    								newCompositeNode(grammarAccess.getContainerAccess().getDefaultBasicEndpointsBasicEndpointParserRuleCall_12_3_2_3_0());
+                            	    								newCompositeNode(grammarAccess.getContainerAccess().getDefaultServicePropertyValuesPropertyValueAssignmentParserRuleCall_12_3_2_0_0());
                             	    							
-                            	    pushFollow(FOLLOW_19);
-                            	    lv_defaultBasicEndpoints_35_0=ruleBasicEndpoint();
+                            	    pushFollow(FOLLOW_22);
+                            	    lv_defaultServicePropertyValues_32_0=rulePropertyValueAssignment();
 
                             	    state._fsp--;
 
@@ -1087,9 +1075,9 @@ public class InternalOperationDslParser extends AbstractInternalAntlrParser {
                             	    								}
                             	    								add(
                             	    									current,
-                            	    									"defaultBasicEndpoints",
-                            	    									lv_defaultBasicEndpoints_35_0,
-                            	    									"de.fhdo.ddmm.operationdsl.OperationDsl.BasicEndpoint");
+                            	    									"defaultServicePropertyValues",
+                            	    									lv_defaultServicePropertyValues_32_0,
+                            	    									"de.fhdo.ddmm.operationdsl.OperationDsl.PropertyValueAssignment");
                             	    								afterParserOrEnumRuleCall();
                             	    							
 
@@ -1108,11 +1096,19 @@ public class InternalOperationDslParser extends AbstractInternalAntlrParser {
                                 cnt11++;
                             } while (true);
 
-                            otherlv_36=(Token)match(input,26,FOLLOW_7); 
+                            otherlv_33=(Token)match(input,29,FOLLOW_23); 
 
-                            						newLeafNode(otherlv_36, grammarAccess.getContainerAccess().getRightCurlyBracketKeyword_12_3_2_4());
+                            						newLeafNode(otherlv_33, grammarAccess.getContainerAccess().getBasicKeyword_12_3_2_1());
                             					
-                            // InternalOperationDsl.g:456:6: ( (lv_defaultServicePropertyValues_37_0= rulePropertyValueAssignment ) )+
+                            otherlv_34=(Token)match(input,30,FOLLOW_18); 
+
+                            						newLeafNode(otherlv_34, grammarAccess.getContainerAccess().getEndpointsKeyword_12_3_2_2());
+                            					
+                            otherlv_35=(Token)match(input,24,FOLLOW_7); 
+
+                            						newLeafNode(otherlv_35, grammarAccess.getContainerAccess().getLeftCurlyBracketKeyword_12_3_2_3());
+                            					
+                            // InternalOperationDsl.g:452:6: ( (lv_defaultBasicEndpoints_36_0= ruleBasicEndpoint ) )+
                             int cnt12=0;
                             loop12:
                             do {
@@ -1126,16 +1122,16 @@ public class InternalOperationDslParser extends AbstractInternalAntlrParser {
 
                                 switch (alt12) {
                             	case 1 :
-                            	    // InternalOperationDsl.g:457:7: (lv_defaultServicePropertyValues_37_0= rulePropertyValueAssignment )
+                            	    // InternalOperationDsl.g:453:7: (lv_defaultBasicEndpoints_36_0= ruleBasicEndpoint )
                             	    {
-                            	    // InternalOperationDsl.g:457:7: (lv_defaultServicePropertyValues_37_0= rulePropertyValueAssignment )
-                            	    // InternalOperationDsl.g:458:8: lv_defaultServicePropertyValues_37_0= rulePropertyValueAssignment
+                            	    // InternalOperationDsl.g:453:7: (lv_defaultBasicEndpoints_36_0= ruleBasicEndpoint )
+                            	    // InternalOperationDsl.g:454:8: lv_defaultBasicEndpoints_36_0= ruleBasicEndpoint
                             	    {
 
-                            	    								newCompositeNode(grammarAccess.getContainerAccess().getDefaultServicePropertyValuesPropertyValueAssignmentParserRuleCall_12_3_2_5_0());
+                            	    								newCompositeNode(grammarAccess.getContainerAccess().getDefaultBasicEndpointsBasicEndpointParserRuleCall_12_3_2_4_0());
                             	    							
                             	    pushFollow(FOLLOW_19);
-                            	    lv_defaultServicePropertyValues_37_0=rulePropertyValueAssignment();
+                            	    lv_defaultBasicEndpoints_36_0=ruleBasicEndpoint();
 
                             	    state._fsp--;
 
@@ -1145,9 +1141,9 @@ public class InternalOperationDslParser extends AbstractInternalAntlrParser {
                             	    								}
                             	    								add(
                             	    									current,
-                            	    									"defaultServicePropertyValues",
-                            	    									lv_defaultServicePropertyValues_37_0,
-                            	    									"de.fhdo.ddmm.operationdsl.OperationDsl.PropertyValueAssignment");
+                            	    									"defaultBasicEndpoints",
+                            	    									lv_defaultBasicEndpoints_36_0,
+                            	    									"de.fhdo.ddmm.operationdsl.OperationDsl.BasicEndpoint");
                             	    								afterParserOrEnumRuleCall();
                             	    							
 
@@ -1166,6 +1162,10 @@ public class InternalOperationDslParser extends AbstractInternalAntlrParser {
                                 cnt12++;
                             } while (true);
 
+                            otherlv_37=(Token)match(input,26,FOLLOW_24); 
+
+                            						newLeafNode(otherlv_37, grammarAccess.getContainerAccess().getRightCurlyBracketKeyword_12_3_2_5());
+                            					
 
                             }
 
@@ -16734,40 +16734,26 @@ public class InternalOperationDslParser extends AbstractInternalAntlrParser {
             return "()* loopback of 99:3: ( (lv_containers_1_0= ruleContainer ) )*";
         }
     }
-    static final String dfa_8s = "\34\uffff";
-    static final String dfa_9s = "\1\4\1\uffff\1\36\1\30\1\4\1\37\1\4\1\27\3\4\1\5\2\27\1\37\1\27\1\4\1\5\1\4\2\27\3\4\2\uffff\2\27";
-    static final String dfa_10s = "\1\35\1\uffff\1\36\1\30\1\4\1\37\1\4\1\72\3\4\1\5\1\72\1\50\1\37\1\51\1\4\1\5\1\32\1\72\1\51\1\32\2\4\2\uffff\1\72\1\50";
-    static final String dfa_11s = "\1\uffff\1\1\26\uffff\1\3\1\2\2\uffff";
-    static final String dfa_12s = "\34\uffff}>";
+    static final String dfa_8s = "\16\uffff";
+    static final String dfa_9s = "\1\4\1\17\1\uffff\2\5\3\20\4\4\2\uffff";
+    static final String dfa_10s = "\1\35\1\52\1\uffff\2\7\3\20\4\35\2\uffff";
+    static final String dfa_11s = "\2\uffff\1\2\11\uffff\1\3\1\1";
+    static final String dfa_12s = "\16\uffff}>";
     static final String[] dfa_13s = {
             "\1\1\30\uffff\1\2",
+            "\1\3\32\uffff\1\4",
             "",
-            "\1\3",
-            "\1\4",
-            "\1\5",
-            "\1\6",
-            "\1\7",
-            "\1\12\17\uffff\1\11\1\13\21\uffff\1\10",
-            "\1\14",
-            "\1\15",
-            "\1\16",
-            "\1\17",
-            "\1\12\17\uffff\1\11\1\13\21\uffff\1\10",
-            "\1\12\20\uffff\1\13",
-            "\1\20",
-            "\1\21\21\uffff\1\22",
-            "\1\23",
-            "\1\24",
-            "\1\5\25\uffff\1\25",
-            "\1\12\17\uffff\1\27\1\13\21\uffff\1\26",
-            "\1\21\21\uffff\1\22",
-            "\1\30\25\uffff\1\31",
-            "\1\32",
-            "\1\33",
+            "\1\7\1\6\1\5",
+            "\1\12\1\11\1\10",
+            "\1\13",
+            "\1\13",
+            "\1\13",
+            "\1\1\25\uffff\1\15\2\uffff\1\14",
+            "\1\1\25\uffff\1\15\2\uffff\1\14",
+            "\1\1\25\uffff\1\15\2\uffff\1\14",
+            "\1\1\25\uffff\1\15\2\uffff\1\14",
             "",
-            "",
-            "\1\12\17\uffff\1\27\1\13\21\uffff\1\26",
-            "\1\12\20\uffff\1\13"
+            ""
     };
 
     static final short[] dfa_8 = DFA.unpackEncodedString(dfa_8s);
@@ -16791,7 +16777,7 @@ public class InternalOperationDslParser extends AbstractInternalAntlrParser {
             this.transition = dfa_13;
         }
         public String getDescription() {
-            return "361:4: ( ( (lv_defaultServicePropertyValues_26_0= rulePropertyValueAssignment ) )+ | (otherlv_27= 'basic' otherlv_28= 'endpoints' otherlv_29= '{' ( (lv_defaultBasicEndpoints_30_0= ruleBasicEndpoint ) )+ otherlv_31= '}' ) | (otherlv_32= 'basic' otherlv_33= 'endpoints' otherlv_34= '{' ( (lv_defaultBasicEndpoints_35_0= ruleBasicEndpoint ) )+ otherlv_36= '}' ( (lv_defaultServicePropertyValues_37_0= rulePropertyValueAssignment ) )+ ) )";
+            return "361:4: ( ( (lv_defaultServicePropertyValues_26_0= rulePropertyValueAssignment ) )+ | (otherlv_27= 'basic' otherlv_28= 'endpoints' otherlv_29= '{' ( (lv_defaultBasicEndpoints_30_0= ruleBasicEndpoint ) )+ otherlv_31= '}' ) | ( ( (lv_defaultServicePropertyValues_32_0= rulePropertyValueAssignment ) )+ otherlv_33= 'basic' otherlv_34= 'endpoints' otherlv_35= '{' ( (lv_defaultBasicEndpoints_36_0= ruleBasicEndpoint ) )+ otherlv_37= '}' ) )";
         }
     }
     static final String dfa_14s = "\123\uffff";

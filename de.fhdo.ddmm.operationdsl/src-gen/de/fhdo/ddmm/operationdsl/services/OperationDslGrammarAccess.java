@@ -120,14 +120,14 @@ public class OperationDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cDefaultBasicEndpointsBasicEndpointParserRuleCall_12_3_1_3_0 = (RuleCall)cDefaultBasicEndpointsAssignment_12_3_1_3.eContents().get(0);
 		private final Keyword cRightCurlyBracketKeyword_12_3_1_4 = (Keyword)cGroup_12_3_1.eContents().get(4);
 		private final Group cGroup_12_3_2 = (Group)cAlternatives_12_3.eContents().get(2);
-		private final Keyword cBasicKeyword_12_3_2_0 = (Keyword)cGroup_12_3_2.eContents().get(0);
-		private final Keyword cEndpointsKeyword_12_3_2_1 = (Keyword)cGroup_12_3_2.eContents().get(1);
-		private final Keyword cLeftCurlyBracketKeyword_12_3_2_2 = (Keyword)cGroup_12_3_2.eContents().get(2);
-		private final Assignment cDefaultBasicEndpointsAssignment_12_3_2_3 = (Assignment)cGroup_12_3_2.eContents().get(3);
-		private final RuleCall cDefaultBasicEndpointsBasicEndpointParserRuleCall_12_3_2_3_0 = (RuleCall)cDefaultBasicEndpointsAssignment_12_3_2_3.eContents().get(0);
-		private final Keyword cRightCurlyBracketKeyword_12_3_2_4 = (Keyword)cGroup_12_3_2.eContents().get(4);
-		private final Assignment cDefaultServicePropertyValuesAssignment_12_3_2_5 = (Assignment)cGroup_12_3_2.eContents().get(5);
-		private final RuleCall cDefaultServicePropertyValuesPropertyValueAssignmentParserRuleCall_12_3_2_5_0 = (RuleCall)cDefaultServicePropertyValuesAssignment_12_3_2_5.eContents().get(0);
+		private final Assignment cDefaultServicePropertyValuesAssignment_12_3_2_0 = (Assignment)cGroup_12_3_2.eContents().get(0);
+		private final RuleCall cDefaultServicePropertyValuesPropertyValueAssignmentParserRuleCall_12_3_2_0_0 = (RuleCall)cDefaultServicePropertyValuesAssignment_12_3_2_0.eContents().get(0);
+		private final Keyword cBasicKeyword_12_3_2_1 = (Keyword)cGroup_12_3_2.eContents().get(1);
+		private final Keyword cEndpointsKeyword_12_3_2_2 = (Keyword)cGroup_12_3_2.eContents().get(2);
+		private final Keyword cLeftCurlyBracketKeyword_12_3_2_3 = (Keyword)cGroup_12_3_2.eContents().get(3);
+		private final Assignment cDefaultBasicEndpointsAssignment_12_3_2_4 = (Assignment)cGroup_12_3_2.eContents().get(4);
+		private final RuleCall cDefaultBasicEndpointsBasicEndpointParserRuleCall_12_3_2_4_0 = (RuleCall)cDefaultBasicEndpointsAssignment_12_3_2_4.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_12_3_2_5 = (Keyword)cGroup_12_3_2.eContents().get(5);
 		private final Keyword cRightCurlyBracketKeyword_12_4 = (Keyword)cGroup_12.eContents().get(4);
 		private final Assignment cDeploymentSpecificationsAssignment_13 = (Assignment)cGroup.eContents().get(13);
 		private final RuleCall cDeploymentSpecificationsServiceDeploymentSpecificationParserRuleCall_13_0 = (RuleCall)cDeploymentSpecificationsAssignment_13.eContents().get(0);
@@ -144,11 +144,10 @@ public class OperationDslGrammarAccess extends AbstractGrammarElementFinder {
 		//	'}')? ('default' 'values' '{' (defaultServicePropertyValues+=PropertyValueAssignment+
 		//	| 'basic' 'endpoints' '{'
 		//	defaultBasicEndpoints+=BasicEndpoint+
-		//	'}' |
+		//	'}' | defaultServicePropertyValues+=PropertyValueAssignment+
 		//	'basic' 'endpoints' '{'
 		//	defaultBasicEndpoints+=BasicEndpoint+
-		//	'}'
-		//	defaultServicePropertyValues+=PropertyValueAssignment+)
+		//	'}')
 		//	'}')?
 		//	deploymentSpecifications+=ServiceDeploymentSpecification*
 		//	'}';
@@ -159,9 +158,8 @@ public class OperationDslGrammarAccess extends AbstractGrammarElementFinder {
 		//operationEnvironment=[technology::OperationEnvironment|STRING])? 'deploys' deployedServices+=ImportedMicroservice (','
 		//deployedServices+=ImportedMicroservice)* '{' ('aspects' '{' aspects+=ImportedOperationAspect+ '}')? ('default' 'values'
 		//'{' (defaultServicePropertyValues+=PropertyValueAssignment+ | 'basic' 'endpoints' '{'
-		//defaultBasicEndpoints+=BasicEndpoint+ '}' | 'basic' 'endpoints' '{' defaultBasicEndpoints+=BasicEndpoint+ '}'
-		//defaultServicePropertyValues+=PropertyValueAssignment+) '}')? deploymentSpecifications+=ServiceDeploymentSpecification*
-		//'}'
+		//defaultBasicEndpoints+=BasicEndpoint+ '}' | defaultServicePropertyValues+=PropertyValueAssignment+ 'basic' 'endpoints'
+		//'{' defaultBasicEndpoints+=BasicEndpoint+ '}') '}')? deploymentSpecifications+=ServiceDeploymentSpecification* '}'
 		public Group getGroup() { return cGroup; }
 		
 		//('@' 'technology' '(' technologies+=[service::Import] ')')+
@@ -273,8 +271,8 @@ public class OperationDslGrammarAccess extends AbstractGrammarElementFinder {
 		public Keyword getRightCurlyBracketKeyword_11_3() { return cRightCurlyBracketKeyword_11_3; }
 		
 		//('default' 'values' '{' (defaultServicePropertyValues+=PropertyValueAssignment+ | 'basic' 'endpoints' '{'
-		//defaultBasicEndpoints+=BasicEndpoint+ '}' | 'basic' 'endpoints' '{' defaultBasicEndpoints+=BasicEndpoint+ '}'
-		//defaultServicePropertyValues+=PropertyValueAssignment+) '}')?
+		//defaultBasicEndpoints+=BasicEndpoint+ '}' | defaultServicePropertyValues+=PropertyValueAssignment+ 'basic' 'endpoints'
+		//'{' defaultBasicEndpoints+=BasicEndpoint+ '}') '}')?
 		public Group getGroup_12() { return cGroup_12; }
 		
 		//'default'
@@ -288,8 +286,8 @@ public class OperationDslGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//// Must not be empty
 		//defaultServicePropertyValues+=PropertyValueAssignment+ | 'basic' 'endpoints' '{' defaultBasicEndpoints+=BasicEndpoint+
-		//'}' | 'basic' 'endpoints' '{' defaultBasicEndpoints+=BasicEndpoint+ '}'
-		//defaultServicePropertyValues+=PropertyValueAssignment+
+		//'}' | defaultServicePropertyValues+=PropertyValueAssignment+ 'basic' 'endpoints' '{'
+		//defaultBasicEndpoints+=BasicEndpoint+ '}'
 		public Alternatives getAlternatives_12_3() { return cAlternatives_12_3; }
 		
 		//defaultServicePropertyValues+=PropertyValueAssignment+
@@ -319,32 +317,32 @@ public class OperationDslGrammarAccess extends AbstractGrammarElementFinder {
 		//'}'
 		public Keyword getRightCurlyBracketKeyword_12_3_1_4() { return cRightCurlyBracketKeyword_12_3_1_4; }
 		
-		//'basic' 'endpoints' '{' defaultBasicEndpoints+=BasicEndpoint+ '}' defaultServicePropertyValues+=PropertyValueAssignment+
+		//defaultServicePropertyValues+=PropertyValueAssignment+ 'basic' 'endpoints' '{' defaultBasicEndpoints+=BasicEndpoint+ '}'
 		public Group getGroup_12_3_2() { return cGroup_12_3_2; }
 		
-		//'basic'
-		public Keyword getBasicKeyword_12_3_2_0() { return cBasicKeyword_12_3_2_0; }
-		
-		//'endpoints'
-		public Keyword getEndpointsKeyword_12_3_2_1() { return cEndpointsKeyword_12_3_2_1; }
-		
-		//'{'
-		public Keyword getLeftCurlyBracketKeyword_12_3_2_2() { return cLeftCurlyBracketKeyword_12_3_2_2; }
-		
-		//defaultBasicEndpoints+=BasicEndpoint+
-		public Assignment getDefaultBasicEndpointsAssignment_12_3_2_3() { return cDefaultBasicEndpointsAssignment_12_3_2_3; }
-		
-		//BasicEndpoint
-		public RuleCall getDefaultBasicEndpointsBasicEndpointParserRuleCall_12_3_2_3_0() { return cDefaultBasicEndpointsBasicEndpointParserRuleCall_12_3_2_3_0; }
-		
-		//'}'
-		public Keyword getRightCurlyBracketKeyword_12_3_2_4() { return cRightCurlyBracketKeyword_12_3_2_4; }
-		
 		//defaultServicePropertyValues+=PropertyValueAssignment+
-		public Assignment getDefaultServicePropertyValuesAssignment_12_3_2_5() { return cDefaultServicePropertyValuesAssignment_12_3_2_5; }
+		public Assignment getDefaultServicePropertyValuesAssignment_12_3_2_0() { return cDefaultServicePropertyValuesAssignment_12_3_2_0; }
 		
 		//PropertyValueAssignment
-		public RuleCall getDefaultServicePropertyValuesPropertyValueAssignmentParserRuleCall_12_3_2_5_0() { return cDefaultServicePropertyValuesPropertyValueAssignmentParserRuleCall_12_3_2_5_0; }
+		public RuleCall getDefaultServicePropertyValuesPropertyValueAssignmentParserRuleCall_12_3_2_0_0() { return cDefaultServicePropertyValuesPropertyValueAssignmentParserRuleCall_12_3_2_0_0; }
+		
+		//'basic'
+		public Keyword getBasicKeyword_12_3_2_1() { return cBasicKeyword_12_3_2_1; }
+		
+		//'endpoints'
+		public Keyword getEndpointsKeyword_12_3_2_2() { return cEndpointsKeyword_12_3_2_2; }
+		
+		//'{'
+		public Keyword getLeftCurlyBracketKeyword_12_3_2_3() { return cLeftCurlyBracketKeyword_12_3_2_3; }
+		
+		//defaultBasicEndpoints+=BasicEndpoint+
+		public Assignment getDefaultBasicEndpointsAssignment_12_3_2_4() { return cDefaultBasicEndpointsAssignment_12_3_2_4; }
+		
+		//BasicEndpoint
+		public RuleCall getDefaultBasicEndpointsBasicEndpointParserRuleCall_12_3_2_4_0() { return cDefaultBasicEndpointsBasicEndpointParserRuleCall_12_3_2_4_0; }
+		
+		//'}'
+		public Keyword getRightCurlyBracketKeyword_12_3_2_5() { return cRightCurlyBracketKeyword_12_3_2_5; }
 		
 		//'}'
 		public Keyword getRightCurlyBracketKeyword_12_4() { return cRightCurlyBracketKeyword_12_4; }
@@ -1362,11 +1360,10 @@ public class OperationDslGrammarAccess extends AbstractGrammarElementFinder {
 	//	'}')? ('default' 'values' '{' (defaultServicePropertyValues+=PropertyValueAssignment+
 	//	| 'basic' 'endpoints' '{'
 	//	defaultBasicEndpoints+=BasicEndpoint+
-	//	'}' |
+	//	'}' | defaultServicePropertyValues+=PropertyValueAssignment+
 	//	'basic' 'endpoints' '{'
 	//	defaultBasicEndpoints+=BasicEndpoint+
-	//	'}'
-	//	defaultServicePropertyValues+=PropertyValueAssignment+)
+	//	'}')
 	//	'}')?
 	//	deploymentSpecifications+=ServiceDeploymentSpecification*
 	//	'}';

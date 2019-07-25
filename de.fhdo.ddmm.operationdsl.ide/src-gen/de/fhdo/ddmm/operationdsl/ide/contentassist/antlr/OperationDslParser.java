@@ -226,8 +226,8 @@ public class OperationDslParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getContainerAccess().getAspectsAssignment_11_2(), "rule__Container__AspectsAssignment_11_2");
 			builder.put(grammarAccess.getContainerAccess().getDefaultServicePropertyValuesAssignment_12_3_0(), "rule__Container__DefaultServicePropertyValuesAssignment_12_3_0");
 			builder.put(grammarAccess.getContainerAccess().getDefaultBasicEndpointsAssignment_12_3_1_3(), "rule__Container__DefaultBasicEndpointsAssignment_12_3_1_3");
-			builder.put(grammarAccess.getContainerAccess().getDefaultBasicEndpointsAssignment_12_3_2_3(), "rule__Container__DefaultBasicEndpointsAssignment_12_3_2_3");
-			builder.put(grammarAccess.getContainerAccess().getDefaultServicePropertyValuesAssignment_12_3_2_5(), "rule__Container__DefaultServicePropertyValuesAssignment_12_3_2_5");
+			builder.put(grammarAccess.getContainerAccess().getDefaultServicePropertyValuesAssignment_12_3_2_0(), "rule__Container__DefaultServicePropertyValuesAssignment_12_3_2_0");
+			builder.put(grammarAccess.getContainerAccess().getDefaultBasicEndpointsAssignment_12_3_2_4(), "rule__Container__DefaultBasicEndpointsAssignment_12_3_2_4");
 			builder.put(grammarAccess.getContainerAccess().getDeploymentSpecificationsAssignment_13(), "rule__Container__DeploymentSpecificationsAssignment_13");
 			builder.put(grammarAccess.getDeploymentTechnologyReferenceAccess().getImportAssignment_0(), "rule__DeploymentTechnologyReference__ImportAssignment_0");
 			builder.put(grammarAccess.getDeploymentTechnologyReferenceAccess().getDeploymentTechnologyAssignment_2(), "rule__DeploymentTechnologyReference__DeploymentTechnologyAssignment_2");

@@ -343,7 +343,7 @@ public class OperationDslSemanticSequencer extends ServiceDslSemanticSequencer {
 	 *         (
 	 *             defaultServicePropertyValues+=PropertyValueAssignment+ | 
 	 *             defaultBasicEndpoints+=BasicEndpoint+ | 
-	 *             (defaultBasicEndpoints+=BasicEndpoint+ defaultServicePropertyValues+=PropertyValueAssignment+)
+	 *             (defaultServicePropertyValues+=PropertyValueAssignment+ defaultBasicEndpoints+=BasicEndpoint+)
 	 *         )? 
 	 *         deploymentSpecifications+=ServiceDeploymentSpecification*
 	 *     )
