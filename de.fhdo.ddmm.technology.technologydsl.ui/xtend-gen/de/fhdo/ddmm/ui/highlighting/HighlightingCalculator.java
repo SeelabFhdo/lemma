@@ -1,8 +1,10 @@
 package de.fhdo.ddmm.ui.highlighting;
 
+import de.fhdo.ddmm.data.PrimitiveValue;
 import de.fhdo.ddmm.technology.OperationAspectPointcut;
 import de.fhdo.ddmm.technology.ServiceAspectPointcut;
 import de.fhdo.ddmm.technology.TechnologyPackage;
+import de.fhdo.ddmm.technology.TechnologySpecificProperty;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +24,7 @@ import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.IteratorExtensions;
 import org.eclipse.xtext.xbase.lib.Pair;
+import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
 
 /**
  * Provide custom syntax highlighting for certain elements.
@@ -36,6 +39,7 @@ public class HighlightingCalculator implements ISemanticHighlightingCalculator {
   @Override
   public void provideHighlightingFor(final XtextResource resource, final IHighlightedPositionAcceptor acceptor, final CancelIndicator cancelIndicator) {
     this.provideHighlightingForPointcuts(resource, acceptor);
+    this.provideHighlightingForBooleanConstants(resource, acceptor);
   }
   
   /**
@@ -80,5 +84,35 @@ public class HighlightingCalculator implements ISemanticHighlightingCalculator {
       features.forEach(_function_4);
     };
     modeledPointcutsWithHighlightingFeatures.forEach(_function_3);
+  }
+  
+  /**
+   * Provide highlighting for boolean values
+   */
+  private void provideHighlightingForBooleanConstants(final XtextResource resource, final IHighlightedPositionAcceptor acceptor) {
+    final Procedure1<EObject> _function = (EObject it) -> {
+      boolean _and = false;
+      if (!(it instanceof TechnologySpecificProperty)) {
+        _and = false;
+      } else {
+        PrimitiveValue _defaultValue = ((TechnologySpecificProperty) it).getDefaultValue();
+        Boolean _booleanValue = null;
+        if (_defaultValue!=null) {
+          _booleanValue=_defaultValue.getBooleanValue();
+        }
+        boolean _tripleNotEquals = (_booleanValue != null);
+        _and = _tripleNotEquals;
+      }
+      final boolean booleanDefaultValue = _and;
+      if (booleanDefaultValue) {
+        final Consumer<INode> _function_1 = (INode it_1) -> {
+          acceptor.addPosition(it_1.getOffset(), it_1.getLength(), 
+            DefaultHighlightingConfiguration.KEYWORD_ID);
+        };
+        NodeModelUtils.findNodesForFeature(it, 
+          TechnologyPackage.Literals.TECHNOLOGY_SPECIFIC_PROPERTY__DEFAULT_VALUE).forEach(_function_1);
+      }
+    };
+    IteratorExtensions.<EObject>forEach(resource.getAllContents(), _function);
   }
 }

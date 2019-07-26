@@ -9,6 +9,7 @@ import de.fhdo.ddmm.technology.ServiceAspectPointcut
 import de.fhdo.ddmm.technology.TechnologyPackage
 import de.fhdo.ddmm.technology.OperationAspectPointcut
 import org.eclipse.xtext.ui.editor.syntaxcoloring.DefaultHighlightingConfiguration
+import de.fhdo.ddmm.technology.TechnologySpecificProperty
 
 /**
  * Provide custom syntax highlighting for certain elements.
@@ -22,6 +23,7 @@ class HighlightingCalculator implements ISemanticHighlightingCalculator {
     override provideHighlightingFor(XtextResource resource, IHighlightedPositionAcceptor acceptor,
         CancelIndicator cancelIndicator) {
         resource.provideHighlightingForPointcuts(acceptor)
+        resource.provideHighlightingForBooleanConstants(acceptor)
     }
 
     /**
@@ -67,6 +69,26 @@ class HighlightingCalculator implements ISemanticHighlightingCalculator {
                         DefaultHighlightingConfiguration.DEFAULT_ID)
                 }
             ]
+        ]
+    }
+
+    /**
+     * Provide highlighting for boolean values
+     */
+    private def provideHighlightingForBooleanConstants(XtextResource resource,
+        IHighlightedPositionAcceptor acceptor) {
+        resource.allContents.forEach[
+            val booleanDefaultValue = it instanceof TechnologySpecificProperty &&
+                (it as TechnologySpecificProperty).defaultValue?.booleanValue !== null
+            if (booleanDefaultValue) {
+                NodeModelUtils.findNodesForFeature(
+                    it,
+                    TechnologyPackage::Literals.TECHNOLOGY_SPECIFIC_PROPERTY__DEFAULT_VALUE
+                ).forEach[
+                    acceptor.addPosition(offset, length,
+                        DefaultHighlightingConfiguration.KEYWORD_ID)
+                ]
+            }
         ]
     }
 }

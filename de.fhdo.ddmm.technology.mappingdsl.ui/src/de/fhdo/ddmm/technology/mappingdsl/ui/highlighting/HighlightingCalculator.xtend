@@ -11,6 +11,10 @@ import de.fhdo.ddmm.service.TechnologyReference
 import de.fhdo.ddmm.service.ServicePackage
 import org.eclipse.xtext.nodemodel.INode
 import org.eclipse.xtext.Keyword
+import de.fhdo.ddmm.technology.mapping.TechnologySpecificImportedServiceAspect
+import de.fhdo.ddmm.technology.mapping.MappingPackage
+import de.fhdo.ddmm.technology.TechnologySpecificPropertyValueAssignment
+import de.fhdo.ddmm.technology.TechnologyPackage
 
 /**
  * Provide custom syntax highlighting for certain elements.
@@ -25,6 +29,7 @@ class HighlightingCalculator implements ISemanticHighlightingCalculator {
         CancelIndicator cancelIndicator) {
         resource.provideHighlightingForAnnotations(acceptor)
         resource.provideHighlightingForDefaultTypeDefinitionFlag(acceptor)
+        resource.provideHighlightingForBooleanConstants(acceptor)
     }
 
     /**
@@ -97,5 +102,43 @@ class HighlightingCalculator implements ISemanticHighlightingCalculator {
                 grammarElement.value
             else
                 ""
+    }
+
+    /**
+     * Provide highlighting for boolean values
+     */
+    private def provideHighlightingForBooleanConstants(XtextResource resource,
+        IHighlightedPositionAcceptor acceptor) {
+        val booleanConcepts = newHashMap(
+            TechnologySpecificImportedServiceAspect -> #[
+                [(it as TechnologySpecificImportedServiceAspect).singlePropertyValue]
+                    -> MappingPackage::Literals
+                        .TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__SINGLE_PROPERTY_VALUE
+            ],
+
+            TechnologySpecificPropertyValueAssignment -> #[
+                [(it as TechnologySpecificPropertyValueAssignment).value]
+                    -> TechnologyPackage::Literals
+                        .TECHNOLOGY_SPECIFIC_PROPERTY_VALUE_ASSIGNMENT__VALUE
+            ]
+        )
+
+        resource.allContents.forEach[eObject |
+            val matchingBooleanConcept = booleanConcepts.keySet.findFirst[it.isInstance(eObject)]
+            if (matchingBooleanConcept !== null) {
+                val primitiveValueGetters = booleanConcepts.get(matchingBooleanConcept)
+                primitiveValueGetters.forEach[
+                    val getter = it.key
+                    val feature = it.value
+
+                    val primitiveValue = getter.apply(eObject)
+                    if (primitiveValue !== null && primitiveValue.booleanValue !== null)
+                        NodeModelUtils.findNodesForFeature(eObject, feature).forEach[
+                            acceptor.addPosition(offset, length,
+                                HighlightingConfiguration.KEYWORD_ID)
+                        ]
+                ]
+            }
+        ]
     }
 }
