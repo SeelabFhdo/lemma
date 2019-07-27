@@ -2,12 +2,7 @@
  */
 package de.fhdo.ddmm.service.impl;
 
-import com.google.common.base.Objects;
-
-import com.google.common.collect.Iterables;
-
 import de.fhdo.ddmm.service.Endpoint;
-import de.fhdo.ddmm.service.ImportedProtocolAndDataFormat;
 import de.fhdo.ddmm.service.ImportedServiceAspect;
 import de.fhdo.ddmm.service.Interface;
 import de.fhdo.ddmm.service.Operation;
@@ -16,7 +11,6 @@ import de.fhdo.ddmm.service.ReferredOperation;
 import de.fhdo.ddmm.service.ServicePackage;
 
 import de.fhdo.ddmm.technology.CommunicationType;
-import de.fhdo.ddmm.technology.DataFormat;
 import de.fhdo.ddmm.technology.Protocol;
 
 import java.lang.reflect.InvocationTargetException;
@@ -269,94 +263,7 @@ public class ReferredOperationImpl extends MinimalEObjectImpl.Container implemen
      * @generated
      */
     @Override
-    public List<Map<String, Object>> t_missingEndpointEffectiveProtocols() {
-        if (((((this.getInterface() == null) || 
-            (this.getInterface().getMicroservice() == null)) || 
-            (this.getInterface().getMicroservice().getT_defaultProtocols() == null)) || 
-            this.getInterface().getMicroservice().getT_defaultProtocols().isEmpty())) {
-            return null;
-        }
-        final List<Map<String, Object>> effectiveProtocols = this.t_effectiveProtocolSpecifications();
-        if ((effectiveProtocols == null)) {
-            return null;
-        }
-        final Function1<Endpoint, EList<ImportedProtocolAndDataFormat>> _function = new Function1<Endpoint, EList<ImportedProtocolAndDataFormat>>() {
-            public EList<ImportedProtocolAndDataFormat> apply(final Endpoint it) {
-                return it.getProtocols();
-            }
-        };
-        final Function1<ImportedProtocolAndDataFormat, Boolean> _function_1 = new Function1<ImportedProtocolAndDataFormat, Boolean>() {
-            public Boolean apply(final ImportedProtocolAndDataFormat it) {
-                DataFormat _dataFormat = it.getDataFormat();
-                return Boolean.valueOf((_dataFormat == null));
-            }
-        };
-        final Function1<ImportedProtocolAndDataFormat, Protocol> _function_2 = new Function1<ImportedProtocolAndDataFormat, Protocol>() {
-            public Protocol apply(final ImportedProtocolAndDataFormat it) {
-                return it.getImportedProtocol();
-            }
-        };
-        final List<Protocol> endpointProtocolsWithoutDataFormats = IterableExtensions.<Protocol>toList(IterableExtensions.<ImportedProtocolAndDataFormat, Protocol>map(IterableExtensions.<ImportedProtocolAndDataFormat>filter(Iterables.<ImportedProtocolAndDataFormat>concat(XcoreEListExtensions.<Endpoint, EList<ImportedProtocolAndDataFormat>>map(this.getEndpoints(), _function)), _function_1), _function_2));
-        final Function1<Map<String, Object>, Boolean> _function_3 = new Function1<Map<String, Object>, Boolean>() {
-            public Boolean apply(final Map<String, Object> it) {
-                boolean _xblockexpression = false;
-                {
-                    Object _get = it.get("protocol");
-                    final Protocol protocol = ((Protocol) _get);
-                    boolean _contains = endpointProtocolsWithoutDataFormats.contains(protocol);
-                    _xblockexpression = (!_contains);
-                }
-                return Boolean.valueOf(_xblockexpression);
-            }
-        };
-        List<Map<String, Object>> resultProtocols = IterableExtensions.<Map<String, Object>>toList(IterableExtensions.<Map<String, Object>>filter(effectiveProtocols, _function_3));
-        final Function1<Endpoint, EList<ImportedProtocolAndDataFormat>> _function_4 = new Function1<Endpoint, EList<ImportedProtocolAndDataFormat>>() {
-            public EList<ImportedProtocolAndDataFormat> apply(final Endpoint it) {
-                return it.getProtocols();
-            }
-        };
-        final Function1<ImportedProtocolAndDataFormat, Boolean> _function_5 = new Function1<ImportedProtocolAndDataFormat, Boolean>() {
-            public Boolean apply(final ImportedProtocolAndDataFormat it) {
-                DataFormat _dataFormat = it.getDataFormat();
-                return Boolean.valueOf((_dataFormat != null));
-            }
-        };
-        final List<ImportedProtocolAndDataFormat> endpointProtocolsWithDataFormats = IterableExtensions.<ImportedProtocolAndDataFormat>toList(IterableExtensions.<ImportedProtocolAndDataFormat>filter(Iterables.<ImportedProtocolAndDataFormat>concat(XcoreEListExtensions.<Endpoint, EList<ImportedProtocolAndDataFormat>>map(this.getEndpoints(), _function_4)), _function_5));
-        final Function1<Map<String, Object>, Boolean> _function_6 = new Function1<Map<String, Object>, Boolean>() {
-            public Boolean apply(final Map<String, Object> it) {
-                boolean _xblockexpression = false;
-                {
-                    Object _get = it.get("protocol");
-                    final Protocol protocol = ((Protocol) _get);
-                    Object _get_1 = it.get("dataFormat");
-                    final DataFormat dataFormat = ((DataFormat) _get_1);
-                    final Function1<ImportedProtocolAndDataFormat, Boolean> _function = new Function1<ImportedProtocolAndDataFormat, Boolean>() {
-                        public Boolean apply(final ImportedProtocolAndDataFormat it) {
-                            return Boolean.valueOf((Objects.equal(it.getImportedProtocol(), protocol) && Objects.equal(it.getDataFormat(), dataFormat)));
-                        }
-                    };
-                    boolean _exists = IterableExtensions.<ImportedProtocolAndDataFormat>exists(endpointProtocolsWithDataFormats, _function);
-                    _xblockexpression = (!_exists);
-                }
-                return Boolean.valueOf(_xblockexpression);
-            }
-        };
-        return IterableExtensions.<Map<String, Object>>toList(IterableExtensions.<Map<String, Object>>filter(resultProtocols, _function_6));
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
     public List<Map<String, Object>> t_effectiveProtocolSpecifications() {
-        if (((((this.getInterface() == null) || 
-            (this.getInterface().getMicroservice() == null)) || 
-            (this.getInterface().getMicroservice().getT_defaultProtocols() == null)) || 
-            this.getInterface().getMicroservice().getT_defaultProtocols().isEmpty())) {
-            return null;
-        }
         List<Map<String, Object>> _xifexpression = null;
         boolean _isEmpty = this.getProtocols().isEmpty();
         boolean _not = (!_isEmpty);
@@ -598,8 +505,6 @@ public class ReferredOperationImpl extends MinimalEObjectImpl.Container implemen
     @Override
     public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
         switch (operationID) {
-            case ServicePackage.REFERRED_OPERATION___TMISSING_ENDPOINT_EFFECTIVE_PROTOCOLS:
-                return t_missingEndpointEffectiveProtocols();
             case ServicePackage.REFERRED_OPERATION___TEFFECTIVE_PROTOCOL_SPECIFICATIONS:
                 return t_effectiveProtocolSpecifications();
             case ServicePackage.REFERRED_OPERATION___GET_QUALIFIED_NAME_PARTS:

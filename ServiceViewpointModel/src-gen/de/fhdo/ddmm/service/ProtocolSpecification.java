@@ -100,9 +100,9 @@ public interface ProtocolSpecification extends EObject {
      * *
      * Reusable helper method to determine effective protocol specifications from a list of
      * ProtocolSpecification instances as combinations of Protocol and DataFormat. In case a
-     * ProtocolSpecification instance does not specify a data format, the effective protocol
-     * specifications correspond to the ProtocolSpecification's Protocol being combined with all of
-     * its DataFormats.
+     * ProtocolSpecification instance does not specify an explicit or implicit (i.e., default) data
+     * format, the effective protocol specifications correspond to the ProtocolSpecification's
+     * Protocol being combined with all of its DataFormats.
      * <!-- end-model-doc -->
      * @model dataType="de.fhdo.ddmm.service.TupleList" unique="false" specificationsUnique="false" specificationsMany="true"
      * @generated

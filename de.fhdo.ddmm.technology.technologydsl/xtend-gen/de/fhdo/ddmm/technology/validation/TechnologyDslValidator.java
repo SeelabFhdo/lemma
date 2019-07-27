@@ -9,7 +9,6 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import de.fhdo.ddmm.data.PrimitiveType;
 import de.fhdo.ddmm.data.PrimitiveValue;
-import de.fhdo.ddmm.technology.CommunicationType;
 import de.fhdo.ddmm.technology.CompatibilityDirection;
 import de.fhdo.ddmm.technology.CompatibilityMatrixEntry;
 import de.fhdo.ddmm.technology.DataFormat;
@@ -22,7 +21,6 @@ import de.fhdo.ddmm.technology.OperationTechnology;
 import de.fhdo.ddmm.technology.PointcutType;
 import de.fhdo.ddmm.technology.PossiblyImportedTechnologySpecificType;
 import de.fhdo.ddmm.technology.PropertyFeature;
-import de.fhdo.ddmm.technology.Protocol;
 import de.fhdo.ddmm.technology.ServiceAspect;
 import de.fhdo.ddmm.technology.ServiceAspectPointcut;
 import de.fhdo.ddmm.technology.ServiceAspectPointcutSelector;
@@ -280,71 +278,6 @@ public class TechnologyDslValidator extends AbstractTechnologyDslValidator {
     if (_not) {
       this.error(("Technology must define at least one default primitive type for each built-in " + 
         "primitive type"), technology, TechnologyPackage.Literals.TECHNOLOGY__NAME);
-    }
-  }
-  
-  /**
-   * Check that there is exactly one default protocol for each communication type
-   */
-  @Check
-  public void checkProtocolDefaults(final Technology technology) {
-    this.checkProtocolsDefaults(technology, CommunicationType.SYNCHRONOUS);
-    this.checkProtocolsDefaults(technology, CommunicationType.ASYNCHRONOUS);
-  }
-  
-  /**
-   * Convenience method to check protocol defaults
-   */
-  public void checkProtocolsDefaults(final Technology technology, final CommunicationType forCommunicationType) {
-    boolean _isEmpty = technology.getProtocols().isEmpty();
-    if (_isEmpty) {
-      return;
-    }
-    String _switchResult = null;
-    if (forCommunicationType != null) {
-      switch (forCommunicationType) {
-        case SYNCHRONOUS:
-          _switchResult = "synchronous";
-          break;
-        case ASYNCHRONOUS:
-          _switchResult = "asynchronous";
-          break;
-        default:
-          _switchResult = "";
-          break;
-      }
-    } else {
-      _switchResult = "";
-    }
-    final String communicationTypeString = _switchResult;
-    final Function1<Protocol, Boolean> _function = (Protocol it) -> {
-      return Boolean.valueOf((it.isDefault() && Objects.equal(forCommunicationType, it.getCommunicationType())));
-    };
-    final Iterable<Protocol> definedDefaultProtocols = IterableExtensions.<Protocol>filter(technology.getProtocols(), _function);
-    boolean _isEmpty_1 = IterableExtensions.isEmpty(definedDefaultProtocols);
-    if (_isEmpty_1) {
-      StringConcatenation _builder = new StringConcatenation();
-      _builder.append("Technology must define at least one default ");
-      _builder.append(communicationTypeString);
-      _builder.append(" ");
-      StringConcatenation _builder_1 = new StringConcatenation();
-      _builder_1.append("protocol");
-      String _plus = (_builder.toString() + _builder_1);
-      this.error(_plus, technology, TechnologyPackage.Literals.TECHNOLOGY__NAME);
-    } else {
-      int _size = IterableExtensions.size(definedDefaultProtocols);
-      boolean _greaterEqualsThan = (_size >= 2);
-      if (_greaterEqualsThan) {
-        StringConcatenation _builder_2 = new StringConcatenation();
-        _builder_2.append("Technology may not define more than one default ");
-        _builder_2.append(communicationTypeString);
-        _builder_2.append(" ");
-        StringConcatenation _builder_3 = new StringConcatenation();
-        _builder_3.append("protocol");
-        String _plus_1 = (_builder_2.toString() + _builder_3);
-        this.error(_plus_1, ((EObject[])Conversions.unwrapArray(definedDefaultProtocols, EObject.class))[1], 
-          TechnologyPackage.Literals.PROTOCOL__NAME);
-      }
     }
   }
   

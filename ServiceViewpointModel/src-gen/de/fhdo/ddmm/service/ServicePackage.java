@@ -678,22 +678,13 @@ public interface ServicePackage extends EPackage {
     int MICROSERVICE_FEATURE_COUNT = 20;
 
     /**
-     * The operation id for the '<em>Tmissing Endpoint Effective Protocols</em>' operation.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int MICROSERVICE___TMISSING_ENDPOINT_EFFECTIVE_PROTOCOLS = 0;
-
-    /**
      * The operation id for the '<em>Teffective Protocol Specifications</em>' operation.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int MICROSERVICE___TEFFECTIVE_PROTOCOL_SPECIFICATIONS = 1;
+    int MICROSERVICE___TEFFECTIVE_PROTOCOL_SPECIFICATIONS = 0;
 
     /**
      * The operation id for the '<em>Get All Type Definition Technology References</em>' operation.
@@ -702,7 +693,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MICROSERVICE___GET_ALL_TYPE_DEFINITION_TECHNOLOGY_REFERENCES = 2;
+    int MICROSERVICE___GET_ALL_TYPE_DEFINITION_TECHNOLOGY_REFERENCES = 1;
 
     /**
      * The operation id for the '<em>Get Type Definition Technology Import</em>' operation.
@@ -711,7 +702,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MICROSERVICE___GET_TYPE_DEFINITION_TECHNOLOGY_IMPORT = 3;
+    int MICROSERVICE___GET_TYPE_DEFINITION_TECHNOLOGY_IMPORT = 2;
 
     /**
      * The operation id for the '<em>Get Type Definition Technology</em>' operation.
@@ -720,7 +711,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MICROSERVICE___GET_TYPE_DEFINITION_TECHNOLOGY = 4;
+    int MICROSERVICE___GET_TYPE_DEFINITION_TECHNOLOGY = 3;
 
     /**
      * The operation id for the '<em>Get Qualified Name Parts</em>' operation.
@@ -729,7 +720,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MICROSERVICE___GET_QUALIFIED_NAME_PARTS = 5;
+    int MICROSERVICE___GET_QUALIFIED_NAME_PARTS = 4;
 
     /**
      * The operation id for the '<em>Build Qualified Name</em>' operation.
@@ -738,7 +729,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MICROSERVICE___BUILD_QUALIFIED_NAME__STRING = 6;
+    int MICROSERVICE___BUILD_QUALIFIED_NAME__STRING = 5;
 
     /**
      * The operation id for the '<em>Get Contained Operations</em>' operation.
@@ -747,7 +738,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MICROSERVICE___GET_CONTAINED_OPERATIONS = 7;
+    int MICROSERVICE___GET_CONTAINED_OPERATIONS = 6;
 
     /**
      * The operation id for the '<em>Get Contained Referred Operations</em>' operation.
@@ -756,7 +747,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MICROSERVICE___GET_CONTAINED_REFERRED_OPERATIONS = 8;
+    int MICROSERVICE___GET_CONTAINED_REFERRED_OPERATIONS = 7;
 
     /**
      * The operation id for the '<em>Get Required Imports</em>' operation.
@@ -765,7 +756,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MICROSERVICE___GET_REQUIRED_IMPORTS = 9;
+    int MICROSERVICE___GET_REQUIRED_IMPORTS = 8;
 
     /**
      * The operation id for the '<em>Get All Required Operations</em>' operation.
@@ -774,7 +765,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MICROSERVICE___GET_ALL_REQUIRED_OPERATIONS__IMPORT = 10;
+    int MICROSERVICE___GET_ALL_REQUIRED_OPERATIONS__IMPORT = 9;
 
     /**
      * The operation id for the '<em>Get All Required Microservices</em>' operation.
@@ -783,7 +774,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MICROSERVICE___GET_ALL_REQUIRED_MICROSERVICES = 11;
+    int MICROSERVICE___GET_ALL_REQUIRED_MICROSERVICES = 10;
 
     /**
      * The operation id for the '<em>Get All Initializing Microservices</em>' operation.
@@ -792,7 +783,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MICROSERVICE___GET_ALL_INITIALIZING_MICROSERVICES = 12;
+    int MICROSERVICE___GET_ALL_INITIALIZING_MICROSERVICES = 11;
 
     /**
      * The operation id for the '<em>Can Require</em>' operation.
@@ -801,7 +792,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MICROSERVICE___CAN_REQUIRE__MICROSERVICE_BOOLEAN = 13;
+    int MICROSERVICE___CAN_REQUIRE__MICROSERVICE_BOOLEAN = 12;
 
     /**
      * The operation id for the '<em>Can Require</em>' operation.
@@ -810,7 +801,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MICROSERVICE___CAN_REQUIRE__INTERFACE_BOOLEAN = 14;
+    int MICROSERVICE___CAN_REQUIRE__INTERFACE_BOOLEAN = 13;
 
     /**
      * The operation id for the '<em>Can Require</em>' operation.
@@ -819,7 +810,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MICROSERVICE___CAN_REQUIRE__OPERATION_BOOLEAN = 15;
+    int MICROSERVICE___CAN_REQUIRE__OPERATION_BOOLEAN = 14;
 
     /**
      * The number of operations of the '<em>Microservice</em>' class.
@@ -828,7 +819,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MICROSERVICE_OPERATION_COUNT = 16;
+    int MICROSERVICE_OPERATION_COUNT = 15;
 
     /**
      * The meta object id for the '{@link de.fhdo.ddmm.service.impl.TechnologyReferenceImpl <em>Technology Reference</em>}' class.
@@ -1022,22 +1013,13 @@ public interface ServicePackage extends EPackage {
     int INTERFACE_FEATURE_COUNT = 12;
 
     /**
-     * The operation id for the '<em>Tmissing Endpoint Effective Protocols</em>' operation.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int INTERFACE___TMISSING_ENDPOINT_EFFECTIVE_PROTOCOLS = 0;
-
-    /**
      * The operation id for the '<em>Teffective Protocol Specifications</em>' operation.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int INTERFACE___TEFFECTIVE_PROTOCOL_SPECIFICATIONS = 1;
+    int INTERFACE___TEFFECTIVE_PROTOCOL_SPECIFICATIONS = 0;
 
     /**
      * The operation id for the '<em>Get Qualified Name Parts</em>' operation.
@@ -1046,7 +1028,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERFACE___GET_QUALIFIED_NAME_PARTS = 2;
+    int INTERFACE___GET_QUALIFIED_NAME_PARTS = 1;
 
     /**
      * The operation id for the '<em>Build Qualified Name</em>' operation.
@@ -1055,7 +1037,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERFACE___BUILD_QUALIFIED_NAME__STRING = 3;
+    int INTERFACE___BUILD_QUALIFIED_NAME__STRING = 2;
 
     /**
      * The number of operations of the '<em>Interface</em>' class.
@@ -1064,7 +1046,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERFACE_OPERATION_COUNT = 4;
+    int INTERFACE_OPERATION_COUNT = 3;
 
     /**
      * The meta object id for the '{@link de.fhdo.ddmm.service.impl.OperationImpl <em>Operation</em>}' class.
@@ -1194,22 +1176,13 @@ public interface ServicePackage extends EPackage {
     int OPERATION_FEATURE_COUNT = 12;
 
     /**
-     * The operation id for the '<em>Tmissing Endpoint Effective Protocols</em>' operation.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int OPERATION___TMISSING_ENDPOINT_EFFECTIVE_PROTOCOLS = 0;
-
-    /**
      * The operation id for the '<em>Teffective Protocol Specifications</em>' operation.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int OPERATION___TEFFECTIVE_PROTOCOL_SPECIFICATIONS = 1;
+    int OPERATION___TEFFECTIVE_PROTOCOL_SPECIFICATIONS = 0;
 
     /**
      * The operation id for the '<em>Get Qualified Name Parts</em>' operation.
@@ -1218,7 +1191,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int OPERATION___GET_QUALIFIED_NAME_PARTS = 2;
+    int OPERATION___GET_QUALIFIED_NAME_PARTS = 1;
 
     /**
      * The operation id for the '<em>Build Qualified Name</em>' operation.
@@ -1227,7 +1200,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int OPERATION___BUILD_QUALIFIED_NAME__STRING = 3;
+    int OPERATION___BUILD_QUALIFIED_NAME__STRING = 2;
 
     /**
      * The number of operations of the '<em>Operation</em>' class.
@@ -1236,7 +1209,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int OPERATION_OPERATION_COUNT = 4;
+    int OPERATION_OPERATION_COUNT = 3;
 
     /**
      * The meta object id for the '{@link de.fhdo.ddmm.service.impl.ReferredOperationImpl <em>Referred Operation</em>}' class.
@@ -1303,22 +1276,13 @@ public interface ServicePackage extends EPackage {
     int REFERRED_OPERATION_FEATURE_COUNT = 5;
 
     /**
-     * The operation id for the '<em>Tmissing Endpoint Effective Protocols</em>' operation.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int REFERRED_OPERATION___TMISSING_ENDPOINT_EFFECTIVE_PROTOCOLS = 0;
-
-    /**
      * The operation id for the '<em>Teffective Protocol Specifications</em>' operation.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int REFERRED_OPERATION___TEFFECTIVE_PROTOCOL_SPECIFICATIONS = 1;
+    int REFERRED_OPERATION___TEFFECTIVE_PROTOCOL_SPECIFICATIONS = 0;
 
     /**
      * The operation id for the '<em>Get Qualified Name Parts</em>' operation.
@@ -1327,7 +1291,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int REFERRED_OPERATION___GET_QUALIFIED_NAME_PARTS = 2;
+    int REFERRED_OPERATION___GET_QUALIFIED_NAME_PARTS = 1;
 
     /**
      * The operation id for the '<em>Build Qualified Name</em>' operation.
@@ -1336,7 +1300,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int REFERRED_OPERATION___BUILD_QUALIFIED_NAME__STRING = 3;
+    int REFERRED_OPERATION___BUILD_QUALIFIED_NAME__STRING = 2;
 
     /**
      * The number of operations of the '<em>Referred Operation</em>' class.
@@ -1345,7 +1309,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int REFERRED_OPERATION_OPERATION_COUNT = 4;
+    int REFERRED_OPERATION_OPERATION_COUNT = 3;
 
     /**
      * The meta object id for the '{@link de.fhdo.ddmm.service.impl.ParameterImpl <em>Parameter</em>}' class.
@@ -2834,16 +2798,6 @@ public interface ServicePackage extends EPackage {
     EAttribute getMicroservice_EffectivelyInternal();
 
     /**
-     * Returns the meta object for the '{@link de.fhdo.ddmm.service.Microservice#t_missingEndpointEffectiveProtocols() <em>Tmissing Endpoint Effective Protocols</em>}' operation.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the '<em>Tmissing Endpoint Effective Protocols</em>' operation.
-     * @see de.fhdo.ddmm.service.Microservice#t_missingEndpointEffectiveProtocols()
-     * @generated
-     */
-    EOperation getMicroservice__T_missingEndpointEffectiveProtocols();
-
-    /**
      * Returns the meta object for the '{@link de.fhdo.ddmm.service.Microservice#t_effectiveProtocolSpecifications() <em>Teffective Protocol Specifications</em>}' operation.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -3190,16 +3144,6 @@ public interface ServicePackage extends EPackage {
     EAttribute getInterface_EffectivelyInternal();
 
     /**
-     * Returns the meta object for the '{@link de.fhdo.ddmm.service.Interface#t_missingEndpointEffectiveProtocols() <em>Tmissing Endpoint Effective Protocols</em>}' operation.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the '<em>Tmissing Endpoint Effective Protocols</em>' operation.
-     * @see de.fhdo.ddmm.service.Interface#t_missingEndpointEffectiveProtocols()
-     * @generated
-     */
-    EOperation getInterface__T_missingEndpointEffectiveProtocols();
-
-    /**
      * Returns the meta object for the '{@link de.fhdo.ddmm.service.Interface#t_effectiveProtocolSpecifications() <em>Teffective Protocol Specifications</em>}' operation.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -3372,16 +3316,6 @@ public interface ServicePackage extends EPackage {
     EAttribute getOperation_EffectivelyInternal();
 
     /**
-     * Returns the meta object for the '{@link de.fhdo.ddmm.service.Operation#t_missingEndpointEffectiveProtocols() <em>Tmissing Endpoint Effective Protocols</em>}' operation.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the '<em>Tmissing Endpoint Effective Protocols</em>' operation.
-     * @see de.fhdo.ddmm.service.Operation#t_missingEndpointEffectiveProtocols()
-     * @generated
-     */
-    EOperation getOperation__T_missingEndpointEffectiveProtocols();
-
-    /**
      * Returns the meta object for the '{@link de.fhdo.ddmm.service.Operation#t_effectiveProtocolSpecifications() <em>Teffective Protocol Specifications</em>}' operation.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -3475,16 +3409,6 @@ public interface ServicePackage extends EPackage {
      * @generated
      */
     EReference getReferredOperation_Interface();
-
-    /**
-     * Returns the meta object for the '{@link de.fhdo.ddmm.service.ReferredOperation#t_missingEndpointEffectiveProtocols() <em>Tmissing Endpoint Effective Protocols</em>}' operation.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the '<em>Tmissing Endpoint Effective Protocols</em>' operation.
-     * @see de.fhdo.ddmm.service.ReferredOperation#t_missingEndpointEffectiveProtocols()
-     * @generated
-     */
-    EOperation getReferredOperation__T_missingEndpointEffectiveProtocols();
 
     /**
      * Returns the meta object for the '{@link de.fhdo.ddmm.service.ReferredOperation#t_effectiveProtocolSpecifications() <em>Teffective Protocol Specifications</em>}' operation.
@@ -4828,14 +4752,6 @@ public interface ServicePackage extends EPackage {
         EAttribute MICROSERVICE__EFFECTIVELY_INTERNAL = eINSTANCE.getMicroservice_EffectivelyInternal();
 
         /**
-         * The meta object literal for the '<em><b>Tmissing Endpoint Effective Protocols</b></em>' operation.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EOperation MICROSERVICE___TMISSING_ENDPOINT_EFFECTIVE_PROTOCOLS = eINSTANCE.getMicroservice__T_missingEndpointEffectiveProtocols();
-
-        /**
          * The meta object literal for the '<em><b>Teffective Protocol Specifications</b></em>' operation.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -5104,14 +5020,6 @@ public interface ServicePackage extends EPackage {
         EAttribute INTERFACE__EFFECTIVELY_INTERNAL = eINSTANCE.getInterface_EffectivelyInternal();
 
         /**
-         * The meta object literal for the '<em><b>Tmissing Endpoint Effective Protocols</b></em>' operation.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EOperation INTERFACE___TMISSING_ENDPOINT_EFFECTIVE_PROTOCOLS = eINSTANCE.getInterface__T_missingEndpointEffectiveProtocols();
-
-        /**
          * The meta object literal for the '<em><b>Teffective Protocol Specifications</b></em>' operation.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -5242,14 +5150,6 @@ public interface ServicePackage extends EPackage {
         EAttribute OPERATION__EFFECTIVELY_INTERNAL = eINSTANCE.getOperation_EffectivelyInternal();
 
         /**
-         * The meta object literal for the '<em><b>Tmissing Endpoint Effective Protocols</b></em>' operation.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EOperation OPERATION___TMISSING_ENDPOINT_EFFECTIVE_PROTOCOLS = eINSTANCE.getOperation__T_missingEndpointEffectiveProtocols();
-
-        /**
          * The meta object literal for the '<em><b>Teffective Protocol Specifications</b></em>' operation.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -5322,14 +5222,6 @@ public interface ServicePackage extends EPackage {
          * @generated
          */
         EReference REFERRED_OPERATION__INTERFACE = eINSTANCE.getReferredOperation_Interface();
-
-        /**
-         * The meta object literal for the '<em><b>Tmissing Endpoint Effective Protocols</b></em>' operation.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EOperation REFERRED_OPERATION___TMISSING_ENDPOINT_EFFECTIVE_PROTOCOLS = eINSTANCE.getReferredOperation__T_missingEndpointEffectiveProtocols();
 
         /**
          * The meta object literal for the '<em><b>Teffective Protocol Specifications</b></em>' operation.

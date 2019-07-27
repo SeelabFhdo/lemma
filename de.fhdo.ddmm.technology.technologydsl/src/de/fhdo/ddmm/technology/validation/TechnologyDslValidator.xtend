@@ -6,7 +6,6 @@ package de.fhdo.ddmm.technology.validation
 import org.eclipse.xtext.validation.Check
 import de.fhdo.ddmm.technology.TechnologyPackage
 import de.fhdo.ddmm.technology.Technology
-import de.fhdo.ddmm.technology.CommunicationType
 import de.fhdo.ddmm.technology.TechnologySpecificPrimitiveType
 import de.fhdo.ddmm.data.PrimitiveType
 import de.fhdo.ddmm.technology.DataFormat
@@ -260,41 +259,6 @@ class TechnologyDslValidator extends AbstractTechnologyDslValidator {
         if (!specificDefaultPrimitivesBasics.containsAll(builtinPrimitives))
             error("Technology must define at least one default primitive type for each built-in " +
                   "primitive type", technology, TechnologyPackage::Literals.TECHNOLOGY__NAME)
-    }
-
-    /**
-     * Check that there is exactly one default protocol for each communication type
-     */
-    @Check
-    def checkProtocolDefaults(Technology technology) {
-        checkProtocolsDefaults(technology, CommunicationType.SYNCHRONOUS)
-        checkProtocolsDefaults(technology, CommunicationType.ASYNCHRONOUS)
-    }
-
-    /**
-     * Convenience method to check protocol defaults
-     */
-    def checkProtocolsDefaults(Technology technology, CommunicationType forCommunicationType) {
-        if (technology.protocols.empty) {
-            return
-        }
-
-        val communicationTypeString = switch (forCommunicationType) {
-            case SYNCHRONOUS: "synchronous"
-            case ASYNCHRONOUS: "asynchronous"
-            default: ""
-        }
-
-        val definedDefaultProtocols = technology.protocols
-            .filter[^default && forCommunicationType == communicationType]
-
-        if (definedDefaultProtocols.empty)
-            error('''Technology must define at least one default «communicationTypeString» ''' +
-                '''protocol''', technology, TechnologyPackage::Literals.TECHNOLOGY__NAME)
-        else if (definedDefaultProtocols.size >= 2)
-            error('''Technology may not define more than one default «communicationTypeString» ''' +
-                '''protocol''', definedDefaultProtocols.get(1),
-                TechnologyPackage::Literals.PROTOCOL__NAME)
     }
 
     /**

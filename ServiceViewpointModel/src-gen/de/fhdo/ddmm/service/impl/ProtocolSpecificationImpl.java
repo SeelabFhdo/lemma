@@ -189,16 +189,27 @@ public class ProtocolSpecificationImpl extends MinimalEObjectImpl.Container impl
                     results.add(entry);
                 }
                 else {
-                    final Consumer<DataFormat> _function = new Consumer<DataFormat>() {
-                        public void accept(final DataFormat dataFormat) {
-                            final HashMap<String, Object> entry = CollectionLiterals.<String, Object>newHashMap();
-                            entry.put("protocol", importedProtocol);
-                            entry.put("dataFormat", dataFormat);
-                            entry.put("import", protocol.getImport());
-                            results.add(entry);
-                        }
-                    };
-                    importedProtocol.getDataFormats().forEach(_function);
+                    DataFormat _defaultFormat = importedProtocol.getDefaultFormat();
+                    boolean _tripleNotEquals_1 = (_defaultFormat != null);
+                    if (_tripleNotEquals_1) {
+                        final HashMap<String, Object> entry_1 = CollectionLiterals.<String, Object>newHashMap();
+                        entry_1.put("protocol", importedProtocol);
+                        entry_1.put("dataFormat", importedProtocol.getDefaultFormat());
+                        entry_1.put("import", protocol.getImport());
+                        results.add(entry_1);
+                    }
+                    else {
+                        final Consumer<DataFormat> _function = new Consumer<DataFormat>() {
+                            public void accept(final DataFormat dataFormat) {
+                                final HashMap<String, Object> entry = CollectionLiterals.<String, Object>newHashMap();
+                                entry.put("protocol", importedProtocol);
+                                entry.put("dataFormat", dataFormat);
+                                entry.put("import", protocol.getImport());
+                                results.add(entry);
+                            }
+                        };
+                        importedProtocol.getDataFormats().forEach(_function);
+                    }
                 }
             }
         };

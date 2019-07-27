@@ -330,6 +330,105 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
   }
   
   /**
+   * Check that a microservice specifies protocols that match its operation parameters'
+   * communication types
+   */
+  @Check
+  public void checkEffectiveProtocols(final Microservice microservice) {
+    boolean _isEmpty = microservice.getTechnologyReferences().isEmpty();
+    if (_isEmpty) {
+      return;
+    }
+    this.checkEffectiveProtocolsForCommunicationType(microservice, CommunicationType.ASYNCHRONOUS);
+    this.checkEffectiveProtocolsForCommunicationType(microservice, CommunicationType.SYNCHRONOUS);
+  }
+  
+  /**
+   * Helper to check if a microservice specifies protocols for its operation parameters'
+   * communication types
+   */
+  private void checkEffectiveProtocolsForCommunicationType(final Microservice microservice, final CommunicationType communicationType) {
+    final Function1<ProtocolSpecification, Boolean> _function = (ProtocolSpecification it) -> {
+      CommunicationType _communicationType = it.getCommunicationType();
+      return Boolean.valueOf(Objects.equal(_communicationType, communicationType));
+    };
+    final ProtocolSpecification explicitProtocol = IterableExtensions.<ProtocolSpecification>findFirst(microservice.getProtocols(), _function);
+    if ((explicitProtocol != null)) {
+      return;
+    }
+    final Protocol implicitProtocol = this.getEffectiveDefaultProtocol(microservice, communicationType);
+    if ((implicitProtocol != null)) {
+      return;
+    }
+    boolean parameterForMissingProtocolExists = (IterableExtensions.<Operation>exists(microservice.getContainedOperations(), 
+      ((Function1<Operation, Boolean>) (Operation it) -> {
+        final Function1<Parameter, Boolean> _function_1 = (Parameter it_1) -> {
+          CommunicationType _communicationType = it_1.getCommunicationType();
+          return Boolean.valueOf(Objects.equal(_communicationType, communicationType));
+        };
+        return Boolean.valueOf(IterableExtensions.<Parameter>exists(it.getParameters(), _function_1));
+      })) || 
+      IterableExtensions.<ReferredOperation>exists(microservice.getContainedReferredOperations(), 
+        ((Function1<ReferredOperation, Boolean>) (ReferredOperation it) -> {
+          final Function1<Parameter, Boolean> _function_1 = (Parameter it_1) -> {
+            CommunicationType _communicationType = it_1.getCommunicationType();
+            return Boolean.valueOf(Objects.equal(_communicationType, communicationType));
+          };
+          return Boolean.valueOf(IterableExtensions.<Parameter>exists(it.getOperation().getParameters(), _function_1));
+        })));
+    if (parameterForMissingProtocolExists) {
+      String _switchResult = null;
+      if (communicationType != null) {
+        switch (communicationType) {
+          case SYNCHRONOUS:
+            _switchResult = "synchronous";
+            break;
+          case ASYNCHRONOUS:
+            _switchResult = "asynchronous";
+            break;
+          default:
+            break;
+        }
+      }
+      final String communicationTypeOutputString = _switchResult;
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("Microservice does not specify ");
+      _builder.append(communicationTypeOutputString);
+      _builder.append(" protocol, ");
+      StringConcatenation _builder_1 = new StringConcatenation();
+      _builder_1.append("but its operations define ");
+      _builder_1.append(communicationTypeOutputString);
+      _builder_1.append(" parameters");
+      String _plus = (_builder.toString() + _builder_1);
+      this.error(_plus, microservice, ServicePackage.Literals.MICROSERVICE__NAME);
+    }
+  }
+  
+  /**
+   * Helper to find the effective default protocol of a microservice
+   */
+  private Protocol getEffectiveDefaultProtocol(final Microservice microservice, final CommunicationType communicationType) {
+    final Function1<TechnologyReference, Import> _function = (TechnologyReference it) -> {
+      return it.getTechnology();
+    };
+    List<Import> _map = ListExtensions.<TechnologyReference, Import>map(microservice.getTechnologyReferences(), _function);
+    for (final Import technologyImport : _map) {
+      {
+        final Technology technologyModel = DdmmUtils.<Technology>getImportedModelRoot(technologyImport.eResource(), 
+          technologyImport.getImportURI(), Technology.class);
+        final Function1<Protocol, Boolean> _function_1 = (Protocol it) -> {
+          return Boolean.valueOf((it.isDefault() && (it.getCommunicationType() == communicationType)));
+        };
+        final Protocol defaultProtocolOfTechnology = IterableExtensions.<Protocol>findFirst(technologyModel.getProtocols(), _function_1);
+        if ((defaultProtocolOfTechnology != null)) {
+          return defaultProtocolOfTechnology;
+        }
+      }
+    }
+    return null;
+  }
+  
+  /**
    * Check technologies of a microservice per communication type for unambiguous default protocols
    */
   @Check

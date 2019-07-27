@@ -330,6 +330,9 @@ class Microservice {
      *     (C10) If the service does not specify explicit protocols for a communication type, only
      *           one technology may comprise a default protocol specification for that type.
      *           Ensured by: DSL validator.
+     *     (C11) If technology models were assigned to the service it must exhibit a protocol for
+     *           each of its operation parameters' communication types.
+     *           Ensured by: DSL validator.
      */
 
     String name
@@ -365,43 +368,6 @@ class Microservice {
     container ServiceModel serviceModel opposite microservices
 
     /**
-     * TRANSFORMATION ONLY: Get those effective protocols and data formats of the microservice that
-     * are not used in an endpoint of the microservice.
-     */
-    op TupleList t_missingEndpointEffectiveProtocols() {
-        if (t_defaultProtocols === null || t_defaultProtocols.empty)
-            return null
-
-        val effectiveProtocols = t_effectiveProtocolSpecifications()
-        if (effectiveProtocols === null)
-            return null
-
-        // Remove effective protocols for which endpoints exist that do not specify data formats. In
-        // this case, the endpoint and its addresses account for all data formats of the endpoint
-        // protocol.
-        val endpointProtocolsWithoutDataFormats = endpoints.map[protocols].flatten
-            .filter[dataFormat === null]
-            .map[importedProtocol]
-            .toList
-        var resultProtocols = effectiveProtocols.filter[
-            val protocol = get("protocol") as Protocol
-            !endpointProtocolsWithoutDataFormats.contains(protocol)
-        ].toList
-
-        // Remove effective protocols for which endpoints with data formats exist
-        val endpointProtocolsWithDataFormats = endpoints.map[protocols].flatten
-            .filter[dataFormat !== null]
-            .toList
-        return resultProtocols.filter[
-            val protocol = get("protocol") as Protocol
-            val dataFormat = get("dataFormat") as DataFormat
-            !endpointProtocolsWithDataFormats.exists[
-                it.importedProtocol == protocol && it.dataFormat == dataFormat
-            ]
-        ].toList
-    }
-
-    /**
      * TRANSFORMATION ONLY: Get effective protocols of the microservice as combinations of Protocol
      * and DataFormat. The effective protocols are primarily determined by the microservice's
      * protocol specifications. If a protocol specification for a communication type is missing, the
@@ -409,9 +375,6 @@ class Microservice {
      * default protocol technology.
      */
     op TupleList t_effectiveProtocolSpecifications() {
-        if (t_defaultProtocols === null || t_defaultProtocols.empty)
-            return null
-
         val effectiveProtocolSpecifications = if (!protocols.empty)
                 protocols.get(0).effectiveProtocolSpecifications(protocols)
             else
@@ -420,7 +383,7 @@ class Microservice {
         // Complement effective protocols with default protocols if necessary
         val protocolSpecificationsCommunicationTypes = protocols
             .map[protocol.importedProtocol.communicationType].toSet
-        t_defaultProtocols.forEach[communicationType, importAndProtocol |
+        t_defaultProtocols?.forEach[communicationType, importAndProtocol |
             if (!protocolSpecificationsCommunicationTypes.contains(communicationType)) {
                 val entry = <String, Object> newHashMap
                 val protocol = importAndProtocol.value
@@ -773,56 +736,12 @@ class Interface {
     container Microservice microservice opposite interfaces
 
     /**
-     * TRANSFORMATION ONLY: Get those effective protocols and data formats of the interface that
-     * are not used in an endpoint of the interface.
-     */
-    op TupleList t_missingEndpointEffectiveProtocols() {
-        if (microservice === null ||
-            microservice.t_defaultProtocols === null ||
-            microservice.t_defaultProtocols.empty)
-            return null
-
-        val effectiveProtocols = t_effectiveProtocolSpecifications()
-        if (effectiveProtocols === null)
-            return null
-
-        // Remove effective protocols for which endpoints exist that do not specify data formats. In
-        // this case, the endpoint and its addresses account for all data formats of the endpoint
-        // protocol.
-        val endpointProtocolsWithoutDataFormats = endpoints.map[protocols].flatten
-            .filter[dataFormat === null]
-            .map[importedProtocol]
-            .toList
-        var resultProtocols = effectiveProtocols.filter[
-            val protocol = get("protocol") as Protocol
-            !endpointProtocolsWithoutDataFormats.contains(protocol)
-        ].toList
-
-        // Remove effective protocols for which endpoints with data formats exist
-        val endpointProtocolsWithDataFormats = endpoints.map[protocols].flatten
-            .filter[dataFormat !== null]
-            .toList
-        return resultProtocols.filter[
-            val protocol = get("protocol") as Protocol
-            val dataFormat = get("dataFormat") as DataFormat
-            !endpointProtocolsWithDataFormats.exists[
-                it.importedProtocol == protocol && it.dataFormat == dataFormat
-            ]
-        ].toList
-    }
-
-    /**
      * TRANSFORMATION ONLY: Get effective protocols of the interface as combinations of Protocol
      * and DataFormat. The effective protocols are primarily determined by the interface's protocol
      * specifications. If a protocol specification for a communication type is missing, the type's
      * effective protocols are taken from the containing microservice.
      */
     op TupleList t_effectiveProtocolSpecifications() {
-        if (microservice === null ||
-            microservice.t_defaultProtocols === null ||
-            microservice.t_defaultProtocols.empty)
-            return null
-
         val effectiveProtocolSpecifications = if (!protocols.empty)
                 protocols.get(0).effectiveProtocolSpecifications(protocols)
             else
@@ -955,59 +874,13 @@ class Operation {
     container Interface ^interface opposite operations
 
     /**
-     * TRANSFORMATION ONLY: Get those effective protocols and data formats of the operation that
-     * are not used in an endpoint of the operation.
-     */
-    op TupleList t_missingEndpointEffectiveProtocols() {
-        if (interface === null ||
-            interface.microservice === null ||
-            interface.microservice.t_defaultProtocols === null ||
-            interface.microservice.t_defaultProtocols.empty)
-            return null
-
-        val effectiveProtocols = t_effectiveProtocolSpecifications()
-        if (effectiveProtocols === null)
-            return null
-
-        // Remove effective protocols for which endpoints exist that do not specify data formats. In
-        // this case, the endpoint and its addresses account for all data formats of the endpoint
-        // protocol.
-        val endpointProtocolsWithoutDataFormats = endpoints.map[protocols].flatten
-            .filter[dataFormat === null]
-            .map[importedProtocol]
-            .toList
-        var resultProtocols = effectiveProtocols.filter[
-            val protocol = get("protocol") as Protocol
-            !endpointProtocolsWithoutDataFormats.contains(protocol)
-        ].toList
-
-        // Remove effective protocols for which endpoints with data formats exist
-        val endpointProtocolsWithDataFormats = endpoints.map[protocols].flatten
-            .filter[dataFormat !== null]
-            .toList
-        return resultProtocols.filter[
-            val protocol = get("protocol") as Protocol
-            val dataFormat = get("dataFormat") as DataFormat
-            !endpointProtocolsWithDataFormats.exists[
-                it.importedProtocol == protocol && it.dataFormat == dataFormat
-            ]
-        ].toList
-    }
-
-    /**
      * TRANSFORMATION ONLY: Get effective protocols of the operation as combinations of Protocol
      * and DataFormat. The effective protocols are primarily determined by the operation's protocol
      * specifications. If a protocol specification for a communication type is missing, the type's
      * effective protocols are taken from the containing interface.
      */
     op TupleList t_effectiveProtocolSpecifications() {
-        if (interface === null ||
-            interface.microservice === null ||
-            interface.microservice.t_defaultProtocols === null ||
-            interface.microservice.t_defaultProtocols.empty)
-            return null
-
-        val effectiveProtocolSpecifications = if (!protocols.empty)
+       val effectiveProtocolSpecifications = if (!protocols.empty)
                 protocols.get(0).effectiveProtocolSpecifications(protocols)
             else
                 <Map<String, Object>> newArrayList
@@ -1154,49 +1027,6 @@ class ReferredOperation {
     container Interface ^interface opposite referredOperations
 
     /**
-     * TRANSFORMATION ONLY: Get those effective protocols and data formats of the referred operation
-     * that are not used in an endpoint of the referred operation. Note that a referred operation
-     * "inherits" its effective protocols from its surrounding interface that refers to the original
-     * operation and hence particularly _not_ from the interface in which the operation being
-     * referred to is declared.
-     */
-    op TupleList t_missingEndpointEffectiveProtocols() {
-        if (interface === null ||
-            interface.microservice === null ||
-            interface.microservice.t_defaultProtocols === null ||
-            interface.microservice.t_defaultProtocols.empty)
-            return null
-
-        val effectiveProtocols = t_effectiveProtocolSpecifications()
-        if (effectiveProtocols === null)
-            return null
-
-        // Remove effective protocols for which endpoints exist that do not specify data formats. In
-        // this case, the endpoint and its addresses account for all data formats of the endpoint
-        // protocol.
-        val endpointProtocolsWithoutDataFormats = endpoints.map[protocols].flatten
-            .filter[dataFormat === null]
-            .map[importedProtocol]
-            .toList
-        var resultProtocols = effectiveProtocols.filter[
-            val protocol = get("protocol") as Protocol
-            !endpointProtocolsWithoutDataFormats.contains(protocol)
-        ].toList
-
-        // Remove effective protocols for which endpoints with data formats exist
-        val endpointProtocolsWithDataFormats = endpoints.map[protocols].flatten
-            .filter[dataFormat !== null]
-            .toList
-        return resultProtocols.filter[
-            val protocol = get("protocol") as Protocol
-            val dataFormat = get("dataFormat") as DataFormat
-            !endpointProtocolsWithDataFormats.exists[
-                it.importedProtocol == protocol && it.dataFormat == dataFormat
-            ]
-        ].toList
-    }
-
-    /**
      * TRANSFORMATION ONLY: Get effective protocols of the referred operation as combinations of
      * Protocol and DataFormat. The effective protocols are primarily determined by the referred
      * operations _own_ (i.e., _not_ the operation it refers to) protocol specifications. If a
@@ -1205,12 +1035,6 @@ class ReferredOperation {
      * of the operation being referred to).
      */
     op TupleList t_effectiveProtocolSpecifications() {
-        if (interface === null ||
-            interface.microservice === null ||
-            interface.microservice.t_defaultProtocols === null ||
-            interface.microservice.t_defaultProtocols.empty)
-            return null
-
         val effectiveProtocolSpecifications = if (!protocols.empty)
                 protocols.get(0).effectiveProtocolSpecifications(protocols)
             else
@@ -1567,9 +1391,9 @@ class ProtocolSpecification {
     /**
      * Reusable helper method to determine effective protocol specifications from a list of
      * ProtocolSpecification instances as combinations of Protocol and DataFormat. In case a
-     * ProtocolSpecification instance does not specify a data format, the effective protocol
-     * specifications correspond to the ProtocolSpecification's Protocol being combined with all of
-     * its DataFormats.
+     * ProtocolSpecification instance does not specify an explicit or implicit (i.e., default) data
+     * format, the effective protocol specifications correspond to the ProtocolSpecification's
+     * Protocol being combined with all of its DataFormats.
      */
     op TupleList effectiveProtocolSpecifications(ProtocolSpecification[] specifications) {
         if (specifications === null)
@@ -1579,7 +1403,7 @@ class ProtocolSpecification {
         specifications.forEach[specification |
             val protocol = specification.protocol
             val importedProtocol = protocol.importedProtocol
-            // Protocol specification has data format
+            // Protocol specification has explicit data format
             if (protocol.dataFormat !== null) {
                 val entry = <String, Object> newHashMap
                 entry.put("protocol", importedProtocol)
@@ -1587,7 +1411,15 @@ class ProtocolSpecification {
                 entry.put("import", protocol.import)
                 results.add(entry)
 
-            // Protocol specification lacks data format
+            // Protocol specification has default (implicit) data format
+            } else if (importedProtocol.defaultFormat !== null) {
+                val entry = <String, Object> newHashMap
+                entry.put("protocol", importedProtocol)
+                entry.put("dataFormat", importedProtocol.defaultFormat)
+                entry.put("import", protocol.import)
+                results.add(entry)
+
+            // Protocol specification lacks any kind data format
             } else {
                 // Combine the specification's protocol with all of the protocol's data formats
                 importedProtocol.dataFormats.forEach[dataFormat |

@@ -299,19 +299,6 @@ public interface Interface extends EObject {
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
      * *
-     * TRANSFORMATION ONLY: Get those effective protocols and data formats of the interface that
-     * are not used in an endpoint of the interface.
-     * <!-- end-model-doc -->
-     * @model dataType="de.fhdo.ddmm.service.TupleList" unique="false"
-     * @generated
-     */
-    List<Map<String, Object>> t_missingEndpointEffectiveProtocols();
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * *
      * TRANSFORMATION ONLY: Get effective protocols of the interface as combinations of Protocol
      * and DataFormat. The effective protocols are primarily determined by the interface's protocol
      * specifications. If a protocol specification for a communication type is missing, the type's

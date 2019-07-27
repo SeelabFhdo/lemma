@@ -244,6 +244,89 @@ class MappingDslValidator extends AbstractMappingDslValidator {
     }
 
     /**
+     * Check that a microservice specifies protocols that match its operation parameters'
+     * communication types
+     */
+    @Check
+    def checkEffectiveProtocols(MicroserviceMapping mapping) {
+        mapping
+            .checkEffectiveProtocolsForCommunicationType(CommunicationType.ASYNCHRONOUS)
+        mapping
+            .checkEffectiveProtocolsForCommunicationType(CommunicationType.SYNCHRONOUS)
+    }
+
+    /**
+     * Helper to check if a microservice specifies protocols for its operation parameters'
+     * communication types
+     */
+    private def checkEffectiveProtocolsForCommunicationType(MicroserviceMapping mapping,
+        CommunicationType communicationType) {
+        /*
+         * If the microservice specifies an explicit or implicit protocol, we do not need to
+         * perform the check. Explicit protocols are specified with the built-in @async/@sync
+         * annotations. Implicit protocols result from default protocols in assigned technology
+         * models.
+         */
+        val explicitProtocol = mapping.protocols.findFirst[
+            it.communicationType == communicationType
+        ]
+        if (explicitProtocol !== null) {
+            return
+        }
+
+        val implicitProtocol = getEffectiveDefaultProtocol(mapping, communicationType)
+        if (implicitProtocol !== null) {
+            return
+        }
+
+        /*
+         * Show error, if the microservice does not explicitly or implicitly specify a protocol for
+         * its operation parameters' commmunication types
+         */
+        val mappedMicroservice = mapping.microservice.microservice
+        var parameterForMissingProtocolExists =
+            mappedMicroservice.containedOperations.exists[
+                parameters.exists[it.communicationType == communicationType]
+            ]
+            ||
+            mappedMicroservice.containedReferredOperations.exists[
+                operation.parameters.exists[it.communicationType == communicationType]
+            ]
+
+        if (parameterForMissingProtocolExists) {
+            val communicationTypeOutputString = switch (communicationType) {
+                case SYNCHRONOUS: "synchronous"
+                case ASYNCHRONOUS: "asynchronous"
+            }
+
+            error('''Microservice does not specify «communicationTypeOutputString» protocol, ''' +
+                '''but its operations define «communicationTypeOutputString» parameters''',
+                mapping, MappingPackage::Literals.MICROSERVICE_MAPPING__MICROSERVICE
+            )
+        }
+    }
+
+    /**
+     * Helper to find the effective default protocol of a microservice
+     */
+    private def getEffectiveDefaultProtocol(MicroserviceMapping mapping,
+        CommunicationType communicationType) {
+        for (technologyImport : mapping.technologyReferences.map[technology]) {
+            val technologyModel = DdmmUtils.getImportedModelRoot(technologyImport.eResource,
+                technologyImport.importURI, Technology)
+
+            val defaultProtocolOfTechnology = technologyModel.protocols.findFirst[
+                ^default && it.communicationType === communicationType
+            ]
+
+            if (defaultProtocolOfTechnology !== null)
+                return defaultProtocolOfTechnology
+        }
+
+        return null
+    }
+
+    /**
      * Check technologies of a microservice mapping per communication type for unambiguous default
      * protocols
      */

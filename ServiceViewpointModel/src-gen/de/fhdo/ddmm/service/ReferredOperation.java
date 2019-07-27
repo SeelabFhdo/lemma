@@ -152,22 +152,6 @@ public interface ReferredOperation extends EObject {
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
      * *
-     * TRANSFORMATION ONLY: Get those effective protocols and data formats of the referred operation
-     * that are not used in an endpoint of the referred operation. Note that a referred operation
-     * "inherits" its effective protocols from its surrounding interface that refers to the original
-     * operation and hence particularly _not_ from the interface in which the operation being
-     * referred to is declared.
-     * <!-- end-model-doc -->
-     * @model dataType="de.fhdo.ddmm.service.TupleList" unique="false"
-     * @generated
-     */
-    List<Map<String, Object>> t_missingEndpointEffectiveProtocols();
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * *
      * TRANSFORMATION ONLY: Get effective protocols of the referred operation as combinations of
      * Protocol and DataFormat. The effective protocols are primarily determined by the referred
      * operations _own_ (i.e., _not_ the operation it refers to) protocol specifications. If a

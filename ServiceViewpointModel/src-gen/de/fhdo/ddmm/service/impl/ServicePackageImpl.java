@@ -881,7 +881,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     @Override
-    public EOperation getMicroservice__T_missingEndpointEffectiveProtocols() {
+    public EOperation getMicroservice__T_effectiveProtocolSpecifications() {
         return microserviceEClass.getEOperations().get(0);
     }
 
@@ -891,7 +891,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     @Override
-    public EOperation getMicroservice__T_effectiveProtocolSpecifications() {
+    public EOperation getMicroservice__GetAllTypeDefinitionTechnologyReferences() {
         return microserviceEClass.getEOperations().get(1);
     }
 
@@ -901,7 +901,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     @Override
-    public EOperation getMicroservice__GetAllTypeDefinitionTechnologyReferences() {
+    public EOperation getMicroservice__GetTypeDefinitionTechnologyImport() {
         return microserviceEClass.getEOperations().get(2);
     }
 
@@ -911,7 +911,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     @Override
-    public EOperation getMicroservice__GetTypeDefinitionTechnologyImport() {
+    public EOperation getMicroservice__GetTypeDefinitionTechnology() {
         return microserviceEClass.getEOperations().get(3);
     }
 
@@ -921,7 +921,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     @Override
-    public EOperation getMicroservice__GetTypeDefinitionTechnology() {
+    public EOperation getMicroservice__GetQualifiedNameParts() {
         return microserviceEClass.getEOperations().get(4);
     }
 
@@ -931,7 +931,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     @Override
-    public EOperation getMicroservice__GetQualifiedNameParts() {
+    public EOperation getMicroservice__BuildQualifiedName__String() {
         return microserviceEClass.getEOperations().get(5);
     }
 
@@ -941,7 +941,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     @Override
-    public EOperation getMicroservice__BuildQualifiedName__String() {
+    public EOperation getMicroservice__GetContainedOperations() {
         return microserviceEClass.getEOperations().get(6);
     }
 
@@ -951,7 +951,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     @Override
-    public EOperation getMicroservice__GetContainedOperations() {
+    public EOperation getMicroservice__GetContainedReferredOperations() {
         return microserviceEClass.getEOperations().get(7);
     }
 
@@ -961,7 +961,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     @Override
-    public EOperation getMicroservice__GetContainedReferredOperations() {
+    public EOperation getMicroservice__GetRequiredImports() {
         return microserviceEClass.getEOperations().get(8);
     }
 
@@ -971,7 +971,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     @Override
-    public EOperation getMicroservice__GetRequiredImports() {
+    public EOperation getMicroservice__GetAllRequiredOperations__Import() {
         return microserviceEClass.getEOperations().get(9);
     }
 
@@ -981,7 +981,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     @Override
-    public EOperation getMicroservice__GetAllRequiredOperations__Import() {
+    public EOperation getMicroservice__GetAllRequiredMicroservices() {
         return microserviceEClass.getEOperations().get(10);
     }
 
@@ -991,7 +991,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     @Override
-    public EOperation getMicroservice__GetAllRequiredMicroservices() {
+    public EOperation getMicroservice__GetAllInitializingMicroservices() {
         return microserviceEClass.getEOperations().get(11);
     }
 
@@ -1001,7 +1001,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     @Override
-    public EOperation getMicroservice__GetAllInitializingMicroservices() {
+    public EOperation getMicroservice__CanRequire__Microservice_boolean() {
         return microserviceEClass.getEOperations().get(12);
     }
 
@@ -1011,7 +1011,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     @Override
-    public EOperation getMicroservice__CanRequire__Microservice_boolean() {
+    public EOperation getMicroservice__CanRequire__Interface_boolean() {
         return microserviceEClass.getEOperations().get(13);
     }
 
@@ -1021,18 +1021,8 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     @Override
-    public EOperation getMicroservice__CanRequire__Interface_boolean() {
-        return microserviceEClass.getEOperations().get(14);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
     public EOperation getMicroservice__CanRequire__Operation_boolean() {
-        return microserviceEClass.getEOperations().get(15);
+        return microserviceEClass.getEOperations().get(14);
     }
 
     /**
@@ -1221,7 +1211,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     @Override
-    public EOperation getInterface__T_missingEndpointEffectiveProtocols() {
+    public EOperation getInterface__T_effectiveProtocolSpecifications() {
         return interfaceEClass.getEOperations().get(0);
     }
 
@@ -1231,7 +1221,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     @Override
-    public EOperation getInterface__T_effectiveProtocolSpecifications() {
+    public EOperation getInterface__GetQualifiedNameParts() {
         return interfaceEClass.getEOperations().get(1);
     }
 
@@ -1241,18 +1231,8 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     @Override
-    public EOperation getInterface__GetQualifiedNameParts() {
-        return interfaceEClass.getEOperations().get(2);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
     public EOperation getInterface__BuildQualifiedName__String() {
-        return interfaceEClass.getEOperations().get(3);
+        return interfaceEClass.getEOperations().get(2);
     }
 
     /**
@@ -1391,7 +1371,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     @Override
-    public EOperation getOperation__T_missingEndpointEffectiveProtocols() {
+    public EOperation getOperation__T_effectiveProtocolSpecifications() {
         return operationEClass.getEOperations().get(0);
     }
 
@@ -1401,7 +1381,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     @Override
-    public EOperation getOperation__T_effectiveProtocolSpecifications() {
+    public EOperation getOperation__GetQualifiedNameParts() {
         return operationEClass.getEOperations().get(1);
     }
 
@@ -1411,18 +1391,8 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     @Override
-    public EOperation getOperation__GetQualifiedNameParts() {
-        return operationEClass.getEOperations().get(2);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
     public EOperation getOperation__BuildQualifiedName__String() {
-        return operationEClass.getEOperations().get(3);
+        return operationEClass.getEOperations().get(2);
     }
 
     /**
@@ -1491,7 +1461,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     @Override
-    public EOperation getReferredOperation__T_missingEndpointEffectiveProtocols() {
+    public EOperation getReferredOperation__T_effectiveProtocolSpecifications() {
         return referredOperationEClass.getEOperations().get(0);
     }
 
@@ -1501,7 +1471,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     @Override
-    public EOperation getReferredOperation__T_effectiveProtocolSpecifications() {
+    public EOperation getReferredOperation__GetQualifiedNameParts() {
         return referredOperationEClass.getEOperations().get(1);
     }
 
@@ -1511,18 +1481,8 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     @Override
-    public EOperation getReferredOperation__GetQualifiedNameParts() {
-        return referredOperationEClass.getEOperations().get(2);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
     public EOperation getReferredOperation__BuildQualifiedName__String() {
-        return referredOperationEClass.getEOperations().get(3);
+        return referredOperationEClass.getEOperations().get(2);
     }
 
     /**
@@ -2367,7 +2327,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
         createEAttribute(microserviceEClass, MICROSERVICE__EFFECTIVELY_IMPLEMENTED);
         createEAttribute(microserviceEClass, MICROSERVICE__EFFECTIVE_VISIBILITY);
         createEAttribute(microserviceEClass, MICROSERVICE__EFFECTIVELY_INTERNAL);
-        createEOperation(microserviceEClass, MICROSERVICE___TMISSING_ENDPOINT_EFFECTIVE_PROTOCOLS);
         createEOperation(microserviceEClass, MICROSERVICE___TEFFECTIVE_PROTOCOL_SPECIFICATIONS);
         createEOperation(microserviceEClass, MICROSERVICE___GET_ALL_TYPE_DEFINITION_TECHNOLOGY_REFERENCES);
         createEOperation(microserviceEClass, MICROSERVICE___GET_TYPE_DEFINITION_TECHNOLOGY_IMPORT);
@@ -2403,7 +2362,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
         createEAttribute(interfaceEClass, INTERFACE__EFFECTIVE_VISIBILITY);
         createEAttribute(interfaceEClass, INTERFACE__EFFECTIVELY_IMPLEMENTED);
         createEAttribute(interfaceEClass, INTERFACE__EFFECTIVELY_INTERNAL);
-        createEOperation(interfaceEClass, INTERFACE___TMISSING_ENDPOINT_EFFECTIVE_PROTOCOLS);
         createEOperation(interfaceEClass, INTERFACE___TEFFECTIVE_PROTOCOL_SPECIFICATIONS);
         createEOperation(interfaceEClass, INTERFACE___GET_QUALIFIED_NAME_PARTS);
         createEOperation(interfaceEClass, INTERFACE___BUILD_QUALIFIED_NAME__STRING);
@@ -2421,7 +2379,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
         createEAttribute(operationEClass, OPERATION__EFFECTIVELY_NOT_IMPLEMENTED);
         createEAttribute(operationEClass, OPERATION__EFFECTIVE_VISIBILITY);
         createEAttribute(operationEClass, OPERATION__EFFECTIVELY_INTERNAL);
-        createEOperation(operationEClass, OPERATION___TMISSING_ENDPOINT_EFFECTIVE_PROTOCOLS);
         createEOperation(operationEClass, OPERATION___TEFFECTIVE_PROTOCOL_SPECIFICATIONS);
         createEOperation(operationEClass, OPERATION___GET_QUALIFIED_NAME_PARTS);
         createEOperation(operationEClass, OPERATION___BUILD_QUALIFIED_NAME__STRING);
@@ -2432,7 +2389,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
         createEReference(referredOperationEClass, REFERRED_OPERATION__PROTOCOLS);
         createEReference(referredOperationEClass, REFERRED_OPERATION__ASPECTS);
         createEReference(referredOperationEClass, REFERRED_OPERATION__INTERFACE);
-        createEOperation(referredOperationEClass, REFERRED_OPERATION___TMISSING_ENDPOINT_EFFECTIVE_PROTOCOLS);
         createEOperation(referredOperationEClass, REFERRED_OPERATION___TEFFECTIVE_PROTOCOL_SPECIFICATIONS);
         createEOperation(referredOperationEClass, REFERRED_OPERATION___GET_QUALIFIED_NAME_PARTS);
         createEOperation(referredOperationEClass, REFERRED_OPERATION___BUILD_QUALIFIED_NAME__STRING);
@@ -2642,8 +2598,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
         initEAttribute(getMicroservice_EffectiveVisibility(), this.getVisibility(), "effectiveVisibility", null, 0, 1, Microservice.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, IS_DERIVED, IS_ORDERED);
         initEAttribute(getMicroservice_EffectivelyInternal(), theEcorePackage.getEBoolean(), "effectivelyInternal", null, 0, 1, Microservice.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 
-        initEOperation(getMicroservice__T_missingEndpointEffectiveProtocols(), this.getTupleList(), "t_missingEndpointEffectiveProtocols", 0, 1, !IS_UNIQUE, IS_ORDERED);
-
         initEOperation(getMicroservice__T_effectiveProtocolSpecifications(), this.getTupleList(), "t_effectiveProtocolSpecifications", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
         initEOperation(getMicroservice__GetAllTypeDefinitionTechnologyReferences(), this.getTechnologyReference(), "getAllTypeDefinitionTechnologyReferences", 0, -1, !IS_UNIQUE, IS_ORDERED);
@@ -2702,8 +2656,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
         initEAttribute(getInterface_EffectivelyImplemented(), theEcorePackage.getEBoolean(), "effectivelyImplemented", null, 0, 1, Interface.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, IS_DERIVED, IS_ORDERED);
         initEAttribute(getInterface_EffectivelyInternal(), theEcorePackage.getEBoolean(), "effectivelyInternal", null, 0, 1, Interface.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 
-        initEOperation(getInterface__T_missingEndpointEffectiveProtocols(), this.getTupleList(), "t_missingEndpointEffectiveProtocols", 0, 1, !IS_UNIQUE, IS_ORDERED);
-
         initEOperation(getInterface__T_effectiveProtocolSpecifications(), this.getTupleList(), "t_effectiveProtocolSpecifications", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
         initEOperation(getInterface__GetQualifiedNameParts(), theEcorePackage.getEString(), "getQualifiedNameParts", 0, -1, !IS_UNIQUE, IS_ORDERED);
@@ -2725,8 +2677,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
         initEAttribute(getOperation_EffectiveVisibility(), this.getVisibility(), "effectiveVisibility", null, 0, 1, Operation.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, IS_DERIVED, IS_ORDERED);
         initEAttribute(getOperation_EffectivelyInternal(), theEcorePackage.getEBoolean(), "effectivelyInternal", null, 0, 1, Operation.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 
-        initEOperation(getOperation__T_missingEndpointEffectiveProtocols(), this.getTupleList(), "t_missingEndpointEffectiveProtocols", 0, 1, !IS_UNIQUE, IS_ORDERED);
-
         initEOperation(getOperation__T_effectiveProtocolSpecifications(), this.getTupleList(), "t_effectiveProtocolSpecifications", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
         initEOperation(getOperation__GetQualifiedNameParts(), theEcorePackage.getEString(), "getQualifiedNameParts", 0, -1, !IS_UNIQUE, IS_ORDERED);
@@ -2740,8 +2690,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
         initEReference(getReferredOperation_Protocols(), this.getProtocolSpecification(), null, "protocols", null, 0, 2, ReferredOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getReferredOperation_Aspects(), this.getImportedServiceAspect(), this.getImportedServiceAspect_ReferredOperation(), "aspects", null, 0, -1, ReferredOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getReferredOperation_Interface(), this.getInterface(), this.getInterface_ReferredOperations(), "interface", null, 0, 1, ReferredOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-        initEOperation(getReferredOperation__T_missingEndpointEffectiveProtocols(), this.getTupleList(), "t_missingEndpointEffectiveProtocols", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
         initEOperation(getReferredOperation__T_effectiveProtocolSpecifications(), this.getTupleList(), "t_effectiveProtocolSpecifications", 0, 1, !IS_UNIQUE, IS_ORDERED);
 

@@ -92,6 +92,9 @@ public interface Microservice extends EObject {
      *     (C10) If the service does not specify explicit protocols for a communication type, only
      *           one technology may comprise a default protocol specification for that type.
      *           Ensured by: DSL validator.
+     *     (C11) If technology models were assigned to the service it must exhibit a protocol for
+     *           each of its operation parameters' communication types.
+     *           Ensured by: DSL validator.
      * <!-- end-model-doc -->
      * @return the value of the '<em>Name</em>' attribute.
      * @see #setName(String)
@@ -516,19 +519,6 @@ public interface Microservice extends EObject {
      * @generated
      */
     boolean isEffectivelyInternal();
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * *
-     * TRANSFORMATION ONLY: Get those effective protocols and data formats of the microservice that
-     * are not used in an endpoint of the microservice.
-     * <!-- end-model-doc -->
-     * @model dataType="de.fhdo.ddmm.service.TupleList" unique="false"
-     * @generated
-     */
-    List<Map<String, Object>> t_missingEndpointEffectiveProtocols();
 
     /**
      * <!-- begin-user-doc -->
