@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated IntermediateServiceModel -->
+      <package
+            uri="http://www.fhdo.de/lemma/service/intermediate"
+            class="de.fhdo.lemma.service.intermediate.IntermediatePackage"
+            genModel="model/IntermediateServiceModel.xcore"/>
+   </extension>
+
+</plugin>

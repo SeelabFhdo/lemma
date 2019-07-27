@@ -1,0 +1,57 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <relativePath>../de.fhdo.lemma.intermediate.transformations.parent/pom.xml</relativePath>
+        <groupId>de.fhdo.lemma.intermediate</groupId>
+        <artifactId>parent</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>de.fhdo.lemma.data.intermediate.metamodel</artifactId>
+    <packaging>eclipse-plugin</packaging>
+
+    <dependencies>
+        <dependency>
+            <groupId>de.fhdo.lemma.data.datadsl</groupId>
+            <artifactId>de.fhdo.lemma.data.datadsl.metamodel</artifactId>
+            <version>${data-viewpoint-metamodel-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>de.fhdo.lemma.servicedsl</groupId>
+            <artifactId>de.fhdo.lemma.servicedsl.metamodel</artifactId>
+            <version>${service-viewpoint-metamodel-version}</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>${build-helper-maven-plugin-version}</version>
+                <executions>
+                  <execution>
+                    <id>add-source</id>
+                    <phase>generate-sources</phase>
+                    <goals>
+                      <goal>add-source</goal>
+                    </goals>
+                    <configuration>
+                      <sources>
+                        <source>src-gen/</source>
+                      </sources>
+                    </configuration>
+                  </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler-plugin-version}</version>
+            </plugin>
+        </plugins>
+    </build>
+</project>

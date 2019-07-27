@@ -1,0 +1,1120 @@
+package de.fhdo.lemma.technology
+
+import de.fhdo.lemma.data.ComplexType
+import de.fhdo.lemma.data.PrimitiveType
+import de.fhdo.lemma.data.PrimitiveValue
+import de.fhdo.lemma.data.Type
+import java.util.Map
+import java.util.List
+import org.eclipse.emf.ecore.EObject
+
+/**
+ * Root model concept, which represents all concept related to a certain technology that maps
+ * microservices to technology
+ *
+ * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
+ */
+class Technology {
+    /**
+     * Implicit Constraints:
+     *     (C1) A technology must define at least one default technology-specific primitive type for
+     *          each built-in primitive type. This ensures, that even if there is no mapping of a
+     *          built-in primitive type to a technology-specific one, we can deduce a
+     *          technology-specific type for it when code gets generated.
+     *          Ensured by: DSL validator.
+     *     (C2) A technology must define at least one default communication protocol for either type
+     *          of communication.
+     *          Ensured by: DSL validator.
+     *     (C3) Technology models must not be empty.
+     *          Ensured by: DSL validator.
+     *     (C4) Aspects must be unique per type (service or operation) and join point. That is,
+     *          there might exist duplicate service or operation aspects as long as their join
+     *          points do not overlap.
+     *          Ensured by: DSL validator.
+     */
+
+    String name
+
+    contains TechnologyImport[] imports opposite technology
+    contains TechnologySpecificPrimitiveType[] primitiveTypes opposite technology
+    contains TechnologySpecificListType[] listTypes opposite technology
+    contains TechnologySpecificDataStructure[] dataStructures opposite technology
+    contains CompatibilityMatrixEntry[] compatibilityEntries opposite technology
+    contains Protocol[] protocols opposite technology
+    contains ServiceAspect[] serviceAspects opposite technology
+    contains DeploymentTechnology[] deploymentTechnologies opposite technology
+    contains InfrastructureTechnology[] infrastructureTechnologies opposite technology
+    contains OperationAspect[] operationAspects opposite technology
+}
+
+/**
+ * Concept for importing another technology
+ */
+class TechnologyImport {
+    /**
+     * Implicit Constraints:
+     *     (C1) The import URI must point to a valid file.
+     *          Ensured by: DSL validator.
+     *     (C2) Model may not import itself. However, cyclic imports are allowed, because otherwise
+     *          it would not be possible to declare that types of two different technologies are
+     *          bidirectionally compatible (see implicit constraints of CompatibilityMatrixEntry for
+     *          details on this).
+     *          Ensured by: DSL validator.
+     *     (C3) Import names, i.e., "aliases", must be unique.
+     *          Ensured by: DSL validator.
+     *     (C4) Imported file must define a technology model.
+     *          Ensured by: DSL validator.
+     */
+
+    String name
+    String importURI
+
+    container Technology technology opposite imports
+}
+
+/**
+ * Exchange patterns
+ */
+enum ExchangePattern {
+    IN
+    OUT
+    INOUT
+}
+
+/**
+ * Possible types of communication
+ */
+enum CommunicationType {
+    SYNCHRONOUS
+    ASYNCHRONOUS
+}
+
+/**
+ * Represents a data exchange protocol for microservice communications, e.g., AMQP
+ */
+class Protocol {
+    /**
+     * Implicit Constraints:
+     *     (C1) The default format must be one of the data formats assigned to the protocol.
+     *          Ensured by: DSL scope provider.
+     *     (C2) Name must be unique.
+     *          Ensured by: DSL validator.
+     */
+
+    String name
+    CommunicationType communicationType
+    boolean ^default = "false"
+
+    refers DataFormat defaultFormat
+    contains DataFormat[1..*] dataFormats opposite protocol
+
+    container Technology technology opposite protocols
+
+    /**
+     * Get parts of the protocol for creating a qualified name
+     */
+    op String[] getQualifiedNameParts() {
+        if (name === null || name.empty)
+            return newArrayList.asEList
+
+        val nameParts = newArrayList
+        nameParts.add("_protocols")
+        nameParts.add(name)
+        nameParts.asEList
+    }
+}
+
+/**
+ * Protocol-specific data format, e.g., XML for AMQP
+ */
+class DataFormat {
+    /**
+     * Implicit Constraints:
+     *     (C1) Name must be unique within a protocol.
+     *          Ensured by: DSL validator.
+     */
+
+    String formatName
+
+    container Protocol protocol opposite dataFormats
+}
+
+/**
+ * A primitive type that is specific to a certain technology, e.g., uint64 for Go
+ */
+class TechnologySpecificPrimitiveType extends PrimitiveType {
+    /**
+     * Implicit Constraints:
+     *     (C1) There might be no duplicates in the basic built-ins of a technology-specific
+     *          primitive type.
+     *          Ensured by: DSL validator.
+     *     (C2) There might be only one technology-specific primitive type that is marked as the
+     *          default for a built-in primitive type. Otherwise, the code generator could not
+     *          unambiguously decide which technology-specific primitive type to use, when no
+     *          explicit mapping of a built-in primitive types was specified.
+     *          Ensured by: DSL validator.
+     *     (C3) Name must be unique.
+     *          Ensured by: DSL validator.
+     */
+
+    String name
+    boolean ^default = "false"
+
+    container Technology technology opposite primitiveTypes
+
+    contains PrimitiveType[] basicBuiltinPrimitiveTypes
+
+    /**
+     * Get parts of the type for creating a qualified name
+     */
+    op String[] getQualifiedNameParts() {
+        if (name === null || name.empty)
+            return newArrayList.asEList
+
+        val nameParts = newArrayList
+        nameParts.add("_types")
+        nameParts.add(name)
+        nameParts.asEList
+    }
+
+    /**
+     * Build qualified name from qualified name parts
+     */
+    op String buildQualifiedName(String separator) {
+        if (separator === null)
+            return null
+
+        var String qualifiedName = ""
+        for (part : qualifiedNameParts)
+            qualifiedName += separator + part
+        // Remove leading separator
+        if (!qualifiedName.empty)
+            qualifiedName = qualifiedName.substring(separator.length)
+        return qualifiedName
+    }
+}
+
+/**
+ * A list type that is specific to a certain technology, e.g., Queue for Java
+ */
+class TechnologySpecificListType extends ComplexType {
+    /**
+     * Implicit Constraints:
+     *     (C1) Name must be unique.
+     *          Ensured by: DSL validator.
+     */
+
+    container Technology technology opposite listTypes
+
+    /**
+     * Get parts of the type for creating a qualified name
+     */
+    op String[] getQualifiedNameParts() {
+        if (name === null || name.empty)
+            return newArrayList.asEList
+
+        val nameParts = newArrayList
+        nameParts.add("_types")
+        nameParts.add(name)
+        nameParts.asEList
+    }
+
+    /**
+     * Build qualified name from qualified name parts
+     */
+    op String buildQualifiedName(String separator) {
+        if (separator === null)
+            return null
+
+        var String qualifiedName = ""
+        for (part : qualifiedNameParts)
+            qualifiedName += separator + part
+        // Remove leading separator
+        if (!qualifiedName.empty)
+            qualifiedName = qualifiedName.substring(separator.length)
+        return qualifiedName
+    }
+}
+
+/**
+ * A data structure type that is specific to a certain technology
+ */
+class TechnologySpecificDataStructure extends ComplexType {
+    /**
+     * Implicit Constraints:
+     *     (C1) Name must be unique.
+     *          Ensured by: DSL validator.
+     */
+
+    container Technology technology opposite dataStructures
+
+    /**
+     * Get parts of the type for creating a qualified name
+     */
+    op String[] getQualifiedNameParts() {
+        if (name === null || name.empty)
+            return newArrayList.asEList
+
+        val nameParts = newArrayList
+        nameParts.add("_types")
+        nameParts.add(name)
+        nameParts.asEList
+    }
+
+    /**
+     * Build qualified name from qualified name parts
+     */
+    op String buildQualifiedName(String separator) {
+        if (separator === null)
+            return null
+
+        var String qualifiedName = ""
+        for (part : qualifiedNameParts)
+            qualifiedName += separator + part
+        // Remove leading separator
+        if (!qualifiedName.empty)
+            qualifiedName = qualifiedName.substring(separator.length)
+        return qualifiedName
+    }
+}
+
+/**
+ * Represents the direction of compatibility in a compatibility matrix entry.
+ *
+ * Semantics:
+ *     - MAPPING_TO_COMPATIBLE_TYPES: The mapping type of the entry may be converted into instances
+ *                                    the compatible types.
+ *     - COMPATIBLE_TYPES_TO_MAPPING: The compatible types of the entry may be converted into an
+ *                                    instance of the mapping type.
+ *     - BIDIRECTONAL: Both conversion directions are possible.
+ */
+enum CompatibilityDirection {
+    MAPPING_TO_COMPATIBLE_TYPES,
+    COMPATIBLE_TYPES_TO_MAPPING,
+    BIDIRECTIONAL
+}
+
+/**
+ * Entry for declaring technology-specific compatibility between a mapping type and a set of other
+ * technology-specific types. The conversion direction is determined leveraging an
+ * CompatibilityDirection-typed field.
+ */
+class CompatibilityMatrixEntry {
+    /**
+     * Implicit Constraints:
+     *     (C1) No duplicate entries.
+     *          Ensured by: DSL validator.
+     *     (C2) No ambiguous entries in case of bidirectional compatibility, e.g., when comprising a
+     *          Boolean <-> Character mapping the matrix may not have any of the entries Boolean ->
+     *          Character or Character -> Boolean.
+     *          Ensured by: DSL validator.
+     *     (C3) For imported types, only the forms "imported compatible types -> local mapping type"
+     *          or "local compatible types <- imported mapping type" is allowed. That is, the
+     *          compatibility matrix must declare which imported types may be converted _into_ its
+     *          types. A bidirectional compatibility direction is prevented, because then all
+     *          imported technology models must be traversed to decide whether a compatibility
+     *          entry exists. Furthermore, for an entry with imported types it must always be
+     *          declared that imported types are convertible into local types. This follows the
+     *          direction of an initialized parameter of a microservices that has a technology
+     *          assigned.
+     *          Ensured by: DSL validator.
+     */
+
+    CompatibilityDirection direction
+    contains PossiblyImportedTechnologySpecificType mappingType opposite mappingEntry
+    contains PossiblyImportedTechnologySpecificType[1..*] compatibleTypes opposite compatibleEntry
+
+    container Technology technology opposite compatibilityEntries
+}
+
+/**
+ * A technology-specific type possibly imported from another technology model
+ */
+class PossiblyImportedTechnologySpecificType {
+    refers TechnologyImport[0..1] ^import
+    refers Type ^type
+
+    container CompatibilityMatrixEntry mappingEntry opposite mappingType
+    container CompatibilityMatrixEntry compatibleEntry opposite compatibleTypes
+}
+
+/**
+ * Abstract superclass of technologies specific to service operation
+ */
+abstract class OperationTechnology {
+    String name
+
+    contains OperationEnvironment[1..*] operationEnvironments opposite operationTechnology
+    contains TechnologySpecificProperty[] serviceProperties opposite operationTechnology
+}
+
+/**
+ * Operation environment of an operation technology, e.g., an image of a deployment container
+ */
+class OperationEnvironment {
+    /**
+     * Implicit Constraints:
+     *     (C1) Name must be unique.
+     *          Ensured by: DSL validator.
+     *     (C2) If there is more than one operation environment within an operation technology, than
+     *          there must be at least one default environment.
+     *          Ensured by: DSL validator.
+     */
+
+    String environmentName
+    boolean ^default = "false"
+
+    container OperationTechnology operationTechnology opposite operationEnvironments
+}
+
+/**
+ * Possible features for a technology-specific property
+ */
+enum PropertyFeature {
+    MANDATORY,
+    SINGLE_VALUED
+}
+
+/**
+ * A property, e.g., of an operation technology that may be set per associated service or an aspect
+ */
+class TechnologySpecificProperty {
+    /**
+     * Implicit Constraints:
+     *     (C1) A property with the "mandatory" feature may not have a default value.
+     *          Ensured by: DSL grammar.
+     *     (C2) The assigned default value must be compatible with the poperty's type.
+     *          Ensured by: DSL validator.
+     *     (C3) Name must be unique.
+     *          Ensured by: DSL validator.
+     */
+
+    String name
+
+    contains PrimitiveType ^type
+    contains PrimitiveValue[0..1] defaultValue
+    PropertyFeature[*] features
+
+    container OperationTechnology operationTechnology opposite serviceProperties
+    container TechnologyAspect technologyAspect opposite properties
+
+    /**
+     * Check if property exhibits the "mandatory" feature
+     */
+    derived boolean isMandatory get {
+        features.contains(PropertyFeature.MANDATORY)
+    }
+}
+
+/**
+ * Value assignment to a property
+ */
+class TechnologySpecificPropertyValueAssignment {
+    /**
+     * Implicit Constraints:
+     *     (C1) Assigned value must match property type.
+     *          Ensured by: DSL validator.
+     */
+
+    refers TechnologySpecificProperty property
+    contains PrimitiveValue value
+}
+
+/**
+ * Operation technology for service deployment
+ */
+class DeploymentTechnology extends OperationTechnology {
+    /**
+     * Implicit Constraints:
+     *     (C1) Name must be unique.
+     *          Ensured by: DSL validator.
+     */
+
+    container Technology technology opposite deploymentTechnologies
+
+    /**
+     * Get parts of the technology for creating a qualified name
+     */
+    op String[] getQualifiedNameParts() {
+        if (name === null || name.empty)
+            return newArrayList.asEList
+
+        val nameParts = newArrayList
+        nameParts.add("_deployment")
+        nameParts.add(name)
+        nameParts.asEList
+    }
+}
+
+/**
+ * Infrastructure technology for service operation
+ */
+class InfrastructureTechnology extends OperationTechnology {
+    /**
+     * Implicit Constraints:
+     *     (C1) Name must be unique.
+     *          Ensured by: DSL validator.
+     */
+
+    container Technology technology opposite infrastructureTechnologies
+
+    /**
+     * Get parts of the technology for creating a qualified name
+     */
+    op String[] getQualifiedNameParts() {
+        if (name === null || name.empty)
+            return newArrayList.asEList
+
+        val nameParts = newArrayList
+        nameParts.add("_infrastructure")
+        nameParts.add(name)
+        nameParts.asEList
+    }
+}
+
+/**
+ * Types of the possible join points of technology aspects
+ */
+enum JoinPointType {
+    MICROSERVICES,
+    INTERFACES,
+    OPERATIONS,
+    PARAMETERS,
+    COMPLEX_TYPES,
+    DATA_FIELDS,
+    CONTAINERS,
+    INFRASTRUCTURE_NODES
+}
+
+/**
+ * Types of the possible pointcuts of technology aspects
+ */
+enum PointcutType {
+    EXCHANGE_PATTERN,
+    COMMUNICATION_TYPE,
+    PROTOCOL,
+    DATA_FORMAT,
+    TECHNOLOGY
+}
+
+/**
+ * Abstract superclass for technology aspects
+ */
+abstract class TechnologyAspect {
+    /**
+     * Implicit Constraints:
+     *     (C1) Join points must be unique.
+     *          Ensured by: DSL validator.
+     *     (C2) Properties must be unique.
+     *          Ensured by: DSL validator.
+     */
+
+    String name
+    JoinPointType[1..*] joinPoints
+
+    contains TechnologySpecificProperty[] properties opposite technologyAspect
+
+    /**
+     * Get parts of the technology aspect for creating a qualified name
+     */
+    op String[] getQualifiedNameParts() {
+        if (name === null || name.empty)
+            return newArrayList.asEList
+
+        val nameParts = newArrayList
+        nameParts.add("_aspects")
+        nameParts.add(name)
+        nameParts.asEList
+    }
+}
+
+/**
+ * Metamodel concept for aspects related to microservices and their elements
+ */
+class ServiceAspect extends TechnologyAspect {
+    /**
+     * Implicit Constraints:
+     *     (C1) Selectors must be unique.
+     *          Ensured by: DSL validator.
+     */
+
+    contains ServiceAspectPointcutSelector[] pointcutSelectors opposite serviceAspect
+
+    container Technology technology opposite serviceAspects
+
+    /**
+     * Check if the aspect has a matching selector for the given pointcuts and their values.
+     * Therefore, all pointcut values of a selector must be equal to the given values, i.e., the
+     * matching is based on the logical conjunction of all pointcuts ("AND" semantics) as long as
+     * their types differ. For pointcuts that receive more than one value in a selector (currently
+     * prevented on the language-level by the validator), logical disjunction ("OR" semantics) is
+     * applied. The pointcut values themselves are compared with the given values on the basis of
+     * identity matching ("equal" semantics).
+     */
+    op boolean hasMatchingSelector(ExchangePattern forExchangePattern,
+        CommunicationType forCommunicationType, Protocol forProtocol, DataFormat forDataFormat) {
+        if (pointcutSelectors.empty)
+            return true
+
+        /*
+         * Iterate over all specified selectors of the aspect and look for one for that all
+         * pointcuts match the given values
+         */
+        for (selector : pointcutSelectors) {
+            var pointcutTypes = selector.pointcuts.get(0).orderedPointcutTypes
+            var allPointcutsMatch = true
+            var pointcutTypeIndex = 0
+
+            /*
+             * Iterate over all pointcut types of the current selector and check, if they all
+             * match the given values ("AND" and "equal" semantics).
+             */
+            while (allPointcutsMatch && pointcutTypeIndex < pointcutTypes.size) {
+                val pointcutType = pointcutTypes.get(pointcutTypeIndex)
+
+                // Get values of current pointcut type. On the level of the metamodel, a pointcut
+                // may theoretically receive more than one value in a selector. On the language
+                // level, this is currently prevented by the validator. However, to enable the
+                // assignment of more than one value for a pointcut in a selector (if necessary in
+                // the future), get all values of the current pointcut type, ignoring the fact that
+                // this is currently only one.
+                var pointcutValuesOfType = selector.pointcuts
+                    .filter[effectiveType == pointcutType]
+                    .map[effectiveValue]
+                    .toList
+
+                // Determine the given value to check depending on the current pointcut's type.
+                // Given null values will be ignored.
+                var forValue = switch(pointcutType) {
+                    case EXCHANGE_PATTERN: if (forExchangePattern !== null)
+                        forExchangePattern.getName
+                    case COMMUNICATION_TYPE: if (forCommunicationType !== null)
+                        forCommunicationType.getName
+                    case PROTOCOL: if (forProtocol !== null) forProtocol.name
+                    case DATA_FORMAT: if (forDataFormat !== null) forDataFormat.formatName
+                    default: null
+                }
+
+                // Perform value matching. There are three cases:
+                //  (1) The current pointcut has values and the given value of the same type is not
+                //      null: The given value matches the current pointcut's values if it is
+                //      contained in them.
+                //  (2) The current pointcut has values, but the given value of the same is null:
+                //      No match, because the selector is more specific than the given values.
+                //  (3) The current pointcut has no values: Then the selector accepts per definition
+                //      arbitrary values for the pointcut and all pointcuts match.
+                if (!pointcutValuesOfType.empty) {
+                    if (forValue !== null)
+                        allPointcutsMatch = pointcutValuesOfType.contains(forValue)
+                    else
+                        allPointcutsMatch = false
+                }
+
+                pointcutTypeIndex++
+            }
+
+            if (allPointcutsMatch)
+                return true
+        }
+
+        return false
+    }
+}
+
+/**
+ * Pointcut of a service aspect
+ */
+class ServiceAspectPointcut {
+    /**
+     * Implicit Constraints:
+     *     (C1) For exchange pattern and communication type pointcuts the selector's join point must
+     *          be parameters.
+     *          Ensured by: DSL validator.
+     *     (C2) If communication types were selected, protocols of parent selector must be of those
+     *          types.
+     *          Ensured by: DSL scope provider.
+     *     (C3) If protocols were selected, data formats of parent selector must correspond to them.
+     *          Ensured by: DSL scope provider.
+     */
+
+    boolean forExchangePattern
+    boolean forCommunicationType
+    boolean forProtocol
+    boolean forDataFormat
+    ExchangePattern exchangePattern
+    CommunicationType communicationType
+
+    refers Protocol protocol
+    refers DataFormat dataFormat
+
+    container ServiceAspectPointcutSelector selector opposite pointcuts
+
+    /**
+     * Convenience method to get type of pointcut depending on the boolean flags that actually
+     * determine its semantics
+     */
+    derived PointcutType effectiveType get {
+        return if (forExchangePattern)
+            PointcutType.EXCHANGE_PATTERN
+        else if (forCommunicationType)
+            PointcutType.COMMUNICATION_TYPE
+        else if (forProtocol)
+            PointcutType.PROTOCOL
+        else if (forDataFormat)
+            PointcutType.DATA_FORMAT
+        else
+            null
+    }
+
+    /**
+     * Get selector name of pointcut depending on its type. It must match the one declared in the
+     * grammar of the DSL
+     */
+    derived String effectiveSelectorName get {
+        return switch (effectiveType) {
+            case EXCHANGE_PATTERN: "exchange_pattern"
+            case COMMUNICATION_TYPE: "communication_type"
+            case PROTOCOL: "protocol"
+            case DATA_FORMAT: "data_format"
+            default: null
+        }
+    }
+
+    /**
+     * Get effective value of pointcut depending on its type
+     */
+    derived String effectiveValue get {
+        return if (effectiveType === PointcutType.EXCHANGE_PATTERN && exchangePattern !== null)
+            exchangePattern.getName
+        else if (effectiveType === PointcutType.COMMUNICATION_TYPE && communicationType !== null)
+            communicationType.getName
+        else if (effectiveType === PointcutType.PROTOCOL && protocol !== null)
+            protocol.name
+        else if (effectiveType === PointcutType.DATA_FORMAT && dataFormat !== null)
+            dataFormat.formatName
+        else
+            null
+    }
+
+    /**
+     * Return printable effective value of pointcut as it would occur in the grammar of the DSL
+     */
+    derived String printableEffectiveValue get {
+        return if (effectiveType === PointcutType.EXCHANGE_PATTERN && exchangePattern !== null)
+            exchangePattern.getName.toLowerCase
+        else if (effectiveType === PointcutType.COMMUNICATION_TYPE &&
+            CommunicationType.ASYNCHRONOUS == communicationType)
+            "async"
+        else if (effectiveType === PointcutType.COMMUNICATION_TYPE &&
+            CommunicationType.SYNCHRONOUS == communicationType)
+            "sync"
+        else if (effectiveType === PointcutType.PROTOCOL && protocol !== null)
+            protocol.name
+        else if (effectiveType === PointcutType.DATA_FORMAT && dataFormat !== null)
+            dataFormat.formatName
+        else
+            null
+    }
+
+    /**
+     * Get all possible types of pointcuts in an ordered manner
+     */
+    derived PointcutType[] orderedPointcutTypes get {
+        return #[
+            PointcutType.EXCHANGE_PATTERN,
+            PointcutType.COMMUNICATION_TYPE,
+            PointcutType.PROTOCOL,
+            PointcutType.DATA_FORMAT
+        ].asEList
+    }
+}
+
+/**
+ * A selector of pointcuts for join points
+ */
+class ServiceAspectPointcutSelector {
+    /**
+     * Implicit Constraints:
+     *     (C1) Per pointcut type only one pointcut may be specified in a selector.
+     *          Ensured by: DSL validator.
+     */
+
+    contains ServiceAspectPointcut[1..*] pointcuts opposite selector
+
+    container ServiceAspect serviceAspect opposite pointcutSelectors
+
+    /**
+     * Check if the selector is more generic than the given selector. A selector is more generic
+     * than another selector if it lacks certain pointcuts and overlapping pointcuts have the same
+     * values in both selector. Take for instance the selector
+     *      selector(protocol = rest, data_format = xml)
+     * It is more generic than the selector
+     *      selector(exchange_pattern = in, protocol = rest, data_format = xml)
+     * but less generic than
+     *      selector(protocol = rest)
+     */
+    op boolean isMoreGenericThan(ServiceAspectPointcutSelector otherSelector) {
+        if (otherSelector === null)
+            return true
+        else if (this === otherSelector)
+            return false
+
+        /* Get values of this and the other selector in an ordered manner */
+        val thisSelectorValues = orderedSelectorValues
+        val otherSelectorValues = otherSelector.orderedSelectorValues
+
+        /* Perform the actual check */
+        for (entry : thisSelectorValues.entrySet) {
+            val thisType = entry.key
+            val thisValuesOfType = entry.value
+            val otherValuesOfType = otherSelectorValues.get(thisType)
+
+            // Determine, pointcut-type-specific, if one of the values of this selector is contained
+            // in the values of the other selector
+            if (thisValuesOfType.exists[otherValuesOfType.contains(it)]) {
+                // If so, remove all overlapping values from the other selector's value map for the
+                // pointcut's type and, possibly, the pointcut type as well. The other selector's
+                // value map is later used to determine if the other selector has more pointcuts and
+                // is hence more specific than this selector.
+                otherValuesOfType.removeAll(thisValuesOfType)
+                if (otherValuesOfType.empty)
+                    otherSelectorValues.remove(thisType)
+            } else
+                // There must be at least one value for all pointcut types within this selector to
+                // make it more generic than the other selector
+                return false
+        }
+
+        // If this selector contains at least one value for every pointcut type of the other
+        // selector, but does not have more pointcuts than the other selector, this selector is more
+        // generic
+        var thisHasMorePointcuts = otherSelectorValues.empty
+        return !thisHasMorePointcuts
+    }
+
+    /**
+     * Return values of the selector's pointcuts ordered by their types. The return type is a map
+     * that preserves the insertion order and assigns a pointcut type to a list of values specified
+     * for it in the selector. The ordering of the types matches the ordering as returned by
+     * ServiceAspectPointcut.orderedPointcutTypes.
+     */
+    op PointcutTypeStringsMap orderedSelectorValues() {
+        if (pointcuts.empty)
+            return null
+
+        val orderedValues = <PointcutType, List<String>> newLinkedHashMap
+        val orderedPointcutTypes = pointcuts.get(0).orderedPointcutTypes
+        orderedPointcutTypes.forEach[pointcutType |
+            pointcuts.filter[effectiveType == pointcutType].forEach[
+                var pointcutStrings = orderedValues.get(pointcutType)
+                if (pointcutStrings === null) {
+                    pointcutStrings = <String> newArrayList
+                    orderedValues.put(pointcutType, pointcutStrings)
+                }
+                pointcutStrings.add(effectiveValue)
+            ]
+        ]
+
+        return orderedValues
+    }
+
+    /**
+     * Return the selector string of this pointcut based on the DSL's grammar
+     */
+    derived String selectorString get {
+        if (pointcuts.empty)
+            return ""
+
+        val orderedPointcutTypes = pointcuts.get(0).orderedPointcutTypes
+        var selectorString = ""
+        for (pointcutType : orderedPointcutTypes)
+            for (pointcut : pointcuts.filter[effectiveType == pointcutType]) {
+                selectorString += pointcut.effectiveSelectorName + " = " +
+                    pointcut.printableEffectiveValue
+                selectorString += ", "
+            }
+
+        if (selectorString.length > 2) {
+            val trailingCommaBegin = selectorString.length - 2
+            selectorString = selectorString.substring(0, trailingCommaBegin)
+        }
+
+        return selectorString
+    }
+}
+
+/**
+ * Metamodel concept for operation aspects
+ */
+class OperationAspect extends TechnologyAspect {
+    /**
+     * Implicit Constraints:
+     *     (C1) Selectors must be unique.
+     *          Ensured by: DSL validator.
+     */
+
+    contains OperationAspectPointcutSelector[] pointcutSelectors opposite operationAspect
+
+    container Technology technology opposite operationAspects
+
+    /**
+     * Check if the aspect has a matching selector for the given pointcuts and their values.
+     * Therefore, all pointcut values of a selector must be equal to the given values, i.e., the
+     * matching is based on the logical conjunction of all pointcuts ("AND" semantics) as long as
+     * their types differ. For pointcuts that receive more than one value in a selector (currently
+     * prevented on the language-level by the validator), logical disjunction ("OR" semantics) is
+     * applied. The pointcut values themselves are compared with the given values on the basis of
+     * identity matching ("equal" semantics).
+     */
+    op boolean hasMatchingSelector(EObject forTechnology) {
+        if (pointcutSelectors.empty)
+            return true
+
+        /*
+         * Iterate over all specified selectors of the aspect and look for one for that all
+         * pointcuts match the given values
+         */
+        for (selector : pointcutSelectors) {
+            var pointcutTypes = selector.pointcuts.get(0).orderedPointcutTypes
+            var allPointcutsMatch = true
+            var pointcutTypeIndex = 0
+
+            /*
+             * Iterate over all pointcut types of the current selector and check, if they all
+             * match the given values ("AND" and "equal" semantics).
+             */
+            while (allPointcutsMatch && pointcutTypeIndex < pointcutTypes.size) {
+                val pointcutType = pointcutTypes.get(pointcutTypeIndex)
+
+                // Get values of current pointcut type. On the level of the metamodel, a pointcut
+                // may theoretically receive more than one value in a selector. On the language
+                // level, this is currently prevented by the validator. However, to enable the
+                // assignment of more than one value for a pointcut in a selector (if necessary in
+                // the future), get all values of the current pointcut type, ignoring the fact that
+                // this is currently only one.
+                var pointcutValuesOfType = selector.pointcuts
+                    .filter[effectiveType == pointcutType]
+                    .map[effectiveValue]
+                    .toList
+
+                // Determine the given value to check depending on the current pointcut's type.
+                // Given null values will be ignored.
+                var forValue = switch(pointcutType) {
+                    case TECHNOLOGY: if (forTechnology !== null)
+                        if (forTechnology instanceof DeploymentTechnology)
+                            forTechnology.getName
+                        else if (forTechnology instanceof InfrastructureTechnology)
+                            forTechnology.getName
+                    default: null
+                }
+
+                // Perform value matching. There are three cases:
+                //  (1) The current pointcut has values and the given value of the same type is not
+                //      null: The given value matches the current pointcut's values if it is
+                //      contained in them.
+                //  (2) The current pointcut has values, but the given value of the same is null:
+                //      No match, because the selector is more specific than the given values.
+                //  (3) The current pointcut has no values: Then the selector accepts per definition
+                //      arbitrary values for the pointcut and all pointcuts match.
+                if (!pointcutValuesOfType.empty) {
+                    if (forValue !== null)
+                        allPointcutsMatch = pointcutValuesOfType.contains(forValue)
+                    else
+                        allPointcutsMatch = false
+                }
+
+                pointcutTypeIndex++
+            }
+
+            if (allPointcutsMatch)
+                return true
+        }
+
+        return false
+    }
+}
+
+/**
+ * Pointcut of an operation aspect
+ */
+class OperationAspectPointcut {
+    boolean forTechnology
+
+    refers EObject technology
+
+    container OperationAspectPointcutSelector selector opposite pointcuts
+
+    /**
+     * Convenience method to get type of pointcut depending on the boolean flags that actually
+     * determine its semantics
+     */
+    derived PointcutType effectiveType get {
+        return if (forTechnology)
+            PointcutType.TECHNOLOGY
+        else
+            null
+    }
+
+    /**
+     * Get selector name of pointcut depending on its type. It must match the one declared in the
+     * grammar of the DSL
+     */
+    derived String effectiveSelectorName get {
+        return switch (effectiveType) {
+            case TECHNOLOGY: "technology"
+            default: null
+        }
+    }
+
+    /**
+     * Get effective value of pointcut depending on its type
+     */
+    derived String effectiveValue get {
+        return if (effectiveType === PointcutType.TECHNOLOGY && technology !== null)
+            if (technology instanceof DeploymentTechnology)
+                (technology as DeploymentTechnology).getName
+            else if (technology instanceof InfrastructureTechnology)
+                (technology as InfrastructureTechnology).getName
+        else
+            null
+    }
+
+    /**
+     * Return printable effective value of pointcut as it would occur in the grammar of the DSL
+     */
+    derived String printableEffectiveValue get {
+        return if (effectiveType === PointcutType.TECHNOLOGY && technology !== null)
+            if (technology instanceof DeploymentTechnology)
+                (technology as DeploymentTechnology).getName
+            else if (technology instanceof InfrastructureTechnology)
+                (technology as InfrastructureTechnology).getName
+        else
+            null
+    }
+
+    /**
+     * Get all possible types of pointcuts in an ordered manner
+     */
+    derived PointcutType[] orderedPointcutTypes get {
+        return #[PointcutType.TECHNOLOGY].asEList
+    }
+}
+
+/**
+ * A selector of pointcuts for join points
+ */
+class OperationAspectPointcutSelector {
+    /**
+     * Implicit Constraints:
+     *     (C1) Per pointcut type only one pointcut may be specified in a selector.
+     *          Ensured by: DSL validator.
+     */
+
+    contains OperationAspectPointcut[1..*] pointcuts opposite selector
+
+    container OperationAspect operationAspect opposite pointcutSelectors
+
+    /**
+     * Check if the selector is more generic than the given selector. A selector is more generic
+     * than another selector if it lacks certain pointcuts and overlapping pointcuts have the same
+     * values in both selector. Take for instance the selector
+     *      selector(protocol = rest, data_format = xml)
+     * It is more generic than the selector
+     *      selector(exchange_pattern = in, protocol = rest, data_format = xml)
+     * but less generic than
+     *      selector(protocol = rest)
+     */
+    op boolean isMoreGenericThan(OperationAspectPointcutSelector otherSelector) {
+        if (otherSelector === null)
+            return true
+        else if (this === otherSelector)
+            return false
+
+        /* Get values of this and the other selector in an ordered manner */
+        val thisSelectorValues = orderedSelectorValues
+        val otherSelectorValues = otherSelector.orderedSelectorValues
+
+        /* Perform the actual check */
+        for (entry : thisSelectorValues.entrySet) {
+            val thisType = entry.key
+            val thisValuesOfType = entry.value
+            val otherValuesOfType = otherSelectorValues.get(thisType)
+
+            // Determine, pointcut-type-specific, if one of the values of this selector is contained
+            // in the values of the other selector
+            if (thisValuesOfType.exists[otherValuesOfType.contains(it)]) {
+                // If so, remove all overlapping values from the other selector's value map for the
+                // pointcut's type and, possibly, the pointcut type as well. The other selector's
+                // value map is later used to determine if the other selector has more pointcuts and
+                // is hence more specific than this selector.
+                otherValuesOfType.removeAll(thisValuesOfType)
+                if (otherValuesOfType.empty)
+                    otherSelectorValues.remove(thisType)
+            } else
+                // There must be at least one value for all pointcut types within this selector to
+                // make it more generic than the other selector
+                return false
+        }
+
+        // If this selector contains at least one value for every pointcut type of the other
+        // selector, but does not have more pointcuts than the other selector, this selector is more
+        // generic
+        var thisHasMorePointcuts = otherSelectorValues.empty
+        return !thisHasMorePointcuts
+    }
+
+    /**
+     * Return values of the selector's pointcuts ordered by their types. The return type is a map
+     * that preserves the insertion order and assigns a pointcut type to a list of values specified
+     * for it in the selector. The ordering of the types matches the ordering as returned by
+     * OperationAspectPointcut.orderedPointcutTypes.
+     */
+    op PointcutTypeStringsMap orderedSelectorValues() {
+        if (pointcuts.empty)
+            return null
+
+        val orderedValues = <PointcutType, List<String>> newLinkedHashMap
+        val orderedPointcutTypes = pointcuts.get(0).orderedPointcutTypes
+        orderedPointcutTypes.forEach[pointcutType |
+            pointcuts.filter[effectiveType == pointcutType].forEach[
+                var pointcutStrings = orderedValues.get(pointcutType)
+                if (pointcutStrings === null) {
+                    pointcutStrings = <String> newArrayList
+                    orderedValues.put(pointcutType, pointcutStrings)
+                }
+                pointcutStrings.add(effectiveValue)
+            ]
+        ]
+
+        return orderedValues
+    }
+
+    /**
+     * Return the selector string of this pointcut based on the DSL's grammar
+     */
+    derived String selectorString get {
+        if (pointcuts.empty)
+            return ""
+
+        val orderedPointcutTypes = pointcuts.get(0).orderedPointcutTypes
+        var selectorString = ""
+        for (pointcutType : orderedPointcutTypes)
+            for (pointcut : pointcuts.filter[effectiveType == pointcutType]) {
+                selectorString += pointcut.effectiveSelectorName + " = " +
+                    pointcut.printableEffectiveValue
+                selectorString += ", "
+            }
+
+        if (selectorString.length > 2) {
+            val trailingCommaBegin = selectorString.length - 2
+            selectorString = selectorString.substring(0, trailingCommaBegin)
+        }
+
+        return selectorString
+    }
+}
+
+/**
+ * Wrapper type for maps that assign a pointcut type to a list of Strings
+ */
+type PointcutTypeStringsMap wraps Map<PointcutType, List<String>>

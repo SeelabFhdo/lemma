@@ -1,0 +1,80 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <relativePath>../de.fhdo.lemma.eclipse.ui.parent/pom.xml</relativePath>
+        <groupId>de.fhdo.lemma.eclipse.ui</groupId>
+        <artifactId>parent</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>de.fhdo.lemma.eclipse.ui</artifactId>
+    <packaging>eclipse-plugin</packaging>
+
+    <repositories>
+        <repository>
+            <id>eclipse</id>
+            <layout>p2</layout>
+            <url>http://download.eclipse.org/releases/2018-12/</url>
+        </repository>
+    </repositories>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                  <groupId>org.eclipse.xtend</groupId>
+                  <artifactId>xtend-maven-plugin</artifactId>
+                  <version>${xtext-version}</version>
+                  <executions>
+                    <execution>
+                      <goals>
+                        <goal>compile</goal>
+                        <goal>xtend-install-debug-info</goal>
+                        <goal>testCompile</goal>
+                        <goal>xtend-test-install-debug-info</goal>
+                      </goals>
+                    </execution>
+                  </executions>
+                  <configuration>
+                    <outputDirectory>xtend-gen</outputDirectory>
+                  </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>${build-helper-maven-plugin-version}</version>
+                <executions>
+                  <execution>
+                    <id>add-source</id>
+                    <phase>generate-sources</phase>
+                    <goals>
+                      <goal>add-source</goal>
+                    </goals>
+                    <configuration>
+                      <sources>
+                        <source>xtend-gen/</source>
+                      </sources>
+                    </configuration>
+                  </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler-plugin-version}</version>
+            </plugin>
+            <plugin>
+                <groupId>org.eclipse.tycho</groupId>
+                <artifactId>tycho-maven-plugin</artifactId>
+                <version>${tycho-version}</version>
+                <extensions>true</extensions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

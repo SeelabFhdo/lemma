@@ -1,0 +1,224 @@
+@Ecore(nsURI="http://www.fhdo.de/lemma/service/intermediate", nsPrefix="intermediate")
+package de.fhdo.lemma.service.intermediate
+
+import de.fhdo.lemma.data.intermediate.IntermediateImport
+import de.fhdo.lemma.data.intermediate.IntermediateType
+import de.fhdo.lemma.data.intermediate.IntermediateImportedAspect
+import de.fhdo.lemma.service.MicroserviceType
+import de.fhdo.lemma.service.Visibility
+import de.fhdo.lemma.technology.CommunicationType
+import de.fhdo.lemma.technology.ExchangePattern
+
+/**
+ * Metamodel of intermediate service models.
+ *
+ * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
+ */
+class IntermediateServiceModel {
+    // "file" URI to the source model from which this intermediate model originated. Note that this
+    // only gets filled, if the whole model was derived from a source Service Model. If the source
+    // model was a Mapping Model, however,, this field is empty, because each microservice could
+    // then have potentially been derived from different Service Models. In this case, model
+    // processors would need to rely on the sourceModelUri field in the IntermediateMicroservice
+    // concept.
+    String sourceModelUri
+
+    contains IntermediateImport[] imports
+    contains IntermediateMicroservice[1..*] microservices opposite serviceModel
+}
+
+/**
+ * Microservice
+ */
+class IntermediateMicroservice {
+    String sourceModelUri
+    String name
+    String version
+    String qualifiedName
+    MicroserviceType ^type
+    Visibility visibility
+    // Flag to indicate if the microservice has at least one operation that is not flagged as being
+    // not implemented (either directly or transitively via its encapsulating interface)
+    boolean effectivelyImplemented
+
+    contains IntermediateTechnology[] technologies opposite microservice
+    contains IntermediateEndpoint[] endpoints opposite microservice
+    contains IntermediateProtocolSpecification[0..2] protocols
+    contains MicroserviceReference[] requiredMicroservices opposite requiringMicroservice
+    contains InterfaceReference[] requiredInterfaces opposite requiringMicroservice
+    contains OperationReference[] requiredOperations opposite requiringMicroservice
+    contains IntermediateInterface[1..*] interfaces opposite microservice
+    contains IntermediateImportedAspect[] aspects
+
+    container IntermediateServiceModel serviceModel opposite microservices
+}
+
+/**
+ * Interface
+ */
+class IntermediateInterface {
+    String name
+    String qualifiedName
+    Visibility visibility
+    boolean notImplemented
+    boolean hasImplementedOperations
+
+    contains IntermediateEndpoint[] endpoints opposite ^interface
+    contains IntermediateProtocolSpecification[0..2] protocols
+    contains IntermediateOperation[] operations opposite ^interface
+    contains IntermediateReferredOperation[] referredOperations opposite referringInterface
+    contains IntermediateImportedAspect[] aspects
+
+    container IntermediateMicroservice microservice opposite interfaces
+}
+
+/**
+ * Operation
+ */
+class IntermediateOperation {
+    String name
+    String qualifiedName
+    Visibility visibility
+    boolean notImplemented
+
+    contains IntermediateEndpoint[] endpoints opposite operation
+    contains IntermediateProtocolSpecification[0..2] protocols
+    contains IntermediateImportedAspect[] aspects
+    contains IntermediateParameter[] parameters opposite operation
+
+    container IntermediateInterface ^interface opposite operations
+}
+
+/**
+ * Referred operation
+ */
+class IntermediateReferredOperation {
+    // Name and qualified name of the operation in the referring interface. Currently, this is
+    // identical to the name of the operation itself.
+    String nameInReferringInterface
+    String qualifiedNameInReferringInterface
+
+    refers IntermediateOperation operation
+    contains IntermediateEndpoint[] endpoints opposite referredOperation
+    contains IntermediateProtocolSpecification[0..2] protocols
+    contains IntermediateImportedAspect[] aspects
+
+    container IntermediateInterface referringInterface opposite referredOperations
+}
+
+/**
+ * Parameter
+ */
+class IntermediateParameter {
+    String name
+    String qualifiedName
+    ExchangePattern exchangePattern
+    CommunicationType communicationType
+    boolean communicatesFault
+    boolean optional
+
+    contains IntermediateType ^type
+    contains OperationReference[0..1] initializedByOperation  opposite initializedParameter
+    contains IntermediateImportedAspect[] aspects
+    contains DataFieldAspects[] fieldAspects opposite parameter
+
+    container IntermediateOperation operation opposite parameters
+}
+
+/**
+ * Aspects assigned to a data field of a structured parameter
+ */
+class DataFieldAspects {
+    String name
+    String qualifiedName
+
+    contains IntermediateImportedAspect[] aspects
+
+    container IntermediateParameter parameter opposite fieldAspects
+}
+
+/**
+ * Reference to a microservice required by another microservice
+ */
+class MicroserviceReference {
+    String name
+    String version
+    String qualifiedName
+    boolean imported = "false"
+
+    refers IntermediateImport[0..1] ^import
+    // Direct reference to the microservice in case it is contained in the same model as the
+    // requiring microservice
+    refers IntermediateMicroservice[0..1] localMicroservice
+
+    container IntermediateMicroservice requiringMicroservice opposite requiredMicroservices
+}
+
+/**
+ * Reference to an interface required by a microservice
+ */
+class InterfaceReference {
+    String name
+    String qualifiedName
+    boolean imported = "false"
+
+    refers IntermediateImport ^import
+    // Direct reference to the interface in case it is contained in the same model as the
+    // requiring microservice
+    refers IntermediateInterface[0..1] localInterface
+
+    container IntermediateMicroservice requiringMicroservice opposite requiredInterfaces
+}
+
+/**
+ * Reference to an operation required by a microservice
+ */
+class OperationReference {
+    String name
+    String qualifiedName
+    boolean imported = "false"
+
+    refers IntermediateImport ^import
+    // Direct reference to the operation in case it is contained in the same model as the
+    // requiring microservice
+    refers IntermediateOperation[0..1] localOperation
+
+    container IntermediateMicroservice requiringMicroservice opposite requiredOperations
+    container IntermediateParameter initializedParameter opposite initializedByOperation
+}
+
+/**
+ * Technology
+ */
+class IntermediateTechnology {
+    String name
+
+    refers IntermediateImport ^import
+
+    container IntermediateMicroservice microservice opposite technologies
+}
+
+/**
+ * Endpoint
+ */
+class IntermediateEndpoint {
+    CommunicationType communicationType
+    String protocol
+    String dataFormat
+    String[*] addresses
+
+    refers IntermediateTechnology technology
+    container IntermediateMicroservice microservice opposite endpoints
+    container IntermediateInterface ^interface opposite endpoints
+    container IntermediateOperation operation opposite endpoints
+    container IntermediateReferredOperation referredOperation opposite endpoints
+}
+
+/**
+ * Protocol specification
+ */
+class IntermediateProtocolSpecification {
+    CommunicationType communicationType
+    String protocol
+    String dataFormat
+}

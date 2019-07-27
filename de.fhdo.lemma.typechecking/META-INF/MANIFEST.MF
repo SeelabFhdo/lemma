@@ -1,0 +1,18 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: de.fhdo.lemma.typechecking
+Bundle-Vendor: University of Applied Sciences and Arts Dortmund
+Bundle-SymbolicName: de.fhdo.lemma.typechecking;singleton:=true
+Bundle-Version: 0.0.1.qualifier
+Require-Bundle: org.eclipse.emf.ecore,
+ org.eclipse.xtext.xbase.lib,
+ org.eclipse.emf.ecore.xcore.lib,
+ de.fhdo.lemma.data.datadsl.metamodel;bundle-version="0.0.1",
+ de.fhdo.lemma.technology.technologydsl.metamodel;bundle-version="0.0.1",
+ org.eclipse.xtend.lib;bundle-version="2.16.0",
+ org.eclipse.xtend.lib.macro;bundle-version="2.16.0",
+ de.fhdo.lemma.utils;bundle-version="0.0.1",
+ org.eclipse.xtext;bundle-version="2.16.0"
+Export-Package: de.fhdo.lemma.typechecking
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Automatic-Module-Name: de.fhdo.lemma.typechecking

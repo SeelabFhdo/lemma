@@ -1,0 +1,103 @@
+/**
+ * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
+ */
+
+grammar de.fhdo.lemma.data.DataDsl with org.eclipse.xtext.common.Terminals
+
+import "de.fhdo.lemma.data"
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+
+DataModel returns DataModel:
+    complexTypeImports+=ComplexTypeImport*
+    (versions+=Version+ | contexts+=Context+ | complexTypes+=ComplexType+)
+
+    /* For debugging purposes to test the type checker. May be safely removed in the future. */
+    //(assignTests+=AssignTest)*
+;
+
+/* For debugging purposes to test the type checker. May be safely removed in the future. */
+/*AssignTest:
+    (target=PossiblyImportedComplexType)
+    '='
+    (source=PossiblyImportedComplexType)
+;*/
+
+ComplexTypeImport returns ComplexTypeImport:
+    'import' 'datatypes' 'from' importURI=STRING 'as' name=ID
+;
+
+Version returns Version:
+    'version' name=ID '{'
+         (complexTypes+=ComplexType+ | contexts+=Context+)?
+     '}'
+;
+
+Context returns Context:
+    'context' name=ID '{'
+        complexTypes+=ComplexType+
+    '}'
+;
+
+ComplexType returns ComplexType:
+    DataStructure | ListType | Enumeration
+;
+
+DataStructure returns DataStructure:
+    'structure' name=ID ('extends' super=[DataStructure|QualifiedName])? '{'
+        (dataFields+=DataField (',' dataFields+=DataField)*)?
+    '}'
+;
+
+ListType returns ListType:
+    'list' name=ID '{'
+        dataFields+=DataField (',' dataFields+=DataField)*
+    '}'
+    |
+    'list' name=ID '{'
+        primitiveType=PrimitiveType
+    '}'
+;
+
+DataField returns DataField:
+    ^hidden?='hide'?
+    (primitiveType=PrimitiveType | complexType=PossiblyImportedComplexType)?
+    name=ID
+;
+
+Enumeration returns Enumeration:
+    'enum' name=ID '{'
+        fields+=EnumerationField (',' fields+=EnumerationField)*
+    '}'
+;
+
+EnumerationField returns EnumerationField:
+    name=ID ('(' initializationValue=PrimitiveValue ')')?
+;
+
+PrimitiveValue returns PrimitiveValue:
+    numericValue=BIG_DECIMAL | booleanValue=BOOLEAN | stringValue=STRING
+;
+
+PossiblyImportedComplexType returns PossiblyImportedComplexType:
+    (^import=[ComplexTypeImport] '::')? complexType=[ComplexType|QualifiedName]
+;
+
+PrimitiveType returns PrimitiveType:
+    {PrimitiveBoolean} 'boolean' |
+    {PrimitiveByte} 'byte' |
+    {PrimitiveCharacter} 'char' |
+    {PrimitiveDate} 'date' |
+    {PrimitiveDouble} 'double' |
+    {PrimitiveFloat} 'float' |
+    {PrimitiveInteger} 'int' |
+    {PrimitiveLong} 'long' |
+    {PrimitiveShort} 'short' |
+    {PrimitiveString} 'string'
+;
+
+QualifiedName:
+    ID ('.' ID)*
+;
+
+terminal BIG_DECIMAL returns ecore::EBigDecimal: '-'?INT ('.' INT)?;
+terminal BOOLEAN returns ecore::EBoolean: 'true' | 'false';

@@ -1,0 +1,18 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: de.fhdo.lemma.technology.technologydsl.ide
+Bundle-Vendor: University of Applied Sciences and Arts Dortmund
+Bundle-Version: 0.0.1.qualifier
+Bundle-SymbolicName: de.fhdo.lemma.technology.technologydsl.ide;singleton:=true
+Bundle-ActivationPolicy: lazy
+Require-Bundle: de.fhdo.lemma.technology.technologydsl,
+ de.fhdo.lemma.technology.technologydsl.metamodel,
+ org.eclipse.xtext.ide,
+ org.eclipse.xtext.xbase.ide,
+ de.fhdo.lemma.data.datadsl;bundle-version="0.0.1",
+ de.fhdo.lemma.data.datadsl.ide;bundle-version="0.0.1",
+ org.antlr.runtime;bundle-version="[3.2.0,3.2.1)"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Export-Package: de.fhdo.lemma.technology.ide.contentassist.antlr,
+ de.fhdo.lemma.technology.ide.contentassist.antlr.internal
+Automatic-Module-Name: de.fhdo.lemma.technology.technologydsl.ide
