@@ -44,7 +44,7 @@ class ModelTreeContentProvider implements ITreeContentProvider {
             ModelFile: parentElement.children.sort
         }
 
-        return children.toArray
+        return children.filter[!hasErrors].toList.toArray
     }
 
     /**
@@ -87,7 +87,9 @@ class ModelTreeContentProvider implements ITreeContentProvider {
                 if (!element.scannedForChildren) {
                     val importedModelFiles = strategy.getImportedModelFiles(element)
                     importedModelFiles.forEach[importAlias, file |
-                        element.children.addAll(createModelFile(file, element, importAlias))
+                        val modelFile = createModelFile(file, element, importAlias)
+                        if (!modelFile.hasErrors)
+                            element.children.add(modelFile)
                     ]
 
                     // Perform child scanning only once per element

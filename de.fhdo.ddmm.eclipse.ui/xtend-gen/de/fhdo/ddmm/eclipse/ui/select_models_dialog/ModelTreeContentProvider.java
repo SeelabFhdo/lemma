@@ -11,8 +11,8 @@ import java.util.function.BiConsumer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.jface.viewers.ITreeContentProvider;
-import org.eclipse.xtext.xbase.lib.CollectionExtensions;
 import org.eclipse.xtext.xbase.lib.Conversions;
+import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 
 /**
@@ -64,7 +64,11 @@ public class ModelTreeContentProvider implements ITreeContentProvider {
       }
     }
     final List<ModelFile> children = _switchResult;
-    return children.toArray();
+    final Function1<ModelFile, Boolean> _function = (ModelFile it) -> {
+      Boolean _hasErrors = it.hasErrors();
+      return Boolean.valueOf((!(_hasErrors).booleanValue()));
+    };
+    return IterableExtensions.<ModelFile>toList(IterableExtensions.<ModelFile>filter(children, _function)).toArray();
   }
   
   /**
@@ -117,7 +121,12 @@ public class ModelTreeContentProvider implements ITreeContentProvider {
           if (_not) {
             final Map<String, IFile> importedModelFiles = this.strategy.getImportedModelFiles(((ModelFile)element));
             final BiConsumer<String, IFile> _function = (String importAlias, IFile file) -> {
-              CollectionExtensions.<ModelFile>addAll(((ModelFile)element).getChildren(), this.createModelFile(file, ((ModelFile)element), importAlias));
+              final ModelFile modelFile = this.createModelFile(file, ((ModelFile)element), importAlias);
+              Boolean _hasErrors = modelFile.hasErrors();
+              boolean _not_1 = (!(_hasErrors).booleanValue());
+              if (_not_1) {
+                ((ModelFile)element).getChildren().add(modelFile);
+              }
             };
             importedModelFiles.forEach(_function);
             ((ModelFile)element).setScannedForChildren(true);
