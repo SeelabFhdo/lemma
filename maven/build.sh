@@ -1,33 +1,58 @@
 #!/usr/bin/env bash
 
-do_build() {    
+modules=(
+    # Utils
+    de.fhdo.lemma.eclipse.ui.utils
+    de.fhdo.lemma.data.datadsl.metamodel
+    de.fhdo.lemma.utils
+
+    # Type Checker
+    de.fhdo.lemma.technology.technologydsl.metamodel
+    de.fhdo.lemma.typechecking
+
+    # Languages
+    de.fhdo.lemma.data.datadsl.parent
+    de.fhdo.lemma.technology.technologydsl.parent
+    de.fhdo.lemma.servicedsl.parent
+    de.fhdo.lemma.technology.mappingdsl.parent
+    de.fhdo.lemma.operationdsl.parent
+
+    # Transformations
+    de.fhdo.lemma.intermediate.transformations.parent
+
+    # UI Components
+    de.fhdo.lemma.eclipse.ui.parent
+)
+
+do_build() {
     MODULE=$1
     echo -e "\033[1;35m------------------------------------------------------------------------"
-    echo "Building module $MODULE"
+    echo "Building module $MODULE ($2/$3)"
     echo -e "------------------------------------------------------------------------\033[0m"
-    mvn -f $MODULE/pom.xml clean install || { echo -e "\033[0;31mBuild of $MODULE unsuccessful\033[0m"; exit 1; }
+    mvn -f $MODULE/pom.xml clean install || { echo -e "\033[0;31mBuild of $MODULE ($2/$3) unsuccessful\033[0m"; notify_error "LEMMA Build Process Error: Build of $MODULE ($2/$3) unsuccessful!"; exit 1; }
+    notify "LEMMA Build Process: $MODULE ($2/$3) successfully built"
+}
+
+notify() {
+    if hash notify-send 2>/dev/null; then
+        notify-send "$1"
+    fi
+}
+
+notify_error() {
+    if hash notify-send 2>/dev/null; then
+        notify-send -u critical "$1"
+    fi
 }
 
 cd ..
 
-# Utils
-do_build    DdmmUiUtils
-do_build    DataViewpointModel
-do_build    DdmmUtils
+MODULE_COUNT=$(wc -w <<< "${modules[@]}")
+CURRENT_MODULE_INDEX=1
 
-# Type Checker
-do_build    TechnologyDefinitionModel
-do_build    DdmmTypechecking
+for module in "${modules[@]}"; do
+    do_build $module $CURRENT_MODULE_INDEX $MODULE_COUNT
+    CURRENT_MODULE_INDEX=$((CURRENT_MODULE_INDEX+1))
+done
 
-# Languages
-do_build    de.fhdo.ddmm.data.datadsl.parent
-do_build    de.fhdo.ddmm.technology.technologydsl.parent
-do_build    de.fhdo.ddmm.servicedsl.parent
-do_build    de.fhdo.ddmm.technology.mappingdsl.parent
-do_build    de.fhdo.ddmm.operationdsl.parent
-
-# Transformations
-do_build    IntermediateModelTransformations.parent
-
-# UI Components
-do_build    de.fhdo.ddmm.eclipse.ui.parent
+notify "LEMMA Build Process: All modules built successfully!"
