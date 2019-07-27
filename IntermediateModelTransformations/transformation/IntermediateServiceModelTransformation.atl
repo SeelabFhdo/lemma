@@ -653,15 +653,13 @@ rule IntermediateEndpoint {
             i.dataFormat <- p.dataFormat.formatName;
         else {
             -- If no data format was specified for the endpoint, the newly created
-            -- IntermediateEndpoint gets the first format of the protocol assigned
-            i.dataFormat <- p.importedProtocol.dataFormats->first().formatName;
-
-            -- Furthermore, we create an additional endpoint for each remaining data format of the
-            -- protocol. Additional endpoints are exact copies of the created IntermediateEndpoint,
-            -- but each with a different data format. Semantically, this means that specifying an
-            -- endpoint without data format, the endpoint's addresses are valid for all data formats
-            -- used to interact with the endpoint.
-            if (p.importedProtocol.dataFormats->size() > 1)
+            -- IntermediateEndpoint gets the default format of the protocol assigned
+            if (not p.importedProtocol.defaultFormat.oclIsUndefined())
+                i.dataFormat <- p.importedProtocol.defaultFormat.formatName;
+            else
+                -- If no default format for the protocol exists, we create an endpoint for each
+                -- data format of the protocol
+                i.dataFormat <- p.importedProtocol.dataFormats->first().formatName;
                 for (dataFormat in p.importedProtocol.dataFormats
                         ->subSequence(2, p.importedProtocol.dataFormats->size())) {
                     thisModule.CopyIntermediateEndpoint(i, dataFormat);

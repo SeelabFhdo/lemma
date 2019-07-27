@@ -236,10 +236,10 @@ generators are free to generate code for the microservice or not.</p>
 </div>
 <div class="admonition hint">
 <p class="first admonition-title">Hint</p>
-<p class="last">There can only be one technology that defines types. Moreover, it is
-guaranteed that default protocol/data format combinations are
-unambiguous. For instance, there can only be one default synchronous
-protocol across all referenced technologies.</p>
+<p class="last">There can only be one technology that defines default primitive
+types. Moreover, it is guaranteed that default protocol/data format
+combinations are unambiguous. For instance, there can only be one
+default synchronous protocol across all referenced technologies.</p>
 </div>
 </dd></dl>
 
@@ -1026,20 +1026,22 @@ the endpoint, e.g., <cite>“http://www.example.org”</cite>.</p>
 <p class="first admonition-title">Hint</p>
 <p class="last">If the list of addresses is empty, code generators should produce
 sensible defaults, as described
-<code class="xref java java-type docutils literal notranslate"><span class="pre">here</span></code>,
-<code class="xref java java-type docutils literal notranslate"><span class="pre">here</span></code>,
-<code class="xref java java-type docutils literal notranslate"><span class="pre">here</span></code>, and
-<code class="xref java java-type docutils literal notranslate"><span class="pre">here</span></code>.</p>
+<a class="reference internal" href="#link-intermediatemicroservice-endpoints"><span class="std std-ref">here</span></a>,
+<a class="reference internal" href="#link-intermediateinterface-endpoints"><span class="std std-ref">here</span></a>,
+<a class="reference internal" href="#link-intermediateoperation-endpoints"><span class="std std-ref">here</span></a>, and
+<a class="reference internal" href="#link-intermediatereferredoperation-endpoints"><span class="std std-ref">here</span></a>.</p>
 </div>
 <div class="admonition hint">
 <p class="first admonition-title">Hint</p>
 <p class="last">In case the modeler did not specify a data format for an endpoint,
-this is shorthand notation for “endpoint’s addresses apply to all
-formats of the protocol”. That is, <code class="docutils literal notranslate"><span class="pre">IntermediateEndpoint</span></code>
-instances with the source addresses are generated for all formats
-of the protocol. However, code generators must only create endpoints
-for the protocols and data formats that were assigned to the
-respective
+it depends on the technology models, which endpoints are created. If
+the technology model defines a default protocol and thus a default
+format, an endpoint for this protocol and format is created. If the
+protocol is not the default protocol for the communication type and
+hence does not define a default format, endpoints for all formats
+of the protocols are created. However, code generators must only
+produce endpoints for the protocols and data formats that were
+assigned to the respective
 <a class="reference internal" href="#link-intermediatemicroservice-protocols"><span class="std std-ref">microservice</span></a>,
 <a class="reference internal" href="#link-intermediateinterface-protocols"><span class="std std-ref">interface</span></a>,
 <a class="reference internal" href="#link-intermediateoperation-protocols"><span class="std std-ref">operation</span></a>, or

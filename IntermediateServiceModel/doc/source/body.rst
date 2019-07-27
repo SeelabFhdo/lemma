@@ -197,10 +197,10 @@ Microservices
 
         .. HINT::
 
-            There can only be one technology that defines types. Moreover, it is
-            guaranteed that default protocol/data format combinations are
-            unambiguous. For instance, there can only be one default synchronous
-            protocol across all referenced technologies.
+            There can only be one technology that defines default primitive 
+            types. Moreover, it is guaranteed that default protocol/data format 
+            combinations are unambiguous. For instance, there can only be one 
+            default synchronous protocol across all referenced technologies.
         
     .. _link__IntermediateMicroservice_endpoints:
 
@@ -876,20 +876,22 @@ between microservices.
 
             If the list of addresses is empty, code generators should produce 
             sensible defaults, as described 
-            :java:type:`here <link__IntermediateMicroservice_endpoints>`,
-            :java:type:`here <link__IntermediateInterface_endpoints>`,
-            :java:type:`here <link__IntermediateOperation_endpoints>`, and
-            :java:type:`here <link__IntermediateReferredOperation_endpoints>`.
+            :ref:`here <link__IntermediateMicroservice_endpoints>`,
+            :ref:`here <link__IntermediateInterface_endpoints>`,
+            :ref:`here <link__IntermediateOperation_endpoints>`, and
+            :ref:`here <link__IntermediateReferredOperation_endpoints>`.
 
         .. HINT::
 
             In case the modeler did not specify a data format for an endpoint,
-            this is shorthand notation for \"endpoint's addresses apply to all
-            formats of the protocol\". That is, ``IntermediateEndpoint`` 
-            instances with the source addresses are generated for all formats
-            of the protocol. However, code generators must only create endpoints
-            for the protocols and data formats that were assigned to the 
-            respective 
+            it depends on the technology models, which endpoints are created. If
+            the technology model defines a default protocol and thus a default
+            format, an endpoint for this protocol and format is created. If the
+            protocol is not the default protocol for the communication type and
+            hence does not define a default format, endpoints for all formats
+            of the protocols are created. However, code generators must only 
+            produce endpoints for the protocols and data formats that were 
+            assigned to the respective 
             :ref:`microservice <link__IntermediateMicroservice_protocols>`,
             :ref:`interface <link__IntermediateInterface_protocols>`,
             :ref:`operation <link__IntermediateOperation_protocols>`, or
