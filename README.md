@@ -1,5 +1,7 @@
 # Language Ecosystem for Modeling Microservice Architecture (LEMMA)
 
+![Version](https://img.shields.io/github/tag/seelabfhdo/lemma?label=version) ![Eclipse]( https://img.shields.io/badge/eclipse-%3E%3D%202018--12-green) ![License](https://img.shields.io/github/license/seelabfhdo/lemma)
+
 This repository contains the modeling languages, model transformations, and related artifacts of the Language Ecosystem for Modeling Microservice Architecture (LEMMA). LEMMA provides means for the model-driven development of distributed software systems following the Microservice Architecture approach. The conceptual foundations of the languages are described in several publications [1&ndash;3].
 
 Please follow these steps if you want to try out LEMMA on the basis of the case study example described in [3]:
