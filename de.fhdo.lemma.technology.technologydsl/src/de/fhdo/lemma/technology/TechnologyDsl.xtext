@@ -138,9 +138,9 @@ enum PropertyFeature returns PropertyFeature:
 TechnologySpecificProperty returns TechnologySpecificProperty:
     type=PrimitiveType name=ID
     ('=' defaultValue=PrimitiveValue)?
-    ('{'
+    ('<'
         features+=PropertyFeature (',' features+=PropertyFeature)*
-    '}')?
+    '>')?
     ';'
 ;
 

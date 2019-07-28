@@ -946,25 +946,25 @@ public class TechnologyDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cDefaultValueAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
 		private final RuleCall cDefaultValuePrimitiveValueParserRuleCall_2_1_0 = (RuleCall)cDefaultValueAssignment_2_1.eContents().get(0);
 		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
-		private final Keyword cLeftCurlyBracketKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
+		private final Keyword cLessThanSignKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
 		private final Assignment cFeaturesAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
 		private final RuleCall cFeaturesPropertyFeatureEnumRuleCall_3_1_0 = (RuleCall)cFeaturesAssignment_3_1.eContents().get(0);
 		private final Group cGroup_3_2 = (Group)cGroup_3.eContents().get(2);
 		private final Keyword cCommaKeyword_3_2_0 = (Keyword)cGroup_3_2.eContents().get(0);
 		private final Assignment cFeaturesAssignment_3_2_1 = (Assignment)cGroup_3_2.eContents().get(1);
 		private final RuleCall cFeaturesPropertyFeatureEnumRuleCall_3_2_1_0 = (RuleCall)cFeaturesAssignment_3_2_1.eContents().get(0);
-		private final Keyword cRightCurlyBracketKeyword_3_3 = (Keyword)cGroup_3.eContents().get(3);
+		private final Keyword cGreaterThanSignKeyword_3_3 = (Keyword)cGroup_3.eContents().get(3);
 		private final Keyword cSemicolonKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		
 		//TechnologySpecificProperty:
-		//	type=PrimitiveType name=ID ('=' defaultValue=PrimitiveValue)? ('{'
+		//	type=PrimitiveType name=ID ('=' defaultValue=PrimitiveValue)? ('<'
 		//	features+=PropertyFeature (',' features+=PropertyFeature)*
-		//	'}')?
+		//	'>')?
 		//	';';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//type=PrimitiveType name=ID ('=' defaultValue=PrimitiveValue)? ('{' features+=PropertyFeature (','
-		//features+=PropertyFeature)* '}')? ';'
+		//type=PrimitiveType name=ID ('=' defaultValue=PrimitiveValue)? ('<' features+=PropertyFeature (','
+		//features+=PropertyFeature)* '>')? ';'
 		public Group getGroup() { return cGroup; }
 		
 		//type=PrimitiveType
@@ -991,11 +991,11 @@ public class TechnologyDslGrammarAccess extends AbstractGrammarElementFinder {
 		//PrimitiveValue
 		public RuleCall getDefaultValuePrimitiveValueParserRuleCall_2_1_0() { return cDefaultValuePrimitiveValueParserRuleCall_2_1_0; }
 		
-		//('{' features+=PropertyFeature (',' features+=PropertyFeature)* '}')?
+		//('<' features+=PropertyFeature (',' features+=PropertyFeature)* '>')?
 		public Group getGroup_3() { return cGroup_3; }
 		
-		//'{'
-		public Keyword getLeftCurlyBracketKeyword_3_0() { return cLeftCurlyBracketKeyword_3_0; }
+		//'<'
+		public Keyword getLessThanSignKeyword_3_0() { return cLessThanSignKeyword_3_0; }
 		
 		//features+=PropertyFeature
 		public Assignment getFeaturesAssignment_3_1() { return cFeaturesAssignment_3_1; }
@@ -1015,8 +1015,8 @@ public class TechnologyDslGrammarAccess extends AbstractGrammarElementFinder {
 		//PropertyFeature
 		public RuleCall getFeaturesPropertyFeatureEnumRuleCall_3_2_1_0() { return cFeaturesPropertyFeatureEnumRuleCall_3_2_1_0; }
 		
-		//'}'
-		public Keyword getRightCurlyBracketKeyword_3_3() { return cRightCurlyBracketKeyword_3_3; }
+		//'>'
+		public Keyword getGreaterThanSignKeyword_3_3() { return cGreaterThanSignKeyword_3_3; }
 		
 		//';'
 		public Keyword getSemicolonKeyword_4() { return cSemicolonKeyword_4; }
@@ -1987,9 +1987,9 @@ public class TechnologyDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//TechnologySpecificProperty:
-	//	type=PrimitiveType name=ID ('=' defaultValue=PrimitiveValue)? ('{'
+	//	type=PrimitiveType name=ID ('=' defaultValue=PrimitiveValue)? ('<'
 	//	features+=PropertyFeature (',' features+=PropertyFeature)*
-	//	'}')?
+	//	'>')?
 	//	';';
 	public TechnologySpecificPropertyElements getTechnologySpecificPropertyAccess() {
 		return pTechnologySpecificProperty;

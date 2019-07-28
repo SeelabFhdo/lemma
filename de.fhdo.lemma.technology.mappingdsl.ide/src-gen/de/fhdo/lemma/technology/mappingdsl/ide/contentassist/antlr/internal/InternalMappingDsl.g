@@ -15522,9 +15522,9 @@ rule__TechnologySpecificProperty__Group_3__0__Impl
 	}
 :
 (
-	{ before(grammarAccess.getTechnologySpecificPropertyAccess().getLeftCurlyBracketKeyword_3_0()); }
-	'{'
-	{ after(grammarAccess.getTechnologySpecificPropertyAccess().getLeftCurlyBracketKeyword_3_0()); }
+	{ before(grammarAccess.getTechnologySpecificPropertyAccess().getLessThanSignKeyword_3_0()); }
+	'<'
+	{ after(grammarAccess.getTechnologySpecificPropertyAccess().getLessThanSignKeyword_3_0()); }
 )
 ;
 finally {
@@ -15602,9 +15602,9 @@ rule__TechnologySpecificProperty__Group_3__3__Impl
 	}
 :
 (
-	{ before(grammarAccess.getTechnologySpecificPropertyAccess().getRightCurlyBracketKeyword_3_3()); }
-	'}'
-	{ after(grammarAccess.getTechnologySpecificPropertyAccess().getRightCurlyBracketKeyword_3_3()); }
+	{ before(grammarAccess.getTechnologySpecificPropertyAccess().getGreaterThanSignKeyword_3_3()); }
+	'>'
+	{ after(grammarAccess.getTechnologySpecificPropertyAccess().getGreaterThanSignKeyword_3_3()); }
 )
 ;
 finally {

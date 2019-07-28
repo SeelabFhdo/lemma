@@ -22,7 +22,7 @@ import java.util.ArrayList;
 @SuppressWarnings("all")
 public class InternalTechnologyDslParser extends AbstractInternalContentAssistParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_STRING", "RULE_BIG_DECIMAL", "RULE_BOOLEAN", "RULE_INT", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "';'", "'in'", "'out'", "'inout'", "'sync'", "'async'", "'<-'", "'->'", "'<->'", "'mandatory'", "'singleval'", "'microservices'", "'interfaces'", "'operations'", "'parameters'", "'types'", "'fields'", "'containers'", "'infrastructure'", "'technology'", "'{'", "'}'", "'compatibility'", "'matrix'", "'protocols'", "'service'", "'aspects'", "'deployment'", "'technologies'", "'operation'", "'import'", "'from'", "'as'", "'data'", "'formats'", "','", "'with'", "'format'", "'primitive'", "'type'", "'based'", "'on'", "'list'", "'structure'", "'::'", "'environments'", "'='", "'properties'", "'selector'", "'('", "')'", "'aspect'", "'for'", "'datatypes'", "'version'", "'context'", "'extends'", "'enum'", "'boolean'", "'byte'", "'char'", "'date'", "'double'", "'float'", "'int'", "'long'", "'short'", "'string'", "'.'", "'default'", "'exchange_pattern'", "'communication_type'", "'protocol'", "'data_format'", "'hide'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_STRING", "RULE_BIG_DECIMAL", "RULE_BOOLEAN", "RULE_INT", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "';'", "'in'", "'out'", "'inout'", "'sync'", "'async'", "'<-'", "'->'", "'<->'", "'mandatory'", "'singleval'", "'microservices'", "'interfaces'", "'operations'", "'parameters'", "'types'", "'fields'", "'containers'", "'infrastructure'", "'technology'", "'{'", "'}'", "'compatibility'", "'matrix'", "'protocols'", "'service'", "'aspects'", "'deployment'", "'technologies'", "'operation'", "'import'", "'from'", "'as'", "'data'", "'formats'", "','", "'with'", "'format'", "'primitive'", "'type'", "'based'", "'on'", "'list'", "'structure'", "'::'", "'environments'", "'='", "'properties'", "'<'", "'>'", "'selector'", "'('", "')'", "'aspect'", "'for'", "'datatypes'", "'version'", "'context'", "'extends'", "'enum'", "'boolean'", "'byte'", "'char'", "'date'", "'double'", "'float'", "'int'", "'long'", "'short'", "'string'", "'.'", "'default'", "'exchange_pattern'", "'communication_type'", "'protocol'", "'data_format'", "'hide'"
     };
     public static final int T__50=50;
     public static final int RULE_BOOLEAN=7;
@@ -98,7 +98,9 @@ public class InternalTechnologyDslParser extends AbstractInternalContentAssistPa
     public static final int T__48=48;
     public static final int T__49=49;
     public static final int T__44=44;
+    public static final int T__88=88;
     public static final int T__45=45;
+    public static final int T__89=89;
     public static final int T__46=46;
     public static final int T__47=47;
     public static final int T__40=40;
@@ -3026,22 +3028,22 @@ public class InternalTechnologyDslParser extends AbstractInternalContentAssistPa
             // InternalTechnologyDsl.g:979:1: ( ( ( rule__ServiceAspectPointcut__Group_0__0 ) ) | ( ( rule__ServiceAspectPointcut__Group_1__0 ) ) | ( ( rule__ServiceAspectPointcut__Group_2__0 ) ) | ( ( rule__ServiceAspectPointcut__Group_3__0 ) ) )
             int alt2=4;
             switch ( input.LA(1) ) {
-            case 83:
+            case 85:
                 {
                 alt2=1;
                 }
                 break;
-            case 84:
+            case 86:
                 {
                 alt2=2;
                 }
                 break;
-            case 85:
+            case 87:
                 {
                 alt2=3;
                 }
                 break;
-            case 86:
+            case 88:
                 {
                 alt2=4;
                 }
@@ -3344,10 +3346,10 @@ public class InternalTechnologyDslParser extends AbstractInternalContentAssistPa
             int alt7=2;
             int LA7_0 = input.LA(1);
 
-            if ( ((LA7_0>=55 && LA7_0<=56)||LA7_0==70) ) {
+            if ( ((LA7_0>=55 && LA7_0<=56)||LA7_0==72) ) {
                 alt7=1;
             }
-            else if ( (LA7_0==68) ) {
+            else if ( (LA7_0==70) ) {
                 alt7=2;
             }
             else {
@@ -3392,7 +3394,7 @@ public class InternalTechnologyDslParser extends AbstractInternalContentAssistPa
                         int alt5=2;
                         int LA5_0 = input.LA(1);
 
-                        if ( ((LA5_0>=55 && LA5_0<=56)||LA5_0==70) ) {
+                        if ( ((LA5_0>=55 && LA5_0<=56)||LA5_0==72) ) {
                             alt5=1;
                         }
 
@@ -3460,7 +3462,7 @@ public class InternalTechnologyDslParser extends AbstractInternalContentAssistPa
                         int alt6=2;
                         int LA6_0 = input.LA(1);
 
-                        if ( (LA6_0==68) ) {
+                        if ( (LA6_0==70) ) {
                             alt6=1;
                         }
 
@@ -3530,7 +3532,7 @@ public class InternalTechnologyDslParser extends AbstractInternalContentAssistPa
                 alt8=2;
                 }
                 break;
-            case 70:
+            case 72:
                 {
                 alt8=3;
                 }
@@ -3706,7 +3708,7 @@ public class InternalTechnologyDslParser extends AbstractInternalContentAssistPa
             int alt10=2;
             int LA10_0 = input.LA(1);
 
-            if ( ((LA10_0>=71 && LA10_0<=80)) ) {
+            if ( ((LA10_0>=73 && LA10_0<=82)) ) {
                 alt10=1;
             }
             else if ( (LA10_0==RULE_ID) ) {
@@ -3921,52 +3923,52 @@ public class InternalTechnologyDslParser extends AbstractInternalContentAssistPa
             // InternalTechnologyDsl.g:1185:1: ( ( ( rule__PrimitiveType__Group_0__0 ) ) | ( ( rule__PrimitiveType__Group_1__0 ) ) | ( ( rule__PrimitiveType__Group_2__0 ) ) | ( ( rule__PrimitiveType__Group_3__0 ) ) | ( ( rule__PrimitiveType__Group_4__0 ) ) | ( ( rule__PrimitiveType__Group_5__0 ) ) | ( ( rule__PrimitiveType__Group_6__0 ) ) | ( ( rule__PrimitiveType__Group_7__0 ) ) | ( ( rule__PrimitiveType__Group_8__0 ) ) | ( ( rule__PrimitiveType__Group_9__0 ) ) )
             int alt12=10;
             switch ( input.LA(1) ) {
-            case 71:
+            case 73:
                 {
                 alt12=1;
                 }
                 break;
-            case 72:
+            case 74:
                 {
                 alt12=2;
                 }
                 break;
-            case 73:
+            case 75:
                 {
                 alt12=3;
                 }
                 break;
-            case 74:
+            case 76:
                 {
                 alt12=4;
                 }
                 break;
-            case 75:
+            case 77:
                 {
                 alt12=5;
                 }
                 break;
-            case 76:
+            case 78:
                 {
                 alt12=6;
                 }
                 break;
-            case 77:
+            case 79:
                 {
                 alt12=7;
                 }
                 break;
-            case 78:
+            case 80:
                 {
                 alt12=8;
                 }
                 break;
-            case 79:
+            case 81:
                 {
                 alt12=9;
                 }
                 break;
-            case 80:
+            case 82:
                 {
                 alt12=10;
                 }
@@ -7416,7 +7418,7 @@ public class InternalTechnologyDslParser extends AbstractInternalContentAssistPa
                 int alt30=2;
                 int LA30_0 = input.LA(1);
 
-                if ( (LA30_0==64) ) {
+                if ( (LA30_0==66) ) {
                     alt30=1;
                 }
 
@@ -8685,7 +8687,7 @@ public class InternalTechnologyDslParser extends AbstractInternalContentAssistPa
                 int alt33=2;
                 int LA33_0 = input.LA(1);
 
-                if ( (LA33_0==64) ) {
+                if ( (LA33_0==66) ) {
                     alt33=1;
                 }
 
@@ -9832,7 +9834,7 @@ public class InternalTechnologyDslParser extends AbstractInternalContentAssistPa
             int alt35=2;
             int LA35_0 = input.LA(1);
 
-            if ( (LA35_0==82) ) {
+            if ( (LA35_0==84) ) {
                 alt35=1;
             }
             switch (alt35) {
@@ -11202,7 +11204,7 @@ public class InternalTechnologyDslParser extends AbstractInternalContentAssistPa
             int alt38=2;
             int LA38_0 = input.LA(1);
 
-            if ( (LA38_0==82) ) {
+            if ( (LA38_0==84) ) {
                 alt38=1;
             }
             switch (alt38) {
@@ -14199,7 +14201,7 @@ public class InternalTechnologyDslParser extends AbstractInternalContentAssistPa
                 int alt43=2;
                 int LA43_0 = input.LA(1);
 
-                if ( ((LA43_0>=71 && LA43_0<=80)) ) {
+                if ( ((LA43_0>=73 && LA43_0<=82)) ) {
                     alt43=1;
                 }
 
@@ -15591,7 +15593,7 @@ public class InternalTechnologyDslParser extends AbstractInternalContentAssistPa
                 int alt46=2;
                 int LA46_0 = input.LA(1);
 
-                if ( ((LA46_0>=71 && LA46_0<=80)) ) {
+                if ( ((LA46_0>=73 && LA46_0<=82)) ) {
                     alt46=1;
                 }
 
@@ -15845,7 +15847,7 @@ public class InternalTechnologyDslParser extends AbstractInternalContentAssistPa
             int alt47=2;
             int LA47_0 = input.LA(1);
 
-            if ( (LA47_0==82) ) {
+            if ( (LA47_0==84) ) {
                 alt47=1;
             }
             switch (alt47) {
@@ -16207,7 +16209,7 @@ public class InternalTechnologyDslParser extends AbstractInternalContentAssistPa
             int alt49=2;
             int LA49_0 = input.LA(1);
 
-            if ( (LA49_0==33) ) {
+            if ( (LA49_0==61) ) {
                 alt49=1;
             }
             switch (alt49) {
@@ -16511,21 +16513,21 @@ public class InternalTechnologyDslParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__TechnologySpecificProperty__Group_3__0__Impl"
-    // InternalTechnologyDsl.g:5240:1: rule__TechnologySpecificProperty__Group_3__0__Impl : ( '{' ) ;
+    // InternalTechnologyDsl.g:5240:1: rule__TechnologySpecificProperty__Group_3__0__Impl : ( '<' ) ;
     public final void rule__TechnologySpecificProperty__Group_3__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalTechnologyDsl.g:5244:1: ( ( '{' ) )
-            // InternalTechnologyDsl.g:5245:1: ( '{' )
+            // InternalTechnologyDsl.g:5244:1: ( ( '<' ) )
+            // InternalTechnologyDsl.g:5245:1: ( '<' )
             {
-            // InternalTechnologyDsl.g:5245:1: ( '{' )
-            // InternalTechnologyDsl.g:5246:2: '{'
+            // InternalTechnologyDsl.g:5245:1: ( '<' )
+            // InternalTechnologyDsl.g:5246:2: '<'
             {
-             before(grammarAccess.getTechnologySpecificPropertyAccess().getLeftCurlyBracketKeyword_3_0()); 
-            match(input,33,FOLLOW_2); 
-             after(grammarAccess.getTechnologySpecificPropertyAccess().getLeftCurlyBracketKeyword_3_0()); 
+             before(grammarAccess.getTechnologySpecificPropertyAccess().getLessThanSignKeyword_3_0()); 
+            match(input,61,FOLLOW_2); 
+             after(grammarAccess.getTechnologySpecificPropertyAccess().getLessThanSignKeyword_3_0()); 
 
             }
 
@@ -16769,21 +16771,21 @@ public class InternalTechnologyDslParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__TechnologySpecificProperty__Group_3__3__Impl"
-    // InternalTechnologyDsl.g:5320:1: rule__TechnologySpecificProperty__Group_3__3__Impl : ( '}' ) ;
+    // InternalTechnologyDsl.g:5320:1: rule__TechnologySpecificProperty__Group_3__3__Impl : ( '>' ) ;
     public final void rule__TechnologySpecificProperty__Group_3__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalTechnologyDsl.g:5324:1: ( ( '}' ) )
-            // InternalTechnologyDsl.g:5325:1: ( '}' )
+            // InternalTechnologyDsl.g:5324:1: ( ( '>' ) )
+            // InternalTechnologyDsl.g:5325:1: ( '>' )
             {
-            // InternalTechnologyDsl.g:5325:1: ( '}' )
-            // InternalTechnologyDsl.g:5326:2: '}'
+            // InternalTechnologyDsl.g:5325:1: ( '>' )
+            // InternalTechnologyDsl.g:5326:2: '>'
             {
-             before(grammarAccess.getTechnologySpecificPropertyAccess().getRightCurlyBracketKeyword_3_3()); 
-            match(input,34,FOLLOW_2); 
-             after(grammarAccess.getTechnologySpecificPropertyAccess().getRightCurlyBracketKeyword_3_3()); 
+             before(grammarAccess.getTechnologySpecificPropertyAccess().getGreaterThanSignKeyword_3_3()); 
+            match(input,62,FOLLOW_2); 
+             after(grammarAccess.getTechnologySpecificPropertyAccess().getGreaterThanSignKeyword_3_3()); 
 
             }
 
@@ -17972,7 +17974,7 @@ public class InternalTechnologyDslParser extends AbstractInternalContentAssistPa
             // InternalTechnologyDsl.g:5732:2: 'selector'
             {
              before(grammarAccess.getServiceAspectPointcutSelectorAccess().getSelectorKeyword_0()); 
-            match(input,61,FOLLOW_2); 
+            match(input,63,FOLLOW_2); 
              after(grammarAccess.getServiceAspectPointcutSelectorAccess().getSelectorKeyword_0()); 
 
             }
@@ -18047,7 +18049,7 @@ public class InternalTechnologyDslParser extends AbstractInternalContentAssistPa
             // InternalTechnologyDsl.g:5759:2: '('
             {
              before(grammarAccess.getServiceAspectPointcutSelectorAccess().getLeftParenthesisKeyword_1()); 
-            match(input,62,FOLLOW_2); 
+            match(input,64,FOLLOW_2); 
              after(grammarAccess.getServiceAspectPointcutSelectorAccess().getLeftParenthesisKeyword_1()); 
 
             }
@@ -18310,7 +18312,7 @@ public class InternalTechnologyDslParser extends AbstractInternalContentAssistPa
             // InternalTechnologyDsl.g:5840:2: ')'
             {
              before(grammarAccess.getServiceAspectPointcutSelectorAccess().getRightParenthesisKeyword_4()); 
-            match(input,63,FOLLOW_2); 
+            match(input,65,FOLLOW_2); 
              after(grammarAccess.getServiceAspectPointcutSelectorAccess().getRightParenthesisKeyword_4()); 
 
             }
@@ -18610,7 +18612,7 @@ public class InternalTechnologyDslParser extends AbstractInternalContentAssistPa
             // InternalTechnologyDsl.g:5948:2: 'aspect'
             {
              before(grammarAccess.getServiceAspectAccess().getAspectKeyword_0()); 
-            match(input,64,FOLLOW_2); 
+            match(input,66,FOLLOW_2); 
              after(grammarAccess.getServiceAspectAccess().getAspectKeyword_0()); 
 
             }
@@ -18770,7 +18772,7 @@ public class InternalTechnologyDslParser extends AbstractInternalContentAssistPa
             // InternalTechnologyDsl.g:6002:2: 'for'
             {
              before(grammarAccess.getServiceAspectAccess().getForKeyword_2()); 
-            match(input,65,FOLLOW_2); 
+            match(input,67,FOLLOW_2); 
              after(grammarAccess.getServiceAspectAccess().getForKeyword_2()); 
 
             }
@@ -19349,7 +19351,7 @@ public class InternalTechnologyDslParser extends AbstractInternalContentAssistPa
                 int alt53=2;
                 int LA53_0 = input.LA(1);
 
-                if ( (LA53_0==61) ) {
+                if ( (LA53_0==63) ) {
                     alt53=1;
                 }
 
@@ -19452,7 +19454,7 @@ public class InternalTechnologyDslParser extends AbstractInternalContentAssistPa
                 int alt54=2;
                 int LA54_0 = input.LA(1);
 
-                if ( ((LA54_0>=71 && LA54_0<=80)) ) {
+                if ( ((LA54_0>=73 && LA54_0<=82)) ) {
                     alt54=1;
                 }
 
@@ -19859,7 +19861,7 @@ public class InternalTechnologyDslParser extends AbstractInternalContentAssistPa
             // InternalTechnologyDsl.g:6353:2: 'selector'
             {
              before(grammarAccess.getOperationAspectPointcutSelectorAccess().getSelectorKeyword_0()); 
-            match(input,61,FOLLOW_2); 
+            match(input,63,FOLLOW_2); 
              after(grammarAccess.getOperationAspectPointcutSelectorAccess().getSelectorKeyword_0()); 
 
             }
@@ -19934,7 +19936,7 @@ public class InternalTechnologyDslParser extends AbstractInternalContentAssistPa
             // InternalTechnologyDsl.g:6380:2: '('
             {
              before(grammarAccess.getOperationAspectPointcutSelectorAccess().getLeftParenthesisKeyword_1()); 
-            match(input,62,FOLLOW_2); 
+            match(input,64,FOLLOW_2); 
              after(grammarAccess.getOperationAspectPointcutSelectorAccess().getLeftParenthesisKeyword_1()); 
 
             }
@@ -20197,7 +20199,7 @@ public class InternalTechnologyDslParser extends AbstractInternalContentAssistPa
             // InternalTechnologyDsl.g:6461:2: ')'
             {
              before(grammarAccess.getOperationAspectPointcutSelectorAccess().getRightParenthesisKeyword_4()); 
-            match(input,63,FOLLOW_2); 
+            match(input,65,FOLLOW_2); 
              after(grammarAccess.getOperationAspectPointcutSelectorAccess().getRightParenthesisKeyword_4()); 
 
             }
@@ -20497,7 +20499,7 @@ public class InternalTechnologyDslParser extends AbstractInternalContentAssistPa
             // InternalTechnologyDsl.g:6569:2: 'aspect'
             {
              before(grammarAccess.getOperationAspectAccess().getAspectKeyword_0()); 
-            match(input,64,FOLLOW_2); 
+            match(input,66,FOLLOW_2); 
              after(grammarAccess.getOperationAspectAccess().getAspectKeyword_0()); 
 
             }
@@ -20657,7 +20659,7 @@ public class InternalTechnologyDslParser extends AbstractInternalContentAssistPa
             // InternalTechnologyDsl.g:6623:2: 'for'
             {
              before(grammarAccess.getOperationAspectAccess().getForKeyword_2()); 
-            match(input,65,FOLLOW_2); 
+            match(input,67,FOLLOW_2); 
              after(grammarAccess.getOperationAspectAccess().getForKeyword_2()); 
 
             }
@@ -21236,7 +21238,7 @@ public class InternalTechnologyDslParser extends AbstractInternalContentAssistPa
                 int alt57=2;
                 int LA57_0 = input.LA(1);
 
-                if ( (LA57_0==61) ) {
+                if ( (LA57_0==63) ) {
                     alt57=1;
                 }
 
@@ -21339,7 +21341,7 @@ public class InternalTechnologyDslParser extends AbstractInternalContentAssistPa
                 int alt58=2;
                 int LA58_0 = input.LA(1);
 
-                if ( ((LA58_0>=71 && LA58_0<=80)) ) {
+                if ( ((LA58_0>=73 && LA58_0<=82)) ) {
                     alt58=1;
                 }
 
@@ -21581,7 +21583,7 @@ public class InternalTechnologyDslParser extends AbstractInternalContentAssistPa
             // InternalTechnologyDsl.g:6920:2: 'datatypes'
             {
              before(grammarAccess.getComplexTypeImportAccess().getDatatypesKeyword_1()); 
-            match(input,66,FOLLOW_2); 
+            match(input,68,FOLLOW_2); 
              after(grammarAccess.getComplexTypeImportAccess().getDatatypesKeyword_1()); 
 
             }
@@ -21971,7 +21973,7 @@ public class InternalTechnologyDslParser extends AbstractInternalContentAssistPa
             // InternalTechnologyDsl.g:7055:2: 'version'
             {
              before(grammarAccess.getVersionAccess().getVersionKeyword_0()); 
-            match(input,67,FOLLOW_2); 
+            match(input,69,FOLLOW_2); 
              after(grammarAccess.getVersionAccess().getVersionKeyword_0()); 
 
             }
@@ -22210,7 +22212,7 @@ public class InternalTechnologyDslParser extends AbstractInternalContentAssistPa
             int alt59=2;
             int LA59_0 = input.LA(1);
 
-            if ( ((LA59_0>=55 && LA59_0<=56)||LA59_0==68||LA59_0==70) ) {
+            if ( ((LA59_0>=55 && LA59_0<=56)||LA59_0==70||LA59_0==72) ) {
                 alt59=1;
             }
             switch (alt59) {
@@ -22372,7 +22374,7 @@ public class InternalTechnologyDslParser extends AbstractInternalContentAssistPa
             // InternalTechnologyDsl.g:7190:2: 'context'
             {
              before(grammarAccess.getContextAccess().getContextKeyword_0()); 
-            match(input,68,FOLLOW_2); 
+            match(input,70,FOLLOW_2); 
              after(grammarAccess.getContextAccess().getContextKeyword_0()); 
 
             }
@@ -22635,7 +22637,7 @@ public class InternalTechnologyDslParser extends AbstractInternalContentAssistPa
                 int alt60=2;
                 int LA60_0 = input.LA(1);
 
-                if ( ((LA60_0>=55 && LA60_0<=56)||LA60_0==70) ) {
+                if ( ((LA60_0>=55 && LA60_0<=56)||LA60_0==72) ) {
                     alt60=1;
                 }
 
@@ -22969,7 +22971,7 @@ public class InternalTechnologyDslParser extends AbstractInternalContentAssistPa
             int alt61=2;
             int LA61_0 = input.LA(1);
 
-            if ( (LA61_0==69) ) {
+            if ( (LA61_0==71) ) {
                 alt61=1;
             }
             switch (alt61) {
@@ -23140,7 +23142,7 @@ public class InternalTechnologyDslParser extends AbstractInternalContentAssistPa
             int alt62=2;
             int LA62_0 = input.LA(1);
 
-            if ( (LA62_0==RULE_ID||(LA62_0>=71 && LA62_0<=80)||LA62_0==87) ) {
+            if ( (LA62_0==RULE_ID||(LA62_0>=73 && LA62_0<=82)||LA62_0==89) ) {
                 alt62=1;
             }
             switch (alt62) {
@@ -23302,7 +23304,7 @@ public class InternalTechnologyDslParser extends AbstractInternalContentAssistPa
             // InternalTechnologyDsl.g:7494:2: 'extends'
             {
              before(grammarAccess.getDataStructureAccess().getExtendsKeyword_2_0()); 
-            match(input,69,FOLLOW_2); 
+            match(input,71,FOLLOW_2); 
              after(grammarAccess.getDataStructureAccess().getExtendsKeyword_2_0()); 
 
             }
@@ -23988,7 +23990,7 @@ public class InternalTechnologyDslParser extends AbstractInternalContentAssistPa
             // InternalTechnologyDsl.g:7723:1: ( rule__ListType__Group_0__3__Impl rule__ListType__Group_0__4 )
             // InternalTechnologyDsl.g:7724:2: rule__ListType__Group_0__3__Impl rule__ListType__Group_0__4
             {
-            pushFollow(FOLLOW_50);
+            pushFollow(FOLLOW_68);
             rule__ListType__Group_0__3__Impl();
 
             state._fsp--;
@@ -24073,7 +24075,7 @@ public class InternalTechnologyDslParser extends AbstractInternalContentAssistPa
             // InternalTechnologyDsl.g:7750:1: ( rule__ListType__Group_0__4__Impl rule__ListType__Group_0__5 )
             // InternalTechnologyDsl.g:7751:2: rule__ListType__Group_0__4__Impl rule__ListType__Group_0__5
             {
-            pushFollow(FOLLOW_50);
+            pushFollow(FOLLOW_68);
             rule__ListType__Group_0__4__Impl();
 
             state._fsp--;
@@ -24837,7 +24839,7 @@ public class InternalTechnologyDslParser extends AbstractInternalContentAssistPa
             int alt65=2;
             int LA65_0 = input.LA(1);
 
-            if ( (LA65_0==87) ) {
+            if ( (LA65_0==89) ) {
                 alt65=1;
             }
             switch (alt65) {
@@ -24933,13 +24935,13 @@ public class InternalTechnologyDslParser extends AbstractInternalContentAssistPa
             int alt66=2;
             int LA66_0 = input.LA(1);
 
-            if ( ((LA66_0>=71 && LA66_0<=80)) ) {
+            if ( ((LA66_0>=73 && LA66_0<=82)) ) {
                 alt66=1;
             }
             else if ( (LA66_0==RULE_ID) ) {
                 int LA66_2 = input.LA(2);
 
-                if ( (LA66_2==RULE_ID||LA66_2==57||LA66_2==81) ) {
+                if ( (LA66_2==RULE_ID||LA66_2==57||LA66_2==83) ) {
                     alt66=1;
                 }
             }
@@ -25112,7 +25114,7 @@ public class InternalTechnologyDslParser extends AbstractInternalContentAssistPa
             // InternalTechnologyDsl.g:8088:2: 'enum'
             {
              before(grammarAccess.getEnumerationAccess().getEnumKeyword_0()); 
-            match(input,70,FOLLOW_2); 
+            match(input,72,FOLLOW_2); 
              after(grammarAccess.getEnumerationAccess().getEnumKeyword_0()); 
 
             }
@@ -25305,7 +25307,7 @@ public class InternalTechnologyDslParser extends AbstractInternalContentAssistPa
             // InternalTechnologyDsl.g:8155:1: ( rule__Enumeration__Group__3__Impl rule__Enumeration__Group__4 )
             // InternalTechnologyDsl.g:8156:2: rule__Enumeration__Group__3__Impl rule__Enumeration__Group__4
             {
-            pushFollow(FOLLOW_50);
+            pushFollow(FOLLOW_68);
             rule__Enumeration__Group__3__Impl();
 
             state._fsp--;
@@ -25390,7 +25392,7 @@ public class InternalTechnologyDslParser extends AbstractInternalContentAssistPa
             // InternalTechnologyDsl.g:8182:1: ( rule__Enumeration__Group__4__Impl rule__Enumeration__Group__5 )
             // InternalTechnologyDsl.g:8183:2: rule__Enumeration__Group__4__Impl rule__Enumeration__Group__5
             {
-            pushFollow(FOLLOW_50);
+            pushFollow(FOLLOW_68);
             rule__Enumeration__Group__4__Impl();
 
             state._fsp--;
@@ -25844,7 +25846,7 @@ public class InternalTechnologyDslParser extends AbstractInternalContentAssistPa
             int alt68=2;
             int LA68_0 = input.LA(1);
 
-            if ( (LA68_0==62) ) {
+            if ( (LA68_0==64) ) {
                 alt68=1;
             }
             switch (alt68) {
@@ -25936,7 +25938,7 @@ public class InternalTechnologyDslParser extends AbstractInternalContentAssistPa
             // InternalTechnologyDsl.g:8358:2: '('
             {
              before(grammarAccess.getEnumerationFieldAccess().getLeftParenthesisKeyword_1_0()); 
-            match(input,62,FOLLOW_2); 
+            match(input,64,FOLLOW_2); 
              after(grammarAccess.getEnumerationFieldAccess().getLeftParenthesisKeyword_1_0()); 
 
             }
@@ -25969,7 +25971,7 @@ public class InternalTechnologyDslParser extends AbstractInternalContentAssistPa
             // InternalTechnologyDsl.g:8371:1: ( rule__EnumerationField__Group_1__1__Impl rule__EnumerationField__Group_1__2 )
             // InternalTechnologyDsl.g:8372:2: rule__EnumerationField__Group_1__1__Impl rule__EnumerationField__Group_1__2
             {
-            pushFollow(FOLLOW_68);
+            pushFollow(FOLLOW_69);
             rule__EnumerationField__Group_1__1__Impl();
 
             state._fsp--;
@@ -26091,7 +26093,7 @@ public class InternalTechnologyDslParser extends AbstractInternalContentAssistPa
             // InternalTechnologyDsl.g:8411:2: ')'
             {
              before(grammarAccess.getEnumerationFieldAccess().getRightParenthesisKeyword_1_2()); 
-            match(input,63,FOLLOW_2); 
+            match(input,65,FOLLOW_2); 
              after(grammarAccess.getEnumerationFieldAccess().getRightParenthesisKeyword_1_2()); 
 
             }
@@ -26124,7 +26126,7 @@ public class InternalTechnologyDslParser extends AbstractInternalContentAssistPa
             // InternalTechnologyDsl.g:8425:1: ( rule__PossiblyImportedComplexType__Group__0__Impl rule__PossiblyImportedComplexType__Group__1 )
             // InternalTechnologyDsl.g:8426:2: rule__PossiblyImportedComplexType__Group__0__Impl rule__PossiblyImportedComplexType__Group__1
             {
-            pushFollow(FOLLOW_69);
+            pushFollow(FOLLOW_70);
             rule__PossiblyImportedComplexType__Group__0__Impl();
 
             state._fsp--;
@@ -26459,7 +26461,7 @@ public class InternalTechnologyDslParser extends AbstractInternalContentAssistPa
             // InternalTechnologyDsl.g:8533:1: ( rule__PrimitiveType__Group_0__0__Impl rule__PrimitiveType__Group_0__1 )
             // InternalTechnologyDsl.g:8534:2: rule__PrimitiveType__Group_0__0__Impl rule__PrimitiveType__Group_0__1
             {
-            pushFollow(FOLLOW_70);
+            pushFollow(FOLLOW_71);
             rule__PrimitiveType__Group_0__0__Impl();
 
             state._fsp--;
@@ -26571,7 +26573,7 @@ public class InternalTechnologyDslParser extends AbstractInternalContentAssistPa
             // InternalTechnologyDsl.g:8573:2: 'boolean'
             {
              before(grammarAccess.getPrimitiveTypeAccess().getBooleanKeyword_0_1()); 
-            match(input,71,FOLLOW_2); 
+            match(input,73,FOLLOW_2); 
              after(grammarAccess.getPrimitiveTypeAccess().getBooleanKeyword_0_1()); 
 
             }
@@ -26604,7 +26606,7 @@ public class InternalTechnologyDslParser extends AbstractInternalContentAssistPa
             // InternalTechnologyDsl.g:8587:1: ( rule__PrimitiveType__Group_1__0__Impl rule__PrimitiveType__Group_1__1 )
             // InternalTechnologyDsl.g:8588:2: rule__PrimitiveType__Group_1__0__Impl rule__PrimitiveType__Group_1__1
             {
-            pushFollow(FOLLOW_71);
+            pushFollow(FOLLOW_72);
             rule__PrimitiveType__Group_1__0__Impl();
 
             state._fsp--;
@@ -26716,7 +26718,7 @@ public class InternalTechnologyDslParser extends AbstractInternalContentAssistPa
             // InternalTechnologyDsl.g:8627:2: 'byte'
             {
              before(grammarAccess.getPrimitiveTypeAccess().getByteKeyword_1_1()); 
-            match(input,72,FOLLOW_2); 
+            match(input,74,FOLLOW_2); 
              after(grammarAccess.getPrimitiveTypeAccess().getByteKeyword_1_1()); 
 
             }
@@ -26749,7 +26751,7 @@ public class InternalTechnologyDslParser extends AbstractInternalContentAssistPa
             // InternalTechnologyDsl.g:8641:1: ( rule__PrimitiveType__Group_2__0__Impl rule__PrimitiveType__Group_2__1 )
             // InternalTechnologyDsl.g:8642:2: rule__PrimitiveType__Group_2__0__Impl rule__PrimitiveType__Group_2__1
             {
-            pushFollow(FOLLOW_72);
+            pushFollow(FOLLOW_73);
             rule__PrimitiveType__Group_2__0__Impl();
 
             state._fsp--;
@@ -26861,7 +26863,7 @@ public class InternalTechnologyDslParser extends AbstractInternalContentAssistPa
             // InternalTechnologyDsl.g:8681:2: 'char'
             {
              before(grammarAccess.getPrimitiveTypeAccess().getCharKeyword_2_1()); 
-            match(input,73,FOLLOW_2); 
+            match(input,75,FOLLOW_2); 
              after(grammarAccess.getPrimitiveTypeAccess().getCharKeyword_2_1()); 
 
             }
@@ -26894,7 +26896,7 @@ public class InternalTechnologyDslParser extends AbstractInternalContentAssistPa
             // InternalTechnologyDsl.g:8695:1: ( rule__PrimitiveType__Group_3__0__Impl rule__PrimitiveType__Group_3__1 )
             // InternalTechnologyDsl.g:8696:2: rule__PrimitiveType__Group_3__0__Impl rule__PrimitiveType__Group_3__1
             {
-            pushFollow(FOLLOW_73);
+            pushFollow(FOLLOW_74);
             rule__PrimitiveType__Group_3__0__Impl();
 
             state._fsp--;
@@ -27006,7 +27008,7 @@ public class InternalTechnologyDslParser extends AbstractInternalContentAssistPa
             // InternalTechnologyDsl.g:8735:2: 'date'
             {
              before(grammarAccess.getPrimitiveTypeAccess().getDateKeyword_3_1()); 
-            match(input,74,FOLLOW_2); 
+            match(input,76,FOLLOW_2); 
              after(grammarAccess.getPrimitiveTypeAccess().getDateKeyword_3_1()); 
 
             }
@@ -27039,7 +27041,7 @@ public class InternalTechnologyDslParser extends AbstractInternalContentAssistPa
             // InternalTechnologyDsl.g:8749:1: ( rule__PrimitiveType__Group_4__0__Impl rule__PrimitiveType__Group_4__1 )
             // InternalTechnologyDsl.g:8750:2: rule__PrimitiveType__Group_4__0__Impl rule__PrimitiveType__Group_4__1
             {
-            pushFollow(FOLLOW_74);
+            pushFollow(FOLLOW_75);
             rule__PrimitiveType__Group_4__0__Impl();
 
             state._fsp--;
@@ -27151,7 +27153,7 @@ public class InternalTechnologyDslParser extends AbstractInternalContentAssistPa
             // InternalTechnologyDsl.g:8789:2: 'double'
             {
              before(grammarAccess.getPrimitiveTypeAccess().getDoubleKeyword_4_1()); 
-            match(input,75,FOLLOW_2); 
+            match(input,77,FOLLOW_2); 
              after(grammarAccess.getPrimitiveTypeAccess().getDoubleKeyword_4_1()); 
 
             }
@@ -27184,7 +27186,7 @@ public class InternalTechnologyDslParser extends AbstractInternalContentAssistPa
             // InternalTechnologyDsl.g:8803:1: ( rule__PrimitiveType__Group_5__0__Impl rule__PrimitiveType__Group_5__1 )
             // InternalTechnologyDsl.g:8804:2: rule__PrimitiveType__Group_5__0__Impl rule__PrimitiveType__Group_5__1
             {
-            pushFollow(FOLLOW_75);
+            pushFollow(FOLLOW_76);
             rule__PrimitiveType__Group_5__0__Impl();
 
             state._fsp--;
@@ -27296,7 +27298,7 @@ public class InternalTechnologyDslParser extends AbstractInternalContentAssistPa
             // InternalTechnologyDsl.g:8843:2: 'float'
             {
              before(grammarAccess.getPrimitiveTypeAccess().getFloatKeyword_5_1()); 
-            match(input,76,FOLLOW_2); 
+            match(input,78,FOLLOW_2); 
              after(grammarAccess.getPrimitiveTypeAccess().getFloatKeyword_5_1()); 
 
             }
@@ -27329,7 +27331,7 @@ public class InternalTechnologyDslParser extends AbstractInternalContentAssistPa
             // InternalTechnologyDsl.g:8857:1: ( rule__PrimitiveType__Group_6__0__Impl rule__PrimitiveType__Group_6__1 )
             // InternalTechnologyDsl.g:8858:2: rule__PrimitiveType__Group_6__0__Impl rule__PrimitiveType__Group_6__1
             {
-            pushFollow(FOLLOW_76);
+            pushFollow(FOLLOW_77);
             rule__PrimitiveType__Group_6__0__Impl();
 
             state._fsp--;
@@ -27441,7 +27443,7 @@ public class InternalTechnologyDslParser extends AbstractInternalContentAssistPa
             // InternalTechnologyDsl.g:8897:2: 'int'
             {
              before(grammarAccess.getPrimitiveTypeAccess().getIntKeyword_6_1()); 
-            match(input,77,FOLLOW_2); 
+            match(input,79,FOLLOW_2); 
              after(grammarAccess.getPrimitiveTypeAccess().getIntKeyword_6_1()); 
 
             }
@@ -27474,7 +27476,7 @@ public class InternalTechnologyDslParser extends AbstractInternalContentAssistPa
             // InternalTechnologyDsl.g:8911:1: ( rule__PrimitiveType__Group_7__0__Impl rule__PrimitiveType__Group_7__1 )
             // InternalTechnologyDsl.g:8912:2: rule__PrimitiveType__Group_7__0__Impl rule__PrimitiveType__Group_7__1
             {
-            pushFollow(FOLLOW_77);
+            pushFollow(FOLLOW_78);
             rule__PrimitiveType__Group_7__0__Impl();
 
             state._fsp--;
@@ -27586,7 +27588,7 @@ public class InternalTechnologyDslParser extends AbstractInternalContentAssistPa
             // InternalTechnologyDsl.g:8951:2: 'long'
             {
              before(grammarAccess.getPrimitiveTypeAccess().getLongKeyword_7_1()); 
-            match(input,78,FOLLOW_2); 
+            match(input,80,FOLLOW_2); 
              after(grammarAccess.getPrimitiveTypeAccess().getLongKeyword_7_1()); 
 
             }
@@ -27619,7 +27621,7 @@ public class InternalTechnologyDslParser extends AbstractInternalContentAssistPa
             // InternalTechnologyDsl.g:8965:1: ( rule__PrimitiveType__Group_8__0__Impl rule__PrimitiveType__Group_8__1 )
             // InternalTechnologyDsl.g:8966:2: rule__PrimitiveType__Group_8__0__Impl rule__PrimitiveType__Group_8__1
             {
-            pushFollow(FOLLOW_78);
+            pushFollow(FOLLOW_79);
             rule__PrimitiveType__Group_8__0__Impl();
 
             state._fsp--;
@@ -27731,7 +27733,7 @@ public class InternalTechnologyDslParser extends AbstractInternalContentAssistPa
             // InternalTechnologyDsl.g:9005:2: 'short'
             {
              before(grammarAccess.getPrimitiveTypeAccess().getShortKeyword_8_1()); 
-            match(input,79,FOLLOW_2); 
+            match(input,81,FOLLOW_2); 
              after(grammarAccess.getPrimitiveTypeAccess().getShortKeyword_8_1()); 
 
             }
@@ -27876,7 +27878,7 @@ public class InternalTechnologyDslParser extends AbstractInternalContentAssistPa
             // InternalTechnologyDsl.g:9059:2: 'string'
             {
              before(grammarAccess.getPrimitiveTypeAccess().getStringKeyword_9_1()); 
-            match(input,80,FOLLOW_2); 
+            match(input,82,FOLLOW_2); 
              after(grammarAccess.getPrimitiveTypeAccess().getStringKeyword_9_1()); 
 
             }
@@ -27909,7 +27911,7 @@ public class InternalTechnologyDslParser extends AbstractInternalContentAssistPa
             // InternalTechnologyDsl.g:9073:1: ( rule__QualifiedName__Group__0__Impl rule__QualifiedName__Group__1 )
             // InternalTechnologyDsl.g:9074:2: rule__QualifiedName__Group__0__Impl rule__QualifiedName__Group__1
             {
-            pushFollow(FOLLOW_79);
+            pushFollow(FOLLOW_80);
             rule__QualifiedName__Group__0__Impl();
 
             state._fsp--;
@@ -28027,7 +28029,7 @@ public class InternalTechnologyDslParser extends AbstractInternalContentAssistPa
                 int alt70=2;
                 int LA70_0 = input.LA(1);
 
-                if ( (LA70_0==81) ) {
+                if ( (LA70_0==83) ) {
                     alt70=1;
                 }
 
@@ -28036,7 +28038,7 @@ public class InternalTechnologyDslParser extends AbstractInternalContentAssistPa
             	case 1 :
             	    // InternalTechnologyDsl.g:9114:3: rule__QualifiedName__Group_1__0
             	    {
-            	    pushFollow(FOLLOW_80);
+            	    pushFollow(FOLLOW_81);
             	    rule__QualifiedName__Group_1__0();
 
             	    state._fsp--;
@@ -28124,7 +28126,7 @@ public class InternalTechnologyDslParser extends AbstractInternalContentAssistPa
             // InternalTechnologyDsl.g:9141:2: '.'
             {
              before(grammarAccess.getQualifiedNameAccess().getFullStopKeyword_1_0()); 
-            match(input,81,FOLLOW_2); 
+            match(input,83,FOLLOW_2); 
              after(grammarAccess.getQualifiedNameAccess().getFullStopKeyword_1_0()); 
 
             }
@@ -28916,7 +28918,7 @@ public class InternalTechnologyDslParser extends AbstractInternalContentAssistPa
             // InternalTechnologyDsl.g:9440:4: 'default'
             {
              before(grammarAccess.getProtocolAccess().getDefaultDefaultKeyword_6_0_0()); 
-            match(input,82,FOLLOW_2); 
+            match(input,84,FOLLOW_2); 
              after(grammarAccess.getProtocolAccess().getDefaultDefaultKeyword_6_0_0()); 
 
             }
@@ -29162,7 +29164,7 @@ public class InternalTechnologyDslParser extends AbstractInternalContentAssistPa
             // InternalTechnologyDsl.g:9538:4: 'default'
             {
              before(grammarAccess.getTechnologySpecificPrimitiveTypeAccess().getDefaultDefaultKeyword_3_4_0()); 
-            match(input,82,FOLLOW_2); 
+            match(input,84,FOLLOW_2); 
              after(grammarAccess.getTechnologySpecificPrimitiveTypeAccess().getDefaultDefaultKeyword_3_4_0()); 
 
             }
@@ -29896,7 +29898,7 @@ public class InternalTechnologyDslParser extends AbstractInternalContentAssistPa
             // InternalTechnologyDsl.g:9820:4: 'default'
             {
              before(grammarAccess.getOperationEnvironmentAccess().getDefaultDefaultKeyword_1_0()); 
-            match(input,82,FOLLOW_2); 
+            match(input,84,FOLLOW_2); 
              after(grammarAccess.getOperationEnvironmentAccess().getDefaultDefaultKeyword_1_0()); 
 
             }
@@ -30142,7 +30144,7 @@ public class InternalTechnologyDslParser extends AbstractInternalContentAssistPa
             // InternalTechnologyDsl.g:9914:4: 'exchange_pattern'
             {
              before(grammarAccess.getServiceAspectPointcutAccess().getForExchangePatternExchange_patternKeyword_0_0_0()); 
-            match(input,83,FOLLOW_2); 
+            match(input,85,FOLLOW_2); 
              after(grammarAccess.getServiceAspectPointcutAccess().getForExchangePatternExchange_patternKeyword_0_0_0()); 
 
             }
@@ -30228,7 +30230,7 @@ public class InternalTechnologyDslParser extends AbstractInternalContentAssistPa
             // InternalTechnologyDsl.g:9948:4: 'communication_type'
             {
              before(grammarAccess.getServiceAspectPointcutAccess().getForCommunicationTypeCommunication_typeKeyword_1_0_0()); 
-            match(input,84,FOLLOW_2); 
+            match(input,86,FOLLOW_2); 
              after(grammarAccess.getServiceAspectPointcutAccess().getForCommunicationTypeCommunication_typeKeyword_1_0_0()); 
 
             }
@@ -30314,7 +30316,7 @@ public class InternalTechnologyDslParser extends AbstractInternalContentAssistPa
             // InternalTechnologyDsl.g:9982:4: 'protocol'
             {
              before(grammarAccess.getServiceAspectPointcutAccess().getForProtocolProtocolKeyword_2_0_0()); 
-            match(input,85,FOLLOW_2); 
+            match(input,87,FOLLOW_2); 
              after(grammarAccess.getServiceAspectPointcutAccess().getForProtocolProtocolKeyword_2_0_0()); 
 
             }
@@ -30404,7 +30406,7 @@ public class InternalTechnologyDslParser extends AbstractInternalContentAssistPa
             // InternalTechnologyDsl.g:10020:4: 'data_format'
             {
              before(grammarAccess.getServiceAspectPointcutAccess().getForDataFormatData_formatKeyword_3_0_0()); 
-            match(input,86,FOLLOW_2); 
+            match(input,88,FOLLOW_2); 
              after(grammarAccess.getServiceAspectPointcutAccess().getForDataFormatData_formatKeyword_3_0_0()); 
 
             }
@@ -31786,7 +31788,7 @@ public class InternalTechnologyDslParser extends AbstractInternalContentAssistPa
             // InternalTechnologyDsl.g:10550:4: 'hide'
             {
              before(grammarAccess.getDataFieldAccess().getHiddenHideKeyword_0_0()); 
-            match(input,87,FOLLOW_2); 
+            match(input,89,FOLLOW_2); 
              after(grammarAccess.getDataFieldAccess().getHiddenHideKeyword_0_0()); 
 
             }
@@ -32339,14 +32341,14 @@ public class InternalTechnologyDslParser extends AbstractInternalContentAssistPa
     protected DFA9 dfa9 = new DFA9(this);
     static final String dfa_1s = "\20\uffff";
     static final String dfa_2s = "\1\67\1\4\1\41\1\4\1\uffff\12\4\1\uffff";
-    static final String dfa_3s = "\1\67\1\4\1\41\1\127\1\uffff\12\42\1\uffff";
+    static final String dfa_3s = "\1\67\1\4\1\41\1\131\1\uffff\12\42\1\uffff";
     static final String dfa_4s = "\4\uffff\1\1\12\uffff\1\2";
     static final String dfa_5s = "\20\uffff}>";
     static final String[] dfa_6s = {
             "\1\1",
             "\1\2",
             "\1\3",
-            "\1\4\102\uffff\1\5\1\6\1\7\1\10\1\11\1\12\1\13\1\14\1\15\1\16\6\uffff\1\4",
+            "\1\4\104\uffff\1\5\1\6\1\7\1\10\1\11\1\12\1\13\1\14\1\15\1\16\6\uffff\1\4",
             "",
             "\1\4\35\uffff\1\17",
             "\1\4\35\uffff\1\17",
@@ -32389,8 +32391,8 @@ public class InternalTechnologyDslParser extends AbstractInternalContentAssistPa
 
     public static final BitSet FOLLOW_1 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_2 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_3 = new BitSet(new long[]{0x0180000000000002L,0x0000000000000040L});
-    public static final BitSet FOLLOW_4 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000010L});
+    public static final BitSet FOLLOW_3 = new BitSet(new long[]{0x0180000000000002L,0x0000000000000100L});
+    public static final BitSet FOLLOW_4 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000040L});
     public static final BitSet FOLLOW_5 = new BitSet(new long[]{0x0000000100000000L});
     public static final BitSet FOLLOW_6 = new BitSet(new long[]{0x0000080000000002L});
     public static final BitSet FOLLOW_7 = new BitSet(new long[]{0x0000000000000010L});
@@ -32405,23 +32407,23 @@ public class InternalTechnologyDslParser extends AbstractInternalContentAssistPa
     public static final BitSet FOLLOW_16 = new BitSet(new long[]{0x0000000000060000L});
     public static final BitSet FOLLOW_17 = new BitSet(new long[]{0x0000000000060002L});
     public static final BitSet FOLLOW_18 = new BitSet(new long[]{0x0000008000000000L});
-    public static final BitSet FOLLOW_19 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000001L});
-    public static final BitSet FOLLOW_20 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000001L});
+    public static final BitSet FOLLOW_19 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000004L});
+    public static final BitSet FOLLOW_20 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000004L});
     public static final BitSet FOLLOW_21 = new BitSet(new long[]{0x0000020000000000L});
     public static final BitSet FOLLOW_22 = new BitSet(new long[]{0x0000100000000000L});
     public static final BitSet FOLLOW_23 = new BitSet(new long[]{0x0000000000000020L});
     public static final BitSet FOLLOW_24 = new BitSet(new long[]{0x0000200000000000L});
     public static final BitSet FOLLOW_25 = new BitSet(new long[]{0x0000400000000000L});
     public static final BitSet FOLLOW_26 = new BitSet(new long[]{0x0000800000000000L});
-    public static final BitSet FOLLOW_27 = new BitSet(new long[]{0x0001000000002000L,0x0000000000040000L});
+    public static final BitSet FOLLOW_27 = new BitSet(new long[]{0x0001000000002000L,0x0000000000100000L});
     public static final BitSet FOLLOW_28 = new BitSet(new long[]{0x0001000000000002L});
     public static final BitSet FOLLOW_29 = new BitSet(new long[]{0x0002000000000000L});
     public static final BitSet FOLLOW_30 = new BitSet(new long[]{0x0004000000000000L});
     public static final BitSet FOLLOW_31 = new BitSet(new long[]{0x0010000000000000L});
     public static final BitSet FOLLOW_32 = new BitSet(new long[]{0x0020000000002000L});
     public static final BitSet FOLLOW_33 = new BitSet(new long[]{0x0040000000000000L});
-    public static final BitSet FOLLOW_34 = new BitSet(new long[]{0x0000000000000000L,0x000000000001FF80L});
-    public static final BitSet FOLLOW_35 = new BitSet(new long[]{0x0001000000000000L,0x0000000000040000L});
+    public static final BitSet FOLLOW_34 = new BitSet(new long[]{0x0000000000000000L,0x000000000007FE00L});
+    public static final BitSet FOLLOW_35 = new BitSet(new long[]{0x0001000000000000L,0x0000000000100000L});
     public static final BitSet FOLLOW_36 = new BitSet(new long[]{0x0000000000002000L});
     public static final BitSet FOLLOW_37 = new BitSet(new long[]{0x0200000000000000L});
     public static final BitSet FOLLOW_38 = new BitSet(new long[]{0x0001000000380000L});
@@ -32431,41 +32433,42 @@ public class InternalTechnologyDslParser extends AbstractInternalContentAssistPa
     public static final BitSet FOLLOW_42 = new BitSet(new long[]{0x0001000000002000L});
     public static final BitSet FOLLOW_43 = new BitSet(new long[]{0x0000004400000000L});
     public static final BitSet FOLLOW_44 = new BitSet(new long[]{0x1000000000000000L});
-    public static final BitSet FOLLOW_45 = new BitSet(new long[]{0x0000000000000002L,0x000000000001FF80L});
-    public static final BitSet FOLLOW_46 = new BitSet(new long[]{0x0000000000000000L,0x0000000000040000L});
-    public static final BitSet FOLLOW_47 = new BitSet(new long[]{0x0800000200002000L});
+    public static final BitSet FOLLOW_45 = new BitSet(new long[]{0x0000000000000002L,0x000000000007FE00L});
+    public static final BitSet FOLLOW_46 = new BitSet(new long[]{0x0000000000000000L,0x0000000000100000L});
+    public static final BitSet FOLLOW_47 = new BitSet(new long[]{0x2800000000002000L});
     public static final BitSet FOLLOW_48 = new BitSet(new long[]{0x00000000000000E0L});
     public static final BitSet FOLLOW_49 = new BitSet(new long[]{0x0000000000C00000L});
-    public static final BitSet FOLLOW_50 = new BitSet(new long[]{0x0001000400000000L});
+    public static final BitSet FOLLOW_50 = new BitSet(new long[]{0x4001000000000000L});
     public static final BitSet FOLLOW_51 = new BitSet(new long[]{0x000000000001C000L});
-    public static final BitSet FOLLOW_52 = new BitSet(new long[]{0x4000000000000000L});
-    public static final BitSet FOLLOW_53 = new BitSet(new long[]{0x0000000000000000L,0x0000000000780000L});
-    public static final BitSet FOLLOW_54 = new BitSet(new long[]{0x8001000000000000L});
-    public static final BitSet FOLLOW_55 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000002L});
+    public static final BitSet FOLLOW_52 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000001L});
+    public static final BitSet FOLLOW_53 = new BitSet(new long[]{0x0000000000000000L,0x0000000001E00000L});
+    public static final BitSet FOLLOW_54 = new BitSet(new long[]{0x0001000000000000L,0x0000000000000002L});
+    public static final BitSet FOLLOW_55 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000008L});
     public static final BitSet FOLLOW_56 = new BitSet(new long[]{0x000000003F000000L});
     public static final BitSet FOLLOW_57 = new BitSet(new long[]{0x0001000200002000L});
-    public static final BitSet FOLLOW_58 = new BitSet(new long[]{0x2000000400000000L,0x000000000001FF80L});
-    public static final BitSet FOLLOW_59 = new BitSet(new long[]{0x2000000000000002L});
+    public static final BitSet FOLLOW_58 = new BitSet(new long[]{0x8000000400000000L,0x000000000007FE00L});
+    public static final BitSet FOLLOW_59 = new BitSet(new long[]{0x8000000000000002L});
     public static final BitSet FOLLOW_60 = new BitSet(new long[]{0x00000000C0000000L});
-    public static final BitSet FOLLOW_61 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000004L});
-    public static final BitSet FOLLOW_62 = new BitSet(new long[]{0x0180000400000000L,0x0000000000000050L});
-    public static final BitSet FOLLOW_63 = new BitSet(new long[]{0x0180000000000000L,0x0000000000000040L});
-    public static final BitSet FOLLOW_64 = new BitSet(new long[]{0x0000000200000000L,0x0000000000000020L});
-    public static final BitSet FOLLOW_65 = new BitSet(new long[]{0x0000000400000010L,0x000000000081FF80L});
+    public static final BitSet FOLLOW_61 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000010L});
+    public static final BitSet FOLLOW_62 = new BitSet(new long[]{0x0180000400000000L,0x0000000000000140L});
+    public static final BitSet FOLLOW_63 = new BitSet(new long[]{0x0180000000000000L,0x0000000000000100L});
+    public static final BitSet FOLLOW_64 = new BitSet(new long[]{0x0000000200000000L,0x0000000000000080L});
+    public static final BitSet FOLLOW_65 = new BitSet(new long[]{0x0000000400000010L,0x000000000207FE00L});
     public static final BitSet FOLLOW_66 = new BitSet(new long[]{0x0001000000000000L});
-    public static final BitSet FOLLOW_67 = new BitSet(new long[]{0x0000000000000010L,0x000000000081FF80L});
-    public static final BitSet FOLLOW_68 = new BitSet(new long[]{0x8000000000000000L});
-    public static final BitSet FOLLOW_69 = new BitSet(new long[]{0x0000000000000010L,0x000000000001FF80L});
-    public static final BitSet FOLLOW_70 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000080L});
-    public static final BitSet FOLLOW_71 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000100L});
-    public static final BitSet FOLLOW_72 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000200L});
-    public static final BitSet FOLLOW_73 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000400L});
-    public static final BitSet FOLLOW_74 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000800L});
-    public static final BitSet FOLLOW_75 = new BitSet(new long[]{0x0000000000000000L,0x0000000000001000L});
-    public static final BitSet FOLLOW_76 = new BitSet(new long[]{0x0000000000000000L,0x0000000000002000L});
-    public static final BitSet FOLLOW_77 = new BitSet(new long[]{0x0000000000000000L,0x0000000000004000L});
-    public static final BitSet FOLLOW_78 = new BitSet(new long[]{0x0000000000000000L,0x0000000000008000L});
+    public static final BitSet FOLLOW_67 = new BitSet(new long[]{0x0000000000000010L,0x000000000207FE00L});
+    public static final BitSet FOLLOW_68 = new BitSet(new long[]{0x0001000400000000L});
+    public static final BitSet FOLLOW_69 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000002L});
+    public static final BitSet FOLLOW_70 = new BitSet(new long[]{0x0000000000000010L,0x000000000007FE00L});
+    public static final BitSet FOLLOW_71 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000200L});
+    public static final BitSet FOLLOW_72 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000400L});
+    public static final BitSet FOLLOW_73 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000800L});
+    public static final BitSet FOLLOW_74 = new BitSet(new long[]{0x0000000000000000L,0x0000000000001000L});
+    public static final BitSet FOLLOW_75 = new BitSet(new long[]{0x0000000000000000L,0x0000000000002000L});
+    public static final BitSet FOLLOW_76 = new BitSet(new long[]{0x0000000000000000L,0x0000000000004000L});
+    public static final BitSet FOLLOW_77 = new BitSet(new long[]{0x0000000000000000L,0x0000000000008000L});
+    public static final BitSet FOLLOW_78 = new BitSet(new long[]{0x0000000000000000L,0x0000000000010000L});
     public static final BitSet FOLLOW_79 = new BitSet(new long[]{0x0000000000000000L,0x0000000000020000L});
-    public static final BitSet FOLLOW_80 = new BitSet(new long[]{0x0000000000000002L,0x0000000000020000L});
+    public static final BitSet FOLLOW_80 = new BitSet(new long[]{0x0000000000000000L,0x0000000000080000L});
+    public static final BitSet FOLLOW_81 = new BitSet(new long[]{0x0000000000000002L,0x0000000000080000L});
 
 }

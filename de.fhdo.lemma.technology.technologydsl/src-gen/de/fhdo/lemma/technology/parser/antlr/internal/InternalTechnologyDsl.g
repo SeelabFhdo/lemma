@@ -1465,9 +1465,9 @@ ruleTechnologySpecificProperty returns [EObject current=null]
 			)
 		)?
 		(
-			otherlv_4='{'
+			otherlv_4='<'
 			{
-				newLeafNode(otherlv_4, grammarAccess.getTechnologySpecificPropertyAccess().getLeftCurlyBracketKeyword_3_0());
+				newLeafNode(otherlv_4, grammarAccess.getTechnologySpecificPropertyAccess().getLessThanSignKeyword_3_0());
 			}
 			(
 				(
@@ -1513,9 +1513,9 @@ ruleTechnologySpecificProperty returns [EObject current=null]
 					)
 				)
 			)*
-			otherlv_8='}'
+			otherlv_8='>'
 			{
-				newLeafNode(otherlv_8, grammarAccess.getTechnologySpecificPropertyAccess().getRightCurlyBracketKeyword_3_3());
+				newLeafNode(otherlv_8, grammarAccess.getTechnologySpecificPropertyAccess().getGreaterThanSignKeyword_3_3());
 			}
 		)?
 		otherlv_9=';'

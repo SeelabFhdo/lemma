@@ -22,7 +22,7 @@ import java.util.ArrayList;
 @SuppressWarnings("all")
 public class InternalMappingDslParser extends AbstractInternalContentAssistParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_STRING", "RULE_BOOLEAN", "RULE_BIG_DECIMAL", "RULE_INT", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "';'", "'technology'", "'microservices'", "'internal'", "'architecture'", "'public'", "'functional'", "'utility'", "'infrastructure'", "'in'", "'out'", "'inout'", "'sync'", "'async'", "'<-'", "'->'", "'<->'", "'mandatory'", "'singleval'", "'interfaces'", "'operations'", "'parameters'", "'types'", "'fields'", "'containers'", "'type'", "'{'", "'}'", "'aspects'", "'::'", "'protocols'", "'endpoints'", "'interface'", "'operation'", "'referred'", "'primitive'", "':'", "'complex'", "'.'", "'/'", "','", "'('", "')'", "'import'", "'from'", "'as'", "'microservice'", "'@'", "'version'", "'required'", "'typedef'", "'='", "'refers'", "'data'", "'formats'", "'with'", "'format'", "'based'", "'on'", "'list'", "'structure'", "'environments'", "'service'", "'properties'", "'selector'", "'aspect'", "'for'", "'datatypes'", "'context'", "'extends'", "'enum'", "'boolean'", "'byte'", "'char'", "'date'", "'double'", "'float'", "'int'", "'long'", "'short'", "'string'", "'noimpl'", "'fault'", "'?'", "'default'", "'exchange_pattern'", "'communication_type'", "'protocol'", "'data_format'", "'hide'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_STRING", "RULE_BOOLEAN", "RULE_BIG_DECIMAL", "RULE_INT", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "';'", "'technology'", "'microservices'", "'internal'", "'architecture'", "'public'", "'functional'", "'utility'", "'infrastructure'", "'in'", "'out'", "'inout'", "'sync'", "'async'", "'<-'", "'->'", "'<->'", "'mandatory'", "'singleval'", "'interfaces'", "'operations'", "'parameters'", "'types'", "'fields'", "'containers'", "'type'", "'{'", "'}'", "'aspects'", "'::'", "'protocols'", "'endpoints'", "'interface'", "'operation'", "'referred'", "'primitive'", "':'", "'complex'", "'.'", "'/'", "','", "'('", "')'", "'import'", "'from'", "'as'", "'microservice'", "'@'", "'version'", "'required'", "'typedef'", "'='", "'refers'", "'data'", "'formats'", "'with'", "'format'", "'based'", "'on'", "'list'", "'structure'", "'environments'", "'service'", "'properties'", "'<'", "'>'", "'selector'", "'aspect'", "'for'", "'datatypes'", "'context'", "'extends'", "'enum'", "'boolean'", "'byte'", "'char'", "'date'", "'double'", "'float'", "'int'", "'long'", "'short'", "'string'", "'noimpl'", "'fault'", "'?'", "'default'", "'exchange_pattern'", "'communication_type'", "'protocol'", "'data_format'", "'hide'"
     };
     public static final int T__50=50;
     public static final int T__59=59;
@@ -121,7 +121,9 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
     public static final int T__88=88;
     public static final int T__89=89;
     public static final int T__84=84;
+    public static final int T__104=104;
     public static final int T__85=85;
+    public static final int T__103=103;
     public static final int T__86=86;
     public static final int T__87=87;
 
@@ -6040,7 +6042,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             int alt8=2;
             int LA8_0 = input.LA(1);
 
-            if ( ((LA8_0>=84 && LA8_0<=93)) ) {
+            if ( ((LA8_0>=86 && LA8_0<=95)) ) {
                 alt8=1;
             }
             else if ( (LA8_0==RULE_ID) ) {
@@ -6322,22 +6324,22 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             // InternalMappingDsl.g:1985:1: ( ( ( rule__ServiceAspectPointcut__Group_0__0 ) ) | ( ( rule__ServiceAspectPointcut__Group_1__0 ) ) | ( ( rule__ServiceAspectPointcut__Group_2__0 ) ) | ( ( rule__ServiceAspectPointcut__Group_3__0 ) ) )
             int alt11=4;
             switch ( input.LA(1) ) {
-            case 98:
+            case 100:
                 {
                 alt11=1;
                 }
                 break;
-            case 99:
+            case 101:
                 {
                 alt11=2;
                 }
                 break;
-            case 100:
+            case 102:
                 {
                 alt11=3;
                 }
                 break;
-            case 101:
+            case 103:
                 {
                 alt11=4;
                 }
@@ -6640,10 +6642,10 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             int alt16=2;
             int LA16_0 = input.LA(1);
 
-            if ( ((LA16_0>=72 && LA16_0<=73)||LA16_0==83) ) {
+            if ( ((LA16_0>=72 && LA16_0<=73)||LA16_0==85) ) {
                 alt16=1;
             }
-            else if ( (LA16_0==81) ) {
+            else if ( (LA16_0==83) ) {
                 alt16=2;
             }
             else {
@@ -6688,7 +6690,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
                         int alt14=2;
                         int LA14_0 = input.LA(1);
 
-                        if ( ((LA14_0>=72 && LA14_0<=73)||LA14_0==83) ) {
+                        if ( ((LA14_0>=72 && LA14_0<=73)||LA14_0==85) ) {
                             alt14=1;
                         }
 
@@ -6756,7 +6758,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
                         int alt15=2;
                         int LA15_0 = input.LA(1);
 
-                        if ( (LA15_0==81) ) {
+                        if ( (LA15_0==83) ) {
                             alt15=1;
                         }
 
@@ -6826,7 +6828,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
                 alt17=2;
                 }
                 break;
-            case 83:
+            case 85:
                 {
                 alt17=3;
                 }
@@ -7002,7 +7004,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             int alt19=2;
             int LA19_0 = input.LA(1);
 
-            if ( ((LA19_0>=84 && LA19_0<=93)) ) {
+            if ( ((LA19_0>=86 && LA19_0<=95)) ) {
                 alt19=1;
             }
             else if ( (LA19_0==RULE_ID) ) {
@@ -7217,52 +7219,52 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             // InternalMappingDsl.g:2191:1: ( ( ( rule__PrimitiveType__Group_0__0 ) ) | ( ( rule__PrimitiveType__Group_1__0 ) ) | ( ( rule__PrimitiveType__Group_2__0 ) ) | ( ( rule__PrimitiveType__Group_3__0 ) ) | ( ( rule__PrimitiveType__Group_4__0 ) ) | ( ( rule__PrimitiveType__Group_5__0 ) ) | ( ( rule__PrimitiveType__Group_6__0 ) ) | ( ( rule__PrimitiveType__Group_7__0 ) ) | ( ( rule__PrimitiveType__Group_8__0 ) ) | ( ( rule__PrimitiveType__Group_9__0 ) ) )
             int alt21=10;
             switch ( input.LA(1) ) {
-            case 84:
+            case 86:
                 {
                 alt21=1;
                 }
                 break;
-            case 85:
+            case 87:
                 {
                 alt21=2;
                 }
                 break;
-            case 86:
+            case 88:
                 {
                 alt21=3;
                 }
                 break;
-            case 87:
+            case 89:
                 {
                 alt21=4;
                 }
                 break;
-            case 88:
+            case 90:
                 {
                 alt21=5;
                 }
                 break;
-            case 89:
+            case 91:
                 {
                 alt21=6;
                 }
                 break;
-            case 90:
+            case 92:
                 {
                 alt21=7;
                 }
                 break;
-            case 91:
+            case 93:
                 {
                 alt21=8;
                 }
                 break;
-            case 92:
+            case 94:
                 {
                 alt21=9;
                 }
                 break;
-            case 93:
+            case 95:
                 {
                 alt21=10;
                 }
@@ -27032,7 +27034,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
                 int alt92=2;
                 int LA92_0 = input.LA(1);
 
-                if ( ((LA92_0>=16 && LA92_0<=18)||LA92_0==45||LA92_0==60||LA92_0==94) ) {
+                if ( ((LA92_0>=16 && LA92_0<=18)||LA92_0==45||LA92_0==60||LA92_0==96) ) {
                     alt92=1;
                 }
 
@@ -31967,7 +31969,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             int alt105=2;
             int LA105_0 = input.LA(1);
 
-            if ( (LA105_0==94) ) {
+            if ( (LA105_0==96) ) {
                 alt105=1;
             }
             switch (alt105) {
@@ -32493,7 +32495,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
                 int alt108=2;
                 int LA108_0 = input.LA(1);
 
-                if ( (LA108_0==RULE_ID||(LA108_0>=16 && LA108_0<=18)||LA108_0==60||LA108_0==94) ) {
+                if ( (LA108_0==RULE_ID||(LA108_0>=16 && LA108_0<=18)||LA108_0==60||LA108_0==96) ) {
                     alt108=1;
                 }
 
@@ -33570,7 +33572,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             int alt114=2;
             int LA114_0 = input.LA(1);
 
-            if ( (LA114_0==94) ) {
+            if ( (LA114_0==96) ) {
                 alt114=1;
             }
             switch (alt114) {
@@ -36444,7 +36446,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             int alt127=2;
             int LA127_0 = input.LA(1);
 
-            if ( (LA127_0==95) ) {
+            if ( (LA127_0==97) ) {
                 alt127=1;
             }
             switch (alt127) {
@@ -36625,7 +36627,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             int alt128=2;
             int LA128_0 = input.LA(1);
 
-            if ( (LA128_0==96) ) {
+            if ( (LA128_0==98) ) {
                 alt128=1;
             }
             switch (alt128) {
@@ -41810,7 +41812,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             int alt136=2;
             int LA136_0 = input.LA(1);
 
-            if ( (LA136_0==97) ) {
+            if ( (LA136_0==99) ) {
                 alt136=1;
             }
             switch (alt136) {
@@ -43180,7 +43182,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             int alt139=2;
             int LA139_0 = input.LA(1);
 
-            if ( (LA139_0==97) ) {
+            if ( (LA139_0==99) ) {
                 alt139=1;
             }
             switch (alt139) {
@@ -46177,7 +46179,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
                 int alt144=2;
                 int LA144_0 = input.LA(1);
 
-                if ( ((LA144_0>=84 && LA144_0<=93)) ) {
+                if ( ((LA144_0>=86 && LA144_0<=95)) ) {
                     alt144=1;
                 }
 
@@ -47569,7 +47571,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
                 int alt147=2;
                 int LA147_0 = input.LA(1);
 
-                if ( ((LA147_0>=84 && LA147_0<=93)) ) {
+                if ( ((LA147_0>=86 && LA147_0<=95)) ) {
                     alt147=1;
                 }
 
@@ -47823,7 +47825,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             int alt148=2;
             int LA148_0 = input.LA(1);
 
-            if ( (LA148_0==97) ) {
+            if ( (LA148_0==99) ) {
                 alt148=1;
             }
             switch (alt148) {
@@ -48185,7 +48187,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             int alt150=2;
             int LA150_0 = input.LA(1);
 
-            if ( (LA150_0==39) ) {
+            if ( (LA150_0==77) ) {
                 alt150=1;
             }
             switch (alt150) {
@@ -48489,21 +48491,21 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
 
 
     // $ANTLR start "rule__TechnologySpecificProperty__Group_3__0__Impl"
-    // InternalMappingDsl.g:15519:1: rule__TechnologySpecificProperty__Group_3__0__Impl : ( '{' ) ;
+    // InternalMappingDsl.g:15519:1: rule__TechnologySpecificProperty__Group_3__0__Impl : ( '<' ) ;
     public final void rule__TechnologySpecificProperty__Group_3__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalMappingDsl.g:15523:1: ( ( '{' ) )
-            // InternalMappingDsl.g:15524:1: ( '{' )
+            // InternalMappingDsl.g:15523:1: ( ( '<' ) )
+            // InternalMappingDsl.g:15524:1: ( '<' )
             {
-            // InternalMappingDsl.g:15524:1: ( '{' )
-            // InternalMappingDsl.g:15525:2: '{'
+            // InternalMappingDsl.g:15524:1: ( '<' )
+            // InternalMappingDsl.g:15525:2: '<'
             {
-             before(grammarAccess.getTechnologySpecificPropertyAccess().getLeftCurlyBracketKeyword_3_0()); 
-            match(input,39,FOLLOW_2); 
-             after(grammarAccess.getTechnologySpecificPropertyAccess().getLeftCurlyBracketKeyword_3_0()); 
+             before(grammarAccess.getTechnologySpecificPropertyAccess().getLessThanSignKeyword_3_0()); 
+            match(input,77,FOLLOW_2); 
+             after(grammarAccess.getTechnologySpecificPropertyAccess().getLessThanSignKeyword_3_0()); 
 
             }
 
@@ -48535,7 +48537,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             // InternalMappingDsl.g:15538:1: ( rule__TechnologySpecificProperty__Group_3__1__Impl rule__TechnologySpecificProperty__Group_3__2 )
             // InternalMappingDsl.g:15539:2: rule__TechnologySpecificProperty__Group_3__1__Impl rule__TechnologySpecificProperty__Group_3__2
             {
-            pushFollow(FOLLOW_58);
+            pushFollow(FOLLOW_97);
             rule__TechnologySpecificProperty__Group_3__1__Impl();
 
             state._fsp--;
@@ -48620,7 +48622,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             // InternalMappingDsl.g:15565:1: ( rule__TechnologySpecificProperty__Group_3__2__Impl rule__TechnologySpecificProperty__Group_3__3 )
             // InternalMappingDsl.g:15566:2: rule__TechnologySpecificProperty__Group_3__2__Impl rule__TechnologySpecificProperty__Group_3__3
             {
-            pushFollow(FOLLOW_58);
+            pushFollow(FOLLOW_97);
             rule__TechnologySpecificProperty__Group_3__2__Impl();
 
             state._fsp--;
@@ -48747,21 +48749,21 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
 
 
     // $ANTLR start "rule__TechnologySpecificProperty__Group_3__3__Impl"
-    // InternalMappingDsl.g:15599:1: rule__TechnologySpecificProperty__Group_3__3__Impl : ( '}' ) ;
+    // InternalMappingDsl.g:15599:1: rule__TechnologySpecificProperty__Group_3__3__Impl : ( '>' ) ;
     public final void rule__TechnologySpecificProperty__Group_3__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalMappingDsl.g:15603:1: ( ( '}' ) )
-            // InternalMappingDsl.g:15604:1: ( '}' )
+            // InternalMappingDsl.g:15603:1: ( ( '>' ) )
+            // InternalMappingDsl.g:15604:1: ( '>' )
             {
-            // InternalMappingDsl.g:15604:1: ( '}' )
-            // InternalMappingDsl.g:15605:2: '}'
+            // InternalMappingDsl.g:15604:1: ( '>' )
+            // InternalMappingDsl.g:15605:2: '>'
             {
-             before(grammarAccess.getTechnologySpecificPropertyAccess().getRightCurlyBracketKeyword_3_3()); 
-            match(input,40,FOLLOW_2); 
-             after(grammarAccess.getTechnologySpecificPropertyAccess().getRightCurlyBracketKeyword_3_3()); 
+             before(grammarAccess.getTechnologySpecificPropertyAccess().getGreaterThanSignKeyword_3_3()); 
+            match(input,78,FOLLOW_2); 
+             after(grammarAccess.getTechnologySpecificPropertyAccess().getGreaterThanSignKeyword_3_3()); 
 
             }
 
@@ -49033,7 +49035,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             // InternalMappingDsl.g:15700:1: ( rule__ServiceAspectPointcut__Group_0__1__Impl rule__ServiceAspectPointcut__Group_0__2 )
             // InternalMappingDsl.g:15701:2: rule__ServiceAspectPointcut__Group_0__1__Impl rule__ServiceAspectPointcut__Group_0__2
             {
-            pushFollow(FOLLOW_97);
+            pushFollow(FOLLOW_98);
             rule__ServiceAspectPointcut__Group_0__1__Impl();
 
             state._fsp--;
@@ -49950,7 +49952,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             // InternalMappingDsl.g:16011:2: 'selector'
             {
              before(grammarAccess.getServiceAspectPointcutSelectorAccess().getSelectorKeyword_0()); 
-            match(input,77,FOLLOW_2); 
+            match(input,79,FOLLOW_2); 
              after(grammarAccess.getServiceAspectPointcutSelectorAccess().getSelectorKeyword_0()); 
 
             }
@@ -49983,7 +49985,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             // InternalMappingDsl.g:16024:1: ( rule__ServiceAspectPointcutSelector__Group__1__Impl rule__ServiceAspectPointcutSelector__Group__2 )
             // InternalMappingDsl.g:16025:2: rule__ServiceAspectPointcutSelector__Group__1__Impl rule__ServiceAspectPointcutSelector__Group__2
             {
-            pushFollow(FOLLOW_98);
+            pushFollow(FOLLOW_99);
             rule__ServiceAspectPointcutSelector__Group__1__Impl();
 
             state._fsp--;
@@ -50391,7 +50393,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             // InternalMappingDsl.g:16159:1: ( rule__ServiceAspectPointcutSelector__Group_3__0__Impl rule__ServiceAspectPointcutSelector__Group_3__1 )
             // InternalMappingDsl.g:16160:2: rule__ServiceAspectPointcutSelector__Group_3__0__Impl rule__ServiceAspectPointcutSelector__Group_3__1
             {
-            pushFollow(FOLLOW_98);
+            pushFollow(FOLLOW_99);
             rule__ServiceAspectPointcutSelector__Group_3__0__Impl();
 
             state._fsp--;
@@ -50588,7 +50590,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             // InternalMappingDsl.g:16227:2: 'aspect'
             {
              before(grammarAccess.getServiceAspectAccess().getAspectKeyword_0()); 
-            match(input,78,FOLLOW_2); 
+            match(input,80,FOLLOW_2); 
              after(grammarAccess.getServiceAspectAccess().getAspectKeyword_0()); 
 
             }
@@ -50621,7 +50623,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             // InternalMappingDsl.g:16240:1: ( rule__ServiceAspect__Group__1__Impl rule__ServiceAspect__Group__2 )
             // InternalMappingDsl.g:16241:2: rule__ServiceAspect__Group__1__Impl rule__ServiceAspect__Group__2
             {
-            pushFollow(FOLLOW_99);
+            pushFollow(FOLLOW_100);
             rule__ServiceAspect__Group__1__Impl();
 
             state._fsp--;
@@ -50706,7 +50708,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             // InternalMappingDsl.g:16267:1: ( rule__ServiceAspect__Group__2__Impl rule__ServiceAspect__Group__3 )
             // InternalMappingDsl.g:16268:2: rule__ServiceAspect__Group__2__Impl rule__ServiceAspect__Group__3
             {
-            pushFollow(FOLLOW_100);
+            pushFollow(FOLLOW_101);
             rule__ServiceAspect__Group__2__Impl();
 
             state._fsp--;
@@ -50748,7 +50750,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             // InternalMappingDsl.g:16281:2: 'for'
             {
              before(grammarAccess.getServiceAspectAccess().getForKeyword_2()); 
-            match(input,79,FOLLOW_2); 
+            match(input,81,FOLLOW_2); 
              after(grammarAccess.getServiceAspectAccess().getForKeyword_2()); 
 
             }
@@ -50781,7 +50783,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             // InternalMappingDsl.g:16294:1: ( rule__ServiceAspect__Group__3__Impl rule__ServiceAspect__Group__4 )
             // InternalMappingDsl.g:16295:2: rule__ServiceAspect__Group__3__Impl rule__ServiceAspect__Group__4
             {
-            pushFollow(FOLLOW_101);
+            pushFollow(FOLLOW_102);
             rule__ServiceAspect__Group__3__Impl();
 
             state._fsp--;
@@ -50866,7 +50868,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             // InternalMappingDsl.g:16321:1: ( rule__ServiceAspect__Group__4__Impl rule__ServiceAspect__Group__5 )
             // InternalMappingDsl.g:16322:2: rule__ServiceAspect__Group__4__Impl rule__ServiceAspect__Group__5
             {
-            pushFollow(FOLLOW_101);
+            pushFollow(FOLLOW_102);
             rule__ServiceAspect__Group__4__Impl();
 
             state._fsp--;
@@ -51049,7 +51051,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             // InternalMappingDsl.g:16375:1: ( rule__ServiceAspect__Group_4__0__Impl rule__ServiceAspect__Group_4__1 )
             // InternalMappingDsl.g:16376:2: rule__ServiceAspect__Group_4__0__Impl rule__ServiceAspect__Group_4__1
             {
-            pushFollow(FOLLOW_100);
+            pushFollow(FOLLOW_101);
             rule__ServiceAspect__Group_4__0__Impl();
 
             state._fsp--;
@@ -51204,7 +51206,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             // InternalMappingDsl.g:16429:1: ( rule__ServiceAspect__Group_5_0__0__Impl rule__ServiceAspect__Group_5_0__1 )
             // InternalMappingDsl.g:16430:2: rule__ServiceAspect__Group_5_0__0__Impl rule__ServiceAspect__Group_5_0__1
             {
-            pushFollow(FOLLOW_102);
+            pushFollow(FOLLOW_103);
             rule__ServiceAspect__Group_5_0__0__Impl();
 
             state._fsp--;
@@ -51279,7 +51281,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             // InternalMappingDsl.g:16456:1: ( rule__ServiceAspect__Group_5_0__1__Impl rule__ServiceAspect__Group_5_0__2 )
             // InternalMappingDsl.g:16457:2: rule__ServiceAspect__Group_5_0__1__Impl rule__ServiceAspect__Group_5_0__2
             {
-            pushFollow(FOLLOW_102);
+            pushFollow(FOLLOW_103);
             rule__ServiceAspect__Group_5_0__1__Impl();
 
             state._fsp--;
@@ -51327,7 +51329,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
                 int alt154=2;
                 int LA154_0 = input.LA(1);
 
-                if ( (LA154_0==77) ) {
+                if ( (LA154_0==79) ) {
                     alt154=1;
                 }
 
@@ -51336,7 +51338,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             	case 1 :
             	    // InternalMappingDsl.g:16471:3: rule__ServiceAspect__PointcutSelectorsAssignment_5_0_1
             	    {
-            	    pushFollow(FOLLOW_103);
+            	    pushFollow(FOLLOW_104);
             	    rule__ServiceAspect__PointcutSelectorsAssignment_5_0_1();
 
             	    state._fsp--;
@@ -51382,7 +51384,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             // InternalMappingDsl.g:16483:1: ( rule__ServiceAspect__Group_5_0__2__Impl rule__ServiceAspect__Group_5_0__3 )
             // InternalMappingDsl.g:16484:2: rule__ServiceAspect__Group_5_0__2__Impl rule__ServiceAspect__Group_5_0__3
             {
-            pushFollow(FOLLOW_102);
+            pushFollow(FOLLOW_103);
             rule__ServiceAspect__Group_5_0__2__Impl();
 
             state._fsp--;
@@ -51430,7 +51432,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
                 int alt155=2;
                 int LA155_0 = input.LA(1);
 
-                if ( ((LA155_0>=84 && LA155_0<=93)) ) {
+                if ( ((LA155_0>=86 && LA155_0<=95)) ) {
                     alt155=1;
                 }
 
@@ -51837,7 +51839,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             // InternalMappingDsl.g:16632:2: 'selector'
             {
              before(grammarAccess.getOperationAspectPointcutSelectorAccess().getSelectorKeyword_0()); 
-            match(input,77,FOLLOW_2); 
+            match(input,79,FOLLOW_2); 
              after(grammarAccess.getOperationAspectPointcutSelectorAccess().getSelectorKeyword_0()); 
 
             }
@@ -52475,7 +52477,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             // InternalMappingDsl.g:16848:2: 'aspect'
             {
              before(grammarAccess.getOperationAspectAccess().getAspectKeyword_0()); 
-            match(input,78,FOLLOW_2); 
+            match(input,80,FOLLOW_2); 
              after(grammarAccess.getOperationAspectAccess().getAspectKeyword_0()); 
 
             }
@@ -52508,7 +52510,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             // InternalMappingDsl.g:16861:1: ( rule__OperationAspect__Group__1__Impl rule__OperationAspect__Group__2 )
             // InternalMappingDsl.g:16862:2: rule__OperationAspect__Group__1__Impl rule__OperationAspect__Group__2
             {
-            pushFollow(FOLLOW_99);
+            pushFollow(FOLLOW_100);
             rule__OperationAspect__Group__1__Impl();
 
             state._fsp--;
@@ -52593,7 +52595,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             // InternalMappingDsl.g:16888:1: ( rule__OperationAspect__Group__2__Impl rule__OperationAspect__Group__3 )
             // InternalMappingDsl.g:16889:2: rule__OperationAspect__Group__2__Impl rule__OperationAspect__Group__3
             {
-            pushFollow(FOLLOW_104);
+            pushFollow(FOLLOW_105);
             rule__OperationAspect__Group__2__Impl();
 
             state._fsp--;
@@ -52635,7 +52637,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             // InternalMappingDsl.g:16902:2: 'for'
             {
              before(grammarAccess.getOperationAspectAccess().getForKeyword_2()); 
-            match(input,79,FOLLOW_2); 
+            match(input,81,FOLLOW_2); 
              after(grammarAccess.getOperationAspectAccess().getForKeyword_2()); 
 
             }
@@ -52668,7 +52670,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             // InternalMappingDsl.g:16915:1: ( rule__OperationAspect__Group__3__Impl rule__OperationAspect__Group__4 )
             // InternalMappingDsl.g:16916:2: rule__OperationAspect__Group__3__Impl rule__OperationAspect__Group__4
             {
-            pushFollow(FOLLOW_101);
+            pushFollow(FOLLOW_102);
             rule__OperationAspect__Group__3__Impl();
 
             state._fsp--;
@@ -52753,7 +52755,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             // InternalMappingDsl.g:16942:1: ( rule__OperationAspect__Group__4__Impl rule__OperationAspect__Group__5 )
             // InternalMappingDsl.g:16943:2: rule__OperationAspect__Group__4__Impl rule__OperationAspect__Group__5
             {
-            pushFollow(FOLLOW_101);
+            pushFollow(FOLLOW_102);
             rule__OperationAspect__Group__4__Impl();
 
             state._fsp--;
@@ -52936,7 +52938,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             // InternalMappingDsl.g:16996:1: ( rule__OperationAspect__Group_4__0__Impl rule__OperationAspect__Group_4__1 )
             // InternalMappingDsl.g:16997:2: rule__OperationAspect__Group_4__0__Impl rule__OperationAspect__Group_4__1
             {
-            pushFollow(FOLLOW_104);
+            pushFollow(FOLLOW_105);
             rule__OperationAspect__Group_4__0__Impl();
 
             state._fsp--;
@@ -53091,7 +53093,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             // InternalMappingDsl.g:17050:1: ( rule__OperationAspect__Group_5_0__0__Impl rule__OperationAspect__Group_5_0__1 )
             // InternalMappingDsl.g:17051:2: rule__OperationAspect__Group_5_0__0__Impl rule__OperationAspect__Group_5_0__1
             {
-            pushFollow(FOLLOW_102);
+            pushFollow(FOLLOW_103);
             rule__OperationAspect__Group_5_0__0__Impl();
 
             state._fsp--;
@@ -53166,7 +53168,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             // InternalMappingDsl.g:17077:1: ( rule__OperationAspect__Group_5_0__1__Impl rule__OperationAspect__Group_5_0__2 )
             // InternalMappingDsl.g:17078:2: rule__OperationAspect__Group_5_0__1__Impl rule__OperationAspect__Group_5_0__2
             {
-            pushFollow(FOLLOW_102);
+            pushFollow(FOLLOW_103);
             rule__OperationAspect__Group_5_0__1__Impl();
 
             state._fsp--;
@@ -53214,7 +53216,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
                 int alt158=2;
                 int LA158_0 = input.LA(1);
 
-                if ( (LA158_0==77) ) {
+                if ( (LA158_0==79) ) {
                     alt158=1;
                 }
 
@@ -53223,7 +53225,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             	case 1 :
             	    // InternalMappingDsl.g:17092:3: rule__OperationAspect__PointcutSelectorsAssignment_5_0_1
             	    {
-            	    pushFollow(FOLLOW_103);
+            	    pushFollow(FOLLOW_104);
             	    rule__OperationAspect__PointcutSelectorsAssignment_5_0_1();
 
             	    state._fsp--;
@@ -53269,7 +53271,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             // InternalMappingDsl.g:17104:1: ( rule__OperationAspect__Group_5_0__2__Impl rule__OperationAspect__Group_5_0__3 )
             // InternalMappingDsl.g:17105:2: rule__OperationAspect__Group_5_0__2__Impl rule__OperationAspect__Group_5_0__3
             {
-            pushFollow(FOLLOW_102);
+            pushFollow(FOLLOW_103);
             rule__OperationAspect__Group_5_0__2__Impl();
 
             state._fsp--;
@@ -53317,7 +53319,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
                 int alt159=2;
                 int LA159_0 = input.LA(1);
 
-                if ( ((LA159_0>=84 && LA159_0<=93)) ) {
+                if ( ((LA159_0>=86 && LA159_0<=95)) ) {
                     alt159=1;
                 }
 
@@ -53442,7 +53444,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             // InternalMappingDsl.g:17158:1: ( rule__ComplexTypeImport__Group__0__Impl rule__ComplexTypeImport__Group__1 )
             // InternalMappingDsl.g:17159:2: rule__ComplexTypeImport__Group__0__Impl rule__ComplexTypeImport__Group__1
             {
-            pushFollow(FOLLOW_105);
+            pushFollow(FOLLOW_106);
             rule__ComplexTypeImport__Group__0__Impl();
 
             state._fsp--;
@@ -53559,7 +53561,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             // InternalMappingDsl.g:17199:2: 'datatypes'
             {
              before(grammarAccess.getComplexTypeImportAccess().getDatatypesKeyword_1()); 
-            match(input,80,FOLLOW_2); 
+            match(input,82,FOLLOW_2); 
              after(grammarAccess.getComplexTypeImportAccess().getDatatypesKeyword_1()); 
 
             }
@@ -54067,7 +54069,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             // InternalMappingDsl.g:17374:1: ( rule__Version__Group__2__Impl rule__Version__Group__3 )
             // InternalMappingDsl.g:17375:2: rule__Version__Group__2__Impl rule__Version__Group__3
             {
-            pushFollow(FOLLOW_106);
+            pushFollow(FOLLOW_107);
             rule__Version__Group__2__Impl();
 
             state._fsp--;
@@ -54142,7 +54144,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             // InternalMappingDsl.g:17401:1: ( rule__Version__Group__3__Impl rule__Version__Group__4 )
             // InternalMappingDsl.g:17402:2: rule__Version__Group__3__Impl rule__Version__Group__4
             {
-            pushFollow(FOLLOW_106);
+            pushFollow(FOLLOW_107);
             rule__Version__Group__3__Impl();
 
             state._fsp--;
@@ -54188,7 +54190,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             int alt160=2;
             int LA160_0 = input.LA(1);
 
-            if ( ((LA160_0>=72 && LA160_0<=73)||LA160_0==81||LA160_0==83) ) {
+            if ( ((LA160_0>=72 && LA160_0<=73)||LA160_0==83||LA160_0==85) ) {
                 alt160=1;
             }
             switch (alt160) {
@@ -54350,7 +54352,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             // InternalMappingDsl.g:17469:2: 'context'
             {
              before(grammarAccess.getContextAccess().getContextKeyword_0()); 
-            match(input,81,FOLLOW_2); 
+            match(input,83,FOLLOW_2); 
              after(grammarAccess.getContextAccess().getContextKeyword_0()); 
 
             }
@@ -54468,7 +54470,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             // InternalMappingDsl.g:17509:1: ( rule__Context__Group__2__Impl rule__Context__Group__3 )
             // InternalMappingDsl.g:17510:2: rule__Context__Group__2__Impl rule__Context__Group__3
             {
-            pushFollow(FOLLOW_107);
+            pushFollow(FOLLOW_108);
             rule__Context__Group__2__Impl();
 
             state._fsp--;
@@ -54613,7 +54615,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
                 int alt161=2;
                 int LA161_0 = input.LA(1);
 
-                if ( ((LA161_0>=72 && LA161_0<=73)||LA161_0==83) ) {
+                if ( ((LA161_0>=72 && LA161_0<=73)||LA161_0==85) ) {
                     alt161=1;
                 }
 
@@ -54816,7 +54818,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             // InternalMappingDsl.g:17624:1: ( rule__DataStructure__Group__1__Impl rule__DataStructure__Group__2 )
             // InternalMappingDsl.g:17625:2: rule__DataStructure__Group__1__Impl rule__DataStructure__Group__2
             {
-            pushFollow(FOLLOW_108);
+            pushFollow(FOLLOW_109);
             rule__DataStructure__Group__1__Impl();
 
             state._fsp--;
@@ -54901,7 +54903,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             // InternalMappingDsl.g:17651:1: ( rule__DataStructure__Group__2__Impl rule__DataStructure__Group__3 )
             // InternalMappingDsl.g:17652:2: rule__DataStructure__Group__2__Impl rule__DataStructure__Group__3
             {
-            pushFollow(FOLLOW_108);
+            pushFollow(FOLLOW_109);
             rule__DataStructure__Group__2__Impl();
 
             state._fsp--;
@@ -54947,7 +54949,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             int alt162=2;
             int LA162_0 = input.LA(1);
 
-            if ( (LA162_0==82) ) {
+            if ( (LA162_0==84) ) {
                 alt162=1;
             }
             switch (alt162) {
@@ -54997,7 +54999,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             // InternalMappingDsl.g:17678:1: ( rule__DataStructure__Group__3__Impl rule__DataStructure__Group__4 )
             // InternalMappingDsl.g:17679:2: rule__DataStructure__Group__3__Impl rule__DataStructure__Group__4
             {
-            pushFollow(FOLLOW_109);
+            pushFollow(FOLLOW_110);
             rule__DataStructure__Group__3__Impl();
 
             state._fsp--;
@@ -55072,7 +55074,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             // InternalMappingDsl.g:17705:1: ( rule__DataStructure__Group__4__Impl rule__DataStructure__Group__5 )
             // InternalMappingDsl.g:17706:2: rule__DataStructure__Group__4__Impl rule__DataStructure__Group__5
             {
-            pushFollow(FOLLOW_109);
+            pushFollow(FOLLOW_110);
             rule__DataStructure__Group__4__Impl();
 
             state._fsp--;
@@ -55118,7 +55120,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             int alt163=2;
             int LA163_0 = input.LA(1);
 
-            if ( (LA163_0==RULE_ID||(LA163_0>=84 && LA163_0<=93)||LA163_0==102) ) {
+            if ( (LA163_0==RULE_ID||(LA163_0>=86 && LA163_0<=95)||LA163_0==104) ) {
                 alt163=1;
             }
             switch (alt163) {
@@ -55280,7 +55282,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             // InternalMappingDsl.g:17773:2: 'extends'
             {
              before(grammarAccess.getDataStructureAccess().getExtendsKeyword_2_0()); 
-            match(input,82,FOLLOW_2); 
+            match(input,84,FOLLOW_2); 
              after(grammarAccess.getDataStructureAccess().getExtendsKeyword_2_0()); 
 
             }
@@ -55576,7 +55578,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             // InternalMappingDsl.g:17867:1: ( rule__DataStructure__Group_4_1__0__Impl rule__DataStructure__Group_4_1__1 )
             // InternalMappingDsl.g:17868:2: rule__DataStructure__Group_4_1__0__Impl rule__DataStructure__Group_4_1__1
             {
-            pushFollow(FOLLOW_110);
+            pushFollow(FOLLOW_111);
             rule__DataStructure__Group_4_1__0__Impl();
 
             state._fsp--;
@@ -55891,7 +55893,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             // InternalMappingDsl.g:17975:1: ( rule__ListType__Group_0__2__Impl rule__ListType__Group_0__3 )
             // InternalMappingDsl.g:17976:2: rule__ListType__Group_0__2__Impl rule__ListType__Group_0__3
             {
-            pushFollow(FOLLOW_110);
+            pushFollow(FOLLOW_111);
             rule__ListType__Group_0__2__Impl();
 
             state._fsp--;
@@ -56224,7 +56226,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             // InternalMappingDsl.g:18083:1: ( rule__ListType__Group_0_4__0__Impl rule__ListType__Group_0_4__1 )
             // InternalMappingDsl.g:18084:2: rule__ListType__Group_0_4__0__Impl rule__ListType__Group_0_4__1
             {
-            pushFollow(FOLLOW_110);
+            pushFollow(FOLLOW_111);
             rule__ListType__Group_0_4__0__Impl();
 
             state._fsp--;
@@ -56769,7 +56771,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             // InternalMappingDsl.g:18272:1: ( rule__DataField__Group__0__Impl rule__DataField__Group__1 )
             // InternalMappingDsl.g:18273:2: rule__DataField__Group__0__Impl rule__DataField__Group__1
             {
-            pushFollow(FOLLOW_110);
+            pushFollow(FOLLOW_111);
             rule__DataField__Group__0__Impl();
 
             state._fsp--;
@@ -56815,7 +56817,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             int alt166=2;
             int LA166_0 = input.LA(1);
 
-            if ( (LA166_0==102) ) {
+            if ( (LA166_0==104) ) {
                 alt166=1;
             }
             switch (alt166) {
@@ -56865,7 +56867,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             // InternalMappingDsl.g:18299:1: ( rule__DataField__Group__1__Impl rule__DataField__Group__2 )
             // InternalMappingDsl.g:18300:2: rule__DataField__Group__1__Impl rule__DataField__Group__2
             {
-            pushFollow(FOLLOW_110);
+            pushFollow(FOLLOW_111);
             rule__DataField__Group__1__Impl();
 
             state._fsp--;
@@ -56911,7 +56913,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             int alt167=2;
             int LA167_0 = input.LA(1);
 
-            if ( ((LA167_0>=84 && LA167_0<=93)) ) {
+            if ( ((LA167_0>=86 && LA167_0<=95)) ) {
                 alt167=1;
             }
             else if ( (LA167_0==RULE_ID) ) {
@@ -57090,7 +57092,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             // InternalMappingDsl.g:18367:2: 'enum'
             {
              before(grammarAccess.getEnumerationAccess().getEnumKeyword_0()); 
-            match(input,83,FOLLOW_2); 
+            match(input,85,FOLLOW_2); 
              after(grammarAccess.getEnumerationAccess().getEnumKeyword_0()); 
 
             }
@@ -58437,7 +58439,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             // InternalMappingDsl.g:18812:1: ( rule__PrimitiveType__Group_0__0__Impl rule__PrimitiveType__Group_0__1 )
             // InternalMappingDsl.g:18813:2: rule__PrimitiveType__Group_0__0__Impl rule__PrimitiveType__Group_0__1
             {
-            pushFollow(FOLLOW_111);
+            pushFollow(FOLLOW_112);
             rule__PrimitiveType__Group_0__0__Impl();
 
             state._fsp--;
@@ -58549,7 +58551,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             // InternalMappingDsl.g:18852:2: 'boolean'
             {
              before(grammarAccess.getPrimitiveTypeAccess().getBooleanKeyword_0_1()); 
-            match(input,84,FOLLOW_2); 
+            match(input,86,FOLLOW_2); 
              after(grammarAccess.getPrimitiveTypeAccess().getBooleanKeyword_0_1()); 
 
             }
@@ -58582,7 +58584,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             // InternalMappingDsl.g:18866:1: ( rule__PrimitiveType__Group_1__0__Impl rule__PrimitiveType__Group_1__1 )
             // InternalMappingDsl.g:18867:2: rule__PrimitiveType__Group_1__0__Impl rule__PrimitiveType__Group_1__1
             {
-            pushFollow(FOLLOW_112);
+            pushFollow(FOLLOW_113);
             rule__PrimitiveType__Group_1__0__Impl();
 
             state._fsp--;
@@ -58694,7 +58696,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             // InternalMappingDsl.g:18906:2: 'byte'
             {
              before(grammarAccess.getPrimitiveTypeAccess().getByteKeyword_1_1()); 
-            match(input,85,FOLLOW_2); 
+            match(input,87,FOLLOW_2); 
              after(grammarAccess.getPrimitiveTypeAccess().getByteKeyword_1_1()); 
 
             }
@@ -58727,7 +58729,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             // InternalMappingDsl.g:18920:1: ( rule__PrimitiveType__Group_2__0__Impl rule__PrimitiveType__Group_2__1 )
             // InternalMappingDsl.g:18921:2: rule__PrimitiveType__Group_2__0__Impl rule__PrimitiveType__Group_2__1
             {
-            pushFollow(FOLLOW_113);
+            pushFollow(FOLLOW_114);
             rule__PrimitiveType__Group_2__0__Impl();
 
             state._fsp--;
@@ -58839,7 +58841,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             // InternalMappingDsl.g:18960:2: 'char'
             {
              before(grammarAccess.getPrimitiveTypeAccess().getCharKeyword_2_1()); 
-            match(input,86,FOLLOW_2); 
+            match(input,88,FOLLOW_2); 
              after(grammarAccess.getPrimitiveTypeAccess().getCharKeyword_2_1()); 
 
             }
@@ -58872,7 +58874,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             // InternalMappingDsl.g:18974:1: ( rule__PrimitiveType__Group_3__0__Impl rule__PrimitiveType__Group_3__1 )
             // InternalMappingDsl.g:18975:2: rule__PrimitiveType__Group_3__0__Impl rule__PrimitiveType__Group_3__1
             {
-            pushFollow(FOLLOW_114);
+            pushFollow(FOLLOW_115);
             rule__PrimitiveType__Group_3__0__Impl();
 
             state._fsp--;
@@ -58984,7 +58986,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             // InternalMappingDsl.g:19014:2: 'date'
             {
              before(grammarAccess.getPrimitiveTypeAccess().getDateKeyword_3_1()); 
-            match(input,87,FOLLOW_2); 
+            match(input,89,FOLLOW_2); 
              after(grammarAccess.getPrimitiveTypeAccess().getDateKeyword_3_1()); 
 
             }
@@ -59017,7 +59019,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             // InternalMappingDsl.g:19028:1: ( rule__PrimitiveType__Group_4__0__Impl rule__PrimitiveType__Group_4__1 )
             // InternalMappingDsl.g:19029:2: rule__PrimitiveType__Group_4__0__Impl rule__PrimitiveType__Group_4__1
             {
-            pushFollow(FOLLOW_115);
+            pushFollow(FOLLOW_116);
             rule__PrimitiveType__Group_4__0__Impl();
 
             state._fsp--;
@@ -59129,7 +59131,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             // InternalMappingDsl.g:19068:2: 'double'
             {
              before(grammarAccess.getPrimitiveTypeAccess().getDoubleKeyword_4_1()); 
-            match(input,88,FOLLOW_2); 
+            match(input,90,FOLLOW_2); 
              after(grammarAccess.getPrimitiveTypeAccess().getDoubleKeyword_4_1()); 
 
             }
@@ -59162,7 +59164,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             // InternalMappingDsl.g:19082:1: ( rule__PrimitiveType__Group_5__0__Impl rule__PrimitiveType__Group_5__1 )
             // InternalMappingDsl.g:19083:2: rule__PrimitiveType__Group_5__0__Impl rule__PrimitiveType__Group_5__1
             {
-            pushFollow(FOLLOW_116);
+            pushFollow(FOLLOW_117);
             rule__PrimitiveType__Group_5__0__Impl();
 
             state._fsp--;
@@ -59274,7 +59276,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             // InternalMappingDsl.g:19122:2: 'float'
             {
              before(grammarAccess.getPrimitiveTypeAccess().getFloatKeyword_5_1()); 
-            match(input,89,FOLLOW_2); 
+            match(input,91,FOLLOW_2); 
              after(grammarAccess.getPrimitiveTypeAccess().getFloatKeyword_5_1()); 
 
             }
@@ -59307,7 +59309,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             // InternalMappingDsl.g:19136:1: ( rule__PrimitiveType__Group_6__0__Impl rule__PrimitiveType__Group_6__1 )
             // InternalMappingDsl.g:19137:2: rule__PrimitiveType__Group_6__0__Impl rule__PrimitiveType__Group_6__1
             {
-            pushFollow(FOLLOW_117);
+            pushFollow(FOLLOW_118);
             rule__PrimitiveType__Group_6__0__Impl();
 
             state._fsp--;
@@ -59419,7 +59421,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             // InternalMappingDsl.g:19176:2: 'int'
             {
              before(grammarAccess.getPrimitiveTypeAccess().getIntKeyword_6_1()); 
-            match(input,90,FOLLOW_2); 
+            match(input,92,FOLLOW_2); 
              after(grammarAccess.getPrimitiveTypeAccess().getIntKeyword_6_1()); 
 
             }
@@ -59452,7 +59454,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             // InternalMappingDsl.g:19190:1: ( rule__PrimitiveType__Group_7__0__Impl rule__PrimitiveType__Group_7__1 )
             // InternalMappingDsl.g:19191:2: rule__PrimitiveType__Group_7__0__Impl rule__PrimitiveType__Group_7__1
             {
-            pushFollow(FOLLOW_118);
+            pushFollow(FOLLOW_119);
             rule__PrimitiveType__Group_7__0__Impl();
 
             state._fsp--;
@@ -59564,7 +59566,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             // InternalMappingDsl.g:19230:2: 'long'
             {
              before(grammarAccess.getPrimitiveTypeAccess().getLongKeyword_7_1()); 
-            match(input,91,FOLLOW_2); 
+            match(input,93,FOLLOW_2); 
              after(grammarAccess.getPrimitiveTypeAccess().getLongKeyword_7_1()); 
 
             }
@@ -59597,7 +59599,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             // InternalMappingDsl.g:19244:1: ( rule__PrimitiveType__Group_8__0__Impl rule__PrimitiveType__Group_8__1 )
             // InternalMappingDsl.g:19245:2: rule__PrimitiveType__Group_8__0__Impl rule__PrimitiveType__Group_8__1
             {
-            pushFollow(FOLLOW_119);
+            pushFollow(FOLLOW_120);
             rule__PrimitiveType__Group_8__0__Impl();
 
             state._fsp--;
@@ -59709,7 +59711,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             // InternalMappingDsl.g:19284:2: 'short'
             {
              before(grammarAccess.getPrimitiveTypeAccess().getShortKeyword_8_1()); 
-            match(input,92,FOLLOW_2); 
+            match(input,94,FOLLOW_2); 
              after(grammarAccess.getPrimitiveTypeAccess().getShortKeyword_8_1()); 
 
             }
@@ -59854,7 +59856,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             // InternalMappingDsl.g:19338:2: 'string'
             {
              before(grammarAccess.getPrimitiveTypeAccess().getStringKeyword_9_1()); 
-            match(input,93,FOLLOW_2); 
+            match(input,95,FOLLOW_2); 
              after(grammarAccess.getPrimitiveTypeAccess().getStringKeyword_9_1()); 
 
             }
@@ -60014,7 +60016,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             	case 1 :
             	    // InternalMappingDsl.g:19393:3: rule__QualifiedName__Group_1__0
             	    {
-            	    pushFollow(FOLLOW_120);
+            	    pushFollow(FOLLOW_121);
             	    rule__QualifiedName__Group_1__0();
 
             	    state._fsp--;
@@ -64217,7 +64219,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             // InternalMappingDsl.g:20994:4: 'noimpl'
             {
              before(grammarAccess.getInterfaceAccess().getNotImplementedNoimplKeyword_3_0()); 
-            match(input,94,FOLLOW_2); 
+            match(input,96,FOLLOW_2); 
              after(grammarAccess.getInterfaceAccess().getNotImplementedNoimplKeyword_3_0()); 
 
             }
@@ -64586,7 +64588,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             // InternalMappingDsl.g:21133:4: 'noimpl'
             {
              before(grammarAccess.getOperationAccess().getNotImplementedNoimplKeyword_3_0()); 
-            match(input,94,FOLLOW_2); 
+            match(input,96,FOLLOW_2); 
              after(grammarAccess.getOperationAccess().getNotImplementedNoimplKeyword_3_0()); 
 
             }
@@ -65127,7 +65129,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             // InternalMappingDsl.g:21336:4: 'fault'
             {
              before(grammarAccess.getParameterAccess().getCommunicatesFaultFaultKeyword_3_0()); 
-            match(input,95,FOLLOW_2); 
+            match(input,97,FOLLOW_2); 
              after(grammarAccess.getParameterAccess().getCommunicatesFaultFaultKeyword_3_0()); 
 
             }
@@ -65209,7 +65211,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             // InternalMappingDsl.g:21370:4: '?'
             {
              before(grammarAccess.getParameterAccess().getOptionalQuestionMarkKeyword_5_0()); 
-            match(input,96,FOLLOW_2); 
+            match(input,98,FOLLOW_2); 
              after(grammarAccess.getParameterAccess().getOptionalQuestionMarkKeyword_5_0()); 
 
             }
@@ -66471,7 +66473,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             // InternalMappingDsl.g:21860:4: 'default'
             {
              before(grammarAccess.getProtocolAccess().getDefaultDefaultKeyword_6_0_0()); 
-            match(input,97,FOLLOW_2); 
+            match(input,99,FOLLOW_2); 
              after(grammarAccess.getProtocolAccess().getDefaultDefaultKeyword_6_0_0()); 
 
             }
@@ -66717,7 +66719,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             // InternalMappingDsl.g:21958:4: 'default'
             {
              before(grammarAccess.getTechnologySpecificPrimitiveTypeAccess().getDefaultDefaultKeyword_3_4_0()); 
-            match(input,97,FOLLOW_2); 
+            match(input,99,FOLLOW_2); 
              after(grammarAccess.getTechnologySpecificPrimitiveTypeAccess().getDefaultDefaultKeyword_3_4_0()); 
 
             }
@@ -67451,7 +67453,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             // InternalMappingDsl.g:22240:4: 'default'
             {
              before(grammarAccess.getOperationEnvironmentAccess().getDefaultDefaultKeyword_1_0()); 
-            match(input,97,FOLLOW_2); 
+            match(input,99,FOLLOW_2); 
              after(grammarAccess.getOperationEnvironmentAccess().getDefaultDefaultKeyword_1_0()); 
 
             }
@@ -67697,7 +67699,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             // InternalMappingDsl.g:22334:4: 'exchange_pattern'
             {
              before(grammarAccess.getServiceAspectPointcutAccess().getForExchangePatternExchange_patternKeyword_0_0_0()); 
-            match(input,98,FOLLOW_2); 
+            match(input,100,FOLLOW_2); 
              after(grammarAccess.getServiceAspectPointcutAccess().getForExchangePatternExchange_patternKeyword_0_0_0()); 
 
             }
@@ -67783,7 +67785,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             // InternalMappingDsl.g:22368:4: 'communication_type'
             {
              before(grammarAccess.getServiceAspectPointcutAccess().getForCommunicationTypeCommunication_typeKeyword_1_0_0()); 
-            match(input,99,FOLLOW_2); 
+            match(input,101,FOLLOW_2); 
              after(grammarAccess.getServiceAspectPointcutAccess().getForCommunicationTypeCommunication_typeKeyword_1_0_0()); 
 
             }
@@ -67869,7 +67871,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             // InternalMappingDsl.g:22402:4: 'protocol'
             {
              before(grammarAccess.getServiceAspectPointcutAccess().getForProtocolProtocolKeyword_2_0_0()); 
-            match(input,100,FOLLOW_2); 
+            match(input,102,FOLLOW_2); 
              after(grammarAccess.getServiceAspectPointcutAccess().getForProtocolProtocolKeyword_2_0_0()); 
 
             }
@@ -67959,7 +67961,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             // InternalMappingDsl.g:22440:4: 'data_format'
             {
              before(grammarAccess.getServiceAspectPointcutAccess().getForDataFormatData_formatKeyword_3_0_0()); 
-            match(input,101,FOLLOW_2); 
+            match(input,103,FOLLOW_2); 
              after(grammarAccess.getServiceAspectPointcutAccess().getForDataFormatData_formatKeyword_3_0_0()); 
 
             }
@@ -69341,7 +69343,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             // InternalMappingDsl.g:22970:4: 'hide'
             {
              before(grammarAccess.getDataFieldAccess().getHiddenHideKeyword_0_0()); 
-            match(input,102,FOLLOW_2); 
+            match(input,104,FOLLOW_2); 
              after(grammarAccess.getDataFieldAccess().getHiddenHideKeyword_0_0()); 
 
             }
@@ -69896,14 +69898,14 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
     protected DFA107 dfa107 = new DFA107(this);
     static final String dfa_1s = "\20\uffff";
     static final String dfa_2s = "\1\110\1\4\1\47\13\4\2\uffff";
-    static final String dfa_3s = "\1\110\1\4\1\47\1\146\12\50\2\uffff";
+    static final String dfa_3s = "\1\110\1\4\1\47\1\150\12\50\2\uffff";
     static final String dfa_4s = "\16\uffff\1\1\1\2";
     static final String dfa_5s = "\20\uffff}>";
     static final String[] dfa_6s = {
             "\1\1",
             "\1\2",
             "\1\3",
-            "\1\16\117\uffff\1\4\1\5\1\6\1\7\1\10\1\11\1\12\1\13\1\14\1\15\10\uffff\1\16",
+            "\1\16\121\uffff\1\4\1\5\1\6\1\7\1\10\1\11\1\12\1\13\1\14\1\15\10\uffff\1\16",
             "\1\16\43\uffff\1\17",
             "\1\16\43\uffff\1\17",
             "\1\16\43\uffff\1\17",
@@ -69990,11 +69992,11 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
     }
     static final String dfa_14s = "\147\uffff";
     static final String dfa_15s = "\2\4\2\uffff\1\52\3\66\4\4\2\52\6\4\3\67\1\66\1\63\1\61\1\4\2\5\6\4\1\5\3\67\3\65\1\63\1\67\1\4\2\61\1\52\1\15\1\65\1\4\2\66\1\4\1\5\1\4\1\66\1\4\1\61\1\15\1\52\1\4\2\5\1\52\3\4\3\67\3\65\1\4\3\61\1\65\1\63\3\4\1\5\3\4\2\61\1\52\1\15\1\63\1\67\2\4\1\5\1\4\1\61\1\15\2\4\2\61";
-    static final String dfa_16s = "\1\136\1\54\2\uffff\1\52\3\66\3\4\1\136\2\52\1\4\1\7\3\4\1\136\3\67\1\100\1\67\1\65\1\136\2\7\2\4\1\136\3\4\1\5\10\67\1\54\2\65\1\52\1\65\1\67\1\4\2\66\1\4\1\5\1\67\1\100\1\4\2\65\1\52\1\136\2\7\1\52\3\4\6\67\1\4\3\65\2\67\3\4\1\5\2\4\1\136\2\65\1\52\1\65\2\67\1\54\1\4\1\5\1\67\2\65\2\4\2\65";
+    static final String dfa_16s = "\1\140\1\54\2\uffff\1\52\3\66\3\4\1\140\2\52\1\4\1\7\3\4\1\140\3\67\1\100\1\67\1\65\1\140\2\7\2\4\1\140\3\4\1\5\10\67\1\54\2\65\1\52\1\65\1\67\1\4\2\66\1\4\1\5\1\67\1\100\1\4\2\65\1\52\1\140\2\7\1\52\3\4\6\67\1\4\3\65\2\67\3\4\1\5\2\4\1\140\2\65\1\52\1\65\2\67\1\54\1\4\1\5\1\67\2\65\2\4\2\65";
     static final String dfa_17s = "\2\uffff\1\2\1\1\143\uffff";
     static final String dfa_18s = "\147\uffff}>";
     static final String[] dfa_19s = {
-            "\1\2\13\uffff\3\2\25\uffff\1\2\23\uffff\1\1\4\uffff\1\3\34\uffff\1\2",
+            "\1\2\13\uffff\3\2\25\uffff\1\2\23\uffff\1\1\4\uffff\1\3\36\uffff\1\2",
             "\1\4\24\uffff\1\5\1\6\21\uffff\1\7",
             "",
             "",
@@ -70005,7 +70007,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             "\1\13",
             "\1\14",
             "\1\15",
-            "\1\2\13\uffff\3\2\40\uffff\1\16\2\uffff\1\17\5\uffff\1\20\4\uffff\1\3\34\uffff\1\2",
+            "\1\2\13\uffff\3\2\40\uffff\1\16\2\uffff\1\17\5\uffff\1\20\4\uffff\1\3\36\uffff\1\2",
             "\1\21",
             "\1\22",
             "\1\23",
@@ -70013,19 +70015,19 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             "\1\4",
             "\1\30",
             "\1\31",
-            "\1\2\13\uffff\3\2\40\uffff\1\16\2\uffff\1\17\5\uffff\1\20\4\uffff\1\3\34\uffff\1\2",
+            "\1\2\13\uffff\3\2\40\uffff\1\16\2\uffff\1\17\5\uffff\1\20\4\uffff\1\3\36\uffff\1\2",
             "\1\32",
             "\1\32",
             "\1\32",
             "\1\33\11\uffff\1\34",
             "\1\35\1\36\2\uffff\1\37",
             "\1\43\1\uffff\1\40\1\41\1\42",
-            "\1\2\13\uffff\3\2\51\uffff\1\20\4\uffff\1\3\34\uffff\1\2",
+            "\1\2\13\uffff\3\2\51\uffff\1\20\4\uffff\1\3\36\uffff\1\2",
             "\1\46\1\45\1\44",
             "\1\51\1\50\1\47",
             "\1\52",
             "\1\53",
-            "\1\2\13\uffff\3\2\51\uffff\1\54\4\uffff\1\3\34\uffff\1\2",
+            "\1\2\13\uffff\3\2\51\uffff\1\54\4\uffff\1\3\36\uffff\1\2",
             "\1\55",
             "\1\56",
             "\1\57",
@@ -70055,7 +70057,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             "\1\43\1\uffff\1\101\1\102\1\42",
             "\1\67\47\uffff\1\66",
             "\1\103",
-            "\1\2\13\uffff\3\2\51\uffff\1\20\4\uffff\1\3\34\uffff\1\2",
+            "\1\2\13\uffff\3\2\51\uffff\1\20\4\uffff\1\3\36\uffff\1\2",
             "\1\106\1\105\1\104",
             "\1\111\1\110\1\107",
             "\1\112",
@@ -70080,7 +70082,7 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
             "\1\132",
             "\1\133",
             "\1\134",
-            "\1\2\13\uffff\3\2\51\uffff\1\135\4\uffff\1\3\34\uffff\1\2",
+            "\1\2\13\uffff\3\2\51\uffff\1\135\4\uffff\1\3\36\uffff\1\2",
             "\1\123\1\uffff\1\120\1\121\1\122",
             "\1\123\3\uffff\1\122",
             "\1\136",
@@ -70127,8 +70129,8 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
 
     public static final BitSet FOLLOW_1 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_2 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_3 = new BitSet(new long[]{0x0000000000000002L,0x0000000000080300L});
-    public static final BitSet FOLLOW_4 = new BitSet(new long[]{0x0000000000000002L,0x0000000000020000L});
+    public static final BitSet FOLLOW_3 = new BitSet(new long[]{0x0000000000000002L,0x0000000000200300L});
+    public static final BitSet FOLLOW_4 = new BitSet(new long[]{0x0000000000000002L,0x0000000000080000L});
     public static final BitSet FOLLOW_5 = new BitSet(new long[]{0x1000004000000010L});
     public static final BitSet FOLLOW_6 = new BitSet(new long[]{0x0100000000000002L});
     public static final BitSet FOLLOW_7 = new BitSet(new long[]{0x1000004000000002L});
@@ -70176,8 +70178,8 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
     public static final BitSet FOLLOW_49 = new BitSet(new long[]{0x10000000003F0000L});
     public static final BitSet FOLLOW_50 = new BitSet(new long[]{0x0800000000000000L});
     public static final BitSet FOLLOW_51 = new BitSet(new long[]{0x2000008000000000L});
-    public static final BitSet FOLLOW_52 = new BitSet(new long[]{0x5000200000070000L,0x0000000040000000L});
-    public static final BitSet FOLLOW_53 = new BitSet(new long[]{0x5000200000070002L,0x0000000040000000L});
+    public static final BitSet FOLLOW_52 = new BitSet(new long[]{0x5000200000070000L,0x0000000100000000L});
+    public static final BitSet FOLLOW_53 = new BitSet(new long[]{0x5000200000070002L,0x0000000100000000L});
     public static final BitSet FOLLOW_54 = new BitSet(new long[]{0x1000000000000000L});
     public static final BitSet FOLLOW_55 = new BitSet(new long[]{0x0000100000000000L});
     public static final BitSet FOLLOW_56 = new BitSet(new long[]{0x0040000000000000L});
@@ -70190,60 +70192,61 @@ public class InternalMappingDslParser extends AbstractInternalContentAssistParse
     public static final BitSet FOLLOW_63 = new BitSet(new long[]{0x8000000000000000L});
     public static final BitSet FOLLOW_64 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000001L});
     public static final BitSet FOLLOW_65 = new BitSet(new long[]{0x0000000000000040L});
-    public static final BitSet FOLLOW_66 = new BitSet(new long[]{0x1000010000070010L,0x0000000040000002L});
+    public static final BitSet FOLLOW_66 = new BitSet(new long[]{0x1000010000070010L,0x0000000100000002L});
     public static final BitSet FOLLOW_67 = new BitSet(new long[]{0x1000000000000002L,0x0000000000000002L});
-    public static final BitSet FOLLOW_68 = new BitSet(new long[]{0x1000000000070012L,0x0000000040000000L});
-    public static final BitSet FOLLOW_69 = new BitSet(new long[]{0x1000000000070010L,0x0000000040000000L});
+    public static final BitSet FOLLOW_68 = new BitSet(new long[]{0x1000000000070012L,0x0000000100000000L});
+    public static final BitSet FOLLOW_69 = new BitSet(new long[]{0x1000000000070010L,0x0000000100000000L});
     public static final BitSet FOLLOW_70 = new BitSet(new long[]{0x10A0000006000000L});
     public static final BitSet FOLLOW_71 = new BitSet(new long[]{0x0000000000002000L});
     public static final BitSet FOLLOW_72 = new BitSet(new long[]{0x1000000006000000L});
     public static final BitSet FOLLOW_73 = new BitSet(new long[]{0x1000000000000000L,0x0000000000000002L});
-    public static final BitSet FOLLOW_74 = new BitSet(new long[]{0x0000000001C00010L,0x0000000080000000L});
-    public static final BitSet FOLLOW_75 = new BitSet(new long[]{0x0002000000000000L,0x0000000100000000L});
-    public static final BitSet FOLLOW_76 = new BitSet(new long[]{0x0000000000000010L,0x000000003FF00000L});
+    public static final BitSet FOLLOW_74 = new BitSet(new long[]{0x0000000001C00010L,0x0000000200000000L});
+    public static final BitSet FOLLOW_75 = new BitSet(new long[]{0x0002000000000000L,0x0000000400000000L});
+    public static final BitSet FOLLOW_76 = new BitSet(new long[]{0x0000000000000010L,0x00000000FFC00000L});
     public static final BitSet FOLLOW_77 = new BitSet(new long[]{0x00000000000000E0L});
     public static final BitSet FOLLOW_78 = new BitSet(new long[]{0x0008000000000000L});
     public static final BitSet FOLLOW_79 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000004L});
     public static final BitSet FOLLOW_80 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000008L});
-    public static final BitSet FOLLOW_81 = new BitSet(new long[]{0x0020000000002000L,0x0000000200000000L});
+    public static final BitSet FOLLOW_81 = new BitSet(new long[]{0x0020000000002000L,0x0000000800000000L});
     public static final BitSet FOLLOW_82 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000010L});
     public static final BitSet FOLLOW_83 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000020L});
     public static final BitSet FOLLOW_84 = new BitSet(new long[]{0x0000004000000000L});
     public static final BitSet FOLLOW_85 = new BitSet(new long[]{0x0000000000002000L,0x0000000000000040L});
     public static final BitSet FOLLOW_86 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000080L});
-    public static final BitSet FOLLOW_87 = new BitSet(new long[]{0x0000000000000000L,0x000000003FF00000L});
-    public static final BitSet FOLLOW_88 = new BitSet(new long[]{0x0020000000000000L,0x0000000200000000L});
+    public static final BitSet FOLLOW_87 = new BitSet(new long[]{0x0000000000000000L,0x00000000FFC00000L});
+    public static final BitSet FOLLOW_88 = new BitSet(new long[]{0x0020000000000000L,0x0000000800000000L});
     public static final BitSet FOLLOW_89 = new BitSet(new long[]{0x0020000038000000L});
     public static final BitSet FOLLOW_90 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000400L});
     public static final BitSet FOLLOW_91 = new BitSet(new long[]{0x0000010000000000L,0x0000000000000800L});
     public static final BitSet FOLLOW_92 = new BitSet(new long[]{0x0000000000000000L,0x0000000000001000L});
-    public static final BitSet FOLLOW_93 = new BitSet(new long[]{0x0000000000000002L,0x000000003FF00000L});
-    public static final BitSet FOLLOW_94 = new BitSet(new long[]{0x0000000000000000L,0x0000000200000000L});
-    public static final BitSet FOLLOW_95 = new BitSet(new long[]{0x0000008000002000L,0x0000000000000001L});
+    public static final BitSet FOLLOW_93 = new BitSet(new long[]{0x0000000000000002L,0x00000000FFC00000L});
+    public static final BitSet FOLLOW_94 = new BitSet(new long[]{0x0000000000000000L,0x0000000800000000L});
+    public static final BitSet FOLLOW_95 = new BitSet(new long[]{0x0000000000002000L,0x0000000000002001L});
     public static final BitSet FOLLOW_96 = new BitSet(new long[]{0x00000000C0000000L});
-    public static final BitSet FOLLOW_97 = new BitSet(new long[]{0x0000000001C00000L});
-    public static final BitSet FOLLOW_98 = new BitSet(new long[]{0x0000000000000000L,0x0000003C00000000L});
-    public static final BitSet FOLLOW_99 = new BitSet(new long[]{0x0000000000000000L,0x0000000000008000L});
-    public static final BitSet FOLLOW_100 = new BitSet(new long[]{0x0000001F00008000L});
-    public static final BitSet FOLLOW_101 = new BitSet(new long[]{0x0020008000002000L});
-    public static final BitSet FOLLOW_102 = new BitSet(new long[]{0x0000010000000000L,0x000000003FF02000L});
-    public static final BitSet FOLLOW_103 = new BitSet(new long[]{0x0000000000000002L,0x0000000000002000L});
-    public static final BitSet FOLLOW_104 = new BitSet(new long[]{0x0000002000200000L});
-    public static final BitSet FOLLOW_105 = new BitSet(new long[]{0x0000000000000000L,0x0000000000010000L});
-    public static final BitSet FOLLOW_106 = new BitSet(new long[]{0x0000010000000000L,0x00000000000A0300L});
-    public static final BitSet FOLLOW_107 = new BitSet(new long[]{0x0000000000000000L,0x0000000000080300L});
-    public static final BitSet FOLLOW_108 = new BitSet(new long[]{0x0000008000000000L,0x0000000000040000L});
-    public static final BitSet FOLLOW_109 = new BitSet(new long[]{0x0000010000000010L,0x000000403FF00000L});
-    public static final BitSet FOLLOW_110 = new BitSet(new long[]{0x0000000000000010L,0x000000403FF00000L});
-    public static final BitSet FOLLOW_111 = new BitSet(new long[]{0x0000000000000000L,0x0000000000100000L});
-    public static final BitSet FOLLOW_112 = new BitSet(new long[]{0x0000000000000000L,0x0000000000200000L});
-    public static final BitSet FOLLOW_113 = new BitSet(new long[]{0x0000000000000000L,0x0000000000400000L});
-    public static final BitSet FOLLOW_114 = new BitSet(new long[]{0x0000000000000000L,0x0000000000800000L});
-    public static final BitSet FOLLOW_115 = new BitSet(new long[]{0x0000000000000000L,0x0000000001000000L});
-    public static final BitSet FOLLOW_116 = new BitSet(new long[]{0x0000000000000000L,0x0000000002000000L});
-    public static final BitSet FOLLOW_117 = new BitSet(new long[]{0x0000000000000000L,0x0000000004000000L});
-    public static final BitSet FOLLOW_118 = new BitSet(new long[]{0x0000000000000000L,0x0000000008000000L});
-    public static final BitSet FOLLOW_119 = new BitSet(new long[]{0x0000000000000000L,0x0000000010000000L});
-    public static final BitSet FOLLOW_120 = new BitSet(new long[]{0x0008000000000002L});
+    public static final BitSet FOLLOW_97 = new BitSet(new long[]{0x0020000000000000L,0x0000000000004000L});
+    public static final BitSet FOLLOW_98 = new BitSet(new long[]{0x0000000001C00000L});
+    public static final BitSet FOLLOW_99 = new BitSet(new long[]{0x0000000000000000L,0x000000F000000000L});
+    public static final BitSet FOLLOW_100 = new BitSet(new long[]{0x0000000000000000L,0x0000000000020000L});
+    public static final BitSet FOLLOW_101 = new BitSet(new long[]{0x0000001F00008000L});
+    public static final BitSet FOLLOW_102 = new BitSet(new long[]{0x0020008000002000L});
+    public static final BitSet FOLLOW_103 = new BitSet(new long[]{0x0000010000000000L,0x00000000FFC08000L});
+    public static final BitSet FOLLOW_104 = new BitSet(new long[]{0x0000000000000002L,0x0000000000008000L});
+    public static final BitSet FOLLOW_105 = new BitSet(new long[]{0x0000002000200000L});
+    public static final BitSet FOLLOW_106 = new BitSet(new long[]{0x0000000000000000L,0x0000000000040000L});
+    public static final BitSet FOLLOW_107 = new BitSet(new long[]{0x0000010000000000L,0x0000000000280300L});
+    public static final BitSet FOLLOW_108 = new BitSet(new long[]{0x0000000000000000L,0x0000000000200300L});
+    public static final BitSet FOLLOW_109 = new BitSet(new long[]{0x0000008000000000L,0x0000000000100000L});
+    public static final BitSet FOLLOW_110 = new BitSet(new long[]{0x0000010000000010L,0x00000100FFC00000L});
+    public static final BitSet FOLLOW_111 = new BitSet(new long[]{0x0000000000000010L,0x00000100FFC00000L});
+    public static final BitSet FOLLOW_112 = new BitSet(new long[]{0x0000000000000000L,0x0000000000400000L});
+    public static final BitSet FOLLOW_113 = new BitSet(new long[]{0x0000000000000000L,0x0000000000800000L});
+    public static final BitSet FOLLOW_114 = new BitSet(new long[]{0x0000000000000000L,0x0000000001000000L});
+    public static final BitSet FOLLOW_115 = new BitSet(new long[]{0x0000000000000000L,0x0000000002000000L});
+    public static final BitSet FOLLOW_116 = new BitSet(new long[]{0x0000000000000000L,0x0000000004000000L});
+    public static final BitSet FOLLOW_117 = new BitSet(new long[]{0x0000000000000000L,0x0000000008000000L});
+    public static final BitSet FOLLOW_118 = new BitSet(new long[]{0x0000000000000000L,0x0000000010000000L});
+    public static final BitSet FOLLOW_119 = new BitSet(new long[]{0x0000000000000000L,0x0000000020000000L});
+    public static final BitSet FOLLOW_120 = new BitSet(new long[]{0x0000000000000000L,0x0000000040000000L});
+    public static final BitSet FOLLOW_121 = new BitSet(new long[]{0x0008000000000002L});
 
 }

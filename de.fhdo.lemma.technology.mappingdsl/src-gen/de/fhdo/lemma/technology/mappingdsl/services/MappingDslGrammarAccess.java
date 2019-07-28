@@ -2306,9 +2306,9 @@ public class MappingDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//TechnologySpecificProperty:
-	//	type=PrimitiveType name=ID ('=' defaultValue=PrimitiveValue)? ('{'
+	//	type=PrimitiveType name=ID ('=' defaultValue=PrimitiveValue)? ('<'
 	//	features+=PropertyFeature (',' features+=PropertyFeature)*
-	//	'}')?
+	//	'>')?
 	//	';';
 	public TechnologyDslGrammarAccess.TechnologySpecificPropertyElements getTechnologySpecificPropertyAccess() {
 		return gaTechnologyDsl.getTechnologySpecificPropertyAccess();
