@@ -25,6 +25,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
+import org.eclipse.emf.ecore.util.EDataTypeEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -40,7 +41,8 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.fhdo.lemma.data.intermediate.impl.IntermediateDataFieldImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.impl.IntermediateDataFieldImpl#getQualifiedName <em>Qualified Name</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.impl.IntermediateDataFieldImpl#isHidden <em>Hidden</em>}</li>
- *   <li>{@link de.fhdo.lemma.data.intermediate.impl.IntermediateDataFieldImpl#isDerived <em>Derived</em>}</li>
+ *   <li>{@link de.fhdo.lemma.data.intermediate.impl.IntermediateDataFieldImpl#isInherited <em>Inherited</em>}</li>
+ *   <li>{@link de.fhdo.lemma.data.intermediate.impl.IntermediateDataFieldImpl#getFeatureNames <em>Feature Names</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.impl.IntermediateDataFieldImpl#getType <em>Type</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.impl.IntermediateDataFieldImpl#getOriginalType <em>Original Type</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.impl.IntermediateDataFieldImpl#getAspects <em>Aspects</em>}</li>
@@ -112,24 +114,34 @@ public class IntermediateDataFieldImpl extends MinimalEObjectImpl.Container impl
     protected boolean hidden = HIDDEN_EDEFAULT;
 
     /**
-     * The default value of the '{@link #isDerived() <em>Derived</em>}' attribute.
+     * The default value of the '{@link #isInherited() <em>Inherited</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #isDerived()
+     * @see #isInherited()
      * @generated
      * @ordered
      */
-    protected static final boolean DERIVED_EDEFAULT = false;
+    protected static final boolean INHERITED_EDEFAULT = false;
 
     /**
-     * The cached value of the '{@link #isDerived() <em>Derived</em>}' attribute.
+     * The cached value of the '{@link #isInherited() <em>Inherited</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #isDerived()
+     * @see #isInherited()
      * @generated
      * @ordered
      */
-    protected boolean derived = DERIVED_EDEFAULT;
+    protected boolean inherited = INHERITED_EDEFAULT;
+
+    /**
+     * The cached value of the '{@link #getFeatureNames() <em>Feature Names</em>}' attribute list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getFeatureNames()
+     * @generated
+     * @ordered
+     */
+    protected EList<String> featureNames;
 
     /**
      * The cached value of the '{@link #getType() <em>Type</em>}' containment reference.
@@ -255,8 +267,8 @@ public class IntermediateDataFieldImpl extends MinimalEObjectImpl.Container impl
      * @generated
      */
     @Override
-    public boolean isDerived() {
-        return derived;
+    public boolean isInherited() {
+        return inherited;
     }
 
     /**
@@ -265,11 +277,24 @@ public class IntermediateDataFieldImpl extends MinimalEObjectImpl.Container impl
      * @generated
      */
     @Override
-    public void setDerived(boolean newDerived) {
-        boolean oldDerived = derived;
-        derived = newDerived;
+    public void setInherited(boolean newInherited) {
+        boolean oldInherited = inherited;
+        inherited = newInherited;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, IntermediatePackage.INTERMEDIATE_DATA_FIELD__DERIVED, oldDerived, derived));
+            eNotify(new ENotificationImpl(this, Notification.SET, IntermediatePackage.INTERMEDIATE_DATA_FIELD__INHERITED, oldInherited, inherited));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EList<String> getFeatureNames() {
+        if (featureNames == null) {
+            featureNames = new EDataTypeEList<String>(String.class, this, IntermediatePackage.INTERMEDIATE_DATA_FIELD__FEATURE_NAMES);
+        }
+        return featureNames;
     }
 
     /**
@@ -588,8 +613,10 @@ public class IntermediateDataFieldImpl extends MinimalEObjectImpl.Container impl
                 return getQualifiedName();
             case IntermediatePackage.INTERMEDIATE_DATA_FIELD__HIDDEN:
                 return isHidden();
-            case IntermediatePackage.INTERMEDIATE_DATA_FIELD__DERIVED:
-                return isDerived();
+            case IntermediatePackage.INTERMEDIATE_DATA_FIELD__INHERITED:
+                return isInherited();
+            case IntermediatePackage.INTERMEDIATE_DATA_FIELD__FEATURE_NAMES:
+                return getFeatureNames();
             case IntermediatePackage.INTERMEDIATE_DATA_FIELD__TYPE:
                 return getType();
             case IntermediatePackage.INTERMEDIATE_DATA_FIELD__ORIGINAL_TYPE:
@@ -624,8 +651,12 @@ public class IntermediateDataFieldImpl extends MinimalEObjectImpl.Container impl
             case IntermediatePackage.INTERMEDIATE_DATA_FIELD__HIDDEN:
                 setHidden((Boolean)newValue);
                 return;
-            case IntermediatePackage.INTERMEDIATE_DATA_FIELD__DERIVED:
-                setDerived((Boolean)newValue);
+            case IntermediatePackage.INTERMEDIATE_DATA_FIELD__INHERITED:
+                setInherited((Boolean)newValue);
+                return;
+            case IntermediatePackage.INTERMEDIATE_DATA_FIELD__FEATURE_NAMES:
+                getFeatureNames().clear();
+                getFeatureNames().addAll((Collection<? extends String>)newValue);
                 return;
             case IntermediatePackage.INTERMEDIATE_DATA_FIELD__TYPE:
                 setType((IntermediateType)newValue);
@@ -664,8 +695,11 @@ public class IntermediateDataFieldImpl extends MinimalEObjectImpl.Container impl
             case IntermediatePackage.INTERMEDIATE_DATA_FIELD__HIDDEN:
                 setHidden(HIDDEN_EDEFAULT);
                 return;
-            case IntermediatePackage.INTERMEDIATE_DATA_FIELD__DERIVED:
-                setDerived(DERIVED_EDEFAULT);
+            case IntermediatePackage.INTERMEDIATE_DATA_FIELD__INHERITED:
+                setInherited(INHERITED_EDEFAULT);
+                return;
+            case IntermediatePackage.INTERMEDIATE_DATA_FIELD__FEATURE_NAMES:
+                getFeatureNames().clear();
                 return;
             case IntermediatePackage.INTERMEDIATE_DATA_FIELD__TYPE:
                 setType((IntermediateType)null);
@@ -700,8 +734,10 @@ public class IntermediateDataFieldImpl extends MinimalEObjectImpl.Container impl
                 return QUALIFIED_NAME_EDEFAULT == null ? qualifiedName != null : !QUALIFIED_NAME_EDEFAULT.equals(qualifiedName);
             case IntermediatePackage.INTERMEDIATE_DATA_FIELD__HIDDEN:
                 return hidden != HIDDEN_EDEFAULT;
-            case IntermediatePackage.INTERMEDIATE_DATA_FIELD__DERIVED:
-                return derived != DERIVED_EDEFAULT;
+            case IntermediatePackage.INTERMEDIATE_DATA_FIELD__INHERITED:
+                return inherited != INHERITED_EDEFAULT;
+            case IntermediatePackage.INTERMEDIATE_DATA_FIELD__FEATURE_NAMES:
+                return featureNames != null && !featureNames.isEmpty();
             case IntermediatePackage.INTERMEDIATE_DATA_FIELD__TYPE:
                 return type != null;
             case IntermediatePackage.INTERMEDIATE_DATA_FIELD__ORIGINAL_TYPE:
@@ -746,8 +782,10 @@ public class IntermediateDataFieldImpl extends MinimalEObjectImpl.Container impl
         result.append(qualifiedName);
         result.append(", hidden: ");
         result.append(hidden);
-        result.append(", derived: ");
-        result.append(derived);
+        result.append(", inherited: ");
+        result.append(inherited);
+        result.append(", featureNames: ");
+        result.append(featureNames);
         result.append(')');
         return result.toString();
     }

@@ -1747,13 +1747,22 @@ public interface DataPackage extends EPackage {
     int DATA_FIELD__PRIMITIVE_TYPE = 3;
 
     /**
+     * The feature id for the '<em><b>Features</b></em>' attribute list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATA_FIELD__FEATURES = 4;
+
+    /**
      * The feature id for the '<em><b>Data Structure</b></em>' container reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int DATA_FIELD__DATA_STRUCTURE = 4;
+    int DATA_FIELD__DATA_STRUCTURE = 5;
 
     /**
      * The feature id for the '<em><b>List Type</b></em>' container reference.
@@ -1762,7 +1771,7 @@ public interface DataPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int DATA_FIELD__LIST_TYPE = 5;
+    int DATA_FIELD__LIST_TYPE = 6;
 
     /**
      * The number of structural features of the '<em>Field</em>' class.
@@ -1771,7 +1780,7 @@ public interface DataPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int DATA_FIELD_FEATURE_COUNT = 6;
+    int DATA_FIELD_FEATURE_COUNT = 7;
 
     /**
      * The operation id for the '<em>Get Effective Type</em>' operation.
@@ -2246,6 +2255,16 @@ public interface DataPackage extends EPackage {
     int PRIMITIVE_TYPE_CONSTANTS = 24;
 
     /**
+     * The meta object id for the '{@link de.fhdo.lemma.data.FieldFeature <em>Field Feature</em>}' enum.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.fhdo.lemma.data.FieldFeature
+     * @see de.fhdo.lemma.data.impl.DataPackageImpl#getFieldFeature()
+     * @generated
+     */
+    int FIELD_FEATURE = 25;
+
+    /**
      * The meta object id for the '<em>Type Name Size Map</em>' data type.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2253,7 +2272,7 @@ public interface DataPackage extends EPackage {
      * @see de.fhdo.lemma.data.impl.DataPackageImpl#getTypeNameSizeMap()
      * @generated
      */
-    int TYPE_NAME_SIZE_MAP = 25;
+    int TYPE_NAME_SIZE_MAP = 26;
 
 
     /**
@@ -3024,6 +3043,17 @@ public interface DataPackage extends EPackage {
     EReference getDataField_PrimitiveType();
 
     /**
+     * Returns the meta object for the attribute list '{@link de.fhdo.lemma.data.DataField#getFeatures <em>Features</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute list '<em>Features</em>'.
+     * @see de.fhdo.lemma.data.DataField#getFeatures()
+     * @see #getDataField()
+     * @generated
+     */
+    EAttribute getDataField_Features();
+
+    /**
      * Returns the meta object for the container reference '{@link de.fhdo.lemma.data.DataField#getDataStructure <em>Data Structure</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -3391,6 +3421,16 @@ public interface DataPackage extends EPackage {
      * @generated
      */
     EEnum getPrimitiveTypeConstants();
+
+    /**
+     * Returns the meta object for enum '{@link de.fhdo.lemma.data.FieldFeature <em>Field Feature</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for enum '<em>Field Feature</em>'.
+     * @see de.fhdo.lemma.data.FieldFeature
+     * @generated
+     */
+    EEnum getFieldFeature();
 
     /**
      * Returns the meta object for data type '{@link java.util.Map <em>Type Name Size Map</em>}'.
@@ -4053,6 +4093,14 @@ public interface DataPackage extends EPackage {
         EReference DATA_FIELD__PRIMITIVE_TYPE = eINSTANCE.getDataField_PrimitiveType();
 
         /**
+         * The meta object literal for the '<em><b>Features</b></em>' attribute list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute DATA_FIELD__FEATURES = eINSTANCE.getDataField_Features();
+
+        /**
          * The meta object literal for the '<em><b>Data Structure</b></em>' container reference feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -4347,6 +4395,16 @@ public interface DataPackage extends EPackage {
          * @generated
          */
         EEnum PRIMITIVE_TYPE_CONSTANTS = eINSTANCE.getPrimitiveTypeConstants();
+
+        /**
+         * The meta object literal for the '{@link de.fhdo.lemma.data.FieldFeature <em>Field Feature</em>}' enum.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.fhdo.lemma.data.FieldFeature
+         * @see de.fhdo.lemma.data.impl.DataPackageImpl#getFieldFeature()
+         * @generated
+         */
+        EEnum FIELD_FEATURE = eINSTANCE.getFieldFeature();
 
         /**
          * The meta object literal for the '<em>Type Name Size Map</em>' data type.

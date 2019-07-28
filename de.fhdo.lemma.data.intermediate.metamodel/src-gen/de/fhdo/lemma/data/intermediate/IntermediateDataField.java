@@ -23,7 +23,8 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateDataField#getName <em>Name</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateDataField#getQualifiedName <em>Qualified Name</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateDataField#isHidden <em>Hidden</em>}</li>
- *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateDataField#isDerived <em>Derived</em>}</li>
+ *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateDataField#isInherited <em>Inherited</em>}</li>
+ *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateDataField#getFeatureNames <em>Feature Names</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateDataField#getType <em>Type</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateDataField#getOriginalType <em>Original Type</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateDataField#getAspects <em>Aspects</em>}</li>
@@ -115,30 +116,46 @@ public interface IntermediateDataField extends EObject {
     void setHidden(boolean value);
 
     /**
-     * Returns the value of the '<em><b>Derived</b></em>' attribute.
+     * Returns the value of the '<em><b>Inherited</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <p>
-     * If the meaning of the '<em>Derived</em>' attribute isn't clear,
+     * If the meaning of the '<em>Inherited</em>' attribute isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Derived</em>' attribute.
-     * @see #setDerived(boolean)
-     * @see de.fhdo.lemma.data.intermediate.IntermediatePackage#getIntermediateDataField_Derived()
+     * @return the value of the '<em>Inherited</em>' attribute.
+     * @see #setInherited(boolean)
+     * @see de.fhdo.lemma.data.intermediate.IntermediatePackage#getIntermediateDataField_Inherited()
      * @model unique="false"
      * @generated
      */
-    boolean isDerived();
+    boolean isInherited();
 
     /**
-     * Sets the value of the '{@link de.fhdo.lemma.data.intermediate.IntermediateDataField#isDerived <em>Derived</em>}' attribute.
+     * Sets the value of the '{@link de.fhdo.lemma.data.intermediate.IntermediateDataField#isInherited <em>Inherited</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Derived</em>' attribute.
-     * @see #isDerived()
+     * @param value the new value of the '<em>Inherited</em>' attribute.
+     * @see #isInherited()
      * @generated
      */
-    void setDerived(boolean value);
+    void setInherited(boolean value);
+
+    /**
+     * Returns the value of the '<em><b>Feature Names</b></em>' attribute list.
+     * The list contents are of type {@link java.lang.String}.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Feature Names</em>' attribute list isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Feature Names</em>' attribute list.
+     * @see de.fhdo.lemma.data.intermediate.IntermediatePackage#getIntermediateDataField_FeatureNames()
+     * @model unique="false"
+     * @generated
+     */
+    EList<String> getFeatureNames();
 
     /**
      * Returns the value of the '<em><b>Type</b></em>' containment reference.

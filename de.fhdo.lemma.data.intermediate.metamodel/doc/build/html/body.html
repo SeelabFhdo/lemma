@@ -624,7 +624,7 @@ data fields.</p>
 <dl class="attribute">
 <dt>
 <code class="descname">IntermediateDataStructure super</code></dt>
-<dd><p>The super data structure from which this data structure was derived.</p>
+<dd><p>The super data structure from which this data structure inherits.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">The modeling language for creating Domain Data Models supports
@@ -641,11 +641,11 @@ from another Domain Data Model.</p>
 <div class="admonition hint">
 <p class="first admonition-title">Hint</p>
 <p class="last">In case the data structure inherits from a super data structure, the
-data fields also contain derived, non-hidden data fields from the
+data fields also contain inherited, non-hidden data fields from the
 inheritance hierarchy, i.e., the <em>effective fields</em> of the
-structure. The derived fields can be distinguished from “local”
+structure. The inherited fields can be distinguished from “local”
 fields of the structure on the basis of the
-<a class="reference internal" href="#link-intermediatedatafield-derived"><span class="std std-ref">IntermediateDataField.derived</span></a> attribute.</p>
+<a class="reference internal" href="#link-intermediatedatafield-inherited"><span class="std std-ref">IntermediateDataField.inherited</span></a> attribute.</p>
 </div>
 </dd></dl>
 
@@ -682,11 +682,35 @@ field is not visible in any of the following levels of the inheritance
 hierarchy.</p>
 </dd></dl>
 
-<span class="target" id="link-intermediatedatafield-derived"></span><dl class="attribute">
+<span class="target" id="link-intermediatedatafield-inherited"></span><dl class="attribute">
 <dt>
-<code class="descname">boolean derived</code></dt>
-<dd><p>Flag to indicate whether this field was derived from a super
+<code class="descname">boolean inherited</code></dt>
+<dd><p>Flag to indicate whether this field was inherited from a super
 <a class="reference internal" href="#link-intermediatedatastructure"><span class="std std-ref">structure</span></a>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">String[*] featureNames</code></dt>
+<dd><p>This attribute contains the names of all features specified for the data
+field. The following values are possible:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="25%" />
+<col width="75%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>Feature Name</strong></td>
+<td><strong>Description</strong></td>
+</tr>
+<tr class="row-even"><td>DERIVED</td>
+<td>Flag to indicate that the value of the data field is
+derived from the state of the complex type’s
+instance or other values. Only allowed on <a class="reference internal" href="#link-intermediatedatastructure"><span class="std std-ref">data
+structures</span></a>.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <span class="target" id="link-intermediatedatafield-type"></span><dl class="attribute">

@@ -2504,9 +2504,21 @@ public class MappingDslGrammarAccess extends AbstractGrammarElementFinder {
 		return getListTypeAccess().getRule();
 	}
 	
+	//enum FieldFeature:
+	//	DERIVED="derived";
+	public DataDslGrammarAccess.FieldFeatureElements getFieldFeatureAccess() {
+		return gaDataDsl.getFieldFeatureAccess();
+	}
+	
+	public EnumRule getFieldFeatureRule() {
+		return getFieldFeatureAccess().getRule();
+	}
+	
 	//DataField:
 	//	^hidden?='hide'? (primitiveType=PrimitiveType | complexType=PossiblyImportedComplexType)?
-	//	name=ID;
+	//	name=ID ('<'
+	//	features+=FieldFeature (',' features+=FieldFeature)*
+	//	'>')?;
 	public DataDslGrammarAccess.DataFieldElements getDataFieldAccess() {
 		return gaDataDsl.getDataFieldAccess();
 	}

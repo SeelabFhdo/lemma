@@ -10,6 +10,8 @@ import org.eclipse.xtext.Action;
 import org.eclipse.xtext.Alternatives;
 import org.eclipse.xtext.Assignment;
 import org.eclipse.xtext.CrossReference;
+import org.eclipse.xtext.EnumLiteralDeclaration;
+import org.eclipse.xtext.EnumRule;
 import org.eclipse.xtext.Grammar;
 import org.eclipse.xtext.GrammarUtil;
 import org.eclipse.xtext.Group;
@@ -18,6 +20,7 @@ import org.eclipse.xtext.ParserRule;
 import org.eclipse.xtext.RuleCall;
 import org.eclipse.xtext.TerminalRule;
 import org.eclipse.xtext.common.services.TerminalsGrammarAccess;
+import org.eclipse.xtext.service.AbstractElementFinder.AbstractEnumRuleElementFinder;
 import org.eclipse.xtext.service.AbstractElementFinder.AbstractGrammarElementFinder;
 import org.eclipse.xtext.service.GrammarProvider;
 
@@ -426,13 +429,25 @@ public class DataDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cComplexTypePossiblyImportedComplexTypeParserRuleCall_1_1_0 = (RuleCall)cComplexTypeAssignment_1_1.eContents().get(0);
 		private final Assignment cNameAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final RuleCall cNameIDTerminalRuleCall_2_0 = (RuleCall)cNameAssignment_2.eContents().get(0);
+		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
+		private final Keyword cLessThanSignKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
+		private final Assignment cFeaturesAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
+		private final RuleCall cFeaturesFieldFeatureEnumRuleCall_3_1_0 = (RuleCall)cFeaturesAssignment_3_1.eContents().get(0);
+		private final Group cGroup_3_2 = (Group)cGroup_3.eContents().get(2);
+		private final Keyword cCommaKeyword_3_2_0 = (Keyword)cGroup_3_2.eContents().get(0);
+		private final Assignment cFeaturesAssignment_3_2_1 = (Assignment)cGroup_3_2.eContents().get(1);
+		private final RuleCall cFeaturesFieldFeatureEnumRuleCall_3_2_1_0 = (RuleCall)cFeaturesAssignment_3_2_1.eContents().get(0);
+		private final Keyword cGreaterThanSignKeyword_3_3 = (Keyword)cGroup_3.eContents().get(3);
 		
 		//DataField:
 		//	^hidden?='hide'? (primitiveType=PrimitiveType | complexType=PossiblyImportedComplexType)?
-		//	name=ID;
+		//	name=ID ('<'
+		//	features+=FieldFeature (',' features+=FieldFeature)*
+		//	'>')?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//^hidden?='hide'? (primitiveType=PrimitiveType | complexType=PossiblyImportedComplexType)? name=ID
+		//^hidden?='hide'? (primitiveType=PrimitiveType | complexType=PossiblyImportedComplexType)? name=ID ('<'
+		//features+=FieldFeature (',' features+=FieldFeature)* '>')?
 		public Group getGroup() { return cGroup; }
 		
 		//^hidden?='hide'?
@@ -461,6 +476,33 @@ public class DataDslGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//ID
 		public RuleCall getNameIDTerminalRuleCall_2_0() { return cNameIDTerminalRuleCall_2_0; }
+		
+		//('<' features+=FieldFeature (',' features+=FieldFeature)* '>')?
+		public Group getGroup_3() { return cGroup_3; }
+		
+		//'<'
+		public Keyword getLessThanSignKeyword_3_0() { return cLessThanSignKeyword_3_0; }
+		
+		//features+=FieldFeature
+		public Assignment getFeaturesAssignment_3_1() { return cFeaturesAssignment_3_1; }
+		
+		//FieldFeature
+		public RuleCall getFeaturesFieldFeatureEnumRuleCall_3_1_0() { return cFeaturesFieldFeatureEnumRuleCall_3_1_0; }
+		
+		//(',' features+=FieldFeature)*
+		public Group getGroup_3_2() { return cGroup_3_2; }
+		
+		//','
+		public Keyword getCommaKeyword_3_2_0() { return cCommaKeyword_3_2_0; }
+		
+		//features+=FieldFeature
+		public Assignment getFeaturesAssignment_3_2_1() { return cFeaturesAssignment_3_2_1; }
+		
+		//FieldFeature
+		public RuleCall getFeaturesFieldFeatureEnumRuleCall_3_2_1_0() { return cFeaturesFieldFeatureEnumRuleCall_3_2_1_0; }
+		
+		//'>'
+		public Keyword getGreaterThanSignKeyword_3_3() { return cGreaterThanSignKeyword_3_3; }
 	}
 	public class EnumerationElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.fhdo.lemma.data.DataDsl.Enumeration");
@@ -799,6 +841,21 @@ public class DataDslGrammarAccess extends AbstractGrammarElementFinder {
 		public RuleCall getIDTerminalRuleCall_1_1() { return cIDTerminalRuleCall_1_1; }
 	}
 	
+	public class FieldFeatureElements extends AbstractEnumRuleElementFinder {
+		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.fhdo.lemma.data.DataDsl.FieldFeature");
+		private final EnumLiteralDeclaration cDERIVEDEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
+		private final Keyword cDERIVEDDerivedKeyword_0 = (Keyword)cDERIVEDEnumLiteralDeclaration.eContents().get(0);
+		
+		//enum FieldFeature:
+		//	DERIVED="derived";
+		public EnumRule getRule() { return rule; }
+		
+		//DERIVED="derived"
+		public EnumLiteralDeclaration getDERIVEDEnumLiteralDeclaration() { return cDERIVEDEnumLiteralDeclaration; }
+		
+		//"derived"
+		public Keyword getDERIVEDDerivedKeyword_0() { return cDERIVEDDerivedKeyword_0; }
+	}
 	
 	private final DataModelElements pDataModel;
 	private final ComplexTypeImportElements pComplexTypeImport;
@@ -807,6 +864,7 @@ public class DataDslGrammarAccess extends AbstractGrammarElementFinder {
 	private final ComplexTypeElements pComplexType;
 	private final DataStructureElements pDataStructure;
 	private final ListTypeElements pListType;
+	private final FieldFeatureElements eFieldFeature;
 	private final DataFieldElements pDataField;
 	private final EnumerationElements pEnumeration;
 	private final EnumerationFieldElements pEnumerationField;
@@ -833,6 +891,7 @@ public class DataDslGrammarAccess extends AbstractGrammarElementFinder {
 		this.pComplexType = new ComplexTypeElements();
 		this.pDataStructure = new DataStructureElements();
 		this.pListType = new ListTypeElements();
+		this.eFieldFeature = new FieldFeatureElements();
 		this.pDataField = new DataFieldElements();
 		this.pEnumeration = new EnumerationElements();
 		this.pEnumerationField = new EnumerationFieldElements();
@@ -956,9 +1015,21 @@ public class DataDslGrammarAccess extends AbstractGrammarElementFinder {
 		return getListTypeAccess().getRule();
 	}
 	
+	//enum FieldFeature:
+	//	DERIVED="derived";
+	public FieldFeatureElements getFieldFeatureAccess() {
+		return eFieldFeature;
+	}
+	
+	public EnumRule getFieldFeatureRule() {
+		return getFieldFeatureAccess().getRule();
+	}
+	
 	//DataField:
 	//	^hidden?='hide'? (primitiveType=PrimitiveType | complexType=PossiblyImportedComplexType)?
-	//	name=ID;
+	//	name=ID ('<'
+	//	features+=FieldFeature (',' features+=FieldFeature)*
+	//	'>')?;
 	public DataFieldElements getDataFieldAccess() {
 		return pDataField;
 	}

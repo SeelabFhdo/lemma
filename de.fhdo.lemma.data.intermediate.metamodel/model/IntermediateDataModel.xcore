@@ -167,7 +167,8 @@ class IntermediateDataField {
     String name
     String qualifiedName
     boolean hidden
-    boolean ^derived
+    boolean inherited
+    String[] featureNames
 
     contains IntermediateType ^type opposite dataField
     contains IntermediateType originalType

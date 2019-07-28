@@ -16,6 +16,7 @@ import com.google.common.base.Function
 import java.util.List
 import org.eclipse.emf.ecore.resource.Resource
 import de.fhdo.lemma.utils.LemmaUtils
+import de.fhdo.lemma.data.FieldFeature
 
 /**
  * This class contains validation rules for the Data DSL.
@@ -89,12 +90,31 @@ class DataDslValidator extends AbstractDataDslValidator {
             return
         }
 
-        val equalSuperField = dataField.findEponymousSuperField()
+        /* A feature may only be assigned once to a data field */
+        val duplicateFeatureIndex = LemmaUtils.getDuplicateIndex(dataField.features, [it])
+        if (duplicateFeatureIndex > -1) {
+            error("Duplicate feature", dataField,
+                DataPackage::Literals.DATA_FIELD__FEATURES, duplicateFeatureIndex)
+
+            return
+        }
+
+        /* The "derived" property is only allowed for data structure fields */
+        val derivedFeatureIndex = dataField.features.indexOf(FieldFeature.DERIVED)
+        if (dataField.dataStructure === null && derivedFeatureIndex > -1) {
+            error('''The "derived" feature is only allowed on data structure fields''', dataField,
+                DataPackage::Literals.DATA_FIELD__FEATURES, derivedFeatureIndex)
+
+            return
+        }
+
         /*
          * If there is no equally named super field or the super field is hidden (which means
          * that the complex type does not allow external callers to access it), the field must
          * have a type
          */
+        val equalSuperField = dataField.findEponymousSuperField()
+
         if (equalSuperField === null || equalSuperField.hidden) {
             if (dataField.effectiveType === null)
                 error('''Field must have a type''', dataField,

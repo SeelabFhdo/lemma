@@ -30,6 +30,7 @@
 'datatypes'=66
 'date'=74
 'default'=44
+'derived'=101
 'double'=75
 'endpoints'=17
 'enum'=70
@@ -96,6 +97,7 @@ RULE_SL_COMMENT=10
 RULE_STRING=4
 RULE_WS=11
 T__100=100
+T__101=101
 T__13=13
 T__14=14
 T__15=15

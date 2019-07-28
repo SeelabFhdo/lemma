@@ -9,6 +9,7 @@ import de.fhdo.lemma.data.DataField;
 import de.fhdo.lemma.data.DataModel;
 import de.fhdo.lemma.data.DataPackage;
 import de.fhdo.lemma.data.DataStructure;
+import de.fhdo.lemma.data.FieldFeature;
 import de.fhdo.lemma.data.Type;
 import de.fhdo.lemma.data.Version;
 import de.fhdo.lemma.data.validation.AbstractDataDslValidator;
@@ -94,14 +95,31 @@ public class DataDslValidator extends AbstractDataDslValidator {
         DataPackage.Literals.DATA_FIELD__NAME);
       return;
     }
+    final Function<FieldFeature, FieldFeature> _function = (FieldFeature it) -> {
+      return it;
+    };
+    final Integer duplicateFeatureIndex = LemmaUtils.<FieldFeature, FieldFeature>getDuplicateIndex(dataField.getFeatures(), _function);
+    if (((duplicateFeatureIndex).intValue() > (-1))) {
+      this.error("Duplicate feature", dataField, 
+        DataPackage.Literals.DATA_FIELD__FEATURES, (duplicateFeatureIndex).intValue());
+      return;
+    }
+    final int derivedFeatureIndex = dataField.getFeatures().indexOf(FieldFeature.DERIVED);
+    if (((dataField.getDataStructure() == null) && (derivedFeatureIndex > (-1)))) {
+      StringConcatenation _builder_1 = new StringConcatenation();
+      _builder_1.append("The \"derived\" feature is only allowed on data structure fields");
+      this.error(_builder_1.toString(), dataField, 
+        DataPackage.Literals.DATA_FIELD__FEATURES, derivedFeatureIndex);
+      return;
+    }
     final DataField equalSuperField = dataField.findEponymousSuperField();
     if (((equalSuperField == null) || equalSuperField.isHidden())) {
       Type _effectiveType = dataField.getEffectiveType();
       boolean _tripleEquals = (_effectiveType == null);
       if (_tripleEquals) {
-        StringConcatenation _builder_1 = new StringConcatenation();
-        _builder_1.append("Field must have a type");
-        this.error(_builder_1.toString(), dataField, 
+        StringConcatenation _builder_2 = new StringConcatenation();
+        _builder_2.append("Field must have a type");
+        this.error(_builder_2.toString(), dataField, 
           DataPackage.Literals.DATA_FIELD__NAME);
       }
     } else {
@@ -110,11 +128,11 @@ public class DataDslValidator extends AbstractDataDslValidator {
         Type _effectiveType_1 = dataField.getEffectiveType();
         boolean _tripleNotEquals = (_effectiveType_1 != null);
         if (_tripleNotEquals) {
-          StringConcatenation _builder_2 = new StringConcatenation();
-          _builder_2.append("Field cannot redefine inherited field ");
-          _builder_2.append(superQualifiedName);
-          _builder_2.append(" ");
-          this.error(_builder_2.toString(), dataField, 
+          StringConcatenation _builder_3 = new StringConcatenation();
+          _builder_3.append("Field cannot redefine inherited field ");
+          _builder_3.append(superQualifiedName);
+          _builder_3.append(" ");
+          this.error(_builder_3.toString(), dataField, 
             DataPackage.Literals.DATA_FIELD__NAME);
         }
       }

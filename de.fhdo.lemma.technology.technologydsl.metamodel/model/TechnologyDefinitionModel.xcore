@@ -387,13 +387,15 @@ class TechnologySpecificProperty {
      *          Ensured by: DSL validator.
      *     (C3) Name must be unique.
      *          Ensured by: DSL validator.
+     *     (C4) A feature may only be assigned once.
+     *          Ensured by: DSL validator.
      */
 
     String name
 
     contains PrimitiveType ^type
     contains PrimitiveValue[0..1] defaultValue
-    PropertyFeature[*] features
+    PropertyFeature[] features
 
     container OperationTechnology operationTechnology opposite serviceProperties
     container TechnologyAspect technologyAspect opposite properties

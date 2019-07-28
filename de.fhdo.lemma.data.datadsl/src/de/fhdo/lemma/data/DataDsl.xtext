@@ -58,10 +58,17 @@ ListType returns ListType:
     '}'
 ;
 
+enum FieldFeature returns FieldFeature:
+    DERIVED = "derived"
+;
+
 DataField returns DataField:
     ^hidden?='hide'?
     (primitiveType=PrimitiveType | complexType=PossiblyImportedComplexType)?
     name=ID
+    ('<'
+        features+=FieldFeature (',' features+=FieldFeature)*
+    '>')?
 ;
 
 Enumeration returns Enumeration:

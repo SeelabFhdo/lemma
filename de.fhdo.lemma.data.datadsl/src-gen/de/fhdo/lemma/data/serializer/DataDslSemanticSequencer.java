@@ -158,7 +158,12 @@ public class DataDslSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *     DataField returns DataField
 	 *
 	 * Constraint:
-	 *     (hidden?='hide'? (primitiveType=PrimitiveType | complexType=PossiblyImportedComplexType)? name=ID)
+	 *     (
+	 *         hidden?='hide'? 
+	 *         (primitiveType=PrimitiveType | complexType=PossiblyImportedComplexType)? 
+	 *         name=ID 
+	 *         (features+=FieldFeature features+=FieldFeature*)?
+	 *     )
 	 */
 	protected void sequence_DataField(ISerializationContext context, DataField semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

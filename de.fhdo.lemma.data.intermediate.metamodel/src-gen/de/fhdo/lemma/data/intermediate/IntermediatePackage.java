@@ -1107,13 +1107,22 @@ public interface IntermediatePackage extends EPackage {
     int INTERMEDIATE_DATA_FIELD__HIDDEN = 2;
 
     /**
-     * The feature id for the '<em><b>Derived</b></em>' attribute.
+     * The feature id for the '<em><b>Inherited</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_DATA_FIELD__DERIVED = 3;
+    int INTERMEDIATE_DATA_FIELD__INHERITED = 3;
+
+    /**
+     * The feature id for the '<em><b>Feature Names</b></em>' attribute list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_DATA_FIELD__FEATURE_NAMES = 4;
 
     /**
      * The feature id for the '<em><b>Type</b></em>' containment reference.
@@ -1122,7 +1131,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_DATA_FIELD__TYPE = 4;
+    int INTERMEDIATE_DATA_FIELD__TYPE = 5;
 
     /**
      * The feature id for the '<em><b>Original Type</b></em>' containment reference.
@@ -1131,7 +1140,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_DATA_FIELD__ORIGINAL_TYPE = 5;
+    int INTERMEDIATE_DATA_FIELD__ORIGINAL_TYPE = 6;
 
     /**
      * The feature id for the '<em><b>Aspects</b></em>' containment reference list.
@@ -1140,7 +1149,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_DATA_FIELD__ASPECTS = 6;
+    int INTERMEDIATE_DATA_FIELD__ASPECTS = 7;
 
     /**
      * The feature id for the '<em><b>Data Structure</b></em>' container reference.
@@ -1149,7 +1158,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_DATA_FIELD__DATA_STRUCTURE = 7;
+    int INTERMEDIATE_DATA_FIELD__DATA_STRUCTURE = 8;
 
     /**
      * The feature id for the '<em><b>List Type</b></em>' container reference.
@@ -1158,7 +1167,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_DATA_FIELD__LIST_TYPE = 8;
+    int INTERMEDIATE_DATA_FIELD__LIST_TYPE = 9;
 
     /**
      * The number of structural features of the '<em>Data Field</em>' class.
@@ -1167,7 +1176,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_DATA_FIELD_FEATURE_COUNT = 9;
+    int INTERMEDIATE_DATA_FIELD_FEATURE_COUNT = 10;
 
     /**
      * The operation id for the '<em>Get Effective Complex Type</em>' operation.
@@ -2192,15 +2201,26 @@ public interface IntermediatePackage extends EPackage {
     EAttribute getIntermediateDataField_Hidden();
 
     /**
-     * Returns the meta object for the attribute '{@link de.fhdo.lemma.data.intermediate.IntermediateDataField#isDerived <em>Derived</em>}'.
+     * Returns the meta object for the attribute '{@link de.fhdo.lemma.data.intermediate.IntermediateDataField#isInherited <em>Inherited</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Derived</em>'.
-     * @see de.fhdo.lemma.data.intermediate.IntermediateDataField#isDerived()
+     * @return the meta object for the attribute '<em>Inherited</em>'.
+     * @see de.fhdo.lemma.data.intermediate.IntermediateDataField#isInherited()
      * @see #getIntermediateDataField()
      * @generated
      */
-    EAttribute getIntermediateDataField_Derived();
+    EAttribute getIntermediateDataField_Inherited();
+
+    /**
+     * Returns the meta object for the attribute list '{@link de.fhdo.lemma.data.intermediate.IntermediateDataField#getFeatureNames <em>Feature Names</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute list '<em>Feature Names</em>'.
+     * @see de.fhdo.lemma.data.intermediate.IntermediateDataField#getFeatureNames()
+     * @see #getIntermediateDataField()
+     * @generated
+     */
+    EAttribute getIntermediateDataField_FeatureNames();
 
     /**
      * Returns the meta object for the containment reference '{@link de.fhdo.lemma.data.intermediate.IntermediateDataField#getType <em>Type</em>}'.
@@ -3037,12 +3057,20 @@ public interface IntermediatePackage extends EPackage {
         EAttribute INTERMEDIATE_DATA_FIELD__HIDDEN = eINSTANCE.getIntermediateDataField_Hidden();
 
         /**
-         * The meta object literal for the '<em><b>Derived</b></em>' attribute feature.
+         * The meta object literal for the '<em><b>Inherited</b></em>' attribute feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EAttribute INTERMEDIATE_DATA_FIELD__DERIVED = eINSTANCE.getIntermediateDataField_Derived();
+        EAttribute INTERMEDIATE_DATA_FIELD__INHERITED = eINSTANCE.getIntermediateDataField_Inherited();
+
+        /**
+         * The meta object literal for the '<em><b>Feature Names</b></em>' attribute list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute INTERMEDIATE_DATA_FIELD__FEATURE_NAMES = eINSTANCE.getIntermediateDataField_FeatureNames();
 
         /**
          * The meta object literal for the '<em><b>Type</b></em>' containment reference feature.

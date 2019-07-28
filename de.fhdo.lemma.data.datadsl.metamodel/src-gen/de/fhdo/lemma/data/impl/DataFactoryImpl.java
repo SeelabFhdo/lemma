@@ -95,6 +95,8 @@ public class DataFactoryImpl extends EFactoryImpl implements DataFactory {
         switch (eDataType.getClassifierID()) {
             case DataPackage.PRIMITIVE_TYPE_CONSTANTS:
                 return createPrimitiveTypeConstantsFromString(eDataType, initialValue);
+            case DataPackage.FIELD_FEATURE:
+                return createFieldFeatureFromString(eDataType, initialValue);
             case DataPackage.TYPE_NAME_SIZE_MAP:
                 return createTypeNameSizeMapFromString(eDataType, initialValue);
             default:
@@ -112,6 +114,8 @@ public class DataFactoryImpl extends EFactoryImpl implements DataFactory {
         switch (eDataType.getClassifierID()) {
             case DataPackage.PRIMITIVE_TYPE_CONSTANTS:
                 return convertPrimitiveTypeConstantsToString(eDataType, instanceValue);
+            case DataPackage.FIELD_FEATURE:
+                return convertFieldFeatureToString(eDataType, instanceValue);
             case DataPackage.TYPE_NAME_SIZE_MAP:
                 return convertTypeNameSizeMapToString(eDataType, instanceValue);
             default:
@@ -367,6 +371,26 @@ public class DataFactoryImpl extends EFactoryImpl implements DataFactory {
      * @generated
      */
     public String convertPrimitiveTypeConstantsToString(EDataType eDataType, Object instanceValue) {
+        return instanceValue == null ? null : instanceValue.toString();
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public FieldFeature createFieldFeatureFromString(EDataType eDataType, String initialValue) {
+        FieldFeature result = FieldFeature.get(initialValue);
+        if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+        return result;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public String convertFieldFeatureToString(EDataType eDataType, Object instanceValue) {
         return instanceValue == null ? null : instanceValue.toString();
     }
 

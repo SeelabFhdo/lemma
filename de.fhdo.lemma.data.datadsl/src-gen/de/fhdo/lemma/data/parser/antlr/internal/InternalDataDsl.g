@@ -23,6 +23,7 @@ import org.eclipse.xtext.parser.*;
 import org.eclipse.xtext.parser.impl.*;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.common.util.Enumerator;
 import org.eclipse.xtext.parser.antlr.AbstractInternalAntlrParser;
 import org.eclipse.xtext.parser.antlr.XtextTokenStream;
 import org.eclipse.xtext.parser.antlr.XtextTokenStream.HiddenTokens;
@@ -786,6 +787,60 @@ ruleDataField returns [EObject current=null]
 				}
 			)
 		)
+		(
+			otherlv_4='<'
+			{
+				newLeafNode(otherlv_4, grammarAccess.getDataFieldAccess().getLessThanSignKeyword_3_0());
+			}
+			(
+				(
+					{
+						newCompositeNode(grammarAccess.getDataFieldAccess().getFeaturesFieldFeatureEnumRuleCall_3_1_0());
+					}
+					lv_features_5_0=ruleFieldFeature
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getDataFieldRule());
+						}
+						add(
+							$current,
+							"features",
+							lv_features_5_0,
+							"de.fhdo.lemma.data.DataDsl.FieldFeature");
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)
+			(
+				otherlv_6=','
+				{
+					newLeafNode(otherlv_6, grammarAccess.getDataFieldAccess().getCommaKeyword_3_2_0());
+				}
+				(
+					(
+						{
+							newCompositeNode(grammarAccess.getDataFieldAccess().getFeaturesFieldFeatureEnumRuleCall_3_2_1_0());
+						}
+						lv_features_7_0=ruleFieldFeature
+						{
+							if ($current==null) {
+								$current = createModelElementForParent(grammarAccess.getDataFieldRule());
+							}
+							add(
+								$current,
+								"features",
+								lv_features_7_0,
+								"de.fhdo.lemma.data.DataDsl.FieldFeature");
+							afterParserOrEnumRuleCall();
+						}
+					)
+				)
+			)*
+			otherlv_8='>'
+			{
+				newLeafNode(otherlv_8, grammarAccess.getDataFieldAccess().getGreaterThanSignKeyword_3_3());
+			}
+		)?
 	)
 ;
 
@@ -1272,6 +1327,23 @@ ruleQualifiedName returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleT
 				newLeafNode(this_ID_2, grammarAccess.getQualifiedNameAccess().getIDTerminalRuleCall_1_1());
 			}
 		)*
+	)
+;
+
+// Rule FieldFeature
+ruleFieldFeature returns [Enumerator current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		enumLiteral_0='derived'
+		{
+			$current = grammarAccess.getFieldFeatureAccess().getDERIVEDEnumLiteralDeclaration().getEnumLiteral().getInstance();
+			newLeafNode(enumLiteral_0, grammarAccess.getFieldFeatureAccess().getDERIVEDEnumLiteralDeclaration());
+		}
 	)
 ;
 

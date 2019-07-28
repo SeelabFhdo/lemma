@@ -12,6 +12,7 @@ import de.fhdo.lemma.data.DataPackage;
 import de.fhdo.lemma.data.DataStructure;
 import de.fhdo.lemma.data.Enumeration;
 import de.fhdo.lemma.data.EnumerationField;
+import de.fhdo.lemma.data.FieldFeature;
 import de.fhdo.lemma.data.ListType;
 import de.fhdo.lemma.data.PossiblyImportedComplexType;
 import de.fhdo.lemma.data.PrimitiveBoolean;
@@ -225,6 +226,13 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * @generated
      */
     private EEnum primitiveTypeConstantsEEnum = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EEnum fieldFeatureEEnum = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -1033,8 +1041,18 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * @generated
      */
     @Override
+    public EAttribute getDataField_Features() {
+        return (EAttribute)dataFieldEClass.getEStructuralFeatures().get(4);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public EReference getDataField_DataStructure() {
-        return (EReference)dataFieldEClass.getEStructuralFeatures().get(4);
+        return (EReference)dataFieldEClass.getEStructuralFeatures().get(5);
     }
 
     /**
@@ -1044,7 +1062,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      */
     @Override
     public EReference getDataField_ListType() {
-        return (EReference)dataFieldEClass.getEStructuralFeatures().get(5);
+        return (EReference)dataFieldEClass.getEStructuralFeatures().get(6);
     }
 
     /**
@@ -1393,6 +1411,16 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * @generated
      */
     @Override
+    public EEnum getFieldFeature() {
+        return fieldFeatureEEnum;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public EDataType getTypeNameSizeMap() {
         return typeNameSizeMapEDataType;
     }
@@ -1519,6 +1547,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
         createEAttribute(dataFieldEClass, DATA_FIELD__HIDDEN);
         createEReference(dataFieldEClass, DATA_FIELD__COMPLEX_TYPE);
         createEReference(dataFieldEClass, DATA_FIELD__PRIMITIVE_TYPE);
+        createEAttribute(dataFieldEClass, DATA_FIELD__FEATURES);
         createEReference(dataFieldEClass, DATA_FIELD__DATA_STRUCTURE);
         createEReference(dataFieldEClass, DATA_FIELD__LIST_TYPE);
         createEOperation(dataFieldEClass, DATA_FIELD___GET_EFFECTIVE_TYPE);
@@ -1560,6 +1589,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 
         // Create enums
         primitiveTypeConstantsEEnum = createEEnum(PRIMITIVE_TYPE_CONSTANTS);
+        fieldFeatureEEnum = createEEnum(FIELD_FEATURE);
 
         // Create data types
         typeNameSizeMapEDataType = createEDataType(TYPE_NAME_SIZE_MAP);
@@ -1734,6 +1764,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
         initEAttribute(getDataField_Hidden(), theEcorePackage.getEBoolean(), "hidden", null, 0, 1, DataField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getDataField_ComplexType(), this.getPossiblyImportedComplexType(), this.getPossiblyImportedComplexType_DataField(), "complexType", null, 0, 1, DataField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getDataField_PrimitiveType(), this.getPrimitiveType(), null, "primitiveType", null, 0, 1, DataField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getDataField_Features(), this.getFieldFeature(), "features", null, 0, -1, DataField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getDataField_DataStructure(), this.getDataStructure(), this.getDataStructure_DataFields(), "dataStructure", null, 0, 1, DataField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getDataField_ListType(), this.getListType(), this.getListType_DataFields(), "listType", null, 0, 1, DataField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -1814,6 +1845,9 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
         addEEnumLiteral(primitiveTypeConstantsEEnum, PrimitiveTypeConstants.LONG);
         addEEnumLiteral(primitiveTypeConstantsEEnum, PrimitiveTypeConstants.SHORT);
         addEEnumLiteral(primitiveTypeConstantsEEnum, PrimitiveTypeConstants.STRING);
+
+        initEEnum(fieldFeatureEEnum, FieldFeature.class, "FieldFeature");
+        addEEnumLiteral(fieldFeatureEEnum, FieldFeature.DERIVED);
 
         // Initialize data types
         initEDataType(typeNameSizeMapEDataType, Map.class, "TypeNameSizeMap", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS, "java.util.Map<java.lang.String, java.lang.Integer>");

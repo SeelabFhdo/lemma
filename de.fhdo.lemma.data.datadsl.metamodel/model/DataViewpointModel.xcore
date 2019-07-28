@@ -688,6 +688,13 @@ class ListType extends ComplexType {
 }
 
 /**
+ * Possible features for a data field
+ */
+enum FieldFeature {
+    DERIVED
+}
+
+/**
  * Represents a typed and named field in a data structure or structured list
  */
 class DataField {
@@ -705,6 +712,8 @@ class DataField {
      *          Ensured by: DSL validator.
      *     (C4) Name must be unique within a data structure.
      *          Ensured by: DSL validator.
+     *     (C5) A feature may only be assigned once.
+     *          Ensured by: DSL validator.
      */
 
     String name
@@ -712,6 +721,7 @@ class DataField {
 
     contains PossiblyImportedComplexType[0..1] complexType opposite dataField
     contains PrimitiveType[0..1] primitiveType
+    FieldFeature[] features
 
     container DataStructure dataStructure opposite dataFields
     container ListType listType opposite dataFields

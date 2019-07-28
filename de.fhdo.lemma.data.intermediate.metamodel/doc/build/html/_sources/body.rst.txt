@@ -494,7 +494,7 @@ Custom, domain-specific Types
 
     .. py:attribute:: IntermediateDataStructure super
 
-        The super data structure from which this data structure was derived.
+        The super data structure from which this data structure inherits.
 
         .. NOTE::
 
@@ -510,12 +510,12 @@ Custom, domain-specific Types
         .. HINT::
 
             In case the data structure inherits from a super data structure, the
-            data fields also contain derived, non-hidden data fields from the
+            data fields also contain inherited, non-hidden data fields from the
             inheritance hierarchy, i.e., the *effective fields* of the 
-            structure. The derived fields can be distinguished from \"local\" 
+            structure. The inherited fields can be distinguished from \"local\" 
             fields of the structure on the basis of the
-            :ref:`IntermediateDataField.derived 
-            <link__IntermediateDataField_derived>` attribute.
+            :ref:`IntermediateDataField.inherited 
+            <link__IntermediateDataField_inherited>` attribute.
 
 .. _link__IntermediateDataField:
 
@@ -544,12 +544,26 @@ Custom, domain-specific Types
         field is not visible in any of the following levels of the inheritance
         hierarchy.
 
-    .. _link__IntermediateDataField_derived:
+    .. _link__IntermediateDataField_inherited:
     
-    .. py:attribute:: boolean derived
+    .. py:attribute:: boolean inherited
       
-        Flag to indicate whether this field was derived from a super
+        Flag to indicate whether this field was inherited from a super
         :ref:`structure <link__IntermediateDataStructure>`.
+
+    .. py:attribute:: String[*] featureNames
+
+        This attribute contains the names of all features specified for the data
+        field. The following values are possible:
+
+        =================   ====================================================
+        **Feature Name**      **Description**
+        -----------------   ----------------------------------------------------
+             DERIVED        Flag to indicate that the value of the data field is
+                            derived from the state of the complex type's 
+                            instance or other values. Only allowed on :ref:`data
+                            structures <link__IntermediateDataStructure>`.
+        =================   ====================================================
 
     .. _link__IntermediateDataField_type:
 

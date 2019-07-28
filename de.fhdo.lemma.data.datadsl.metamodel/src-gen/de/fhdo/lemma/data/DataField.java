@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.fhdo.lemma.data.DataField#isHidden <em>Hidden</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.DataField#getComplexType <em>Complex Type</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.DataField#getPrimitiveType <em>Primitive Type</em>}</li>
+ *   <li>{@link de.fhdo.lemma.data.DataField#getFeatures <em>Features</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.DataField#getDataStructure <em>Data Structure</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.DataField#getListType <em>List Type</em>}</li>
  * </ul>
@@ -51,6 +52,8 @@ public interface DataField extends EObject {
      *          a type, i.e., a visible super field cannot be redefined in a sub-structure.
      *          Ensured by: DSL validator.
      *     (C4) Name must be unique within a data structure.
+     *          Ensured by: DSL validator.
+     *     (C5) A feature may only be assigned once.
      *          Ensured by: DSL validator.
      * <!-- end-model-doc -->
      * @return the value of the '<em>Name</em>' attribute.
@@ -150,6 +153,24 @@ public interface DataField extends EObject {
      * @generated
      */
     void setPrimitiveType(PrimitiveType value);
+
+    /**
+     * Returns the value of the '<em><b>Features</b></em>' attribute list.
+     * The list contents are of type {@link de.fhdo.lemma.data.FieldFeature}.
+     * The literals are from the enumeration {@link de.fhdo.lemma.data.FieldFeature}.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Features</em>' attribute list isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Features</em>' attribute list.
+     * @see de.fhdo.lemma.data.FieldFeature
+     * @see de.fhdo.lemma.data.DataPackage#getDataField_Features()
+     * @model unique="false"
+     * @generated
+     */
+    EList<FieldFeature> getFeatures();
 
     /**
      * Returns the value of the '<em><b>Data Structure</b></em>' container reference.

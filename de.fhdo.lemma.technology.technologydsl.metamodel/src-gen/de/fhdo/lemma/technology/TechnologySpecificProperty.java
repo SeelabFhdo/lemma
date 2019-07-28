@@ -50,6 +50,8 @@ public interface TechnologySpecificProperty extends EObject {
      *          Ensured by: DSL validator.
      *     (C3) Name must be unique.
      *          Ensured by: DSL validator.
+     *     (C4) A feature may only be assigned once.
+     *          Ensured by: DSL validator.
      * <!-- end-model-doc -->
      * @return the value of the '<em>Name</em>' attribute.
      * @see #setName(String)

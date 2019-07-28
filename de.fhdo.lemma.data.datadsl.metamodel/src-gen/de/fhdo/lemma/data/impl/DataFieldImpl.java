@@ -7,6 +7,7 @@ import com.google.common.base.Objects;
 import de.fhdo.lemma.data.DataField;
 import de.fhdo.lemma.data.DataPackage;
 import de.fhdo.lemma.data.DataStructure;
+import de.fhdo.lemma.data.FieldFeature;
 import de.fhdo.lemma.data.ListType;
 import de.fhdo.lemma.data.PossiblyImportedComplexType;
 import de.fhdo.lemma.data.PrimitiveType;
@@ -15,6 +16,7 @@ import de.fhdo.lemma.data.Type;
 import java.lang.reflect.InvocationTargetException;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -28,6 +30,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
+import org.eclipse.emf.ecore.util.EDataTypeEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
@@ -48,6 +51,7 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
  *   <li>{@link de.fhdo.lemma.data.impl.DataFieldImpl#isHidden <em>Hidden</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.impl.DataFieldImpl#getComplexType <em>Complex Type</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.impl.DataFieldImpl#getPrimitiveType <em>Primitive Type</em>}</li>
+ *   <li>{@link de.fhdo.lemma.data.impl.DataFieldImpl#getFeatures <em>Features</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.impl.DataFieldImpl#getDataStructure <em>Data Structure</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.impl.DataFieldImpl#getListType <em>List Type</em>}</li>
  * </ul>
@@ -114,6 +118,16 @@ public class DataFieldImpl extends MinimalEObjectImpl.Container implements DataF
      * @ordered
      */
     protected PrimitiveType primitiveType;
+
+    /**
+     * The cached value of the '{@link #getFeatures() <em>Features</em>}' attribute list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getFeatures()
+     * @generated
+     * @ordered
+     */
+    protected EList<FieldFeature> features;
 
     /**
      * <!-- begin-user-doc -->
@@ -268,6 +282,19 @@ public class DataFieldImpl extends MinimalEObjectImpl.Container implements DataF
         }
         else if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.DATA_FIELD__PRIMITIVE_TYPE, newPrimitiveType, newPrimitiveType));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EList<FieldFeature> getFeatures() {
+        if (features == null) {
+            features = new EDataTypeEList<FieldFeature>(FieldFeature.class, this, DataPackage.DATA_FIELD__FEATURES);
+        }
+        return features;
     }
 
     /**
@@ -568,6 +595,8 @@ public class DataFieldImpl extends MinimalEObjectImpl.Container implements DataF
                 return getComplexType();
             case DataPackage.DATA_FIELD__PRIMITIVE_TYPE:
                 return getPrimitiveType();
+            case DataPackage.DATA_FIELD__FEATURES:
+                return getFeatures();
             case DataPackage.DATA_FIELD__DATA_STRUCTURE:
                 if (resolve) return getDataStructure();
                 return basicGetDataStructure();
@@ -583,6 +612,7 @@ public class DataFieldImpl extends MinimalEObjectImpl.Container implements DataF
      * <!-- end-user-doc -->
      * @generated
      */
+    @SuppressWarnings("unchecked")
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
@@ -597,6 +627,10 @@ public class DataFieldImpl extends MinimalEObjectImpl.Container implements DataF
                 return;
             case DataPackage.DATA_FIELD__PRIMITIVE_TYPE:
                 setPrimitiveType((PrimitiveType)newValue);
+                return;
+            case DataPackage.DATA_FIELD__FEATURES:
+                getFeatures().clear();
+                getFeatures().addAll((Collection<? extends FieldFeature>)newValue);
                 return;
             case DataPackage.DATA_FIELD__DATA_STRUCTURE:
                 setDataStructure((DataStructure)newValue);
@@ -628,6 +662,9 @@ public class DataFieldImpl extends MinimalEObjectImpl.Container implements DataF
             case DataPackage.DATA_FIELD__PRIMITIVE_TYPE:
                 setPrimitiveType((PrimitiveType)null);
                 return;
+            case DataPackage.DATA_FIELD__FEATURES:
+                getFeatures().clear();
+                return;
             case DataPackage.DATA_FIELD__DATA_STRUCTURE:
                 setDataStructure((DataStructure)null);
                 return;
@@ -654,6 +691,8 @@ public class DataFieldImpl extends MinimalEObjectImpl.Container implements DataF
                 return complexType != null;
             case DataPackage.DATA_FIELD__PRIMITIVE_TYPE:
                 return primitiveType != null;
+            case DataPackage.DATA_FIELD__FEATURES:
+                return features != null && !features.isEmpty();
             case DataPackage.DATA_FIELD__DATA_STRUCTURE:
                 return basicGetDataStructure() != null;
             case DataPackage.DATA_FIELD__LIST_TYPE:
@@ -696,6 +735,8 @@ public class DataFieldImpl extends MinimalEObjectImpl.Container implements DataF
         result.append(name);
         result.append(", hidden: ");
         result.append(hidden);
+        result.append(", features: ");
+        result.append(features);
         result.append(')');
         return result.toString();
     }
