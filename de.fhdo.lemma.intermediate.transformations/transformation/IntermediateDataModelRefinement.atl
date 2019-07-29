@@ -178,7 +178,7 @@ rule RefineIntermediateDataField {
 
         -- Determine field type
         if (not mappedType.oclIsUndefined()) {
-            t.type <- thisModule.IntermediateImportedTechnologySpecificType(t, mappedType);
+            t.type <- thisModule.IntermediateImportedTechnologySpecificType(t, mappedField);
             t.originalType <- s.type;
         } else if (not typeDefinitionTechnology.oclIsUndefined()) {
             if (thisModule.hasDefaultPrimitiveTechnologySpecificType(s, typeDefinitionTechnology)) {
