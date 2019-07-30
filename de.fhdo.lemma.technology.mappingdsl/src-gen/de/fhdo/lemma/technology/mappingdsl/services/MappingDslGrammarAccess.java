@@ -74,7 +74,7 @@ public class MappingDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cTechnologyReferencesTechnologyReferenceParserRuleCall_0_0 = (RuleCall)cTechnologyReferencesAssignment_0.eContents().get(0);
 		private final Keyword cTypeKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		private final Assignment cTypeAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cTypeImportedComplexTypeParserRuleCall_2_0 = (RuleCall)cTypeAssignment_2.eContents().get(0);
+		private final RuleCall cTypeImportedComplexTypeToMapParserRuleCall_2_0 = (RuleCall)cTypeAssignment_2.eContents().get(0);
 		private final Keyword cLeftCurlyBracketKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
 		private final Keyword cAspectsKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
@@ -90,7 +90,7 @@ public class MappingDslGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//ComplexTypeMapping:
 		//	technologyReferences+=TechnologyReference*
-		//	'type' type=ImportedComplexType '{' ('aspects' '{'
+		//	'type' type=ImportedComplexTypeToMap '{' ('aspects' '{'
 		//	aspects+=TechnologySpecificImportedServiceAspect+
 		//	'}')?
 		//	fieldMappings+=TechnologySpecificFieldMapping*
@@ -98,7 +98,7 @@ public class MappingDslGrammarAccess extends AbstractGrammarElementFinder {
 		//	'}';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//technologyReferences+=TechnologyReference* 'type' type=ImportedComplexType '{' ('aspects' '{'
+		//technologyReferences+=TechnologyReference* 'type' type=ImportedComplexTypeToMap '{' ('aspects' '{'
 		//aspects+=TechnologySpecificImportedServiceAspect+ '}')? fieldMappings+=TechnologySpecificFieldMapping*
 		//operationMappings+=DataOperationMapping* '}'
 		public Group getGroup() { return cGroup; }
@@ -112,11 +112,11 @@ public class MappingDslGrammarAccess extends AbstractGrammarElementFinder {
 		//'type'
 		public Keyword getTypeKeyword_1() { return cTypeKeyword_1; }
 		
-		//type=ImportedComplexType
+		//type=ImportedComplexTypeToMap
 		public Assignment getTypeAssignment_2() { return cTypeAssignment_2; }
 		
-		//ImportedComplexType
-		public RuleCall getTypeImportedComplexTypeParserRuleCall_2_0() { return cTypeImportedComplexTypeParserRuleCall_2_0; }
+		//ImportedComplexTypeToMap
+		public RuleCall getTypeImportedComplexTypeToMapParserRuleCall_2_0() { return cTypeImportedComplexTypeToMapParserRuleCall_2_0; }
 		
 		//'{'
 		public Keyword getLeftCurlyBracketKeyword_3() { return cLeftCurlyBracketKeyword_3; }
@@ -154,8 +154,8 @@ public class MappingDslGrammarAccess extends AbstractGrammarElementFinder {
 		//'}'
 		public Keyword getRightCurlyBracketKeyword_7() { return cRightCurlyBracketKeyword_7; }
 	}
-	public class ImportedComplexTypeElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.fhdo.lemma.technology.mappingdsl.MappingDsl.ImportedComplexType");
+	public class ImportedComplexTypeToMapElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.fhdo.lemma.technology.mappingdsl.MappingDsl.ImportedComplexTypeToMap");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cServiceModelImportAssignment_0 = (Assignment)cGroup.eContents().get(0);
 		private final CrossReference cServiceModelImportImportCrossReference_0_0 = (CrossReference)cServiceModelImportAssignment_0.eContents().get(0);
@@ -169,7 +169,7 @@ public class MappingDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final CrossReference cTypeComplexTypeCrossReference_4_0 = (CrossReference)cTypeAssignment_4.eContents().get(0);
 		private final RuleCall cTypeComplexTypeQualifiedNameParserRuleCall_4_0_1 = (RuleCall)cTypeComplexTypeCrossReference_4_0.eContents().get(1);
 		
-		//ImportedComplexType:
+		//ImportedComplexTypeToMap:
 		//	serviceModelImport=[service::Import] '::'
 		//	dataModelImport=[service::Import] '::'
 		//	type=[data::ComplexType|QualifiedName];
@@ -1792,7 +1792,7 @@ public class MappingDslGrammarAccess extends AbstractGrammarElementFinder {
 	private final TechnologyMappingElements pTechnologyMapping;
 	private final ImportTypeElements eImportType;
 	private final ComplexTypeMappingElements pComplexTypeMapping;
-	private final ImportedComplexTypeElements pImportedComplexType;
+	private final ImportedComplexTypeToMapElements pImportedComplexTypeToMap;
 	private final MicroserviceMappingElements pMicroserviceMapping;
 	private final InterfaceMappingElements pInterfaceMapping;
 	private final OperationMappingElements pOperationMapping;
@@ -1832,7 +1832,7 @@ public class MappingDslGrammarAccess extends AbstractGrammarElementFinder {
 		this.pTechnologyMapping = new TechnologyMappingElements();
 		this.eImportType = new ImportTypeElements();
 		this.pComplexTypeMapping = new ComplexTypeMappingElements();
-		this.pImportedComplexType = new ImportedComplexTypeElements();
+		this.pImportedComplexTypeToMap = new ImportedComplexTypeToMapElements();
 		this.pMicroserviceMapping = new MicroserviceMappingElements();
 		this.pInterfaceMapping = new InterfaceMappingElements();
 		this.pOperationMapping = new OperationMappingElements();
@@ -1913,7 +1913,7 @@ public class MappingDslGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//ComplexTypeMapping:
 	//	technologyReferences+=TechnologyReference*
-	//	'type' type=ImportedComplexType '{' ('aspects' '{'
+	//	'type' type=ImportedComplexTypeToMap '{' ('aspects' '{'
 	//	aspects+=TechnologySpecificImportedServiceAspect+
 	//	'}')?
 	//	fieldMappings+=TechnologySpecificFieldMapping*
@@ -1927,16 +1927,16 @@ public class MappingDslGrammarAccess extends AbstractGrammarElementFinder {
 		return getComplexTypeMappingAccess().getRule();
 	}
 	
-	//ImportedComplexType:
+	//ImportedComplexTypeToMap:
 	//	serviceModelImport=[service::Import] '::'
 	//	dataModelImport=[service::Import] '::'
 	//	type=[data::ComplexType|QualifiedName];
-	public ImportedComplexTypeElements getImportedComplexTypeAccess() {
-		return pImportedComplexType;
+	public ImportedComplexTypeToMapElements getImportedComplexTypeToMapAccess() {
+		return pImportedComplexTypeToMap;
 	}
 	
-	public ParserRule getImportedComplexTypeRule() {
-		return getImportedComplexTypeAccess().getRule();
+	public ParserRule getImportedComplexTypeToMapRule() {
+		return getImportedComplexTypeToMapAccess().getRule();
 	}
 	
 	//MicroserviceMapping:
@@ -2735,11 +2735,7 @@ public class MappingDslGrammarAccess extends AbstractGrammarElementFinder {
 		return getDataModelAccess().getRule();
 	}
 	
-	///* For debugging purposes to test the type checker. May be safely removed in the future. */ /*AssignTest:
-	//    (target=PossiblyImportedComplexType)
-	//    '='
-	//    (source=PossiblyImportedComplexType)
-	//;*/ ComplexTypeImport:
+	//ComplexTypeImport:
 	//	'import' 'datatypes' 'from' importURI=STRING 'as' name=ID;
 	public DataDslGrammarAccess.ComplexTypeImportElements getComplexTypeImportAccess() {
 		return gaDataDsl.getComplexTypeImportAccess();
@@ -2783,12 +2779,8 @@ public class MappingDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//DataStructure:
-	//	'structure' name=ID ('extends' super=[DataStructure|QualifiedName])? '{' (dataFields+=DataField (','
-	//	dataFields+=DataField)*
-	//	| operations+=DataOperation (',' operations+=DataOperation)*
-	//	| dataFields+=DataField (',' dataFields+=DataField)*
-	//	','
-	//	operations+=DataOperation (',' operations+=DataOperation)*)?
+	//	'structure' name=ID ('extends' super=[DataStructure|QualifiedName])? '{' ((dataFields+=DataField |
+	//	operations+=DataOperation) (',' (dataFields+=DataField | operations+=DataOperation))*)?
 	//	'}';
 	public DataDslGrammarAccess.DataStructureElements getDataStructureAccess() {
 		return gaDataDsl.getDataStructureAccess();
@@ -2825,7 +2817,8 @@ public class MappingDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//DataField:
-	//	^hidden?='hide'? (primitiveType=PrimitiveType | complexType=PossiblyImportedComplexType)?
+	//	^hidden?='hide'? (primitiveType=PrimitiveType | complexType=[ComplexType|QualifiedName] |
+	//	importedComplexType=ImportedComplexType)?
 	//	name=ID ('<'
 	//	features+=FieldFeature (',' features+=FieldFeature)*
 	//	'>')?;
@@ -2861,8 +2854,9 @@ public class MappingDslGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//DataOperation:
 	//	^hidden?='hide'? (hasNoReturnType?='procedure' |
-	//	'function' (primitiveReturnType=PrimitiveType | complexReturnType=PossiblyImportedComplexType)?) name=ID ('('
-	//	parameters+=DataOperationParameter? (',' parameters+=DataOperationParameter)* ')')?;
+	//	'function' (primitiveReturnType=PrimitiveType | complexReturnType=[ComplexType|QualifiedName] |
+	//	importedComplexReturnType=ImportedComplexType)?) name=ID ('(' parameters+=DataOperationParameter? (','
+	//	parameters+=DataOperationParameter)* ')')?;
 	public DataDslGrammarAccess.DataOperationElements getDataOperationAccess() {
 		return gaDataDsl.getDataOperationAccess();
 	}
@@ -2872,7 +2866,8 @@ public class MappingDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//DataOperationParameter:
-	//	(primitiveType=PrimitiveType | complexType=PossiblyImportedComplexType) name=ID;
+	//	(primitiveType=PrimitiveType | complexType=[ComplexType|QualifiedName] | importedComplexType=ImportedComplexType)
+	//	name=ID;
 	public DataDslGrammarAccess.DataOperationParameterElements getDataOperationParameterAccess() {
 		return gaDataDsl.getDataOperationParameterAccess();
 	}
@@ -2891,14 +2886,14 @@ public class MappingDslGrammarAccess extends AbstractGrammarElementFinder {
 		return getPrimitiveValueAccess().getRule();
 	}
 	
-	//PossiblyImportedComplexType:
-	//	(^import=[ComplexTypeImport] '::')? complexType=[ComplexType|QualifiedName];
-	public DataDslGrammarAccess.PossiblyImportedComplexTypeElements getPossiblyImportedComplexTypeAccess() {
-		return gaDataDsl.getPossiblyImportedComplexTypeAccess();
+	//ImportedComplexType:
+	//	^import=[ComplexTypeImport] '::' importedType=[Type|QualifiedName];
+	public DataDslGrammarAccess.ImportedComplexTypeElements getImportedComplexTypeAccess() {
+		return gaDataDsl.getImportedComplexTypeAccess();
 	}
 	
-	public ParserRule getPossiblyImportedComplexTypeRule() {
-		return getPossiblyImportedComplexTypeAccess().getRule();
+	public ParserRule getImportedComplexTypeRule() {
+		return getImportedComplexTypeAccess().getRule();
 	}
 	
 	//PrimitiveType:

@@ -63,7 +63,7 @@ public class MappingFactoryImpl extends EFactoryImpl implements MappingFactory {
         switch (eClass.getClassifierID()) {
             case MappingPackage.TECHNOLOGY_MAPPING: return createTechnologyMapping();
             case MappingPackage.COMPLEX_TYPE_MAPPING: return createComplexTypeMapping();
-            case MappingPackage.IMPORTED_COMPLEX_TYPE: return createImportedComplexType();
+            case MappingPackage.IMPORTED_COMPLEX_TYPE_TO_MAP: return createImportedComplexTypeToMap();
             case MappingPackage.MICROSERVICE_MAPPING: return createMicroserviceMapping();
             case MappingPackage.IMPORTED_MICROSERVICE: return createImportedMicroservice();
             case MappingPackage.INTERFACE_MAPPING: return createInterfaceMapping();
@@ -141,9 +141,9 @@ public class MappingFactoryImpl extends EFactoryImpl implements MappingFactory {
      * @generated
      */
     @Override
-    public ImportedComplexType createImportedComplexType() {
-        ImportedComplexTypeImpl importedComplexType = new ImportedComplexTypeImpl();
-        return importedComplexType;
+    public ImportedComplexTypeToMap createImportedComplexTypeToMap() {
+        ImportedComplexTypeToMapImpl importedComplexTypeToMap = new ImportedComplexTypeToMapImpl();
+        return importedComplexTypeToMap;
     }
 
     /**

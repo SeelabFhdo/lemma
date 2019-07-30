@@ -22,7 +22,7 @@ import de.fhdo.lemma.service.ServicePackage;
 import de.fhdo.lemma.service.intermediate.IntermediateServiceModel;
 import de.fhdo.lemma.technology.mapping.ComplexParameterMapping;
 import de.fhdo.lemma.technology.mapping.ComplexTypeMapping;
-import de.fhdo.lemma.technology.mapping.ImportedComplexType;
+import de.fhdo.lemma.technology.mapping.ImportedComplexTypeToMap;
 import de.fhdo.lemma.technology.mapping.MappingPackage;
 import de.fhdo.lemma.technology.mapping.MicroserviceMapping;
 import de.fhdo.lemma.technology.mapping.TechnologyMapping;
@@ -419,7 +419,7 @@ public class MappingModelTransformation extends AbstractAtlInputOutputIntermedia
   private String _getServiceModelUri(final TechnologySpecificFieldMapping mapping) {
     Import _elvis = null;
     ComplexTypeMapping _containerOfType = EcoreUtil2.<ComplexTypeMapping>getContainerOfType(mapping, ComplexTypeMapping.class);
-    ImportedComplexType _type = null;
+    ImportedComplexTypeToMap _type = null;
     if (_containerOfType!=null) {
       _type=_containerOfType.getType();
     }

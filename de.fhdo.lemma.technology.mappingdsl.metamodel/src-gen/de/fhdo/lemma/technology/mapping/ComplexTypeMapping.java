@@ -83,7 +83,7 @@ public interface ComplexTypeMapping extends EObject {
 
     /**
      * Returns the value of the '<em><b>Type</b></em>' containment reference.
-     * It is bidirectional and its opposite is '{@link de.fhdo.lemma.technology.mapping.ImportedComplexType#getTypeMapping <em>Type Mapping</em>}'.
+     * It is bidirectional and its opposite is '{@link de.fhdo.lemma.technology.mapping.ImportedComplexTypeToMap#getTypeMapping <em>Type Mapping</em>}'.
      * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Type</em>' containment reference isn't clear,
@@ -91,13 +91,13 @@ public interface ComplexTypeMapping extends EObject {
      * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Type</em>' containment reference.
-     * @see #setType(ImportedComplexType)
+     * @see #setType(ImportedComplexTypeToMap)
      * @see de.fhdo.lemma.technology.mapping.MappingPackage#getComplexTypeMapping_Type()
-     * @see de.fhdo.lemma.technology.mapping.ImportedComplexType#getTypeMapping
+     * @see de.fhdo.lemma.technology.mapping.ImportedComplexTypeToMap#getTypeMapping
      * @model opposite="typeMapping" containment="true"
      * @generated
      */
-    ImportedComplexType getType();
+    ImportedComplexTypeToMap getType();
 
     /**
      * Sets the value of the '{@link de.fhdo.lemma.technology.mapping.ComplexTypeMapping#getType <em>Type</em>}' containment reference.
@@ -107,7 +107,7 @@ public interface ComplexTypeMapping extends EObject {
      * @see #getType()
      * @generated
      */
-    void setType(ImportedComplexType value);
+    void setType(ImportedComplexTypeToMap value);
 
     /**
      * Returns the value of the '<em><b>Field Mappings</b></em>' containment reference list.

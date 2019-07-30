@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.fhdo.lemma.data.DataOperation#isHidden <em>Hidden</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.DataOperation#isHasNoReturnType <em>Has No Return Type</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.DataOperation#getComplexReturnType <em>Complex Return Type</em>}</li>
+ *   <li>{@link de.fhdo.lemma.data.DataOperation#getImportedComplexReturnType <em>Imported Complex Return Type</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.DataOperation#getPrimitiveReturnType <em>Primitive Return Type</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.DataOperation#getParameters <em>Parameters</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.DataOperation#getDataStructure <em>Data Structure</em>}</li>
@@ -126,32 +127,58 @@ public interface DataOperation extends EObject {
     void setHasNoReturnType(boolean value);
 
     /**
-     * Returns the value of the '<em><b>Complex Return Type</b></em>' containment reference.
-     * It is bidirectional and its opposite is '{@link de.fhdo.lemma.data.PossiblyImportedComplexType#getOperation <em>Operation</em>}'.
+     * Returns the value of the '<em><b>Complex Return Type</b></em>' reference.
      * <!-- begin-user-doc -->
      * <p>
-     * If the meaning of the '<em>Complex Return Type</em>' containment reference isn't clear,
+     * If the meaning of the '<em>Complex Return Type</em>' reference isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Complex Return Type</em>' containment reference.
-     * @see #setComplexReturnType(PossiblyImportedComplexType)
+     * @return the value of the '<em>Complex Return Type</em>' reference.
+     * @see #setComplexReturnType(ComplexType)
      * @see de.fhdo.lemma.data.DataPackage#getDataOperation_ComplexReturnType()
-     * @see de.fhdo.lemma.data.PossiblyImportedComplexType#getOperation
-     * @model opposite="operation" containment="true"
+     * @model
      * @generated
      */
-    PossiblyImportedComplexType getComplexReturnType();
+    ComplexType getComplexReturnType();
 
     /**
-     * Sets the value of the '{@link de.fhdo.lemma.data.DataOperation#getComplexReturnType <em>Complex Return Type</em>}' containment reference.
+     * Sets the value of the '{@link de.fhdo.lemma.data.DataOperation#getComplexReturnType <em>Complex Return Type</em>}' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Complex Return Type</em>' containment reference.
+     * @param value the new value of the '<em>Complex Return Type</em>' reference.
      * @see #getComplexReturnType()
      * @generated
      */
-    void setComplexReturnType(PossiblyImportedComplexType value);
+    void setComplexReturnType(ComplexType value);
+
+    /**
+     * Returns the value of the '<em><b>Imported Complex Return Type</b></em>' containment reference.
+     * It is bidirectional and its opposite is '{@link de.fhdo.lemma.data.ImportedComplexType#getOperation <em>Operation</em>}'.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Imported Complex Return Type</em>' containment reference isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Imported Complex Return Type</em>' containment reference.
+     * @see #setImportedComplexReturnType(ImportedComplexType)
+     * @see de.fhdo.lemma.data.DataPackage#getDataOperation_ImportedComplexReturnType()
+     * @see de.fhdo.lemma.data.ImportedComplexType#getOperation
+     * @model opposite="operation" containment="true"
+     * @generated
+     */
+    ImportedComplexType getImportedComplexReturnType();
+
+    /**
+     * Sets the value of the '{@link de.fhdo.lemma.data.DataOperation#getImportedComplexReturnType <em>Imported Complex Return Type</em>}' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Imported Complex Return Type</em>' containment reference.
+     * @see #getImportedComplexReturnType()
+     * @generated
+     */
+    void setImportedComplexReturnType(ImportedComplexType value);
 
     /**
      * Returns the value of the '<em><b>Primitive Return Type</b></em>' containment reference.

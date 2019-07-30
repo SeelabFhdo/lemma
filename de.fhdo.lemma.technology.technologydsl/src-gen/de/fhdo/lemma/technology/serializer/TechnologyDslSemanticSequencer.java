@@ -14,8 +14,8 @@ import de.fhdo.lemma.data.DataPackage;
 import de.fhdo.lemma.data.DataStructure;
 import de.fhdo.lemma.data.Enumeration;
 import de.fhdo.lemma.data.EnumerationField;
+import de.fhdo.lemma.data.ImportedComplexType;
 import de.fhdo.lemma.data.ListType;
-import de.fhdo.lemma.data.PossiblyImportedComplexType;
 import de.fhdo.lemma.data.PrimitiveBoolean;
 import de.fhdo.lemma.data.PrimitiveByte;
 import de.fhdo.lemma.data.PrimitiveCharacter;
@@ -101,11 +101,11 @@ public class TechnologyDslSemanticSequencer extends DataDslSemanticSequencer {
 			case DataPackage.ENUMERATION_FIELD:
 				sequence_EnumerationField(context, (EnumerationField) semanticObject); 
 				return; 
+			case DataPackage.IMPORTED_COMPLEX_TYPE:
+				sequence_ImportedComplexType(context, (ImportedComplexType) semanticObject); 
+				return; 
 			case DataPackage.LIST_TYPE:
 				sequence_ListType(context, (ListType) semanticObject); 
-				return; 
-			case DataPackage.POSSIBLY_IMPORTED_COMPLEX_TYPE:
-				sequence_PossiblyImportedComplexType(context, (PossiblyImportedComplexType) semanticObject); 
 				return; 
 			case DataPackage.PRIMITIVE_BOOLEAN:
 				sequence_PrimitiveType(context, (PrimitiveBoolean) semanticObject); 

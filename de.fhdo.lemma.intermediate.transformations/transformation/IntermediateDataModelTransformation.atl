@@ -297,16 +297,12 @@ rule IntermediateDataOperation(sourceOperation : Data!DataOperation,
             t.returnType <- thisModule.IntermediatePrimitiveType(
                 sourceOperation.primitiveReturnType.typeName,
                 sourceOperation.primitiveReturnType.typeSize);
-        else if (not sourceOperation.complexReturnType.oclIsUndefined()) {
-            if (sourceOperation.complexReturnType.import.oclIsUndefined())
-                t.returnType <- thisModule.IntermediateComplexType(
-                    sourceOperation.complexReturnType
-                );
-            else
-                t.returnType <- thisModule.IntermediateImportedComplexType(
-                    sourceOperation.complexReturnType
-                );
-        }
+        else if (not sourceOperation.complexReturnType.oclIsUndefined())
+            t.returnType <- thisModule.IntermediateComplexType(sourceOperation.complexReturnType);
+        else if (not sourceOperation.importedComplexReturnType.oclIsUndefined())
+            t.returnType <- thisModule.IntermediateImportedComplexType(
+                sourceOperation.importedComplexReturnType
+            );
 
         for (parameter in sourceOperation.parameters) {
             thisModule.IntermediateDataOperationParameter(parameter, t);
@@ -330,12 +326,12 @@ rule IntermediateDataOperationParameter(sourceParameter : Data!DataOperationPara
         if (not sourceParameter.primitiveType.oclIsUndefined())
             t.type <- thisModule.IntermediatePrimitiveType(sourceParameter.primitiveType.typeName,
                 sourceParameter.primitiveType.typeSize);
-        else if (not sourceParameter.complexType.oclIsUndefined()) {
-            if (sourceParameter.complexType.import.oclIsUndefined())
-                t.type <- thisModule.IntermediateComplexType(sourceParameter.complexType);
-            else
-                t.type <- thisModule.IntermediateImportedComplexType(sourceParameter.complexType);
-        }
+        else if (not sourceParameter.complexType.oclIsUndefined())
+            t.type <- thisModule.IntermediateComplexType(sourceParameter.complexType);
+        else if (not sourceParameter.importedComplexType.oclIsUndefined())
+            t.type <- thisModule.IntermediateImportedComplexType(
+                sourceParameter.importedComplexType
+            );
 
         t.operation.parameters <- t.operation.parameters->append(t);
         t;
@@ -376,12 +372,10 @@ rule IntermediateDataField(sourceField : Data!DataField,
         if (not sourceField.primitiveType.oclIsUndefined())
             t.type <- thisModule.IntermediatePrimitiveType(sourceField.primitiveType.typeName,
                 sourceField.primitiveType.typeSize);
-        else if (not sourceField.complexType.oclIsUndefined()) {
-            if (sourceField.complexType.import.oclIsUndefined())
-                t.type <- thisModule.IntermediateComplexType(sourceField.complexType);
-            else
-                t.type <- thisModule.IntermediateImportedComplexType(sourceField.complexType);
-        }
+        else if (not sourceField.complexType.oclIsUndefined())
+            t.type <- thisModule.IntermediateComplexType(sourceField.complexType);
+        else if (not sourceField.importedComplexType.oclIsUndefined())
+            t.type <- thisModule.IntermediateImportedComplexType(sourceField.importedComplexType);
 
         if (targetContainer.oclIsTypeOf(Intermediate!IntermediateDataStructure)) {
             t.dataStructure <- targetContainer;
@@ -526,17 +520,17 @@ rule IntermediatePrimitiveType(typeName : String, typeSize : Integer) {
 }
 
 --- Called rule to create an IntermediateComplexType instance
-rule IntermediateComplexType(sourceType : Data!PossiblyImportedComplexType) {
+rule IntermediateComplexType(sourceType : Data!ComplexType) {
     to
         t : Intermediate!IntermediateComplexType(
-            name <- sourceType.complexType.name,
-            qualifiedName <- sourceType.complexType.buildQualifiedName('.'),
+            name <- sourceType.name,
+            qualifiedName <- sourceType.buildQualifiedName('.'),
             origin <- #DATA_MODEL
         )
     do {
-        if (sourceType.complexType.oclIsTypeOf(Data!ListType)) {
+        if (sourceType.oclIsTypeOf(Data!ListType)) {
             t.kind <- #LIST;
-        } else if (sourceType.complexType.oclIsTypeOf(Data!DataStructure)) {
+        } else if (sourceType.oclIsTypeOf(Data!DataStructure)) {
             t.kind <- #STRUCTURE;
         }
 
@@ -545,18 +539,21 @@ rule IntermediateComplexType(sourceType : Data!PossiblyImportedComplexType) {
 }
 
 --- Called rule to create an IntermediateImportedComplexType instance
-rule IntermediateImportedComplexType(sourceType : Data!PossiblyImportedComplexType) {
+rule IntermediateImportedComplexType(sourceType : Data!ImportedComplexType) {
+    using {
+        importedType : Data!ComplexType = sourceType.importedType;
+    }
     to
         t : Intermediate!IntermediateImportedComplexType(
-            name <- sourceType.complexType.name,
-            qualifiedName <- sourceType.complexType.buildQualifiedName('.'),
+            name <- importedType.name,
+            qualifiedName <- importedType.buildQualifiedName('.'),
             origin <- #DATA_MODEL,
             import <- thisModule.getCreatedImport(sourceType.import)
         )
     do {
-        if (sourceType.complexType.oclIsTypeOf(Data!ListType)) {
+        if (importedType.oclIsTypeOf(Data!ListType)) {
             t.kind <- #LIST;
-        } else if (sourceType.complexType.oclIsTypeOf(Data!DataStructure)) {
+        } else if (importedType.oclIsTypeOf(Data!DataStructure)) {
             t.kind <- #STRUCTURE;
         }
 

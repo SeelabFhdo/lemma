@@ -9,9 +9,10 @@ import de.fhdo.lemma.data.ComplexType;
 import de.fhdo.lemma.data.ComplexTypeImport;
 import de.fhdo.lemma.data.Context;
 import de.fhdo.lemma.data.DataModel;
+import de.fhdo.lemma.data.DataOperation;
 import de.fhdo.lemma.data.DataPackage;
 import de.fhdo.lemma.data.DataStructure;
-import de.fhdo.lemma.data.PossiblyImportedComplexType;
+import de.fhdo.lemma.data.ImportedComplexType;
 import de.fhdo.lemma.data.Version;
 import de.fhdo.lemma.data.scoping.AbstractDataDslScopeProvider;
 import de.fhdo.lemma.utils.LemmaUtils;
@@ -43,15 +44,21 @@ public class DataDslScopeProvider extends AbstractDataDslScopeProvider {
       _switchResult = this.getScope(((DataModel)context), reference);
     }
     if (!_matched) {
-      if (context instanceof PossiblyImportedComplexType) {
+      if (context instanceof ImportedComplexType) {
         _matched=true;
-        _switchResult = this.getScope(((PossiblyImportedComplexType)context), reference);
+        _switchResult = this.getScope(((ImportedComplexType)context), reference);
       }
     }
     if (!_matched) {
       if (context instanceof DataStructure) {
         _matched=true;
         _switchResult = this.getScope(((DataStructure)context), reference);
+      }
+    }
+    if (!_matched) {
+      if (context instanceof DataOperation) {
+        _matched=true;
+        _switchResult = this.getScope(((DataOperation)context), reference);
       }
     }
     final IScope scope = _switchResult;
@@ -70,59 +77,41 @@ public class DataDslScopeProvider extends AbstractDataDslScopeProvider {
    */
   private IScope getScope(final DataModel dataModel, final EReference reference) {
     boolean _matched = false;
-    if (Objects.equal(reference, DataPackage.Literals.POSSIBLY_IMPORTED_COMPLEX_TYPE__IMPORT)) {
+    if (Objects.equal(reference, DataPackage.Literals.DATA_FIELD__COMPLEX_TYPE)) {
       _matched=true;
-      return Scopes.scopeFor(dataModel.getComplexTypeImports());
-    }
-    if (!_matched) {
-      if (Objects.equal(reference, DataPackage.Literals.POSSIBLY_IMPORTED_COMPLEX_TYPE__COMPLEX_TYPE)) {
-        _matched=true;
-        return this.getScopeForPossiblyImportedComplexTypes(dataModel, null);
-      }
+      return Scopes.scopeFor(dataModel.getContainedComplexTypes());
     }
     return null;
   }
   
   /**
-   * Build scope for the given reference in the context of a possibly imported complex type
+   * Build scope for the given reference in the context of an imported complex type
    */
-  private IScope getScope(final PossiblyImportedComplexType complexType, final EReference reference) {
+  private IScope getScope(final ImportedComplexType complexType, final EReference reference) {
     boolean _matched = false;
-    if (Objects.equal(reference, DataPackage.Literals.POSSIBLY_IMPORTED_COMPLEX_TYPE__IMPORT)) {
+    if (Objects.equal(reference, DataPackage.Literals.IMPORTED_COMPLEX_TYPE__IMPORT)) {
       _matched=true;
       final DataModel dataModel = EcoreUtil2.<DataModel>getContainerOfType(complexType, DataModel.class);
       return Scopes.scopeFor(dataModel.getComplexTypeImports());
     }
     if (!_matched) {
-      if (Objects.equal(reference, DataPackage.Literals.POSSIBLY_IMPORTED_COMPLEX_TYPE__COMPLEX_TYPE)) {
+      if (Objects.equal(reference, DataPackage.Literals.IMPORTED_COMPLEX_TYPE__IMPORTED_TYPE)) {
         _matched=true;
         ComplexTypeImport _import = complexType.getImport();
         String _importURI = null;
         if (_import!=null) {
           _importURI=_import.getImportURI();
         }
-        return this.getScopeForPossiblyImportedComplexTypes(complexType, _importURI);
+        return this.getScopeForImportedComplexTypes(complexType, _importURI);
       }
     }
     return null;
   }
   
   /**
-   * Build scope for the given reference in the context of a data structure
+   * Convenience method to create a scope for imported complex types of certain types
    */
-  private IScope getScope(final DataStructure structure, final EReference reference) {
-    boolean _matched = false;
-    if (Objects.equal(reference, DataPackage.Literals.DATA_STRUCTURE__SUPER)) {
-      _matched=true;
-      return this.getScopeForSuperStructures(structure);
-    }
-    return null;
-  }
-  
-  /**
-   * Convenience method to create a scope for possibly imported complex types of certain types
-   */
-  private IScope getScopeForPossiblyImportedComplexTypes(final EObject context, final String importUri) {
+  private IScope getScopeForImportedComplexTypes(final EObject context, final String importUri) {
     EObject container = null;
     List<String> qualifiedNameParts = null;
     final Version containingVersion = EcoreUtil2.<Version>getContainerOfType(context, Version.class);
@@ -150,6 +139,52 @@ public class DataDslScopeProvider extends AbstractDataDslScopeProvider {
     };
     return LemmaUtils.<EObject, DataModel, ComplexType>getScopeForPossiblyImportedConcept(container, qualifiedNameParts, 
       DataModel.class, importUri, _function, _function_1);
+  }
+  
+  /**
+   * Build scope for the given reference in the context of a data operation
+   */
+  private IScope getScope(final DataOperation operation, final EReference reference) {
+    boolean _matched = false;
+    if (Objects.equal(reference, DataPackage.Literals.IMPORTED_COMPLEX_TYPE__IMPORT)) {
+      _matched=true;
+      final DataModel dataModel = EcoreUtil2.<DataModel>getContainerOfType(operation, DataModel.class);
+      return Scopes.scopeFor(dataModel.getComplexTypeImports());
+    }
+    if (!_matched) {
+      if (Objects.equal(reference, DataPackage.Literals.DATA_OPERATION_PARAMETER__COMPLEX_TYPE)) {
+        _matched=true;
+        final DataModel dataModel_1 = EcoreUtil2.<DataModel>getContainerOfType(operation, DataModel.class);
+        return Scopes.scopeFor(dataModel_1.getContainedComplexTypes());
+      }
+    }
+    return null;
+  }
+  
+  /**
+   * Build scope for the given reference in the context of a data structure
+   */
+  private IScope getScope(final DataStructure structure, final EReference reference) {
+    boolean _matched = false;
+    if (Objects.equal(reference, DataPackage.Literals.DATA_STRUCTURE__SUPER)) {
+      _matched=true;
+      return this.getScopeForSuperStructures(structure);
+    }
+    if (!_matched) {
+      if (Objects.equal(reference, DataPackage.Literals.IMPORTED_COMPLEX_TYPE__IMPORT)) {
+        _matched=true;
+        final DataModel dataModel = EcoreUtil2.<DataModel>getContainerOfType(structure, DataModel.class);
+        return Scopes.scopeFor(dataModel.getComplexTypeImports());
+      }
+    }
+    if (!_matched) {
+      if (Objects.equal(reference, DataPackage.Literals.DATA_FIELD__COMPLEX_TYPE)) {
+        _matched=true;
+        final DataModel dataModel_1 = EcoreUtil2.<DataModel>getContainerOfType(structure, DataModel.class);
+        return Scopes.scopeFor(dataModel_1.getContainedComplexTypes());
+      }
+    }
+    return null;
   }
   
   /**

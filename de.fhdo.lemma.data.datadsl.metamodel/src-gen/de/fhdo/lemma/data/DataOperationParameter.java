@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link de.fhdo.lemma.data.DataOperationParameter#getName <em>Name</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.DataOperationParameter#getComplexType <em>Complex Type</em>}</li>
+ *   <li>{@link de.fhdo.lemma.data.DataOperationParameter#getImportedComplexType <em>Imported Complex Type</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.DataOperationParameter#getPrimitiveType <em>Primitive Type</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.DataOperationParameter#getOperation <em>Operation</em>}</li>
  * </ul>
@@ -59,32 +60,58 @@ public interface DataOperationParameter extends EObject {
     void setName(String value);
 
     /**
-     * Returns the value of the '<em><b>Complex Type</b></em>' containment reference.
-     * It is bidirectional and its opposite is '{@link de.fhdo.lemma.data.PossiblyImportedComplexType#getParameter <em>Parameter</em>}'.
+     * Returns the value of the '<em><b>Complex Type</b></em>' reference.
      * <!-- begin-user-doc -->
      * <p>
-     * If the meaning of the '<em>Complex Type</em>' containment reference isn't clear,
+     * If the meaning of the '<em>Complex Type</em>' reference isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Complex Type</em>' containment reference.
-     * @see #setComplexType(PossiblyImportedComplexType)
+     * @return the value of the '<em>Complex Type</em>' reference.
+     * @see #setComplexType(ComplexType)
      * @see de.fhdo.lemma.data.DataPackage#getDataOperationParameter_ComplexType()
-     * @see de.fhdo.lemma.data.PossiblyImportedComplexType#getParameter
-     * @model opposite="parameter" containment="true"
+     * @model
      * @generated
      */
-    PossiblyImportedComplexType getComplexType();
+    ComplexType getComplexType();
 
     /**
-     * Sets the value of the '{@link de.fhdo.lemma.data.DataOperationParameter#getComplexType <em>Complex Type</em>}' containment reference.
+     * Sets the value of the '{@link de.fhdo.lemma.data.DataOperationParameter#getComplexType <em>Complex Type</em>}' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Complex Type</em>' containment reference.
+     * @param value the new value of the '<em>Complex Type</em>' reference.
      * @see #getComplexType()
      * @generated
      */
-    void setComplexType(PossiblyImportedComplexType value);
+    void setComplexType(ComplexType value);
+
+    /**
+     * Returns the value of the '<em><b>Imported Complex Type</b></em>' containment reference.
+     * It is bidirectional and its opposite is '{@link de.fhdo.lemma.data.ImportedComplexType#getParameter <em>Parameter</em>}'.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Imported Complex Type</em>' containment reference isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Imported Complex Type</em>' containment reference.
+     * @see #setImportedComplexType(ImportedComplexType)
+     * @see de.fhdo.lemma.data.DataPackage#getDataOperationParameter_ImportedComplexType()
+     * @see de.fhdo.lemma.data.ImportedComplexType#getParameter
+     * @model opposite="parameter" containment="true"
+     * @generated
+     */
+    ImportedComplexType getImportedComplexType();
+
+    /**
+     * Sets the value of the '{@link de.fhdo.lemma.data.DataOperationParameter#getImportedComplexType <em>Imported Complex Type</em>}' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Imported Complex Type</em>' containment reference.
+     * @see #getImportedComplexType()
+     * @generated
+     */
+    void setImportedComplexType(ImportedComplexType value);
 
     /**
      * Returns the value of the '<em><b>Primitive Type</b></em>' containment reference.

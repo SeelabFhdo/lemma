@@ -9,7 +9,7 @@ import de.fhdo.lemma.technology.Technology;
 
 import de.fhdo.lemma.technology.mapping.ComplexTypeMapping;
 import de.fhdo.lemma.technology.mapping.DataOperationMapping;
-import de.fhdo.lemma.technology.mapping.ImportedComplexType;
+import de.fhdo.lemma.technology.mapping.ImportedComplexTypeToMap;
 import de.fhdo.lemma.technology.mapping.MappingPackage;
 import de.fhdo.lemma.technology.mapping.TechnologyMapping;
 import de.fhdo.lemma.technology.mapping.TechnologySpecificFieldMapping;
@@ -102,7 +102,7 @@ public class ComplexTypeMappingImpl extends MinimalEObjectImpl.Container impleme
      * @generated
      * @ordered
      */
-    protected ImportedComplexType type;
+    protected ImportedComplexTypeToMap type;
 
     /**
      * The cached value of the '{@link #getFieldMappings() <em>Field Mappings</em>}' containment reference list.
@@ -195,7 +195,7 @@ public class ComplexTypeMappingImpl extends MinimalEObjectImpl.Container impleme
      * @generated
      */
     @Override
-    public ImportedComplexType getType() {
+    public ImportedComplexTypeToMap getType() {
         return type;
     }
 
@@ -204,8 +204,8 @@ public class ComplexTypeMappingImpl extends MinimalEObjectImpl.Container impleme
      * <!-- end-user-doc -->
      * @generated
      */
-    public NotificationChain basicSetType(ImportedComplexType newType, NotificationChain msgs) {
-        ImportedComplexType oldType = type;
+    public NotificationChain basicSetType(ImportedComplexTypeToMap newType, NotificationChain msgs) {
+        ImportedComplexTypeToMap oldType = type;
         type = newType;
         if (eNotificationRequired()) {
             ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, MappingPackage.COMPLEX_TYPE_MAPPING__TYPE, oldType, newType);
@@ -220,13 +220,13 @@ public class ComplexTypeMappingImpl extends MinimalEObjectImpl.Container impleme
      * @generated
      */
     @Override
-    public void setType(ImportedComplexType newType) {
+    public void setType(ImportedComplexTypeToMap newType) {
         if (newType != type) {
             NotificationChain msgs = null;
             if (type != null)
-                msgs = ((InternalEObject)type).eInverseRemove(this, MappingPackage.IMPORTED_COMPLEX_TYPE__TYPE_MAPPING, ImportedComplexType.class, msgs);
+                msgs = ((InternalEObject)type).eInverseRemove(this, MappingPackage.IMPORTED_COMPLEX_TYPE_TO_MAP__TYPE_MAPPING, ImportedComplexTypeToMap.class, msgs);
             if (newType != null)
-                msgs = ((InternalEObject)newType).eInverseAdd(this, MappingPackage.IMPORTED_COMPLEX_TYPE__TYPE_MAPPING, ImportedComplexType.class, msgs);
+                msgs = ((InternalEObject)newType).eInverseAdd(this, MappingPackage.IMPORTED_COMPLEX_TYPE_TO_MAP__TYPE_MAPPING, ImportedComplexTypeToMap.class, msgs);
             msgs = basicSetType(newType, msgs);
             if (msgs != null) msgs.dispatch();
         }
@@ -417,7 +417,7 @@ public class ComplexTypeMappingImpl extends MinimalEObjectImpl.Container impleme
             case MappingPackage.COMPLEX_TYPE_MAPPING__TYPE:
                 if (type != null)
                     msgs = ((InternalEObject)type).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - MappingPackage.COMPLEX_TYPE_MAPPING__TYPE, null, msgs);
-                return basicSetType((ImportedComplexType)otherEnd, msgs);
+                return basicSetType((ImportedComplexTypeToMap)otherEnd, msgs);
             case MappingPackage.COMPLEX_TYPE_MAPPING__FIELD_MAPPINGS:
                 return ((InternalEList<InternalEObject>)(InternalEList<?>)getFieldMappings()).basicAdd(otherEnd, msgs);
             case MappingPackage.COMPLEX_TYPE_MAPPING__OPERATION_MAPPINGS:
@@ -514,7 +514,7 @@ public class ComplexTypeMappingImpl extends MinimalEObjectImpl.Container impleme
                 getTechnologyReferences().addAll((Collection<? extends TechnologyReference>)newValue);
                 return;
             case MappingPackage.COMPLEX_TYPE_MAPPING__TYPE:
-                setType((ImportedComplexType)newValue);
+                setType((ImportedComplexTypeToMap)newValue);
                 return;
             case MappingPackage.COMPLEX_TYPE_MAPPING__FIELD_MAPPINGS:
                 getFieldMappings().clear();
@@ -550,7 +550,7 @@ public class ComplexTypeMappingImpl extends MinimalEObjectImpl.Container impleme
                 getTechnologyReferences().clear();
                 return;
             case MappingPackage.COMPLEX_TYPE_MAPPING__TYPE:
-                setType((ImportedComplexType)null);
+                setType((ImportedComplexTypeToMap)null);
                 return;
             case MappingPackage.COMPLEX_TYPE_MAPPING__FIELD_MAPPINGS:
                 getFieldMappings().clear();

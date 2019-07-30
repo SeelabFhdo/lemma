@@ -1320,14 +1320,14 @@ public interface DataPackage extends EPackage {
     int COMPLEX_TYPE_OPERATION_COUNT = TYPE_OPERATION_COUNT + 3;
 
     /**
-     * The meta object id for the '{@link de.fhdo.lemma.data.impl.PossiblyImportedComplexTypeImpl <em>Possibly Imported Complex Type</em>}' class.
+     * The meta object id for the '{@link de.fhdo.lemma.data.impl.ImportedComplexTypeImpl <em>Imported Complex Type</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.fhdo.lemma.data.impl.PossiblyImportedComplexTypeImpl
-     * @see de.fhdo.lemma.data.impl.DataPackageImpl#getPossiblyImportedComplexType()
+     * @see de.fhdo.lemma.data.impl.ImportedComplexTypeImpl
+     * @see de.fhdo.lemma.data.impl.DataPackageImpl#getImportedComplexType()
      * @generated
      */
-    int POSSIBLY_IMPORTED_COMPLEX_TYPE = 17;
+    int IMPORTED_COMPLEX_TYPE = 17;
 
     /**
      * The feature id for the '<em><b>Import</b></em>' reference.
@@ -1336,16 +1336,16 @@ public interface DataPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int POSSIBLY_IMPORTED_COMPLEX_TYPE__IMPORT = 0;
+    int IMPORTED_COMPLEX_TYPE__IMPORT = 0;
 
     /**
-     * The feature id for the '<em><b>Complex Type</b></em>' reference.
+     * The feature id for the '<em><b>Imported Type</b></em>' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int POSSIBLY_IMPORTED_COMPLEX_TYPE__COMPLEX_TYPE = 1;
+    int IMPORTED_COMPLEX_TYPE__IMPORTED_TYPE = 1;
 
     /**
      * The feature id for the '<em><b>Data Field</b></em>' container reference.
@@ -1354,7 +1354,7 @@ public interface DataPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int POSSIBLY_IMPORTED_COMPLEX_TYPE__DATA_FIELD = 2;
+    int IMPORTED_COMPLEX_TYPE__DATA_FIELD = 2;
 
     /**
      * The feature id for the '<em><b>Operation</b></em>' container reference.
@@ -1363,7 +1363,7 @@ public interface DataPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int POSSIBLY_IMPORTED_COMPLEX_TYPE__OPERATION = 3;
+    int IMPORTED_COMPLEX_TYPE__OPERATION = 3;
 
     /**
      * The feature id for the '<em><b>Parameter</b></em>' container reference.
@@ -1372,25 +1372,25 @@ public interface DataPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int POSSIBLY_IMPORTED_COMPLEX_TYPE__PARAMETER = 4;
+    int IMPORTED_COMPLEX_TYPE__PARAMETER = 4;
 
     /**
-     * The number of structural features of the '<em>Possibly Imported Complex Type</em>' class.
+     * The number of structural features of the '<em>Imported Complex Type</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int POSSIBLY_IMPORTED_COMPLEX_TYPE_FEATURE_COUNT = 5;
+    int IMPORTED_COMPLEX_TYPE_FEATURE_COUNT = 5;
 
     /**
-     * The number of operations of the '<em>Possibly Imported Complex Type</em>' class.
+     * The number of operations of the '<em>Imported Complex Type</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int POSSIBLY_IMPORTED_COMPLEX_TYPE_OPERATION_COUNT = 0;
+    int IMPORTED_COMPLEX_TYPE_OPERATION_COUNT = 0;
 
     /**
      * The meta object id for the '{@link de.fhdo.lemma.data.impl.DataStructureImpl <em>Structure</em>}' class.
@@ -1620,7 +1620,7 @@ public interface DataPackage extends EPackage {
     int DATA_OPERATION__HAS_NO_RETURN_TYPE = 2;
 
     /**
-     * The feature id for the '<em><b>Complex Return Type</b></em>' containment reference.
+     * The feature id for the '<em><b>Complex Return Type</b></em>' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -1629,13 +1629,22 @@ public interface DataPackage extends EPackage {
     int DATA_OPERATION__COMPLEX_RETURN_TYPE = 3;
 
     /**
+     * The feature id for the '<em><b>Imported Complex Return Type</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATA_OPERATION__IMPORTED_COMPLEX_RETURN_TYPE = 4;
+
+    /**
      * The feature id for the '<em><b>Primitive Return Type</b></em>' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int DATA_OPERATION__PRIMITIVE_RETURN_TYPE = 4;
+    int DATA_OPERATION__PRIMITIVE_RETURN_TYPE = 5;
 
     /**
      * The feature id for the '<em><b>Parameters</b></em>' containment reference list.
@@ -1644,7 +1653,7 @@ public interface DataPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int DATA_OPERATION__PARAMETERS = 5;
+    int DATA_OPERATION__PARAMETERS = 6;
 
     /**
      * The feature id for the '<em><b>Data Structure</b></em>' container reference.
@@ -1653,7 +1662,7 @@ public interface DataPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int DATA_OPERATION__DATA_STRUCTURE = 6;
+    int DATA_OPERATION__DATA_STRUCTURE = 7;
 
     /**
      * The feature id for the '<em><b>Lacks Return Type Specification</b></em>' attribute.
@@ -1662,7 +1671,7 @@ public interface DataPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int DATA_OPERATION__LACKS_RETURN_TYPE_SPECIFICATION = 7;
+    int DATA_OPERATION__LACKS_RETURN_TYPE_SPECIFICATION = 8;
 
     /**
      * The feature id for the '<em><b>Inherited</b></em>' attribute.
@@ -1671,7 +1680,7 @@ public interface DataPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int DATA_OPERATION__INHERITED = 8;
+    int DATA_OPERATION__INHERITED = 9;
 
     /**
      * The number of structural features of the '<em>Operation</em>' class.
@@ -1680,7 +1689,7 @@ public interface DataPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int DATA_OPERATION_FEATURE_COUNT = 9;
+    int DATA_OPERATION_FEATURE_COUNT = 10;
 
     /**
      * The operation id for the '<em>Get Qualified Name Parts</em>' operation.
@@ -1747,7 +1756,7 @@ public interface DataPackage extends EPackage {
     int DATA_OPERATION_PARAMETER__NAME = 0;
 
     /**
-     * The feature id for the '<em><b>Complex Type</b></em>' containment reference.
+     * The feature id for the '<em><b>Complex Type</b></em>' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -1756,13 +1765,22 @@ public interface DataPackage extends EPackage {
     int DATA_OPERATION_PARAMETER__COMPLEX_TYPE = 1;
 
     /**
+     * The feature id for the '<em><b>Imported Complex Type</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATA_OPERATION_PARAMETER__IMPORTED_COMPLEX_TYPE = 2;
+
+    /**
      * The feature id for the '<em><b>Primitive Type</b></em>' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int DATA_OPERATION_PARAMETER__PRIMITIVE_TYPE = 2;
+    int DATA_OPERATION_PARAMETER__PRIMITIVE_TYPE = 3;
 
     /**
      * The feature id for the '<em><b>Operation</b></em>' container reference.
@@ -1771,7 +1789,7 @@ public interface DataPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int DATA_OPERATION_PARAMETER__OPERATION = 3;
+    int DATA_OPERATION_PARAMETER__OPERATION = 4;
 
     /**
      * The number of structural features of the '<em>Operation Parameter</em>' class.
@@ -1780,7 +1798,7 @@ public interface DataPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int DATA_OPERATION_PARAMETER_FEATURE_COUNT = 4;
+    int DATA_OPERATION_PARAMETER_FEATURE_COUNT = 5;
 
     /**
      * The operation id for the '<em>Get Qualified Name Parts</em>' operation.
@@ -2001,7 +2019,7 @@ public interface DataPackage extends EPackage {
     int DATA_FIELD__HIDDEN = 1;
 
     /**
-     * The feature id for the '<em><b>Complex Type</b></em>' containment reference.
+     * The feature id for the '<em><b>Complex Type</b></em>' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -2010,13 +2028,22 @@ public interface DataPackage extends EPackage {
     int DATA_FIELD__COMPLEX_TYPE = 2;
 
     /**
+     * The feature id for the '<em><b>Imported Complex Type</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATA_FIELD__IMPORTED_COMPLEX_TYPE = 3;
+
+    /**
      * The feature id for the '<em><b>Primitive Type</b></em>' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int DATA_FIELD__PRIMITIVE_TYPE = 3;
+    int DATA_FIELD__PRIMITIVE_TYPE = 4;
 
     /**
      * The feature id for the '<em><b>Features</b></em>' attribute list.
@@ -2025,7 +2052,7 @@ public interface DataPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int DATA_FIELD__FEATURES = 4;
+    int DATA_FIELD__FEATURES = 5;
 
     /**
      * The feature id for the '<em><b>Data Structure</b></em>' container reference.
@@ -2034,7 +2061,7 @@ public interface DataPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int DATA_FIELD__DATA_STRUCTURE = 5;
+    int DATA_FIELD__DATA_STRUCTURE = 6;
 
     /**
      * The feature id for the '<em><b>List Type</b></em>' container reference.
@@ -2043,7 +2070,7 @@ public interface DataPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int DATA_FIELD__LIST_TYPE = 6;
+    int DATA_FIELD__LIST_TYPE = 7;
 
     /**
      * The number of structural features of the '<em>Field</em>' class.
@@ -2052,7 +2079,7 @@ public interface DataPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int DATA_FIELD_FEATURE_COUNT = 7;
+    int DATA_FIELD_FEATURE_COUNT = 8;
 
     /**
      * The operation id for the '<em>Get Effective Type</em>' operation.
@@ -3114,69 +3141,69 @@ public interface DataPackage extends EPackage {
     EOperation getComplexType__CompareFieldCounts__EList_EList();
 
     /**
-     * Returns the meta object for class '{@link de.fhdo.lemma.data.PossiblyImportedComplexType <em>Possibly Imported Complex Type</em>}'.
+     * Returns the meta object for class '{@link de.fhdo.lemma.data.ImportedComplexType <em>Imported Complex Type</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Possibly Imported Complex Type</em>'.
-     * @see de.fhdo.lemma.data.PossiblyImportedComplexType
+     * @return the meta object for class '<em>Imported Complex Type</em>'.
+     * @see de.fhdo.lemma.data.ImportedComplexType
      * @generated
      */
-    EClass getPossiblyImportedComplexType();
+    EClass getImportedComplexType();
 
     /**
-     * Returns the meta object for the reference '{@link de.fhdo.lemma.data.PossiblyImportedComplexType#getImport <em>Import</em>}'.
+     * Returns the meta object for the reference '{@link de.fhdo.lemma.data.ImportedComplexType#getImport <em>Import</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the reference '<em>Import</em>'.
-     * @see de.fhdo.lemma.data.PossiblyImportedComplexType#getImport()
-     * @see #getPossiblyImportedComplexType()
+     * @see de.fhdo.lemma.data.ImportedComplexType#getImport()
+     * @see #getImportedComplexType()
      * @generated
      */
-    EReference getPossiblyImportedComplexType_Import();
+    EReference getImportedComplexType_Import();
 
     /**
-     * Returns the meta object for the reference '{@link de.fhdo.lemma.data.PossiblyImportedComplexType#getComplexType <em>Complex Type</em>}'.
+     * Returns the meta object for the reference '{@link de.fhdo.lemma.data.ImportedComplexType#getImportedType <em>Imported Type</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the reference '<em>Complex Type</em>'.
-     * @see de.fhdo.lemma.data.PossiblyImportedComplexType#getComplexType()
-     * @see #getPossiblyImportedComplexType()
+     * @return the meta object for the reference '<em>Imported Type</em>'.
+     * @see de.fhdo.lemma.data.ImportedComplexType#getImportedType()
+     * @see #getImportedComplexType()
      * @generated
      */
-    EReference getPossiblyImportedComplexType_ComplexType();
+    EReference getImportedComplexType_ImportedType();
 
     /**
-     * Returns the meta object for the container reference '{@link de.fhdo.lemma.data.PossiblyImportedComplexType#getDataField <em>Data Field</em>}'.
+     * Returns the meta object for the container reference '{@link de.fhdo.lemma.data.ImportedComplexType#getDataField <em>Data Field</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the container reference '<em>Data Field</em>'.
-     * @see de.fhdo.lemma.data.PossiblyImportedComplexType#getDataField()
-     * @see #getPossiblyImportedComplexType()
+     * @see de.fhdo.lemma.data.ImportedComplexType#getDataField()
+     * @see #getImportedComplexType()
      * @generated
      */
-    EReference getPossiblyImportedComplexType_DataField();
+    EReference getImportedComplexType_DataField();
 
     /**
-     * Returns the meta object for the container reference '{@link de.fhdo.lemma.data.PossiblyImportedComplexType#getOperation <em>Operation</em>}'.
+     * Returns the meta object for the container reference '{@link de.fhdo.lemma.data.ImportedComplexType#getOperation <em>Operation</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the container reference '<em>Operation</em>'.
-     * @see de.fhdo.lemma.data.PossiblyImportedComplexType#getOperation()
-     * @see #getPossiblyImportedComplexType()
+     * @see de.fhdo.lemma.data.ImportedComplexType#getOperation()
+     * @see #getImportedComplexType()
      * @generated
      */
-    EReference getPossiblyImportedComplexType_Operation();
+    EReference getImportedComplexType_Operation();
 
     /**
-     * Returns the meta object for the container reference '{@link de.fhdo.lemma.data.PossiblyImportedComplexType#getParameter <em>Parameter</em>}'.
+     * Returns the meta object for the container reference '{@link de.fhdo.lemma.data.ImportedComplexType#getParameter <em>Parameter</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the container reference '<em>Parameter</em>'.
-     * @see de.fhdo.lemma.data.PossiblyImportedComplexType#getParameter()
-     * @see #getPossiblyImportedComplexType()
+     * @see de.fhdo.lemma.data.ImportedComplexType#getParameter()
+     * @see #getImportedComplexType()
      * @generated
      */
-    EReference getPossiblyImportedComplexType_Parameter();
+    EReference getImportedComplexType_Parameter();
 
     /**
      * Returns the meta object for class '{@link de.fhdo.lemma.data.DataStructure <em>Structure</em>}'.
@@ -3305,15 +3332,26 @@ public interface DataPackage extends EPackage {
     EAttribute getDataOperation_HasNoReturnType();
 
     /**
-     * Returns the meta object for the containment reference '{@link de.fhdo.lemma.data.DataOperation#getComplexReturnType <em>Complex Return Type</em>}'.
+     * Returns the meta object for the reference '{@link de.fhdo.lemma.data.DataOperation#getComplexReturnType <em>Complex Return Type</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the containment reference '<em>Complex Return Type</em>'.
+     * @return the meta object for the reference '<em>Complex Return Type</em>'.
      * @see de.fhdo.lemma.data.DataOperation#getComplexReturnType()
      * @see #getDataOperation()
      * @generated
      */
     EReference getDataOperation_ComplexReturnType();
+
+    /**
+     * Returns the meta object for the containment reference '{@link de.fhdo.lemma.data.DataOperation#getImportedComplexReturnType <em>Imported Complex Return Type</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference '<em>Imported Complex Return Type</em>'.
+     * @see de.fhdo.lemma.data.DataOperation#getImportedComplexReturnType()
+     * @see #getDataOperation()
+     * @generated
+     */
+    EReference getDataOperation_ImportedComplexReturnType();
 
     /**
      * Returns the meta object for the containment reference '{@link de.fhdo.lemma.data.DataOperation#getPrimitiveReturnType <em>Primitive Return Type</em>}'.
@@ -3432,15 +3470,26 @@ public interface DataPackage extends EPackage {
     EAttribute getDataOperationParameter_Name();
 
     /**
-     * Returns the meta object for the containment reference '{@link de.fhdo.lemma.data.DataOperationParameter#getComplexType <em>Complex Type</em>}'.
+     * Returns the meta object for the reference '{@link de.fhdo.lemma.data.DataOperationParameter#getComplexType <em>Complex Type</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the containment reference '<em>Complex Type</em>'.
+     * @return the meta object for the reference '<em>Complex Type</em>'.
      * @see de.fhdo.lemma.data.DataOperationParameter#getComplexType()
      * @see #getDataOperationParameter()
      * @generated
      */
     EReference getDataOperationParameter_ComplexType();
+
+    /**
+     * Returns the meta object for the containment reference '{@link de.fhdo.lemma.data.DataOperationParameter#getImportedComplexType <em>Imported Complex Type</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference '<em>Imported Complex Type</em>'.
+     * @see de.fhdo.lemma.data.DataOperationParameter#getImportedComplexType()
+     * @see #getDataOperationParameter()
+     * @generated
+     */
+    EReference getDataOperationParameter_ImportedComplexType();
 
     /**
      * Returns the meta object for the containment reference '{@link de.fhdo.lemma.data.DataOperationParameter#getPrimitiveType <em>Primitive Type</em>}'.
@@ -3569,15 +3618,26 @@ public interface DataPackage extends EPackage {
     EAttribute getDataField_Hidden();
 
     /**
-     * Returns the meta object for the containment reference '{@link de.fhdo.lemma.data.DataField#getComplexType <em>Complex Type</em>}'.
+     * Returns the meta object for the reference '{@link de.fhdo.lemma.data.DataField#getComplexType <em>Complex Type</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the containment reference '<em>Complex Type</em>'.
+     * @return the meta object for the reference '<em>Complex Type</em>'.
      * @see de.fhdo.lemma.data.DataField#getComplexType()
      * @see #getDataField()
      * @generated
      */
     EReference getDataField_ComplexType();
+
+    /**
+     * Returns the meta object for the containment reference '{@link de.fhdo.lemma.data.DataField#getImportedComplexType <em>Imported Complex Type</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference '<em>Imported Complex Type</em>'.
+     * @see de.fhdo.lemma.data.DataField#getImportedComplexType()
+     * @see #getDataField()
+     * @generated
+     */
+    EReference getDataField_ImportedComplexType();
 
     /**
      * Returns the meta object for the containment reference '{@link de.fhdo.lemma.data.DataField#getPrimitiveType <em>Primitive Type</em>}'.
@@ -4481,14 +4541,14 @@ public interface DataPackage extends EPackage {
         EOperation COMPLEX_TYPE___COMPARE_FIELD_COUNTS__ELIST_ELIST = eINSTANCE.getComplexType__CompareFieldCounts__EList_EList();
 
         /**
-         * The meta object literal for the '{@link de.fhdo.lemma.data.impl.PossiblyImportedComplexTypeImpl <em>Possibly Imported Complex Type</em>}' class.
+         * The meta object literal for the '{@link de.fhdo.lemma.data.impl.ImportedComplexTypeImpl <em>Imported Complex Type</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see de.fhdo.lemma.data.impl.PossiblyImportedComplexTypeImpl
-         * @see de.fhdo.lemma.data.impl.DataPackageImpl#getPossiblyImportedComplexType()
+         * @see de.fhdo.lemma.data.impl.ImportedComplexTypeImpl
+         * @see de.fhdo.lemma.data.impl.DataPackageImpl#getImportedComplexType()
          * @generated
          */
-        EClass POSSIBLY_IMPORTED_COMPLEX_TYPE = eINSTANCE.getPossiblyImportedComplexType();
+        EClass IMPORTED_COMPLEX_TYPE = eINSTANCE.getImportedComplexType();
 
         /**
          * The meta object literal for the '<em><b>Import</b></em>' reference feature.
@@ -4496,15 +4556,15 @@ public interface DataPackage extends EPackage {
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference POSSIBLY_IMPORTED_COMPLEX_TYPE__IMPORT = eINSTANCE.getPossiblyImportedComplexType_Import();
+        EReference IMPORTED_COMPLEX_TYPE__IMPORT = eINSTANCE.getImportedComplexType_Import();
 
         /**
-         * The meta object literal for the '<em><b>Complex Type</b></em>' reference feature.
+         * The meta object literal for the '<em><b>Imported Type</b></em>' reference feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference POSSIBLY_IMPORTED_COMPLEX_TYPE__COMPLEX_TYPE = eINSTANCE.getPossiblyImportedComplexType_ComplexType();
+        EReference IMPORTED_COMPLEX_TYPE__IMPORTED_TYPE = eINSTANCE.getImportedComplexType_ImportedType();
 
         /**
          * The meta object literal for the '<em><b>Data Field</b></em>' container reference feature.
@@ -4512,7 +4572,7 @@ public interface DataPackage extends EPackage {
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference POSSIBLY_IMPORTED_COMPLEX_TYPE__DATA_FIELD = eINSTANCE.getPossiblyImportedComplexType_DataField();
+        EReference IMPORTED_COMPLEX_TYPE__DATA_FIELD = eINSTANCE.getImportedComplexType_DataField();
 
         /**
          * The meta object literal for the '<em><b>Operation</b></em>' container reference feature.
@@ -4520,7 +4580,7 @@ public interface DataPackage extends EPackage {
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference POSSIBLY_IMPORTED_COMPLEX_TYPE__OPERATION = eINSTANCE.getPossiblyImportedComplexType_Operation();
+        EReference IMPORTED_COMPLEX_TYPE__OPERATION = eINSTANCE.getImportedComplexType_Operation();
 
         /**
          * The meta object literal for the '<em><b>Parameter</b></em>' container reference feature.
@@ -4528,7 +4588,7 @@ public interface DataPackage extends EPackage {
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference POSSIBLY_IMPORTED_COMPLEX_TYPE__PARAMETER = eINSTANCE.getPossiblyImportedComplexType_Parameter();
+        EReference IMPORTED_COMPLEX_TYPE__PARAMETER = eINSTANCE.getImportedComplexType_Parameter();
 
         /**
          * The meta object literal for the '{@link de.fhdo.lemma.data.impl.DataStructureImpl <em>Structure</em>}' class.
@@ -4631,12 +4691,20 @@ public interface DataPackage extends EPackage {
         EAttribute DATA_OPERATION__HAS_NO_RETURN_TYPE = eINSTANCE.getDataOperation_HasNoReturnType();
 
         /**
-         * The meta object literal for the '<em><b>Complex Return Type</b></em>' containment reference feature.
+         * The meta object literal for the '<em><b>Complex Return Type</b></em>' reference feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
         EReference DATA_OPERATION__COMPLEX_RETURN_TYPE = eINSTANCE.getDataOperation_ComplexReturnType();
+
+        /**
+         * The meta object literal for the '<em><b>Imported Complex Return Type</b></em>' containment reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference DATA_OPERATION__IMPORTED_COMPLEX_RETURN_TYPE = eINSTANCE.getDataOperation_ImportedComplexReturnType();
 
         /**
          * The meta object literal for the '<em><b>Primitive Return Type</b></em>' containment reference feature.
@@ -4729,12 +4797,20 @@ public interface DataPackage extends EPackage {
         EAttribute DATA_OPERATION_PARAMETER__NAME = eINSTANCE.getDataOperationParameter_Name();
 
         /**
-         * The meta object literal for the '<em><b>Complex Type</b></em>' containment reference feature.
+         * The meta object literal for the '<em><b>Complex Type</b></em>' reference feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
         EReference DATA_OPERATION_PARAMETER__COMPLEX_TYPE = eINSTANCE.getDataOperationParameter_ComplexType();
+
+        /**
+         * The meta object literal for the '<em><b>Imported Complex Type</b></em>' containment reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference DATA_OPERATION_PARAMETER__IMPORTED_COMPLEX_TYPE = eINSTANCE.getDataOperationParameter_ImportedComplexType();
 
         /**
          * The meta object literal for the '<em><b>Primitive Type</b></em>' containment reference feature.
@@ -4837,12 +4913,20 @@ public interface DataPackage extends EPackage {
         EAttribute DATA_FIELD__HIDDEN = eINSTANCE.getDataField_Hidden();
 
         /**
-         * The meta object literal for the '<em><b>Complex Type</b></em>' containment reference feature.
+         * The meta object literal for the '<em><b>Complex Type</b></em>' reference feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
         EReference DATA_FIELD__COMPLEX_TYPE = eINSTANCE.getDataField_ComplexType();
+
+        /**
+         * The meta object literal for the '<em><b>Imported Complex Type</b></em>' containment reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference DATA_FIELD__IMPORTED_COMPLEX_TYPE = eINSTANCE.getDataField_ImportedComplexType();
 
         /**
          * The meta object literal for the '<em><b>Primitive Type</b></em>' containment reference feature.

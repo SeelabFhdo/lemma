@@ -136,8 +136,8 @@ public class DataAdapterFactory extends AdapterFactoryImpl {
                 return createComplexTypeAdapter();
             }
             @Override
-            public Adapter casePossiblyImportedComplexType(PossiblyImportedComplexType object) {
-                return createPossiblyImportedComplexTypeAdapter();
+            public Adapter caseImportedComplexType(ImportedComplexType object) {
+                return createImportedComplexTypeAdapter();
             }
             @Override
             public Adapter caseDataStructure(DataStructure object) {
@@ -430,16 +430,16 @@ public class DataAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link de.fhdo.lemma.data.PossiblyImportedComplexType <em>Possibly Imported Complex Type</em>}'.
+     * Creates a new adapter for an object of class '{@link de.fhdo.lemma.data.ImportedComplexType <em>Imported Complex Type</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see de.fhdo.lemma.data.PossiblyImportedComplexType
+     * @see de.fhdo.lemma.data.ImportedComplexType
      * @generated
      */
-    public Adapter createPossiblyImportedComplexTypeAdapter() {
+    public Adapter createImportedComplexTypeAdapter() {
         return null;
     }
 

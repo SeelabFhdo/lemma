@@ -190,9 +190,9 @@ public class DataSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case DataPackage.POSSIBLY_IMPORTED_COMPLEX_TYPE: {
-                PossiblyImportedComplexType possiblyImportedComplexType = (PossiblyImportedComplexType)theEObject;
-                T result = casePossiblyImportedComplexType(possiblyImportedComplexType);
+            case DataPackage.IMPORTED_COMPLEX_TYPE: {
+                ImportedComplexType importedComplexType = (ImportedComplexType)theEObject;
+                T result = caseImportedComplexType(importedComplexType);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -510,17 +510,17 @@ public class DataSwitch<T> extends Switch<T> {
     }
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>Possibly Imported Complex Type</em>'.
+     * Returns the result of interpreting the object as an instance of '<em>Imported Complex Type</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
      * returning a non-null result will terminate the switch.
      * <!-- end-user-doc -->
      * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Possibly Imported Complex Type</em>'.
+     * @return the result of interpreting the object as an instance of '<em>Imported Complex Type</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-    public T casePossiblyImportedComplexType(PossiblyImportedComplexType object) {
+    public T caseImportedComplexType(ImportedComplexType object) {
         return null;
     }
 

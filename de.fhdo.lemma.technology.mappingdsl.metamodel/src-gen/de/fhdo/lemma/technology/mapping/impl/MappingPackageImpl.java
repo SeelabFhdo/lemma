@@ -12,7 +12,7 @@ import de.fhdo.lemma.technology.mapping.ComplexParameterMapping;
 import de.fhdo.lemma.technology.mapping.ComplexTypeMapping;
 import de.fhdo.lemma.technology.mapping.DataOperationMapping;
 import de.fhdo.lemma.technology.mapping.DataOperationParameterMapping;
-import de.fhdo.lemma.technology.mapping.ImportedComplexType;
+import de.fhdo.lemma.technology.mapping.ImportedComplexTypeToMap;
 import de.fhdo.lemma.technology.mapping.ImportedMicroservice;
 import de.fhdo.lemma.technology.mapping.InterfaceMapping;
 import de.fhdo.lemma.technology.mapping.MappingFactory;
@@ -67,7 +67,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    private EClass importedComplexTypeEClass = null;
+    private EClass importedComplexTypeToMapEClass = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -444,8 +444,8 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * @generated
      */
     @Override
-    public EClass getImportedComplexType() {
-        return importedComplexTypeEClass;
+    public EClass getImportedComplexTypeToMap() {
+        return importedComplexTypeToMapEClass;
     }
 
     /**
@@ -454,8 +454,8 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * @generated
      */
     @Override
-    public EReference getImportedComplexType_ServiceModelImport() {
-        return (EReference)importedComplexTypeEClass.getEStructuralFeatures().get(0);
+    public EReference getImportedComplexTypeToMap_ServiceModelImport() {
+        return (EReference)importedComplexTypeToMapEClass.getEStructuralFeatures().get(0);
     }
 
     /**
@@ -464,8 +464,8 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * @generated
      */
     @Override
-    public EReference getImportedComplexType_DataModelImport() {
-        return (EReference)importedComplexTypeEClass.getEStructuralFeatures().get(1);
+    public EReference getImportedComplexTypeToMap_DataModelImport() {
+        return (EReference)importedComplexTypeToMapEClass.getEStructuralFeatures().get(1);
     }
 
     /**
@@ -474,8 +474,8 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * @generated
      */
     @Override
-    public EReference getImportedComplexType_Type() {
-        return (EReference)importedComplexTypeEClass.getEStructuralFeatures().get(2);
+    public EReference getImportedComplexTypeToMap_Type() {
+        return (EReference)importedComplexTypeToMapEClass.getEStructuralFeatures().get(2);
     }
 
     /**
@@ -484,8 +484,8 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * @generated
      */
     @Override
-    public EReference getImportedComplexType_TypeMapping() {
-        return (EReference)importedComplexTypeEClass.getEStructuralFeatures().get(3);
+    public EReference getImportedComplexTypeToMap_TypeMapping() {
+        return (EReference)importedComplexTypeToMapEClass.getEStructuralFeatures().get(3);
     }
 
     /**
@@ -1538,11 +1538,11 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
         createEOperation(complexTypeMappingEClass, COMPLEX_TYPE_MAPPING___GET_TYPE_DEFINITION_TECHNOLOGY_IMPORT);
         createEOperation(complexTypeMappingEClass, COMPLEX_TYPE_MAPPING___GET_TYPE_DEFINITION_TECHNOLOGY);
 
-        importedComplexTypeEClass = createEClass(IMPORTED_COMPLEX_TYPE);
-        createEReference(importedComplexTypeEClass, IMPORTED_COMPLEX_TYPE__SERVICE_MODEL_IMPORT);
-        createEReference(importedComplexTypeEClass, IMPORTED_COMPLEX_TYPE__DATA_MODEL_IMPORT);
-        createEReference(importedComplexTypeEClass, IMPORTED_COMPLEX_TYPE__TYPE);
-        createEReference(importedComplexTypeEClass, IMPORTED_COMPLEX_TYPE__TYPE_MAPPING);
+        importedComplexTypeToMapEClass = createEClass(IMPORTED_COMPLEX_TYPE_TO_MAP);
+        createEReference(importedComplexTypeToMapEClass, IMPORTED_COMPLEX_TYPE_TO_MAP__SERVICE_MODEL_IMPORT);
+        createEReference(importedComplexTypeToMapEClass, IMPORTED_COMPLEX_TYPE_TO_MAP__DATA_MODEL_IMPORT);
+        createEReference(importedComplexTypeToMapEClass, IMPORTED_COMPLEX_TYPE_TO_MAP__TYPE);
+        createEReference(importedComplexTypeToMapEClass, IMPORTED_COMPLEX_TYPE_TO_MAP__TYPE_MAPPING);
 
         microserviceMappingEClass = createEClass(MICROSERVICE_MAPPING);
         createEReference(microserviceMappingEClass, MICROSERVICE_MAPPING__TECHNOLOGY_REFERENCES);
@@ -1716,7 +1716,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
         initEClass(complexTypeMappingEClass, ComplexTypeMapping.class, "ComplexTypeMapping", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getComplexTypeMapping_T_sourceModelUri(), theEcorePackage.getEString(), "t_sourceModelUri", null, 0, 1, ComplexTypeMapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getComplexTypeMapping_TechnologyReferences(), theServicePackage.getTechnologyReference(), null, "technologyReferences", null, 0, -1, ComplexTypeMapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getComplexTypeMapping_Type(), this.getImportedComplexType(), this.getImportedComplexType_TypeMapping(), "type", null, 0, 1, ComplexTypeMapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getComplexTypeMapping_Type(), this.getImportedComplexTypeToMap(), this.getImportedComplexTypeToMap_TypeMapping(), "type", null, 0, 1, ComplexTypeMapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getComplexTypeMapping_FieldMappings(), this.getTechnologySpecificFieldMapping(), this.getTechnologySpecificFieldMapping_TypeMapping(), "fieldMappings", null, 0, -1, ComplexTypeMapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getComplexTypeMapping_OperationMappings(), this.getDataOperationMapping(), this.getDataOperationMapping_TypeMapping(), "operationMappings", null, 0, -1, ComplexTypeMapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getComplexTypeMapping_Aspects(), this.getTechnologySpecificImportedServiceAspect(), this.getTechnologySpecificImportedServiceAspect_TypeMapping(), "aspects", null, 0, -1, ComplexTypeMapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1728,11 +1728,11 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
 
         initEOperation(getComplexTypeMapping__GetTypeDefinitionTechnology(), theTechnologyPackage.getTechnology(), "getTypeDefinitionTechnology", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
-        initEClass(importedComplexTypeEClass, ImportedComplexType.class, "ImportedComplexType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getImportedComplexType_ServiceModelImport(), theServicePackage.getImport(), null, "serviceModelImport", null, 0, 1, ImportedComplexType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getImportedComplexType_DataModelImport(), theServicePackage.getImport(), null, "dataModelImport", null, 0, 1, ImportedComplexType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getImportedComplexType_Type(), theDataPackage.getComplexType(), null, "type", null, 0, 1, ImportedComplexType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getImportedComplexType_TypeMapping(), this.getComplexTypeMapping(), this.getComplexTypeMapping_Type(), "typeMapping", null, 0, 1, ImportedComplexType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEClass(importedComplexTypeToMapEClass, ImportedComplexTypeToMap.class, "ImportedComplexTypeToMap", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEReference(getImportedComplexTypeToMap_ServiceModelImport(), theServicePackage.getImport(), null, "serviceModelImport", null, 0, 1, ImportedComplexTypeToMap.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getImportedComplexTypeToMap_DataModelImport(), theServicePackage.getImport(), null, "dataModelImport", null, 0, 1, ImportedComplexTypeToMap.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getImportedComplexTypeToMap_Type(), theDataPackage.getComplexType(), null, "type", null, 0, 1, ImportedComplexTypeToMap.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getImportedComplexTypeToMap_TypeMapping(), this.getComplexTypeMapping(), this.getComplexTypeMapping_Type(), "typeMapping", null, 0, 1, ImportedComplexTypeToMap.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(microserviceMappingEClass, MicroserviceMapping.class, "MicroserviceMapping", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getMicroserviceMapping_TechnologyReferences(), theServicePackage.getTechnologyReference(), null, "technologyReferences", null, 0, -1, MicroserviceMapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

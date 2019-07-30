@@ -9,7 +9,7 @@ import de.fhdo.lemma.data.DataOperation;
 import de.fhdo.lemma.data.DataOperationParameter;
 import de.fhdo.lemma.data.DataPackage;
 import de.fhdo.lemma.data.DataStructure;
-import de.fhdo.lemma.data.PossiblyImportedComplexType;
+import de.fhdo.lemma.data.ImportedComplexType;
 import de.fhdo.lemma.data.PrimitiveType;
 import de.fhdo.lemma.data.Type;
 
@@ -51,6 +51,7 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
  *   <li>{@link de.fhdo.lemma.data.impl.DataOperationImpl#isHidden <em>Hidden</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.impl.DataOperationImpl#isHasNoReturnType <em>Has No Return Type</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.impl.DataOperationImpl#getComplexReturnType <em>Complex Return Type</em>}</li>
+ *   <li>{@link de.fhdo.lemma.data.impl.DataOperationImpl#getImportedComplexReturnType <em>Imported Complex Return Type</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.impl.DataOperationImpl#getPrimitiveReturnType <em>Primitive Return Type</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.impl.DataOperationImpl#getParameters <em>Parameters</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.impl.DataOperationImpl#getDataStructure <em>Data Structure</em>}</li>
@@ -122,14 +123,24 @@ public class DataOperationImpl extends MinimalEObjectImpl.Container implements D
     protected boolean hasNoReturnType = HAS_NO_RETURN_TYPE_EDEFAULT;
 
     /**
-     * The cached value of the '{@link #getComplexReturnType() <em>Complex Return Type</em>}' containment reference.
+     * The cached value of the '{@link #getComplexReturnType() <em>Complex Return Type</em>}' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @see #getComplexReturnType()
      * @generated
      * @ordered
      */
-    protected PossiblyImportedComplexType complexReturnType;
+    protected ComplexType complexReturnType;
+
+    /**
+     * The cached value of the '{@link #getImportedComplexReturnType() <em>Imported Complex Return Type</em>}' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getImportedComplexReturnType()
+     * @generated
+     * @ordered
+     */
+    protected ImportedComplexType importedComplexReturnType;
 
     /**
      * The cached value of the '{@link #getPrimitiveReturnType() <em>Primitive Return Type</em>}' containment reference.
@@ -265,7 +276,15 @@ public class DataOperationImpl extends MinimalEObjectImpl.Container implements D
      * @generated
      */
     @Override
-    public PossiblyImportedComplexType getComplexReturnType() {
+    public ComplexType getComplexReturnType() {
+        if (complexReturnType != null && complexReturnType.eIsProxy()) {
+            InternalEObject oldComplexReturnType = (InternalEObject)complexReturnType;
+            complexReturnType = (ComplexType)eResolveProxy(oldComplexReturnType);
+            if (complexReturnType != oldComplexReturnType) {
+                if (eNotificationRequired())
+                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, DataPackage.DATA_OPERATION__COMPLEX_RETURN_TYPE, oldComplexReturnType, complexReturnType));
+            }
+        }
         return complexReturnType;
     }
 
@@ -274,11 +293,43 @@ public class DataOperationImpl extends MinimalEObjectImpl.Container implements D
      * <!-- end-user-doc -->
      * @generated
      */
-    public NotificationChain basicSetComplexReturnType(PossiblyImportedComplexType newComplexReturnType, NotificationChain msgs) {
-        PossiblyImportedComplexType oldComplexReturnType = complexReturnType;
+    public ComplexType basicGetComplexReturnType() {
+        return complexReturnType;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void setComplexReturnType(ComplexType newComplexReturnType) {
+        ComplexType oldComplexReturnType = complexReturnType;
         complexReturnType = newComplexReturnType;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.DATA_OPERATION__COMPLEX_RETURN_TYPE, oldComplexReturnType, complexReturnType));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public ImportedComplexType getImportedComplexReturnType() {
+        return importedComplexReturnType;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public NotificationChain basicSetImportedComplexReturnType(ImportedComplexType newImportedComplexReturnType, NotificationChain msgs) {
+        ImportedComplexType oldImportedComplexReturnType = importedComplexReturnType;
+        importedComplexReturnType = newImportedComplexReturnType;
         if (eNotificationRequired()) {
-            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, DataPackage.DATA_OPERATION__COMPLEX_RETURN_TYPE, oldComplexReturnType, newComplexReturnType);
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, DataPackage.DATA_OPERATION__IMPORTED_COMPLEX_RETURN_TYPE, oldImportedComplexReturnType, newImportedComplexReturnType);
             if (msgs == null) msgs = notification; else msgs.add(notification);
         }
         return msgs;
@@ -290,18 +341,18 @@ public class DataOperationImpl extends MinimalEObjectImpl.Container implements D
      * @generated
      */
     @Override
-    public void setComplexReturnType(PossiblyImportedComplexType newComplexReturnType) {
-        if (newComplexReturnType != complexReturnType) {
+    public void setImportedComplexReturnType(ImportedComplexType newImportedComplexReturnType) {
+        if (newImportedComplexReturnType != importedComplexReturnType) {
             NotificationChain msgs = null;
-            if (complexReturnType != null)
-                msgs = ((InternalEObject)complexReturnType).eInverseRemove(this, DataPackage.POSSIBLY_IMPORTED_COMPLEX_TYPE__OPERATION, PossiblyImportedComplexType.class, msgs);
-            if (newComplexReturnType != null)
-                msgs = ((InternalEObject)newComplexReturnType).eInverseAdd(this, DataPackage.POSSIBLY_IMPORTED_COMPLEX_TYPE__OPERATION, PossiblyImportedComplexType.class, msgs);
-            msgs = basicSetComplexReturnType(newComplexReturnType, msgs);
+            if (importedComplexReturnType != null)
+                msgs = ((InternalEObject)importedComplexReturnType).eInverseRemove(this, DataPackage.IMPORTED_COMPLEX_TYPE__OPERATION, ImportedComplexType.class, msgs);
+            if (newImportedComplexReturnType != null)
+                msgs = ((InternalEObject)newImportedComplexReturnType).eInverseAdd(this, DataPackage.IMPORTED_COMPLEX_TYPE__OPERATION, ImportedComplexType.class, msgs);
+            msgs = basicSetImportedComplexReturnType(newImportedComplexReturnType, msgs);
             if (msgs != null) msgs.dispatch();
         }
         else if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.DATA_OPERATION__COMPLEX_RETURN_TYPE, newComplexReturnType, newComplexReturnType));
+            eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.DATA_OPERATION__IMPORTED_COMPLEX_RETURN_TYPE, newImportedComplexReturnType, newImportedComplexReturnType));
     }
 
     /**
@@ -530,12 +581,23 @@ public class DataOperationImpl extends MinimalEObjectImpl.Container implements D
             _xifexpression = this.getPrimitiveReturnType();
         }
         else {
-            ComplexType _xifexpression_1 = null;
-            if (((this.getComplexReturnType() != null) && (this.getComplexReturnType().getComplexType() != null))) {
-                _xifexpression_1 = this.getComplexReturnType().getComplexType();
+            Type _xifexpression_1 = null;
+            ComplexType _complexReturnType = this.getComplexReturnType();
+            boolean _tripleNotEquals_1 = (_complexReturnType != null);
+            if (_tripleNotEquals_1) {
+                _xifexpression_1 = this.getComplexReturnType();
             }
             else {
-                _xifexpression_1 = null;
+                Type _xifexpression_2 = null;
+                ImportedComplexType _importedComplexReturnType = this.getImportedComplexReturnType();
+                boolean _tripleNotEquals_2 = (_importedComplexReturnType != null);
+                if (_tripleNotEquals_2) {
+                    _xifexpression_2 = this.getImportedComplexReturnType().getImportedType();
+                }
+                else {
+                    _xifexpression_2 = null;
+                }
+                _xifexpression_1 = _xifexpression_2;
             }
             _xifexpression = _xifexpression_1;
         }
@@ -551,10 +613,10 @@ public class DataOperationImpl extends MinimalEObjectImpl.Container implements D
     @Override
     public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
-            case DataPackage.DATA_OPERATION__COMPLEX_RETURN_TYPE:
-                if (complexReturnType != null)
-                    msgs = ((InternalEObject)complexReturnType).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - DataPackage.DATA_OPERATION__COMPLEX_RETURN_TYPE, null, msgs);
-                return basicSetComplexReturnType((PossiblyImportedComplexType)otherEnd, msgs);
+            case DataPackage.DATA_OPERATION__IMPORTED_COMPLEX_RETURN_TYPE:
+                if (importedComplexReturnType != null)
+                    msgs = ((InternalEObject)importedComplexReturnType).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - DataPackage.DATA_OPERATION__IMPORTED_COMPLEX_RETURN_TYPE, null, msgs);
+                return basicSetImportedComplexReturnType((ImportedComplexType)otherEnd, msgs);
             case DataPackage.DATA_OPERATION__PARAMETERS:
                 return ((InternalEList<InternalEObject>)(InternalEList<?>)getParameters()).basicAdd(otherEnd, msgs);
             case DataPackage.DATA_OPERATION__DATA_STRUCTURE:
@@ -573,8 +635,8 @@ public class DataOperationImpl extends MinimalEObjectImpl.Container implements D
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
-            case DataPackage.DATA_OPERATION__COMPLEX_RETURN_TYPE:
-                return basicSetComplexReturnType(null, msgs);
+            case DataPackage.DATA_OPERATION__IMPORTED_COMPLEX_RETURN_TYPE:
+                return basicSetImportedComplexReturnType(null, msgs);
             case DataPackage.DATA_OPERATION__PRIMITIVE_RETURN_TYPE:
                 return basicSetPrimitiveReturnType(null, msgs);
             case DataPackage.DATA_OPERATION__PARAMETERS:
@@ -614,7 +676,10 @@ public class DataOperationImpl extends MinimalEObjectImpl.Container implements D
             case DataPackage.DATA_OPERATION__HAS_NO_RETURN_TYPE:
                 return isHasNoReturnType();
             case DataPackage.DATA_OPERATION__COMPLEX_RETURN_TYPE:
-                return getComplexReturnType();
+                if (resolve) return getComplexReturnType();
+                return basicGetComplexReturnType();
+            case DataPackage.DATA_OPERATION__IMPORTED_COMPLEX_RETURN_TYPE:
+                return getImportedComplexReturnType();
             case DataPackage.DATA_OPERATION__PRIMITIVE_RETURN_TYPE:
                 return getPrimitiveReturnType();
             case DataPackage.DATA_OPERATION__PARAMETERS:
@@ -649,7 +714,10 @@ public class DataOperationImpl extends MinimalEObjectImpl.Container implements D
                 setHasNoReturnType((Boolean)newValue);
                 return;
             case DataPackage.DATA_OPERATION__COMPLEX_RETURN_TYPE:
-                setComplexReturnType((PossiblyImportedComplexType)newValue);
+                setComplexReturnType((ComplexType)newValue);
+                return;
+            case DataPackage.DATA_OPERATION__IMPORTED_COMPLEX_RETURN_TYPE:
+                setImportedComplexReturnType((ImportedComplexType)newValue);
                 return;
             case DataPackage.DATA_OPERATION__PRIMITIVE_RETURN_TYPE:
                 setPrimitiveReturnType((PrimitiveType)newValue);
@@ -683,7 +751,10 @@ public class DataOperationImpl extends MinimalEObjectImpl.Container implements D
                 setHasNoReturnType(HAS_NO_RETURN_TYPE_EDEFAULT);
                 return;
             case DataPackage.DATA_OPERATION__COMPLEX_RETURN_TYPE:
-                setComplexReturnType((PossiblyImportedComplexType)null);
+                setComplexReturnType((ComplexType)null);
+                return;
+            case DataPackage.DATA_OPERATION__IMPORTED_COMPLEX_RETURN_TYPE:
+                setImportedComplexReturnType((ImportedComplexType)null);
                 return;
             case DataPackage.DATA_OPERATION__PRIMITIVE_RETURN_TYPE:
                 setPrimitiveReturnType((PrimitiveType)null);
@@ -714,6 +785,8 @@ public class DataOperationImpl extends MinimalEObjectImpl.Container implements D
                 return hasNoReturnType != HAS_NO_RETURN_TYPE_EDEFAULT;
             case DataPackage.DATA_OPERATION__COMPLEX_RETURN_TYPE:
                 return complexReturnType != null;
+            case DataPackage.DATA_OPERATION__IMPORTED_COMPLEX_RETURN_TYPE:
+                return importedComplexReturnType != null;
             case DataPackage.DATA_OPERATION__PRIMITIVE_RETURN_TYPE:
                 return primitiveReturnType != null;
             case DataPackage.DATA_OPERATION__PARAMETERS:

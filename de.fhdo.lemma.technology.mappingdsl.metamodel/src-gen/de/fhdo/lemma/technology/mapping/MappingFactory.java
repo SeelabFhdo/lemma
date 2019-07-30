@@ -40,13 +40,13 @@ public interface MappingFactory extends EFactory {
     ComplexTypeMapping createComplexTypeMapping();
 
     /**
-     * Returns a new object of class '<em>Imported Complex Type</em>'.
+     * Returns a new object of class '<em>Imported Complex Type To Map</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return a new object of class '<em>Imported Complex Type</em>'.
+     * @return a new object of class '<em>Imported Complex Type To Map</em>'.
      * @generated
      */
-    ImportedComplexType createImportedComplexType();
+    ImportedComplexTypeToMap createImportedComplexTypeToMap();
 
     /**
      * Returns a new object of class '<em>Microservice Mapping</em>'.

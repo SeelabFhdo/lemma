@@ -86,11 +86,7 @@ public class DataDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cNameAssignment_5 = (Assignment)cGroup.eContents().get(5);
 		private final RuleCall cNameIDTerminalRuleCall_5_0 = (RuleCall)cNameAssignment_5.eContents().get(0);
 		
-		///* For debugging purposes to test the type checker. May be safely removed in the future. */ /*AssignTest:
-		//    (target=PossiblyImportedComplexType)
-		//    '='
-		//    (source=PossiblyImportedComplexType)
-		//;*/ ComplexTypeImport:
+		//ComplexTypeImport:
 		//	'import' 'datatypes' 'from' importURI=STRING 'as' name=ID;
 		@Override public ParserRule getRule() { return rule; }
 		
@@ -249,50 +245,29 @@ public class DataDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final CrossReference cSuperDataStructureCrossReference_2_1_0 = (CrossReference)cSuperAssignment_2_1.eContents().get(0);
 		private final RuleCall cSuperDataStructureQualifiedNameParserRuleCall_2_1_0_1 = (RuleCall)cSuperDataStructureCrossReference_2_1_0.eContents().get(1);
 		private final Keyword cLeftCurlyBracketKeyword_3 = (Keyword)cGroup.eContents().get(3);
-		private final Alternatives cAlternatives_4 = (Alternatives)cGroup.eContents().get(4);
-		private final Group cGroup_4_0 = (Group)cAlternatives_4.eContents().get(0);
-		private final Assignment cDataFieldsAssignment_4_0_0 = (Assignment)cGroup_4_0.eContents().get(0);
+		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
+		private final Alternatives cAlternatives_4_0 = (Alternatives)cGroup_4.eContents().get(0);
+		private final Assignment cDataFieldsAssignment_4_0_0 = (Assignment)cAlternatives_4_0.eContents().get(0);
 		private final RuleCall cDataFieldsDataFieldParserRuleCall_4_0_0_0 = (RuleCall)cDataFieldsAssignment_4_0_0.eContents().get(0);
-		private final Group cGroup_4_0_1 = (Group)cGroup_4_0.eContents().get(1);
-		private final Keyword cCommaKeyword_4_0_1_0 = (Keyword)cGroup_4_0_1.eContents().get(0);
-		private final Assignment cDataFieldsAssignment_4_0_1_1 = (Assignment)cGroup_4_0_1.eContents().get(1);
-		private final RuleCall cDataFieldsDataFieldParserRuleCall_4_0_1_1_0 = (RuleCall)cDataFieldsAssignment_4_0_1_1.eContents().get(0);
-		private final Group cGroup_4_1 = (Group)cAlternatives_4.eContents().get(1);
-		private final Assignment cOperationsAssignment_4_1_0 = (Assignment)cGroup_4_1.eContents().get(0);
-		private final RuleCall cOperationsDataOperationParserRuleCall_4_1_0_0 = (RuleCall)cOperationsAssignment_4_1_0.eContents().get(0);
-		private final Group cGroup_4_1_1 = (Group)cGroup_4_1.eContents().get(1);
-		private final Keyword cCommaKeyword_4_1_1_0 = (Keyword)cGroup_4_1_1.eContents().get(0);
-		private final Assignment cOperationsAssignment_4_1_1_1 = (Assignment)cGroup_4_1_1.eContents().get(1);
+		private final Assignment cOperationsAssignment_4_0_1 = (Assignment)cAlternatives_4_0.eContents().get(1);
+		private final RuleCall cOperationsDataOperationParserRuleCall_4_0_1_0 = (RuleCall)cOperationsAssignment_4_0_1.eContents().get(0);
+		private final Group cGroup_4_1 = (Group)cGroup_4.eContents().get(1);
+		private final Keyword cCommaKeyword_4_1_0 = (Keyword)cGroup_4_1.eContents().get(0);
+		private final Alternatives cAlternatives_4_1_1 = (Alternatives)cGroup_4_1.eContents().get(1);
+		private final Assignment cDataFieldsAssignment_4_1_1_0 = (Assignment)cAlternatives_4_1_1.eContents().get(0);
+		private final RuleCall cDataFieldsDataFieldParserRuleCall_4_1_1_0_0 = (RuleCall)cDataFieldsAssignment_4_1_1_0.eContents().get(0);
+		private final Assignment cOperationsAssignment_4_1_1_1 = (Assignment)cAlternatives_4_1_1.eContents().get(1);
 		private final RuleCall cOperationsDataOperationParserRuleCall_4_1_1_1_0 = (RuleCall)cOperationsAssignment_4_1_1_1.eContents().get(0);
-		private final Group cGroup_4_2 = (Group)cAlternatives_4.eContents().get(2);
-		private final Assignment cDataFieldsAssignment_4_2_0 = (Assignment)cGroup_4_2.eContents().get(0);
-		private final RuleCall cDataFieldsDataFieldParserRuleCall_4_2_0_0 = (RuleCall)cDataFieldsAssignment_4_2_0.eContents().get(0);
-		private final Group cGroup_4_2_1 = (Group)cGroup_4_2.eContents().get(1);
-		private final Keyword cCommaKeyword_4_2_1_0 = (Keyword)cGroup_4_2_1.eContents().get(0);
-		private final Assignment cDataFieldsAssignment_4_2_1_1 = (Assignment)cGroup_4_2_1.eContents().get(1);
-		private final RuleCall cDataFieldsDataFieldParserRuleCall_4_2_1_1_0 = (RuleCall)cDataFieldsAssignment_4_2_1_1.eContents().get(0);
-		private final Keyword cCommaKeyword_4_2_2 = (Keyword)cGroup_4_2.eContents().get(2);
-		private final Assignment cOperationsAssignment_4_2_3 = (Assignment)cGroup_4_2.eContents().get(3);
-		private final RuleCall cOperationsDataOperationParserRuleCall_4_2_3_0 = (RuleCall)cOperationsAssignment_4_2_3.eContents().get(0);
-		private final Group cGroup_4_2_4 = (Group)cGroup_4_2.eContents().get(4);
-		private final Keyword cCommaKeyword_4_2_4_0 = (Keyword)cGroup_4_2_4.eContents().get(0);
-		private final Assignment cOperationsAssignment_4_2_4_1 = (Assignment)cGroup_4_2_4.eContents().get(1);
-		private final RuleCall cOperationsDataOperationParserRuleCall_4_2_4_1_0 = (RuleCall)cOperationsAssignment_4_2_4_1.eContents().get(0);
 		private final Keyword cRightCurlyBracketKeyword_5 = (Keyword)cGroup.eContents().get(5);
 		
 		//DataStructure:
-		//	'structure' name=ID ('extends' super=[DataStructure|QualifiedName])? '{' (dataFields+=DataField (','
-		//	dataFields+=DataField)*
-		//	| operations+=DataOperation (',' operations+=DataOperation)*
-		//	| dataFields+=DataField (',' dataFields+=DataField)*
-		//	','
-		//	operations+=DataOperation (',' operations+=DataOperation)*)?
+		//	'structure' name=ID ('extends' super=[DataStructure|QualifiedName])? '{' ((dataFields+=DataField |
+		//	operations+=DataOperation) (',' (dataFields+=DataField | operations+=DataOperation))*)?
 		//	'}';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'structure' name=ID ('extends' super=[DataStructure|QualifiedName])? '{' (dataFields+=DataField (','
-		//dataFields+=DataField)* | operations+=DataOperation (',' operations+=DataOperation)* | dataFields+=DataField (','
-		//dataFields+=DataField)* ',' operations+=DataOperation (',' operations+=DataOperation)*)? '}'
+		//'structure' name=ID ('extends' super=[DataStructure|QualifiedName])? '{' ((dataFields+=DataField |
+		//operations+=DataOperation) (',' (dataFields+=DataField | operations+=DataOperation))*)? '}'
 		public Group getGroup() { return cGroup; }
 		
 		//'structure'
@@ -322,12 +297,11 @@ public class DataDslGrammarAccess extends AbstractGrammarElementFinder {
 		//'{'
 		public Keyword getLeftCurlyBracketKeyword_3() { return cLeftCurlyBracketKeyword_3; }
 		
-		//(dataFields+=DataField (',' dataFields+=DataField)* | operations+=DataOperation (',' operations+=DataOperation)* |
-		//dataFields+=DataField (',' dataFields+=DataField)* ',' operations+=DataOperation (',' operations+=DataOperation)*)?
-		public Alternatives getAlternatives_4() { return cAlternatives_4; }
+		//((dataFields+=DataField | operations+=DataOperation) (',' (dataFields+=DataField | operations+=DataOperation))*)?
+		public Group getGroup_4() { return cGroup_4; }
 		
-		//dataFields+=DataField (',' dataFields+=DataField)*
-		public Group getGroup_4_0() { return cGroup_4_0; }
+		//dataFields+=DataField | operations+=DataOperation
+		public Alternatives getAlternatives_4_0() { return cAlternatives_4_0; }
 		
 		//dataFields+=DataField
 		public Assignment getDataFieldsAssignment_4_0_0() { return cDataFieldsAssignment_4_0_0; }
@@ -335,80 +309,32 @@ public class DataDslGrammarAccess extends AbstractGrammarElementFinder {
 		//DataField
 		public RuleCall getDataFieldsDataFieldParserRuleCall_4_0_0_0() { return cDataFieldsDataFieldParserRuleCall_4_0_0_0; }
 		
-		//(',' dataFields+=DataField)*
-		public Group getGroup_4_0_1() { return cGroup_4_0_1; }
-		
-		//','
-		public Keyword getCommaKeyword_4_0_1_0() { return cCommaKeyword_4_0_1_0; }
-		
-		//dataFields+=DataField
-		public Assignment getDataFieldsAssignment_4_0_1_1() { return cDataFieldsAssignment_4_0_1_1; }
-		
-		//DataField
-		public RuleCall getDataFieldsDataFieldParserRuleCall_4_0_1_1_0() { return cDataFieldsDataFieldParserRuleCall_4_0_1_1_0; }
-		
-		//operations+=DataOperation (',' operations+=DataOperation)*
-		public Group getGroup_4_1() { return cGroup_4_1; }
-		
 		//operations+=DataOperation
-		public Assignment getOperationsAssignment_4_1_0() { return cOperationsAssignment_4_1_0; }
+		public Assignment getOperationsAssignment_4_0_1() { return cOperationsAssignment_4_0_1; }
 		
 		//DataOperation
-		public RuleCall getOperationsDataOperationParserRuleCall_4_1_0_0() { return cOperationsDataOperationParserRuleCall_4_1_0_0; }
+		public RuleCall getOperationsDataOperationParserRuleCall_4_0_1_0() { return cOperationsDataOperationParserRuleCall_4_0_1_0; }
 		
-		//(',' operations+=DataOperation)*
-		public Group getGroup_4_1_1() { return cGroup_4_1_1; }
+		//(',' (dataFields+=DataField | operations+=DataOperation))*
+		public Group getGroup_4_1() { return cGroup_4_1; }
 		
 		//','
-		public Keyword getCommaKeyword_4_1_1_0() { return cCommaKeyword_4_1_1_0; }
+		public Keyword getCommaKeyword_4_1_0() { return cCommaKeyword_4_1_0; }
+		
+		//dataFields+=DataField | operations+=DataOperation
+		public Alternatives getAlternatives_4_1_1() { return cAlternatives_4_1_1; }
+		
+		//dataFields+=DataField
+		public Assignment getDataFieldsAssignment_4_1_1_0() { return cDataFieldsAssignment_4_1_1_0; }
+		
+		//DataField
+		public RuleCall getDataFieldsDataFieldParserRuleCall_4_1_1_0_0() { return cDataFieldsDataFieldParserRuleCall_4_1_1_0_0; }
 		
 		//operations+=DataOperation
 		public Assignment getOperationsAssignment_4_1_1_1() { return cOperationsAssignment_4_1_1_1; }
 		
 		//DataOperation
 		public RuleCall getOperationsDataOperationParserRuleCall_4_1_1_1_0() { return cOperationsDataOperationParserRuleCall_4_1_1_1_0; }
-		
-		//dataFields+=DataField (',' dataFields+=DataField)* ',' operations+=DataOperation (',' operations+=DataOperation)*
-		public Group getGroup_4_2() { return cGroup_4_2; }
-		
-		//dataFields+=DataField
-		public Assignment getDataFieldsAssignment_4_2_0() { return cDataFieldsAssignment_4_2_0; }
-		
-		//DataField
-		public RuleCall getDataFieldsDataFieldParserRuleCall_4_2_0_0() { return cDataFieldsDataFieldParserRuleCall_4_2_0_0; }
-		
-		//(',' dataFields+=DataField)*
-		public Group getGroup_4_2_1() { return cGroup_4_2_1; }
-		
-		//','
-		public Keyword getCommaKeyword_4_2_1_0() { return cCommaKeyword_4_2_1_0; }
-		
-		//dataFields+=DataField
-		public Assignment getDataFieldsAssignment_4_2_1_1() { return cDataFieldsAssignment_4_2_1_1; }
-		
-		//DataField
-		public RuleCall getDataFieldsDataFieldParserRuleCall_4_2_1_1_0() { return cDataFieldsDataFieldParserRuleCall_4_2_1_1_0; }
-		
-		//','
-		public Keyword getCommaKeyword_4_2_2() { return cCommaKeyword_4_2_2; }
-		
-		//operations+=DataOperation
-		public Assignment getOperationsAssignment_4_2_3() { return cOperationsAssignment_4_2_3; }
-		
-		//DataOperation
-		public RuleCall getOperationsDataOperationParserRuleCall_4_2_3_0() { return cOperationsDataOperationParserRuleCall_4_2_3_0; }
-		
-		//(',' operations+=DataOperation)*
-		public Group getGroup_4_2_4() { return cGroup_4_2_4; }
-		
-		//','
-		public Keyword getCommaKeyword_4_2_4_0() { return cCommaKeyword_4_2_4_0; }
-		
-		//operations+=DataOperation
-		public Assignment getOperationsAssignment_4_2_4_1() { return cOperationsAssignment_4_2_4_1; }
-		
-		//DataOperation
-		public RuleCall getOperationsDataOperationParserRuleCall_4_2_4_1_0() { return cOperationsDataOperationParserRuleCall_4_2_4_1_0; }
 		
 		//'}'
 		public Keyword getRightCurlyBracketKeyword_5() { return cRightCurlyBracketKeyword_5; }
@@ -520,7 +446,10 @@ public class DataDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cPrimitiveTypeAssignment_1_0 = (Assignment)cAlternatives_1.eContents().get(0);
 		private final RuleCall cPrimitiveTypePrimitiveTypeParserRuleCall_1_0_0 = (RuleCall)cPrimitiveTypeAssignment_1_0.eContents().get(0);
 		private final Assignment cComplexTypeAssignment_1_1 = (Assignment)cAlternatives_1.eContents().get(1);
-		private final RuleCall cComplexTypePossiblyImportedComplexTypeParserRuleCall_1_1_0 = (RuleCall)cComplexTypeAssignment_1_1.eContents().get(0);
+		private final CrossReference cComplexTypeComplexTypeCrossReference_1_1_0 = (CrossReference)cComplexTypeAssignment_1_1.eContents().get(0);
+		private final RuleCall cComplexTypeComplexTypeQualifiedNameParserRuleCall_1_1_0_1 = (RuleCall)cComplexTypeComplexTypeCrossReference_1_1_0.eContents().get(1);
+		private final Assignment cImportedComplexTypeAssignment_1_2 = (Assignment)cAlternatives_1.eContents().get(2);
+		private final RuleCall cImportedComplexTypeImportedComplexTypeParserRuleCall_1_2_0 = (RuleCall)cImportedComplexTypeAssignment_1_2.eContents().get(0);
 		private final Assignment cNameAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final RuleCall cNameIDTerminalRuleCall_2_0 = (RuleCall)cNameAssignment_2.eContents().get(0);
 		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
@@ -534,14 +463,15 @@ public class DataDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cGreaterThanSignKeyword_3_3 = (Keyword)cGroup_3.eContents().get(3);
 		
 		//DataField:
-		//	^hidden?='hide'? (primitiveType=PrimitiveType | complexType=PossiblyImportedComplexType)?
+		//	^hidden?='hide'? (primitiveType=PrimitiveType | complexType=[ComplexType|QualifiedName] |
+		//	importedComplexType=ImportedComplexType)?
 		//	name=ID ('<'
 		//	features+=FieldFeature (',' features+=FieldFeature)*
 		//	'>')?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//^hidden?='hide'? (primitiveType=PrimitiveType | complexType=PossiblyImportedComplexType)? name=ID ('<'
-		//features+=FieldFeature (',' features+=FieldFeature)* '>')?
+		//^hidden?='hide'? (primitiveType=PrimitiveType | complexType=[ComplexType|QualifiedName] |
+		//importedComplexType=ImportedComplexType)? name=ID ('<' features+=FieldFeature (',' features+=FieldFeature)* '>')?
 		public Group getGroup() { return cGroup; }
 		
 		//^hidden?='hide'?
@@ -550,7 +480,7 @@ public class DataDslGrammarAccess extends AbstractGrammarElementFinder {
 		//'hide'
 		public Keyword getHiddenHideKeyword_0_0() { return cHiddenHideKeyword_0_0; }
 		
-		//(primitiveType=PrimitiveType | complexType=PossiblyImportedComplexType)?
+		//(primitiveType=PrimitiveType | complexType=[ComplexType|QualifiedName] | importedComplexType=ImportedComplexType)?
 		public Alternatives getAlternatives_1() { return cAlternatives_1; }
 		
 		//primitiveType=PrimitiveType
@@ -559,11 +489,20 @@ public class DataDslGrammarAccess extends AbstractGrammarElementFinder {
 		//PrimitiveType
 		public RuleCall getPrimitiveTypePrimitiveTypeParserRuleCall_1_0_0() { return cPrimitiveTypePrimitiveTypeParserRuleCall_1_0_0; }
 		
-		//complexType=PossiblyImportedComplexType
+		//complexType=[ComplexType|QualifiedName]
 		public Assignment getComplexTypeAssignment_1_1() { return cComplexTypeAssignment_1_1; }
 		
-		//PossiblyImportedComplexType
-		public RuleCall getComplexTypePossiblyImportedComplexTypeParserRuleCall_1_1_0() { return cComplexTypePossiblyImportedComplexTypeParserRuleCall_1_1_0; }
+		//[ComplexType|QualifiedName]
+		public CrossReference getComplexTypeComplexTypeCrossReference_1_1_0() { return cComplexTypeComplexTypeCrossReference_1_1_0; }
+		
+		//QualifiedName
+		public RuleCall getComplexTypeComplexTypeQualifiedNameParserRuleCall_1_1_0_1() { return cComplexTypeComplexTypeQualifiedNameParserRuleCall_1_1_0_1; }
+		
+		//importedComplexType=ImportedComplexType
+		public Assignment getImportedComplexTypeAssignment_1_2() { return cImportedComplexTypeAssignment_1_2; }
+		
+		//ImportedComplexType
+		public RuleCall getImportedComplexTypeImportedComplexTypeParserRuleCall_1_2_0() { return cImportedComplexTypeImportedComplexTypeParserRuleCall_1_2_0; }
 		
 		//name=ID
 		public Assignment getNameAssignment_2() { return cNameAssignment_2; }
@@ -708,7 +647,10 @@ public class DataDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cPrimitiveReturnTypeAssignment_1_1_1_0 = (Assignment)cAlternatives_1_1_1.eContents().get(0);
 		private final RuleCall cPrimitiveReturnTypePrimitiveTypeParserRuleCall_1_1_1_0_0 = (RuleCall)cPrimitiveReturnTypeAssignment_1_1_1_0.eContents().get(0);
 		private final Assignment cComplexReturnTypeAssignment_1_1_1_1 = (Assignment)cAlternatives_1_1_1.eContents().get(1);
-		private final RuleCall cComplexReturnTypePossiblyImportedComplexTypeParserRuleCall_1_1_1_1_0 = (RuleCall)cComplexReturnTypeAssignment_1_1_1_1.eContents().get(0);
+		private final CrossReference cComplexReturnTypeComplexTypeCrossReference_1_1_1_1_0 = (CrossReference)cComplexReturnTypeAssignment_1_1_1_1.eContents().get(0);
+		private final RuleCall cComplexReturnTypeComplexTypeQualifiedNameParserRuleCall_1_1_1_1_0_1 = (RuleCall)cComplexReturnTypeComplexTypeCrossReference_1_1_1_1_0.eContents().get(1);
+		private final Assignment cImportedComplexReturnTypeAssignment_1_1_1_2 = (Assignment)cAlternatives_1_1_1.eContents().get(2);
+		private final RuleCall cImportedComplexReturnTypeImportedComplexTypeParserRuleCall_1_1_1_2_0 = (RuleCall)cImportedComplexReturnTypeAssignment_1_1_1_2.eContents().get(0);
 		private final Assignment cNameAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final RuleCall cNameIDTerminalRuleCall_2_0 = (RuleCall)cNameAssignment_2.eContents().get(0);
 		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
@@ -723,13 +665,14 @@ public class DataDslGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//DataOperation:
 		//	^hidden?='hide'? (hasNoReturnType?='procedure' |
-		//	'function' (primitiveReturnType=PrimitiveType | complexReturnType=PossiblyImportedComplexType)?) name=ID ('('
-		//	parameters+=DataOperationParameter? (',' parameters+=DataOperationParameter)* ')')?;
+		//	'function' (primitiveReturnType=PrimitiveType | complexReturnType=[ComplexType|QualifiedName] |
+		//	importedComplexReturnType=ImportedComplexType)?) name=ID ('(' parameters+=DataOperationParameter? (','
+		//	parameters+=DataOperationParameter)* ')')?;
 		@Override public ParserRule getRule() { return rule; }
 		
 		//^hidden?='hide'? (hasNoReturnType?='procedure' | 'function' (primitiveReturnType=PrimitiveType |
-		//complexReturnType=PossiblyImportedComplexType)?) name=ID ('(' parameters+=DataOperationParameter? (','
-		//parameters+=DataOperationParameter)* ')')?
+		//complexReturnType=[ComplexType|QualifiedName] | importedComplexReturnType=ImportedComplexType)?) name=ID ('('
+		//parameters+=DataOperationParameter? (',' parameters+=DataOperationParameter)* ')')?
 		public Group getGroup() { return cGroup; }
 		
 		//^hidden?='hide'?
@@ -739,7 +682,7 @@ public class DataDslGrammarAccess extends AbstractGrammarElementFinder {
 		public Keyword getHiddenHideKeyword_0_0() { return cHiddenHideKeyword_0_0; }
 		
 		//hasNoReturnType?='procedure' | 'function' (primitiveReturnType=PrimitiveType |
-		//complexReturnType=PossiblyImportedComplexType)?
+		//complexReturnType=[ComplexType|QualifiedName] | importedComplexReturnType=ImportedComplexType)?
 		public Alternatives getAlternatives_1() { return cAlternatives_1; }
 		
 		//hasNoReturnType?='procedure'
@@ -748,13 +691,15 @@ public class DataDslGrammarAccess extends AbstractGrammarElementFinder {
 		//'procedure'
 		public Keyword getHasNoReturnTypeProcedureKeyword_1_0_0() { return cHasNoReturnTypeProcedureKeyword_1_0_0; }
 		
-		//'function' (primitiveReturnType=PrimitiveType | complexReturnType=PossiblyImportedComplexType)?
+		//'function' (primitiveReturnType=PrimitiveType | complexReturnType=[ComplexType|QualifiedName] |
+		//importedComplexReturnType=ImportedComplexType)?
 		public Group getGroup_1_1() { return cGroup_1_1; }
 		
 		//'function'
 		public Keyword getFunctionKeyword_1_1_0() { return cFunctionKeyword_1_1_0; }
 		
-		//(primitiveReturnType=PrimitiveType | complexReturnType=PossiblyImportedComplexType)?
+		//(primitiveReturnType=PrimitiveType | complexReturnType=[ComplexType|QualifiedName] |
+		//importedComplexReturnType=ImportedComplexType)?
 		public Alternatives getAlternatives_1_1_1() { return cAlternatives_1_1_1; }
 		
 		//primitiveReturnType=PrimitiveType
@@ -763,11 +708,20 @@ public class DataDslGrammarAccess extends AbstractGrammarElementFinder {
 		//PrimitiveType
 		public RuleCall getPrimitiveReturnTypePrimitiveTypeParserRuleCall_1_1_1_0_0() { return cPrimitiveReturnTypePrimitiveTypeParserRuleCall_1_1_1_0_0; }
 		
-		//complexReturnType=PossiblyImportedComplexType
+		//complexReturnType=[ComplexType|QualifiedName]
 		public Assignment getComplexReturnTypeAssignment_1_1_1_1() { return cComplexReturnTypeAssignment_1_1_1_1; }
 		
-		//PossiblyImportedComplexType
-		public RuleCall getComplexReturnTypePossiblyImportedComplexTypeParserRuleCall_1_1_1_1_0() { return cComplexReturnTypePossiblyImportedComplexTypeParserRuleCall_1_1_1_1_0; }
+		//[ComplexType|QualifiedName]
+		public CrossReference getComplexReturnTypeComplexTypeCrossReference_1_1_1_1_0() { return cComplexReturnTypeComplexTypeCrossReference_1_1_1_1_0; }
+		
+		//QualifiedName
+		public RuleCall getComplexReturnTypeComplexTypeQualifiedNameParserRuleCall_1_1_1_1_0_1() { return cComplexReturnTypeComplexTypeQualifiedNameParserRuleCall_1_1_1_1_0_1; }
+		
+		//importedComplexReturnType=ImportedComplexType
+		public Assignment getImportedComplexReturnTypeAssignment_1_1_1_2() { return cImportedComplexReturnTypeAssignment_1_1_1_2; }
+		
+		//ImportedComplexType
+		public RuleCall getImportedComplexReturnTypeImportedComplexTypeParserRuleCall_1_1_1_2_0() { return cImportedComplexReturnTypeImportedComplexTypeParserRuleCall_1_1_1_2_0; }
 		
 		//name=ID
 		public Assignment getNameAssignment_2() { return cNameAssignment_2; }
@@ -809,18 +763,23 @@ public class DataDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cPrimitiveTypeAssignment_0_0 = (Assignment)cAlternatives_0.eContents().get(0);
 		private final RuleCall cPrimitiveTypePrimitiveTypeParserRuleCall_0_0_0 = (RuleCall)cPrimitiveTypeAssignment_0_0.eContents().get(0);
 		private final Assignment cComplexTypeAssignment_0_1 = (Assignment)cAlternatives_0.eContents().get(1);
-		private final RuleCall cComplexTypePossiblyImportedComplexTypeParserRuleCall_0_1_0 = (RuleCall)cComplexTypeAssignment_0_1.eContents().get(0);
+		private final CrossReference cComplexTypeComplexTypeCrossReference_0_1_0 = (CrossReference)cComplexTypeAssignment_0_1.eContents().get(0);
+		private final RuleCall cComplexTypeComplexTypeQualifiedNameParserRuleCall_0_1_0_1 = (RuleCall)cComplexTypeComplexTypeCrossReference_0_1_0.eContents().get(1);
+		private final Assignment cImportedComplexTypeAssignment_0_2 = (Assignment)cAlternatives_0.eContents().get(2);
+		private final RuleCall cImportedComplexTypeImportedComplexTypeParserRuleCall_0_2_0 = (RuleCall)cImportedComplexTypeAssignment_0_2.eContents().get(0);
 		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cNameIDTerminalRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
 		
 		//DataOperationParameter:
-		//	(primitiveType=PrimitiveType | complexType=PossiblyImportedComplexType) name=ID;
+		//	(primitiveType=PrimitiveType | complexType=[ComplexType|QualifiedName] | importedComplexType=ImportedComplexType)
+		//	name=ID;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//(primitiveType=PrimitiveType | complexType=PossiblyImportedComplexType) name=ID
+		//(primitiveType=PrimitiveType | complexType=[ComplexType|QualifiedName] | importedComplexType=ImportedComplexType)
+		//name=ID
 		public Group getGroup() { return cGroup; }
 		
-		//primitiveType=PrimitiveType | complexType=PossiblyImportedComplexType
+		//primitiveType=PrimitiveType | complexType=[ComplexType|QualifiedName] | importedComplexType=ImportedComplexType
 		public Alternatives getAlternatives_0() { return cAlternatives_0; }
 		
 		//primitiveType=PrimitiveType
@@ -829,11 +788,20 @@ public class DataDslGrammarAccess extends AbstractGrammarElementFinder {
 		//PrimitiveType
 		public RuleCall getPrimitiveTypePrimitiveTypeParserRuleCall_0_0_0() { return cPrimitiveTypePrimitiveTypeParserRuleCall_0_0_0; }
 		
-		//complexType=PossiblyImportedComplexType
+		//complexType=[ComplexType|QualifiedName]
 		public Assignment getComplexTypeAssignment_0_1() { return cComplexTypeAssignment_0_1; }
 		
-		//PossiblyImportedComplexType
-		public RuleCall getComplexTypePossiblyImportedComplexTypeParserRuleCall_0_1_0() { return cComplexTypePossiblyImportedComplexTypeParserRuleCall_0_1_0; }
+		//[ComplexType|QualifiedName]
+		public CrossReference getComplexTypeComplexTypeCrossReference_0_1_0() { return cComplexTypeComplexTypeCrossReference_0_1_0; }
+		
+		//QualifiedName
+		public RuleCall getComplexTypeComplexTypeQualifiedNameParserRuleCall_0_1_0_1() { return cComplexTypeComplexTypeQualifiedNameParserRuleCall_0_1_0_1; }
+		
+		//importedComplexType=ImportedComplexType
+		public Assignment getImportedComplexTypeAssignment_0_2() { return cImportedComplexTypeAssignment_0_2; }
+		
+		//ImportedComplexType
+		public RuleCall getImportedComplexTypeImportedComplexTypeParserRuleCall_0_2_0() { return cImportedComplexTypeImportedComplexTypeParserRuleCall_0_2_0; }
 		
 		//name=ID
 		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
@@ -876,48 +844,44 @@ public class DataDslGrammarAccess extends AbstractGrammarElementFinder {
 		//STRING
 		public RuleCall getStringValueSTRINGTerminalRuleCall_2_0() { return cStringValueSTRINGTerminalRuleCall_2_0; }
 	}
-	public class PossiblyImportedComplexTypeElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.fhdo.lemma.data.DataDsl.PossiblyImportedComplexType");
+	public class ImportedComplexTypeElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.fhdo.lemma.data.DataDsl.ImportedComplexType");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Group cGroup_0 = (Group)cGroup.eContents().get(0);
-		private final Assignment cImportAssignment_0_0 = (Assignment)cGroup_0.eContents().get(0);
-		private final CrossReference cImportComplexTypeImportCrossReference_0_0_0 = (CrossReference)cImportAssignment_0_0.eContents().get(0);
-		private final RuleCall cImportComplexTypeImportIDTerminalRuleCall_0_0_0_1 = (RuleCall)cImportComplexTypeImportCrossReference_0_0_0.eContents().get(1);
-		private final Keyword cColonColonKeyword_0_1 = (Keyword)cGroup_0.eContents().get(1);
-		private final Assignment cComplexTypeAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final CrossReference cComplexTypeComplexTypeCrossReference_1_0 = (CrossReference)cComplexTypeAssignment_1.eContents().get(0);
-		private final RuleCall cComplexTypeComplexTypeQualifiedNameParserRuleCall_1_0_1 = (RuleCall)cComplexTypeComplexTypeCrossReference_1_0.eContents().get(1);
+		private final Assignment cImportAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final CrossReference cImportComplexTypeImportCrossReference_0_0 = (CrossReference)cImportAssignment_0.eContents().get(0);
+		private final RuleCall cImportComplexTypeImportIDTerminalRuleCall_0_0_1 = (RuleCall)cImportComplexTypeImportCrossReference_0_0.eContents().get(1);
+		private final Keyword cColonColonKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cImportedTypeAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final CrossReference cImportedTypeTypeCrossReference_2_0 = (CrossReference)cImportedTypeAssignment_2.eContents().get(0);
+		private final RuleCall cImportedTypeTypeQualifiedNameParserRuleCall_2_0_1 = (RuleCall)cImportedTypeTypeCrossReference_2_0.eContents().get(1);
 		
-		//PossiblyImportedComplexType:
-		//	(^import=[ComplexTypeImport] '::')? complexType=[ComplexType|QualifiedName];
+		//ImportedComplexType:
+		//	^import=[ComplexTypeImport] '::' importedType=[Type|QualifiedName];
 		@Override public ParserRule getRule() { return rule; }
 		
-		//(^import=[ComplexTypeImport] '::')? complexType=[ComplexType|QualifiedName]
+		//^import=[ComplexTypeImport] '::' importedType=[Type|QualifiedName]
 		public Group getGroup() { return cGroup; }
 		
-		//(^import=[ComplexTypeImport] '::')?
-		public Group getGroup_0() { return cGroup_0; }
-		
 		//^import=[ComplexTypeImport]
-		public Assignment getImportAssignment_0_0() { return cImportAssignment_0_0; }
+		public Assignment getImportAssignment_0() { return cImportAssignment_0; }
 		
 		//[ComplexTypeImport]
-		public CrossReference getImportComplexTypeImportCrossReference_0_0_0() { return cImportComplexTypeImportCrossReference_0_0_0; }
+		public CrossReference getImportComplexTypeImportCrossReference_0_0() { return cImportComplexTypeImportCrossReference_0_0; }
 		
 		//ID
-		public RuleCall getImportComplexTypeImportIDTerminalRuleCall_0_0_0_1() { return cImportComplexTypeImportIDTerminalRuleCall_0_0_0_1; }
+		public RuleCall getImportComplexTypeImportIDTerminalRuleCall_0_0_1() { return cImportComplexTypeImportIDTerminalRuleCall_0_0_1; }
 		
 		//'::'
-		public Keyword getColonColonKeyword_0_1() { return cColonColonKeyword_0_1; }
+		public Keyword getColonColonKeyword_1() { return cColonColonKeyword_1; }
 		
-		//complexType=[ComplexType|QualifiedName]
-		public Assignment getComplexTypeAssignment_1() { return cComplexTypeAssignment_1; }
+		//importedType=[Type|QualifiedName]
+		public Assignment getImportedTypeAssignment_2() { return cImportedTypeAssignment_2; }
 		
-		//[ComplexType|QualifiedName]
-		public CrossReference getComplexTypeComplexTypeCrossReference_1_0() { return cComplexTypeComplexTypeCrossReference_1_0; }
+		//[Type|QualifiedName]
+		public CrossReference getImportedTypeTypeCrossReference_2_0() { return cImportedTypeTypeCrossReference_2_0; }
 		
 		//QualifiedName
-		public RuleCall getComplexTypeComplexTypeQualifiedNameParserRuleCall_1_0_1() { return cComplexTypeComplexTypeQualifiedNameParserRuleCall_1_0_1; }
+		public RuleCall getImportedTypeTypeQualifiedNameParserRuleCall_2_0_1() { return cImportedTypeTypeQualifiedNameParserRuleCall_2_0_1; }
 	}
 	public class PrimitiveTypeElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.fhdo.lemma.data.DataDsl.PrimitiveType");
@@ -1112,7 +1076,7 @@ public class DataDslGrammarAccess extends AbstractGrammarElementFinder {
 	private final DataOperationElements pDataOperation;
 	private final DataOperationParameterElements pDataOperationParameter;
 	private final PrimitiveValueElements pPrimitiveValue;
-	private final PossiblyImportedComplexTypeElements pPossiblyImportedComplexType;
+	private final ImportedComplexTypeElements pImportedComplexType;
 	private final PrimitiveTypeElements pPrimitiveType;
 	private final QualifiedNameElements pQualifiedName;
 	private final TerminalRule tBIG_DECIMAL;
@@ -1141,7 +1105,7 @@ public class DataDslGrammarAccess extends AbstractGrammarElementFinder {
 		this.pDataOperation = new DataOperationElements();
 		this.pDataOperationParameter = new DataOperationParameterElements();
 		this.pPrimitiveValue = new PrimitiveValueElements();
-		this.pPossiblyImportedComplexType = new PossiblyImportedComplexTypeElements();
+		this.pImportedComplexType = new ImportedComplexTypeElements();
 		this.pPrimitiveType = new PrimitiveTypeElements();
 		this.pQualifiedName = new QualifiedNameElements();
 		this.tBIG_DECIMAL = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "de.fhdo.lemma.data.DataDsl.BIG_DECIMAL");
@@ -1185,11 +1149,7 @@ public class DataDslGrammarAccess extends AbstractGrammarElementFinder {
 		return getDataModelAccess().getRule();
 	}
 	
-	///* For debugging purposes to test the type checker. May be safely removed in the future. */ /*AssignTest:
-	//    (target=PossiblyImportedComplexType)
-	//    '='
-	//    (source=PossiblyImportedComplexType)
-	//;*/ ComplexTypeImport:
+	//ComplexTypeImport:
 	//	'import' 'datatypes' 'from' importURI=STRING 'as' name=ID;
 	public ComplexTypeImportElements getComplexTypeImportAccess() {
 		return pComplexTypeImport;
@@ -1233,12 +1193,8 @@ public class DataDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//DataStructure:
-	//	'structure' name=ID ('extends' super=[DataStructure|QualifiedName])? '{' (dataFields+=DataField (','
-	//	dataFields+=DataField)*
-	//	| operations+=DataOperation (',' operations+=DataOperation)*
-	//	| dataFields+=DataField (',' dataFields+=DataField)*
-	//	','
-	//	operations+=DataOperation (',' operations+=DataOperation)*)?
+	//	'structure' name=ID ('extends' super=[DataStructure|QualifiedName])? '{' ((dataFields+=DataField |
+	//	operations+=DataOperation) (',' (dataFields+=DataField | operations+=DataOperation))*)?
 	//	'}';
 	public DataStructureElements getDataStructureAccess() {
 		return pDataStructure;
@@ -1275,7 +1231,8 @@ public class DataDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//DataField:
-	//	^hidden?='hide'? (primitiveType=PrimitiveType | complexType=PossiblyImportedComplexType)?
+	//	^hidden?='hide'? (primitiveType=PrimitiveType | complexType=[ComplexType|QualifiedName] |
+	//	importedComplexType=ImportedComplexType)?
 	//	name=ID ('<'
 	//	features+=FieldFeature (',' features+=FieldFeature)*
 	//	'>')?;
@@ -1311,8 +1268,9 @@ public class DataDslGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//DataOperation:
 	//	^hidden?='hide'? (hasNoReturnType?='procedure' |
-	//	'function' (primitiveReturnType=PrimitiveType | complexReturnType=PossiblyImportedComplexType)?) name=ID ('('
-	//	parameters+=DataOperationParameter? (',' parameters+=DataOperationParameter)* ')')?;
+	//	'function' (primitiveReturnType=PrimitiveType | complexReturnType=[ComplexType|QualifiedName] |
+	//	importedComplexReturnType=ImportedComplexType)?) name=ID ('(' parameters+=DataOperationParameter? (','
+	//	parameters+=DataOperationParameter)* ')')?;
 	public DataOperationElements getDataOperationAccess() {
 		return pDataOperation;
 	}
@@ -1322,7 +1280,8 @@ public class DataDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//DataOperationParameter:
-	//	(primitiveType=PrimitiveType | complexType=PossiblyImportedComplexType) name=ID;
+	//	(primitiveType=PrimitiveType | complexType=[ComplexType|QualifiedName] | importedComplexType=ImportedComplexType)
+	//	name=ID;
 	public DataOperationParameterElements getDataOperationParameterAccess() {
 		return pDataOperationParameter;
 	}
@@ -1341,14 +1300,14 @@ public class DataDslGrammarAccess extends AbstractGrammarElementFinder {
 		return getPrimitiveValueAccess().getRule();
 	}
 	
-	//PossiblyImportedComplexType:
-	//	(^import=[ComplexTypeImport] '::')? complexType=[ComplexType|QualifiedName];
-	public PossiblyImportedComplexTypeElements getPossiblyImportedComplexTypeAccess() {
-		return pPossiblyImportedComplexType;
+	//ImportedComplexType:
+	//	^import=[ComplexTypeImport] '::' importedType=[Type|QualifiedName];
+	public ImportedComplexTypeElements getImportedComplexTypeAccess() {
+		return pImportedComplexType;
 	}
 	
-	public ParserRule getPossiblyImportedComplexTypeRule() {
-		return getPossiblyImportedComplexTypeAccess().getRule();
+	public ParserRule getImportedComplexTypeRule() {
+		return getImportedComplexTypeAccess().getRule();
 	}
 	
 	//PrimitiveType:

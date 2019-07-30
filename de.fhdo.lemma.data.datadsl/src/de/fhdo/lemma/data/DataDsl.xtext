@@ -10,17 +10,7 @@ import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 DataModel returns DataModel:
     complexTypeImports+=ComplexTypeImport*
     (versions+=Version+ | contexts+=Context+ | complexTypes+=ComplexType+)
-
-    /* For debugging purposes to test the type checker. May be safely removed in the future. */
-    //(assignTests+=AssignTest)*
 ;
-
-/* For debugging purposes to test the type checker. May be safely removed in the future. */
-/*AssignTest:
-    (target=PossiblyImportedComplexType)
-    '='
-    (source=PossiblyImportedComplexType)
-;*/
 
 ComplexTypeImport returns ComplexTypeImport:
     'import' 'datatypes' 'from' importURI=STRING 'as' name=ID
@@ -45,15 +35,8 @@ ComplexType returns ComplexType:
 DataStructure returns DataStructure:
     'structure' name=ID ('extends' super=[DataStructure|QualifiedName])? '{'
         (
-            dataFields+=DataField (',' dataFields+=DataField)*
-            |
-            operations+=DataOperation (',' operations+=DataOperation)*
-            |
-            (
-                dataFields+=DataField (',' dataFields+=DataField)*
-                ','
-                operations+=DataOperation (',' operations+=DataOperation)*
-            )
+            (dataFields+=DataField | operations+=DataOperation)
+            (',' (dataFields+=DataField | operations+=DataOperation))*
         )?
     '}'
 ;
@@ -74,7 +57,11 @@ enum FieldFeature returns FieldFeature:
 
 DataField returns DataField:
     ^hidden?='hide'?
-    (primitiveType=PrimitiveType | complexType=PossiblyImportedComplexType)?
+    (
+        primitiveType=PrimitiveType |
+        complexType=[ComplexType|QualifiedName] |
+        importedComplexType=ImportedComplexType
+    )?
     name=ID
     ('<'
         features+=FieldFeature (',' features+=FieldFeature)*
@@ -98,7 +85,8 @@ DataOperation returns DataOperation:
         'function'
             (
                 primitiveReturnType=PrimitiveType |
-                complexReturnType=PossiblyImportedComplexType
+                complexReturnType=[ComplexType|QualifiedName] |
+                importedComplexReturnType=ImportedComplexType
             )?
     )
     name=ID
@@ -106,7 +94,11 @@ DataOperation returns DataOperation:
 ;
 
 DataOperationParameter returns DataOperationParameter:
-    (primitiveType=PrimitiveType | complexType=PossiblyImportedComplexType)
+    (
+        primitiveType=PrimitiveType |
+        complexType=[ComplexType|QualifiedName] |
+        importedComplexType=ImportedComplexType
+    )
     name=ID
 ;
 
@@ -114,8 +106,8 @@ PrimitiveValue returns PrimitiveValue:
     numericValue=BIG_DECIMAL | booleanValue=BOOLEAN | stringValue=STRING
 ;
 
-PossiblyImportedComplexType returns PossiblyImportedComplexType:
-    (^import=[ComplexTypeImport] '::')? complexType=[ComplexType|QualifiedName]
+ImportedComplexType returns ImportedComplexType:
+    ^import=[ComplexTypeImport] '::' importedType=[Type|QualifiedName]
 ;
 
 PrimitiveType returns PrimitiveType:

@@ -51,12 +51,6 @@ class DataModel {
     }
 }
 
-/* For debugging purposes to test the type checker. May be safely removed in the future. */
-/*class AssignTest {
-    contains PossiblyImportedComplexType[0..1] source
-    contains PossiblyImportedComplexType[0..1] target
-}*/
-
 /**
  * Represents the import of ComplexType from other DataModel instances
  */
@@ -519,17 +513,15 @@ abstract class ComplexType extends Type {
 }
 
 /**
- * Represents a complex type that may be imported from another data model. In fact, this is used by
- * the DSL for referring to complex types in data fields to allow field-typing with imported data
- * structures and lists.
+ * Represents a complex type that is imported from another data model
  */
-class PossiblyImportedComplexType {
+class ImportedComplexType {
     refers ComplexTypeImport ^import
-    refers ComplexType complexType
+    refers Type importedType
 
-    container DataField dataField opposite complexType
-    container DataOperation operation opposite complexReturnType
-    container DataOperationParameter parameter opposite complexType
+    container DataField dataField opposite importedComplexType
+    container DataOperation operation opposite importedComplexReturnType
+    container DataOperationParameter parameter opposite importedComplexType
 }
 
 /*
@@ -716,8 +708,9 @@ class DataOperation {
     String name
     boolean hidden
     boolean hasNoReturnType
+    refers ComplexType[0..1] complexReturnType
 
-    contains PossiblyImportedComplexType[0..1] complexReturnType opposite operation
+    contains ImportedComplexType[0..1] importedComplexReturnType opposite operation
     contains PrimitiveType[0..1] primitiveReturnType
     contains DataOperationParameter[] parameters opposite operation
 
@@ -801,8 +794,10 @@ class DataOperation {
     op Type getPrimitiveOrComplexReturnType() {
         return if (primitiveReturnType !== null)
             primitiveReturnType
-        else if (complexReturnType !== null && complexReturnType.complexType !== null)
-            complexReturnType.complexType
+        else if (complexReturnType !== null)
+            complexReturnType
+        else if (importedComplexReturnType !== null)
+            importedComplexReturnType.importedType
         else
             null
     }
@@ -820,8 +815,9 @@ class DataOperationParameter {
      */
 
     String name
+    refers ComplexType[0..1] complexType
 
-    contains PossiblyImportedComplexType[0..1] complexType opposite parameter
+    contains ImportedComplexType[0..1] importedComplexType opposite parameter
     contains PrimitiveType[0..1] primitiveType
 
     container DataOperation operation opposite parameters
@@ -858,12 +854,14 @@ class DataOperationParameter {
      * Get effective type of parameter, i.e., the primitive or imported type (null otherwise)
      */
     op Type getEffectiveType() {
-        if (primitiveType !== null)
-            return primitiveType
-        else if (complexType !== null && complexType.complexType !== null)
-            return complexType.complexType
+        return if (primitiveType !== null)
+            primitiveType
+        else if (complexType !== null)
+            complexType
+        else if (importedComplexType !== null)
+            importedComplexType.importedType
         else
-            return null
+            null
     }
 }
 
@@ -948,8 +946,9 @@ class DataField {
 
     String name
     boolean hidden
+    refers ComplexType[0..1] complexType
 
-    contains PossiblyImportedComplexType[0..1] complexType opposite dataField
+    contains ImportedComplexType[0..1] importedComplexType opposite dataField
     contains PrimitiveType[0..1] primitiveType
     FieldFeature[] features
 
@@ -960,12 +959,14 @@ class DataField {
      * Get the effective type (complex type, possibly imported, or primitive type) of the field
      */
     op Type getEffectiveType() {
-        if (complexType !== null)
-            return complexType.complexType
-        else if (primitiveType !== null)
-            return primitiveType
+        return if (primitiveType !== null)
+            primitiveType
+        else if (complexType !== null)
+            complexType
+        else if (importedComplexType !== null)
+            importedComplexType.importedType
         else
-            return null
+            null
     }
 
     /**

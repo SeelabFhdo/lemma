@@ -269,14 +269,14 @@ public interface MappingPackage extends EPackage {
     int COMPLEX_TYPE_MAPPING_OPERATION_COUNT = 3;
 
     /**
-     * The meta object id for the '{@link de.fhdo.lemma.technology.mapping.impl.ImportedComplexTypeImpl <em>Imported Complex Type</em>}' class.
+     * The meta object id for the '{@link de.fhdo.lemma.technology.mapping.impl.ImportedComplexTypeToMapImpl <em>Imported Complex Type To Map</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.fhdo.lemma.technology.mapping.impl.ImportedComplexTypeImpl
-     * @see de.fhdo.lemma.technology.mapping.impl.MappingPackageImpl#getImportedComplexType()
+     * @see de.fhdo.lemma.technology.mapping.impl.ImportedComplexTypeToMapImpl
+     * @see de.fhdo.lemma.technology.mapping.impl.MappingPackageImpl#getImportedComplexTypeToMap()
      * @generated
      */
-    int IMPORTED_COMPLEX_TYPE = 2;
+    int IMPORTED_COMPLEX_TYPE_TO_MAP = 2;
 
     /**
      * The feature id for the '<em><b>Service Model Import</b></em>' reference.
@@ -285,7 +285,7 @@ public interface MappingPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int IMPORTED_COMPLEX_TYPE__SERVICE_MODEL_IMPORT = 0;
+    int IMPORTED_COMPLEX_TYPE_TO_MAP__SERVICE_MODEL_IMPORT = 0;
 
     /**
      * The feature id for the '<em><b>Data Model Import</b></em>' reference.
@@ -294,7 +294,7 @@ public interface MappingPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int IMPORTED_COMPLEX_TYPE__DATA_MODEL_IMPORT = 1;
+    int IMPORTED_COMPLEX_TYPE_TO_MAP__DATA_MODEL_IMPORT = 1;
 
     /**
      * The feature id for the '<em><b>Type</b></em>' reference.
@@ -303,7 +303,7 @@ public interface MappingPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int IMPORTED_COMPLEX_TYPE__TYPE = 2;
+    int IMPORTED_COMPLEX_TYPE_TO_MAP__TYPE = 2;
 
     /**
      * The feature id for the '<em><b>Type Mapping</b></em>' container reference.
@@ -312,25 +312,25 @@ public interface MappingPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int IMPORTED_COMPLEX_TYPE__TYPE_MAPPING = 3;
+    int IMPORTED_COMPLEX_TYPE_TO_MAP__TYPE_MAPPING = 3;
 
     /**
-     * The number of structural features of the '<em>Imported Complex Type</em>' class.
+     * The number of structural features of the '<em>Imported Complex Type To Map</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int IMPORTED_COMPLEX_TYPE_FEATURE_COUNT = 4;
+    int IMPORTED_COMPLEX_TYPE_TO_MAP_FEATURE_COUNT = 4;
 
     /**
-     * The number of operations of the '<em>Imported Complex Type</em>' class.
+     * The number of operations of the '<em>Imported Complex Type To Map</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int IMPORTED_COMPLEX_TYPE_OPERATION_COUNT = 0;
+    int IMPORTED_COMPLEX_TYPE_TO_MAP_OPERATION_COUNT = 0;
 
     /**
      * The meta object id for the '{@link de.fhdo.lemma.technology.mapping.impl.MicroserviceMappingImpl <em>Microservice Mapping</em>}' class.
@@ -1774,58 +1774,58 @@ public interface MappingPackage extends EPackage {
     EOperation getComplexTypeMapping__GetTypeDefinitionTechnology();
 
     /**
-     * Returns the meta object for class '{@link de.fhdo.lemma.technology.mapping.ImportedComplexType <em>Imported Complex Type</em>}'.
+     * Returns the meta object for class '{@link de.fhdo.lemma.technology.mapping.ImportedComplexTypeToMap <em>Imported Complex Type To Map</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Imported Complex Type</em>'.
-     * @see de.fhdo.lemma.technology.mapping.ImportedComplexType
+     * @return the meta object for class '<em>Imported Complex Type To Map</em>'.
+     * @see de.fhdo.lemma.technology.mapping.ImportedComplexTypeToMap
      * @generated
      */
-    EClass getImportedComplexType();
+    EClass getImportedComplexTypeToMap();
 
     /**
-     * Returns the meta object for the reference '{@link de.fhdo.lemma.technology.mapping.ImportedComplexType#getServiceModelImport <em>Service Model Import</em>}'.
+     * Returns the meta object for the reference '{@link de.fhdo.lemma.technology.mapping.ImportedComplexTypeToMap#getServiceModelImport <em>Service Model Import</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the reference '<em>Service Model Import</em>'.
-     * @see de.fhdo.lemma.technology.mapping.ImportedComplexType#getServiceModelImport()
-     * @see #getImportedComplexType()
+     * @see de.fhdo.lemma.technology.mapping.ImportedComplexTypeToMap#getServiceModelImport()
+     * @see #getImportedComplexTypeToMap()
      * @generated
      */
-    EReference getImportedComplexType_ServiceModelImport();
+    EReference getImportedComplexTypeToMap_ServiceModelImport();
 
     /**
-     * Returns the meta object for the reference '{@link de.fhdo.lemma.technology.mapping.ImportedComplexType#getDataModelImport <em>Data Model Import</em>}'.
+     * Returns the meta object for the reference '{@link de.fhdo.lemma.technology.mapping.ImportedComplexTypeToMap#getDataModelImport <em>Data Model Import</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the reference '<em>Data Model Import</em>'.
-     * @see de.fhdo.lemma.technology.mapping.ImportedComplexType#getDataModelImport()
-     * @see #getImportedComplexType()
+     * @see de.fhdo.lemma.technology.mapping.ImportedComplexTypeToMap#getDataModelImport()
+     * @see #getImportedComplexTypeToMap()
      * @generated
      */
-    EReference getImportedComplexType_DataModelImport();
+    EReference getImportedComplexTypeToMap_DataModelImport();
 
     /**
-     * Returns the meta object for the reference '{@link de.fhdo.lemma.technology.mapping.ImportedComplexType#getType <em>Type</em>}'.
+     * Returns the meta object for the reference '{@link de.fhdo.lemma.technology.mapping.ImportedComplexTypeToMap#getType <em>Type</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the reference '<em>Type</em>'.
-     * @see de.fhdo.lemma.technology.mapping.ImportedComplexType#getType()
-     * @see #getImportedComplexType()
+     * @see de.fhdo.lemma.technology.mapping.ImportedComplexTypeToMap#getType()
+     * @see #getImportedComplexTypeToMap()
      * @generated
      */
-    EReference getImportedComplexType_Type();
+    EReference getImportedComplexTypeToMap_Type();
 
     /**
-     * Returns the meta object for the container reference '{@link de.fhdo.lemma.technology.mapping.ImportedComplexType#getTypeMapping <em>Type Mapping</em>}'.
+     * Returns the meta object for the container reference '{@link de.fhdo.lemma.technology.mapping.ImportedComplexTypeToMap#getTypeMapping <em>Type Mapping</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the container reference '<em>Type Mapping</em>'.
-     * @see de.fhdo.lemma.technology.mapping.ImportedComplexType#getTypeMapping()
-     * @see #getImportedComplexType()
+     * @see de.fhdo.lemma.technology.mapping.ImportedComplexTypeToMap#getTypeMapping()
+     * @see #getImportedComplexTypeToMap()
      * @generated
      */
-    EReference getImportedComplexType_TypeMapping();
+    EReference getImportedComplexTypeToMap_TypeMapping();
 
     /**
      * Returns the meta object for class '{@link de.fhdo.lemma.technology.mapping.MicroserviceMapping <em>Microservice Mapping</em>}'.
@@ -3088,14 +3088,14 @@ public interface MappingPackage extends EPackage {
         EOperation COMPLEX_TYPE_MAPPING___GET_TYPE_DEFINITION_TECHNOLOGY = eINSTANCE.getComplexTypeMapping__GetTypeDefinitionTechnology();
 
         /**
-         * The meta object literal for the '{@link de.fhdo.lemma.technology.mapping.impl.ImportedComplexTypeImpl <em>Imported Complex Type</em>}' class.
+         * The meta object literal for the '{@link de.fhdo.lemma.technology.mapping.impl.ImportedComplexTypeToMapImpl <em>Imported Complex Type To Map</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see de.fhdo.lemma.technology.mapping.impl.ImportedComplexTypeImpl
-         * @see de.fhdo.lemma.technology.mapping.impl.MappingPackageImpl#getImportedComplexType()
+         * @see de.fhdo.lemma.technology.mapping.impl.ImportedComplexTypeToMapImpl
+         * @see de.fhdo.lemma.technology.mapping.impl.MappingPackageImpl#getImportedComplexTypeToMap()
          * @generated
          */
-        EClass IMPORTED_COMPLEX_TYPE = eINSTANCE.getImportedComplexType();
+        EClass IMPORTED_COMPLEX_TYPE_TO_MAP = eINSTANCE.getImportedComplexTypeToMap();
 
         /**
          * The meta object literal for the '<em><b>Service Model Import</b></em>' reference feature.
@@ -3103,7 +3103,7 @@ public interface MappingPackage extends EPackage {
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference IMPORTED_COMPLEX_TYPE__SERVICE_MODEL_IMPORT = eINSTANCE.getImportedComplexType_ServiceModelImport();
+        EReference IMPORTED_COMPLEX_TYPE_TO_MAP__SERVICE_MODEL_IMPORT = eINSTANCE.getImportedComplexTypeToMap_ServiceModelImport();
 
         /**
          * The meta object literal for the '<em><b>Data Model Import</b></em>' reference feature.
@@ -3111,7 +3111,7 @@ public interface MappingPackage extends EPackage {
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference IMPORTED_COMPLEX_TYPE__DATA_MODEL_IMPORT = eINSTANCE.getImportedComplexType_DataModelImport();
+        EReference IMPORTED_COMPLEX_TYPE_TO_MAP__DATA_MODEL_IMPORT = eINSTANCE.getImportedComplexTypeToMap_DataModelImport();
 
         /**
          * The meta object literal for the '<em><b>Type</b></em>' reference feature.
@@ -3119,7 +3119,7 @@ public interface MappingPackage extends EPackage {
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference IMPORTED_COMPLEX_TYPE__TYPE = eINSTANCE.getImportedComplexType_Type();
+        EReference IMPORTED_COMPLEX_TYPE_TO_MAP__TYPE = eINSTANCE.getImportedComplexTypeToMap_Type();
 
         /**
          * The meta object literal for the '<em><b>Type Mapping</b></em>' container reference feature.
@@ -3127,7 +3127,7 @@ public interface MappingPackage extends EPackage {
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference IMPORTED_COMPLEX_TYPE__TYPE_MAPPING = eINSTANCE.getImportedComplexType_TypeMapping();
+        EReference IMPORTED_COMPLEX_TYPE_TO_MAP__TYPE_MAPPING = eINSTANCE.getImportedComplexTypeToMap_TypeMapping();
 
         /**
          * The meta object literal for the '{@link de.fhdo.lemma.technology.mapping.impl.MicroserviceMappingImpl <em>Microservice Mapping</em>}' class.

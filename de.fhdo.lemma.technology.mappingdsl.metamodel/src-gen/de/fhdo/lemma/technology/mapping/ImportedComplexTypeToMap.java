@@ -10,29 +10,29 @@ import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Imported Complex Type</b></em>'.
+ * A representation of the model object '<em><b>Imported Complex Type To Map</b></em>'.
  * <!-- end-user-doc -->
  *
  * <!-- begin-model-doc -->
  * *
- * Represents an imported complex type
+ * Represents an imported complex type that shall be mapped
  * <!-- end-model-doc -->
  *
  * <p>
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link de.fhdo.lemma.technology.mapping.ImportedComplexType#getServiceModelImport <em>Service Model Import</em>}</li>
- *   <li>{@link de.fhdo.lemma.technology.mapping.ImportedComplexType#getDataModelImport <em>Data Model Import</em>}</li>
- *   <li>{@link de.fhdo.lemma.technology.mapping.ImportedComplexType#getType <em>Type</em>}</li>
- *   <li>{@link de.fhdo.lemma.technology.mapping.ImportedComplexType#getTypeMapping <em>Type Mapping</em>}</li>
+ *   <li>{@link de.fhdo.lemma.technology.mapping.ImportedComplexTypeToMap#getServiceModelImport <em>Service Model Import</em>}</li>
+ *   <li>{@link de.fhdo.lemma.technology.mapping.ImportedComplexTypeToMap#getDataModelImport <em>Data Model Import</em>}</li>
+ *   <li>{@link de.fhdo.lemma.technology.mapping.ImportedComplexTypeToMap#getType <em>Type</em>}</li>
+ *   <li>{@link de.fhdo.lemma.technology.mapping.ImportedComplexTypeToMap#getTypeMapping <em>Type Mapping</em>}</li>
  * </ul>
  *
- * @see de.fhdo.lemma.technology.mapping.MappingPackage#getImportedComplexType()
+ * @see de.fhdo.lemma.technology.mapping.MappingPackage#getImportedComplexTypeToMap()
  * @model
  * @generated
  */
-public interface ImportedComplexType extends EObject {
+public interface ImportedComplexTypeToMap extends EObject {
     /**
      * Returns the value of the '<em><b>Service Model Import</b></em>' reference.
      * <!-- begin-user-doc -->
@@ -43,14 +43,14 @@ public interface ImportedComplexType extends EObject {
      * <!-- end-user-doc -->
      * @return the value of the '<em>Service Model Import</em>' reference.
      * @see #setServiceModelImport(Import)
-     * @see de.fhdo.lemma.technology.mapping.MappingPackage#getImportedComplexType_ServiceModelImport()
+     * @see de.fhdo.lemma.technology.mapping.MappingPackage#getImportedComplexTypeToMap_ServiceModelImport()
      * @model
      * @generated
      */
     Import getServiceModelImport();
 
     /**
-     * Sets the value of the '{@link de.fhdo.lemma.technology.mapping.ImportedComplexType#getServiceModelImport <em>Service Model Import</em>}' reference.
+     * Sets the value of the '{@link de.fhdo.lemma.technology.mapping.ImportedComplexTypeToMap#getServiceModelImport <em>Service Model Import</em>}' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @param value the new value of the '<em>Service Model Import</em>' reference.
@@ -69,14 +69,14 @@ public interface ImportedComplexType extends EObject {
      * <!-- end-user-doc -->
      * @return the value of the '<em>Data Model Import</em>' reference.
      * @see #setDataModelImport(Import)
-     * @see de.fhdo.lemma.technology.mapping.MappingPackage#getImportedComplexType_DataModelImport()
+     * @see de.fhdo.lemma.technology.mapping.MappingPackage#getImportedComplexTypeToMap_DataModelImport()
      * @model
      * @generated
      */
     Import getDataModelImport();
 
     /**
-     * Sets the value of the '{@link de.fhdo.lemma.technology.mapping.ImportedComplexType#getDataModelImport <em>Data Model Import</em>}' reference.
+     * Sets the value of the '{@link de.fhdo.lemma.technology.mapping.ImportedComplexTypeToMap#getDataModelImport <em>Data Model Import</em>}' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @param value the new value of the '<em>Data Model Import</em>' reference.
@@ -95,14 +95,14 @@ public interface ImportedComplexType extends EObject {
      * <!-- end-user-doc -->
      * @return the value of the '<em>Type</em>' reference.
      * @see #setType(ComplexType)
-     * @see de.fhdo.lemma.technology.mapping.MappingPackage#getImportedComplexType_Type()
+     * @see de.fhdo.lemma.technology.mapping.MappingPackage#getImportedComplexTypeToMap_Type()
      * @model
      * @generated
      */
     ComplexType getType();
 
     /**
-     * Sets the value of the '{@link de.fhdo.lemma.technology.mapping.ImportedComplexType#getType <em>Type</em>}' reference.
+     * Sets the value of the '{@link de.fhdo.lemma.technology.mapping.ImportedComplexTypeToMap#getType <em>Type</em>}' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @param value the new value of the '<em>Type</em>' reference.
@@ -122,7 +122,7 @@ public interface ImportedComplexType extends EObject {
      * <!-- end-user-doc -->
      * @return the value of the '<em>Type Mapping</em>' container reference.
      * @see #setTypeMapping(ComplexTypeMapping)
-     * @see de.fhdo.lemma.technology.mapping.MappingPackage#getImportedComplexType_TypeMapping()
+     * @see de.fhdo.lemma.technology.mapping.MappingPackage#getImportedComplexTypeToMap_TypeMapping()
      * @see de.fhdo.lemma.technology.mapping.ComplexTypeMapping#getType
      * @model opposite="type" transient="false"
      * @generated
@@ -130,7 +130,7 @@ public interface ImportedComplexType extends EObject {
     ComplexTypeMapping getTypeMapping();
 
     /**
-     * Sets the value of the '{@link de.fhdo.lemma.technology.mapping.ImportedComplexType#getTypeMapping <em>Type Mapping</em>}' container reference.
+     * Sets the value of the '{@link de.fhdo.lemma.technology.mapping.ImportedComplexTypeToMap#getTypeMapping <em>Type Mapping</em>}' container reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @param value the new value of the '<em>Type Mapping</em>' container reference.
@@ -139,4 +139,4 @@ public interface ImportedComplexType extends EObject {
      */
     void setTypeMapping(ComplexTypeMapping value);
 
-} // ImportedComplexType
+} // ImportedComplexTypeToMap

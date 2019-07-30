@@ -76,8 +76,8 @@ public class MappingAdapterFactory extends AdapterFactoryImpl {
                 return createComplexTypeMappingAdapter();
             }
             @Override
-            public Adapter caseImportedComplexType(ImportedComplexType object) {
-                return createImportedComplexTypeAdapter();
+            public Adapter caseImportedComplexTypeToMap(ImportedComplexTypeToMap object) {
+                return createImportedComplexTypeToMapAdapter();
             }
             @Override
             public Adapter caseMicroserviceMapping(MicroserviceMapping object) {
@@ -188,16 +188,16 @@ public class MappingAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link de.fhdo.lemma.technology.mapping.ImportedComplexType <em>Imported Complex Type</em>}'.
+     * Creates a new adapter for an object of class '{@link de.fhdo.lemma.technology.mapping.ImportedComplexTypeToMap <em>Imported Complex Type To Map</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see de.fhdo.lemma.technology.mapping.ImportedComplexType
+     * @see de.fhdo.lemma.technology.mapping.ImportedComplexTypeToMap
      * @generated
      */
-    public Adapter createImportedComplexTypeAdapter() {
+    public Adapter createImportedComplexTypeToMapAdapter() {
         return null;
     }
 

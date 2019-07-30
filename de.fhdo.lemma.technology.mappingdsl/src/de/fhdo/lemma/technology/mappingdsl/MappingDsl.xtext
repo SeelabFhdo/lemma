@@ -20,7 +20,7 @@ enum ImportType returns service::ImportType:
 
 ComplexTypeMapping returns ComplexTypeMapping:
     (technologyReferences+=TechnologyReference)*
-    'type' type=ImportedComplexType '{'
+    'type' type=ImportedComplexTypeToMap '{'
         ('aspects' '{'
             aspects+=TechnologySpecificImportedServiceAspect+
         '}')?
@@ -30,7 +30,7 @@ ComplexTypeMapping returns ComplexTypeMapping:
     '}'
 ;
 
-ImportedComplexType:
+ImportedComplexTypeToMap returns ImportedComplexTypeToMap:
     serviceModelImport=[service::Import] '::'
     dataModelImport=[service::Import] '::'
     type=[data::ComplexType|QualifiedName]

@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.fhdo.lemma.data.DataField#getName <em>Name</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.DataField#isHidden <em>Hidden</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.DataField#getComplexType <em>Complex Type</em>}</li>
+ *   <li>{@link de.fhdo.lemma.data.DataField#getImportedComplexType <em>Imported Complex Type</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.DataField#getPrimitiveType <em>Primitive Type</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.DataField#getFeatures <em>Features</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.DataField#getDataStructure <em>Data Structure</em>}</li>
@@ -101,32 +102,58 @@ public interface DataField extends EObject {
     void setHidden(boolean value);
 
     /**
-     * Returns the value of the '<em><b>Complex Type</b></em>' containment reference.
-     * It is bidirectional and its opposite is '{@link de.fhdo.lemma.data.PossiblyImportedComplexType#getDataField <em>Data Field</em>}'.
+     * Returns the value of the '<em><b>Complex Type</b></em>' reference.
      * <!-- begin-user-doc -->
      * <p>
-     * If the meaning of the '<em>Complex Type</em>' containment reference isn't clear,
+     * If the meaning of the '<em>Complex Type</em>' reference isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Complex Type</em>' containment reference.
-     * @see #setComplexType(PossiblyImportedComplexType)
+     * @return the value of the '<em>Complex Type</em>' reference.
+     * @see #setComplexType(ComplexType)
      * @see de.fhdo.lemma.data.DataPackage#getDataField_ComplexType()
-     * @see de.fhdo.lemma.data.PossiblyImportedComplexType#getDataField
-     * @model opposite="dataField" containment="true"
+     * @model
      * @generated
      */
-    PossiblyImportedComplexType getComplexType();
+    ComplexType getComplexType();
 
     /**
-     * Sets the value of the '{@link de.fhdo.lemma.data.DataField#getComplexType <em>Complex Type</em>}' containment reference.
+     * Sets the value of the '{@link de.fhdo.lemma.data.DataField#getComplexType <em>Complex Type</em>}' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Complex Type</em>' containment reference.
+     * @param value the new value of the '<em>Complex Type</em>' reference.
      * @see #getComplexType()
      * @generated
      */
-    void setComplexType(PossiblyImportedComplexType value);
+    void setComplexType(ComplexType value);
+
+    /**
+     * Returns the value of the '<em><b>Imported Complex Type</b></em>' containment reference.
+     * It is bidirectional and its opposite is '{@link de.fhdo.lemma.data.ImportedComplexType#getDataField <em>Data Field</em>}'.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Imported Complex Type</em>' containment reference isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Imported Complex Type</em>' containment reference.
+     * @see #setImportedComplexType(ImportedComplexType)
+     * @see de.fhdo.lemma.data.DataPackage#getDataField_ImportedComplexType()
+     * @see de.fhdo.lemma.data.ImportedComplexType#getDataField
+     * @model opposite="dataField" containment="true"
+     * @generated
+     */
+    ImportedComplexType getImportedComplexType();
+
+    /**
+     * Sets the value of the '{@link de.fhdo.lemma.data.DataField#getImportedComplexType <em>Imported Complex Type</em>}' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Imported Complex Type</em>' containment reference.
+     * @see #getImportedComplexType()
+     * @generated
+     */
+    void setImportedComplexType(ImportedComplexType value);
 
     /**
      * Returns the value of the '<em><b>Primitive Type</b></em>' containment reference.

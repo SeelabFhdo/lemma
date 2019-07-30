@@ -78,9 +78,9 @@ public class MappingSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case MappingPackage.IMPORTED_COMPLEX_TYPE: {
-                ImportedComplexType importedComplexType = (ImportedComplexType)theEObject;
-                T result = caseImportedComplexType(importedComplexType);
+            case MappingPackage.IMPORTED_COMPLEX_TYPE_TO_MAP: {
+                ImportedComplexTypeToMap importedComplexTypeToMap = (ImportedComplexTypeToMap)theEObject;
+                T result = caseImportedComplexTypeToMap(importedComplexTypeToMap);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -211,17 +211,17 @@ public class MappingSwitch<T> extends Switch<T> {
     }
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>Imported Complex Type</em>'.
+     * Returns the result of interpreting the object as an instance of '<em>Imported Complex Type To Map</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
      * returning a non-null result will terminate the switch.
      * <!-- end-user-doc -->
      * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Imported Complex Type</em>'.
+     * @return the result of interpreting the object as an instance of '<em>Imported Complex Type To Map</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-    public T caseImportedComplexType(ImportedComplexType object) {
+    public T caseImportedComplexTypeToMap(ImportedComplexTypeToMap object) {
         return null;
     }
 

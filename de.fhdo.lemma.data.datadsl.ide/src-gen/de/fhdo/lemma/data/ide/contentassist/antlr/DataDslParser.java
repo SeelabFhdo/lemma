@@ -34,7 +34,8 @@ public class DataDslParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getDataModelAccess().getAlternatives_1(), "rule__DataModel__Alternatives_1");
 			builder.put(grammarAccess.getVersionAccess().getAlternatives_3(), "rule__Version__Alternatives_3");
 			builder.put(grammarAccess.getComplexTypeAccess().getAlternatives(), "rule__ComplexType__Alternatives");
-			builder.put(grammarAccess.getDataStructureAccess().getAlternatives_4(), "rule__DataStructure__Alternatives_4");
+			builder.put(grammarAccess.getDataStructureAccess().getAlternatives_4_0(), "rule__DataStructure__Alternatives_4_0");
+			builder.put(grammarAccess.getDataStructureAccess().getAlternatives_4_1_1(), "rule__DataStructure__Alternatives_4_1_1");
 			builder.put(grammarAccess.getListTypeAccess().getAlternatives(), "rule__ListType__Alternatives");
 			builder.put(grammarAccess.getDataFieldAccess().getAlternatives_1(), "rule__DataField__Alternatives_1");
 			builder.put(grammarAccess.getDataOperationAccess().getAlternatives_1(), "rule__DataOperation__Alternatives_1");
@@ -48,13 +49,8 @@ public class DataDslParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getContextAccess().getGroup(), "rule__Context__Group__0");
 			builder.put(grammarAccess.getDataStructureAccess().getGroup(), "rule__DataStructure__Group__0");
 			builder.put(grammarAccess.getDataStructureAccess().getGroup_2(), "rule__DataStructure__Group_2__0");
-			builder.put(grammarAccess.getDataStructureAccess().getGroup_4_0(), "rule__DataStructure__Group_4_0__0");
-			builder.put(grammarAccess.getDataStructureAccess().getGroup_4_0_1(), "rule__DataStructure__Group_4_0_1__0");
+			builder.put(grammarAccess.getDataStructureAccess().getGroup_4(), "rule__DataStructure__Group_4__0");
 			builder.put(grammarAccess.getDataStructureAccess().getGroup_4_1(), "rule__DataStructure__Group_4_1__0");
-			builder.put(grammarAccess.getDataStructureAccess().getGroup_4_1_1(), "rule__DataStructure__Group_4_1_1__0");
-			builder.put(grammarAccess.getDataStructureAccess().getGroup_4_2(), "rule__DataStructure__Group_4_2__0");
-			builder.put(grammarAccess.getDataStructureAccess().getGroup_4_2_1(), "rule__DataStructure__Group_4_2_1__0");
-			builder.put(grammarAccess.getDataStructureAccess().getGroup_4_2_4(), "rule__DataStructure__Group_4_2_4__0");
 			builder.put(grammarAccess.getListTypeAccess().getGroup_0(), "rule__ListType__Group_0__0");
 			builder.put(grammarAccess.getListTypeAccess().getGroup_0_4(), "rule__ListType__Group_0_4__0");
 			builder.put(grammarAccess.getListTypeAccess().getGroup_1(), "rule__ListType__Group_1__0");
@@ -70,8 +66,7 @@ public class DataDslParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getDataOperationAccess().getGroup_3(), "rule__DataOperation__Group_3__0");
 			builder.put(grammarAccess.getDataOperationAccess().getGroup_3_2(), "rule__DataOperation__Group_3_2__0");
 			builder.put(grammarAccess.getDataOperationParameterAccess().getGroup(), "rule__DataOperationParameter__Group__0");
-			builder.put(grammarAccess.getPossiblyImportedComplexTypeAccess().getGroup(), "rule__PossiblyImportedComplexType__Group__0");
-			builder.put(grammarAccess.getPossiblyImportedComplexTypeAccess().getGroup_0(), "rule__PossiblyImportedComplexType__Group_0__0");
+			builder.put(grammarAccess.getImportedComplexTypeAccess().getGroup(), "rule__ImportedComplexType__Group__0");
 			builder.put(grammarAccess.getPrimitiveTypeAccess().getGroup_0(), "rule__PrimitiveType__Group_0__0");
 			builder.put(grammarAccess.getPrimitiveTypeAccess().getGroup_1(), "rule__PrimitiveType__Group_1__0");
 			builder.put(grammarAccess.getPrimitiveTypeAccess().getGroup_2(), "rule__PrimitiveType__Group_2__0");
@@ -98,13 +93,9 @@ public class DataDslParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getDataStructureAccess().getNameAssignment_1(), "rule__DataStructure__NameAssignment_1");
 			builder.put(grammarAccess.getDataStructureAccess().getSuperAssignment_2_1(), "rule__DataStructure__SuperAssignment_2_1");
 			builder.put(grammarAccess.getDataStructureAccess().getDataFieldsAssignment_4_0_0(), "rule__DataStructure__DataFieldsAssignment_4_0_0");
-			builder.put(grammarAccess.getDataStructureAccess().getDataFieldsAssignment_4_0_1_1(), "rule__DataStructure__DataFieldsAssignment_4_0_1_1");
-			builder.put(grammarAccess.getDataStructureAccess().getOperationsAssignment_4_1_0(), "rule__DataStructure__OperationsAssignment_4_1_0");
+			builder.put(grammarAccess.getDataStructureAccess().getOperationsAssignment_4_0_1(), "rule__DataStructure__OperationsAssignment_4_0_1");
+			builder.put(grammarAccess.getDataStructureAccess().getDataFieldsAssignment_4_1_1_0(), "rule__DataStructure__DataFieldsAssignment_4_1_1_0");
 			builder.put(grammarAccess.getDataStructureAccess().getOperationsAssignment_4_1_1_1(), "rule__DataStructure__OperationsAssignment_4_1_1_1");
-			builder.put(grammarAccess.getDataStructureAccess().getDataFieldsAssignment_4_2_0(), "rule__DataStructure__DataFieldsAssignment_4_2_0");
-			builder.put(grammarAccess.getDataStructureAccess().getDataFieldsAssignment_4_2_1_1(), "rule__DataStructure__DataFieldsAssignment_4_2_1_1");
-			builder.put(grammarAccess.getDataStructureAccess().getOperationsAssignment_4_2_3(), "rule__DataStructure__OperationsAssignment_4_2_3");
-			builder.put(grammarAccess.getDataStructureAccess().getOperationsAssignment_4_2_4_1(), "rule__DataStructure__OperationsAssignment_4_2_4_1");
 			builder.put(grammarAccess.getListTypeAccess().getNameAssignment_0_1(), "rule__ListType__NameAssignment_0_1");
 			builder.put(grammarAccess.getListTypeAccess().getDataFieldsAssignment_0_3(), "rule__ListType__DataFieldsAssignment_0_3");
 			builder.put(grammarAccess.getListTypeAccess().getDataFieldsAssignment_0_4_1(), "rule__ListType__DataFieldsAssignment_0_4_1");
@@ -113,6 +104,7 @@ public class DataDslParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getDataFieldAccess().getHiddenAssignment_0(), "rule__DataField__HiddenAssignment_0");
 			builder.put(grammarAccess.getDataFieldAccess().getPrimitiveTypeAssignment_1_0(), "rule__DataField__PrimitiveTypeAssignment_1_0");
 			builder.put(grammarAccess.getDataFieldAccess().getComplexTypeAssignment_1_1(), "rule__DataField__ComplexTypeAssignment_1_1");
+			builder.put(grammarAccess.getDataFieldAccess().getImportedComplexTypeAssignment_1_2(), "rule__DataField__ImportedComplexTypeAssignment_1_2");
 			builder.put(grammarAccess.getDataFieldAccess().getNameAssignment_2(), "rule__DataField__NameAssignment_2");
 			builder.put(grammarAccess.getDataFieldAccess().getFeaturesAssignment_3_1(), "rule__DataField__FeaturesAssignment_3_1");
 			builder.put(grammarAccess.getDataFieldAccess().getFeaturesAssignment_3_2_1(), "rule__DataField__FeaturesAssignment_3_2_1");
@@ -125,17 +117,19 @@ public class DataDslParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getDataOperationAccess().getHasNoReturnTypeAssignment_1_0(), "rule__DataOperation__HasNoReturnTypeAssignment_1_0");
 			builder.put(grammarAccess.getDataOperationAccess().getPrimitiveReturnTypeAssignment_1_1_1_0(), "rule__DataOperation__PrimitiveReturnTypeAssignment_1_1_1_0");
 			builder.put(grammarAccess.getDataOperationAccess().getComplexReturnTypeAssignment_1_1_1_1(), "rule__DataOperation__ComplexReturnTypeAssignment_1_1_1_1");
+			builder.put(grammarAccess.getDataOperationAccess().getImportedComplexReturnTypeAssignment_1_1_1_2(), "rule__DataOperation__ImportedComplexReturnTypeAssignment_1_1_1_2");
 			builder.put(grammarAccess.getDataOperationAccess().getNameAssignment_2(), "rule__DataOperation__NameAssignment_2");
 			builder.put(grammarAccess.getDataOperationAccess().getParametersAssignment_3_1(), "rule__DataOperation__ParametersAssignment_3_1");
 			builder.put(grammarAccess.getDataOperationAccess().getParametersAssignment_3_2_1(), "rule__DataOperation__ParametersAssignment_3_2_1");
 			builder.put(grammarAccess.getDataOperationParameterAccess().getPrimitiveTypeAssignment_0_0(), "rule__DataOperationParameter__PrimitiveTypeAssignment_0_0");
 			builder.put(grammarAccess.getDataOperationParameterAccess().getComplexTypeAssignment_0_1(), "rule__DataOperationParameter__ComplexTypeAssignment_0_1");
+			builder.put(grammarAccess.getDataOperationParameterAccess().getImportedComplexTypeAssignment_0_2(), "rule__DataOperationParameter__ImportedComplexTypeAssignment_0_2");
 			builder.put(grammarAccess.getDataOperationParameterAccess().getNameAssignment_1(), "rule__DataOperationParameter__NameAssignment_1");
 			builder.put(grammarAccess.getPrimitiveValueAccess().getNumericValueAssignment_0(), "rule__PrimitiveValue__NumericValueAssignment_0");
 			builder.put(grammarAccess.getPrimitiveValueAccess().getBooleanValueAssignment_1(), "rule__PrimitiveValue__BooleanValueAssignment_1");
 			builder.put(grammarAccess.getPrimitiveValueAccess().getStringValueAssignment_2(), "rule__PrimitiveValue__StringValueAssignment_2");
-			builder.put(grammarAccess.getPossiblyImportedComplexTypeAccess().getImportAssignment_0_0(), "rule__PossiblyImportedComplexType__ImportAssignment_0_0");
-			builder.put(grammarAccess.getPossiblyImportedComplexTypeAccess().getComplexTypeAssignment_1(), "rule__PossiblyImportedComplexType__ComplexTypeAssignment_1");
+			builder.put(grammarAccess.getImportedComplexTypeAccess().getImportAssignment_0(), "rule__ImportedComplexType__ImportAssignment_0");
+			builder.put(grammarAccess.getImportedComplexTypeAccess().getImportedTypeAssignment_2(), "rule__ImportedComplexType__ImportedTypeAssignment_2");
 		}
 	}
 	

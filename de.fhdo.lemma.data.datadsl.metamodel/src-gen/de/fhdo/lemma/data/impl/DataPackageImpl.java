@@ -15,8 +15,8 @@ import de.fhdo.lemma.data.DataStructure;
 import de.fhdo.lemma.data.Enumeration;
 import de.fhdo.lemma.data.EnumerationField;
 import de.fhdo.lemma.data.FieldFeature;
+import de.fhdo.lemma.data.ImportedComplexType;
 import de.fhdo.lemma.data.ListType;
-import de.fhdo.lemma.data.PossiblyImportedComplexType;
 import de.fhdo.lemma.data.PrimitiveBoolean;
 import de.fhdo.lemma.data.PrimitiveByte;
 import de.fhdo.lemma.data.PrimitiveCharacter;
@@ -178,7 +178,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    private EClass possiblyImportedComplexTypeEClass = null;
+    private EClass importedComplexTypeEClass = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -867,8 +867,8 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * @generated
      */
     @Override
-    public EClass getPossiblyImportedComplexType() {
-        return possiblyImportedComplexTypeEClass;
+    public EClass getImportedComplexType() {
+        return importedComplexTypeEClass;
     }
 
     /**
@@ -877,8 +877,8 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * @generated
      */
     @Override
-    public EReference getPossiblyImportedComplexType_Import() {
-        return (EReference)possiblyImportedComplexTypeEClass.getEStructuralFeatures().get(0);
+    public EReference getImportedComplexType_Import() {
+        return (EReference)importedComplexTypeEClass.getEStructuralFeatures().get(0);
     }
 
     /**
@@ -887,8 +887,8 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * @generated
      */
     @Override
-    public EReference getPossiblyImportedComplexType_ComplexType() {
-        return (EReference)possiblyImportedComplexTypeEClass.getEStructuralFeatures().get(1);
+    public EReference getImportedComplexType_ImportedType() {
+        return (EReference)importedComplexTypeEClass.getEStructuralFeatures().get(1);
     }
 
     /**
@@ -897,8 +897,8 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * @generated
      */
     @Override
-    public EReference getPossiblyImportedComplexType_DataField() {
-        return (EReference)possiblyImportedComplexTypeEClass.getEStructuralFeatures().get(2);
+    public EReference getImportedComplexType_DataField() {
+        return (EReference)importedComplexTypeEClass.getEStructuralFeatures().get(2);
     }
 
     /**
@@ -907,8 +907,8 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * @generated
      */
     @Override
-    public EReference getPossiblyImportedComplexType_Operation() {
-        return (EReference)possiblyImportedComplexTypeEClass.getEStructuralFeatures().get(3);
+    public EReference getImportedComplexType_Operation() {
+        return (EReference)importedComplexTypeEClass.getEStructuralFeatures().get(3);
     }
 
     /**
@@ -917,8 +917,8 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * @generated
      */
     @Override
-    public EReference getPossiblyImportedComplexType_Parameter() {
-        return (EReference)possiblyImportedComplexTypeEClass.getEStructuralFeatures().get(4);
+    public EReference getImportedComplexType_Parameter() {
+        return (EReference)importedComplexTypeEClass.getEStructuralFeatures().get(4);
     }
 
     /**
@@ -1057,7 +1057,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * @generated
      */
     @Override
-    public EReference getDataOperation_PrimitiveReturnType() {
+    public EReference getDataOperation_ImportedComplexReturnType() {
         return (EReference)dataOperationEClass.getEStructuralFeatures().get(4);
     }
 
@@ -1067,7 +1067,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * @generated
      */
     @Override
-    public EReference getDataOperation_Parameters() {
+    public EReference getDataOperation_PrimitiveReturnType() {
         return (EReference)dataOperationEClass.getEStructuralFeatures().get(5);
     }
 
@@ -1077,7 +1077,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * @generated
      */
     @Override
-    public EReference getDataOperation_DataStructure() {
+    public EReference getDataOperation_Parameters() {
         return (EReference)dataOperationEClass.getEStructuralFeatures().get(6);
     }
 
@@ -1087,8 +1087,18 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * @generated
      */
     @Override
+    public EReference getDataOperation_DataStructure() {
+        return (EReference)dataOperationEClass.getEStructuralFeatures().get(7);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public EAttribute getDataOperation_LacksReturnTypeSpecification() {
-        return (EAttribute)dataOperationEClass.getEStructuralFeatures().get(7);
+        return (EAttribute)dataOperationEClass.getEStructuralFeatures().get(8);
     }
 
     /**
@@ -1098,7 +1108,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      */
     @Override
     public EAttribute getDataOperation_Inherited() {
-        return (EAttribute)dataOperationEClass.getEStructuralFeatures().get(8);
+        return (EAttribute)dataOperationEClass.getEStructuralFeatures().get(9);
     }
 
     /**
@@ -1177,7 +1187,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * @generated
      */
     @Override
-    public EReference getDataOperationParameter_PrimitiveType() {
+    public EReference getDataOperationParameter_ImportedComplexType() {
         return (EReference)dataOperationParameterEClass.getEStructuralFeatures().get(2);
     }
 
@@ -1187,8 +1197,18 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * @generated
      */
     @Override
-    public EReference getDataOperationParameter_Operation() {
+    public EReference getDataOperationParameter_PrimitiveType() {
         return (EReference)dataOperationParameterEClass.getEStructuralFeatures().get(3);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getDataOperationParameter_Operation() {
+        return (EReference)dataOperationParameterEClass.getEStructuralFeatures().get(4);
     }
 
     /**
@@ -1307,7 +1327,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * @generated
      */
     @Override
-    public EReference getDataField_PrimitiveType() {
+    public EReference getDataField_ImportedComplexType() {
         return (EReference)dataFieldEClass.getEStructuralFeatures().get(3);
     }
 
@@ -1317,8 +1337,18 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * @generated
      */
     @Override
+    public EReference getDataField_PrimitiveType() {
+        return (EReference)dataFieldEClass.getEStructuralFeatures().get(4);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public EAttribute getDataField_Features() {
-        return (EAttribute)dataFieldEClass.getEStructuralFeatures().get(4);
+        return (EAttribute)dataFieldEClass.getEStructuralFeatures().get(5);
     }
 
     /**
@@ -1328,7 +1358,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      */
     @Override
     public EReference getDataField_DataStructure() {
-        return (EReference)dataFieldEClass.getEStructuralFeatures().get(5);
+        return (EReference)dataFieldEClass.getEStructuralFeatures().get(6);
     }
 
     /**
@@ -1338,7 +1368,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      */
     @Override
     public EReference getDataField_ListType() {
-        return (EReference)dataFieldEClass.getEStructuralFeatures().get(6);
+        return (EReference)dataFieldEClass.getEStructuralFeatures().get(7);
     }
 
     /**
@@ -1801,12 +1831,12 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
         createEOperation(complexTypeEClass, COMPLEX_TYPE___BUILD_QUALIFIED_NAME__STRING);
         createEOperation(complexTypeEClass, COMPLEX_TYPE___COMPARE_FIELD_COUNTS__ELIST_ELIST);
 
-        possiblyImportedComplexTypeEClass = createEClass(POSSIBLY_IMPORTED_COMPLEX_TYPE);
-        createEReference(possiblyImportedComplexTypeEClass, POSSIBLY_IMPORTED_COMPLEX_TYPE__IMPORT);
-        createEReference(possiblyImportedComplexTypeEClass, POSSIBLY_IMPORTED_COMPLEX_TYPE__COMPLEX_TYPE);
-        createEReference(possiblyImportedComplexTypeEClass, POSSIBLY_IMPORTED_COMPLEX_TYPE__DATA_FIELD);
-        createEReference(possiblyImportedComplexTypeEClass, POSSIBLY_IMPORTED_COMPLEX_TYPE__OPERATION);
-        createEReference(possiblyImportedComplexTypeEClass, POSSIBLY_IMPORTED_COMPLEX_TYPE__PARAMETER);
+        importedComplexTypeEClass = createEClass(IMPORTED_COMPLEX_TYPE);
+        createEReference(importedComplexTypeEClass, IMPORTED_COMPLEX_TYPE__IMPORT);
+        createEReference(importedComplexTypeEClass, IMPORTED_COMPLEX_TYPE__IMPORTED_TYPE);
+        createEReference(importedComplexTypeEClass, IMPORTED_COMPLEX_TYPE__DATA_FIELD);
+        createEReference(importedComplexTypeEClass, IMPORTED_COMPLEX_TYPE__OPERATION);
+        createEReference(importedComplexTypeEClass, IMPORTED_COMPLEX_TYPE__PARAMETER);
 
         dataStructureEClass = createEClass(DATA_STRUCTURE);
         createEReference(dataStructureEClass, DATA_STRUCTURE__SUPER);
@@ -1822,6 +1852,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
         createEAttribute(dataOperationEClass, DATA_OPERATION__HIDDEN);
         createEAttribute(dataOperationEClass, DATA_OPERATION__HAS_NO_RETURN_TYPE);
         createEReference(dataOperationEClass, DATA_OPERATION__COMPLEX_RETURN_TYPE);
+        createEReference(dataOperationEClass, DATA_OPERATION__IMPORTED_COMPLEX_RETURN_TYPE);
         createEReference(dataOperationEClass, DATA_OPERATION__PRIMITIVE_RETURN_TYPE);
         createEReference(dataOperationEClass, DATA_OPERATION__PARAMETERS);
         createEReference(dataOperationEClass, DATA_OPERATION__DATA_STRUCTURE);
@@ -1835,6 +1866,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
         dataOperationParameterEClass = createEClass(DATA_OPERATION_PARAMETER);
         createEAttribute(dataOperationParameterEClass, DATA_OPERATION_PARAMETER__NAME);
         createEReference(dataOperationParameterEClass, DATA_OPERATION_PARAMETER__COMPLEX_TYPE);
+        createEReference(dataOperationParameterEClass, DATA_OPERATION_PARAMETER__IMPORTED_COMPLEX_TYPE);
         createEReference(dataOperationParameterEClass, DATA_OPERATION_PARAMETER__PRIMITIVE_TYPE);
         createEReference(dataOperationParameterEClass, DATA_OPERATION_PARAMETER__OPERATION);
         createEOperation(dataOperationParameterEClass, DATA_OPERATION_PARAMETER___GET_QUALIFIED_NAME_PARTS);
@@ -1850,6 +1882,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
         createEAttribute(dataFieldEClass, DATA_FIELD__NAME);
         createEAttribute(dataFieldEClass, DATA_FIELD__HIDDEN);
         createEReference(dataFieldEClass, DATA_FIELD__COMPLEX_TYPE);
+        createEReference(dataFieldEClass, DATA_FIELD__IMPORTED_COMPLEX_TYPE);
         createEReference(dataFieldEClass, DATA_FIELD__PRIMITIVE_TYPE);
         createEAttribute(dataFieldEClass, DATA_FIELD__FEATURES);
         createEReference(dataFieldEClass, DATA_FIELD__DATA_STRUCTURE);
@@ -2039,12 +2072,12 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
         addEParameter(op, this.getDataField(), "fields", 0, -1, !IS_UNIQUE, IS_ORDERED);
         addEParameter(op, this.getDataField(), "fieldsToCompare", 0, -1, !IS_UNIQUE, IS_ORDERED);
 
-        initEClass(possiblyImportedComplexTypeEClass, PossiblyImportedComplexType.class, "PossiblyImportedComplexType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getPossiblyImportedComplexType_Import(), this.getComplexTypeImport(), null, "import", null, 0, 1, PossiblyImportedComplexType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getPossiblyImportedComplexType_ComplexType(), this.getComplexType(), null, "complexType", null, 0, 1, PossiblyImportedComplexType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getPossiblyImportedComplexType_DataField(), this.getDataField(), this.getDataField_ComplexType(), "dataField", null, 0, 1, PossiblyImportedComplexType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getPossiblyImportedComplexType_Operation(), this.getDataOperation(), this.getDataOperation_ComplexReturnType(), "operation", null, 0, 1, PossiblyImportedComplexType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getPossiblyImportedComplexType_Parameter(), this.getDataOperationParameter(), this.getDataOperationParameter_ComplexType(), "parameter", null, 0, 1, PossiblyImportedComplexType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEClass(importedComplexTypeEClass, ImportedComplexType.class, "ImportedComplexType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEReference(getImportedComplexType_Import(), this.getComplexTypeImport(), null, "import", null, 0, 1, ImportedComplexType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getImportedComplexType_ImportedType(), this.getType(), null, "importedType", null, 0, 1, ImportedComplexType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getImportedComplexType_DataField(), this.getDataField(), this.getDataField_ImportedComplexType(), "dataField", null, 0, 1, ImportedComplexType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getImportedComplexType_Operation(), this.getDataOperation(), this.getDataOperation_ImportedComplexReturnType(), "operation", null, 0, 1, ImportedComplexType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getImportedComplexType_Parameter(), this.getDataOperationParameter(), this.getDataOperationParameter_ImportedComplexType(), "parameter", null, 0, 1, ImportedComplexType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(dataStructureEClass, DataStructure.class, "DataStructure", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getDataStructure_Super(), this.getDataStructure(), null, "super", null, 0, 1, DataStructure.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2065,7 +2098,8 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
         initEAttribute(getDataOperation_Name(), theEcorePackage.getEString(), "name", null, 0, 1, DataOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getDataOperation_Hidden(), theEcorePackage.getEBoolean(), "hidden", null, 0, 1, DataOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getDataOperation_HasNoReturnType(), theEcorePackage.getEBoolean(), "hasNoReturnType", null, 0, 1, DataOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getDataOperation_ComplexReturnType(), this.getPossiblyImportedComplexType(), this.getPossiblyImportedComplexType_Operation(), "complexReturnType", null, 0, 1, DataOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getDataOperation_ComplexReturnType(), this.getComplexType(), null, "complexReturnType", null, 0, 1, DataOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getDataOperation_ImportedComplexReturnType(), this.getImportedComplexType(), this.getImportedComplexType_Operation(), "importedComplexReturnType", null, 0, 1, DataOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getDataOperation_PrimitiveReturnType(), this.getPrimitiveType(), null, "primitiveReturnType", null, 0, 1, DataOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getDataOperation_Parameters(), this.getDataOperationParameter(), this.getDataOperationParameter_Operation(), "parameters", null, 0, -1, DataOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getDataOperation_DataStructure(), this.getDataStructure(), this.getDataStructure_Operations(), "dataStructure", null, 0, 1, DataOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2083,7 +2117,8 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 
         initEClass(dataOperationParameterEClass, DataOperationParameter.class, "DataOperationParameter", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getDataOperationParameter_Name(), theEcorePackage.getEString(), "name", null, 0, 1, DataOperationParameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getDataOperationParameter_ComplexType(), this.getPossiblyImportedComplexType(), this.getPossiblyImportedComplexType_Parameter(), "complexType", null, 0, 1, DataOperationParameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getDataOperationParameter_ComplexType(), this.getComplexType(), null, "complexType", null, 0, 1, DataOperationParameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getDataOperationParameter_ImportedComplexType(), this.getImportedComplexType(), this.getImportedComplexType_Parameter(), "importedComplexType", null, 0, 1, DataOperationParameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getDataOperationParameter_PrimitiveType(), this.getPrimitiveType(), null, "primitiveType", null, 0, 1, DataOperationParameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getDataOperationParameter_Operation(), this.getDataOperation(), this.getDataOperation_Parameters(), "operation", null, 0, 1, DataOperationParameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -2104,7 +2139,8 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
         initEClass(dataFieldEClass, DataField.class, "DataField", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getDataField_Name(), theEcorePackage.getEString(), "name", null, 0, 1, DataField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getDataField_Hidden(), theEcorePackage.getEBoolean(), "hidden", null, 0, 1, DataField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getDataField_ComplexType(), this.getPossiblyImportedComplexType(), this.getPossiblyImportedComplexType_DataField(), "complexType", null, 0, 1, DataField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getDataField_ComplexType(), this.getComplexType(), null, "complexType", null, 0, 1, DataField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getDataField_ImportedComplexType(), this.getImportedComplexType(), this.getImportedComplexType_DataField(), "importedComplexType", null, 0, 1, DataField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getDataField_PrimitiveType(), this.getPrimitiveType(), null, "primitiveType", null, 0, 1, DataField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getDataField_Features(), this.getFieldFeature(), "features", null, 0, -1, DataField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getDataField_DataStructure(), this.getDataStructure(), this.getDataStructure_DataFields(), "dataStructure", null, 0, 1, DataField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

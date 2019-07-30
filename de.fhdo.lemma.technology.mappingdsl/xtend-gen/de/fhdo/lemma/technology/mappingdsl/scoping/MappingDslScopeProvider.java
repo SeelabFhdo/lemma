@@ -41,7 +41,7 @@ import de.fhdo.lemma.technology.mapping.ComplexParameterMapping;
 import de.fhdo.lemma.technology.mapping.ComplexTypeMapping;
 import de.fhdo.lemma.technology.mapping.DataOperationMapping;
 import de.fhdo.lemma.technology.mapping.DataOperationParameterMapping;
-import de.fhdo.lemma.technology.mapping.ImportedComplexType;
+import de.fhdo.lemma.technology.mapping.ImportedComplexTypeToMap;
 import de.fhdo.lemma.technology.mapping.ImportedMicroservice;
 import de.fhdo.lemma.technology.mapping.InterfaceMapping;
 import de.fhdo.lemma.technology.mapping.MappingPackage;
@@ -92,9 +92,9 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
   public IScope getScope(final EObject context, final EReference reference) {
     IScope _switchResult = null;
     boolean _matched = false;
-    if (context instanceof ImportedComplexType) {
+    if (context instanceof ImportedComplexTypeToMap) {
       _matched=true;
-      _switchResult = this.getScope(((ImportedComplexType)context), reference);
+      _switchResult = this.getScope(((ImportedComplexTypeToMap)context), reference);
     }
     if (!_matched) {
       if (context instanceof ComplexTypeMapping) {
@@ -210,22 +210,22 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
   }
   
   /**
-   * Build scope for imported complex types
+   * Build scope for imported complex types to map
    */
-  private IScope getScope(final ImportedComplexType type, final EReference reference) {
+  private IScope getScope(final ImportedComplexTypeToMap type, final EReference reference) {
     boolean _matched = false;
-    if (Objects.equal(reference, MappingPackage.Literals.IMPORTED_COMPLEX_TYPE__SERVICE_MODEL_IMPORT)) {
+    if (Objects.equal(reference, MappingPackage.Literals.IMPORTED_COMPLEX_TYPE_TO_MAP__SERVICE_MODEL_IMPORT)) {
       _matched=true;
       return this.getScopeForImportsOfType(type.getTypeMapping(), ServiceModel.class);
     }
     if (!_matched) {
-      if (Objects.equal(reference, MappingPackage.Literals.IMPORTED_COMPLEX_TYPE__DATA_MODEL_IMPORT)) {
+      if (Objects.equal(reference, MappingPackage.Literals.IMPORTED_COMPLEX_TYPE_TO_MAP__DATA_MODEL_IMPORT)) {
         _matched=true;
         return this.getScopeForDomainModelImports(type);
       }
     }
     if (!_matched) {
-      if (Objects.equal(reference, MappingPackage.Literals.IMPORTED_COMPLEX_TYPE__TYPE)) {
+      if (Objects.equal(reference, MappingPackage.Literals.IMPORTED_COMPLEX_TYPE_TO_MAP__TYPE)) {
         _matched=true;
         return this.getScopeForComplexTypes(type);
       }
@@ -238,7 +238,7 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
    */
   private IScope getScope(final ComplexTypeMapping mapping, final EReference reference) {
     boolean _matched = false;
-    if (Objects.equal(reference, MappingPackage.Literals.IMPORTED_COMPLEX_TYPE__SERVICE_MODEL_IMPORT)) {
+    if (Objects.equal(reference, MappingPackage.Literals.IMPORTED_COMPLEX_TYPE_TO_MAP__SERVICE_MODEL_IMPORT)) {
       _matched=true;
       return this.getScopeForImportsOfType(mapping, ServiceModel.class);
     }
@@ -257,9 +257,9 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     if (!_matched) {
       if (Objects.equal(reference, MappingPackage.Literals.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__ENUMERATION_FIELD)) {
         _matched=true;
-        ImportedComplexType _type = mapping.getType();
+        ImportedComplexTypeToMap _type = mapping.getType();
         if ((_type instanceof Enumeration)) {
-          ImportedComplexType _type_1 = mapping.getType();
+          ImportedComplexTypeToMap _type_1 = mapping.getType();
           return Scopes.scopeFor(((Enumeration) _type_1).getFields());
         }
       }
@@ -641,7 +641,7 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
   /**
    * Build scope for domain model imports of imported complex types
    */
-  private IScope getScopeForDomainModelImports(final ImportedComplexType type) {
+  private IScope getScopeForDomainModelImports(final ImportedComplexTypeToMap type) {
     final ServiceModel serviceModel = LemmaUtils.<ServiceModel>getImportedModelRoot(type.eResource(), 
       type.getServiceModelImport().getImportURI(), ServiceModel.class);
     final Function1<Import, Boolean> _function = (Import it) -> {
@@ -655,7 +655,7 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
   /**
    * Build scope for complex types to be imported
    */
-  private IScope getScopeForComplexTypes(final ImportedComplexType type) {
+  private IScope getScopeForComplexTypes(final ImportedComplexTypeToMap type) {
     Import _dataModelImport = type.getDataModelImport();
     boolean _tripleEquals = (_dataModelImport == null);
     if (_tripleEquals) {

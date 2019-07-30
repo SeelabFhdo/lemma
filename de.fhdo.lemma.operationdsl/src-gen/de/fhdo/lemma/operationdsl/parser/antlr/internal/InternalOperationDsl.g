@@ -5726,40 +5726,13 @@ ruleDataStructure returns [EObject current=null]
 						}
 					)
 				)
-				(
-					otherlv_6=','
-					{
-						newLeafNode(otherlv_6, grammarAccess.getDataStructureAccess().getCommaKeyword_4_0_1_0());
-					}
-					(
-						(
-							{
-								newCompositeNode(grammarAccess.getDataStructureAccess().getDataFieldsDataFieldParserRuleCall_4_0_1_1_0());
-							}
-							lv_dataFields_7_0=ruleDataField
-							{
-								if ($current==null) {
-									$current = createModelElementForParent(grammarAccess.getDataStructureRule());
-								}
-								add(
-									$current,
-									"dataFields",
-									lv_dataFields_7_0,
-									"de.fhdo.lemma.data.DataDsl.DataField");
-								afterParserOrEnumRuleCall();
-							}
-						)
-					)
-				)*
-			)
-			    |
-			(
+				    |
 				(
 					(
 						{
-							newCompositeNode(grammarAccess.getDataStructureAccess().getOperationsDataOperationParserRuleCall_4_1_0_0());
+							newCompositeNode(grammarAccess.getDataStructureAccess().getOperationsDataOperationParserRuleCall_4_0_1_0());
 						}
-						lv_operations_8_0=ruleDataOperation
+						lv_operations_6_0=ruleDataOperation
 						{
 							if ($current==null) {
 								$current = createModelElementForParent(grammarAccess.getDataStructureRule());
@@ -5767,23 +5740,45 @@ ruleDataStructure returns [EObject current=null]
 							add(
 								$current,
 								"operations",
-								lv_operations_8_0,
+								lv_operations_6_0,
 								"de.fhdo.lemma.data.DataDsl.DataOperation");
 							afterParserOrEnumRuleCall();
 						}
 					)
 				)
+			)
+			(
+				otherlv_7=','
+				{
+					newLeafNode(otherlv_7, grammarAccess.getDataStructureAccess().getCommaKeyword_4_1_0());
+				}
 				(
-					otherlv_9=','
-					{
-						newLeafNode(otherlv_9, grammarAccess.getDataStructureAccess().getCommaKeyword_4_1_1_0());
-					}
+					(
+						(
+							{
+								newCompositeNode(grammarAccess.getDataStructureAccess().getDataFieldsDataFieldParserRuleCall_4_1_1_0_0());
+							}
+							lv_dataFields_8_0=ruleDataField
+							{
+								if ($current==null) {
+									$current = createModelElementForParent(grammarAccess.getDataStructureRule());
+								}
+								add(
+									$current,
+									"dataFields",
+									lv_dataFields_8_0,
+									"de.fhdo.lemma.data.DataDsl.DataField");
+								afterParserOrEnumRuleCall();
+							}
+						)
+					)
+					    |
 					(
 						(
 							{
 								newCompositeNode(grammarAccess.getDataStructureAccess().getOperationsDataOperationParserRuleCall_4_1_1_1_0());
 							}
-							lv_operations_10_0=ruleDataOperation
+							lv_operations_9_0=ruleDataOperation
 							{
 								if ($current==null) {
 									$current = createModelElementForParent(grammarAccess.getDataStructureRule());
@@ -5791,113 +5786,18 @@ ruleDataStructure returns [EObject current=null]
 								add(
 									$current,
 									"operations",
-									lv_operations_10_0,
+									lv_operations_9_0,
 									"de.fhdo.lemma.data.DataDsl.DataOperation");
 								afterParserOrEnumRuleCall();
 							}
 						)
 					)
-				)*
-			)
-			    |
-			(
-				(
-					(
-						{
-							newCompositeNode(grammarAccess.getDataStructureAccess().getDataFieldsDataFieldParserRuleCall_4_2_0_0());
-						}
-						lv_dataFields_11_0=ruleDataField
-						{
-							if ($current==null) {
-								$current = createModelElementForParent(grammarAccess.getDataStructureRule());
-							}
-							add(
-								$current,
-								"dataFields",
-								lv_dataFields_11_0,
-								"de.fhdo.lemma.data.DataDsl.DataField");
-							afterParserOrEnumRuleCall();
-						}
-					)
 				)
-				(
-					otherlv_12=','
-					{
-						newLeafNode(otherlv_12, grammarAccess.getDataStructureAccess().getCommaKeyword_4_2_1_0());
-					}
-					(
-						(
-							{
-								newCompositeNode(grammarAccess.getDataStructureAccess().getDataFieldsDataFieldParserRuleCall_4_2_1_1_0());
-							}
-							lv_dataFields_13_0=ruleDataField
-							{
-								if ($current==null) {
-									$current = createModelElementForParent(grammarAccess.getDataStructureRule());
-								}
-								add(
-									$current,
-									"dataFields",
-									lv_dataFields_13_0,
-									"de.fhdo.lemma.data.DataDsl.DataField");
-								afterParserOrEnumRuleCall();
-							}
-						)
-					)
-				)*
-				otherlv_14=','
-				{
-					newLeafNode(otherlv_14, grammarAccess.getDataStructureAccess().getCommaKeyword_4_2_2());
-				}
-				(
-					(
-						{
-							newCompositeNode(grammarAccess.getDataStructureAccess().getOperationsDataOperationParserRuleCall_4_2_3_0());
-						}
-						lv_operations_15_0=ruleDataOperation
-						{
-							if ($current==null) {
-								$current = createModelElementForParent(grammarAccess.getDataStructureRule());
-							}
-							add(
-								$current,
-								"operations",
-								lv_operations_15_0,
-								"de.fhdo.lemma.data.DataDsl.DataOperation");
-							afterParserOrEnumRuleCall();
-						}
-					)
-				)
-				(
-					otherlv_16=','
-					{
-						newLeafNode(otherlv_16, grammarAccess.getDataStructureAccess().getCommaKeyword_4_2_4_0());
-					}
-					(
-						(
-							{
-								newCompositeNode(grammarAccess.getDataStructureAccess().getOperationsDataOperationParserRuleCall_4_2_4_1_0());
-							}
-							lv_operations_17_0=ruleDataOperation
-							{
-								if ($current==null) {
-									$current = createModelElementForParent(grammarAccess.getDataStructureRule());
-								}
-								add(
-									$current,
-									"operations",
-									lv_operations_17_0,
-									"de.fhdo.lemma.data.DataDsl.DataOperation");
-								afterParserOrEnumRuleCall();
-							}
-						)
-					)
-				)*
-			)
+			)*
 		)?
-		otherlv_18='}'
+		otherlv_10='}'
 		{
-			newLeafNode(otherlv_18, grammarAccess.getDataStructureAccess().getRightCurlyBracketKeyword_5());
+			newLeafNode(otherlv_10, grammarAccess.getDataStructureAccess().getRightCurlyBracketKeyword_5());
 		}
 	)
 ;
@@ -6103,18 +6003,35 @@ ruleDataField returns [EObject current=null]
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getDataFieldAccess().getComplexTypePossiblyImportedComplexTypeParserRuleCall_1_1_0());
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getDataFieldRule());
+						}
 					}
-					lv_complexType_2_0=rulePossiblyImportedComplexType
+					{
+						newCompositeNode(grammarAccess.getDataFieldAccess().getComplexTypeComplexTypeCrossReference_1_1_0());
+					}
+					ruleQualifiedName
+					{
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)
+			    |
+			(
+				(
+					{
+						newCompositeNode(grammarAccess.getDataFieldAccess().getImportedComplexTypeImportedComplexTypeParserRuleCall_1_2_0());
+					}
+					lv_importedComplexType_3_0=ruleImportedComplexType
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getDataFieldRule());
 						}
 						set(
 							$current,
-							"complexType",
-							lv_complexType_2_0,
-							"de.fhdo.lemma.data.DataDsl.PossiblyImportedComplexType");
+							"importedComplexType",
+							lv_importedComplexType_3_0,
+							"de.fhdo.lemma.data.DataDsl.ImportedComplexType");
 						afterParserOrEnumRuleCall();
 					}
 				)
@@ -6122,9 +6039,9 @@ ruleDataField returns [EObject current=null]
 		)?
 		(
 			(
-				lv_name_3_0=RULE_ID
+				lv_name_4_0=RULE_ID
 				{
-					newLeafNode(lv_name_3_0, grammarAccess.getDataFieldAccess().getNameIDTerminalRuleCall_2_0());
+					newLeafNode(lv_name_4_0, grammarAccess.getDataFieldAccess().getNameIDTerminalRuleCall_2_0());
 				}
 				{
 					if ($current==null) {
@@ -6133,22 +6050,22 @@ ruleDataField returns [EObject current=null]
 					setWithLastConsumed(
 						$current,
 						"name",
-						lv_name_3_0,
+						lv_name_4_0,
 						"org.eclipse.xtext.common.Terminals.ID");
 				}
 			)
 		)
 		(
-			otherlv_4='<'
+			otherlv_5='<'
 			{
-				newLeafNode(otherlv_4, grammarAccess.getDataFieldAccess().getLessThanSignKeyword_3_0());
+				newLeafNode(otherlv_5, grammarAccess.getDataFieldAccess().getLessThanSignKeyword_3_0());
 			}
 			(
 				(
 					{
 						newCompositeNode(grammarAccess.getDataFieldAccess().getFeaturesFieldFeatureEnumRuleCall_3_1_0());
 					}
-					lv_features_5_0=ruleFieldFeature
+					lv_features_6_0=ruleFieldFeature
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getDataFieldRule());
@@ -6156,23 +6073,23 @@ ruleDataField returns [EObject current=null]
 						add(
 							$current,
 							"features",
-							lv_features_5_0,
+							lv_features_6_0,
 							"de.fhdo.lemma.data.DataDsl.FieldFeature");
 						afterParserOrEnumRuleCall();
 					}
 				)
 			)
 			(
-				otherlv_6=','
+				otherlv_7=','
 				{
-					newLeafNode(otherlv_6, grammarAccess.getDataFieldAccess().getCommaKeyword_3_2_0());
+					newLeafNode(otherlv_7, grammarAccess.getDataFieldAccess().getCommaKeyword_3_2_0());
 				}
 				(
 					(
 						{
 							newCompositeNode(grammarAccess.getDataFieldAccess().getFeaturesFieldFeatureEnumRuleCall_3_2_1_0());
 						}
-						lv_features_7_0=ruleFieldFeature
+						lv_features_8_0=ruleFieldFeature
 						{
 							if ($current==null) {
 								$current = createModelElementForParent(grammarAccess.getDataFieldRule());
@@ -6180,16 +6097,16 @@ ruleDataField returns [EObject current=null]
 							add(
 								$current,
 								"features",
-								lv_features_7_0,
+								lv_features_8_0,
 								"de.fhdo.lemma.data.DataDsl.FieldFeature");
 							afterParserOrEnumRuleCall();
 						}
 					)
 				)
 			)*
-			otherlv_8='>'
+			otherlv_9='>'
 			{
-				newLeafNode(otherlv_8, grammarAccess.getDataFieldAccess().getGreaterThanSignKeyword_3_3());
+				newLeafNode(otherlv_9, grammarAccess.getDataFieldAccess().getGreaterThanSignKeyword_3_3());
 			}
 		)?
 	)
@@ -6429,18 +6346,35 @@ ruleDataOperation returns [EObject current=null]
 					(
 						(
 							{
-								newCompositeNode(grammarAccess.getDataOperationAccess().getComplexReturnTypePossiblyImportedComplexTypeParserRuleCall_1_1_1_1_0());
+								if ($current==null) {
+									$current = createModelElement(grammarAccess.getDataOperationRule());
+								}
 							}
-							lv_complexReturnType_4_0=rulePossiblyImportedComplexType
+							{
+								newCompositeNode(grammarAccess.getDataOperationAccess().getComplexReturnTypeComplexTypeCrossReference_1_1_1_1_0());
+							}
+							ruleQualifiedName
+							{
+								afterParserOrEnumRuleCall();
+							}
+						)
+					)
+					    |
+					(
+						(
+							{
+								newCompositeNode(grammarAccess.getDataOperationAccess().getImportedComplexReturnTypeImportedComplexTypeParserRuleCall_1_1_1_2_0());
+							}
+							lv_importedComplexReturnType_5_0=ruleImportedComplexType
 							{
 								if ($current==null) {
 									$current = createModelElementForParent(grammarAccess.getDataOperationRule());
 								}
 								set(
 									$current,
-									"complexReturnType",
-									lv_complexReturnType_4_0,
-									"de.fhdo.lemma.data.DataDsl.PossiblyImportedComplexType");
+									"importedComplexReturnType",
+									lv_importedComplexReturnType_5_0,
+									"de.fhdo.lemma.data.DataDsl.ImportedComplexType");
 								afterParserOrEnumRuleCall();
 							}
 						)
@@ -6450,9 +6384,9 @@ ruleDataOperation returns [EObject current=null]
 		)
 		(
 			(
-				lv_name_5_0=RULE_ID
+				lv_name_6_0=RULE_ID
 				{
-					newLeafNode(lv_name_5_0, grammarAccess.getDataOperationAccess().getNameIDTerminalRuleCall_2_0());
+					newLeafNode(lv_name_6_0, grammarAccess.getDataOperationAccess().getNameIDTerminalRuleCall_2_0());
 				}
 				{
 					if ($current==null) {
@@ -6461,22 +6395,22 @@ ruleDataOperation returns [EObject current=null]
 					setWithLastConsumed(
 						$current,
 						"name",
-						lv_name_5_0,
+						lv_name_6_0,
 						"org.eclipse.xtext.common.Terminals.ID");
 				}
 			)
 		)
 		(
-			otherlv_6='('
+			otherlv_7='('
 			{
-				newLeafNode(otherlv_6, grammarAccess.getDataOperationAccess().getLeftParenthesisKeyword_3_0());
+				newLeafNode(otherlv_7, grammarAccess.getDataOperationAccess().getLeftParenthesisKeyword_3_0());
 			}
 			(
 				(
 					{
 						newCompositeNode(grammarAccess.getDataOperationAccess().getParametersDataOperationParameterParserRuleCall_3_1_0());
 					}
-					lv_parameters_7_0=ruleDataOperationParameter
+					lv_parameters_8_0=ruleDataOperationParameter
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getDataOperationRule());
@@ -6484,23 +6418,23 @@ ruleDataOperation returns [EObject current=null]
 						add(
 							$current,
 							"parameters",
-							lv_parameters_7_0,
+							lv_parameters_8_0,
 							"de.fhdo.lemma.data.DataDsl.DataOperationParameter");
 						afterParserOrEnumRuleCall();
 					}
 				)
 			)?
 			(
-				otherlv_8=','
+				otherlv_9=','
 				{
-					newLeafNode(otherlv_8, grammarAccess.getDataOperationAccess().getCommaKeyword_3_2_0());
+					newLeafNode(otherlv_9, grammarAccess.getDataOperationAccess().getCommaKeyword_3_2_0());
 				}
 				(
 					(
 						{
 							newCompositeNode(grammarAccess.getDataOperationAccess().getParametersDataOperationParameterParserRuleCall_3_2_1_0());
 						}
-						lv_parameters_9_0=ruleDataOperationParameter
+						lv_parameters_10_0=ruleDataOperationParameter
 						{
 							if ($current==null) {
 								$current = createModelElementForParent(grammarAccess.getDataOperationRule());
@@ -6508,16 +6442,16 @@ ruleDataOperation returns [EObject current=null]
 							add(
 								$current,
 								"parameters",
-								lv_parameters_9_0,
+								lv_parameters_10_0,
 								"de.fhdo.lemma.data.DataDsl.DataOperationParameter");
 							afterParserOrEnumRuleCall();
 						}
 					)
 				)
 			)*
-			otherlv_10=')'
+			otherlv_11=')'
 			{
-				newLeafNode(otherlv_10, grammarAccess.getDataOperationAccess().getRightParenthesisKeyword_3_3());
+				newLeafNode(otherlv_11, grammarAccess.getDataOperationAccess().getRightParenthesisKeyword_3_3());
 			}
 		)?
 	)
@@ -6563,18 +6497,35 @@ ruleDataOperationParameter returns [EObject current=null]
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getDataOperationParameterAccess().getComplexTypePossiblyImportedComplexTypeParserRuleCall_0_1_0());
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getDataOperationParameterRule());
+						}
 					}
-					lv_complexType_1_0=rulePossiblyImportedComplexType
+					{
+						newCompositeNode(grammarAccess.getDataOperationParameterAccess().getComplexTypeComplexTypeCrossReference_0_1_0());
+					}
+					ruleQualifiedName
+					{
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)
+			    |
+			(
+				(
+					{
+						newCompositeNode(grammarAccess.getDataOperationParameterAccess().getImportedComplexTypeImportedComplexTypeParserRuleCall_0_2_0());
+					}
+					lv_importedComplexType_2_0=ruleImportedComplexType
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getDataOperationParameterRule());
 						}
 						set(
 							$current,
-							"complexType",
-							lv_complexType_1_0,
-							"de.fhdo.lemma.data.DataDsl.PossiblyImportedComplexType");
+							"importedComplexType",
+							lv_importedComplexType_2_0,
+							"de.fhdo.lemma.data.DataDsl.ImportedComplexType");
 						afterParserOrEnumRuleCall();
 					}
 				)
@@ -6582,9 +6533,9 @@ ruleDataOperationParameter returns [EObject current=null]
 		)
 		(
 			(
-				lv_name_2_0=RULE_ID
+				lv_name_3_0=RULE_ID
 				{
-					newLeafNode(lv_name_2_0, grammarAccess.getDataOperationParameterAccess().getNameIDTerminalRuleCall_1_0());
+					newLeafNode(lv_name_3_0, grammarAccess.getDataOperationParameterAccess().getNameIDTerminalRuleCall_1_0());
 				}
 				{
 					if ($current==null) {
@@ -6593,7 +6544,7 @@ ruleDataOperationParameter returns [EObject current=null]
 					setWithLastConsumed(
 						$current,
 						"name",
-						lv_name_2_0,
+						lv_name_3_0,
 						"org.eclipse.xtext.common.Terminals.ID");
 				}
 			)
@@ -6676,15 +6627,15 @@ rulePrimitiveValue returns [EObject current=null]
 	)
 ;
 
-// Entry rule entryRulePossiblyImportedComplexType
-entryRulePossiblyImportedComplexType returns [EObject current=null]:
-	{ newCompositeNode(grammarAccess.getPossiblyImportedComplexTypeRule()); }
-	iv_rulePossiblyImportedComplexType=rulePossiblyImportedComplexType
-	{ $current=$iv_rulePossiblyImportedComplexType.current; }
+// Entry rule entryRuleImportedComplexType
+entryRuleImportedComplexType returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getImportedComplexTypeRule()); }
+	iv_ruleImportedComplexType=ruleImportedComplexType
+	{ $current=$iv_ruleImportedComplexType.current; }
 	EOF;
 
-// Rule PossiblyImportedComplexType
-rulePossiblyImportedComplexType returns [EObject current=null]
+// Rule ImportedComplexType
+ruleImportedComplexType returns [EObject current=null]
 @init {
 	enterRule();
 }
@@ -6694,32 +6645,30 @@ rulePossiblyImportedComplexType returns [EObject current=null]
 	(
 		(
 			(
-				(
-					{
-						if ($current==null) {
-							$current = createModelElement(grammarAccess.getPossiblyImportedComplexTypeRule());
-						}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getImportedComplexTypeRule());
 					}
-					otherlv_0=RULE_ID
-					{
-						newLeafNode(otherlv_0, grammarAccess.getPossiblyImportedComplexTypeAccess().getImportComplexTypeImportCrossReference_0_0_0());
-					}
-				)
+				}
+				otherlv_0=RULE_ID
+				{
+					newLeafNode(otherlv_0, grammarAccess.getImportedComplexTypeAccess().getImportComplexTypeImportCrossReference_0_0());
+				}
 			)
-			otherlv_1='::'
-			{
-				newLeafNode(otherlv_1, grammarAccess.getPossiblyImportedComplexTypeAccess().getColonColonKeyword_0_1());
-			}
-		)?
+		)
+		otherlv_1='::'
+		{
+			newLeafNode(otherlv_1, grammarAccess.getImportedComplexTypeAccess().getColonColonKeyword_1());
+		}
 		(
 			(
 				{
 					if ($current==null) {
-						$current = createModelElement(grammarAccess.getPossiblyImportedComplexTypeRule());
+						$current = createModelElement(grammarAccess.getImportedComplexTypeRule());
 					}
 				}
 				{
-					newCompositeNode(grammarAccess.getPossiblyImportedComplexTypeAccess().getComplexTypeComplexTypeCrossReference_1_0());
+					newCompositeNode(grammarAccess.getImportedComplexTypeAccess().getImportedTypeTypeCrossReference_2_0());
 				}
 				ruleQualifiedName
 				{

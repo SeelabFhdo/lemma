@@ -14,8 +14,8 @@ import de.fhdo.lemma.data.DataPackage;
 import de.fhdo.lemma.data.DataStructure;
 import de.fhdo.lemma.data.Enumeration;
 import de.fhdo.lemma.data.EnumerationField;
+import de.fhdo.lemma.data.ImportedComplexType;
 import de.fhdo.lemma.data.ListType;
-import de.fhdo.lemma.data.PossiblyImportedComplexType;
 import de.fhdo.lemma.data.PrimitiveBoolean;
 import de.fhdo.lemma.data.PrimitiveByte;
 import de.fhdo.lemma.data.PrimitiveCharacter;
@@ -81,11 +81,11 @@ public class DataDslSemanticSequencer extends AbstractDelegatingSemanticSequence
 			case DataPackage.ENUMERATION_FIELD:
 				sequence_EnumerationField(context, (EnumerationField) semanticObject); 
 				return; 
+			case DataPackage.IMPORTED_COMPLEX_TYPE:
+				sequence_ImportedComplexType(context, (ImportedComplexType) semanticObject); 
+				return; 
 			case DataPackage.LIST_TYPE:
 				sequence_ListType(context, (ListType) semanticObject); 
-				return; 
-			case DataPackage.POSSIBLY_IMPORTED_COMPLEX_TYPE:
-				sequence_PossiblyImportedComplexType(context, (PossiblyImportedComplexType) semanticObject); 
 				return; 
 			case DataPackage.PRIMITIVE_BOOLEAN:
 				sequence_PrimitiveType(context, (PrimitiveBoolean) semanticObject); 
@@ -168,7 +168,7 @@ public class DataDslSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 * Constraint:
 	 *     (
 	 *         hidden?='hide'? 
-	 *         (primitiveType=PrimitiveType | complexType=PossiblyImportedComplexType)? 
+	 *         (primitiveType=PrimitiveType | complexType=[ComplexType|QualifiedName] | importedComplexType=ImportedComplexType)? 
 	 *         name=ID 
 	 *         (features+=FieldFeature features+=FieldFeature*)?
 	 *     )
@@ -195,7 +195,7 @@ public class DataDslSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *     DataOperationParameter returns DataOperationParameter
 	 *
 	 * Constraint:
-	 *     ((primitiveType=PrimitiveType | complexType=PossiblyImportedComplexType) name=ID)
+	 *     ((primitiveType=PrimitiveType | complexType=[ComplexType|QualifiedName] | importedComplexType=ImportedComplexType) name=ID)
 	 */
 	protected void sequence_DataOperationParameter(ISerializationContext context, DataOperationParameter semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -209,7 +209,12 @@ public class DataDslSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 * Constraint:
 	 *     (
 	 *         hidden?='hide'? 
-	 *         (hasNoReturnType?='procedure' | primitiveReturnType=PrimitiveType | complexReturnType=PossiblyImportedComplexType)? 
+	 *         (
+	 *             hasNoReturnType?='procedure' | 
+	 *             primitiveReturnType=PrimitiveType | 
+	 *             complexReturnType=[ComplexType|QualifiedName] | 
+	 *             importedComplexReturnType=ImportedComplexType
+	 *         )? 
 	 *         name=ID 
 	 *         parameters+=DataOperationParameter? 
 	 *         parameters+=DataOperationParameter*
@@ -229,11 +234,7 @@ public class DataDslSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *     (
 	 *         name=ID 
 	 *         super=[DataStructure|QualifiedName]? 
-	 *         (
-	 *             (dataFields+=DataField dataFields+=DataField*) | 
-	 *             (operations+=DataOperation operations+=DataOperation*) | 
-	 *             (dataFields+=DataField dataFields+=DataField* operations+=DataOperation operations+=DataOperation*)
-	 *         )?
+	 *         ((dataFields+=DataField | operations+=DataOperation) dataFields+=DataField? (operations+=DataOperation? dataFields+=DataField?)*)?
 	 *     )
 	 */
 	protected void sequence_DataStructure(ISerializationContext context, DataStructure semanticObject) {
@@ -268,6 +269,27 @@ public class DataDslSemanticSequencer extends AbstractDelegatingSemanticSequence
 	
 	/**
 	 * Contexts:
+	 *     ImportedComplexType returns ImportedComplexType
+	 *
+	 * Constraint:
+	 *     (import=[ComplexTypeImport|ID] importedType=[Type|QualifiedName])
+	 */
+	protected void sequence_ImportedComplexType(ISerializationContext context, ImportedComplexType semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, DataPackage.Literals.IMPORTED_COMPLEX_TYPE__IMPORT) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, DataPackage.Literals.IMPORTED_COMPLEX_TYPE__IMPORT));
+			if (transientValues.isValueTransient(semanticObject, DataPackage.Literals.IMPORTED_COMPLEX_TYPE__IMPORTED_TYPE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, DataPackage.Literals.IMPORTED_COMPLEX_TYPE__IMPORTED_TYPE));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getImportedComplexTypeAccess().getImportComplexTypeImportIDTerminalRuleCall_0_0_1(), semanticObject.eGet(DataPackage.Literals.IMPORTED_COMPLEX_TYPE__IMPORT, false));
+		feeder.accept(grammarAccess.getImportedComplexTypeAccess().getImportedTypeTypeQualifiedNameParserRuleCall_2_0_1(), semanticObject.eGet(DataPackage.Literals.IMPORTED_COMPLEX_TYPE__IMPORTED_TYPE, false));
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     ComplexType returns ListType
 	 *     ListType returns ListType
 	 *
@@ -275,18 +297,6 @@ public class DataDslSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *     ((name=ID dataFields+=DataField dataFields+=DataField*) | (name=ID primitiveType=PrimitiveType))
 	 */
 	protected void sequence_ListType(ISerializationContext context, ListType semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     PossiblyImportedComplexType returns PossiblyImportedComplexType
-	 *
-	 * Constraint:
-	 *     (import=[ComplexTypeImport|ID]? complexType=[ComplexType|QualifiedName])
-	 */
-	protected void sequence_PossiblyImportedComplexType(ISerializationContext context, PossiblyImportedComplexType semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

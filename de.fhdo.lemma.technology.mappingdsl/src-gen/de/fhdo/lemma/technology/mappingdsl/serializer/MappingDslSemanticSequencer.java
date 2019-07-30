@@ -14,8 +14,8 @@ import de.fhdo.lemma.data.DataPackage;
 import de.fhdo.lemma.data.DataStructure;
 import de.fhdo.lemma.data.Enumeration;
 import de.fhdo.lemma.data.EnumerationField;
+import de.fhdo.lemma.data.ImportedComplexType;
 import de.fhdo.lemma.data.ListType;
-import de.fhdo.lemma.data.PossiblyImportedComplexType;
 import de.fhdo.lemma.data.PrimitiveBoolean;
 import de.fhdo.lemma.data.PrimitiveByte;
 import de.fhdo.lemma.data.PrimitiveCharacter;
@@ -70,7 +70,7 @@ import de.fhdo.lemma.technology.mapping.ComplexParameterMapping;
 import de.fhdo.lemma.technology.mapping.ComplexTypeMapping;
 import de.fhdo.lemma.technology.mapping.DataOperationMapping;
 import de.fhdo.lemma.technology.mapping.DataOperationParameterMapping;
-import de.fhdo.lemma.technology.mapping.ImportedComplexType;
+import de.fhdo.lemma.technology.mapping.ImportedComplexTypeToMap;
 import de.fhdo.lemma.technology.mapping.ImportedMicroservice;
 import de.fhdo.lemma.technology.mapping.InterfaceMapping;
 import de.fhdo.lemma.technology.mapping.MappingPackage;
@@ -136,11 +136,11 @@ public class MappingDslSemanticSequencer extends ServiceDslSemanticSequencer {
 			case DataPackage.ENUMERATION_FIELD:
 				sequence_EnumerationField(context, (EnumerationField) semanticObject); 
 				return; 
+			case DataPackage.IMPORTED_COMPLEX_TYPE:
+				sequence_ImportedComplexType(context, (ImportedComplexType) semanticObject); 
+				return; 
 			case DataPackage.LIST_TYPE:
 				sequence_ListType(context, (ListType) semanticObject); 
-				return; 
-			case DataPackage.POSSIBLY_IMPORTED_COMPLEX_TYPE:
-				sequence_PossiblyImportedComplexType(context, (PossiblyImportedComplexType) semanticObject); 
 				return; 
 			case DataPackage.PRIMITIVE_BOOLEAN:
 				sequence_PrimitiveType(context, (PrimitiveBoolean) semanticObject); 
@@ -193,8 +193,8 @@ public class MappingDslSemanticSequencer extends ServiceDslSemanticSequencer {
 			case MappingPackage.DATA_OPERATION_PARAMETER_MAPPING:
 				sequence_DataOperationParameterMapping(context, (DataOperationParameterMapping) semanticObject); 
 				return; 
-			case MappingPackage.IMPORTED_COMPLEX_TYPE:
-				sequence_ImportedComplexType(context, (ImportedComplexType) semanticObject); 
+			case MappingPackage.IMPORTED_COMPLEX_TYPE_TO_MAP:
+				sequence_ImportedComplexTypeToMap(context, (ImportedComplexTypeToMap) semanticObject); 
 				return; 
 			case MappingPackage.IMPORTED_MICROSERVICE:
 				sequence_ImportedMicroservice(context, (ImportedMicroservice) semanticObject); 
@@ -376,7 +376,7 @@ public class MappingDslSemanticSequencer extends ServiceDslSemanticSequencer {
 	 * Constraint:
 	 *     (
 	 *         technologyReferences+=TechnologyReference* 
-	 *         type=ImportedComplexType 
+	 *         type=ImportedComplexTypeToMap 
 	 *         aspects+=TechnologySpecificImportedServiceAspect* 
 	 *         fieldMappings+=TechnologySpecificFieldMapping* 
 	 *         operationMappings+=DataOperationMapping*
@@ -418,24 +418,24 @@ public class MappingDslSemanticSequencer extends ServiceDslSemanticSequencer {
 	
 	/**
 	 * Contexts:
-	 *     ImportedComplexType returns ImportedComplexType
+	 *     ImportedComplexTypeToMap returns ImportedComplexTypeToMap
 	 *
 	 * Constraint:
 	 *     (serviceModelImport=[Import|ID] dataModelImport=[Import|ID] type=[ComplexType|QualifiedName])
 	 */
-	protected void sequence_ImportedComplexType(ISerializationContext context, ImportedComplexType semanticObject) {
+	protected void sequence_ImportedComplexTypeToMap(ISerializationContext context, ImportedComplexTypeToMap semanticObject) {
 		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, MappingPackage.Literals.IMPORTED_COMPLEX_TYPE__SERVICE_MODEL_IMPORT) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MappingPackage.Literals.IMPORTED_COMPLEX_TYPE__SERVICE_MODEL_IMPORT));
-			if (transientValues.isValueTransient(semanticObject, MappingPackage.Literals.IMPORTED_COMPLEX_TYPE__DATA_MODEL_IMPORT) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MappingPackage.Literals.IMPORTED_COMPLEX_TYPE__DATA_MODEL_IMPORT));
-			if (transientValues.isValueTransient(semanticObject, MappingPackage.Literals.IMPORTED_COMPLEX_TYPE__TYPE) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MappingPackage.Literals.IMPORTED_COMPLEX_TYPE__TYPE));
+			if (transientValues.isValueTransient(semanticObject, MappingPackage.Literals.IMPORTED_COMPLEX_TYPE_TO_MAP__SERVICE_MODEL_IMPORT) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MappingPackage.Literals.IMPORTED_COMPLEX_TYPE_TO_MAP__SERVICE_MODEL_IMPORT));
+			if (transientValues.isValueTransient(semanticObject, MappingPackage.Literals.IMPORTED_COMPLEX_TYPE_TO_MAP__DATA_MODEL_IMPORT) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MappingPackage.Literals.IMPORTED_COMPLEX_TYPE_TO_MAP__DATA_MODEL_IMPORT));
+			if (transientValues.isValueTransient(semanticObject, MappingPackage.Literals.IMPORTED_COMPLEX_TYPE_TO_MAP__TYPE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MappingPackage.Literals.IMPORTED_COMPLEX_TYPE_TO_MAP__TYPE));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getImportedComplexTypeAccess().getServiceModelImportImportIDTerminalRuleCall_0_0_1(), semanticObject.eGet(MappingPackage.Literals.IMPORTED_COMPLEX_TYPE__SERVICE_MODEL_IMPORT, false));
-		feeder.accept(grammarAccess.getImportedComplexTypeAccess().getDataModelImportImportIDTerminalRuleCall_2_0_1(), semanticObject.eGet(MappingPackage.Literals.IMPORTED_COMPLEX_TYPE__DATA_MODEL_IMPORT, false));
-		feeder.accept(grammarAccess.getImportedComplexTypeAccess().getTypeComplexTypeQualifiedNameParserRuleCall_4_0_1(), semanticObject.eGet(MappingPackage.Literals.IMPORTED_COMPLEX_TYPE__TYPE, false));
+		feeder.accept(grammarAccess.getImportedComplexTypeToMapAccess().getServiceModelImportImportIDTerminalRuleCall_0_0_1(), semanticObject.eGet(MappingPackage.Literals.IMPORTED_COMPLEX_TYPE_TO_MAP__SERVICE_MODEL_IMPORT, false));
+		feeder.accept(grammarAccess.getImportedComplexTypeToMapAccess().getDataModelImportImportIDTerminalRuleCall_2_0_1(), semanticObject.eGet(MappingPackage.Literals.IMPORTED_COMPLEX_TYPE_TO_MAP__DATA_MODEL_IMPORT, false));
+		feeder.accept(grammarAccess.getImportedComplexTypeToMapAccess().getTypeComplexTypeQualifiedNameParserRuleCall_4_0_1(), semanticObject.eGet(MappingPackage.Literals.IMPORTED_COMPLEX_TYPE_TO_MAP__TYPE, false));
 		feeder.finish();
 	}
 	

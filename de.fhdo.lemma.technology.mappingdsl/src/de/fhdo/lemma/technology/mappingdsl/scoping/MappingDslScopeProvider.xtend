@@ -47,7 +47,7 @@ import de.fhdo.lemma.technology.TechnologyPackage
 import de.fhdo.lemma.technology.TechnologySpecificPropertyValueAssignment
 import de.fhdo.lemma.technology.mapping.TechnologySpecificEndpoint
 import de.fhdo.lemma.data.Enumeration
-import de.fhdo.lemma.technology.mapping.ImportedComplexType
+import de.fhdo.lemma.technology.mapping.ImportedComplexTypeToMap
 import de.fhdo.lemma.service.ImportType
 import de.fhdo.lemma.data.DataModel
 import de.fhdo.lemma.technology.mapping.ComplexTypeMapping
@@ -69,7 +69,7 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     override getScope(EObject context, EReference reference) {
         val scope = switch (context) {
             /* Imported complex type */
-            ImportedComplexType: context.getScope(reference)
+            ImportedComplexTypeToMap: context.getScope(reference)
 
             /* Complex type mappings */
             ComplexTypeMapping: context.getScope(reference)
@@ -131,20 +131,20 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     }
 
     /**
-     * Build scope for imported complex types
+     * Build scope for imported complex types to map
      */
-    private def getScope(ImportedComplexType type, EReference reference) {
+    private def getScope(ImportedComplexTypeToMap type, EReference reference) {
         switch (reference) {
             /* Scope for service model imports */
-            case MappingPackage::Literals.IMPORTED_COMPLEX_TYPE__SERVICE_MODEL_IMPORT:
+            case MappingPackage::Literals.IMPORTED_COMPLEX_TYPE_TO_MAP__SERVICE_MODEL_IMPORT:
                 return type.typeMapping.getScopeForImportsOfType(ServiceModel)
 
             /* Scope for data model imports */
-            case MappingPackage::Literals.IMPORTED_COMPLEX_TYPE__DATA_MODEL_IMPORT:
+            case MappingPackage::Literals.IMPORTED_COMPLEX_TYPE_TO_MAP__DATA_MODEL_IMPORT:
                 return type.getScopeForDomainModelImports()
 
            /* Scope for complex types */
-            case MappingPackage::Literals.IMPORTED_COMPLEX_TYPE__TYPE:
+            case MappingPackage::Literals.IMPORTED_COMPLEX_TYPE_TO_MAP__TYPE:
                 return type.getScopeForComplexTypes()
         }
 
@@ -157,7 +157,7 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     private def getScope(ComplexTypeMapping mapping, EReference reference) {
         switch (reference) {
             /* Scope for service model imports */
-            case MappingPackage::Literals.IMPORTED_COMPLEX_TYPE__SERVICE_MODEL_IMPORT:
+            case MappingPackage::Literals.IMPORTED_COMPLEX_TYPE_TO_MAP__SERVICE_MODEL_IMPORT:
                 return mapping.getScopeForImportsOfType(ServiceModel)
 
             /* Aspect technologies */
@@ -487,7 +487,7 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     /**
      * Build scope for domain model imports of imported complex types
      */
-    private def getScopeForDomainModelImports(ImportedComplexType type) {
+    private def getScopeForDomainModelImports(ImportedComplexTypeToMap type) {
         val serviceModel = LemmaUtils.getImportedModelRoot(type.eResource,
             type.serviceModelImport.importURI, ServiceModel)
         val dataModels = serviceModel.imports.filter[importType == ImportType.DATATYPES]
@@ -497,7 +497,7 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     /**
      * Build scope for complex types to be imported
      */
-    private def getScopeForComplexTypes(ImportedComplexType type) {
+    private def getScopeForComplexTypes(ImportedComplexTypeToMap type) {
         if (type.dataModelImport === null)
             return IScope.NULLSCOPE
 

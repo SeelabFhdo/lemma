@@ -37,7 +37,7 @@ import de.fhdo.lemma.technology.mapping.ComplexParameterMapping;
 import de.fhdo.lemma.technology.mapping.ComplexTypeMapping;
 import de.fhdo.lemma.technology.mapping.DataOperationMapping;
 import de.fhdo.lemma.technology.mapping.DataOperationParameterMapping;
-import de.fhdo.lemma.technology.mapping.ImportedComplexType;
+import de.fhdo.lemma.technology.mapping.ImportedComplexTypeToMap;
 import de.fhdo.lemma.technology.mapping.ImportedMicroservice;
 import de.fhdo.lemma.technology.mapping.InterfaceMapping;
 import de.fhdo.lemma.technology.mapping.MappingPackage;
@@ -528,7 +528,7 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
       };
       final List<ComplexTypeMapping> modelMappingsWithTechnology = IterableExtensions.<ComplexTypeMapping>toList(IterableExtensions.<ComplexTypeMapping>filter(model.getTypeMappings(), _function));
       final Function<ComplexTypeMapping, String> _function_1 = (ComplexTypeMapping it) -> {
-        ImportedComplexType _type = it.getType();
+        ImportedComplexTypeToMap _type = it.getType();
         Import _dataModelImport = null;
         if (_type!=null) {
           _dataModelImport=_type.getDataModelImport();

@@ -2238,11 +2238,7 @@ public class ServiceDslGrammarAccess extends AbstractGrammarElementFinder {
 		return getDataModelAccess().getRule();
 	}
 	
-	///* For debugging purposes to test the type checker. May be safely removed in the future. */ /*AssignTest:
-	//    (target=PossiblyImportedComplexType)
-	//    '='
-	//    (source=PossiblyImportedComplexType)
-	//;*/ ComplexTypeImport:
+	//ComplexTypeImport:
 	//	'import' 'datatypes' 'from' importURI=STRING 'as' name=ID;
 	public DataDslGrammarAccess.ComplexTypeImportElements getComplexTypeImportAccess() {
 		return gaDataDsl.getComplexTypeImportAccess();
@@ -2286,12 +2282,8 @@ public class ServiceDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//DataStructure:
-	//	'structure' name=ID ('extends' super=[DataStructure|QualifiedName])? '{' (dataFields+=DataField (','
-	//	dataFields+=DataField)*
-	//	| operations+=DataOperation (',' operations+=DataOperation)*
-	//	| dataFields+=DataField (',' dataFields+=DataField)*
-	//	','
-	//	operations+=DataOperation (',' operations+=DataOperation)*)?
+	//	'structure' name=ID ('extends' super=[DataStructure|QualifiedName])? '{' ((dataFields+=DataField |
+	//	operations+=DataOperation) (',' (dataFields+=DataField | operations+=DataOperation))*)?
 	//	'}';
 	public DataDslGrammarAccess.DataStructureElements getDataStructureAccess() {
 		return gaDataDsl.getDataStructureAccess();
@@ -2328,7 +2320,8 @@ public class ServiceDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//DataField:
-	//	^hidden?='hide'? (primitiveType=PrimitiveType | complexType=PossiblyImportedComplexType)?
+	//	^hidden?='hide'? (primitiveType=PrimitiveType | complexType=[ComplexType|QualifiedName] |
+	//	importedComplexType=ImportedComplexType)?
 	//	name=ID ('<'
 	//	features+=FieldFeature (',' features+=FieldFeature)*
 	//	'>')?;
@@ -2364,8 +2357,9 @@ public class ServiceDslGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//DataOperation:
 	//	^hidden?='hide'? (hasNoReturnType?='procedure' |
-	//	'function' (primitiveReturnType=PrimitiveType | complexReturnType=PossiblyImportedComplexType)?) name=ID ('('
-	//	parameters+=DataOperationParameter? (',' parameters+=DataOperationParameter)* ')')?;
+	//	'function' (primitiveReturnType=PrimitiveType | complexReturnType=[ComplexType|QualifiedName] |
+	//	importedComplexReturnType=ImportedComplexType)?) name=ID ('(' parameters+=DataOperationParameter? (','
+	//	parameters+=DataOperationParameter)* ')')?;
 	public DataDslGrammarAccess.DataOperationElements getDataOperationAccess() {
 		return gaDataDsl.getDataOperationAccess();
 	}
@@ -2375,7 +2369,8 @@ public class ServiceDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//DataOperationParameter:
-	//	(primitiveType=PrimitiveType | complexType=PossiblyImportedComplexType) name=ID;
+	//	(primitiveType=PrimitiveType | complexType=[ComplexType|QualifiedName] | importedComplexType=ImportedComplexType)
+	//	name=ID;
 	public DataDslGrammarAccess.DataOperationParameterElements getDataOperationParameterAccess() {
 		return gaDataDsl.getDataOperationParameterAccess();
 	}
@@ -2394,14 +2389,14 @@ public class ServiceDslGrammarAccess extends AbstractGrammarElementFinder {
 		return getPrimitiveValueAccess().getRule();
 	}
 	
-	//PossiblyImportedComplexType:
-	//	(^import=[ComplexTypeImport] '::')? complexType=[ComplexType|QualifiedName];
-	public DataDslGrammarAccess.PossiblyImportedComplexTypeElements getPossiblyImportedComplexTypeAccess() {
-		return gaDataDsl.getPossiblyImportedComplexTypeAccess();
+	//ImportedComplexType:
+	//	^import=[ComplexTypeImport] '::' importedType=[Type|QualifiedName];
+	public DataDslGrammarAccess.ImportedComplexTypeElements getImportedComplexTypeAccess() {
+		return gaDataDsl.getImportedComplexTypeAccess();
 	}
 	
-	public ParserRule getPossiblyImportedComplexTypeRule() {
-		return getPossiblyImportedComplexTypeAccess().getRule();
+	public ParserRule getImportedComplexTypeRule() {
+		return getImportedComplexTypeAccess().getRule();
 	}
 	
 	//PrimitiveType:

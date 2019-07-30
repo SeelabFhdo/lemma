@@ -10,7 +10,8 @@ import org.eclipse.emf.ecore.EObject;
  * <!-- end-user-doc -->
  *
  * <!-- begin-model-doc -->
- *  For debugging purposes to test the type checker. May be safely removed in the future.
+ * *
+ * Represents the import of ComplexType from other DataModel instances
  * <!-- end-model-doc -->
  *
  * <p>

@@ -21,6 +21,7 @@ All notable changes to [LEMMA](https://github.com/SeelabFhdo/lemma/) will be doc
 ### Changed
 - Rename the project from "Domain-driven Microservice Modeling (DDMM)" to "Language Ecosystem for Modeling Microservice Architecture (LEMMA)".
 - Data DSL: Don't consider technology-specific types in scoping of imported complex types.
+- Data DSL: Fixed scoping of local and imported complex types.
 - Mapping DSL: The emptyness check of mapping models now considers mapped data fields.
 - Mapping DSL: Fixed validation of non-existing aspect properties.
 - Mapping DSL: Fixed assignment of more than one property value.

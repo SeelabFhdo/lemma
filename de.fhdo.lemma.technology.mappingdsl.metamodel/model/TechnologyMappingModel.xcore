@@ -84,7 +84,7 @@ class ComplexTypeMapping {
     String t_sourceModelUri
 
     contains TechnologyReference[] technologyReferences
-    contains ImportedComplexType ^type opposite typeMapping
+    contains ImportedComplexTypeToMap ^type opposite typeMapping
     contains TechnologySpecificFieldMapping[] fieldMappings opposite typeMapping
     contains DataOperationMapping[] operationMappings opposite typeMapping
     contains TechnologySpecificImportedServiceAspect[] aspects opposite typeMapping
@@ -144,9 +144,9 @@ class ComplexTypeMapping {
 }
 
 /**
- * Represents an imported complex type
+ * Represents an imported complex type that shall be mapped
  */
-class ImportedComplexType {
+class ImportedComplexTypeToMap {
     refers Import serviceModelImport
     refers Import dataModelImport
     refers ComplexType ^type

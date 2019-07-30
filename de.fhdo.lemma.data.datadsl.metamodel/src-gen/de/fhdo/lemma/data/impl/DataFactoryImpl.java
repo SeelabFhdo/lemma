@@ -73,7 +73,7 @@ public class DataFactoryImpl extends EFactoryImpl implements DataFactory {
             case DataPackage.PRIMITIVE_LONG: return createPrimitiveLong();
             case DataPackage.PRIMITIVE_SHORT: return createPrimitiveShort();
             case DataPackage.PRIMITIVE_STRING: return createPrimitiveString();
-            case DataPackage.POSSIBLY_IMPORTED_COMPLEX_TYPE: return createPossiblyImportedComplexType();
+            case DataPackage.IMPORTED_COMPLEX_TYPE: return createImportedComplexType();
             case DataPackage.DATA_STRUCTURE: return createDataStructure();
             case DataPackage.DATA_OPERATION: return createDataOperation();
             case DataPackage.DATA_OPERATION_PARAMETER: return createDataOperationParameter();
@@ -285,9 +285,9 @@ public class DataFactoryImpl extends EFactoryImpl implements DataFactory {
      * @generated
      */
     @Override
-    public PossiblyImportedComplexType createPossiblyImportedComplexType() {
-        PossiblyImportedComplexTypeImpl possiblyImportedComplexType = new PossiblyImportedComplexTypeImpl();
-        return possiblyImportedComplexType;
+    public ImportedComplexType createImportedComplexType() {
+        ImportedComplexTypeImpl importedComplexType = new ImportedComplexTypeImpl();
+        return importedComplexType;
     }
 
     /**
