@@ -23,6 +23,8 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.fhdo.lemma.data.PossiblyImportedComplexType#getImport <em>Import</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.PossiblyImportedComplexType#getComplexType <em>Complex Type</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.PossiblyImportedComplexType#getDataField <em>Data Field</em>}</li>
+ *   <li>{@link de.fhdo.lemma.data.PossiblyImportedComplexType#getOperation <em>Operation</em>}</li>
+ *   <li>{@link de.fhdo.lemma.data.PossiblyImportedComplexType#getParameter <em>Parameter</em>}</li>
  * </ul>
  *
  * @see de.fhdo.lemma.data.DataPackage#getPossiblyImportedComplexType()
@@ -109,5 +111,61 @@ public interface PossiblyImportedComplexType extends EObject {
      * @generated
      */
     void setDataField(DataField value);
+
+    /**
+     * Returns the value of the '<em><b>Operation</b></em>' container reference.
+     * It is bidirectional and its opposite is '{@link de.fhdo.lemma.data.DataOperation#getComplexReturnType <em>Complex Return Type</em>}'.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Operation</em>' container reference isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Operation</em>' container reference.
+     * @see #setOperation(DataOperation)
+     * @see de.fhdo.lemma.data.DataPackage#getPossiblyImportedComplexType_Operation()
+     * @see de.fhdo.lemma.data.DataOperation#getComplexReturnType
+     * @model opposite="complexReturnType" transient="false"
+     * @generated
+     */
+    DataOperation getOperation();
+
+    /**
+     * Sets the value of the '{@link de.fhdo.lemma.data.PossiblyImportedComplexType#getOperation <em>Operation</em>}' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Operation</em>' container reference.
+     * @see #getOperation()
+     * @generated
+     */
+    void setOperation(DataOperation value);
+
+    /**
+     * Returns the value of the '<em><b>Parameter</b></em>' container reference.
+     * It is bidirectional and its opposite is '{@link de.fhdo.lemma.data.DataOperationParameter#getComplexType <em>Complex Type</em>}'.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Parameter</em>' container reference isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Parameter</em>' container reference.
+     * @see #setParameter(DataOperationParameter)
+     * @see de.fhdo.lemma.data.DataPackage#getPossiblyImportedComplexType_Parameter()
+     * @see de.fhdo.lemma.data.DataOperationParameter#getComplexType
+     * @model opposite="complexType" transient="false"
+     * @generated
+     */
+    DataOperationParameter getParameter();
+
+    /**
+     * Sets the value of the '{@link de.fhdo.lemma.data.PossiblyImportedComplexType#getParameter <em>Parameter</em>}' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Parameter</em>' container reference.
+     * @see #getParameter()
+     * @generated
+     */
+    void setParameter(DataOperationParameter value);
 
 } // PossiblyImportedComplexType

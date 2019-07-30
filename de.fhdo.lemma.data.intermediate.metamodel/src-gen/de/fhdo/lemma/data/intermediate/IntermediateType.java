@@ -28,6 +28,8 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateType#getName <em>Name</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateType#getOrigin <em>Origin</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateType#getKind <em>Kind</em>}</li>
+ *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateType#getOperation <em>Operation</em>}</li>
+ *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateType#getParameter <em>Parameter</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateType#getDataField <em>Data Field</em>}</li>
  * </ul>
  *
@@ -119,6 +121,62 @@ public interface IntermediateType extends EObject {
      * @generated
      */
     void setKind(IntermediateTypeKind value);
+
+    /**
+     * Returns the value of the '<em><b>Operation</b></em>' container reference.
+     * It is bidirectional and its opposite is '{@link de.fhdo.lemma.data.intermediate.IntermediateDataOperation#getReturnType <em>Return Type</em>}'.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Operation</em>' container reference isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Operation</em>' container reference.
+     * @see #setOperation(IntermediateDataOperation)
+     * @see de.fhdo.lemma.data.intermediate.IntermediatePackage#getIntermediateType_Operation()
+     * @see de.fhdo.lemma.data.intermediate.IntermediateDataOperation#getReturnType
+     * @model opposite="returnType" transient="false"
+     * @generated
+     */
+    IntermediateDataOperation getOperation();
+
+    /**
+     * Sets the value of the '{@link de.fhdo.lemma.data.intermediate.IntermediateType#getOperation <em>Operation</em>}' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Operation</em>' container reference.
+     * @see #getOperation()
+     * @generated
+     */
+    void setOperation(IntermediateDataOperation value);
+
+    /**
+     * Returns the value of the '<em><b>Parameter</b></em>' container reference.
+     * It is bidirectional and its opposite is '{@link de.fhdo.lemma.data.intermediate.IntermediateDataOperationParameter#getType <em>Type</em>}'.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Parameter</em>' container reference isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Parameter</em>' container reference.
+     * @see #setParameter(IntermediateDataOperationParameter)
+     * @see de.fhdo.lemma.data.intermediate.IntermediatePackage#getIntermediateType_Parameter()
+     * @see de.fhdo.lemma.data.intermediate.IntermediateDataOperationParameter#getType
+     * @model opposite="type" transient="false"
+     * @generated
+     */
+    IntermediateDataOperationParameter getParameter();
+
+    /**
+     * Sets the value of the '{@link de.fhdo.lemma.data.intermediate.IntermediateType#getParameter <em>Parameter</em>}' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Parameter</em>' container reference.
+     * @see #getParameter()
+     * @generated
+     */
+    void setParameter(IntermediateDataOperationParameter value);
 
     /**
      * Returns the value of the '<em><b>Data Field</b></em>' container reference.

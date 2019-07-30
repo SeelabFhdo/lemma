@@ -41,6 +41,8 @@ import de.fhdo.lemma.service.Operation
 import de.fhdo.lemma.service.ReferredOperation
 import de.fhdo.lemma.service.TechnologyReference
 import de.fhdo.lemma.utils.LemmaUtils
+import de.fhdo.lemma.technology.mapping.DataOperationMapping
+import de.fhdo.lemma.technology.mapping.DataOperationParameterMapping
 
 /**
  * This class contains validation rules for the Mapping DSL.
@@ -458,6 +460,28 @@ class MappingDslValidator extends AbstractMappingDslValidator {
     }
 
     /**
+     * Check that data operation mappings are unique
+     */
+    @Check
+    def checkDataOperationMappingUniqueness(ComplexTypeMapping typeMapping) {
+        checkMappingUniqueness(typeMapping.operationMappings, "Data operation",
+            [QualifiedName.create(dataOperation.qualifiedNameParts).toString],
+            MappingPackage::Literals.DATA_OPERATION_MAPPING__DATA_OPERATION
+        )
+    }
+
+    /**
+     * Check that data operation parameter mappings are unique
+     */
+    @Check
+    def checkDataOperationParameterMappingUniqueness(DataOperationMapping operationMapping) {
+        checkMappingUniqueness(operationMapping.parameterMappings, "Parameter",
+            [QualifiedName.create(parameter.qualifiedNameParts).toString],
+            MappingPackage::Literals.DATA_OPERATION_PARAMETER_MAPPING__PARAMETER
+        )
+    }
+
+    /**
      * Check that interface mappings are unique
      */
     @Check
@@ -774,7 +798,7 @@ class MappingDslValidator extends AbstractMappingDslValidator {
     /**
      * Check and warn if types of a primitive parameter mapping are not compatible. Note that we
      * just place a warning in case of (suspected) type incompatibility, as we also do it in the
-     * service DSL.
+     * Service DSL.
      */
     @Check
     def warnPrimitiveParameterMappingTypeCompatibility(PrimitiveParameterMapping mapping) {
@@ -784,16 +808,136 @@ class MappingDslValidator extends AbstractMappingDslValidator {
 
     /**
      * Check and warn if types of a data field mapping are not compatible. Note that we just place a
-     * warning in case of (suspected) type incompatibility, as we also do it in the service DSL.
+     * warning in case of (suspected) type incompatibility, as we also do it in the Service DSL.
      */
     @Check
-    def warnComplexParameterMappingTypeCompatibility(TechnologySpecificFieldMapping mapping) {
+    def warnFieldMappingTypeCompatibility(TechnologySpecificFieldMapping mapping) {
         // We only consider primitive mappings for checking type compatibility, because if the
         // mapped type is a technology-specific complex type, type checking makes not sense at all
         // because technology-specific complex type don't exhibit any type-checking relevant
         // information, e.g., a structure consisting of typed fields
         if (mapping.isPrimitiveTypeMapping)
             warnPrimitiveTypeMappingCompatibility(mapping)
+    }
+
+    /**
+     * Check and warn if types of a data operation mapping with primitive return type are not
+     * compatible. Note that we just place a warning in case of (suspected) type incompatibility, as
+     * we also do it in the Service DSL.
+     */
+    @Check
+    def warnReturnTypeCompatibility(DataOperationMapping mapping) {
+        // We only consider primitive mappings for checking type compatibility, because if the
+        // mapped type is a technology-specific complex type, type checking makes not sense at all
+        // because technology-specific complex type don't exhibit any type-checking relevant
+        // information, e.g., a structure consisting of typed fields
+        if (mapping.isPrimitiveTypeMapping)
+            warnPrimitiveTypeMappingCompatibility(mapping)
+    }
+
+    /**
+     * Check and warn if types of a data operation parameter primitive type mapping are not
+     * compatible. Note that we just place a warning in case of (suspected) type incompatibility, as
+     * we also do it in the Service DSL.
+     */
+    @Check
+    def warnDataOperationParameterTypeCompatibility(DataOperationParameterMapping mapping) {
+        // We only consider primitive mappings for checking type compatibility, because if the
+        // mapped type is a technology-specific complex type, type checking makes not sense at all
+        // because technology-specific complex type don't exhibit any type-checking relevant
+        // information, e.g., a structure consisting of typed fields
+        if (mapping.isPrimitiveTypeMapping)
+            warnPrimitiveTypeMappingCompatibility(mapping)
+    }
+
+    /**
+     * Convenience method for warning if primitive types within a mapping are not compatible with
+     * each other
+     */
+    private def warnPrimitiveTypeMappingCompatibility(EObject mapping) {
+        if (!mapping.isPrimitiveTypeMapping)
+            return
+
+        /*
+         * Determine mapped type, its name, the original type, and the feature to place the warning
+         * on
+         */
+        var Type mappedType
+        var String mappedTypeName
+        var Type originalType
+        var EStructuralFeature erroneousMappingFeature
+        switch (mapping) {
+            // Primitive data field mapping
+            TechnologySpecificFieldMapping: {
+                mappedType = mapping.type
+                mappedTypeName = (mappedType as TechnologySpecificPrimitiveType).name
+                originalType = mapping.dataField.effectiveType
+                erroneousMappingFeature = MappingPackage::Literals
+                    .TECHNOLOGY_SPECIFIC_FIELD_MAPPING__DATA_FIELD
+            }
+
+            // Mapping of data operation with primitive return type
+            DataOperationMapping: {
+                mappedType = mapping.returnType
+                mappedTypeName = (mappedType as TechnologySpecificPrimitiveType).name
+                originalType = mapping.dataOperation.primitiveReturnType
+                erroneousMappingFeature = MappingPackage::Literals
+                    .DATA_OPERATION_MAPPING__DATA_OPERATION
+            }
+
+            // Primitive data operation parameter mapping
+            DataOperationParameterMapping: {
+                mappedType = mapping.type
+                mappedTypeName = (mappedType as TechnologySpecificPrimitiveType).name
+                originalType = mapping.parameter.primitiveType
+                erroneousMappingFeature = MappingPackage::Literals
+                    .DATA_OPERATION_PARAMETER_MAPPING__PARAMETER
+            }
+
+            // Primitive parameter mapping
+            PrimitiveParameterMapping: {
+                mappedType = mapping.primitiveType
+                mappedTypeName = mapping.primitiveType.name
+                originalType = mapping.parameter.primitiveType
+                erroneousMappingFeature = MappingPackage::Literals.PARAMETER_MAPPING__PARAMETER
+            }
+        }
+
+        if (originalType === null || mappedType === null) {
+            return
+        }
+
+        /* Perform the actual type check */
+        try {
+            new TypeChecker().checkTypeCompatibility(originalType, mappedType)
+        } catch (TypesNotCompatibleException ex) {
+            // The original type is always a primitive type, because the scope provider only
+            // provides a selection of primitive types when the original type is also a primitive
+            // one. That is, a primitive type mapping is only possible if original and mapped type
+            // are primitive.
+            val originalTypeName = if (originalType instanceof TechnologySpecificPrimitiveType)
+                    originalType.buildQualifiedName(".")
+                else if (originalType instanceof PrimitiveType)
+                    originalType.typeName
+
+            warning('''Original type «originalTypeName» is not directly compatible with ''' +
+                '''mapped type «mappedTypeName» ''', mapping, erroneousMappingFeature)
+        }
+    }
+
+    /**
+     * Helper to check if a mapping is for a primitive type
+     */
+    private def isPrimitiveTypeMapping(EObject mapping) {
+        return mapping instanceof PrimitiveParameterMapping ||
+            if (mapping instanceof TechnologySpecificFieldMapping)
+                mapping.type instanceof TechnologySpecificPrimitiveType
+            else if (mapping instanceof DataOperationMapping)
+                mapping.returnType instanceof TechnologySpecificPrimitiveType
+            else if (mapping instanceof DataOperationParameterMapping)
+                mapping.type instanceof TechnologySpecificPrimitiveType
+            else
+                false
     }
 
     /**
@@ -996,6 +1140,16 @@ class MappingDslValidator extends AbstractMappingDslValidator {
     }
 
     /**
+     * Check that a data operation mapping is not empty
+     */
+    @Check
+    def checkDataOperationMappingNotEmpty(DataOperationMapping mapping) {
+        if (mapping.returnType === null && mapping.aspects.empty)
+            error("Data operation mapping must not be empty", mapping,
+                MappingPackage::Literals.DATA_OPERATION_MAPPING__DATA_OPERATION)
+    }
+
+    /**
      * Helper to check that communication types are unique
      */
     private def checkCommunicationTypeUniqueness(
@@ -1047,69 +1201,6 @@ class MappingDslValidator extends AbstractMappingDslValidator {
         val duplicate = mappingsToCheck.get(duplicateIndex)
         error(errorMessage, duplicate, mappingFeature)
         return true
-    }
-
-    /**
-     * Convenience method for warning if types of a parameter mapping are not compatible with each
-     * other
-     */
-    def warnPrimitiveTypeMappingCompatibility(EObject mapping) {
-        if (!mapping.isPrimitiveTypeMapping)
-            return
-
-        /*
-         * Determine mapped type, its name, the original type, and the feature to place the warning
-         * on
-         */
-        var Type mappedType
-        var String mappedTypeName
-        var Type originalType
-        var EStructuralFeature erroneousMappingFeature
-        switch (mapping) {
-            // Primitive parameter mapping
-            PrimitiveParameterMapping: {
-                mappedType = mapping.primitiveType
-                mappedTypeName = mapping.primitiveType.name
-                originalType = mapping.parameter.primitiveType
-                erroneousMappingFeature = MappingPackage::Literals.PARAMETER_MAPPING__PARAMETER
-            }
-
-            // Primitive data field mapping
-            TechnologySpecificFieldMapping: {
-                mappedType = mapping.type
-                mappedTypeName = (mappedType as TechnologySpecificPrimitiveType).name
-                originalType = mapping.dataField.effectiveType
-                erroneousMappingFeature = MappingPackage::Literals
-                    .TECHNOLOGY_SPECIFIC_FIELD_MAPPING__DATA_FIELD
-            }
-        }
-
-        // Might happen if there are syntax errors in the model because a non-existing parameter or
-        // type was specified
-        if (originalType === null || mappedType === null) {
-            return
-        }
-
-        /* Perform the actual type check */
-        try {
-            new TypeChecker().checkTypeCompatibility(originalType, mappedType)
-        } catch (TypesNotCompatibleException ex) {
-            val originalTypeName = buildMappedTypeQualifiedName(mapping, originalType)
-            warning('''Original type «originalTypeName» of parameter is not directly ''' +
-                '''compatible with mapped type «mappedTypeName» ''', mapping,
-                erroneousMappingFeature)
-        }
-    }
-
-    /**
-     * Helper to check if a mapping is for a primitive type
-     */
-    private def isPrimitiveTypeMapping(EObject mapping) {
-        return mapping instanceof PrimitiveParameterMapping ||
-            if (mapping instanceof TechnologySpecificFieldMapping)
-                mapping.type instanceof TechnologySpecificPrimitiveType
-            else
-                false
     }
 
     /**
@@ -1190,60 +1281,5 @@ class MappingDslValidator extends AbstractMappingDslValidator {
                     MappingPackage.Literals::TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__ASPECT)
             ]
         }
-    }
-
-    /**
-     * Convenience method to build a qualified name for a type being used in a parameter mapping
-     */
-    private def buildMappedTypeQualifiedName(EObject mapping, Type type) {
-        var String importAlias
-        var List<String> nameParts
-
-        /* Get alias (if type is imported) and name parts of fully-qualified type name */
-        switch (mapping) {
-            /* Primitive parameter mapping */
-            PrimitiveParameterMapping:
-                switch (type) {
-                    // Primitive type is imported from a technology model
-                    TechnologySpecificPrimitiveType: {
-                        importAlias = mapping.parameter.importedType.import.name
-                        nameParts = type.qualifiedNameParts
-                    }
-
-                    // Built-in primitive type
-                    PrimitiveType: nameParts = #[type.typeName]
-                }
-
-            /* Complex parameter mapping */
-            ComplexParameterMapping:
-                switch (type) {
-                    ComplexType: {
-                        importAlias = mapping.parameter.importedType.import.name
-                        nameParts = type.qualifiedNameParts
-                    }
-                }
-
-            /*
-             * Data field mapping. A data field either has a built-in primitive type or a complex
-             * type from a data model. It may not have a technology-specific type of any kind
-             * assigned.
-             */
-            TechnologySpecificFieldMapping:
-                switch (type) {
-                    // Built-in primitive type
-                    PrimitiveType: nameParts = #[type.typeName]
-
-                    // Complex type being imported from data model
-                    ComplexType: {
-                        importAlias = mapping.parameterMapping.parameter.importedType.import.name
-                        nameParts = type.qualifiedNameParts
-                    }
-            }
-        }
-
-        var qualifiedName = QualifiedName.create(nameParts).toString
-        if (importAlias !== null)
-            qualifiedName = importAlias + "::" + qualifiedName
-        return qualifiedName
     }
 }

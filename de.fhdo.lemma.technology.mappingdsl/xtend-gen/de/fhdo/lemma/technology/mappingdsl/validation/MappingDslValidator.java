@@ -35,6 +35,8 @@ import de.fhdo.lemma.technology.TechnologySpecificProperty;
 import de.fhdo.lemma.technology.TechnologySpecificPropertyValueAssignment;
 import de.fhdo.lemma.technology.mapping.ComplexParameterMapping;
 import de.fhdo.lemma.technology.mapping.ComplexTypeMapping;
+import de.fhdo.lemma.technology.mapping.DataOperationMapping;
+import de.fhdo.lemma.technology.mapping.DataOperationParameterMapping;
 import de.fhdo.lemma.technology.mapping.ImportedComplexType;
 import de.fhdo.lemma.technology.mapping.ImportedMicroservice;
 import de.fhdo.lemma.technology.mapping.InterfaceMapping;
@@ -55,7 +57,6 @@ import de.fhdo.lemma.typechecking.TypeChecker;
 import de.fhdo.lemma.typechecking.TypesNotCompatibleException;
 import de.fhdo.lemma.utils.LemmaUtils;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -590,6 +591,30 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
   }
   
   /**
+   * Check that data operation mappings are unique
+   */
+  @Check
+  public boolean checkDataOperationMappingUniqueness(final ComplexTypeMapping typeMapping) {
+    final Function<DataOperationMapping, String> _function = (DataOperationMapping it) -> {
+      return QualifiedName.create(it.getDataOperation().getQualifiedNameParts()).toString();
+    };
+    return this.<DataOperationMapping>checkMappingUniqueness(typeMapping.getOperationMappings(), "Data operation", _function, 
+      MappingPackage.Literals.DATA_OPERATION_MAPPING__DATA_OPERATION);
+  }
+  
+  /**
+   * Check that data operation parameter mappings are unique
+   */
+  @Check
+  public boolean checkDataOperationParameterMappingUniqueness(final DataOperationMapping operationMapping) {
+    final Function<DataOperationParameterMapping, String> _function = (DataOperationParameterMapping it) -> {
+      return QualifiedName.create(it.getParameter().getQualifiedNameParts()).toString();
+    };
+    return this.<DataOperationParameterMapping>checkMappingUniqueness(operationMapping.getParameterMappings(), "Parameter", _function, 
+      MappingPackage.Literals.DATA_OPERATION_PARAMETER_MAPPING__PARAMETER);
+  }
+  
+  /**
    * Check that interface mappings are unique
    */
   @Check
@@ -1040,7 +1065,7 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
   /**
    * Check and warn if types of a primitive parameter mapping are not compatible. Note that we
    * just place a warning in case of (suspected) type incompatibility, as we also do it in the
-   * service DSL.
+   * Service DSL.
    */
   @Check
   public void warnPrimitiveParameterMappingTypeCompatibility(final PrimitiveParameterMapping mapping) {
@@ -1053,14 +1078,157 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
   
   /**
    * Check and warn if types of a data field mapping are not compatible. Note that we just place a
-   * warning in case of (suspected) type incompatibility, as we also do it in the service DSL.
+   * warning in case of (suspected) type incompatibility, as we also do it in the Service DSL.
    */
   @Check
-  public void warnComplexParameterMappingTypeCompatibility(final TechnologySpecificFieldMapping mapping) {
+  public void warnFieldMappingTypeCompatibility(final TechnologySpecificFieldMapping mapping) {
     boolean _isPrimitiveTypeMapping = this.isPrimitiveTypeMapping(mapping);
     if (_isPrimitiveTypeMapping) {
       this.warnPrimitiveTypeMappingCompatibility(mapping);
     }
+  }
+  
+  /**
+   * Check and warn if types of a data operation mapping with primitive return type are not
+   * compatible. Note that we just place a warning in case of (suspected) type incompatibility, as
+   * we also do it in the Service DSL.
+   */
+  @Check
+  public void warnReturnTypeCompatibility(final DataOperationMapping mapping) {
+    boolean _isPrimitiveTypeMapping = this.isPrimitiveTypeMapping(mapping);
+    if (_isPrimitiveTypeMapping) {
+      this.warnPrimitiveTypeMappingCompatibility(mapping);
+    }
+  }
+  
+  /**
+   * Check and warn if types of a data operation parameter primitive type mapping are not
+   * compatible. Note that we just place a warning in case of (suspected) type incompatibility, as
+   * we also do it in the Service DSL.
+   */
+  @Check
+  public void warnDataOperationParameterTypeCompatibility(final DataOperationParameterMapping mapping) {
+    boolean _isPrimitiveTypeMapping = this.isPrimitiveTypeMapping(mapping);
+    if (_isPrimitiveTypeMapping) {
+      this.warnPrimitiveTypeMappingCompatibility(mapping);
+    }
+  }
+  
+  /**
+   * Convenience method for warning if primitive types within a mapping are not compatible with
+   * each other
+   */
+  private void warnPrimitiveTypeMappingCompatibility(final EObject mapping) {
+    boolean _isPrimitiveTypeMapping = this.isPrimitiveTypeMapping(mapping);
+    boolean _not = (!_isPrimitiveTypeMapping);
+    if (_not) {
+      return;
+    }
+    Type mappedType = null;
+    String mappedTypeName = null;
+    Type originalType = null;
+    EStructuralFeature erroneousMappingFeature = null;
+    boolean _matched = false;
+    if (mapping instanceof TechnologySpecificFieldMapping) {
+      _matched=true;
+      mappedType = ((TechnologySpecificFieldMapping)mapping).getType();
+      mappedTypeName = ((TechnologySpecificPrimitiveType) mappedType).getName();
+      originalType = ((TechnologySpecificFieldMapping)mapping).getDataField().getEffectiveType();
+      erroneousMappingFeature = MappingPackage.Literals.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__DATA_FIELD;
+    }
+    if (!_matched) {
+      if (mapping instanceof DataOperationMapping) {
+        _matched=true;
+        mappedType = ((DataOperationMapping)mapping).getReturnType();
+        mappedTypeName = ((TechnologySpecificPrimitiveType) mappedType).getName();
+        originalType = ((DataOperationMapping)mapping).getDataOperation().getPrimitiveReturnType();
+        erroneousMappingFeature = MappingPackage.Literals.DATA_OPERATION_MAPPING__DATA_OPERATION;
+      }
+    }
+    if (!_matched) {
+      if (mapping instanceof DataOperationParameterMapping) {
+        _matched=true;
+        mappedType = ((DataOperationParameterMapping)mapping).getType();
+        mappedTypeName = ((TechnologySpecificPrimitiveType) mappedType).getName();
+        originalType = ((DataOperationParameterMapping)mapping).getParameter().getPrimitiveType();
+        erroneousMappingFeature = MappingPackage.Literals.DATA_OPERATION_PARAMETER_MAPPING__PARAMETER;
+      }
+    }
+    if (!_matched) {
+      if (mapping instanceof PrimitiveParameterMapping) {
+        _matched=true;
+        mappedType = ((PrimitiveParameterMapping)mapping).getPrimitiveType();
+        mappedTypeName = ((PrimitiveParameterMapping)mapping).getPrimitiveType().getName();
+        originalType = ((PrimitiveParameterMapping)mapping).getParameter().getPrimitiveType();
+        erroneousMappingFeature = MappingPackage.Literals.PARAMETER_MAPPING__PARAMETER;
+      }
+    }
+    if (((originalType == null) || (mappedType == null))) {
+      return;
+    }
+    try {
+      new TypeChecker().checkTypeCompatibility(originalType, mappedType);
+    } catch (final Throwable _t) {
+      if (_t instanceof TypesNotCompatibleException) {
+        String _xifexpression = null;
+        if ((originalType instanceof TechnologySpecificPrimitiveType)) {
+          _xifexpression = ((TechnologySpecificPrimitiveType)originalType).buildQualifiedName(".");
+        } else {
+          String _xifexpression_1 = null;
+          if ((originalType instanceof PrimitiveType)) {
+            _xifexpression_1 = ((PrimitiveType)originalType).getTypeName();
+          }
+          _xifexpression = _xifexpression_1;
+        }
+        final String originalTypeName = _xifexpression;
+        StringConcatenation _builder = new StringConcatenation();
+        _builder.append("Original type ");
+        _builder.append(originalTypeName);
+        _builder.append(" is not directly compatible with ");
+        StringConcatenation _builder_1 = new StringConcatenation();
+        _builder_1.append("mapped type ");
+        _builder_1.append(mappedTypeName);
+        _builder_1.append(" ");
+        String _plus = (_builder.toString() + _builder_1);
+        this.warning(_plus, mapping, erroneousMappingFeature);
+      } else {
+        throw Exceptions.sneakyThrow(_t);
+      }
+    }
+  }
+  
+  /**
+   * Helper to check if a mapping is for a primitive type
+   */
+  private boolean isPrimitiveTypeMapping(final EObject mapping) {
+    boolean _or = false;
+    if ((mapping instanceof PrimitiveParameterMapping)) {
+      _or = true;
+    } else {
+      boolean _xifexpression = false;
+      if ((mapping instanceof TechnologySpecificFieldMapping)) {
+        Type _type = ((TechnologySpecificFieldMapping)mapping).getType();
+        _xifexpression = (_type instanceof TechnologySpecificPrimitiveType);
+      } else {
+        boolean _xifexpression_1 = false;
+        if ((mapping instanceof DataOperationMapping)) {
+          Type _returnType = ((DataOperationMapping)mapping).getReturnType();
+          _xifexpression_1 = (_returnType instanceof TechnologySpecificPrimitiveType);
+        } else {
+          boolean _xifexpression_2 = false;
+          if ((mapping instanceof DataOperationParameterMapping)) {
+            Type _type_1 = ((DataOperationParameterMapping)mapping).getType();
+            _xifexpression_2 = (_type_1 instanceof TechnologySpecificPrimitiveType);
+          } else {
+            _xifexpression_2 = false;
+          }
+          _xifexpression_1 = _xifexpression_2;
+        }
+        _xifexpression = _xifexpression_1;
+      }
+      _or = _xifexpression;
+    }
+    return _or;
   }
   
   /**
@@ -1302,6 +1470,17 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
   }
   
   /**
+   * Check that a data operation mapping is not empty
+   */
+  @Check
+  public void checkDataOperationMappingNotEmpty(final DataOperationMapping mapping) {
+    if (((mapping.getReturnType() == null) && mapping.getAspects().isEmpty())) {
+      this.error("Data operation mapping must not be empty", mapping, 
+        MappingPackage.Literals.DATA_OPERATION_MAPPING__DATA_OPERATION);
+    }
+  }
+  
+  /**
    * Helper to check that communication types are unique
    */
   private void checkCommunicationTypeUniqueness(final List<TechnologySpecificProtocolSpecification> protocolSpecifications) {
@@ -1377,81 +1556,6 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
     final T duplicate = mappingsToCheck.get((duplicateIndex).intValue());
     this.error(errorMessage, duplicate, mappingFeature);
     return true;
-  }
-  
-  /**
-   * Convenience method for warning if types of a parameter mapping are not compatible with each
-   * other
-   */
-  public void warnPrimitiveTypeMappingCompatibility(final EObject mapping) {
-    boolean _isPrimitiveTypeMapping = this.isPrimitiveTypeMapping(mapping);
-    boolean _not = (!_isPrimitiveTypeMapping);
-    if (_not) {
-      return;
-    }
-    Type mappedType = null;
-    String mappedTypeName = null;
-    Type originalType = null;
-    EStructuralFeature erroneousMappingFeature = null;
-    boolean _matched = false;
-    if (mapping instanceof PrimitiveParameterMapping) {
-      _matched=true;
-      mappedType = ((PrimitiveParameterMapping)mapping).getPrimitiveType();
-      mappedTypeName = ((PrimitiveParameterMapping)mapping).getPrimitiveType().getName();
-      originalType = ((PrimitiveParameterMapping)mapping).getParameter().getPrimitiveType();
-      erroneousMappingFeature = MappingPackage.Literals.PARAMETER_MAPPING__PARAMETER;
-    }
-    if (!_matched) {
-      if (mapping instanceof TechnologySpecificFieldMapping) {
-        _matched=true;
-        mappedType = ((TechnologySpecificFieldMapping)mapping).getType();
-        mappedTypeName = ((TechnologySpecificPrimitiveType) mappedType).getName();
-        originalType = ((TechnologySpecificFieldMapping)mapping).getDataField().getEffectiveType();
-        erroneousMappingFeature = MappingPackage.Literals.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__DATA_FIELD;
-      }
-    }
-    if (((originalType == null) || (mappedType == null))) {
-      return;
-    }
-    try {
-      new TypeChecker().checkTypeCompatibility(originalType, mappedType);
-    } catch (final Throwable _t) {
-      if (_t instanceof TypesNotCompatibleException) {
-        final String originalTypeName = this.buildMappedTypeQualifiedName(mapping, originalType);
-        StringConcatenation _builder = new StringConcatenation();
-        _builder.append("Original type ");
-        _builder.append(originalTypeName);
-        _builder.append(" of parameter is not directly ");
-        StringConcatenation _builder_1 = new StringConcatenation();
-        _builder_1.append("compatible with mapped type ");
-        _builder_1.append(mappedTypeName);
-        _builder_1.append(" ");
-        String _plus = (_builder.toString() + _builder_1);
-        this.warning(_plus, mapping, erroneousMappingFeature);
-      } else {
-        throw Exceptions.sneakyThrow(_t);
-      }
-    }
-  }
-  
-  /**
-   * Helper to check if a mapping is for a primitive type
-   */
-  private boolean isPrimitiveTypeMapping(final EObject mapping) {
-    boolean _or = false;
-    if ((mapping instanceof PrimitiveParameterMapping)) {
-      _or = true;
-    } else {
-      boolean _xifexpression = false;
-      if ((mapping instanceof TechnologySpecificFieldMapping)) {
-        Type _type = ((TechnologySpecificFieldMapping)mapping).getType();
-        _xifexpression = (_type instanceof TechnologySpecificPrimitiveType);
-      } else {
-        _xifexpression = false;
-      }
-      _or = _xifexpression;
-    }
-    return _or;
   }
   
   /**
@@ -1565,64 +1669,5 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
         mandatoryPropertiesWithoutValues.forEach(_function_2);
       }
     }
-  }
-  
-  /**
-   * Convenience method to build a qualified name for a type being used in a parameter mapping
-   */
-  private String buildMappedTypeQualifiedName(final EObject mapping, final Type type) {
-    String importAlias = null;
-    List<String> nameParts = null;
-    boolean _matched = false;
-    if (mapping instanceof PrimitiveParameterMapping) {
-      _matched=true;
-      boolean _matched_1 = false;
-      if (type instanceof TechnologySpecificPrimitiveType) {
-        _matched_1=true;
-        importAlias = ((PrimitiveParameterMapping)mapping).getParameter().getImportedType().getImport().getName();
-        nameParts = ((TechnologySpecificPrimitiveType)type).getQualifiedNameParts();
-      }
-      if (!_matched_1) {
-        if (type instanceof PrimitiveType) {
-          _matched_1=true;
-          String _typeName = ((PrimitiveType)type).getTypeName();
-          nameParts = Collections.<String>unmodifiableList(CollectionLiterals.<String>newArrayList(_typeName));
-        }
-      }
-    }
-    if (!_matched) {
-      if (mapping instanceof ComplexParameterMapping) {
-        _matched=true;
-        boolean _matched_1 = false;
-        if (type instanceof ComplexType) {
-          _matched_1=true;
-          importAlias = ((ComplexParameterMapping)mapping).getParameter().getImportedType().getImport().getName();
-          nameParts = ((ComplexType)type).getQualifiedNameParts();
-        }
-      }
-    }
-    if (!_matched) {
-      if (mapping instanceof TechnologySpecificFieldMapping) {
-        _matched=true;
-        boolean _matched_1 = false;
-        if (type instanceof PrimitiveType) {
-          _matched_1=true;
-          String _typeName = ((PrimitiveType)type).getTypeName();
-          nameParts = Collections.<String>unmodifiableList(CollectionLiterals.<String>newArrayList(_typeName));
-        }
-        if (!_matched_1) {
-          if (type instanceof ComplexType) {
-            _matched_1=true;
-            importAlias = ((TechnologySpecificFieldMapping)mapping).getParameterMapping().getParameter().getImportedType().getImport().getName();
-            nameParts = ((ComplexType)type).getQualifiedNameParts();
-          }
-        }
-      }
-    }
-    String qualifiedName = QualifiedName.create(nameParts).toString();
-    if ((importAlias != null)) {
-      qualifiedName = ((importAlias + "::") + qualifiedName);
-    }
-    return qualifiedName;
   }
 }

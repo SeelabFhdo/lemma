@@ -197,13 +197,22 @@ public interface MappingPackage extends EPackage {
     int COMPLEX_TYPE_MAPPING__FIELD_MAPPINGS = 3;
 
     /**
+     * The feature id for the '<em><b>Operation Mappings</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int COMPLEX_TYPE_MAPPING__OPERATION_MAPPINGS = 4;
+
+    /**
      * The feature id for the '<em><b>Aspects</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int COMPLEX_TYPE_MAPPING__ASPECTS = 4;
+    int COMPLEX_TYPE_MAPPING__ASPECTS = 5;
 
     /**
      * The feature id for the '<em><b>Mapping Model</b></em>' container reference.
@@ -212,7 +221,7 @@ public interface MappingPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int COMPLEX_TYPE_MAPPING__MAPPING_MODEL = 5;
+    int COMPLEX_TYPE_MAPPING__MAPPING_MODEL = 6;
 
     /**
      * The number of structural features of the '<em>Complex Type Mapping</em>' class.
@@ -221,7 +230,7 @@ public interface MappingPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int COMPLEX_TYPE_MAPPING_FEATURE_COUNT = 6;
+    int COMPLEX_TYPE_MAPPING_FEATURE_COUNT = 7;
 
     /**
      * The operation id for the '<em>Get All Type Definition Technology References</em>' operation.
@@ -963,22 +972,13 @@ public interface MappingPackage extends EPackage {
     int TECHNOLOGY_SPECIFIC_FIELD_MAPPING = 11;
 
     /**
-     * The feature id for the '<em><b>Tsource Model Uri</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int TECHNOLOGY_SPECIFIC_FIELD_MAPPING__TSOURCE_MODEL_URI = 0;
-
-    /**
      * The feature id for the '<em><b>Technology</b></em>' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int TECHNOLOGY_SPECIFIC_FIELD_MAPPING__TECHNOLOGY = 1;
+    int TECHNOLOGY_SPECIFIC_FIELD_MAPPING__TECHNOLOGY = 0;
 
     /**
      * The feature id for the '<em><b>Type</b></em>' reference.
@@ -987,7 +987,7 @@ public interface MappingPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TECHNOLOGY_SPECIFIC_FIELD_MAPPING__TYPE = 2;
+    int TECHNOLOGY_SPECIFIC_FIELD_MAPPING__TYPE = 1;
 
     /**
      * The feature id for the '<em><b>Enumeration Field</b></em>' reference.
@@ -996,7 +996,7 @@ public interface MappingPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TECHNOLOGY_SPECIFIC_FIELD_MAPPING__ENUMERATION_FIELD = 3;
+    int TECHNOLOGY_SPECIFIC_FIELD_MAPPING__ENUMERATION_FIELD = 2;
 
     /**
      * The feature id for the '<em><b>Data Field</b></em>' reference.
@@ -1005,7 +1005,7 @@ public interface MappingPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TECHNOLOGY_SPECIFIC_FIELD_MAPPING__DATA_FIELD = 4;
+    int TECHNOLOGY_SPECIFIC_FIELD_MAPPING__DATA_FIELD = 3;
 
     /**
      * The feature id for the '<em><b>Aspects</b></em>' containment reference list.
@@ -1014,7 +1014,7 @@ public interface MappingPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TECHNOLOGY_SPECIFIC_FIELD_MAPPING__ASPECTS = 5;
+    int TECHNOLOGY_SPECIFIC_FIELD_MAPPING__ASPECTS = 4;
 
     /**
      * The feature id for the '<em><b>Type Mapping</b></em>' container reference.
@@ -1023,7 +1023,7 @@ public interface MappingPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TECHNOLOGY_SPECIFIC_FIELD_MAPPING__TYPE_MAPPING = 6;
+    int TECHNOLOGY_SPECIFIC_FIELD_MAPPING__TYPE_MAPPING = 5;
 
     /**
      * The feature id for the '<em><b>Parameter Mapping</b></em>' container reference.
@@ -1032,7 +1032,7 @@ public interface MappingPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TECHNOLOGY_SPECIFIC_FIELD_MAPPING__PARAMETER_MAPPING = 7;
+    int TECHNOLOGY_SPECIFIC_FIELD_MAPPING__PARAMETER_MAPPING = 6;
 
     /**
      * The number of structural features of the '<em>Technology Specific Field Mapping</em>' class.
@@ -1041,7 +1041,7 @@ public interface MappingPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TECHNOLOGY_SPECIFIC_FIELD_MAPPING_FEATURE_COUNT = 8;
+    int TECHNOLOGY_SPECIFIC_FIELD_MAPPING_FEATURE_COUNT = 7;
 
     /**
      * The operation id for the '<em>Get Original Type Of Mapped Element</em>' operation.
@@ -1062,6 +1062,161 @@ public interface MappingPackage extends EPackage {
     int TECHNOLOGY_SPECIFIC_FIELD_MAPPING_OPERATION_COUNT = 1;
 
     /**
+     * The meta object id for the '{@link de.fhdo.lemma.technology.mapping.impl.DataOperationMappingImpl <em>Data Operation Mapping</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.fhdo.lemma.technology.mapping.impl.DataOperationMappingImpl
+     * @see de.fhdo.lemma.technology.mapping.impl.MappingPackageImpl#getDataOperationMapping()
+     * @generated
+     */
+    int DATA_OPERATION_MAPPING = 12;
+
+    /**
+     * The feature id for the '<em><b>Data Operation</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATA_OPERATION_MAPPING__DATA_OPERATION = 0;
+
+    /**
+     * The feature id for the '<em><b>Technology</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATA_OPERATION_MAPPING__TECHNOLOGY = 1;
+
+    /**
+     * The feature id for the '<em><b>Return Type</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATA_OPERATION_MAPPING__RETURN_TYPE = 2;
+
+    /**
+     * The feature id for the '<em><b>Aspects</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATA_OPERATION_MAPPING__ASPECTS = 3;
+
+    /**
+     * The feature id for the '<em><b>Parameter Mappings</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATA_OPERATION_MAPPING__PARAMETER_MAPPINGS = 4;
+
+    /**
+     * The feature id for the '<em><b>Type Mapping</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATA_OPERATION_MAPPING__TYPE_MAPPING = 5;
+
+    /**
+     * The number of structural features of the '<em>Data Operation Mapping</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATA_OPERATION_MAPPING_FEATURE_COUNT = 6;
+
+    /**
+     * The number of operations of the '<em>Data Operation Mapping</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATA_OPERATION_MAPPING_OPERATION_COUNT = 0;
+
+    /**
+     * The meta object id for the '{@link de.fhdo.lemma.technology.mapping.impl.DataOperationParameterMappingImpl <em>Data Operation Parameter Mapping</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.fhdo.lemma.technology.mapping.impl.DataOperationParameterMappingImpl
+     * @see de.fhdo.lemma.technology.mapping.impl.MappingPackageImpl#getDataOperationParameterMapping()
+     * @generated
+     */
+    int DATA_OPERATION_PARAMETER_MAPPING = 13;
+
+    /**
+     * The feature id for the '<em><b>Parameter</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATA_OPERATION_PARAMETER_MAPPING__PARAMETER = 0;
+
+    /**
+     * The feature id for the '<em><b>Technology</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATA_OPERATION_PARAMETER_MAPPING__TECHNOLOGY = 1;
+
+    /**
+     * The feature id for the '<em><b>Type</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATA_OPERATION_PARAMETER_MAPPING__TYPE = 2;
+
+    /**
+     * The feature id for the '<em><b>Aspects</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATA_OPERATION_PARAMETER_MAPPING__ASPECTS = 3;
+
+    /**
+     * The feature id for the '<em><b>Operation Mapping</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATA_OPERATION_PARAMETER_MAPPING__OPERATION_MAPPING = 4;
+
+    /**
+     * The number of structural features of the '<em>Data Operation Parameter Mapping</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATA_OPERATION_PARAMETER_MAPPING_FEATURE_COUNT = 5;
+
+    /**
+     * The number of operations of the '<em>Data Operation Parameter Mapping</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATA_OPERATION_PARAMETER_MAPPING_OPERATION_COUNT = 0;
+
+    /**
      * The meta object id for the '{@link de.fhdo.lemma.technology.mapping.impl.TechnologySpecificProtocolSpecificationImpl <em>Technology Specific Protocol Specification</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1069,7 +1224,7 @@ public interface MappingPackage extends EPackage {
      * @see de.fhdo.lemma.technology.mapping.impl.MappingPackageImpl#getTechnologySpecificProtocolSpecification()
      * @generated
      */
-    int TECHNOLOGY_SPECIFIC_PROTOCOL_SPECIFICATION = 12;
+    int TECHNOLOGY_SPECIFIC_PROTOCOL_SPECIFICATION = 14;
 
     /**
      * The feature id for the '<em><b>Communication Type</b></em>' attribute.
@@ -1115,7 +1270,7 @@ public interface MappingPackage extends EPackage {
      * @see de.fhdo.lemma.technology.mapping.impl.MappingPackageImpl#getTechnologySpecificProtocol()
      * @generated
      */
-    int TECHNOLOGY_SPECIFIC_PROTOCOL = 13;
+    int TECHNOLOGY_SPECIFIC_PROTOCOL = 15;
 
     /**
      * The feature id for the '<em><b>Technology</b></em>' reference.
@@ -1188,7 +1343,7 @@ public interface MappingPackage extends EPackage {
      * @see de.fhdo.lemma.technology.mapping.impl.MappingPackageImpl#getTechnologySpecificEndpoint()
      * @generated
      */
-    int TECHNOLOGY_SPECIFIC_ENDPOINT = 14;
+    int TECHNOLOGY_SPECIFIC_ENDPOINT = 16;
 
     /**
      * The feature id for the '<em><b>Addresses</b></em>' attribute list.
@@ -1270,7 +1425,7 @@ public interface MappingPackage extends EPackage {
      * @see de.fhdo.lemma.technology.mapping.impl.MappingPackageImpl#getTechnologySpecificImportedServiceAspect()
      * @generated
      */
-    int TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT = 15;
+    int TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT = 17;
 
     /**
      * The feature id for the '<em><b>Technology</b></em>' reference.
@@ -1372,13 +1527,31 @@ public interface MappingPackage extends EPackage {
     int TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__FIELD_MAPPING = 10;
 
     /**
+     * The feature id for the '<em><b>Data Operation Mapping</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__DATA_OPERATION_MAPPING = 11;
+
+    /**
+     * The feature id for the '<em><b>Data Operation Parameter Mapping</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__DATA_OPERATION_PARAMETER_MAPPING = 12;
+
+    /**
      * The number of structural features of the '<em>Technology Specific Imported Service Aspect</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT_FEATURE_COUNT = 11;
+    int TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT_FEATURE_COUNT = 13;
 
     /**
      * The number of operations of the '<em>Technology Specific Imported Service Aspect</em>' class.
@@ -1397,7 +1570,7 @@ public interface MappingPackage extends EPackage {
      * @see de.fhdo.lemma.technology.mapping.impl.MappingPackageImpl#getDataFieldList()
      * @generated
      */
-    int DATA_FIELD_LIST = 16;
+    int DATA_FIELD_LIST = 18;
 
 
     /**
@@ -1536,6 +1709,17 @@ public interface MappingPackage extends EPackage {
      * @generated
      */
     EReference getComplexTypeMapping_FieldMappings();
+
+    /**
+     * Returns the meta object for the containment reference list '{@link de.fhdo.lemma.technology.mapping.ComplexTypeMapping#getOperationMappings <em>Operation Mappings</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Operation Mappings</em>'.
+     * @see de.fhdo.lemma.technology.mapping.ComplexTypeMapping#getOperationMappings()
+     * @see #getComplexTypeMapping()
+     * @generated
+     */
+    EReference getComplexTypeMapping_OperationMappings();
 
     /**
      * Returns the meta object for the containment reference list '{@link de.fhdo.lemma.technology.mapping.ComplexTypeMapping#getAspects <em>Aspects</em>}'.
@@ -2160,17 +2344,6 @@ public interface MappingPackage extends EPackage {
     EClass getTechnologySpecificFieldMapping();
 
     /**
-     * Returns the meta object for the attribute '{@link de.fhdo.lemma.technology.mapping.TechnologySpecificFieldMapping#getT_sourceModelUri <em>Tsource Model Uri</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Tsource Model Uri</em>'.
-     * @see de.fhdo.lemma.technology.mapping.TechnologySpecificFieldMapping#getT_sourceModelUri()
-     * @see #getTechnologySpecificFieldMapping()
-     * @generated
-     */
-    EAttribute getTechnologySpecificFieldMapping_T_sourceModelUri();
-
-    /**
      * Returns the meta object for the reference '{@link de.fhdo.lemma.technology.mapping.TechnologySpecificFieldMapping#getTechnology <em>Technology</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2256,6 +2429,147 @@ public interface MappingPackage extends EPackage {
      * @generated
      */
     EOperation getTechnologySpecificFieldMapping__GetOriginalTypeOfMappedElement();
+
+    /**
+     * Returns the meta object for class '{@link de.fhdo.lemma.technology.mapping.DataOperationMapping <em>Data Operation Mapping</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Data Operation Mapping</em>'.
+     * @see de.fhdo.lemma.technology.mapping.DataOperationMapping
+     * @generated
+     */
+    EClass getDataOperationMapping();
+
+    /**
+     * Returns the meta object for the reference '{@link de.fhdo.lemma.technology.mapping.DataOperationMapping#getDataOperation <em>Data Operation</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference '<em>Data Operation</em>'.
+     * @see de.fhdo.lemma.technology.mapping.DataOperationMapping#getDataOperation()
+     * @see #getDataOperationMapping()
+     * @generated
+     */
+    EReference getDataOperationMapping_DataOperation();
+
+    /**
+     * Returns the meta object for the reference '{@link de.fhdo.lemma.technology.mapping.DataOperationMapping#getTechnology <em>Technology</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference '<em>Technology</em>'.
+     * @see de.fhdo.lemma.technology.mapping.DataOperationMapping#getTechnology()
+     * @see #getDataOperationMapping()
+     * @generated
+     */
+    EReference getDataOperationMapping_Technology();
+
+    /**
+     * Returns the meta object for the reference '{@link de.fhdo.lemma.technology.mapping.DataOperationMapping#getReturnType <em>Return Type</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference '<em>Return Type</em>'.
+     * @see de.fhdo.lemma.technology.mapping.DataOperationMapping#getReturnType()
+     * @see #getDataOperationMapping()
+     * @generated
+     */
+    EReference getDataOperationMapping_ReturnType();
+
+    /**
+     * Returns the meta object for the containment reference list '{@link de.fhdo.lemma.technology.mapping.DataOperationMapping#getAspects <em>Aspects</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Aspects</em>'.
+     * @see de.fhdo.lemma.technology.mapping.DataOperationMapping#getAspects()
+     * @see #getDataOperationMapping()
+     * @generated
+     */
+    EReference getDataOperationMapping_Aspects();
+
+    /**
+     * Returns the meta object for the containment reference list '{@link de.fhdo.lemma.technology.mapping.DataOperationMapping#getParameterMappings <em>Parameter Mappings</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Parameter Mappings</em>'.
+     * @see de.fhdo.lemma.technology.mapping.DataOperationMapping#getParameterMappings()
+     * @see #getDataOperationMapping()
+     * @generated
+     */
+    EReference getDataOperationMapping_ParameterMappings();
+
+    /**
+     * Returns the meta object for the container reference '{@link de.fhdo.lemma.technology.mapping.DataOperationMapping#getTypeMapping <em>Type Mapping</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the container reference '<em>Type Mapping</em>'.
+     * @see de.fhdo.lemma.technology.mapping.DataOperationMapping#getTypeMapping()
+     * @see #getDataOperationMapping()
+     * @generated
+     */
+    EReference getDataOperationMapping_TypeMapping();
+
+    /**
+     * Returns the meta object for class '{@link de.fhdo.lemma.technology.mapping.DataOperationParameterMapping <em>Data Operation Parameter Mapping</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Data Operation Parameter Mapping</em>'.
+     * @see de.fhdo.lemma.technology.mapping.DataOperationParameterMapping
+     * @generated
+     */
+    EClass getDataOperationParameterMapping();
+
+    /**
+     * Returns the meta object for the reference '{@link de.fhdo.lemma.technology.mapping.DataOperationParameterMapping#getParameter <em>Parameter</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference '<em>Parameter</em>'.
+     * @see de.fhdo.lemma.technology.mapping.DataOperationParameterMapping#getParameter()
+     * @see #getDataOperationParameterMapping()
+     * @generated
+     */
+    EReference getDataOperationParameterMapping_Parameter();
+
+    /**
+     * Returns the meta object for the reference '{@link de.fhdo.lemma.technology.mapping.DataOperationParameterMapping#getTechnology <em>Technology</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference '<em>Technology</em>'.
+     * @see de.fhdo.lemma.technology.mapping.DataOperationParameterMapping#getTechnology()
+     * @see #getDataOperationParameterMapping()
+     * @generated
+     */
+    EReference getDataOperationParameterMapping_Technology();
+
+    /**
+     * Returns the meta object for the reference '{@link de.fhdo.lemma.technology.mapping.DataOperationParameterMapping#getType <em>Type</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference '<em>Type</em>'.
+     * @see de.fhdo.lemma.technology.mapping.DataOperationParameterMapping#getType()
+     * @see #getDataOperationParameterMapping()
+     * @generated
+     */
+    EReference getDataOperationParameterMapping_Type();
+
+    /**
+     * Returns the meta object for the containment reference list '{@link de.fhdo.lemma.technology.mapping.DataOperationParameterMapping#getAspects <em>Aspects</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Aspects</em>'.
+     * @see de.fhdo.lemma.technology.mapping.DataOperationParameterMapping#getAspects()
+     * @see #getDataOperationParameterMapping()
+     * @generated
+     */
+    EReference getDataOperationParameterMapping_Aspects();
+
+    /**
+     * Returns the meta object for the container reference '{@link de.fhdo.lemma.technology.mapping.DataOperationParameterMapping#getOperationMapping <em>Operation Mapping</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the container reference '<em>Operation Mapping</em>'.
+     * @see de.fhdo.lemma.technology.mapping.DataOperationParameterMapping#getOperationMapping()
+     * @see #getDataOperationParameterMapping()
+     * @generated
+     */
+    EReference getDataOperationParameterMapping_OperationMapping();
 
     /**
      * Returns the meta object for class '{@link de.fhdo.lemma.technology.mapping.TechnologySpecificProtocolSpecification <em>Technology Specific Protocol Specification</em>}'.
@@ -2562,6 +2876,28 @@ public interface MappingPackage extends EPackage {
     EReference getTechnologySpecificImportedServiceAspect_FieldMapping();
 
     /**
+     * Returns the meta object for the container reference '{@link de.fhdo.lemma.technology.mapping.TechnologySpecificImportedServiceAspect#getDataOperationMapping <em>Data Operation Mapping</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the container reference '<em>Data Operation Mapping</em>'.
+     * @see de.fhdo.lemma.technology.mapping.TechnologySpecificImportedServiceAspect#getDataOperationMapping()
+     * @see #getTechnologySpecificImportedServiceAspect()
+     * @generated
+     */
+    EReference getTechnologySpecificImportedServiceAspect_DataOperationMapping();
+
+    /**
+     * Returns the meta object for the container reference '{@link de.fhdo.lemma.technology.mapping.TechnologySpecificImportedServiceAspect#getDataOperationParameterMapping <em>Data Operation Parameter Mapping</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the container reference '<em>Data Operation Parameter Mapping</em>'.
+     * @see de.fhdo.lemma.technology.mapping.TechnologySpecificImportedServiceAspect#getDataOperationParameterMapping()
+     * @see #getTechnologySpecificImportedServiceAspect()
+     * @generated
+     */
+    EReference getTechnologySpecificImportedServiceAspect_DataOperationParameterMapping();
+
+    /**
      * Returns the meta object for data type '{@link java.util.List <em>Data Field List</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2702,6 +3038,14 @@ public interface MappingPackage extends EPackage {
          * @generated
          */
         EReference COMPLEX_TYPE_MAPPING__FIELD_MAPPINGS = eINSTANCE.getComplexTypeMapping_FieldMappings();
+
+        /**
+         * The meta object literal for the '<em><b>Operation Mappings</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference COMPLEX_TYPE_MAPPING__OPERATION_MAPPINGS = eINSTANCE.getComplexTypeMapping_OperationMappings();
 
         /**
          * The meta object literal for the '<em><b>Aspects</b></em>' containment reference list feature.
@@ -3188,14 +3532,6 @@ public interface MappingPackage extends EPackage {
         EClass TECHNOLOGY_SPECIFIC_FIELD_MAPPING = eINSTANCE.getTechnologySpecificFieldMapping();
 
         /**
-         * The meta object literal for the '<em><b>Tsource Model Uri</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute TECHNOLOGY_SPECIFIC_FIELD_MAPPING__TSOURCE_MODEL_URI = eINSTANCE.getTechnologySpecificFieldMapping_T_sourceModelUri();
-
-        /**
          * The meta object literal for the '<em><b>Technology</b></em>' reference feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -3258,6 +3594,114 @@ public interface MappingPackage extends EPackage {
          * @generated
          */
         EOperation TECHNOLOGY_SPECIFIC_FIELD_MAPPING___GET_ORIGINAL_TYPE_OF_MAPPED_ELEMENT = eINSTANCE.getTechnologySpecificFieldMapping__GetOriginalTypeOfMappedElement();
+
+        /**
+         * The meta object literal for the '{@link de.fhdo.lemma.technology.mapping.impl.DataOperationMappingImpl <em>Data Operation Mapping</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.fhdo.lemma.technology.mapping.impl.DataOperationMappingImpl
+         * @see de.fhdo.lemma.technology.mapping.impl.MappingPackageImpl#getDataOperationMapping()
+         * @generated
+         */
+        EClass DATA_OPERATION_MAPPING = eINSTANCE.getDataOperationMapping();
+
+        /**
+         * The meta object literal for the '<em><b>Data Operation</b></em>' reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference DATA_OPERATION_MAPPING__DATA_OPERATION = eINSTANCE.getDataOperationMapping_DataOperation();
+
+        /**
+         * The meta object literal for the '<em><b>Technology</b></em>' reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference DATA_OPERATION_MAPPING__TECHNOLOGY = eINSTANCE.getDataOperationMapping_Technology();
+
+        /**
+         * The meta object literal for the '<em><b>Return Type</b></em>' reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference DATA_OPERATION_MAPPING__RETURN_TYPE = eINSTANCE.getDataOperationMapping_ReturnType();
+
+        /**
+         * The meta object literal for the '<em><b>Aspects</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference DATA_OPERATION_MAPPING__ASPECTS = eINSTANCE.getDataOperationMapping_Aspects();
+
+        /**
+         * The meta object literal for the '<em><b>Parameter Mappings</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference DATA_OPERATION_MAPPING__PARAMETER_MAPPINGS = eINSTANCE.getDataOperationMapping_ParameterMappings();
+
+        /**
+         * The meta object literal for the '<em><b>Type Mapping</b></em>' container reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference DATA_OPERATION_MAPPING__TYPE_MAPPING = eINSTANCE.getDataOperationMapping_TypeMapping();
+
+        /**
+         * The meta object literal for the '{@link de.fhdo.lemma.technology.mapping.impl.DataOperationParameterMappingImpl <em>Data Operation Parameter Mapping</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.fhdo.lemma.technology.mapping.impl.DataOperationParameterMappingImpl
+         * @see de.fhdo.lemma.technology.mapping.impl.MappingPackageImpl#getDataOperationParameterMapping()
+         * @generated
+         */
+        EClass DATA_OPERATION_PARAMETER_MAPPING = eINSTANCE.getDataOperationParameterMapping();
+
+        /**
+         * The meta object literal for the '<em><b>Parameter</b></em>' reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference DATA_OPERATION_PARAMETER_MAPPING__PARAMETER = eINSTANCE.getDataOperationParameterMapping_Parameter();
+
+        /**
+         * The meta object literal for the '<em><b>Technology</b></em>' reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference DATA_OPERATION_PARAMETER_MAPPING__TECHNOLOGY = eINSTANCE.getDataOperationParameterMapping_Technology();
+
+        /**
+         * The meta object literal for the '<em><b>Type</b></em>' reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference DATA_OPERATION_PARAMETER_MAPPING__TYPE = eINSTANCE.getDataOperationParameterMapping_Type();
+
+        /**
+         * The meta object literal for the '<em><b>Aspects</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference DATA_OPERATION_PARAMETER_MAPPING__ASPECTS = eINSTANCE.getDataOperationParameterMapping_Aspects();
+
+        /**
+         * The meta object literal for the '<em><b>Operation Mapping</b></em>' container reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference DATA_OPERATION_PARAMETER_MAPPING__OPERATION_MAPPING = eINSTANCE.getDataOperationParameterMapping_OperationMapping();
 
         /**
          * The meta object literal for the '{@link de.fhdo.lemma.technology.mapping.impl.TechnologySpecificProtocolSpecificationImpl <em>Technology Specific Protocol Specification</em>}' class.
@@ -3490,6 +3934,22 @@ public interface MappingPackage extends EPackage {
          * @generated
          */
         EReference TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__FIELD_MAPPING = eINSTANCE.getTechnologySpecificImportedServiceAspect_FieldMapping();
+
+        /**
+         * The meta object literal for the '<em><b>Data Operation Mapping</b></em>' container reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__DATA_OPERATION_MAPPING = eINSTANCE.getTechnologySpecificImportedServiceAspect_DataOperationMapping();
+
+        /**
+         * The meta object literal for the '<em><b>Data Operation Parameter Mapping</b></em>' container reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__DATA_OPERATION_PARAMETER_MAPPING = eINSTANCE.getTechnologySpecificImportedServiceAspect_DataOperationParameterMapping();
 
         /**
          * The meta object literal for the '<em>Data Field List</em>' data type.

@@ -140,6 +140,18 @@ public class MappingSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
+            case MappingPackage.DATA_OPERATION_MAPPING: {
+                DataOperationMapping dataOperationMapping = (DataOperationMapping)theEObject;
+                T result = caseDataOperationMapping(dataOperationMapping);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case MappingPackage.DATA_OPERATION_PARAMETER_MAPPING: {
+                DataOperationParameterMapping dataOperationParameterMapping = (DataOperationParameterMapping)theEObject;
+                T result = caseDataOperationParameterMapping(dataOperationParameterMapping);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
             case MappingPackage.TECHNOLOGY_SPECIFIC_PROTOCOL_SPECIFICATION: {
                 TechnologySpecificProtocolSpecification technologySpecificProtocolSpecification = (TechnologySpecificProtocolSpecification)theEObject;
                 T result = caseTechnologySpecificProtocolSpecification(technologySpecificProtocolSpecification);
@@ -345,6 +357,36 @@ public class MappingSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseTechnologySpecificFieldMapping(TechnologySpecificFieldMapping object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Data Operation Mapping</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Data Operation Mapping</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseDataOperationMapping(DataOperationMapping object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Data Operation Parameter Mapping</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Data Operation Parameter Mapping</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseDataOperationParameterMapping(DataOperationParameterMapping object) {
         return null;
     }
 

@@ -144,6 +144,14 @@ public class DataAdapterFactory extends AdapterFactoryImpl {
                 return createDataStructureAdapter();
             }
             @Override
+            public Adapter caseDataOperation(DataOperation object) {
+                return createDataOperationAdapter();
+            }
+            @Override
+            public Adapter caseDataOperationParameter(DataOperationParameter object) {
+                return createDataOperationParameterAdapter();
+            }
+            @Override
             public Adapter caseListType(ListType object) {
                 return createListTypeAdapter();
             }
@@ -446,6 +454,34 @@ public class DataAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createDataStructureAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.fhdo.lemma.data.DataOperation <em>Operation</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.fhdo.lemma.data.DataOperation
+     * @generated
+     */
+    public Adapter createDataOperationAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.fhdo.lemma.data.DataOperationParameter <em>Operation Parameter</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.fhdo.lemma.data.DataOperationParameter
+     * @generated
+     */
+    public Adapter createDataOperationParameterAdapter() {
         return null;
     }
 

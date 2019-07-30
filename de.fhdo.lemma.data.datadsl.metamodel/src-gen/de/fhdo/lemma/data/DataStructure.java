@@ -20,6 +20,7 @@ import org.eclipse.emf.common.util.EList;
  * <ul>
  *   <li>{@link de.fhdo.lemma.data.DataStructure#getSuper <em>Super</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.DataStructure#getDataFields <em>Data Fields</em>}</li>
+ *   <li>{@link de.fhdo.lemma.data.DataStructure#getOperations <em>Operations</em>}</li>
  * </ul>
  *
  * @see de.fhdo.lemma.data.DataPackage#getDataStructure()
@@ -75,6 +76,24 @@ public interface DataStructure extends ComplexType {
     EList<DataField> getDataFields();
 
     /**
+     * Returns the value of the '<em><b>Operations</b></em>' containment reference list.
+     * The list contents are of type {@link de.fhdo.lemma.data.DataOperation}.
+     * It is bidirectional and its opposite is '{@link de.fhdo.lemma.data.DataOperation#getDataStructure <em>Data Structure</em>}'.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Operations</em>' containment reference list isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Operations</em>' containment reference list.
+     * @see de.fhdo.lemma.data.DataPackage#getDataStructure_Operations()
+     * @see de.fhdo.lemma.data.DataOperation#getDataStructure
+     * @model opposite="dataStructure" containment="true"
+     * @generated
+     */
+    EList<DataOperation> getOperations();
+
+    /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
@@ -86,6 +105,19 @@ public interface DataStructure extends ComplexType {
      * @generated
      */
     EList<DataField> getEffectiveFields();
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * *
+     * Get the effective operations of the structure considering possible direct and indirect
+     * inheritance relationships
+     * <!-- end-model-doc -->
+     * @model kind="operation" unique="false"
+     * @generated
+     */
+    EList<DataOperation> getEffectiveOperations();
 
     /**
      * <!-- begin-user-doc -->

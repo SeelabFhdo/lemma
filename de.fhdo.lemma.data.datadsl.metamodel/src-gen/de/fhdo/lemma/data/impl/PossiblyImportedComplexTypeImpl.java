@@ -5,6 +5,8 @@ package de.fhdo.lemma.data.impl;
 import de.fhdo.lemma.data.ComplexType;
 import de.fhdo.lemma.data.ComplexTypeImport;
 import de.fhdo.lemma.data.DataField;
+import de.fhdo.lemma.data.DataOperation;
+import de.fhdo.lemma.data.DataOperationParameter;
 import de.fhdo.lemma.data.DataPackage;
 import de.fhdo.lemma.data.PossiblyImportedComplexType;
 
@@ -30,6 +32,8 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  *   <li>{@link de.fhdo.lemma.data.impl.PossiblyImportedComplexTypeImpl#getImport <em>Import</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.impl.PossiblyImportedComplexTypeImpl#getComplexType <em>Complex Type</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.impl.PossiblyImportedComplexTypeImpl#getDataField <em>Data Field</em>}</li>
+ *   <li>{@link de.fhdo.lemma.data.impl.PossiblyImportedComplexTypeImpl#getOperation <em>Operation</em>}</li>
+ *   <li>{@link de.fhdo.lemma.data.impl.PossiblyImportedComplexTypeImpl#getParameter <em>Parameter</em>}</li>
  * </ul>
  *
  * @generated
@@ -213,12 +217,126 @@ public class PossiblyImportedComplexTypeImpl extends MinimalEObjectImpl.Containe
      * @generated
      */
     @Override
+    public DataOperation getOperation() {
+        if (eContainerFeatureID() != DataPackage.POSSIBLY_IMPORTED_COMPLEX_TYPE__OPERATION) return null;
+        return (DataOperation)eContainer();
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public DataOperation basicGetOperation() {
+        if (eContainerFeatureID() != DataPackage.POSSIBLY_IMPORTED_COMPLEX_TYPE__OPERATION) return null;
+        return (DataOperation)eInternalContainer();
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public NotificationChain basicSetOperation(DataOperation newOperation, NotificationChain msgs) {
+        msgs = eBasicSetContainer((InternalEObject)newOperation, DataPackage.POSSIBLY_IMPORTED_COMPLEX_TYPE__OPERATION, msgs);
+        return msgs;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void setOperation(DataOperation newOperation) {
+        if (newOperation != eInternalContainer() || (eContainerFeatureID() != DataPackage.POSSIBLY_IMPORTED_COMPLEX_TYPE__OPERATION && newOperation != null)) {
+            if (EcoreUtil.isAncestor(this, newOperation))
+                throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
+            NotificationChain msgs = null;
+            if (eInternalContainer() != null)
+                msgs = eBasicRemoveFromContainer(msgs);
+            if (newOperation != null)
+                msgs = ((InternalEObject)newOperation).eInverseAdd(this, DataPackage.DATA_OPERATION__COMPLEX_RETURN_TYPE, DataOperation.class, msgs);
+            msgs = basicSetOperation(newOperation, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.POSSIBLY_IMPORTED_COMPLEX_TYPE__OPERATION, newOperation, newOperation));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public DataOperationParameter getParameter() {
+        if (eContainerFeatureID() != DataPackage.POSSIBLY_IMPORTED_COMPLEX_TYPE__PARAMETER) return null;
+        return (DataOperationParameter)eContainer();
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public DataOperationParameter basicGetParameter() {
+        if (eContainerFeatureID() != DataPackage.POSSIBLY_IMPORTED_COMPLEX_TYPE__PARAMETER) return null;
+        return (DataOperationParameter)eInternalContainer();
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public NotificationChain basicSetParameter(DataOperationParameter newParameter, NotificationChain msgs) {
+        msgs = eBasicSetContainer((InternalEObject)newParameter, DataPackage.POSSIBLY_IMPORTED_COMPLEX_TYPE__PARAMETER, msgs);
+        return msgs;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void setParameter(DataOperationParameter newParameter) {
+        if (newParameter != eInternalContainer() || (eContainerFeatureID() != DataPackage.POSSIBLY_IMPORTED_COMPLEX_TYPE__PARAMETER && newParameter != null)) {
+            if (EcoreUtil.isAncestor(this, newParameter))
+                throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
+            NotificationChain msgs = null;
+            if (eInternalContainer() != null)
+                msgs = eBasicRemoveFromContainer(msgs);
+            if (newParameter != null)
+                msgs = ((InternalEObject)newParameter).eInverseAdd(this, DataPackage.DATA_OPERATION_PARAMETER__COMPLEX_TYPE, DataOperationParameter.class, msgs);
+            msgs = basicSetParameter(newParameter, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.POSSIBLY_IMPORTED_COMPLEX_TYPE__PARAMETER, newParameter, newParameter));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
             case DataPackage.POSSIBLY_IMPORTED_COMPLEX_TYPE__DATA_FIELD:
                 if (eInternalContainer() != null)
                     msgs = eBasicRemoveFromContainer(msgs);
                 return basicSetDataField((DataField)otherEnd, msgs);
+            case DataPackage.POSSIBLY_IMPORTED_COMPLEX_TYPE__OPERATION:
+                if (eInternalContainer() != null)
+                    msgs = eBasicRemoveFromContainer(msgs);
+                return basicSetOperation((DataOperation)otherEnd, msgs);
+            case DataPackage.POSSIBLY_IMPORTED_COMPLEX_TYPE__PARAMETER:
+                if (eInternalContainer() != null)
+                    msgs = eBasicRemoveFromContainer(msgs);
+                return basicSetParameter((DataOperationParameter)otherEnd, msgs);
         }
         return super.eInverseAdd(otherEnd, featureID, msgs);
     }
@@ -233,6 +351,10 @@ public class PossiblyImportedComplexTypeImpl extends MinimalEObjectImpl.Containe
         switch (featureID) {
             case DataPackage.POSSIBLY_IMPORTED_COMPLEX_TYPE__DATA_FIELD:
                 return basicSetDataField(null, msgs);
+            case DataPackage.POSSIBLY_IMPORTED_COMPLEX_TYPE__OPERATION:
+                return basicSetOperation(null, msgs);
+            case DataPackage.POSSIBLY_IMPORTED_COMPLEX_TYPE__PARAMETER:
+                return basicSetParameter(null, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
@@ -247,6 +369,10 @@ public class PossiblyImportedComplexTypeImpl extends MinimalEObjectImpl.Containe
         switch (eContainerFeatureID()) {
             case DataPackage.POSSIBLY_IMPORTED_COMPLEX_TYPE__DATA_FIELD:
                 return eInternalContainer().eInverseRemove(this, DataPackage.DATA_FIELD__COMPLEX_TYPE, DataField.class, msgs);
+            case DataPackage.POSSIBLY_IMPORTED_COMPLEX_TYPE__OPERATION:
+                return eInternalContainer().eInverseRemove(this, DataPackage.DATA_OPERATION__COMPLEX_RETURN_TYPE, DataOperation.class, msgs);
+            case DataPackage.POSSIBLY_IMPORTED_COMPLEX_TYPE__PARAMETER:
+                return eInternalContainer().eInverseRemove(this, DataPackage.DATA_OPERATION_PARAMETER__COMPLEX_TYPE, DataOperationParameter.class, msgs);
         }
         return super.eBasicRemoveFromContainerFeature(msgs);
     }
@@ -268,6 +394,12 @@ public class PossiblyImportedComplexTypeImpl extends MinimalEObjectImpl.Containe
             case DataPackage.POSSIBLY_IMPORTED_COMPLEX_TYPE__DATA_FIELD:
                 if (resolve) return getDataField();
                 return basicGetDataField();
+            case DataPackage.POSSIBLY_IMPORTED_COMPLEX_TYPE__OPERATION:
+                if (resolve) return getOperation();
+                return basicGetOperation();
+            case DataPackage.POSSIBLY_IMPORTED_COMPLEX_TYPE__PARAMETER:
+                if (resolve) return getParameter();
+                return basicGetParameter();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -288,6 +420,12 @@ public class PossiblyImportedComplexTypeImpl extends MinimalEObjectImpl.Containe
                 return;
             case DataPackage.POSSIBLY_IMPORTED_COMPLEX_TYPE__DATA_FIELD:
                 setDataField((DataField)newValue);
+                return;
+            case DataPackage.POSSIBLY_IMPORTED_COMPLEX_TYPE__OPERATION:
+                setOperation((DataOperation)newValue);
+                return;
+            case DataPackage.POSSIBLY_IMPORTED_COMPLEX_TYPE__PARAMETER:
+                setParameter((DataOperationParameter)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -310,6 +448,12 @@ public class PossiblyImportedComplexTypeImpl extends MinimalEObjectImpl.Containe
             case DataPackage.POSSIBLY_IMPORTED_COMPLEX_TYPE__DATA_FIELD:
                 setDataField((DataField)null);
                 return;
+            case DataPackage.POSSIBLY_IMPORTED_COMPLEX_TYPE__OPERATION:
+                setOperation((DataOperation)null);
+                return;
+            case DataPackage.POSSIBLY_IMPORTED_COMPLEX_TYPE__PARAMETER:
+                setParameter((DataOperationParameter)null);
+                return;
         }
         super.eUnset(featureID);
     }
@@ -328,6 +472,10 @@ public class PossiblyImportedComplexTypeImpl extends MinimalEObjectImpl.Containe
                 return complexType != null;
             case DataPackage.POSSIBLY_IMPORTED_COMPLEX_TYPE__DATA_FIELD:
                 return basicGetDataField() != null;
+            case DataPackage.POSSIBLY_IMPORTED_COMPLEX_TYPE__OPERATION:
+                return basicGetOperation() != null;
+            case DataPackage.POSSIBLY_IMPORTED_COMPLEX_TYPE__PARAMETER:
+                return basicGetParameter() != null;
         }
         return super.eIsSet(featureID);
     }

@@ -320,6 +320,7 @@ rule MappedComplexType {
             m.type.dataModelImport,
             m.type.type,
             m.fieldMappings,
+            m.operationMappings,
             m.aspects,
             m.t_sourceModelUri
         );
@@ -330,6 +331,7 @@ rule MappedComplexType {
 rule CreateMappedComplexType(technologyReferences : Sequence(Service!TechnologyReference),
     typeImport : Service!Import, type : Service!ComplexType,
     fieldMappings : Sequence(Mapping!TechnologySpecificFieldMapping),
+    operationMappings : Sequence(Mapping!DataOperationMapping),
     aspects : Sequence(Mapping!TechnologySpecificImportedServiceAspect), sourceModelUri : String) {
     to
         t : Service!MappedComplexType(
@@ -347,6 +349,12 @@ rule CreateMappedComplexType(technologyReferences : Sequence(Service!TechnologyR
         for (fieldMapping in fieldMappings) {
             t.mappedFields <- t.mappedFields->append(
                 thisModule.MappedField(fieldMapping, type, typeImport, t)
+            );
+        }
+
+        for (operationMapping in operationMappings) {
+            t.mappedOperations <- t.mappedOperations->append(
+                thisModule.MappedDataOperation(operationMapping, t)
             );
         }
 
@@ -643,6 +651,50 @@ rule Parameter(sourceParameter : Service!Parameter, parameterMapping : Mapping!P
     }
 }
 
+--- Generic called rule for creating a MappedDataOperation
+rule MappedDataOperation(operationMapping : Mapping!MappedDataOperation,
+    mappedComplexType : Mapping!MappedComplexType) {
+    to
+        t : Service!MappedDataOperation(
+            dataOperation <- operationMapping.dataOperation,
+            aspects <- thisModule.createImportedServiceAspects(operationMapping.aspects,
+                'mappedDataOperation', t),
+            mappedComplexType <- mappedComplexType
+        )
+    do {
+        if (not operationMapping.technology.oclIsUndefined() and
+            not operationMapping.returnType.oclIsUndefined())
+            t.mappedReturnType <- thisModule.ImportedType(operationMapping.technology,
+                operationMapping.returnType);
+
+        for (parameterMapping in operationMapping.parameterMappings) {
+            thisModule.MappedDataOperationParameter(parameterMapping, t);
+        }
+
+        t;
+    }
+}
+
+--- Generic called rule for creating a MappedDataOperationParameter
+rule MappedDataOperationParameter(parameterMapping : Mapping!MappedDataOperationParameter,
+    mappedDataOperation : Mapping!MappedDataOperation) {
+    to
+        t : Service!MappedDataOperationParameter(
+            parameter <- parameterMapping.parameter,
+            aspects <- thisModule.createImportedServiceAspects(parameterMapping.aspects,
+                'mappedDataOperationParameter', t),
+            mappedOperation <- mappedDataOperation
+        )
+    do {
+        if (not parameterMapping.technology.oclIsUndefined() and
+            not parameterMapping.type.oclIsUndefined())
+            t.mappedType <- thisModule.ImportedType(parameterMapping.technology,
+                parameterMapping.type);
+
+        t;
+    }
+}
+
 --- Generic called rule for creating a MappedField
 rule MappedField(fieldMapping : Mapping!TechnologySpecificFieldMapping,
     sourceTypeImport : Service!Import, sourceType : Service!ComplexType, parent : OclAny) {
@@ -687,6 +739,7 @@ rule MappedFieldWithAspects(fieldMapping : Mapping!TechnologySpecificFieldMappin
                     parent.operation.interface.microservice.technologyReferences,
                     sourceTypeImport,
                     sourceType,
+                    Sequence{},
                     Sequence{},
                     Sequence{},
                     fieldMapping.t_sourceModelUri

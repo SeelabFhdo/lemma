@@ -26,6 +26,7 @@ ComplexTypeMapping returns ComplexTypeMapping:
         '}')?
 
         fieldMappings+=TechnologySpecificFieldMapping*
+        operationMappings+=DataOperationMapping*
     '}'
 ;
 
@@ -179,6 +180,40 @@ TechnologySpecificFieldMapping returns TechnologySpecificFieldMapping:
             |
             ';'
         )
+    )
+;
+
+DataOperationMapping returns DataOperationMapping:
+    'op' dataOperation=[data::DataOperation]
+    (':' technology=[service::Import] '::' returnType=[data::Type|QualifiedName])?
+
+    ('{'
+        ('aspects' '{'
+            aspects+=TechnologySpecificImportedServiceAspect+
+        '}')?
+
+        ('parameters' '{'
+            parameterMappings+=DataOperationParameterMapping+
+        '}')?
+    '}')
+    |
+    {DataOperationMapping} ';'
+;
+
+DataOperationParameterMapping returns DataOperationParameterMapping:
+    parameter=[data::DataOperationParameter]
+    (
+     ':' technology=[service::Import] '::'
+     type=[data::Type|QualifiedName]
+    )?
+    (
+        '{'
+            'aspects' '{'
+                aspects+=TechnologySpecificImportedServiceAspect+
+            '}'
+        '}'
+    |
+        ';'
     )
 ;
 

@@ -29,6 +29,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.fhdo.lemma.technology.mapping.ComplexTypeMapping#getTechnologyReferences <em>Technology References</em>}</li>
  *   <li>{@link de.fhdo.lemma.technology.mapping.ComplexTypeMapping#getType <em>Type</em>}</li>
  *   <li>{@link de.fhdo.lemma.technology.mapping.ComplexTypeMapping#getFieldMappings <em>Field Mappings</em>}</li>
+ *   <li>{@link de.fhdo.lemma.technology.mapping.ComplexTypeMapping#getOperationMappings <em>Operation Mappings</em>}</li>
  *   <li>{@link de.fhdo.lemma.technology.mapping.ComplexTypeMapping#getAspects <em>Aspects</em>}</li>
  *   <li>{@link de.fhdo.lemma.technology.mapping.ComplexTypeMapping#getMappingModel <em>Mapping Model</em>}</li>
  * </ul>
@@ -125,6 +126,24 @@ public interface ComplexTypeMapping extends EObject {
      * @generated
      */
     EList<TechnologySpecificFieldMapping> getFieldMappings();
+
+    /**
+     * Returns the value of the '<em><b>Operation Mappings</b></em>' containment reference list.
+     * The list contents are of type {@link de.fhdo.lemma.technology.mapping.DataOperationMapping}.
+     * It is bidirectional and its opposite is '{@link de.fhdo.lemma.technology.mapping.DataOperationMapping#getTypeMapping <em>Type Mapping</em>}'.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Operation Mappings</em>' containment reference list isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Operation Mappings</em>' containment reference list.
+     * @see de.fhdo.lemma.technology.mapping.MappingPackage#getComplexTypeMapping_OperationMappings()
+     * @see de.fhdo.lemma.technology.mapping.DataOperationMapping#getTypeMapping
+     * @model opposite="typeMapping" containment="true"
+     * @generated
+     */
+    EList<DataOperationMapping> getOperationMappings();
 
     /**
      * Returns the value of the '<em><b>Aspects</b></em>' containment reference list.

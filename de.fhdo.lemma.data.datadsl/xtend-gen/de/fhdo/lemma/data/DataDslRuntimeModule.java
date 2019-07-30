@@ -6,10 +6,8 @@ package de.fhdo.lemma.data;
 import de.fhdo.lemma.data.AbstractDataDslRuntimeModule;
 import de.fhdo.lemma.data.DataDslResourceDescriptionStrategy;
 import de.fhdo.lemma.data.scoping.DataDslScopeProvider;
-import de.fhdo.lemma.data.validation.DataDslNamesAreUniqueValidationHelper;
 import org.eclipse.xtext.resource.IDefaultResourceDescriptionStrategy;
 import org.eclipse.xtext.scoping.IScopeProvider;
-import org.eclipse.xtext.validation.INamesAreUniqueValidationHelper;
 
 /**
  * Use this class to register components to be used at runtime / without the Equinox extension
@@ -26,9 +24,5 @@ public class DataDslRuntimeModule extends AbstractDataDslRuntimeModule {
   
   public Class<? extends IDefaultResourceDescriptionStrategy> bindIDefaultResourceDescriptionStrategy() {
     return DataDslResourceDescriptionStrategy.class;
-  }
-  
-  public Class<? extends INamesAreUniqueValidationHelper> bindINamesAreUniqueValidationHelper() {
-    return DataDslNamesAreUniqueValidationHelper.class;
   }
 }

@@ -1357,13 +1357,31 @@ public interface DataPackage extends EPackage {
     int POSSIBLY_IMPORTED_COMPLEX_TYPE__DATA_FIELD = 2;
 
     /**
+     * The feature id for the '<em><b>Operation</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int POSSIBLY_IMPORTED_COMPLEX_TYPE__OPERATION = 3;
+
+    /**
+     * The feature id for the '<em><b>Parameter</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int POSSIBLY_IMPORTED_COMPLEX_TYPE__PARAMETER = 4;
+
+    /**
      * The number of structural features of the '<em>Possibly Imported Complex Type</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int POSSIBLY_IMPORTED_COMPLEX_TYPE_FEATURE_COUNT = 3;
+    int POSSIBLY_IMPORTED_COMPLEX_TYPE_FEATURE_COUNT = 5;
 
     /**
      * The number of operations of the '<em>Possibly Imported Complex Type</em>' class.
@@ -1475,13 +1493,22 @@ public interface DataPackage extends EPackage {
     int DATA_STRUCTURE__DATA_FIELDS = COMPLEX_TYPE_FEATURE_COUNT + 1;
 
     /**
+     * The feature id for the '<em><b>Operations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATA_STRUCTURE__OPERATIONS = COMPLEX_TYPE_FEATURE_COUNT + 2;
+
+    /**
      * The number of structural features of the '<em>Structure</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int DATA_STRUCTURE_FEATURE_COUNT = COMPLEX_TYPE_FEATURE_COUNT + 2;
+    int DATA_STRUCTURE_FEATURE_COUNT = COMPLEX_TYPE_FEATURE_COUNT + 3;
 
     /**
      * The operation id for the '<em>Get Qualified Name Parts</em>' operation.
@@ -1520,13 +1547,22 @@ public interface DataPackage extends EPackage {
     int DATA_STRUCTURE___GET_EFFECTIVE_FIELDS = COMPLEX_TYPE_OPERATION_COUNT + 0;
 
     /**
+     * The operation id for the '<em>Get Effective Operations</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATA_STRUCTURE___GET_EFFECTIVE_OPERATIONS = COMPLEX_TYPE_OPERATION_COUNT + 1;
+
+    /**
      * The operation id for the '<em>Is Extension Of</em>' operation.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int DATA_STRUCTURE___IS_EXTENSION_OF__DATASTRUCTURE = COMPLEX_TYPE_OPERATION_COUNT + 1;
+    int DATA_STRUCTURE___IS_EXTENSION_OF__DATASTRUCTURE = COMPLEX_TYPE_OPERATION_COUNT + 2;
 
     /**
      * The operation id for the '<em>Compare Field Counts</em>' operation.
@@ -1535,7 +1571,7 @@ public interface DataPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int DATA_STRUCTURE___COMPARE_FIELD_COUNTS__DATASTRUCTURE = COMPLEX_TYPE_OPERATION_COUNT + 2;
+    int DATA_STRUCTURE___COMPARE_FIELD_COUNTS__DATASTRUCTURE = COMPLEX_TYPE_OPERATION_COUNT + 3;
 
     /**
      * The number of operations of the '<em>Structure</em>' class.
@@ -1544,7 +1580,243 @@ public interface DataPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int DATA_STRUCTURE_OPERATION_COUNT = COMPLEX_TYPE_OPERATION_COUNT + 3;
+    int DATA_STRUCTURE_OPERATION_COUNT = COMPLEX_TYPE_OPERATION_COUNT + 4;
+
+    /**
+     * The meta object id for the '{@link de.fhdo.lemma.data.impl.DataOperationImpl <em>Operation</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.fhdo.lemma.data.impl.DataOperationImpl
+     * @see de.fhdo.lemma.data.impl.DataPackageImpl#getDataOperation()
+     * @generated
+     */
+    int DATA_OPERATION = 19;
+
+    /**
+     * The feature id for the '<em><b>Name</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATA_OPERATION__NAME = 0;
+
+    /**
+     * The feature id for the '<em><b>Hidden</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATA_OPERATION__HIDDEN = 1;
+
+    /**
+     * The feature id for the '<em><b>Has No Return Type</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATA_OPERATION__HAS_NO_RETURN_TYPE = 2;
+
+    /**
+     * The feature id for the '<em><b>Complex Return Type</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATA_OPERATION__COMPLEX_RETURN_TYPE = 3;
+
+    /**
+     * The feature id for the '<em><b>Primitive Return Type</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATA_OPERATION__PRIMITIVE_RETURN_TYPE = 4;
+
+    /**
+     * The feature id for the '<em><b>Parameters</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATA_OPERATION__PARAMETERS = 5;
+
+    /**
+     * The feature id for the '<em><b>Data Structure</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATA_OPERATION__DATA_STRUCTURE = 6;
+
+    /**
+     * The feature id for the '<em><b>Lacks Return Type Specification</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATA_OPERATION__LACKS_RETURN_TYPE_SPECIFICATION = 7;
+
+    /**
+     * The feature id for the '<em><b>Inherited</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATA_OPERATION__INHERITED = 8;
+
+    /**
+     * The number of structural features of the '<em>Operation</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATA_OPERATION_FEATURE_COUNT = 9;
+
+    /**
+     * The operation id for the '<em>Get Qualified Name Parts</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATA_OPERATION___GET_QUALIFIED_NAME_PARTS = 0;
+
+    /**
+     * The operation id for the '<em>Build Qualified Name</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATA_OPERATION___BUILD_QUALIFIED_NAME__STRING = 1;
+
+    /**
+     * The operation id for the '<em>Find Eponymous Super Operation</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATA_OPERATION___FIND_EPONYMOUS_SUPER_OPERATION = 2;
+
+    /**
+     * The operation id for the '<em>Get Primitive Or Complex Return Type</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATA_OPERATION___GET_PRIMITIVE_OR_COMPLEX_RETURN_TYPE = 3;
+
+    /**
+     * The number of operations of the '<em>Operation</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATA_OPERATION_OPERATION_COUNT = 4;
+
+    /**
+     * The meta object id for the '{@link de.fhdo.lemma.data.impl.DataOperationParameterImpl <em>Operation Parameter</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.fhdo.lemma.data.impl.DataOperationParameterImpl
+     * @see de.fhdo.lemma.data.impl.DataPackageImpl#getDataOperationParameter()
+     * @generated
+     */
+    int DATA_OPERATION_PARAMETER = 20;
+
+    /**
+     * The feature id for the '<em><b>Name</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATA_OPERATION_PARAMETER__NAME = 0;
+
+    /**
+     * The feature id for the '<em><b>Complex Type</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATA_OPERATION_PARAMETER__COMPLEX_TYPE = 1;
+
+    /**
+     * The feature id for the '<em><b>Primitive Type</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATA_OPERATION_PARAMETER__PRIMITIVE_TYPE = 2;
+
+    /**
+     * The feature id for the '<em><b>Operation</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATA_OPERATION_PARAMETER__OPERATION = 3;
+
+    /**
+     * The number of structural features of the '<em>Operation Parameter</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATA_OPERATION_PARAMETER_FEATURE_COUNT = 4;
+
+    /**
+     * The operation id for the '<em>Get Qualified Name Parts</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATA_OPERATION_PARAMETER___GET_QUALIFIED_NAME_PARTS = 0;
+
+    /**
+     * The operation id for the '<em>Build Qualified Name</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATA_OPERATION_PARAMETER___BUILD_QUALIFIED_NAME__STRING = 1;
+
+    /**
+     * The operation id for the '<em>Get Effective Type</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATA_OPERATION_PARAMETER___GET_EFFECTIVE_TYPE = 2;
+
+    /**
+     * The number of operations of the '<em>Operation Parameter</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATA_OPERATION_PARAMETER_OPERATION_COUNT = 3;
 
     /**
      * The meta object id for the '{@link de.fhdo.lemma.data.impl.ListTypeImpl <em>List Type</em>}' class.
@@ -1554,7 +1826,7 @@ public interface DataPackage extends EPackage {
      * @see de.fhdo.lemma.data.impl.DataPackageImpl#getListType()
      * @generated
      */
-    int LIST_TYPE = 19;
+    int LIST_TYPE = 21;
 
     /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1708,7 +1980,7 @@ public interface DataPackage extends EPackage {
      * @see de.fhdo.lemma.data.impl.DataPackageImpl#getDataField()
      * @generated
      */
-    int DATA_FIELD = 20;
+    int DATA_FIELD = 22;
 
     /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1835,7 +2107,7 @@ public interface DataPackage extends EPackage {
      * @see de.fhdo.lemma.data.impl.DataPackageImpl#getEnumeration()
      * @generated
      */
-    int ENUMERATION = 21;
+    int ENUMERATION = 23;
 
     /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1971,7 +2243,7 @@ public interface DataPackage extends EPackage {
      * @see de.fhdo.lemma.data.impl.DataPackageImpl#getEnumerationField()
      * @generated
      */
-    int ENUMERATION_FIELD = 22;
+    int ENUMERATION_FIELD = 24;
 
     /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -2044,7 +2316,7 @@ public interface DataPackage extends EPackage {
      * @see de.fhdo.lemma.data.impl.DataPackageImpl#getPrimitiveValue()
      * @generated
      */
-    int PRIMITIVE_VALUE = 23;
+    int PRIMITIVE_VALUE = 25;
 
     /**
      * The feature id for the '<em><b>String Value</b></em>' attribute.
@@ -2252,7 +2524,7 @@ public interface DataPackage extends EPackage {
      * @see de.fhdo.lemma.data.impl.DataPackageImpl#getPrimitiveTypeConstants()
      * @generated
      */
-    int PRIMITIVE_TYPE_CONSTANTS = 24;
+    int PRIMITIVE_TYPE_CONSTANTS = 26;
 
     /**
      * The meta object id for the '{@link de.fhdo.lemma.data.FieldFeature <em>Field Feature</em>}' enum.
@@ -2262,7 +2534,7 @@ public interface DataPackage extends EPackage {
      * @see de.fhdo.lemma.data.impl.DataPackageImpl#getFieldFeature()
      * @generated
      */
-    int FIELD_FEATURE = 25;
+    int FIELD_FEATURE = 27;
 
     /**
      * The meta object id for the '<em>Type Name Size Map</em>' data type.
@@ -2272,7 +2544,7 @@ public interface DataPackage extends EPackage {
      * @see de.fhdo.lemma.data.impl.DataPackageImpl#getTypeNameSizeMap()
      * @generated
      */
-    int TYPE_NAME_SIZE_MAP = 26;
+    int TYPE_NAME_SIZE_MAP = 28;
 
 
     /**
@@ -2885,6 +3157,28 @@ public interface DataPackage extends EPackage {
     EReference getPossiblyImportedComplexType_DataField();
 
     /**
+     * Returns the meta object for the container reference '{@link de.fhdo.lemma.data.PossiblyImportedComplexType#getOperation <em>Operation</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the container reference '<em>Operation</em>'.
+     * @see de.fhdo.lemma.data.PossiblyImportedComplexType#getOperation()
+     * @see #getPossiblyImportedComplexType()
+     * @generated
+     */
+    EReference getPossiblyImportedComplexType_Operation();
+
+    /**
+     * Returns the meta object for the container reference '{@link de.fhdo.lemma.data.PossiblyImportedComplexType#getParameter <em>Parameter</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the container reference '<em>Parameter</em>'.
+     * @see de.fhdo.lemma.data.PossiblyImportedComplexType#getParameter()
+     * @see #getPossiblyImportedComplexType()
+     * @generated
+     */
+    EReference getPossiblyImportedComplexType_Parameter();
+
+    /**
      * Returns the meta object for class '{@link de.fhdo.lemma.data.DataStructure <em>Structure</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2917,6 +3211,17 @@ public interface DataPackage extends EPackage {
     EReference getDataStructure_DataFields();
 
     /**
+     * Returns the meta object for the containment reference list '{@link de.fhdo.lemma.data.DataStructure#getOperations <em>Operations</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Operations</em>'.
+     * @see de.fhdo.lemma.data.DataStructure#getOperations()
+     * @see #getDataStructure()
+     * @generated
+     */
+    EReference getDataStructure_Operations();
+
+    /**
      * Returns the meta object for the '{@link de.fhdo.lemma.data.DataStructure#getEffectiveFields() <em>Get Effective Fields</em>}' operation.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2925,6 +3230,16 @@ public interface DataPackage extends EPackage {
      * @generated
      */
     EOperation getDataStructure__GetEffectiveFields();
+
+    /**
+     * Returns the meta object for the '{@link de.fhdo.lemma.data.DataStructure#getEffectiveOperations() <em>Get Effective Operations</em>}' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the '<em>Get Effective Operations</em>' operation.
+     * @see de.fhdo.lemma.data.DataStructure#getEffectiveOperations()
+     * @generated
+     */
+    EOperation getDataStructure__GetEffectiveOperations();
 
     /**
      * Returns the meta object for the '{@link de.fhdo.lemma.data.DataStructure#isExtensionOf(de.fhdo.lemma.data.DataStructure) <em>Is Extension Of</em>}' operation.
@@ -2945,6 +3260,239 @@ public interface DataPackage extends EPackage {
      * @generated
      */
     EOperation getDataStructure__CompareFieldCounts__DataStructure();
+
+    /**
+     * Returns the meta object for class '{@link de.fhdo.lemma.data.DataOperation <em>Operation</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Operation</em>'.
+     * @see de.fhdo.lemma.data.DataOperation
+     * @generated
+     */
+    EClass getDataOperation();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.fhdo.lemma.data.DataOperation#getName <em>Name</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Name</em>'.
+     * @see de.fhdo.lemma.data.DataOperation#getName()
+     * @see #getDataOperation()
+     * @generated
+     */
+    EAttribute getDataOperation_Name();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.fhdo.lemma.data.DataOperation#isHidden <em>Hidden</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Hidden</em>'.
+     * @see de.fhdo.lemma.data.DataOperation#isHidden()
+     * @see #getDataOperation()
+     * @generated
+     */
+    EAttribute getDataOperation_Hidden();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.fhdo.lemma.data.DataOperation#isHasNoReturnType <em>Has No Return Type</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Has No Return Type</em>'.
+     * @see de.fhdo.lemma.data.DataOperation#isHasNoReturnType()
+     * @see #getDataOperation()
+     * @generated
+     */
+    EAttribute getDataOperation_HasNoReturnType();
+
+    /**
+     * Returns the meta object for the containment reference '{@link de.fhdo.lemma.data.DataOperation#getComplexReturnType <em>Complex Return Type</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference '<em>Complex Return Type</em>'.
+     * @see de.fhdo.lemma.data.DataOperation#getComplexReturnType()
+     * @see #getDataOperation()
+     * @generated
+     */
+    EReference getDataOperation_ComplexReturnType();
+
+    /**
+     * Returns the meta object for the containment reference '{@link de.fhdo.lemma.data.DataOperation#getPrimitiveReturnType <em>Primitive Return Type</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference '<em>Primitive Return Type</em>'.
+     * @see de.fhdo.lemma.data.DataOperation#getPrimitiveReturnType()
+     * @see #getDataOperation()
+     * @generated
+     */
+    EReference getDataOperation_PrimitiveReturnType();
+
+    /**
+     * Returns the meta object for the containment reference list '{@link de.fhdo.lemma.data.DataOperation#getParameters <em>Parameters</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Parameters</em>'.
+     * @see de.fhdo.lemma.data.DataOperation#getParameters()
+     * @see #getDataOperation()
+     * @generated
+     */
+    EReference getDataOperation_Parameters();
+
+    /**
+     * Returns the meta object for the container reference '{@link de.fhdo.lemma.data.DataOperation#getDataStructure <em>Data Structure</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the container reference '<em>Data Structure</em>'.
+     * @see de.fhdo.lemma.data.DataOperation#getDataStructure()
+     * @see #getDataOperation()
+     * @generated
+     */
+    EReference getDataOperation_DataStructure();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.fhdo.lemma.data.DataOperation#isLacksReturnTypeSpecification <em>Lacks Return Type Specification</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Lacks Return Type Specification</em>'.
+     * @see de.fhdo.lemma.data.DataOperation#isLacksReturnTypeSpecification()
+     * @see #getDataOperation()
+     * @generated
+     */
+    EAttribute getDataOperation_LacksReturnTypeSpecification();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.fhdo.lemma.data.DataOperation#isInherited <em>Inherited</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Inherited</em>'.
+     * @see de.fhdo.lemma.data.DataOperation#isInherited()
+     * @see #getDataOperation()
+     * @generated
+     */
+    EAttribute getDataOperation_Inherited();
+
+    /**
+     * Returns the meta object for the '{@link de.fhdo.lemma.data.DataOperation#getQualifiedNameParts() <em>Get Qualified Name Parts</em>}' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the '<em>Get Qualified Name Parts</em>' operation.
+     * @see de.fhdo.lemma.data.DataOperation#getQualifiedNameParts()
+     * @generated
+     */
+    EOperation getDataOperation__GetQualifiedNameParts();
+
+    /**
+     * Returns the meta object for the '{@link de.fhdo.lemma.data.DataOperation#buildQualifiedName(java.lang.String) <em>Build Qualified Name</em>}' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the '<em>Build Qualified Name</em>' operation.
+     * @see de.fhdo.lemma.data.DataOperation#buildQualifiedName(java.lang.String)
+     * @generated
+     */
+    EOperation getDataOperation__BuildQualifiedName__String();
+
+    /**
+     * Returns the meta object for the '{@link de.fhdo.lemma.data.DataOperation#findEponymousSuperOperation() <em>Find Eponymous Super Operation</em>}' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the '<em>Find Eponymous Super Operation</em>' operation.
+     * @see de.fhdo.lemma.data.DataOperation#findEponymousSuperOperation()
+     * @generated
+     */
+    EOperation getDataOperation__FindEponymousSuperOperation();
+
+    /**
+     * Returns the meta object for the '{@link de.fhdo.lemma.data.DataOperation#getPrimitiveOrComplexReturnType() <em>Get Primitive Or Complex Return Type</em>}' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the '<em>Get Primitive Or Complex Return Type</em>' operation.
+     * @see de.fhdo.lemma.data.DataOperation#getPrimitiveOrComplexReturnType()
+     * @generated
+     */
+    EOperation getDataOperation__GetPrimitiveOrComplexReturnType();
+
+    /**
+     * Returns the meta object for class '{@link de.fhdo.lemma.data.DataOperationParameter <em>Operation Parameter</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Operation Parameter</em>'.
+     * @see de.fhdo.lemma.data.DataOperationParameter
+     * @generated
+     */
+    EClass getDataOperationParameter();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.fhdo.lemma.data.DataOperationParameter#getName <em>Name</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Name</em>'.
+     * @see de.fhdo.lemma.data.DataOperationParameter#getName()
+     * @see #getDataOperationParameter()
+     * @generated
+     */
+    EAttribute getDataOperationParameter_Name();
+
+    /**
+     * Returns the meta object for the containment reference '{@link de.fhdo.lemma.data.DataOperationParameter#getComplexType <em>Complex Type</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference '<em>Complex Type</em>'.
+     * @see de.fhdo.lemma.data.DataOperationParameter#getComplexType()
+     * @see #getDataOperationParameter()
+     * @generated
+     */
+    EReference getDataOperationParameter_ComplexType();
+
+    /**
+     * Returns the meta object for the containment reference '{@link de.fhdo.lemma.data.DataOperationParameter#getPrimitiveType <em>Primitive Type</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference '<em>Primitive Type</em>'.
+     * @see de.fhdo.lemma.data.DataOperationParameter#getPrimitiveType()
+     * @see #getDataOperationParameter()
+     * @generated
+     */
+    EReference getDataOperationParameter_PrimitiveType();
+
+    /**
+     * Returns the meta object for the container reference '{@link de.fhdo.lemma.data.DataOperationParameter#getOperation <em>Operation</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the container reference '<em>Operation</em>'.
+     * @see de.fhdo.lemma.data.DataOperationParameter#getOperation()
+     * @see #getDataOperationParameter()
+     * @generated
+     */
+    EReference getDataOperationParameter_Operation();
+
+    /**
+     * Returns the meta object for the '{@link de.fhdo.lemma.data.DataOperationParameter#getQualifiedNameParts() <em>Get Qualified Name Parts</em>}' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the '<em>Get Qualified Name Parts</em>' operation.
+     * @see de.fhdo.lemma.data.DataOperationParameter#getQualifiedNameParts()
+     * @generated
+     */
+    EOperation getDataOperationParameter__GetQualifiedNameParts();
+
+    /**
+     * Returns the meta object for the '{@link de.fhdo.lemma.data.DataOperationParameter#buildQualifiedName(java.lang.String) <em>Build Qualified Name</em>}' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the '<em>Build Qualified Name</em>' operation.
+     * @see de.fhdo.lemma.data.DataOperationParameter#buildQualifiedName(java.lang.String)
+     * @generated
+     */
+    EOperation getDataOperationParameter__BuildQualifiedName__String();
+
+    /**
+     * Returns the meta object for the '{@link de.fhdo.lemma.data.DataOperationParameter#getEffectiveType() <em>Get Effective Type</em>}' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the '<em>Get Effective Type</em>' operation.
+     * @see de.fhdo.lemma.data.DataOperationParameter#getEffectiveType()
+     * @generated
+     */
+    EOperation getDataOperationParameter__GetEffectiveType();
 
     /**
      * Returns the meta object for class '{@link de.fhdo.lemma.data.ListType <em>List Type</em>}'.
@@ -3967,6 +4515,22 @@ public interface DataPackage extends EPackage {
         EReference POSSIBLY_IMPORTED_COMPLEX_TYPE__DATA_FIELD = eINSTANCE.getPossiblyImportedComplexType_DataField();
 
         /**
+         * The meta object literal for the '<em><b>Operation</b></em>' container reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference POSSIBLY_IMPORTED_COMPLEX_TYPE__OPERATION = eINSTANCE.getPossiblyImportedComplexType_Operation();
+
+        /**
+         * The meta object literal for the '<em><b>Parameter</b></em>' container reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference POSSIBLY_IMPORTED_COMPLEX_TYPE__PARAMETER = eINSTANCE.getPossiblyImportedComplexType_Parameter();
+
+        /**
          * The meta object literal for the '{@link de.fhdo.lemma.data.impl.DataStructureImpl <em>Structure</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -3993,12 +4557,28 @@ public interface DataPackage extends EPackage {
         EReference DATA_STRUCTURE__DATA_FIELDS = eINSTANCE.getDataStructure_DataFields();
 
         /**
+         * The meta object literal for the '<em><b>Operations</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference DATA_STRUCTURE__OPERATIONS = eINSTANCE.getDataStructure_Operations();
+
+        /**
          * The meta object literal for the '<em><b>Get Effective Fields</b></em>' operation.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
         EOperation DATA_STRUCTURE___GET_EFFECTIVE_FIELDS = eINSTANCE.getDataStructure__GetEffectiveFields();
+
+        /**
+         * The meta object literal for the '<em><b>Get Effective Operations</b></em>' operation.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EOperation DATA_STRUCTURE___GET_EFFECTIVE_OPERATIONS = eINSTANCE.getDataStructure__GetEffectiveOperations();
 
         /**
          * The meta object literal for the '<em><b>Is Extension Of</b></em>' operation.
@@ -4015,6 +4595,186 @@ public interface DataPackage extends EPackage {
          * @generated
          */
         EOperation DATA_STRUCTURE___COMPARE_FIELD_COUNTS__DATASTRUCTURE = eINSTANCE.getDataStructure__CompareFieldCounts__DataStructure();
+
+        /**
+         * The meta object literal for the '{@link de.fhdo.lemma.data.impl.DataOperationImpl <em>Operation</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.fhdo.lemma.data.impl.DataOperationImpl
+         * @see de.fhdo.lemma.data.impl.DataPackageImpl#getDataOperation()
+         * @generated
+         */
+        EClass DATA_OPERATION = eINSTANCE.getDataOperation();
+
+        /**
+         * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute DATA_OPERATION__NAME = eINSTANCE.getDataOperation_Name();
+
+        /**
+         * The meta object literal for the '<em><b>Hidden</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute DATA_OPERATION__HIDDEN = eINSTANCE.getDataOperation_Hidden();
+
+        /**
+         * The meta object literal for the '<em><b>Has No Return Type</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute DATA_OPERATION__HAS_NO_RETURN_TYPE = eINSTANCE.getDataOperation_HasNoReturnType();
+
+        /**
+         * The meta object literal for the '<em><b>Complex Return Type</b></em>' containment reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference DATA_OPERATION__COMPLEX_RETURN_TYPE = eINSTANCE.getDataOperation_ComplexReturnType();
+
+        /**
+         * The meta object literal for the '<em><b>Primitive Return Type</b></em>' containment reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference DATA_OPERATION__PRIMITIVE_RETURN_TYPE = eINSTANCE.getDataOperation_PrimitiveReturnType();
+
+        /**
+         * The meta object literal for the '<em><b>Parameters</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference DATA_OPERATION__PARAMETERS = eINSTANCE.getDataOperation_Parameters();
+
+        /**
+         * The meta object literal for the '<em><b>Data Structure</b></em>' container reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference DATA_OPERATION__DATA_STRUCTURE = eINSTANCE.getDataOperation_DataStructure();
+
+        /**
+         * The meta object literal for the '<em><b>Lacks Return Type Specification</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute DATA_OPERATION__LACKS_RETURN_TYPE_SPECIFICATION = eINSTANCE.getDataOperation_LacksReturnTypeSpecification();
+
+        /**
+         * The meta object literal for the '<em><b>Inherited</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute DATA_OPERATION__INHERITED = eINSTANCE.getDataOperation_Inherited();
+
+        /**
+         * The meta object literal for the '<em><b>Get Qualified Name Parts</b></em>' operation.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EOperation DATA_OPERATION___GET_QUALIFIED_NAME_PARTS = eINSTANCE.getDataOperation__GetQualifiedNameParts();
+
+        /**
+         * The meta object literal for the '<em><b>Build Qualified Name</b></em>' operation.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EOperation DATA_OPERATION___BUILD_QUALIFIED_NAME__STRING = eINSTANCE.getDataOperation__BuildQualifiedName__String();
+
+        /**
+         * The meta object literal for the '<em><b>Find Eponymous Super Operation</b></em>' operation.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EOperation DATA_OPERATION___FIND_EPONYMOUS_SUPER_OPERATION = eINSTANCE.getDataOperation__FindEponymousSuperOperation();
+
+        /**
+         * The meta object literal for the '<em><b>Get Primitive Or Complex Return Type</b></em>' operation.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EOperation DATA_OPERATION___GET_PRIMITIVE_OR_COMPLEX_RETURN_TYPE = eINSTANCE.getDataOperation__GetPrimitiveOrComplexReturnType();
+
+        /**
+         * The meta object literal for the '{@link de.fhdo.lemma.data.impl.DataOperationParameterImpl <em>Operation Parameter</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.fhdo.lemma.data.impl.DataOperationParameterImpl
+         * @see de.fhdo.lemma.data.impl.DataPackageImpl#getDataOperationParameter()
+         * @generated
+         */
+        EClass DATA_OPERATION_PARAMETER = eINSTANCE.getDataOperationParameter();
+
+        /**
+         * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute DATA_OPERATION_PARAMETER__NAME = eINSTANCE.getDataOperationParameter_Name();
+
+        /**
+         * The meta object literal for the '<em><b>Complex Type</b></em>' containment reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference DATA_OPERATION_PARAMETER__COMPLEX_TYPE = eINSTANCE.getDataOperationParameter_ComplexType();
+
+        /**
+         * The meta object literal for the '<em><b>Primitive Type</b></em>' containment reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference DATA_OPERATION_PARAMETER__PRIMITIVE_TYPE = eINSTANCE.getDataOperationParameter_PrimitiveType();
+
+        /**
+         * The meta object literal for the '<em><b>Operation</b></em>' container reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference DATA_OPERATION_PARAMETER__OPERATION = eINSTANCE.getDataOperationParameter_Operation();
+
+        /**
+         * The meta object literal for the '<em><b>Get Qualified Name Parts</b></em>' operation.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EOperation DATA_OPERATION_PARAMETER___GET_QUALIFIED_NAME_PARTS = eINSTANCE.getDataOperationParameter__GetQualifiedNameParts();
+
+        /**
+         * The meta object literal for the '<em><b>Build Qualified Name</b></em>' operation.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EOperation DATA_OPERATION_PARAMETER___BUILD_QUALIFIED_NAME__STRING = eINSTANCE.getDataOperationParameter__BuildQualifiedName__String();
+
+        /**
+         * The meta object literal for the '<em><b>Get Effective Type</b></em>' operation.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EOperation DATA_OPERATION_PARAMETER___GET_EFFECTIVE_TYPE = eINSTANCE.getDataOperationParameter__GetEffectiveType();
 
         /**
          * The meta object literal for the '{@link de.fhdo.lemma.data.impl.ListTypeImpl <em>List Type</em>}' class.

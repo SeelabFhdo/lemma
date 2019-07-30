@@ -121,6 +121,24 @@ public interface MappingFactory extends EFactory {
     TechnologySpecificFieldMapping createTechnologySpecificFieldMapping();
 
     /**
+     * Returns a new object of class '<em>Data Operation Mapping</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Data Operation Mapping</em>'.
+     * @generated
+     */
+    DataOperationMapping createDataOperationMapping();
+
+    /**
+     * Returns a new object of class '<em>Data Operation Parameter Mapping</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Data Operation Parameter Mapping</em>'.
+     * @generated
+     */
+    DataOperationParameterMapping createDataOperationParameterMapping();
+
+    /**
      * Returns a new object of class '<em>Technology Specific Protocol Specification</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

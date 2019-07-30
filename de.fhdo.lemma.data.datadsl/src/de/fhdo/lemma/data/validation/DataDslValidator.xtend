@@ -17,6 +17,10 @@ import java.util.List
 import org.eclipse.emf.ecore.resource.Resource
 import de.fhdo.lemma.utils.LemmaUtils
 import de.fhdo.lemma.data.FieldFeature
+import org.eclipse.emf.ecore.EObject
+import org.eclipse.emf.ecore.EStructuralFeature
+import de.fhdo.lemma.data.Context
+import de.fhdo.lemma.data.DataOperation
 
 /**
  * This class contains validation rules for the Data DSL.
@@ -78,6 +82,112 @@ class DataDslValidator extends AbstractDataDslValidator {
     }
 
     /**
+     * Check versions for unique names
+     */
+    @Check
+    def checkUniqueVersionNames(DataModel dataModel) {
+        checkUniqueNames(dataModel.versions, "version", [name], [name],
+            DataPackage::Literals.VERSION__NAME)
+    }
+
+    /**
+     * Check top-level contexts for unique names
+     */
+    @Check
+    def checkUniqueContextNames(DataModel dataModel) {
+        checkUniqueNames(dataModel.contexts, "context", [name], [name],
+            DataPackage::Literals.CONTEXT__NAME)
+    }
+
+    /**
+     * Check top-level complex types for unique names
+     */
+    @Check
+    def checkUniqueTypeNames(DataModel dataModel) {
+        checkUniqueNames(dataModel.complexTypes, "complex type", [name], [name],
+            DataPackage::Literals.COMPLEX_TYPE__NAME)
+    }
+
+    /**
+     * Check contexts defined in versions for unique names
+     */
+    @Check
+    def checkUniqueContextNames(Version version) {
+        checkUniqueNames(version.contexts, "context", [name], [name],
+            DataPackage::Literals.CONTEXT__NAME)
+    }
+
+    /**
+     * Check complex types defined in versions for unique names
+     */
+    @Check
+    def checkUniqueTypeNames(Version version) {
+        checkUniqueNames(version.complexTypes, "complex type", [name], [name],
+            DataPackage::Literals.COMPLEX_TYPE__NAME)
+    }
+
+    /**
+     * Check complex types defined in contexts for unique names
+     */
+    @Check
+    def checkUniqueTypeNames(Context context) {
+        checkUniqueNames(context.complexTypes, "complex type", [name], [name],
+            DataPackage::Literals.COMPLEX_TYPE__NAME)
+    }
+
+    /**
+     * Check operation parameters for unique names
+     */
+    @Check
+    def checkUniqueParameterNames(DataOperation operation) {
+        checkUniqueNames(operation.parameters, "parameter", [name], [name],
+            DataPackage::Literals.DATA_OPERATION_PARAMETER__NAME)
+    }
+
+    /**
+     * Generic helper to check a list of EObjects for unique names
+     */
+    private def <T extends EObject> checkUniqueNames(
+        List<T> objectsToCheck,
+        String objectKind,
+        Function<T, Object> getCompareValue,
+        Function<T, String> getDuplicateOutputString,
+        EStructuralFeature feature
+    ) {
+        val duplicateIndex = LemmaUtils.getDuplicateIndex(objectsToCheck, getCompareValue)
+        if (duplicateIndex === -1) {
+            return
+        }
+
+        val duplicate = objectsToCheck.get(duplicateIndex)
+        error('''Duplicate «objectKind» «getDuplicateOutputString.apply(duplicate)»''', duplicate,
+            feature)
+    }
+
+    /**
+     * Check data structure for unique names
+     */
+    @Check
+    def checkUniqueNames(DataStructure dataStructure) {
+        val dataFieldCount = dataStructure.dataFields.size
+        val uniqueNames = <String>newArrayList
+        uniqueNames.addAll(dataStructure.dataFields.map[it.name])
+        uniqueNames.addAll(dataStructure.operations.map[it.name])
+        val duplicateIndex = LemmaUtils.getDuplicateIndex(uniqueNames, [it])
+        if (duplicateIndex > -1) {
+            val isOperation = duplicateIndex >= dataFieldCount
+            if (!isOperation)
+                error("Duplicate structure component",
+                    DataPackage::Literals.DATA_STRUCTURE__DATA_FIELDS, duplicateIndex)
+            else {
+                val operationIndex = duplicateIndex - dataFieldCount
+                error("Duplicate structure component",
+                    DataPackage::Literals.DATA_STRUCTURE__OPERATIONS, operationIndex)
+            }
+        }
+    }
+
+    /**
      * Perform checks on data fields
      */
     @Check
@@ -133,6 +243,62 @@ class DataDslValidator extends AbstractDataDslValidator {
                 error('''Field cannot redefine inherited field «superQualifiedName» ''', dataField,
                     DataPackage::Literals.DATA_FIELD__NAME)
         }
+    }
+
+    /**
+     * Perform checks on data operations
+     */
+    @Check
+    def checkOperation(DataOperation dataOperation) {
+        val superOperation = dataOperation.findEponymousSuperOperation()
+        val superOperationName = if (superOperation !== null)
+                QualifiedName.create(superOperation.qualifiedNameParts).toString
+            else
+                null
+        val superOperationIsHidden = superOperation !== null && superOperation.hidden
+
+        val thisIsInherited = superOperation !== null
+        val thisIsHidden = dataOperation.hidden
+
+        val redefinitionAttempt = thisIsInherited && !superOperationIsHidden
+        val operationTypesDiffer = thisIsInherited &&
+            dataOperation.hasNoReturnType != superOperation.hasNoReturnType
+
+        if (redefinitionAttempt) {
+            // In a redefinition attempt, i.e., when the super operation is not hidden, this
+            // operation must be hidden
+            if (!thisIsHidden) {
+                error('''Operation cannot redefine operation «superOperationName» ''',
+                        dataOperation, DataPackage::Literals.DATA_OPERATION__NAME)
+                return
+
+            // In a redefinition attempt, the operation types of the super and this operation must
+            // not differ, i.e., they must be both either procedures or functions
+            } else if (operationTypesDiffer) {
+                error("Hidden inherited operation must have the same operation type (procedure " +
+                    '''or function) as «superOperationName»''', dataOperation,
+                    DataPackage::Literals.DATA_OPERATION__NAME)
+                return
+
+            // In a redefinition attempt, this operation must be a procedure or function without a
+            // return type specification
+            } else if (dataOperation.primitiveOrComplexReturnType !== null) {
+                error("Hidden inherited operation must not specify a return type", dataOperation,
+                    DataPackage::Literals.DATA_OPERATION__NAME)
+                return
+
+            // In a redefinition attempt, operations may not specify parameters themselves
+            } else if (!dataOperation.parameters.empty) {
+                error("Hidden inherited operation must not specify parameters", dataOperation,
+                    DataPackage::Literals.DATA_OPERATION__NAME)
+                return
+            }
+        }
+
+        // Operation may only lack a return type specification when it is hidden and inherited
+        if (dataOperation.lacksReturnTypeSpecification && (!thisIsHidden || !thisIsInherited))
+            error("Operation must have a return type specification or be hidden", dataOperation,
+                DataPackage::Literals.DATA_OPERATION__NAME)
     }
 
     /**

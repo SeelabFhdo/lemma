@@ -399,12 +399,6 @@ public class MappingModelTransformation extends AbstractAtlInputOutputIntermedia
           _matched=true;
           ((ComplexTypeMapping)it).setT_sourceModelUri(absoluteDataModelUri);
         }
-        if (!_matched) {
-          if (it instanceof TechnologySpecificFieldMapping) {
-            _matched=true;
-            ((TechnologySpecificFieldMapping)it).setT_sourceModelUri(absoluteDataModelUri);
-          }
-        }
       } catch (Throwable _e) {
         throw Exceptions.sneakyThrow(_e);
       }

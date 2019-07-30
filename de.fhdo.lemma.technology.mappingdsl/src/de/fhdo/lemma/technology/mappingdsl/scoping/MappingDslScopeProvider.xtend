@@ -54,6 +54,8 @@ import de.fhdo.lemma.technology.mapping.ComplexTypeMapping
 import de.fhdo.lemma.service.TechnologyReference
 import de.fhdo.lemma.service.ServicePackage
 import de.fhdo.lemma.utils.LemmaUtils
+import de.fhdo.lemma.technology.mapping.DataOperationMapping
+import de.fhdo.lemma.technology.mapping.DataOperationParameterMapping
 
 /**
  * This class implements a custom scope provider for the Mapping DSL.
@@ -71,6 +73,12 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
 
             /* Complex type mappings */
             ComplexTypeMapping: context.getScope(reference)
+
+            /* Data operation mappings */
+            DataOperationMapping: context.getScope(reference)
+
+            /* Data operation parameter mappings */
+            DataOperationParameterMapping: context.getScope(reference)
 
             /* Microservice mappings */
             MicroserviceMapping: context.getScope(reference)
@@ -164,6 +172,56 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
             case MappingPackage::Literals.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__ENUMERATION_FIELD:
                 if (mapping.type instanceof Enumeration)
                     return Scopes::scopeFor((mapping.type as Enumeration).fields)
+        }
+
+        return null
+    }
+
+    /**
+     * Build scope for data operation mappings and the given reference
+     */
+    private def getScope(DataOperationMapping mapping, EReference reference) {
+        switch (reference) {
+            /* Data operations */
+            case MappingPackage::Literals.DATA_OPERATION_MAPPING__DATA_OPERATION:
+                return mapping.getScopeForDataOperations()
+
+            /* Aspect technologies */
+            case MappingPackage::Literals.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__TECHNOLOGY:
+                return mapping.getScopeForAnnotatedTechnologies()
+
+            /* Data type technologies */
+            case MappingPackage::Literals.DATA_OPERATION_MAPPING__TECHNOLOGY:
+                return mapping.getScopeForAnnotatedTechnologies()
+
+            /* Return types */
+            case MappingPackage::Literals.DATA_OPERATION_MAPPING__RETURN_TYPE:
+                return mapping.getScopeForMappingTypes()
+
+            /* Parameters */
+            case MappingPackage::Literals.DATA_OPERATION_PARAMETER_MAPPING__PARAMETER:
+                return Scopes::scopeFor(mapping.dataOperation.parameters)
+        }
+
+        return null
+    }
+
+    /**
+     * Build scope for data operation parameter mappings and the given reference
+     */
+    private def getScope(DataOperationParameterMapping mapping, EReference reference) {
+        switch (reference) {
+            /* Parameters */
+            case MappingPackage::Literals.DATA_OPERATION_PARAMETER_MAPPING__PARAMETER:
+                return Scopes::scopeFor(mapping.operationMapping.dataOperation.parameters)
+
+            /* Aspect technologies */
+            case MappingPackage::Literals.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__TECHNOLOGY:
+                return mapping.getScopeForAnnotatedTechnologies()
+
+            /* Data type technologies */
+            case MappingPackage::Literals.DATA_OPERATION_PARAMETER_MAPPING__TECHNOLOGY:
+                return mapping.getScopeForAnnotatedTechnologies()
         }
 
         return null
@@ -499,30 +557,33 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     }
 
     /**
-     * Build scope for technology-specific types of field in complex type mappings or parameters
+     * Build scope for technology-specific types
      */
     private def getScopeForMappingTypes(EObject mapping) {
-        /* Determine type of mapped parameter */
-        var Type parameterType
+        /* Determine original type */
+        var Type originalType
         var Import technology
         switch (mapping) {
             PrimitiveParameterMapping: {
-                parameterType = mapping.parameter.effectiveType
+                originalType = mapping.parameter.effectiveType
                 technology = mapping.technology
             }
             ComplexParameterMapping: {
-                parameterType = mapping?.parameter?.importedType?.type
+                originalType = mapping?.parameter?.importedType?.type
                 technology = mapping.technology
             }
             TechnologySpecificFieldMapping: {
-                parameterType = mapping.dataField.effectiveType
+                originalType = mapping.dataField.effectiveType
+                technology = mapping.technology
+            }
+            DataOperationMapping: {
+                originalType = mapping.dataOperation.primitiveOrComplexReturnType
                 technology = mapping.technology
             }
             default: return IScope.NULLSCOPE
         }
 
-        // May happen if parameter does not exist
-        if (parameterType === null)
+        if (originalType === null)
             return IScope.NULLSCOPE
 
         /*
@@ -531,21 +592,21 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
          */
         var Function<Technology, List<Type>> getImportedConcepts
         var Function<Type, List<String>> getConceptNameParts
-        // Parameter is of primitive type
-        if (parameterType instanceof PrimitiveType) {
+        // Element is of primitive type
+        if (originalType instanceof PrimitiveType) {
             getImportedConcepts = [primitiveTypes.map[it as Type]]
             getConceptNameParts = [(it as TechnologySpecificPrimitiveType).qualifiedNameParts]
-        } else if (parameterType instanceof ComplexType) {
-            // Parameter is of structure type
-            if (parameterType.isStructure) {
+        } else if (originalType instanceof ComplexType) {
+            // Element is of structure type
+            if (originalType.isStructure) {
                 getImportedConcepts = [dataStructures.map[it as Type]]
                 getConceptNameParts = [(it as TechnologySpecificDataStructure).qualifiedNameParts]
-            // Parameter is of list type
-            } else if (parameterType.isStructuredList || parameterType.isPrimitiveList) {
+            // Element is of list type
+            } else if (originalType.isStructuredList || originalType.isPrimitiveList) {
                 getImportedConcepts = [listTypes.map[it as Type]]
                 getConceptNameParts = [(it as TechnologySpecificListType).qualifiedNameParts]
-            // Types of enum parameters are not changeable via mappings
-            } else if (parameterType.isEnumeration)
+            // Enum types are not changeable via mappings
+            } else if (originalType.isEnumeration)
                 return IScope.NULLSCOPE
         }
 
@@ -603,6 +664,18 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
                 Scopes::scopeFor((complexType as DataStructure).dataFields)
             else if (complexType.isStructuredList)
                 Scopes::scopeFor((complexType as ListType).dataFields)
+            else
+                IScope.NULLSCOPE
+    }
+
+    /**
+     * Build scope for data operations in complex type mappings
+     */
+    private def getScopeForDataOperations(DataOperationMapping mapping) {
+        var ComplexType complexType = mapping.typeMapping.type.type as ComplexType
+
+        return if (complexType.isStructure)
+                Scopes::scopeFor((complexType as DataStructure).operations)
             else
                 IScope.NULLSCOPE
     }
@@ -760,6 +833,12 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
         val joinPoint = switch (mapping) {
             ComplexTypeMapping: {
                 JoinPointType.COMPLEX_TYPES
+            }
+            DataOperationMapping: {
+                JoinPointType.OPERATIONS
+            }
+            DataOperationParameterMapping: {
+                JoinPointType.PARAMETERS
             }
             MicroserviceMapping: {
                 forProtocolsAndDataFormats = mapping.effectiveProtocolsAndDataFormats

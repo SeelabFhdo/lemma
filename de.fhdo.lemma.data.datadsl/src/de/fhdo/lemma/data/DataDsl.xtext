@@ -44,7 +44,17 @@ ComplexType returns ComplexType:
 
 DataStructure returns DataStructure:
     'structure' name=ID ('extends' super=[DataStructure|QualifiedName])? '{'
-        (dataFields+=DataField (',' dataFields+=DataField)*)?
+        (
+            dataFields+=DataField (',' dataFields+=DataField)*
+            |
+            operations+=DataOperation (',' operations+=DataOperation)*
+            |
+            (
+                dataFields+=DataField (',' dataFields+=DataField)*
+                ','
+                operations+=DataOperation (',' operations+=DataOperation)*
+            )
+        )?
     '}'
 ;
 
@@ -79,6 +89,25 @@ Enumeration returns Enumeration:
 
 EnumerationField returns EnumerationField:
     name=ID ('(' initializationValue=PrimitiveValue ')')?
+;
+
+DataOperation returns DataOperation:
+    ^hidden?='hide'?
+    (
+        hasNoReturnType ?= 'procedure' |
+        'function'
+            (
+                primitiveReturnType=PrimitiveType |
+                complexReturnType=PossiblyImportedComplexType
+            )?
+    )
+    name=ID
+    ('(' parameters+=DataOperationParameter? (',' parameters+=DataOperationParameter)* ')')?
+;
+
+DataOperationParameter returns DataOperationParameter:
+    (primitiveType=PrimitiveType | complexType=PossiblyImportedComplexType)
+    name=ID
 ;
 
 PrimitiveValue returns PrimitiveValue:

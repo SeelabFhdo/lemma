@@ -80,6 +80,14 @@ public class ServiceAdapterFactory extends AdapterFactoryImpl {
                 return createMappedComplexTypeAdapter();
             }
             @Override
+            public Adapter caseMappedDataOperation(MappedDataOperation object) {
+                return createMappedDataOperationAdapter();
+            }
+            @Override
+            public Adapter caseMappedDataOperationParameter(MappedDataOperationParameter object) {
+                return createMappedDataOperationParameterAdapter();
+            }
+            @Override
             public Adapter caseMappedField(MappedField object) {
                 return createMappedFieldAdapter();
             }
@@ -198,6 +206,34 @@ public class ServiceAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createMappedComplexTypeAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.fhdo.lemma.service.MappedDataOperation <em>Mapped Data Operation</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.fhdo.lemma.service.MappedDataOperation
+     * @generated
+     */
+    public Adapter createMappedDataOperationAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.fhdo.lemma.service.MappedDataOperationParameter <em>Mapped Data Operation Parameter</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.fhdo.lemma.service.MappedDataOperationParameter
+     * @generated
+     */
+    public Adapter createMappedDataOperationParameterAdapter() {
         return null;
     }
 

@@ -103,6 +103,24 @@ public interface IntermediateFactory extends EFactory {
     IntermediateDataStructure createIntermediateDataStructure();
 
     /**
+     * Returns a new object of class '<em>Data Operation</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Data Operation</em>'.
+     * @generated
+     */
+    IntermediateDataOperation createIntermediateDataOperation();
+
+    /**
+     * Returns a new object of class '<em>Data Operation Parameter</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Data Operation Parameter</em>'.
+     * @generated
+     */
+    IntermediateDataOperationParameter createIntermediateDataOperationParameter();
+
+    /**
      * Returns a new object of class '<em>List Type</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

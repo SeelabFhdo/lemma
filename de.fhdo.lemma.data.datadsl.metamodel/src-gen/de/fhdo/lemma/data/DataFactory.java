@@ -166,6 +166,24 @@ public interface DataFactory extends EFactory {
     DataStructure createDataStructure();
 
     /**
+     * Returns a new object of class '<em>Operation</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Operation</em>'.
+     * @generated
+     */
+    DataOperation createDataOperation();
+
+    /**
+     * Returns a new object of class '<em>Operation Parameter</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Operation Parameter</em>'.
+     * @generated
+     */
+    DataOperationParameter createDataOperationParameter();
+
+    /**
      * Returns a new object of class '<em>List Type</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

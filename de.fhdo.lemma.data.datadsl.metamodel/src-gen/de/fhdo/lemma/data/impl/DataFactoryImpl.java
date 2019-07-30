@@ -75,6 +75,8 @@ public class DataFactoryImpl extends EFactoryImpl implements DataFactory {
             case DataPackage.PRIMITIVE_STRING: return createPrimitiveString();
             case DataPackage.POSSIBLY_IMPORTED_COMPLEX_TYPE: return createPossiblyImportedComplexType();
             case DataPackage.DATA_STRUCTURE: return createDataStructure();
+            case DataPackage.DATA_OPERATION: return createDataOperation();
+            case DataPackage.DATA_OPERATION_PARAMETER: return createDataOperationParameter();
             case DataPackage.LIST_TYPE: return createListType();
             case DataPackage.DATA_FIELD: return createDataField();
             case DataPackage.ENUMERATION: return createEnumeration();
@@ -297,6 +299,28 @@ public class DataFactoryImpl extends EFactoryImpl implements DataFactory {
     public DataStructure createDataStructure() {
         DataStructureImpl dataStructure = new DataStructureImpl();
         return dataStructure;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public DataOperation createDataOperation() {
+        DataOperationImpl dataOperation = new DataOperationImpl();
+        return dataOperation;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public DataOperationParameter createDataOperationParameter() {
+        DataOperationParameterImpl dataOperationParameter = new DataOperationParameterImpl();
+        return dataOperationParameter;
     }
 
     /**

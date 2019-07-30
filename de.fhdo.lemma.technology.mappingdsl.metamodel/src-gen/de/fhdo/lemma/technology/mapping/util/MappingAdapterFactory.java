@@ -116,6 +116,14 @@ public class MappingAdapterFactory extends AdapterFactoryImpl {
                 return createTechnologySpecificFieldMappingAdapter();
             }
             @Override
+            public Adapter caseDataOperationMapping(DataOperationMapping object) {
+                return createDataOperationMappingAdapter();
+            }
+            @Override
+            public Adapter caseDataOperationParameterMapping(DataOperationParameterMapping object) {
+                return createDataOperationParameterMappingAdapter();
+            }
+            @Override
             public Adapter caseTechnologySpecificProtocolSpecification(TechnologySpecificProtocolSpecification object) {
                 return createTechnologySpecificProtocolSpecificationAdapter();
             }
@@ -316,6 +324,34 @@ public class MappingAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createTechnologySpecificFieldMappingAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.fhdo.lemma.technology.mapping.DataOperationMapping <em>Data Operation Mapping</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.fhdo.lemma.technology.mapping.DataOperationMapping
+     * @generated
+     */
+    public Adapter createDataOperationMappingAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.fhdo.lemma.technology.mapping.DataOperationParameterMapping <em>Data Operation Parameter Mapping</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.fhdo.lemma.technology.mapping.DataOperationParameterMapping
+     * @generated
+     */
+    public Adapter createDataOperationParameterMappingAdapter() {
         return null;
     }
 

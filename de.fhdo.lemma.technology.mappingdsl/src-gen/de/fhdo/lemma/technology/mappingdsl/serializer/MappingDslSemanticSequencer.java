@@ -8,6 +8,8 @@ import de.fhdo.lemma.data.ComplexTypeImport;
 import de.fhdo.lemma.data.Context;
 import de.fhdo.lemma.data.DataField;
 import de.fhdo.lemma.data.DataModel;
+import de.fhdo.lemma.data.DataOperation;
+import de.fhdo.lemma.data.DataOperationParameter;
 import de.fhdo.lemma.data.DataPackage;
 import de.fhdo.lemma.data.DataStructure;
 import de.fhdo.lemma.data.Enumeration;
@@ -66,6 +68,8 @@ import de.fhdo.lemma.technology.TechnologySpecificProperty;
 import de.fhdo.lemma.technology.TechnologySpecificPropertyValueAssignment;
 import de.fhdo.lemma.technology.mapping.ComplexParameterMapping;
 import de.fhdo.lemma.technology.mapping.ComplexTypeMapping;
+import de.fhdo.lemma.technology.mapping.DataOperationMapping;
+import de.fhdo.lemma.technology.mapping.DataOperationParameterMapping;
 import de.fhdo.lemma.technology.mapping.ImportedComplexType;
 import de.fhdo.lemma.technology.mapping.ImportedMicroservice;
 import de.fhdo.lemma.technology.mapping.InterfaceMapping;
@@ -116,6 +120,12 @@ public class MappingDslSemanticSequencer extends ServiceDslSemanticSequencer {
 				return; 
 			case DataPackage.DATA_MODEL:
 				sequence_DataModel(context, (DataModel) semanticObject); 
+				return; 
+			case DataPackage.DATA_OPERATION:
+				sequence_DataOperation(context, (DataOperation) semanticObject); 
+				return; 
+			case DataPackage.DATA_OPERATION_PARAMETER:
+				sequence_DataOperationParameter(context, (DataOperationParameter) semanticObject); 
 				return; 
 			case DataPackage.DATA_STRUCTURE:
 				sequence_DataStructure(context, (DataStructure) semanticObject); 
@@ -176,6 +186,12 @@ public class MappingDslSemanticSequencer extends ServiceDslSemanticSequencer {
 				return; 
 			case MappingPackage.COMPLEX_TYPE_MAPPING:
 				sequence_ComplexTypeMapping(context, (ComplexTypeMapping) semanticObject); 
+				return; 
+			case MappingPackage.DATA_OPERATION_MAPPING:
+				sequence_DataOperationMapping(context, (DataOperationMapping) semanticObject); 
+				return; 
+			case MappingPackage.DATA_OPERATION_PARAMETER_MAPPING:
+				sequence_DataOperationParameterMapping(context, (DataOperationParameterMapping) semanticObject); 
 				return; 
 			case MappingPackage.IMPORTED_COMPLEX_TYPE:
 				sequence_ImportedComplexType(context, (ImportedComplexType) semanticObject); 
@@ -362,10 +378,40 @@ public class MappingDslSemanticSequencer extends ServiceDslSemanticSequencer {
 	 *         technologyReferences+=TechnologyReference* 
 	 *         type=ImportedComplexType 
 	 *         aspects+=TechnologySpecificImportedServiceAspect* 
-	 *         fieldMappings+=TechnologySpecificFieldMapping*
+	 *         fieldMappings+=TechnologySpecificFieldMapping* 
+	 *         operationMappings+=DataOperationMapping*
 	 *     )
 	 */
 	protected void sequence_ComplexTypeMapping(ISerializationContext context, ComplexTypeMapping semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     DataOperationMapping returns DataOperationMapping
+	 *
+	 * Constraint:
+	 *     (
+	 *         dataOperation=[DataOperation|ID] 
+	 *         (technology=[Import|ID] returnType=[Type|QualifiedName])? 
+	 *         aspects+=TechnologySpecificImportedServiceAspect* 
+	 *         parameterMappings+=DataOperationParameterMapping*
+	 *     )?
+	 */
+	protected void sequence_DataOperationMapping(ISerializationContext context, DataOperationMapping semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     DataOperationParameterMapping returns DataOperationParameterMapping
+	 *
+	 * Constraint:
+	 *     (parameter=[DataOperationParameter|ID] (technology=[Import|ID] type=[Type|QualifiedName])? aspects+=TechnologySpecificImportedServiceAspect*)
+	 */
+	protected void sequence_DataOperationParameterMapping(ISerializationContext context, DataOperationParameterMapping semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

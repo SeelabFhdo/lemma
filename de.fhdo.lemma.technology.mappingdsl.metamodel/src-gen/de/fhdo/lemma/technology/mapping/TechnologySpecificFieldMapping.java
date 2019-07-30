@@ -26,7 +26,6 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link de.fhdo.lemma.technology.mapping.TechnologySpecificFieldMapping#getT_sourceModelUri <em>Tsource Model Uri</em>}</li>
  *   <li>{@link de.fhdo.lemma.technology.mapping.TechnologySpecificFieldMapping#getTechnology <em>Technology</em>}</li>
  *   <li>{@link de.fhdo.lemma.technology.mapping.TechnologySpecificFieldMapping#getType <em>Type</em>}</li>
  *   <li>{@link de.fhdo.lemma.technology.mapping.TechnologySpecificFieldMapping#getEnumerationField <em>Enumeration Field</em>}</li>
@@ -42,7 +41,7 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface TechnologySpecificFieldMapping extends EObject {
     /**
-     * Returns the value of the '<em><b>Tsource Model Uri</b></em>' attribute.
+     * Returns the value of the '<em><b>Technology</b></em>' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
@@ -51,32 +50,6 @@ public interface TechnologySpecificFieldMapping extends EObject {
      *     (C1) Enumeration fields cannot exhibit mapped types.
      *          Ensured by: DSL validator.
      * <!-- end-model-doc -->
-     * @return the value of the '<em>Tsource Model Uri</em>' attribute.
-     * @see #setT_sourceModelUri(String)
-     * @see de.fhdo.lemma.technology.mapping.MappingPackage#getTechnologySpecificFieldMapping_T_sourceModelUri()
-     * @model unique="false"
-     * @generated
-     */
-    String getT_sourceModelUri();
-
-    /**
-     * Sets the value of the '{@link de.fhdo.lemma.technology.mapping.TechnologySpecificFieldMapping#getT_sourceModelUri <em>Tsource Model Uri</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Tsource Model Uri</em>' attribute.
-     * @see #getT_sourceModelUri()
-     * @generated
-     */
-    void setT_sourceModelUri(String value);
-
-    /**
-     * Returns the value of the '<em><b>Technology</b></em>' reference.
-     * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Technology</em>' reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
      * @return the value of the '<em>Technology</em>' reference.
      * @see #setTechnology(Import)
      * @see de.fhdo.lemma.technology.mapping.MappingPackage#getTechnologySpecificFieldMapping_Technology()

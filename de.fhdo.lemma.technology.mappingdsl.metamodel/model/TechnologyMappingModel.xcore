@@ -2,6 +2,8 @@ package de.fhdo.lemma.technology.mapping
 
 import de.fhdo.lemma.data.ComplexType
 import de.fhdo.lemma.data.DataField
+import de.fhdo.lemma.data.DataOperation
+import de.fhdo.lemma.data.DataOperationParameter
 import de.fhdo.lemma.data.EnumerationField
 import de.fhdo.lemma.data.PrimitiveValue
 import de.fhdo.lemma.data.Type
@@ -84,6 +86,7 @@ class ComplexTypeMapping {
     contains TechnologyReference[] technologyReferences
     contains ImportedComplexType ^type opposite typeMapping
     contains TechnologySpecificFieldMapping[] fieldMappings opposite typeMapping
+    contains DataOperationMapping[] operationMappings opposite typeMapping
     contains TechnologySpecificImportedServiceAspect[] aspects opposite typeMapping
 
     container TechnologyMapping mappingModel opposite typeMappings
@@ -336,6 +339,12 @@ class ReferredOperationMapping {
  * Abstract superclass for technology mapping of operation parameters
  */
 abstract class ParameterMapping {
+    /**
+     * Implicit Constraints:
+     *     (C1) A parameter may be mapped only once.
+     *          Ensured by: DSL validator.
+     */
+
     refers Parameter parameter
     contains TechnologySpecificImportedServiceAspect[] aspects opposite parameterMapping
 
@@ -356,9 +365,7 @@ class PrimitiveParameterMapping extends ParameterMapping {
 class ComplexParameterMapping extends ParameterMapping {
     /**
      * Implicit Constraints:
-     *     (C1) A parameter may be mapped only once.
-     *          Ensured by: DSL validator.
-     *     (C2) Maps either a technology-specific complex type directly or individual data fields.
+     *     (C1) Maps either a technology-specific complex type directly or individual data fields.
      *          Ensured by: DSL scope provider.
      */
 
@@ -376,10 +383,6 @@ class TechnologySpecificFieldMapping {
      *     (C1) Enumeration fields cannot exhibit mapped types.
      *          Ensured by: DSL validator.
      */
-
-    // TRANSFORMATION ONLY: Source model URI of the data model that defines the original type of
-    //                      the mapped element, i.e., the enumeration or data field's type
-    String t_sourceModelUri
 
     refers Import[0..1] technology
     refers Type[0..1] ^type
@@ -401,6 +404,45 @@ class TechnologySpecificFieldMapping {
         else
             return null
     }
+}
+
+/**
+ * Technology mapping for data operations
+ */
+class DataOperationMapping {
+    /**
+     * Implicit Constraints:
+     *     (C1) If the original data operation has no return type, the return type may not be mapped
+     *          to a new type.
+     *          Ensured by: DSL validator.
+     */
+
+    refers DataOperation dataOperation
+    refers Import[0..1] technology
+    refers Type[0..1] returnType
+    contains TechnologySpecificImportedServiceAspect[] aspects opposite dataOperationMapping
+    contains DataOperationParameterMapping[] parameterMappings opposite operationMapping
+
+    container ComplexTypeMapping typeMapping opposite operationMappings
+}
+
+/**
+ * Technology mapping for parameters of data operations
+ */
+class DataOperationParameterMapping {
+    /**
+     * Implicit Constraints:
+     *     (C1) A parameter may be mapped only once.
+     *          Ensured by: DSL validator.
+     */
+
+    refers DataOperationParameter parameter
+    refers Import[0..1] technology
+    refers Type[0..1] ^type
+    contains TechnologySpecificImportedServiceAspect[] aspects
+        opposite dataOperationParameterMapping
+
+    container DataOperationMapping operationMapping opposite parameterMappings
 }
 
 /**
@@ -485,6 +527,8 @@ class TechnologySpecificImportedServiceAspect {
     container ReferredOperationMapping referredOperationMapping opposite aspects
     container ParameterMapping parameterMapping opposite aspects
     container TechnologySpecificFieldMapping fieldMapping opposite aspects
+    container DataOperationMapping dataOperationMapping opposite aspects
+    container DataOperationParameterMapping dataOperationParameterMapping opposite aspects
 }
 
 type DataFieldList wraps List<DataField>

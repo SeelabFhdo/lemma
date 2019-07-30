@@ -38,6 +38,8 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.fhdo.lemma.technology.mapping.TechnologySpecificImportedServiceAspect#getReferredOperationMapping <em>Referred Operation Mapping</em>}</li>
  *   <li>{@link de.fhdo.lemma.technology.mapping.TechnologySpecificImportedServiceAspect#getParameterMapping <em>Parameter Mapping</em>}</li>
  *   <li>{@link de.fhdo.lemma.technology.mapping.TechnologySpecificImportedServiceAspect#getFieldMapping <em>Field Mapping</em>}</li>
+ *   <li>{@link de.fhdo.lemma.technology.mapping.TechnologySpecificImportedServiceAspect#getDataOperationMapping <em>Data Operation Mapping</em>}</li>
+ *   <li>{@link de.fhdo.lemma.technology.mapping.TechnologySpecificImportedServiceAspect#getDataOperationParameterMapping <em>Data Operation Parameter Mapping</em>}</li>
  * </ul>
  *
  * @see de.fhdo.lemma.technology.mapping.MappingPackage#getTechnologySpecificImportedServiceAspect()
@@ -345,5 +347,61 @@ public interface TechnologySpecificImportedServiceAspect extends EObject {
      * @generated
      */
     void setFieldMapping(TechnologySpecificFieldMapping value);
+
+    /**
+     * Returns the value of the '<em><b>Data Operation Mapping</b></em>' container reference.
+     * It is bidirectional and its opposite is '{@link de.fhdo.lemma.technology.mapping.DataOperationMapping#getAspects <em>Aspects</em>}'.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Data Operation Mapping</em>' container reference isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Data Operation Mapping</em>' container reference.
+     * @see #setDataOperationMapping(DataOperationMapping)
+     * @see de.fhdo.lemma.technology.mapping.MappingPackage#getTechnologySpecificImportedServiceAspect_DataOperationMapping()
+     * @see de.fhdo.lemma.technology.mapping.DataOperationMapping#getAspects
+     * @model opposite="aspects" transient="false"
+     * @generated
+     */
+    DataOperationMapping getDataOperationMapping();
+
+    /**
+     * Sets the value of the '{@link de.fhdo.lemma.technology.mapping.TechnologySpecificImportedServiceAspect#getDataOperationMapping <em>Data Operation Mapping</em>}' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Data Operation Mapping</em>' container reference.
+     * @see #getDataOperationMapping()
+     * @generated
+     */
+    void setDataOperationMapping(DataOperationMapping value);
+
+    /**
+     * Returns the value of the '<em><b>Data Operation Parameter Mapping</b></em>' container reference.
+     * It is bidirectional and its opposite is '{@link de.fhdo.lemma.technology.mapping.DataOperationParameterMapping#getAspects <em>Aspects</em>}'.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Data Operation Parameter Mapping</em>' container reference isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Data Operation Parameter Mapping</em>' container reference.
+     * @see #setDataOperationParameterMapping(DataOperationParameterMapping)
+     * @see de.fhdo.lemma.technology.mapping.MappingPackage#getTechnologySpecificImportedServiceAspect_DataOperationParameterMapping()
+     * @see de.fhdo.lemma.technology.mapping.DataOperationParameterMapping#getAspects
+     * @model opposite="aspects" transient="false"
+     * @generated
+     */
+    DataOperationParameterMapping getDataOperationParameterMapping();
+
+    /**
+     * Sets the value of the '{@link de.fhdo.lemma.technology.mapping.TechnologySpecificImportedServiceAspect#getDataOperationParameterMapping <em>Data Operation Parameter Mapping</em>}' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Data Operation Parameter Mapping</em>' container reference.
+     * @see #getDataOperationParameterMapping()
+     * @generated
+     */
+    void setDataOperationParameterMapping(DataOperationParameterMapping value);
 
 } // TechnologySpecificImportedServiceAspect

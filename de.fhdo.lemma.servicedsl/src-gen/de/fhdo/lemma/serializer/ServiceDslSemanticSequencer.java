@@ -8,6 +8,8 @@ import de.fhdo.lemma.data.ComplexTypeImport;
 import de.fhdo.lemma.data.Context;
 import de.fhdo.lemma.data.DataField;
 import de.fhdo.lemma.data.DataModel;
+import de.fhdo.lemma.data.DataOperation;
+import de.fhdo.lemma.data.DataOperationParameter;
 import de.fhdo.lemma.data.DataPackage;
 import de.fhdo.lemma.data.DataStructure;
 import de.fhdo.lemma.data.Enumeration;
@@ -100,6 +102,12 @@ public class ServiceDslSemanticSequencer extends TechnologyDslSemanticSequencer 
 				return; 
 			case DataPackage.DATA_MODEL:
 				sequence_DataModel(context, (DataModel) semanticObject); 
+				return; 
+			case DataPackage.DATA_OPERATION:
+				sequence_DataOperation(context, (DataOperation) semanticObject); 
+				return; 
+			case DataPackage.DATA_OPERATION_PARAMETER:
+				sequence_DataOperationParameter(context, (DataOperationParameter) semanticObject); 
 				return; 
 			case DataPackage.DATA_STRUCTURE:
 				sequence_DataStructure(context, (DataStructure) semanticObject); 

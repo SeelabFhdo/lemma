@@ -380,13 +380,31 @@ public interface IntermediatePackage extends EPackage {
     int INTERMEDIATE_TYPE__KIND = 2;
 
     /**
+     * The feature id for the '<em><b>Operation</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_TYPE__OPERATION = 3;
+
+    /**
+     * The feature id for the '<em><b>Parameter</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_TYPE__PARAMETER = 4;
+
+    /**
      * The feature id for the '<em><b>Data Field</b></em>' container reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_TYPE__DATA_FIELD = 3;
+    int INTERMEDIATE_TYPE__DATA_FIELD = 5;
 
     /**
      * The number of structural features of the '<em>Type</em>' class.
@@ -395,7 +413,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_TYPE_FEATURE_COUNT = 4;
+    int INTERMEDIATE_TYPE_FEATURE_COUNT = 6;
 
     /**
      * The number of operations of the '<em>Type</em>' class.
@@ -442,6 +460,24 @@ public interface IntermediatePackage extends EPackage {
      * @ordered
      */
     int INTERMEDIATE_PRIMITIVE_TYPE__KIND = INTERMEDIATE_TYPE__KIND;
+
+    /**
+     * The feature id for the '<em><b>Operation</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_PRIMITIVE_TYPE__OPERATION = INTERMEDIATE_TYPE__OPERATION;
+
+    /**
+     * The feature id for the '<em><b>Parameter</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_PRIMITIVE_TYPE__PARAMETER = INTERMEDIATE_TYPE__PARAMETER;
 
     /**
      * The feature id for the '<em><b>Data Field</b></em>' container reference.
@@ -524,6 +560,24 @@ public interface IntermediatePackage extends EPackage {
      * @ordered
      */
     int INTERMEDIATE_COMPLEX_TYPE__KIND = INTERMEDIATE_TYPE__KIND;
+
+    /**
+     * The feature id for the '<em><b>Operation</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_COMPLEX_TYPE__OPERATION = INTERMEDIATE_TYPE__OPERATION;
+
+    /**
+     * The feature id for the '<em><b>Parameter</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_COMPLEX_TYPE__PARAMETER = INTERMEDIATE_TYPE__PARAMETER;
 
     /**
      * The feature id for the '<em><b>Data Field</b></em>' container reference.
@@ -633,6 +687,24 @@ public interface IntermediatePackage extends EPackage {
      * @ordered
      */
     int INTERMEDIATE_IMPORTED_COMPLEX_TYPE__KIND = INTERMEDIATE_COMPLEX_TYPE__KIND;
+
+    /**
+     * The feature id for the '<em><b>Operation</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_IMPORTED_COMPLEX_TYPE__OPERATION = INTERMEDIATE_COMPLEX_TYPE__OPERATION;
+
+    /**
+     * The feature id for the '<em><b>Parameter</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_IMPORTED_COMPLEX_TYPE__PARAMETER = INTERMEDIATE_COMPLEX_TYPE__PARAMETER;
 
     /**
      * The feature id for the '<em><b>Data Field</b></em>' container reference.
@@ -753,6 +825,24 @@ public interface IntermediatePackage extends EPackage {
     int INTERMEDIATE_IMPORTED_TECHNOLOGY_SPECIFIC_TYPE__KIND = INTERMEDIATE_TYPE__KIND;
 
     /**
+     * The feature id for the '<em><b>Operation</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_IMPORTED_TECHNOLOGY_SPECIFIC_TYPE__OPERATION = INTERMEDIATE_TYPE__OPERATION;
+
+    /**
+     * The feature id for the '<em><b>Parameter</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_IMPORTED_TECHNOLOGY_SPECIFIC_TYPE__PARAMETER = INTERMEDIATE_TYPE__PARAMETER;
+
+    /**
      * The feature id for the '<em><b>Data Field</b></em>' container reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -835,6 +925,24 @@ public interface IntermediatePackage extends EPackage {
     int INTERMEDIATE_DATA_STRUCTURE__KIND = INTERMEDIATE_COMPLEX_TYPE__KIND;
 
     /**
+     * The feature id for the '<em><b>Operation</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_DATA_STRUCTURE__OPERATION = INTERMEDIATE_COMPLEX_TYPE__OPERATION;
+
+    /**
+     * The feature id for the '<em><b>Parameter</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_DATA_STRUCTURE__PARAMETER = INTERMEDIATE_COMPLEX_TYPE__PARAMETER;
+
+    /**
      * The feature id for the '<em><b>Data Field</b></em>' container reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -898,13 +1006,22 @@ public interface IntermediatePackage extends EPackage {
     int INTERMEDIATE_DATA_STRUCTURE__SUPER = INTERMEDIATE_COMPLEX_TYPE_FEATURE_COUNT + 0;
 
     /**
+     * The feature id for the '<em><b>Operations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_DATA_STRUCTURE__OPERATIONS = INTERMEDIATE_COMPLEX_TYPE_FEATURE_COUNT + 1;
+
+    /**
      * The feature id for the '<em><b>Data Fields</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_DATA_STRUCTURE__DATA_FIELDS = INTERMEDIATE_COMPLEX_TYPE_FEATURE_COUNT + 1;
+    int INTERMEDIATE_DATA_STRUCTURE__DATA_FIELDS = INTERMEDIATE_COMPLEX_TYPE_FEATURE_COUNT + 2;
 
     /**
      * The number of structural features of the '<em>Data Structure</em>' class.
@@ -913,7 +1030,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_DATA_STRUCTURE_FEATURE_COUNT = INTERMEDIATE_COMPLEX_TYPE_FEATURE_COUNT + 2;
+    int INTERMEDIATE_DATA_STRUCTURE_FEATURE_COUNT = INTERMEDIATE_COMPLEX_TYPE_FEATURE_COUNT + 3;
 
     /**
      * The number of operations of the '<em>Data Structure</em>' class.
@@ -925,6 +1042,206 @@ public interface IntermediatePackage extends EPackage {
     int INTERMEDIATE_DATA_STRUCTURE_OPERATION_COUNT = INTERMEDIATE_COMPLEX_TYPE_OPERATION_COUNT + 0;
 
     /**
+     * The meta object id for the '{@link de.fhdo.lemma.data.intermediate.impl.IntermediateDataOperationImpl <em>Data Operation</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.fhdo.lemma.data.intermediate.impl.IntermediateDataOperationImpl
+     * @see de.fhdo.lemma.data.intermediate.impl.IntermediatePackageImpl#getIntermediateDataOperation()
+     * @generated
+     */
+    int INTERMEDIATE_DATA_OPERATION = 10;
+
+    /**
+     * The feature id for the '<em><b>Name</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_DATA_OPERATION__NAME = 0;
+
+    /**
+     * The feature id for the '<em><b>Qualified Name</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_DATA_OPERATION__QUALIFIED_NAME = 1;
+
+    /**
+     * The feature id for the '<em><b>Hidden</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_DATA_OPERATION__HIDDEN = 2;
+
+    /**
+     * The feature id for the '<em><b>Inherited</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_DATA_OPERATION__INHERITED = 3;
+
+    /**
+     * The feature id for the '<em><b>Has No Return Type</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_DATA_OPERATION__HAS_NO_RETURN_TYPE = 4;
+
+    /**
+     * The feature id for the '<em><b>Return Type</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_DATA_OPERATION__RETURN_TYPE = 5;
+
+    /**
+     * The feature id for the '<em><b>Original Return Type</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_DATA_OPERATION__ORIGINAL_RETURN_TYPE = 6;
+
+    /**
+     * The feature id for the '<em><b>Parameters</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_DATA_OPERATION__PARAMETERS = 7;
+
+    /**
+     * The feature id for the '<em><b>Aspects</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_DATA_OPERATION__ASPECTS = 8;
+
+    /**
+     * The feature id for the '<em><b>Data Structure</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_DATA_OPERATION__DATA_STRUCTURE = 9;
+
+    /**
+     * The number of structural features of the '<em>Data Operation</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_DATA_OPERATION_FEATURE_COUNT = 10;
+
+    /**
+     * The number of operations of the '<em>Data Operation</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_DATA_OPERATION_OPERATION_COUNT = 0;
+
+    /**
+     * The meta object id for the '{@link de.fhdo.lemma.data.intermediate.impl.IntermediateDataOperationParameterImpl <em>Data Operation Parameter</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.fhdo.lemma.data.intermediate.impl.IntermediateDataOperationParameterImpl
+     * @see de.fhdo.lemma.data.intermediate.impl.IntermediatePackageImpl#getIntermediateDataOperationParameter()
+     * @generated
+     */
+    int INTERMEDIATE_DATA_OPERATION_PARAMETER = 11;
+
+    /**
+     * The feature id for the '<em><b>Name</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_DATA_OPERATION_PARAMETER__NAME = 0;
+
+    /**
+     * The feature id for the '<em><b>Qualified Name</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_DATA_OPERATION_PARAMETER__QUALIFIED_NAME = 1;
+
+    /**
+     * The feature id for the '<em><b>Type</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_DATA_OPERATION_PARAMETER__TYPE = 2;
+
+    /**
+     * The feature id for the '<em><b>Original Type</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_DATA_OPERATION_PARAMETER__ORIGINAL_TYPE = 3;
+
+    /**
+     * The feature id for the '<em><b>Aspects</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_DATA_OPERATION_PARAMETER__ASPECTS = 4;
+
+    /**
+     * The feature id for the '<em><b>Operation</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_DATA_OPERATION_PARAMETER__OPERATION = 5;
+
+    /**
+     * The number of structural features of the '<em>Data Operation Parameter</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_DATA_OPERATION_PARAMETER_FEATURE_COUNT = 6;
+
+    /**
+     * The number of operations of the '<em>Data Operation Parameter</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_DATA_OPERATION_PARAMETER_OPERATION_COUNT = 0;
+
+    /**
      * The meta object id for the '{@link de.fhdo.lemma.data.intermediate.impl.IntermediateListTypeImpl <em>List Type</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -932,7 +1249,7 @@ public interface IntermediatePackage extends EPackage {
      * @see de.fhdo.lemma.data.intermediate.impl.IntermediatePackageImpl#getIntermediateListType()
      * @generated
      */
-    int INTERMEDIATE_LIST_TYPE = 10;
+    int INTERMEDIATE_LIST_TYPE = 12;
 
     /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -960,6 +1277,24 @@ public interface IntermediatePackage extends EPackage {
      * @ordered
      */
     int INTERMEDIATE_LIST_TYPE__KIND = INTERMEDIATE_COMPLEX_TYPE__KIND;
+
+    /**
+     * The feature id for the '<em><b>Operation</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_LIST_TYPE__OPERATION = INTERMEDIATE_COMPLEX_TYPE__OPERATION;
+
+    /**
+     * The feature id for the '<em><b>Parameter</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_LIST_TYPE__PARAMETER = INTERMEDIATE_COMPLEX_TYPE__PARAMETER;
 
     /**
      * The feature id for the '<em><b>Data Field</b></em>' container reference.
@@ -1077,7 +1412,7 @@ public interface IntermediatePackage extends EPackage {
      * @see de.fhdo.lemma.data.intermediate.impl.IntermediatePackageImpl#getIntermediateDataField()
      * @generated
      */
-    int INTERMEDIATE_DATA_FIELD = 11;
+    int INTERMEDIATE_DATA_FIELD = 13;
 
     /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1204,7 +1539,7 @@ public interface IntermediatePackage extends EPackage {
      * @see de.fhdo.lemma.data.intermediate.impl.IntermediatePackageImpl#getIntermediateEnumeration()
      * @generated
      */
-    int INTERMEDIATE_ENUMERATION = 12;
+    int INTERMEDIATE_ENUMERATION = 14;
 
     /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1232,6 +1567,24 @@ public interface IntermediatePackage extends EPackage {
      * @ordered
      */
     int INTERMEDIATE_ENUMERATION__KIND = INTERMEDIATE_COMPLEX_TYPE__KIND;
+
+    /**
+     * The feature id for the '<em><b>Operation</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_ENUMERATION__OPERATION = INTERMEDIATE_COMPLEX_TYPE__OPERATION;
+
+    /**
+     * The feature id for the '<em><b>Parameter</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_ENUMERATION__PARAMETER = INTERMEDIATE_COMPLEX_TYPE__PARAMETER;
 
     /**
      * The feature id for the '<em><b>Data Field</b></em>' container reference.
@@ -1322,7 +1675,7 @@ public interface IntermediatePackage extends EPackage {
      * @see de.fhdo.lemma.data.intermediate.impl.IntermediatePackageImpl#getIntermediateEnumerationField()
      * @generated
      */
-    int INTERMEDIATE_ENUMERATION_FIELD = 13;
+    int INTERMEDIATE_ENUMERATION_FIELD = 15;
 
     /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1395,7 +1748,7 @@ public interface IntermediatePackage extends EPackage {
      * @see de.fhdo.lemma.data.intermediate.impl.IntermediatePackageImpl#getIntermediateImportedAspect()
      * @generated
      */
-    int INTERMEDIATE_IMPORTED_ASPECT = 14;
+    int INTERMEDIATE_IMPORTED_ASPECT = 16;
 
     /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1443,13 +1796,31 @@ public interface IntermediatePackage extends EPackage {
     int INTERMEDIATE_IMPORTED_ASPECT__COMPLEX_TYPE = 4;
 
     /**
+     * The feature id for the '<em><b>Operation</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_IMPORTED_ASPECT__OPERATION = 5;
+
+    /**
+     * The feature id for the '<em><b>Parameter</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_IMPORTED_ASPECT__PARAMETER = 6;
+
+    /**
      * The feature id for the '<em><b>Data Field</b></em>' container reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_IMPORTED_ASPECT__DATA_FIELD = 5;
+    int INTERMEDIATE_IMPORTED_ASPECT__DATA_FIELD = 7;
 
     /**
      * The number of structural features of the '<em>Imported Aspect</em>' class.
@@ -1458,7 +1829,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_IMPORTED_ASPECT_FEATURE_COUNT = 6;
+    int INTERMEDIATE_IMPORTED_ASPECT_FEATURE_COUNT = 8;
 
     /**
      * The number of operations of the '<em>Imported Aspect</em>' class.
@@ -1477,7 +1848,7 @@ public interface IntermediatePackage extends EPackage {
      * @see de.fhdo.lemma.data.intermediate.impl.IntermediatePackageImpl#getIntermediateAspectProperty()
      * @generated
      */
-    int INTERMEDIATE_ASPECT_PROPERTY = 15;
+    int INTERMEDIATE_ASPECT_PROPERTY = 17;
 
     /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1550,7 +1921,7 @@ public interface IntermediatePackage extends EPackage {
      * @see de.fhdo.lemma.data.intermediate.impl.IntermediatePackageImpl#getIntermediateAspectPropertyValue()
      * @generated
      */
-    int INTERMEDIATE_ASPECT_PROPERTY_VALUE = 16;
+    int INTERMEDIATE_ASPECT_PROPERTY_VALUE = 18;
 
     /**
      * The feature id for the '<em><b>Value</b></em>' attribute.
@@ -1605,7 +1976,7 @@ public interface IntermediatePackage extends EPackage {
      * @see de.fhdo.lemma.data.intermediate.impl.IntermediatePackageImpl#getIntermediateTypeKind()
      * @generated
      */
-    int INTERMEDIATE_TYPE_KIND = 17;
+    int INTERMEDIATE_TYPE_KIND = 19;
 
     /**
      * The meta object id for the '{@link de.fhdo.lemma.data.intermediate.IntermediateTypeOrigin <em>Type Origin</em>}' enum.
@@ -1615,7 +1986,7 @@ public interface IntermediatePackage extends EPackage {
      * @see de.fhdo.lemma.data.intermediate.impl.IntermediatePackageImpl#getIntermediateTypeOrigin()
      * @generated
      */
-    int INTERMEDIATE_TYPE_ORIGIN = 18;
+    int INTERMEDIATE_TYPE_ORIGIN = 20;
 
 
     /**
@@ -1911,6 +2282,28 @@ public interface IntermediatePackage extends EPackage {
     EAttribute getIntermediateType_Kind();
 
     /**
+     * Returns the meta object for the container reference '{@link de.fhdo.lemma.data.intermediate.IntermediateType#getOperation <em>Operation</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the container reference '<em>Operation</em>'.
+     * @see de.fhdo.lemma.data.intermediate.IntermediateType#getOperation()
+     * @see #getIntermediateType()
+     * @generated
+     */
+    EReference getIntermediateType_Operation();
+
+    /**
+     * Returns the meta object for the container reference '{@link de.fhdo.lemma.data.intermediate.IntermediateType#getParameter <em>Parameter</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the container reference '<em>Parameter</em>'.
+     * @see de.fhdo.lemma.data.intermediate.IntermediateType#getParameter()
+     * @see #getIntermediateType()
+     * @generated
+     */
+    EReference getIntermediateType_Parameter();
+
+    /**
      * Returns the meta object for the container reference '{@link de.fhdo.lemma.data.intermediate.IntermediateType#getDataField <em>Data Field</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2093,6 +2486,17 @@ public interface IntermediatePackage extends EPackage {
     EReference getIntermediateDataStructure_Super();
 
     /**
+     * Returns the meta object for the containment reference list '{@link de.fhdo.lemma.data.intermediate.IntermediateDataStructure#getOperations <em>Operations</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Operations</em>'.
+     * @see de.fhdo.lemma.data.intermediate.IntermediateDataStructure#getOperations()
+     * @see #getIntermediateDataStructure()
+     * @generated
+     */
+    EReference getIntermediateDataStructure_Operations();
+
+    /**
      * Returns the meta object for the containment reference list '{@link de.fhdo.lemma.data.intermediate.IntermediateDataStructure#getDataFields <em>Data Fields</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2102,6 +2506,202 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      */
     EReference getIntermediateDataStructure_DataFields();
+
+    /**
+     * Returns the meta object for class '{@link de.fhdo.lemma.data.intermediate.IntermediateDataOperation <em>Data Operation</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Data Operation</em>'.
+     * @see de.fhdo.lemma.data.intermediate.IntermediateDataOperation
+     * @generated
+     */
+    EClass getIntermediateDataOperation();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.fhdo.lemma.data.intermediate.IntermediateDataOperation#getName <em>Name</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Name</em>'.
+     * @see de.fhdo.lemma.data.intermediate.IntermediateDataOperation#getName()
+     * @see #getIntermediateDataOperation()
+     * @generated
+     */
+    EAttribute getIntermediateDataOperation_Name();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.fhdo.lemma.data.intermediate.IntermediateDataOperation#getQualifiedName <em>Qualified Name</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Qualified Name</em>'.
+     * @see de.fhdo.lemma.data.intermediate.IntermediateDataOperation#getQualifiedName()
+     * @see #getIntermediateDataOperation()
+     * @generated
+     */
+    EAttribute getIntermediateDataOperation_QualifiedName();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.fhdo.lemma.data.intermediate.IntermediateDataOperation#isHidden <em>Hidden</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Hidden</em>'.
+     * @see de.fhdo.lemma.data.intermediate.IntermediateDataOperation#isHidden()
+     * @see #getIntermediateDataOperation()
+     * @generated
+     */
+    EAttribute getIntermediateDataOperation_Hidden();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.fhdo.lemma.data.intermediate.IntermediateDataOperation#isInherited <em>Inherited</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Inherited</em>'.
+     * @see de.fhdo.lemma.data.intermediate.IntermediateDataOperation#isInherited()
+     * @see #getIntermediateDataOperation()
+     * @generated
+     */
+    EAttribute getIntermediateDataOperation_Inherited();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.fhdo.lemma.data.intermediate.IntermediateDataOperation#isHasNoReturnType <em>Has No Return Type</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Has No Return Type</em>'.
+     * @see de.fhdo.lemma.data.intermediate.IntermediateDataOperation#isHasNoReturnType()
+     * @see #getIntermediateDataOperation()
+     * @generated
+     */
+    EAttribute getIntermediateDataOperation_HasNoReturnType();
+
+    /**
+     * Returns the meta object for the containment reference '{@link de.fhdo.lemma.data.intermediate.IntermediateDataOperation#getReturnType <em>Return Type</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference '<em>Return Type</em>'.
+     * @see de.fhdo.lemma.data.intermediate.IntermediateDataOperation#getReturnType()
+     * @see #getIntermediateDataOperation()
+     * @generated
+     */
+    EReference getIntermediateDataOperation_ReturnType();
+
+    /**
+     * Returns the meta object for the containment reference '{@link de.fhdo.lemma.data.intermediate.IntermediateDataOperation#getOriginalReturnType <em>Original Return Type</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference '<em>Original Return Type</em>'.
+     * @see de.fhdo.lemma.data.intermediate.IntermediateDataOperation#getOriginalReturnType()
+     * @see #getIntermediateDataOperation()
+     * @generated
+     */
+    EReference getIntermediateDataOperation_OriginalReturnType();
+
+    /**
+     * Returns the meta object for the containment reference list '{@link de.fhdo.lemma.data.intermediate.IntermediateDataOperation#getParameters <em>Parameters</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Parameters</em>'.
+     * @see de.fhdo.lemma.data.intermediate.IntermediateDataOperation#getParameters()
+     * @see #getIntermediateDataOperation()
+     * @generated
+     */
+    EReference getIntermediateDataOperation_Parameters();
+
+    /**
+     * Returns the meta object for the containment reference list '{@link de.fhdo.lemma.data.intermediate.IntermediateDataOperation#getAspects <em>Aspects</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Aspects</em>'.
+     * @see de.fhdo.lemma.data.intermediate.IntermediateDataOperation#getAspects()
+     * @see #getIntermediateDataOperation()
+     * @generated
+     */
+    EReference getIntermediateDataOperation_Aspects();
+
+    /**
+     * Returns the meta object for the container reference '{@link de.fhdo.lemma.data.intermediate.IntermediateDataOperation#getDataStructure <em>Data Structure</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the container reference '<em>Data Structure</em>'.
+     * @see de.fhdo.lemma.data.intermediate.IntermediateDataOperation#getDataStructure()
+     * @see #getIntermediateDataOperation()
+     * @generated
+     */
+    EReference getIntermediateDataOperation_DataStructure();
+
+    /**
+     * Returns the meta object for class '{@link de.fhdo.lemma.data.intermediate.IntermediateDataOperationParameter <em>Data Operation Parameter</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Data Operation Parameter</em>'.
+     * @see de.fhdo.lemma.data.intermediate.IntermediateDataOperationParameter
+     * @generated
+     */
+    EClass getIntermediateDataOperationParameter();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.fhdo.lemma.data.intermediate.IntermediateDataOperationParameter#getName <em>Name</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Name</em>'.
+     * @see de.fhdo.lemma.data.intermediate.IntermediateDataOperationParameter#getName()
+     * @see #getIntermediateDataOperationParameter()
+     * @generated
+     */
+    EAttribute getIntermediateDataOperationParameter_Name();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.fhdo.lemma.data.intermediate.IntermediateDataOperationParameter#getQualifiedName <em>Qualified Name</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Qualified Name</em>'.
+     * @see de.fhdo.lemma.data.intermediate.IntermediateDataOperationParameter#getQualifiedName()
+     * @see #getIntermediateDataOperationParameter()
+     * @generated
+     */
+    EAttribute getIntermediateDataOperationParameter_QualifiedName();
+
+    /**
+     * Returns the meta object for the containment reference '{@link de.fhdo.lemma.data.intermediate.IntermediateDataOperationParameter#getType <em>Type</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference '<em>Type</em>'.
+     * @see de.fhdo.lemma.data.intermediate.IntermediateDataOperationParameter#getType()
+     * @see #getIntermediateDataOperationParameter()
+     * @generated
+     */
+    EReference getIntermediateDataOperationParameter_Type();
+
+    /**
+     * Returns the meta object for the containment reference '{@link de.fhdo.lemma.data.intermediate.IntermediateDataOperationParameter#getOriginalType <em>Original Type</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference '<em>Original Type</em>'.
+     * @see de.fhdo.lemma.data.intermediate.IntermediateDataOperationParameter#getOriginalType()
+     * @see #getIntermediateDataOperationParameter()
+     * @generated
+     */
+    EReference getIntermediateDataOperationParameter_OriginalType();
+
+    /**
+     * Returns the meta object for the containment reference list '{@link de.fhdo.lemma.data.intermediate.IntermediateDataOperationParameter#getAspects <em>Aspects</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Aspects</em>'.
+     * @see de.fhdo.lemma.data.intermediate.IntermediateDataOperationParameter#getAspects()
+     * @see #getIntermediateDataOperationParameter()
+     * @generated
+     */
+    EReference getIntermediateDataOperationParameter_Aspects();
+
+    /**
+     * Returns the meta object for the container reference '{@link de.fhdo.lemma.data.intermediate.IntermediateDataOperationParameter#getOperation <em>Operation</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the container reference '<em>Operation</em>'.
+     * @see de.fhdo.lemma.data.intermediate.IntermediateDataOperationParameter#getOperation()
+     * @see #getIntermediateDataOperationParameter()
+     * @generated
+     */
+    EReference getIntermediateDataOperationParameter_Operation();
 
     /**
      * Returns the meta object for class '{@link de.fhdo.lemma.data.intermediate.IntermediateListType <em>List Type</em>}'.
@@ -2437,6 +3037,28 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      */
     EReference getIntermediateImportedAspect_ComplexType();
+
+    /**
+     * Returns the meta object for the container reference '{@link de.fhdo.lemma.data.intermediate.IntermediateImportedAspect#getOperation <em>Operation</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the container reference '<em>Operation</em>'.
+     * @see de.fhdo.lemma.data.intermediate.IntermediateImportedAspect#getOperation()
+     * @see #getIntermediateImportedAspect()
+     * @generated
+     */
+    EReference getIntermediateImportedAspect_Operation();
+
+    /**
+     * Returns the meta object for the container reference '{@link de.fhdo.lemma.data.intermediate.IntermediateImportedAspect#getParameter <em>Parameter</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the container reference '<em>Parameter</em>'.
+     * @see de.fhdo.lemma.data.intermediate.IntermediateImportedAspect#getParameter()
+     * @see #getIntermediateImportedAspect()
+     * @generated
+     */
+    EReference getIntermediateImportedAspect_Parameter();
 
     /**
      * Returns the meta object for the container reference '{@link de.fhdo.lemma.data.intermediate.IntermediateImportedAspect#getDataField <em>Data Field</em>}'.
@@ -2827,6 +3449,22 @@ public interface IntermediatePackage extends EPackage {
         EAttribute INTERMEDIATE_TYPE__KIND = eINSTANCE.getIntermediateType_Kind();
 
         /**
+         * The meta object literal for the '<em><b>Operation</b></em>' container reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference INTERMEDIATE_TYPE__OPERATION = eINSTANCE.getIntermediateType_Operation();
+
+        /**
+         * The meta object literal for the '<em><b>Parameter</b></em>' container reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference INTERMEDIATE_TYPE__PARAMETER = eINSTANCE.getIntermediateType_Parameter();
+
+        /**
          * The meta object literal for the '<em><b>Data Field</b></em>' container reference feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -2973,12 +3611,168 @@ public interface IntermediatePackage extends EPackage {
         EReference INTERMEDIATE_DATA_STRUCTURE__SUPER = eINSTANCE.getIntermediateDataStructure_Super();
 
         /**
+         * The meta object literal for the '<em><b>Operations</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference INTERMEDIATE_DATA_STRUCTURE__OPERATIONS = eINSTANCE.getIntermediateDataStructure_Operations();
+
+        /**
          * The meta object literal for the '<em><b>Data Fields</b></em>' containment reference list feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
         EReference INTERMEDIATE_DATA_STRUCTURE__DATA_FIELDS = eINSTANCE.getIntermediateDataStructure_DataFields();
+
+        /**
+         * The meta object literal for the '{@link de.fhdo.lemma.data.intermediate.impl.IntermediateDataOperationImpl <em>Data Operation</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.fhdo.lemma.data.intermediate.impl.IntermediateDataOperationImpl
+         * @see de.fhdo.lemma.data.intermediate.impl.IntermediatePackageImpl#getIntermediateDataOperation()
+         * @generated
+         */
+        EClass INTERMEDIATE_DATA_OPERATION = eINSTANCE.getIntermediateDataOperation();
+
+        /**
+         * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute INTERMEDIATE_DATA_OPERATION__NAME = eINSTANCE.getIntermediateDataOperation_Name();
+
+        /**
+         * The meta object literal for the '<em><b>Qualified Name</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute INTERMEDIATE_DATA_OPERATION__QUALIFIED_NAME = eINSTANCE.getIntermediateDataOperation_QualifiedName();
+
+        /**
+         * The meta object literal for the '<em><b>Hidden</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute INTERMEDIATE_DATA_OPERATION__HIDDEN = eINSTANCE.getIntermediateDataOperation_Hidden();
+
+        /**
+         * The meta object literal for the '<em><b>Inherited</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute INTERMEDIATE_DATA_OPERATION__INHERITED = eINSTANCE.getIntermediateDataOperation_Inherited();
+
+        /**
+         * The meta object literal for the '<em><b>Has No Return Type</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute INTERMEDIATE_DATA_OPERATION__HAS_NO_RETURN_TYPE = eINSTANCE.getIntermediateDataOperation_HasNoReturnType();
+
+        /**
+         * The meta object literal for the '<em><b>Return Type</b></em>' containment reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference INTERMEDIATE_DATA_OPERATION__RETURN_TYPE = eINSTANCE.getIntermediateDataOperation_ReturnType();
+
+        /**
+         * The meta object literal for the '<em><b>Original Return Type</b></em>' containment reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference INTERMEDIATE_DATA_OPERATION__ORIGINAL_RETURN_TYPE = eINSTANCE.getIntermediateDataOperation_OriginalReturnType();
+
+        /**
+         * The meta object literal for the '<em><b>Parameters</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference INTERMEDIATE_DATA_OPERATION__PARAMETERS = eINSTANCE.getIntermediateDataOperation_Parameters();
+
+        /**
+         * The meta object literal for the '<em><b>Aspects</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference INTERMEDIATE_DATA_OPERATION__ASPECTS = eINSTANCE.getIntermediateDataOperation_Aspects();
+
+        /**
+         * The meta object literal for the '<em><b>Data Structure</b></em>' container reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference INTERMEDIATE_DATA_OPERATION__DATA_STRUCTURE = eINSTANCE.getIntermediateDataOperation_DataStructure();
+
+        /**
+         * The meta object literal for the '{@link de.fhdo.lemma.data.intermediate.impl.IntermediateDataOperationParameterImpl <em>Data Operation Parameter</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.fhdo.lemma.data.intermediate.impl.IntermediateDataOperationParameterImpl
+         * @see de.fhdo.lemma.data.intermediate.impl.IntermediatePackageImpl#getIntermediateDataOperationParameter()
+         * @generated
+         */
+        EClass INTERMEDIATE_DATA_OPERATION_PARAMETER = eINSTANCE.getIntermediateDataOperationParameter();
+
+        /**
+         * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute INTERMEDIATE_DATA_OPERATION_PARAMETER__NAME = eINSTANCE.getIntermediateDataOperationParameter_Name();
+
+        /**
+         * The meta object literal for the '<em><b>Qualified Name</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute INTERMEDIATE_DATA_OPERATION_PARAMETER__QUALIFIED_NAME = eINSTANCE.getIntermediateDataOperationParameter_QualifiedName();
+
+        /**
+         * The meta object literal for the '<em><b>Type</b></em>' containment reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference INTERMEDIATE_DATA_OPERATION_PARAMETER__TYPE = eINSTANCE.getIntermediateDataOperationParameter_Type();
+
+        /**
+         * The meta object literal for the '<em><b>Original Type</b></em>' containment reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference INTERMEDIATE_DATA_OPERATION_PARAMETER__ORIGINAL_TYPE = eINSTANCE.getIntermediateDataOperationParameter_OriginalType();
+
+        /**
+         * The meta object literal for the '<em><b>Aspects</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference INTERMEDIATE_DATA_OPERATION_PARAMETER__ASPECTS = eINSTANCE.getIntermediateDataOperationParameter_Aspects();
+
+        /**
+         * The meta object literal for the '<em><b>Operation</b></em>' container reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference INTERMEDIATE_DATA_OPERATION_PARAMETER__OPERATION = eINSTANCE.getIntermediateDataOperationParameter_Operation();
 
         /**
          * The meta object literal for the '{@link de.fhdo.lemma.data.intermediate.impl.IntermediateListTypeImpl <em>List Type</em>}' class.
@@ -3237,6 +4031,22 @@ public interface IntermediatePackage extends EPackage {
          * @generated
          */
         EReference INTERMEDIATE_IMPORTED_ASPECT__COMPLEX_TYPE = eINSTANCE.getIntermediateImportedAspect_ComplexType();
+
+        /**
+         * The meta object literal for the '<em><b>Operation</b></em>' container reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference INTERMEDIATE_IMPORTED_ASPECT__OPERATION = eINSTANCE.getIntermediateImportedAspect_Operation();
+
+        /**
+         * The meta object literal for the '<em><b>Parameter</b></em>' container reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference INTERMEDIATE_IMPORTED_ASPECT__PARAMETER = eINSTANCE.getIntermediateImportedAspect_Parameter();
 
         /**
          * The meta object literal for the '<em><b>Data Field</b></em>' container reference feature.

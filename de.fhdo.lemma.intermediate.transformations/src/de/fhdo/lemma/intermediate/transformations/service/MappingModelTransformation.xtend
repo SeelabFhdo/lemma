@@ -130,7 +130,6 @@ class MappingModelTransformation
 
             switch (it) {
                 ComplexTypeMapping: it.t_sourceModelUri = absoluteDataModelUri
-                TechnologySpecificFieldMapping: it.t_sourceModelUri = absoluteDataModelUri
             }
         ]
     }

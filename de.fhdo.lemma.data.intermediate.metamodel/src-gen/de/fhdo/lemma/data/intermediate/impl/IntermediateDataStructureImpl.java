@@ -3,6 +3,7 @@
 package de.fhdo.lemma.data.intermediate.impl;
 
 import de.fhdo.lemma.data.intermediate.IntermediateDataField;
+import de.fhdo.lemma.data.intermediate.IntermediateDataOperation;
 import de.fhdo.lemma.data.intermediate.IntermediateDataStructure;
 import de.fhdo.lemma.data.intermediate.IntermediatePackage;
 
@@ -30,6 +31,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * </p>
  * <ul>
  *   <li>{@link de.fhdo.lemma.data.intermediate.impl.IntermediateDataStructureImpl#getSuper <em>Super</em>}</li>
+ *   <li>{@link de.fhdo.lemma.data.intermediate.impl.IntermediateDataStructureImpl#getOperations <em>Operations</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.impl.IntermediateDataStructureImpl#getDataFields <em>Data Fields</em>}</li>
  * </ul>
  *
@@ -45,6 +47,16 @@ public class IntermediateDataStructureImpl extends IntermediateComplexTypeImpl i
      * @ordered
      */
     protected IntermediateDataStructure super_;
+
+    /**
+     * The cached value of the '{@link #getOperations() <em>Operations</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getOperations()
+     * @generated
+     * @ordered
+     */
+    protected EList<IntermediateDataOperation> operations;
 
     /**
      * The cached value of the '{@link #getDataFields() <em>Data Fields</em>}' containment reference list.
@@ -121,6 +133,19 @@ public class IntermediateDataStructureImpl extends IntermediateComplexTypeImpl i
      * @generated
      */
     @Override
+    public EList<IntermediateDataOperation> getOperations() {
+        if (operations == null) {
+            operations = new EObjectContainmentWithInverseEList<IntermediateDataOperation>(IntermediateDataOperation.class, this, IntermediatePackage.INTERMEDIATE_DATA_STRUCTURE__OPERATIONS, IntermediatePackage.INTERMEDIATE_DATA_OPERATION__DATA_STRUCTURE);
+        }
+        return operations;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public EList<IntermediateDataField> getDataFields() {
         if (dataFields == null) {
             dataFields = new EObjectContainmentWithInverseEList<IntermediateDataField>(IntermediateDataField.class, this, IntermediatePackage.INTERMEDIATE_DATA_STRUCTURE__DATA_FIELDS, IntermediatePackage.INTERMEDIATE_DATA_FIELD__DATA_STRUCTURE);
@@ -137,6 +162,8 @@ public class IntermediateDataStructureImpl extends IntermediateComplexTypeImpl i
     @Override
     public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
+            case IntermediatePackage.INTERMEDIATE_DATA_STRUCTURE__OPERATIONS:
+                return ((InternalEList<InternalEObject>)(InternalEList<?>)getOperations()).basicAdd(otherEnd, msgs);
             case IntermediatePackage.INTERMEDIATE_DATA_STRUCTURE__DATA_FIELDS:
                 return ((InternalEList<InternalEObject>)(InternalEList<?>)getDataFields()).basicAdd(otherEnd, msgs);
         }
@@ -151,6 +178,8 @@ public class IntermediateDataStructureImpl extends IntermediateComplexTypeImpl i
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
+            case IntermediatePackage.INTERMEDIATE_DATA_STRUCTURE__OPERATIONS:
+                return ((InternalEList<?>)getOperations()).basicRemove(otherEnd, msgs);
             case IntermediatePackage.INTERMEDIATE_DATA_STRUCTURE__DATA_FIELDS:
                 return ((InternalEList<?>)getDataFields()).basicRemove(otherEnd, msgs);
         }
@@ -168,6 +197,8 @@ public class IntermediateDataStructureImpl extends IntermediateComplexTypeImpl i
             case IntermediatePackage.INTERMEDIATE_DATA_STRUCTURE__SUPER:
                 if (resolve) return getSuper();
                 return basicGetSuper();
+            case IntermediatePackage.INTERMEDIATE_DATA_STRUCTURE__OPERATIONS:
+                return getOperations();
             case IntermediatePackage.INTERMEDIATE_DATA_STRUCTURE__DATA_FIELDS:
                 return getDataFields();
         }
@@ -185,6 +216,10 @@ public class IntermediateDataStructureImpl extends IntermediateComplexTypeImpl i
         switch (featureID) {
             case IntermediatePackage.INTERMEDIATE_DATA_STRUCTURE__SUPER:
                 setSuper((IntermediateDataStructure)newValue);
+                return;
+            case IntermediatePackage.INTERMEDIATE_DATA_STRUCTURE__OPERATIONS:
+                getOperations().clear();
+                getOperations().addAll((Collection<? extends IntermediateDataOperation>)newValue);
                 return;
             case IntermediatePackage.INTERMEDIATE_DATA_STRUCTURE__DATA_FIELDS:
                 getDataFields().clear();
@@ -205,6 +240,9 @@ public class IntermediateDataStructureImpl extends IntermediateComplexTypeImpl i
             case IntermediatePackage.INTERMEDIATE_DATA_STRUCTURE__SUPER:
                 setSuper((IntermediateDataStructure)null);
                 return;
+            case IntermediatePackage.INTERMEDIATE_DATA_STRUCTURE__OPERATIONS:
+                getOperations().clear();
+                return;
             case IntermediatePackage.INTERMEDIATE_DATA_STRUCTURE__DATA_FIELDS:
                 getDataFields().clear();
                 return;
@@ -222,6 +260,8 @@ public class IntermediateDataStructureImpl extends IntermediateComplexTypeImpl i
         switch (featureID) {
             case IntermediatePackage.INTERMEDIATE_DATA_STRUCTURE__SUPER:
                 return super_ != null;
+            case IntermediatePackage.INTERMEDIATE_DATA_STRUCTURE__OPERATIONS:
+                return operations != null && !operations.isEmpty();
             case IntermediatePackage.INTERMEDIATE_DATA_STRUCTURE__DATA_FIELDS:
                 return dataFields != null && !dataFields.isEmpty();
         }

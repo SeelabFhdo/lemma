@@ -5,6 +5,7 @@ package de.fhdo.lemma.data.impl;
 import com.google.common.base.Objects;
 
 import de.fhdo.lemma.data.DataField;
+import de.fhdo.lemma.data.DataOperation;
 import de.fhdo.lemma.data.DataPackage;
 import de.fhdo.lemma.data.DataStructure;
 
@@ -44,6 +45,7 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
  * <ul>
  *   <li>{@link de.fhdo.lemma.data.impl.DataStructureImpl#getSuper <em>Super</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.impl.DataStructureImpl#getDataFields <em>Data Fields</em>}</li>
+ *   <li>{@link de.fhdo.lemma.data.impl.DataStructureImpl#getOperations <em>Operations</em>}</li>
  * </ul>
  *
  * @generated
@@ -68,6 +70,16 @@ public class DataStructureImpl extends ComplexTypeImpl implements DataStructure 
      * @ordered
      */
     protected EList<DataField> dataFields;
+
+    /**
+     * The cached value of the '{@link #getOperations() <em>Operations</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getOperations()
+     * @generated
+     * @ordered
+     */
+    protected EList<DataOperation> operations;
 
     /**
      * <!-- begin-user-doc -->
@@ -147,6 +159,19 @@ public class DataStructureImpl extends ComplexTypeImpl implements DataStructure 
      * @generated
      */
     @Override
+    public EList<DataOperation> getOperations() {
+        if (operations == null) {
+            operations = new EObjectContainmentWithInverseEList<DataOperation>(DataOperation.class, this, DataPackage.DATA_STRUCTURE__OPERATIONS, DataPackage.DATA_OPERATION__DATA_STRUCTURE);
+        }
+        return operations;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public EList<DataField> getEffectiveFields() {
         final ArrayList<DataField> effectiveFields = CollectionLiterals.<DataField>newArrayList();
         final HashSet<String> hiddenFields = CollectionLiterals.<String>newHashSet();
@@ -202,6 +227,61 @@ public class DataStructureImpl extends ComplexTypeImpl implements DataStructure 
      * @generated
      */
     @Override
+    public EList<DataOperation> getEffectiveOperations() {
+        final ArrayList<DataOperation> effectiveOperations = CollectionLiterals.<DataOperation>newArrayList();
+        final HashSet<String> hiddenOperations = CollectionLiterals.<String>newHashSet();
+        DataStructure currentStructure = this;
+        do {
+            {
+                final Function1<DataOperation, Boolean> _function = new Function1<DataOperation, Boolean>() {
+                    public Boolean apply(final DataOperation it) {
+                        String _name = it.getName();
+                        return Boolean.valueOf((_name != null));
+                    }
+                };
+                final Iterable<DataOperation> currentNamedOperations = IterableExtensions.<DataOperation>filter(currentStructure.getOperations(), _function);
+                for (final DataOperation operation : currentNamedOperations) {
+                    {
+                        boolean _isHidden = operation.isHidden();
+                        if (_isHidden) {
+                            hiddenOperations.add(operation.getName());
+                        }
+                        final Function1<DataOperation, Boolean> _function_1 = new Function1<DataOperation, Boolean>() {
+                            public Boolean apply(final DataOperation it) {
+                                String _name = operation.getName();
+                                String _name_1 = it.getName();
+                                return Boolean.valueOf(Objects.equal(_name, _name_1));
+                            }
+                        };
+                        final DataOperation existingEffectiveOperation = IterableExtensions.<DataOperation>findFirst(effectiveOperations, _function_1);
+                        final boolean operationAlreadyCollected = (existingEffectiveOperation != null);
+                        final boolean hiddenOperation = (operation.isHidden() || hiddenOperations.contains(operation.getName()));
+                        final boolean inheritedOperation = (currentStructure != this);
+                        final boolean visibleInheritedOperation = ((!hiddenOperation) && inheritedOperation);
+                        if (((!operationAlreadyCollected) && ((!inheritedOperation) || visibleInheritedOperation))) {
+                            effectiveOperations.add(operation);
+                        }
+                        else {
+                            if ((operationAlreadyCollected && hiddenOperation)) {
+                                effectiveOperations.remove(existingEffectiveOperation);
+                                effectiveOperations.add(operation);
+                            }
+                        }
+                    }
+                }
+                currentStructure = currentStructure.getSuper();
+            }
+        }
+        while((currentStructure != null));
+        return ECollections.<DataOperation>asEList(effectiveOperations);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public boolean isExtensionOf(final DataStructure structure) {
         if ((structure == null)) {
             return false;
@@ -244,6 +324,8 @@ public class DataStructureImpl extends ComplexTypeImpl implements DataStructure 
         switch (featureID) {
             case DataPackage.DATA_STRUCTURE__DATA_FIELDS:
                 return ((InternalEList<InternalEObject>)(InternalEList<?>)getDataFields()).basicAdd(otherEnd, msgs);
+            case DataPackage.DATA_STRUCTURE__OPERATIONS:
+                return ((InternalEList<InternalEObject>)(InternalEList<?>)getOperations()).basicAdd(otherEnd, msgs);
         }
         return super.eInverseAdd(otherEnd, featureID, msgs);
     }
@@ -258,6 +340,8 @@ public class DataStructureImpl extends ComplexTypeImpl implements DataStructure 
         switch (featureID) {
             case DataPackage.DATA_STRUCTURE__DATA_FIELDS:
                 return ((InternalEList<?>)getDataFields()).basicRemove(otherEnd, msgs);
+            case DataPackage.DATA_STRUCTURE__OPERATIONS:
+                return ((InternalEList<?>)getOperations()).basicRemove(otherEnd, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
@@ -275,6 +359,8 @@ public class DataStructureImpl extends ComplexTypeImpl implements DataStructure 
                 return basicGetSuper();
             case DataPackage.DATA_STRUCTURE__DATA_FIELDS:
                 return getDataFields();
+            case DataPackage.DATA_STRUCTURE__OPERATIONS:
+                return getOperations();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -295,6 +381,10 @@ public class DataStructureImpl extends ComplexTypeImpl implements DataStructure 
                 getDataFields().clear();
                 getDataFields().addAll((Collection<? extends DataField>)newValue);
                 return;
+            case DataPackage.DATA_STRUCTURE__OPERATIONS:
+                getOperations().clear();
+                getOperations().addAll((Collection<? extends DataOperation>)newValue);
+                return;
         }
         super.eSet(featureID, newValue);
     }
@@ -313,6 +403,9 @@ public class DataStructureImpl extends ComplexTypeImpl implements DataStructure 
             case DataPackage.DATA_STRUCTURE__DATA_FIELDS:
                 getDataFields().clear();
                 return;
+            case DataPackage.DATA_STRUCTURE__OPERATIONS:
+                getOperations().clear();
+                return;
         }
         super.eUnset(featureID);
     }
@@ -329,6 +422,8 @@ public class DataStructureImpl extends ComplexTypeImpl implements DataStructure 
                 return super_ != null;
             case DataPackage.DATA_STRUCTURE__DATA_FIELDS:
                 return dataFields != null && !dataFields.isEmpty();
+            case DataPackage.DATA_STRUCTURE__OPERATIONS:
+                return operations != null && !operations.isEmpty();
         }
         return super.eIsSet(featureID);
     }
@@ -343,6 +438,8 @@ public class DataStructureImpl extends ComplexTypeImpl implements DataStructure 
         switch (operationID) {
             case DataPackage.DATA_STRUCTURE___GET_EFFECTIVE_FIELDS:
                 return getEffectiveFields();
+            case DataPackage.DATA_STRUCTURE___GET_EFFECTIVE_OPERATIONS:
+                return getEffectiveOperations();
             case DataPackage.DATA_STRUCTURE___IS_EXTENSION_OF__DATASTRUCTURE:
                 return isExtensionOf((DataStructure)arguments.get(0));
             case DataPackage.DATA_STRUCTURE___COMPARE_FIELD_COUNTS__DATASTRUCTURE:

@@ -90,12 +90,13 @@ helper def : findIntermediateComplexType(complexType : Service!MappedComplexType
                 t.dataField.oclIsUndefined()
             )
         in
-        intermediateType;
+        intermediateType
+;
 
 --- Find a MappedField from an IntermediateDataField instance based on their fully-qualified names
 helper def : findMappedField(field : Intermediate!IntermediateDataField)
     : Service!MappedField =
-    let allMappedFields: Sequence(Service!MappedField)
+    let allMappedFields : Sequence(Service!MappedField)
         = Service!MappedField.allInstancesFrom('SERVICE')
     in
         let mappedField : Service!MappedField = allMappedFields->select(
@@ -105,20 +106,54 @@ helper def : findMappedField(field : Intermediate!IntermediateDataField)
                 f.mappedComplexType.t_sourceModelUri
                     = thisModule.intermediateDataModel().sourceModelUri and
                 f.buildQualifiedName('.', false) = field.qualifiedName
-            )
+        )
         in
-        mappedField;
+        mappedField
+;
+
+--- Find a MappedDataOperation from an IntermediateDataOperation instance based on their
+--- fully-qualified names
+helper def : findMappedDataOperation(operation : Intermediate!IntermediateDataOperation)
+    : Service!MappedDataOperation =
+    let allMappedDataOperations : Sequence(Service!MappedDataOperation)
+        = Service!MappedDataOperation.allInstancesFrom('SERVICE')
+    in
+        let mappedDataOperation : Service!MappedDataOperation = allMappedDataOperations->any(
+            o |
+            o.mappedComplexType.t_sourceModelUri
+                = thisModule.intermediateDataModel().sourceModelUri and
+            o.dataOperation.buildQualifiedName('.') = operation.qualifiedName
+        )
+        in
+        mappedDataOperation
+;
+
+--- Find a MappedDataOperationParameter from an IntermediateDataOperationParameter instance based on
+--- their fully-qualified names
+helper def : findMappedDataOperationParameter(
+    parameter : Intermediate!IntermediateDataOperationParameter)
+    : Service!MappedDataOperationParameter =
+    let mappedDataOperation : Service!MappedDataOperation
+        = thisModule.findMappedDataOperation(parameter.operation)
+    in
+        if (not mappedDataOperation.oclIsUndefined()) then
+            mappedDataOperation.mappedParameters->any(p | p.parameter.name = parameter.name)
+        else
+            OclUndefined
+        endif
+;
 
 --- Find an IntermediateDataField from a MappedField instance based on their fully-qualified names
 helper def : findIntermediateDataField(field : Service!MappedField)
     : Intermediate!IntermediateDataField =
-    let allIntermediateFields: Sequence(Intermediate!IntermediateDataField) =
-        Intermediate!IntermediateDataField.allInstancesFrom('IN')
+    let allIntermediateFields : Sequence(Intermediate!IntermediateDataField)
+        = Intermediate!IntermediateDataField.allInstancesFrom('IN')
     in
         let intermediateField : Intermediate!IntermediateDataField =
             allIntermediateFields->any(f | f.qualifiedName = field. buildQualifiedName('.', false))
         in
-        intermediateField;
+        intermediateField
+;
 
 --- Determine the kind of a technology-specific type
 helper def : getTechnologySpecificTypeKind(type: Service!Type)
@@ -134,29 +169,146 @@ helper def : getTechnologySpecificTypeKind(type: Service!Type)
         OclUndefined
     endif
     endif
-    endif;
+    endif
+;
 
---- Refine an IntermediateDataField for which a technology-specific type mapping exists
-rule RefineIntermediateDataField {
+--- Refine an IntermediateDataOperation for which a technology-specific mapping exists
+rule RefineIntermediateDataOperation {
     from
-        s: Intermediate!IntermediateDataField
+        s : Intermediate!IntermediateDataOperation
     using {
-        mappedComplexType: Service!MappedComplexType =
-            thisModule.findMappedComplexType(s.getEffectiveComplexType());
-        typeDefinitionTechnology: Service!Technology =
+        mappedComplexType : Service!MappedComplexType =
+            thisModule.findMappedComplexType(s.dataStructure);
+        typeDefinitionTechnology : Service!Technology =
             if (not mappedComplexType.oclIsUndefined()) then
                 mappedComplexType.t_typeDefinitionTechnology
             else
                 OclUndefined
             endif;
-        typeDefinitionTechnologyImport: Service!Import =
+        typeDefinitionTechnologyImport : Service!Import =
             if (not mappedComplexType.oclIsUndefined()) then
                 mappedComplexType.t_typeDefinitionTechnologyImport
             else
                 OclUndefined
             endif;
-        mappedField: Service!MappedField = thisModule.findMappedField(s);
+        mappedDataOperation : Service!MappedDataOperation = thisModule.findMappedDataOperation(s);
+        mappedReturnType: Service!ImportedType =
+            if (not mappedDataOperation.oclIsUndefined()) then
+                mappedDataOperation.mappedReturnType
+            else
+                OclUndefined
+            endif;
+    }
+    to
+        t : Intermediate!IntermediateDataOperation(
+            originalReturnType <- s.returnType
+        )
+    do {
+        -- Transform aspects
+        if (not mappedDataOperation.oclIsUndefined())
+            for (aspect in mappedDataOperation.aspects) {
+                t.aspects <- t.aspects->append(
+                    thisModule.IntermediateImportedAspect(aspect, t, 'operation')
+                );
+            }
+
+        -- Determine return type
+        if (not typeDefinitionTechnology.oclIsUndefined()) {
+            if (not mappedReturnType.oclIsUndefined())
+                t.returnType <- thisModule.IntermediateImportedTechnologySpecificType(t,
+                    'operation', mappedReturnType, typeDefinitionTechnology);
+            else if (not t.originalReturnType.oclIsUndefined())
+                if (thisModule.hasDefaultPrimitiveTechnologySpecificType(t.originalReturnType,
+                    typeDefinitionTechnology))
+                    t.returnType <- thisModule.TechnologySpecificPrimitiveIntermediateType(
+                        t.originalReturnType,
+                        typeDefinitionTechnology,
+                        typeDefinitionTechnologyImport
+                    );
+        }
+
+        t;
+    }
+}
+
+--- Refine an IntermediateDataOperationParameter for which a technology-specific mapping exists
+rule RefineIntermediateDataOperationParameter {
+    from
+        s : Intermediate!IntermediateDataOperationParameter
+    using {
+        mappedComplexType : Service!MappedComplexType =
+            thisModule.findMappedComplexType(s.operation.dataStructure);
+        typeDefinitionTechnology : Service!Technology =
+            if (not mappedComplexType.oclIsUndefined()) then
+                mappedComplexType.t_typeDefinitionTechnology
+            else
+                OclUndefined
+            endif;
+        typeDefinitionTechnologyImport : Service!Import =
+            if (not mappedComplexType.oclIsUndefined()) then
+                mappedComplexType.t_typeDefinitionTechnologyImport
+            else
+                OclUndefined
+            endif;
+        mappedDataOperationParameter : Service!MappedDataOperationParameter
+            = thisModule.findMappedDataOperationParameter(s);
         mappedType: Service!ImportedType =
+            if (not mappedDataOperationParameter.oclIsUndefined()) then
+                mappedDataOperationParameter.mappedType
+            else
+                OclUndefined
+            endif;
+    }
+    to
+        t : Intermediate!IntermediateDataOperationParameter(
+            originalType <- s.type
+        )
+    do {
+        -- Transform aspects
+        if (not mappedDataOperationParameter.oclIsUndefined())
+            for (aspect in mappedDataOperationParameter.aspects) {
+                t.aspects <- t.aspects->append(
+                    thisModule.IntermediateImportedAspect(aspect, t, 'parameter')
+                );
+            }
+
+        -- Determine type
+        if (not typeDefinitionTechnology.oclIsUndefined()) {
+            if (not mappedType.oclIsUndefined())
+                t.type <- thisModule.IntermediateImportedTechnologySpecificType(t,
+                    'parameter', mappedType, typeDefinitionTechnology);
+            else if (not t.originalType.oclIsUndefined())
+                if (thisModule.hasDefaultPrimitiveTechnologySpecificType(t.originalType,
+                    typeDefinitionTechnology))
+                    t.type <- thisModule.TechnologySpecificPrimitiveIntermediateType(t.originalType,
+                        typeDefinitionTechnology, typeDefinitionTechnologyImport);
+        }
+
+        t;
+    }
+}
+
+--- Refine an IntermediateDataField for which a technology-specific type mapping exists
+rule RefineIntermediateDataField {
+    from
+        s : Intermediate!IntermediateDataField
+    using {
+        mappedComplexType : Service!MappedComplexType =
+            thisModule.findMappedComplexType(s.getEffectiveComplexType());
+        typeDefinitionTechnology : Service!Technology =
+            if (not mappedComplexType.oclIsUndefined()) then
+                mappedComplexType.t_typeDefinitionTechnology
+            else
+                OclUndefined
+            endif;
+        typeDefinitionTechnologyImport : Service!Import =
+            if (not mappedComplexType.oclIsUndefined()) then
+                mappedComplexType.t_typeDefinitionTechnologyImport
+            else
+                OclUndefined
+            endif;
+        mappedField : Service!MappedField = thisModule.findMappedField(s);
+        mappedType : Service!ImportedType =
             if (not mappedField.oclIsUndefined()) then
                 mappedField.mappedType
             else
@@ -164,8 +316,8 @@ rule RefineIntermediateDataField {
             endif;
     }
     to
-        t: Intermediate!IntermediateDataField (
-            type <- s.type
+        t : Intermediate!IntermediateDataField(
+            originalType <- s.type
         )
     do {
         -- Transform aspects
@@ -177,40 +329,36 @@ rule RefineIntermediateDataField {
             }
 
         -- Determine field type
-        if (not mappedType.oclIsUndefined()) {
-            t.type <- thisModule.IntermediateImportedTechnologySpecificType(t, mappedField);
-            t.originalType <- s.type;
-        } else if (not typeDefinitionTechnology.oclIsUndefined()) {
-            if (thisModule.hasDefaultPrimitiveTechnologySpecificType(s, typeDefinitionTechnology)) {
-                t.type <- thisModule.TechnologySpecificPrimitiveIntermediateType(s,
-                    typeDefinitionTechnology, typeDefinitionTechnologyImport);
-                t.originalType <- s.type;
-            }
+        if (not typeDefinitionTechnology.oclIsUndefined()) {
+            if (not mappedType.oclIsUndefined())
+                t.type <- thisModule.IntermediateImportedTechnologySpecificType(t, 'dataField',
+                    mappedType, typeDefinitionTechnology);
+            else if (not t.originalType.oclIsUndefined())
+                if (thisModule.hasDefaultPrimitiveTechnologySpecificType(t.originalType,
+                    typeDefinitionTechnology))
+                    t.type <- thisModule.TechnologySpecificPrimitiveIntermediateType(t.originalType,
+                        typeDefinitionTechnology, typeDefinitionTechnologyImport);
         }
 
         t;
     }
 }
 
---- Called rule to create an IntermediateImportedTechnologySpecificType from a MappedField
-rule IntermediateImportedTechnologySpecificType(targetField : Intermediate!IntermediateDataField,
-    mappedField : Service!MappedField) {
-    using {
-        mappedType : Service!ImportedType = mappedField.mappedType;
-        typeDefinitionTechnologyName : String =
-            mappedField.mappedComplexType.t_typeDefinitionTechnologyImport.name;
-    }
+--- Called rule to create an IntermediateImportedTechnologySpecificType
+rule IntermediateImportedTechnologySpecificType(container : OclAny, containerFeatureName : String,
+    mappedType : Service!ImportedType, typeDefinitionTechnology : Service!Technology) {
     to
         i : Intermediate!IntermediateImportedTechnologySpecificType (
             name <- mappedType.type.name,
-            qualifiedName <- typeDefinitionTechnologyName
+            qualifiedName <- typeDefinitionTechnology.name
                 .concat('.')
                 .concat(mappedType.type.buildQualifiedName('.')),
             origin <- #TECHNOLOGY,
-            kind <- thisModule.getTechnologySpecificTypeKind(mappedType.type),
-            dataField <- targetField
+            kind <- thisModule.getTechnologySpecificTypeKind(mappedType.type)
         )
     do {
+        i.refSetValue(containerFeatureName, container);
+
         if (thisModule.getCreatedImport(mappedType.import).oclIsUndefined())
             thisModule.IntermediateImport(mappedType.import);
         i.import <- thisModule.getCreatedImport(mappedType.import);
@@ -219,29 +367,15 @@ rule IntermediateImportedTechnologySpecificType(targetField : Intermediate!Inter
     }
 }
 
---- Check if for the original primitive type of a data field a default technology-specific primitive
---- type exists in the default type definition technology of the comprising mapped complex type
-helper def : hasDefaultPrimitiveTechnologySpecificType(field : Intermediate!IntermediateDataField,
+--- Check if for a built-in primitive type a default technology-specific primitive type exists in a
+--- given technology
+helper def : hasDefaultPrimitiveTechnologySpecificType(type : Intermediate!IntermediateType,
     typeDefinitionTechnology : Service!Technology) : Boolean =
-    if (not field.type.oclIsKindOf(Intermediate!IntermediatePrimitiveType)) then
+    if (not type.oclIsKindOf(Intermediate!IntermediatePrimitiveType)) then
         false
     else
-        let primitiveType : Service!PrimitiveType = field.type
-        in
-        if (primitiveType.oclIsUndefined()) then
-            false
-        else
-            if (typeDefinitionTechnology.oclIsUndefined()) then
-                false
-             else
-                 if (thisModule.findDefaultTechnologySpecificPrimitiveType(primitiveType,
-                     typeDefinitionTechnology).oclIsUndefined()) then
-                     false
-                 else
-                     true
-                 endif
-            endif
-        endif
+         not thisModule.findDefaultTechnologySpecificPrimitiveType(type, typeDefinitionTechnology)
+            .oclIsUndefined()
     endif
 ;
 
@@ -258,16 +392,16 @@ helper def : findDefaultTechnologySpecificPrimitiveType(
 ;
 
 --- Create an intermediate type that represents a technology-specific primitive type
-rule TechnologySpecificPrimitiveIntermediateType(field : Intermediate!IntermediateDataField,
+rule TechnologySpecificPrimitiveIntermediateType(type : Intermediate!IntermediatePrimitiveType,
     typeDefinitionTechnology : Service!Technology,
     typeDefinitionTechnologyImport : Service!Import) {
     to
         i : Intermediate!IntermediateImportedTechnologySpecificType(
-            name <- thisModule.findDefaultTechnologySpecificPrimitiveType(field.type,
+            name <- thisModule.findDefaultTechnologySpecificPrimitiveType(type,
                     typeDefinitionTechnology).name,
             qualifiedName <- typeDefinitionTechnology.name
                 .concat('.')
-                .concat(thisModule.findDefaultTechnologySpecificPrimitiveType(field.type,
+                .concat(thisModule.findDefaultTechnologySpecificPrimitiveType(type,
                     typeDefinitionTechnology).buildQualifiedName('.')),
             origin <- #TECHNOLOGY,
             kind <- #PRIMITIVE
@@ -351,7 +485,7 @@ rule IntermediateImportedAspect(sourceAspect : Service!ImportedServiceAspect, co
     }
     to
         i : Intermediate!IntermediateImportedAspect (
-            name <- sourceAspect.importedAspect.name
+            name <- importedAspect.name
         )
     do {
         -- Establish reference to container. Note that this cannot be done in the to-clause via

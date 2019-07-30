@@ -39,6 +39,8 @@ import de.fhdo.lemma.technology.TechnologySpecificPrimitiveType;
 import de.fhdo.lemma.technology.TechnologySpecificPropertyValueAssignment;
 import de.fhdo.lemma.technology.mapping.ComplexParameterMapping;
 import de.fhdo.lemma.technology.mapping.ComplexTypeMapping;
+import de.fhdo.lemma.technology.mapping.DataOperationMapping;
+import de.fhdo.lemma.technology.mapping.DataOperationParameterMapping;
 import de.fhdo.lemma.technology.mapping.ImportedComplexType;
 import de.fhdo.lemma.technology.mapping.ImportedMicroservice;
 import de.fhdo.lemma.technology.mapping.InterfaceMapping;
@@ -98,6 +100,18 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
       if (context instanceof ComplexTypeMapping) {
         _matched=true;
         _switchResult = this.getScope(((ComplexTypeMapping)context), reference);
+      }
+    }
+    if (!_matched) {
+      if (context instanceof DataOperationMapping) {
+        _matched=true;
+        _switchResult = this.getScope(((DataOperationMapping)context), reference);
+      }
+    }
+    if (!_matched) {
+      if (context instanceof DataOperationParameterMapping) {
+        _matched=true;
+        _switchResult = this.getScope(((DataOperationParameterMapping)context), reference);
       }
     }
     if (!_matched) {
@@ -248,6 +262,66 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
           ImportedComplexType _type_1 = mapping.getType();
           return Scopes.scopeFor(((Enumeration) _type_1).getFields());
         }
+      }
+    }
+    return null;
+  }
+  
+  /**
+   * Build scope for data operation mappings and the given reference
+   */
+  private IScope getScope(final DataOperationMapping mapping, final EReference reference) {
+    boolean _matched = false;
+    if (Objects.equal(reference, MappingPackage.Literals.DATA_OPERATION_MAPPING__DATA_OPERATION)) {
+      _matched=true;
+      return this.getScopeForDataOperations(mapping);
+    }
+    if (!_matched) {
+      if (Objects.equal(reference, MappingPackage.Literals.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__TECHNOLOGY)) {
+        _matched=true;
+        return this.getScopeForAnnotatedTechnologies(mapping);
+      }
+    }
+    if (!_matched) {
+      if (Objects.equal(reference, MappingPackage.Literals.DATA_OPERATION_MAPPING__TECHNOLOGY)) {
+        _matched=true;
+        return this.getScopeForAnnotatedTechnologies(mapping);
+      }
+    }
+    if (!_matched) {
+      if (Objects.equal(reference, MappingPackage.Literals.DATA_OPERATION_MAPPING__RETURN_TYPE)) {
+        _matched=true;
+        return this.getScopeForMappingTypes(mapping);
+      }
+    }
+    if (!_matched) {
+      if (Objects.equal(reference, MappingPackage.Literals.DATA_OPERATION_PARAMETER_MAPPING__PARAMETER)) {
+        _matched=true;
+        return Scopes.scopeFor(mapping.getDataOperation().getParameters());
+      }
+    }
+    return null;
+  }
+  
+  /**
+   * Build scope for data operation parameter mappings and the given reference
+   */
+  private IScope getScope(final DataOperationParameterMapping mapping, final EReference reference) {
+    boolean _matched = false;
+    if (Objects.equal(reference, MappingPackage.Literals.DATA_OPERATION_PARAMETER_MAPPING__PARAMETER)) {
+      _matched=true;
+      return Scopes.scopeFor(mapping.getOperationMapping().getDataOperation().getParameters());
+    }
+    if (!_matched) {
+      if (Objects.equal(reference, MappingPackage.Literals.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__TECHNOLOGY)) {
+        _matched=true;
+        return this.getScopeForAnnotatedTechnologies(mapping);
+      }
+    }
+    if (!_matched) {
+      if (Objects.equal(reference, MappingPackage.Literals.DATA_OPERATION_PARAMETER_MAPPING__TECHNOLOGY)) {
+        _matched=true;
+        return this.getScopeForAnnotatedTechnologies(mapping);
       }
     }
     return null;
@@ -658,15 +732,15 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
   }
   
   /**
-   * Build scope for technology-specific types of field in complex type mappings or parameters
+   * Build scope for technology-specific types
    */
   private IScope getScopeForMappingTypes(final EObject mapping) {
-    Type parameterType = null;
+    Type originalType = null;
     Import technology = null;
     boolean _matched = false;
     if (mapping instanceof PrimitiveParameterMapping) {
       _matched=true;
-      parameterType = ((PrimitiveParameterMapping)mapping).getParameter().getEffectiveType();
+      originalType = ((PrimitiveParameterMapping)mapping).getParameter().getEffectiveType();
       technology = ((PrimitiveParameterMapping)mapping).getTechnology();
     }
     if (!_matched) {
@@ -684,26 +758,33 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
         if (_importedType!=null) {
           _type=_importedType.getType();
         }
-        parameterType = _type;
+        originalType = _type;
         technology = ((ComplexParameterMapping)mapping).getTechnology();
       }
     }
     if (!_matched) {
       if (mapping instanceof TechnologySpecificFieldMapping) {
         _matched=true;
-        parameterType = ((TechnologySpecificFieldMapping)mapping).getDataField().getEffectiveType();
+        originalType = ((TechnologySpecificFieldMapping)mapping).getDataField().getEffectiveType();
         technology = ((TechnologySpecificFieldMapping)mapping).getTechnology();
+      }
+    }
+    if (!_matched) {
+      if (mapping instanceof DataOperationMapping) {
+        _matched=true;
+        originalType = ((DataOperationMapping)mapping).getDataOperation().getPrimitiveOrComplexReturnType();
+        technology = ((DataOperationMapping)mapping).getTechnology();
       }
     }
     if (!_matched) {
       return IScope.NULLSCOPE;
     }
-    if ((parameterType == null)) {
+    if ((originalType == null)) {
       return IScope.NULLSCOPE;
     }
     Function<Technology, List<Type>> getImportedConcepts = null;
     Function<Type, List<String>> getConceptNameParts = null;
-    if ((parameterType instanceof PrimitiveType)) {
+    if ((originalType instanceof PrimitiveType)) {
       final Function<Technology, List<Type>> _function = (Technology it) -> {
         final Function1<TechnologySpecificPrimitiveType, Type> _function_1 = (TechnologySpecificPrimitiveType it_1) -> {
           return ((Type) it_1);
@@ -716,8 +797,8 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
       };
       getConceptNameParts = _function_1;
     } else {
-      if ((parameterType instanceof ComplexType)) {
-        boolean _isIsStructure = ((ComplexType)parameterType).isIsStructure();
+      if ((originalType instanceof ComplexType)) {
+        boolean _isIsStructure = ((ComplexType)originalType).isIsStructure();
         if (_isIsStructure) {
           final Function<Technology, List<Type>> _function_2 = (Technology it) -> {
             final Function1<TechnologySpecificDataStructure, Type> _function_3 = (TechnologySpecificDataStructure it_1) -> {
@@ -731,7 +812,7 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
           };
           getConceptNameParts = _function_3;
         } else {
-          if ((((ComplexType)parameterType).isIsStructuredList() || ((ComplexType)parameterType).isIsPrimitiveList())) {
+          if ((((ComplexType)originalType).isIsStructuredList() || ((ComplexType)originalType).isIsPrimitiveList())) {
             final Function<Technology, List<Type>> _function_4 = (Technology it) -> {
               final Function1<TechnologySpecificListType, Type> _function_5 = (TechnologySpecificListType it_1) -> {
                 return ((Type) it_1);
@@ -744,7 +825,7 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
             };
             getConceptNameParts = _function_5;
           } else {
-            boolean _isIsEnumeration = ((ComplexType)parameterType).isIsEnumeration();
+            boolean _isIsEnumeration = ((ComplexType)originalType).isIsEnumeration();
             if (_isIsEnumeration) {
               return IScope.NULLSCOPE;
             }
@@ -870,6 +951,22 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
       _xifexpression_3 = _xifexpression_4;
     }
     return _xifexpression_3;
+  }
+  
+  /**
+   * Build scope for data operations in complex type mappings
+   */
+  private IScope getScopeForDataOperations(final DataOperationMapping mapping) {
+    ComplexType _type = mapping.getTypeMapping().getType().getType();
+    ComplexType complexType = ((ComplexType) _type);
+    IScope _xifexpression = null;
+    boolean _isIsStructure = complexType.isIsStructure();
+    if (_isIsStructure) {
+      _xifexpression = Scopes.scopeFor(((DataStructure) complexType).getOperations());
+    } else {
+      _xifexpression = IScope.NULLSCOPE;
+    }
+    return _xifexpression;
   }
   
   /**
@@ -1049,6 +1146,18 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     if (mapping instanceof ComplexTypeMapping) {
       _matched=true;
       _switchResult = JoinPointType.COMPLEX_TYPES;
+    }
+    if (!_matched) {
+      if (mapping instanceof DataOperationMapping) {
+        _matched=true;
+        _switchResult = JoinPointType.OPERATIONS;
+      }
+    }
+    if (!_matched) {
+      if (mapping instanceof DataOperationParameterMapping) {
+        _matched=true;
+        _switchResult = JoinPointType.PARAMETERS;
+      }
     }
     if (!_matched) {
       if (mapping instanceof MicroserviceMapping) {

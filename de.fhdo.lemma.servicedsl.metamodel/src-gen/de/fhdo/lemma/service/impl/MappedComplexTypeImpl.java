@@ -9,6 +9,7 @@ import de.fhdo.lemma.service.Import;
 import de.fhdo.lemma.service.ImportedServiceAspect;
 import de.fhdo.lemma.service.ImportedType;
 import de.fhdo.lemma.service.MappedComplexType;
+import de.fhdo.lemma.service.MappedDataOperation;
 import de.fhdo.lemma.service.MappedField;
 import de.fhdo.lemma.service.ServiceModel;
 import de.fhdo.lemma.service.ServicePackage;
@@ -61,6 +62,7 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
  *   <li>{@link de.fhdo.lemma.service.impl.MappedComplexTypeImpl#getTechnologyReferences <em>Technology References</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.impl.MappedComplexTypeImpl#getType <em>Type</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.impl.MappedComplexTypeImpl#getMappedFields <em>Mapped Fields</em>}</li>
+ *   <li>{@link de.fhdo.lemma.service.impl.MappedComplexTypeImpl#getMappedOperations <em>Mapped Operations</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.impl.MappedComplexTypeImpl#getAspects <em>Aspects</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.impl.MappedComplexTypeImpl#getServiceModel <em>Service Model</em>}</li>
  * </ul>
@@ -137,6 +139,16 @@ public class MappedComplexTypeImpl extends MinimalEObjectImpl.Container implemen
      * @ordered
      */
     protected EList<MappedField> mappedFields;
+
+    /**
+     * The cached value of the '{@link #getMappedOperations() <em>Mapped Operations</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getMappedOperations()
+     * @generated
+     * @ordered
+     */
+    protected EList<MappedDataOperation> mappedOperations;
 
     /**
      * The cached value of the '{@link #getAspects() <em>Aspects</em>}' containment reference list.
@@ -339,6 +351,19 @@ public class MappedComplexTypeImpl extends MinimalEObjectImpl.Container implemen
             mappedFields = new EObjectContainmentWithInverseEList<MappedField>(MappedField.class, this, ServicePackage.MAPPED_COMPLEX_TYPE__MAPPED_FIELDS, ServicePackage.MAPPED_FIELD__MAPPED_COMPLEX_TYPE);
         }
         return mappedFields;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EList<MappedDataOperation> getMappedOperations() {
+        if (mappedOperations == null) {
+            mappedOperations = new EObjectContainmentWithInverseEList<MappedDataOperation>(MappedDataOperation.class, this, ServicePackage.MAPPED_COMPLEX_TYPE__MAPPED_OPERATIONS, ServicePackage.MAPPED_DATA_OPERATION__MAPPED_COMPLEX_TYPE);
+        }
+        return mappedOperations;
     }
 
     /**
@@ -568,6 +593,8 @@ public class MappedComplexTypeImpl extends MinimalEObjectImpl.Container implemen
                 return ((InternalEList<InternalEObject>)(InternalEList<?>)getTechnologyReferences()).basicAdd(otherEnd, msgs);
             case ServicePackage.MAPPED_COMPLEX_TYPE__MAPPED_FIELDS:
                 return ((InternalEList<InternalEObject>)(InternalEList<?>)getMappedFields()).basicAdd(otherEnd, msgs);
+            case ServicePackage.MAPPED_COMPLEX_TYPE__MAPPED_OPERATIONS:
+                return ((InternalEList<InternalEObject>)(InternalEList<?>)getMappedOperations()).basicAdd(otherEnd, msgs);
             case ServicePackage.MAPPED_COMPLEX_TYPE__ASPECTS:
                 return ((InternalEList<InternalEObject>)(InternalEList<?>)getAspects()).basicAdd(otherEnd, msgs);
             case ServicePackage.MAPPED_COMPLEX_TYPE__SERVICE_MODEL:
@@ -592,6 +619,8 @@ public class MappedComplexTypeImpl extends MinimalEObjectImpl.Container implemen
                 return basicSetType(null, msgs);
             case ServicePackage.MAPPED_COMPLEX_TYPE__MAPPED_FIELDS:
                 return ((InternalEList<?>)getMappedFields()).basicRemove(otherEnd, msgs);
+            case ServicePackage.MAPPED_COMPLEX_TYPE__MAPPED_OPERATIONS:
+                return ((InternalEList<?>)getMappedOperations()).basicRemove(otherEnd, msgs);
             case ServicePackage.MAPPED_COMPLEX_TYPE__ASPECTS:
                 return ((InternalEList<?>)getAspects()).basicRemove(otherEnd, msgs);
             case ServicePackage.MAPPED_COMPLEX_TYPE__SERVICE_MODEL:
@@ -636,6 +665,8 @@ public class MappedComplexTypeImpl extends MinimalEObjectImpl.Container implemen
                 return getType();
             case ServicePackage.MAPPED_COMPLEX_TYPE__MAPPED_FIELDS:
                 return getMappedFields();
+            case ServicePackage.MAPPED_COMPLEX_TYPE__MAPPED_OPERATIONS:
+                return getMappedOperations();
             case ServicePackage.MAPPED_COMPLEX_TYPE__ASPECTS:
                 return getAspects();
             case ServicePackage.MAPPED_COMPLEX_TYPE__SERVICE_MODEL:
@@ -674,6 +705,10 @@ public class MappedComplexTypeImpl extends MinimalEObjectImpl.Container implemen
                 getMappedFields().clear();
                 getMappedFields().addAll((Collection<? extends MappedField>)newValue);
                 return;
+            case ServicePackage.MAPPED_COMPLEX_TYPE__MAPPED_OPERATIONS:
+                getMappedOperations().clear();
+                getMappedOperations().addAll((Collection<? extends MappedDataOperation>)newValue);
+                return;
             case ServicePackage.MAPPED_COMPLEX_TYPE__ASPECTS:
                 getAspects().clear();
                 getAspects().addAll((Collection<? extends ImportedServiceAspect>)newValue);
@@ -711,6 +746,9 @@ public class MappedComplexTypeImpl extends MinimalEObjectImpl.Container implemen
             case ServicePackage.MAPPED_COMPLEX_TYPE__MAPPED_FIELDS:
                 getMappedFields().clear();
                 return;
+            case ServicePackage.MAPPED_COMPLEX_TYPE__MAPPED_OPERATIONS:
+                getMappedOperations().clear();
+                return;
             case ServicePackage.MAPPED_COMPLEX_TYPE__ASPECTS:
                 getAspects().clear();
                 return;
@@ -741,6 +779,8 @@ public class MappedComplexTypeImpl extends MinimalEObjectImpl.Container implemen
                 return type != null;
             case ServicePackage.MAPPED_COMPLEX_TYPE__MAPPED_FIELDS:
                 return mappedFields != null && !mappedFields.isEmpty();
+            case ServicePackage.MAPPED_COMPLEX_TYPE__MAPPED_OPERATIONS:
+                return mappedOperations != null && !mappedOperations.isEmpty();
             case ServicePackage.MAPPED_COMPLEX_TYPE__ASPECTS:
                 return aspects != null && !aspects.isEmpty();
             case ServicePackage.MAPPED_COMPLEX_TYPE__SERVICE_MODEL:

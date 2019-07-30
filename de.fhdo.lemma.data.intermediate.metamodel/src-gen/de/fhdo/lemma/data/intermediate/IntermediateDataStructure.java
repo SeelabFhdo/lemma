@@ -19,6 +19,7 @@ import org.eclipse.emf.common.util.EList;
  * </p>
  * <ul>
  *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateDataStructure#getSuper <em>Super</em>}</li>
+ *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateDataStructure#getOperations <em>Operations</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateDataStructure#getDataFields <em>Data Fields</em>}</li>
  * </ul>
  *
@@ -52,6 +53,24 @@ public interface IntermediateDataStructure extends IntermediateComplexType {
      * @generated
      */
     void setSuper(IntermediateDataStructure value);
+
+    /**
+     * Returns the value of the '<em><b>Operations</b></em>' containment reference list.
+     * The list contents are of type {@link de.fhdo.lemma.data.intermediate.IntermediateDataOperation}.
+     * It is bidirectional and its opposite is '{@link de.fhdo.lemma.data.intermediate.IntermediateDataOperation#getDataStructure <em>Data Structure</em>}'.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Operations</em>' containment reference list isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Operations</em>' containment reference list.
+     * @see de.fhdo.lemma.data.intermediate.IntermediatePackage#getIntermediateDataStructure_Operations()
+     * @see de.fhdo.lemma.data.intermediate.IntermediateDataOperation#getDataStructure
+     * @model opposite="dataStructure" containment="true"
+     * @generated
+     */
+    EList<IntermediateDataOperation> getOperations();
 
     /**
      * Returns the value of the '<em><b>Data Fields</b></em>' containment reference list.

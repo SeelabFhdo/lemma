@@ -35,11 +35,13 @@ public interface ParameterMapping extends EObject {
     /**
      * Returns the value of the '<em><b>Parameter</b></em>' reference.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Parameter</em>' reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * *
+     * Implicit Constraints:
+     *     (C1) A parameter may be mapped only once.
+     *          Ensured by: DSL validator.
+     * <!-- end-model-doc -->
      * @return the value of the '<em>Parameter</em>' reference.
      * @see #setParameter(Parameter)
      * @see de.fhdo.lemma.technology.mapping.MappingPackage#getParameterMapping_Parameter()

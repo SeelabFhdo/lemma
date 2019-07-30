@@ -49,6 +49,24 @@ public interface ServiceFactory extends EFactory {
     MappedComplexType createMappedComplexType();
 
     /**
+     * Returns a new object of class '<em>Mapped Data Operation</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Mapped Data Operation</em>'.
+     * @generated
+     */
+    MappedDataOperation createMappedDataOperation();
+
+    /**
+     * Returns a new object of class '<em>Mapped Data Operation Parameter</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Mapped Data Operation Parameter</em>'.
+     * @generated
+     */
+    MappedDataOperationParameter createMappedDataOperationParameter();
+
+    /**
      * Returns a new object of class '<em>Mapped Field</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

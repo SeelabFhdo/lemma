@@ -4,9 +4,13 @@
 package de.fhdo.lemma.data.validation;
 
 import com.google.common.base.Function;
+import de.fhdo.lemma.data.ComplexType;
 import de.fhdo.lemma.data.ComplexTypeImport;
+import de.fhdo.lemma.data.Context;
 import de.fhdo.lemma.data.DataField;
 import de.fhdo.lemma.data.DataModel;
+import de.fhdo.lemma.data.DataOperation;
+import de.fhdo.lemma.data.DataOperationParameter;
 import de.fhdo.lemma.data.DataPackage;
 import de.fhdo.lemma.data.DataStructure;
 import de.fhdo.lemma.data.FieldFeature;
@@ -14,12 +18,16 @@ import de.fhdo.lemma.data.Type;
 import de.fhdo.lemma.data.Version;
 import de.fhdo.lemma.data.validation.AbstractDataDslValidator;
 import de.fhdo.lemma.utils.LemmaUtils;
+import java.util.ArrayList;
 import java.util.List;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.EcoreUtil2;
 import org.eclipse.xtext.naming.QualifiedName;
 import org.eclipse.xtext.validation.Check;
+import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.ListExtensions;
 
@@ -84,6 +92,161 @@ public class DataDslValidator extends AbstractDataDslValidator {
   }
   
   /**
+   * Check versions for unique names
+   */
+  @Check
+  public void checkUniqueVersionNames(final DataModel dataModel) {
+    final Function<Version, Object> _function = (Version it) -> {
+      return it.getName();
+    };
+    final Function<Version, String> _function_1 = (Version it) -> {
+      return it.getName();
+    };
+    this.<Version>checkUniqueNames(dataModel.getVersions(), "version", _function, _function_1, 
+      DataPackage.Literals.VERSION__NAME);
+  }
+  
+  /**
+   * Check top-level contexts for unique names
+   */
+  @Check
+  public void checkUniqueContextNames(final DataModel dataModel) {
+    final Function<Context, Object> _function = (Context it) -> {
+      return it.getName();
+    };
+    final Function<Context, String> _function_1 = (Context it) -> {
+      return it.getName();
+    };
+    this.<Context>checkUniqueNames(dataModel.getContexts(), "context", _function, _function_1, 
+      DataPackage.Literals.CONTEXT__NAME);
+  }
+  
+  /**
+   * Check top-level complex types for unique names
+   */
+  @Check
+  public void checkUniqueTypeNames(final DataModel dataModel) {
+    final Function<ComplexType, Object> _function = (ComplexType it) -> {
+      return it.getName();
+    };
+    final Function<ComplexType, String> _function_1 = (ComplexType it) -> {
+      return it.getName();
+    };
+    this.<ComplexType>checkUniqueNames(dataModel.getComplexTypes(), "complex type", _function, _function_1, 
+      DataPackage.Literals.COMPLEX_TYPE__NAME);
+  }
+  
+  /**
+   * Check contexts defined in versions for unique names
+   */
+  @Check
+  public void checkUniqueContextNames(final Version version) {
+    final Function<Context, Object> _function = (Context it) -> {
+      return it.getName();
+    };
+    final Function<Context, String> _function_1 = (Context it) -> {
+      return it.getName();
+    };
+    this.<Context>checkUniqueNames(version.getContexts(), "context", _function, _function_1, 
+      DataPackage.Literals.CONTEXT__NAME);
+  }
+  
+  /**
+   * Check complex types defined in versions for unique names
+   */
+  @Check
+  public void checkUniqueTypeNames(final Version version) {
+    final Function<ComplexType, Object> _function = (ComplexType it) -> {
+      return it.getName();
+    };
+    final Function<ComplexType, String> _function_1 = (ComplexType it) -> {
+      return it.getName();
+    };
+    this.<ComplexType>checkUniqueNames(version.getComplexTypes(), "complex type", _function, _function_1, 
+      DataPackage.Literals.COMPLEX_TYPE__NAME);
+  }
+  
+  /**
+   * Check complex types defined in contexts for unique names
+   */
+  @Check
+  public void checkUniqueTypeNames(final Context context) {
+    final Function<ComplexType, Object> _function = (ComplexType it) -> {
+      return it.getName();
+    };
+    final Function<ComplexType, String> _function_1 = (ComplexType it) -> {
+      return it.getName();
+    };
+    this.<ComplexType>checkUniqueNames(context.getComplexTypes(), "complex type", _function, _function_1, 
+      DataPackage.Literals.COMPLEX_TYPE__NAME);
+  }
+  
+  /**
+   * Check operation parameters for unique names
+   */
+  @Check
+  public void checkUniqueParameterNames(final DataOperation operation) {
+    final Function<DataOperationParameter, Object> _function = (DataOperationParameter it) -> {
+      return it.getName();
+    };
+    final Function<DataOperationParameter, String> _function_1 = (DataOperationParameter it) -> {
+      return it.getName();
+    };
+    this.<DataOperationParameter>checkUniqueNames(operation.getParameters(), "parameter", _function, _function_1, 
+      DataPackage.Literals.DATA_OPERATION_PARAMETER__NAME);
+  }
+  
+  /**
+   * Generic helper to check a list of EObjects for unique names
+   */
+  private <T extends EObject> void checkUniqueNames(final List<T> objectsToCheck, final String objectKind, final Function<T, Object> getCompareValue, final Function<T, String> getDuplicateOutputString, final EStructuralFeature feature) {
+    final Integer duplicateIndex = LemmaUtils.<T, Object>getDuplicateIndex(objectsToCheck, getCompareValue);
+    if (((duplicateIndex).intValue() == (-1))) {
+      return;
+    }
+    final T duplicate = objectsToCheck.get((duplicateIndex).intValue());
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("Duplicate ");
+    _builder.append(objectKind);
+    _builder.append(" ");
+    String _apply = getDuplicateOutputString.apply(duplicate);
+    _builder.append(_apply);
+    this.error(_builder.toString(), duplicate, feature);
+  }
+  
+  /**
+   * Check data structure for unique names
+   */
+  @Check
+  public void checkUniqueNames(final DataStructure dataStructure) {
+    final int dataFieldCount = dataStructure.getDataFields().size();
+    final ArrayList<String> uniqueNames = CollectionLiterals.<String>newArrayList();
+    final Function1<DataField, String> _function = (DataField it) -> {
+      return it.getName();
+    };
+    uniqueNames.addAll(ListExtensions.<DataField, String>map(dataStructure.getDataFields(), _function));
+    final Function1<DataOperation, String> _function_1 = (DataOperation it) -> {
+      return it.getName();
+    };
+    uniqueNames.addAll(ListExtensions.<DataOperation, String>map(dataStructure.getOperations(), _function_1));
+    final Function<String, String> _function_2 = (String it) -> {
+      return it;
+    };
+    final Integer duplicateIndex = LemmaUtils.<String, String>getDuplicateIndex(uniqueNames, _function_2);
+    if (((duplicateIndex).intValue() > (-1))) {
+      final boolean isOperation = ((duplicateIndex).intValue() >= dataFieldCount);
+      if ((!isOperation)) {
+        this.error("Duplicate structure component", 
+          DataPackage.Literals.DATA_STRUCTURE__DATA_FIELDS, (duplicateIndex).intValue());
+      } else {
+        final int operationIndex = ((duplicateIndex).intValue() - dataFieldCount);
+        this.error("Duplicate structure component", 
+          DataPackage.Literals.DATA_STRUCTURE__OPERATIONS, operationIndex);
+      }
+    }
+  }
+  
+  /**
    * Perform checks on data fields
    */
   @Check
@@ -136,6 +299,67 @@ public class DataDslValidator extends AbstractDataDslValidator {
             DataPackage.Literals.DATA_FIELD__NAME);
         }
       }
+    }
+  }
+  
+  /**
+   * Perform checks on data operations
+   */
+  @Check
+  public void checkOperation(final DataOperation dataOperation) {
+    final DataOperation superOperation = dataOperation.findEponymousSuperOperation();
+    String _xifexpression = null;
+    if ((superOperation != null)) {
+      _xifexpression = QualifiedName.create(superOperation.getQualifiedNameParts()).toString();
+    } else {
+      _xifexpression = null;
+    }
+    final String superOperationName = _xifexpression;
+    final boolean superOperationIsHidden = ((superOperation != null) && superOperation.isHidden());
+    final boolean thisIsInherited = (superOperation != null);
+    final boolean thisIsHidden = dataOperation.isHidden();
+    final boolean redefinitionAttempt = (thisIsInherited && (!superOperationIsHidden));
+    final boolean operationTypesDiffer = (thisIsInherited && 
+      (dataOperation.isHasNoReturnType() != superOperation.isHasNoReturnType()));
+    if (redefinitionAttempt) {
+      if ((!thisIsHidden)) {
+        StringConcatenation _builder = new StringConcatenation();
+        _builder.append("Operation cannot redefine operation ");
+        _builder.append(superOperationName);
+        _builder.append(" ");
+        this.error(_builder.toString(), dataOperation, DataPackage.Literals.DATA_OPERATION__NAME);
+        return;
+      } else {
+        if (operationTypesDiffer) {
+          StringConcatenation _builder_1 = new StringConcatenation();
+          _builder_1.append("or function) as ");
+          _builder_1.append(superOperationName);
+          String _plus = ("Hidden inherited operation must have the same operation type (procedure " + _builder_1);
+          this.error(_plus, dataOperation, 
+            DataPackage.Literals.DATA_OPERATION__NAME);
+          return;
+        } else {
+          Type _primitiveOrComplexReturnType = dataOperation.getPrimitiveOrComplexReturnType();
+          boolean _tripleNotEquals = (_primitiveOrComplexReturnType != null);
+          if (_tripleNotEquals) {
+            this.error("Hidden inherited operation must not specify a return type", dataOperation, 
+              DataPackage.Literals.DATA_OPERATION__NAME);
+            return;
+          } else {
+            boolean _isEmpty = dataOperation.getParameters().isEmpty();
+            boolean _not = (!_isEmpty);
+            if (_not) {
+              this.error("Hidden inherited operation must not specify parameters", dataOperation, 
+                DataPackage.Literals.DATA_OPERATION__NAME);
+              return;
+            }
+          }
+        }
+      }
+    }
+    if ((dataOperation.isLacksReturnTypeSpecification() && ((!thisIsHidden) || (!thisIsInherited)))) {
+      this.error("Operation must have a return type specification or be hidden", dataOperation, 
+        DataPackage.Literals.DATA_OPERATION__NAME);
     }
   }
   

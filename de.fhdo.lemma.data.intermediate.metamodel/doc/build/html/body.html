@@ -649,6 +649,179 @@ fields of the structure on the basis of the
 </div>
 </dd></dl>
 
+<dl class="attribute">
+<dt>
+<code class="descname">IntermediateDataOperation[*] operations</code></dt>
+<dd><p>Operations of the structure.</p>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">In case the data structure inherits from a super data structure, the
+operations also contain inherited, non-hidden operations from the
+inheritance hierarchy, i.e., the <em>effective operations</em> of the
+structure. The inherited operations can be distinguished from
+“local” operations of the structure on the basis of the
+<a class="reference internal" href="#link-intermediatedataoperation-inherited"><span class="std std-ref">IntermediateDataOperation.inherited</span></a> attribute.</p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="link-intermediatedataoperation"></span><dl class="type">
+<dt id="IntermediateDataOperation">
+ class <code class="descname">IntermediateDataOperation</code><a class="headerlink" href="#IntermediateDataOperation" title="Permalink to this definition">¶</a></dt>
+<dd><p>An operation within an
+<a class="reference internal" href="#link-intermediatedatastructure"><span class="std std-ref">IntermediateDataStructure</span></a>.</p>
+<dl class="attribute">
+<dt>
+<code class="descname">String[1] name</code></dt>
+<dd><p>Unique name of the operation.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">String[1] qualifiedName</code></dt>
+<dd><p>Qualified name of the operation. This is the operation’s name prefixed
+by the qualified name of the surrounding
+<a class="reference internal" href="#link-intermediatedatastructure"><span class="std std-ref">data structure</span></a>. The name
+fragments are separated by dots.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">boolean hidden</code></dt>
+<dd><p>Flag to indicate whether the operation is hidden or not. Semantically,
+this flag corresponds to Java’s <code class="docutils literal notranslate"><span class="pre">private</span></code> accessibility specifier.
+However, its functionality differs in that an inherited operation may be
+set to hidden. That is, operations’ visibility may be overridden. A
+hidden operation is not visible in any of the following levels of the
+inheritance hierarchy.</p>
+</dd></dl>
+
+<span class="target" id="link-intermediatedataoperation-inherited"></span><dl class="attribute">
+<dt>
+<code class="descname">boolean inherited</code></dt>
+<dd><p>Flag to indicate whether this operation was inherited from a super
+<a class="reference internal" href="#link-intermediatedatastructure"><span class="std std-ref">structure</span></a>.</p>
+</dd></dl>
+
+<span class="target" id="link-intermediatedataoperation-hasnoreturntype"></span><dl class="attribute">
+<dt>
+<code class="descname">boolean hasNoReturnType</code></dt>
+<dd><p>Flag to indicate whether this operation has a return type or not.</p>
+</dd></dl>
+
+<span class="target" id="link-intermediatedataoperation-returntype"></span><dl class="attribute">
+<dt>
+<code class="descname">IntermediateType returnType</code></dt>
+<dd><p>The return type of the operation.</p>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">The <code class="docutils literal notranslate"><span class="pre">type</span></code> attribute always holds a unique instance of
+<code class="xref py py-class docutils literal notranslate"><span class="pre">IntermediateType</span></code>, if the <a class="reference internal" href="#link-intermediatedataoperation-hasnoreturntype"><span class="std std-ref">hasNoReturnType</span></a> attribute is
+false. Moreover, instances of the same types are not reused for
+return types.</p>
+</div>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">Code generators must use this type as the operation’s return type
+and not its <a class="reference internal" href="#link-intermediatedataoperation-originalreturntype"><span class="std std-ref">original return type</span></a>.</p>
+</div>
+</dd></dl>
+
+<span class="target" id="link-intermediatedataoperation-originalreturntype"></span><dl class="attribute">
+<dt>
+<code class="descname">IntermediateType originalReturnType</code></dt>
+<dd><p>The original return type of the operation in case it got mapped within a
+Mapping Model.</p>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">In case the operation has a <a class="reference internal" href="#link-intermediatedataoperation-returntype"><span class="std std-ref">return type</span></a>, this attribute also
+holds a value. If it differs from the <a class="reference internal" href="#link-intermediatedataoperation-returntype"><span class="std std-ref">return type</span></a> of the operation, the
+return got mapped and the
+<a class="reference internal" href="#link-intermediatedataoperation-returntype"><span class="std std-ref">returnType</span></a>
+attribute holds an
+<a class="reference internal" href="#IntermediateImportedTechnologySpecificType" title="IntermediateImportedTechnologySpecificType"><code class="xref java java-type docutils literal notranslate"><span class="pre">IntermediateImportedTechnologySpecificType</span></code></a> instance that points
+to the technology-specific type to which the return type was mapped.</p>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">IntermediateDataOperationParameter[*] parameters</code></dt>
+<dd><p>The <a class="reference internal" href="#link-intermediatedataoperationparameter"><span class="std std-ref">parameters</span></a> of the
+operation.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">IntermediateImportedAspect[*] aspects</code></dt>
+<dd><p>The <a class="reference internal" href="#IntermediateImportedAspect" title="IntermediateImportedAspect"><code class="xref java java-type docutils literal notranslate"><span class="pre">aspects</span></code></a> that were assigned
+to the operation within a Mapping Model.</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="link-intermediatedataoperationparameter"></span><dl class="type">
+<dt id="IntermediateDataOperationParameter">
+ class <code class="descname">IntermediateDataOperationParameter</code><a class="headerlink" href="#IntermediateDataOperationParameter" title="Permalink to this definition">¶</a></dt>
+<dd><p>A parameter within an
+<a class="reference internal" href="#link-intermediatedataoperation"><span class="std std-ref">IntermediateDataOperation</span></a>.</p>
+<dl class="attribute">
+<dt>
+<code class="descname">String[1] name</code></dt>
+<dd><p>Unique name of the parameter.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">String[1] qualifiedName</code></dt>
+<dd><p>Qualified name of the parameter. This is the parameter’s name prefixed
+by the qualified name of the surrounding
+<a class="reference internal" href="#link-intermediatedataoperation"><span class="std std-ref">operation</span></a>. The name fragments
+are separated by dots.</p>
+</dd></dl>
+
+<span class="target" id="link-intermediatedataoperationparameter-type"></span><dl class="attribute">
+<dt>
+<code class="descname">IntermediateType[1] type</code></dt>
+<dd><p>The type of the parameter.</p>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">The <code class="docutils literal notranslate"><span class="pre">type</span></code> attribute always holds a unique instance of
+<code class="xref py py-class docutils literal notranslate"><span class="pre">IntermediateType</span></code>, i.e., instances of the same types are
+not reused.</p>
+</div>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">Code generators must use this type as the parameter’s type and not
+its <a class="reference internal" href="#link-intermediatedataoperationparameter-originaltype"><span class="std std-ref">original type</span></a>.</p>
+</div>
+</dd></dl>
+
+<span class="target" id="link-intermediatedataoperationparameter-originaltype"></span><dl class="attribute">
+<dt>
+<code class="descname">IntermediateType[1] originalType</code></dt>
+<dd><p>The original type of the parameter in case it got mapped within a
+Mapping Model.</p>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">This attribute always holds a value. In case it differs from the
+<a class="reference internal" href="#link-intermediatedataoperationparameter-type"><span class="std std-ref">type</span></a> of the
+parameter, the parameter got mapped and the
+<a class="reference internal" href="#link-intermediatedataoperationparameter-type"><span class="std std-ref">type</span></a>
+attribute holds an
+<a class="reference internal" href="#IntermediateImportedTechnologySpecificType" title="IntermediateImportedTechnologySpecificType"><code class="xref java java-type docutils literal notranslate"><span class="pre">IntermediateImportedTechnologySpecificType</span></code></a> instance that points
+to the technology-specific type to which the parameter was mapped.</p>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">IntermediateImportedAspect[*] aspects</code></dt>
+<dd><p>The <a class="reference internal" href="#IntermediateImportedAspect" title="IntermediateImportedAspect"><code class="xref java java-type docutils literal notranslate"><span class="pre">aspects</span></code></a> that were assigned
+to the parameter within a Mapping Model.</p>
+</dd></dl>
+
 </dd></dl>
 
 <span class="target" id="link-intermediatedatafield"></span><dl class="type">
@@ -674,12 +847,11 @@ fragments are separated by dots.</p>
 <dl class="attribute">
 <dt>
 <code class="descname">boolean hidden</code></dt>
-<dd><p>Flag to indicate whether the attribute is hidden or not. Semantically,
-this flag corresponds to Java’s <code class="docutils literal notranslate"><span class="pre">private</span></code> accessibility specifier.
-However, its functionality differs in that an inherited field may be
-set to hidden. That is, fields’ visibility may be overridden. A hidden
-field is not visible in any of the following levels of the inheritance
-hierarchy.</p>
+<dd><p>Flag to indicate whether the field is hidden or not. Semantically, this
+flag corresponds to Java’s <code class="docutils literal notranslate"><span class="pre">private</span></code> accessibility specifier. However,
+its functionality differs in that an inherited field may be set to
+hidden. That is, fields’ visibility may be overridden. A hidden field is
+not visible in any of the following levels of the inheritance hierarchy.</p>
 </dd></dl>
 
 <span class="target" id="link-intermediatedatafield-inherited"></span><dl class="attribute">
@@ -732,14 +904,17 @@ not reused for data field typing.</p>
 
 <span class="target" id="link-intermediatedatafield-originaltype"></span><dl class="attribute">
 <dt>
-<code class="descname">IntermediateType originalType</code></dt>
+<code class="descname">IntermediateType[1] originalType</code></dt>
 <dd><p>The original type of the data field in case it got mapped within a
 Mapping Model.</p>
 <div class="admonition hint">
 <p class="first admonition-title">Hint</p>
-<p class="last">In case this attribute is not null, the <a class="reference internal" href="#link-intermediatedatafield-type"><span class="std std-ref">type</span></a> attribute holds a
+<p class="last">This attribute always holds a value. In case it differs from the
+<a class="reference internal" href="#link-intermediatedatafield-type"><span class="std std-ref">type</span></a> of the data field,
+the field got mapped and the
+<a class="reference internal" href="#link-intermediatedatafield-type"><span class="std std-ref">type</span></a> attribute holds an
 <a class="reference internal" href="#IntermediateImportedTechnologySpecificType" title="IntermediateImportedTechnologySpecificType"><code class="xref java java-type docutils literal notranslate"><span class="pre">IntermediateImportedTechnologySpecificType</span></code></a> instance that points
-to the technology-specific type to which the data field was mapped.</p>
+to the technology-specific type to which the field was mapped.</p>
 </div>
 </dd></dl>
 

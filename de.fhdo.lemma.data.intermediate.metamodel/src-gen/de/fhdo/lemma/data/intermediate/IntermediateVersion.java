@@ -11,6 +11,11 @@ import org.eclipse.emf.ecore.EObject;
  * A representation of the model object '<em><b>Version</b></em>'.
  * <!-- end-user-doc -->
  *
+ * <!-- begin-model-doc -->
+ * *
+ * Intermediate version
+ * <!-- end-model-doc -->
+ *
  * <p>
  * The following features are supported:
  * </p>

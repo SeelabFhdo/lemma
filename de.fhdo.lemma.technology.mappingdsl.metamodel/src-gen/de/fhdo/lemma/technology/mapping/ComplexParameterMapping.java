@@ -39,9 +39,7 @@ public interface ComplexParameterMapping extends ParameterMapping {
      * <!-- begin-model-doc -->
      * *
      * Implicit Constraints:
-     *     (C1) A parameter may be mapped only once.
-     *          Ensured by: DSL validator.
-     *     (C2) Maps either a technology-specific complex type directly or individual data fields.
+     *     (C1) Maps either a technology-specific complex type directly or individual data fields.
      *          Ensured by: DSL scope provider.
      * <!-- end-model-doc -->
      * @return the value of the '<em>Technology</em>' reference.

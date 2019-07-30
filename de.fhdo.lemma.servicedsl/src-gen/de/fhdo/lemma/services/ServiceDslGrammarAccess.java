@@ -2287,7 +2287,11 @@ public class ServiceDslGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//DataStructure:
 	//	'structure' name=ID ('extends' super=[DataStructure|QualifiedName])? '{' (dataFields+=DataField (','
-	//	dataFields+=DataField)*)?
+	//	dataFields+=DataField)*
+	//	| operations+=DataOperation (',' operations+=DataOperation)*
+	//	| dataFields+=DataField (',' dataFields+=DataField)*
+	//	','
+	//	operations+=DataOperation (',' operations+=DataOperation)*)?
 	//	'}';
 	public DataDslGrammarAccess.DataStructureElements getDataStructureAccess() {
 		return gaDataDsl.getDataStructureAccess();
@@ -2356,6 +2360,28 @@ public class ServiceDslGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getEnumerationFieldRule() {
 		return getEnumerationFieldAccess().getRule();
+	}
+	
+	//DataOperation:
+	//	^hidden?='hide'? (hasNoReturnType?='procedure' |
+	//	'function' (primitiveReturnType=PrimitiveType | complexReturnType=PossiblyImportedComplexType)?) name=ID ('('
+	//	parameters+=DataOperationParameter? (',' parameters+=DataOperationParameter)* ')')?;
+	public DataDslGrammarAccess.DataOperationElements getDataOperationAccess() {
+		return gaDataDsl.getDataOperationAccess();
+	}
+	
+	public ParserRule getDataOperationRule() {
+		return getDataOperationAccess().getRule();
+	}
+	
+	//DataOperationParameter:
+	//	(primitiveType=PrimitiveType | complexType=PossiblyImportedComplexType) name=ID;
+	public DataDslGrammarAccess.DataOperationParameterElements getDataOperationParameterAccess() {
+		return gaDataDsl.getDataOperationParameterAccess();
+	}
+	
+	public ParserRule getDataOperationParameterRule() {
+		return getDataOperationParameterAccess().getRule();
 	}
 	
 	//PrimitiveValue:

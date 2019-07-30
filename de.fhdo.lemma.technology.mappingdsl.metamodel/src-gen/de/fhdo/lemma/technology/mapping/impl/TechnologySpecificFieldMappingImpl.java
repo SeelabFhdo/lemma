@@ -42,7 +42,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.fhdo.lemma.technology.mapping.impl.TechnologySpecificFieldMappingImpl#getT_sourceModelUri <em>Tsource Model Uri</em>}</li>
  *   <li>{@link de.fhdo.lemma.technology.mapping.impl.TechnologySpecificFieldMappingImpl#getTechnology <em>Technology</em>}</li>
  *   <li>{@link de.fhdo.lemma.technology.mapping.impl.TechnologySpecificFieldMappingImpl#getType <em>Type</em>}</li>
  *   <li>{@link de.fhdo.lemma.technology.mapping.impl.TechnologySpecificFieldMappingImpl#getEnumerationField <em>Enumeration Field</em>}</li>
@@ -55,26 +54,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * @generated
  */
 public class TechnologySpecificFieldMappingImpl extends MinimalEObjectImpl.Container implements TechnologySpecificFieldMapping {
-    /**
-     * The default value of the '{@link #getT_sourceModelUri() <em>Tsource Model Uri</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getT_sourceModelUri()
-     * @generated
-     * @ordered
-     */
-    protected static final String TSOURCE_MODEL_URI_EDEFAULT = null;
-
-    /**
-     * The cached value of the '{@link #getT_sourceModelUri() <em>Tsource Model Uri</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getT_sourceModelUri()
-     * @generated
-     * @ordered
-     */
-    protected String t_sourceModelUri = TSOURCE_MODEL_URI_EDEFAULT;
-
     /**
      * The cached value of the '{@link #getTechnology() <em>Technology</em>}' reference.
      * <!-- begin-user-doc -->
@@ -142,29 +121,6 @@ public class TechnologySpecificFieldMappingImpl extends MinimalEObjectImpl.Conta
     @Override
     protected EClass eStaticClass() {
         return MappingPackage.Literals.TECHNOLOGY_SPECIFIC_FIELD_MAPPING;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public String getT_sourceModelUri() {
-        return t_sourceModelUri;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public void setT_sourceModelUri(String newT_sourceModelUri) {
-        String oldT_sourceModelUri = t_sourceModelUri;
-        t_sourceModelUri = newT_sourceModelUri;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__TSOURCE_MODEL_URI, oldT_sourceModelUri, t_sourceModelUri));
     }
 
     /**
@@ -539,8 +495,6 @@ public class TechnologySpecificFieldMappingImpl extends MinimalEObjectImpl.Conta
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
-            case MappingPackage.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__TSOURCE_MODEL_URI:
-                return getT_sourceModelUri();
             case MappingPackage.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__TECHNOLOGY:
                 if (resolve) return getTechnology();
                 return basicGetTechnology();
@@ -574,9 +528,6 @@ public class TechnologySpecificFieldMappingImpl extends MinimalEObjectImpl.Conta
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
-            case MappingPackage.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__TSOURCE_MODEL_URI:
-                setT_sourceModelUri((String)newValue);
-                return;
             case MappingPackage.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__TECHNOLOGY:
                 setTechnology((Import)newValue);
                 return;
@@ -611,9 +562,6 @@ public class TechnologySpecificFieldMappingImpl extends MinimalEObjectImpl.Conta
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
-            case MappingPackage.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__TSOURCE_MODEL_URI:
-                setT_sourceModelUri(TSOURCE_MODEL_URI_EDEFAULT);
-                return;
             case MappingPackage.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__TECHNOLOGY:
                 setTechnology((Import)null);
                 return;
@@ -647,8 +595,6 @@ public class TechnologySpecificFieldMappingImpl extends MinimalEObjectImpl.Conta
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
-            case MappingPackage.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__TSOURCE_MODEL_URI:
-                return TSOURCE_MODEL_URI_EDEFAULT == null ? t_sourceModelUri != null : !TSOURCE_MODEL_URI_EDEFAULT.equals(t_sourceModelUri);
             case MappingPackage.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__TECHNOLOGY:
                 return technology != null;
             case MappingPackage.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__TYPE:
@@ -679,22 +625,6 @@ public class TechnologySpecificFieldMappingImpl extends MinimalEObjectImpl.Conta
                 return getOriginalTypeOfMappedElement();
         }
         return super.eInvoke(operationID, arguments);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public String toString() {
-        if (eIsProxy()) return super.toString();
-
-        StringBuilder result = new StringBuilder(super.toString());
-        result.append(" (t_sourceModelUri: ");
-        result.append(t_sourceModelUri);
-        result.append(')');
-        return result.toString();
     }
 
 } //TechnologySpecificFieldMappingImpl

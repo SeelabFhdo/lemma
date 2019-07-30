@@ -108,6 +108,14 @@ public class IntermediateAdapterFactory extends AdapterFactoryImpl {
                 return createIntermediateDataStructureAdapter();
             }
             @Override
+            public Adapter caseIntermediateDataOperation(IntermediateDataOperation object) {
+                return createIntermediateDataOperationAdapter();
+            }
+            @Override
+            public Adapter caseIntermediateDataOperationParameter(IntermediateDataOperationParameter object) {
+                return createIntermediateDataOperationParameterAdapter();
+            }
+            @Override
             public Adapter caseIntermediateListType(IntermediateListType object) {
                 return createIntermediateListTypeAdapter();
             }
@@ -292,6 +300,34 @@ public class IntermediateAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createIntermediateDataStructureAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.fhdo.lemma.data.intermediate.IntermediateDataOperation <em>Data Operation</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.fhdo.lemma.data.intermediate.IntermediateDataOperation
+     * @generated
+     */
+    public Adapter createIntermediateDataOperationAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.fhdo.lemma.data.intermediate.IntermediateDataOperationParameter <em>Data Operation Parameter</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.fhdo.lemma.data.intermediate.IntermediateDataOperationParameter
+     * @generated
+     */
+    public Adapter createIntermediateDataOperationParameterAdapter() {
         return null;
     }
 

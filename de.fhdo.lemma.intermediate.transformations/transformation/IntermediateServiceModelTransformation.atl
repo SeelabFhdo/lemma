@@ -831,9 +831,11 @@ rule CreateOperationReference(sourceOperation : Service!PossiblyImportedOperatio
 rule IntermediateImportedAspect {
     from
         a : Service!ImportedServiceAspect (
-            -- Aspects of mapped complex types are part of intermediate data models (not
-            -- intermediate service models)
-            if (not a.mappedComplexType.oclIsUndefined()) then
+            -- Filter aspects belonging to mapped elements of data models, and thus become parts of
+            -- intermediate data models instead of intermediate service models
+            if (not a.mappedComplexType.oclIsUndefined() or
+                not a.mappedDataOperation.oclIsUndefined() or
+                not a.mappedDataOperationParameter.oclIsUndefined()) then
                 false
             -- Aspects of mapped fields are only handled if they are assigned to the fields in the
             -- context of a parameter. Aspects of mapped fields belonging to mapped complex types

@@ -528,6 +528,8 @@ class PossiblyImportedComplexType {
     refers ComplexType complexType
 
     container DataField dataField opposite complexType
+    container DataOperation operation opposite complexReturnType
+    container DataOperationParameter parameter opposite complexType
 }
 
 /*
@@ -544,6 +546,7 @@ class DataStructure extends ComplexType {
 
     refers DataStructure ^super
     contains DataField[] dataFields opposite dataStructure
+    contains DataOperation[] operations opposite dataStructure
 
     /**
      * Get the effective fields of the structure considering possible direct and indirect
@@ -558,8 +561,7 @@ class DataStructure extends ComplexType {
             // may happen that a field does not have a name, e.g., when the user does not finish its
             // declaration leveraging the DSL (which leads to syntax errors but does not prevent
             // model validation)
-            val currentNamedFields = currentStructure.dataFields
-                .filter[it.name !== null]
+            val currentNamedFields = currentStructure.dataFields.filter[it.name !== null]
 
             for (field : currentNamedFields) {
                 // Collect hidden fields on the way upwards the inheritance root
@@ -567,8 +569,7 @@ class DataStructure extends ComplexType {
                     hiddenFields.add(field.name)
 
                 // Got the field already collected on a lower inheritance level?
-                val existingEffectiveField = effectiveFields
-                    .findFirst[field.name == it.name]
+                val existingEffectiveField = effectiveFields.findFirst[field.name == it.name]
                 val fieldAlreadyCollected = existingEffectiveField !== null
 
                 // Is the field hidden, i.e., is the field itself hidden or was a field of the same
@@ -588,7 +589,7 @@ class DataStructure extends ComplexType {
                 //        of it somewhere in the lower inheritance levels, we remove the existing
                 //        version, which must've also been hidden (otherwise it could not be
                 //        referenced on a lower inheritance level), and add the currently iterated
-                //        field. This eventually results in the list of effective field to contain
+                //        field. This eventually results in the list of effective fields to contain
                 //        only the visible versions of fields that get hidden somewhere on a lower
                 //        inheritance hierarchy level.
                 if (!fieldAlreadyCollected &&
@@ -605,6 +606,62 @@ class DataStructure extends ComplexType {
         } while (currentStructure !== null)
 
         return effectiveFields.asEList
+    }
+
+    /**
+     * Get the effective operations of the structure considering possible direct and indirect
+     * inheritance relationships
+     */
+    op DataOperation[] getEffectiveOperations() {
+        val effectiveOperations = <DataOperation> newArrayList
+        val hiddenOperations = <String> newHashSet
+        var currentStructure = this
+        do {
+            val currentNamedOperations = currentStructure.operations.filter[it.name !== null]
+
+            for (operation : currentNamedOperations) {
+                if (operation.hidden)
+                    hiddenOperations.add(operation.name)
+
+                // Got the operation already collected on a lower inheritance level?
+                val existingEffectiveOperation = effectiveOperations
+                    .findFirst[operation.name == it.name]
+                val operationAlreadyCollected = existingEffectiveOperation !== null
+
+                // Is the operation hidden, i.e., is the operation itself hidden or was an operation
+                // of the same name hidden on a lower inheritance level?
+                val hiddenOperation = operation.hidden || hiddenOperations.contains(operation.name)
+
+                // Was the operation inherited from a super structure?
+                val inheritedOperation = currentStructure !== this
+
+                // Is this a visible, inherited operation?
+                val visibleInheritedOperation = !hiddenOperation && inheritedOperation
+
+                // Add the operation to the list of effective operation if one of the following
+                // applies:
+                //    (1) The operation was not collected before, and is either not inherited or if
+                //        inherited it is visible.
+                //    (2) In case the operation got collected before and there exists a hidden
+                //        version of it somewhere in the lower inheritance levels, we remove the
+                //        existing version, which must've also been hidden (otherwise it could not
+                //        be referenced on a lower inheritance level), and add the currently
+                //        iterated operation. This eventually results in the list of effective
+                //        operations to contain only the visible versions of operations that get
+                //        hidden somewhere on a lower inheritance hierarchy level.
+                if (!operationAlreadyCollected &&
+                    (!inheritedOperation || visibleInheritedOperation))
+                    effectiveOperations.add(operation)
+                else if (operationAlreadyCollected && hiddenOperation) {
+                    effectiveOperations.remove(existingEffectiveOperation)
+                    effectiveOperations.add(operation)
+                }
+            }
+
+            currentStructure = currentStructure.super
+        } while (currentStructure !== null)
+
+        return effectiveOperations.asEList
     }
 
     /**
@@ -634,6 +691,179 @@ class DataStructure extends ComplexType {
             return 1
 
         return super.compareFieldCounts(effectiveFields, structureToCompare.effectiveFields)
+    }
+}
+
+/**
+ * Represents an operation within a data structure
+ */
+class DataOperation {
+    /**
+     * Implicit Constraints:
+     *     (C1) The operation must have a return type specification (which can be a complex return
+     *          type, a primitive return type, or an _explicit_ specification that the operation has
+     *          no return type) if either no operation with an equal name exists in a super data
+     *          structure, or if an eponymous super operation exists that is hidden.
+     *          Ensured by: DSL validator.
+     *     (C2) If an eponymous super operation exists that is not hidden, than this operation must
+     *          not have a return type specification, i.e., a visible super operation cannot be
+     *          redefined in a sub-structure.
+     *          Ensured by: DSL validator.
+     *     (C3) Name must be unique within a data structure.
+     *          Ensured by: DSL validator.
+     */
+
+    String name
+    boolean hidden
+    boolean hasNoReturnType
+
+    contains PossiblyImportedComplexType[0..1] complexReturnType opposite operation
+    contains PrimitiveType[0..1] primitiveReturnType
+    contains DataOperationParameter[] parameters opposite operation
+
+    container DataStructure dataStructure opposite operations
+
+    /**
+     * Flag to indicate that this operation lacks a return type specification, i.e., it was not
+     * explicitly specified as having no return type and also does not return a primitive or complex
+     * type
+     */
+    derived boolean lacksReturnTypeSpecification get {
+        !hasNoReturnType && primitiveOrComplexReturnType === null
+    }
+
+    /**
+     * Flag to indicate if this operation is inherited from a super structure
+     */
+    derived boolean inherited get {
+        return findEponymousSuperOperation() !== null
+    }
+
+    /**
+     * Get parts of the operation for creating a qualified name
+     */
+    op String[] getQualifiedNameParts() {
+        if (name === null || name.empty)
+            return newArrayList.asEList
+
+        val nameParts = dataStructure.qualifiedNameParts
+        nameParts.add(name)
+        nameParts.asEList
+    }
+
+    /**
+     * Build qualified name from qualified name parts
+     */
+    op String buildQualifiedName(String separator) {
+        if (separator === null)
+            return null
+
+        var String qualifiedName = ""
+        for (part : qualifiedNameParts)
+            qualifiedName += separator + part
+        // Remove leading separator
+        if (!qualifiedName.empty)
+            qualifiedName = qualifiedName.substring(separator.length)
+        return qualifiedName
+    }
+
+    /**
+     * Find an eponymous operation in the inheritance hierarchy of this operations's data structure.
+     * Returns null, if this operation is not part of a data structure, as only data structures may
+     * extend other data structures.
+     */
+    op DataOperation findEponymousSuperOperation() {
+        if (dataStructure === null)
+            return null
+
+        if (name === null || name.empty)
+            return null
+
+        var superStructure = dataStructure.super
+        while (superStructure !== null) {
+            val overridenOperation = superStructure.operations.findFirst[
+                this.name == it.name
+            ]
+
+            if (overridenOperation !== null)
+                return overridenOperation
+            else
+                superStructure = superStructure.^super
+        }
+
+        return null
+    }
+
+    /**
+     * Get the return type of the operation, if any. Will return null if the operation has no
+     * primitive or complex type.
+     */
+    op Type getPrimitiveOrComplexReturnType() {
+        return if (primitiveReturnType !== null)
+            primitiveReturnType
+        else if (complexReturnType !== null && complexReturnType.complexType !== null)
+            complexReturnType.complexType
+        else
+            null
+    }
+}
+
+class DataOperationParameter {
+    /**
+     * Implicit Constraints:
+     *     (C1) Must have exactly one type, either imported or primitive.
+     *          Ensured by: DSL grammar.
+     *     (C2) Imported types may only come from a data model.
+     *          Ensured by: DSL scope provider.
+     *     (C3) Name must be unique.
+     *          Ensured by: DSL validator.
+     */
+
+    String name
+
+    contains PossiblyImportedComplexType[0..1] complexType opposite parameter
+    contains PrimitiveType[0..1] primitiveType
+
+    container DataOperation operation opposite parameters
+
+    /**
+     * Get parts of the parameter for creating a qualified name
+     */
+    op String[] getQualifiedNameParts() {
+        if (name === null || name.empty)
+            return newArrayList.asEList
+
+        val nameParts = operation.qualifiedNameParts
+        nameParts.addAll(name)
+        nameParts.asEList
+    }
+
+    /**
+     * Build qualified name from qualified name parts
+     */
+    op String buildQualifiedName(String separator) {
+        if (separator === null)
+            return null
+
+        var String qualifiedName = ""
+        for (part : qualifiedNameParts)
+            qualifiedName += separator + part
+        // Remove leading separator
+        if (!qualifiedName.empty)
+            qualifiedName = qualifiedName.substring(separator.length)
+        return qualifiedName
+    }
+
+    /**
+     * Get effective type of parameter, i.e., the primitive or imported type (null otherwise)
+     */
+    op Type getEffectiveType() {
+        if (primitiveType !== null)
+            return primitiveType
+        else if (complexType !== null && complexType.complexType !== null)
+            return complexType.complexType
+        else
+            return null
     }
 }
 
@@ -786,8 +1016,8 @@ class DataField {
 
         var superStructure = dataStructure.super
         while (superStructure !== null) {
-            // Fields in super structures with the same name as this field
-            // are considered "overridden"
+            // Fields in super structures with the same name as this field are considered
+            // "overridden"
             val overridenField = superStructure.dataFields.findFirst[
                 this.name == it.name
             ]

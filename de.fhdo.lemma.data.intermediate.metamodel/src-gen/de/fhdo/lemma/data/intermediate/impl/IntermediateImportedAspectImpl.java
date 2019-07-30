@@ -6,6 +6,8 @@ import de.fhdo.lemma.data.intermediate.IntermediateAspectProperty;
 import de.fhdo.lemma.data.intermediate.IntermediateAspectPropertyValue;
 import de.fhdo.lemma.data.intermediate.IntermediateComplexType;
 import de.fhdo.lemma.data.intermediate.IntermediateDataField;
+import de.fhdo.lemma.data.intermediate.IntermediateDataOperation;
+import de.fhdo.lemma.data.intermediate.IntermediateDataOperationParameter;
 import de.fhdo.lemma.data.intermediate.IntermediateImport;
 import de.fhdo.lemma.data.intermediate.IntermediateImportedAspect;
 import de.fhdo.lemma.data.intermediate.IntermediatePackage;
@@ -40,6 +42,8 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.fhdo.lemma.data.intermediate.impl.IntermediateImportedAspectImpl#getProperties <em>Properties</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.impl.IntermediateImportedAspectImpl#getPropertyValues <em>Property Values</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.impl.IntermediateImportedAspectImpl#getComplexType <em>Complex Type</em>}</li>
+ *   <li>{@link de.fhdo.lemma.data.intermediate.impl.IntermediateImportedAspectImpl#getOperation <em>Operation</em>}</li>
+ *   <li>{@link de.fhdo.lemma.data.intermediate.impl.IntermediateImportedAspectImpl#getParameter <em>Parameter</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.impl.IntermediateImportedAspectImpl#getDataField <em>Data Field</em>}</li>
  * </ul>
  *
@@ -263,6 +267,112 @@ public class IntermediateImportedAspectImpl extends MinimalEObjectImpl.Container
      * @generated
      */
     @Override
+    public IntermediateDataOperation getOperation() {
+        if (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__OPERATION) return null;
+        return (IntermediateDataOperation)eContainer();
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public IntermediateDataOperation basicGetOperation() {
+        if (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__OPERATION) return null;
+        return (IntermediateDataOperation)eInternalContainer();
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public NotificationChain basicSetOperation(IntermediateDataOperation newOperation, NotificationChain msgs) {
+        msgs = eBasicSetContainer((InternalEObject)newOperation, IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__OPERATION, msgs);
+        return msgs;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void setOperation(IntermediateDataOperation newOperation) {
+        if (newOperation != eInternalContainer() || (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__OPERATION && newOperation != null)) {
+            if (EcoreUtil.isAncestor(this, newOperation))
+                throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
+            NotificationChain msgs = null;
+            if (eInternalContainer() != null)
+                msgs = eBasicRemoveFromContainer(msgs);
+            if (newOperation != null)
+                msgs = ((InternalEObject)newOperation).eInverseAdd(this, IntermediatePackage.INTERMEDIATE_DATA_OPERATION__ASPECTS, IntermediateDataOperation.class, msgs);
+            msgs = basicSetOperation(newOperation, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__OPERATION, newOperation, newOperation));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public IntermediateDataOperationParameter getParameter() {
+        if (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__PARAMETER) return null;
+        return (IntermediateDataOperationParameter)eContainer();
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public IntermediateDataOperationParameter basicGetParameter() {
+        if (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__PARAMETER) return null;
+        return (IntermediateDataOperationParameter)eInternalContainer();
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public NotificationChain basicSetParameter(IntermediateDataOperationParameter newParameter, NotificationChain msgs) {
+        msgs = eBasicSetContainer((InternalEObject)newParameter, IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__PARAMETER, msgs);
+        return msgs;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void setParameter(IntermediateDataOperationParameter newParameter) {
+        if (newParameter != eInternalContainer() || (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__PARAMETER && newParameter != null)) {
+            if (EcoreUtil.isAncestor(this, newParameter))
+                throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
+            NotificationChain msgs = null;
+            if (eInternalContainer() != null)
+                msgs = eBasicRemoveFromContainer(msgs);
+            if (newParameter != null)
+                msgs = ((InternalEObject)newParameter).eInverseAdd(this, IntermediatePackage.INTERMEDIATE_DATA_OPERATION_PARAMETER__ASPECTS, IntermediateDataOperationParameter.class, msgs);
+            msgs = basicSetParameter(newParameter, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__PARAMETER, newParameter, newParameter));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public IntermediateDataField getDataField() {
         if (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__DATA_FIELD) return null;
         return (IntermediateDataField)eContainer();
@@ -327,6 +437,14 @@ public class IntermediateImportedAspectImpl extends MinimalEObjectImpl.Container
                 if (eInternalContainer() != null)
                     msgs = eBasicRemoveFromContainer(msgs);
                 return basicSetComplexType((IntermediateComplexType)otherEnd, msgs);
+            case IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__OPERATION:
+                if (eInternalContainer() != null)
+                    msgs = eBasicRemoveFromContainer(msgs);
+                return basicSetOperation((IntermediateDataOperation)otherEnd, msgs);
+            case IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__PARAMETER:
+                if (eInternalContainer() != null)
+                    msgs = eBasicRemoveFromContainer(msgs);
+                return basicSetParameter((IntermediateDataOperationParameter)otherEnd, msgs);
             case IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__DATA_FIELD:
                 if (eInternalContainer() != null)
                     msgs = eBasicRemoveFromContainer(msgs);
@@ -349,6 +467,10 @@ public class IntermediateImportedAspectImpl extends MinimalEObjectImpl.Container
                 return ((InternalEList<?>)getPropertyValues()).basicRemove(otherEnd, msgs);
             case IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__COMPLEX_TYPE:
                 return basicSetComplexType(null, msgs);
+            case IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__OPERATION:
+                return basicSetOperation(null, msgs);
+            case IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__PARAMETER:
+                return basicSetParameter(null, msgs);
             case IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__DATA_FIELD:
                 return basicSetDataField(null, msgs);
         }
@@ -365,6 +487,10 @@ public class IntermediateImportedAspectImpl extends MinimalEObjectImpl.Container
         switch (eContainerFeatureID()) {
             case IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__COMPLEX_TYPE:
                 return eInternalContainer().eInverseRemove(this, IntermediatePackage.INTERMEDIATE_COMPLEX_TYPE__ASPECTS, IntermediateComplexType.class, msgs);
+            case IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__OPERATION:
+                return eInternalContainer().eInverseRemove(this, IntermediatePackage.INTERMEDIATE_DATA_OPERATION__ASPECTS, IntermediateDataOperation.class, msgs);
+            case IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__PARAMETER:
+                return eInternalContainer().eInverseRemove(this, IntermediatePackage.INTERMEDIATE_DATA_OPERATION_PARAMETER__ASPECTS, IntermediateDataOperationParameter.class, msgs);
             case IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__DATA_FIELD:
                 return eInternalContainer().eInverseRemove(this, IntermediatePackage.INTERMEDIATE_DATA_FIELD__ASPECTS, IntermediateDataField.class, msgs);
         }
@@ -391,6 +517,12 @@ public class IntermediateImportedAspectImpl extends MinimalEObjectImpl.Container
             case IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__COMPLEX_TYPE:
                 if (resolve) return getComplexType();
                 return basicGetComplexType();
+            case IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__OPERATION:
+                if (resolve) return getOperation();
+                return basicGetOperation();
+            case IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__PARAMETER:
+                if (resolve) return getParameter();
+                return basicGetParameter();
             case IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__DATA_FIELD:
                 if (resolve) return getDataField();
                 return basicGetDataField();
@@ -424,6 +556,12 @@ public class IntermediateImportedAspectImpl extends MinimalEObjectImpl.Container
             case IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__COMPLEX_TYPE:
                 setComplexType((IntermediateComplexType)newValue);
                 return;
+            case IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__OPERATION:
+                setOperation((IntermediateDataOperation)newValue);
+                return;
+            case IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__PARAMETER:
+                setParameter((IntermediateDataOperationParameter)newValue);
+                return;
             case IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__DATA_FIELD:
                 setDataField((IntermediateDataField)newValue);
                 return;
@@ -454,6 +592,12 @@ public class IntermediateImportedAspectImpl extends MinimalEObjectImpl.Container
             case IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__COMPLEX_TYPE:
                 setComplexType((IntermediateComplexType)null);
                 return;
+            case IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__OPERATION:
+                setOperation((IntermediateDataOperation)null);
+                return;
+            case IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__PARAMETER:
+                setParameter((IntermediateDataOperationParameter)null);
+                return;
             case IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__DATA_FIELD:
                 setDataField((IntermediateDataField)null);
                 return;
@@ -479,6 +623,10 @@ public class IntermediateImportedAspectImpl extends MinimalEObjectImpl.Container
                 return propertyValues != null && !propertyValues.isEmpty();
             case IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__COMPLEX_TYPE:
                 return basicGetComplexType() != null;
+            case IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__OPERATION:
+                return basicGetOperation() != null;
+            case IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__PARAMETER:
+                return basicGetParameter() != null;
             case IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__DATA_FIELD:
                 return basicGetDataField() != null;
         }

@@ -14,6 +14,8 @@ import de.fhdo.lemma.technology.TechnologySpecificPropertyValueAssignment
 import de.fhdo.lemma.data.ComplexType
 import de.fhdo.lemma.data.DataField
 import de.fhdo.lemma.data.EnumerationField
+import de.fhdo.lemma.data.DataOperation
+import de.fhdo.lemma.data.DataOperationParameter
 import java.util.List
 import java.util.Map
 import org.eclipse.xtext.xbase.lib.Pair
@@ -108,6 +110,7 @@ class MappedComplexType {
     contains TechnologyReference[] technologyReferences opposite mappedComplexType
     contains ImportedType ^type
     contains MappedField[] mappedFields opposite mappedComplexType
+    contains MappedDataOperation[] mappedOperations opposite mappedComplexType
     contains ImportedServiceAspect[] aspects opposite mappedComplexType
 
     container ServiceModel serviceModel opposite mappedComplexTypes
@@ -198,13 +201,38 @@ class MappedComplexType {
 }
 
 /**
+ * Concept to express technology-specific information, which was assigned to a data operation
+ * leveraging the Mapping DSL
+ */
+class MappedDataOperation {
+    refers DataOperation dataOperation
+    contains ImportedType[0..1] mappedReturnType
+    contains ImportedServiceAspect[] aspects opposite mappedDataOperation
+    contains MappedDataOperationParameter[] mappedParameters opposite mappedOperation
+
+    container MappedComplexType mappedComplexType opposite mappedOperations
+}
+
+/**
+ * Concept to express technology-specific information, which was assigned to a data operation
+ * parameter leveraging the Mapping DSL
+ */
+class MappedDataOperationParameter {
+    refers DataOperationParameter parameter
+    contains ImportedType[0..1] mappedType
+    contains ImportedServiceAspect[] aspects opposite mappedDataOperationParameter
+
+    container MappedDataOperation mappedOperation opposite mappedParameters
+}
+
+/**
  * Concept to express technology-specific information, which was assigned to a data or enumeration
  * field leveraging the Mapping DSL
  */
 class MappedField {
     refers DataField dataField
     refers EnumerationField enumerationField
-    contains ImportedType mappedType
+    contains ImportedType[0..1] mappedType
     contains ImportedServiceAspect[] aspects opposite mappedField
 
     container Parameter parameter opposite mappedFields
@@ -1487,6 +1515,8 @@ class ImportedServiceAspect {
     container Parameter parameter opposite aspects
     container MappedComplexType mappedComplexType opposite aspects
     container MappedField mappedField opposite aspects
+    container MappedDataOperation mappedDataOperation opposite aspects
+    container MappedDataOperationParameter mappedDataOperationParameter opposite aspects
 }
 
 type TupleList wraps List<Map<String, Object>>

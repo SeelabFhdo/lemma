@@ -8,6 +8,8 @@ import de.fhdo.lemma.data.ComplexTypeImport;
 import de.fhdo.lemma.data.Context;
 import de.fhdo.lemma.data.DataField;
 import de.fhdo.lemma.data.DataModel;
+import de.fhdo.lemma.data.DataOperation;
+import de.fhdo.lemma.data.DataOperationParameter;
 import de.fhdo.lemma.data.DataPackage;
 import de.fhdo.lemma.data.DataStructure;
 import de.fhdo.lemma.data.Enumeration;
@@ -63,6 +65,12 @@ public class DataDslSemanticSequencer extends AbstractDelegatingSemanticSequence
 				return; 
 			case DataPackage.DATA_MODEL:
 				sequence_DataModel(context, (DataModel) semanticObject); 
+				return; 
+			case DataPackage.DATA_OPERATION:
+				sequence_DataOperation(context, (DataOperation) semanticObject); 
+				return; 
+			case DataPackage.DATA_OPERATION_PARAMETER:
+				sequence_DataOperationParameter(context, (DataOperationParameter) semanticObject); 
 				return; 
 			case DataPackage.DATA_STRUCTURE:
 				sequence_DataStructure(context, (DataStructure) semanticObject); 
@@ -184,11 +192,49 @@ public class DataDslSemanticSequencer extends AbstractDelegatingSemanticSequence
 	
 	/**
 	 * Contexts:
+	 *     DataOperationParameter returns DataOperationParameter
+	 *
+	 * Constraint:
+	 *     ((primitiveType=PrimitiveType | complexType=PossiblyImportedComplexType) name=ID)
+	 */
+	protected void sequence_DataOperationParameter(ISerializationContext context, DataOperationParameter semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     DataOperation returns DataOperation
+	 *
+	 * Constraint:
+	 *     (
+	 *         hidden?='hide'? 
+	 *         (hasNoReturnType?='procedure' | primitiveReturnType=PrimitiveType | complexReturnType=PossiblyImportedComplexType)? 
+	 *         name=ID 
+	 *         parameters+=DataOperationParameter? 
+	 *         parameters+=DataOperationParameter*
+	 *     )
+	 */
+	protected void sequence_DataOperation(ISerializationContext context, DataOperation semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     ComplexType returns DataStructure
 	 *     DataStructure returns DataStructure
 	 *
 	 * Constraint:
-	 *     (name=ID super=[DataStructure|QualifiedName]? (dataFields+=DataField dataFields+=DataField*)?)
+	 *     (
+	 *         name=ID 
+	 *         super=[DataStructure|QualifiedName]? 
+	 *         (
+	 *             (dataFields+=DataField dataFields+=DataField*) | 
+	 *             (operations+=DataOperation operations+=DataOperation*) | 
+	 *             (dataFields+=DataField dataFields+=DataField* operations+=DataOperation operations+=DataOperation*)
+	 *         )?
+	 *     )
 	 */
 	protected void sequence_DataStructure(ISerializationContext context, DataStructure semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

@@ -249,23 +249,50 @@ public class DataDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final CrossReference cSuperDataStructureCrossReference_2_1_0 = (CrossReference)cSuperAssignment_2_1.eContents().get(0);
 		private final RuleCall cSuperDataStructureQualifiedNameParserRuleCall_2_1_0_1 = (RuleCall)cSuperDataStructureCrossReference_2_1_0.eContents().get(1);
 		private final Keyword cLeftCurlyBracketKeyword_3 = (Keyword)cGroup.eContents().get(3);
-		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
-		private final Assignment cDataFieldsAssignment_4_0 = (Assignment)cGroup_4.eContents().get(0);
-		private final RuleCall cDataFieldsDataFieldParserRuleCall_4_0_0 = (RuleCall)cDataFieldsAssignment_4_0.eContents().get(0);
-		private final Group cGroup_4_1 = (Group)cGroup_4.eContents().get(1);
-		private final Keyword cCommaKeyword_4_1_0 = (Keyword)cGroup_4_1.eContents().get(0);
-		private final Assignment cDataFieldsAssignment_4_1_1 = (Assignment)cGroup_4_1.eContents().get(1);
-		private final RuleCall cDataFieldsDataFieldParserRuleCall_4_1_1_0 = (RuleCall)cDataFieldsAssignment_4_1_1.eContents().get(0);
+		private final Alternatives cAlternatives_4 = (Alternatives)cGroup.eContents().get(4);
+		private final Group cGroup_4_0 = (Group)cAlternatives_4.eContents().get(0);
+		private final Assignment cDataFieldsAssignment_4_0_0 = (Assignment)cGroup_4_0.eContents().get(0);
+		private final RuleCall cDataFieldsDataFieldParserRuleCall_4_0_0_0 = (RuleCall)cDataFieldsAssignment_4_0_0.eContents().get(0);
+		private final Group cGroup_4_0_1 = (Group)cGroup_4_0.eContents().get(1);
+		private final Keyword cCommaKeyword_4_0_1_0 = (Keyword)cGroup_4_0_1.eContents().get(0);
+		private final Assignment cDataFieldsAssignment_4_0_1_1 = (Assignment)cGroup_4_0_1.eContents().get(1);
+		private final RuleCall cDataFieldsDataFieldParserRuleCall_4_0_1_1_0 = (RuleCall)cDataFieldsAssignment_4_0_1_1.eContents().get(0);
+		private final Group cGroup_4_1 = (Group)cAlternatives_4.eContents().get(1);
+		private final Assignment cOperationsAssignment_4_1_0 = (Assignment)cGroup_4_1.eContents().get(0);
+		private final RuleCall cOperationsDataOperationParserRuleCall_4_1_0_0 = (RuleCall)cOperationsAssignment_4_1_0.eContents().get(0);
+		private final Group cGroup_4_1_1 = (Group)cGroup_4_1.eContents().get(1);
+		private final Keyword cCommaKeyword_4_1_1_0 = (Keyword)cGroup_4_1_1.eContents().get(0);
+		private final Assignment cOperationsAssignment_4_1_1_1 = (Assignment)cGroup_4_1_1.eContents().get(1);
+		private final RuleCall cOperationsDataOperationParserRuleCall_4_1_1_1_0 = (RuleCall)cOperationsAssignment_4_1_1_1.eContents().get(0);
+		private final Group cGroup_4_2 = (Group)cAlternatives_4.eContents().get(2);
+		private final Assignment cDataFieldsAssignment_4_2_0 = (Assignment)cGroup_4_2.eContents().get(0);
+		private final RuleCall cDataFieldsDataFieldParserRuleCall_4_2_0_0 = (RuleCall)cDataFieldsAssignment_4_2_0.eContents().get(0);
+		private final Group cGroup_4_2_1 = (Group)cGroup_4_2.eContents().get(1);
+		private final Keyword cCommaKeyword_4_2_1_0 = (Keyword)cGroup_4_2_1.eContents().get(0);
+		private final Assignment cDataFieldsAssignment_4_2_1_1 = (Assignment)cGroup_4_2_1.eContents().get(1);
+		private final RuleCall cDataFieldsDataFieldParserRuleCall_4_2_1_1_0 = (RuleCall)cDataFieldsAssignment_4_2_1_1.eContents().get(0);
+		private final Keyword cCommaKeyword_4_2_2 = (Keyword)cGroup_4_2.eContents().get(2);
+		private final Assignment cOperationsAssignment_4_2_3 = (Assignment)cGroup_4_2.eContents().get(3);
+		private final RuleCall cOperationsDataOperationParserRuleCall_4_2_3_0 = (RuleCall)cOperationsAssignment_4_2_3.eContents().get(0);
+		private final Group cGroup_4_2_4 = (Group)cGroup_4_2.eContents().get(4);
+		private final Keyword cCommaKeyword_4_2_4_0 = (Keyword)cGroup_4_2_4.eContents().get(0);
+		private final Assignment cOperationsAssignment_4_2_4_1 = (Assignment)cGroup_4_2_4.eContents().get(1);
+		private final RuleCall cOperationsDataOperationParserRuleCall_4_2_4_1_0 = (RuleCall)cOperationsAssignment_4_2_4_1.eContents().get(0);
 		private final Keyword cRightCurlyBracketKeyword_5 = (Keyword)cGroup.eContents().get(5);
 		
 		//DataStructure:
 		//	'structure' name=ID ('extends' super=[DataStructure|QualifiedName])? '{' (dataFields+=DataField (','
-		//	dataFields+=DataField)*)?
+		//	dataFields+=DataField)*
+		//	| operations+=DataOperation (',' operations+=DataOperation)*
+		//	| dataFields+=DataField (',' dataFields+=DataField)*
+		//	','
+		//	operations+=DataOperation (',' operations+=DataOperation)*)?
 		//	'}';
 		@Override public ParserRule getRule() { return rule; }
 		
 		//'structure' name=ID ('extends' super=[DataStructure|QualifiedName])? '{' (dataFields+=DataField (','
-		//dataFields+=DataField)*)? '}'
+		//dataFields+=DataField)* | operations+=DataOperation (',' operations+=DataOperation)* | dataFields+=DataField (','
+		//dataFields+=DataField)* ',' operations+=DataOperation (',' operations+=DataOperation)*)? '}'
 		public Group getGroup() { return cGroup; }
 		
 		//'structure'
@@ -295,26 +322,93 @@ public class DataDslGrammarAccess extends AbstractGrammarElementFinder {
 		//'{'
 		public Keyword getLeftCurlyBracketKeyword_3() { return cLeftCurlyBracketKeyword_3; }
 		
-		//(dataFields+=DataField (',' dataFields+=DataField)*)?
-		public Group getGroup_4() { return cGroup_4; }
+		//(dataFields+=DataField (',' dataFields+=DataField)* | operations+=DataOperation (',' operations+=DataOperation)* |
+		//dataFields+=DataField (',' dataFields+=DataField)* ',' operations+=DataOperation (',' operations+=DataOperation)*)?
+		public Alternatives getAlternatives_4() { return cAlternatives_4; }
+		
+		//dataFields+=DataField (',' dataFields+=DataField)*
+		public Group getGroup_4_0() { return cGroup_4_0; }
 		
 		//dataFields+=DataField
-		public Assignment getDataFieldsAssignment_4_0() { return cDataFieldsAssignment_4_0; }
+		public Assignment getDataFieldsAssignment_4_0_0() { return cDataFieldsAssignment_4_0_0; }
 		
 		//DataField
-		public RuleCall getDataFieldsDataFieldParserRuleCall_4_0_0() { return cDataFieldsDataFieldParserRuleCall_4_0_0; }
+		public RuleCall getDataFieldsDataFieldParserRuleCall_4_0_0_0() { return cDataFieldsDataFieldParserRuleCall_4_0_0_0; }
 		
 		//(',' dataFields+=DataField)*
-		public Group getGroup_4_1() { return cGroup_4_1; }
+		public Group getGroup_4_0_1() { return cGroup_4_0_1; }
 		
 		//','
-		public Keyword getCommaKeyword_4_1_0() { return cCommaKeyword_4_1_0; }
+		public Keyword getCommaKeyword_4_0_1_0() { return cCommaKeyword_4_0_1_0; }
 		
 		//dataFields+=DataField
-		public Assignment getDataFieldsAssignment_4_1_1() { return cDataFieldsAssignment_4_1_1; }
+		public Assignment getDataFieldsAssignment_4_0_1_1() { return cDataFieldsAssignment_4_0_1_1; }
 		
 		//DataField
-		public RuleCall getDataFieldsDataFieldParserRuleCall_4_1_1_0() { return cDataFieldsDataFieldParserRuleCall_4_1_1_0; }
+		public RuleCall getDataFieldsDataFieldParserRuleCall_4_0_1_1_0() { return cDataFieldsDataFieldParserRuleCall_4_0_1_1_0; }
+		
+		//operations+=DataOperation (',' operations+=DataOperation)*
+		public Group getGroup_4_1() { return cGroup_4_1; }
+		
+		//operations+=DataOperation
+		public Assignment getOperationsAssignment_4_1_0() { return cOperationsAssignment_4_1_0; }
+		
+		//DataOperation
+		public RuleCall getOperationsDataOperationParserRuleCall_4_1_0_0() { return cOperationsDataOperationParserRuleCall_4_1_0_0; }
+		
+		//(',' operations+=DataOperation)*
+		public Group getGroup_4_1_1() { return cGroup_4_1_1; }
+		
+		//','
+		public Keyword getCommaKeyword_4_1_1_0() { return cCommaKeyword_4_1_1_0; }
+		
+		//operations+=DataOperation
+		public Assignment getOperationsAssignment_4_1_1_1() { return cOperationsAssignment_4_1_1_1; }
+		
+		//DataOperation
+		public RuleCall getOperationsDataOperationParserRuleCall_4_1_1_1_0() { return cOperationsDataOperationParserRuleCall_4_1_1_1_0; }
+		
+		//dataFields+=DataField (',' dataFields+=DataField)* ',' operations+=DataOperation (',' operations+=DataOperation)*
+		public Group getGroup_4_2() { return cGroup_4_2; }
+		
+		//dataFields+=DataField
+		public Assignment getDataFieldsAssignment_4_2_0() { return cDataFieldsAssignment_4_2_0; }
+		
+		//DataField
+		public RuleCall getDataFieldsDataFieldParserRuleCall_4_2_0_0() { return cDataFieldsDataFieldParserRuleCall_4_2_0_0; }
+		
+		//(',' dataFields+=DataField)*
+		public Group getGroup_4_2_1() { return cGroup_4_2_1; }
+		
+		//','
+		public Keyword getCommaKeyword_4_2_1_0() { return cCommaKeyword_4_2_1_0; }
+		
+		//dataFields+=DataField
+		public Assignment getDataFieldsAssignment_4_2_1_1() { return cDataFieldsAssignment_4_2_1_1; }
+		
+		//DataField
+		public RuleCall getDataFieldsDataFieldParserRuleCall_4_2_1_1_0() { return cDataFieldsDataFieldParserRuleCall_4_2_1_1_0; }
+		
+		//','
+		public Keyword getCommaKeyword_4_2_2() { return cCommaKeyword_4_2_2; }
+		
+		//operations+=DataOperation
+		public Assignment getOperationsAssignment_4_2_3() { return cOperationsAssignment_4_2_3; }
+		
+		//DataOperation
+		public RuleCall getOperationsDataOperationParserRuleCall_4_2_3_0() { return cOperationsDataOperationParserRuleCall_4_2_3_0; }
+		
+		//(',' operations+=DataOperation)*
+		public Group getGroup_4_2_4() { return cGroup_4_2_4; }
+		
+		//','
+		public Keyword getCommaKeyword_4_2_4_0() { return cCommaKeyword_4_2_4_0; }
+		
+		//operations+=DataOperation
+		public Assignment getOperationsAssignment_4_2_4_1() { return cOperationsAssignment_4_2_4_1; }
+		
+		//DataOperation
+		public RuleCall getOperationsDataOperationParserRuleCall_4_2_4_1_0() { return cOperationsDataOperationParserRuleCall_4_2_4_1_0; }
 		
 		//'}'
 		public Keyword getRightCurlyBracketKeyword_5() { return cRightCurlyBracketKeyword_5; }
@@ -600,6 +694,153 @@ public class DataDslGrammarAccess extends AbstractGrammarElementFinder {
 		//')'
 		public Keyword getRightParenthesisKeyword_1_2() { return cRightParenthesisKeyword_1_2; }
 	}
+	public class DataOperationElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.fhdo.lemma.data.DataDsl.DataOperation");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cHiddenAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final Keyword cHiddenHideKeyword_0_0 = (Keyword)cHiddenAssignment_0.eContents().get(0);
+		private final Alternatives cAlternatives_1 = (Alternatives)cGroup.eContents().get(1);
+		private final Assignment cHasNoReturnTypeAssignment_1_0 = (Assignment)cAlternatives_1.eContents().get(0);
+		private final Keyword cHasNoReturnTypeProcedureKeyword_1_0_0 = (Keyword)cHasNoReturnTypeAssignment_1_0.eContents().get(0);
+		private final Group cGroup_1_1 = (Group)cAlternatives_1.eContents().get(1);
+		private final Keyword cFunctionKeyword_1_1_0 = (Keyword)cGroup_1_1.eContents().get(0);
+		private final Alternatives cAlternatives_1_1_1 = (Alternatives)cGroup_1_1.eContents().get(1);
+		private final Assignment cPrimitiveReturnTypeAssignment_1_1_1_0 = (Assignment)cAlternatives_1_1_1.eContents().get(0);
+		private final RuleCall cPrimitiveReturnTypePrimitiveTypeParserRuleCall_1_1_1_0_0 = (RuleCall)cPrimitiveReturnTypeAssignment_1_1_1_0.eContents().get(0);
+		private final Assignment cComplexReturnTypeAssignment_1_1_1_1 = (Assignment)cAlternatives_1_1_1.eContents().get(1);
+		private final RuleCall cComplexReturnTypePossiblyImportedComplexTypeParserRuleCall_1_1_1_1_0 = (RuleCall)cComplexReturnTypeAssignment_1_1_1_1.eContents().get(0);
+		private final Assignment cNameAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cNameIDTerminalRuleCall_2_0 = (RuleCall)cNameAssignment_2.eContents().get(0);
+		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
+		private final Keyword cLeftParenthesisKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
+		private final Assignment cParametersAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
+		private final RuleCall cParametersDataOperationParameterParserRuleCall_3_1_0 = (RuleCall)cParametersAssignment_3_1.eContents().get(0);
+		private final Group cGroup_3_2 = (Group)cGroup_3.eContents().get(2);
+		private final Keyword cCommaKeyword_3_2_0 = (Keyword)cGroup_3_2.eContents().get(0);
+		private final Assignment cParametersAssignment_3_2_1 = (Assignment)cGroup_3_2.eContents().get(1);
+		private final RuleCall cParametersDataOperationParameterParserRuleCall_3_2_1_0 = (RuleCall)cParametersAssignment_3_2_1.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_3_3 = (Keyword)cGroup_3.eContents().get(3);
+		
+		//DataOperation:
+		//	^hidden?='hide'? (hasNoReturnType?='procedure' |
+		//	'function' (primitiveReturnType=PrimitiveType | complexReturnType=PossiblyImportedComplexType)?) name=ID ('('
+		//	parameters+=DataOperationParameter? (',' parameters+=DataOperationParameter)* ')')?;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//^hidden?='hide'? (hasNoReturnType?='procedure' | 'function' (primitiveReturnType=PrimitiveType |
+		//complexReturnType=PossiblyImportedComplexType)?) name=ID ('(' parameters+=DataOperationParameter? (','
+		//parameters+=DataOperationParameter)* ')')?
+		public Group getGroup() { return cGroup; }
+		
+		//^hidden?='hide'?
+		public Assignment getHiddenAssignment_0() { return cHiddenAssignment_0; }
+		
+		//'hide'
+		public Keyword getHiddenHideKeyword_0_0() { return cHiddenHideKeyword_0_0; }
+		
+		//hasNoReturnType?='procedure' | 'function' (primitiveReturnType=PrimitiveType |
+		//complexReturnType=PossiblyImportedComplexType)?
+		public Alternatives getAlternatives_1() { return cAlternatives_1; }
+		
+		//hasNoReturnType?='procedure'
+		public Assignment getHasNoReturnTypeAssignment_1_0() { return cHasNoReturnTypeAssignment_1_0; }
+		
+		//'procedure'
+		public Keyword getHasNoReturnTypeProcedureKeyword_1_0_0() { return cHasNoReturnTypeProcedureKeyword_1_0_0; }
+		
+		//'function' (primitiveReturnType=PrimitiveType | complexReturnType=PossiblyImportedComplexType)?
+		public Group getGroup_1_1() { return cGroup_1_1; }
+		
+		//'function'
+		public Keyword getFunctionKeyword_1_1_0() { return cFunctionKeyword_1_1_0; }
+		
+		//(primitiveReturnType=PrimitiveType | complexReturnType=PossiblyImportedComplexType)?
+		public Alternatives getAlternatives_1_1_1() { return cAlternatives_1_1_1; }
+		
+		//primitiveReturnType=PrimitiveType
+		public Assignment getPrimitiveReturnTypeAssignment_1_1_1_0() { return cPrimitiveReturnTypeAssignment_1_1_1_0; }
+		
+		//PrimitiveType
+		public RuleCall getPrimitiveReturnTypePrimitiveTypeParserRuleCall_1_1_1_0_0() { return cPrimitiveReturnTypePrimitiveTypeParserRuleCall_1_1_1_0_0; }
+		
+		//complexReturnType=PossiblyImportedComplexType
+		public Assignment getComplexReturnTypeAssignment_1_1_1_1() { return cComplexReturnTypeAssignment_1_1_1_1; }
+		
+		//PossiblyImportedComplexType
+		public RuleCall getComplexReturnTypePossiblyImportedComplexTypeParserRuleCall_1_1_1_1_0() { return cComplexReturnTypePossiblyImportedComplexTypeParserRuleCall_1_1_1_1_0; }
+		
+		//name=ID
+		public Assignment getNameAssignment_2() { return cNameAssignment_2; }
+		
+		//ID
+		public RuleCall getNameIDTerminalRuleCall_2_0() { return cNameIDTerminalRuleCall_2_0; }
+		
+		//('(' parameters+=DataOperationParameter? (',' parameters+=DataOperationParameter)* ')')?
+		public Group getGroup_3() { return cGroup_3; }
+		
+		//'('
+		public Keyword getLeftParenthesisKeyword_3_0() { return cLeftParenthesisKeyword_3_0; }
+		
+		//parameters+=DataOperationParameter?
+		public Assignment getParametersAssignment_3_1() { return cParametersAssignment_3_1; }
+		
+		//DataOperationParameter
+		public RuleCall getParametersDataOperationParameterParserRuleCall_3_1_0() { return cParametersDataOperationParameterParserRuleCall_3_1_0; }
+		
+		//(',' parameters+=DataOperationParameter)*
+		public Group getGroup_3_2() { return cGroup_3_2; }
+		
+		//','
+		public Keyword getCommaKeyword_3_2_0() { return cCommaKeyword_3_2_0; }
+		
+		//parameters+=DataOperationParameter
+		public Assignment getParametersAssignment_3_2_1() { return cParametersAssignment_3_2_1; }
+		
+		//DataOperationParameter
+		public RuleCall getParametersDataOperationParameterParserRuleCall_3_2_1_0() { return cParametersDataOperationParameterParserRuleCall_3_2_1_0; }
+		
+		//')'
+		public Keyword getRightParenthesisKeyword_3_3() { return cRightParenthesisKeyword_3_3; }
+	}
+	public class DataOperationParameterElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.fhdo.lemma.data.DataDsl.DataOperationParameter");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Alternatives cAlternatives_0 = (Alternatives)cGroup.eContents().get(0);
+		private final Assignment cPrimitiveTypeAssignment_0_0 = (Assignment)cAlternatives_0.eContents().get(0);
+		private final RuleCall cPrimitiveTypePrimitiveTypeParserRuleCall_0_0_0 = (RuleCall)cPrimitiveTypeAssignment_0_0.eContents().get(0);
+		private final Assignment cComplexTypeAssignment_0_1 = (Assignment)cAlternatives_0.eContents().get(1);
+		private final RuleCall cComplexTypePossiblyImportedComplexTypeParserRuleCall_0_1_0 = (RuleCall)cComplexTypeAssignment_0_1.eContents().get(0);
+		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cNameIDTerminalRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
+		
+		//DataOperationParameter:
+		//	(primitiveType=PrimitiveType | complexType=PossiblyImportedComplexType) name=ID;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//(primitiveType=PrimitiveType | complexType=PossiblyImportedComplexType) name=ID
+		public Group getGroup() { return cGroup; }
+		
+		//primitiveType=PrimitiveType | complexType=PossiblyImportedComplexType
+		public Alternatives getAlternatives_0() { return cAlternatives_0; }
+		
+		//primitiveType=PrimitiveType
+		public Assignment getPrimitiveTypeAssignment_0_0() { return cPrimitiveTypeAssignment_0_0; }
+		
+		//PrimitiveType
+		public RuleCall getPrimitiveTypePrimitiveTypeParserRuleCall_0_0_0() { return cPrimitiveTypePrimitiveTypeParserRuleCall_0_0_0; }
+		
+		//complexType=PossiblyImportedComplexType
+		public Assignment getComplexTypeAssignment_0_1() { return cComplexTypeAssignment_0_1; }
+		
+		//PossiblyImportedComplexType
+		public RuleCall getComplexTypePossiblyImportedComplexTypeParserRuleCall_0_1_0() { return cComplexTypePossiblyImportedComplexTypeParserRuleCall_0_1_0; }
+		
+		//name=ID
+		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
+		
+		//ID
+		public RuleCall getNameIDTerminalRuleCall_1_0() { return cNameIDTerminalRuleCall_1_0; }
+	}
 	public class PrimitiveValueElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.fhdo.lemma.data.DataDsl.PrimitiveValue");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
@@ -868,6 +1109,8 @@ public class DataDslGrammarAccess extends AbstractGrammarElementFinder {
 	private final DataFieldElements pDataField;
 	private final EnumerationElements pEnumeration;
 	private final EnumerationFieldElements pEnumerationField;
+	private final DataOperationElements pDataOperation;
+	private final DataOperationParameterElements pDataOperationParameter;
 	private final PrimitiveValueElements pPrimitiveValue;
 	private final PossiblyImportedComplexTypeElements pPossiblyImportedComplexType;
 	private final PrimitiveTypeElements pPrimitiveType;
@@ -895,6 +1138,8 @@ public class DataDslGrammarAccess extends AbstractGrammarElementFinder {
 		this.pDataField = new DataFieldElements();
 		this.pEnumeration = new EnumerationElements();
 		this.pEnumerationField = new EnumerationFieldElements();
+		this.pDataOperation = new DataOperationElements();
+		this.pDataOperationParameter = new DataOperationParameterElements();
 		this.pPrimitiveValue = new PrimitiveValueElements();
 		this.pPossiblyImportedComplexType = new PossiblyImportedComplexTypeElements();
 		this.pPrimitiveType = new PrimitiveTypeElements();
@@ -989,7 +1234,11 @@ public class DataDslGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//DataStructure:
 	//	'structure' name=ID ('extends' super=[DataStructure|QualifiedName])? '{' (dataFields+=DataField (','
-	//	dataFields+=DataField)*)?
+	//	dataFields+=DataField)*
+	//	| operations+=DataOperation (',' operations+=DataOperation)*
+	//	| dataFields+=DataField (',' dataFields+=DataField)*
+	//	','
+	//	operations+=DataOperation (',' operations+=DataOperation)*)?
 	//	'}';
 	public DataStructureElements getDataStructureAccess() {
 		return pDataStructure;
@@ -1058,6 +1307,28 @@ public class DataDslGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getEnumerationFieldRule() {
 		return getEnumerationFieldAccess().getRule();
+	}
+	
+	//DataOperation:
+	//	^hidden?='hide'? (hasNoReturnType?='procedure' |
+	//	'function' (primitiveReturnType=PrimitiveType | complexReturnType=PossiblyImportedComplexType)?) name=ID ('('
+	//	parameters+=DataOperationParameter? (',' parameters+=DataOperationParameter)* ')')?;
+	public DataOperationElements getDataOperationAccess() {
+		return pDataOperation;
+	}
+	
+	public ParserRule getDataOperationRule() {
+		return getDataOperationAccess().getRule();
+	}
+	
+	//DataOperationParameter:
+	//	(primitiveType=PrimitiveType | complexType=PossiblyImportedComplexType) name=ID;
+	public DataOperationParameterElements getDataOperationParameterAccess() {
+		return pDataOperationParameter;
+	}
+	
+	public ParserRule getDataOperationParameterRule() {
+		return getDataOperationParameterAccess().getRule();
 	}
 	
 	//PrimitiveValue:

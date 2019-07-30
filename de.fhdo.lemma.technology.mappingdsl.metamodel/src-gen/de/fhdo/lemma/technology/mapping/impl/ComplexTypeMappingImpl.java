@@ -8,6 +8,7 @@ import de.fhdo.lemma.service.TechnologyReference;
 import de.fhdo.lemma.technology.Technology;
 
 import de.fhdo.lemma.technology.mapping.ComplexTypeMapping;
+import de.fhdo.lemma.technology.mapping.DataOperationMapping;
 import de.fhdo.lemma.technology.mapping.ImportedComplexType;
 import de.fhdo.lemma.technology.mapping.MappingPackage;
 import de.fhdo.lemma.technology.mapping.TechnologyMapping;
@@ -55,6 +56,7 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
  *   <li>{@link de.fhdo.lemma.technology.mapping.impl.ComplexTypeMappingImpl#getTechnologyReferences <em>Technology References</em>}</li>
  *   <li>{@link de.fhdo.lemma.technology.mapping.impl.ComplexTypeMappingImpl#getType <em>Type</em>}</li>
  *   <li>{@link de.fhdo.lemma.technology.mapping.impl.ComplexTypeMappingImpl#getFieldMappings <em>Field Mappings</em>}</li>
+ *   <li>{@link de.fhdo.lemma.technology.mapping.impl.ComplexTypeMappingImpl#getOperationMappings <em>Operation Mappings</em>}</li>
  *   <li>{@link de.fhdo.lemma.technology.mapping.impl.ComplexTypeMappingImpl#getAspects <em>Aspects</em>}</li>
  *   <li>{@link de.fhdo.lemma.technology.mapping.impl.ComplexTypeMappingImpl#getMappingModel <em>Mapping Model</em>}</li>
  * </ul>
@@ -111,6 +113,16 @@ public class ComplexTypeMappingImpl extends MinimalEObjectImpl.Container impleme
      * @ordered
      */
     protected EList<TechnologySpecificFieldMapping> fieldMappings;
+
+    /**
+     * The cached value of the '{@link #getOperationMappings() <em>Operation Mappings</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getOperationMappings()
+     * @generated
+     * @ordered
+     */
+    protected EList<DataOperationMapping> operationMappings;
 
     /**
      * The cached value of the '{@link #getAspects() <em>Aspects</em>}' containment reference list.
@@ -233,6 +245,19 @@ public class ComplexTypeMappingImpl extends MinimalEObjectImpl.Container impleme
             fieldMappings = new EObjectContainmentWithInverseEList<TechnologySpecificFieldMapping>(TechnologySpecificFieldMapping.class, this, MappingPackage.COMPLEX_TYPE_MAPPING__FIELD_MAPPINGS, MappingPackage.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__TYPE_MAPPING);
         }
         return fieldMappings;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EList<DataOperationMapping> getOperationMappings() {
+        if (operationMappings == null) {
+            operationMappings = new EObjectContainmentWithInverseEList<DataOperationMapping>(DataOperationMapping.class, this, MappingPackage.COMPLEX_TYPE_MAPPING__OPERATION_MAPPINGS, MappingPackage.DATA_OPERATION_MAPPING__TYPE_MAPPING);
+        }
+        return operationMappings;
     }
 
     /**
@@ -395,6 +420,8 @@ public class ComplexTypeMappingImpl extends MinimalEObjectImpl.Container impleme
                 return basicSetType((ImportedComplexType)otherEnd, msgs);
             case MappingPackage.COMPLEX_TYPE_MAPPING__FIELD_MAPPINGS:
                 return ((InternalEList<InternalEObject>)(InternalEList<?>)getFieldMappings()).basicAdd(otherEnd, msgs);
+            case MappingPackage.COMPLEX_TYPE_MAPPING__OPERATION_MAPPINGS:
+                return ((InternalEList<InternalEObject>)(InternalEList<?>)getOperationMappings()).basicAdd(otherEnd, msgs);
             case MappingPackage.COMPLEX_TYPE_MAPPING__ASPECTS:
                 return ((InternalEList<InternalEObject>)(InternalEList<?>)getAspects()).basicAdd(otherEnd, msgs);
             case MappingPackage.COMPLEX_TYPE_MAPPING__MAPPING_MODEL:
@@ -419,6 +446,8 @@ public class ComplexTypeMappingImpl extends MinimalEObjectImpl.Container impleme
                 return basicSetType(null, msgs);
             case MappingPackage.COMPLEX_TYPE_MAPPING__FIELD_MAPPINGS:
                 return ((InternalEList<?>)getFieldMappings()).basicRemove(otherEnd, msgs);
+            case MappingPackage.COMPLEX_TYPE_MAPPING__OPERATION_MAPPINGS:
+                return ((InternalEList<?>)getOperationMappings()).basicRemove(otherEnd, msgs);
             case MappingPackage.COMPLEX_TYPE_MAPPING__ASPECTS:
                 return ((InternalEList<?>)getAspects()).basicRemove(otherEnd, msgs);
             case MappingPackage.COMPLEX_TYPE_MAPPING__MAPPING_MODEL:
@@ -457,6 +486,8 @@ public class ComplexTypeMappingImpl extends MinimalEObjectImpl.Container impleme
                 return getType();
             case MappingPackage.COMPLEX_TYPE_MAPPING__FIELD_MAPPINGS:
                 return getFieldMappings();
+            case MappingPackage.COMPLEX_TYPE_MAPPING__OPERATION_MAPPINGS:
+                return getOperationMappings();
             case MappingPackage.COMPLEX_TYPE_MAPPING__ASPECTS:
                 return getAspects();
             case MappingPackage.COMPLEX_TYPE_MAPPING__MAPPING_MODEL:
@@ -489,6 +520,10 @@ public class ComplexTypeMappingImpl extends MinimalEObjectImpl.Container impleme
                 getFieldMappings().clear();
                 getFieldMappings().addAll((Collection<? extends TechnologySpecificFieldMapping>)newValue);
                 return;
+            case MappingPackage.COMPLEX_TYPE_MAPPING__OPERATION_MAPPINGS:
+                getOperationMappings().clear();
+                getOperationMappings().addAll((Collection<? extends DataOperationMapping>)newValue);
+                return;
             case MappingPackage.COMPLEX_TYPE_MAPPING__ASPECTS:
                 getAspects().clear();
                 getAspects().addAll((Collection<? extends TechnologySpecificImportedServiceAspect>)newValue);
@@ -520,6 +555,9 @@ public class ComplexTypeMappingImpl extends MinimalEObjectImpl.Container impleme
             case MappingPackage.COMPLEX_TYPE_MAPPING__FIELD_MAPPINGS:
                 getFieldMappings().clear();
                 return;
+            case MappingPackage.COMPLEX_TYPE_MAPPING__OPERATION_MAPPINGS:
+                getOperationMappings().clear();
+                return;
             case MappingPackage.COMPLEX_TYPE_MAPPING__ASPECTS:
                 getAspects().clear();
                 return;
@@ -546,6 +584,8 @@ public class ComplexTypeMappingImpl extends MinimalEObjectImpl.Container impleme
                 return type != null;
             case MappingPackage.COMPLEX_TYPE_MAPPING__FIELD_MAPPINGS:
                 return fieldMappings != null && !fieldMappings.isEmpty();
+            case MappingPackage.COMPLEX_TYPE_MAPPING__OPERATION_MAPPINGS:
+                return operationMappings != null && !operationMappings.isEmpty();
             case MappingPackage.COMPLEX_TYPE_MAPPING__ASPECTS:
                 return aspects != null && !aspects.isEmpty();
             case MappingPackage.COMPLEX_TYPE_MAPPING__MAPPING_MODEL:

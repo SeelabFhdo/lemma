@@ -44,6 +44,9 @@ class IntermediateImport {
     }
 }
 
+/**
+ * Intermediate version
+ */
 class IntermediateVersion {
     String name
 
@@ -53,6 +56,9 @@ class IntermediateVersion {
     container IntermediateDataModel dataModel opposite versions
 }
 
+/**
+ * Intermediate context
+ */
 class IntermediateContext {
     String name
     String qualifiedName
@@ -101,6 +107,8 @@ abstract class IntermediateType {
     IntermediateTypeOrigin origin
     IntermediateTypeKind kind
 
+    container IntermediateDataOperation operation opposite returnType
+    container IntermediateDataOperationParameter parameter opposite ^type
     container IntermediateDataField dataField opposite ^type
 }
 
@@ -146,7 +154,40 @@ class IntermediateImportedTechnologySpecificType extends IntermediateType {
  */
 class IntermediateDataStructure extends IntermediateComplexType {
     refers IntermediateDataStructure ^super
+    contains IntermediateDataOperation[] operations opposite dataStructure
     contains IntermediateDataField[] dataFields opposite dataStructure
+}
+
+/**
+ * Data operation
+ */
+class IntermediateDataOperation {
+    String name
+    String qualifiedName
+    boolean hidden
+    boolean inherited
+    boolean hasNoReturnType
+
+    contains IntermediateType[0..1] returnType opposite operation
+    contains IntermediateType[0..1] originalReturnType
+    contains IntermediateDataOperationParameter[] parameters opposite operation
+    contains IntermediateImportedAspect[] aspects opposite operation
+
+    container IntermediateDataStructure dataStructure opposite operations
+}
+
+/**
+ * Data operation parameter
+ */
+class IntermediateDataOperationParameter {
+    String name
+    String qualifiedName
+
+    contains IntermediateType ^type opposite parameter
+    contains IntermediateType originalType
+    contains IntermediateImportedAspect[] aspects opposite parameter
+
+    container IntermediateDataOperation operation opposite parameters
 }
 
 /**
@@ -223,6 +264,8 @@ class IntermediateImportedAspect {
     contains IntermediateAspectPropertyValue[] propertyValues opposite aspect
 
     container IntermediateComplexType complexType opposite aspects
+    container IntermediateDataOperation operation opposite aspects
+    container IntermediateDataOperationParameter parameter opposite aspects
     container IntermediateDataField dataField opposite aspects
 }
 

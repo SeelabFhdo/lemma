@@ -36,6 +36,8 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.fhdo.lemma.service.ImportedServiceAspect#getParameter <em>Parameter</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.ImportedServiceAspect#getMappedComplexType <em>Mapped Complex Type</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.ImportedServiceAspect#getMappedField <em>Mapped Field</em>}</li>
+ *   <li>{@link de.fhdo.lemma.service.ImportedServiceAspect#getMappedDataOperation <em>Mapped Data Operation</em>}</li>
+ *   <li>{@link de.fhdo.lemma.service.ImportedServiceAspect#getMappedDataOperationParameter <em>Mapped Data Operation Parameter</em>}</li>
  * </ul>
  *
  * @see de.fhdo.lemma.service.ServicePackage#getImportedServiceAspect()
@@ -343,5 +345,61 @@ public interface ImportedServiceAspect extends EObject {
      * @generated
      */
     void setMappedField(MappedField value);
+
+    /**
+     * Returns the value of the '<em><b>Mapped Data Operation</b></em>' container reference.
+     * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.MappedDataOperation#getAspects <em>Aspects</em>}'.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Mapped Data Operation</em>' container reference isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Mapped Data Operation</em>' container reference.
+     * @see #setMappedDataOperation(MappedDataOperation)
+     * @see de.fhdo.lemma.service.ServicePackage#getImportedServiceAspect_MappedDataOperation()
+     * @see de.fhdo.lemma.service.MappedDataOperation#getAspects
+     * @model opposite="aspects" transient="false"
+     * @generated
+     */
+    MappedDataOperation getMappedDataOperation();
+
+    /**
+     * Sets the value of the '{@link de.fhdo.lemma.service.ImportedServiceAspect#getMappedDataOperation <em>Mapped Data Operation</em>}' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Mapped Data Operation</em>' container reference.
+     * @see #getMappedDataOperation()
+     * @generated
+     */
+    void setMappedDataOperation(MappedDataOperation value);
+
+    /**
+     * Returns the value of the '<em><b>Mapped Data Operation Parameter</b></em>' container reference.
+     * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.MappedDataOperationParameter#getAspects <em>Aspects</em>}'.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Mapped Data Operation Parameter</em>' container reference isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Mapped Data Operation Parameter</em>' container reference.
+     * @see #setMappedDataOperationParameter(MappedDataOperationParameter)
+     * @see de.fhdo.lemma.service.ServicePackage#getImportedServiceAspect_MappedDataOperationParameter()
+     * @see de.fhdo.lemma.service.MappedDataOperationParameter#getAspects
+     * @model opposite="aspects" transient="false"
+     * @generated
+     */
+    MappedDataOperationParameter getMappedDataOperationParameter();
+
+    /**
+     * Sets the value of the '{@link de.fhdo.lemma.service.ImportedServiceAspect#getMappedDataOperationParameter <em>Mapped Data Operation Parameter</em>}' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Mapped Data Operation Parameter</em>' container reference.
+     * @see #getMappedDataOperationParameter()
+     * @generated
+     */
+    void setMappedDataOperationParameter(MappedDataOperationParameter value);
 
 } // ImportedServiceAspect

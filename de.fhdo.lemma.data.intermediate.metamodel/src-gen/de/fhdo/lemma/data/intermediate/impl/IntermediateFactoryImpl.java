@@ -66,6 +66,8 @@ public class IntermediateFactoryImpl extends EFactoryImpl implements Intermediat
             case IntermediatePackage.INTERMEDIATE_IMPORTED_COMPLEX_TYPE: return createIntermediateImportedComplexType();
             case IntermediatePackage.INTERMEDIATE_IMPORTED_TECHNOLOGY_SPECIFIC_TYPE: return createIntermediateImportedTechnologySpecificType();
             case IntermediatePackage.INTERMEDIATE_DATA_STRUCTURE: return createIntermediateDataStructure();
+            case IntermediatePackage.INTERMEDIATE_DATA_OPERATION: return createIntermediateDataOperation();
+            case IntermediatePackage.INTERMEDIATE_DATA_OPERATION_PARAMETER: return createIntermediateDataOperationParameter();
             case IntermediatePackage.INTERMEDIATE_LIST_TYPE: return createIntermediateListType();
             case IntermediatePackage.INTERMEDIATE_DATA_FIELD: return createIntermediateDataField();
             case IntermediatePackage.INTERMEDIATE_ENUMERATION: return createIntermediateEnumeration();
@@ -209,6 +211,28 @@ public class IntermediateFactoryImpl extends EFactoryImpl implements Intermediat
     public IntermediateDataStructure createIntermediateDataStructure() {
         IntermediateDataStructureImpl intermediateDataStructure = new IntermediateDataStructureImpl();
         return intermediateDataStructure;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public IntermediateDataOperation createIntermediateDataOperation() {
+        IntermediateDataOperationImpl intermediateDataOperation = new IntermediateDataOperationImpl();
+        return intermediateDataOperation;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public IntermediateDataOperationParameter createIntermediateDataOperationParameter() {
+        IntermediateDataOperationParameterImpl intermediateDataOperationParameter = new IntermediateDataOperationParameterImpl();
+        return intermediateDataOperationParameter;
     }
 
     /**

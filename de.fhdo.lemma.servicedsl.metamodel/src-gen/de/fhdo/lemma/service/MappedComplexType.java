@@ -29,6 +29,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.fhdo.lemma.service.MappedComplexType#getTechnologyReferences <em>Technology References</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.MappedComplexType#getType <em>Type</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.MappedComplexType#getMappedFields <em>Mapped Fields</em>}</li>
+ *   <li>{@link de.fhdo.lemma.service.MappedComplexType#getMappedOperations <em>Mapped Operations</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.MappedComplexType#getAspects <em>Aspects</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.MappedComplexType#getServiceModel <em>Service Model</em>}</li>
  * </ul>
@@ -177,6 +178,24 @@ public interface MappedComplexType extends EObject {
      * @generated
      */
     EList<MappedField> getMappedFields();
+
+    /**
+     * Returns the value of the '<em><b>Mapped Operations</b></em>' containment reference list.
+     * The list contents are of type {@link de.fhdo.lemma.service.MappedDataOperation}.
+     * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.MappedDataOperation#getMappedComplexType <em>Mapped Complex Type</em>}'.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Mapped Operations</em>' containment reference list isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Mapped Operations</em>' containment reference list.
+     * @see de.fhdo.lemma.service.ServicePackage#getMappedComplexType_MappedOperations()
+     * @see de.fhdo.lemma.service.MappedDataOperation#getMappedComplexType
+     * @model opposite="mappedComplexType" containment="true"
+     * @generated
+     */
+    EList<MappedDataOperation> getMappedOperations();
 
     /**
      * Returns the value of the '<em><b>Aspects</b></em>' containment reference list.

@@ -8,6 +8,8 @@ import de.fhdo.lemma.data.Context;
 import de.fhdo.lemma.data.DataFactory;
 import de.fhdo.lemma.data.DataField;
 import de.fhdo.lemma.data.DataModel;
+import de.fhdo.lemma.data.DataOperation;
+import de.fhdo.lemma.data.DataOperationParameter;
 import de.fhdo.lemma.data.DataPackage;
 import de.fhdo.lemma.data.DataStructure;
 import de.fhdo.lemma.data.Enumeration;
@@ -184,6 +186,20 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * @generated
      */
     private EClass dataStructureEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass dataOperationEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass dataOperationParameterEClass = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -891,6 +907,26 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * @generated
      */
     @Override
+    public EReference getPossiblyImportedComplexType_Operation() {
+        return (EReference)possiblyImportedComplexTypeEClass.getEStructuralFeatures().get(3);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getPossiblyImportedComplexType_Parameter() {
+        return (EReference)possiblyImportedComplexTypeEClass.getEStructuralFeatures().get(4);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public EClass getDataStructure() {
         return dataStructureEClass;
     }
@@ -921,6 +957,16 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * @generated
      */
     @Override
+    public EReference getDataStructure_Operations() {
+        return (EReference)dataStructureEClass.getEStructuralFeatures().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public EOperation getDataStructure__GetEffectiveFields() {
         return dataStructureEClass.getEOperations().get(0);
     }
@@ -931,7 +977,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * @generated
      */
     @Override
-    public EOperation getDataStructure__IsExtensionOf__DataStructure() {
+    public EOperation getDataStructure__GetEffectiveOperations() {
         return dataStructureEClass.getEOperations().get(1);
     }
 
@@ -941,8 +987,238 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * @generated
      */
     @Override
-    public EOperation getDataStructure__CompareFieldCounts__DataStructure() {
+    public EOperation getDataStructure__IsExtensionOf__DataStructure() {
         return dataStructureEClass.getEOperations().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EOperation getDataStructure__CompareFieldCounts__DataStructure() {
+        return dataStructureEClass.getEOperations().get(3);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EClass getDataOperation() {
+        return dataOperationEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EAttribute getDataOperation_Name() {
+        return (EAttribute)dataOperationEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EAttribute getDataOperation_Hidden() {
+        return (EAttribute)dataOperationEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EAttribute getDataOperation_HasNoReturnType() {
+        return (EAttribute)dataOperationEClass.getEStructuralFeatures().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getDataOperation_ComplexReturnType() {
+        return (EReference)dataOperationEClass.getEStructuralFeatures().get(3);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getDataOperation_PrimitiveReturnType() {
+        return (EReference)dataOperationEClass.getEStructuralFeatures().get(4);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getDataOperation_Parameters() {
+        return (EReference)dataOperationEClass.getEStructuralFeatures().get(5);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getDataOperation_DataStructure() {
+        return (EReference)dataOperationEClass.getEStructuralFeatures().get(6);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EAttribute getDataOperation_LacksReturnTypeSpecification() {
+        return (EAttribute)dataOperationEClass.getEStructuralFeatures().get(7);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EAttribute getDataOperation_Inherited() {
+        return (EAttribute)dataOperationEClass.getEStructuralFeatures().get(8);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EOperation getDataOperation__GetQualifiedNameParts() {
+        return dataOperationEClass.getEOperations().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EOperation getDataOperation__BuildQualifiedName__String() {
+        return dataOperationEClass.getEOperations().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EOperation getDataOperation__FindEponymousSuperOperation() {
+        return dataOperationEClass.getEOperations().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EOperation getDataOperation__GetPrimitiveOrComplexReturnType() {
+        return dataOperationEClass.getEOperations().get(3);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EClass getDataOperationParameter() {
+        return dataOperationParameterEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EAttribute getDataOperationParameter_Name() {
+        return (EAttribute)dataOperationParameterEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getDataOperationParameter_ComplexType() {
+        return (EReference)dataOperationParameterEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getDataOperationParameter_PrimitiveType() {
+        return (EReference)dataOperationParameterEClass.getEStructuralFeatures().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getDataOperationParameter_Operation() {
+        return (EReference)dataOperationParameterEClass.getEStructuralFeatures().get(3);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EOperation getDataOperationParameter__GetQualifiedNameParts() {
+        return dataOperationParameterEClass.getEOperations().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EOperation getDataOperationParameter__BuildQualifiedName__String() {
+        return dataOperationParameterEClass.getEOperations().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EOperation getDataOperationParameter__GetEffectiveType() {
+        return dataOperationParameterEClass.getEOperations().get(2);
     }
 
     /**
@@ -1529,13 +1805,41 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
         createEReference(possiblyImportedComplexTypeEClass, POSSIBLY_IMPORTED_COMPLEX_TYPE__IMPORT);
         createEReference(possiblyImportedComplexTypeEClass, POSSIBLY_IMPORTED_COMPLEX_TYPE__COMPLEX_TYPE);
         createEReference(possiblyImportedComplexTypeEClass, POSSIBLY_IMPORTED_COMPLEX_TYPE__DATA_FIELD);
+        createEReference(possiblyImportedComplexTypeEClass, POSSIBLY_IMPORTED_COMPLEX_TYPE__OPERATION);
+        createEReference(possiblyImportedComplexTypeEClass, POSSIBLY_IMPORTED_COMPLEX_TYPE__PARAMETER);
 
         dataStructureEClass = createEClass(DATA_STRUCTURE);
         createEReference(dataStructureEClass, DATA_STRUCTURE__SUPER);
         createEReference(dataStructureEClass, DATA_STRUCTURE__DATA_FIELDS);
+        createEReference(dataStructureEClass, DATA_STRUCTURE__OPERATIONS);
         createEOperation(dataStructureEClass, DATA_STRUCTURE___GET_EFFECTIVE_FIELDS);
+        createEOperation(dataStructureEClass, DATA_STRUCTURE___GET_EFFECTIVE_OPERATIONS);
         createEOperation(dataStructureEClass, DATA_STRUCTURE___IS_EXTENSION_OF__DATASTRUCTURE);
         createEOperation(dataStructureEClass, DATA_STRUCTURE___COMPARE_FIELD_COUNTS__DATASTRUCTURE);
+
+        dataOperationEClass = createEClass(DATA_OPERATION);
+        createEAttribute(dataOperationEClass, DATA_OPERATION__NAME);
+        createEAttribute(dataOperationEClass, DATA_OPERATION__HIDDEN);
+        createEAttribute(dataOperationEClass, DATA_OPERATION__HAS_NO_RETURN_TYPE);
+        createEReference(dataOperationEClass, DATA_OPERATION__COMPLEX_RETURN_TYPE);
+        createEReference(dataOperationEClass, DATA_OPERATION__PRIMITIVE_RETURN_TYPE);
+        createEReference(dataOperationEClass, DATA_OPERATION__PARAMETERS);
+        createEReference(dataOperationEClass, DATA_OPERATION__DATA_STRUCTURE);
+        createEAttribute(dataOperationEClass, DATA_OPERATION__LACKS_RETURN_TYPE_SPECIFICATION);
+        createEAttribute(dataOperationEClass, DATA_OPERATION__INHERITED);
+        createEOperation(dataOperationEClass, DATA_OPERATION___GET_QUALIFIED_NAME_PARTS);
+        createEOperation(dataOperationEClass, DATA_OPERATION___BUILD_QUALIFIED_NAME__STRING);
+        createEOperation(dataOperationEClass, DATA_OPERATION___FIND_EPONYMOUS_SUPER_OPERATION);
+        createEOperation(dataOperationEClass, DATA_OPERATION___GET_PRIMITIVE_OR_COMPLEX_RETURN_TYPE);
+
+        dataOperationParameterEClass = createEClass(DATA_OPERATION_PARAMETER);
+        createEAttribute(dataOperationParameterEClass, DATA_OPERATION_PARAMETER__NAME);
+        createEReference(dataOperationParameterEClass, DATA_OPERATION_PARAMETER__COMPLEX_TYPE);
+        createEReference(dataOperationParameterEClass, DATA_OPERATION_PARAMETER__PRIMITIVE_TYPE);
+        createEReference(dataOperationParameterEClass, DATA_OPERATION_PARAMETER__OPERATION);
+        createEOperation(dataOperationParameterEClass, DATA_OPERATION_PARAMETER___GET_QUALIFIED_NAME_PARTS);
+        createEOperation(dataOperationParameterEClass, DATA_OPERATION_PARAMETER___BUILD_QUALIFIED_NAME__STRING);
+        createEOperation(dataOperationParameterEClass, DATA_OPERATION_PARAMETER___GET_EFFECTIVE_TYPE);
 
         listTypeEClass = createEClass(LIST_TYPE);
         createEReference(listTypeEClass, LIST_TYPE__PRIMITIVE_TYPE);
@@ -1739,18 +2043,56 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
         initEReference(getPossiblyImportedComplexType_Import(), this.getComplexTypeImport(), null, "import", null, 0, 1, PossiblyImportedComplexType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getPossiblyImportedComplexType_ComplexType(), this.getComplexType(), null, "complexType", null, 0, 1, PossiblyImportedComplexType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getPossiblyImportedComplexType_DataField(), this.getDataField(), this.getDataField_ComplexType(), "dataField", null, 0, 1, PossiblyImportedComplexType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getPossiblyImportedComplexType_Operation(), this.getDataOperation(), this.getDataOperation_ComplexReturnType(), "operation", null, 0, 1, PossiblyImportedComplexType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getPossiblyImportedComplexType_Parameter(), this.getDataOperationParameter(), this.getDataOperationParameter_ComplexType(), "parameter", null, 0, 1, PossiblyImportedComplexType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(dataStructureEClass, DataStructure.class, "DataStructure", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getDataStructure_Super(), this.getDataStructure(), null, "super", null, 0, 1, DataStructure.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getDataStructure_DataFields(), this.getDataField(), this.getDataField_DataStructure(), "dataFields", null, 0, -1, DataStructure.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getDataStructure_Operations(), this.getDataOperation(), this.getDataOperation_DataStructure(), "operations", null, 0, -1, DataStructure.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEOperation(getDataStructure__GetEffectiveFields(), this.getDataField(), "getEffectiveFields", 0, -1, !IS_UNIQUE, IS_ORDERED);
+
+        initEOperation(getDataStructure__GetEffectiveOperations(), this.getDataOperation(), "getEffectiveOperations", 0, -1, !IS_UNIQUE, IS_ORDERED);
 
         op = initEOperation(getDataStructure__IsExtensionOf__DataStructure(), theEcorePackage.getEBoolean(), "isExtensionOf", 0, 1, !IS_UNIQUE, IS_ORDERED);
         addEParameter(op, this.getDataStructure(), "structure", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
         op = initEOperation(getDataStructure__CompareFieldCounts__DataStructure(), theEcorePackage.getEInt(), "compareFieldCounts", 0, 1, !IS_UNIQUE, IS_ORDERED);
         addEParameter(op, this.getDataStructure(), "structureToCompare", 0, 1, !IS_UNIQUE, IS_ORDERED);
+
+        initEClass(dataOperationEClass, DataOperation.class, "DataOperation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getDataOperation_Name(), theEcorePackage.getEString(), "name", null, 0, 1, DataOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getDataOperation_Hidden(), theEcorePackage.getEBoolean(), "hidden", null, 0, 1, DataOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getDataOperation_HasNoReturnType(), theEcorePackage.getEBoolean(), "hasNoReturnType", null, 0, 1, DataOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getDataOperation_ComplexReturnType(), this.getPossiblyImportedComplexType(), this.getPossiblyImportedComplexType_Operation(), "complexReturnType", null, 0, 1, DataOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getDataOperation_PrimitiveReturnType(), this.getPrimitiveType(), null, "primitiveReturnType", null, 0, 1, DataOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getDataOperation_Parameters(), this.getDataOperationParameter(), this.getDataOperationParameter_Operation(), "parameters", null, 0, -1, DataOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getDataOperation_DataStructure(), this.getDataStructure(), this.getDataStructure_Operations(), "dataStructure", null, 0, 1, DataOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getDataOperation_LacksReturnTypeSpecification(), theEcorePackage.getEBoolean(), "lacksReturnTypeSpecification", null, 0, 1, DataOperation.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+        initEAttribute(getDataOperation_Inherited(), theEcorePackage.getEBoolean(), "inherited", null, 0, 1, DataOperation.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+
+        initEOperation(getDataOperation__GetQualifiedNameParts(), theEcorePackage.getEString(), "getQualifiedNameParts", 0, -1, !IS_UNIQUE, IS_ORDERED);
+
+        op = initEOperation(getDataOperation__BuildQualifiedName__String(), theEcorePackage.getEString(), "buildQualifiedName", 0, 1, !IS_UNIQUE, IS_ORDERED);
+        addEParameter(op, theEcorePackage.getEString(), "separator", 0, 1, !IS_UNIQUE, IS_ORDERED);
+
+        initEOperation(getDataOperation__FindEponymousSuperOperation(), this.getDataOperation(), "findEponymousSuperOperation", 0, 1, !IS_UNIQUE, IS_ORDERED);
+
+        initEOperation(getDataOperation__GetPrimitiveOrComplexReturnType(), this.getType(), "getPrimitiveOrComplexReturnType", 0, 1, !IS_UNIQUE, IS_ORDERED);
+
+        initEClass(dataOperationParameterEClass, DataOperationParameter.class, "DataOperationParameter", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getDataOperationParameter_Name(), theEcorePackage.getEString(), "name", null, 0, 1, DataOperationParameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getDataOperationParameter_ComplexType(), this.getPossiblyImportedComplexType(), this.getPossiblyImportedComplexType_Parameter(), "complexType", null, 0, 1, DataOperationParameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getDataOperationParameter_PrimitiveType(), this.getPrimitiveType(), null, "primitiveType", null, 0, 1, DataOperationParameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getDataOperationParameter_Operation(), this.getDataOperation(), this.getDataOperation_Parameters(), "operation", null, 0, 1, DataOperationParameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEOperation(getDataOperationParameter__GetQualifiedNameParts(), theEcorePackage.getEString(), "getQualifiedNameParts", 0, -1, !IS_UNIQUE, IS_ORDERED);
+
+        op = initEOperation(getDataOperationParameter__BuildQualifiedName__String(), theEcorePackage.getEString(), "buildQualifiedName", 0, 1, !IS_UNIQUE, IS_ORDERED);
+        addEParameter(op, theEcorePackage.getEString(), "separator", 0, 1, !IS_UNIQUE, IS_ORDERED);
+
+        initEOperation(getDataOperationParameter__GetEffectiveType(), this.getType(), "getEffectiveType", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
         initEClass(listTypeEClass, ListType.class, "ListType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getListType_PrimitiveType(), this.getPrimitiveType(), null, "primitiveType", null, 0, 1, ListType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

@@ -12,6 +12,8 @@ import de.fhdo.lemma.service.ImportedServiceAspect;
 import de.fhdo.lemma.service.ImportedType;
 import de.fhdo.lemma.service.Interface;
 import de.fhdo.lemma.service.MappedComplexType;
+import de.fhdo.lemma.service.MappedDataOperation;
+import de.fhdo.lemma.service.MappedDataOperationParameter;
 import de.fhdo.lemma.service.MappedField;
 import de.fhdo.lemma.service.Microservice;
 import de.fhdo.lemma.service.MicroserviceType;
@@ -71,6 +73,20 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     private EClass mappedComplexTypeEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass mappedDataOperationEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass mappedDataOperationParameterEClass = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -491,7 +507,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     @Override
-    public EReference getMappedComplexType_Aspects() {
+    public EReference getMappedComplexType_MappedOperations() {
         return (EReference)mappedComplexTypeEClass.getEStructuralFeatures().get(6);
     }
 
@@ -501,8 +517,18 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     @Override
-    public EReference getMappedComplexType_ServiceModel() {
+    public EReference getMappedComplexType_Aspects() {
         return (EReference)mappedComplexTypeEClass.getEStructuralFeatures().get(7);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getMappedComplexType_ServiceModel() {
+        return (EReference)mappedComplexTypeEClass.getEStructuralFeatures().get(8);
     }
 
     /**
@@ -553,6 +579,116 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
     @Override
     public EOperation getMappedComplexType__GetTypeDefinitionTechnology() {
         return mappedComplexTypeEClass.getEOperations().get(4);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EClass getMappedDataOperation() {
+        return mappedDataOperationEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getMappedDataOperation_DataOperation() {
+        return (EReference)mappedDataOperationEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getMappedDataOperation_MappedReturnType() {
+        return (EReference)mappedDataOperationEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getMappedDataOperation_Aspects() {
+        return (EReference)mappedDataOperationEClass.getEStructuralFeatures().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getMappedDataOperation_MappedParameters() {
+        return (EReference)mappedDataOperationEClass.getEStructuralFeatures().get(3);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getMappedDataOperation_MappedComplexType() {
+        return (EReference)mappedDataOperationEClass.getEStructuralFeatures().get(4);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EClass getMappedDataOperationParameter() {
+        return mappedDataOperationParameterEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getMappedDataOperationParameter_Parameter() {
+        return (EReference)mappedDataOperationParameterEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getMappedDataOperationParameter_MappedType() {
+        return (EReference)mappedDataOperationParameterEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getMappedDataOperationParameter_Aspects() {
+        return (EReference)mappedDataOperationParameterEClass.getEStructuralFeatures().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getMappedDataOperationParameter_MappedOperation() {
+        return (EReference)mappedDataOperationParameterEClass.getEStructuralFeatures().get(3);
     }
 
     /**
@@ -2181,6 +2317,26 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     @Override
+    public EReference getImportedServiceAspect_MappedDataOperation() {
+        return (EReference)importedServiceAspectEClass.getEStructuralFeatures().get(11);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getImportedServiceAspect_MappedDataOperationParameter() {
+        return (EReference)importedServiceAspectEClass.getEStructuralFeatures().get(12);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public EEnum getImportType() {
         return importTypeEEnum;
     }
@@ -2286,6 +2442,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
         createEReference(mappedComplexTypeEClass, MAPPED_COMPLEX_TYPE__TECHNOLOGY_REFERENCES);
         createEReference(mappedComplexTypeEClass, MAPPED_COMPLEX_TYPE__TYPE);
         createEReference(mappedComplexTypeEClass, MAPPED_COMPLEX_TYPE__MAPPED_FIELDS);
+        createEReference(mappedComplexTypeEClass, MAPPED_COMPLEX_TYPE__MAPPED_OPERATIONS);
         createEReference(mappedComplexTypeEClass, MAPPED_COMPLEX_TYPE__ASPECTS);
         createEReference(mappedComplexTypeEClass, MAPPED_COMPLEX_TYPE__SERVICE_MODEL);
         createEOperation(mappedComplexTypeEClass, MAPPED_COMPLEX_TYPE___GET_QUALIFIED_NAME_PARTS__BOOLEAN);
@@ -2293,6 +2450,19 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
         createEOperation(mappedComplexTypeEClass, MAPPED_COMPLEX_TYPE___GET_ALL_TYPE_DEFINITION_TECHNOLOGY_REFERENCES);
         createEOperation(mappedComplexTypeEClass, MAPPED_COMPLEX_TYPE___GET_TYPE_DEFINITION_TECHNOLOGY_IMPORT);
         createEOperation(mappedComplexTypeEClass, MAPPED_COMPLEX_TYPE___GET_TYPE_DEFINITION_TECHNOLOGY);
+
+        mappedDataOperationEClass = createEClass(MAPPED_DATA_OPERATION);
+        createEReference(mappedDataOperationEClass, MAPPED_DATA_OPERATION__DATA_OPERATION);
+        createEReference(mappedDataOperationEClass, MAPPED_DATA_OPERATION__MAPPED_RETURN_TYPE);
+        createEReference(mappedDataOperationEClass, MAPPED_DATA_OPERATION__ASPECTS);
+        createEReference(mappedDataOperationEClass, MAPPED_DATA_OPERATION__MAPPED_PARAMETERS);
+        createEReference(mappedDataOperationEClass, MAPPED_DATA_OPERATION__MAPPED_COMPLEX_TYPE);
+
+        mappedDataOperationParameterEClass = createEClass(MAPPED_DATA_OPERATION_PARAMETER);
+        createEReference(mappedDataOperationParameterEClass, MAPPED_DATA_OPERATION_PARAMETER__PARAMETER);
+        createEReference(mappedDataOperationParameterEClass, MAPPED_DATA_OPERATION_PARAMETER__MAPPED_TYPE);
+        createEReference(mappedDataOperationParameterEClass, MAPPED_DATA_OPERATION_PARAMETER__ASPECTS);
+        createEReference(mappedDataOperationParameterEClass, MAPPED_DATA_OPERATION_PARAMETER__MAPPED_OPERATION);
 
         mappedFieldEClass = createEClass(MAPPED_FIELD);
         createEReference(mappedFieldEClass, MAPPED_FIELD__DATA_FIELD);
@@ -2470,6 +2640,8 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
         createEReference(importedServiceAspectEClass, IMPORTED_SERVICE_ASPECT__PARAMETER);
         createEReference(importedServiceAspectEClass, IMPORTED_SERVICE_ASPECT__MAPPED_COMPLEX_TYPE);
         createEReference(importedServiceAspectEClass, IMPORTED_SERVICE_ASPECT__MAPPED_FIELD);
+        createEReference(importedServiceAspectEClass, IMPORTED_SERVICE_ASPECT__MAPPED_DATA_OPERATION);
+        createEReference(importedServiceAspectEClass, IMPORTED_SERVICE_ASPECT__MAPPED_DATA_OPERATION_PARAMETER);
 
         // Create enums
         importTypeEEnum = createEEnum(IMPORT_TYPE);
@@ -2542,6 +2714,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
         initEReference(getMappedComplexType_TechnologyReferences(), this.getTechnologyReference(), this.getTechnologyReference_MappedComplexType(), "technologyReferences", null, 0, -1, MappedComplexType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getMappedComplexType_Type(), this.getImportedType(), null, "type", null, 0, 1, MappedComplexType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getMappedComplexType_MappedFields(), this.getMappedField(), this.getMappedField_MappedComplexType(), "mappedFields", null, 0, -1, MappedComplexType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getMappedComplexType_MappedOperations(), this.getMappedDataOperation(), this.getMappedDataOperation_MappedComplexType(), "mappedOperations", null, 0, -1, MappedComplexType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getMappedComplexType_Aspects(), this.getImportedServiceAspect(), this.getImportedServiceAspect_MappedComplexType(), "aspects", null, 0, -1, MappedComplexType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getMappedComplexType_ServiceModel(), this.getServiceModel(), this.getServiceModel_MappedComplexTypes(), "serviceModel", null, 0, 1, MappedComplexType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -2557,6 +2730,19 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
         initEOperation(getMappedComplexType__GetTypeDefinitionTechnologyImport(), this.getImport(), "getTypeDefinitionTechnologyImport", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
         initEOperation(getMappedComplexType__GetTypeDefinitionTechnology(), theTechnologyPackage.getTechnology(), "getTypeDefinitionTechnology", 0, 1, !IS_UNIQUE, IS_ORDERED);
+
+        initEClass(mappedDataOperationEClass, MappedDataOperation.class, "MappedDataOperation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEReference(getMappedDataOperation_DataOperation(), theDataPackage.getDataOperation(), null, "dataOperation", null, 0, 1, MappedDataOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getMappedDataOperation_MappedReturnType(), this.getImportedType(), null, "mappedReturnType", null, 0, 1, MappedDataOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getMappedDataOperation_Aspects(), this.getImportedServiceAspect(), this.getImportedServiceAspect_MappedDataOperation(), "aspects", null, 0, -1, MappedDataOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getMappedDataOperation_MappedParameters(), this.getMappedDataOperationParameter(), this.getMappedDataOperationParameter_MappedOperation(), "mappedParameters", null, 0, -1, MappedDataOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getMappedDataOperation_MappedComplexType(), this.getMappedComplexType(), this.getMappedComplexType_MappedOperations(), "mappedComplexType", null, 0, 1, MappedDataOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEClass(mappedDataOperationParameterEClass, MappedDataOperationParameter.class, "MappedDataOperationParameter", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEReference(getMappedDataOperationParameter_Parameter(), theDataPackage.getDataOperationParameter(), null, "parameter", null, 0, 1, MappedDataOperationParameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getMappedDataOperationParameter_MappedType(), this.getImportedType(), null, "mappedType", null, 0, 1, MappedDataOperationParameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getMappedDataOperationParameter_Aspects(), this.getImportedServiceAspect(), this.getImportedServiceAspect_MappedDataOperationParameter(), "aspects", null, 0, -1, MappedDataOperationParameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getMappedDataOperationParameter_MappedOperation(), this.getMappedDataOperation(), this.getMappedDataOperation_MappedParameters(), "mappedOperation", null, 0, 1, MappedDataOperationParameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(mappedFieldEClass, MappedField.class, "MappedField", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getMappedField_DataField(), theDataPackage.getDataField(), null, "dataField", null, 0, 1, MappedField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2785,6 +2971,8 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
         initEReference(getImportedServiceAspect_Parameter(), this.getParameter(), this.getParameter_Aspects(), "parameter", null, 0, 1, ImportedServiceAspect.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getImportedServiceAspect_MappedComplexType(), this.getMappedComplexType(), this.getMappedComplexType_Aspects(), "mappedComplexType", null, 0, 1, ImportedServiceAspect.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getImportedServiceAspect_MappedField(), this.getMappedField(), this.getMappedField_Aspects(), "mappedField", null, 0, 1, ImportedServiceAspect.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getImportedServiceAspect_MappedDataOperation(), this.getMappedDataOperation(), this.getMappedDataOperation_Aspects(), "mappedDataOperation", null, 0, 1, ImportedServiceAspect.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getImportedServiceAspect_MappedDataOperationParameter(), this.getMappedDataOperationParameter(), this.getMappedDataOperationParameter_Aspects(), "mappedDataOperationParameter", null, 0, 1, ImportedServiceAspect.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         // Initialize enums and add enum literals
         initEEnum(importTypeEEnum, ImportType.class, "ImportType");

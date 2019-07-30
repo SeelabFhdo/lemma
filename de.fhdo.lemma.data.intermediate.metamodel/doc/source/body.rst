@@ -517,6 +517,169 @@ Custom, domain-specific Types
             :ref:`IntermediateDataField.inherited 
             <link__IntermediateDataField_inherited>` attribute.
 
+    .. py:attribute:: IntermediateDataOperation[*] operations
+
+        Operations of the structure.
+
+        .. HINT::
+
+            In case the data structure inherits from a super data structure, the
+            operations also contain inherited, non-hidden operations from the
+            inheritance hierarchy, i.e., the *effective operations* of the 
+            structure. The inherited operations can be distinguished from 
+            \"local\" operations of the structure on the basis of the
+            :ref:`IntermediateDataOperation.inherited 
+            <link__IntermediateDataOperation_inherited>` attribute.
+
+.. _link__IntermediateDataOperation:
+
+.. java:type:: class IntermediateDataOperation
+
+    An operation within an 
+    :ref:`IntermediateDataStructure <link__IntermediateDataStructure>`.
+
+    .. py:attribute:: String[1] name
+
+        Unique name of the operation.
+
+    .. py:attribute:: String[1] qualifiedName
+
+        Qualified name of the operation. This is the operation's name prefixed
+        by the qualified name of the surrounding 
+        :ref:`data structure <link__IntermediateDataStructure>`. The name
+        fragments are separated by dots.
+
+    .. py:attribute:: boolean hidden
+
+        Flag to indicate whether the operation is hidden or not. Semantically,
+        this flag corresponds to Java's ``private`` accessibility specifier.
+        However, its functionality differs in that an inherited operation may be
+        set to hidden. That is, operations' visibility may be overridden. A 
+        hidden operation is not visible in any of the following levels of the 
+        inheritance hierarchy.
+
+    .. _link__IntermediateDataOperation_inherited:
+    
+    .. py:attribute:: boolean inherited
+      
+        Flag to indicate whether this operation was inherited from a super
+        :ref:`structure <link__IntermediateDataStructure>`.
+
+    .. _link__IntermediateDataOperation_hasNoReturnType:
+
+    .. py:attribute:: boolean hasNoReturnType
+      
+        Flag to indicate whether this operation has a return type or not.
+
+    .. _link__IntermediateDataOperation_returnType:
+
+    .. py:attribute:: IntermediateType returnType
+
+        The return type of the operation.
+
+        .. HINT::
+
+            The ``type`` attribute always holds a unique instance of 
+            :py:class:`IntermediateType`, if the :ref:`hasNoReturnType
+            <link__IntermediateDataOperation_hasNoReturnType>` attribute is 
+            false. Moreover, instances of the same types are not reused for
+            return types.
+
+        .. HINT::
+
+            Code generators must use this type as the operation's return type
+            and not its :ref:`original return type
+            <link__IntermediateDataOperation_originalReturnType>`.
+
+    .. _link__IntermediateDataOperation_originalReturnType:
+
+    .. py:attribute:: IntermediateType originalReturnType
+
+        The original return type of the operation in case it got mapped within a 
+        Mapping Model.
+
+        .. HINT::
+
+            In case the operation has a :ref:`return type 
+            <link__IntermediateDataOperation_returnType>`, this attribute also
+            holds a value. If it differs from the :ref:`return type 
+            <link__IntermediateDataOperation_returnType>` of the operation, the
+            return got mapped and the 
+            :ref:`returnType <link__IntermediateDataOperation_returnType>` 
+            attribute holds an 
+            :java:type:`IntermediateImportedTechnologySpecificType 
+            <IntermediateImportedTechnologySpecificType>` instance that points
+            to the technology-specific type to which the return type was mapped.
+
+    .. py:attribute:: IntermediateDataOperationParameter[*] parameters
+
+        The :ref:`parameters <link__IntermediateDataOperationParameter>` of the
+        operation.
+
+    .. py:attribute:: IntermediateImportedAspect[*] aspects
+
+        The :java:type:`aspects <IntermediateImportedAspect>` that were assigned
+        to the operation within a Mapping Model.
+
+.. _link__IntermediateDataOperationParameter:
+
+.. java:type:: class IntermediateDataOperationParameter
+
+    A parameter within an 
+    :ref:`IntermediateDataOperation <link__IntermediateDataOperation>`.
+
+    .. py:attribute:: String[1] name
+
+        Unique name of the parameter.
+
+    .. py:attribute:: String[1] qualifiedName
+
+        Qualified name of the parameter. This is the parameter's name prefixed
+        by the qualified name of the surrounding 
+        :ref:`operation <link__IntermediateDataOperation>`. The name fragments
+        are separated by dots.
+
+    .. _link__IntermediateDataOperationParameter_type:
+
+    .. py:attribute:: IntermediateType[1] type
+
+        The type of the parameter.
+
+        .. HINT::
+
+            The ``type`` attribute always holds a unique instance of 
+            :py:class:`IntermediateType`, i.e., instances of the same types are
+            not reused.
+
+        .. HINT::
+
+            Code generators must use this type as the parameter's type and not
+            its :ref:`original type
+            <link__IntermediateDataOperationParameter_originalType>`.
+
+    .. _link__IntermediateDataOperationParameter_originalType:
+
+    .. py:attribute:: IntermediateType[1] originalType
+
+        The original type of the parameter in case it got mapped within a 
+        Mapping Model.
+
+        .. HINT::
+
+            This attribute always holds a value. In case it differs from the
+            :ref:`type <link__IntermediateDataOperationParameter_type>` of the
+            parameter, the parameter got mapped and the 
+            :ref:`type <link__IntermediateDataOperationParameter_type>` 
+            attribute holds an 
+            :java:type:`IntermediateImportedTechnologySpecificType 
+            <IntermediateImportedTechnologySpecificType>` instance that points
+            to the technology-specific type to which the parameter was mapped.
+
+    .. py:attribute:: IntermediateImportedAspect[*] aspects
+
+        The :java:type:`aspects <IntermediateImportedAspect>` that were assigned
+        to the parameter within a Mapping Model.
+
 .. _link__IntermediateDataField:
 
 .. java:type:: class IntermediateDataField
@@ -537,12 +700,11 @@ Custom, domain-specific Types
 
     .. py:attribute:: boolean hidden
 
-        Flag to indicate whether the attribute is hidden or not. Semantically,
-        this flag corresponds to Java's ``private`` accessibility specifier.
-        However, its functionality differs in that an inherited field may be
-        set to hidden. That is, fields' visibility may be overridden. A hidden
-        field is not visible in any of the following levels of the inheritance
-        hierarchy.
+        Flag to indicate whether the field is hidden or not. Semantically, this
+        flag corresponds to Java's ``private`` accessibility specifier. However,
+        its functionality differs in that an inherited field may be set to 
+        hidden. That is, fields' visibility may be overridden. A hidden field is
+        not visible in any of the following levels of the inheritance hierarchy.
 
     .. _link__IntermediateDataField_inherited:
     
@@ -584,18 +746,20 @@ Custom, domain-specific Types
 
     .. _link__IntermediateDataField_originalType:
 
-    .. py:attribute:: IntermediateType originalType
+    .. py:attribute:: IntermediateType[1] originalType
 
         The original type of the data field in case it got mapped within a 
         Mapping Model.
 
         .. HINT::
 
-            In case this attribute is not null, the :ref:`type
-            <link__IntermediateDataField_type>` attribute holds a 
+            This attribute always holds a value. In case it differs from the
+            :ref:`type <link__IntermediateDataField_type>` of the data field,
+            the field got mapped and the 
+            :ref:`type <link__IntermediateDataField_type>` attribute holds an 
             :java:type:`IntermediateImportedTechnologySpecificType 
             <IntermediateImportedTechnologySpecificType>` instance that points
-            to the technology-specific type to which the data field was mapped.
+            to the technology-specific type to which the field was mapped.
 
     .. py:attribute:: IntermediateImportedAspect[*] aspects
 
