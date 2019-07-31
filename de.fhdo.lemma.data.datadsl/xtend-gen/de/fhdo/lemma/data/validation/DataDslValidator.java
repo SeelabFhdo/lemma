@@ -437,17 +437,25 @@ public class DataDslValidator extends AbstractDataDslValidator {
     final Function1<DataOperation, Boolean> _function = (DataOperation it) -> {
       boolean _or = false;
       if ((it.isHasNoReturnType() || 
-        (!(it.getPrimitiveOrComplexReturnType() instanceof DataStructure)))) {
+        (!((it.getPrimitiveOrComplexReturnType() instanceof PrimitiveType) || 
+          (it.getPrimitiveOrComplexReturnType() instanceof DataStructure))))) {
         _or = true;
       } else {
-        boolean _xblockexpression = false;
-        {
-          Type _primitiveOrComplexReturnType = it.getPrimitiveOrComplexReturnType();
-          final DataStructure dataStructureReturnType = ((DataStructure) _primitiveOrComplexReturnType);
-          _xblockexpression = ((!dataStructureReturnType.hasFeature(DataStructureFeature.AGGREGATE)) && 
-            (!dataStructureReturnType.hasFeature(DataStructureFeature.VALUE_OBJECT)));
+        boolean _xifexpression = false;
+        Type _primitiveOrComplexReturnType = it.getPrimitiveOrComplexReturnType();
+        if ((_primitiveOrComplexReturnType instanceof DataStructure)) {
+          boolean _xblockexpression = false;
+          {
+            Type _primitiveOrComplexReturnType_1 = it.getPrimitiveOrComplexReturnType();
+            final DataStructure dataStructureReturnType = ((DataStructure) _primitiveOrComplexReturnType_1);
+            _xblockexpression = ((!dataStructureReturnType.hasFeature(DataStructureFeature.AGGREGATE)) && 
+              (!dataStructureReturnType.hasFeature(DataStructureFeature.VALUE_OBJECT)));
+          }
+          _xifexpression = _xblockexpression;
+        } else {
+          _xifexpression = false;
         }
-        _or = _xblockexpression;
+        _or = _xifexpression;
       }
       return Boolean.valueOf(_or);
     };

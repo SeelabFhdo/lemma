@@ -343,16 +343,23 @@ class DataDslValidator extends AbstractDataDslValidator {
             warning("A factory should not exhibit other domain features", dataStructure,
                 DataPackage::Literals.DATA_STRUCTURE__FEATURES, featureIndex)
 
-        // Factory operations should return aggregates or value objects
+        // Factory operations should return complex types being aggregates or value objects
         val hasOperationsWithWrongReturnTypes = dataStructure.effectiveOperations.exists[
             hasNoReturnType ||
-            !(primitiveOrComplexReturnType instanceof DataStructure) ||
+            !(
+                primitiveOrComplexReturnType instanceof PrimitiveType ||
+                primitiveOrComplexReturnType instanceof DataStructure
+            ) ||
             {
-                val dataStructureReturnType = primitiveOrComplexReturnType as DataStructure
-                !dataStructureReturnType.hasFeature(DataStructureFeature.AGGREGATE) &&
-                !dataStructureReturnType.hasFeature(DataStructureFeature.VALUE_OBJECT)
+                if (primitiveOrComplexReturnType instanceof DataStructure) {
+                    val dataStructureReturnType = primitiveOrComplexReturnType as DataStructure
+                    !dataStructureReturnType.hasFeature(DataStructureFeature.AGGREGATE) &&
+                    !dataStructureReturnType.hasFeature(DataStructureFeature.VALUE_OBJECT)
+                } else
+                    false
             }
         ]
+
         if (hasOperationsWithWrongReturnTypes)
             warning("Factory operations should return aggregates or value objects", dataStructure,
                 DataPackage::Literals.DATA_STRUCTURE__FEATURES, featureIndex)
