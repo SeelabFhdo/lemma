@@ -210,7 +210,8 @@ rule IntermediateDataStructure {
             qualifiedName <- s.buildQualifiedName('.'),
             origin <- #DATA_MODEL,
             kind <- #STRUCTURE,
-            dataFields <- Sequence{}
+            dataFields <- Sequence{},
+            featureNames <- s.features->collect(f | f.toString())
         )
     do {
         if (not s.super.oclIsUndefined()) {
@@ -286,9 +287,12 @@ rule IntermediateDataOperation(sourceOperation : Data!DataOperation,
             dataStructure <- dataStructure
         )
     do {
-        if (not inherited)
+        if (not inherited) {
             t.qualifiedName <- sourceOperation.buildQualifiedName('.');
-        else
+
+            -- Add features only to non-inherited operations
+            t.featureNames <- sourceOperation.features->collect(f | f.toString());
+        } else
             t.qualifiedName <- sourceContainerQualifiedName
                 .concat('.')
                 .concat(sourceOperation.name);
@@ -363,6 +367,8 @@ rule IntermediateDataField(sourceField : Data!DataField,
         if (not inherited) {
             t.qualifiedName <- sourceField.buildQualifiedName('.');
 
+            -- Add features only to non-inherited fields
+            t.featureNames <- sourceField.features->collect(f | f.toString());
         } else
             t.qualifiedName <- sourceContainerQualifiedName.concat('.').concat(sourceField.name);
 

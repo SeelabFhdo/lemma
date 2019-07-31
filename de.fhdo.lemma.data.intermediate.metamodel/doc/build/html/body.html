@@ -42,8 +42,8 @@ to facilitate the development of <em>microservice-based software systems</em>
 <a class="reference internal" href="#combemale2017" id="id3">[CFJezequel+17]</a>.</p>
 <p>In this context, a microservice architecture consists of several different types
 of models, listed in <a class="reference internal" href="#tab-model-types"><span class="std std-numref">Table 1</span></a>.</p>
-<span id="tab-model-types"></span><table border="1" class="docutils" id="id20">
-<caption><span class="caption-number">Table 1 </span><span class="caption-text">Model types</span><a class="headerlink" href="#id20" title="Permalink to this table">¶</a></caption>
+<span id="tab-model-types"></span><table border="1" class="docutils" id="id25">
+<caption><span class="caption-number">Table 1 </span><span class="caption-text">Model types</span><a class="headerlink" href="#id25" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col width="23%" />
 <col width="77%" />
@@ -112,7 +112,7 @@ microservice-related Domain Data Models.</p>
 Data Models in an object-oriented way in the form of a UML class diagram. The
 modeling concepts, their properties, and relationships are depicted as classes,
 attributes, and associations, respectively.</p>
-<div class="figure" id="id21">
+<div class="figure" id="id26">
 <span id="fig-metamodel"></span><a class="reference external image-reference" href="_images/metamodel.png"><img alt="_images/metamodel.png" src="_images/metamodel.png" /></a>
 <p class="caption"><span class="caption-number">Fig. 1 </span><span class="caption-text">Metamodel of Intermediate Data Models</span></p>
 </div>
@@ -621,6 +621,76 @@ type originates.</p>
  class <code class="descname">IntermediateDataStructure</code> extends <a class="reference internal" href="#IntermediateComplexType" title="IntermediateComplexType">IntermediateComplexType</a><a class="headerlink" href="#IntermediateDataStructure" title="Permalink to this definition">¶</a></dt>
 <dd><p>A domain-specific data structure that usually comprises a variety of typed
 data fields.</p>
+<span class="target" id="link-intermediatedatastructure-featurenames"></span><dl class="attribute">
+<dt>
+<code class="descname">String[*] featureNames</code></dt>
+<dd><p>This attribute contains the names of all features specified for the data
+structure. The following values are possible:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="32%" />
+<col width="68%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>Feature Name</strong></td>
+<td><strong>Description</strong></td>
+</tr>
+<tr class="row-even"><td>AGGREGATE</td>
+<td>Data structure is an Aggregate in the sense of
+Domain-driven Design (DDD) <a class="reference internal" href="#evans2004" id="id18">[Eva04]</a>.</td>
+</tr>
+<tr class="row-odd"><td>APPLICATION_SERVICE</td>
+<td>Data structure is a Service with application
+focus in the sense of DDD.</td>
+</tr>
+<tr class="row-even"><td>DOMAIN_EVENT</td>
+<td>Data structure is a Domain Event
+<a class="footnote-reference" href="#enterprise-patterns-event-message" id="id19">[10]</a>.</td>
+</tr>
+<tr class="row-odd"><td>DOMAIN_SERVICE</td>
+<td>Data structure is a Service with domain focus
+in the sense of DDD.</td>
+</tr>
+<tr class="row-even"><td>ENTITY</td>
+<td>Data structure is an Entity in the sense of
+DDD.</td>
+</tr>
+<tr class="row-odd"><td>FACTORY</td>
+<td>Data structure is a Factory in the sense of
+DDD.</td>
+</tr>
+<tr class="row-even"><td>INFRASTRUCTURE_SERVICE</td>
+<td>Data structure is a Service with infrastructure
+focus in the sense of DDD.</td>
+</tr>
+<tr class="row-odd"><td>REPOSITORY</td>
+<td>Data structure is a Repository in the sense of
+DDD.</td>
+</tr>
+<tr class="row-even"><td>SERVICE</td>
+<td>Data structure is a Service in the sense of
+DDD.</td>
+</tr>
+<tr class="row-odd"><td>SPECIFICATION</td>
+<td>Data structure is a Specification in the sense
+of DDD.</td>
+</tr>
+<tr class="row-even"><td>VALUE_OBJECT</td>
+<td>Data structure is a Value Object in the sense
+of DDD.</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">DDD-related features should follow the constraints described in
+<a class="reference internal" href="#rademacher2018" id="id20">[RSZundorf18]</a>. The Data Modeling Language currently issues
+a warning in case they are violated. Code generators are free to
+also check the constraints and deny code generation in case they are
+violated.</p>
+</div>
+</dd></dl>
+
 <dl class="attribute">
 <dt>
 <code class="descname">IntermediateDataStructure super</code></dt>
@@ -708,6 +778,49 @@ inheritance hierarchy.</p>
 <dt>
 <code class="descname">boolean hasNoReturnType</code></dt>
 <dd><p>Flag to indicate whether this operation has a return type or not.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">String[*] featureNames</code></dt>
+<dd><p>This attribute contains the names of all features specified for the data
+operation. The following values are possible:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="23%" />
+<col width="77%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>Feature Name</strong></td>
+<td><strong>Description</strong></td>
+</tr>
+<tr class="row-even"><td>CLOSURE</td>
+<td>Data operation is a Closure in the sense of DDD.</td>
+</tr>
+<tr class="row-odd"><td>IDENTIFIER</td>
+<td>Data operation acts as identifier for an Entity in
+the sense of DDD (see also
+<a class="reference internal" href="#link-intermediatedatastructure-featurenames"><span class="std std-ref">IntermediateDataStructure.featureNames</span></a>).</td>
+</tr>
+<tr class="row-even"><td>SIDE_EFFECT_FREE</td>
+<td>Data operation is side-effect-free in the sense of
+DDD.</td>
+</tr>
+<tr class="row-odd"><td>VALIDATOR</td>
+<td>Data operation acts as validator for a Specification
+in the sense of DDD (see also
+<a class="reference internal" href="#link-intermediatedatastructure-featurenames"><span class="std std-ref">IntermediateDataStructure.featureNames</span></a>).</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">DDD-related features should follow the constraints described in
+<a class="reference internal" href="#rademacher2018" id="id21">[RSZundorf18]</a>. The Data Modeling Language currently issues
+a warning in case they are violated. Code generators are free to
+also check the constraints and deny code generation in case they are
+violated.</p>
+</div>
 </dd></dl>
 
 <span class="target" id="link-intermediatedataoperation-returntype"></span><dl class="attribute">
@@ -872,7 +985,36 @@ instance, this could correspond to a field that has no public setter.</p>
 <dt>
 <code class="descname">String[*] featureNames</code></dt>
 <dd><p>This attribute contains the names of all features specified for the data
-field.</p>
+field. The following values are possible:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="23%" />
+<col width="77%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>Feature Name</strong></td>
+<td><strong>Description</strong></td>
+</tr>
+<tr class="row-even"><td>IDENTIFIER</td>
+<td>Data field acts as identifier for an Entity in the
+sense of DDD (see also
+<a class="reference internal" href="#link-intermediatedatastructure-featurenames"><span class="std std-ref">IntermediateDataStructure.featureNames</span></a>).</td>
+</tr>
+<tr class="row-odd"><td>PART</td>
+<td>Data field is a part of an Aggregate in the sense of
+DDD (see also
+<a class="reference internal" href="#link-intermediatedatastructure-featurenames"><span class="std std-ref">IntermediateDataStructure.featureNames</span></a>).</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">DDD-related features should follow the constraints described in
+<a class="reference internal" href="#rademacher2018" id="id22">[RSZundorf18]</a>. The Data Modeling Language currently issues
+a warning in case they are violated. Code generators are free to
+also check the constraints and deny code generation in case they are
+violated.</p>
+</div>
 </dd></dl>
 
 <span class="target" id="link-intermediatedatafield-type"></span><dl class="attribute">
@@ -1070,7 +1212,7 @@ points to the Technology Model from which the type was imported.</p>
 <a class="reference external" href="../../../../de.fhdo.lemma.service.intermediate.metamodel/doc/build/html/body.html#IntermediateInterface" title="(in Intermediate Service Model Format Specification v1.0)"><code class="xref java java-type docutils literal notranslate"><span class="pre">interfaces</span></code></a>,
 <a class="reference external" href="../../../../de.fhdo.lemma.service.intermediate.metamodel/doc/build/html/body.html#IntermediateOperation" title="(in Intermediate Service Model Format Specification v1.0)"><code class="xref java java-type docutils literal notranslate"><span class="pre">operations</span></code></a>, and
 <a class="reference external" href="../../../../de.fhdo.lemma.service.intermediate.metamodel/doc/build/html/body.html#IntermediateParameter" title="(in Intermediate Service Model Format Specification v1.0)"><code class="xref java java-type docutils literal notranslate"><span class="pre">parameters</span></code></a>, in the sense of
-Aspect-oriented Programming (AOP) <a class="reference internal" href="#kiczales1997" id="id18">[KLM+97]</a>.</p>
+Aspect-oriented Programming (AOP) <a class="reference internal" href="#kiczales1997" id="id23">[KLM+97]</a>.</p>
 <p>Aspects are defined within Technology Models. An aspect definition might be
 accompanied with properties and constrained to the concepts to which they
 apply. With this mechanism it is possible to create, e.g., aspects for the
@@ -1254,7 +1396,7 @@ property value belongs.</p>
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
 <tr><td class="label"><a class="fn-backref" href="#id11">[5]</a></td><td>Actually, the models are <em>transformed</em> into the XMI format.
-Please refer to <a class="reference internal" href="#combemale2017" id="id19">[CFJezequel+17]</a> to learn more about <em>model</em>
+Please refer to <a class="reference internal" href="#combemale2017" id="id24">[CFJezequel+17]</a> to learn more about <em>model</em>
 <em>transformation</em>.</td></tr>
 </tbody>
 </table>
@@ -1282,6 +1424,12 @@ Please refer to <a class="reference internal" href="#combemale2017" id="id19">[C
 <tr><td class="label"><a class="fn-backref" href="#id17">[9]</a></td><td><a class="reference external" href="https://www.golang.org">https://www.golang.org</a></td></tr>
 </tbody>
 </table>
+<table class="docutils footnote" frame="void" id="enterprise-patterns-event-message" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id19">[10]</a></td><td><a class="reference external" href="https://www.enterpriseintegrationpatterns.com/patterns/messaging/EventMessage.html">https://www.enterpriseintegrationpatterns.com/patterns/messaging/EventMessage.html</a></td></tr>
+</tbody>
+</table>
 </div>
 </div>
 <div class="section" id="indices-and-tables">
@@ -1296,25 +1444,31 @@ Please refer to <a class="reference internal" href="#combemale2017" id="id19">[C
 <p id="bibtex-bibliography-body-0"><table class="docutils citation" frame="void" id="combemale2017" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label">[CFJezequel+17]</td><td><em>(<a class="fn-backref" href="#id3">1</a>, <a class="fn-backref" href="#id10">2</a>, <a class="fn-backref" href="#id13">3</a>, <a class="fn-backref" href="#id19">4</a>)</em> Benoit Combemale, Robert&nbsp;B. France, Jean-Marc Jézéquel, Bernhard Rumpe, Jim Steel, and Didier Vojtisek. <em>Engineering Modeling Languages</em>. CRC Press, 2017.</td></tr>
+<tr><td class="label">[CFJezequel+17]</td><td><em>(<a class="fn-backref" href="#id3">1</a>, <a class="fn-backref" href="#id10">2</a>, <a class="fn-backref" href="#id13">3</a>, <a class="fn-backref" href="#id24">4</a>)</em> Benoit Combemale, Robert&nbsp;B. France, Jean-Marc Jézéquel, Bernhard Rumpe, Jim Steel, and Didier Vojtisek. <em>Engineering Modeling Languages</em>. CRC Press, 2017.</td></tr>
 </tbody>
 </table>
 <table class="docutils citation" frame="void" id="evans2004" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id15">[Eva04]</a></td><td>Eric Evans. <em>Domain-Driven Design</em>. Addison-Wesley, 2004.</td></tr>
+<tr><td class="label">[Eva04]</td><td><em>(<a class="fn-backref" href="#id15">1</a>, <a class="fn-backref" href="#id18">2</a>)</em> Eric Evans. <em>Domain-Driven Design</em>. Addison-Wesley, 2004.</td></tr>
 </tbody>
 </table>
 <table class="docutils citation" frame="void" id="kiczales1997" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label">[KLM+97]</td><td><em>(<a class="fn-backref" href="#id4">1</a>, <a class="fn-backref" href="#id18">2</a>)</em> Gregor Kiczales, John Lamping, Anurag Mendhekar, Chris Maeda, Cristina Lopes, Jean-Marc Loingtier, and John Irwin. Aspect-oriented programming. In <em>Object-Oriented Programming</em>, 220–242. Springer, 1997.</td></tr>
+<tr><td class="label">[KLM+97]</td><td><em>(<a class="fn-backref" href="#id4">1</a>, <a class="fn-backref" href="#id23">2</a>)</em> Gregor Kiczales, John Lamping, Anurag Mendhekar, Chris Maeda, Cristina Lopes, Jean-Marc Loingtier, and John Irwin. Aspect-oriented programming. In <em>Object-Oriented Programming</em>, 220–242. Springer, 1997.</td></tr>
 </tbody>
 </table>
 <table class="docutils citation" frame="void" id="newman2015" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
 <tr><td class="label"><a class="fn-backref" href="#id2">[New15]</a></td><td>Sam Newman. <em>Building Microservices</em>. O’Reilly Media, 2015.</td></tr>
+</tbody>
+</table>
+<table class="docutils citation" frame="void" id="rademacher2018" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[RSZundorf18]</td><td><em>(<a class="fn-backref" href="#id20">1</a>, <a class="fn-backref" href="#id21">2</a>, <a class="fn-backref" href="#id22">3</a>)</em> Florian Rademacher, Sabine Sachweh, and Albert Zündorf. Towards a uml profile for domain-driven design of microservice architectures. In Antonio Cerone and Marco Roveri, editors, <em>Software Engineering and Formal Methods</em>, 230–245. Springer, 2018.</td></tr>
 </tbody>
 </table>
 <table class="docutils citation" frame="void" id="steinberg2011" rules="none">

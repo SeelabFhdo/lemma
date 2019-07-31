@@ -16,10 +16,18 @@ import com.google.common.base.Function
 import java.util.List
 import org.eclipse.emf.ecore.resource.Resource
 import de.fhdo.lemma.utils.LemmaUtils
+import de.fhdo.lemma.data.DataFieldFeature
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EStructuralFeature
 import de.fhdo.lemma.data.Context
 import de.fhdo.lemma.data.DataOperation
+import de.fhdo.lemma.data.DataStructureFeature
+import de.fhdo.lemma.data.DataOperationFeature
+import de.fhdo.lemma.data.PrimitiveType
+import de.fhdo.lemma.data.Type
+import de.fhdo.lemma.data.ListType
+import de.fhdo.lemma.data.Enumeration
+import de.fhdo.lemma.data.PrimitiveTypeConstants
 
 /**
  * This class contains validation rules for the Data DSL.
@@ -187,13 +195,291 @@ class DataDslValidator extends AbstractDataDslValidator {
     }
 
     /**
+     * Check data structure for unique features
+     */
+    @Check
+    def checkUniqueFeatures(DataStructure dataStructure) {
+        val duplicateIndex = LemmaUtils.getDuplicateIndex(dataStructure.features, [it])
+        if (duplicateIndex > -1)
+            error("Duplicate feature", dataStructure,
+                DataPackage::Literals.DATA_STRUCTURE__FEATURES, duplicateIndex)
+    }
+
+    /**
+     * Check "aggregate" feature constraints
+     */
+    @Check
+    def checkAggregateFeatureConstraints(DataStructure dataStructure) {
+        val featureIndex = dataStructure.features.indexOf(DataStructureFeature.AGGREGATE)
+        if (featureIndex === -1) {
+            return
+        }
+
+        // Only entities should be aggregates
+        if (!dataStructure.hasFeature(DataStructureFeature.ENTITY))
+            warning("Only entities should be aggregates", dataStructure,
+                DataPackage::Literals.DATA_STRUCTURE__FEATURES, featureIndex)
+
+        // The aggregate should contain at least one part
+        val effectiveDataFieldFeatures = dataStructure.effectiveFields.map[features].flatten
+        if (!effectiveDataFieldFeatures.exists[it == DataFieldFeature.PART])
+            warning("Aggregate should contain at least one part", dataStructure,
+                DataPackage::Literals.DATA_STRUCTURE__FEATURES, featureIndex)
+    }
+
+    /**
+     * Check "applicationService" feature constraints
+     */
+    @Check
+    def checkApplicationServiceFeatureConstraints(DataStructure dataStructure) {
+        checkServiceFeatureConstraints(dataStructure, DataStructureFeature.APPLICATION_SERVICE)
+    }
+
+    /**
+     * Generic helper to check constraints of a certain peculiarity of the "service" feature
+     */
+    def checkServiceFeatureConstraints(DataStructure dataStructure,
+        DataStructureFeature serviceFeature) {
+        val featureIndex = dataStructure.features.indexOf(serviceFeature)
+        if (featureIndex === -1) {
+            return
+        }
+
+        // No other domain features should exist on the structure
+        if (dataStructure.hasAdditionalDomainFeatures(serviceFeature))
+            warning("A service should not exhibit other domain features", dataStructure,
+                DataPackage::Literals.DATA_STRUCTURE__FEATURES, featureIndex)
+
+        // Service should only comprise operations
+        if (!dataStructure.effectiveFields.empty)
+            warning("A service should only comprise operations", dataStructure,
+                DataPackage::Literals.DATA_STRUCTURE__FEATURES, featureIndex)
+
+        // Service should comprise at least one operation
+        if (dataStructure.effectiveOperations.empty)
+            warning("A service should comprise at least one operation", dataStructure,
+                DataPackage::Literals.DATA_STRUCTURE__FEATURES, featureIndex)
+    }
+
+    /**
+     * Helper to check if a data structure has also other domain-driven-design-related features than
+     * a given one
+     */
+    private def hasAdditionalDomainFeatures(DataStructure structure, DataStructureFeature feature) {
+        val domainFeaturesOnStructure = structure.features
+            .filter[structure.allDomainFeatures.contains(it)]
+        return domainFeaturesOnStructure.size > 1 ||
+            !domainFeaturesOnStructure.exists[it == feature]
+    }
+
+    /**
+     * Check "domainEvent" feature constraints
+     */
+    @Check
+    def checkDomainEventFeatureConstraints(DataStructure dataStructure) {
+        val featureIndex = dataStructure.features.indexOf(DataStructureFeature.DOMAIN_EVENT)
+        if (featureIndex === -1) {
+            return
+        }
+
+        // Only value objects should be domain events
+        if (!dataStructure.hasFeature(DataStructureFeature.VALUE_OBJECT))
+            warning("Only value objects should be domain events", dataStructure,
+                DataPackage::Literals.DATA_STRUCTURE__FEATURES, featureIndex)
+    }
+
+    /**
+     * Check "domainService" feature constraints
+     */
+    @Check
+    def checkDomainServiceFeatureConstraints(DataStructure dataStructure) {
+        checkServiceFeatureConstraints(dataStructure, DataStructureFeature.DOMAIN_SERVICE)
+    }
+
+    /**
+     * Check "entity" feature constraints
+     */
+    @Check
+    def checkEntityFeatureConstraints(DataStructure dataStructure) {
+        val featureIndex = dataStructure.features.indexOf(DataStructureFeature.ENTITY)
+        if (featureIndex === -1) {
+            return
+        }
+
+        // At least one local, i.e., non-inherited, field or operation should be an identifier
+        val dataFieldFeatures = dataStructure.dataFields.map[features].flatten
+        val identifierOperations = dataStructure.operations
+            .map[features].flatten
+            .filter[it == DataOperationFeature.IDENTIFIER]
+        val hasIdentifierFields = dataFieldFeatures.exists[it == DataFieldFeature.IDENTIFIER]
+        val hasIdentifierOperations = !identifierOperations.empty
+
+        if (!hasIdentifierFields && !hasIdentifierOperations)
+            warning("At least one non-inherited field or operation should be an identifier for " +
+                "the entity", dataStructure, DataPackage::Literals.DATA_STRUCTURE__FEATURES,
+                featureIndex)
+        else if (hasIdentifierFields && hasIdentifierOperations)
+            warning("Identifier fields and operations should not be mixed", dataStructure,
+                DataPackage::Literals.DATA_STRUCTURE__FEATURES, featureIndex)
+
+        // Only one operation should be an identifier
+        if (identifierOperations.size > 1)
+            warning("Only one operation should be an identifier for the entity", dataStructure,
+                DataPackage::Literals.DATA_STRUCTURE__FEATURES, featureIndex)
+    }
+
+    /**
+     * Check "factory" feature constraints
+     */
+    @Check
+    def checkFactoryFeatureConstraints(DataStructure dataStructure) {
+        val featureIndex = dataStructure.features.indexOf(DataStructureFeature.FACTORY)
+        if (featureIndex === -1) {
+            return
+        }
+
+        // No other domain features should exist on the structure
+        if (dataStructure.hasAdditionalDomainFeatures(DataStructureFeature.FACTORY))
+            warning("A factory should not exhibit other domain features", dataStructure,
+                DataPackage::Literals.DATA_STRUCTURE__FEATURES, featureIndex)
+
+        // A factory should only contain operations
+        if (!dataStructure.effectiveFields.empty)
+            warning("A data structure should only comprise operations", dataStructure,
+                DataPackage::Literals.DATA_STRUCTURE__FEATURES, featureIndex)
+
+        // Factory operations should return aggregates or value objects
+        val hasOperationsWithWrongReturnTypes = dataStructure.effectiveOperations.exists[
+            hasNoReturnType ||
+            !(primitiveOrComplexReturnType instanceof DataStructure) ||
+            {
+                val dataStructureReturnType = primitiveOrComplexReturnType as DataStructure
+                !dataStructureReturnType.hasFeature(DataStructureFeature.AGGREGATE) &&
+                !dataStructureReturnType.hasFeature(DataStructureFeature.VALUE_OBJECT)
+            }
+        ]
+        if (hasOperationsWithWrongReturnTypes)
+            warning("Factory operations should return aggregates or value objects", dataStructure,
+                DataPackage::Literals.DATA_STRUCTURE__FEATURES, featureIndex)
+    }
+
+    /**
+     * Check "infrastructureService" feature constraints
+     */
+    @Check
+    def checkInfrastructureServiceFeatureConstraints(DataStructure dataStructure) {
+        checkServiceFeatureConstraints(dataStructure, DataStructureFeature.INFRASTRUCTURE_SERVICE)
+    }
+
+    /**
+     * Check "repository" feature constraints
+     */
+    @Check
+    def checkRepositoryFeatureConstraints(DataStructure dataStructure) {
+        val featureIndex = dataStructure.features.indexOf(DataStructureFeature.REPOSITORY)
+        if (featureIndex === -1) {
+            return
+        }
+
+        // No other domain features should exist on the structure
+        if (dataStructure.hasAdditionalDomainFeatures(DataStructureFeature.REPOSITORY))
+            warning("A repository should not exhibit other domain features", dataStructure,
+                DataPackage::Literals.DATA_STRUCTURE__FEATURES, featureIndex)
+
+        // Repository should only comprise operations
+        if (!dataStructure.effectiveFields.empty)
+            warning("A repository should only comprise operations", dataStructure,
+                DataPackage::Literals.DATA_STRUCTURE__FEATURES, featureIndex)
+
+        // Repository should comprise at least one operation
+        if (dataStructure.effectiveOperations.empty)
+            warning("A repository should comprise at least one operation", dataStructure,
+                DataPackage::Literals.DATA_STRUCTURE__FEATURES, featureIndex)
+
+        // Repository should only handle entities or value objects
+        val allDataOperationParameters = dataStructure.effectiveOperations.map[parameters].flatten
+        val handlesNotOnlyEntitiesOrValueObjects = allDataOperationParameters.exists[
+            return switch(effectiveType) {
+                PrimitiveType: false
+                DataStructure: {
+                    val parameterType = effectiveType as DataStructure
+                    !parameterType.hasFeature(DataStructureFeature.ENTITY) &&
+                    !parameterType.hasFeature(DataStructureFeature.VALUE_OBJECT)
+                }
+                default: true
+            }
+        ]
+        if (handlesNotOnlyEntitiesOrValueObjects)
+            warning("Complex typed parameters of repository operations should be entities or " +
+                "value objects", dataStructure,
+                DataPackage::Literals.DATA_STRUCTURE__FEATURES, featureIndex)
+    }
+
+    /**
+     * Check "service" feature constraints
+     */
+    @Check
+    def checkServiceFeatureConstraints(DataStructure dataStructure) {
+        checkServiceFeatureConstraints(dataStructure, DataStructureFeature.SERVICE)
+    }
+
+    /**
+     * Check "specification" feature constraints
+     */
+    @Check
+    def checkSpecificationFeatureConstraints(DataStructure dataStructure) {
+        val featureIndex = dataStructure.features.indexOf(DataStructureFeature.SPECIFICATION)
+        if (featureIndex === -1) {
+            return
+        }
+
+        // No other domain features should exist on the structure
+        if (dataStructure.hasAdditionalDomainFeatures(DataStructureFeature.SPECIFICATION))
+            warning("A specification should not exhibit other domain features", dataStructure,
+                DataPackage::Literals.DATA_STRUCTURE__FEATURES, featureIndex)
+
+        // A specification should comprise at least one validator operation
+        if (!dataStructure.effectiveOperations.exists[hasFeature(DataOperationFeature.VALIDATOR)])
+            warning("A specification should comprise at least one validator operation",
+                dataStructure, DataPackage::Literals.DATA_STRUCTURE__FEATURES, featureIndex)
+    }
+
+    /**
+     * Check "valueObject" feature constraints
+     */
+    @Check
+    def checkValueObjectFeatureConstraints(DataStructure dataStructure) {
+        val featureIndex = dataStructure.features.indexOf(DataStructureFeature.VALUE_OBJECT)
+        if (featureIndex === -1) {
+            return
+        }
+
+        // A value object may not exhibit several other features
+        val forbiddenFeatures = #[
+            DataStructureFeature.AGGREGATE,
+            DataStructureFeature.APPLICATION_SERVICE,
+            DataStructureFeature.DOMAIN_SERVICE,
+            DataStructureFeature.ENTITY,
+            DataStructureFeature.INFRASTRUCTURE_SERVICE,
+            DataStructureFeature.REPOSITORY,
+            DataStructureFeature.SERVICE,
+            DataStructureFeature.SPECIFICATION
+        ]
+
+        if (dataStructure.features.exists[forbiddenFeatures.contains(it)])
+            warning("A value object should not be an aggregate, entity, repository, service, or " +
+                "specification", dataStructure,
+                DataPackage::Literals.DATA_STRUCTURE__FEATURES, featureIndex)
+    }
+
+    /**
      * Perform checks on data fields
      */
     @Check
     def checkDataField(DataField dataField) {
         /* A data field must either have a type or be hidden */
         if (dataField.effectiveType === null && !dataField.hidden) {
-            error('''Field must have a type or be hidden''', dataField,
+            error("Field must have a type or be hidden", dataField,
                     DataPackage::Literals.DATA_FIELD__NAME)
 
             return
@@ -217,21 +503,23 @@ class DataDslValidator extends AbstractDataDslValidator {
 
         if (equalSuperField === null || equalSuperField.hidden) {
             if (dataField.effectiveType === null)
-                error('''Field must have a type''', dataField,
-                    DataPackage::Literals.DATA_FIELD__NAME)
+                error("Field must have a type", dataField, DataPackage::Literals.DATA_FIELD__NAME)
 
         /*
          * A field with a non-hidden super field (that therefore has a type) may not redefine the
-         * super field by having a type
+         * super field by having a type, have features, or be immutable
          */
-        } else if (equalSuperField !== null && !equalSuperField.hidden) {
+        } else {
             var String superQualifiedName = QualifiedName
                 .create(equalSuperField.qualifiedNameParts)
                 .toString
 
             if (dataField.effectiveType !== null)
-                error('''Field cannot redefine inherited field «superQualifiedName» ''', dataField,
+                error('''Field cannot redefine inherited field «superQualifiedName»''', dataField,
                     DataPackage::Literals.DATA_FIELD__NAME)
+            else if (!dataField.features.empty)
+                error("Feature assignment is not allowed for inherited fields", dataField,
+                    DataPackage::Literals.DATA_FIELD__FEATURES)
             else if (dataField.immutable)
                 error("Inherited fields cannot be immutable", dataField,
                     DataPackage::Literals.DATA_FIELD__IMMUTABLE)
@@ -239,10 +527,80 @@ class DataDslValidator extends AbstractDataDslValidator {
     }
 
     /**
+     * Check "part" feature constraints
+     */
+    @Check
+    def checkPartFeatureConstraints(DataField dataField) {
+        val featureIndex = dataField.features.indexOf(DataFieldFeature.PART)
+        if (featureIndex === -1) {
+            return
+        }
+
+        if (dataField.dataStructure === null) {
+            error('''The "part" feature is only allowed on data structure fields''', dataField,
+                DataPackage::Literals.DATA_FIELD__FEATURES, featureIndex)
+
+            return
+        }
+
+        if (!(dataField.effectiveType instanceof DataStructure)) {
+            error('''Only fields with structural type may exhibit the "part" feature''', dataField,
+                DataPackage::Literals.DATA_FIELD__FEATURES, featureIndex)
+
+            return
+        }
+
+        // Defining data structure should be aggregate
+        if (!dataField.dataStructure.hasFeature(DataStructureFeature.AGGREGATE))
+            warning("Parts should only be defined in aggregates", dataField,
+                DataPackage::Literals.DATA_FIELD__FEATURES, featureIndex)
+
+        // Only entities and value objects should be parts
+        val fieldType = dataField.effectiveType as DataStructure
+        if (!fieldType.hasFeature(DataStructureFeature.ENTITY) &&
+            !fieldType.hasFeature(DataStructureFeature.VALUE_OBJECT))
+            warning("Parts should be entities or value objects", dataField,
+                DataPackage::Literals.DATA_FIELD__FEATURES, featureIndex)
+
+        // Part should be in same namespace as aggregate
+        val fieldTypeIsImported = dataField.importedComplexType !== null
+        if (fieldTypeIsImported ||
+            fieldType.closestNamespace != dataField.dataStructure.closestNamespace)
+            warning("Parts should be defined in the same namespace as the aggregate", dataField,
+                DataPackage::Literals.DATA_FIELD__FEATURES, featureIndex)
+    }
+
+    /**
+     * Check "identifier" feature constraints
+     */
+    @Check
+    def checkIdenitfierFeatureConstraints(DataField dataField) {
+        val featureIndex = dataField.features.indexOf(DataFieldFeature.IDENTIFIER)
+        if (featureIndex === -1) {
+            return
+        }
+
+        // Data structure should be an entity
+        if (dataField.dataStructure === null ||
+            !dataField.dataStructure.hasFeature(DataStructureFeature.ENTITY))
+            warning("An identifier should only be defined within an entity", dataField,
+                DataPackage::Literals.DATA_FIELD__FEATURES, featureIndex)
+    }
+
+    /**
      * Perform checks on data operations
      */
     @Check
     def checkOperation(DataOperation dataOperation) {
+        /* Check for unique features */
+        val duplicateIndex = LemmaUtils.getDuplicateIndex(dataOperation.features, [it])
+        if (duplicateIndex > -1) {
+            error("Duplicate feature", dataOperation,
+                DataPackage::Literals.DATA_OPERATION__FEATURES, duplicateIndex)
+            return
+        }
+
+        /* Perform checks related to data structure inheritance */
         val superOperation = dataOperation.findEponymousSuperOperation()
         val superOperationName = if (superOperation !== null)
                 QualifiedName.create(superOperation.qualifiedNameParts).toString
@@ -256,6 +614,13 @@ class DataDslValidator extends AbstractDataDslValidator {
         val redefinitionAttempt = thisIsInherited && !superOperationIsHidden
         val operationTypesDiffer = thisIsInherited &&
             dataOperation.hasNoReturnType != superOperation.hasNoReturnType
+
+        // Inherited operations may not have features
+        if (thisIsInherited && !dataOperation.features.empty) {
+            error("Feature assignment is not allowed for inherited operations", dataOperation,
+                DataPackage::Literals.DATA_OPERATION__FEATURES)
+            return
+        }
 
         if (redefinitionAttempt) {
             // In a redefinition attempt, i.e., when the super operation is not hidden, this
@@ -292,6 +657,122 @@ class DataDslValidator extends AbstractDataDslValidator {
         if (dataOperation.lacksReturnTypeSpecification && (!thisIsHidden || !thisIsInherited))
             error("Operation must have a return type specification or be hidden", dataOperation,
                 DataPackage::Literals.DATA_OPERATION__NAME)
+    }
+
+    /**
+     * Check "closure" feature constraints
+     */
+    @Check
+    def checkClosureFeatureConstraints(DataOperation dataOperation) {
+        val featureIndex = dataOperation.features.indexOf(DataOperationFeature.CLOSURE)
+        if (featureIndex === -1) {
+            return
+        }
+
+        // Operation may not be identifier or validator
+        if (dataOperation.hasFeature(DataOperationFeature.IDENTIFIER) ||
+            dataOperation.hasFeature(DataOperationFeature.VALIDATOR))
+            warning("A closure should not be an identifier or validator", dataOperation,
+                DataPackage::Literals.DATA_OPERATION__FEATURES, featureIndex)
+
+        // A closure should take exactly one parameter and have a return type
+        val hasExactlyOneParameterAndReturnType = dataOperation.parameters.size === 1 &&
+            !dataOperation.hasNoReturnType
+        if (!hasExactlyOneParameterAndReturnType)
+            warning("A closure should take exactly one parameter and have a return type",
+                dataOperation, DataPackage::Literals.DATA_OPERATION__FEATURES, featureIndex)
+
+        // A closure should return the same type as it takes
+        if (hasExactlyOneParameterAndReturnType) {
+            val parameterType = dataOperation.parameters.get(0).effectiveType
+            val returnType = dataOperation.primitiveOrComplexReturnType
+            if (!returnType.isEquivalent(parameterType))
+                warning("A closure should return a value of the same type as its parameter",
+                    dataOperation, DataPackage::Literals.DATA_OPERATION__FEATURES, featureIndex)
+        }
+    }
+
+    /**
+     * Helper to check if type1 is equivalent with type2. In this context, equivalence means that
+     * type1 is identical to type2, or that it is an extension of type2.
+     */
+    private def isEquivalent(Type type1, Type type2) {
+        return if (type1 instanceof PrimitiveType && type2 instanceof PrimitiveType)
+            (type1 as PrimitiveType).typeName == (type2 as PrimitiveType)
+        else if (type1 instanceof DataStructure && type2 instanceof DataStructure) {
+            val dataStructure1 = (type1 as DataStructure)
+            val dataStructure2 = (type2 as DataStructure)
+            dataStructure1.buildQualifiedName(".") == dataStructure2.buildQualifiedName(".") ||
+            dataStructure1.isExtensionOf(dataStructure2)
+        } else if (type1 instanceof ListType && type2 instanceof ListType)
+            (type1 as ListType).buildQualifiedName(".") ==
+                (type2 as ListType).buildQualifiedName(".")
+        else if (type1 instanceof Enumeration && type2 instanceof Enumeration)
+            (type1 as Enumeration).name == (type2 as Enumeration).name
+        else
+            false
+    }
+
+    /**
+     * Check "sideEffectFree" feature constraints
+     */
+    @Check
+    def checkSideEffectFreeFeatureConstraints(DataOperation dataOperation) {
+        val featureIndex = dataOperation.features.indexOf(DataOperationFeature.SIDE_EFFECT_FREE)
+        if (featureIndex === -1) {
+            return
+        }
+
+        // Operation should have a return type
+        if (dataOperation.hasNoReturnType)
+            warning("A side effect free operation should be a function", dataOperation,
+                DataPackage::Literals.DATA_OPERATION__FEATURES, featureIndex)
+    }
+
+    /**
+     * Check "validator" feature constraints
+     */
+    @Check
+    def checkValidatorFeatureConstraints(DataOperation dataOperation) {
+        val featureIndex = dataOperation.features.indexOf(DataOperationFeature.VALIDATOR)
+        if (featureIndex === -1) {
+            return
+        }
+
+        // Defining data structure should be a specification
+        if (!dataOperation.dataStructure.hasFeature(DataStructureFeature.SPECIFICATION))
+            warning("A validator operation should be defined within a specification", dataOperation,
+                DataPackage::Literals.DATA_OPERATION__FEATURES, featureIndex)
+
+        // Operation should have a boolean return type
+        if (dataOperation.hasNoReturnType ||
+            dataOperation.primitiveReturnType === null ||
+            dataOperation.primitiveReturnType.typeName != PrimitiveTypeConstants.BOOLEAN.literal
+        )
+            warning("A validator operation should return a value of type "+
+                '''«PrimitiveTypeConstants.BOOLEAN.literal»''', dataOperation,
+                DataPackage::Literals.DATA_OPERATION__FEATURES, featureIndex)
+    }
+
+    /**
+     * Check "identifier" feature constraints
+     */
+    @Check
+    def checkIdenitfierFeatureConstraints(DataOperation dataOperation) {
+        val featureIndex = dataOperation.features.indexOf(DataOperationFeature.IDENTIFIER)
+        if (featureIndex === -1) {
+            return
+        }
+
+        // Operation may not be validator
+        if (dataOperation.hasFeature(DataOperationFeature.VALIDATOR))
+            warning("An identifier should not be a validator", dataOperation,
+                DataPackage::Literals.DATA_OPERATION__FEATURES, featureIndex)
+
+        // Data structure should be an entity
+        if (!dataOperation.dataStructure.hasFeature(DataStructureFeature.ENTITY))
+            warning("An identifier should only be defined within an entity", dataOperation,
+                DataPackage::Literals.DATA_OPERATION__FEATURES, featureIndex)
     }
 
     /**

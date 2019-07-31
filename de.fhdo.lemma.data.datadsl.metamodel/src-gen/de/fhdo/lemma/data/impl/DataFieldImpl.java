@@ -6,9 +6,9 @@ import com.google.common.base.Objects;
 
 import de.fhdo.lemma.data.ComplexType;
 import de.fhdo.lemma.data.DataField;
+import de.fhdo.lemma.data.DataFieldFeature;
 import de.fhdo.lemma.data.DataPackage;
 import de.fhdo.lemma.data.DataStructure;
-import de.fhdo.lemma.data.FieldFeature;
 import de.fhdo.lemma.data.ImportedComplexType;
 import de.fhdo.lemma.data.ListType;
 import de.fhdo.lemma.data.PrimitiveType;
@@ -50,6 +50,7 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
  * <ul>
  *   <li>{@link de.fhdo.lemma.data.impl.DataFieldImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.impl.DataFieldImpl#isHidden <em>Hidden</em>}</li>
+ *   <li>{@link de.fhdo.lemma.data.impl.DataFieldImpl#isImmutable <em>Immutable</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.impl.DataFieldImpl#getComplexType <em>Complex Type</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.impl.DataFieldImpl#getImportedComplexType <em>Imported Complex Type</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.impl.DataFieldImpl#getPrimitiveType <em>Primitive Type</em>}</li>
@@ -102,6 +103,26 @@ public class DataFieldImpl extends MinimalEObjectImpl.Container implements DataF
     protected boolean hidden = HIDDEN_EDEFAULT;
 
     /**
+     * The default value of the '{@link #isImmutable() <em>Immutable</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isImmutable()
+     * @generated
+     * @ordered
+     */
+    protected static final boolean IMMUTABLE_EDEFAULT = false;
+
+    /**
+     * The cached value of the '{@link #isImmutable() <em>Immutable</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isImmutable()
+     * @generated
+     * @ordered
+     */
+    protected boolean immutable = IMMUTABLE_EDEFAULT;
+
+    /**
      * The cached value of the '{@link #getComplexType() <em>Complex Type</em>}' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -139,7 +160,7 @@ public class DataFieldImpl extends MinimalEObjectImpl.Container implements DataF
      * @generated
      * @ordered
      */
-    protected EList<FieldFeature> features;
+    protected EList<DataFieldFeature> features;
 
     /**
      * <!-- begin-user-doc -->
@@ -204,6 +225,29 @@ public class DataFieldImpl extends MinimalEObjectImpl.Container implements DataF
         hidden = newHidden;
         if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.DATA_FIELD__HIDDEN, oldHidden, hidden));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public boolean isImmutable() {
+        return immutable;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void setImmutable(boolean newImmutable) {
+        boolean oldImmutable = immutable;
+        immutable = newImmutable;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.DATA_FIELD__IMMUTABLE, oldImmutable, immutable));
     }
 
     /**
@@ -342,9 +386,9 @@ public class DataFieldImpl extends MinimalEObjectImpl.Container implements DataF
      * @generated
      */
     @Override
-    public EList<FieldFeature> getFeatures() {
+    public EList<DataFieldFeature> getFeatures() {
         if (features == null) {
-            features = new EDataTypeEList<FieldFeature>(FieldFeature.class, this, DataPackage.DATA_FIELD__FEATURES);
+            features = new EDataTypeEList<DataFieldFeature>(DataFieldFeature.class, this, DataPackage.DATA_FIELD__FEATURES);
         }
         return features;
     }
@@ -590,6 +634,16 @@ public class DataFieldImpl extends MinimalEObjectImpl.Container implements DataF
      * @generated
      */
     @Override
+    public boolean hasFeature(final DataFieldFeature feature) {
+        return this.getFeatures().contains(feature);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
             case DataPackage.DATA_FIELD__IMPORTED_COMPLEX_TYPE:
@@ -656,6 +710,8 @@ public class DataFieldImpl extends MinimalEObjectImpl.Container implements DataF
                 return getName();
             case DataPackage.DATA_FIELD__HIDDEN:
                 return isHidden();
+            case DataPackage.DATA_FIELD__IMMUTABLE:
+                return isImmutable();
             case DataPackage.DATA_FIELD__COMPLEX_TYPE:
                 if (resolve) return getComplexType();
                 return basicGetComplexType();
@@ -690,6 +746,9 @@ public class DataFieldImpl extends MinimalEObjectImpl.Container implements DataF
             case DataPackage.DATA_FIELD__HIDDEN:
                 setHidden((Boolean)newValue);
                 return;
+            case DataPackage.DATA_FIELD__IMMUTABLE:
+                setImmutable((Boolean)newValue);
+                return;
             case DataPackage.DATA_FIELD__COMPLEX_TYPE:
                 setComplexType((ComplexType)newValue);
                 return;
@@ -701,7 +760,7 @@ public class DataFieldImpl extends MinimalEObjectImpl.Container implements DataF
                 return;
             case DataPackage.DATA_FIELD__FEATURES:
                 getFeatures().clear();
-                getFeatures().addAll((Collection<? extends FieldFeature>)newValue);
+                getFeatures().addAll((Collection<? extends DataFieldFeature>)newValue);
                 return;
             case DataPackage.DATA_FIELD__DATA_STRUCTURE:
                 setDataStructure((DataStructure)newValue);
@@ -726,6 +785,9 @@ public class DataFieldImpl extends MinimalEObjectImpl.Container implements DataF
                 return;
             case DataPackage.DATA_FIELD__HIDDEN:
                 setHidden(HIDDEN_EDEFAULT);
+                return;
+            case DataPackage.DATA_FIELD__IMMUTABLE:
+                setImmutable(IMMUTABLE_EDEFAULT);
                 return;
             case DataPackage.DATA_FIELD__COMPLEX_TYPE:
                 setComplexType((ComplexType)null);
@@ -761,6 +823,8 @@ public class DataFieldImpl extends MinimalEObjectImpl.Container implements DataF
                 return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
             case DataPackage.DATA_FIELD__HIDDEN:
                 return hidden != HIDDEN_EDEFAULT;
+            case DataPackage.DATA_FIELD__IMMUTABLE:
+                return immutable != IMMUTABLE_EDEFAULT;
             case DataPackage.DATA_FIELD__COMPLEX_TYPE:
                 return complexType != null;
             case DataPackage.DATA_FIELD__IMPORTED_COMPLEX_TYPE:
@@ -793,6 +857,8 @@ public class DataFieldImpl extends MinimalEObjectImpl.Container implements DataF
                 return buildQualifiedName((String)arguments.get(0));
             case DataPackage.DATA_FIELD___FIND_EPONYMOUS_SUPER_FIELD:
                 return findEponymousSuperField();
+            case DataPackage.DATA_FIELD___HAS_FEATURE__DATAFIELDFEATURE:
+                return hasFeature((DataFieldFeature)arguments.get(0));
         }
         return super.eInvoke(operationID, arguments);
     }
@@ -811,6 +877,8 @@ public class DataFieldImpl extends MinimalEObjectImpl.Container implements DataF
         result.append(name);
         result.append(", hidden: ");
         result.append(hidden);
+        result.append(", immutable: ");
+        result.append(immutable);
         result.append(", features: ");
         result.append(features);
         result.append(')');

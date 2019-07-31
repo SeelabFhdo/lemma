@@ -6,8 +6,11 @@ import org.eclipse.xtext.ide.editor.syntaxcoloring.IHighlightedPositionAcceptor
 import org.eclipse.xtext.util.CancelIndicator
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils
 import de.fhdo.lemma.data.DataPackage
-import org.eclipse.xtext.ui.editor.syntaxcoloring.DefaultHighlightingConfiguration
 import de.fhdo.lemma.data.EnumerationField
+import org.eclipse.emf.ecore.EObject
+import de.fhdo.lemma.data.DataStructure
+import de.fhdo.lemma.data.DataField
+import de.fhdo.lemma.data.DataOperation
 
 /**
  * Provide custom syntax highlighting for certain elements.
@@ -20,7 +23,15 @@ class HighlightingCalculator implements ISemanticHighlightingCalculator {
      */
     override provideHighlightingFor(XtextResource resource, IHighlightedPositionAcceptor acceptor,
         CancelIndicator cancelIndicator) {
-        // Color boolean values as keywords
+        resource.provideHighlightingForBooleanConstants(acceptor)
+        resource.provideHighlightingForFeatures(acceptor)
+    }
+
+    /**
+     * Provide highlighting for boolean values
+     */
+    private def provideHighlightingForBooleanConstants(XtextResource resource,
+        IHighlightedPositionAcceptor acceptor) {
         resource.allContents.forEach[
             val booleanInitializedEnumerationField = it instanceof EnumerationField &&
                 (it as EnumerationField).initializationValue?.booleanValue !== null
@@ -29,10 +40,34 @@ class HighlightingCalculator implements ISemanticHighlightingCalculator {
                     it,
                     DataPackage::Literals.ENUMERATION_FIELD__INITIALIZATION_VALUE
                 ).forEach[
-                    acceptor.addPosition(offset, length,
-                        DefaultHighlightingConfiguration.KEYWORD_ID)
+                    acceptor.addPosition(offset, length, HighlightingConfiguration.KEYWORD_ID)
                 ]
             }
         ]
+    }
+
+    /**
+     * Provide highlighting for features
+     */
+    private def provideHighlightingForFeatures(XtextResource resource,
+        IHighlightedPositionAcceptor acceptor) {
+        resource.allContents.forEach[nodesWithFeatures.forEach[
+            acceptor.addPosition(offset, length, HighlightingConfiguration.FEATURE_ID)
+        ]]
+    }
+
+    /**
+     * Get feature nodes on EObjects that support feature specification
+     */
+    private def getNodesWithFeatures(EObject eObject) {
+        return switch (eObject) {
+            DataStructure: NodeModelUtils.findNodesForFeature(eObject,
+                DataPackage::Literals.DATA_STRUCTURE__FEATURES)
+            DataField: NodeModelUtils.findNodesForFeature(eObject,
+                DataPackage::Literals.DATA_FIELD__FEATURES)
+            DataOperation: NodeModelUtils.findNodesForFeature(eObject,
+                DataPackage::Literals.DATA_OPERATION__FEATURES)
+            default: emptyList
+        }
     }
 }

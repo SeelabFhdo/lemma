@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
+import org.eclipse.emf.ecore.util.EDataTypeEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -30,6 +31,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link de.fhdo.lemma.data.intermediate.impl.IntermediateDataStructureImpl#getFeatureNames <em>Feature Names</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.impl.IntermediateDataStructureImpl#getSuper <em>Super</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.impl.IntermediateDataStructureImpl#getOperations <em>Operations</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.impl.IntermediateDataStructureImpl#getDataFields <em>Data Fields</em>}</li>
@@ -38,6 +40,16 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * @generated
  */
 public class IntermediateDataStructureImpl extends IntermediateComplexTypeImpl implements IntermediateDataStructure {
+    /**
+     * The cached value of the '{@link #getFeatureNames() <em>Feature Names</em>}' attribute list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getFeatureNames()
+     * @generated
+     * @ordered
+     */
+    protected EList<String> featureNames;
+
     /**
      * The cached value of the '{@link #getSuper() <em>Super</em>}' reference.
      * <!-- begin-user-doc -->
@@ -85,6 +97,19 @@ public class IntermediateDataStructureImpl extends IntermediateComplexTypeImpl i
     @Override
     protected EClass eStaticClass() {
         return IntermediatePackage.Literals.INTERMEDIATE_DATA_STRUCTURE;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EList<String> getFeatureNames() {
+        if (featureNames == null) {
+            featureNames = new EDataTypeEList<String>(String.class, this, IntermediatePackage.INTERMEDIATE_DATA_STRUCTURE__FEATURE_NAMES);
+        }
+        return featureNames;
     }
 
     /**
@@ -194,6 +219,8 @@ public class IntermediateDataStructureImpl extends IntermediateComplexTypeImpl i
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
+            case IntermediatePackage.INTERMEDIATE_DATA_STRUCTURE__FEATURE_NAMES:
+                return getFeatureNames();
             case IntermediatePackage.INTERMEDIATE_DATA_STRUCTURE__SUPER:
                 if (resolve) return getSuper();
                 return basicGetSuper();
@@ -214,6 +241,10 @@ public class IntermediateDataStructureImpl extends IntermediateComplexTypeImpl i
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
+            case IntermediatePackage.INTERMEDIATE_DATA_STRUCTURE__FEATURE_NAMES:
+                getFeatureNames().clear();
+                getFeatureNames().addAll((Collection<? extends String>)newValue);
+                return;
             case IntermediatePackage.INTERMEDIATE_DATA_STRUCTURE__SUPER:
                 setSuper((IntermediateDataStructure)newValue);
                 return;
@@ -237,6 +268,9 @@ public class IntermediateDataStructureImpl extends IntermediateComplexTypeImpl i
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
+            case IntermediatePackage.INTERMEDIATE_DATA_STRUCTURE__FEATURE_NAMES:
+                getFeatureNames().clear();
+                return;
             case IntermediatePackage.INTERMEDIATE_DATA_STRUCTURE__SUPER:
                 setSuper((IntermediateDataStructure)null);
                 return;
@@ -258,6 +292,8 @@ public class IntermediateDataStructureImpl extends IntermediateComplexTypeImpl i
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
+            case IntermediatePackage.INTERMEDIATE_DATA_STRUCTURE__FEATURE_NAMES:
+                return featureNames != null && !featureNames.isEmpty();
             case IntermediatePackage.INTERMEDIATE_DATA_STRUCTURE__SUPER:
                 return super_ != null;
             case IntermediatePackage.INTERMEDIATE_DATA_STRUCTURE__OPERATIONS:
@@ -266,6 +302,22 @@ public class IntermediateDataStructureImpl extends IntermediateComplexTypeImpl i
                 return dataFields != null && !dataFields.isEmpty();
         }
         return super.eIsSet(featureID);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public String toString() {
+        if (eIsProxy()) return super.toString();
+
+        StringBuilder result = new StringBuilder(super.toString());
+        result.append(" (featureNames: ");
+        result.append(featureNames);
+        result.append(')');
+        return result.toString();
     }
 
 } //IntermediateDataStructureImpl

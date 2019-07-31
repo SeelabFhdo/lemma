@@ -153,6 +153,7 @@ class IntermediateImportedTechnologySpecificType extends IntermediateType {
  * Data structure
  */
 class IntermediateDataStructure extends IntermediateComplexType {
+    String[] featureNames
     refers IntermediateDataStructure ^super
     contains IntermediateDataOperation[] operations opposite dataStructure
     contains IntermediateDataField[] dataFields opposite dataStructure
@@ -167,6 +168,7 @@ class IntermediateDataOperation {
     boolean hidden
     boolean inherited
     boolean hasNoReturnType
+    String[] featureNames
 
     contains IntermediateType[0..1] returnType opposite operation
     contains IntermediateType[0..1] originalReturnType

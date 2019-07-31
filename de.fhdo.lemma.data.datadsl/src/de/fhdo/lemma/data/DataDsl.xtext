@@ -32,8 +32,24 @@ ComplexType returns ComplexType:
     DataStructure | ListType | Enumeration
 ;
 
+enum DataStructureFeature returns DataStructureFeature:
+    AGGREGATE = "aggregate" |
+    APPLICATION_SERVICE = "applicationService" |
+    DOMAIN_EVENT = "domainEvent" |
+    DOMAIN_SERVICE = "domainService" |
+    ENTITY = "entity" |
+    FACTORY = "factory" |
+    INFRASTRUCTURE_SERVICE = "infrastructureService" |
+    REPOSITORY = "repository" |
+    SERVICE = "service" |
+    SPECIFICATION = "specification" |
+    VALUE_OBJECT = "valueObject"
+;
+
 DataStructure returns DataStructure:
-    'structure' name=ID ('extends' super=[DataStructure|QualifiedName])? '{'
+    'structure' name=ID
+    ('<' features+=DataStructureFeature (',' features+=DataStructureFeature)* '>')?
+    ('extends' super=[DataStructure|QualifiedName])? '{'
         (
             (dataFields+=DataField | operations+=DataOperation)
             (',' (dataFields+=DataField | operations+=DataOperation))*
@@ -51,6 +67,9 @@ ListType returns ListType:
     '}'
 ;
 
+enum DataFieldFeature returns DataFieldFeature:
+    IDENTIFIER = "identifier" |
+    PART = "part"
 ;
 
 DataField returns DataField:
@@ -62,9 +81,7 @@ DataField returns DataField:
         importedComplexType=ImportedComplexType
     )?
     name=ID
-    ('<'
-        features+=FieldFeature (',' features+=FieldFeature)*
-    '>')?
+    ('<' features+=DataFieldFeature (',' features+=DataFieldFeature)* '>')?
 ;
 
 Enumeration returns Enumeration:
@@ -75,6 +92,13 @@ Enumeration returns Enumeration:
 
 EnumerationField returns EnumerationField:
     name=ID ('(' initializationValue=PrimitiveValue ')')?
+;
+
+enum DataOperationFeature returns DataOperationFeature:
+    CLOSURE = "closure" |
+    IDENTIFIER = "identifier" |
+    SIDE_EFFECT_FREE = "sideEffectFree" |
+    VALIDATOR = "validator"
 ;
 
 DataOperation returns DataOperation:
@@ -90,6 +114,7 @@ DataOperation returns DataOperation:
     )
     name=ID
     ('(' parameters+=DataOperationParameter? (',' parameters+=DataOperationParameter)* ')')?
+    ('<' features+=DataOperationFeature (',' features+=DataOperationFeature)* '>')?
 ;
 
 DataOperationParameter returns DataOperationParameter:

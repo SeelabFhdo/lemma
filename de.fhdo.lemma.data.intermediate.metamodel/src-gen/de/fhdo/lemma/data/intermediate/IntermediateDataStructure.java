@@ -18,6 +18,7 @@ import org.eclipse.emf.common.util.EList;
  * The following features are supported:
  * </p>
  * <ul>
+ *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateDataStructure#getFeatureNames <em>Feature Names</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateDataStructure#getSuper <em>Super</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateDataStructure#getOperations <em>Operations</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateDataStructure#getDataFields <em>Data Fields</em>}</li>
@@ -28,6 +29,22 @@ import org.eclipse.emf.common.util.EList;
  * @generated
  */
 public interface IntermediateDataStructure extends IntermediateComplexType {
+    /**
+     * Returns the value of the '<em><b>Feature Names</b></em>' attribute list.
+     * The list contents are of type {@link java.lang.String}.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Feature Names</em>' attribute list isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Feature Names</em>' attribute list.
+     * @see de.fhdo.lemma.data.intermediate.IntermediatePackage#getIntermediateDataStructure_FeatureNames()
+     * @model unique="false"
+     * @generated
+     */
+    EList<String> getFeatureNames();
+
     /**
      * Returns the value of the '<em><b>Super</b></em>' reference.
      * <!-- begin-user-doc -->

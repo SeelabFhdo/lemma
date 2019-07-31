@@ -4,22 +4,33 @@
 package de.fhdo.lemma.data.validation;
 
 import com.google.common.base.Function;
+import com.google.common.base.Objects;
+import com.google.common.collect.Iterables;
 import de.fhdo.lemma.data.ComplexType;
 import de.fhdo.lemma.data.ComplexTypeImport;
 import de.fhdo.lemma.data.Context;
 import de.fhdo.lemma.data.DataField;
+import de.fhdo.lemma.data.DataFieldFeature;
 import de.fhdo.lemma.data.DataModel;
 import de.fhdo.lemma.data.DataOperation;
+import de.fhdo.lemma.data.DataOperationFeature;
 import de.fhdo.lemma.data.DataOperationParameter;
 import de.fhdo.lemma.data.DataPackage;
 import de.fhdo.lemma.data.DataStructure;
-import de.fhdo.lemma.data.FieldFeature;
+import de.fhdo.lemma.data.DataStructureFeature;
+import de.fhdo.lemma.data.Enumeration;
+import de.fhdo.lemma.data.ImportedComplexType;
+import de.fhdo.lemma.data.ListType;
+import de.fhdo.lemma.data.PrimitiveType;
+import de.fhdo.lemma.data.PrimitiveTypeConstants;
 import de.fhdo.lemma.data.Type;
 import de.fhdo.lemma.data.Version;
 import de.fhdo.lemma.data.validation.AbstractDataDslValidator;
 import de.fhdo.lemma.utils.LemmaUtils;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -29,6 +40,7 @@ import org.eclipse.xtext.naming.QualifiedName;
 import org.eclipse.xtext.validation.Check;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
+import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.ListExtensions;
 
 /**
@@ -247,32 +259,352 @@ public class DataDslValidator extends AbstractDataDslValidator {
   }
   
   /**
+   * Check data structure for unique features
+   */
+  @Check
+  public void checkUniqueFeatures(final DataStructure dataStructure) {
+    final Function<DataStructureFeature, DataStructureFeature> _function = (DataStructureFeature it) -> {
+      return it;
+    };
+    final Integer duplicateIndex = LemmaUtils.<DataStructureFeature, DataStructureFeature>getDuplicateIndex(dataStructure.getFeatures(), _function);
+    if (((duplicateIndex).intValue() > (-1))) {
+      this.error("Duplicate feature", dataStructure, 
+        DataPackage.Literals.DATA_STRUCTURE__FEATURES, (duplicateIndex).intValue());
+    }
+  }
+  
+  /**
+   * Check "aggregate" feature constraints
+   */
+  @Check
+  public void checkAggregateFeatureConstraints(final DataStructure dataStructure) {
+    final int featureIndex = dataStructure.getFeatures().indexOf(DataStructureFeature.AGGREGATE);
+    if ((featureIndex == (-1))) {
+      return;
+    }
+    boolean _hasFeature = dataStructure.hasFeature(DataStructureFeature.ENTITY);
+    boolean _not = (!_hasFeature);
+    if (_not) {
+      this.warning("Only entities should be aggregates", dataStructure, 
+        DataPackage.Literals.DATA_STRUCTURE__FEATURES, featureIndex);
+    }
+    final Function1<DataField, EList<DataFieldFeature>> _function = (DataField it) -> {
+      return it.getFeatures();
+    };
+    final Iterable<DataFieldFeature> effectiveDataFieldFeatures = Iterables.<DataFieldFeature>concat(ListExtensions.<DataField, EList<DataFieldFeature>>map(dataStructure.getEffectiveFields(), _function));
+    final Function1<DataFieldFeature, Boolean> _function_1 = (DataFieldFeature it) -> {
+      return Boolean.valueOf(Objects.equal(it, DataFieldFeature.PART));
+    };
+    boolean _exists = IterableExtensions.<DataFieldFeature>exists(effectiveDataFieldFeatures, _function_1);
+    boolean _not_1 = (!_exists);
+    if (_not_1) {
+      this.warning("Aggregate should contain at least one part", dataStructure, 
+        DataPackage.Literals.DATA_STRUCTURE__FEATURES, featureIndex);
+    }
+  }
+  
+  /**
+   * Check "applicationService" feature constraints
+   */
+  @Check
+  public void checkApplicationServiceFeatureConstraints(final DataStructure dataStructure) {
+    this.checkServiceFeatureConstraints(dataStructure, DataStructureFeature.APPLICATION_SERVICE);
+  }
+  
+  /**
+   * Generic helper to check constraints of a certain peculiarity of the "service" feature
+   */
+  public void checkServiceFeatureConstraints(final DataStructure dataStructure, final DataStructureFeature serviceFeature) {
+    final int featureIndex = dataStructure.getFeatures().indexOf(serviceFeature);
+    if ((featureIndex == (-1))) {
+      return;
+    }
+    boolean _hasAdditionalDomainFeatures = this.hasAdditionalDomainFeatures(dataStructure, serviceFeature);
+    if (_hasAdditionalDomainFeatures) {
+      this.warning("A service should not exhibit other domain features", dataStructure, 
+        DataPackage.Literals.DATA_STRUCTURE__FEATURES, featureIndex);
+    }
+    boolean _isEmpty = dataStructure.getEffectiveFields().isEmpty();
+    boolean _not = (!_isEmpty);
+    if (_not) {
+      this.warning("A service should only comprise operations", dataStructure, 
+        DataPackage.Literals.DATA_STRUCTURE__FEATURES, featureIndex);
+    }
+    boolean _isEmpty_1 = dataStructure.getEffectiveOperations().isEmpty();
+    if (_isEmpty_1) {
+      this.warning("A service should comprise at least one operation", dataStructure, 
+        DataPackage.Literals.DATA_STRUCTURE__FEATURES, featureIndex);
+    }
+  }
+  
+  /**
+   * Helper to check if a data structure has also other domain-driven-design-related features than
+   * a given one
+   */
+  private boolean hasAdditionalDomainFeatures(final DataStructure structure, final DataStructureFeature feature) {
+    final Function1<DataStructureFeature, Boolean> _function = (DataStructureFeature it) -> {
+      return Boolean.valueOf(structure.getAllDomainFeatures().contains(it));
+    };
+    final Iterable<DataStructureFeature> domainFeaturesOnStructure = IterableExtensions.<DataStructureFeature>filter(structure.getFeatures(), _function);
+    return ((IterableExtensions.size(domainFeaturesOnStructure) > 1) || 
+      (!IterableExtensions.<DataStructureFeature>exists(domainFeaturesOnStructure, ((Function1<DataStructureFeature, Boolean>) (DataStructureFeature it) -> {
+        return Boolean.valueOf(Objects.equal(it, feature));
+      }))));
+  }
+  
+  /**
+   * Check "domainEvent" feature constraints
+   */
+  @Check
+  public void checkDomainEventFeatureConstraints(final DataStructure dataStructure) {
+    final int featureIndex = dataStructure.getFeatures().indexOf(DataStructureFeature.DOMAIN_EVENT);
+    if ((featureIndex == (-1))) {
+      return;
+    }
+    boolean _hasFeature = dataStructure.hasFeature(DataStructureFeature.VALUE_OBJECT);
+    boolean _not = (!_hasFeature);
+    if (_not) {
+      this.warning("Only value objects should be domain events", dataStructure, 
+        DataPackage.Literals.DATA_STRUCTURE__FEATURES, featureIndex);
+    }
+  }
+  
+  /**
+   * Check "domainService" feature constraints
+   */
+  @Check
+  public void checkDomainServiceFeatureConstraints(final DataStructure dataStructure) {
+    this.checkServiceFeatureConstraints(dataStructure, DataStructureFeature.DOMAIN_SERVICE);
+  }
+  
+  /**
+   * Check "entity" feature constraints
+   */
+  @Check
+  public void checkEntityFeatureConstraints(final DataStructure dataStructure) {
+    final int featureIndex = dataStructure.getFeatures().indexOf(DataStructureFeature.ENTITY);
+    if ((featureIndex == (-1))) {
+      return;
+    }
+    final Function1<DataField, EList<DataFieldFeature>> _function = (DataField it) -> {
+      return it.getFeatures();
+    };
+    final Iterable<DataFieldFeature> dataFieldFeatures = Iterables.<DataFieldFeature>concat(ListExtensions.<DataField, EList<DataFieldFeature>>map(dataStructure.getDataFields(), _function));
+    final Function1<DataOperation, EList<DataOperationFeature>> _function_1 = (DataOperation it) -> {
+      return it.getFeatures();
+    };
+    final Function1<DataOperationFeature, Boolean> _function_2 = (DataOperationFeature it) -> {
+      return Boolean.valueOf(Objects.equal(it, DataOperationFeature.IDENTIFIER));
+    };
+    final Iterable<DataOperationFeature> identifierOperations = IterableExtensions.<DataOperationFeature>filter(Iterables.<DataOperationFeature>concat(ListExtensions.<DataOperation, EList<DataOperationFeature>>map(dataStructure.getOperations(), _function_1)), _function_2);
+    final Function1<DataFieldFeature, Boolean> _function_3 = (DataFieldFeature it) -> {
+      return Boolean.valueOf(Objects.equal(it, DataFieldFeature.IDENTIFIER));
+    };
+    final boolean hasIdentifierFields = IterableExtensions.<DataFieldFeature>exists(dataFieldFeatures, _function_3);
+    boolean _isEmpty = IterableExtensions.isEmpty(identifierOperations);
+    final boolean hasIdentifierOperations = (!_isEmpty);
+    if (((!hasIdentifierFields) && (!hasIdentifierOperations))) {
+      this.warning(("At least one non-inherited field or operation should be an identifier for " + 
+        "the entity"), dataStructure, DataPackage.Literals.DATA_STRUCTURE__FEATURES, featureIndex);
+    } else {
+      if ((hasIdentifierFields && hasIdentifierOperations)) {
+        this.warning("Identifier fields and operations should not be mixed", dataStructure, 
+          DataPackage.Literals.DATA_STRUCTURE__FEATURES, featureIndex);
+      }
+    }
+    int _size = IterableExtensions.size(identifierOperations);
+    boolean _greaterThan = (_size > 1);
+    if (_greaterThan) {
+      this.warning("Only one operation should be an identifier for the entity", dataStructure, 
+        DataPackage.Literals.DATA_STRUCTURE__FEATURES, featureIndex);
+    }
+  }
+  
+  /**
+   * Check "factory" feature constraints
+   */
+  @Check
+  public void checkFactoryFeatureConstraints(final DataStructure dataStructure) {
+    final int featureIndex = dataStructure.getFeatures().indexOf(DataStructureFeature.FACTORY);
+    if ((featureIndex == (-1))) {
+      return;
+    }
+    boolean _hasAdditionalDomainFeatures = this.hasAdditionalDomainFeatures(dataStructure, DataStructureFeature.FACTORY);
+    if (_hasAdditionalDomainFeatures) {
+      this.warning("A factory should not exhibit other domain features", dataStructure, 
+        DataPackage.Literals.DATA_STRUCTURE__FEATURES, featureIndex);
+    }
+    boolean _isEmpty = dataStructure.getEffectiveFields().isEmpty();
+    boolean _not = (!_isEmpty);
+    if (_not) {
+      this.warning("A data structure should only comprise operations", dataStructure, 
+        DataPackage.Literals.DATA_STRUCTURE__FEATURES, featureIndex);
+    }
+    final Function1<DataOperation, Boolean> _function = (DataOperation it) -> {
+      boolean _or = false;
+      if ((it.isHasNoReturnType() || 
+        (!(it.getPrimitiveOrComplexReturnType() instanceof DataStructure)))) {
+        _or = true;
+      } else {
+        boolean _xblockexpression = false;
+        {
+          Type _primitiveOrComplexReturnType = it.getPrimitiveOrComplexReturnType();
+          final DataStructure dataStructureReturnType = ((DataStructure) _primitiveOrComplexReturnType);
+          _xblockexpression = ((!dataStructureReturnType.hasFeature(DataStructureFeature.AGGREGATE)) && 
+            (!dataStructureReturnType.hasFeature(DataStructureFeature.VALUE_OBJECT)));
+        }
+        _or = _xblockexpression;
+      }
+      return Boolean.valueOf(_or);
+    };
+    final boolean hasOperationsWithWrongReturnTypes = IterableExtensions.<DataOperation>exists(dataStructure.getEffectiveOperations(), _function);
+    if (hasOperationsWithWrongReturnTypes) {
+      this.warning("Factory operations should return aggregates or value objects", dataStructure, 
+        DataPackage.Literals.DATA_STRUCTURE__FEATURES, featureIndex);
+    }
+  }
+  
+  /**
+   * Check "infrastructureService" feature constraints
+   */
+  @Check
+  public void checkInfrastructureServiceFeatureConstraints(final DataStructure dataStructure) {
+    this.checkServiceFeatureConstraints(dataStructure, DataStructureFeature.INFRASTRUCTURE_SERVICE);
+  }
+  
+  /**
+   * Check "repository" feature constraints
+   */
+  @Check
+  public void checkRepositoryFeatureConstraints(final DataStructure dataStructure) {
+    final int featureIndex = dataStructure.getFeatures().indexOf(DataStructureFeature.REPOSITORY);
+    if ((featureIndex == (-1))) {
+      return;
+    }
+    boolean _hasAdditionalDomainFeatures = this.hasAdditionalDomainFeatures(dataStructure, DataStructureFeature.REPOSITORY);
+    if (_hasAdditionalDomainFeatures) {
+      this.warning("A repository should not exhibit other domain features", dataStructure, 
+        DataPackage.Literals.DATA_STRUCTURE__FEATURES, featureIndex);
+    }
+    boolean _isEmpty = dataStructure.getEffectiveFields().isEmpty();
+    boolean _not = (!_isEmpty);
+    if (_not) {
+      this.warning("A repository should only comprise operations", dataStructure, 
+        DataPackage.Literals.DATA_STRUCTURE__FEATURES, featureIndex);
+    }
+    boolean _isEmpty_1 = dataStructure.getEffectiveOperations().isEmpty();
+    if (_isEmpty_1) {
+      this.warning("A repository should comprise at least one operation", dataStructure, 
+        DataPackage.Literals.DATA_STRUCTURE__FEATURES, featureIndex);
+    }
+    final Function1<DataOperation, EList<DataOperationParameter>> _function = (DataOperation it) -> {
+      return it.getParameters();
+    };
+    final Iterable<DataOperationParameter> allDataOperationParameters = Iterables.<DataOperationParameter>concat(ListExtensions.<DataOperation, EList<DataOperationParameter>>map(dataStructure.getEffectiveOperations(), _function));
+    final Function1<DataOperationParameter, Boolean> _function_1 = (DataOperationParameter it) -> {
+      boolean _switchResult = false;
+      Type _effectiveType = it.getEffectiveType();
+      boolean _matched = false;
+      if (_effectiveType instanceof PrimitiveType) {
+        _matched=true;
+        _switchResult = false;
+      }
+      if (!_matched) {
+        if (_effectiveType instanceof DataStructure) {
+          _matched=true;
+          boolean _xblockexpression = false;
+          {
+            Type _effectiveType_1 = it.getEffectiveType();
+            final DataStructure parameterType = ((DataStructure) _effectiveType_1);
+            _xblockexpression = ((!parameterType.hasFeature(DataStructureFeature.ENTITY)) && 
+              (!parameterType.hasFeature(DataStructureFeature.VALUE_OBJECT)));
+          }
+          _switchResult = _xblockexpression;
+        }
+      }
+      if (!_matched) {
+        _switchResult = true;
+      }
+      return Boolean.valueOf(_switchResult);
+    };
+    final boolean handlesNotOnlyEntitiesOrValueObjects = IterableExtensions.<DataOperationParameter>exists(allDataOperationParameters, _function_1);
+    if (handlesNotOnlyEntitiesOrValueObjects) {
+      this.warning(("Complex typed parameters of repository operations should be entities or " + 
+        "value objects"), dataStructure, 
+        DataPackage.Literals.DATA_STRUCTURE__FEATURES, featureIndex);
+    }
+  }
+  
+  /**
+   * Check "service" feature constraints
+   */
+  @Check
+  public void checkServiceFeatureConstraints(final DataStructure dataStructure) {
+    this.checkServiceFeatureConstraints(dataStructure, DataStructureFeature.SERVICE);
+  }
+  
+  /**
+   * Check "specification" feature constraints
+   */
+  @Check
+  public void checkSpecificationFeatureConstraints(final DataStructure dataStructure) {
+    final int featureIndex = dataStructure.getFeatures().indexOf(DataStructureFeature.SPECIFICATION);
+    if ((featureIndex == (-1))) {
+      return;
+    }
+    boolean _hasAdditionalDomainFeatures = this.hasAdditionalDomainFeatures(dataStructure, DataStructureFeature.SPECIFICATION);
+    if (_hasAdditionalDomainFeatures) {
+      this.warning("A specification should not exhibit other domain features", dataStructure, 
+        DataPackage.Literals.DATA_STRUCTURE__FEATURES, featureIndex);
+    }
+    final Function1<DataOperation, Boolean> _function = (DataOperation it) -> {
+      return Boolean.valueOf(it.hasFeature(DataOperationFeature.VALIDATOR));
+    };
+    boolean _exists = IterableExtensions.<DataOperation>exists(dataStructure.getEffectiveOperations(), _function);
+    boolean _not = (!_exists);
+    if (_not) {
+      this.warning("A specification should comprise at least one validator operation", dataStructure, DataPackage.Literals.DATA_STRUCTURE__FEATURES, featureIndex);
+    }
+  }
+  
+  /**
+   * Check "valueObject" feature constraints
+   */
+  @Check
+  public void checkValueObjectFeatureConstraints(final DataStructure dataStructure) {
+    final int featureIndex = dataStructure.getFeatures().indexOf(DataStructureFeature.VALUE_OBJECT);
+    if ((featureIndex == (-1))) {
+      return;
+    }
+    final List<DataStructureFeature> forbiddenFeatures = Collections.<DataStructureFeature>unmodifiableList(CollectionLiterals.<DataStructureFeature>newArrayList(DataStructureFeature.AGGREGATE, DataStructureFeature.APPLICATION_SERVICE, DataStructureFeature.DOMAIN_SERVICE, DataStructureFeature.ENTITY, DataStructureFeature.INFRASTRUCTURE_SERVICE, DataStructureFeature.REPOSITORY, DataStructureFeature.SERVICE, DataStructureFeature.SPECIFICATION));
+    final Function1<DataStructureFeature, Boolean> _function = (DataStructureFeature it) -> {
+      return Boolean.valueOf(forbiddenFeatures.contains(it));
+    };
+    boolean _exists = IterableExtensions.<DataStructureFeature>exists(dataStructure.getFeatures(), _function);
+    if (_exists) {
+      this.warning(("A value object should not be an aggregate, entity, repository, service, or " + 
+        "specification"), dataStructure, 
+        DataPackage.Literals.DATA_STRUCTURE__FEATURES, featureIndex);
+    }
+  }
+  
+  /**
    * Perform checks on data fields
    */
   @Check
   public void checkDataField(final DataField dataField) {
     if (((dataField.getEffectiveType() == null) && (!dataField.isHidden()))) {
-      StringConcatenation _builder = new StringConcatenation();
-      _builder.append("Field must have a type or be hidden");
-      this.error(_builder.toString(), dataField, 
+      this.error("Field must have a type or be hidden", dataField, 
         DataPackage.Literals.DATA_FIELD__NAME);
       return;
     }
-    final Function<FieldFeature, FieldFeature> _function = (FieldFeature it) -> {
+    final Function<DataFieldFeature, DataFieldFeature> _function = (DataFieldFeature it) -> {
       return it;
     };
-    final Integer duplicateFeatureIndex = LemmaUtils.<FieldFeature, FieldFeature>getDuplicateIndex(dataField.getFeatures(), _function);
+    final Integer duplicateFeatureIndex = LemmaUtils.<DataFieldFeature, DataFieldFeature>getDuplicateIndex(dataField.getFeatures(), _function);
     if (((duplicateFeatureIndex).intValue() > (-1))) {
       this.error("Duplicate feature", dataField, 
         DataPackage.Literals.DATA_FIELD__FEATURES, (duplicateFeatureIndex).intValue());
-      return;
-    }
-    final int derivedFeatureIndex = dataField.getFeatures().indexOf(FieldFeature.DERIVED);
-    if (((dataField.getDataStructure() == null) && (derivedFeatureIndex > (-1)))) {
-      StringConcatenation _builder_1 = new StringConcatenation();
-      _builder_1.append("The \"derived\" feature is only allowed on data structure fields");
-      this.error(_builder_1.toString(), dataField, 
-        DataPackage.Literals.DATA_FIELD__FEATURES, derivedFeatureIndex);
       return;
     }
     final DataField equalSuperField = dataField.findEponymousSuperField();
@@ -280,25 +612,97 @@ public class DataDslValidator extends AbstractDataDslValidator {
       Type _effectiveType = dataField.getEffectiveType();
       boolean _tripleEquals = (_effectiveType == null);
       if (_tripleEquals) {
-        StringConcatenation _builder_2 = new StringConcatenation();
-        _builder_2.append("Field must have a type");
-        this.error(_builder_2.toString(), dataField, 
-          DataPackage.Literals.DATA_FIELD__NAME);
+        this.error("Field must have a type", dataField, DataPackage.Literals.DATA_FIELD__NAME);
       }
     } else {
-      if (((equalSuperField != null) && (!equalSuperField.isHidden()))) {
-        String superQualifiedName = QualifiedName.create(equalSuperField.getQualifiedNameParts()).toString();
-        Type _effectiveType_1 = dataField.getEffectiveType();
-        boolean _tripleNotEquals = (_effectiveType_1 != null);
-        if (_tripleNotEquals) {
-          StringConcatenation _builder_3 = new StringConcatenation();
-          _builder_3.append("Field cannot redefine inherited field ");
-          _builder_3.append(superQualifiedName);
-          _builder_3.append(" ");
-          this.error(_builder_3.toString(), dataField, 
-            DataPackage.Literals.DATA_FIELD__NAME);
+      String superQualifiedName = QualifiedName.create(equalSuperField.getQualifiedNameParts()).toString();
+      Type _effectiveType_1 = dataField.getEffectiveType();
+      boolean _tripleNotEquals = (_effectiveType_1 != null);
+      if (_tripleNotEquals) {
+        StringConcatenation _builder = new StringConcatenation();
+        _builder.append("Field cannot redefine inherited field ");
+        _builder.append(superQualifiedName);
+        this.error(_builder.toString(), dataField, 
+          DataPackage.Literals.DATA_FIELD__NAME);
+      } else {
+        boolean _isEmpty = dataField.getFeatures().isEmpty();
+        boolean _not = (!_isEmpty);
+        if (_not) {
+          this.error("Feature assignment is not allowed for inherited fields", dataField, 
+            DataPackage.Literals.DATA_FIELD__FEATURES);
+        } else {
+          boolean _isImmutable = dataField.isImmutable();
+          if (_isImmutable) {
+            this.error("Inherited fields cannot be immutable", dataField, 
+              DataPackage.Literals.DATA_FIELD__IMMUTABLE);
+          }
         }
       }
+    }
+  }
+  
+  /**
+   * Check "part" feature constraints
+   */
+  @Check
+  public void checkPartFeatureConstraints(final DataField dataField) {
+    final int featureIndex = dataField.getFeatures().indexOf(DataFieldFeature.PART);
+    if ((featureIndex == (-1))) {
+      return;
+    }
+    DataStructure _dataStructure = dataField.getDataStructure();
+    boolean _tripleEquals = (_dataStructure == null);
+    if (_tripleEquals) {
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("The \"part\" feature is only allowed on data structure fields");
+      this.error(_builder.toString(), dataField, 
+        DataPackage.Literals.DATA_FIELD__FEATURES, featureIndex);
+      return;
+    }
+    Type _effectiveType = dataField.getEffectiveType();
+    boolean _not = (!(_effectiveType instanceof DataStructure));
+    if (_not) {
+      StringConcatenation _builder_1 = new StringConcatenation();
+      _builder_1.append("Only fields with structural type may exhibit the \"part\" feature");
+      this.error(_builder_1.toString(), dataField, 
+        DataPackage.Literals.DATA_FIELD__FEATURES, featureIndex);
+      return;
+    }
+    boolean _hasFeature = dataField.getDataStructure().hasFeature(DataStructureFeature.AGGREGATE);
+    boolean _not_1 = (!_hasFeature);
+    if (_not_1) {
+      this.warning("Parts should only be defined in aggregates", dataField, 
+        DataPackage.Literals.DATA_FIELD__FEATURES, featureIndex);
+    }
+    Type _effectiveType_1 = dataField.getEffectiveType();
+    final DataStructure fieldType = ((DataStructure) _effectiveType_1);
+    if (((!fieldType.hasFeature(DataStructureFeature.ENTITY)) && 
+      (!fieldType.hasFeature(DataStructureFeature.VALUE_OBJECT)))) {
+      this.warning("Parts should be entities or value objects", dataField, 
+        DataPackage.Literals.DATA_FIELD__FEATURES, featureIndex);
+    }
+    ImportedComplexType _importedComplexType = dataField.getImportedComplexType();
+    final boolean fieldTypeIsImported = (_importedComplexType != null);
+    if ((fieldTypeIsImported || 
+      (!Objects.equal(fieldType.getClosestNamespace(), dataField.getDataStructure().getClosestNamespace())))) {
+      this.warning("Parts should be defined in the same namespace as the aggregate", dataField, 
+        DataPackage.Literals.DATA_FIELD__FEATURES, featureIndex);
+    }
+  }
+  
+  /**
+   * Check "identifier" feature constraints
+   */
+  @Check
+  public void checkIdenitfierFeatureConstraints(final DataField dataField) {
+    final int featureIndex = dataField.getFeatures().indexOf(DataFieldFeature.IDENTIFIER);
+    if ((featureIndex == (-1))) {
+      return;
+    }
+    if (((dataField.getDataStructure() == null) || 
+      (!dataField.getDataStructure().hasFeature(DataStructureFeature.ENTITY)))) {
+      this.warning("An identifier should only be defined within an entity", dataField, 
+        DataPackage.Literals.DATA_FIELD__FEATURES, featureIndex);
     }
   }
   
@@ -307,6 +711,15 @@ public class DataDslValidator extends AbstractDataDslValidator {
    */
   @Check
   public void checkOperation(final DataOperation dataOperation) {
+    final Function<DataOperationFeature, DataOperationFeature> _function = (DataOperationFeature it) -> {
+      return it;
+    };
+    final Integer duplicateIndex = LemmaUtils.<DataOperationFeature, DataOperationFeature>getDuplicateIndex(dataOperation.getFeatures(), _function);
+    if (((duplicateIndex).intValue() > (-1))) {
+      this.error("Duplicate feature", dataOperation, 
+        DataPackage.Literals.DATA_OPERATION__FEATURES, (duplicateIndex).intValue());
+      return;
+    }
     final DataOperation superOperation = dataOperation.findEponymousSuperOperation();
     String _xifexpression = null;
     if ((superOperation != null)) {
@@ -321,6 +734,11 @@ public class DataDslValidator extends AbstractDataDslValidator {
     final boolean redefinitionAttempt = (thisIsInherited && (!superOperationIsHidden));
     final boolean operationTypesDiffer = (thisIsInherited && 
       (dataOperation.isHasNoReturnType() != superOperation.isHasNoReturnType()));
+    if ((thisIsInherited && (!dataOperation.getFeatures().isEmpty()))) {
+      this.error("Feature assignment is not allowed for inherited operations", dataOperation, 
+        DataPackage.Literals.DATA_OPERATION__FEATURES);
+      return;
+    }
     if (redefinitionAttempt) {
       if ((!thisIsHidden)) {
         StringConcatenation _builder = new StringConcatenation();
@@ -360,6 +778,145 @@ public class DataDslValidator extends AbstractDataDslValidator {
     if ((dataOperation.isLacksReturnTypeSpecification() && ((!thisIsHidden) || (!thisIsInherited)))) {
       this.error("Operation must have a return type specification or be hidden", dataOperation, 
         DataPackage.Literals.DATA_OPERATION__NAME);
+    }
+  }
+  
+  /**
+   * Check "closure" feature constraints
+   */
+  @Check
+  public void checkClosureFeatureConstraints(final DataOperation dataOperation) {
+    final int featureIndex = dataOperation.getFeatures().indexOf(DataOperationFeature.CLOSURE);
+    if ((featureIndex == (-1))) {
+      return;
+    }
+    if ((dataOperation.hasFeature(DataOperationFeature.IDENTIFIER) || 
+      dataOperation.hasFeature(DataOperationFeature.VALIDATOR))) {
+      this.warning("A closure should not be an identifier or validator", dataOperation, 
+        DataPackage.Literals.DATA_OPERATION__FEATURES, featureIndex);
+    }
+    final boolean hasExactlyOneParameterAndReturnType = ((dataOperation.getParameters().size() == 1) && 
+      (!dataOperation.isHasNoReturnType()));
+    if ((!hasExactlyOneParameterAndReturnType)) {
+      this.warning("A closure should take exactly one parameter and have a return type", dataOperation, DataPackage.Literals.DATA_OPERATION__FEATURES, featureIndex);
+    }
+    if (hasExactlyOneParameterAndReturnType) {
+      final Type parameterType = dataOperation.getParameters().get(0).getEffectiveType();
+      final Type returnType = dataOperation.getPrimitiveOrComplexReturnType();
+      boolean _isEquivalent = this.isEquivalent(returnType, parameterType);
+      boolean _not = (!_isEquivalent);
+      if (_not) {
+        this.warning("A closure should return a value of the same type as its parameter", dataOperation, DataPackage.Literals.DATA_OPERATION__FEATURES, featureIndex);
+      }
+    }
+  }
+  
+  /**
+   * Helper to check if type1 is equivalent with type2. In this context, equivalence means that
+   * type1 is identical to type2, or that it is an extension of type2.
+   */
+  private boolean isEquivalent(final Type type1, final Type type2) {
+    boolean _xifexpression = false;
+    if (((type1 instanceof PrimitiveType) && (type2 instanceof PrimitiveType))) {
+      String _typeName = ((PrimitiveType) type1).getTypeName();
+      _xifexpression = Objects.equal(_typeName, ((PrimitiveType) type2));
+    } else {
+      boolean _xifexpression_1 = false;
+      if (((type1 instanceof DataStructure) && (type2 instanceof DataStructure))) {
+        boolean _xblockexpression = false;
+        {
+          final DataStructure dataStructure1 = ((DataStructure) type1);
+          final DataStructure dataStructure2 = ((DataStructure) type2);
+          _xblockexpression = (Objects.equal(dataStructure1.buildQualifiedName("."), dataStructure2.buildQualifiedName(".")) || 
+            dataStructure1.isExtensionOf(dataStructure2));
+        }
+        _xifexpression_1 = _xblockexpression;
+      } else {
+        boolean _xifexpression_2 = false;
+        if (((type1 instanceof ListType) && (type2 instanceof ListType))) {
+          String _buildQualifiedName = ((ListType) type1).buildQualifiedName(".");
+          String _buildQualifiedName_1 = ((ListType) type2).buildQualifiedName(".");
+          _xifexpression_2 = Objects.equal(_buildQualifiedName, _buildQualifiedName_1);
+        } else {
+          boolean _xifexpression_3 = false;
+          if (((type1 instanceof Enumeration) && (type2 instanceof Enumeration))) {
+            String _name = ((Enumeration) type1).getName();
+            String _name_1 = ((Enumeration) type2).getName();
+            _xifexpression_3 = Objects.equal(_name, _name_1);
+          } else {
+            _xifexpression_3 = false;
+          }
+          _xifexpression_2 = _xifexpression_3;
+        }
+        _xifexpression_1 = _xifexpression_2;
+      }
+      _xifexpression = _xifexpression_1;
+    }
+    return _xifexpression;
+  }
+  
+  /**
+   * Check "sideEffectFree" feature constraints
+   */
+  @Check
+  public void checkSideEffectFreeFeatureConstraints(final DataOperation dataOperation) {
+    final int featureIndex = dataOperation.getFeatures().indexOf(DataOperationFeature.SIDE_EFFECT_FREE);
+    if ((featureIndex == (-1))) {
+      return;
+    }
+    boolean _isHasNoReturnType = dataOperation.isHasNoReturnType();
+    if (_isHasNoReturnType) {
+      this.warning("A side effect free operation should be a function", dataOperation, 
+        DataPackage.Literals.DATA_OPERATION__FEATURES, featureIndex);
+    }
+  }
+  
+  /**
+   * Check "validator" feature constraints
+   */
+  @Check
+  public void checkValidatorFeatureConstraints(final DataOperation dataOperation) {
+    final int featureIndex = dataOperation.getFeatures().indexOf(DataOperationFeature.VALIDATOR);
+    if ((featureIndex == (-1))) {
+      return;
+    }
+    boolean _hasFeature = dataOperation.getDataStructure().hasFeature(DataStructureFeature.SPECIFICATION);
+    boolean _not = (!_hasFeature);
+    if (_not) {
+      this.warning("A validator operation should be defined within a specification", dataOperation, 
+        DataPackage.Literals.DATA_OPERATION__FEATURES, featureIndex);
+    }
+    if (((dataOperation.isHasNoReturnType() || 
+      (dataOperation.getPrimitiveReturnType() == null)) || 
+      (!Objects.equal(dataOperation.getPrimitiveReturnType().getTypeName(), PrimitiveTypeConstants.BOOLEAN.getLiteral())))) {
+      StringConcatenation _builder = new StringConcatenation();
+      String _literal = PrimitiveTypeConstants.BOOLEAN.getLiteral();
+      _builder.append(_literal);
+      String _plus = ("A validator operation should return a value of type " + _builder);
+      this.warning(_plus, dataOperation, 
+        DataPackage.Literals.DATA_OPERATION__FEATURES, featureIndex);
+    }
+  }
+  
+  /**
+   * Check "identifier" feature constraints
+   */
+  @Check
+  public void checkIdenitfierFeatureConstraints(final DataOperation dataOperation) {
+    final int featureIndex = dataOperation.getFeatures().indexOf(DataOperationFeature.IDENTIFIER);
+    if ((featureIndex == (-1))) {
+      return;
+    }
+    boolean _hasFeature = dataOperation.hasFeature(DataOperationFeature.VALIDATOR);
+    if (_hasFeature) {
+      this.warning("An identifier should not be a validator", dataOperation, 
+        DataPackage.Literals.DATA_OPERATION__FEATURES, featureIndex);
+    }
+    boolean _hasFeature_1 = dataOperation.getDataStructure().hasFeature(DataStructureFeature.ENTITY);
+    boolean _not = (!_hasFeature_1);
+    if (_not) {
+      this.warning("An identifier should only be defined within an entity", dataOperation, 
+        DataPackage.Literals.DATA_OPERATION__FEATURES, featureIndex);
     }
   }
   

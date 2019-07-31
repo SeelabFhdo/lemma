@@ -25,6 +25,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateDataOperation#isHidden <em>Hidden</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateDataOperation#isInherited <em>Inherited</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateDataOperation#isHasNoReturnType <em>Has No Return Type</em>}</li>
+ *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateDataOperation#getFeatureNames <em>Feature Names</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateDataOperation#getReturnType <em>Return Type</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateDataOperation#getOriginalReturnType <em>Original Return Type</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateDataOperation#getParameters <em>Parameters</em>}</li>
@@ -166,6 +167,22 @@ public interface IntermediateDataOperation extends EObject {
      * @generated
      */
     void setHasNoReturnType(boolean value);
+
+    /**
+     * Returns the value of the '<em><b>Feature Names</b></em>' attribute list.
+     * The list contents are of type {@link java.lang.String}.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Feature Names</em>' attribute list isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Feature Names</em>' attribute list.
+     * @see de.fhdo.lemma.data.intermediate.IntermediatePackage#getIntermediateDataOperation_FeatureNames()
+     * @model unique="false"
+     * @generated
+     */
+    EList<String> getFeatureNames();
 
     /**
      * Returns the value of the '<em><b>Return Type</b></em>' containment reference.

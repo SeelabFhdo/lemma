@@ -8,6 +8,7 @@ import de.fhdo.lemma.data.DataField;
 import de.fhdo.lemma.data.DataOperation;
 import de.fhdo.lemma.data.DataPackage;
 import de.fhdo.lemma.data.DataStructure;
+import de.fhdo.lemma.data.DataStructureFeature;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -26,6 +27,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
+import org.eclipse.emf.ecore.util.EDataTypeEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -43,6 +45,7 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link de.fhdo.lemma.data.impl.DataStructureImpl#getFeatures <em>Features</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.impl.DataStructureImpl#getSuper <em>Super</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.impl.DataStructureImpl#getDataFields <em>Data Fields</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.impl.DataStructureImpl#getOperations <em>Operations</em>}</li>
@@ -51,6 +54,16 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
  * @generated
  */
 public class DataStructureImpl extends ComplexTypeImpl implements DataStructure {
+    /**
+     * The cached value of the '{@link #getFeatures() <em>Features</em>}' attribute list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getFeatures()
+     * @generated
+     * @ordered
+     */
+    protected EList<DataStructureFeature> features;
+
     /**
      * The cached value of the '{@link #getSuper() <em>Super</em>}' reference.
      * <!-- begin-user-doc -->
@@ -98,6 +111,19 @@ public class DataStructureImpl extends ComplexTypeImpl implements DataStructure 
     @Override
     protected EClass eStaticClass() {
         return DataPackage.Literals.DATA_STRUCTURE;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EList<DataStructureFeature> getFeatures() {
+        if (features == null) {
+            features = new EDataTypeEList<DataStructureFeature>(DataStructureFeature.class, this, DataPackage.DATA_STRUCTURE__FEATURES);
+        }
+        return features;
     }
 
     /**
@@ -318,6 +344,26 @@ public class DataStructureImpl extends ComplexTypeImpl implements DataStructure 
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
+    public boolean hasFeature(final DataStructureFeature feature) {
+        return this.getFeatures().contains(feature);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EList<DataStructureFeature> getAllDomainFeatures() {
+        return ECollections.<DataStructureFeature>toEList(java.util.Collections.<DataStructureFeature>unmodifiableList(org.eclipse.xtext.xbase.lib.CollectionLiterals.<DataStructureFeature>newArrayList(DataStructureFeature.AGGREGATE, DataStructureFeature.APPLICATION_SERVICE, DataStructureFeature.DOMAIN_EVENT, DataStructureFeature.DOMAIN_SERVICE, DataStructureFeature.ENTITY, DataStructureFeature.FACTORY, DataStructureFeature.INFRASTRUCTURE_SERVICE, DataStructureFeature.REPOSITORY, DataStructureFeature.SERVICE, DataStructureFeature.SPECIFICATION, DataStructureFeature.VALUE_OBJECT)));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     @SuppressWarnings("unchecked")
     @Override
     public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
@@ -354,6 +400,8 @@ public class DataStructureImpl extends ComplexTypeImpl implements DataStructure 
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
+            case DataPackage.DATA_STRUCTURE__FEATURES:
+                return getFeatures();
             case DataPackage.DATA_STRUCTURE__SUPER:
                 if (resolve) return getSuper();
                 return basicGetSuper();
@@ -374,6 +422,10 @@ public class DataStructureImpl extends ComplexTypeImpl implements DataStructure 
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
+            case DataPackage.DATA_STRUCTURE__FEATURES:
+                getFeatures().clear();
+                getFeatures().addAll((Collection<? extends DataStructureFeature>)newValue);
+                return;
             case DataPackage.DATA_STRUCTURE__SUPER:
                 setSuper((DataStructure)newValue);
                 return;
@@ -397,6 +449,9 @@ public class DataStructureImpl extends ComplexTypeImpl implements DataStructure 
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
+            case DataPackage.DATA_STRUCTURE__FEATURES:
+                getFeatures().clear();
+                return;
             case DataPackage.DATA_STRUCTURE__SUPER:
                 setSuper((DataStructure)null);
                 return;
@@ -418,6 +473,8 @@ public class DataStructureImpl extends ComplexTypeImpl implements DataStructure 
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
+            case DataPackage.DATA_STRUCTURE__FEATURES:
+                return features != null && !features.isEmpty();
             case DataPackage.DATA_STRUCTURE__SUPER:
                 return super_ != null;
             case DataPackage.DATA_STRUCTURE__DATA_FIELDS:
@@ -444,8 +501,28 @@ public class DataStructureImpl extends ComplexTypeImpl implements DataStructure 
                 return isExtensionOf((DataStructure)arguments.get(0));
             case DataPackage.DATA_STRUCTURE___COMPARE_FIELD_COUNTS__DATASTRUCTURE:
                 return compareFieldCounts((DataStructure)arguments.get(0));
+            case DataPackage.DATA_STRUCTURE___HAS_FEATURE__DATASTRUCTUREFEATURE:
+                return hasFeature((DataStructureFeature)arguments.get(0));
+            case DataPackage.DATA_STRUCTURE___GET_ALL_DOMAIN_FEATURES:
+                return getAllDomainFeatures();
         }
         return super.eInvoke(operationID, arguments);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public String toString() {
+        if (eIsProxy()) return super.toString();
+
+        StringBuilder result = new StringBuilder(super.toString());
+        result.append(" (features: ");
+        result.append(features);
+        result.append(')');
+        return result.toString();
     }
 
 } //DataStructureImpl

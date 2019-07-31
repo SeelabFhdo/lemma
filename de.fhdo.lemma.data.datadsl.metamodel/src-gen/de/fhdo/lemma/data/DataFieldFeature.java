@@ -17,35 +17,60 @@ import org.eclipse.emf.common.util.Enumerator;
  * *
  * Possible features for a data field
  * <!-- end-model-doc -->
- * @see de.fhdo.lemma.data.DataPackage#getFieldFeature()
+ * @see de.fhdo.lemma.data.DataPackage#getDataFieldFeature()
  * @model
  * @generated
  */
-public enum FieldFeature implements Enumerator {
+public enum DataFieldFeature implements Enumerator {
     /**
-     * The '<em><b>DERIVED</b></em>' literal object.
+     * The '<em><b>IDENTIFIER</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #DERIVED_VALUE
+     * @see #IDENTIFIER_VALUE
      * @generated
      * @ordered
      */
-    DERIVED(0, "DERIVED", "DERIVED");
+    IDENTIFIER(0, "IDENTIFIER", "IDENTIFIER"),
 
     /**
-     * The '<em><b>DERIVED</b></em>' literal value.
+     * The '<em><b>PART</b></em>' literal object.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #PART_VALUE
+     * @generated
+     * @ordered
+     */
+    PART(0, "PART", "PART");
+
+    /**
+     * The '<em><b>IDENTIFIER</b></em>' literal value.
      * <!-- begin-user-doc -->
      * <p>
-     * If the meaning of '<em><b>DERIVED</b></em>' literal object isn't clear,
+     * If the meaning of '<em><b>IDENTIFIER</b></em>' literal object isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @see #DERIVED
+     * @see #IDENTIFIER
      * @model
      * @generated
      * @ordered
      */
-    public static final int DERIVED_VALUE = 0;
+    public static final int IDENTIFIER_VALUE = 0;
+
+    /**
+     * The '<em><b>PART</b></em>' literal value.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of '<em><b>PART</b></em>' literal object isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @see #PART
+     * @model
+     * @generated
+     * @ordered
+     */
+    public static final int PART_VALUE = 0;
 
     /**
      * An array of all the '<em><b>Field Feature</b></em>' enumerators.
@@ -53,9 +78,10 @@ public enum FieldFeature implements Enumerator {
      * <!-- end-user-doc -->
      * @generated
      */
-    private static final FieldFeature[] VALUES_ARRAY =
-        new FieldFeature[] {
-            DERIVED,
+    private static final DataFieldFeature[] VALUES_ARRAY =
+        new DataFieldFeature[] {
+            IDENTIFIER,
+            PART,
         };
 
     /**
@@ -64,7 +90,7 @@ public enum FieldFeature implements Enumerator {
      * <!-- end-user-doc -->
      * @generated
      */
-    public static final List<FieldFeature> VALUES = Collections.unmodifiableList(Arrays.asList(VALUES_ARRAY));
+    public static final List<DataFieldFeature> VALUES = Collections.unmodifiableList(Arrays.asList(VALUES_ARRAY));
 
     /**
      * Returns the '<em><b>Field Feature</b></em>' literal with the specified literal value.
@@ -74,9 +100,9 @@ public enum FieldFeature implements Enumerator {
      * @return the matching enumerator or <code>null</code>.
      * @generated
      */
-    public static FieldFeature get(String literal) {
+    public static DataFieldFeature get(String literal) {
         for (int i = 0; i < VALUES_ARRAY.length; ++i) {
-            FieldFeature result = VALUES_ARRAY[i];
+            DataFieldFeature result = VALUES_ARRAY[i];
             if (result.toString().equals(literal)) {
                 return result;
             }
@@ -92,9 +118,9 @@ public enum FieldFeature implements Enumerator {
      * @return the matching enumerator or <code>null</code>.
      * @generated
      */
-    public static FieldFeature getByName(String name) {
+    public static DataFieldFeature getByName(String name) {
         for (int i = 0; i < VALUES_ARRAY.length; ++i) {
-            FieldFeature result = VALUES_ARRAY[i];
+            DataFieldFeature result = VALUES_ARRAY[i];
             if (result.getName().equals(name)) {
                 return result;
             }
@@ -110,9 +136,9 @@ public enum FieldFeature implements Enumerator {
      * @return the matching enumerator or <code>null</code>.
      * @generated
      */
-    public static FieldFeature get(int value) {
+    public static DataFieldFeature get(int value) {
         switch (value) {
-            case DERIVED_VALUE: return DERIVED;
+            case IDENTIFIER_VALUE: return IDENTIFIER;
         }
         return null;
     }
@@ -144,7 +170,7 @@ public enum FieldFeature implements Enumerator {
      * <!-- end-user-doc -->
      * @generated
      */
-    private FieldFeature(int value, String name, String literal) {
+    private DataFieldFeature(int value, String name, String literal) {
         this.value = value;
         this.name = name;
         this.literal = literal;
@@ -191,4 +217,4 @@ public enum FieldFeature implements Enumerator {
         return literal;
     }
     
-} //FieldFeature
+} //DataFieldFeature

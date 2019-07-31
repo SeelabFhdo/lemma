@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
+import org.eclipse.emf.ecore.util.EDataTypeEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -39,6 +40,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.fhdo.lemma.data.intermediate.impl.IntermediateDataOperationImpl#isHidden <em>Hidden</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.impl.IntermediateDataOperationImpl#isInherited <em>Inherited</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.impl.IntermediateDataOperationImpl#isHasNoReturnType <em>Has No Return Type</em>}</li>
+ *   <li>{@link de.fhdo.lemma.data.intermediate.impl.IntermediateDataOperationImpl#getFeatureNames <em>Feature Names</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.impl.IntermediateDataOperationImpl#getReturnType <em>Return Type</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.impl.IntermediateDataOperationImpl#getOriginalReturnType <em>Original Return Type</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.impl.IntermediateDataOperationImpl#getParameters <em>Parameters</em>}</li>
@@ -148,6 +150,16 @@ public class IntermediateDataOperationImpl extends MinimalEObjectImpl.Container 
      * @ordered
      */
     protected boolean hasNoReturnType = HAS_NO_RETURN_TYPE_EDEFAULT;
+
+    /**
+     * The cached value of the '{@link #getFeatureNames() <em>Feature Names</em>}' attribute list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getFeatureNames()
+     * @generated
+     * @ordered
+     */
+    protected EList<String> featureNames;
 
     /**
      * The cached value of the '{@link #getReturnType() <em>Return Type</em>}' containment reference.
@@ -321,6 +333,19 @@ public class IntermediateDataOperationImpl extends MinimalEObjectImpl.Container 
         hasNoReturnType = newHasNoReturnType;
         if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, IntermediatePackage.INTERMEDIATE_DATA_OPERATION__HAS_NO_RETURN_TYPE, oldHasNoReturnType, hasNoReturnType));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EList<String> getFeatureNames() {
+        if (featureNames == null) {
+            featureNames = new EDataTypeEList<String>(String.class, this, IntermediatePackage.INTERMEDIATE_DATA_OPERATION__FEATURE_NAMES);
+        }
+        return featureNames;
     }
 
     /**
@@ -571,6 +596,8 @@ public class IntermediateDataOperationImpl extends MinimalEObjectImpl.Container 
                 return isInherited();
             case IntermediatePackage.INTERMEDIATE_DATA_OPERATION__HAS_NO_RETURN_TYPE:
                 return isHasNoReturnType();
+            case IntermediatePackage.INTERMEDIATE_DATA_OPERATION__FEATURE_NAMES:
+                return getFeatureNames();
             case IntermediatePackage.INTERMEDIATE_DATA_OPERATION__RETURN_TYPE:
                 return getReturnType();
             case IntermediatePackage.INTERMEDIATE_DATA_OPERATION__ORIGINAL_RETURN_TYPE:
@@ -609,6 +636,10 @@ public class IntermediateDataOperationImpl extends MinimalEObjectImpl.Container 
                 return;
             case IntermediatePackage.INTERMEDIATE_DATA_OPERATION__HAS_NO_RETURN_TYPE:
                 setHasNoReturnType((Boolean)newValue);
+                return;
+            case IntermediatePackage.INTERMEDIATE_DATA_OPERATION__FEATURE_NAMES:
+                getFeatureNames().clear();
+                getFeatureNames().addAll((Collection<? extends String>)newValue);
                 return;
             case IntermediatePackage.INTERMEDIATE_DATA_OPERATION__RETURN_TYPE:
                 setReturnType((IntermediateType)newValue);
@@ -654,6 +685,9 @@ public class IntermediateDataOperationImpl extends MinimalEObjectImpl.Container 
             case IntermediatePackage.INTERMEDIATE_DATA_OPERATION__HAS_NO_RETURN_TYPE:
                 setHasNoReturnType(HAS_NO_RETURN_TYPE_EDEFAULT);
                 return;
+            case IntermediatePackage.INTERMEDIATE_DATA_OPERATION__FEATURE_NAMES:
+                getFeatureNames().clear();
+                return;
             case IntermediatePackage.INTERMEDIATE_DATA_OPERATION__RETURN_TYPE:
                 setReturnType((IntermediateType)null);
                 return;
@@ -691,6 +725,8 @@ public class IntermediateDataOperationImpl extends MinimalEObjectImpl.Container 
                 return inherited != INHERITED_EDEFAULT;
             case IntermediatePackage.INTERMEDIATE_DATA_OPERATION__HAS_NO_RETURN_TYPE:
                 return hasNoReturnType != HAS_NO_RETURN_TYPE_EDEFAULT;
+            case IntermediatePackage.INTERMEDIATE_DATA_OPERATION__FEATURE_NAMES:
+                return featureNames != null && !featureNames.isEmpty();
             case IntermediatePackage.INTERMEDIATE_DATA_OPERATION__RETURN_TYPE:
                 return returnType != null;
             case IntermediatePackage.INTERMEDIATE_DATA_OPERATION__ORIGINAL_RETURN_TYPE:
@@ -725,6 +761,8 @@ public class IntermediateDataOperationImpl extends MinimalEObjectImpl.Container 
         result.append(inherited);
         result.append(", hasNoReturnType: ");
         result.append(hasNoReturnType);
+        result.append(", featureNames: ");
+        result.append(featureNames);
         result.append(')');
         return result.toString();
     }

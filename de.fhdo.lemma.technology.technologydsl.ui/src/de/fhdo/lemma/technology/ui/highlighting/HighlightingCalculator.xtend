@@ -1,4 +1,4 @@
-package de.fhdo.lemma.ui.highlighting
+package de.fhdo.lemma.technology.ui.highlighting
 
 import org.eclipse.xtext.ide.editor.syntaxcoloring.ISemanticHighlightingCalculator
 import org.eclipse.xtext.resource.XtextResource
@@ -24,6 +24,7 @@ class HighlightingCalculator implements ISemanticHighlightingCalculator {
         CancelIndicator cancelIndicator) {
         resource.provideHighlightingForPointcuts(acceptor)
         resource.provideHighlightingForBooleanConstants(acceptor)
+        resource.provideHighlightingForFeatures(acceptor)
     }
 
     /**
@@ -89,6 +90,22 @@ class HighlightingCalculator implements ISemanticHighlightingCalculator {
                         DefaultHighlightingConfiguration.KEYWORD_ID)
                 ]
             }
+        ]
+    }
+
+    /**
+     * Provide highlighting for features
+     */
+    private def provideHighlightingForFeatures(XtextResource resource,
+        IHighlightedPositionAcceptor acceptor) {
+        resource.allContents.forEach[
+            if (it instanceof TechnologySpecificProperty)
+                NodeModelUtils.findNodesForFeature(
+                    it,
+                    TechnologyPackage::Literals.TECHNOLOGY_SPECIFIC_PROPERTY__FEATURES
+                ).forEach[
+                    acceptor.addPosition(offset, length, HighlightingConfiguration.FEATURE_ID)
+                ]
         ]
     }
 }

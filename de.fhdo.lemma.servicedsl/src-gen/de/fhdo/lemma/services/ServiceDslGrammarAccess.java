@@ -2281,9 +2281,30 @@ public class ServiceDslGrammarAccess extends AbstractGrammarElementFinder {
 		return getComplexTypeAccess().getRule();
 	}
 	
+	//enum DataStructureFeature:
+	//	AGGREGATE="aggregate" |
+	//	APPLICATION_SERVICE="applicationService" |
+	//	DOMAIN_EVENT="domainEvent" |
+	//	DOMAIN_SERVICE="domainService" |
+	//	ENTITY="entity" |
+	//	FACTORY="factory" |
+	//	INFRASTRUCTURE_SERVICE="infrastructureService" |
+	//	REPOSITORY="repository" |
+	//	SERVICE="service" |
+	//	SPECIFICATION="specification" |
+	//	VALUE_OBJECT="valueObject";
+	public DataDslGrammarAccess.DataStructureFeatureElements getDataStructureFeatureAccess() {
+		return gaDataDsl.getDataStructureFeatureAccess();
+	}
+	
+	public EnumRule getDataStructureFeatureRule() {
+		return getDataStructureFeatureAccess().getRule();
+	}
+	
 	//DataStructure:
-	//	'structure' name=ID ('extends' super=[DataStructure|QualifiedName])? '{' ((dataFields+=DataField |
-	//	operations+=DataOperation) (',' (dataFields+=DataField | operations+=DataOperation))*)?
+	//	'structure' name=ID ('<' features+=DataStructureFeature (',' features+=DataStructureFeature)* '>')? ('extends'
+	//	super=[DataStructure|QualifiedName])? '{' ((dataFields+=DataField | operations+=DataOperation) (','
+	//	(dataFields+=DataField | operations+=DataOperation))*)?
 	//	'}';
 	public DataDslGrammarAccess.DataStructureElements getDataStructureAccess() {
 		return gaDataDsl.getDataStructureAccess();
@@ -2309,22 +2330,22 @@ public class ServiceDslGrammarAccess extends AbstractGrammarElementFinder {
 		return getListTypeAccess().getRule();
 	}
 	
-	//enum FieldFeature:
-	//	DERIVED="derived";
-	public DataDslGrammarAccess.FieldFeatureElements getFieldFeatureAccess() {
-		return gaDataDsl.getFieldFeatureAccess();
+	//enum DataFieldFeature:
+	//	IDENTIFIER="identifier" |
+	//	PART="part";
+	public DataDslGrammarAccess.DataFieldFeatureElements getDataFieldFeatureAccess() {
+		return gaDataDsl.getDataFieldFeatureAccess();
 	}
 	
-	public EnumRule getFieldFeatureRule() {
-		return getFieldFeatureAccess().getRule();
+	public EnumRule getDataFieldFeatureRule() {
+		return getDataFieldFeatureAccess().getRule();
 	}
 	
 	//DataField:
-	//	^hidden?='hide'? (primitiveType=PrimitiveType | complexType=[ComplexType|QualifiedName] |
+	//	^hidden?='hide'?
+	//	immutable?='immutable'? (primitiveType=PrimitiveType | complexType=[ComplexType|QualifiedName] |
 	//	importedComplexType=ImportedComplexType)?
-	//	name=ID ('<'
-	//	features+=FieldFeature (',' features+=FieldFeature)*
-	//	'>')?;
+	//	name=ID ('<' features+=DataFieldFeature (',' features+=DataFieldFeature)* '>')?;
 	public DataDslGrammarAccess.DataFieldElements getDataFieldAccess() {
 		return gaDataDsl.getDataFieldAccess();
 	}
@@ -2355,11 +2376,25 @@ public class ServiceDslGrammarAccess extends AbstractGrammarElementFinder {
 		return getEnumerationFieldAccess().getRule();
 	}
 	
+	//enum DataOperationFeature:
+	//	CLOSURE="closure" |
+	//	IDENTIFIER="identifier" |
+	//	SIDE_EFFECT_FREE="sideEffectFree" |
+	//	VALIDATOR="validator";
+	public DataDslGrammarAccess.DataOperationFeatureElements getDataOperationFeatureAccess() {
+		return gaDataDsl.getDataOperationFeatureAccess();
+	}
+	
+	public EnumRule getDataOperationFeatureRule() {
+		return getDataOperationFeatureAccess().getRule();
+	}
+	
 	//DataOperation:
 	//	^hidden?='hide'? (hasNoReturnType?='procedure' |
 	//	'function' (primitiveReturnType=PrimitiveType | complexReturnType=[ComplexType|QualifiedName] |
 	//	importedComplexReturnType=ImportedComplexType)?) name=ID ('(' parameters+=DataOperationParameter? (','
-	//	parameters+=DataOperationParameter)* ')')?;
+	//	parameters+=DataOperationParameter)* ')')? ('<' features+=DataOperationFeature (',' features+=DataOperationFeature)*
+	//	'>')?;
 	public DataDslGrammarAccess.DataOperationElements getDataOperationAccess() {
 		return gaDataDsl.getDataOperationAccess();
 	}

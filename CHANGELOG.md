@@ -4,6 +4,7 @@ All notable changes to [LEMMA](https://github.com/SeelabFhdo/lemma/) will be doc
 ## [0.6.0] - 2019-MM-DD
 ### Added
 - Data DSL: Enable modeling of operations (functions and procedures) within data structures.
+- Data DSL: Enable specification of prescribed features for data structures, data fields, and data operations. The initial set of supported features comprises patterns from [Domain-driven Design (DDD)](https://www.domainlanguage.com). Constraint violations of pattern specifications are checked and shown as warnings in the Data DSL editor according to our [2018 paper](http://fmse.di.unimi.it/faacs2017/papers/paperMSE1.pdf).
 - Data DSL: Enable specification of immutable data fields.
 - Mapping DSL: Enable mapping of complex types. Aspects may now be assigned to complex types and their fields. Moreover, fields of complex types may be "re-typed" now with technology-specific types.
 - Mapping DSL: Aspects can now be assigned to enumeration fields.

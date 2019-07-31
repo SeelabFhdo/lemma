@@ -4,8 +4,10 @@
 package de.fhdo.lemma.technology.ui
 
 import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor
-import de.fhdo.lemma.ui.highlighting.HighlightingCalculator
 import org.eclipse.xtext.ide.editor.syntaxcoloring.ISemanticHighlightingCalculator
+import org.eclipse.xtext.ui.editor.syntaxcoloring.IHighlightingConfiguration
+import de.fhdo.lemma.technology.ui.highlighting.HighlightingConfiguration
+import de.fhdo.lemma.technology.ui.highlighting.HighlightingCalculator
 
 /**
  * Use this class to register components to be used within the Eclipse IDE.
@@ -14,6 +16,10 @@ import org.eclipse.xtext.ide.editor.syntaxcoloring.ISemanticHighlightingCalculat
  */
 @FinalFieldsConstructor
 class TechnologyDslUiModule extends AbstractTechnologyDslUiModule {
+    def Class<? extends IHighlightingConfiguration> bindIHighlightingConfiguration() {
+        HighlightingConfiguration
+    }
+
     def Class<? extends ISemanticHighlightingCalculator> bindISemanticHighlightingCalculator() {
         HighlightingCalculator
     }

@@ -236,6 +236,18 @@ public interface ComplexType extends Type {
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
      * *
+     * Get closest encompassing namespace
+     * <!-- end-model-doc -->
+     * @model kind="operation" unique="false"
+     * @generated
+     */
+    Object getClosestNamespace();
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * *
      * Helper operation for ComplexType-subclasses to compare the counts of two DataField lists. The
      * return value follows the semantics of Java's Comparator.compare() method. The comparison is
      * based on the numbers of concrete types of the DataFields, i.e., primitive types are compared

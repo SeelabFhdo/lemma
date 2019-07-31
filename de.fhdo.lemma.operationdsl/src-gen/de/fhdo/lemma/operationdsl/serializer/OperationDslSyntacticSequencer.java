@@ -61,6 +61,7 @@ public class OperationDslSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     ('(' ')')?
 	 *
 	 * This ambiguous syntax occurs at:
+	 *     name=ID (ambiguity) '<' features+=DataOperationFeature
 	 *     name=ID (ambiguity) (rule end)
 	 */
 	protected void emit_DataOperation___LeftParenthesisKeyword_3_0_RightParenthesisKeyword_3_3__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {

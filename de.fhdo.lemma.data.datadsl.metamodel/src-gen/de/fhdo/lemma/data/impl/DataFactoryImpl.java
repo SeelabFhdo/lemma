@@ -97,8 +97,12 @@ public class DataFactoryImpl extends EFactoryImpl implements DataFactory {
         switch (eDataType.getClassifierID()) {
             case DataPackage.PRIMITIVE_TYPE_CONSTANTS:
                 return createPrimitiveTypeConstantsFromString(eDataType, initialValue);
-            case DataPackage.FIELD_FEATURE:
-                return createFieldFeatureFromString(eDataType, initialValue);
+            case DataPackage.DATA_STRUCTURE_FEATURE:
+                return createDataStructureFeatureFromString(eDataType, initialValue);
+            case DataPackage.DATA_OPERATION_FEATURE:
+                return createDataOperationFeatureFromString(eDataType, initialValue);
+            case DataPackage.DATA_FIELD_FEATURE:
+                return createDataFieldFeatureFromString(eDataType, initialValue);
             case DataPackage.TYPE_NAME_SIZE_MAP:
                 return createTypeNameSizeMapFromString(eDataType, initialValue);
             default:
@@ -116,8 +120,12 @@ public class DataFactoryImpl extends EFactoryImpl implements DataFactory {
         switch (eDataType.getClassifierID()) {
             case DataPackage.PRIMITIVE_TYPE_CONSTANTS:
                 return convertPrimitiveTypeConstantsToString(eDataType, instanceValue);
-            case DataPackage.FIELD_FEATURE:
-                return convertFieldFeatureToString(eDataType, instanceValue);
+            case DataPackage.DATA_STRUCTURE_FEATURE:
+                return convertDataStructureFeatureToString(eDataType, instanceValue);
+            case DataPackage.DATA_OPERATION_FEATURE:
+                return convertDataOperationFeatureToString(eDataType, instanceValue);
+            case DataPackage.DATA_FIELD_FEATURE:
+                return convertDataFieldFeatureToString(eDataType, instanceValue);
             case DataPackage.TYPE_NAME_SIZE_MAP:
                 return convertTypeNameSizeMapToString(eDataType, instanceValue);
             default:
@@ -403,8 +411,8 @@ public class DataFactoryImpl extends EFactoryImpl implements DataFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    public FieldFeature createFieldFeatureFromString(EDataType eDataType, String initialValue) {
-        FieldFeature result = FieldFeature.get(initialValue);
+    public DataStructureFeature createDataStructureFeatureFromString(EDataType eDataType, String initialValue) {
+        DataStructureFeature result = DataStructureFeature.get(initialValue);
         if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
         return result;
     }
@@ -414,7 +422,47 @@ public class DataFactoryImpl extends EFactoryImpl implements DataFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    public String convertFieldFeatureToString(EDataType eDataType, Object instanceValue) {
+    public String convertDataStructureFeatureToString(EDataType eDataType, Object instanceValue) {
+        return instanceValue == null ? null : instanceValue.toString();
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public DataOperationFeature createDataOperationFeatureFromString(EDataType eDataType, String initialValue) {
+        DataOperationFeature result = DataOperationFeature.get(initialValue);
+        if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+        return result;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public String convertDataOperationFeatureToString(EDataType eDataType, Object instanceValue) {
+        return instanceValue == null ? null : instanceValue.toString();
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public DataFieldFeature createDataFieldFeatureFromString(EDataType eDataType, String initialValue) {
+        DataFieldFeature result = DataFieldFeature.get(initialValue);
+        if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+        return result;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public String convertDataFieldFeatureToString(EDataType eDataType, Object instanceValue) {
         return instanceValue == null ? null : instanceValue.toString();
     }
 

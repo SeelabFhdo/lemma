@@ -473,9 +473,63 @@ ruleDataStructure returns [EObject current=null]
 			)
 		)
 		(
-			otherlv_2='extends'
+			otherlv_2='<'
 			{
-				newLeafNode(otherlv_2, grammarAccess.getDataStructureAccess().getExtendsKeyword_2_0());
+				newLeafNode(otherlv_2, grammarAccess.getDataStructureAccess().getLessThanSignKeyword_2_0());
+			}
+			(
+				(
+					{
+						newCompositeNode(grammarAccess.getDataStructureAccess().getFeaturesDataStructureFeatureEnumRuleCall_2_1_0());
+					}
+					lv_features_3_0=ruleDataStructureFeature
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getDataStructureRule());
+						}
+						add(
+							$current,
+							"features",
+							lv_features_3_0,
+							"de.fhdo.lemma.data.DataDsl.DataStructureFeature");
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)
+			(
+				otherlv_4=','
+				{
+					newLeafNode(otherlv_4, grammarAccess.getDataStructureAccess().getCommaKeyword_2_2_0());
+				}
+				(
+					(
+						{
+							newCompositeNode(grammarAccess.getDataStructureAccess().getFeaturesDataStructureFeatureEnumRuleCall_2_2_1_0());
+						}
+						lv_features_5_0=ruleDataStructureFeature
+						{
+							if ($current==null) {
+								$current = createModelElementForParent(grammarAccess.getDataStructureRule());
+							}
+							add(
+								$current,
+								"features",
+								lv_features_5_0,
+								"de.fhdo.lemma.data.DataDsl.DataStructureFeature");
+							afterParserOrEnumRuleCall();
+						}
+					)
+				)
+			)*
+			otherlv_6='>'
+			{
+				newLeafNode(otherlv_6, grammarAccess.getDataStructureAccess().getGreaterThanSignKeyword_2_3());
+			}
+		)?
+		(
+			otherlv_7='extends'
+			{
+				newLeafNode(otherlv_7, grammarAccess.getDataStructureAccess().getExtendsKeyword_3_0());
 			}
 			(
 				(
@@ -485,7 +539,7 @@ ruleDataStructure returns [EObject current=null]
 						}
 					}
 					{
-						newCompositeNode(grammarAccess.getDataStructureAccess().getSuperDataStructureCrossReference_2_1_0());
+						newCompositeNode(grammarAccess.getDataStructureAccess().getSuperDataStructureCrossReference_3_1_0());
 					}
 					ruleQualifiedName
 					{
@@ -494,18 +548,18 @@ ruleDataStructure returns [EObject current=null]
 				)
 			)
 		)?
-		otherlv_4='{'
+		otherlv_9='{'
 		{
-			newLeafNode(otherlv_4, grammarAccess.getDataStructureAccess().getLeftCurlyBracketKeyword_3());
+			newLeafNode(otherlv_9, grammarAccess.getDataStructureAccess().getLeftCurlyBracketKeyword_4());
 		}
 		(
 			(
 				(
 					(
 						{
-							newCompositeNode(grammarAccess.getDataStructureAccess().getDataFieldsDataFieldParserRuleCall_4_0_0_0());
+							newCompositeNode(grammarAccess.getDataStructureAccess().getDataFieldsDataFieldParserRuleCall_5_0_0_0());
 						}
-						lv_dataFields_5_0=ruleDataField
+						lv_dataFields_10_0=ruleDataField
 						{
 							if ($current==null) {
 								$current = createModelElementForParent(grammarAccess.getDataStructureRule());
@@ -513,7 +567,7 @@ ruleDataStructure returns [EObject current=null]
 							add(
 								$current,
 								"dataFields",
-								lv_dataFields_5_0,
+								lv_dataFields_10_0,
 								"de.fhdo.lemma.data.DataDsl.DataField");
 							afterParserOrEnumRuleCall();
 						}
@@ -523,9 +577,9 @@ ruleDataStructure returns [EObject current=null]
 				(
 					(
 						{
-							newCompositeNode(grammarAccess.getDataStructureAccess().getOperationsDataOperationParserRuleCall_4_0_1_0());
+							newCompositeNode(grammarAccess.getDataStructureAccess().getOperationsDataOperationParserRuleCall_5_0_1_0());
 						}
-						lv_operations_6_0=ruleDataOperation
+						lv_operations_11_0=ruleDataOperation
 						{
 							if ($current==null) {
 								$current = createModelElementForParent(grammarAccess.getDataStructureRule());
@@ -533,7 +587,7 @@ ruleDataStructure returns [EObject current=null]
 							add(
 								$current,
 								"operations",
-								lv_operations_6_0,
+								lv_operations_11_0,
 								"de.fhdo.lemma.data.DataDsl.DataOperation");
 							afterParserOrEnumRuleCall();
 						}
@@ -541,17 +595,17 @@ ruleDataStructure returns [EObject current=null]
 				)
 			)
 			(
-				otherlv_7=','
+				otherlv_12=','
 				{
-					newLeafNode(otherlv_7, grammarAccess.getDataStructureAccess().getCommaKeyword_4_1_0());
+					newLeafNode(otherlv_12, grammarAccess.getDataStructureAccess().getCommaKeyword_5_1_0());
 				}
 				(
 					(
 						(
 							{
-								newCompositeNode(grammarAccess.getDataStructureAccess().getDataFieldsDataFieldParserRuleCall_4_1_1_0_0());
+								newCompositeNode(grammarAccess.getDataStructureAccess().getDataFieldsDataFieldParserRuleCall_5_1_1_0_0());
 							}
-							lv_dataFields_8_0=ruleDataField
+							lv_dataFields_13_0=ruleDataField
 							{
 								if ($current==null) {
 									$current = createModelElementForParent(grammarAccess.getDataStructureRule());
@@ -559,7 +613,7 @@ ruleDataStructure returns [EObject current=null]
 								add(
 									$current,
 									"dataFields",
-									lv_dataFields_8_0,
+									lv_dataFields_13_0,
 									"de.fhdo.lemma.data.DataDsl.DataField");
 								afterParserOrEnumRuleCall();
 							}
@@ -569,9 +623,9 @@ ruleDataStructure returns [EObject current=null]
 					(
 						(
 							{
-								newCompositeNode(grammarAccess.getDataStructureAccess().getOperationsDataOperationParserRuleCall_4_1_1_1_0());
+								newCompositeNode(grammarAccess.getDataStructureAccess().getOperationsDataOperationParserRuleCall_5_1_1_1_0());
 							}
-							lv_operations_9_0=ruleDataOperation
+							lv_operations_14_0=ruleDataOperation
 							{
 								if ($current==null) {
 									$current = createModelElementForParent(grammarAccess.getDataStructureRule());
@@ -579,7 +633,7 @@ ruleDataStructure returns [EObject current=null]
 								add(
 									$current,
 									"operations",
-									lv_operations_9_0,
+									lv_operations_14_0,
 									"de.fhdo.lemma.data.DataDsl.DataOperation");
 								afterParserOrEnumRuleCall();
 							}
@@ -588,9 +642,9 @@ ruleDataStructure returns [EObject current=null]
 				)
 			)*
 		)?
-		otherlv_10='}'
+		otherlv_15='}'
 		{
-			newLeafNode(otherlv_10, grammarAccess.getDataStructureAccess().getRightCurlyBracketKeyword_5());
+			newLeafNode(otherlv_15, grammarAccess.getDataStructureAccess().getRightCurlyBracketKeyword_6());
 		}
 	)
 ;
@@ -774,11 +828,25 @@ ruleDataField returns [EObject current=null]
 		)?
 		(
 			(
+				lv_immutable_1_0='immutable'
+				{
+					newLeafNode(lv_immutable_1_0, grammarAccess.getDataFieldAccess().getImmutableImmutableKeyword_1_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getDataFieldRule());
+					}
+					setWithLastConsumed($current, "immutable", true, "immutable");
+				}
+			)
+		)?
+		(
+			(
 				(
 					{
-						newCompositeNode(grammarAccess.getDataFieldAccess().getPrimitiveTypePrimitiveTypeParserRuleCall_1_0_0());
+						newCompositeNode(grammarAccess.getDataFieldAccess().getPrimitiveTypePrimitiveTypeParserRuleCall_2_0_0());
 					}
-					lv_primitiveType_1_0=rulePrimitiveType
+					lv_primitiveType_2_0=rulePrimitiveType
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getDataFieldRule());
@@ -786,7 +854,7 @@ ruleDataField returns [EObject current=null]
 						set(
 							$current,
 							"primitiveType",
-							lv_primitiveType_1_0,
+							lv_primitiveType_2_0,
 							"de.fhdo.lemma.data.DataDsl.PrimitiveType");
 						afterParserOrEnumRuleCall();
 					}
@@ -801,7 +869,7 @@ ruleDataField returns [EObject current=null]
 						}
 					}
 					{
-						newCompositeNode(grammarAccess.getDataFieldAccess().getComplexTypeComplexTypeCrossReference_1_1_0());
+						newCompositeNode(grammarAccess.getDataFieldAccess().getComplexTypeComplexTypeCrossReference_2_1_0());
 					}
 					ruleQualifiedName
 					{
@@ -813,9 +881,9 @@ ruleDataField returns [EObject current=null]
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getDataFieldAccess().getImportedComplexTypeImportedComplexTypeParserRuleCall_1_2_0());
+						newCompositeNode(grammarAccess.getDataFieldAccess().getImportedComplexTypeImportedComplexTypeParserRuleCall_2_2_0());
 					}
-					lv_importedComplexType_3_0=ruleImportedComplexType
+					lv_importedComplexType_4_0=ruleImportedComplexType
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getDataFieldRule());
@@ -823,7 +891,7 @@ ruleDataField returns [EObject current=null]
 						set(
 							$current,
 							"importedComplexType",
-							lv_importedComplexType_3_0,
+							lv_importedComplexType_4_0,
 							"de.fhdo.lemma.data.DataDsl.ImportedComplexType");
 						afterParserOrEnumRuleCall();
 					}
@@ -832,9 +900,9 @@ ruleDataField returns [EObject current=null]
 		)?
 		(
 			(
-				lv_name_4_0=RULE_ID
+				lv_name_5_0=RULE_ID
 				{
-					newLeafNode(lv_name_4_0, grammarAccess.getDataFieldAccess().getNameIDTerminalRuleCall_2_0());
+					newLeafNode(lv_name_5_0, grammarAccess.getDataFieldAccess().getNameIDTerminalRuleCall_3_0());
 				}
 				{
 					if ($current==null) {
@@ -843,22 +911,22 @@ ruleDataField returns [EObject current=null]
 					setWithLastConsumed(
 						$current,
 						"name",
-						lv_name_4_0,
+						lv_name_5_0,
 						"org.eclipse.xtext.common.Terminals.ID");
 				}
 			)
 		)
 		(
-			otherlv_5='<'
+			otherlv_6='<'
 			{
-				newLeafNode(otherlv_5, grammarAccess.getDataFieldAccess().getLessThanSignKeyword_3_0());
+				newLeafNode(otherlv_6, grammarAccess.getDataFieldAccess().getLessThanSignKeyword_4_0());
 			}
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getDataFieldAccess().getFeaturesFieldFeatureEnumRuleCall_3_1_0());
+						newCompositeNode(grammarAccess.getDataFieldAccess().getFeaturesDataFieldFeatureEnumRuleCall_4_1_0());
 					}
-					lv_features_6_0=ruleFieldFeature
+					lv_features_7_0=ruleDataFieldFeature
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getDataFieldRule());
@@ -866,23 +934,23 @@ ruleDataField returns [EObject current=null]
 						add(
 							$current,
 							"features",
-							lv_features_6_0,
-							"de.fhdo.lemma.data.DataDsl.FieldFeature");
+							lv_features_7_0,
+							"de.fhdo.lemma.data.DataDsl.DataFieldFeature");
 						afterParserOrEnumRuleCall();
 					}
 				)
 			)
 			(
-				otherlv_7=','
+				otherlv_8=','
 				{
-					newLeafNode(otherlv_7, grammarAccess.getDataFieldAccess().getCommaKeyword_3_2_0());
+					newLeafNode(otherlv_8, grammarAccess.getDataFieldAccess().getCommaKeyword_4_2_0());
 				}
 				(
 					(
 						{
-							newCompositeNode(grammarAccess.getDataFieldAccess().getFeaturesFieldFeatureEnumRuleCall_3_2_1_0());
+							newCompositeNode(grammarAccess.getDataFieldAccess().getFeaturesDataFieldFeatureEnumRuleCall_4_2_1_0());
 						}
-						lv_features_8_0=ruleFieldFeature
+						lv_features_9_0=ruleDataFieldFeature
 						{
 							if ($current==null) {
 								$current = createModelElementForParent(grammarAccess.getDataFieldRule());
@@ -890,16 +958,16 @@ ruleDataField returns [EObject current=null]
 							add(
 								$current,
 								"features",
-								lv_features_8_0,
-								"de.fhdo.lemma.data.DataDsl.FieldFeature");
+								lv_features_9_0,
+								"de.fhdo.lemma.data.DataDsl.DataFieldFeature");
 							afterParserOrEnumRuleCall();
 						}
 					)
 				)
 			)*
-			otherlv_9='>'
+			otherlv_10='>'
 			{
-				newLeafNode(otherlv_9, grammarAccess.getDataFieldAccess().getGreaterThanSignKeyword_3_3());
+				newLeafNode(otherlv_10, grammarAccess.getDataFieldAccess().getGreaterThanSignKeyword_4_3());
 			}
 		)?
 	)
@@ -1245,6 +1313,60 @@ ruleDataOperation returns [EObject current=null]
 			otherlv_11=')'
 			{
 				newLeafNode(otherlv_11, grammarAccess.getDataOperationAccess().getRightParenthesisKeyword_3_3());
+			}
+		)?
+		(
+			otherlv_12='<'
+			{
+				newLeafNode(otherlv_12, grammarAccess.getDataOperationAccess().getLessThanSignKeyword_4_0());
+			}
+			(
+				(
+					{
+						newCompositeNode(grammarAccess.getDataOperationAccess().getFeaturesDataOperationFeatureEnumRuleCall_4_1_0());
+					}
+					lv_features_13_0=ruleDataOperationFeature
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getDataOperationRule());
+						}
+						add(
+							$current,
+							"features",
+							lv_features_13_0,
+							"de.fhdo.lemma.data.DataDsl.DataOperationFeature");
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)
+			(
+				otherlv_14=','
+				{
+					newLeafNode(otherlv_14, grammarAccess.getDataOperationAccess().getCommaKeyword_4_2_0());
+				}
+				(
+					(
+						{
+							newCompositeNode(grammarAccess.getDataOperationAccess().getFeaturesDataOperationFeatureEnumRuleCall_4_2_1_0());
+						}
+						lv_features_15_0=ruleDataOperationFeature
+						{
+							if ($current==null) {
+								$current = createModelElementForParent(grammarAccess.getDataOperationRule());
+							}
+							add(
+								$current,
+								"features",
+								lv_features_15_0,
+								"de.fhdo.lemma.data.DataDsl.DataOperationFeature");
+							afterParserOrEnumRuleCall();
+						}
+					)
+				)
+			)*
+			otherlv_16='>'
+			{
+				newLeafNode(otherlv_16, grammarAccess.getDataOperationAccess().getGreaterThanSignKeyword_4_3());
 			}
 		)?
 	)
@@ -1670,8 +1792,8 @@ ruleQualifiedName returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleT
 	)
 ;
 
-// Rule FieldFeature
-ruleFieldFeature returns [Enumerator current=null]
+// Rule DataStructureFeature
+ruleDataStructureFeature returns [Enumerator current=null]
 @init {
 	enterRule();
 }
@@ -1679,11 +1801,163 @@ ruleFieldFeature returns [Enumerator current=null]
 	leaveRule();
 }:
 	(
-		enumLiteral_0='derived'
-		{
-			$current = grammarAccess.getFieldFeatureAccess().getDERIVEDEnumLiteralDeclaration().getEnumLiteral().getInstance();
-			newLeafNode(enumLiteral_0, grammarAccess.getFieldFeatureAccess().getDERIVEDEnumLiteralDeclaration());
-		}
+		(
+			enumLiteral_0='aggregate'
+			{
+				$current = grammarAccess.getDataStructureFeatureAccess().getAGGREGATEEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
+				newLeafNode(enumLiteral_0, grammarAccess.getDataStructureFeatureAccess().getAGGREGATEEnumLiteralDeclaration_0());
+			}
+		)
+		    |
+		(
+			enumLiteral_1='applicationService'
+			{
+				$current = grammarAccess.getDataStructureFeatureAccess().getAPPLICATION_SERVICEEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
+				newLeafNode(enumLiteral_1, grammarAccess.getDataStructureFeatureAccess().getAPPLICATION_SERVICEEnumLiteralDeclaration_1());
+			}
+		)
+		    |
+		(
+			enumLiteral_2='domainEvent'
+			{
+				$current = grammarAccess.getDataStructureFeatureAccess().getDOMAIN_EVENTEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
+				newLeafNode(enumLiteral_2, grammarAccess.getDataStructureFeatureAccess().getDOMAIN_EVENTEnumLiteralDeclaration_2());
+			}
+		)
+		    |
+		(
+			enumLiteral_3='domainService'
+			{
+				$current = grammarAccess.getDataStructureFeatureAccess().getDOMAIN_SERVICEEnumLiteralDeclaration_3().getEnumLiteral().getInstance();
+				newLeafNode(enumLiteral_3, grammarAccess.getDataStructureFeatureAccess().getDOMAIN_SERVICEEnumLiteralDeclaration_3());
+			}
+		)
+		    |
+		(
+			enumLiteral_4='entity'
+			{
+				$current = grammarAccess.getDataStructureFeatureAccess().getENTITYEnumLiteralDeclaration_4().getEnumLiteral().getInstance();
+				newLeafNode(enumLiteral_4, grammarAccess.getDataStructureFeatureAccess().getENTITYEnumLiteralDeclaration_4());
+			}
+		)
+		    |
+		(
+			enumLiteral_5='factory'
+			{
+				$current = grammarAccess.getDataStructureFeatureAccess().getFACTORYEnumLiteralDeclaration_5().getEnumLiteral().getInstance();
+				newLeafNode(enumLiteral_5, grammarAccess.getDataStructureFeatureAccess().getFACTORYEnumLiteralDeclaration_5());
+			}
+		)
+		    |
+		(
+			enumLiteral_6='infrastructureService'
+			{
+				$current = grammarAccess.getDataStructureFeatureAccess().getINFRASTRUCTURE_SERVICEEnumLiteralDeclaration_6().getEnumLiteral().getInstance();
+				newLeafNode(enumLiteral_6, grammarAccess.getDataStructureFeatureAccess().getINFRASTRUCTURE_SERVICEEnumLiteralDeclaration_6());
+			}
+		)
+		    |
+		(
+			enumLiteral_7='repository'
+			{
+				$current = grammarAccess.getDataStructureFeatureAccess().getREPOSITORYEnumLiteralDeclaration_7().getEnumLiteral().getInstance();
+				newLeafNode(enumLiteral_7, grammarAccess.getDataStructureFeatureAccess().getREPOSITORYEnumLiteralDeclaration_7());
+			}
+		)
+		    |
+		(
+			enumLiteral_8='service'
+			{
+				$current = grammarAccess.getDataStructureFeatureAccess().getSERVICEEnumLiteralDeclaration_8().getEnumLiteral().getInstance();
+				newLeafNode(enumLiteral_8, grammarAccess.getDataStructureFeatureAccess().getSERVICEEnumLiteralDeclaration_8());
+			}
+		)
+		    |
+		(
+			enumLiteral_9='specification'
+			{
+				$current = grammarAccess.getDataStructureFeatureAccess().getSPECIFICATIONEnumLiteralDeclaration_9().getEnumLiteral().getInstance();
+				newLeafNode(enumLiteral_9, grammarAccess.getDataStructureFeatureAccess().getSPECIFICATIONEnumLiteralDeclaration_9());
+			}
+		)
+		    |
+		(
+			enumLiteral_10='valueObject'
+			{
+				$current = grammarAccess.getDataStructureFeatureAccess().getVALUE_OBJECTEnumLiteralDeclaration_10().getEnumLiteral().getInstance();
+				newLeafNode(enumLiteral_10, grammarAccess.getDataStructureFeatureAccess().getVALUE_OBJECTEnumLiteralDeclaration_10());
+			}
+		)
+	)
+;
+
+// Rule DataFieldFeature
+ruleDataFieldFeature returns [Enumerator current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		(
+			enumLiteral_0='identifier'
+			{
+				$current = grammarAccess.getDataFieldFeatureAccess().getIDENTIFIEREnumLiteralDeclaration_0().getEnumLiteral().getInstance();
+				newLeafNode(enumLiteral_0, grammarAccess.getDataFieldFeatureAccess().getIDENTIFIEREnumLiteralDeclaration_0());
+			}
+		)
+		    |
+		(
+			enumLiteral_1='part'
+			{
+				$current = grammarAccess.getDataFieldFeatureAccess().getPARTEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
+				newLeafNode(enumLiteral_1, grammarAccess.getDataFieldFeatureAccess().getPARTEnumLiteralDeclaration_1());
+			}
+		)
+	)
+;
+
+// Rule DataOperationFeature
+ruleDataOperationFeature returns [Enumerator current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		(
+			enumLiteral_0='closure'
+			{
+				$current = grammarAccess.getDataOperationFeatureAccess().getCLOSUREEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
+				newLeafNode(enumLiteral_0, grammarAccess.getDataOperationFeatureAccess().getCLOSUREEnumLiteralDeclaration_0());
+			}
+		)
+		    |
+		(
+			enumLiteral_1='identifier'
+			{
+				$current = grammarAccess.getDataOperationFeatureAccess().getIDENTIFIEREnumLiteralDeclaration_1().getEnumLiteral().getInstance();
+				newLeafNode(enumLiteral_1, grammarAccess.getDataOperationFeatureAccess().getIDENTIFIEREnumLiteralDeclaration_1());
+			}
+		)
+		    |
+		(
+			enumLiteral_2='sideEffectFree'
+			{
+				$current = grammarAccess.getDataOperationFeatureAccess().getSIDE_EFFECT_FREEEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
+				newLeafNode(enumLiteral_2, grammarAccess.getDataOperationFeatureAccess().getSIDE_EFFECT_FREEEnumLiteralDeclaration_2());
+			}
+		)
+		    |
+		(
+			enumLiteral_3='validator'
+			{
+				$current = grammarAccess.getDataOperationFeatureAccess().getVALIDATOREnumLiteralDeclaration_3().getEnumLiteral().getInstance();
+				newLeafNode(enumLiteral_3, grammarAccess.getDataOperationFeatureAccess().getVALIDATOREnumLiteralDeclaration_3());
+			}
+		)
 	)
 ;
 

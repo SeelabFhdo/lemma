@@ -1,10 +1,11 @@
-package de.fhdo.lemma.ui.highlighting;
+package de.fhdo.lemma.technology.ui.highlighting;
 
 import de.fhdo.lemma.data.PrimitiveValue;
 import de.fhdo.lemma.technology.OperationAspectPointcut;
 import de.fhdo.lemma.technology.ServiceAspectPointcut;
 import de.fhdo.lemma.technology.TechnologyPackage;
 import de.fhdo.lemma.technology.TechnologySpecificProperty;
+import de.fhdo.lemma.technology.ui.highlighting.HighlightingConfiguration;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -40,6 +41,7 @@ public class HighlightingCalculator implements ISemanticHighlightingCalculator {
   public void provideHighlightingFor(final XtextResource resource, final IHighlightedPositionAcceptor acceptor, final CancelIndicator cancelIndicator) {
     this.provideHighlightingForPointcuts(resource, acceptor);
     this.provideHighlightingForBooleanConstants(resource, acceptor);
+    this.provideHighlightingForFeatures(resource, acceptor);
   }
   
   /**
@@ -111,6 +113,22 @@ public class HighlightingCalculator implements ISemanticHighlightingCalculator {
         };
         NodeModelUtils.findNodesForFeature(it, 
           TechnologyPackage.Literals.TECHNOLOGY_SPECIFIC_PROPERTY__DEFAULT_VALUE).forEach(_function_1);
+      }
+    };
+    IteratorExtensions.<EObject>forEach(resource.getAllContents(), _function);
+  }
+  
+  /**
+   * Provide highlighting for features
+   */
+  private void provideHighlightingForFeatures(final XtextResource resource, final IHighlightedPositionAcceptor acceptor) {
+    final Procedure1<EObject> _function = (EObject it) -> {
+      if ((it instanceof TechnologySpecificProperty)) {
+        final Consumer<INode> _function_1 = (INode it_1) -> {
+          acceptor.addPosition(it_1.getOffset(), it_1.getLength(), HighlightingConfiguration.FEATURE_ID);
+        };
+        NodeModelUtils.findNodesForFeature(it, 
+          TechnologyPackage.Literals.TECHNOLOGY_SPECIFIC_PROPERTY__FEATURES).forEach(_function_1);
       }
     };
     IteratorExtensions.<EObject>forEach(resource.getAllContents(), _function);

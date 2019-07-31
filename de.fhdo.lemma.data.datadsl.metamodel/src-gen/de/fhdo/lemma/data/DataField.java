@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link de.fhdo.lemma.data.DataField#getName <em>Name</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.DataField#isHidden <em>Hidden</em>}</li>
+ *   <li>{@link de.fhdo.lemma.data.DataField#isImmutable <em>Immutable</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.DataField#getComplexType <em>Complex Type</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.DataField#getImportedComplexType <em>Imported Complex Type</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.DataField#getPrimitiveType <em>Primitive Type</em>}</li>
@@ -55,6 +56,8 @@ public interface DataField extends EObject {
      *     (C4) Name must be unique within a data structure.
      *          Ensured by: DSL validator.
      *     (C5) A feature may only be assigned once.
+     *          Ensured by: DSL validator.
+     *     (C6) Inherited fields cannot be immutable.
      *          Ensured by: DSL validator.
      * <!-- end-model-doc -->
      * @return the value of the '<em>Name</em>' attribute.
@@ -100,6 +103,32 @@ public interface DataField extends EObject {
      * @generated
      */
     void setHidden(boolean value);
+
+    /**
+     * Returns the value of the '<em><b>Immutable</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Immutable</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Immutable</em>' attribute.
+     * @see #setImmutable(boolean)
+     * @see de.fhdo.lemma.data.DataPackage#getDataField_Immutable()
+     * @model unique="false"
+     * @generated
+     */
+    boolean isImmutable();
+
+    /**
+     * Sets the value of the '{@link de.fhdo.lemma.data.DataField#isImmutable <em>Immutable</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Immutable</em>' attribute.
+     * @see #isImmutable()
+     * @generated
+     */
+    void setImmutable(boolean value);
 
     /**
      * Returns the value of the '<em><b>Complex Type</b></em>' reference.
@@ -183,8 +212,8 @@ public interface DataField extends EObject {
 
     /**
      * Returns the value of the '<em><b>Features</b></em>' attribute list.
-     * The list contents are of type {@link de.fhdo.lemma.data.FieldFeature}.
-     * The literals are from the enumeration {@link de.fhdo.lemma.data.FieldFeature}.
+     * The list contents are of type {@link de.fhdo.lemma.data.DataFieldFeature}.
+     * The literals are from the enumeration {@link de.fhdo.lemma.data.DataFieldFeature}.
      * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Features</em>' attribute list isn't clear,
@@ -192,12 +221,12 @@ public interface DataField extends EObject {
      * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Features</em>' attribute list.
-     * @see de.fhdo.lemma.data.FieldFeature
+     * @see de.fhdo.lemma.data.DataFieldFeature
      * @see de.fhdo.lemma.data.DataPackage#getDataField_Features()
      * @model unique="false"
      * @generated
      */
-    EList<FieldFeature> getFeatures();
+    EList<DataFieldFeature> getFeatures();
 
     /**
      * Returns the value of the '<em><b>Data Structure</b></em>' container reference.
@@ -304,5 +333,17 @@ public interface DataField extends EObject {
      * @generated
      */
     DataField findEponymousSuperField();
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * *
+     * Check if the field has a specific feature assigned
+     * <!-- end-model-doc -->
+     * @model unique="false" featureUnique="false"
+     * @generated
+     */
+    boolean hasFeature(DataFieldFeature feature);
 
 } // DataField

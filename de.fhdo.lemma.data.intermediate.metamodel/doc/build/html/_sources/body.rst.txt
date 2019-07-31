@@ -492,6 +492,58 @@ Custom, domain-specific Types
     A domain-specific data structure that usually comprises a variety of typed
     data fields.
 
+    .. _link__IntermediateDataStructure_featureNames:
+
+    .. py:attribute:: String[*] featureNames
+
+        This attribute contains the names of all features specified for the data
+        structure. The following values are possible:
+
+        ======================   ===============================================
+        **Feature Name**         **Description**
+        ----------------------   -----------------------------------------------
+               AGGREGATE         Data structure is an Aggregate in the sense of
+                                 Domain-driven Design (DDD) :cite:`Evans2004`.
+        ----------------------   -----------------------------------------------
+          APPLICATION_SERVICE    Data structure is a Service with application
+                                 focus in the sense of DDD.
+        ----------------------   -----------------------------------------------
+             DOMAIN_EVENT        Data structure is a Domain Event 
+                                 [#enterprise-patterns-event-message]_.
+        ----------------------   -----------------------------------------------
+            DOMAIN_SERVICE       Data structure is a Service with domain focus
+                                 in the sense of DDD.
+        ----------------------   -----------------------------------------------
+                ENTITY           Data structure is an Entity in the sense of 
+                                 DDD.
+        ----------------------   -----------------------------------------------
+                FACTORY          Data structure is a Factory in the sense of
+                                 DDD.
+        ----------------------   -----------------------------------------------
+        INFRASTRUCTURE_SERVICE   Data structure is a Service with infrastructure
+                                 focus in the sense of DDD.
+        ----------------------   -----------------------------------------------
+               REPOSITORY        Data structure is a Repository in the sense of
+                                 DDD.
+        ----------------------   -----------------------------------------------
+                SERVICE          Data structure is a Service in the sense of
+                                 DDD.
+        ----------------------   -----------------------------------------------
+             SPECIFICATION       Data structure is a Specification in the sense
+                                 of DDD.
+        ----------------------   -----------------------------------------------
+              VALUE_OBJECT       Data structure is a Value Object in the sense
+                                 of DDD.
+        ======================   ===============================================
+
+        .. NOTE::
+
+            DDD-related features should follow the constraints described in
+            :cite:`Rademacher2018`. The Data Modeling Language currently issues 
+            a warning in case they are violated. Code generators are free to
+            also check the constraints and deny code generation in case they are
+            violated.
+
     .. py:attribute:: IntermediateDataStructure super
 
         The super data structure from which this data structure inherits.
@@ -570,6 +622,38 @@ Custom, domain-specific Types
     .. py:attribute:: boolean hasNoReturnType
       
         Flag to indicate whether this operation has a return type or not.
+
+    .. py:attribute:: String[*] featureNames
+
+        This attribute contains the names of all features specified for the data
+        operation. The following values are possible:
+
+        ================   =====================================================
+        **Feature Name**         **Description**
+        ----------------   -----------------------------------------------------
+             CLOSURE       Data operation is a Closure in the sense of DDD.
+        ----------------   -----------------------------------------------------
+           IDENTIFIER      Data operation acts as identifier for an Entity in
+                           the sense of DDD (see also 
+                           :ref:`IntermediateDataStructure.featureNames 
+                           <link__IntermediateDataStructure_featureNames>`).
+        ----------------   -----------------------------------------------------
+        SIDE_EFFECT_FREE   Data operation is side-effect-free in the sense of 
+                           DDD.
+        ----------------   -----------------------------------------------------
+            VALIDATOR      Data operation acts as validator for a Specification
+                           in the sense of DDD (see also 
+                           :ref:`IntermediateDataStructure.featureNames 
+                           <link__IntermediateDataStructure_featureNames>`).
+        ================   =====================================================
+
+        .. NOTE::
+
+            DDD-related features should follow the constraints described in
+            :cite:`Rademacher2018`. The Data Modeling Language currently issues 
+            a warning in case they are violated. Code generators are free to
+            also check the constraints and deny code generation in case they are
+            violated.
 
     .. _link__IntermediateDataOperation_returnType:
 
@@ -721,7 +805,29 @@ Custom, domain-specific Types
     .. py:attribute:: String[*] featureNames
 
         This attribute contains the names of all features specified for the data
-        field.
+        field. The following values are possible:
+
+        ================   =====================================================
+        **Feature Name**         **Description**
+        ----------------   -----------------------------------------------------
+           IDENTIFIER      Data field acts as identifier for an Entity in the
+                           sense of DDD (see also 
+                           :ref:`IntermediateDataStructure.featureNames 
+                           <link__IntermediateDataStructure_featureNames>`).
+        ----------------   -----------------------------------------------------
+              PART         Data field is a part of an Aggregate in the sense of
+                           DDD (see also
+                           :ref:`IntermediateDataStructure.featureNames 
+                           <link__IntermediateDataStructure_featureNames>`).
+        ================   =====================================================
+
+        .. NOTE::
+
+            DDD-related features should follow the constraints described in
+            :cite:`Rademacher2018`. The Data Modeling Language currently issues 
+            a warning in case they are violated. Code generators are free to
+            also check the constraints and deny code generation in case they are
+            violated.
 
     .. _link__IntermediateDataField_type:
 
@@ -1021,6 +1127,8 @@ and other modeling concepts such as :java:type:`microservices
 .. [#java-type-conversions] 
     https://docs.oracle.com/javase/specs/jls/se11/html/jls-5.html#jls-5.1.2
 .. [#golang] https://www.golang.org
+.. [#enterprise-patterns-event-message]
+    https://www.enterpriseintegrationpatterns.com/patterns/messaging/EventMessage.html
 
 Indices and Tables
 ==================

@@ -168,9 +168,10 @@ public class DataDslSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 * Constraint:
 	 *     (
 	 *         hidden?='hide'? 
+	 *         immutable?='immutable'? 
 	 *         (primitiveType=PrimitiveType | complexType=[ComplexType|QualifiedName] | importedComplexType=ImportedComplexType)? 
 	 *         name=ID 
-	 *         (features+=FieldFeature features+=FieldFeature*)?
+	 *         (features+=DataFieldFeature features+=DataFieldFeature*)?
 	 *     )
 	 */
 	protected void sequence_DataField(ISerializationContext context, DataField semanticObject) {
@@ -217,7 +218,8 @@ public class DataDslSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *         )? 
 	 *         name=ID 
 	 *         parameters+=DataOperationParameter? 
-	 *         parameters+=DataOperationParameter*
+	 *         parameters+=DataOperationParameter* 
+	 *         (features+=DataOperationFeature features+=DataOperationFeature*)?
 	 *     )
 	 */
 	protected void sequence_DataOperation(ISerializationContext context, DataOperation semanticObject) {
@@ -233,8 +235,9 @@ public class DataDslSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 * Constraint:
 	 *     (
 	 *         name=ID 
+	 *         (features+=DataStructureFeature features+=DataStructureFeature*)? 
 	 *         super=[DataStructure|QualifiedName]? 
-	 *         ((dataFields+=DataField | operations+=DataOperation) dataFields+=DataField? (operations+=DataOperation? dataFields+=DataField?)*)?
+	 *         ((dataFields+=DataField | operations+=DataOperation) operations+=DataOperation? (dataFields+=DataField? operations+=DataOperation?)*)?
 	 *     )
 	 */
 	protected void sequence_DataStructure(ISerializationContext context, DataStructure semanticObject) {

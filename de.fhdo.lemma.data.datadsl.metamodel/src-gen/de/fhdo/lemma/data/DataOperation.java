@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.fhdo.lemma.data.DataOperation#getName <em>Name</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.DataOperation#isHidden <em>Hidden</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.DataOperation#isHasNoReturnType <em>Has No Return Type</em>}</li>
+ *   <li>{@link de.fhdo.lemma.data.DataOperation#getFeatures <em>Features</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.DataOperation#getComplexReturnType <em>Complex Return Type</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.DataOperation#getImportedComplexReturnType <em>Imported Complex Return Type</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.DataOperation#getPrimitiveReturnType <em>Primitive Return Type</em>}</li>
@@ -125,6 +126,24 @@ public interface DataOperation extends EObject {
      * @generated
      */
     void setHasNoReturnType(boolean value);
+
+    /**
+     * Returns the value of the '<em><b>Features</b></em>' attribute list.
+     * The list contents are of type {@link de.fhdo.lemma.data.DataOperationFeature}.
+     * The literals are from the enumeration {@link de.fhdo.lemma.data.DataOperationFeature}.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Features</em>' attribute list isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Features</em>' attribute list.
+     * @see de.fhdo.lemma.data.DataOperationFeature
+     * @see de.fhdo.lemma.data.DataPackage#getDataOperation_Features()
+     * @model unique="false"
+     * @generated
+     */
+    EList<DataOperationFeature> getFeatures();
 
     /**
      * Returns the value of the '<em><b>Complex Return Type</b></em>' reference.
@@ -334,5 +353,17 @@ public interface DataOperation extends EObject {
      * @generated
      */
     Type getPrimitiveOrComplexReturnType();
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * *
+     * Check if the operation has a specific feature assigned
+     * <!-- end-model-doc -->
+     * @model unique="false" featureUnique="false"
+     * @generated
+     */
+    boolean hasFeature(DataOperationFeature feature);
 
 } // DataOperation

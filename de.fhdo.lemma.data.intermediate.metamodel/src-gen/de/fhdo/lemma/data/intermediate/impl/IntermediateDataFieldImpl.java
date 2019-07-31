@@ -41,6 +41,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.fhdo.lemma.data.intermediate.impl.IntermediateDataFieldImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.impl.IntermediateDataFieldImpl#getQualifiedName <em>Qualified Name</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.impl.IntermediateDataFieldImpl#isHidden <em>Hidden</em>}</li>
+ *   <li>{@link de.fhdo.lemma.data.intermediate.impl.IntermediateDataFieldImpl#isImmutable <em>Immutable</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.impl.IntermediateDataFieldImpl#isInherited <em>Inherited</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.impl.IntermediateDataFieldImpl#getFeatureNames <em>Feature Names</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.impl.IntermediateDataFieldImpl#getType <em>Type</em>}</li>
@@ -112,6 +113,26 @@ public class IntermediateDataFieldImpl extends MinimalEObjectImpl.Container impl
      * @ordered
      */
     protected boolean hidden = HIDDEN_EDEFAULT;
+
+    /**
+     * The default value of the '{@link #isImmutable() <em>Immutable</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isImmutable()
+     * @generated
+     * @ordered
+     */
+    protected static final boolean IMMUTABLE_EDEFAULT = false;
+
+    /**
+     * The cached value of the '{@link #isImmutable() <em>Immutable</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isImmutable()
+     * @generated
+     * @ordered
+     */
+    protected boolean immutable = IMMUTABLE_EDEFAULT;
 
     /**
      * The default value of the '{@link #isInherited() <em>Inherited</em>}' attribute.
@@ -259,6 +280,29 @@ public class IntermediateDataFieldImpl extends MinimalEObjectImpl.Container impl
         hidden = newHidden;
         if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, IntermediatePackage.INTERMEDIATE_DATA_FIELD__HIDDEN, oldHidden, hidden));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public boolean isImmutable() {
+        return immutable;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void setImmutable(boolean newImmutable) {
+        boolean oldImmutable = immutable;
+        immutable = newImmutable;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, IntermediatePackage.INTERMEDIATE_DATA_FIELD__IMMUTABLE, oldImmutable, immutable));
     }
 
     /**
@@ -613,6 +657,8 @@ public class IntermediateDataFieldImpl extends MinimalEObjectImpl.Container impl
                 return getQualifiedName();
             case IntermediatePackage.INTERMEDIATE_DATA_FIELD__HIDDEN:
                 return isHidden();
+            case IntermediatePackage.INTERMEDIATE_DATA_FIELD__IMMUTABLE:
+                return isImmutable();
             case IntermediatePackage.INTERMEDIATE_DATA_FIELD__INHERITED:
                 return isInherited();
             case IntermediatePackage.INTERMEDIATE_DATA_FIELD__FEATURE_NAMES:
@@ -650,6 +696,9 @@ public class IntermediateDataFieldImpl extends MinimalEObjectImpl.Container impl
                 return;
             case IntermediatePackage.INTERMEDIATE_DATA_FIELD__HIDDEN:
                 setHidden((Boolean)newValue);
+                return;
+            case IntermediatePackage.INTERMEDIATE_DATA_FIELD__IMMUTABLE:
+                setImmutable((Boolean)newValue);
                 return;
             case IntermediatePackage.INTERMEDIATE_DATA_FIELD__INHERITED:
                 setInherited((Boolean)newValue);
@@ -695,6 +744,9 @@ public class IntermediateDataFieldImpl extends MinimalEObjectImpl.Container impl
             case IntermediatePackage.INTERMEDIATE_DATA_FIELD__HIDDEN:
                 setHidden(HIDDEN_EDEFAULT);
                 return;
+            case IntermediatePackage.INTERMEDIATE_DATA_FIELD__IMMUTABLE:
+                setImmutable(IMMUTABLE_EDEFAULT);
+                return;
             case IntermediatePackage.INTERMEDIATE_DATA_FIELD__INHERITED:
                 setInherited(INHERITED_EDEFAULT);
                 return;
@@ -734,6 +786,8 @@ public class IntermediateDataFieldImpl extends MinimalEObjectImpl.Container impl
                 return QUALIFIED_NAME_EDEFAULT == null ? qualifiedName != null : !QUALIFIED_NAME_EDEFAULT.equals(qualifiedName);
             case IntermediatePackage.INTERMEDIATE_DATA_FIELD__HIDDEN:
                 return hidden != HIDDEN_EDEFAULT;
+            case IntermediatePackage.INTERMEDIATE_DATA_FIELD__IMMUTABLE:
+                return immutable != IMMUTABLE_EDEFAULT;
             case IntermediatePackage.INTERMEDIATE_DATA_FIELD__INHERITED:
                 return inherited != INHERITED_EDEFAULT;
             case IntermediatePackage.INTERMEDIATE_DATA_FIELD__FEATURE_NAMES:
@@ -782,6 +836,8 @@ public class IntermediateDataFieldImpl extends MinimalEObjectImpl.Container impl
         result.append(qualifiedName);
         result.append(", hidden: ");
         result.append(hidden);
+        result.append(", immutable: ");
+        result.append(immutable);
         result.append(", inherited: ");
         result.append(inherited);
         result.append(", featureNames: ");

@@ -6,6 +6,8 @@ package de.fhdo.lemma.data.ui
 import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor
 import org.eclipse.xtext.ide.editor.syntaxcoloring.ISemanticHighlightingCalculator
 import de.fhdo.lemma.data.ui.highlighting.HighlightingCalculator
+import org.eclipse.xtext.ui.editor.syntaxcoloring.IHighlightingConfiguration
+import de.fhdo.lemma.data.ui.highlighting.HighlightingConfiguration
 
 /**
  * Use this class to register components to be used within the Eclipse IDE.
@@ -14,6 +16,10 @@ import de.fhdo.lemma.data.ui.highlighting.HighlightingCalculator
  */
 @FinalFieldsConstructor
 class DataDslUiModule extends AbstractDataDslUiModule {
+    def Class<? extends IHighlightingConfiguration> bindIHighlightingConfiguration() {
+        HighlightingConfiguration
+    }
+
     def Class<? extends ISemanticHighlightingCalculator> bindISemanticHighlightingCalculator() {
         HighlightingCalculator
     }

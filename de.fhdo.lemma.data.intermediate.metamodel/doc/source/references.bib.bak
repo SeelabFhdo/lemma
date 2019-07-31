@@ -5,8 +5,6 @@
   publisher     = {O'Reilly Media},
   year          = {2015},
   author        = {Newman, Sam},
-  isbn          = {1491950331},
-  abstract      = {Distributed systems have become more fine-grained in the past 10 years, shifting from code-heavy monolithic applications to smaller, self-contained microservices. But developing these systems brings its own set of headaches. With lots of examples and practical advice, this book takes a holistic view of the topics that system architects and administrators must consider when building, managing, and evolving microservice architectures.Microservice technologies are moving quickly. Author Sam Newman provides you with a firm grounding in the concepts while diving into current solutions for modeling, integrating, testing, deploying, and monitoring your own autonomous services. You'll follow a fictional company throughout the book to learn how building a microservice architecture affects a single domain.Discover how microservices allow you to align your system design with your organization's goalsLearn options for integrating a service with the rest of your systemTake an incremental approach when splitting monolithic codebasesDeploy individual microservices through continuous integrationExamine the complexities of testing and monitoring distributed servicesManage security with user-to-service and service-to-service modelsUnderstand the challenges of scaling microservice architectures},
   file          = {:home/florian/Dokumente/Forschung/Dissertation/Literature/Newman - 2015 - Building Microservices.pdf:pdf},
   mendeley-tags = {foundations},
   timestamp     = {2017.01.14},
@@ -36,6 +34,25 @@
   year      = {2011},
   author    = {Dave Steinberg and Frank Budinsky and Marcelo Paternostro and Ed Merks},
   edition   = {2},
+}
+
+@Book{Evans2004,
+  title     = {Domain-Driven Design},
+  publisher = {Addison-Wesley},
+  year      = {2004},
+  author    = {Eric Evans},
+  owner     = {florian},
+  timestamp = {2017.02.10},
+}
+
+@InProceedings{10.1007/978-3-319-74781-1_17,
+  author    = {Rademacher, Florian and Sachweh, Sabine and Z{\"u}ndorf, Albert},
+  title     = {Towards a UML Profile for Domain-Driven Design of Microservice Architectures},
+  booktitle = {Software Engineering and Formal Methods},
+  year      = {2018},
+  editor    = {Cerone, Antonio and Roveri, Marco},
+  pages     = {230--245},
+  publisher = {Springer},
 }
 
 @Comment{jabref-meta: databaseType:bibtex;}

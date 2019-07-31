@@ -25,6 +25,7 @@ import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
@@ -426,6 +427,32 @@ public abstract class ComplexTypeImpl extends TypeImpl implements ComplexType {
      * @generated
      */
     @Override
+    public Object getClosestNamespace() {
+        EObject _xifexpression = null;
+        if (((this.getVersion() != null) && (this.getContext() != null))) {
+            _xifexpression = this.getContext();
+        }
+        else {
+            EObject _xifexpression_1 = null;
+            Version _version = this.getVersion();
+            boolean _tripleNotEquals = (_version != null);
+            if (_tripleNotEquals) {
+                _xifexpression_1 = this.getVersion();
+            }
+            else {
+                _xifexpression_1 = this.getDataModel();
+            }
+            _xifexpression = _xifexpression_1;
+        }
+        return _xifexpression;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public int compareFieldCounts(final EList<DataField> fields, final EList<DataField> fieldsToCompare) {
         if (((fields == null) && (fieldsToCompare == null))) {
             return 0;
@@ -677,6 +704,8 @@ public abstract class ComplexTypeImpl extends TypeImpl implements ComplexType {
                 return getQualifiedNameParts();
             case DataPackage.COMPLEX_TYPE___BUILD_QUALIFIED_NAME__STRING:
                 return buildQualifiedName((String)arguments.get(0));
+            case DataPackage.COMPLEX_TYPE___GET_CLOSEST_NAMESPACE:
+                return getClosestNamespace();
             case DataPackage.COMPLEX_TYPE___COMPARE_FIELD_COUNTS__ELIST_ELIST:
                 return compareFieldCounts((EList<DataField>)arguments.get(0), (EList<DataField>)arguments.get(1));
         }

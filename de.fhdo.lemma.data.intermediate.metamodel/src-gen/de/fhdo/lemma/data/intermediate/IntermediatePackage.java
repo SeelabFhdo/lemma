@@ -997,13 +997,22 @@ public interface IntermediatePackage extends EPackage {
     int INTERMEDIATE_DATA_STRUCTURE__CONTEXT = INTERMEDIATE_COMPLEX_TYPE__CONTEXT;
 
     /**
+     * The feature id for the '<em><b>Feature Names</b></em>' attribute list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_DATA_STRUCTURE__FEATURE_NAMES = INTERMEDIATE_COMPLEX_TYPE_FEATURE_COUNT + 0;
+
+    /**
      * The feature id for the '<em><b>Super</b></em>' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_DATA_STRUCTURE__SUPER = INTERMEDIATE_COMPLEX_TYPE_FEATURE_COUNT + 0;
+    int INTERMEDIATE_DATA_STRUCTURE__SUPER = INTERMEDIATE_COMPLEX_TYPE_FEATURE_COUNT + 1;
 
     /**
      * The feature id for the '<em><b>Operations</b></em>' containment reference list.
@@ -1012,7 +1021,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_DATA_STRUCTURE__OPERATIONS = INTERMEDIATE_COMPLEX_TYPE_FEATURE_COUNT + 1;
+    int INTERMEDIATE_DATA_STRUCTURE__OPERATIONS = INTERMEDIATE_COMPLEX_TYPE_FEATURE_COUNT + 2;
 
     /**
      * The feature id for the '<em><b>Data Fields</b></em>' containment reference list.
@@ -1021,7 +1030,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_DATA_STRUCTURE__DATA_FIELDS = INTERMEDIATE_COMPLEX_TYPE_FEATURE_COUNT + 2;
+    int INTERMEDIATE_DATA_STRUCTURE__DATA_FIELDS = INTERMEDIATE_COMPLEX_TYPE_FEATURE_COUNT + 3;
 
     /**
      * The number of structural features of the '<em>Data Structure</em>' class.
@@ -1030,7 +1039,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_DATA_STRUCTURE_FEATURE_COUNT = INTERMEDIATE_COMPLEX_TYPE_FEATURE_COUNT + 3;
+    int INTERMEDIATE_DATA_STRUCTURE_FEATURE_COUNT = INTERMEDIATE_COMPLEX_TYPE_FEATURE_COUNT + 4;
 
     /**
      * The number of operations of the '<em>Data Structure</em>' class.
@@ -1097,13 +1106,22 @@ public interface IntermediatePackage extends EPackage {
     int INTERMEDIATE_DATA_OPERATION__HAS_NO_RETURN_TYPE = 4;
 
     /**
+     * The feature id for the '<em><b>Feature Names</b></em>' attribute list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_DATA_OPERATION__FEATURE_NAMES = 5;
+
+    /**
      * The feature id for the '<em><b>Return Type</b></em>' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_DATA_OPERATION__RETURN_TYPE = 5;
+    int INTERMEDIATE_DATA_OPERATION__RETURN_TYPE = 6;
 
     /**
      * The feature id for the '<em><b>Original Return Type</b></em>' containment reference.
@@ -1112,7 +1130,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_DATA_OPERATION__ORIGINAL_RETURN_TYPE = 6;
+    int INTERMEDIATE_DATA_OPERATION__ORIGINAL_RETURN_TYPE = 7;
 
     /**
      * The feature id for the '<em><b>Parameters</b></em>' containment reference list.
@@ -1121,7 +1139,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_DATA_OPERATION__PARAMETERS = 7;
+    int INTERMEDIATE_DATA_OPERATION__PARAMETERS = 8;
 
     /**
      * The feature id for the '<em><b>Aspects</b></em>' containment reference list.
@@ -1130,7 +1148,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_DATA_OPERATION__ASPECTS = 8;
+    int INTERMEDIATE_DATA_OPERATION__ASPECTS = 9;
 
     /**
      * The feature id for the '<em><b>Data Structure</b></em>' container reference.
@@ -1139,7 +1157,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_DATA_OPERATION__DATA_STRUCTURE = 9;
+    int INTERMEDIATE_DATA_OPERATION__DATA_STRUCTURE = 10;
 
     /**
      * The number of structural features of the '<em>Data Operation</em>' class.
@@ -1148,7 +1166,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_DATA_OPERATION_FEATURE_COUNT = 10;
+    int INTERMEDIATE_DATA_OPERATION_FEATURE_COUNT = 11;
 
     /**
      * The number of operations of the '<em>Data Operation</em>' class.
@@ -1442,13 +1460,22 @@ public interface IntermediatePackage extends EPackage {
     int INTERMEDIATE_DATA_FIELD__HIDDEN = 2;
 
     /**
+     * The feature id for the '<em><b>Immutable</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_DATA_FIELD__IMMUTABLE = 3;
+
+    /**
      * The feature id for the '<em><b>Inherited</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_DATA_FIELD__INHERITED = 3;
+    int INTERMEDIATE_DATA_FIELD__INHERITED = 4;
 
     /**
      * The feature id for the '<em><b>Feature Names</b></em>' attribute list.
@@ -1457,7 +1484,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_DATA_FIELD__FEATURE_NAMES = 4;
+    int INTERMEDIATE_DATA_FIELD__FEATURE_NAMES = 5;
 
     /**
      * The feature id for the '<em><b>Type</b></em>' containment reference.
@@ -1466,7 +1493,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_DATA_FIELD__TYPE = 5;
+    int INTERMEDIATE_DATA_FIELD__TYPE = 6;
 
     /**
      * The feature id for the '<em><b>Original Type</b></em>' containment reference.
@@ -1475,7 +1502,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_DATA_FIELD__ORIGINAL_TYPE = 6;
+    int INTERMEDIATE_DATA_FIELD__ORIGINAL_TYPE = 7;
 
     /**
      * The feature id for the '<em><b>Aspects</b></em>' containment reference list.
@@ -1484,7 +1511,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_DATA_FIELD__ASPECTS = 7;
+    int INTERMEDIATE_DATA_FIELD__ASPECTS = 8;
 
     /**
      * The feature id for the '<em><b>Data Structure</b></em>' container reference.
@@ -1493,7 +1520,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_DATA_FIELD__DATA_STRUCTURE = 8;
+    int INTERMEDIATE_DATA_FIELD__DATA_STRUCTURE = 9;
 
     /**
      * The feature id for the '<em><b>List Type</b></em>' container reference.
@@ -1502,7 +1529,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_DATA_FIELD__LIST_TYPE = 9;
+    int INTERMEDIATE_DATA_FIELD__LIST_TYPE = 10;
 
     /**
      * The number of structural features of the '<em>Data Field</em>' class.
@@ -1511,7 +1538,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_DATA_FIELD_FEATURE_COUNT = 10;
+    int INTERMEDIATE_DATA_FIELD_FEATURE_COUNT = 11;
 
     /**
      * The operation id for the '<em>Get Effective Complex Type</em>' operation.
@@ -2475,6 +2502,17 @@ public interface IntermediatePackage extends EPackage {
     EClass getIntermediateDataStructure();
 
     /**
+     * Returns the meta object for the attribute list '{@link de.fhdo.lemma.data.intermediate.IntermediateDataStructure#getFeatureNames <em>Feature Names</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute list '<em>Feature Names</em>'.
+     * @see de.fhdo.lemma.data.intermediate.IntermediateDataStructure#getFeatureNames()
+     * @see #getIntermediateDataStructure()
+     * @generated
+     */
+    EAttribute getIntermediateDataStructure_FeatureNames();
+
+    /**
      * Returns the meta object for the reference '{@link de.fhdo.lemma.data.intermediate.IntermediateDataStructure#getSuper <em>Super</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2571,6 +2609,17 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      */
     EAttribute getIntermediateDataOperation_HasNoReturnType();
+
+    /**
+     * Returns the meta object for the attribute list '{@link de.fhdo.lemma.data.intermediate.IntermediateDataOperation#getFeatureNames <em>Feature Names</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute list '<em>Feature Names</em>'.
+     * @see de.fhdo.lemma.data.intermediate.IntermediateDataOperation#getFeatureNames()
+     * @see #getIntermediateDataOperation()
+     * @generated
+     */
+    EAttribute getIntermediateDataOperation_FeatureNames();
 
     /**
      * Returns the meta object for the containment reference '{@link de.fhdo.lemma.data.intermediate.IntermediateDataOperation#getReturnType <em>Return Type</em>}'.
@@ -2799,6 +2848,17 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      */
     EAttribute getIntermediateDataField_Hidden();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.fhdo.lemma.data.intermediate.IntermediateDataField#isImmutable <em>Immutable</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Immutable</em>'.
+     * @see de.fhdo.lemma.data.intermediate.IntermediateDataField#isImmutable()
+     * @see #getIntermediateDataField()
+     * @generated
+     */
+    EAttribute getIntermediateDataField_Immutable();
 
     /**
      * Returns the meta object for the attribute '{@link de.fhdo.lemma.data.intermediate.IntermediateDataField#isInherited <em>Inherited</em>}'.
@@ -3603,6 +3663,14 @@ public interface IntermediatePackage extends EPackage {
         EClass INTERMEDIATE_DATA_STRUCTURE = eINSTANCE.getIntermediateDataStructure();
 
         /**
+         * The meta object literal for the '<em><b>Feature Names</b></em>' attribute list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute INTERMEDIATE_DATA_STRUCTURE__FEATURE_NAMES = eINSTANCE.getIntermediateDataStructure_FeatureNames();
+
+        /**
          * The meta object literal for the '<em><b>Super</b></em>' reference feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -3675,6 +3743,14 @@ public interface IntermediatePackage extends EPackage {
          * @generated
          */
         EAttribute INTERMEDIATE_DATA_OPERATION__HAS_NO_RETURN_TYPE = eINSTANCE.getIntermediateDataOperation_HasNoReturnType();
+
+        /**
+         * The meta object literal for the '<em><b>Feature Names</b></em>' attribute list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute INTERMEDIATE_DATA_OPERATION__FEATURE_NAMES = eINSTANCE.getIntermediateDataOperation_FeatureNames();
 
         /**
          * The meta object literal for the '<em><b>Return Type</b></em>' containment reference feature.
@@ -3849,6 +3925,14 @@ public interface IntermediatePackage extends EPackage {
          * @generated
          */
         EAttribute INTERMEDIATE_DATA_FIELD__HIDDEN = eINSTANCE.getIntermediateDataField_Hidden();
+
+        /**
+         * The meta object literal for the '<em><b>Immutable</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute INTERMEDIATE_DATA_FIELD__IMMUTABLE = eINSTANCE.getIntermediateDataField_Immutable();
 
         /**
          * The meta object literal for the '<em><b>Inherited</b></em>' attribute feature.

@@ -609,6 +609,15 @@ public interface TechnologyPackage extends EPackage {
     int TECHNOLOGY_SPECIFIC_LIST_TYPE_FEATURE_COUNT = DataPackage.COMPLEX_TYPE_FEATURE_COUNT + 1;
 
     /**
+     * The operation id for the '<em>Get Closest Namespace</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TECHNOLOGY_SPECIFIC_LIST_TYPE___GET_CLOSEST_NAMESPACE = DataPackage.COMPLEX_TYPE___GET_CLOSEST_NAMESPACE;
+
+    /**
      * The operation id for the '<em>Compare Field Counts</em>' operation.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -743,6 +752,15 @@ public interface TechnologyPackage extends EPackage {
      * @ordered
      */
     int TECHNOLOGY_SPECIFIC_DATA_STRUCTURE_FEATURE_COUNT = DataPackage.COMPLEX_TYPE_FEATURE_COUNT + 1;
+
+    /**
+     * The operation id for the '<em>Get Closest Namespace</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TECHNOLOGY_SPECIFIC_DATA_STRUCTURE___GET_CLOSEST_NAMESPACE = DataPackage.COMPLEX_TYPE___GET_CLOSEST_NAMESPACE;
 
     /**
      * The operation id for the '<em>Compare Field Counts</em>' operation.

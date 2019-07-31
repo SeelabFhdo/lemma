@@ -6,6 +6,7 @@ import com.google.common.base.Objects;
 
 import de.fhdo.lemma.data.ComplexType;
 import de.fhdo.lemma.data.DataOperation;
+import de.fhdo.lemma.data.DataOperationFeature;
 import de.fhdo.lemma.data.DataOperationParameter;
 import de.fhdo.lemma.data.DataPackage;
 import de.fhdo.lemma.data.DataStructure;
@@ -29,6 +30,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
+import org.eclipse.emf.ecore.util.EDataTypeEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -50,6 +52,7 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
  *   <li>{@link de.fhdo.lemma.data.impl.DataOperationImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.impl.DataOperationImpl#isHidden <em>Hidden</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.impl.DataOperationImpl#isHasNoReturnType <em>Has No Return Type</em>}</li>
+ *   <li>{@link de.fhdo.lemma.data.impl.DataOperationImpl#getFeatures <em>Features</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.impl.DataOperationImpl#getComplexReturnType <em>Complex Return Type</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.impl.DataOperationImpl#getImportedComplexReturnType <em>Imported Complex Return Type</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.impl.DataOperationImpl#getPrimitiveReturnType <em>Primitive Return Type</em>}</li>
@@ -121,6 +124,16 @@ public class DataOperationImpl extends MinimalEObjectImpl.Container implements D
      * @ordered
      */
     protected boolean hasNoReturnType = HAS_NO_RETURN_TYPE_EDEFAULT;
+
+    /**
+     * The cached value of the '{@link #getFeatures() <em>Features</em>}' attribute list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getFeatures()
+     * @generated
+     * @ordered
+     */
+    protected EList<DataOperationFeature> features;
 
     /**
      * The cached value of the '{@link #getComplexReturnType() <em>Complex Return Type</em>}' reference.
@@ -268,6 +281,19 @@ public class DataOperationImpl extends MinimalEObjectImpl.Container implements D
         hasNoReturnType = newHasNoReturnType;
         if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.DATA_OPERATION__HAS_NO_RETURN_TYPE, oldHasNoReturnType, hasNoReturnType));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EList<DataOperationFeature> getFeatures() {
+        if (features == null) {
+            features = new EDataTypeEList<DataOperationFeature>(DataOperationFeature.class, this, DataPackage.DATA_OPERATION__FEATURES);
+        }
+        return features;
     }
 
     /**
@@ -609,6 +635,16 @@ public class DataOperationImpl extends MinimalEObjectImpl.Container implements D
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
+    public boolean hasFeature(final DataOperationFeature feature) {
+        return this.getFeatures().contains(feature);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     @SuppressWarnings("unchecked")
     @Override
     public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
@@ -675,6 +711,8 @@ public class DataOperationImpl extends MinimalEObjectImpl.Container implements D
                 return isHidden();
             case DataPackage.DATA_OPERATION__HAS_NO_RETURN_TYPE:
                 return isHasNoReturnType();
+            case DataPackage.DATA_OPERATION__FEATURES:
+                return getFeatures();
             case DataPackage.DATA_OPERATION__COMPLEX_RETURN_TYPE:
                 if (resolve) return getComplexReturnType();
                 return basicGetComplexReturnType();
@@ -713,6 +751,10 @@ public class DataOperationImpl extends MinimalEObjectImpl.Container implements D
             case DataPackage.DATA_OPERATION__HAS_NO_RETURN_TYPE:
                 setHasNoReturnType((Boolean)newValue);
                 return;
+            case DataPackage.DATA_OPERATION__FEATURES:
+                getFeatures().clear();
+                getFeatures().addAll((Collection<? extends DataOperationFeature>)newValue);
+                return;
             case DataPackage.DATA_OPERATION__COMPLEX_RETURN_TYPE:
                 setComplexReturnType((ComplexType)newValue);
                 return;
@@ -750,6 +792,9 @@ public class DataOperationImpl extends MinimalEObjectImpl.Container implements D
             case DataPackage.DATA_OPERATION__HAS_NO_RETURN_TYPE:
                 setHasNoReturnType(HAS_NO_RETURN_TYPE_EDEFAULT);
                 return;
+            case DataPackage.DATA_OPERATION__FEATURES:
+                getFeatures().clear();
+                return;
             case DataPackage.DATA_OPERATION__COMPLEX_RETURN_TYPE:
                 setComplexReturnType((ComplexType)null);
                 return;
@@ -783,6 +828,8 @@ public class DataOperationImpl extends MinimalEObjectImpl.Container implements D
                 return hidden != HIDDEN_EDEFAULT;
             case DataPackage.DATA_OPERATION__HAS_NO_RETURN_TYPE:
                 return hasNoReturnType != HAS_NO_RETURN_TYPE_EDEFAULT;
+            case DataPackage.DATA_OPERATION__FEATURES:
+                return features != null && !features.isEmpty();
             case DataPackage.DATA_OPERATION__COMPLEX_RETURN_TYPE:
                 return complexReturnType != null;
             case DataPackage.DATA_OPERATION__IMPORTED_COMPLEX_RETURN_TYPE:
@@ -817,6 +864,8 @@ public class DataOperationImpl extends MinimalEObjectImpl.Container implements D
                 return findEponymousSuperOperation();
             case DataPackage.DATA_OPERATION___GET_PRIMITIVE_OR_COMPLEX_RETURN_TYPE:
                 return getPrimitiveOrComplexReturnType();
+            case DataPackage.DATA_OPERATION___HAS_FEATURE__DATAOPERATIONFEATURE:
+                return hasFeature((DataOperationFeature)arguments.get(0));
         }
         return super.eInvoke(operationID, arguments);
     }
@@ -837,6 +886,8 @@ public class DataOperationImpl extends MinimalEObjectImpl.Container implements D
         result.append(hidden);
         result.append(", hasNoReturnType: ");
         result.append(hasNoReturnType);
+        result.append(", features: ");
+        result.append(features);
         result.append(')');
         return result.toString();
     }

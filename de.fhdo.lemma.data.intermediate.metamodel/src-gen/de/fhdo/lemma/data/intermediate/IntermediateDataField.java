@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateDataField#getName <em>Name</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateDataField#getQualifiedName <em>Qualified Name</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateDataField#isHidden <em>Hidden</em>}</li>
+ *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateDataField#isImmutable <em>Immutable</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateDataField#isInherited <em>Inherited</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateDataField#getFeatureNames <em>Feature Names</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateDataField#getType <em>Type</em>}</li>
@@ -114,6 +115,32 @@ public interface IntermediateDataField extends EObject {
      * @generated
      */
     void setHidden(boolean value);
+
+    /**
+     * Returns the value of the '<em><b>Immutable</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Immutable</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Immutable</em>' attribute.
+     * @see #setImmutable(boolean)
+     * @see de.fhdo.lemma.data.intermediate.IntermediatePackage#getIntermediateDataField_Immutable()
+     * @model unique="false"
+     * @generated
+     */
+    boolean isImmutable();
+
+    /**
+     * Sets the value of the '{@link de.fhdo.lemma.data.intermediate.IntermediateDataField#isImmutable <em>Immutable</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Immutable</em>' attribute.
+     * @see #isImmutable()
+     * @generated
+     */
+    void setImmutable(boolean value);
 
     /**
      * Returns the value of the '<em><b>Inherited</b></em>' attribute.

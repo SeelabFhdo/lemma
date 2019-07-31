@@ -463,6 +463,18 @@ abstract class ComplexType extends Type {
     }
 
     /**
+     * Get closest encompassing namespace
+     */
+    op Object getClosestNamespace() {
+        return if (version !== null && context !== null)
+                context
+            else if (version !== null)
+                version
+            else
+                dataModel
+    }
+
+    /**
      * Helper operation for ComplexType-subclasses to compare the counts of two DataField lists. The
      * return value follows the semantics of Java's Comparator.compare() method. The comparison is
      * based on the numbers of concrete types of the DataFields, i.e., primitive types are compared
@@ -524,6 +536,24 @@ class ImportedComplexType {
     container DataOperationParameter parameter opposite importedComplexType
 }
 
+/**
+ * Possible features for a data structure. Remember to adapt DataStructure.getAllDomainFeatures() if
+ * a new domain-driven-design-related feature is added.
+ */
+enum DataStructureFeature {
+    AGGREGATE,
+    APPLICATION_SERVICE,
+    DOMAIN_EVENT,
+    DOMAIN_SERVICE,
+    ENTITY,
+    FACTORY,
+    INFRASTRUCTURE_SERVICE,
+    REPOSITORY,
+    SERVICE,
+    SPECIFICATION,
+    VALUE_OBJECT
+}
+
 /*
  * Concept for data structures, i.e., complex types probably consisting of named and typed fields,
  * but that may also be empty though
@@ -536,6 +566,7 @@ class DataStructure extends ComplexType {
      *          Ensured by: DSL validator.
      */
 
+    DataStructureFeature[] features
     refers DataStructure ^super
     contains DataField[] dataFields opposite dataStructure
     contains DataOperation[] operations opposite dataStructure
@@ -684,6 +715,42 @@ class DataStructure extends ComplexType {
 
         return super.compareFieldCounts(effectiveFields, structureToCompare.effectiveFields)
     }
+
+    /**
+     * Check if the structure has a specific feature assigned
+     */
+    op boolean hasFeature(DataStructureFeature feature) {
+        return features.contains(feature)
+    }
+
+    /**
+     * Get list of domain-driven-design-related features
+     */
+    op DataStructureFeature[] getAllDomainFeatures() {
+        return #[
+            DataStructureFeature.AGGREGATE,
+            DataStructureFeature.APPLICATION_SERVICE,
+            DataStructureFeature.DOMAIN_EVENT,
+            DataStructureFeature.DOMAIN_SERVICE,
+            DataStructureFeature.ENTITY,
+            DataStructureFeature.FACTORY,
+            DataStructureFeature.INFRASTRUCTURE_SERVICE,
+            DataStructureFeature.REPOSITORY,
+            DataStructureFeature.SERVICE,
+            DataStructureFeature.SPECIFICATION,
+            DataStructureFeature.VALUE_OBJECT
+        ].toEList
+    }
+}
+
+/**
+ * Possible features for a data operation
+ */
+enum DataOperationFeature {
+    CLOSURE,
+    IDENTIFIER,
+    SIDE_EFFECT_FREE,
+    VALIDATOR
 }
 
 /**
@@ -708,6 +775,7 @@ class DataOperation {
     String name
     boolean hidden
     boolean hasNoReturnType
+    DataOperationFeature[] features
     refers ComplexType[0..1] complexReturnType
 
     contains ImportedComplexType[0..1] importedComplexReturnType opposite operation
@@ -800,6 +868,13 @@ class DataOperation {
             importedComplexReturnType.importedType
         else
             null
+    }
+
+    /**
+     * Check if the operation has a specific feature assigned
+     */
+    op boolean hasFeature(DataOperationFeature feature) {
+        return features.contains(feature)
     }
 }
 
@@ -918,6 +993,9 @@ class ListType extends ComplexType {
 /**
  * Possible features for a data field
  */
+enum DataFieldFeature {
+    IDENTIFIER,
+    PART
 }
 
 /**
@@ -951,6 +1029,7 @@ class DataField {
 
     contains ImportedComplexType[0..1] importedComplexType opposite dataField
     contains PrimitiveType[0..1] primitiveType
+    DataFieldFeature[] features
 
     container DataStructure dataStructure opposite dataFields
     container ListType listType opposite dataFields
@@ -1031,6 +1110,13 @@ class DataField {
         }
 
         return null
+    }
+
+    /**
+     * Check if the field has a specific feature assigned
+     */
+    op boolean hasFeature(DataFieldFeature feature) {
+        return features.contains(feature)
     }
 }
 

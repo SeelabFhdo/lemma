@@ -5,9 +5,11 @@ package de.fhdo.lemma.data.ui;
 
 import de.fhdo.lemma.data.ui.AbstractDataDslUiModule;
 import de.fhdo.lemma.data.ui.highlighting.HighlightingCalculator;
+import de.fhdo.lemma.data.ui.highlighting.HighlightingConfiguration;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor;
 import org.eclipse.xtext.ide.editor.syntaxcoloring.ISemanticHighlightingCalculator;
+import org.eclipse.xtext.ui.editor.syntaxcoloring.IHighlightingConfiguration;
 
 /**
  * Use this class to register components to be used within the Eclipse IDE.
@@ -17,6 +19,10 @@ import org.eclipse.xtext.ide.editor.syntaxcoloring.ISemanticHighlightingCalculat
 @FinalFieldsConstructor
 @SuppressWarnings("all")
 public class DataDslUiModule extends AbstractDataDslUiModule {
+  public Class<? extends IHighlightingConfiguration> bindIHighlightingConfiguration() {
+    return HighlightingConfiguration.class;
+  }
+  
   public Class<? extends ISemanticHighlightingCalculator> bindISemanticHighlightingCalculator() {
     return HighlightingCalculator.class;
   }
