@@ -34,7 +34,7 @@
       <menuContribution
             locationURI="menu:org.eclipse.ui.main.menu?after=additions">
          <menu
-               label="Domain-driven Microservice Design"
+               label="LEMMA"
                mnemonic="D"
                id="de.fhdo.lemma.eclipse.ui.lemmaMenu">
             <command
