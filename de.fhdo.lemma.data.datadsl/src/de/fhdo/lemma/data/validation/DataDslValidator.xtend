@@ -16,7 +16,6 @@ import com.google.common.base.Function
 import java.util.List
 import org.eclipse.emf.ecore.resource.Resource
 import de.fhdo.lemma.utils.LemmaUtils
-import de.fhdo.lemma.data.FieldFeature
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EStructuralFeature
 import de.fhdo.lemma.data.Context
@@ -209,15 +208,6 @@ class DataDslValidator extends AbstractDataDslValidator {
             return
         }
 
-        /* The "derived" property is only allowed for data structure fields */
-        val derivedFeatureIndex = dataField.features.indexOf(FieldFeature.DERIVED)
-        if (dataField.dataStructure === null && derivedFeatureIndex > -1) {
-            error('''The "derived" feature is only allowed on data structure fields''', dataField,
-                DataPackage::Literals.DATA_FIELD__FEATURES, derivedFeatureIndex)
-
-            return
-        }
-
         /*
          * If there is no equally named super field or the super field is hidden (which means
          * that the complex type does not allow external callers to access it), the field must
@@ -242,6 +232,9 @@ class DataDslValidator extends AbstractDataDslValidator {
             if (dataField.effectiveType !== null)
                 error('''Field cannot redefine inherited field «superQualifiedName» ''', dataField,
                     DataPackage::Literals.DATA_FIELD__NAME)
+            else if (dataField.immutable)
+                error("Inherited fields cannot be immutable", dataField,
+                    DataPackage::Literals.DATA_FIELD__IMMUTABLE)
         }
     }
 

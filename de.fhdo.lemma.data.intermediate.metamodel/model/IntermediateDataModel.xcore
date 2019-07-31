@@ -208,6 +208,7 @@ class IntermediateDataField {
     String name
     String qualifiedName
     boolean hidden
+    boolean immutable
     boolean inherited
     String[] featureNames
 

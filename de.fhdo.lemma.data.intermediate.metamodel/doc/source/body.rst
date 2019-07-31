@@ -706,6 +706,11 @@ Custom, domain-specific Types
         hidden. That is, fields' visibility may be overridden. A hidden field is
         not visible in any of the following levels of the inheritance hierarchy.
 
+    .. py:attribute:: boolean immutable
+
+        Flag to indicate whether the field is immutable or not. In Java, for 
+        instance, this could correspond to a field that has no public setter.
+
     .. _link__IntermediateDataField_inherited:
     
     .. py:attribute:: boolean inherited
@@ -716,16 +721,7 @@ Custom, domain-specific Types
     .. py:attribute:: String[*] featureNames
 
         This attribute contains the names of all features specified for the data
-        field. The following values are possible:
-
-        =================   ====================================================
-        **Feature Name**      **Description**
-        -----------------   ----------------------------------------------------
-             DERIVED        Flag to indicate that the value of the data field is
-                            derived from the state of the complex type's 
-                            instance or other values. Only allowed on :ref:`data
-                            structures <link__IntermediateDataStructure>`.
-        =================   ====================================================
+        field.
 
     .. _link__IntermediateDataField_type:
 

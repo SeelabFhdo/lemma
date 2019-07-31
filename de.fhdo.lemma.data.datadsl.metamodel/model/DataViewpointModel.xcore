@@ -918,8 +918,6 @@ class ListType extends ComplexType {
 /**
  * Possible features for a data field
  */
-enum FieldFeature {
-    DERIVED
 }
 
 /**
@@ -942,15 +940,17 @@ class DataField {
      *          Ensured by: DSL validator.
      *     (C5) A feature may only be assigned once.
      *          Ensured by: DSL validator.
+     *     (C6) Inherited fields cannot be immutable.
+     *          Ensured by: DSL validator.
      */
 
     String name
     boolean hidden
+    boolean immutable
     refers ComplexType[0..1] complexType
 
     contains ImportedComplexType[0..1] importedComplexType opposite dataField
     contains PrimitiveType[0..1] primitiveType
-    FieldFeature[] features
 
     container DataStructure dataStructure opposite dataFields
     container ListType listType opposite dataFields

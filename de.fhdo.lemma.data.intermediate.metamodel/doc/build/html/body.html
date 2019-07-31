@@ -854,6 +854,13 @@ hidden. That is, fields’ visibility may be overridden. A hidden field is
 not visible in any of the following levels of the inheritance hierarchy.</p>
 </dd></dl>
 
+<dl class="attribute">
+<dt>
+<code class="descname">boolean immutable</code></dt>
+<dd><p>Flag to indicate whether the field is immutable or not. In Java, for
+instance, this could correspond to a field that has no public setter.</p>
+</dd></dl>
+
 <span class="target" id="link-intermediatedatafield-inherited"></span><dl class="attribute">
 <dt>
 <code class="descname">boolean inherited</code></dt>
@@ -865,24 +872,7 @@ not visible in any of the following levels of the inheritance hierarchy.</p>
 <dt>
 <code class="descname">String[*] featureNames</code></dt>
 <dd><p>This attribute contains the names of all features specified for the data
-field. The following values are possible:</p>
-<table border="1" class="docutils">
-<colgroup>
-<col width="25%" />
-<col width="75%" />
-</colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td><strong>Feature Name</strong></td>
-<td><strong>Description</strong></td>
-</tr>
-<tr class="row-even"><td>DERIVED</td>
-<td>Flag to indicate that the value of the data field is
-derived from the state of the complex type’s
-instance or other values. Only allowed on <a class="reference internal" href="#link-intermediatedatastructure"><span class="std std-ref">data
-structures</span></a>.</td>
-</tr>
-</tbody>
-</table>
+field.</p>
 </dd></dl>
 
 <span class="target" id="link-intermediatedatafield-type"></span><dl class="attribute">

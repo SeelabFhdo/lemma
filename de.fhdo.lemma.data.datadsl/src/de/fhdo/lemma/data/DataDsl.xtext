@@ -51,12 +51,11 @@ ListType returns ListType:
     '}'
 ;
 
-enum FieldFeature returns FieldFeature:
-    DERIVED = "derived"
 ;
 
 DataField returns DataField:
     ^hidden?='hide'?
+    immutable?='immutable'?
     (
         primitiveType=PrimitiveType |
         complexType=[ComplexType|QualifiedName] |

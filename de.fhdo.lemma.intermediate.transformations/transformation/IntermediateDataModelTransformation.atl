@@ -356,16 +356,13 @@ rule IntermediateDataField(sourceField : Data!DataField,
         t : Intermediate!IntermediateDataField(
             name <- sourceField.name,
             hidden <- sourceField.hidden,
+            immutable <- sourceField.immutable,
             inherited <- inherited
         )
     do {
         if (not inherited) {
             t.qualifiedName <- sourceField.buildQualifiedName('.');
 
-            -- Add features only to "original", i.e., non-inherited fields
-            for (feature in sourceField.features) {
-                t.featureNames <- t.featureNames.append(feature.toString());
-            }
         } else
             t.qualifiedName <- sourceContainerQualifiedName.concat('.').concat(sourceField.name);
 
