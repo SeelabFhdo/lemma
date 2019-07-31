@@ -27,7 +27,7 @@
 'by'=37
 'byte'=88
 'char'=89
-'closure'=129
+'closure'=130
 'communication_type'=73
 'container'=17
 'containers'=116
@@ -78,6 +78,7 @@
 'mandatory'=111
 'microservice'=46
 'microservices'=49
+'neverEmpty'=128
 'nodes'=35
 'noimpl'=53
 'on'=34
@@ -85,7 +86,7 @@
 'operations'=51
 'out'=104
 'parameters'=113
-'part'=128
+'part'=129
 'primitive'=62
 'procedure'=85
 'properties'=69
@@ -98,7 +99,7 @@
 'service'=68
 'services'=38
 'short'=95
-'sideEffectFree'=130
+'sideEffectFree'=131
 'singleval'=112
 'specification'=125
 'string'=96
@@ -110,7 +111,7 @@
 'types'=114
 'used'=36
 'utility'=101
-'validator'=131
+'validator'=132
 'valueObject'=126
 'values'=28
 'version'=47
@@ -158,6 +159,7 @@ T__128=128
 T__129=129
 T__130=130
 T__131=131
+T__132=132
 T__13=13
 T__14=14
 T__15=15

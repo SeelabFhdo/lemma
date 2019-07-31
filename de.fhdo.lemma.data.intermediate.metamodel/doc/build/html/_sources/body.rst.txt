@@ -815,6 +815,8 @@ Custom, domain-specific Types
                            :ref:`IntermediateDataStructure.featureNames 
                            <link__IntermediateDataStructure_featureNames>`).
         ----------------   -----------------------------------------------------
+           NEVER_EMPTY     Data field should never be empty.
+        ----------------   -----------------------------------------------------
               PART         Data field is a part of an Aggregate in the sense of
                            DDD (see also
                            :ref:`IntermediateDataStructure.featureNames 

@@ -995,6 +995,7 @@ class ListType extends ComplexType {
  */
 enum DataFieldFeature {
     IDENTIFIER,
+    NEVER_EMPTY,
     PART
 }
 

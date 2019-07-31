@@ -33,6 +33,16 @@ public enum DataFieldFeature implements Enumerator {
     IDENTIFIER(0, "IDENTIFIER", "IDENTIFIER"),
 
     /**
+     * The '<em><b>NEVER EMPTY</b></em>' literal object.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #NEVER_EMPTY_VALUE
+     * @generated
+     * @ordered
+     */
+    NEVER_EMPTY(0, "NEVER_EMPTY", "NEVER_EMPTY"),
+
+    /**
      * The '<em><b>PART</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -58,6 +68,21 @@ public enum DataFieldFeature implements Enumerator {
     public static final int IDENTIFIER_VALUE = 0;
 
     /**
+     * The '<em><b>NEVER EMPTY</b></em>' literal value.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of '<em><b>NEVER EMPTY</b></em>' literal object isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @see #NEVER_EMPTY
+     * @model
+     * @generated
+     * @ordered
+     */
+    public static final int NEVER_EMPTY_VALUE = 0;
+
+    /**
      * The '<em><b>PART</b></em>' literal value.
      * <!-- begin-user-doc -->
      * <p>
@@ -81,6 +106,7 @@ public enum DataFieldFeature implements Enumerator {
     private static final DataFieldFeature[] VALUES_ARRAY =
         new DataFieldFeature[] {
             IDENTIFIER,
+            NEVER_EMPTY,
             PART,
         };
 

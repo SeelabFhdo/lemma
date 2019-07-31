@@ -22,7 +22,7 @@ import java.util.ArrayList;
 @SuppressWarnings("all")
 public class InternalDataDslParser extends AbstractInternalAntlrParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_STRING", "RULE_ID", "RULE_BIG_DECIMAL", "RULE_BOOLEAN", "RULE_INT", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'import'", "'datatypes'", "'from'", "'as'", "'version'", "'{'", "'}'", "'context'", "'structure'", "'<'", "','", "'>'", "'extends'", "'list'", "'hide'", "'immutable'", "'enum'", "'('", "')'", "'procedure'", "'function'", "'::'", "'boolean'", "'byte'", "'char'", "'date'", "'double'", "'float'", "'int'", "'long'", "'short'", "'string'", "'.'", "'aggregate'", "'applicationService'", "'domainEvent'", "'domainService'", "'entity'", "'factory'", "'infrastructureService'", "'repository'", "'service'", "'specification'", "'valueObject'", "'identifier'", "'part'", "'closure'", "'sideEffectFree'", "'validator'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_STRING", "RULE_ID", "RULE_BIG_DECIMAL", "RULE_BOOLEAN", "RULE_INT", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'import'", "'datatypes'", "'from'", "'as'", "'version'", "'{'", "'}'", "'context'", "'structure'", "'<'", "','", "'>'", "'extends'", "'list'", "'hide'", "'immutable'", "'enum'", "'('", "')'", "'procedure'", "'function'", "'::'", "'boolean'", "'byte'", "'char'", "'date'", "'double'", "'float'", "'int'", "'long'", "'short'", "'string'", "'.'", "'aggregate'", "'applicationService'", "'domainEvent'", "'domainService'", "'entity'", "'factory'", "'infrastructureService'", "'repository'", "'service'", "'specification'", "'valueObject'", "'identifier'", "'neverEmpty'", "'part'", "'closure'", "'sideEffectFree'", "'validator'"
     };
     public static final int T__50=50;
     public static final int RULE_BOOLEAN=7;
@@ -55,6 +55,7 @@ public class InternalDataDslParser extends AbstractInternalAntlrParser {
     public static final int T__23=23;
     public static final int T__24=24;
     public static final int T__25=25;
+    public static final int T__62=62;
     public static final int T__20=20;
     public static final int T__21=21;
     public static final int RULE_STRING=4;
@@ -4893,36 +4894,46 @@ public class InternalDataDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleDataFieldFeature"
-    // InternalDataDsl.g:1895:1: ruleDataFieldFeature returns [Enumerator current=null] : ( (enumLiteral_0= 'identifier' ) | (enumLiteral_1= 'part' ) ) ;
+    // InternalDataDsl.g:1895:1: ruleDataFieldFeature returns [Enumerator current=null] : ( (enumLiteral_0= 'identifier' ) | (enumLiteral_1= 'neverEmpty' ) | (enumLiteral_2= 'part' ) ) ;
     public final Enumerator ruleDataFieldFeature() throws RecognitionException {
         Enumerator current = null;
 
         Token enumLiteral_0=null;
         Token enumLiteral_1=null;
+        Token enumLiteral_2=null;
 
 
         	enterRule();
 
         try {
-            // InternalDataDsl.g:1901:2: ( ( (enumLiteral_0= 'identifier' ) | (enumLiteral_1= 'part' ) ) )
-            // InternalDataDsl.g:1902:2: ( (enumLiteral_0= 'identifier' ) | (enumLiteral_1= 'part' ) )
+            // InternalDataDsl.g:1901:2: ( ( (enumLiteral_0= 'identifier' ) | (enumLiteral_1= 'neverEmpty' ) | (enumLiteral_2= 'part' ) ) )
+            // InternalDataDsl.g:1902:2: ( (enumLiteral_0= 'identifier' ) | (enumLiteral_1= 'neverEmpty' ) | (enumLiteral_2= 'part' ) )
             {
-            // InternalDataDsl.g:1902:2: ( (enumLiteral_0= 'identifier' ) | (enumLiteral_1= 'part' ) )
-            int alt40=2;
-            int LA40_0 = input.LA(1);
-
-            if ( (LA40_0==57) ) {
+            // InternalDataDsl.g:1902:2: ( (enumLiteral_0= 'identifier' ) | (enumLiteral_1= 'neverEmpty' ) | (enumLiteral_2= 'part' ) )
+            int alt40=3;
+            switch ( input.LA(1) ) {
+            case 57:
+                {
                 alt40=1;
-            }
-            else if ( (LA40_0==58) ) {
+                }
+                break;
+            case 58:
+                {
                 alt40=2;
-            }
-            else {
+                }
+                break;
+            case 59:
+                {
+                alt40=3;
+                }
+                break;
+            default:
                 NoViableAltException nvae =
                     new NoViableAltException("", 40, 0, input);
 
                 throw nvae;
             }
+
             switch (alt40) {
                 case 1 :
                     // InternalDataDsl.g:1903:3: (enumLiteral_0= 'identifier' )
@@ -4942,15 +4953,32 @@ public class InternalDataDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalDataDsl.g:1911:3: (enumLiteral_1= 'part' )
+                    // InternalDataDsl.g:1911:3: (enumLiteral_1= 'neverEmpty' )
                     {
-                    // InternalDataDsl.g:1911:3: (enumLiteral_1= 'part' )
-                    // InternalDataDsl.g:1912:4: enumLiteral_1= 'part'
+                    // InternalDataDsl.g:1911:3: (enumLiteral_1= 'neverEmpty' )
+                    // InternalDataDsl.g:1912:4: enumLiteral_1= 'neverEmpty'
                     {
                     enumLiteral_1=(Token)match(input,58,FOLLOW_2); 
 
-                    				current = grammarAccess.getDataFieldFeatureAccess().getPARTEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
-                    				newLeafNode(enumLiteral_1, grammarAccess.getDataFieldFeatureAccess().getPARTEnumLiteralDeclaration_1());
+                    				current = grammarAccess.getDataFieldFeatureAccess().getNEVER_EMPTYEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
+                    				newLeafNode(enumLiteral_1, grammarAccess.getDataFieldFeatureAccess().getNEVER_EMPTYEnumLiteralDeclaration_1());
+                    			
+
+                    }
+
+
+                    }
+                    break;
+                case 3 :
+                    // InternalDataDsl.g:1919:3: (enumLiteral_2= 'part' )
+                    {
+                    // InternalDataDsl.g:1919:3: (enumLiteral_2= 'part' )
+                    // InternalDataDsl.g:1920:4: enumLiteral_2= 'part'
+                    {
+                    enumLiteral_2=(Token)match(input,59,FOLLOW_2); 
+
+                    				current = grammarAccess.getDataFieldFeatureAccess().getPARTEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
+                    				newLeafNode(enumLiteral_2, grammarAccess.getDataFieldFeatureAccess().getPARTEnumLiteralDeclaration_2());
                     			
 
                     }
@@ -4981,7 +5009,7 @@ public class InternalDataDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleDataOperationFeature"
-    // InternalDataDsl.g:1922:1: ruleDataOperationFeature returns [Enumerator current=null] : ( (enumLiteral_0= 'closure' ) | (enumLiteral_1= 'identifier' ) | (enumLiteral_2= 'sideEffectFree' ) | (enumLiteral_3= 'validator' ) ) ;
+    // InternalDataDsl.g:1930:1: ruleDataOperationFeature returns [Enumerator current=null] : ( (enumLiteral_0= 'closure' ) | (enumLiteral_1= 'identifier' ) | (enumLiteral_2= 'sideEffectFree' ) | (enumLiteral_3= 'validator' ) ) ;
     public final Enumerator ruleDataOperationFeature() throws RecognitionException {
         Enumerator current = null;
 
@@ -4994,13 +5022,13 @@ public class InternalDataDslParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalDataDsl.g:1928:2: ( ( (enumLiteral_0= 'closure' ) | (enumLiteral_1= 'identifier' ) | (enumLiteral_2= 'sideEffectFree' ) | (enumLiteral_3= 'validator' ) ) )
-            // InternalDataDsl.g:1929:2: ( (enumLiteral_0= 'closure' ) | (enumLiteral_1= 'identifier' ) | (enumLiteral_2= 'sideEffectFree' ) | (enumLiteral_3= 'validator' ) )
+            // InternalDataDsl.g:1936:2: ( ( (enumLiteral_0= 'closure' ) | (enumLiteral_1= 'identifier' ) | (enumLiteral_2= 'sideEffectFree' ) | (enumLiteral_3= 'validator' ) ) )
+            // InternalDataDsl.g:1937:2: ( (enumLiteral_0= 'closure' ) | (enumLiteral_1= 'identifier' ) | (enumLiteral_2= 'sideEffectFree' ) | (enumLiteral_3= 'validator' ) )
             {
-            // InternalDataDsl.g:1929:2: ( (enumLiteral_0= 'closure' ) | (enumLiteral_1= 'identifier' ) | (enumLiteral_2= 'sideEffectFree' ) | (enumLiteral_3= 'validator' ) )
+            // InternalDataDsl.g:1937:2: ( (enumLiteral_0= 'closure' ) | (enumLiteral_1= 'identifier' ) | (enumLiteral_2= 'sideEffectFree' ) | (enumLiteral_3= 'validator' ) )
             int alt41=4;
             switch ( input.LA(1) ) {
-            case 59:
+            case 60:
                 {
                 alt41=1;
                 }
@@ -5010,12 +5038,12 @@ public class InternalDataDslParser extends AbstractInternalAntlrParser {
                 alt41=2;
                 }
                 break;
-            case 60:
+            case 61:
                 {
                 alt41=3;
                 }
                 break;
-            case 61:
+            case 62:
                 {
                 alt41=4;
                 }
@@ -5029,12 +5057,12 @@ public class InternalDataDslParser extends AbstractInternalAntlrParser {
 
             switch (alt41) {
                 case 1 :
-                    // InternalDataDsl.g:1930:3: (enumLiteral_0= 'closure' )
+                    // InternalDataDsl.g:1938:3: (enumLiteral_0= 'closure' )
                     {
-                    // InternalDataDsl.g:1930:3: (enumLiteral_0= 'closure' )
-                    // InternalDataDsl.g:1931:4: enumLiteral_0= 'closure'
+                    // InternalDataDsl.g:1938:3: (enumLiteral_0= 'closure' )
+                    // InternalDataDsl.g:1939:4: enumLiteral_0= 'closure'
                     {
-                    enumLiteral_0=(Token)match(input,59,FOLLOW_2); 
+                    enumLiteral_0=(Token)match(input,60,FOLLOW_2); 
 
                     				current = grammarAccess.getDataOperationFeatureAccess().getCLOSUREEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
                     				newLeafNode(enumLiteral_0, grammarAccess.getDataOperationFeatureAccess().getCLOSUREEnumLiteralDeclaration_0());
@@ -5046,10 +5074,10 @@ public class InternalDataDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalDataDsl.g:1938:3: (enumLiteral_1= 'identifier' )
+                    // InternalDataDsl.g:1946:3: (enumLiteral_1= 'identifier' )
                     {
-                    // InternalDataDsl.g:1938:3: (enumLiteral_1= 'identifier' )
-                    // InternalDataDsl.g:1939:4: enumLiteral_1= 'identifier'
+                    // InternalDataDsl.g:1946:3: (enumLiteral_1= 'identifier' )
+                    // InternalDataDsl.g:1947:4: enumLiteral_1= 'identifier'
                     {
                     enumLiteral_1=(Token)match(input,57,FOLLOW_2); 
 
@@ -5063,12 +5091,12 @@ public class InternalDataDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalDataDsl.g:1946:3: (enumLiteral_2= 'sideEffectFree' )
+                    // InternalDataDsl.g:1954:3: (enumLiteral_2= 'sideEffectFree' )
                     {
-                    // InternalDataDsl.g:1946:3: (enumLiteral_2= 'sideEffectFree' )
-                    // InternalDataDsl.g:1947:4: enumLiteral_2= 'sideEffectFree'
+                    // InternalDataDsl.g:1954:3: (enumLiteral_2= 'sideEffectFree' )
+                    // InternalDataDsl.g:1955:4: enumLiteral_2= 'sideEffectFree'
                     {
-                    enumLiteral_2=(Token)match(input,60,FOLLOW_2); 
+                    enumLiteral_2=(Token)match(input,61,FOLLOW_2); 
 
                     				current = grammarAccess.getDataOperationFeatureAccess().getSIDE_EFFECT_FREEEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
                     				newLeafNode(enumLiteral_2, grammarAccess.getDataOperationFeatureAccess().getSIDE_EFFECT_FREEEnumLiteralDeclaration_2());
@@ -5080,12 +5108,12 @@ public class InternalDataDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // InternalDataDsl.g:1954:3: (enumLiteral_3= 'validator' )
+                    // InternalDataDsl.g:1962:3: (enumLiteral_3= 'validator' )
                     {
-                    // InternalDataDsl.g:1954:3: (enumLiteral_3= 'validator' )
-                    // InternalDataDsl.g:1955:4: enumLiteral_3= 'validator'
+                    // InternalDataDsl.g:1962:3: (enumLiteral_3= 'validator' )
+                    // InternalDataDsl.g:1963:4: enumLiteral_3= 'validator'
                     {
-                    enumLiteral_3=(Token)match(input,61,FOLLOW_2); 
+                    enumLiteral_3=(Token)match(input,62,FOLLOW_2); 
 
                     				current = grammarAccess.getDataOperationFeatureAccess().getVALIDATOREnumLiteralDeclaration_3().getEnumLiteral().getInstance();
                     				newLeafNode(enumLiteral_3, grammarAccess.getDataOperationFeatureAccess().getVALIDATOREnumLiteralDeclaration_3());
@@ -5199,7 +5227,7 @@ public class InternalDataDslParser extends AbstractInternalAntlrParser {
     public static final BitSet FOLLOW_26 = new BitSet(new long[]{0x00001FF810000020L});
     public static final BitSet FOLLOW_27 = new BitSet(new long[]{0x00001FF800000020L});
     public static final BitSet FOLLOW_28 = new BitSet(new long[]{0x0000000000400002L});
-    public static final BitSet FOLLOW_29 = new BitSet(new long[]{0x0600000000000000L});
+    public static final BitSet FOLLOW_29 = new BitSet(new long[]{0x0E00000000000000L});
     public static final BitSet FOLLOW_30 = new BitSet(new long[]{0x0000000040000002L});
     public static final BitSet FOLLOW_31 = new BitSet(new long[]{0x00000000000000D0L});
     public static final BitSet FOLLOW_32 = new BitSet(new long[]{0x0000000080000000L});
@@ -5207,7 +5235,7 @@ public class InternalDataDslParser extends AbstractInternalAntlrParser {
     public static final BitSet FOLLOW_34 = new BitSet(new long[]{0x0000000040400002L});
     public static final BitSet FOLLOW_35 = new BitSet(new long[]{0x00001FF880800020L});
     public static final BitSet FOLLOW_36 = new BitSet(new long[]{0x0000000080800000L});
-    public static final BitSet FOLLOW_37 = new BitSet(new long[]{0x3A00000000000000L});
+    public static final BitSet FOLLOW_37 = new BitSet(new long[]{0x7200000000000000L});
     public static final BitSet FOLLOW_38 = new BitSet(new long[]{0x0000000400000000L});
     public static final BitSet FOLLOW_39 = new BitSet(new long[]{0x0000200000000002L});
 

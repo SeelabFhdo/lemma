@@ -1246,15 +1246,18 @@ public class DataDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final EnumLiteralDeclaration cIDENTIFIEREnumLiteralDeclaration_0 = (EnumLiteralDeclaration)cAlternatives.eContents().get(0);
 		private final Keyword cIDENTIFIERIdentifierKeyword_0_0 = (Keyword)cIDENTIFIEREnumLiteralDeclaration_0.eContents().get(0);
-		private final EnumLiteralDeclaration cPARTEnumLiteralDeclaration_1 = (EnumLiteralDeclaration)cAlternatives.eContents().get(1);
-		private final Keyword cPARTPartKeyword_1_0 = (Keyword)cPARTEnumLiteralDeclaration_1.eContents().get(0);
+		private final EnumLiteralDeclaration cNEVER_EMPTYEnumLiteralDeclaration_1 = (EnumLiteralDeclaration)cAlternatives.eContents().get(1);
+		private final Keyword cNEVER_EMPTYNeverEmptyKeyword_1_0 = (Keyword)cNEVER_EMPTYEnumLiteralDeclaration_1.eContents().get(0);
+		private final EnumLiteralDeclaration cPARTEnumLiteralDeclaration_2 = (EnumLiteralDeclaration)cAlternatives.eContents().get(2);
+		private final Keyword cPARTPartKeyword_2_0 = (Keyword)cPARTEnumLiteralDeclaration_2.eContents().get(0);
 		
 		//enum DataFieldFeature:
 		//	IDENTIFIER="identifier" |
+		//	NEVER_EMPTY="neverEmpty" |
 		//	PART="part";
 		public EnumRule getRule() { return rule; }
 		
-		//IDENTIFIER="identifier" | PART="part"
+		//IDENTIFIER="identifier" | NEVER_EMPTY="neverEmpty" | PART="part"
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
 		//IDENTIFIER="identifier"
@@ -1263,11 +1266,17 @@ public class DataDslGrammarAccess extends AbstractGrammarElementFinder {
 		//"identifier"
 		public Keyword getIDENTIFIERIdentifierKeyword_0_0() { return cIDENTIFIERIdentifierKeyword_0_0; }
 		
+		//NEVER_EMPTY="neverEmpty"
+		public EnumLiteralDeclaration getNEVER_EMPTYEnumLiteralDeclaration_1() { return cNEVER_EMPTYEnumLiteralDeclaration_1; }
+		
+		//"neverEmpty"
+		public Keyword getNEVER_EMPTYNeverEmptyKeyword_1_0() { return cNEVER_EMPTYNeverEmptyKeyword_1_0; }
+		
 		//PART="part"
-		public EnumLiteralDeclaration getPARTEnumLiteralDeclaration_1() { return cPARTEnumLiteralDeclaration_1; }
+		public EnumLiteralDeclaration getPARTEnumLiteralDeclaration_2() { return cPARTEnumLiteralDeclaration_2; }
 		
 		//"part"
-		public Keyword getPARTPartKeyword_1_0() { return cPARTPartKeyword_1_0; }
+		public Keyword getPARTPartKeyword_2_0() { return cPARTPartKeyword_2_0; }
 	}
 	public class DataOperationFeatureElements extends AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.fhdo.lemma.data.DataDsl.DataOperationFeature");
@@ -1501,6 +1510,7 @@ public class DataDslGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//enum DataFieldFeature:
 	//	IDENTIFIER="identifier" |
+	//	NEVER_EMPTY="neverEmpty" |
 	//	PART="part";
 	public DataFieldFeatureElements getDataFieldFeatureAccess() {
 		return eDataFieldFeature;

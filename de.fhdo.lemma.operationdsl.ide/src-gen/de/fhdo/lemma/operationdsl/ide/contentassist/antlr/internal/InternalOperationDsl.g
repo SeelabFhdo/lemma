@@ -2581,9 +2581,15 @@ rule__DataFieldFeature__Alternatives
 	)
 	|
 	(
-		{ before(grammarAccess.getDataFieldFeatureAccess().getPARTEnumLiteralDeclaration_1()); }
+		{ before(grammarAccess.getDataFieldFeatureAccess().getNEVER_EMPTYEnumLiteralDeclaration_1()); }
+		('neverEmpty')
+		{ after(grammarAccess.getDataFieldFeatureAccess().getNEVER_EMPTYEnumLiteralDeclaration_1()); }
+	)
+	|
+	(
+		{ before(grammarAccess.getDataFieldFeatureAccess().getPARTEnumLiteralDeclaration_2()); }
 		('part')
-		{ after(grammarAccess.getDataFieldFeatureAccess().getPARTEnumLiteralDeclaration_1()); }
+		{ after(grammarAccess.getDataFieldFeatureAccess().getPARTEnumLiteralDeclaration_2()); }
 	)
 ;
 finally {

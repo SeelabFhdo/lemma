@@ -69,6 +69,7 @@ ListType returns ListType:
 
 enum DataFieldFeature returns DataFieldFeature:
     IDENTIFIER = "identifier" |
+    NEVER_EMPTY = "neverEmpty" |
     PART = "part"
 ;
 

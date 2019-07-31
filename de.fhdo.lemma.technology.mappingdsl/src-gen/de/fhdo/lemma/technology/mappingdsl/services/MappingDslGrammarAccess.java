@@ -2821,6 +2821,7 @@ public class MappingDslGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//enum DataFieldFeature:
 	//	IDENTIFIER="identifier" |
+	//	NEVER_EMPTY="neverEmpty" |
 	//	PART="part";
 	public DataDslGrammarAccess.DataFieldFeatureElements getDataFieldFeatureAccess() {
 		return gaDataDsl.getDataFieldFeatureAccess();

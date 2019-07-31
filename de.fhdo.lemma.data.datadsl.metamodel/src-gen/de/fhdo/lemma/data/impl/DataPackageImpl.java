@@ -2387,6 +2387,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 
         initEEnum(dataFieldFeatureEEnum, DataFieldFeature.class, "DataFieldFeature");
         addEEnumLiteral(dataFieldFeatureEEnum, DataFieldFeature.IDENTIFIER);
+        addEEnumLiteral(dataFieldFeatureEEnum, DataFieldFeature.NEVER_EMPTY);
         addEEnumLiteral(dataFieldFeatureEEnum, DataFieldFeature.PART);
 
         // Initialize data types
