@@ -19,8 +19,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.xtext.Keyword;
 import org.eclipse.xtext.ide.editor.syntaxcoloring.IHighlightedPositionAcceptor;
 import org.eclipse.xtext.ide.editor.syntaxcoloring.ISemanticHighlightingCalculator;
@@ -158,39 +160,54 @@ public class HighlightingCalculator implements ISemanticHighlightingCalculator {
    * Provide highlighting for boolean values
    */
   private void provideHighlightingForBooleanConstants(final XtextResource resource, final IHighlightedPositionAcceptor acceptor) {
-    final Function1<EObject, PrimitiveValue> _function = (EObject it) -> {
-      return ((ImportedServiceAspect) it).getSinglePropertyValue();
+    final Function1<EObject, Boolean> _function = (EObject it) -> {
+      boolean _xblockexpression = false;
+      {
+        final PrimitiveValue value = ((ImportedServiceAspect) it).getSinglePropertyValue();
+        _xblockexpression = ((value != null) && (value.getBooleanValue() != null));
+      }
+      return Boolean.valueOf(_xblockexpression);
     };
-    Pair<Function1<EObject, PrimitiveValue>, EReference> _mappedTo = Pair.<Function1<EObject, PrimitiveValue>, EReference>of(_function, ServicePackage.Literals.IMPORTED_SERVICE_ASPECT__SINGLE_PROPERTY_VALUE);
-    Pair<Class<ImportedServiceAspect>, List<Pair<Function1<EObject, PrimitiveValue>, EReference>>> _mappedTo_1 = Pair.<Class<ImportedServiceAspect>, List<Pair<Function1<EObject, PrimitiveValue>, EReference>>>of(ImportedServiceAspect.class, Collections.<Pair<Function1<EObject, PrimitiveValue>, EReference>>unmodifiableList(CollectionLiterals.<Pair<Function1<EObject, PrimitiveValue>, EReference>>newArrayList(_mappedTo)));
-    final Function1<EObject, PrimitiveValue> _function_1 = (EObject it) -> {
-      return ((TechnologySpecificPropertyValueAssignment) it).getValue();
+    Pair<Function1<EObject, Boolean>, EReference> _mappedTo = Pair.<Function1<EObject, Boolean>, EReference>of(_function, ServicePackage.Literals.IMPORTED_SERVICE_ASPECT__SINGLE_PROPERTY_VALUE);
+    Pair<Class<ImportedServiceAspect>, List<Pair<Function1<EObject, Boolean>, EReference>>> _mappedTo_1 = Pair.<Class<ImportedServiceAspect>, List<Pair<Function1<EObject, Boolean>, EReference>>>of(ImportedServiceAspect.class, Collections.<Pair<Function1<EObject, Boolean>, EReference>>unmodifiableList(CollectionLiterals.<Pair<Function1<EObject, Boolean>, EReference>>newArrayList(_mappedTo)));
+    final Function1<EObject, Boolean> _function_1 = (EObject it) -> {
+      boolean _xblockexpression = false;
+      {
+        final PrimitiveValue value = ((TechnologySpecificPropertyValueAssignment) it).getValue();
+        _xblockexpression = ((value != null) && (value.getBooleanValue() != null));
+      }
+      return Boolean.valueOf(_xblockexpression);
     };
-    Pair<Function1<EObject, PrimitiveValue>, EReference> _mappedTo_2 = Pair.<Function1<EObject, PrimitiveValue>, EReference>of(_function_1, TechnologyPackage.Literals.TECHNOLOGY_SPECIFIC_PROPERTY_VALUE_ASSIGNMENT__VALUE);
-    Pair<Class<TechnologySpecificPropertyValueAssignment>, List<Pair<Function1<EObject, PrimitiveValue>, EReference>>> _mappedTo_3 = Pair.<Class<TechnologySpecificPropertyValueAssignment>, List<Pair<Function1<EObject, PrimitiveValue>, EReference>>>of(TechnologySpecificPropertyValueAssignment.class, Collections.<Pair<Function1<EObject, PrimitiveValue>, EReference>>unmodifiableList(CollectionLiterals.<Pair<Function1<EObject, PrimitiveValue>, EReference>>newArrayList(_mappedTo_2)));
-    final HashMap<Class<? extends EObject>, List<Pair<Function1<EObject, PrimitiveValue>, EReference>>> booleanConcepts = CollectionLiterals.<Class<? extends EObject>, List<Pair<Function1<EObject, PrimitiveValue>, EReference>>>newHashMap(_mappedTo_1, _mappedTo_3);
-    final Procedure1<EObject> _function_2 = (EObject eObject) -> {
-      final Function1<Class<? extends EObject>, Boolean> _function_3 = (Class<? extends EObject> it) -> {
+    Pair<Function1<EObject, Boolean>, EReference> _mappedTo_2 = Pair.<Function1<EObject, Boolean>, EReference>of(_function_1, TechnologyPackage.Literals.TECHNOLOGY_SPECIFIC_PROPERTY_VALUE_ASSIGNMENT__VALUE);
+    Pair<Class<TechnologySpecificPropertyValueAssignment>, List<Pair<Function1<EObject, Boolean>, EReference>>> _mappedTo_3 = Pair.<Class<TechnologySpecificPropertyValueAssignment>, List<Pair<Function1<EObject, Boolean>, EReference>>>of(TechnologySpecificPropertyValueAssignment.class, Collections.<Pair<Function1<EObject, Boolean>, EReference>>unmodifiableList(CollectionLiterals.<Pair<Function1<EObject, Boolean>, EReference>>newArrayList(_mappedTo_2)));
+    final Function1<EObject, Boolean> _function_2 = (EObject it) -> {
+      return Boolean.valueOf(true);
+    };
+    Pair<Function1<EObject, Boolean>, EAttribute> _mappedTo_4 = Pair.<Function1<EObject, Boolean>, EAttribute>of(_function_2, ServicePackage.Literals.TECHNOLOGY_REFERENCE__IS_TYPE_DEFINITION_TECHNOLOGY);
+    Pair<Class<TechnologyReference>, List<Pair<Function1<EObject, Boolean>, EAttribute>>> _mappedTo_5 = Pair.<Class<TechnologyReference>, List<Pair<Function1<EObject, Boolean>, EAttribute>>>of(TechnologyReference.class, Collections.<Pair<Function1<EObject, Boolean>, EAttribute>>unmodifiableList(CollectionLiterals.<Pair<Function1<EObject, Boolean>, EAttribute>>newArrayList(_mappedTo_4)));
+    final HashMap<Class<? extends EObject>, List<? extends Pair<Function1<EObject, Boolean>, ? extends EStructuralFeature>>> booleanConcepts = CollectionLiterals.<Class<? extends EObject>, List<? extends Pair<Function1<EObject, Boolean>, ? extends EStructuralFeature>>>newHashMap(_mappedTo_1, _mappedTo_3, _mappedTo_5);
+    final Procedure1<EObject> _function_3 = (EObject eObject) -> {
+      final Function1<Class<? extends EObject>, Boolean> _function_4 = (Class<? extends EObject> it) -> {
         return Boolean.valueOf(it.isInstance(eObject));
       };
-      final Class<? extends EObject> matchingBooleanConcept = IterableExtensions.<Class<? extends EObject>>findFirst(booleanConcepts.keySet(), _function_3);
+      final Class<? extends EObject> matchingBooleanConcept = IterableExtensions.<Class<? extends EObject>>findFirst(booleanConcepts.keySet(), _function_4);
       if ((matchingBooleanConcept != null)) {
-        final List<Pair<Function1<EObject, PrimitiveValue>, EReference>> primitiveValueGetters = booleanConcepts.get(matchingBooleanConcept);
-        final Consumer<Pair<Function1<EObject, PrimitiveValue>, EReference>> _function_4 = (Pair<Function1<EObject, PrimitiveValue>, EReference> it) -> {
-          final Function1<EObject, PrimitiveValue> getter = it.getKey();
-          final EReference feature = it.getValue();
-          final PrimitiveValue primitiveValue = getter.apply(eObject);
-          if (((primitiveValue != null) && (primitiveValue.getBooleanValue() != null))) {
-            final Consumer<INode> _function_5 = (INode it_1) -> {
+        final List<? extends Pair<Function1<EObject, Boolean>, ? extends EStructuralFeature>> primitiveValueGetters = booleanConcepts.get(matchingBooleanConcept);
+        final Consumer<Pair<Function1<EObject, Boolean>, ? extends EStructuralFeature>> _function_5 = (Pair<Function1<EObject, Boolean>, ? extends EStructuralFeature> it) -> {
+          final Function1<EObject, Boolean> isBooleanValue = it.getKey();
+          final EStructuralFeature feature = it.getValue();
+          Boolean _apply = isBooleanValue.apply(eObject);
+          if ((_apply).booleanValue()) {
+            final Consumer<INode> _function_6 = (INode it_1) -> {
               acceptor.addPosition(it_1.getOffset(), it_1.getLength(), 
                 HighlightingConfiguration.KEYWORD_ID);
             };
-            NodeModelUtils.findNodesForFeature(eObject, feature).forEach(_function_5);
+            NodeModelUtils.findNodesForFeature(eObject, feature).forEach(_function_6);
           }
         };
-        primitiveValueGetters.forEach(_function_4);
+        primitiveValueGetters.forEach(_function_5);
       }
     };
-    IteratorExtensions.<EObject>forEach(resource.getAllContents(), _function_2);
+    IteratorExtensions.<EObject>forEach(resource.getAllContents(), _function_3);
   }
 }

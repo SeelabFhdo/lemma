@@ -111,15 +111,25 @@ class HighlightingCalculator implements ISemanticHighlightingCalculator {
         IHighlightedPositionAcceptor acceptor) {
         val booleanConcepts = newHashMap(
             TechnologySpecificImportedServiceAspect -> #[
-                [(it as TechnologySpecificImportedServiceAspect).singlePropertyValue]
-                    -> MappingPackage::Literals
+                [
+                    val value = (it as TechnologySpecificImportedServiceAspect).singlePropertyValue
+                    value !== null && value.booleanValue !== null
+                ]
+                -> MappingPackage::Literals
                         .TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__SINGLE_PROPERTY_VALUE
             ],
 
             TechnologySpecificPropertyValueAssignment -> #[
-                [(it as TechnologySpecificPropertyValueAssignment).value]
-                    -> TechnologyPackage::Literals
-                        .TECHNOLOGY_SPECIFIC_PROPERTY_VALUE_ASSIGNMENT__VALUE
+                [
+                    val value = (it as TechnologySpecificPropertyValueAssignment).value
+                    value !== null && value.booleanValue !== null
+                ]
+                -> TechnologyPackage::Literals.TECHNOLOGY_SPECIFIC_PROPERTY_VALUE_ASSIGNMENT__VALUE
+            ],
+
+            TechnologyReference -> #[
+                [true]
+                -> ServicePackage::Literals.TECHNOLOGY_REFERENCE__IS_TYPE_DEFINITION_TECHNOLOGY
             ]
         )
 
@@ -128,11 +138,10 @@ class HighlightingCalculator implements ISemanticHighlightingCalculator {
             if (matchingBooleanConcept !== null) {
                 val primitiveValueGetters = booleanConcepts.get(matchingBooleanConcept)
                 primitiveValueGetters.forEach[
-                    val getter = it.key
+                    val isBooleanValue = it.key
                     val feature = it.value
 
-                    val primitiveValue = getter.apply(eObject)
-                    if (primitiveValue !== null && primitiveValue.booleanValue !== null)
+                    if (isBooleanValue.apply(eObject))
                         NodeModelUtils.findNodesForFeature(eObject, feature).forEach[
                             acceptor.addPosition(offset, length,
                                 HighlightingConfiguration.KEYWORD_ID)
