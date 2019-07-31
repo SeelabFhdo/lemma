@@ -343,11 +343,6 @@ class DataDslValidator extends AbstractDataDslValidator {
             warning("A factory should not exhibit other domain features", dataStructure,
                 DataPackage::Literals.DATA_STRUCTURE__FEATURES, featureIndex)
 
-        // A factory should only contain operations
-        if (!dataStructure.effectiveFields.empty)
-            warning("A data structure should only comprise operations", dataStructure,
-                DataPackage::Literals.DATA_STRUCTURE__FEATURES, featureIndex)
-
         // Factory operations should return aggregates or value objects
         val hasOperationsWithWrongReturnTypes = dataStructure.effectiveOperations.exists[
             hasNoReturnType ||
@@ -384,11 +379,6 @@ class DataDslValidator extends AbstractDataDslValidator {
         // No other domain features should exist on the structure
         if (dataStructure.hasAdditionalDomainFeatures(DataStructureFeature.REPOSITORY))
             warning("A repository should not exhibit other domain features", dataStructure,
-                DataPackage::Literals.DATA_STRUCTURE__FEATURES, featureIndex)
-
-        // Repository should only comprise operations
-        if (!dataStructure.effectiveFields.empty)
-            warning("A repository should only comprise operations", dataStructure,
                 DataPackage::Literals.DATA_STRUCTURE__FEATURES, featureIndex)
 
         // Repository should comprise at least one operation

@@ -434,12 +434,6 @@ public class DataDslValidator extends AbstractDataDslValidator {
       this.warning("A factory should not exhibit other domain features", dataStructure, 
         DataPackage.Literals.DATA_STRUCTURE__FEATURES, featureIndex);
     }
-    boolean _isEmpty = dataStructure.getEffectiveFields().isEmpty();
-    boolean _not = (!_isEmpty);
-    if (_not) {
-      this.warning("A data structure should only comprise operations", dataStructure, 
-        DataPackage.Literals.DATA_STRUCTURE__FEATURES, featureIndex);
-    }
     final Function1<DataOperation, Boolean> _function = (DataOperation it) -> {
       boolean _or = false;
       if ((it.isHasNoReturnType() || 
@@ -486,14 +480,8 @@ public class DataDslValidator extends AbstractDataDslValidator {
       this.warning("A repository should not exhibit other domain features", dataStructure, 
         DataPackage.Literals.DATA_STRUCTURE__FEATURES, featureIndex);
     }
-    boolean _isEmpty = dataStructure.getEffectiveFields().isEmpty();
-    boolean _not = (!_isEmpty);
-    if (_not) {
-      this.warning("A repository should only comprise operations", dataStructure, 
-        DataPackage.Literals.DATA_STRUCTURE__FEATURES, featureIndex);
-    }
-    boolean _isEmpty_1 = dataStructure.getEffectiveOperations().isEmpty();
-    if (_isEmpty_1) {
+    boolean _isEmpty = dataStructure.getEffectiveOperations().isEmpty();
+    if (_isEmpty) {
       this.warning("A repository should comprise at least one operation", dataStructure, 
         DataPackage.Literals.DATA_STRUCTURE__FEATURES, featureIndex);
     }
