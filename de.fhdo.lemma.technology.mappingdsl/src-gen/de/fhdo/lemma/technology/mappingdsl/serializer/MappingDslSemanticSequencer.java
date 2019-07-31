@@ -397,7 +397,7 @@ public class MappingDslSemanticSequencer extends ServiceDslSemanticSequencer {
 	 *         (technology=[Import|ID] returnType=[Type|QualifiedName])? 
 	 *         aspects+=TechnologySpecificImportedServiceAspect* 
 	 *         parameterMappings+=DataOperationParameterMapping*
-	 *     )?
+	 *     )
 	 */
 	protected void sequence_DataOperationMapping(ISerializationContext context, DataOperationMapping semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

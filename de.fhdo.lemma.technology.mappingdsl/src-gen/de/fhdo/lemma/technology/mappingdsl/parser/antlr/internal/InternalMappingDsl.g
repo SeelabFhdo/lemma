@@ -1570,10 +1570,27 @@ ruleDataOperationMapping returns [EObject current=null]
 	leaveRule();
 }:
 	(
+		otherlv_0='op'
+		{
+			newLeafNode(otherlv_0, grammarAccess.getDataOperationMappingAccess().getOpKeyword_0());
+		}
 		(
-			otherlv_0='op'
+			(
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getDataOperationMappingRule());
+					}
+				}
+				otherlv_1=RULE_ID
+				{
+					newLeafNode(otherlv_1, grammarAccess.getDataOperationMappingAccess().getDataOperationDataOperationCrossReference_1_0());
+				}
+			)
+		)
+		(
+			otherlv_2=':'
 			{
-				newLeafNode(otherlv_0, grammarAccess.getDataOperationMappingAccess().getOpKeyword_0_0());
+				newLeafNode(otherlv_2, grammarAccess.getDataOperationMappingAccess().getColonKeyword_2_0());
 			}
 			(
 				(
@@ -1582,69 +1599,52 @@ ruleDataOperationMapping returns [EObject current=null]
 							$current = createModelElement(grammarAccess.getDataOperationMappingRule());
 						}
 					}
-					otherlv_1=RULE_ID
+					otherlv_3=RULE_ID
 					{
-						newLeafNode(otherlv_1, grammarAccess.getDataOperationMappingAccess().getDataOperationDataOperationCrossReference_0_1_0());
+						newLeafNode(otherlv_3, grammarAccess.getDataOperationMappingAccess().getTechnologyImportCrossReference_2_1_0());
 					}
 				)
 			)
+			otherlv_4='::'
+			{
+				newLeafNode(otherlv_4, grammarAccess.getDataOperationMappingAccess().getColonColonKeyword_2_2());
+			}
 			(
-				otherlv_2=':'
-				{
-					newLeafNode(otherlv_2, grammarAccess.getDataOperationMappingAccess().getColonKeyword_0_2_0());
-				}
 				(
-					(
-						{
-							if ($current==null) {
-								$current = createModelElement(grammarAccess.getDataOperationMappingRule());
-							}
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getDataOperationMappingRule());
 						}
-						otherlv_3=RULE_ID
-						{
-							newLeafNode(otherlv_3, grammarAccess.getDataOperationMappingAccess().getTechnologyImportCrossReference_0_2_1_0());
-						}
-					)
+					}
+					{
+						newCompositeNode(grammarAccess.getDataOperationMappingAccess().getReturnTypeTypeCrossReference_2_3_0());
+					}
+					ruleQualifiedName
+					{
+						afterParserOrEnumRuleCall();
+					}
 				)
-				otherlv_4='::'
-				{
-					newLeafNode(otherlv_4, grammarAccess.getDataOperationMappingAccess().getColonColonKeyword_0_2_2());
-				}
-				(
-					(
-						{
-							if ($current==null) {
-								$current = createModelElement(grammarAccess.getDataOperationMappingRule());
-							}
-						}
-						{
-							newCompositeNode(grammarAccess.getDataOperationMappingAccess().getReturnTypeTypeCrossReference_0_2_3_0());
-						}
-						ruleQualifiedName
-						{
-							afterParserOrEnumRuleCall();
-						}
-					)
-				)
-			)?
+			)
+		)?
+		(
 			(
 				otherlv_6='{'
 				{
-					newLeafNode(otherlv_6, grammarAccess.getDataOperationMappingAccess().getLeftCurlyBracketKeyword_0_3_0());
+					newLeafNode(otherlv_6, grammarAccess.getDataOperationMappingAccess().getLeftCurlyBracketKeyword_3_0_0());
 				}
 				(
 					otherlv_7='aspects'
 					{
-						newLeafNode(otherlv_7, grammarAccess.getDataOperationMappingAccess().getAspectsKeyword_0_3_1_0());
+						newLeafNode(otherlv_7, grammarAccess.getDataOperationMappingAccess().getAspectsKeyword_3_0_1_0());
 					}
 					otherlv_8='{'
 					{
-						newLeafNode(otherlv_8, grammarAccess.getDataOperationMappingAccess().getLeftCurlyBracketKeyword_0_3_1_1());
+						newLeafNode(otherlv_8, grammarAccess.getDataOperationMappingAccess().getLeftCurlyBracketKeyword_3_0_1_1());
 					}
 					(
 						(
 							{
-								newCompositeNode(grammarAccess.getDataOperationMappingAccess().getAspectsTechnologySpecificImportedServiceAspectParserRuleCall_0_3_1_2_0());
+								newCompositeNode(grammarAccess.getDataOperationMappingAccess().getAspectsTechnologySpecificImportedServiceAspectParserRuleCall_3_0_1_2_0());
 							}
 							lv_aspects_9_0=ruleTechnologySpecificImportedServiceAspect
 							{
@@ -1662,22 +1662,22 @@ ruleDataOperationMapping returns [EObject current=null]
 					)+
 					otherlv_10='}'
 					{
-						newLeafNode(otherlv_10, grammarAccess.getDataOperationMappingAccess().getRightCurlyBracketKeyword_0_3_1_3());
+						newLeafNode(otherlv_10, grammarAccess.getDataOperationMappingAccess().getRightCurlyBracketKeyword_3_0_1_3());
 					}
 				)?
 				(
 					otherlv_11='parameters'
 					{
-						newLeafNode(otherlv_11, grammarAccess.getDataOperationMappingAccess().getParametersKeyword_0_3_2_0());
+						newLeafNode(otherlv_11, grammarAccess.getDataOperationMappingAccess().getParametersKeyword_3_0_2_0());
 					}
 					otherlv_12='{'
 					{
-						newLeafNode(otherlv_12, grammarAccess.getDataOperationMappingAccess().getLeftCurlyBracketKeyword_0_3_2_1());
+						newLeafNode(otherlv_12, grammarAccess.getDataOperationMappingAccess().getLeftCurlyBracketKeyword_3_0_2_1());
 					}
 					(
 						(
 							{
-								newCompositeNode(grammarAccess.getDataOperationMappingAccess().getParameterMappingsDataOperationParameterMappingParserRuleCall_0_3_2_2_0());
+								newCompositeNode(grammarAccess.getDataOperationMappingAccess().getParameterMappingsDataOperationParameterMappingParserRuleCall_3_0_2_2_0());
 							}
 							lv_parameterMappings_13_0=ruleDataOperationParameterMapping
 							{
@@ -1695,27 +1695,18 @@ ruleDataOperationMapping returns [EObject current=null]
 					)+
 					otherlv_14='}'
 					{
-						newLeafNode(otherlv_14, grammarAccess.getDataOperationMappingAccess().getRightCurlyBracketKeyword_0_3_2_3());
+						newLeafNode(otherlv_14, grammarAccess.getDataOperationMappingAccess().getRightCurlyBracketKeyword_3_0_2_3());
 					}
 				)?
 				otherlv_15='}'
 				{
-					newLeafNode(otherlv_15, grammarAccess.getDataOperationMappingAccess().getRightCurlyBracketKeyword_0_3_3());
+					newLeafNode(otherlv_15, grammarAccess.getDataOperationMappingAccess().getRightCurlyBracketKeyword_3_0_3());
 				}
 			)
-		)
-		    |
-		(
-			(
-				{
-					$current = forceCreateModelElement(
-						grammarAccess.getDataOperationMappingAccess().getDataOperationMappingAction_1_0(),
-						$current);
-				}
-			)
-			otherlv_17=';'
+			    |
+			otherlv_16=';'
 			{
-				newLeafNode(otherlv_17, grammarAccess.getDataOperationMappingAccess().getSemicolonKeyword_1_1());
+				newLeafNode(otherlv_16, grammarAccess.getDataOperationMappingAccess().getSemicolonKeyword_3_1());
 			}
 		)
 	)
