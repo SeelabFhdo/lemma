@@ -1576,23 +1576,23 @@ public class TechnologyDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cSINGLE_VALUEDSinglevalKeyword_1_0 = (Keyword)cSINGLE_VALUEDEnumLiteralDeclaration_1.eContents().get(0);
 		
 		//enum PropertyFeature:
-		//	MANDATORY="mandatory" |
-		//	SINGLE_VALUED="singleval";
+		//	MANDATORY='mandatory' |
+		//	SINGLE_VALUED='singleval';
 		public EnumRule getRule() { return rule; }
 		
-		//MANDATORY="mandatory" | SINGLE_VALUED="singleval"
+		//MANDATORY='mandatory' | SINGLE_VALUED='singleval'
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
-		//MANDATORY="mandatory"
+		//MANDATORY='mandatory'
 		public EnumLiteralDeclaration getMANDATORYEnumLiteralDeclaration_0() { return cMANDATORYEnumLiteralDeclaration_0; }
 		
-		//"mandatory"
+		//'mandatory'
 		public Keyword getMANDATORYMandatoryKeyword_0_0() { return cMANDATORYMandatoryKeyword_0_0; }
 		
-		//SINGLE_VALUED="singleval"
+		//SINGLE_VALUED='singleval'
 		public EnumLiteralDeclaration getSINGLE_VALUEDEnumLiteralDeclaration_1() { return cSINGLE_VALUEDEnumLiteralDeclaration_1; }
 		
-		//"singleval"
+		//'singleval'
 		public Keyword getSINGLE_VALUEDSinglevalKeyword_1_0() { return cSINGLE_VALUEDSinglevalKeyword_1_0; }
 	}
 	public class ServiceJoinPointTypeElements extends AbstractEnumRuleElementFinder {
@@ -1976,8 +1976,8 @@ public class TechnologyDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//enum PropertyFeature:
-	//	MANDATORY="mandatory" |
-	//	SINGLE_VALUED="singleval";
+	//	MANDATORY='mandatory' |
+	//	SINGLE_VALUED='singleval';
 	public PropertyFeatureElements getPropertyFeatureAccess() {
 		return ePropertyFeature;
 	}
@@ -2154,17 +2154,17 @@ public class TechnologyDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//enum DataStructureFeature:
-	//	AGGREGATE="aggregate" |
-	//	APPLICATION_SERVICE="applicationService" |
-	//	DOMAIN_EVENT="domainEvent" |
-	//	DOMAIN_SERVICE="domainService" |
-	//	ENTITY="entity" |
-	//	FACTORY="factory" |
-	//	INFRASTRUCTURE_SERVICE="infrastructureService" |
-	//	REPOSITORY="repository" |
-	//	SERVICE="service" |
-	//	SPECIFICATION="specification" |
-	//	VALUE_OBJECT="valueObject";
+	//	AGGREGATE='aggregate' |
+	//	APPLICATION_SERVICE='applicationService' |
+	//	DOMAIN_EVENT='domainEvent' |
+	//	DOMAIN_SERVICE='domainService' |
+	//	ENTITY='entity' |
+	//	FACTORY='factory' |
+	//	INFRASTRUCTURE_SERVICE='infrastructureService' |
+	//	REPOSITORY='repository' |
+	//	SERVICE='service' |
+	//	SPECIFICATION='specification' |
+	//	VALUE_OBJECT='valueObject';
 	public DataDslGrammarAccess.DataStructureFeatureElements getDataStructureFeatureAccess() {
 		return gaDataDsl.getDataStructureFeatureAccess();
 	}
@@ -2203,9 +2203,9 @@ public class TechnologyDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//enum DataFieldFeature:
-	//	IDENTIFIER="identifier" |
-	//	NEVER_EMPTY="neverEmpty" |
-	//	PART="part";
+	//	IDENTIFIER='identifier' |
+	//	NEVER_EMPTY='neverEmpty' |
+	//	PART='part';
 	public DataDslGrammarAccess.DataFieldFeatureElements getDataFieldFeatureAccess() {
 		return gaDataDsl.getDataFieldFeatureAccess();
 	}
@@ -2250,10 +2250,10 @@ public class TechnologyDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//enum DataOperationFeature:
-	//	CLOSURE="closure" |
-	//	IDENTIFIER="identifier" |
-	//	SIDE_EFFECT_FREE="sideEffectFree" |
-	//	VALIDATOR="validator";
+	//	CLOSURE='closure' |
+	//	IDENTIFIER='identifier' |
+	//	SIDE_EFFECT_FREE='sideEffectFree' |
+	//	VALIDATOR='validator';
 	public DataDslGrammarAccess.DataOperationFeatureElements getDataOperationFeatureAccess() {
 		return gaDataDsl.getDataOperationFeatureAccess();
 	}

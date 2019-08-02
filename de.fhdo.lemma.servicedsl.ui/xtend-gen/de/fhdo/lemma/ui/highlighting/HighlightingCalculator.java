@@ -1,5 +1,6 @@
 package de.fhdo.lemma.ui.highlighting;
 
+import com.google.common.base.Function;
 import com.google.common.base.Objects;
 import de.fhdo.lemma.data.PrimitiveValue;
 import de.fhdo.lemma.service.ImportedServiceAspect;
@@ -52,6 +53,7 @@ public class HighlightingCalculator implements ISemanticHighlightingCalculator {
     this.provideHighlightingForAnnotations(resource, acceptor);
     this.provideHighlightingForDefaultTypeDefinitionFlag(resource, acceptor);
     this.provideHighlightingForBooleanConstants(resource, acceptor);
+    this.provideHighlightingForApiComments(resource, acceptor);
   }
   
   /**
@@ -91,15 +93,11 @@ public class HighlightingCalculator implements ISemanticHighlightingCalculator {
               }
             }
             if ((nodeToHighlight != null)) {
-              do {
-                {
-                  acceptor.addPosition(nodeToHighlight.getOffset(), nodeToHighlight.getLength(), 
-                    HighlightingConfiguration.ANNOTATION_ID);
-                  nodeToHighlight = nodeToHighlight.getPreviousSibling();
-                }
-              } while((((nodeToHighlight != null) && 
-                (nodeToHighlight.getNextSibling() != null)) && 
-                (!Objects.equal(nodeToHighlight.getNextSibling().getText(), "@"))));
+              final Function<INode, INode> _function_5 = (INode it_2) -> {
+                return it_2.getPreviousSibling();
+              };
+              this.highlightUntil(nodeToHighlight, _function_5, "@", acceptor, 
+                HighlightingConfiguration.ANNOTATION_ID, true);
             }
           };
           NodeModelUtils.findNodesForFeature(it, feature).forEach(_function_4);
@@ -209,5 +207,75 @@ public class HighlightingCalculator implements ISemanticHighlightingCalculator {
       }
     };
     IteratorExtensions.<EObject>forEach(resource.getAllContents(), _function_3);
+  }
+  
+  /**
+   * Provide highlighting for API operation comments
+   */
+  private void provideHighlightingForApiComments(final XtextResource resource, final IHighlightedPositionAcceptor acceptor) {
+    final Procedure1<EObject> _function = (EObject it) -> {
+      final List<INode> commentFeatures = NodeModelUtils.findNodesForFeature(it, ServicePackage.Literals.API_OPERATION_COMMENT__COMMENT);
+      boolean _isEmpty = commentFeatures.isEmpty();
+      boolean _not = (!_isEmpty);
+      if (_not) {
+        final Consumer<INode> _function_1 = (INode it_1) -> {
+          acceptor.addPosition(it_1.getOffset(), it_1.getLength(), HighlightingConfiguration.API_OPERATION_ID);
+        };
+        commentFeatures.forEach(_function_1);
+        final Function<INode, INode> _function_2 = (INode it_1) -> {
+          return it_1.getPreviousSibling();
+        };
+        this.highlightUntil(commentFeatures.get(0), _function_2, "---", acceptor, 
+          HighlightingConfiguration.API_OPERATION_ID, false);
+        final Function<INode, INode> _function_3 = (INode it_1) -> {
+          return it_1.getNextSibling();
+        };
+        this.highlightUntil(commentFeatures.get(0), _function_3, "---", acceptor, 
+          HighlightingConfiguration.API_OPERATION_ID, false);
+      }
+      final List<INode> parameterFeatures = NodeModelUtils.findNodesForFeature(it, ServicePackage.Literals.API_PARAMETER_COMMENT__PARAMETER);
+      boolean _isEmpty_1 = parameterFeatures.isEmpty();
+      boolean _not_1 = (!_isEmpty_1);
+      if (_not_1) {
+        final Function<INode, INode> _function_4 = (INode it_1) -> {
+          return it_1.getPreviousSibling();
+        };
+        this.highlightUntil(commentFeatures.get(0).getPreviousSibling(), _function_4, "@", acceptor, HighlightingConfiguration.TASK_ID, false);
+        final Consumer<INode> _function_5 = (INode it_1) -> {
+          acceptor.addPosition(it_1.getOffset(), it_1.getLength(), HighlightingConfiguration.API_PARAMETER_ID);
+        };
+        parameterFeatures.forEach(_function_5);
+      }
+    };
+    IteratorExtensions.<EObject>forEach(resource.getAllContents(), _function);
+  }
+  
+  /**
+   * Helper to iteratively highlight nodes until a node with a certain text was reached
+   */
+  private void highlightUntil(final INode startNode, final Function<INode, INode> getNextNode, final String until, final IHighlightedPositionAcceptor acceptor, final String highlightId, final boolean colorStartNode) {
+    if (colorStartNode) {
+      acceptor.addPosition(startNode.getOffset(), startNode.getLength(), highlightId);
+    }
+    INode nextNode = getNextNode.apply(startNode);
+    if ((nextNode == null)) {
+      return;
+    }
+    boolean endReached = false;
+    do {
+      {
+        acceptor.addPosition(nextNode.getOffset(), nextNode.getLength(), highlightId);
+        nextNode = getNextNode.apply(nextNode);
+        String _text = null;
+        if (nextNode!=null) {
+          _text=nextNode.getText();
+        }
+        boolean _equals = Objects.equal(until, _text);
+        endReached = _equals;
+        if (endReached) {
+          acceptor.addPosition(nextNode.getOffset(), nextNode.getLength(), highlightId);
+        }
+      }
+    } while(((nextNode != null) && (!endReached)));
   }
 }

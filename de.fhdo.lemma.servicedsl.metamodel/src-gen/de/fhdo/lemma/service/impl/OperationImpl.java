@@ -2,6 +2,7 @@
  */
 package de.fhdo.lemma.service.impl;
 
+import de.fhdo.lemma.service.ApiOperationComment;
 import de.fhdo.lemma.service.Endpoint;
 import de.fhdo.lemma.service.ImportedServiceAspect;
 import de.fhdo.lemma.service.Interface;
@@ -60,6 +61,7 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
  *   <li>{@link de.fhdo.lemma.service.impl.OperationImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.impl.OperationImpl#isNotImplemented <em>Not Implemented</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.impl.OperationImpl#getVisibility <em>Visibility</em>}</li>
+ *   <li>{@link de.fhdo.lemma.service.impl.OperationImpl#getApiOperationComment <em>Api Operation Comment</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.impl.OperationImpl#getEndpoints <em>Endpoints</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.impl.OperationImpl#getProtocols <em>Protocols</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.impl.OperationImpl#getParameters <em>Parameters</em>}</li>
@@ -133,6 +135,16 @@ public class OperationImpl extends MinimalEObjectImpl.Container implements Opera
      * @ordered
      */
     protected Visibility visibility = VISIBILITY_EDEFAULT;
+
+    /**
+     * The cached value of the '{@link #getApiOperationComment() <em>Api Operation Comment</em>}' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getApiOperationComment()
+     * @generated
+     * @ordered
+     */
+    protected ApiOperationComment apiOperationComment;
 
     /**
      * The cached value of the '{@link #getEndpoints() <em>Endpoints</em>}' containment reference list.
@@ -300,6 +312,51 @@ public class OperationImpl extends MinimalEObjectImpl.Container implements Opera
         visibility = newVisibility == null ? VISIBILITY_EDEFAULT : newVisibility;
         if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, ServicePackage.OPERATION__VISIBILITY, oldVisibility, visibility));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public ApiOperationComment getApiOperationComment() {
+        return apiOperationComment;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public NotificationChain basicSetApiOperationComment(ApiOperationComment newApiOperationComment, NotificationChain msgs) {
+        ApiOperationComment oldApiOperationComment = apiOperationComment;
+        apiOperationComment = newApiOperationComment;
+        if (eNotificationRequired()) {
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ServicePackage.OPERATION__API_OPERATION_COMMENT, oldApiOperationComment, newApiOperationComment);
+            if (msgs == null) msgs = notification; else msgs.add(notification);
+        }
+        return msgs;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void setApiOperationComment(ApiOperationComment newApiOperationComment) {
+        if (newApiOperationComment != apiOperationComment) {
+            NotificationChain msgs = null;
+            if (apiOperationComment != null)
+                msgs = ((InternalEObject)apiOperationComment).eInverseRemove(this, ServicePackage.API_OPERATION_COMMENT__OPERATION, ApiOperationComment.class, msgs);
+            if (newApiOperationComment != null)
+                msgs = ((InternalEObject)newApiOperationComment).eInverseAdd(this, ServicePackage.API_OPERATION_COMMENT__OPERATION, ApiOperationComment.class, msgs);
+            msgs = basicSetApiOperationComment(newApiOperationComment, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ServicePackage.OPERATION__API_OPERATION_COMMENT, newApiOperationComment, newApiOperationComment));
     }
 
     /**
@@ -603,6 +660,10 @@ public class OperationImpl extends MinimalEObjectImpl.Container implements Opera
     @Override
     public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
+            case ServicePackage.OPERATION__API_OPERATION_COMMENT:
+                if (apiOperationComment != null)
+                    msgs = ((InternalEObject)apiOperationComment).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ServicePackage.OPERATION__API_OPERATION_COMMENT, null, msgs);
+                return basicSetApiOperationComment((ApiOperationComment)otherEnd, msgs);
             case ServicePackage.OPERATION__ENDPOINTS:
                 return ((InternalEList<InternalEObject>)(InternalEList<?>)getEndpoints()).basicAdd(otherEnd, msgs);
             case ServicePackage.OPERATION__PARAMETERS:
@@ -625,6 +686,8 @@ public class OperationImpl extends MinimalEObjectImpl.Container implements Opera
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
+            case ServicePackage.OPERATION__API_OPERATION_COMMENT:
+                return basicSetApiOperationComment(null, msgs);
             case ServicePackage.OPERATION__ENDPOINTS:
                 return ((InternalEList<?>)getEndpoints()).basicRemove(otherEnd, msgs);
             case ServicePackage.OPERATION__PROTOCOLS:
@@ -667,6 +730,8 @@ public class OperationImpl extends MinimalEObjectImpl.Container implements Opera
                 return isNotImplemented();
             case ServicePackage.OPERATION__VISIBILITY:
                 return getVisibility();
+            case ServicePackage.OPERATION__API_OPERATION_COMMENT:
+                return getApiOperationComment();
             case ServicePackage.OPERATION__ENDPOINTS:
                 return getEndpoints();
             case ServicePackage.OPERATION__PROTOCOLS:
@@ -708,6 +773,9 @@ public class OperationImpl extends MinimalEObjectImpl.Container implements Opera
             case ServicePackage.OPERATION__VISIBILITY:
                 setVisibility((Visibility)newValue);
                 return;
+            case ServicePackage.OPERATION__API_OPERATION_COMMENT:
+                setApiOperationComment((ApiOperationComment)newValue);
+                return;
             case ServicePackage.OPERATION__ENDPOINTS:
                 getEndpoints().clear();
                 getEndpoints().addAll((Collection<? extends Endpoint>)newValue);
@@ -748,6 +816,9 @@ public class OperationImpl extends MinimalEObjectImpl.Container implements Opera
             case ServicePackage.OPERATION__VISIBILITY:
                 setVisibility(VISIBILITY_EDEFAULT);
                 return;
+            case ServicePackage.OPERATION__API_OPERATION_COMMENT:
+                setApiOperationComment((ApiOperationComment)null);
+                return;
             case ServicePackage.OPERATION__ENDPOINTS:
                 getEndpoints().clear();
                 return;
@@ -781,6 +852,8 @@ public class OperationImpl extends MinimalEObjectImpl.Container implements Opera
                 return notImplemented != NOT_IMPLEMENTED_EDEFAULT;
             case ServicePackage.OPERATION__VISIBILITY:
                 return visibility != VISIBILITY_EDEFAULT;
+            case ServicePackage.OPERATION__API_OPERATION_COMMENT:
+                return apiOperationComment != null;
             case ServicePackage.OPERATION__ENDPOINTS:
                 return endpoints != null && !endpoints.isEmpty();
             case ServicePackage.OPERATION__PROTOCOLS:

@@ -530,6 +530,11 @@ Microservices
             outgoing parameters could be condensed within a uniforming data
             structure.
 
+    .. py:attribute:: IntermediateApiOperationComment[0..1] apiOperationComment
+
+        :java:type:`API comment <IntermediateApiOperationComment>` of the 
+        operation.
+
     .. py:attribute:: IntermediateImportedAspect[*] aspects
 
         :java:type:`Aspects <IntermediateImportedAspect>` of the operation.
@@ -538,9 +543,65 @@ Microservices
 
         Link to the containing :java:type:`IntermediateInterface` instance.
 
+.. java:type:: class IntermediateApiOperationComment
+
+    An API-related comment of an :java:type:`operation <IntermediateOperation>`.
+    It  describes the purpose of the operation, possibly together with its 
+    parameters in :java:type:`IntermediateApiParameterComment` instances.
+
+    .. py:attribute:: String[1] comment
+
+        Comment, which describes the operation.
+
+    .. py:attribute:: IntermediateApiParameterComment[*] parameterComments
+
+        API comments for the operation's parameters.
+
+        .. HINT::
+
+            It is possible that a parameter is commented more than once. Code 
+            generators are free in their reaction to such a situation. For 
+            instance, all comments may be dropped except for the last one or
+            they may ask users on how to proceed in such a situation.
+
+    .. py:attribute:: IntermediateOperation operation
+
+        The :java:type:`operation <IntermediateOperation>` being documented by
+        this comment.
+
+.. java:type:: class IntermediateApiParameterComment
+
+    An API-related comment for a :java:type:`parameter <IntermediateParameter>`
+    of an :java:type:`operation <IntermediateOperation>`.
+
+        .. py:attribute:: String[1] comment
+
+            Comment, which describes the parameter.
+
+        .. py:attribute:: boolean required
+
+            Flag to indicate if this parameter is required (from an API point of
+            view). 
+
+            .. NOTE::            
+
+                It is possible to document even :ref:`optional parameters
+                <link__IntermediateParameter_optional>` as being required.
+
+        .. py:attribute:: IntermediateParameter parameter
+
+            The :java:type:`parameter <IntermediateParameter>` being documented 
+            by this comment.
+
+        .. py:attribute:: IntermediateApiOperationComment operationComment
+
+            The :java:type:`API operation comment 
+            <IntermediateApiOperationComment>` to which this parameter comment
+            belongs.
+
 .. java:type:: class IntermediateParameter
 
-    A parameter of an :java:type:`IntermediateOperation`.
+    A parameter of an :java:type:`operation <IntermediateOperation>`.
 
     .. py:attribute:: String[1] name
 
@@ -576,6 +637,8 @@ Microservices
 
             It is up to the code generator to ensure that the caller is aware 
             that the parameter communicates a fault.
+
+    .. _link__IntermediateParameter_optional:
 
     .. py:attribute:: boolean optional
 

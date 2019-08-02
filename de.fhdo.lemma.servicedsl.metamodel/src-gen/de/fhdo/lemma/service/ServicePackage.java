@@ -1232,13 +1232,22 @@ public interface ServicePackage extends EPackage {
     int OPERATION__VISIBILITY = 2;
 
     /**
+     * The feature id for the '<em><b>Api Operation Comment</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int OPERATION__API_OPERATION_COMMENT = 3;
+
+    /**
      * The feature id for the '<em><b>Endpoints</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int OPERATION__ENDPOINTS = 3;
+    int OPERATION__ENDPOINTS = 4;
 
     /**
      * The feature id for the '<em><b>Protocols</b></em>' containment reference list.
@@ -1247,7 +1256,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int OPERATION__PROTOCOLS = 4;
+    int OPERATION__PROTOCOLS = 5;
 
     /**
      * The feature id for the '<em><b>Parameters</b></em>' containment reference list.
@@ -1256,7 +1265,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int OPERATION__PARAMETERS = 5;
+    int OPERATION__PARAMETERS = 6;
 
     /**
      * The feature id for the '<em><b>Aspects</b></em>' containment reference list.
@@ -1265,7 +1274,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int OPERATION__ASPECTS = 6;
+    int OPERATION__ASPECTS = 7;
 
     /**
      * The feature id for the '<em><b>Interface</b></em>' container reference.
@@ -1274,7 +1283,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int OPERATION__INTERFACE = 7;
+    int OPERATION__INTERFACE = 8;
 
     /**
      * The feature id for the '<em><b>Not Implemented By Container</b></em>' attribute.
@@ -1283,7 +1292,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int OPERATION__NOT_IMPLEMENTED_BY_CONTAINER = 8;
+    int OPERATION__NOT_IMPLEMENTED_BY_CONTAINER = 9;
 
     /**
      * The feature id for the '<em><b>Effectively Not Implemented</b></em>' attribute.
@@ -1292,7 +1301,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int OPERATION__EFFECTIVELY_NOT_IMPLEMENTED = 9;
+    int OPERATION__EFFECTIVELY_NOT_IMPLEMENTED = 10;
 
     /**
      * The feature id for the '<em><b>Effective Visibility</b></em>' attribute.
@@ -1301,7 +1310,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int OPERATION__EFFECTIVE_VISIBILITY = 10;
+    int OPERATION__EFFECTIVE_VISIBILITY = 11;
 
     /**
      * The feature id for the '<em><b>Effectively Internal</b></em>' attribute.
@@ -1310,7 +1319,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int OPERATION__EFFECTIVELY_INTERNAL = 11;
+    int OPERATION__EFFECTIVELY_INTERNAL = 12;
 
     /**
      * The number of structural features of the '<em>Operation</em>' class.
@@ -1319,7 +1328,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int OPERATION_FEATURE_COUNT = 12;
+    int OPERATION_FEATURE_COUNT = 13;
 
     /**
      * The operation id for the '<em>Teffective Protocol Specifications</em>' operation.
@@ -1358,6 +1367,125 @@ public interface ServicePackage extends EPackage {
     int OPERATION_OPERATION_COUNT = 3;
 
     /**
+     * The meta object id for the '{@link de.fhdo.lemma.service.impl.ApiOperationCommentImpl <em>Api Operation Comment</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.fhdo.lemma.service.impl.ApiOperationCommentImpl
+     * @see de.fhdo.lemma.service.impl.ServicePackageImpl#getApiOperationComment()
+     * @generated
+     */
+    int API_OPERATION_COMMENT = 10;
+
+    /**
+     * The feature id for the '<em><b>Comment</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int API_OPERATION_COMMENT__COMMENT = 0;
+
+    /**
+     * The feature id for the '<em><b>Parameter Comments</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int API_OPERATION_COMMENT__PARAMETER_COMMENTS = 1;
+
+    /**
+     * The feature id for the '<em><b>Operation</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int API_OPERATION_COMMENT__OPERATION = 2;
+
+    /**
+     * The number of structural features of the '<em>Api Operation Comment</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int API_OPERATION_COMMENT_FEATURE_COUNT = 3;
+
+    /**
+     * The number of operations of the '<em>Api Operation Comment</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int API_OPERATION_COMMENT_OPERATION_COUNT = 0;
+
+    /**
+     * The meta object id for the '{@link de.fhdo.lemma.service.impl.ApiParameterCommentImpl <em>Api Parameter Comment</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.fhdo.lemma.service.impl.ApiParameterCommentImpl
+     * @see de.fhdo.lemma.service.impl.ServicePackageImpl#getApiParameterComment()
+     * @generated
+     */
+    int API_PARAMETER_COMMENT = 11;
+
+    /**
+     * The feature id for the '<em><b>Comment</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int API_PARAMETER_COMMENT__COMMENT = 0;
+
+    /**
+     * The feature id for the '<em><b>Required</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int API_PARAMETER_COMMENT__REQUIRED = 1;
+
+    /**
+     * The feature id for the '<em><b>Parameter</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int API_PARAMETER_COMMENT__PARAMETER = 2;
+
+    /**
+     * The feature id for the '<em><b>Operation Comment</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int API_PARAMETER_COMMENT__OPERATION_COMMENT = 3;
+
+    /**
+     * The number of structural features of the '<em>Api Parameter Comment</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int API_PARAMETER_COMMENT_FEATURE_COUNT = 4;
+
+    /**
+     * The number of operations of the '<em>Api Parameter Comment</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int API_PARAMETER_COMMENT_OPERATION_COUNT = 0;
+
+    /**
      * The meta object id for the '{@link de.fhdo.lemma.service.impl.ReferredOperationImpl <em>Referred Operation</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1365,7 +1493,7 @@ public interface ServicePackage extends EPackage {
      * @see de.fhdo.lemma.service.impl.ServicePackageImpl#getReferredOperation()
      * @generated
      */
-    int REFERRED_OPERATION = 10;
+    int REFERRED_OPERATION = 12;
 
     /**
      * The feature id for the '<em><b>Operation</b></em>' reference.
@@ -1465,7 +1593,7 @@ public interface ServicePackage extends EPackage {
      * @see de.fhdo.lemma.service.impl.ServicePackageImpl#getParameter()
      * @generated
      */
-    int PARAMETER = 11;
+    int PARAMETER = 13;
 
     /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1646,7 +1774,7 @@ public interface ServicePackage extends EPackage {
      * @see de.fhdo.lemma.service.impl.ServicePackageImpl#getPossiblyImportedMicroservice()
      * @generated
      */
-    int POSSIBLY_IMPORTED_MICROSERVICE = 12;
+    int POSSIBLY_IMPORTED_MICROSERVICE = 14;
 
     /**
      * The feature id for the '<em><b>Import</b></em>' reference.
@@ -1701,7 +1829,7 @@ public interface ServicePackage extends EPackage {
      * @see de.fhdo.lemma.service.impl.ServicePackageImpl#getPossiblyImportedInterface()
      * @generated
      */
-    int POSSIBLY_IMPORTED_INTERFACE = 13;
+    int POSSIBLY_IMPORTED_INTERFACE = 15;
 
     /**
      * The feature id for the '<em><b>Import</b></em>' reference.
@@ -1774,7 +1902,7 @@ public interface ServicePackage extends EPackage {
      * @see de.fhdo.lemma.service.impl.ServicePackageImpl#getPossiblyImportedOperation()
      * @generated
      */
-    int POSSIBLY_IMPORTED_OPERATION = 14;
+    int POSSIBLY_IMPORTED_OPERATION = 16;
 
     /**
      * The feature id for the '<em><b>Import</b></em>' reference.
@@ -1874,7 +2002,7 @@ public interface ServicePackage extends EPackage {
      * @see de.fhdo.lemma.service.impl.ServicePackageImpl#getImportedType()
      * @generated
      */
-    int IMPORTED_TYPE = 15;
+    int IMPORTED_TYPE = 17;
 
     /**
      * The feature id for the '<em><b>Import</b></em>' reference.
@@ -1920,7 +2048,7 @@ public interface ServicePackage extends EPackage {
      * @see de.fhdo.lemma.service.impl.ServicePackageImpl#getImportedProtocolAndDataFormat()
      * @generated
      */
-    int IMPORTED_PROTOCOL_AND_DATA_FORMAT = 16;
+    int IMPORTED_PROTOCOL_AND_DATA_FORMAT = 18;
 
     /**
      * The feature id for the '<em><b>Import</b></em>' reference.
@@ -1993,7 +2121,7 @@ public interface ServicePackage extends EPackage {
      * @see de.fhdo.lemma.service.impl.ServicePackageImpl#getProtocolSpecification()
      * @generated
      */
-    int PROTOCOL_SPECIFICATION = 17;
+    int PROTOCOL_SPECIFICATION = 19;
 
     /**
      * The feature id for the '<em><b>Communication Type</b></em>' attribute.
@@ -2048,7 +2176,7 @@ public interface ServicePackage extends EPackage {
      * @see de.fhdo.lemma.service.impl.ServicePackageImpl#getEndpoint()
      * @generated
      */
-    int ENDPOINT = 18;
+    int ENDPOINT = 20;
 
     /**
      * The feature id for the '<em><b>Addresses</b></em>' attribute list.
@@ -2130,7 +2258,7 @@ public interface ServicePackage extends EPackage {
      * @see de.fhdo.lemma.service.impl.ServicePackageImpl#getImportedServiceAspect()
      * @generated
      */
-    int IMPORTED_SERVICE_ASPECT = 19;
+    int IMPORTED_SERVICE_ASPECT = 21;
 
     /**
      * The feature id for the '<em><b>Import</b></em>' reference.
@@ -2275,7 +2403,7 @@ public interface ServicePackage extends EPackage {
      * @see de.fhdo.lemma.service.impl.ServicePackageImpl#getImportType()
      * @generated
      */
-    int IMPORT_TYPE = 20;
+    int IMPORT_TYPE = 22;
 
     /**
      * The meta object id for the '{@link de.fhdo.lemma.service.MicroserviceType <em>Microservice Type</em>}' enum.
@@ -2285,7 +2413,7 @@ public interface ServicePackage extends EPackage {
      * @see de.fhdo.lemma.service.impl.ServicePackageImpl#getMicroserviceType()
      * @generated
      */
-    int MICROSERVICE_TYPE = 21;
+    int MICROSERVICE_TYPE = 23;
 
     /**
      * The meta object id for the '{@link de.fhdo.lemma.service.Visibility <em>Visibility</em>}' enum.
@@ -2295,7 +2423,7 @@ public interface ServicePackage extends EPackage {
      * @see de.fhdo.lemma.service.impl.ServicePackageImpl#getVisibility()
      * @generated
      */
-    int VISIBILITY = 22;
+    int VISIBILITY = 24;
 
     /**
      * The meta object id for the '<em>Tuple List</em>' data type.
@@ -2305,7 +2433,7 @@ public interface ServicePackage extends EPackage {
      * @see de.fhdo.lemma.service.impl.ServicePackageImpl#getTupleList()
      * @generated
      */
-    int TUPLE_LIST = 23;
+    int TUPLE_LIST = 25;
 
     /**
      * The meta object id for the '<em>Microservice Import Map</em>' data type.
@@ -2315,7 +2443,7 @@ public interface ServicePackage extends EPackage {
      * @see de.fhdo.lemma.service.impl.ServicePackageImpl#getMicroserviceImportMap()
      * @generated
      */
-    int MICROSERVICE_IMPORT_MAP = 24;
+    int MICROSERVICE_IMPORT_MAP = 26;
 
     /**
      * The meta object id for the '<em>Default Protocols</em>' data type.
@@ -2325,7 +2453,7 @@ public interface ServicePackage extends EPackage {
      * @see de.fhdo.lemma.service.impl.ServicePackageImpl#getDefaultProtocols()
      * @generated
      */
-    int DEFAULT_PROTOCOLS = 25;
+    int DEFAULT_PROTOCOLS = 27;
 
 
     /**
@@ -3511,6 +3639,17 @@ public interface ServicePackage extends EPackage {
     EAttribute getOperation_Visibility();
 
     /**
+     * Returns the meta object for the containment reference '{@link de.fhdo.lemma.service.Operation#getApiOperationComment <em>Api Operation Comment</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference '<em>Api Operation Comment</em>'.
+     * @see de.fhdo.lemma.service.Operation#getApiOperationComment()
+     * @see #getOperation()
+     * @generated
+     */
+    EReference getOperation_ApiOperationComment();
+
+    /**
      * Returns the meta object for the containment reference list '{@link de.fhdo.lemma.service.Operation#getEndpoints <em>Endpoints</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -3638,6 +3777,103 @@ public interface ServicePackage extends EPackage {
      * @generated
      */
     EOperation getOperation__BuildQualifiedName__String();
+
+    /**
+     * Returns the meta object for class '{@link de.fhdo.lemma.service.ApiOperationComment <em>Api Operation Comment</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Api Operation Comment</em>'.
+     * @see de.fhdo.lemma.service.ApiOperationComment
+     * @generated
+     */
+    EClass getApiOperationComment();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.fhdo.lemma.service.ApiOperationComment#getComment <em>Comment</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Comment</em>'.
+     * @see de.fhdo.lemma.service.ApiOperationComment#getComment()
+     * @see #getApiOperationComment()
+     * @generated
+     */
+    EAttribute getApiOperationComment_Comment();
+
+    /**
+     * Returns the meta object for the containment reference list '{@link de.fhdo.lemma.service.ApiOperationComment#getParameterComments <em>Parameter Comments</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Parameter Comments</em>'.
+     * @see de.fhdo.lemma.service.ApiOperationComment#getParameterComments()
+     * @see #getApiOperationComment()
+     * @generated
+     */
+    EReference getApiOperationComment_ParameterComments();
+
+    /**
+     * Returns the meta object for the container reference '{@link de.fhdo.lemma.service.ApiOperationComment#getOperation <em>Operation</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the container reference '<em>Operation</em>'.
+     * @see de.fhdo.lemma.service.ApiOperationComment#getOperation()
+     * @see #getApiOperationComment()
+     * @generated
+     */
+    EReference getApiOperationComment_Operation();
+
+    /**
+     * Returns the meta object for class '{@link de.fhdo.lemma.service.ApiParameterComment <em>Api Parameter Comment</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Api Parameter Comment</em>'.
+     * @see de.fhdo.lemma.service.ApiParameterComment
+     * @generated
+     */
+    EClass getApiParameterComment();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.fhdo.lemma.service.ApiParameterComment#getComment <em>Comment</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Comment</em>'.
+     * @see de.fhdo.lemma.service.ApiParameterComment#getComment()
+     * @see #getApiParameterComment()
+     * @generated
+     */
+    EAttribute getApiParameterComment_Comment();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.fhdo.lemma.service.ApiParameterComment#isRequired <em>Required</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Required</em>'.
+     * @see de.fhdo.lemma.service.ApiParameterComment#isRequired()
+     * @see #getApiParameterComment()
+     * @generated
+     */
+    EAttribute getApiParameterComment_Required();
+
+    /**
+     * Returns the meta object for the reference '{@link de.fhdo.lemma.service.ApiParameterComment#getParameter <em>Parameter</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference '<em>Parameter</em>'.
+     * @see de.fhdo.lemma.service.ApiParameterComment#getParameter()
+     * @see #getApiParameterComment()
+     * @generated
+     */
+    EReference getApiParameterComment_Parameter();
+
+    /**
+     * Returns the meta object for the container reference '{@link de.fhdo.lemma.service.ApiParameterComment#getOperationComment <em>Operation Comment</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the container reference '<em>Operation Comment</em>'.
+     * @see de.fhdo.lemma.service.ApiParameterComment#getOperationComment()
+     * @see #getApiParameterComment()
+     * @generated
+     */
+    EReference getApiParameterComment_OperationComment();
 
     /**
      * Returns the meta object for class '{@link de.fhdo.lemma.service.ReferredOperation <em>Referred Operation</em>}'.
@@ -5494,6 +5730,14 @@ public interface ServicePackage extends EPackage {
         EAttribute OPERATION__VISIBILITY = eINSTANCE.getOperation_Visibility();
 
         /**
+         * The meta object literal for the '<em><b>Api Operation Comment</b></em>' containment reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference OPERATION__API_OPERATION_COMMENT = eINSTANCE.getOperation_ApiOperationComment();
+
+        /**
          * The meta object literal for the '<em><b>Endpoints</b></em>' containment reference list feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -5588,6 +5832,82 @@ public interface ServicePackage extends EPackage {
          * @generated
          */
         EOperation OPERATION___BUILD_QUALIFIED_NAME__STRING = eINSTANCE.getOperation__BuildQualifiedName__String();
+
+        /**
+         * The meta object literal for the '{@link de.fhdo.lemma.service.impl.ApiOperationCommentImpl <em>Api Operation Comment</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.fhdo.lemma.service.impl.ApiOperationCommentImpl
+         * @see de.fhdo.lemma.service.impl.ServicePackageImpl#getApiOperationComment()
+         * @generated
+         */
+        EClass API_OPERATION_COMMENT = eINSTANCE.getApiOperationComment();
+
+        /**
+         * The meta object literal for the '<em><b>Comment</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute API_OPERATION_COMMENT__COMMENT = eINSTANCE.getApiOperationComment_Comment();
+
+        /**
+         * The meta object literal for the '<em><b>Parameter Comments</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference API_OPERATION_COMMENT__PARAMETER_COMMENTS = eINSTANCE.getApiOperationComment_ParameterComments();
+
+        /**
+         * The meta object literal for the '<em><b>Operation</b></em>' container reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference API_OPERATION_COMMENT__OPERATION = eINSTANCE.getApiOperationComment_Operation();
+
+        /**
+         * The meta object literal for the '{@link de.fhdo.lemma.service.impl.ApiParameterCommentImpl <em>Api Parameter Comment</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.fhdo.lemma.service.impl.ApiParameterCommentImpl
+         * @see de.fhdo.lemma.service.impl.ServicePackageImpl#getApiParameterComment()
+         * @generated
+         */
+        EClass API_PARAMETER_COMMENT = eINSTANCE.getApiParameterComment();
+
+        /**
+         * The meta object literal for the '<em><b>Comment</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute API_PARAMETER_COMMENT__COMMENT = eINSTANCE.getApiParameterComment_Comment();
+
+        /**
+         * The meta object literal for the '<em><b>Required</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute API_PARAMETER_COMMENT__REQUIRED = eINSTANCE.getApiParameterComment_Required();
+
+        /**
+         * The meta object literal for the '<em><b>Parameter</b></em>' reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference API_PARAMETER_COMMENT__PARAMETER = eINSTANCE.getApiParameterComment_Parameter();
+
+        /**
+         * The meta object literal for the '<em><b>Operation Comment</b></em>' container reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference API_PARAMETER_COMMENT__OPERATION_COMMENT = eINSTANCE.getApiParameterComment_OperationComment();
 
         /**
          * The meta object literal for the '{@link de.fhdo.lemma.service.impl.ReferredOperationImpl <em>Referred Operation</em>}' class.

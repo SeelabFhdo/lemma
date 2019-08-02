@@ -82,7 +82,21 @@ Interface returns Interface:
     '}'
 ;
 
+ApiOperationComment returns ApiOperationComment:
+    '---'
+        comment=Anything
+        parameterComments+=ApiParameterComment*
+    '---'
+;
+
+ApiParameterComment returns ApiParameterComment:
+    ('@param' | required?='@required')
+    parameter=[Parameter]
+    comment=Anything
+;
+
 Operation returns Operation:
+    (apiOperationComment=ApiOperationComment)?
     (protocols+=ProtocolSpecification (protocols+=ProtocolSpecification)?)?
     ('@' 'endpoints' '(' endpoints+=Endpoint+ ')')?
     aspects+=ImportedServiceAspect*
@@ -151,4 +165,56 @@ enum MicroserviceType returns MicroserviceType:
 
 QualifiedNameWithAtLeastOneLevel:
     ID '.' QualifiedName
+;
+
+// Rule to consume any character
+Anything:
+    (
+        // All keyword characters of the Service, Technology, and Data DSLs (the Service DSL
+        // inherits from the latter ones). If we don't specify them here, they will be recognized as
+        // regular grammar tokens in the Anything string.
+        '{' | '}' | '<' | '>' | ',' | '(' | ')' | '::' | '.' | '-' | '--' | '/' | '?' | ':' | '@' |
+        '=' | ';' |
+
+        // All keywords of the Technology DSL (from which the Service DSL inherits). If we don't
+        // specify them here, they will be recognized as regular grammar tokens in the Anything
+        // string.
+        'technology' | 'types' | 'compatibility' | 'matrix' | 'protocols' | 'service' | 'aspects' |
+        'deployment' | 'technologies' | 'infrastructure' | 'operation' | 'import' | 'from' | 'as' |
+        'data' | 'formats' | 'default' | 'with' | 'format' | 'in' | 'out' | 'inout' | 'sync' |
+        'async' | 'primitive' | 'type' | 'based' | 'on' | 'list' | 'structure' | '->' | '<-' |
+        '<->' | 'environments' | 'properties' | 'mandatory' | 'singleval' | 'microservices' |
+        'interfaces' | 'operations' | 'parameters' | 'fields' | 'exchange_pattern' |
+        'communication_type' | 'protocol' | 'data_format' | 'aspect' | 'for' | 'containers' |
+        'selector'
+
+        // All keywords of the Data DSL (from which the Service DSL inherits). If we don't specify
+        // them here, they will be recognized as regular grammar tokens in the Anything string.
+        'datatypes' |  'version' | 'context' | 'aggregate'  | 'applicationService' | 'domainEvent' |
+        'domainService' | 'entity' | 'factory' | 'infrastructureService' | 'repository' |
+        'specification' | 'valueObject' | 'extends' | 'identifier' | 'neverEmpty' | 'part' |
+        'hide' | 'immutable' | 'enum' | 'closure' | 'sideEffectFree' | 'validator' | 'function' |
+        'procedure' | 'boolean' | 'byte' | 'char' | 'date' | 'double' | 'float' | 'int' | 'long' |
+        'short' | 'string' |
+
+        // All keywords of the Service DSL. If we don't specify them here, they will be recognized
+        // as regular grammar tokens in the Anything string.
+        'internal' | 'architecture' | 'public' | 'endpoints' | 'microservice' | 'required' |
+        'typedef' | 'noimpl' | 'interface' | 'param' | 'refers' | 'fault' | 'functional' |
+        'utility' |
+
+        // All other terminal rules of the Service and the Data DSL (from which the Service DSL
+        // inherits). If we don't specify them here, they will be recognized as regular grammar
+        // tokens in the Anything string.
+        BOOLEAN | BIG_DECIMAL | ID | STRING | ANY_OTHER
+    )+
+;
+
+// We override the STRING terminal rule so that only double-quotes instead of single-quotes can be
+// used to express strings. That is, because we need to be able to use a single single-quote in the
+// Anything rule and hence in API operation comments. Otherwise, we could not state comments such as
+// "Change a customer_'_s address".
+@Override
+terminal STRING:
+    '"' ( '\\' . /* 'b'|'t'|'n'|'f'|'r'|'u'|'"'|"'"|'\\' */ | !('\\'|'"') )* '"'
 ;

@@ -17,6 +17,7 @@ import org.eclipse.xtext.nodemodel.INode
 import org.eclipse.xtext.Keyword
 import de.fhdo.lemma.technology.TechnologyPackage
 import de.fhdo.lemma.technology.TechnologySpecificPropertyValueAssignment
+import com.google.common.base.Function
 
 /**
  * Provide custom syntax highlighting for certain elements.
@@ -32,6 +33,7 @@ class HighlightingCalculator implements ISemanticHighlightingCalculator {
         resource.provideHighlightingForAnnotations(acceptor)
         resource.provideHighlightingForDefaultTypeDefinitionFlag(acceptor)
         resource.provideHighlightingForBooleanConstants(acceptor)
+        resource.provideHighlightingForApiComments(acceptor)
     }
 
     /**
@@ -111,16 +113,9 @@ class HighlightingCalculator implements ISemanticHighlightingCalculator {
 
                         // Highlight nodes including the "@" sign, which marks the beginning of an
                         // aspect's annotation string
-                        if (nodeToHighlight !== null) {
-                            do {
-                                acceptor.addPosition(nodeToHighlight.offset, nodeToHighlight.length,
-                                    HighlightingConfiguration.ANNOTATION_ID)
-                                nodeToHighlight = nodeToHighlight.previousSibling
-                            } while (nodeToHighlight !== null &&
-                                nodeToHighlight.nextSibling !== null &&
-                                nodeToHighlight.nextSibling.text != "@"
-                            )
-                        }
+                        if (nodeToHighlight !== null)
+                            nodeToHighlight.highlightUntil([previousSibling], "@", acceptor,
+                                HighlightingConfiguration.ANNOTATION_ID, true)
                     ]
                 ]]
         ]
@@ -205,5 +200,64 @@ class HighlightingCalculator implements ISemanticHighlightingCalculator {
                 ]
             }
         ]
+    }
+
+    /**
+     * Provide highlighting for API operation comments
+     */
+    private def provideHighlightingForApiComments(XtextResource resource,
+        IHighlightedPositionAcceptor acceptor) {
+        resource.allContents.forEach[
+            // API operation comment
+            val commentFeatures = NodeModelUtils
+                .findNodesForFeature(it, ServicePackage::Literals.API_OPERATION_COMMENT__COMMENT)
+            if (!commentFeatures.empty) {
+                commentFeatures.forEach[
+                    acceptor.addPosition(offset, length, HighlightingConfiguration.API_OPERATION_ID)
+                ]
+
+                commentFeatures.get(0).highlightUntil([previousSibling], "---", acceptor,
+                    HighlightingConfiguration.API_OPERATION_ID, false)
+                commentFeatures.get(0).highlightUntil([nextSibling], "---", acceptor,
+                    HighlightingConfiguration.API_OPERATION_ID, false)
+            }
+
+            // API parameter comment
+            val parameterFeatures = NodeModelUtils
+                .findNodesForFeature(it, ServicePackage::Literals.API_PARAMETER_COMMENT__PARAMETER)
+            if (!parameterFeatures.empty) {
+                commentFeatures.get(0).previousSibling.highlightUntil([previousSibling], "@",
+                    acceptor, HighlightingConfiguration.TASK_ID, false)
+
+                parameterFeatures.forEach[
+                    acceptor.addPosition(offset, length, HighlightingConfiguration.API_PARAMETER_ID)
+                ]
+            }
+        ]
+    }
+
+    /**
+     * Helper to iteratively highlight nodes until a node with a certain text was reached
+     */
+    private def highlightUntil(INode startNode, Function<INode, INode> getNextNode, String until,
+        IHighlightedPositionAcceptor acceptor, String highlightId, boolean colorStartNode) {
+        if (colorStartNode)
+            acceptor.addPosition(startNode.offset, startNode.length, highlightId)
+
+        var nextNode = getNextNode.apply(startNode)
+        if (nextNode === null) {
+            return
+        }
+
+        var endReached = false
+        do {
+            acceptor.addPosition(nextNode.offset, nextNode.length, highlightId)
+            nextNode = getNextNode.apply(nextNode)
+            endReached = until == nextNode?.text
+
+            // Also color last node
+            if (endReached)
+                acceptor.addPosition(nextNode.offset, nextNode.length, highlightId)
+        } while (nextNode !== null && !endReached)
     }
 }

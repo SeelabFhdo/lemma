@@ -350,6 +350,9 @@ rule IntermediateOperation {
             interface <- thisModule.getCreatedInterface(o.interface)
         )
     do {
+        if (not o.apiOperationComment.oclIsUndefined())
+            i.apiOperationComment <- thisModule.IntermediateApiOperationComment(o, i);
+
         if (not o.t_effectiveProtocolSpecifications().oclIsUndefined())
             for (specification in o.t_effectiveProtocolSpecifications()) {
                 i.protocols <- i.protocols->append(
@@ -361,6 +364,22 @@ rule IntermediateOperation {
         i.interface.operations <- i.interface.operations->append(i);
 
         thisModule.CreatedOperation(i);
+    }
+}
+
+--- Called rule to create an IntermediateApiOperationComment
+rule IntermediateApiOperationComment(sourceOperation : Service!Operation,
+    targetOperation : Intermediate!IntermediateOperation) {
+    using {
+        sourceComment : Service!ApiOperationComment = sourceOperation.apiOperationComment;
+    }
+    to
+        i : Intermediate!IntermediateApiOperationComment(
+            comment <- sourceComment.comment,
+            operation <- targetOperation
+        )
+    do {
+        i;
     }
 }
 
@@ -395,6 +414,14 @@ rule IntermediateReferredOperation {
 rule IntermediateParameter {
     from
         p : Service!Parameter
+    using {
+        hasComment : Boolean = if (not p.operation.apiOperationComment.oclIsUndefined()) then
+                p.operation.apiOperationComment.parameterComments
+                    ->exists(c | c.parameter.name = p.name)
+            else
+                false
+            endif;
+    }
     to
         i : Intermediate!IntermediateParameter(
             name <- p.name,
@@ -405,6 +432,9 @@ rule IntermediateParameter {
             optional <- p.optional
         )
     do {
+        if (hasComment)
+            thisModule.IntermediateApiParameterComment(p, i);
+
         -- Set initializing operation
         if (not p.initializedByOperation.oclIsUndefined()) {
             i.initializedByOperation <- thisModule
@@ -430,6 +460,31 @@ rule IntermediateParameter {
 
         -- Store created parameter for subsequent referencing
         thisModule.CreatedParameter(i);
+    }
+}
+
+--- Called rule to create an IntermediateApiParameterComment
+rule IntermediateApiParameterComment(sourceParameter : Service!Parameter,
+    targetParameter : Intermediate!IntermediateParameter) {
+    using {
+        sourceOperation : Service!Operation = sourceParameter.operation;
+        sourceOperationComment : Service!ApiOperationComment = sourceOperation.apiOperationComment;
+        sourceComment : Service!ApiParameterComment = sourceOperationComment.parameterComments
+            ->any(c | c.parameter.name = sourceParameter.name);
+        targetOperationComment : Intermediate!IntermediateApiOperationComment
+            = thisModule.getCreatedOperation(sourceOperation).apiOperationComment;
+    }
+    to
+        i : Intermediate!IntermediateApiParameterComment(
+            comment <- sourceComment.comment,
+            required <- sourceComment.required,
+            parameter <- targetParameter
+        )
+    do {
+        targetOperationComment.parameterComments <-
+            targetOperationComment.parameterComments->append(i);
+
+        i;
     }
 }
 

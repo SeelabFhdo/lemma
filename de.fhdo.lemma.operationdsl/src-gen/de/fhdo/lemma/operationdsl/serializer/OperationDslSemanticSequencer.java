@@ -41,6 +41,8 @@ import de.fhdo.lemma.operation.ProtocolAndDataFormat;
 import de.fhdo.lemma.operation.ServiceDeploymentSpecification;
 import de.fhdo.lemma.operationdsl.services.OperationDslGrammarAccess;
 import de.fhdo.lemma.serializer.ServiceDslSemanticSequencer;
+import de.fhdo.lemma.service.ApiOperationComment;
+import de.fhdo.lemma.service.ApiParameterComment;
 import de.fhdo.lemma.service.Endpoint;
 import de.fhdo.lemma.service.Import;
 import de.fhdo.lemma.service.ImportedProtocolAndDataFormat;
@@ -207,6 +209,12 @@ public class OperationDslSemanticSequencer extends ServiceDslSemanticSequencer {
 			}
 		else if (epackage == ServicePackage.eINSTANCE)
 			switch (semanticObject.eClass().getClassifierID()) {
+			case ServicePackage.API_OPERATION_COMMENT:
+				sequence_ApiOperationComment(context, (ApiOperationComment) semanticObject); 
+				return; 
+			case ServicePackage.API_PARAMETER_COMMENT:
+				sequence_ApiParameterComment(context, (ApiParameterComment) semanticObject); 
+				return; 
 			case ServicePackage.ENDPOINT:
 				sequence_Endpoint(context, (Endpoint) semanticObject); 
 				return; 

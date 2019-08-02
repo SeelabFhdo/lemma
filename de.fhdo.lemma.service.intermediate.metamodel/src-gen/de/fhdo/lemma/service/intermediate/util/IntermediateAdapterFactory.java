@@ -84,6 +84,14 @@ public class IntermediateAdapterFactory extends AdapterFactoryImpl {
                 return createIntermediateOperationAdapter();
             }
             @Override
+            public Adapter caseIntermediateApiOperationComment(IntermediateApiOperationComment object) {
+                return createIntermediateApiOperationCommentAdapter();
+            }
+            @Override
+            public Adapter caseIntermediateApiParameterComment(IntermediateApiParameterComment object) {
+                return createIntermediateApiParameterCommentAdapter();
+            }
+            @Override
             public Adapter caseIntermediateReferredOperation(IntermediateReferredOperation object) {
                 return createIntermediateReferredOperationAdapter();
             }
@@ -192,6 +200,34 @@ public class IntermediateAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createIntermediateOperationAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.fhdo.lemma.service.intermediate.IntermediateApiOperationComment <em>Api Operation Comment</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.fhdo.lemma.service.intermediate.IntermediateApiOperationComment
+     * @generated
+     */
+    public Adapter createIntermediateApiOperationCommentAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.fhdo.lemma.service.intermediate.IntermediateApiParameterComment <em>Api Parameter Comment</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.fhdo.lemma.service.intermediate.IntermediateApiParameterComment
+     * @generated
+     */
+    public Adapter createIntermediateApiParameterCommentAdapter() {
         return null;
     }
 

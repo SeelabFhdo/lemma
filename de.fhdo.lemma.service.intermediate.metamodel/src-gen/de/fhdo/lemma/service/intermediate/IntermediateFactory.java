@@ -58,6 +58,24 @@ public interface IntermediateFactory extends EFactory {
     IntermediateOperation createIntermediateOperation();
 
     /**
+     * Returns a new object of class '<em>Api Operation Comment</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Api Operation Comment</em>'.
+     * @generated
+     */
+    IntermediateApiOperationComment createIntermediateApiOperationComment();
+
+    /**
+     * Returns a new object of class '<em>Api Parameter Comment</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Api Parameter Comment</em>'.
+     * @generated
+     */
+    IntermediateApiParameterComment createIntermediateApiParameterComment();
+
+    /**
      * Returns a new object of class '<em>Referred Operation</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

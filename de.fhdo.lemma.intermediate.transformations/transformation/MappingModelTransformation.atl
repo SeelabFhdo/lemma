@@ -575,7 +575,44 @@ rule Operation(sourceOperation : Service!Operation, operationMapping : Mapping!O
                 );
         }
 
+        -- API operation comments
+        if (not sourceOperation.apiOperationComment.oclIsUndefined())
+            t.apiOperationComment <- thisModule.ApiOperationComment(sourceOperation, t);
+
         thisModule.CreatedOperation(t, importAlias);
+        t;
+    }
+}
+
+--- Generic called rule to create a target ApiOperationComment
+rule ApiOperationComment(sourceOperation : Service!Operation, targetOperation : Service!Operation) {
+    using {
+        sourceComment : Service!ApiOperationComment = sourceOperation.apiOperationComment;
+    }
+    to
+        t : Service!ApiOperationComment(
+            comment <- sourceComment.comment
+        )
+    do {
+        for (parameterComment in sourceComment.parameterComments) {
+            t.parameterComments <- t.parameterComments
+                ->append(thisModule.ApiParameterComment(parameterComment, targetOperation));
+        }
+
+        t;
+    }
+}
+
+--- Generic called rule to create a target ApiParameterComment
+rule ApiParameterComment(sourceComment : Service!ApiParameterComment,
+    targetOperation : Service!Operation) {
+    to
+        t : Service!ApiParameterComment(
+            comment <- sourceComment.comment,
+            required <- sourceComment.required,
+            parameter <- targetOperation.parameters->any(p | p.name = sourceComment.parameter.name)
+        )
+    do {
         t;
     }
 }

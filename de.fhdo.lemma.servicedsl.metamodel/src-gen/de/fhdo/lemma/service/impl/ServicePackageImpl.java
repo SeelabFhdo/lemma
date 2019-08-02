@@ -4,6 +4,8 @@ package de.fhdo.lemma.service.impl;
 
 import de.fhdo.lemma.data.DataPackage;
 
+import de.fhdo.lemma.service.ApiOperationComment;
+import de.fhdo.lemma.service.ApiParameterComment;
 import de.fhdo.lemma.service.Endpoint;
 import de.fhdo.lemma.service.Import;
 import de.fhdo.lemma.service.ImportType;
@@ -122,6 +124,20 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     private EClass operationEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass apiOperationCommentEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass apiParameterCommentEClass = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -1417,7 +1433,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     @Override
-    public EReference getOperation_Endpoints() {
+    public EReference getOperation_ApiOperationComment() {
         return (EReference)operationEClass.getEStructuralFeatures().get(3);
     }
 
@@ -1427,7 +1443,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     @Override
-    public EReference getOperation_Protocols() {
+    public EReference getOperation_Endpoints() {
         return (EReference)operationEClass.getEStructuralFeatures().get(4);
     }
 
@@ -1437,7 +1453,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     @Override
-    public EReference getOperation_Parameters() {
+    public EReference getOperation_Protocols() {
         return (EReference)operationEClass.getEStructuralFeatures().get(5);
     }
 
@@ -1447,7 +1463,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     @Override
-    public EReference getOperation_Aspects() {
+    public EReference getOperation_Parameters() {
         return (EReference)operationEClass.getEStructuralFeatures().get(6);
     }
 
@@ -1457,7 +1473,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     @Override
-    public EReference getOperation_Interface() {
+    public EReference getOperation_Aspects() {
         return (EReference)operationEClass.getEStructuralFeatures().get(7);
     }
 
@@ -1467,8 +1483,8 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     @Override
-    public EAttribute getOperation_NotImplementedByContainer() {
-        return (EAttribute)operationEClass.getEStructuralFeatures().get(8);
+    public EReference getOperation_Interface() {
+        return (EReference)operationEClass.getEStructuralFeatures().get(8);
     }
 
     /**
@@ -1477,7 +1493,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     @Override
-    public EAttribute getOperation_EffectivelyNotImplemented() {
+    public EAttribute getOperation_NotImplementedByContainer() {
         return (EAttribute)operationEClass.getEStructuralFeatures().get(9);
     }
 
@@ -1487,7 +1503,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     @Override
-    public EAttribute getOperation_EffectiveVisibility() {
+    public EAttribute getOperation_EffectivelyNotImplemented() {
         return (EAttribute)operationEClass.getEStructuralFeatures().get(10);
     }
 
@@ -1497,8 +1513,18 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     @Override
-    public EAttribute getOperation_EffectivelyInternal() {
+    public EAttribute getOperation_EffectiveVisibility() {
         return (EAttribute)operationEClass.getEStructuralFeatures().get(11);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EAttribute getOperation_EffectivelyInternal() {
+        return (EAttribute)operationEClass.getEStructuralFeatures().get(12);
     }
 
     /**
@@ -1529,6 +1555,96 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
     @Override
     public EOperation getOperation__BuildQualifiedName__String() {
         return operationEClass.getEOperations().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EClass getApiOperationComment() {
+        return apiOperationCommentEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EAttribute getApiOperationComment_Comment() {
+        return (EAttribute)apiOperationCommentEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getApiOperationComment_ParameterComments() {
+        return (EReference)apiOperationCommentEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getApiOperationComment_Operation() {
+        return (EReference)apiOperationCommentEClass.getEStructuralFeatures().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EClass getApiParameterComment() {
+        return apiParameterCommentEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EAttribute getApiParameterComment_Comment() {
+        return (EAttribute)apiParameterCommentEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EAttribute getApiParameterComment_Required() {
+        return (EAttribute)apiParameterCommentEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getApiParameterComment_Parameter() {
+        return (EReference)apiParameterCommentEClass.getEStructuralFeatures().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getApiParameterComment_OperationComment() {
+        return (EReference)apiParameterCommentEClass.getEStructuralFeatures().get(3);
     }
 
     /**
@@ -2540,6 +2656,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
         createEAttribute(operationEClass, OPERATION__NAME);
         createEAttribute(operationEClass, OPERATION__NOT_IMPLEMENTED);
         createEAttribute(operationEClass, OPERATION__VISIBILITY);
+        createEReference(operationEClass, OPERATION__API_OPERATION_COMMENT);
         createEReference(operationEClass, OPERATION__ENDPOINTS);
         createEReference(operationEClass, OPERATION__PROTOCOLS);
         createEReference(operationEClass, OPERATION__PARAMETERS);
@@ -2552,6 +2669,17 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
         createEOperation(operationEClass, OPERATION___TEFFECTIVE_PROTOCOL_SPECIFICATIONS);
         createEOperation(operationEClass, OPERATION___GET_QUALIFIED_NAME_PARTS);
         createEOperation(operationEClass, OPERATION___BUILD_QUALIFIED_NAME__STRING);
+
+        apiOperationCommentEClass = createEClass(API_OPERATION_COMMENT);
+        createEAttribute(apiOperationCommentEClass, API_OPERATION_COMMENT__COMMENT);
+        createEReference(apiOperationCommentEClass, API_OPERATION_COMMENT__PARAMETER_COMMENTS);
+        createEReference(apiOperationCommentEClass, API_OPERATION_COMMENT__OPERATION);
+
+        apiParameterCommentEClass = createEClass(API_PARAMETER_COMMENT);
+        createEAttribute(apiParameterCommentEClass, API_PARAMETER_COMMENT__COMMENT);
+        createEAttribute(apiParameterCommentEClass, API_PARAMETER_COMMENT__REQUIRED);
+        createEReference(apiParameterCommentEClass, API_PARAMETER_COMMENT__PARAMETER);
+        createEReference(apiParameterCommentEClass, API_PARAMETER_COMMENT__OPERATION_COMMENT);
 
         referredOperationEClass = createEClass(REFERRED_OPERATION);
         createEReference(referredOperationEClass, REFERRED_OPERATION__OPERATION);
@@ -2853,6 +2981,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
         initEAttribute(getOperation_Name(), theEcorePackage.getEString(), "name", null, 0, 1, Operation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getOperation_NotImplemented(), theEcorePackage.getEBoolean(), "notImplemented", "false", 0, 1, Operation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getOperation_Visibility(), this.getVisibility(), "visibility", "NONE", 0, 1, Operation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getOperation_ApiOperationComment(), this.getApiOperationComment(), this.getApiOperationComment_Operation(), "apiOperationComment", null, 0, 1, Operation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getOperation_Endpoints(), this.getEndpoint(), this.getEndpoint_Operation(), "endpoints", null, 0, -1, Operation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getOperation_Protocols(), this.getProtocolSpecification(), null, "protocols", null, 0, 2, Operation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getOperation_Parameters(), this.getParameter(), this.getParameter_Operation(), "parameters", null, 0, -1, Operation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2869,6 +2998,17 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
 
         op = initEOperation(getOperation__BuildQualifiedName__String(), theEcorePackage.getEString(), "buildQualifiedName", 0, 1, !IS_UNIQUE, IS_ORDERED);
         addEParameter(op, theEcorePackage.getEString(), "separator", 0, 1, !IS_UNIQUE, IS_ORDERED);
+
+        initEClass(apiOperationCommentEClass, ApiOperationComment.class, "ApiOperationComment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getApiOperationComment_Comment(), theEcorePackage.getEString(), "comment", null, 0, 1, ApiOperationComment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getApiOperationComment_ParameterComments(), this.getApiParameterComment(), this.getApiParameterComment_OperationComment(), "parameterComments", null, 0, -1, ApiOperationComment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getApiOperationComment_Operation(), this.getOperation(), this.getOperation_ApiOperationComment(), "operation", null, 0, 1, ApiOperationComment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEClass(apiParameterCommentEClass, ApiParameterComment.class, "ApiParameterComment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getApiParameterComment_Comment(), theEcorePackage.getEString(), "comment", null, 0, 1, ApiParameterComment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getApiParameterComment_Required(), theEcorePackage.getEBoolean(), "required", null, 0, 1, ApiParameterComment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getApiParameterComment_Parameter(), this.getParameter(), null, "parameter", null, 0, 1, ApiParameterComment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getApiParameterComment_OperationComment(), this.getApiOperationComment(), this.getApiOperationComment_ParameterComments(), "operationComment", null, 0, 1, ApiParameterComment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(referredOperationEClass, ReferredOperation.class, "ReferredOperation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getReferredOperation_Operation(), this.getOperation(), null, "operation", null, 0, 1, ReferredOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

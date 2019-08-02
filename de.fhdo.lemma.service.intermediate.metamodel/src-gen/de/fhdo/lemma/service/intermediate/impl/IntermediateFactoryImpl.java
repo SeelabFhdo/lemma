@@ -60,6 +60,8 @@ public class IntermediateFactoryImpl extends EFactoryImpl implements Intermediat
             case IntermediatePackage.INTERMEDIATE_MICROSERVICE: return createIntermediateMicroservice();
             case IntermediatePackage.INTERMEDIATE_INTERFACE: return createIntermediateInterface();
             case IntermediatePackage.INTERMEDIATE_OPERATION: return createIntermediateOperation();
+            case IntermediatePackage.INTERMEDIATE_API_OPERATION_COMMENT: return createIntermediateApiOperationComment();
+            case IntermediatePackage.INTERMEDIATE_API_PARAMETER_COMMENT: return createIntermediateApiParameterComment();
             case IntermediatePackage.INTERMEDIATE_REFERRED_OPERATION: return createIntermediateReferredOperation();
             case IntermediatePackage.INTERMEDIATE_PARAMETER: return createIntermediateParameter();
             case IntermediatePackage.DATA_FIELD_ASPECTS: return createDataFieldAspects();
@@ -116,6 +118,28 @@ public class IntermediateFactoryImpl extends EFactoryImpl implements Intermediat
     public IntermediateOperation createIntermediateOperation() {
         IntermediateOperationImpl intermediateOperation = new IntermediateOperationImpl();
         return intermediateOperation;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public IntermediateApiOperationComment createIntermediateApiOperationComment() {
+        IntermediateApiOperationCommentImpl intermediateApiOperationComment = new IntermediateApiOperationCommentImpl();
+        return intermediateApiOperationComment;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public IntermediateApiParameterComment createIntermediateApiParameterComment() {
+        IntermediateApiParameterCommentImpl intermediateApiParameterComment = new IntermediateApiParameterCommentImpl();
+        return intermediateApiParameterComment;
     }
 
     /**

@@ -576,7 +576,7 @@ m1=*</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>510</x>
-      <y>760</y>
+      <y>720</y>
       <w>190</w>
       <h>30</h>
     </coordinates>
@@ -588,7 +588,7 @@ bg=yellow</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>510</x>
-      <y>800</y>
+      <y>760</y>
       <w>280</w>
       <h>30</h>
     </coordinates>
@@ -600,7 +600,7 @@ bg=yellow</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>510</x>
-      <y>840</y>
+      <y>800</y>
       <w>290</w>
       <h>30</h>
     </coordinates>
@@ -610,20 +610,20 @@ bg=yellow</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>400</x>
-      <y>760</y>
-      <w>130</w>
-      <h>40</h>
+      <x>320</x>
+      <y>720</y>
+      <w>210</w>
+      <h>60</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;&gt;&gt;
 m1=*</panel_attributes>
-    <additional_attributes>110.0;10.0;10.0;10.0</additional_attributes>
+    <additional_attributes>190.0;10.0;10.0;10.0;10.0;40.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>400</x>
-      <y>800</y>
+      <y>760</y>
       <w>130</w>
       <h>40</h>
     </coordinates>
@@ -635,7 +635,7 @@ m1=0..2</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>400</x>
-      <y>840</y>
+      <y>800</y>
       <w>130</w>
       <h>40</h>
     </coordinates>
@@ -919,5 +919,70 @@ m1=0..2</panel_attributes>
     <panel_attributes>lt=&lt;-&gt;&gt;&gt;&gt;&gt;
 m1=*</panel_attributes>
     <additional_attributes>110.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>510</x>
+      <y>840</y>
+      <w>290</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>*IntermediateApiOperationComment*
+bg=yellow
+--
+comment : String</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>400</x>
+      <y>840</y>
+      <w>130</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;&gt;&gt;&gt;
+m1=0..1</panel_attributes>
+    <additional_attributes>110.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>870</x>
+      <y>830</y>
+      <w>180</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>*IntermediateApi*
+*ParameterComment*
+bg=yellow
+--
+comment : String
+required : Boolean</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>790</x>
+      <y>840</y>
+      <w>100</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;&gt;&gt;&gt;
+m1=*</panel_attributes>
+    <additional_attributes>80.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>370</x>
+      <y>890</y>
+      <w>520</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;30.0;10.0;10.0;500.0;10.0</additional_attributes>
   </element>
 </diagram>

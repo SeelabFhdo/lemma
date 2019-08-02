@@ -33,17 +33,17 @@ ComplexType returns ComplexType:
 ;
 
 enum DataStructureFeature returns DataStructureFeature:
-    AGGREGATE = "aggregate" |
-    APPLICATION_SERVICE = "applicationService" |
-    DOMAIN_EVENT = "domainEvent" |
-    DOMAIN_SERVICE = "domainService" |
-    ENTITY = "entity" |
-    FACTORY = "factory" |
-    INFRASTRUCTURE_SERVICE = "infrastructureService" |
-    REPOSITORY = "repository" |
-    SERVICE = "service" |
-    SPECIFICATION = "specification" |
-    VALUE_OBJECT = "valueObject"
+    AGGREGATE = 'aggregate' |
+    APPLICATION_SERVICE = 'applicationService' |
+    DOMAIN_EVENT = 'domainEvent' |
+    DOMAIN_SERVICE = 'domainService' |
+    ENTITY = 'entity' |
+    FACTORY = 'factory' |
+    INFRASTRUCTURE_SERVICE = 'infrastructureService' |
+    REPOSITORY = 'repository' |
+    SERVICE = 'service' |
+    SPECIFICATION = 'specification' |
+    VALUE_OBJECT = 'valueObject'
 ;
 
 DataStructure returns DataStructure:
@@ -68,9 +68,9 @@ ListType returns ListType:
 ;
 
 enum DataFieldFeature returns DataFieldFeature:
-    IDENTIFIER = "identifier" |
-    NEVER_EMPTY = "neverEmpty" |
-    PART = "part"
+    IDENTIFIER = 'identifier' |
+    NEVER_EMPTY = 'neverEmpty' |
+    PART = 'part'
 ;
 
 DataField returns DataField:
@@ -96,10 +96,10 @@ EnumerationField returns EnumerationField:
 ;
 
 enum DataOperationFeature returns DataOperationFeature:
-    CLOSURE = "closure" |
-    IDENTIFIER = "identifier" |
-    SIDE_EFFECT_FREE = "sideEffectFree" |
-    VALIDATOR = "validator"
+    CLOSURE = 'closure' |
+    IDENTIFIER = 'identifier' |
+    SIDE_EFFECT_FREE = 'sideEffectFree' |
+    VALIDATOR = 'validator'
 ;
 
 DataOperation returns DataOperation:

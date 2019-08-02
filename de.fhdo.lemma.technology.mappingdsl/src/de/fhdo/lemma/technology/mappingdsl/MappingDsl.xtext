@@ -254,3 +254,11 @@ TechnologySpecificImportedServiceAspect returns TechnologySpecificImportedServic
     )?
     ';'
 ;
+
+// Change overridden STRING terminal rule back to single-quote support (cf. the grammar of the
+// Service DSL)
+@Override
+terminal STRING:
+    '"' ( '\\' . /* 'b'|'t'|'n'|'f'|'r'|'u'|'"'|"'"|'\\' */ | !('\\'|'"') )* '"' |
+    "'" ( '\\' . /* 'b'|'t'|'n'|'f'|'r'|'u'|'"'|"'"|'\\' */ | !('\\'|"'") )* "'"
+;

@@ -720,138 +720,232 @@ public class ServiceDslGrammarAccess extends AbstractGrammarElementFinder {
 		//'}'
 		public Keyword getRightCurlyBracketKeyword_10() { return cRightCurlyBracketKeyword_10; }
 	}
+	public class ApiOperationCommentElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.fhdo.lemma.ServiceDsl.ApiOperationComment");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cHyphenMinusHyphenMinusHyphenMinusKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cCommentAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cCommentAnythingParserRuleCall_1_0 = (RuleCall)cCommentAssignment_1.eContents().get(0);
+		private final Assignment cParameterCommentsAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cParameterCommentsApiParameterCommentParserRuleCall_2_0 = (RuleCall)cParameterCommentsAssignment_2.eContents().get(0);
+		private final Keyword cHyphenMinusHyphenMinusHyphenMinusKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		
+		//ApiOperationComment:
+		//	'---'
+		//	comment=Anything
+		//	parameterComments+=ApiParameterComment*
+		//	'---';
+		@Override public ParserRule getRule() { return rule; }
+		
+		//'---' comment=Anything parameterComments+=ApiParameterComment* '---'
+		public Group getGroup() { return cGroup; }
+		
+		//'---'
+		public Keyword getHyphenMinusHyphenMinusHyphenMinusKeyword_0() { return cHyphenMinusHyphenMinusHyphenMinusKeyword_0; }
+		
+		//comment=Anything
+		public Assignment getCommentAssignment_1() { return cCommentAssignment_1; }
+		
+		//Anything
+		public RuleCall getCommentAnythingParserRuleCall_1_0() { return cCommentAnythingParserRuleCall_1_0; }
+		
+		//parameterComments+=ApiParameterComment*
+		public Assignment getParameterCommentsAssignment_2() { return cParameterCommentsAssignment_2; }
+		
+		//ApiParameterComment
+		public RuleCall getParameterCommentsApiParameterCommentParserRuleCall_2_0() { return cParameterCommentsApiParameterCommentParserRuleCall_2_0; }
+		
+		//'---'
+		public Keyword getHyphenMinusHyphenMinusHyphenMinusKeyword_3() { return cHyphenMinusHyphenMinusHyphenMinusKeyword_3; }
+	}
+	public class ApiParameterCommentElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.fhdo.lemma.ServiceDsl.ApiParameterComment");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Alternatives cAlternatives_0 = (Alternatives)cGroup.eContents().get(0);
+		private final Keyword cParamKeyword_0_0 = (Keyword)cAlternatives_0.eContents().get(0);
+		private final Assignment cRequiredAssignment_0_1 = (Assignment)cAlternatives_0.eContents().get(1);
+		private final Keyword cRequiredRequiredKeyword_0_1_0 = (Keyword)cRequiredAssignment_0_1.eContents().get(0);
+		private final Assignment cParameterAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final CrossReference cParameterParameterCrossReference_1_0 = (CrossReference)cParameterAssignment_1.eContents().get(0);
+		private final RuleCall cParameterParameterIDTerminalRuleCall_1_0_1 = (RuleCall)cParameterParameterCrossReference_1_0.eContents().get(1);
+		private final Assignment cCommentAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cCommentAnythingParserRuleCall_2_0 = (RuleCall)cCommentAssignment_2.eContents().get(0);
+		
+		//ApiParameterComment:
+		//	('@param' | required?='@required') parameter=[Parameter] comment=Anything;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//('@param' | required?='@required') parameter=[Parameter] comment=Anything
+		public Group getGroup() { return cGroup; }
+		
+		//'@param' | required?='@required'
+		public Alternatives getAlternatives_0() { return cAlternatives_0; }
+		
+		//'@param'
+		public Keyword getParamKeyword_0_0() { return cParamKeyword_0_0; }
+		
+		//required?='@required'
+		public Assignment getRequiredAssignment_0_1() { return cRequiredAssignment_0_1; }
+		
+		//'@required'
+		public Keyword getRequiredRequiredKeyword_0_1_0() { return cRequiredRequiredKeyword_0_1_0; }
+		
+		//parameter=[Parameter]
+		public Assignment getParameterAssignment_1() { return cParameterAssignment_1; }
+		
+		//[Parameter]
+		public CrossReference getParameterParameterCrossReference_1_0() { return cParameterParameterCrossReference_1_0; }
+		
+		//ID
+		public RuleCall getParameterParameterIDTerminalRuleCall_1_0_1() { return cParameterParameterIDTerminalRuleCall_1_0_1; }
+		
+		//comment=Anything
+		public Assignment getCommentAssignment_2() { return cCommentAssignment_2; }
+		
+		//Anything
+		public RuleCall getCommentAnythingParserRuleCall_2_0() { return cCommentAnythingParserRuleCall_2_0; }
+	}
 	public class OperationElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.fhdo.lemma.ServiceDsl.Operation");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Group cGroup_0 = (Group)cGroup.eContents().get(0);
-		private final Assignment cProtocolsAssignment_0_0 = (Assignment)cGroup_0.eContents().get(0);
-		private final RuleCall cProtocolsProtocolSpecificationParserRuleCall_0_0_0 = (RuleCall)cProtocolsAssignment_0_0.eContents().get(0);
-		private final Assignment cProtocolsAssignment_0_1 = (Assignment)cGroup_0.eContents().get(1);
-		private final RuleCall cProtocolsProtocolSpecificationParserRuleCall_0_1_0 = (RuleCall)cProtocolsAssignment_0_1.eContents().get(0);
+		private final Assignment cApiOperationCommentAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cApiOperationCommentApiOperationCommentParserRuleCall_0_0 = (RuleCall)cApiOperationCommentAssignment_0.eContents().get(0);
 		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
-		private final Keyword cCommercialAtKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
-		private final Keyword cEndpointsKeyword_1_1 = (Keyword)cGroup_1.eContents().get(1);
-		private final Keyword cLeftParenthesisKeyword_1_2 = (Keyword)cGroup_1.eContents().get(2);
-		private final Assignment cEndpointsAssignment_1_3 = (Assignment)cGroup_1.eContents().get(3);
-		private final RuleCall cEndpointsEndpointParserRuleCall_1_3_0 = (RuleCall)cEndpointsAssignment_1_3.eContents().get(0);
-		private final Keyword cRightParenthesisKeyword_1_4 = (Keyword)cGroup_1.eContents().get(4);
-		private final Assignment cAspectsAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cAspectsImportedServiceAspectParserRuleCall_2_0 = (RuleCall)cAspectsAssignment_2.eContents().get(0);
-		private final Assignment cNotImplementedAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final Keyword cNotImplementedNoimplKeyword_3_0 = (Keyword)cNotImplementedAssignment_3.eContents().get(0);
-		private final Assignment cVisibilityAssignment_4 = (Assignment)cGroup.eContents().get(4);
-		private final RuleCall cVisibilityVisibilityEnumRuleCall_4_0 = (RuleCall)cVisibilityAssignment_4.eContents().get(0);
-		private final Assignment cNameAssignment_5 = (Assignment)cGroup.eContents().get(5);
-		private final RuleCall cNameIDTerminalRuleCall_5_0 = (RuleCall)cNameAssignment_5.eContents().get(0);
-		private final Keyword cLeftParenthesisKeyword_6 = (Keyword)cGroup.eContents().get(6);
-		private final Assignment cParametersAssignment_7 = (Assignment)cGroup.eContents().get(7);
-		private final RuleCall cParametersParameterParserRuleCall_7_0 = (RuleCall)cParametersAssignment_7.eContents().get(0);
-		private final Group cGroup_8 = (Group)cGroup.eContents().get(8);
-		private final Keyword cCommaKeyword_8_0 = (Keyword)cGroup_8.eContents().get(0);
-		private final Assignment cParametersAssignment_8_1 = (Assignment)cGroup_8.eContents().get(1);
-		private final RuleCall cParametersParameterParserRuleCall_8_1_0 = (RuleCall)cParametersAssignment_8_1.eContents().get(0);
-		private final Keyword cRightParenthesisKeyword_9 = (Keyword)cGroup.eContents().get(9);
-		private final Keyword cSemicolonKeyword_10 = (Keyword)cGroup.eContents().get(10);
+		private final Assignment cProtocolsAssignment_1_0 = (Assignment)cGroup_1.eContents().get(0);
+		private final RuleCall cProtocolsProtocolSpecificationParserRuleCall_1_0_0 = (RuleCall)cProtocolsAssignment_1_0.eContents().get(0);
+		private final Assignment cProtocolsAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
+		private final RuleCall cProtocolsProtocolSpecificationParserRuleCall_1_1_0 = (RuleCall)cProtocolsAssignment_1_1.eContents().get(0);
+		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
+		private final Keyword cCommercialAtKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Keyword cEndpointsKeyword_2_1 = (Keyword)cGroup_2.eContents().get(1);
+		private final Keyword cLeftParenthesisKeyword_2_2 = (Keyword)cGroup_2.eContents().get(2);
+		private final Assignment cEndpointsAssignment_2_3 = (Assignment)cGroup_2.eContents().get(3);
+		private final RuleCall cEndpointsEndpointParserRuleCall_2_3_0 = (RuleCall)cEndpointsAssignment_2_3.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_2_4 = (Keyword)cGroup_2.eContents().get(4);
+		private final Assignment cAspectsAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cAspectsImportedServiceAspectParserRuleCall_3_0 = (RuleCall)cAspectsAssignment_3.eContents().get(0);
+		private final Assignment cNotImplementedAssignment_4 = (Assignment)cGroup.eContents().get(4);
+		private final Keyword cNotImplementedNoimplKeyword_4_0 = (Keyword)cNotImplementedAssignment_4.eContents().get(0);
+		private final Assignment cVisibilityAssignment_5 = (Assignment)cGroup.eContents().get(5);
+		private final RuleCall cVisibilityVisibilityEnumRuleCall_5_0 = (RuleCall)cVisibilityAssignment_5.eContents().get(0);
+		private final Assignment cNameAssignment_6 = (Assignment)cGroup.eContents().get(6);
+		private final RuleCall cNameIDTerminalRuleCall_6_0 = (RuleCall)cNameAssignment_6.eContents().get(0);
+		private final Keyword cLeftParenthesisKeyword_7 = (Keyword)cGroup.eContents().get(7);
+		private final Assignment cParametersAssignment_8 = (Assignment)cGroup.eContents().get(8);
+		private final RuleCall cParametersParameterParserRuleCall_8_0 = (RuleCall)cParametersAssignment_8.eContents().get(0);
+		private final Group cGroup_9 = (Group)cGroup.eContents().get(9);
+		private final Keyword cCommaKeyword_9_0 = (Keyword)cGroup_9.eContents().get(0);
+		private final Assignment cParametersAssignment_9_1 = (Assignment)cGroup_9.eContents().get(1);
+		private final RuleCall cParametersParameterParserRuleCall_9_1_0 = (RuleCall)cParametersAssignment_9_1.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_10 = (Keyword)cGroup.eContents().get(10);
+		private final Keyword cSemicolonKeyword_11 = (Keyword)cGroup.eContents().get(11);
 		
 		//Operation:
-		//	(protocols+=ProtocolSpecification protocols+=ProtocolSpecification?)? ('@' 'endpoints' '(' endpoints+=Endpoint+ ')')?
+		//	apiOperationComment=ApiOperationComment? (protocols+=ProtocolSpecification protocols+=ProtocolSpecification?)? ('@'
+		//	'endpoints' '(' endpoints+=Endpoint+ ')')?
 		//	aspects+=ImportedServiceAspect*
 		//	notImplemented?='noimpl'? visibility=Visibility? name=ID '('
 		//	parameters+=Parameter? (',' parameters+=Parameter)*
 		//	')' ';';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//(protocols+=ProtocolSpecification protocols+=ProtocolSpecification?)? ('@' 'endpoints' '(' endpoints+=Endpoint+ ')')?
-		//aspects+=ImportedServiceAspect* notImplemented?='noimpl'? visibility=Visibility? name=ID '(' parameters+=Parameter?
-		//(',' parameters+=Parameter)* ')' ';'
+		//apiOperationComment=ApiOperationComment? (protocols+=ProtocolSpecification protocols+=ProtocolSpecification?)? ('@'
+		//'endpoints' '(' endpoints+=Endpoint+ ')')? aspects+=ImportedServiceAspect* notImplemented?='noimpl'?
+		//visibility=Visibility? name=ID '(' parameters+=Parameter? (',' parameters+=Parameter)* ')' ';'
 		public Group getGroup() { return cGroup; }
 		
+		//apiOperationComment=ApiOperationComment?
+		public Assignment getApiOperationCommentAssignment_0() { return cApiOperationCommentAssignment_0; }
+		
+		//ApiOperationComment
+		public RuleCall getApiOperationCommentApiOperationCommentParserRuleCall_0_0() { return cApiOperationCommentApiOperationCommentParserRuleCall_0_0; }
+		
 		//(protocols+=ProtocolSpecification protocols+=ProtocolSpecification?)?
-		public Group getGroup_0() { return cGroup_0; }
-		
-		//protocols+=ProtocolSpecification
-		public Assignment getProtocolsAssignment_0_0() { return cProtocolsAssignment_0_0; }
-		
-		//ProtocolSpecification
-		public RuleCall getProtocolsProtocolSpecificationParserRuleCall_0_0_0() { return cProtocolsProtocolSpecificationParserRuleCall_0_0_0; }
-		
-		//protocols+=ProtocolSpecification?
-		public Assignment getProtocolsAssignment_0_1() { return cProtocolsAssignment_0_1; }
-		
-		//ProtocolSpecification
-		public RuleCall getProtocolsProtocolSpecificationParserRuleCall_0_1_0() { return cProtocolsProtocolSpecificationParserRuleCall_0_1_0; }
-		
-		//('@' 'endpoints' '(' endpoints+=Endpoint+ ')')?
 		public Group getGroup_1() { return cGroup_1; }
 		
+		//protocols+=ProtocolSpecification
+		public Assignment getProtocolsAssignment_1_0() { return cProtocolsAssignment_1_0; }
+		
+		//ProtocolSpecification
+		public RuleCall getProtocolsProtocolSpecificationParserRuleCall_1_0_0() { return cProtocolsProtocolSpecificationParserRuleCall_1_0_0; }
+		
+		//protocols+=ProtocolSpecification?
+		public Assignment getProtocolsAssignment_1_1() { return cProtocolsAssignment_1_1; }
+		
+		//ProtocolSpecification
+		public RuleCall getProtocolsProtocolSpecificationParserRuleCall_1_1_0() { return cProtocolsProtocolSpecificationParserRuleCall_1_1_0; }
+		
+		//('@' 'endpoints' '(' endpoints+=Endpoint+ ')')?
+		public Group getGroup_2() { return cGroup_2; }
+		
 		//'@'
-		public Keyword getCommercialAtKeyword_1_0() { return cCommercialAtKeyword_1_0; }
+		public Keyword getCommercialAtKeyword_2_0() { return cCommercialAtKeyword_2_0; }
 		
 		//'endpoints'
-		public Keyword getEndpointsKeyword_1_1() { return cEndpointsKeyword_1_1; }
+		public Keyword getEndpointsKeyword_2_1() { return cEndpointsKeyword_2_1; }
 		
 		//'('
-		public Keyword getLeftParenthesisKeyword_1_2() { return cLeftParenthesisKeyword_1_2; }
+		public Keyword getLeftParenthesisKeyword_2_2() { return cLeftParenthesisKeyword_2_2; }
 		
 		//endpoints+=Endpoint+
-		public Assignment getEndpointsAssignment_1_3() { return cEndpointsAssignment_1_3; }
+		public Assignment getEndpointsAssignment_2_3() { return cEndpointsAssignment_2_3; }
 		
 		//Endpoint
-		public RuleCall getEndpointsEndpointParserRuleCall_1_3_0() { return cEndpointsEndpointParserRuleCall_1_3_0; }
+		public RuleCall getEndpointsEndpointParserRuleCall_2_3_0() { return cEndpointsEndpointParserRuleCall_2_3_0; }
 		
 		//')'
-		public Keyword getRightParenthesisKeyword_1_4() { return cRightParenthesisKeyword_1_4; }
+		public Keyword getRightParenthesisKeyword_2_4() { return cRightParenthesisKeyword_2_4; }
 		
 		//aspects+=ImportedServiceAspect*
-		public Assignment getAspectsAssignment_2() { return cAspectsAssignment_2; }
+		public Assignment getAspectsAssignment_3() { return cAspectsAssignment_3; }
 		
 		//ImportedServiceAspect
-		public RuleCall getAspectsImportedServiceAspectParserRuleCall_2_0() { return cAspectsImportedServiceAspectParserRuleCall_2_0; }
+		public RuleCall getAspectsImportedServiceAspectParserRuleCall_3_0() { return cAspectsImportedServiceAspectParserRuleCall_3_0; }
 		
 		//notImplemented?='noimpl'?
-		public Assignment getNotImplementedAssignment_3() { return cNotImplementedAssignment_3; }
+		public Assignment getNotImplementedAssignment_4() { return cNotImplementedAssignment_4; }
 		
 		//'noimpl'
-		public Keyword getNotImplementedNoimplKeyword_3_0() { return cNotImplementedNoimplKeyword_3_0; }
+		public Keyword getNotImplementedNoimplKeyword_4_0() { return cNotImplementedNoimplKeyword_4_0; }
 		
 		//visibility=Visibility?
-		public Assignment getVisibilityAssignment_4() { return cVisibilityAssignment_4; }
+		public Assignment getVisibilityAssignment_5() { return cVisibilityAssignment_5; }
 		
 		//Visibility
-		public RuleCall getVisibilityVisibilityEnumRuleCall_4_0() { return cVisibilityVisibilityEnumRuleCall_4_0; }
+		public RuleCall getVisibilityVisibilityEnumRuleCall_5_0() { return cVisibilityVisibilityEnumRuleCall_5_0; }
 		
 		//name=ID
-		public Assignment getNameAssignment_5() { return cNameAssignment_5; }
+		public Assignment getNameAssignment_6() { return cNameAssignment_6; }
 		
 		//ID
-		public RuleCall getNameIDTerminalRuleCall_5_0() { return cNameIDTerminalRuleCall_5_0; }
+		public RuleCall getNameIDTerminalRuleCall_6_0() { return cNameIDTerminalRuleCall_6_0; }
 		
 		//'('
-		public Keyword getLeftParenthesisKeyword_6() { return cLeftParenthesisKeyword_6; }
+		public Keyword getLeftParenthesisKeyword_7() { return cLeftParenthesisKeyword_7; }
 		
 		//parameters+=Parameter?
-		public Assignment getParametersAssignment_7() { return cParametersAssignment_7; }
+		public Assignment getParametersAssignment_8() { return cParametersAssignment_8; }
 		
 		//Parameter
-		public RuleCall getParametersParameterParserRuleCall_7_0() { return cParametersParameterParserRuleCall_7_0; }
+		public RuleCall getParametersParameterParserRuleCall_8_0() { return cParametersParameterParserRuleCall_8_0; }
 		
 		//(',' parameters+=Parameter)*
-		public Group getGroup_8() { return cGroup_8; }
+		public Group getGroup_9() { return cGroup_9; }
 		
 		//','
-		public Keyword getCommaKeyword_8_0() { return cCommaKeyword_8_0; }
+		public Keyword getCommaKeyword_9_0() { return cCommaKeyword_9_0; }
 		
 		//parameters+=Parameter
-		public Assignment getParametersAssignment_8_1() { return cParametersAssignment_8_1; }
+		public Assignment getParametersAssignment_9_1() { return cParametersAssignment_9_1; }
 		
 		//Parameter
-		public RuleCall getParametersParameterParserRuleCall_8_1_0() { return cParametersParameterParserRuleCall_8_1_0; }
+		public RuleCall getParametersParameterParserRuleCall_9_1_0() { return cParametersParameterParserRuleCall_9_1_0; }
 		
 		//')'
-		public Keyword getRightParenthesisKeyword_9() { return cRightParenthesisKeyword_9; }
+		public Keyword getRightParenthesisKeyword_10() { return cRightParenthesisKeyword_10; }
 		
 		//';'
-		public Keyword getSemicolonKeyword_10() { return cSemicolonKeyword_10; }
+		public Keyword getSemicolonKeyword_11() { return cSemicolonKeyword_11; }
 	}
 	public class ReferredOperationElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.fhdo.lemma.ServiceDsl.ReferredOperation");
@@ -1454,6 +1548,569 @@ public class ServiceDslGrammarAccess extends AbstractGrammarElementFinder {
 		//QualifiedName
 		public RuleCall getQualifiedNameParserRuleCall_2() { return cQualifiedNameParserRuleCall_2; }
 	}
+	public class AnythingElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.fhdo.lemma.ServiceDsl.Anything");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final Keyword cLeftCurlyBracketKeyword_0 = (Keyword)cAlternatives.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_1 = (Keyword)cAlternatives.eContents().get(1);
+		private final Keyword cLessThanSignKeyword_2 = (Keyword)cAlternatives.eContents().get(2);
+		private final Keyword cGreaterThanSignKeyword_3 = (Keyword)cAlternatives.eContents().get(3);
+		private final Keyword cCommaKeyword_4 = (Keyword)cAlternatives.eContents().get(4);
+		private final Keyword cLeftParenthesisKeyword_5 = (Keyword)cAlternatives.eContents().get(5);
+		private final Keyword cRightParenthesisKeyword_6 = (Keyword)cAlternatives.eContents().get(6);
+		private final Keyword cColonColonKeyword_7 = (Keyword)cAlternatives.eContents().get(7);
+		private final Keyword cFullStopKeyword_8 = (Keyword)cAlternatives.eContents().get(8);
+		private final Keyword cHyphenMinusKeyword_9 = (Keyword)cAlternatives.eContents().get(9);
+		private final Keyword cHyphenMinusHyphenMinusKeyword_10 = (Keyword)cAlternatives.eContents().get(10);
+		private final Keyword cSolidusKeyword_11 = (Keyword)cAlternatives.eContents().get(11);
+		private final Keyword cQuestionMarkKeyword_12 = (Keyword)cAlternatives.eContents().get(12);
+		private final Keyword cColonKeyword_13 = (Keyword)cAlternatives.eContents().get(13);
+		private final Keyword cCommercialAtKeyword_14 = (Keyword)cAlternatives.eContents().get(14);
+		private final Keyword cEqualsSignKeyword_15 = (Keyword)cAlternatives.eContents().get(15);
+		private final Keyword cSemicolonKeyword_16 = (Keyword)cAlternatives.eContents().get(16);
+		private final Keyword cTechnologyKeyword_17 = (Keyword)cAlternatives.eContents().get(17);
+		private final Keyword cTypesKeyword_18 = (Keyword)cAlternatives.eContents().get(18);
+		private final Keyword cCompatibilityKeyword_19 = (Keyword)cAlternatives.eContents().get(19);
+		private final Keyword cMatrixKeyword_20 = (Keyword)cAlternatives.eContents().get(20);
+		private final Keyword cProtocolsKeyword_21 = (Keyword)cAlternatives.eContents().get(21);
+		private final Keyword cServiceKeyword_22 = (Keyword)cAlternatives.eContents().get(22);
+		private final Keyword cAspectsKeyword_23 = (Keyword)cAlternatives.eContents().get(23);
+		private final Keyword cDeploymentKeyword_24 = (Keyword)cAlternatives.eContents().get(24);
+		private final Keyword cTechnologiesKeyword_25 = (Keyword)cAlternatives.eContents().get(25);
+		private final Keyword cInfrastructureKeyword_26 = (Keyword)cAlternatives.eContents().get(26);
+		private final Keyword cOperationKeyword_27 = (Keyword)cAlternatives.eContents().get(27);
+		private final Keyword cImportKeyword_28 = (Keyword)cAlternatives.eContents().get(28);
+		private final Keyword cFromKeyword_29 = (Keyword)cAlternatives.eContents().get(29);
+		private final Keyword cAsKeyword_30 = (Keyword)cAlternatives.eContents().get(30);
+		private final Keyword cDataKeyword_31 = (Keyword)cAlternatives.eContents().get(31);
+		private final Keyword cFormatsKeyword_32 = (Keyword)cAlternatives.eContents().get(32);
+		private final Keyword cDefaultKeyword_33 = (Keyword)cAlternatives.eContents().get(33);
+		private final Keyword cWithKeyword_34 = (Keyword)cAlternatives.eContents().get(34);
+		private final Keyword cFormatKeyword_35 = (Keyword)cAlternatives.eContents().get(35);
+		private final Keyword cInKeyword_36 = (Keyword)cAlternatives.eContents().get(36);
+		private final Keyword cOutKeyword_37 = (Keyword)cAlternatives.eContents().get(37);
+		private final Keyword cInoutKeyword_38 = (Keyword)cAlternatives.eContents().get(38);
+		private final Keyword cSyncKeyword_39 = (Keyword)cAlternatives.eContents().get(39);
+		private final Keyword cAsyncKeyword_40 = (Keyword)cAlternatives.eContents().get(40);
+		private final Keyword cPrimitiveKeyword_41 = (Keyword)cAlternatives.eContents().get(41);
+		private final Keyword cTypeKeyword_42 = (Keyword)cAlternatives.eContents().get(42);
+		private final Keyword cBasedKeyword_43 = (Keyword)cAlternatives.eContents().get(43);
+		private final Keyword cOnKeyword_44 = (Keyword)cAlternatives.eContents().get(44);
+		private final Keyword cListKeyword_45 = (Keyword)cAlternatives.eContents().get(45);
+		private final Keyword cStructureKeyword_46 = (Keyword)cAlternatives.eContents().get(46);
+		private final Keyword cHyphenMinusGreaterThanSignKeyword_47 = (Keyword)cAlternatives.eContents().get(47);
+		private final Keyword cLessThanSignHyphenMinusKeyword_48 = (Keyword)cAlternatives.eContents().get(48);
+		private final Keyword cLessThanSignHyphenMinusGreaterThanSignKeyword_49 = (Keyword)cAlternatives.eContents().get(49);
+		private final Keyword cEnvironmentsKeyword_50 = (Keyword)cAlternatives.eContents().get(50);
+		private final Keyword cPropertiesKeyword_51 = (Keyword)cAlternatives.eContents().get(51);
+		private final Keyword cMandatoryKeyword_52 = (Keyword)cAlternatives.eContents().get(52);
+		private final Keyword cSinglevalKeyword_53 = (Keyword)cAlternatives.eContents().get(53);
+		private final Keyword cMicroservicesKeyword_54 = (Keyword)cAlternatives.eContents().get(54);
+		private final Keyword cInterfacesKeyword_55 = (Keyword)cAlternatives.eContents().get(55);
+		private final Keyword cOperationsKeyword_56 = (Keyword)cAlternatives.eContents().get(56);
+		private final Keyword cParametersKeyword_57 = (Keyword)cAlternatives.eContents().get(57);
+		private final Keyword cFieldsKeyword_58 = (Keyword)cAlternatives.eContents().get(58);
+		private final Keyword cExchange_patternKeyword_59 = (Keyword)cAlternatives.eContents().get(59);
+		private final Keyword cCommunication_typeKeyword_60 = (Keyword)cAlternatives.eContents().get(60);
+		private final Keyword cProtocolKeyword_61 = (Keyword)cAlternatives.eContents().get(61);
+		private final Keyword cData_formatKeyword_62 = (Keyword)cAlternatives.eContents().get(62);
+		private final Keyword cAspectKeyword_63 = (Keyword)cAlternatives.eContents().get(63);
+		private final Keyword cForKeyword_64 = (Keyword)cAlternatives.eContents().get(64);
+		private final Keyword cContainersKeyword_65 = (Keyword)cAlternatives.eContents().get(65);
+		private final Group cGroup_66 = (Group)cAlternatives.eContents().get(66);
+		private final Keyword cSelectorKeyword_66_0 = (Keyword)cGroup_66.eContents().get(0);
+		private final Keyword cDatatypesKeyword_66_1 = (Keyword)cGroup_66.eContents().get(1);
+		private final Keyword cVersionKeyword_67 = (Keyword)cAlternatives.eContents().get(67);
+		private final Keyword cContextKeyword_68 = (Keyword)cAlternatives.eContents().get(68);
+		private final Keyword cAggregateKeyword_69 = (Keyword)cAlternatives.eContents().get(69);
+		private final Keyword cApplicationServiceKeyword_70 = (Keyword)cAlternatives.eContents().get(70);
+		private final Keyword cDomainEventKeyword_71 = (Keyword)cAlternatives.eContents().get(71);
+		private final Keyword cDomainServiceKeyword_72 = (Keyword)cAlternatives.eContents().get(72);
+		private final Keyword cEntityKeyword_73 = (Keyword)cAlternatives.eContents().get(73);
+		private final Keyword cFactoryKeyword_74 = (Keyword)cAlternatives.eContents().get(74);
+		private final Keyword cInfrastructureServiceKeyword_75 = (Keyword)cAlternatives.eContents().get(75);
+		private final Keyword cRepositoryKeyword_76 = (Keyword)cAlternatives.eContents().get(76);
+		private final Keyword cSpecificationKeyword_77 = (Keyword)cAlternatives.eContents().get(77);
+		private final Keyword cValueObjectKeyword_78 = (Keyword)cAlternatives.eContents().get(78);
+		private final Keyword cExtendsKeyword_79 = (Keyword)cAlternatives.eContents().get(79);
+		private final Keyword cIdentifierKeyword_80 = (Keyword)cAlternatives.eContents().get(80);
+		private final Keyword cNeverEmptyKeyword_81 = (Keyword)cAlternatives.eContents().get(81);
+		private final Keyword cPartKeyword_82 = (Keyword)cAlternatives.eContents().get(82);
+		private final Keyword cHideKeyword_83 = (Keyword)cAlternatives.eContents().get(83);
+		private final Keyword cImmutableKeyword_84 = (Keyword)cAlternatives.eContents().get(84);
+		private final Keyword cEnumKeyword_85 = (Keyword)cAlternatives.eContents().get(85);
+		private final Keyword cClosureKeyword_86 = (Keyword)cAlternatives.eContents().get(86);
+		private final Keyword cSideEffectFreeKeyword_87 = (Keyword)cAlternatives.eContents().get(87);
+		private final Keyword cValidatorKeyword_88 = (Keyword)cAlternatives.eContents().get(88);
+		private final Keyword cFunctionKeyword_89 = (Keyword)cAlternatives.eContents().get(89);
+		private final Keyword cProcedureKeyword_90 = (Keyword)cAlternatives.eContents().get(90);
+		private final Keyword cBooleanKeyword_91 = (Keyword)cAlternatives.eContents().get(91);
+		private final Keyword cByteKeyword_92 = (Keyword)cAlternatives.eContents().get(92);
+		private final Keyword cCharKeyword_93 = (Keyword)cAlternatives.eContents().get(93);
+		private final Keyword cDateKeyword_94 = (Keyword)cAlternatives.eContents().get(94);
+		private final Keyword cDoubleKeyword_95 = (Keyword)cAlternatives.eContents().get(95);
+		private final Keyword cFloatKeyword_96 = (Keyword)cAlternatives.eContents().get(96);
+		private final Keyword cIntKeyword_97 = (Keyword)cAlternatives.eContents().get(97);
+		private final Keyword cLongKeyword_98 = (Keyword)cAlternatives.eContents().get(98);
+		private final Keyword cShortKeyword_99 = (Keyword)cAlternatives.eContents().get(99);
+		private final Keyword cStringKeyword_100 = (Keyword)cAlternatives.eContents().get(100);
+		private final Keyword cInternalKeyword_101 = (Keyword)cAlternatives.eContents().get(101);
+		private final Keyword cArchitectureKeyword_102 = (Keyword)cAlternatives.eContents().get(102);
+		private final Keyword cPublicKeyword_103 = (Keyword)cAlternatives.eContents().get(103);
+		private final Keyword cEndpointsKeyword_104 = (Keyword)cAlternatives.eContents().get(104);
+		private final Keyword cMicroserviceKeyword_105 = (Keyword)cAlternatives.eContents().get(105);
+		private final Keyword cRequiredKeyword_106 = (Keyword)cAlternatives.eContents().get(106);
+		private final Keyword cTypedefKeyword_107 = (Keyword)cAlternatives.eContents().get(107);
+		private final Keyword cNoimplKeyword_108 = (Keyword)cAlternatives.eContents().get(108);
+		private final Keyword cInterfaceKeyword_109 = (Keyword)cAlternatives.eContents().get(109);
+		private final Keyword cParamKeyword_110 = (Keyword)cAlternatives.eContents().get(110);
+		private final Keyword cRefersKeyword_111 = (Keyword)cAlternatives.eContents().get(111);
+		private final Keyword cFaultKeyword_112 = (Keyword)cAlternatives.eContents().get(112);
+		private final Keyword cFunctionalKeyword_113 = (Keyword)cAlternatives.eContents().get(113);
+		private final Keyword cUtilityKeyword_114 = (Keyword)cAlternatives.eContents().get(114);
+		private final RuleCall cBOOLEANTerminalRuleCall_115 = (RuleCall)cAlternatives.eContents().get(115);
+		private final RuleCall cBIG_DECIMALTerminalRuleCall_116 = (RuleCall)cAlternatives.eContents().get(116);
+		private final RuleCall cIDTerminalRuleCall_117 = (RuleCall)cAlternatives.eContents().get(117);
+		private final RuleCall cSTRINGTerminalRuleCall_118 = (RuleCall)cAlternatives.eContents().get(118);
+		private final RuleCall cANY_OTHERTerminalRuleCall_119 = (RuleCall)cAlternatives.eContents().get(119);
+		
+		//// Rule to consume any character
+		//Anything:
+		//	(
+		//	// All keyword characters of the Service, Technology, and Data DSLs (the Service DSL
+		//	// inherits from the latter ones). If we don't specify them here, they will be recognized as
+		//	// regular grammar tokens in the Anything string.
+		//	'{' | '}' | '<' | '>' | ',' | '(' | ')' | '::' | '.' | '-' | '--' | '/' | '?' | ':' | '@' |
+		//	'=' | ';' |
+		//	// All keywords of the Technology DSL (from which the Service DSL inherits). If we don't
+		//	// specify them here, they will be recognized as regular grammar tokens in the Anything
+		//	// string.
+		//	'technology' | 'types' | 'compatibility' | 'matrix' | 'protocols' | 'service' | 'aspects' |
+		//	'deployment' | 'technologies' | 'infrastructure' | 'operation' | 'import' | 'from' | 'as' |
+		//	'data' | 'formats' | 'default' | 'with' | 'format' | 'in' | 'out' | 'inout' | 'sync' |
+		//	'async' | 'primitive' | 'type' | 'based' | 'on' | 'list' | 'structure' | '->' | '<-' |
+		//	'<->' | 'environments' | 'properties' | 'mandatory' | 'singleval' | 'microservices' |
+		//	'interfaces' | 'operations' | 'parameters' | 'fields' | 'exchange_pattern' |
+		//	'communication_type' | 'protocol' | 'data_format' | 'aspect' | 'for' | 'containers' |
+		//	'selector'
+		//	// All keywords of the Data DSL (from which the Service DSL inherits). If we don't specify
+		//	// them here, they will be recognized as regular grammar tokens in the Anything string.
+		//	'datatypes' | 'version' | 'context' | 'aggregate' | 'applicationService' | 'domainEvent' |
+		//	'domainService' | 'entity' | 'factory' | 'infrastructureService' | 'repository' |
+		//	'specification' | 'valueObject' | 'extends' | 'identifier' | 'neverEmpty' | 'part' |
+		//	'hide' | 'immutable' | 'enum' | 'closure' | 'sideEffectFree' | 'validator' | 'function' |
+		//	'procedure' | 'boolean' | 'byte' | 'char' | 'date' | 'double' | 'float' | 'int' | 'long' |
+		//	'short' | 'string' |
+		//	// All keywords of the Service DSL. If we don't specify them here, they will be recognized
+		//	// as regular grammar tokens in the Anything string.
+		//	'internal' | 'architecture' | 'public' | 'endpoints' | 'microservice' | 'required' |
+		//	'typedef' | 'noimpl' | 'interface' | 'param' | 'refers' | 'fault' | 'functional' |
+		//	'utility' | BOOLEAN | BIG_DECIMAL | ID | STRING | ANY_OTHER)+;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//( // All keyword characters of the Service, Technology, and Data DSLs (the Service DSL
+		//// inherits from the latter ones). If we don't specify them here, they will be recognized as
+		//// regular grammar tokens in the Anything string.
+		//'{' | '}' | '<' | '>' | ',' | '(' | ')' | '::' | '.' | '-' | '--' | '/' | '?' | ':' | '@' | '=' | ';' | // All keywords of the Technology DSL (from which the Service DSL inherits). If we don't
+		//// specify them here, they will be recognized as regular grammar tokens in the Anything
+		//// string.
+		//'technology' | 'types' | 'compatibility' | 'matrix' | 'protocols' | 'service' | 'aspects' | 'deployment' |
+		//'technologies' | 'infrastructure' | 'operation' | 'import' | 'from' | 'as' | 'data' | 'formats' | 'default' | 'with' |
+		//'format' | 'in' | 'out' | 'inout' | 'sync' | 'async' | 'primitive' | 'type' | 'based' | 'on' | 'list' | 'structure' |
+		//'->' | '<-' | '<->' | 'environments' | 'properties' | 'mandatory' | 'singleval' | 'microservices' | 'interfaces' |
+		//'operations' | 'parameters' | 'fields' | 'exchange_pattern' | 'communication_type' | 'protocol' | 'data_format' |
+		//'aspect' | 'for' | 'containers' | 'selector' // All keywords of the Data DSL (from which the Service DSL inherits). If we don't specify
+		//// them here, they will be recognized as regular grammar tokens in the Anything string.
+		//'datatypes' | 'version' | 'context' | 'aggregate' | 'applicationService' | 'domainEvent' | 'domainService' | 'entity' |
+		//'factory' | 'infrastructureService' | 'repository' | 'specification' | 'valueObject' | 'extends' | 'identifier' |
+		//'neverEmpty' | 'part' | 'hide' | 'immutable' | 'enum' | 'closure' | 'sideEffectFree' | 'validator' | 'function' |
+		//'procedure' | 'boolean' | 'byte' | 'char' | 'date' | 'double' | 'float' | 'int' | 'long' | 'short' | 'string' | // All keywords of the Service DSL. If we don't specify them here, they will be recognized
+		//// as regular grammar tokens in the Anything string.
+		//'internal' | 'architecture' | 'public' | 'endpoints' | 'microservice' | 'required' | 'typedef' | 'noimpl' | 'interface'
+		//| 'param' | 'refers' | 'fault' | 'functional' | 'utility' | BOOLEAN | BIG_DECIMAL | ID | STRING | ANY_OTHER)+
+		public Alternatives getAlternatives() { return cAlternatives; }
+		
+		//// All keyword characters of the Service, Technology, and Data DSLs (the Service DSL
+		//// inherits from the latter ones). If we don't specify them here, they will be recognized as
+		//// regular grammar tokens in the Anything string.
+		//'{'
+		public Keyword getLeftCurlyBracketKeyword_0() { return cLeftCurlyBracketKeyword_0; }
+		
+		//'}'
+		public Keyword getRightCurlyBracketKeyword_1() { return cRightCurlyBracketKeyword_1; }
+		
+		//'<'
+		public Keyword getLessThanSignKeyword_2() { return cLessThanSignKeyword_2; }
+		
+		//'>'
+		public Keyword getGreaterThanSignKeyword_3() { return cGreaterThanSignKeyword_3; }
+		
+		//','
+		public Keyword getCommaKeyword_4() { return cCommaKeyword_4; }
+		
+		//'('
+		public Keyword getLeftParenthesisKeyword_5() { return cLeftParenthesisKeyword_5; }
+		
+		//')'
+		public Keyword getRightParenthesisKeyword_6() { return cRightParenthesisKeyword_6; }
+		
+		//'::'
+		public Keyword getColonColonKeyword_7() { return cColonColonKeyword_7; }
+		
+		//'.'
+		public Keyword getFullStopKeyword_8() { return cFullStopKeyword_8; }
+		
+		//'-'
+		public Keyword getHyphenMinusKeyword_9() { return cHyphenMinusKeyword_9; }
+		
+		//'--'
+		public Keyword getHyphenMinusHyphenMinusKeyword_10() { return cHyphenMinusHyphenMinusKeyword_10; }
+		
+		//'/'
+		public Keyword getSolidusKeyword_11() { return cSolidusKeyword_11; }
+		
+		//'?'
+		public Keyword getQuestionMarkKeyword_12() { return cQuestionMarkKeyword_12; }
+		
+		//':'
+		public Keyword getColonKeyword_13() { return cColonKeyword_13; }
+		
+		//'@'
+		public Keyword getCommercialAtKeyword_14() { return cCommercialAtKeyword_14; }
+		
+		//'='
+		public Keyword getEqualsSignKeyword_15() { return cEqualsSignKeyword_15; }
+		
+		//';'
+		public Keyword getSemicolonKeyword_16() { return cSemicolonKeyword_16; }
+		
+		//// All keywords of the Technology DSL (from which the Service DSL inherits). If we don't
+		//// specify them here, they will be recognized as regular grammar tokens in the Anything
+		//// string.
+		//'technology'
+		public Keyword getTechnologyKeyword_17() { return cTechnologyKeyword_17; }
+		
+		//'types'
+		public Keyword getTypesKeyword_18() { return cTypesKeyword_18; }
+		
+		//'compatibility'
+		public Keyword getCompatibilityKeyword_19() { return cCompatibilityKeyword_19; }
+		
+		//'matrix'
+		public Keyword getMatrixKeyword_20() { return cMatrixKeyword_20; }
+		
+		//'protocols'
+		public Keyword getProtocolsKeyword_21() { return cProtocolsKeyword_21; }
+		
+		//'service'
+		public Keyword getServiceKeyword_22() { return cServiceKeyword_22; }
+		
+		//'aspects'
+		public Keyword getAspectsKeyword_23() { return cAspectsKeyword_23; }
+		
+		//'deployment'
+		public Keyword getDeploymentKeyword_24() { return cDeploymentKeyword_24; }
+		
+		//'technologies'
+		public Keyword getTechnologiesKeyword_25() { return cTechnologiesKeyword_25; }
+		
+		//'infrastructure'
+		public Keyword getInfrastructureKeyword_26() { return cInfrastructureKeyword_26; }
+		
+		//'operation'
+		public Keyword getOperationKeyword_27() { return cOperationKeyword_27; }
+		
+		//'import'
+		public Keyword getImportKeyword_28() { return cImportKeyword_28; }
+		
+		//'from'
+		public Keyword getFromKeyword_29() { return cFromKeyword_29; }
+		
+		//'as'
+		public Keyword getAsKeyword_30() { return cAsKeyword_30; }
+		
+		//'data'
+		public Keyword getDataKeyword_31() { return cDataKeyword_31; }
+		
+		//'formats'
+		public Keyword getFormatsKeyword_32() { return cFormatsKeyword_32; }
+		
+		//'default'
+		public Keyword getDefaultKeyword_33() { return cDefaultKeyword_33; }
+		
+		//'with'
+		public Keyword getWithKeyword_34() { return cWithKeyword_34; }
+		
+		//'format'
+		public Keyword getFormatKeyword_35() { return cFormatKeyword_35; }
+		
+		//'in'
+		public Keyword getInKeyword_36() { return cInKeyword_36; }
+		
+		//'out'
+		public Keyword getOutKeyword_37() { return cOutKeyword_37; }
+		
+		//'inout'
+		public Keyword getInoutKeyword_38() { return cInoutKeyword_38; }
+		
+		//'sync'
+		public Keyword getSyncKeyword_39() { return cSyncKeyword_39; }
+		
+		//'async'
+		public Keyword getAsyncKeyword_40() { return cAsyncKeyword_40; }
+		
+		//'primitive'
+		public Keyword getPrimitiveKeyword_41() { return cPrimitiveKeyword_41; }
+		
+		//'type'
+		public Keyword getTypeKeyword_42() { return cTypeKeyword_42; }
+		
+		//'based'
+		public Keyword getBasedKeyword_43() { return cBasedKeyword_43; }
+		
+		//'on'
+		public Keyword getOnKeyword_44() { return cOnKeyword_44; }
+		
+		//'list'
+		public Keyword getListKeyword_45() { return cListKeyword_45; }
+		
+		//'structure'
+		public Keyword getStructureKeyword_46() { return cStructureKeyword_46; }
+		
+		//'->'
+		public Keyword getHyphenMinusGreaterThanSignKeyword_47() { return cHyphenMinusGreaterThanSignKeyword_47; }
+		
+		//'<-'
+		public Keyword getLessThanSignHyphenMinusKeyword_48() { return cLessThanSignHyphenMinusKeyword_48; }
+		
+		//'<->'
+		public Keyword getLessThanSignHyphenMinusGreaterThanSignKeyword_49() { return cLessThanSignHyphenMinusGreaterThanSignKeyword_49; }
+		
+		//'environments'
+		public Keyword getEnvironmentsKeyword_50() { return cEnvironmentsKeyword_50; }
+		
+		//'properties'
+		public Keyword getPropertiesKeyword_51() { return cPropertiesKeyword_51; }
+		
+		//'mandatory'
+		public Keyword getMandatoryKeyword_52() { return cMandatoryKeyword_52; }
+		
+		//'singleval'
+		public Keyword getSinglevalKeyword_53() { return cSinglevalKeyword_53; }
+		
+		//'microservices'
+		public Keyword getMicroservicesKeyword_54() { return cMicroservicesKeyword_54; }
+		
+		//'interfaces'
+		public Keyword getInterfacesKeyword_55() { return cInterfacesKeyword_55; }
+		
+		//'operations'
+		public Keyword getOperationsKeyword_56() { return cOperationsKeyword_56; }
+		
+		//'parameters'
+		public Keyword getParametersKeyword_57() { return cParametersKeyword_57; }
+		
+		//'fields'
+		public Keyword getFieldsKeyword_58() { return cFieldsKeyword_58; }
+		
+		//'exchange_pattern'
+		public Keyword getExchange_patternKeyword_59() { return cExchange_patternKeyword_59; }
+		
+		//'communication_type'
+		public Keyword getCommunication_typeKeyword_60() { return cCommunication_typeKeyword_60; }
+		
+		//'protocol'
+		public Keyword getProtocolKeyword_61() { return cProtocolKeyword_61; }
+		
+		//'data_format'
+		public Keyword getData_formatKeyword_62() { return cData_formatKeyword_62; }
+		
+		//'aspect'
+		public Keyword getAspectKeyword_63() { return cAspectKeyword_63; }
+		
+		//'for'
+		public Keyword getForKeyword_64() { return cForKeyword_64; }
+		
+		//'containers'
+		public Keyword getContainersKeyword_65() { return cContainersKeyword_65; }
+		
+		//'selector' // All keywords of the Data DSL (from which the Service DSL inherits). If we don't specify
+		//// them here, they will be recognized as regular grammar tokens in the Anything string.
+		//'datatypes'
+		public Group getGroup_66() { return cGroup_66; }
+		
+		//'selector'
+		public Keyword getSelectorKeyword_66_0() { return cSelectorKeyword_66_0; }
+		
+		//// All keywords of the Data DSL (from which the Service DSL inherits). If we don't specify
+		//// them here, they will be recognized as regular grammar tokens in the Anything string.
+		//'datatypes'
+		public Keyword getDatatypesKeyword_66_1() { return cDatatypesKeyword_66_1; }
+		
+		//'version'
+		public Keyword getVersionKeyword_67() { return cVersionKeyword_67; }
+		
+		//'context'
+		public Keyword getContextKeyword_68() { return cContextKeyword_68; }
+		
+		//'aggregate'
+		public Keyword getAggregateKeyword_69() { return cAggregateKeyword_69; }
+		
+		//'applicationService'
+		public Keyword getApplicationServiceKeyword_70() { return cApplicationServiceKeyword_70; }
+		
+		//'domainEvent'
+		public Keyword getDomainEventKeyword_71() { return cDomainEventKeyword_71; }
+		
+		//'domainService'
+		public Keyword getDomainServiceKeyword_72() { return cDomainServiceKeyword_72; }
+		
+		//'entity'
+		public Keyword getEntityKeyword_73() { return cEntityKeyword_73; }
+		
+		//'factory'
+		public Keyword getFactoryKeyword_74() { return cFactoryKeyword_74; }
+		
+		//'infrastructureService'
+		public Keyword getInfrastructureServiceKeyword_75() { return cInfrastructureServiceKeyword_75; }
+		
+		//'repository'
+		public Keyword getRepositoryKeyword_76() { return cRepositoryKeyword_76; }
+		
+		//'specification'
+		public Keyword getSpecificationKeyword_77() { return cSpecificationKeyword_77; }
+		
+		//'valueObject'
+		public Keyword getValueObjectKeyword_78() { return cValueObjectKeyword_78; }
+		
+		//'extends'
+		public Keyword getExtendsKeyword_79() { return cExtendsKeyword_79; }
+		
+		//'identifier'
+		public Keyword getIdentifierKeyword_80() { return cIdentifierKeyword_80; }
+		
+		//'neverEmpty'
+		public Keyword getNeverEmptyKeyword_81() { return cNeverEmptyKeyword_81; }
+		
+		//'part'
+		public Keyword getPartKeyword_82() { return cPartKeyword_82; }
+		
+		//'hide'
+		public Keyword getHideKeyword_83() { return cHideKeyword_83; }
+		
+		//'immutable'
+		public Keyword getImmutableKeyword_84() { return cImmutableKeyword_84; }
+		
+		//'enum'
+		public Keyword getEnumKeyword_85() { return cEnumKeyword_85; }
+		
+		//'closure'
+		public Keyword getClosureKeyword_86() { return cClosureKeyword_86; }
+		
+		//'sideEffectFree'
+		public Keyword getSideEffectFreeKeyword_87() { return cSideEffectFreeKeyword_87; }
+		
+		//'validator'
+		public Keyword getValidatorKeyword_88() { return cValidatorKeyword_88; }
+		
+		//'function'
+		public Keyword getFunctionKeyword_89() { return cFunctionKeyword_89; }
+		
+		//'procedure'
+		public Keyword getProcedureKeyword_90() { return cProcedureKeyword_90; }
+		
+		//'boolean'
+		public Keyword getBooleanKeyword_91() { return cBooleanKeyword_91; }
+		
+		//'byte'
+		public Keyword getByteKeyword_92() { return cByteKeyword_92; }
+		
+		//'char'
+		public Keyword getCharKeyword_93() { return cCharKeyword_93; }
+		
+		//'date'
+		public Keyword getDateKeyword_94() { return cDateKeyword_94; }
+		
+		//'double'
+		public Keyword getDoubleKeyword_95() { return cDoubleKeyword_95; }
+		
+		//'float'
+		public Keyword getFloatKeyword_96() { return cFloatKeyword_96; }
+		
+		//'int'
+		public Keyword getIntKeyword_97() { return cIntKeyword_97; }
+		
+		//'long'
+		public Keyword getLongKeyword_98() { return cLongKeyword_98; }
+		
+		//'short'
+		public Keyword getShortKeyword_99() { return cShortKeyword_99; }
+		
+		//'string'
+		public Keyword getStringKeyword_100() { return cStringKeyword_100; }
+		
+		//// All keywords of the Service DSL. If we don't specify them here, they will be recognized
+		//// as regular grammar tokens in the Anything string.
+		//'internal'
+		public Keyword getInternalKeyword_101() { return cInternalKeyword_101; }
+		
+		//'architecture'
+		public Keyword getArchitectureKeyword_102() { return cArchitectureKeyword_102; }
+		
+		//'public'
+		public Keyword getPublicKeyword_103() { return cPublicKeyword_103; }
+		
+		//'endpoints'
+		public Keyword getEndpointsKeyword_104() { return cEndpointsKeyword_104; }
+		
+		//'microservice'
+		public Keyword getMicroserviceKeyword_105() { return cMicroserviceKeyword_105; }
+		
+		//'required'
+		public Keyword getRequiredKeyword_106() { return cRequiredKeyword_106; }
+		
+		//'typedef'
+		public Keyword getTypedefKeyword_107() { return cTypedefKeyword_107; }
+		
+		//'noimpl'
+		public Keyword getNoimplKeyword_108() { return cNoimplKeyword_108; }
+		
+		//'interface'
+		public Keyword getInterfaceKeyword_109() { return cInterfaceKeyword_109; }
+		
+		//'param'
+		public Keyword getParamKeyword_110() { return cParamKeyword_110; }
+		
+		//'refers'
+		public Keyword getRefersKeyword_111() { return cRefersKeyword_111; }
+		
+		//'fault'
+		public Keyword getFaultKeyword_112() { return cFaultKeyword_112; }
+		
+		//'functional'
+		public Keyword getFunctionalKeyword_113() { return cFunctionalKeyword_113; }
+		
+		//'utility'
+		public Keyword getUtilityKeyword_114() { return cUtilityKeyword_114; }
+		
+		//// All other terminal rules of the Service and the Data DSL (from which the Service DSL
+		//// inherits). If we don't specify them here, they will be recognized as regular grammar
+		//// tokens in the Anything string.
+		//BOOLEAN
+		public RuleCall getBOOLEANTerminalRuleCall_115() { return cBOOLEANTerminalRuleCall_115; }
+		
+		//BIG_DECIMAL
+		public RuleCall getBIG_DECIMALTerminalRuleCall_116() { return cBIG_DECIMALTerminalRuleCall_116; }
+		
+		//ID
+		public RuleCall getIDTerminalRuleCall_117() { return cIDTerminalRuleCall_117; }
+		
+		//STRING
+		public RuleCall getSTRINGTerminalRuleCall_118() { return cSTRINGTerminalRuleCall_118; }
+		
+		//ANY_OTHER
+		public RuleCall getANY_OTHERTerminalRuleCall_119() { return cANY_OTHERTerminalRuleCall_119; }
+	}
 	
 	public class ImportTypeElements extends AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.fhdo.lemma.ServiceDsl.ImportType");
@@ -1571,6 +2228,8 @@ public class ServiceDslGrammarAccess extends AbstractGrammarElementFinder {
 	private final PossiblyImportedInterfaceElements pPossiblyImportedInterface;
 	private final PossiblyImportedOperationElements pPossiblyImportedOperation;
 	private final InterfaceElements pInterface;
+	private final ApiOperationCommentElements pApiOperationComment;
+	private final ApiParameterCommentElements pApiParameterComment;
 	private final OperationElements pOperation;
 	private final ReferredOperationElements pReferredOperation;
 	private final ParameterElements pParameter;
@@ -1582,6 +2241,8 @@ public class ServiceDslGrammarAccess extends AbstractGrammarElementFinder {
 	private final PropertyValueAssignmentElements pPropertyValueAssignment;
 	private final MicroserviceTypeElements eMicroserviceType;
 	private final QualifiedNameWithAtLeastOneLevelElements pQualifiedNameWithAtLeastOneLevel;
+	private final AnythingElements pAnything;
+	private final TerminalRule tSTRING;
 	
 	private final Grammar grammar;
 	
@@ -1610,6 +2271,8 @@ public class ServiceDslGrammarAccess extends AbstractGrammarElementFinder {
 		this.pPossiblyImportedInterface = new PossiblyImportedInterfaceElements();
 		this.pPossiblyImportedOperation = new PossiblyImportedOperationElements();
 		this.pInterface = new InterfaceElements();
+		this.pApiOperationComment = new ApiOperationCommentElements();
+		this.pApiParameterComment = new ApiParameterCommentElements();
 		this.pOperation = new OperationElements();
 		this.pReferredOperation = new ReferredOperationElements();
 		this.pParameter = new ParameterElements();
@@ -1621,6 +2284,8 @@ public class ServiceDslGrammarAccess extends AbstractGrammarElementFinder {
 		this.pPropertyValueAssignment = new PropertyValueAssignmentElements();
 		this.eMicroserviceType = new MicroserviceTypeElements();
 		this.pQualifiedNameWithAtLeastOneLevel = new QualifiedNameWithAtLeastOneLevelElements();
+		this.pAnything = new AnythingElements();
+		this.tSTRING = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "de.fhdo.lemma.ServiceDsl.STRING");
 	}
 	
 	protected Grammar internalFindGrammar(GrammarProvider grammarProvider) {
@@ -1783,8 +2448,32 @@ public class ServiceDslGrammarAccess extends AbstractGrammarElementFinder {
 		return getInterfaceAccess().getRule();
 	}
 	
+	//ApiOperationComment:
+	//	'---'
+	//	comment=Anything
+	//	parameterComments+=ApiParameterComment*
+	//	'---';
+	public ApiOperationCommentElements getApiOperationCommentAccess() {
+		return pApiOperationComment;
+	}
+	
+	public ParserRule getApiOperationCommentRule() {
+		return getApiOperationCommentAccess().getRule();
+	}
+	
+	//ApiParameterComment:
+	//	('@param' | required?='@required') parameter=[Parameter] comment=Anything;
+	public ApiParameterCommentElements getApiParameterCommentAccess() {
+		return pApiParameterComment;
+	}
+	
+	public ParserRule getApiParameterCommentRule() {
+		return getApiParameterCommentAccess().getRule();
+	}
+	
 	//Operation:
-	//	(protocols+=ProtocolSpecification protocols+=ProtocolSpecification?)? ('@' 'endpoints' '(' endpoints+=Endpoint+ ')')?
+	//	apiOperationComment=ApiOperationComment? (protocols+=ProtocolSpecification protocols+=ProtocolSpecification?)? ('@'
+	//	'endpoints' '(' endpoints+=Endpoint+ ')')?
 	//	aspects+=ImportedServiceAspect*
 	//	notImplemented?='noimpl'? visibility=Visibility? name=ID '('
 	//	parameters+=Parameter? (',' parameters+=Parameter)*
@@ -1913,6 +2602,53 @@ public class ServiceDslGrammarAccess extends AbstractGrammarElementFinder {
 		return getQualifiedNameWithAtLeastOneLevelAccess().getRule();
 	}
 	
+	//// Rule to consume any character
+	//Anything:
+	//	(
+	//	// All keyword characters of the Service, Technology, and Data DSLs (the Service DSL
+	//	// inherits from the latter ones). If we don't specify them here, they will be recognized as
+	//	// regular grammar tokens in the Anything string.
+	//	'{' | '}' | '<' | '>' | ',' | '(' | ')' | '::' | '.' | '-' | '--' | '/' | '?' | ':' | '@' |
+	//	'=' | ';' |
+	//	// All keywords of the Technology DSL (from which the Service DSL inherits). If we don't
+	//	// specify them here, they will be recognized as regular grammar tokens in the Anything
+	//	// string.
+	//	'technology' | 'types' | 'compatibility' | 'matrix' | 'protocols' | 'service' | 'aspects' |
+	//	'deployment' | 'technologies' | 'infrastructure' | 'operation' | 'import' | 'from' | 'as' |
+	//	'data' | 'formats' | 'default' | 'with' | 'format' | 'in' | 'out' | 'inout' | 'sync' |
+	//	'async' | 'primitive' | 'type' | 'based' | 'on' | 'list' | 'structure' | '->' | '<-' |
+	//	'<->' | 'environments' | 'properties' | 'mandatory' | 'singleval' | 'microservices' |
+	//	'interfaces' | 'operations' | 'parameters' | 'fields' | 'exchange_pattern' |
+	//	'communication_type' | 'protocol' | 'data_format' | 'aspect' | 'for' | 'containers' |
+	//	'selector'
+	//	// All keywords of the Data DSL (from which the Service DSL inherits). If we don't specify
+	//	// them here, they will be recognized as regular grammar tokens in the Anything string.
+	//	'datatypes' | 'version' | 'context' | 'aggregate' | 'applicationService' | 'domainEvent' |
+	//	'domainService' | 'entity' | 'factory' | 'infrastructureService' | 'repository' |
+	//	'specification' | 'valueObject' | 'extends' | 'identifier' | 'neverEmpty' | 'part' |
+	//	'hide' | 'immutable' | 'enum' | 'closure' | 'sideEffectFree' | 'validator' | 'function' |
+	//	'procedure' | 'boolean' | 'byte' | 'char' | 'date' | 'double' | 'float' | 'int' | 'long' |
+	//	'short' | 'string' |
+	//	// All keywords of the Service DSL. If we don't specify them here, they will be recognized
+	//	// as regular grammar tokens in the Anything string.
+	//	'internal' | 'architecture' | 'public' | 'endpoints' | 'microservice' | 'required' |
+	//	'typedef' | 'noimpl' | 'interface' | 'param' | 'refers' | 'fault' | 'functional' |
+	//	'utility' | BOOLEAN | BIG_DECIMAL | ID | STRING | ANY_OTHER)+;
+	public AnythingElements getAnythingAccess() {
+		return pAnything;
+	}
+	
+	public ParserRule getAnythingRule() {
+		return getAnythingAccess().getRule();
+	}
+	
+	//@Override
+	//terminal STRING:
+	//	'"' ('\\' . | !('\\' | '"'))* '"';
+	public TerminalRule getSTRINGRule() {
+		return tSTRING;
+	}
+	
 	//Technology:
 	//	imports+=TechnologyImport*
 	//	'technology' name=ID '{' ('types' '{' (primitiveTypes+=TechnologySpecificPrimitiveType |
@@ -1941,7 +2677,7 @@ public class ServiceDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//TechnologyImport:
-	//	'import' 'technology' 'from' importURI=STRING 'as' name=ID;
+	//	'import' 'technology' 'from' importURI=super::STRING 'as' name=ID;
 	public TechnologyDslGrammarAccess.TechnologyImportElements getTechnologyImportAccess() {
 		return gaTechnologyDsl.getTechnologyImportAccess();
 	}
@@ -2094,7 +2830,7 @@ public class ServiceDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//OperationEnvironment:
-	//	environmentName=STRING default?='default'?;
+	//	environmentName=super::STRING default?='default'?;
 	public TechnologyDslGrammarAccess.OperationEnvironmentElements getOperationEnvironmentAccess() {
 		return gaTechnologyDsl.getOperationEnvironmentAccess();
 	}
@@ -2104,8 +2840,8 @@ public class ServiceDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//enum PropertyFeature:
-	//	MANDATORY="mandatory" |
-	//	SINGLE_VALUED="singleval";
+	//	MANDATORY='mandatory' |
+	//	SINGLE_VALUED='singleval';
 	public TechnologyDslGrammarAccess.PropertyFeatureElements getPropertyFeatureAccess() {
 		return gaTechnologyDsl.getPropertyFeatureAccess();
 	}
@@ -2239,7 +2975,7 @@ public class ServiceDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//ComplexTypeImport:
-	//	'import' 'datatypes' 'from' importURI=STRING 'as' name=ID;
+	//	'import' 'datatypes' 'from' importURI=super::STRING 'as' name=ID;
 	public DataDslGrammarAccess.ComplexTypeImportElements getComplexTypeImportAccess() {
 		return gaDataDsl.getComplexTypeImportAccess();
 	}
@@ -2282,17 +3018,17 @@ public class ServiceDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//enum DataStructureFeature:
-	//	AGGREGATE="aggregate" |
-	//	APPLICATION_SERVICE="applicationService" |
-	//	DOMAIN_EVENT="domainEvent" |
-	//	DOMAIN_SERVICE="domainService" |
-	//	ENTITY="entity" |
-	//	FACTORY="factory" |
-	//	INFRASTRUCTURE_SERVICE="infrastructureService" |
-	//	REPOSITORY="repository" |
-	//	SERVICE="service" |
-	//	SPECIFICATION="specification" |
-	//	VALUE_OBJECT="valueObject";
+	//	AGGREGATE='aggregate' |
+	//	APPLICATION_SERVICE='applicationService' |
+	//	DOMAIN_EVENT='domainEvent' |
+	//	DOMAIN_SERVICE='domainService' |
+	//	ENTITY='entity' |
+	//	FACTORY='factory' |
+	//	INFRASTRUCTURE_SERVICE='infrastructureService' |
+	//	REPOSITORY='repository' |
+	//	SERVICE='service' |
+	//	SPECIFICATION='specification' |
+	//	VALUE_OBJECT='valueObject';
 	public DataDslGrammarAccess.DataStructureFeatureElements getDataStructureFeatureAccess() {
 		return gaDataDsl.getDataStructureFeatureAccess();
 	}
@@ -2331,9 +3067,9 @@ public class ServiceDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//enum DataFieldFeature:
-	//	IDENTIFIER="identifier" |
-	//	NEVER_EMPTY="neverEmpty" |
-	//	PART="part";
+	//	IDENTIFIER='identifier' |
+	//	NEVER_EMPTY='neverEmpty' |
+	//	PART='part';
 	public DataDslGrammarAccess.DataFieldFeatureElements getDataFieldFeatureAccess() {
 		return gaDataDsl.getDataFieldFeatureAccess();
 	}
@@ -2378,10 +3114,10 @@ public class ServiceDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//enum DataOperationFeature:
-	//	CLOSURE="closure" |
-	//	IDENTIFIER="identifier" |
-	//	SIDE_EFFECT_FREE="sideEffectFree" |
-	//	VALIDATOR="validator";
+	//	CLOSURE='closure' |
+	//	IDENTIFIER='identifier' |
+	//	SIDE_EFFECT_FREE='sideEffectFree' |
+	//	VALIDATOR='validator';
 	public DataDslGrammarAccess.DataOperationFeatureElements getDataOperationFeatureAccess() {
 		return gaDataDsl.getDataOperationFeatureAccess();
 	}
@@ -2416,7 +3152,7 @@ public class ServiceDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//PrimitiveValue:
-	//	numericValue=BIG_DECIMAL | booleanValue=BOOLEAN | stringValue=STRING;
+	//	numericValue=BIG_DECIMAL | booleanValue=BOOLEAN | stringValue=super::STRING;
 	public DataDslGrammarAccess.PrimitiveValueElements getPrimitiveValueAccess() {
 		return gaDataDsl.getPrimitiveValueAccess();
 	}
@@ -2479,13 +3215,6 @@ public class ServiceDslGrammarAccess extends AbstractGrammarElementFinder {
 	//	'0'..'9'+;
 	public TerminalRule getINTRule() {
 		return gaTerminals.getINTRule();
-	}
-	
-	//terminal STRING:
-	//	'"' ('\\' . | !('\\' | '"'))* '"' |
-	//	"'" ('\\' . | !('\\' | "'"))* "'";
-	public TerminalRule getSTRINGRule() {
-		return gaTerminals.getSTRINGRule();
 	}
 	
 	//terminal ML_COMMENT:

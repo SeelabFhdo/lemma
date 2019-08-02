@@ -108,6 +108,14 @@ public class ServiceAdapterFactory extends AdapterFactoryImpl {
                 return createOperationAdapter();
             }
             @Override
+            public Adapter caseApiOperationComment(ApiOperationComment object) {
+                return createApiOperationCommentAdapter();
+            }
+            @Override
+            public Adapter caseApiParameterComment(ApiParameterComment object) {
+                return createApiParameterCommentAdapter();
+            }
+            @Override
             public Adapter caseReferredOperation(ReferredOperation object) {
                 return createReferredOperationAdapter();
             }
@@ -304,6 +312,34 @@ public class ServiceAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createOperationAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.fhdo.lemma.service.ApiOperationComment <em>Api Operation Comment</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.fhdo.lemma.service.ApiOperationComment
+     * @generated
+     */
+    public Adapter createApiOperationCommentAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.fhdo.lemma.service.ApiParameterComment <em>Api Parameter Comment</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.fhdo.lemma.service.ApiParameterComment
+     * @generated
+     */
+    public Adapter createApiParameterCommentAdapter() {
         return null;
     }
 

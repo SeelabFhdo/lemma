@@ -90,6 +90,18 @@ public class IntermediateSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
+            case IntermediatePackage.INTERMEDIATE_API_OPERATION_COMMENT: {
+                IntermediateApiOperationComment intermediateApiOperationComment = (IntermediateApiOperationComment)theEObject;
+                T result = caseIntermediateApiOperationComment(intermediateApiOperationComment);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case IntermediatePackage.INTERMEDIATE_API_PARAMETER_COMMENT: {
+                IntermediateApiParameterComment intermediateApiParameterComment = (IntermediateApiParameterComment)theEObject;
+                T result = caseIntermediateApiParameterComment(intermediateApiParameterComment);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
             case IntermediatePackage.INTERMEDIATE_REFERRED_OPERATION: {
                 IntermediateReferredOperation intermediateReferredOperation = (IntermediateReferredOperation)theEObject;
                 T result = caseIntermediateReferredOperation(intermediateReferredOperation);
@@ -205,6 +217,36 @@ public class IntermediateSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseIntermediateOperation(IntermediateOperation object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Api Operation Comment</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Api Operation Comment</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseIntermediateApiOperationComment(IntermediateApiOperationComment object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Api Parameter Comment</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Api Parameter Comment</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseIntermediateApiParameterComment(IntermediateApiParameterComment object) {
         return null;
     }
 

@@ -1251,6 +1251,7 @@ public class OperationDslGrammarAccess extends AbstractGrammarElementFinder {
 	private final ImportedMicroserviceElements pImportedMicroservice;
 	private final PropertyValueAssignmentElements pPropertyValueAssignment;
 	private final ImportedOperationAspectElements pImportedOperationAspect;
+	private final TerminalRule tSTRING;
 	
 	private final Grammar grammar;
 	
@@ -1285,6 +1286,7 @@ public class OperationDslGrammarAccess extends AbstractGrammarElementFinder {
 		this.pImportedMicroservice = new ImportedMicroserviceElements();
 		this.pPropertyValueAssignment = new PropertyValueAssignmentElements();
 		this.pImportedOperationAspect = new ImportedOperationAspectElements();
+		this.tSTRING = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "de.fhdo.lemma.operationdsl.OperationDsl.STRING");
 	}
 	
 	protected Grammar internalFindGrammar(GrammarProvider grammarProvider) {
@@ -1495,6 +1497,14 @@ public class OperationDslGrammarAccess extends AbstractGrammarElementFinder {
 		return getImportedOperationAspectAccess().getRule();
 	}
 	
+	//@Override
+	//terminal STRING:
+	//	'"' ('\\' . | !('\\' | '"'))* '"' |
+	//	"'" ('\\' . | !('\\' | "'"))* "'";
+	public TerminalRule getSTRINGRule() {
+		return tSTRING;
+	}
+	
 	//ServiceModel:
 	//	imports+=Import*
 	//	microservices+=Microservice+;
@@ -1507,7 +1517,7 @@ public class OperationDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//Import:
-	//	'import' importType=super::ImportType 'from' importURI=STRING 'as' name=ID;
+	//	'import' importType=super::ImportType 'from' importURI=super::STRING 'as' name=ID;
 	public ServiceDslGrammarAccess.ImportElements getImportAccess() {
 		return gaServiceDsl.getImportAccess();
 	}
@@ -1610,8 +1620,32 @@ public class OperationDslGrammarAccess extends AbstractGrammarElementFinder {
 		return getInterfaceAccess().getRule();
 	}
 	
+	//ApiOperationComment:
+	//	'---'
+	//	comment=Anything
+	//	parameterComments+=ApiParameterComment*
+	//	'---';
+	public ServiceDslGrammarAccess.ApiOperationCommentElements getApiOperationCommentAccess() {
+		return gaServiceDsl.getApiOperationCommentAccess();
+	}
+	
+	public ParserRule getApiOperationCommentRule() {
+		return getApiOperationCommentAccess().getRule();
+	}
+	
+	//ApiParameterComment:
+	//	('@param' | required?='@required') parameter=[Parameter] comment=Anything;
+	public ServiceDslGrammarAccess.ApiParameterCommentElements getApiParameterCommentAccess() {
+		return gaServiceDsl.getApiParameterCommentAccess();
+	}
+	
+	public ParserRule getApiParameterCommentRule() {
+		return getApiParameterCommentAccess().getRule();
+	}
+	
 	//Operation:
-	//	(protocols+=ProtocolSpecification protocols+=ProtocolSpecification?)? ('@' 'endpoints' '(' endpoints+=Endpoint+ ')')?
+	//	apiOperationComment=ApiOperationComment? (protocols+=ProtocolSpecification protocols+=ProtocolSpecification?)? ('@'
+	//	'endpoints' '(' endpoints+=Endpoint+ ')')?
 	//	aspects+=ImportedServiceAspect*
 	//	notImplemented?='noimpl'? visibility=Visibility? name=ID '('
 	//	parameters+=Parameter? (',' parameters+=Parameter)*
@@ -1687,7 +1721,7 @@ public class OperationDslGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//Endpoint:
 	//	protocols+=ImportedProtocolAndDataFormat (',' protocols+=ImportedProtocolAndDataFormat)* ':'
-	//	addresses+=STRING (',' addresses+=STRING)* ';';
+	//	addresses+=super::STRING (',' addresses+=super::STRING)* ';';
 	public ServiceDslGrammarAccess.EndpointElements getEndpointAccess() {
 		return gaServiceDsl.getEndpointAccess();
 	}
@@ -1729,6 +1763,46 @@ public class OperationDslGrammarAccess extends AbstractGrammarElementFinder {
 		return getQualifiedNameWithAtLeastOneLevelAccess().getRule();
 	}
 	
+	//// Rule to consume any character
+	//Anything:
+	//	(
+	//	// All keyword characters of the Service, Technology, and Data DSLs (the Service DSL
+	//	// inherits from the latter ones). If we don't specify them here, they will be recognized as
+	//	// regular grammar tokens in the Anything string.
+	//	'{' | '}' | '<' | '>' | ',' | '(' | ')' | '::' | '.' | '-' | '--' | '/' | '?' | ':' | '@' |
+	//	'=' | ';' |
+	//	// All keywords of the Technology DSL (from which the Service DSL inherits). If we don't
+	//	// specify them here, they will be recognized as regular grammar tokens in the Anything
+	//	// string.
+	//	'technology' | 'types' | 'compatibility' | 'matrix' | 'protocols' | 'service' | 'aspects' |
+	//	'deployment' | 'technologies' | 'infrastructure' | 'operation' | 'import' | 'from' | 'as' |
+	//	'data' | 'formats' | 'default' | 'with' | 'format' | 'in' | 'out' | 'inout' | 'sync' |
+	//	'async' | 'primitive' | 'type' | 'based' | 'on' | 'list' | 'structure' | '->' | '<-' |
+	//	'<->' | 'environments' | 'properties' | 'mandatory' | 'singleval' | 'microservices' |
+	//	'interfaces' | 'operations' | 'parameters' | 'fields' | 'exchange_pattern' |
+	//	'communication_type' | 'protocol' | 'data_format' | 'aspect' | 'for' | 'containers' |
+	//	'selector'
+	//	// All keywords of the Data DSL (from which the Service DSL inherits). If we don't specify
+	//	// them here, they will be recognized as regular grammar tokens in the Anything string.
+	//	'datatypes' | 'version' | 'context' | 'aggregate' | 'applicationService' | 'domainEvent' |
+	//	'domainService' | 'entity' | 'factory' | 'infrastructureService' | 'repository' |
+	//	'specification' | 'valueObject' | 'extends' | 'identifier' | 'neverEmpty' | 'part' |
+	//	'hide' | 'immutable' | 'enum' | 'closure' | 'sideEffectFree' | 'validator' | 'function' |
+	//	'procedure' | 'boolean' | 'byte' | 'char' | 'date' | 'double' | 'float' | 'int' | 'long' |
+	//	'short' | 'string' |
+	//	// All keywords of the Service DSL. If we don't specify them here, they will be recognized
+	//	// as regular grammar tokens in the Anything string.
+	//	'internal' | 'architecture' | 'public' | 'endpoints' | 'microservice' | 'required' |
+	//	'typedef' | 'noimpl' | 'interface' | 'param' | 'refers' | 'fault' | 'functional' |
+	//	'utility' | BOOLEAN | BIG_DECIMAL | ID | super::STRING | ANY_OTHER)+;
+	public ServiceDslGrammarAccess.AnythingElements getAnythingAccess() {
+		return gaServiceDsl.getAnythingAccess();
+	}
+	
+	public ParserRule getAnythingRule() {
+		return getAnythingAccess().getRule();
+	}
+	
 	//Technology:
 	//	imports+=TechnologyImport*
 	//	'technology' name=ID '{' ('types' '{' (primitiveTypes+=TechnologySpecificPrimitiveType |
@@ -1757,7 +1831,7 @@ public class OperationDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//TechnologyImport:
-	//	'import' 'technology' 'from' importURI=STRING 'as' name=ID;
+	//	'import' 'technology' 'from' importURI=super::STRING 'as' name=ID;
 	public TechnologyDslGrammarAccess.TechnologyImportElements getTechnologyImportAccess() {
 		return gaTechnologyDsl.getTechnologyImportAccess();
 	}
@@ -1910,7 +1984,7 @@ public class OperationDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//OperationEnvironment:
-	//	environmentName=STRING default?='default'?;
+	//	environmentName=super::STRING default?='default'?;
 	public TechnologyDslGrammarAccess.OperationEnvironmentElements getOperationEnvironmentAccess() {
 		return gaTechnologyDsl.getOperationEnvironmentAccess();
 	}
@@ -1920,8 +1994,8 @@ public class OperationDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//enum PropertyFeature:
-	//	MANDATORY="mandatory" |
-	//	SINGLE_VALUED="singleval";
+	//	MANDATORY='mandatory' |
+	//	SINGLE_VALUED='singleval';
 	public TechnologyDslGrammarAccess.PropertyFeatureElements getPropertyFeatureAccess() {
 		return gaTechnologyDsl.getPropertyFeatureAccess();
 	}
@@ -2055,7 +2129,7 @@ public class OperationDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//ComplexTypeImport:
-	//	'import' 'datatypes' 'from' importURI=STRING 'as' name=ID;
+	//	'import' 'datatypes' 'from' importURI=super::STRING 'as' name=ID;
 	public DataDslGrammarAccess.ComplexTypeImportElements getComplexTypeImportAccess() {
 		return gaDataDsl.getComplexTypeImportAccess();
 	}
@@ -2098,17 +2172,17 @@ public class OperationDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//enum DataStructureFeature:
-	//	AGGREGATE="aggregate" |
-	//	APPLICATION_SERVICE="applicationService" |
-	//	DOMAIN_EVENT="domainEvent" |
-	//	DOMAIN_SERVICE="domainService" |
-	//	ENTITY="entity" |
-	//	FACTORY="factory" |
-	//	INFRASTRUCTURE_SERVICE="infrastructureService" |
-	//	REPOSITORY="repository" |
-	//	SERVICE="service" |
-	//	SPECIFICATION="specification" |
-	//	VALUE_OBJECT="valueObject";
+	//	AGGREGATE='aggregate' |
+	//	APPLICATION_SERVICE='applicationService' |
+	//	DOMAIN_EVENT='domainEvent' |
+	//	DOMAIN_SERVICE='domainService' |
+	//	ENTITY='entity' |
+	//	FACTORY='factory' |
+	//	INFRASTRUCTURE_SERVICE='infrastructureService' |
+	//	REPOSITORY='repository' |
+	//	SERVICE='service' |
+	//	SPECIFICATION='specification' |
+	//	VALUE_OBJECT='valueObject';
 	public DataDslGrammarAccess.DataStructureFeatureElements getDataStructureFeatureAccess() {
 		return gaDataDsl.getDataStructureFeatureAccess();
 	}
@@ -2147,9 +2221,9 @@ public class OperationDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//enum DataFieldFeature:
-	//	IDENTIFIER="identifier" |
-	//	NEVER_EMPTY="neverEmpty" |
-	//	PART="part";
+	//	IDENTIFIER='identifier' |
+	//	NEVER_EMPTY='neverEmpty' |
+	//	PART='part';
 	public DataDslGrammarAccess.DataFieldFeatureElements getDataFieldFeatureAccess() {
 		return gaDataDsl.getDataFieldFeatureAccess();
 	}
@@ -2194,10 +2268,10 @@ public class OperationDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//enum DataOperationFeature:
-	//	CLOSURE="closure" |
-	//	IDENTIFIER="identifier" |
-	//	SIDE_EFFECT_FREE="sideEffectFree" |
-	//	VALIDATOR="validator";
+	//	CLOSURE='closure' |
+	//	IDENTIFIER='identifier' |
+	//	SIDE_EFFECT_FREE='sideEffectFree' |
+	//	VALIDATOR='validator';
 	public DataDslGrammarAccess.DataOperationFeatureElements getDataOperationFeatureAccess() {
 		return gaDataDsl.getDataOperationFeatureAccess();
 	}
@@ -2232,7 +2306,7 @@ public class OperationDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//PrimitiveValue:
-	//	numericValue=BIG_DECIMAL | booleanValue=BOOLEAN | stringValue=STRING;
+	//	numericValue=BIG_DECIMAL | booleanValue=BOOLEAN | stringValue=super::STRING;
 	public DataDslGrammarAccess.PrimitiveValueElements getPrimitiveValueAccess() {
 		return gaDataDsl.getPrimitiveValueAccess();
 	}
@@ -2295,13 +2369,6 @@ public class OperationDslGrammarAccess extends AbstractGrammarElementFinder {
 	//	'0'..'9'+;
 	public TerminalRule getINTRule() {
 		return gaTerminals.getINTRule();
-	}
-	
-	//terminal STRING:
-	//	'"' ('\\' . | !('\\' | '"'))* '"' |
-	//	"'" ('\\' . | !('\\' | "'"))* "'";
-	public TerminalRule getSTRINGRule() {
-		return gaTerminals.getSTRINGRule();
 	}
 	
 	//terminal ML_COMMENT:

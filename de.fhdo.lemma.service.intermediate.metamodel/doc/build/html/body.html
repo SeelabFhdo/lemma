@@ -601,6 +601,13 @@ structure.</p>
 
 <dl class="attribute">
 <dt>
+<code class="descname">IntermediateApiOperationComment[0..1] apiOperationComment</code></dt>
+<dd><p><a class="reference internal" href="#IntermediateApiOperationComment" title="IntermediateApiOperationComment"><code class="xref java java-type docutils literal notranslate"><span class="pre">API</span> <span class="pre">comment</span></code></a> of the
+operation.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
 <code class="descname">IntermediateImportedAspect[*] aspects</code></dt>
 <dd><p><a class="reference external" href="../../../../de.fhdo.lemma.data.intermediate.metamodel/doc/build/html/body.html#IntermediateImportedAspect" title="(in Intermediate Data Model Format Specification v1.0)"><code class="xref java java-type docutils literal notranslate"><span class="pre">Aspects</span></code></a> of the operation.</p>
 </dd></dl>
@@ -614,9 +621,83 @@ structure.</p>
 </dd></dl>
 
 <dl class="type">
+<dt id="IntermediateApiOperationComment">
+ class <code class="descname">IntermediateApiOperationComment</code><a class="headerlink" href="#IntermediateApiOperationComment" title="Permalink to this definition">¶</a></dt>
+<dd><p>An API-related comment of an <a class="reference internal" href="#IntermediateOperation" title="IntermediateOperation"><code class="xref java java-type docutils literal notranslate"><span class="pre">operation</span></code></a>.
+It  describes the purpose of the operation, possibly together with its
+parameters in <a class="reference internal" href="#IntermediateApiParameterComment" title="IntermediateApiParameterComment"><code class="xref java java-type docutils literal notranslate"><span class="pre">IntermediateApiParameterComment</span></code></a> instances.</p>
+<dl class="attribute">
+<dt>
+<code class="descname">String[1] comment</code></dt>
+<dd><p>Comment, which describes the operation.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">IntermediateApiParameterComment[*] parameterComments</code></dt>
+<dd><p>API comments for the operation’s parameters.</p>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">It is possible that a parameter is commented more than once. Code
+generators are free in their reaction to such a situation. For
+instance, all comments may be dropped except for the last one or
+they may ask users on how to proceed in such a situation.</p>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">IntermediateOperation operation</code></dt>
+<dd><p>The <a class="reference internal" href="#IntermediateOperation" title="IntermediateOperation"><code class="xref java java-type docutils literal notranslate"><span class="pre">operation</span></code></a> being documented by
+this comment.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="type">
+<dt id="IntermediateApiParameterComment">
+ class <code class="descname">IntermediateApiParameterComment</code><a class="headerlink" href="#IntermediateApiParameterComment" title="Permalink to this definition">¶</a></dt>
+<dd><p>An API-related comment for a <a class="reference internal" href="#IntermediateParameter" title="IntermediateParameter"><code class="xref java java-type docutils literal notranslate"><span class="pre">parameter</span></code></a>
+of an <a class="reference internal" href="#IntermediateOperation" title="IntermediateOperation"><code class="xref java java-type docutils literal notranslate"><span class="pre">operation</span></code></a>.</p>
+<blockquote>
+<div><dl class="attribute">
+<dt>
+<code class="descname">String[1] comment</code></dt>
+<dd><p>Comment, which describes the parameter.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">boolean required</code></dt>
+<dd><p>Flag to indicate if this parameter is required (from an API point of
+view).</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">It is possible to document even <a class="reference internal" href="#link-intermediateparameter-optional"><span class="std std-ref">optional parameters</span></a> as being required.</p>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">IntermediateParameter parameter</code></dt>
+<dd><p>The <a class="reference internal" href="#IntermediateParameter" title="IntermediateParameter"><code class="xref java java-type docutils literal notranslate"><span class="pre">parameter</span></code></a> being documented
+by this comment.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">IntermediateApiOperationComment operationComment</code></dt>
+<dd><p>The <a class="reference internal" href="#IntermediateApiOperationComment" title="IntermediateApiOperationComment"><code class="xref java java-type docutils literal notranslate"><span class="pre">API</span> <span class="pre">operation</span> <span class="pre">comment</span></code></a> to which this parameter comment
+belongs.</p>
+</dd></dl>
+
+</div></blockquote>
+</dd></dl>
+
+<dl class="type">
 <dt id="IntermediateParameter">
  class <code class="descname">IntermediateParameter</code><a class="headerlink" href="#IntermediateParameter" title="Permalink to this definition">¶</a></dt>
-<dd><p>A parameter of an <a class="reference internal" href="#IntermediateOperation" title="IntermediateOperation"><code class="xref java java-type docutils literal notranslate"><span class="pre">IntermediateOperation</span></code></a>.</p>
+<dd><p>A parameter of an <a class="reference internal" href="#IntermediateOperation" title="IntermediateOperation"><code class="xref java java-type docutils literal notranslate"><span class="pre">operation</span></code></a>.</p>
 <dl class="attribute">
 <dt>
 <code class="descname">String[1] name</code></dt>
@@ -656,7 +737,7 @@ that the parameter communicates a fault.</p>
 </div>
 </dd></dl>
 
-<dl class="attribute">
+<span class="target" id="link-intermediateparameter-optional"></span><dl class="attribute">
 <dt>
 <code class="descname">boolean optional</code></dt>
 <dd><p>Flag to indicate that the parameter is optional.</p>

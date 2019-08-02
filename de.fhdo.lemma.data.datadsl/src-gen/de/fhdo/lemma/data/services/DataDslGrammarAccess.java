@@ -1157,88 +1157,88 @@ public class DataDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cVALUE_OBJECTValueObjectKeyword_10_0 = (Keyword)cVALUE_OBJECTEnumLiteralDeclaration_10.eContents().get(0);
 		
 		//enum DataStructureFeature:
-		//	AGGREGATE="aggregate" |
-		//	APPLICATION_SERVICE="applicationService" |
-		//	DOMAIN_EVENT="domainEvent" |
-		//	DOMAIN_SERVICE="domainService" |
-		//	ENTITY="entity" |
-		//	FACTORY="factory" |
-		//	INFRASTRUCTURE_SERVICE="infrastructureService" |
-		//	REPOSITORY="repository" |
-		//	SERVICE="service" |
-		//	SPECIFICATION="specification" |
-		//	VALUE_OBJECT="valueObject";
+		//	AGGREGATE='aggregate' |
+		//	APPLICATION_SERVICE='applicationService' |
+		//	DOMAIN_EVENT='domainEvent' |
+		//	DOMAIN_SERVICE='domainService' |
+		//	ENTITY='entity' |
+		//	FACTORY='factory' |
+		//	INFRASTRUCTURE_SERVICE='infrastructureService' |
+		//	REPOSITORY='repository' |
+		//	SERVICE='service' |
+		//	SPECIFICATION='specification' |
+		//	VALUE_OBJECT='valueObject';
 		public EnumRule getRule() { return rule; }
 		
-		//AGGREGATE="aggregate" | APPLICATION_SERVICE="applicationService" | DOMAIN_EVENT="domainEvent" |
-		//DOMAIN_SERVICE="domainService" | ENTITY="entity" | FACTORY="factory" | INFRASTRUCTURE_SERVICE="infrastructureService" |
-		//REPOSITORY="repository" | SERVICE="service" | SPECIFICATION="specification" | VALUE_OBJECT="valueObject"
+		//AGGREGATE='aggregate' | APPLICATION_SERVICE='applicationService' | DOMAIN_EVENT='domainEvent' |
+		//DOMAIN_SERVICE='domainService' | ENTITY='entity' | FACTORY='factory' | INFRASTRUCTURE_SERVICE='infrastructureService' |
+		//REPOSITORY='repository' | SERVICE='service' | SPECIFICATION='specification' | VALUE_OBJECT='valueObject'
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
-		//AGGREGATE="aggregate"
+		//AGGREGATE='aggregate'
 		public EnumLiteralDeclaration getAGGREGATEEnumLiteralDeclaration_0() { return cAGGREGATEEnumLiteralDeclaration_0; }
 		
-		//"aggregate"
+		//'aggregate'
 		public Keyword getAGGREGATEAggregateKeyword_0_0() { return cAGGREGATEAggregateKeyword_0_0; }
 		
-		//APPLICATION_SERVICE="applicationService"
+		//APPLICATION_SERVICE='applicationService'
 		public EnumLiteralDeclaration getAPPLICATION_SERVICEEnumLiteralDeclaration_1() { return cAPPLICATION_SERVICEEnumLiteralDeclaration_1; }
 		
-		//"applicationService"
+		//'applicationService'
 		public Keyword getAPPLICATION_SERVICEApplicationServiceKeyword_1_0() { return cAPPLICATION_SERVICEApplicationServiceKeyword_1_0; }
 		
-		//DOMAIN_EVENT="domainEvent"
+		//DOMAIN_EVENT='domainEvent'
 		public EnumLiteralDeclaration getDOMAIN_EVENTEnumLiteralDeclaration_2() { return cDOMAIN_EVENTEnumLiteralDeclaration_2; }
 		
-		//"domainEvent"
+		//'domainEvent'
 		public Keyword getDOMAIN_EVENTDomainEventKeyword_2_0() { return cDOMAIN_EVENTDomainEventKeyword_2_0; }
 		
-		//DOMAIN_SERVICE="domainService"
+		//DOMAIN_SERVICE='domainService'
 		public EnumLiteralDeclaration getDOMAIN_SERVICEEnumLiteralDeclaration_3() { return cDOMAIN_SERVICEEnumLiteralDeclaration_3; }
 		
-		//"domainService"
+		//'domainService'
 		public Keyword getDOMAIN_SERVICEDomainServiceKeyword_3_0() { return cDOMAIN_SERVICEDomainServiceKeyword_3_0; }
 		
-		//ENTITY="entity"
+		//ENTITY='entity'
 		public EnumLiteralDeclaration getENTITYEnumLiteralDeclaration_4() { return cENTITYEnumLiteralDeclaration_4; }
 		
-		//"entity"
+		//'entity'
 		public Keyword getENTITYEntityKeyword_4_0() { return cENTITYEntityKeyword_4_0; }
 		
-		//FACTORY="factory"
+		//FACTORY='factory'
 		public EnumLiteralDeclaration getFACTORYEnumLiteralDeclaration_5() { return cFACTORYEnumLiteralDeclaration_5; }
 		
-		//"factory"
+		//'factory'
 		public Keyword getFACTORYFactoryKeyword_5_0() { return cFACTORYFactoryKeyword_5_0; }
 		
-		//INFRASTRUCTURE_SERVICE="infrastructureService"
+		//INFRASTRUCTURE_SERVICE='infrastructureService'
 		public EnumLiteralDeclaration getINFRASTRUCTURE_SERVICEEnumLiteralDeclaration_6() { return cINFRASTRUCTURE_SERVICEEnumLiteralDeclaration_6; }
 		
-		//"infrastructureService"
+		//'infrastructureService'
 		public Keyword getINFRASTRUCTURE_SERVICEInfrastructureServiceKeyword_6_0() { return cINFRASTRUCTURE_SERVICEInfrastructureServiceKeyword_6_0; }
 		
-		//REPOSITORY="repository"
+		//REPOSITORY='repository'
 		public EnumLiteralDeclaration getREPOSITORYEnumLiteralDeclaration_7() { return cREPOSITORYEnumLiteralDeclaration_7; }
 		
-		//"repository"
+		//'repository'
 		public Keyword getREPOSITORYRepositoryKeyword_7_0() { return cREPOSITORYRepositoryKeyword_7_0; }
 		
-		//SERVICE="service"
+		//SERVICE='service'
 		public EnumLiteralDeclaration getSERVICEEnumLiteralDeclaration_8() { return cSERVICEEnumLiteralDeclaration_8; }
 		
-		//"service"
+		//'service'
 		public Keyword getSERVICEServiceKeyword_8_0() { return cSERVICEServiceKeyword_8_0; }
 		
-		//SPECIFICATION="specification"
+		//SPECIFICATION='specification'
 		public EnumLiteralDeclaration getSPECIFICATIONEnumLiteralDeclaration_9() { return cSPECIFICATIONEnumLiteralDeclaration_9; }
 		
-		//"specification"
+		//'specification'
 		public Keyword getSPECIFICATIONSpecificationKeyword_9_0() { return cSPECIFICATIONSpecificationKeyword_9_0; }
 		
-		//VALUE_OBJECT="valueObject"
+		//VALUE_OBJECT='valueObject'
 		public EnumLiteralDeclaration getVALUE_OBJECTEnumLiteralDeclaration_10() { return cVALUE_OBJECTEnumLiteralDeclaration_10; }
 		
-		//"valueObject"
+		//'valueObject'
 		public Keyword getVALUE_OBJECTValueObjectKeyword_10_0() { return cVALUE_OBJECTValueObjectKeyword_10_0; }
 	}
 	public class DataFieldFeatureElements extends AbstractEnumRuleElementFinder {
@@ -1252,30 +1252,30 @@ public class DataDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cPARTPartKeyword_2_0 = (Keyword)cPARTEnumLiteralDeclaration_2.eContents().get(0);
 		
 		//enum DataFieldFeature:
-		//	IDENTIFIER="identifier" |
-		//	NEVER_EMPTY="neverEmpty" |
-		//	PART="part";
+		//	IDENTIFIER='identifier' |
+		//	NEVER_EMPTY='neverEmpty' |
+		//	PART='part';
 		public EnumRule getRule() { return rule; }
 		
-		//IDENTIFIER="identifier" | NEVER_EMPTY="neverEmpty" | PART="part"
+		//IDENTIFIER='identifier' | NEVER_EMPTY='neverEmpty' | PART='part'
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
-		//IDENTIFIER="identifier"
+		//IDENTIFIER='identifier'
 		public EnumLiteralDeclaration getIDENTIFIEREnumLiteralDeclaration_0() { return cIDENTIFIEREnumLiteralDeclaration_0; }
 		
-		//"identifier"
+		//'identifier'
 		public Keyword getIDENTIFIERIdentifierKeyword_0_0() { return cIDENTIFIERIdentifierKeyword_0_0; }
 		
-		//NEVER_EMPTY="neverEmpty"
+		//NEVER_EMPTY='neverEmpty'
 		public EnumLiteralDeclaration getNEVER_EMPTYEnumLiteralDeclaration_1() { return cNEVER_EMPTYEnumLiteralDeclaration_1; }
 		
-		//"neverEmpty"
+		//'neverEmpty'
 		public Keyword getNEVER_EMPTYNeverEmptyKeyword_1_0() { return cNEVER_EMPTYNeverEmptyKeyword_1_0; }
 		
-		//PART="part"
+		//PART='part'
 		public EnumLiteralDeclaration getPARTEnumLiteralDeclaration_2() { return cPARTEnumLiteralDeclaration_2; }
 		
-		//"part"
+		//'part'
 		public Keyword getPARTPartKeyword_2_0() { return cPARTPartKeyword_2_0; }
 	}
 	public class DataOperationFeatureElements extends AbstractEnumRuleElementFinder {
@@ -1291,37 +1291,37 @@ public class DataDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cVALIDATORValidatorKeyword_3_0 = (Keyword)cVALIDATOREnumLiteralDeclaration_3.eContents().get(0);
 		
 		//enum DataOperationFeature:
-		//	CLOSURE="closure" |
-		//	IDENTIFIER="identifier" |
-		//	SIDE_EFFECT_FREE="sideEffectFree" |
-		//	VALIDATOR="validator";
+		//	CLOSURE='closure' |
+		//	IDENTIFIER='identifier' |
+		//	SIDE_EFFECT_FREE='sideEffectFree' |
+		//	VALIDATOR='validator';
 		public EnumRule getRule() { return rule; }
 		
-		//CLOSURE="closure" | IDENTIFIER="identifier" | SIDE_EFFECT_FREE="sideEffectFree" | VALIDATOR="validator"
+		//CLOSURE='closure' | IDENTIFIER='identifier' | SIDE_EFFECT_FREE='sideEffectFree' | VALIDATOR='validator'
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
-		//CLOSURE="closure"
+		//CLOSURE='closure'
 		public EnumLiteralDeclaration getCLOSUREEnumLiteralDeclaration_0() { return cCLOSUREEnumLiteralDeclaration_0; }
 		
-		//"closure"
+		//'closure'
 		public Keyword getCLOSUREClosureKeyword_0_0() { return cCLOSUREClosureKeyword_0_0; }
 		
-		//IDENTIFIER="identifier"
+		//IDENTIFIER='identifier'
 		public EnumLiteralDeclaration getIDENTIFIEREnumLiteralDeclaration_1() { return cIDENTIFIEREnumLiteralDeclaration_1; }
 		
-		//"identifier"
+		//'identifier'
 		public Keyword getIDENTIFIERIdentifierKeyword_1_0() { return cIDENTIFIERIdentifierKeyword_1_0; }
 		
-		//SIDE_EFFECT_FREE="sideEffectFree"
+		//SIDE_EFFECT_FREE='sideEffectFree'
 		public EnumLiteralDeclaration getSIDE_EFFECT_FREEEnumLiteralDeclaration_2() { return cSIDE_EFFECT_FREEEnumLiteralDeclaration_2; }
 		
-		//"sideEffectFree"
+		//'sideEffectFree'
 		public Keyword getSIDE_EFFECT_FREESideEffectFreeKeyword_2_0() { return cSIDE_EFFECT_FREESideEffectFreeKeyword_2_0; }
 		
-		//VALIDATOR="validator"
+		//VALIDATOR='validator'
 		public EnumLiteralDeclaration getVALIDATOREnumLiteralDeclaration_3() { return cVALIDATOREnumLiteralDeclaration_3; }
 		
-		//"validator"
+		//'validator'
 		public Keyword getVALIDATORValidatorKeyword_3_0() { return cVALIDATORValidatorKeyword_3_0; }
 	}
 	
@@ -1460,17 +1460,17 @@ public class DataDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//enum DataStructureFeature:
-	//	AGGREGATE="aggregate" |
-	//	APPLICATION_SERVICE="applicationService" |
-	//	DOMAIN_EVENT="domainEvent" |
-	//	DOMAIN_SERVICE="domainService" |
-	//	ENTITY="entity" |
-	//	FACTORY="factory" |
-	//	INFRASTRUCTURE_SERVICE="infrastructureService" |
-	//	REPOSITORY="repository" |
-	//	SERVICE="service" |
-	//	SPECIFICATION="specification" |
-	//	VALUE_OBJECT="valueObject";
+	//	AGGREGATE='aggregate' |
+	//	APPLICATION_SERVICE='applicationService' |
+	//	DOMAIN_EVENT='domainEvent' |
+	//	DOMAIN_SERVICE='domainService' |
+	//	ENTITY='entity' |
+	//	FACTORY='factory' |
+	//	INFRASTRUCTURE_SERVICE='infrastructureService' |
+	//	REPOSITORY='repository' |
+	//	SERVICE='service' |
+	//	SPECIFICATION='specification' |
+	//	VALUE_OBJECT='valueObject';
 	public DataStructureFeatureElements getDataStructureFeatureAccess() {
 		return eDataStructureFeature;
 	}
@@ -1509,9 +1509,9 @@ public class DataDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//enum DataFieldFeature:
-	//	IDENTIFIER="identifier" |
-	//	NEVER_EMPTY="neverEmpty" |
-	//	PART="part";
+	//	IDENTIFIER='identifier' |
+	//	NEVER_EMPTY='neverEmpty' |
+	//	PART='part';
 	public DataFieldFeatureElements getDataFieldFeatureAccess() {
 		return eDataFieldFeature;
 	}
@@ -1556,10 +1556,10 @@ public class DataDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//enum DataOperationFeature:
-	//	CLOSURE="closure" |
-	//	IDENTIFIER="identifier" |
-	//	SIDE_EFFECT_FREE="sideEffectFree" |
-	//	VALIDATOR="validator";
+	//	CLOSURE='closure' |
+	//	IDENTIFIER='identifier' |
+	//	SIDE_EFFECT_FREE='sideEffectFree' |
+	//	VALIDATOR='validator';
 	public DataOperationFeatureElements getDataOperationFeatureAccess() {
 		return eDataOperationFeature;
 	}

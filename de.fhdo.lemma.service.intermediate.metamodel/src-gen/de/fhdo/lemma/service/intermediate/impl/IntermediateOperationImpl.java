@@ -6,6 +6,7 @@ import de.fhdo.lemma.data.intermediate.IntermediateImportedAspect;
 
 import de.fhdo.lemma.service.Visibility;
 
+import de.fhdo.lemma.service.intermediate.IntermediateApiOperationComment;
 import de.fhdo.lemma.service.intermediate.IntermediateEndpoint;
 import de.fhdo.lemma.service.intermediate.IntermediateInterface;
 import de.fhdo.lemma.service.intermediate.IntermediateOperation;
@@ -43,6 +44,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.fhdo.lemma.service.intermediate.impl.IntermediateOperationImpl#getQualifiedName <em>Qualified Name</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.intermediate.impl.IntermediateOperationImpl#getVisibility <em>Visibility</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.intermediate.impl.IntermediateOperationImpl#isNotImplemented <em>Not Implemented</em>}</li>
+ *   <li>{@link de.fhdo.lemma.service.intermediate.impl.IntermediateOperationImpl#getApiOperationComment <em>Api Operation Comment</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.intermediate.impl.IntermediateOperationImpl#getEndpoints <em>Endpoints</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.intermediate.impl.IntermediateOperationImpl#getProtocols <em>Protocols</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.intermediate.impl.IntermediateOperationImpl#getAspects <em>Aspects</em>}</li>
@@ -132,6 +134,16 @@ public class IntermediateOperationImpl extends MinimalEObjectImpl.Container impl
      * @ordered
      */
     protected boolean notImplemented = NOT_IMPLEMENTED_EDEFAULT;
+
+    /**
+     * The cached value of the '{@link #getApiOperationComment() <em>Api Operation Comment</em>}' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getApiOperationComment()
+     * @generated
+     * @ordered
+     */
+    protected IntermediateApiOperationComment apiOperationComment;
 
     /**
      * The cached value of the '{@link #getEndpoints() <em>Endpoints</em>}' containment reference list.
@@ -290,6 +302,51 @@ public class IntermediateOperationImpl extends MinimalEObjectImpl.Container impl
      * @generated
      */
     @Override
+    public IntermediateApiOperationComment getApiOperationComment() {
+        return apiOperationComment;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public NotificationChain basicSetApiOperationComment(IntermediateApiOperationComment newApiOperationComment, NotificationChain msgs) {
+        IntermediateApiOperationComment oldApiOperationComment = apiOperationComment;
+        apiOperationComment = newApiOperationComment;
+        if (eNotificationRequired()) {
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, IntermediatePackage.INTERMEDIATE_OPERATION__API_OPERATION_COMMENT, oldApiOperationComment, newApiOperationComment);
+            if (msgs == null) msgs = notification; else msgs.add(notification);
+        }
+        return msgs;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void setApiOperationComment(IntermediateApiOperationComment newApiOperationComment) {
+        if (newApiOperationComment != apiOperationComment) {
+            NotificationChain msgs = null;
+            if (apiOperationComment != null)
+                msgs = ((InternalEObject)apiOperationComment).eInverseRemove(this, IntermediatePackage.INTERMEDIATE_API_OPERATION_COMMENT__OPERATION, IntermediateApiOperationComment.class, msgs);
+            if (newApiOperationComment != null)
+                msgs = ((InternalEObject)newApiOperationComment).eInverseAdd(this, IntermediatePackage.INTERMEDIATE_API_OPERATION_COMMENT__OPERATION, IntermediateApiOperationComment.class, msgs);
+            msgs = basicSetApiOperationComment(newApiOperationComment, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, IntermediatePackage.INTERMEDIATE_OPERATION__API_OPERATION_COMMENT, newApiOperationComment, newApiOperationComment));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public EList<IntermediateEndpoint> getEndpoints() {
         if (endpoints == null) {
             endpoints = new EObjectContainmentWithInverseEList<IntermediateEndpoint>(IntermediateEndpoint.class, this, IntermediatePackage.INTERMEDIATE_OPERATION__ENDPOINTS, IntermediatePackage.INTERMEDIATE_ENDPOINT__OPERATION);
@@ -398,6 +455,10 @@ public class IntermediateOperationImpl extends MinimalEObjectImpl.Container impl
     @Override
     public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
+            case IntermediatePackage.INTERMEDIATE_OPERATION__API_OPERATION_COMMENT:
+                if (apiOperationComment != null)
+                    msgs = ((InternalEObject)apiOperationComment).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - IntermediatePackage.INTERMEDIATE_OPERATION__API_OPERATION_COMMENT, null, msgs);
+                return basicSetApiOperationComment((IntermediateApiOperationComment)otherEnd, msgs);
             case IntermediatePackage.INTERMEDIATE_OPERATION__ENDPOINTS:
                 return ((InternalEList<InternalEObject>)(InternalEList<?>)getEndpoints()).basicAdd(otherEnd, msgs);
             case IntermediatePackage.INTERMEDIATE_OPERATION__PARAMETERS:
@@ -418,6 +479,8 @@ public class IntermediateOperationImpl extends MinimalEObjectImpl.Container impl
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
+            case IntermediatePackage.INTERMEDIATE_OPERATION__API_OPERATION_COMMENT:
+                return basicSetApiOperationComment(null, msgs);
             case IntermediatePackage.INTERMEDIATE_OPERATION__ENDPOINTS:
                 return ((InternalEList<?>)getEndpoints()).basicRemove(otherEnd, msgs);
             case IntermediatePackage.INTERMEDIATE_OPERATION__PROTOCOLS:
@@ -462,6 +525,8 @@ public class IntermediateOperationImpl extends MinimalEObjectImpl.Container impl
                 return getVisibility();
             case IntermediatePackage.INTERMEDIATE_OPERATION__NOT_IMPLEMENTED:
                 return isNotImplemented();
+            case IntermediatePackage.INTERMEDIATE_OPERATION__API_OPERATION_COMMENT:
+                return getApiOperationComment();
             case IntermediatePackage.INTERMEDIATE_OPERATION__ENDPOINTS:
                 return getEndpoints();
             case IntermediatePackage.INTERMEDIATE_OPERATION__PROTOCOLS:
@@ -497,6 +562,9 @@ public class IntermediateOperationImpl extends MinimalEObjectImpl.Container impl
                 return;
             case IntermediatePackage.INTERMEDIATE_OPERATION__NOT_IMPLEMENTED:
                 setNotImplemented((Boolean)newValue);
+                return;
+            case IntermediatePackage.INTERMEDIATE_OPERATION__API_OPERATION_COMMENT:
+                setApiOperationComment((IntermediateApiOperationComment)newValue);
                 return;
             case IntermediatePackage.INTERMEDIATE_OPERATION__ENDPOINTS:
                 getEndpoints().clear();
@@ -541,6 +609,9 @@ public class IntermediateOperationImpl extends MinimalEObjectImpl.Container impl
             case IntermediatePackage.INTERMEDIATE_OPERATION__NOT_IMPLEMENTED:
                 setNotImplemented(NOT_IMPLEMENTED_EDEFAULT);
                 return;
+            case IntermediatePackage.INTERMEDIATE_OPERATION__API_OPERATION_COMMENT:
+                setApiOperationComment((IntermediateApiOperationComment)null);
+                return;
             case IntermediatePackage.INTERMEDIATE_OPERATION__ENDPOINTS:
                 getEndpoints().clear();
                 return;
@@ -576,6 +647,8 @@ public class IntermediateOperationImpl extends MinimalEObjectImpl.Container impl
                 return visibility != VISIBILITY_EDEFAULT;
             case IntermediatePackage.INTERMEDIATE_OPERATION__NOT_IMPLEMENTED:
                 return notImplemented != NOT_IMPLEMENTED_EDEFAULT;
+            case IntermediatePackage.INTERMEDIATE_OPERATION__API_OPERATION_COMMENT:
+                return apiOperationComment != null;
             case IntermediatePackage.INTERMEDIATE_OPERATION__ENDPOINTS:
                 return endpoints != null && !endpoints.isEmpty();
             case IntermediatePackage.INTERMEDIATE_OPERATION__PROTOCOLS:

@@ -26,6 +26,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.fhdo.lemma.service.Operation#getName <em>Name</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.Operation#isNotImplemented <em>Not Implemented</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.Operation#getVisibility <em>Visibility</em>}</li>
+ *   <li>{@link de.fhdo.lemma.service.Operation#getApiOperationComment <em>Api Operation Comment</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.Operation#getEndpoints <em>Endpoints</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.Operation#getProtocols <em>Protocols</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.Operation#getParameters <em>Parameters</em>}</li>
@@ -128,6 +129,34 @@ public interface Operation extends EObject {
      * @generated
      */
     void setVisibility(Visibility value);
+
+    /**
+     * Returns the value of the '<em><b>Api Operation Comment</b></em>' containment reference.
+     * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.ApiOperationComment#getOperation <em>Operation</em>}'.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Api Operation Comment</em>' containment reference isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Api Operation Comment</em>' containment reference.
+     * @see #setApiOperationComment(ApiOperationComment)
+     * @see de.fhdo.lemma.service.ServicePackage#getOperation_ApiOperationComment()
+     * @see de.fhdo.lemma.service.ApiOperationComment#getOperation
+     * @model opposite="operation" containment="true"
+     * @generated
+     */
+    ApiOperationComment getApiOperationComment();
+
+    /**
+     * Sets the value of the '{@link de.fhdo.lemma.service.Operation#getApiOperationComment <em>Api Operation Comment</em>}' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Api Operation Comment</em>' containment reference.
+     * @see #getApiOperationComment()
+     * @generated
+     */
+    void setApiOperationComment(ApiOperationComment value);
 
     /**
      * Returns the value of the '<em><b>Endpoints</b></em>' containment reference list.

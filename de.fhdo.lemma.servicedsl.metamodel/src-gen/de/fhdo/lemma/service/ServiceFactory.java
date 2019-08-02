@@ -112,6 +112,24 @@ public interface ServiceFactory extends EFactory {
     Operation createOperation();
 
     /**
+     * Returns a new object of class '<em>Api Operation Comment</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Api Operation Comment</em>'.
+     * @generated
+     */
+    ApiOperationComment createApiOperationComment();
+
+    /**
+     * Returns a new object of class '<em>Api Parameter Comment</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Api Parameter Comment</em>'.
+     * @generated
+     */
+    ApiParameterComment createApiParameterComment();
+
+    /**
      * Returns a new object of class '<em>Referred Operation</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

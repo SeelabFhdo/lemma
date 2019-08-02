@@ -28,6 +28,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.fhdo.lemma.service.intermediate.IntermediateOperation#getQualifiedName <em>Qualified Name</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.intermediate.IntermediateOperation#getVisibility <em>Visibility</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.intermediate.IntermediateOperation#isNotImplemented <em>Not Implemented</em>}</li>
+ *   <li>{@link de.fhdo.lemma.service.intermediate.IntermediateOperation#getApiOperationComment <em>Api Operation Comment</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.intermediate.IntermediateOperation#getEndpoints <em>Endpoints</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.intermediate.IntermediateOperation#getProtocols <em>Protocols</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.intermediate.IntermediateOperation#getAspects <em>Aspects</em>}</li>
@@ -146,6 +147,34 @@ public interface IntermediateOperation extends EObject {
      * @generated
      */
     void setNotImplemented(boolean value);
+
+    /**
+     * Returns the value of the '<em><b>Api Operation Comment</b></em>' containment reference.
+     * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.intermediate.IntermediateApiOperationComment#getOperation <em>Operation</em>}'.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Api Operation Comment</em>' containment reference isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Api Operation Comment</em>' containment reference.
+     * @see #setApiOperationComment(IntermediateApiOperationComment)
+     * @see de.fhdo.lemma.service.intermediate.IntermediatePackage#getIntermediateOperation_ApiOperationComment()
+     * @see de.fhdo.lemma.service.intermediate.IntermediateApiOperationComment#getOperation
+     * @model opposite="operation" containment="true"
+     * @generated
+     */
+    IntermediateApiOperationComment getApiOperationComment();
+
+    /**
+     * Sets the value of the '{@link de.fhdo.lemma.service.intermediate.IntermediateOperation#getApiOperationComment <em>Api Operation Comment</em>}' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Api Operation Comment</em>' containment reference.
+     * @see #getApiOperationComment()
+     * @generated
+     */
+    void setApiOperationComment(IntermediateApiOperationComment value);
 
     /**
      * Returns the value of the '<em><b>Endpoints</b></em>' containment reference list.

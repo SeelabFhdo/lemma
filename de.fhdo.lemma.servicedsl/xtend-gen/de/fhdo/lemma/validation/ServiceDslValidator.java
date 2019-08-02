@@ -13,6 +13,8 @@ import de.fhdo.lemma.data.DataModel;
 import de.fhdo.lemma.data.PrimitiveType;
 import de.fhdo.lemma.data.PrimitiveValue;
 import de.fhdo.lemma.data.Type;
+import de.fhdo.lemma.service.ApiOperationComment;
+import de.fhdo.lemma.service.ApiParameterComment;
 import de.fhdo.lemma.service.Endpoint;
 import de.fhdo.lemma.service.Import;
 import de.fhdo.lemma.service.ImportType;
@@ -849,6 +851,117 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
       String _plus = (_builder.toString() + _builder_1);
       this.warning(_plus, parameter, 
         ServicePackage.Literals.PARAMETER__INITIALIZED_BY_OPERATION);
+    }
+  }
+  
+  /**
+   * Warn if an API parameter has already been commented
+   */
+  @Check
+  public void warnDuplicateParameterComments(final ApiOperationComment operationComment) {
+    final EList<ApiParameterComment> parameterComments = operationComment.getParameterComments();
+    if (((parameterComments == null) || parameterComments.isEmpty())) {
+      return;
+    }
+    final Function<ApiParameterComment, Parameter> _function = (ApiParameterComment it) -> {
+      return it.getParameter();
+    };
+    final Integer duplicateIndex = LemmaUtils.<ApiParameterComment, Parameter>getDuplicateIndex(parameterComments, _function);
+    if (((duplicateIndex).intValue() > (-1))) {
+      final ApiParameterComment duplicateComment = parameterComments.get((duplicateIndex).intValue());
+      this.warning("Parameter has already been commented", duplicateComment, 
+        ServicePackage.Literals.API_PARAMETER_COMMENT__PARAMETER);
+    }
+  }
+  
+  /**
+   * Warn if an incoming API parameter has not been commented yet
+   */
+  @Check
+  public void warnMissingParameterComments(final ApiOperationComment operationComment) {
+    Operation _operation = operationComment.getOperation();
+    EList<Parameter> _parameters = null;
+    if (_operation!=null) {
+      _parameters=_operation.getParameters();
+    }
+    Iterable<Parameter> _filter = null;
+    if (_parameters!=null) {
+      final Function1<Parameter, Boolean> _function = (Parameter it) -> {
+        return Boolean.valueOf(((it.getExchangePattern() == ExchangePattern.IN) || 
+          (it.getExchangePattern() == ExchangePattern.INOUT)));
+      };
+      _filter=IterableExtensions.<Parameter>filter(_parameters, _function);
+    }
+    final Iterable<Parameter> allIncomingParameters = _filter;
+    if ((allIncomingParameters == null)) {
+      return;
+    }
+    final Function1<Parameter, Boolean> _function_1 = (Parameter incomingParameter) -> {
+      final Function1<ApiParameterComment, Boolean> _function_2 = (ApiParameterComment it) -> {
+        Parameter _parameter = it.getParameter();
+        return Boolean.valueOf(Objects.equal(_parameter, incomingParameter));
+      };
+      boolean _exists = IterableExtensions.<ApiParameterComment>exists(operationComment.getParameterComments(), _function_2);
+      return Boolean.valueOf((!_exists));
+    };
+    final Parameter missingParameter = IterableExtensions.<Parameter>findFirst(allIncomingParameters, _function_1);
+    if ((missingParameter != null)) {
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("Incoming parameter ");
+      String _name = missingParameter.getName();
+      _builder.append(_name);
+      _builder.append(" has not been commented yet");
+      this.warning(_builder.toString(), 
+        ServicePackage.Literals.API_OPERATION_COMMENT__COMMENT);
+    }
+  }
+  
+  /**
+   * Warn if an API parameter has been commented as being required/not required when it is modeled
+   * as being optional/not optional
+   */
+  @Check
+  public void warnParameterCommentDiffersFromOptionalFlag(final ApiParameterComment parameterComment) {
+    Parameter _parameter = parameterComment.getParameter();
+    boolean _tripleEquals = (_parameter == null);
+    if (_tripleEquals) {
+      return;
+    }
+    boolean _isRequired = parameterComment.isRequired();
+    boolean _isOptional = parameterComment.getParameter().isOptional();
+    boolean _not = (!_isOptional);
+    boolean _tripleNotEquals = (Boolean.valueOf(_isRequired) != Boolean.valueOf(_not));
+    if (_tripleNotEquals) {
+      String _xifexpression = null;
+      boolean _isRequired_1 = parameterComment.isRequired();
+      boolean _not_1 = (!_isRequired_1);
+      if (_not_1) {
+        _xifexpression = " not ";
+      } else {
+        _xifexpression = " ";
+      }
+      final String commentIsRequiredString = _xifexpression;
+      String _xifexpression_1 = null;
+      boolean _isOptional_1 = parameterComment.getParameter().isOptional();
+      boolean _not_2 = (!_isOptional_1);
+      if (_not_2) {
+        _xifexpression_1 = " ";
+      } else {
+        _xifexpression_1 = " not ";
+      }
+      final String parameterIsRequiredString = _xifexpression_1;
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("Parameter has been documented as being");
+      _builder.append(commentIsRequiredString);
+      _builder.append("required,");
+      StringConcatenation _builder_1 = new StringConcatenation();
+      _builder_1.append(" ");
+      _builder_1.append("but is modeled as being");
+      _builder_1.append(parameterIsRequiredString, " ");
+      _builder_1.append("required");
+      String _plus = (_builder.toString() + _builder_1);
+      this.warning(_plus, 
+        ServicePackage.Literals.API_PARAMETER_COMMENT__PARAMETER);
     }
   }
   

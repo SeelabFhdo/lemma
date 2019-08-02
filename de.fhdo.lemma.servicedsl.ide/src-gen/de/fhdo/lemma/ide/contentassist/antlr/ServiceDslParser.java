@@ -31,9 +31,11 @@ public class ServiceDslParser extends AbstractContentAssistParser {
 		}
 		
 		private static void init(ImmutableMap.Builder<AbstractElement, String> builder, ServiceDslGrammarAccess grammarAccess) {
+			builder.put(grammarAccess.getApiParameterCommentAccess().getAlternatives_0(), "rule__ApiParameterComment__Alternatives_0");
 			builder.put(grammarAccess.getParameterAccess().getAlternatives_7(), "rule__Parameter__Alternatives_7");
 			builder.put(grammarAccess.getImportedServiceAspectAccess().getAlternatives_4_1(), "rule__ImportedServiceAspect__Alternatives_4_1");
 			builder.put(grammarAccess.getPropertyValueAssignmentAccess().getAlternatives(), "rule__PropertyValueAssignment__Alternatives");
+			builder.put(grammarAccess.getAnythingAccess().getAlternatives(), "rule__Anything__Alternatives");
 			builder.put(grammarAccess.getTechnologyAccess().getAlternatives_4_2(), "rule__Technology__Alternatives_4_2");
 			builder.put(grammarAccess.getServiceAspectPointcutAccess().getAlternatives(), "rule__ServiceAspectPointcut__Alternatives");
 			builder.put(grammarAccess.getServiceAspectAccess().getAlternatives_5(), "rule__ServiceAspect__Alternatives_5");
@@ -85,10 +87,12 @@ public class ServiceDslParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getInterfaceAccess().getGroup(), "rule__Interface__Group__0");
 			builder.put(grammarAccess.getInterfaceAccess().getGroup_0(), "rule__Interface__Group_0__0");
 			builder.put(grammarAccess.getInterfaceAccess().getGroup_1(), "rule__Interface__Group_1__0");
+			builder.put(grammarAccess.getApiOperationCommentAccess().getGroup(), "rule__ApiOperationComment__Group__0");
+			builder.put(grammarAccess.getApiParameterCommentAccess().getGroup(), "rule__ApiParameterComment__Group__0");
 			builder.put(grammarAccess.getOperationAccess().getGroup(), "rule__Operation__Group__0");
-			builder.put(grammarAccess.getOperationAccess().getGroup_0(), "rule__Operation__Group_0__0");
 			builder.put(grammarAccess.getOperationAccess().getGroup_1(), "rule__Operation__Group_1__0");
-			builder.put(grammarAccess.getOperationAccess().getGroup_8(), "rule__Operation__Group_8__0");
+			builder.put(grammarAccess.getOperationAccess().getGroup_2(), "rule__Operation__Group_2__0");
+			builder.put(grammarAccess.getOperationAccess().getGroup_9(), "rule__Operation__Group_9__0");
 			builder.put(grammarAccess.getReferredOperationAccess().getGroup(), "rule__ReferredOperation__Group__0");
 			builder.put(grammarAccess.getReferredOperationAccess().getGroup_0(), "rule__ReferredOperation__Group_0__0");
 			builder.put(grammarAccess.getReferredOperationAccess().getGroup_1(), "rule__ReferredOperation__Group_1__0");
@@ -108,6 +112,7 @@ public class ServiceDslParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getPropertyValueAssignmentAccess().getGroup_0(), "rule__PropertyValueAssignment__Group_0__0");
 			builder.put(grammarAccess.getPropertyValueAssignmentAccess().getGroup_1(), "rule__PropertyValueAssignment__Group_1__0");
 			builder.put(grammarAccess.getQualifiedNameWithAtLeastOneLevelAccess().getGroup(), "rule__QualifiedNameWithAtLeastOneLevel__Group__0");
+			builder.put(grammarAccess.getAnythingAccess().getGroup_66(), "rule__Anything__Group_66__0");
 			builder.put(grammarAccess.getTechnologyAccess().getGroup(), "rule__Technology__Group__0");
 			builder.put(grammarAccess.getTechnologyAccess().getGroup_4(), "rule__Technology__Group_4__0");
 			builder.put(grammarAccess.getTechnologyAccess().getGroup_4_3(), "rule__Technology__Group_4_3__0");
@@ -233,15 +238,21 @@ public class ServiceDslParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getInterfaceAccess().getNameAssignment_6(), "rule__Interface__NameAssignment_6");
 			builder.put(grammarAccess.getInterfaceAccess().getReferredOperationsAssignment_8(), "rule__Interface__ReferredOperationsAssignment_8");
 			builder.put(grammarAccess.getInterfaceAccess().getOperationsAssignment_9(), "rule__Interface__OperationsAssignment_9");
-			builder.put(grammarAccess.getOperationAccess().getProtocolsAssignment_0_0(), "rule__Operation__ProtocolsAssignment_0_0");
-			builder.put(grammarAccess.getOperationAccess().getProtocolsAssignment_0_1(), "rule__Operation__ProtocolsAssignment_0_1");
-			builder.put(grammarAccess.getOperationAccess().getEndpointsAssignment_1_3(), "rule__Operation__EndpointsAssignment_1_3");
-			builder.put(grammarAccess.getOperationAccess().getAspectsAssignment_2(), "rule__Operation__AspectsAssignment_2");
-			builder.put(grammarAccess.getOperationAccess().getNotImplementedAssignment_3(), "rule__Operation__NotImplementedAssignment_3");
-			builder.put(grammarAccess.getOperationAccess().getVisibilityAssignment_4(), "rule__Operation__VisibilityAssignment_4");
-			builder.put(grammarAccess.getOperationAccess().getNameAssignment_5(), "rule__Operation__NameAssignment_5");
-			builder.put(grammarAccess.getOperationAccess().getParametersAssignment_7(), "rule__Operation__ParametersAssignment_7");
-			builder.put(grammarAccess.getOperationAccess().getParametersAssignment_8_1(), "rule__Operation__ParametersAssignment_8_1");
+			builder.put(grammarAccess.getApiOperationCommentAccess().getCommentAssignment_1(), "rule__ApiOperationComment__CommentAssignment_1");
+			builder.put(grammarAccess.getApiOperationCommentAccess().getParameterCommentsAssignment_2(), "rule__ApiOperationComment__ParameterCommentsAssignment_2");
+			builder.put(grammarAccess.getApiParameterCommentAccess().getRequiredAssignment_0_1(), "rule__ApiParameterComment__RequiredAssignment_0_1");
+			builder.put(grammarAccess.getApiParameterCommentAccess().getParameterAssignment_1(), "rule__ApiParameterComment__ParameterAssignment_1");
+			builder.put(grammarAccess.getApiParameterCommentAccess().getCommentAssignment_2(), "rule__ApiParameterComment__CommentAssignment_2");
+			builder.put(grammarAccess.getOperationAccess().getApiOperationCommentAssignment_0(), "rule__Operation__ApiOperationCommentAssignment_0");
+			builder.put(grammarAccess.getOperationAccess().getProtocolsAssignment_1_0(), "rule__Operation__ProtocolsAssignment_1_0");
+			builder.put(grammarAccess.getOperationAccess().getProtocolsAssignment_1_1(), "rule__Operation__ProtocolsAssignment_1_1");
+			builder.put(grammarAccess.getOperationAccess().getEndpointsAssignment_2_3(), "rule__Operation__EndpointsAssignment_2_3");
+			builder.put(grammarAccess.getOperationAccess().getAspectsAssignment_3(), "rule__Operation__AspectsAssignment_3");
+			builder.put(grammarAccess.getOperationAccess().getNotImplementedAssignment_4(), "rule__Operation__NotImplementedAssignment_4");
+			builder.put(grammarAccess.getOperationAccess().getVisibilityAssignment_5(), "rule__Operation__VisibilityAssignment_5");
+			builder.put(grammarAccess.getOperationAccess().getNameAssignment_6(), "rule__Operation__NameAssignment_6");
+			builder.put(grammarAccess.getOperationAccess().getParametersAssignment_8(), "rule__Operation__ParametersAssignment_8");
+			builder.put(grammarAccess.getOperationAccess().getParametersAssignment_9_1(), "rule__Operation__ParametersAssignment_9_1");
 			builder.put(grammarAccess.getReferredOperationAccess().getProtocolsAssignment_0_0(), "rule__ReferredOperation__ProtocolsAssignment_0_0");
 			builder.put(grammarAccess.getReferredOperationAccess().getProtocolsAssignment_0_1(), "rule__ReferredOperation__ProtocolsAssignment_0_1");
 			builder.put(grammarAccess.getReferredOperationAccess().getEndpointsAssignment_1_3(), "rule__ReferredOperation__EndpointsAssignment_1_3");

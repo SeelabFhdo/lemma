@@ -39,6 +39,8 @@ import de.fhdo.lemma.technology.TechnologyPackage
 import org.eclipse.xtext.EcoreUtil2
 import de.fhdo.lemma.service.TechnologyReference
 import de.fhdo.lemma.utils.LemmaUtils
+import de.fhdo.lemma.service.ApiOperationComment
+import de.fhdo.lemma.service.ApiParameterComment
 
 /**
  * This class contains custom validation rules for service models.
@@ -592,6 +594,67 @@ class ServiceDslValidator extends AbstractServiceDslValidator {
             warning('''Operation does not have any outgoing parameters with communication type ''' +
                 '''«communicationTypeName»''', parameter,
                 ServicePackage::Literals.PARAMETER__INITIALIZED_BY_OPERATION)
+        }
+    }
+
+    /**
+     * Warn if an API parameter has already been commented
+     */
+    @Check
+    def warnDuplicateParameterComments(ApiOperationComment operationComment) {
+        val parameterComments = operationComment.parameterComments
+        if (parameterComments === null || parameterComments.empty) {
+            return
+        }
+
+        val duplicateIndex = LemmaUtils.getDuplicateIndex(parameterComments, [it.parameter])
+        if (duplicateIndex > -1) {
+            val duplicateComment = parameterComments.get(duplicateIndex)
+            warning("Parameter has already been commented", duplicateComment,
+                ServicePackage.Literals::API_PARAMETER_COMMENT__PARAMETER)
+        }
+    }
+
+    /**
+     * Warn if an incoming API parameter has not been commented yet
+     */
+    @Check
+    def warnMissingParameterComments(ApiOperationComment operationComment) {
+        val allIncomingParameters = operationComment.operation?.parameters?.filter[
+            exchangePattern === ExchangePattern.IN ||
+            exchangePattern === ExchangePattern.INOUT
+        ]
+        if (allIncomingParameters === null) {
+            return
+        }
+
+        val missingParameter = allIncomingParameters.findFirst[incomingParameter |
+            !operationComment.parameterComments.exists[parameter == incomingParameter]
+        ]
+        if (missingParameter !== null)
+            warning('''Incoming parameter «missingParameter.name» has not been commented yet''',
+                ServicePackage.Literals::API_OPERATION_COMMENT__COMMENT)
+    }
+
+    /**
+     * Warn if an API parameter has been commented as being required/not required when it is modeled
+     * as being optional/not optional
+     */
+    @Check
+    def warnParameterCommentDiffersFromOptionalFlag(ApiParameterComment parameterComment) {
+        if (parameterComment.parameter === null) {
+            return
+        }
+
+        if (parameterComment.required !== !parameterComment.parameter.optional) {
+            val commentIsRequiredString = if (!parameterComment.required) " not " else " "
+            val parameterIsRequiredString = if (!parameterComment.parameter.optional)
+                    " "
+                else
+                    " not "
+            warning('''Parameter has been documented as being«commentIsRequiredString»required,''' +
+                ''' but is modeled as being«parameterIsRequiredString»required''',
+                ServicePackage.Literals::API_PARAMETER_COMMENT__PARAMETER)
         }
     }
 

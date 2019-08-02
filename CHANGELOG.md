@@ -16,6 +16,7 @@ All notable changes to [LEMMA](https://github.com/SeelabFhdo/lemma/) will be doc
 - Operation DSL: Provide alternative, "call-like" notation for property value assignment. Next to ```property = value```, it is now also possible to write ```property(value)```.
 - Service DSL: Provide alternative, "call-like" notation for property value assignment. Next to ```property = value```, it is now also possible to write ```property(value)```.
 - Service DSL: Extend the built-in ```@technology``` annotation with a flag (```typedef```) to explicitly specify the default type definition technology of a microservice.
+- Service DSL: Enable API commenting. API comments can be placed above service operations as the first element (i.e., above possible built-in or technology aspect annotations and the operation name). API comments are enclosed in a pair of three subsequent dashes (```---```) and start with a text describing the service operation as part of the API. After the description text, parameters of the operation may be commented leveraging the following pattern: ```@[API_PARAM_SPEC] [parameterName] [parameterDescriptionText]``` with ```API_PARAM_SPEC``` being either ```param``` (optional parameters) or ```required``` (required parameters).
 - Technology DSL: Enable specification of prescribed features for aspect, service, and operation properties. The  ```mandatory``` feature allows for specifying that the property needs to receive a value. The ```singleval``` feature allows for specifying that the property may receive a value exactly once.
 - Technology DSL: Provide ```technology``` pointcut selector for operation aspects.
 
@@ -41,3 +42,6 @@ All notable changes to [LEMMA](https://github.com/SeelabFhdo/lemma/) will be doc
 - Tooling: The Maven buildscript now shows notifications when the build of a module has finished.
 - UI: Add keyword highlighting for boolean values.
 - UI: Don't allow transformation of erroneous models.
+
+### Removed
+- Service DSL: It is not possible anymore to use single-quotes (```'```) to enclose strings. Instead, double-quotes (```"```) must be used. If double-quotes must be included in strings as literals, they can be escaped to ```\"```. Consequently, the string ```'Beware the Jubjub bird, and shun the frumious "Bandersnatch"!'``` must be transformed to ```"Beware the Jubjub bird, and shun the frumious 'Bandersnatch'!"``` or ```"Beware the Jubjub bird, and shun the frumious \"Bandersnatch\"!"```.

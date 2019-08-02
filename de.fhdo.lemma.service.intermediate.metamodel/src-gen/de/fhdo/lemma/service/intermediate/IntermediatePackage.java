@@ -458,13 +458,22 @@ public interface IntermediatePackage extends EPackage {
     int INTERMEDIATE_OPERATION__NOT_IMPLEMENTED = 3;
 
     /**
+     * The feature id for the '<em><b>Api Operation Comment</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_OPERATION__API_OPERATION_COMMENT = 4;
+
+    /**
      * The feature id for the '<em><b>Endpoints</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_OPERATION__ENDPOINTS = 4;
+    int INTERMEDIATE_OPERATION__ENDPOINTS = 5;
 
     /**
      * The feature id for the '<em><b>Protocols</b></em>' containment reference list.
@@ -473,7 +482,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_OPERATION__PROTOCOLS = 5;
+    int INTERMEDIATE_OPERATION__PROTOCOLS = 6;
 
     /**
      * The feature id for the '<em><b>Aspects</b></em>' containment reference list.
@@ -482,7 +491,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_OPERATION__ASPECTS = 6;
+    int INTERMEDIATE_OPERATION__ASPECTS = 7;
 
     /**
      * The feature id for the '<em><b>Parameters</b></em>' containment reference list.
@@ -491,7 +500,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_OPERATION__PARAMETERS = 7;
+    int INTERMEDIATE_OPERATION__PARAMETERS = 8;
 
     /**
      * The feature id for the '<em><b>Interface</b></em>' container reference.
@@ -500,7 +509,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_OPERATION__INTERFACE = 8;
+    int INTERMEDIATE_OPERATION__INTERFACE = 9;
 
     /**
      * The number of structural features of the '<em>Operation</em>' class.
@@ -509,7 +518,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_OPERATION_FEATURE_COUNT = 9;
+    int INTERMEDIATE_OPERATION_FEATURE_COUNT = 10;
 
     /**
      * The number of operations of the '<em>Operation</em>' class.
@@ -521,6 +530,125 @@ public interface IntermediatePackage extends EPackage {
     int INTERMEDIATE_OPERATION_OPERATION_COUNT = 0;
 
     /**
+     * The meta object id for the '{@link de.fhdo.lemma.service.intermediate.impl.IntermediateApiOperationCommentImpl <em>Api Operation Comment</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.fhdo.lemma.service.intermediate.impl.IntermediateApiOperationCommentImpl
+     * @see de.fhdo.lemma.service.intermediate.impl.IntermediatePackageImpl#getIntermediateApiOperationComment()
+     * @generated
+     */
+    int INTERMEDIATE_API_OPERATION_COMMENT = 4;
+
+    /**
+     * The feature id for the '<em><b>Comment</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_API_OPERATION_COMMENT__COMMENT = 0;
+
+    /**
+     * The feature id for the '<em><b>Parameter Comments</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_API_OPERATION_COMMENT__PARAMETER_COMMENTS = 1;
+
+    /**
+     * The feature id for the '<em><b>Operation</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_API_OPERATION_COMMENT__OPERATION = 2;
+
+    /**
+     * The number of structural features of the '<em>Api Operation Comment</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_API_OPERATION_COMMENT_FEATURE_COUNT = 3;
+
+    /**
+     * The number of operations of the '<em>Api Operation Comment</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_API_OPERATION_COMMENT_OPERATION_COUNT = 0;
+
+    /**
+     * The meta object id for the '{@link de.fhdo.lemma.service.intermediate.impl.IntermediateApiParameterCommentImpl <em>Api Parameter Comment</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.fhdo.lemma.service.intermediate.impl.IntermediateApiParameterCommentImpl
+     * @see de.fhdo.lemma.service.intermediate.impl.IntermediatePackageImpl#getIntermediateApiParameterComment()
+     * @generated
+     */
+    int INTERMEDIATE_API_PARAMETER_COMMENT = 5;
+
+    /**
+     * The feature id for the '<em><b>Comment</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_API_PARAMETER_COMMENT__COMMENT = 0;
+
+    /**
+     * The feature id for the '<em><b>Required</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_API_PARAMETER_COMMENT__REQUIRED = 1;
+
+    /**
+     * The feature id for the '<em><b>Parameter</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_API_PARAMETER_COMMENT__PARAMETER = 2;
+
+    /**
+     * The feature id for the '<em><b>Operation Comment</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_API_PARAMETER_COMMENT__OPERATION_COMMENT = 3;
+
+    /**
+     * The number of structural features of the '<em>Api Parameter Comment</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_API_PARAMETER_COMMENT_FEATURE_COUNT = 4;
+
+    /**
+     * The number of operations of the '<em>Api Parameter Comment</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_API_PARAMETER_COMMENT_OPERATION_COUNT = 0;
+
+    /**
      * The meta object id for the '{@link de.fhdo.lemma.service.intermediate.impl.IntermediateReferredOperationImpl <em>Referred Operation</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -528,7 +656,7 @@ public interface IntermediatePackage extends EPackage {
      * @see de.fhdo.lemma.service.intermediate.impl.IntermediatePackageImpl#getIntermediateReferredOperation()
      * @generated
      */
-    int INTERMEDIATE_REFERRED_OPERATION = 4;
+    int INTERMEDIATE_REFERRED_OPERATION = 6;
 
     /**
      * The feature id for the '<em><b>Name In Referring Interface</b></em>' attribute.
@@ -619,7 +747,7 @@ public interface IntermediatePackage extends EPackage {
      * @see de.fhdo.lemma.service.intermediate.impl.IntermediatePackageImpl#getIntermediateParameter()
      * @generated
      */
-    int INTERMEDIATE_PARAMETER = 5;
+    int INTERMEDIATE_PARAMETER = 7;
 
     /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -746,7 +874,7 @@ public interface IntermediatePackage extends EPackage {
      * @see de.fhdo.lemma.service.intermediate.impl.IntermediatePackageImpl#getDataFieldAspects()
      * @generated
      */
-    int DATA_FIELD_ASPECTS = 6;
+    int DATA_FIELD_ASPECTS = 8;
 
     /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -810,7 +938,7 @@ public interface IntermediatePackage extends EPackage {
      * @see de.fhdo.lemma.service.intermediate.impl.IntermediatePackageImpl#getMicroserviceReference()
      * @generated
      */
-    int MICROSERVICE_REFERENCE = 7;
+    int MICROSERVICE_REFERENCE = 9;
 
     /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -901,7 +1029,7 @@ public interface IntermediatePackage extends EPackage {
      * @see de.fhdo.lemma.service.intermediate.impl.IntermediatePackageImpl#getInterfaceReference()
      * @generated
      */
-    int INTERFACE_REFERENCE = 8;
+    int INTERFACE_REFERENCE = 10;
 
     /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -983,7 +1111,7 @@ public interface IntermediatePackage extends EPackage {
      * @see de.fhdo.lemma.service.intermediate.impl.IntermediatePackageImpl#getOperationReference()
      * @generated
      */
-    int OPERATION_REFERENCE = 9;
+    int OPERATION_REFERENCE = 11;
 
     /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1074,7 +1202,7 @@ public interface IntermediatePackage extends EPackage {
      * @see de.fhdo.lemma.service.intermediate.impl.IntermediatePackageImpl#getIntermediateTechnology()
      * @generated
      */
-    int INTERMEDIATE_TECHNOLOGY = 10;
+    int INTERMEDIATE_TECHNOLOGY = 12;
 
     /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1129,7 +1257,7 @@ public interface IntermediatePackage extends EPackage {
      * @see de.fhdo.lemma.service.intermediate.impl.IntermediatePackageImpl#getIntermediateEndpoint()
      * @generated
      */
-    int INTERMEDIATE_ENDPOINT = 11;
+    int INTERMEDIATE_ENDPOINT = 13;
 
     /**
      * The feature id for the '<em><b>Communication Type</b></em>' attribute.
@@ -1238,7 +1366,7 @@ public interface IntermediatePackage extends EPackage {
      * @see de.fhdo.lemma.service.intermediate.impl.IntermediatePackageImpl#getIntermediateProtocolSpecification()
      * @generated
      */
-    int INTERMEDIATE_PROTOCOL_SPECIFICATION = 12;
+    int INTERMEDIATE_PROTOCOL_SPECIFICATION = 14;
 
     /**
      * The feature id for the '<em><b>Communication Type</b></em>' attribute.
@@ -1701,6 +1829,17 @@ public interface IntermediatePackage extends EPackage {
     EAttribute getIntermediateOperation_NotImplemented();
 
     /**
+     * Returns the meta object for the containment reference '{@link de.fhdo.lemma.service.intermediate.IntermediateOperation#getApiOperationComment <em>Api Operation Comment</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference '<em>Api Operation Comment</em>'.
+     * @see de.fhdo.lemma.service.intermediate.IntermediateOperation#getApiOperationComment()
+     * @see #getIntermediateOperation()
+     * @generated
+     */
+    EReference getIntermediateOperation_ApiOperationComment();
+
+    /**
      * Returns the meta object for the containment reference list '{@link de.fhdo.lemma.service.intermediate.IntermediateOperation#getEndpoints <em>Endpoints</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1754,6 +1893,103 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      */
     EReference getIntermediateOperation_Interface();
+
+    /**
+     * Returns the meta object for class '{@link de.fhdo.lemma.service.intermediate.IntermediateApiOperationComment <em>Api Operation Comment</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Api Operation Comment</em>'.
+     * @see de.fhdo.lemma.service.intermediate.IntermediateApiOperationComment
+     * @generated
+     */
+    EClass getIntermediateApiOperationComment();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.fhdo.lemma.service.intermediate.IntermediateApiOperationComment#getComment <em>Comment</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Comment</em>'.
+     * @see de.fhdo.lemma.service.intermediate.IntermediateApiOperationComment#getComment()
+     * @see #getIntermediateApiOperationComment()
+     * @generated
+     */
+    EAttribute getIntermediateApiOperationComment_Comment();
+
+    /**
+     * Returns the meta object for the containment reference list '{@link de.fhdo.lemma.service.intermediate.IntermediateApiOperationComment#getParameterComments <em>Parameter Comments</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Parameter Comments</em>'.
+     * @see de.fhdo.lemma.service.intermediate.IntermediateApiOperationComment#getParameterComments()
+     * @see #getIntermediateApiOperationComment()
+     * @generated
+     */
+    EReference getIntermediateApiOperationComment_ParameterComments();
+
+    /**
+     * Returns the meta object for the container reference '{@link de.fhdo.lemma.service.intermediate.IntermediateApiOperationComment#getOperation <em>Operation</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the container reference '<em>Operation</em>'.
+     * @see de.fhdo.lemma.service.intermediate.IntermediateApiOperationComment#getOperation()
+     * @see #getIntermediateApiOperationComment()
+     * @generated
+     */
+    EReference getIntermediateApiOperationComment_Operation();
+
+    /**
+     * Returns the meta object for class '{@link de.fhdo.lemma.service.intermediate.IntermediateApiParameterComment <em>Api Parameter Comment</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Api Parameter Comment</em>'.
+     * @see de.fhdo.lemma.service.intermediate.IntermediateApiParameterComment
+     * @generated
+     */
+    EClass getIntermediateApiParameterComment();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.fhdo.lemma.service.intermediate.IntermediateApiParameterComment#getComment <em>Comment</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Comment</em>'.
+     * @see de.fhdo.lemma.service.intermediate.IntermediateApiParameterComment#getComment()
+     * @see #getIntermediateApiParameterComment()
+     * @generated
+     */
+    EAttribute getIntermediateApiParameterComment_Comment();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.fhdo.lemma.service.intermediate.IntermediateApiParameterComment#isRequired <em>Required</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Required</em>'.
+     * @see de.fhdo.lemma.service.intermediate.IntermediateApiParameterComment#isRequired()
+     * @see #getIntermediateApiParameterComment()
+     * @generated
+     */
+    EAttribute getIntermediateApiParameterComment_Required();
+
+    /**
+     * Returns the meta object for the reference '{@link de.fhdo.lemma.service.intermediate.IntermediateApiParameterComment#getParameter <em>Parameter</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference '<em>Parameter</em>'.
+     * @see de.fhdo.lemma.service.intermediate.IntermediateApiParameterComment#getParameter()
+     * @see #getIntermediateApiParameterComment()
+     * @generated
+     */
+    EReference getIntermediateApiParameterComment_Parameter();
+
+    /**
+     * Returns the meta object for the container reference '{@link de.fhdo.lemma.service.intermediate.IntermediateApiParameterComment#getOperationComment <em>Operation Comment</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the container reference '<em>Operation Comment</em>'.
+     * @see de.fhdo.lemma.service.intermediate.IntermediateApiParameterComment#getOperationComment()
+     * @see #getIntermediateApiParameterComment()
+     * @generated
+     */
+    EReference getIntermediateApiParameterComment_OperationComment();
 
     /**
      * Returns the meta object for class '{@link de.fhdo.lemma.service.intermediate.IntermediateReferredOperation <em>Referred Operation</em>}'.
@@ -2808,6 +3044,14 @@ public interface IntermediatePackage extends EPackage {
         EAttribute INTERMEDIATE_OPERATION__NOT_IMPLEMENTED = eINSTANCE.getIntermediateOperation_NotImplemented();
 
         /**
+         * The meta object literal for the '<em><b>Api Operation Comment</b></em>' containment reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference INTERMEDIATE_OPERATION__API_OPERATION_COMMENT = eINSTANCE.getIntermediateOperation_ApiOperationComment();
+
+        /**
          * The meta object literal for the '<em><b>Endpoints</b></em>' containment reference list feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -2846,6 +3090,82 @@ public interface IntermediatePackage extends EPackage {
          * @generated
          */
         EReference INTERMEDIATE_OPERATION__INTERFACE = eINSTANCE.getIntermediateOperation_Interface();
+
+        /**
+         * The meta object literal for the '{@link de.fhdo.lemma.service.intermediate.impl.IntermediateApiOperationCommentImpl <em>Api Operation Comment</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.fhdo.lemma.service.intermediate.impl.IntermediateApiOperationCommentImpl
+         * @see de.fhdo.lemma.service.intermediate.impl.IntermediatePackageImpl#getIntermediateApiOperationComment()
+         * @generated
+         */
+        EClass INTERMEDIATE_API_OPERATION_COMMENT = eINSTANCE.getIntermediateApiOperationComment();
+
+        /**
+         * The meta object literal for the '<em><b>Comment</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute INTERMEDIATE_API_OPERATION_COMMENT__COMMENT = eINSTANCE.getIntermediateApiOperationComment_Comment();
+
+        /**
+         * The meta object literal for the '<em><b>Parameter Comments</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference INTERMEDIATE_API_OPERATION_COMMENT__PARAMETER_COMMENTS = eINSTANCE.getIntermediateApiOperationComment_ParameterComments();
+
+        /**
+         * The meta object literal for the '<em><b>Operation</b></em>' container reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference INTERMEDIATE_API_OPERATION_COMMENT__OPERATION = eINSTANCE.getIntermediateApiOperationComment_Operation();
+
+        /**
+         * The meta object literal for the '{@link de.fhdo.lemma.service.intermediate.impl.IntermediateApiParameterCommentImpl <em>Api Parameter Comment</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.fhdo.lemma.service.intermediate.impl.IntermediateApiParameterCommentImpl
+         * @see de.fhdo.lemma.service.intermediate.impl.IntermediatePackageImpl#getIntermediateApiParameterComment()
+         * @generated
+         */
+        EClass INTERMEDIATE_API_PARAMETER_COMMENT = eINSTANCE.getIntermediateApiParameterComment();
+
+        /**
+         * The meta object literal for the '<em><b>Comment</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute INTERMEDIATE_API_PARAMETER_COMMENT__COMMENT = eINSTANCE.getIntermediateApiParameterComment_Comment();
+
+        /**
+         * The meta object literal for the '<em><b>Required</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute INTERMEDIATE_API_PARAMETER_COMMENT__REQUIRED = eINSTANCE.getIntermediateApiParameterComment_Required();
+
+        /**
+         * The meta object literal for the '<em><b>Parameter</b></em>' reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference INTERMEDIATE_API_PARAMETER_COMMENT__PARAMETER = eINSTANCE.getIntermediateApiParameterComment_Parameter();
+
+        /**
+         * The meta object literal for the '<em><b>Operation Comment</b></em>' container reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference INTERMEDIATE_API_PARAMETER_COMMENT__OPERATION_COMMENT = eINSTANCE.getIntermediateApiParameterComment_OperationComment();
 
         /**
          * The meta object literal for the '{@link de.fhdo.lemma.service.intermediate.impl.IntermediateReferredOperationImpl <em>Referred Operation</em>}' class.

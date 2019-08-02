@@ -75,6 +75,8 @@ public class ServiceFactoryImpl extends EFactoryImpl implements ServiceFactory {
             case ServicePackage.TECHNOLOGY_REFERENCE: return createTechnologyReference();
             case ServicePackage.INTERFACE: return createInterface();
             case ServicePackage.OPERATION: return createOperation();
+            case ServicePackage.API_OPERATION_COMMENT: return createApiOperationComment();
+            case ServicePackage.API_PARAMETER_COMMENT: return createApiParameterComment();
             case ServicePackage.REFERRED_OPERATION: return createReferredOperation();
             case ServicePackage.PARAMETER: return createParameter();
             case ServicePackage.POSSIBLY_IMPORTED_MICROSERVICE: return createPossiblyImportedMicroservice();
@@ -248,6 +250,28 @@ public class ServiceFactoryImpl extends EFactoryImpl implements ServiceFactory {
     public Operation createOperation() {
         OperationImpl operation = new OperationImpl();
         return operation;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public ApiOperationComment createApiOperationComment() {
+        ApiOperationCommentImpl apiOperationComment = new ApiOperationCommentImpl();
+        return apiOperationComment;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public ApiParameterComment createApiParameterComment() {
+        ApiParameterCommentImpl apiParameterComment = new ApiParameterCommentImpl();
+        return apiParameterComment;
     }
 
     /**

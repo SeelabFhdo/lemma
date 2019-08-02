@@ -894,6 +894,7 @@ class Operation {
     boolean notImplemented = "false"
     Visibility visibility = "NONE"
 
+    contains ApiOperationComment[0..1] apiOperationComment opposite operation
     contains Endpoint[] endpoints opposite operation
     contains ProtocolSpecification[0..2] protocols
     contains Parameter[] parameters opposite operation
@@ -1031,6 +1032,29 @@ class Operation {
     derived boolean effectivelyInternal get {
         return effectiveVisibility === Visibility.INTERNAL
     }
+}
+
+/**
+ * API comment for an operation
+ */
+class ApiOperationComment {
+    String comment
+
+    contains ApiParameterComment[] parameterComments opposite operationComment
+
+    container Operation operation opposite apiOperationComment
+}
+
+/**
+ * API comment for an operation's parameter
+ */
+class ApiParameterComment {
+    String comment
+    boolean required
+
+    refers Parameter parameter
+
+    container ApiOperationComment operationComment opposite parameterComments
 }
 
 /**

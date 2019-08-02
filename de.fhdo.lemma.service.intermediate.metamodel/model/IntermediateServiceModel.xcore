@@ -81,12 +81,36 @@ class IntermediateOperation {
     Visibility visibility
     boolean notImplemented
 
+    contains IntermediateApiOperationComment[0..1] apiOperationComment opposite operation
     contains IntermediateEndpoint[] endpoints opposite operation
     contains IntermediateProtocolSpecification[0..2] protocols
     contains IntermediateImportedAspect[] aspects
     contains IntermediateParameter[] parameters opposite operation
 
     container IntermediateInterface ^interface opposite operations
+}
+
+/**
+ * API comment for an operation
+ */
+class IntermediateApiOperationComment {
+    String comment
+
+    contains IntermediateApiParameterComment[] parameterComments opposite operationComment
+
+    container IntermediateOperation operation opposite apiOperationComment
+}
+
+/**
+ * API comment for an operation's parameter
+ */
+class IntermediateApiParameterComment {
+    String comment
+    boolean required
+
+    refers IntermediateParameter parameter
+
+    container IntermediateApiOperationComment operationComment opposite parameterComments
 }
 
 /**

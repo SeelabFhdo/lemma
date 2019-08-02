@@ -126,6 +126,18 @@ public class ServiceSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
+            case ServicePackage.API_OPERATION_COMMENT: {
+                ApiOperationComment apiOperationComment = (ApiOperationComment)theEObject;
+                T result = caseApiOperationComment(apiOperationComment);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case ServicePackage.API_PARAMETER_COMMENT: {
+                ApiParameterComment apiParameterComment = (ApiParameterComment)theEObject;
+                T result = caseApiParameterComment(apiParameterComment);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
             case ServicePackage.REFERRED_OPERATION: {
                 ReferredOperation referredOperation = (ReferredOperation)theEObject;
                 T result = caseReferredOperation(referredOperation);
@@ -337,6 +349,36 @@ public class ServiceSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseOperation(Operation object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Api Operation Comment</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Api Operation Comment</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseApiOperationComment(ApiOperationComment object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Api Parameter Comment</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Api Parameter Comment</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseApiParameterComment(ApiParameterComment object) {
         return null;
     }
 

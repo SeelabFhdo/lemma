@@ -4,11 +4,13 @@
 package de.fhdo.lemma.ui;
 
 import de.fhdo.lemma.ui.AbstractServiceDslUiModule;
+import de.fhdo.lemma.ui.autoedit.ServiceDslAutoEditStrategyProvider;
 import de.fhdo.lemma.ui.highlighting.HighlightingCalculator;
 import de.fhdo.lemma.ui.highlighting.HighlightingConfiguration;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor;
 import org.eclipse.xtext.ide.editor.syntaxcoloring.ISemanticHighlightingCalculator;
+import org.eclipse.xtext.ui.editor.autoedit.DefaultAutoEditStrategyProvider;
 import org.eclipse.xtext.ui.editor.syntaxcoloring.IHighlightingConfiguration;
 
 /**
@@ -25,6 +27,10 @@ public class ServiceDslUiModule extends AbstractServiceDslUiModule {
   
   public Class<? extends ISemanticHighlightingCalculator> bindISemanticHighlightingCalculator() {
     return HighlightingCalculator.class;
+  }
+  
+  public Class<? extends DefaultAutoEditStrategyProvider> bindDefaultAutoEditStrategyProvider() {
+    return ServiceDslAutoEditStrategyProvider.class;
   }
   
   public ServiceDslUiModule(final AbstractUIPlugin plugin) {

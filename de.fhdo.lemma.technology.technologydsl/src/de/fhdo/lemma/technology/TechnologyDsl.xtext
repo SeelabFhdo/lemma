@@ -131,8 +131,8 @@ OperationEnvironment returns OperationEnvironment:
 ;
 
 enum PropertyFeature returns PropertyFeature:
-    MANDATORY = "mandatory" |
-    SINGLE_VALUED = "singleval"
+    MANDATORY = 'mandatory' |
+    SINGLE_VALUED = 'singleval'
 ;
 
 TechnologySpecificProperty returns TechnologySpecificProperty:

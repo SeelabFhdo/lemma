@@ -8,6 +8,8 @@ import de.fhdo.lemma.service.ServicePackage;
 
 import de.fhdo.lemma.service.intermediate.DataFieldAspects;
 import de.fhdo.lemma.service.intermediate.InterfaceReference;
+import de.fhdo.lemma.service.intermediate.IntermediateApiOperationComment;
+import de.fhdo.lemma.service.intermediate.IntermediateApiParameterComment;
 import de.fhdo.lemma.service.intermediate.IntermediateEndpoint;
 import de.fhdo.lemma.service.intermediate.IntermediateFactory;
 import de.fhdo.lemma.service.intermediate.IntermediateInterface;
@@ -66,6 +68,20 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * @generated
      */
     private EClass intermediateOperationEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass intermediateApiOperationCommentEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass intermediateApiParameterCommentEClass = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -584,7 +600,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * @generated
      */
     @Override
-    public EReference getIntermediateOperation_Endpoints() {
+    public EReference getIntermediateOperation_ApiOperationComment() {
         return (EReference)intermediateOperationEClass.getEStructuralFeatures().get(4);
     }
 
@@ -594,7 +610,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * @generated
      */
     @Override
-    public EReference getIntermediateOperation_Protocols() {
+    public EReference getIntermediateOperation_Endpoints() {
         return (EReference)intermediateOperationEClass.getEStructuralFeatures().get(5);
     }
 
@@ -604,7 +620,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * @generated
      */
     @Override
-    public EReference getIntermediateOperation_Aspects() {
+    public EReference getIntermediateOperation_Protocols() {
         return (EReference)intermediateOperationEClass.getEStructuralFeatures().get(6);
     }
 
@@ -614,7 +630,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * @generated
      */
     @Override
-    public EReference getIntermediateOperation_Parameters() {
+    public EReference getIntermediateOperation_Aspects() {
         return (EReference)intermediateOperationEClass.getEStructuralFeatures().get(7);
     }
 
@@ -624,8 +640,108 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * @generated
      */
     @Override
-    public EReference getIntermediateOperation_Interface() {
+    public EReference getIntermediateOperation_Parameters() {
         return (EReference)intermediateOperationEClass.getEStructuralFeatures().get(8);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getIntermediateOperation_Interface() {
+        return (EReference)intermediateOperationEClass.getEStructuralFeatures().get(9);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EClass getIntermediateApiOperationComment() {
+        return intermediateApiOperationCommentEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EAttribute getIntermediateApiOperationComment_Comment() {
+        return (EAttribute)intermediateApiOperationCommentEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getIntermediateApiOperationComment_ParameterComments() {
+        return (EReference)intermediateApiOperationCommentEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getIntermediateApiOperationComment_Operation() {
+        return (EReference)intermediateApiOperationCommentEClass.getEStructuralFeatures().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EClass getIntermediateApiParameterComment() {
+        return intermediateApiParameterCommentEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EAttribute getIntermediateApiParameterComment_Comment() {
+        return (EAttribute)intermediateApiParameterCommentEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EAttribute getIntermediateApiParameterComment_Required() {
+        return (EAttribute)intermediateApiParameterCommentEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getIntermediateApiParameterComment_Parameter() {
+        return (EReference)intermediateApiParameterCommentEClass.getEStructuralFeatures().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getIntermediateApiParameterComment_OperationComment() {
+        return (EReference)intermediateApiParameterCommentEClass.getEStructuralFeatures().get(3);
     }
 
     /**
@@ -1358,11 +1474,23 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
         createEAttribute(intermediateOperationEClass, INTERMEDIATE_OPERATION__QUALIFIED_NAME);
         createEAttribute(intermediateOperationEClass, INTERMEDIATE_OPERATION__VISIBILITY);
         createEAttribute(intermediateOperationEClass, INTERMEDIATE_OPERATION__NOT_IMPLEMENTED);
+        createEReference(intermediateOperationEClass, INTERMEDIATE_OPERATION__API_OPERATION_COMMENT);
         createEReference(intermediateOperationEClass, INTERMEDIATE_OPERATION__ENDPOINTS);
         createEReference(intermediateOperationEClass, INTERMEDIATE_OPERATION__PROTOCOLS);
         createEReference(intermediateOperationEClass, INTERMEDIATE_OPERATION__ASPECTS);
         createEReference(intermediateOperationEClass, INTERMEDIATE_OPERATION__PARAMETERS);
         createEReference(intermediateOperationEClass, INTERMEDIATE_OPERATION__INTERFACE);
+
+        intermediateApiOperationCommentEClass = createEClass(INTERMEDIATE_API_OPERATION_COMMENT);
+        createEAttribute(intermediateApiOperationCommentEClass, INTERMEDIATE_API_OPERATION_COMMENT__COMMENT);
+        createEReference(intermediateApiOperationCommentEClass, INTERMEDIATE_API_OPERATION_COMMENT__PARAMETER_COMMENTS);
+        createEReference(intermediateApiOperationCommentEClass, INTERMEDIATE_API_OPERATION_COMMENT__OPERATION);
+
+        intermediateApiParameterCommentEClass = createEClass(INTERMEDIATE_API_PARAMETER_COMMENT);
+        createEAttribute(intermediateApiParameterCommentEClass, INTERMEDIATE_API_PARAMETER_COMMENT__COMMENT);
+        createEAttribute(intermediateApiParameterCommentEClass, INTERMEDIATE_API_PARAMETER_COMMENT__REQUIRED);
+        createEReference(intermediateApiParameterCommentEClass, INTERMEDIATE_API_PARAMETER_COMMENT__PARAMETER);
+        createEReference(intermediateApiParameterCommentEClass, INTERMEDIATE_API_PARAMETER_COMMENT__OPERATION_COMMENT);
 
         intermediateReferredOperationEClass = createEClass(INTERMEDIATE_REFERRED_OPERATION);
         createEAttribute(intermediateReferredOperationEClass, INTERMEDIATE_REFERRED_OPERATION__NAME_IN_REFERRING_INTERFACE);
@@ -1517,11 +1645,23 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
         initEAttribute(getIntermediateOperation_QualifiedName(), theEcorePackage.getEString(), "qualifiedName", null, 0, 1, IntermediateOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getIntermediateOperation_Visibility(), theServicePackage.getVisibility(), "visibility", null, 0, 1, IntermediateOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getIntermediateOperation_NotImplemented(), theEcorePackage.getEBoolean(), "notImplemented", null, 0, 1, IntermediateOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getIntermediateOperation_ApiOperationComment(), this.getIntermediateApiOperationComment(), this.getIntermediateApiOperationComment_Operation(), "apiOperationComment", null, 0, 1, IntermediateOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getIntermediateOperation_Endpoints(), this.getIntermediateEndpoint(), this.getIntermediateEndpoint_Operation(), "endpoints", null, 0, -1, IntermediateOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getIntermediateOperation_Protocols(), this.getIntermediateProtocolSpecification(), null, "protocols", null, 0, 2, IntermediateOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getIntermediateOperation_Aspects(), theIntermediatePackage_1.getIntermediateImportedAspect(), null, "aspects", null, 0, -1, IntermediateOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getIntermediateOperation_Parameters(), this.getIntermediateParameter(), this.getIntermediateParameter_Operation(), "parameters", null, 0, -1, IntermediateOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getIntermediateOperation_Interface(), this.getIntermediateInterface(), this.getIntermediateInterface_Operations(), "interface", null, 0, 1, IntermediateOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEClass(intermediateApiOperationCommentEClass, IntermediateApiOperationComment.class, "IntermediateApiOperationComment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getIntermediateApiOperationComment_Comment(), theEcorePackage.getEString(), "comment", null, 0, 1, IntermediateApiOperationComment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getIntermediateApiOperationComment_ParameterComments(), this.getIntermediateApiParameterComment(), this.getIntermediateApiParameterComment_OperationComment(), "parameterComments", null, 0, -1, IntermediateApiOperationComment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getIntermediateApiOperationComment_Operation(), this.getIntermediateOperation(), this.getIntermediateOperation_ApiOperationComment(), "operation", null, 0, 1, IntermediateApiOperationComment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEClass(intermediateApiParameterCommentEClass, IntermediateApiParameterComment.class, "IntermediateApiParameterComment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getIntermediateApiParameterComment_Comment(), theEcorePackage.getEString(), "comment", null, 0, 1, IntermediateApiParameterComment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getIntermediateApiParameterComment_Required(), theEcorePackage.getEBoolean(), "required", null, 0, 1, IntermediateApiParameterComment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getIntermediateApiParameterComment_Parameter(), this.getIntermediateParameter(), null, "parameter", null, 0, 1, IntermediateApiParameterComment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getIntermediateApiParameterComment_OperationComment(), this.getIntermediateApiOperationComment(), this.getIntermediateApiOperationComment_ParameterComments(), "operationComment", null, 0, 1, IntermediateApiParameterComment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(intermediateReferredOperationEClass, IntermediateReferredOperation.class, "IntermediateReferredOperation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getIntermediateReferredOperation_NameInReferringInterface(), theEcorePackage.getEString(), "nameInReferringInterface", null, 0, 1, IntermediateReferredOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

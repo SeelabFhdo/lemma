@@ -28,6 +28,8 @@ import de.fhdo.lemma.data.PrimitiveShort;
 import de.fhdo.lemma.data.PrimitiveString;
 import de.fhdo.lemma.data.PrimitiveValue;
 import de.fhdo.lemma.data.Version;
+import de.fhdo.lemma.service.ApiOperationComment;
+import de.fhdo.lemma.service.ApiParameterComment;
 import de.fhdo.lemma.service.Endpoint;
 import de.fhdo.lemma.service.Import;
 import de.fhdo.lemma.service.ImportedProtocolAndDataFormat;
@@ -163,6 +165,12 @@ public class ServiceDslSemanticSequencer extends TechnologyDslSemanticSequencer 
 			}
 		else if (epackage == ServicePackage.eINSTANCE)
 			switch (semanticObject.eClass().getClassifierID()) {
+			case ServicePackage.API_OPERATION_COMMENT:
+				sequence_ApiOperationComment(context, (ApiOperationComment) semanticObject); 
+				return; 
+			case ServicePackage.API_PARAMETER_COMMENT:
+				sequence_ApiParameterComment(context, (ApiParameterComment) semanticObject); 
+				return; 
 			case ServicePackage.ENDPOINT:
 				sequence_Endpoint(context, (Endpoint) semanticObject); 
 				return; 
@@ -278,6 +286,30 @@ public class ServiceDslSemanticSequencer extends TechnologyDslSemanticSequencer 
 		if (errorAcceptor != null)
 			errorAcceptor.accept(diagnosticProvider.createInvalidContextOrTypeDiagnostic(semanticObject, context));
 	}
+	
+	/**
+	 * Contexts:
+	 *     ApiOperationComment returns ApiOperationComment
+	 *
+	 * Constraint:
+	 *     (comment=Anything parameterComments+=ApiParameterComment*)
+	 */
+	protected void sequence_ApiOperationComment(ISerializationContext context, ApiOperationComment semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     ApiParameterComment returns ApiParameterComment
+	 *
+	 * Constraint:
+	 *     (required?='@required'? parameter=[Parameter|ID] comment=Anything)
+	 */
+	protected void sequence_ApiParameterComment(ISerializationContext context, ApiParameterComment semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
 	
 	/**
 	 * Contexts:
@@ -416,6 +448,7 @@ public class ServiceDslSemanticSequencer extends TechnologyDslSemanticSequencer 
 	 *
 	 * Constraint:
 	 *     (
+	 *         apiOperationComment=ApiOperationComment? 
 	 *         (protocols+=ProtocolSpecification protocols+=ProtocolSpecification?)? 
 	 *         endpoints+=Endpoint* 
 	 *         aspects+=ImportedServiceAspect* 
