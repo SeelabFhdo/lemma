@@ -644,12 +644,23 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
   private IScope getScopeForDomainModelImports(final ImportedComplexTypeToMap type) {
     final ServiceModel serviceModel = LemmaUtils.<ServiceModel>getImportedModelRoot(type.eResource(), 
       type.getServiceModelImport().getImportURI(), ServiceModel.class);
-    final Function1<Import, Boolean> _function = (Import it) -> {
-      ImportType _importType = it.getImportType();
-      return Boolean.valueOf(Objects.equal(_importType, ImportType.DATATYPES));
-    };
-    final Iterable<Import> dataModels = IterableExtensions.<Import>filter(serviceModel.getImports(), _function);
-    return Scopes.scopeFor(dataModels);
+    EList<Import> _imports = null;
+    if (serviceModel!=null) {
+      _imports=serviceModel.getImports();
+    }
+    Iterable<Import> _filter = null;
+    if (_imports!=null) {
+      final Function1<Import, Boolean> _function = (Import it) -> {
+        ImportType _importType = it.getImportType();
+        return Boolean.valueOf(Objects.equal(_importType, ImportType.DATATYPES));
+      };
+      _filter=IterableExtensions.<Import>filter(_imports, _function);
+    }
+    final Iterable<Import> dataModels = _filter;
+    if ((dataModels != null)) {
+      return Scopes.scopeFor(dataModels);
+    }
+    return null;
   }
   
   /**

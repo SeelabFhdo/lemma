@@ -490,8 +490,11 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     private def getScopeForDomainModelImports(ImportedComplexTypeToMap type) {
         val serviceModel = LemmaUtils.getImportedModelRoot(type.eResource,
             type.serviceModelImport.importURI, ServiceModel)
-        val dataModels = serviceModel.imports.filter[importType == ImportType.DATATYPES]
-        return Scopes::scopeFor(dataModels)
+        val dataModels = serviceModel?.imports?.filter[importType == ImportType.DATATYPES]
+
+        // Prevent NPE when models contain errors
+        if (dataModels !== null)
+            return Scopes::scopeFor(dataModels)
     }
 
     /**
