@@ -687,22 +687,6 @@ public class DataDslValidator extends AbstractDataDslValidator {
   }
   
   /**
-   * Check "identifier" feature constraints
-   */
-  @Check
-  public void checkIdenitfierFeatureConstraints(final DataField dataField) {
-    final int featureIndex = dataField.getFeatures().indexOf(DataFieldFeature.IDENTIFIER);
-    if ((featureIndex == (-1))) {
-      return;
-    }
-    if (((dataField.getDataStructure() == null) || 
-      (!dataField.getDataStructure().hasFeature(DataStructureFeature.ENTITY)))) {
-      this.warning("An identifier should only be defined within an entity", dataField, 
-        DataPackage.Literals.DATA_FIELD__FEATURES, featureIndex);
-    }
-  }
-  
-  /**
    * Perform checks on data operations
    */
   @Check
@@ -906,12 +890,6 @@ public class DataDslValidator extends AbstractDataDslValidator {
     boolean _hasFeature = dataOperation.hasFeature(DataOperationFeature.VALIDATOR);
     if (_hasFeature) {
       this.warning("An identifier should not be a validator", dataOperation, 
-        DataPackage.Literals.DATA_OPERATION__FEATURES, featureIndex);
-    }
-    boolean _hasFeature_1 = dataOperation.getDataStructure().hasFeature(DataStructureFeature.ENTITY);
-    boolean _not = (!_hasFeature_1);
-    if (_not) {
-      this.warning("An identifier should only be defined within an entity", dataOperation, 
         DataPackage.Literals.DATA_OPERATION__FEATURES, featureIndex);
     }
   }

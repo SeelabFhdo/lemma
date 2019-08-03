@@ -568,23 +568,6 @@ class DataDslValidator extends AbstractDataDslValidator {
     }
 
     /**
-     * Check "identifier" feature constraints
-     */
-    @Check
-    def checkIdenitfierFeatureConstraints(DataField dataField) {
-        val featureIndex = dataField.features.indexOf(DataFieldFeature.IDENTIFIER)
-        if (featureIndex === -1) {
-            return
-        }
-
-        // Data structure should be an entity
-        if (dataField.dataStructure === null ||
-            !dataField.dataStructure.hasFeature(DataStructureFeature.ENTITY))
-            warning("An identifier should only be defined within an entity", dataField,
-                DataPackage::Literals.DATA_FIELD__FEATURES, featureIndex)
-    }
-
-    /**
      * Perform checks on data operations
      */
     @Check
@@ -764,11 +747,6 @@ class DataDslValidator extends AbstractDataDslValidator {
         // Operation may not be validator
         if (dataOperation.hasFeature(DataOperationFeature.VALIDATOR))
             warning("An identifier should not be a validator", dataOperation,
-                DataPackage::Literals.DATA_OPERATION__FEATURES, featureIndex)
-
-        // Data structure should be an entity
-        if (!dataOperation.dataStructure.hasFeature(DataStructureFeature.ENTITY))
-            warning("An identifier should only be defined within an entity", dataOperation,
                 DataPackage::Literals.DATA_OPERATION__FEATURES, featureIndex)
     }
 
