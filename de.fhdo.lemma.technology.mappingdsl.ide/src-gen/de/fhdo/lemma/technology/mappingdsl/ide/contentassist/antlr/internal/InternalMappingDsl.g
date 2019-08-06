@@ -3575,39 +3575,51 @@ rule__ServiceJoinPointType__Alternatives
 	}
 :
 	(
-		{ before(grammarAccess.getServiceJoinPointTypeAccess().getMICROSERVICESEnumLiteralDeclaration_0()); }
-		('microservices')
-		{ after(grammarAccess.getServiceJoinPointTypeAccess().getMICROSERVICESEnumLiteralDeclaration_0()); }
-	)
-	|
-	(
-		{ before(grammarAccess.getServiceJoinPointTypeAccess().getINTERFACESEnumLiteralDeclaration_1()); }
-		('interfaces')
-		{ after(grammarAccess.getServiceJoinPointTypeAccess().getINTERFACESEnumLiteralDeclaration_1()); }
-	)
-	|
-	(
-		{ before(grammarAccess.getServiceJoinPointTypeAccess().getOPERATIONSEnumLiteralDeclaration_2()); }
-		('operations')
-		{ after(grammarAccess.getServiceJoinPointTypeAccess().getOPERATIONSEnumLiteralDeclaration_2()); }
-	)
-	|
-	(
-		{ before(grammarAccess.getServiceJoinPointTypeAccess().getPARAMETERSEnumLiteralDeclaration_3()); }
-		('parameters')
-		{ after(grammarAccess.getServiceJoinPointTypeAccess().getPARAMETERSEnumLiteralDeclaration_3()); }
-	)
-	|
-	(
-		{ before(grammarAccess.getServiceJoinPointTypeAccess().getCOMPLEX_TYPESEnumLiteralDeclaration_4()); }
+		{ before(grammarAccess.getServiceJoinPointTypeAccess().getCOMPLEX_TYPESEnumLiteralDeclaration_0()); }
 		('types')
-		{ after(grammarAccess.getServiceJoinPointTypeAccess().getCOMPLEX_TYPESEnumLiteralDeclaration_4()); }
+		{ after(grammarAccess.getServiceJoinPointTypeAccess().getCOMPLEX_TYPESEnumLiteralDeclaration_0()); }
 	)
 	|
 	(
-		{ before(grammarAccess.getServiceJoinPointTypeAccess().getDATA_FIELDSEnumLiteralDeclaration_5()); }
+		{ before(grammarAccess.getServiceJoinPointTypeAccess().getDATA_FIELDSEnumLiteralDeclaration_1()); }
 		('fields')
-		{ after(grammarAccess.getServiceJoinPointTypeAccess().getDATA_FIELDSEnumLiteralDeclaration_5()); }
+		{ after(grammarAccess.getServiceJoinPointTypeAccess().getDATA_FIELDSEnumLiteralDeclaration_1()); }
+	)
+	|
+	(
+		{ before(grammarAccess.getServiceJoinPointTypeAccess().getDATA_OPERATIONSEnumLiteralDeclaration_2()); }
+		('domainOperations')
+		{ after(grammarAccess.getServiceJoinPointTypeAccess().getDATA_OPERATIONSEnumLiteralDeclaration_2()); }
+	)
+	|
+	(
+		{ before(grammarAccess.getServiceJoinPointTypeAccess().getDATA_OPERATION_PARAMETERSEnumLiteralDeclaration_3()); }
+		('domainParameters')
+		{ after(grammarAccess.getServiceJoinPointTypeAccess().getDATA_OPERATION_PARAMETERSEnumLiteralDeclaration_3()); }
+	)
+	|
+	(
+		{ before(grammarAccess.getServiceJoinPointTypeAccess().getMICROSERVICESEnumLiteralDeclaration_4()); }
+		('microservices')
+		{ after(grammarAccess.getServiceJoinPointTypeAccess().getMICROSERVICESEnumLiteralDeclaration_4()); }
+	)
+	|
+	(
+		{ before(grammarAccess.getServiceJoinPointTypeAccess().getINTERFACESEnumLiteralDeclaration_5()); }
+		('interfaces')
+		{ after(grammarAccess.getServiceJoinPointTypeAccess().getINTERFACESEnumLiteralDeclaration_5()); }
+	)
+	|
+	(
+		{ before(grammarAccess.getServiceJoinPointTypeAccess().getOPERATIONSEnumLiteralDeclaration_6()); }
+		('operations')
+		{ after(grammarAccess.getServiceJoinPointTypeAccess().getOPERATIONSEnumLiteralDeclaration_6()); }
+	)
+	|
+	(
+		{ before(grammarAccess.getServiceJoinPointTypeAccess().getPARAMETERSEnumLiteralDeclaration_7()); }
+		('parameters')
+		{ after(grammarAccess.getServiceJoinPointTypeAccess().getPARAMETERSEnumLiteralDeclaration_7()); }
 	)
 ;
 finally {

@@ -2077,6 +2077,8 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
         addEEnumLiteral(propertyFeatureEEnum, PropertyFeature.SINGLE_VALUED);
 
         initEEnum(joinPointTypeEEnum, JoinPointType.class, "JoinPointType");
+        addEEnumLiteral(joinPointTypeEEnum, JoinPointType.DATA_OPERATIONS);
+        addEEnumLiteral(joinPointTypeEEnum, JoinPointType.DATA_OPERATION_PARAMETERS);
         addEEnumLiteral(joinPointTypeEEnum, JoinPointType.MICROSERVICES);
         addEEnumLiteral(joinPointTypeEEnum, JoinPointType.INTERFACES);
         addEEnumLiteral(joinPointTypeEEnum, JoinPointType.OPERATIONS);

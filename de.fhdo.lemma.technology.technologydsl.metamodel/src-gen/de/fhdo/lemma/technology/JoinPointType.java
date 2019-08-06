@@ -23,6 +23,26 @@ import org.eclipse.emf.common.util.Enumerator;
  */
 public enum JoinPointType implements Enumerator {
     /**
+     * The '<em><b>DATA OPERATIONS</b></em>' literal object.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #DATA_OPERATIONS_VALUE
+     * @generated
+     * @ordered
+     */
+    DATA_OPERATIONS(0, "DATA_OPERATIONS", "DATA_OPERATIONS"),
+
+    /**
+     * The '<em><b>DATA OPERATION PARAMETERS</b></em>' literal object.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #DATA_OPERATION_PARAMETERS_VALUE
+     * @generated
+     * @ordered
+     */
+    DATA_OPERATION_PARAMETERS(0, "DATA_OPERATION_PARAMETERS", "DATA_OPERATION_PARAMETERS"),
+
+    /**
      * The '<em><b>MICROSERVICES</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -101,6 +121,36 @@ public enum JoinPointType implements Enumerator {
      * @ordered
      */
     INFRASTRUCTURE_NODES(0, "INFRASTRUCTURE_NODES", "INFRASTRUCTURE_NODES");
+
+    /**
+     * The '<em><b>DATA OPERATIONS</b></em>' literal value.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of '<em><b>DATA OPERATIONS</b></em>' literal object isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @see #DATA_OPERATIONS
+     * @model
+     * @generated
+     * @ordered
+     */
+    public static final int DATA_OPERATIONS_VALUE = 0;
+
+    /**
+     * The '<em><b>DATA OPERATION PARAMETERS</b></em>' literal value.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of '<em><b>DATA OPERATION PARAMETERS</b></em>' literal object isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @see #DATA_OPERATION_PARAMETERS
+     * @model
+     * @generated
+     * @ordered
+     */
+    public static final int DATA_OPERATION_PARAMETERS_VALUE = 0;
 
     /**
      * The '<em><b>MICROSERVICES</b></em>' literal value.
@@ -230,6 +280,8 @@ public enum JoinPointType implements Enumerator {
      */
     private static final JoinPointType[] VALUES_ARRAY =
         new JoinPointType[] {
+            DATA_OPERATIONS,
+            DATA_OPERATION_PARAMETERS,
             MICROSERVICES,
             INTERFACES,
             OPERATIONS,
@@ -294,7 +346,7 @@ public enum JoinPointType implements Enumerator {
      */
     public static JoinPointType get(int value) {
         switch (value) {
-            case MICROSERVICES_VALUE: return MICROSERVICES;
+            case DATA_OPERATIONS_VALUE: return DATA_OPERATIONS;
         }
         return null;
     }

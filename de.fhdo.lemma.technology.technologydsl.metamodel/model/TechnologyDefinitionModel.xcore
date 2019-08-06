@@ -478,6 +478,8 @@ class InfrastructureTechnology extends OperationTechnology {
  * Types of the possible join points of technology aspects
  */
 enum JoinPointType {
+    DATA_OPERATIONS,
+    DATA_OPERATION_PARAMETERS,
     MICROSERVICES,
     INTERFACES,
     OPERATIONS,

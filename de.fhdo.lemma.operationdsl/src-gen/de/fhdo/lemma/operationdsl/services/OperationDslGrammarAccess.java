@@ -2018,12 +2018,14 @@ public class OperationDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//enum ServiceJoinPointType returns JoinPointType:
+	//	COMPLEX_TYPES='types' |
+	//	DATA_FIELDS='fields' |
+	//	DATA_OPERATIONS='domainOperations' |
+	//	DATA_OPERATION_PARAMETERS='domainParameters' |
 	//	MICROSERVICES='microservices' |
 	//	INTERFACES='interfaces' |
 	//	OPERATIONS='operations' |
-	//	PARAMETERS='parameters' |
-	//	COMPLEX_TYPES='types' |
-	//	DATA_FIELDS='fields';
+	//	PARAMETERS='parameters';
 	public TechnologyDslGrammarAccess.ServiceJoinPointTypeElements getServiceJoinPointTypeAccess() {
 		return gaTechnologyDsl.getServiceJoinPointTypeAccess();
 	}

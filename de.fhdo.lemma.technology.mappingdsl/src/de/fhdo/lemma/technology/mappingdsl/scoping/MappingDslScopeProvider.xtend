@@ -838,10 +838,10 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
                 JoinPointType.COMPLEX_TYPES
             }
             DataOperationMapping: {
-                JoinPointType.OPERATIONS
+                JoinPointType.DATA_OPERATIONS
             }
             DataOperationParameterMapping: {
-                JoinPointType.PARAMETERS
+                JoinPointType.DATA_OPERATION_PARAMETERS
             }
             MicroserviceMapping: {
                 forProtocolsAndDataFormats = mapping.effectiveProtocolsAndDataFormats

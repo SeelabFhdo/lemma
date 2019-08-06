@@ -3,7 +3,7 @@
 ','=18
 '-'=23
 '--'=24
-'---'=129
+'---'=131
 '->'=61
 '.'=22
 '/'=25
@@ -18,7 +18,7 @@
 '?'=26
 '@'=28
 '@param'=13
-'@required'=131
+'@required'=133
 'aggregate'=82
 'applicationService'=83
 'architecture'=115
@@ -42,6 +42,8 @@
 'default'=47
 'deployment'=38
 'domainEvent'=84
+'domainOperations'=129
+'domainParameters'=130
 'domainService'=85
 'double'=108
 'endpoints'=117
@@ -96,7 +98,7 @@
 'refers'=124
 'repository'=89
 'required'=119
-'selector'=130
+'selector'=132
 'service'=36
 'short'=112
 'sideEffectFree'=100
@@ -158,6 +160,8 @@ T__128=128
 T__129=129
 T__130=130
 T__131=131
+T__132=132
+T__133=133
 T__13=13
 T__14=14
 T__15=15

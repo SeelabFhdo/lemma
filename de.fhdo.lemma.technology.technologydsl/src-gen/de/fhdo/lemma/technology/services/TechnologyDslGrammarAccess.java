@@ -1598,67 +1598,86 @@ public class TechnologyDslGrammarAccess extends AbstractGrammarElementFinder {
 	public class ServiceJoinPointTypeElements extends AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.fhdo.lemma.technology.TechnologyDsl.ServiceJoinPointType");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final EnumLiteralDeclaration cMICROSERVICESEnumLiteralDeclaration_0 = (EnumLiteralDeclaration)cAlternatives.eContents().get(0);
-		private final Keyword cMICROSERVICESMicroservicesKeyword_0_0 = (Keyword)cMICROSERVICESEnumLiteralDeclaration_0.eContents().get(0);
-		private final EnumLiteralDeclaration cINTERFACESEnumLiteralDeclaration_1 = (EnumLiteralDeclaration)cAlternatives.eContents().get(1);
-		private final Keyword cINTERFACESInterfacesKeyword_1_0 = (Keyword)cINTERFACESEnumLiteralDeclaration_1.eContents().get(0);
-		private final EnumLiteralDeclaration cOPERATIONSEnumLiteralDeclaration_2 = (EnumLiteralDeclaration)cAlternatives.eContents().get(2);
-		private final Keyword cOPERATIONSOperationsKeyword_2_0 = (Keyword)cOPERATIONSEnumLiteralDeclaration_2.eContents().get(0);
-		private final EnumLiteralDeclaration cPARAMETERSEnumLiteralDeclaration_3 = (EnumLiteralDeclaration)cAlternatives.eContents().get(3);
-		private final Keyword cPARAMETERSParametersKeyword_3_0 = (Keyword)cPARAMETERSEnumLiteralDeclaration_3.eContents().get(0);
-		private final EnumLiteralDeclaration cCOMPLEX_TYPESEnumLiteralDeclaration_4 = (EnumLiteralDeclaration)cAlternatives.eContents().get(4);
-		private final Keyword cCOMPLEX_TYPESTypesKeyword_4_0 = (Keyword)cCOMPLEX_TYPESEnumLiteralDeclaration_4.eContents().get(0);
-		private final EnumLiteralDeclaration cDATA_FIELDSEnumLiteralDeclaration_5 = (EnumLiteralDeclaration)cAlternatives.eContents().get(5);
-		private final Keyword cDATA_FIELDSFieldsKeyword_5_0 = (Keyword)cDATA_FIELDSEnumLiteralDeclaration_5.eContents().get(0);
+		private final EnumLiteralDeclaration cCOMPLEX_TYPESEnumLiteralDeclaration_0 = (EnumLiteralDeclaration)cAlternatives.eContents().get(0);
+		private final Keyword cCOMPLEX_TYPESTypesKeyword_0_0 = (Keyword)cCOMPLEX_TYPESEnumLiteralDeclaration_0.eContents().get(0);
+		private final EnumLiteralDeclaration cDATA_FIELDSEnumLiteralDeclaration_1 = (EnumLiteralDeclaration)cAlternatives.eContents().get(1);
+		private final Keyword cDATA_FIELDSFieldsKeyword_1_0 = (Keyword)cDATA_FIELDSEnumLiteralDeclaration_1.eContents().get(0);
+		private final EnumLiteralDeclaration cDATA_OPERATIONSEnumLiteralDeclaration_2 = (EnumLiteralDeclaration)cAlternatives.eContents().get(2);
+		private final Keyword cDATA_OPERATIONSDomainOperationsKeyword_2_0 = (Keyword)cDATA_OPERATIONSEnumLiteralDeclaration_2.eContents().get(0);
+		private final EnumLiteralDeclaration cDATA_OPERATION_PARAMETERSEnumLiteralDeclaration_3 = (EnumLiteralDeclaration)cAlternatives.eContents().get(3);
+		private final Keyword cDATA_OPERATION_PARAMETERSDomainParametersKeyword_3_0 = (Keyword)cDATA_OPERATION_PARAMETERSEnumLiteralDeclaration_3.eContents().get(0);
+		private final EnumLiteralDeclaration cMICROSERVICESEnumLiteralDeclaration_4 = (EnumLiteralDeclaration)cAlternatives.eContents().get(4);
+		private final Keyword cMICROSERVICESMicroservicesKeyword_4_0 = (Keyword)cMICROSERVICESEnumLiteralDeclaration_4.eContents().get(0);
+		private final EnumLiteralDeclaration cINTERFACESEnumLiteralDeclaration_5 = (EnumLiteralDeclaration)cAlternatives.eContents().get(5);
+		private final Keyword cINTERFACESInterfacesKeyword_5_0 = (Keyword)cINTERFACESEnumLiteralDeclaration_5.eContents().get(0);
+		private final EnumLiteralDeclaration cOPERATIONSEnumLiteralDeclaration_6 = (EnumLiteralDeclaration)cAlternatives.eContents().get(6);
+		private final Keyword cOPERATIONSOperationsKeyword_6_0 = (Keyword)cOPERATIONSEnumLiteralDeclaration_6.eContents().get(0);
+		private final EnumLiteralDeclaration cPARAMETERSEnumLiteralDeclaration_7 = (EnumLiteralDeclaration)cAlternatives.eContents().get(7);
+		private final Keyword cPARAMETERSParametersKeyword_7_0 = (Keyword)cPARAMETERSEnumLiteralDeclaration_7.eContents().get(0);
 		
 		//enum ServiceJoinPointType returns JoinPointType:
+		//	COMPLEX_TYPES='types' |
+		//	DATA_FIELDS='fields' |
+		//	DATA_OPERATIONS='domainOperations' |
+		//	DATA_OPERATION_PARAMETERS='domainParameters' |
 		//	MICROSERVICES='microservices' |
 		//	INTERFACES='interfaces' |
 		//	OPERATIONS='operations' |
-		//	PARAMETERS='parameters' |
-		//	COMPLEX_TYPES='types' |
-		//	DATA_FIELDS='fields';
+		//	PARAMETERS='parameters';
 		public EnumRule getRule() { return rule; }
 		
-		//MICROSERVICES='microservices' | INTERFACES='interfaces' | OPERATIONS='operations' | PARAMETERS='parameters' |
-		//COMPLEX_TYPES='types' | DATA_FIELDS='fields'
+		//COMPLEX_TYPES='types' | DATA_FIELDS='fields' | DATA_OPERATIONS='domainOperations' |
+		//DATA_OPERATION_PARAMETERS='domainParameters' | MICROSERVICES='microservices' | INTERFACES='interfaces' |
+		//OPERATIONS='operations' | PARAMETERS='parameters'
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
-		//MICROSERVICES='microservices'
-		public EnumLiteralDeclaration getMICROSERVICESEnumLiteralDeclaration_0() { return cMICROSERVICESEnumLiteralDeclaration_0; }
-		
-		//'microservices'
-		public Keyword getMICROSERVICESMicroservicesKeyword_0_0() { return cMICROSERVICESMicroservicesKeyword_0_0; }
-		
-		//INTERFACES='interfaces'
-		public EnumLiteralDeclaration getINTERFACESEnumLiteralDeclaration_1() { return cINTERFACESEnumLiteralDeclaration_1; }
-		
-		//'interfaces'
-		public Keyword getINTERFACESInterfacesKeyword_1_0() { return cINTERFACESInterfacesKeyword_1_0; }
-		
-		//OPERATIONS='operations'
-		public EnumLiteralDeclaration getOPERATIONSEnumLiteralDeclaration_2() { return cOPERATIONSEnumLiteralDeclaration_2; }
-		
-		//'operations'
-		public Keyword getOPERATIONSOperationsKeyword_2_0() { return cOPERATIONSOperationsKeyword_2_0; }
-		
-		//PARAMETERS='parameters'
-		public EnumLiteralDeclaration getPARAMETERSEnumLiteralDeclaration_3() { return cPARAMETERSEnumLiteralDeclaration_3; }
-		
-		//'parameters'
-		public Keyword getPARAMETERSParametersKeyword_3_0() { return cPARAMETERSParametersKeyword_3_0; }
-		
 		//COMPLEX_TYPES='types'
-		public EnumLiteralDeclaration getCOMPLEX_TYPESEnumLiteralDeclaration_4() { return cCOMPLEX_TYPESEnumLiteralDeclaration_4; }
+		public EnumLiteralDeclaration getCOMPLEX_TYPESEnumLiteralDeclaration_0() { return cCOMPLEX_TYPESEnumLiteralDeclaration_0; }
 		
 		//'types'
-		public Keyword getCOMPLEX_TYPESTypesKeyword_4_0() { return cCOMPLEX_TYPESTypesKeyword_4_0; }
+		public Keyword getCOMPLEX_TYPESTypesKeyword_0_0() { return cCOMPLEX_TYPESTypesKeyword_0_0; }
 		
 		//DATA_FIELDS='fields'
-		public EnumLiteralDeclaration getDATA_FIELDSEnumLiteralDeclaration_5() { return cDATA_FIELDSEnumLiteralDeclaration_5; }
+		public EnumLiteralDeclaration getDATA_FIELDSEnumLiteralDeclaration_1() { return cDATA_FIELDSEnumLiteralDeclaration_1; }
 		
 		//'fields'
-		public Keyword getDATA_FIELDSFieldsKeyword_5_0() { return cDATA_FIELDSFieldsKeyword_5_0; }
+		public Keyword getDATA_FIELDSFieldsKeyword_1_0() { return cDATA_FIELDSFieldsKeyword_1_0; }
+		
+		//DATA_OPERATIONS='domainOperations'
+		public EnumLiteralDeclaration getDATA_OPERATIONSEnumLiteralDeclaration_2() { return cDATA_OPERATIONSEnumLiteralDeclaration_2; }
+		
+		//'domainOperations'
+		public Keyword getDATA_OPERATIONSDomainOperationsKeyword_2_0() { return cDATA_OPERATIONSDomainOperationsKeyword_2_0; }
+		
+		//DATA_OPERATION_PARAMETERS='domainParameters'
+		public EnumLiteralDeclaration getDATA_OPERATION_PARAMETERSEnumLiteralDeclaration_3() { return cDATA_OPERATION_PARAMETERSEnumLiteralDeclaration_3; }
+		
+		//'domainParameters'
+		public Keyword getDATA_OPERATION_PARAMETERSDomainParametersKeyword_3_0() { return cDATA_OPERATION_PARAMETERSDomainParametersKeyword_3_0; }
+		
+		//MICROSERVICES='microservices'
+		public EnumLiteralDeclaration getMICROSERVICESEnumLiteralDeclaration_4() { return cMICROSERVICESEnumLiteralDeclaration_4; }
+		
+		//'microservices'
+		public Keyword getMICROSERVICESMicroservicesKeyword_4_0() { return cMICROSERVICESMicroservicesKeyword_4_0; }
+		
+		//INTERFACES='interfaces'
+		public EnumLiteralDeclaration getINTERFACESEnumLiteralDeclaration_5() { return cINTERFACESEnumLiteralDeclaration_5; }
+		
+		//'interfaces'
+		public Keyword getINTERFACESInterfacesKeyword_5_0() { return cINTERFACESInterfacesKeyword_5_0; }
+		
+		//OPERATIONS='operations'
+		public EnumLiteralDeclaration getOPERATIONSEnumLiteralDeclaration_6() { return cOPERATIONSEnumLiteralDeclaration_6; }
+		
+		//'operations'
+		public Keyword getOPERATIONSOperationsKeyword_6_0() { return cOPERATIONSOperationsKeyword_6_0; }
+		
+		//PARAMETERS='parameters'
+		public EnumLiteralDeclaration getPARAMETERSEnumLiteralDeclaration_7() { return cPARAMETERSEnumLiteralDeclaration_7; }
+		
+		//'parameters'
+		public Keyword getPARAMETERSParametersKeyword_7_0() { return cPARAMETERSParametersKeyword_7_0; }
 	}
 	public class OperationJoinPointTypeElements extends AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.fhdo.lemma.technology.TechnologyDsl.OperationJoinPointType");
@@ -2000,12 +2019,14 @@ public class TechnologyDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//enum ServiceJoinPointType returns JoinPointType:
+	//	COMPLEX_TYPES='types' |
+	//	DATA_FIELDS='fields' |
+	//	DATA_OPERATIONS='domainOperations' |
+	//	DATA_OPERATION_PARAMETERS='domainParameters' |
 	//	MICROSERVICES='microservices' |
 	//	INTERFACES='interfaces' |
 	//	OPERATIONS='operations' |
-	//	PARAMETERS='parameters' |
-	//	COMPLEX_TYPES='types' |
-	//	DATA_FIELDS='fields';
+	//	PARAMETERS='parameters';
 	public ServiceJoinPointTypeElements getServiceJoinPointTypeAccess() {
 		return eServiceJoinPointType;
 	}

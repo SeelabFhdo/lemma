@@ -47,6 +47,8 @@
 'deployment'=18
 'deploys'=22
 'domainEvent'=107
+'domainOperations'=143
+'domainParameters'=144
 'domainService'=108
 'double'=131
 'endpoints'=30
@@ -181,6 +183,8 @@ T__13=13
 T__140=140
 T__141=141
 T__142=142
+T__143=143
+T__144=144
 T__14=14
 T__15=15
 T__16=16

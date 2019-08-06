@@ -1032,6 +1032,17 @@ and other modeling concepts such as :java:type:`microservices
         :ref:`IntermediateComplexType <link__IntermediateComplexType>` to which 
         the aspect was assigned.
 
+    .. py:attribute:: IntermediateDataOperation operation
+
+        :ref:`IntermediateDataOperation <link__IntermediateDataOperation>` to 
+        which the aspect was assigned.
+
+    .. py:attribute:: IntermediateDataOperationParameter parameter
+
+        :ref:`IntermediateDataOperationParameter 
+        <link__IntermediateDataOperationParameter>` to which the aspect was 
+        assigned.
+
     .. py:attribute:: IntermediateDataField dataField
 
         :ref:`IntermediateDataField <link__IntermediateDataField>` to which the

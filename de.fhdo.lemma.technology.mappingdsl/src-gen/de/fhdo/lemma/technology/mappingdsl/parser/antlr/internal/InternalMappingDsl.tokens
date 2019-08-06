@@ -43,6 +43,8 @@
 'default'=68
 'deployment'=63
 'domainEvent'=99
+'domainOperations'=135
+'domainParameters'=136
 'domainService'=100
 'double'=123
 'endpoints'=19
@@ -164,6 +166,8 @@ T__131=131
 T__132=132
 T__133=133
 T__134=134
+T__135=135
+T__136=136
 T__13=13
 T__14=14
 T__15=15

@@ -1161,13 +1161,13 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     if (!_matched) {
       if (mapping instanceof DataOperationMapping) {
         _matched=true;
-        _switchResult = JoinPointType.OPERATIONS;
+        _switchResult = JoinPointType.DATA_OPERATIONS;
       }
     }
     if (!_matched) {
       if (mapping instanceof DataOperationParameterMapping) {
         _matched=true;
-        _switchResult = JoinPointType.PARAMETERS;
+        _switchResult = JoinPointType.DATA_OPERATION_PARAMETERS;
       }
     }
     if (!_matched) {

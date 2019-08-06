@@ -22,7 +22,7 @@ import java.util.ArrayList;
 @SuppressWarnings("all")
 public class InternalServiceDslParser extends AbstractInternalAntlrParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_STRING", "RULE_ID", "RULE_BOOLEAN", "RULE_BIG_DECIMAL", "RULE_ANY_OTHER", "RULE_INT", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "'import'", "'from'", "'as'", "'@'", "'endpoints'", "'('", "')'", "'microservice'", "'version'", "'{'", "'required'", "'microservices'", "','", "'}'", "'interfaces'", "'operations'", "'technology'", "'typedef'", "'='", "'::'", "'noimpl'", "'interface'", "'---'", "'@param'", "'@required'", "';'", "'refers'", "'fault'", "'?'", "':'", "'/'", "'.'", "'<'", "'>'", "'-'", "'--'", "'types'", "'compatibility'", "'matrix'", "'protocols'", "'service'", "'aspects'", "'deployment'", "'technologies'", "'infrastructure'", "'operation'", "'data'", "'formats'", "'default'", "'with'", "'format'", "'in'", "'out'", "'inout'", "'sync'", "'async'", "'primitive'", "'type'", "'based'", "'on'", "'list'", "'structure'", "'->'", "'<-'", "'<->'", "'environments'", "'properties'", "'mandatory'", "'singleval'", "'parameters'", "'fields'", "'exchange_pattern'", "'communication_type'", "'protocol'", "'data_format'", "'aspect'", "'for'", "'containers'", "'selector'", "'datatypes'", "'context'", "'aggregate'", "'applicationService'", "'domainEvent'", "'domainService'", "'entity'", "'factory'", "'infrastructureService'", "'repository'", "'specification'", "'valueObject'", "'extends'", "'identifier'", "'neverEmpty'", "'part'", "'hide'", "'immutable'", "'enum'", "'closure'", "'sideEffectFree'", "'validator'", "'function'", "'procedure'", "'boolean'", "'byte'", "'char'", "'date'", "'double'", "'float'", "'int'", "'long'", "'short'", "'string'", "'internal'", "'architecture'", "'public'", "'param'", "'functional'", "'utility'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_STRING", "RULE_ID", "RULE_BOOLEAN", "RULE_BIG_DECIMAL", "RULE_ANY_OTHER", "RULE_INT", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "'import'", "'from'", "'as'", "'@'", "'endpoints'", "'('", "')'", "'microservice'", "'version'", "'{'", "'required'", "'microservices'", "','", "'}'", "'interfaces'", "'operations'", "'technology'", "'typedef'", "'='", "'::'", "'noimpl'", "'interface'", "'---'", "'@param'", "'@required'", "';'", "'refers'", "'fault'", "'?'", "':'", "'/'", "'.'", "'<'", "'>'", "'-'", "'--'", "'types'", "'compatibility'", "'matrix'", "'protocols'", "'service'", "'aspects'", "'deployment'", "'technologies'", "'infrastructure'", "'operation'", "'data'", "'formats'", "'default'", "'with'", "'format'", "'in'", "'out'", "'inout'", "'sync'", "'async'", "'primitive'", "'type'", "'based'", "'on'", "'list'", "'structure'", "'->'", "'<-'", "'<->'", "'environments'", "'properties'", "'mandatory'", "'singleval'", "'parameters'", "'fields'", "'exchange_pattern'", "'communication_type'", "'protocol'", "'data_format'", "'aspect'", "'for'", "'containers'", "'selector'", "'datatypes'", "'context'", "'aggregate'", "'applicationService'", "'domainEvent'", "'domainService'", "'entity'", "'factory'", "'infrastructureService'", "'repository'", "'specification'", "'valueObject'", "'extends'", "'identifier'", "'neverEmpty'", "'part'", "'hide'", "'immutable'", "'enum'", "'closure'", "'sideEffectFree'", "'validator'", "'function'", "'procedure'", "'boolean'", "'byte'", "'char'", "'date'", "'double'", "'float'", "'int'", "'long'", "'short'", "'string'", "'internal'", "'architecture'", "'public'", "'param'", "'functional'", "'utility'", "'domainOperations'", "'domainParameters'"
     };
     public static final int T__50=50;
     public static final int T__59=59;
@@ -34,6 +34,8 @@ public class InternalServiceDslParser extends AbstractInternalAntlrParser {
     public static final int T__52=52;
     public static final int T__53=53;
     public static final int T__54=54;
+    public static final int T__133=133;
+    public static final int T__132=132;
     public static final int T__60=60;
     public static final int T__61=61;
     public static final int RULE_ID=5;
@@ -16948,7 +16950,7 @@ public class InternalServiceDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleServiceJoinPointType"
-    // InternalServiceDsl.g:6768:1: ruleServiceJoinPointType returns [Enumerator current=null] : ( (enumLiteral_0= 'microservices' ) | (enumLiteral_1= 'interfaces' ) | (enumLiteral_2= 'operations' ) | (enumLiteral_3= 'parameters' ) | (enumLiteral_4= 'types' ) | (enumLiteral_5= 'fields' ) ) ;
+    // InternalServiceDsl.g:6768:1: ruleServiceJoinPointType returns [Enumerator current=null] : ( (enumLiteral_0= 'types' ) | (enumLiteral_1= 'fields' ) | (enumLiteral_2= 'domainOperations' ) | (enumLiteral_3= 'domainParameters' ) | (enumLiteral_4= 'microservices' ) | (enumLiteral_5= 'interfaces' ) | (enumLiteral_6= 'operations' ) | (enumLiteral_7= 'parameters' ) ) ;
     public final Enumerator ruleServiceJoinPointType() throws RecognitionException {
         Enumerator current = null;
 
@@ -16958,45 +16960,57 @@ public class InternalServiceDslParser extends AbstractInternalAntlrParser {
         Token enumLiteral_3=null;
         Token enumLiteral_4=null;
         Token enumLiteral_5=null;
+        Token enumLiteral_6=null;
+        Token enumLiteral_7=null;
 
 
         	enterRule();
 
         try {
-            // InternalServiceDsl.g:6774:2: ( ( (enumLiteral_0= 'microservices' ) | (enumLiteral_1= 'interfaces' ) | (enumLiteral_2= 'operations' ) | (enumLiteral_3= 'parameters' ) | (enumLiteral_4= 'types' ) | (enumLiteral_5= 'fields' ) ) )
-            // InternalServiceDsl.g:6775:2: ( (enumLiteral_0= 'microservices' ) | (enumLiteral_1= 'interfaces' ) | (enumLiteral_2= 'operations' ) | (enumLiteral_3= 'parameters' ) | (enumLiteral_4= 'types' ) | (enumLiteral_5= 'fields' ) )
+            // InternalServiceDsl.g:6774:2: ( ( (enumLiteral_0= 'types' ) | (enumLiteral_1= 'fields' ) | (enumLiteral_2= 'domainOperations' ) | (enumLiteral_3= 'domainParameters' ) | (enumLiteral_4= 'microservices' ) | (enumLiteral_5= 'interfaces' ) | (enumLiteral_6= 'operations' ) | (enumLiteral_7= 'parameters' ) ) )
+            // InternalServiceDsl.g:6775:2: ( (enumLiteral_0= 'types' ) | (enumLiteral_1= 'fields' ) | (enumLiteral_2= 'domainOperations' ) | (enumLiteral_3= 'domainParameters' ) | (enumLiteral_4= 'microservices' ) | (enumLiteral_5= 'interfaces' ) | (enumLiteral_6= 'operations' ) | (enumLiteral_7= 'parameters' ) )
             {
-            // InternalServiceDsl.g:6775:2: ( (enumLiteral_0= 'microservices' ) | (enumLiteral_1= 'interfaces' ) | (enumLiteral_2= 'operations' ) | (enumLiteral_3= 'parameters' ) | (enumLiteral_4= 'types' ) | (enumLiteral_5= 'fields' ) )
-            int alt130=6;
+            // InternalServiceDsl.g:6775:2: ( (enumLiteral_0= 'types' ) | (enumLiteral_1= 'fields' ) | (enumLiteral_2= 'domainOperations' ) | (enumLiteral_3= 'domainParameters' ) | (enumLiteral_4= 'microservices' ) | (enumLiteral_5= 'interfaces' ) | (enumLiteral_6= 'operations' ) | (enumLiteral_7= 'parameters' ) )
+            int alt130=8;
             switch ( input.LA(1) ) {
-            case 24:
+            case 49:
                 {
                 alt130=1;
                 }
                 break;
-            case 27:
+            case 83:
                 {
                 alt130=2;
                 }
                 break;
-            case 28:
+            case 132:
                 {
                 alt130=3;
                 }
                 break;
-            case 82:
+            case 133:
                 {
                 alt130=4;
                 }
                 break;
-            case 49:
+            case 24:
                 {
                 alt130=5;
                 }
                 break;
-            case 83:
+            case 27:
                 {
                 alt130=6;
+                }
+                break;
+            case 28:
+                {
+                alt130=7;
+                }
+                break;
+            case 82:
+                {
+                alt130=8;
                 }
                 break;
             default:
@@ -17008,15 +17022,15 @@ public class InternalServiceDslParser extends AbstractInternalAntlrParser {
 
             switch (alt130) {
                 case 1 :
-                    // InternalServiceDsl.g:6776:3: (enumLiteral_0= 'microservices' )
+                    // InternalServiceDsl.g:6776:3: (enumLiteral_0= 'types' )
                     {
-                    // InternalServiceDsl.g:6776:3: (enumLiteral_0= 'microservices' )
-                    // InternalServiceDsl.g:6777:4: enumLiteral_0= 'microservices'
+                    // InternalServiceDsl.g:6776:3: (enumLiteral_0= 'types' )
+                    // InternalServiceDsl.g:6777:4: enumLiteral_0= 'types'
                     {
-                    enumLiteral_0=(Token)match(input,24,FOLLOW_2); 
+                    enumLiteral_0=(Token)match(input,49,FOLLOW_2); 
 
-                    				current = grammarAccess.getServiceJoinPointTypeAccess().getMICROSERVICESEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
-                    				newLeafNode(enumLiteral_0, grammarAccess.getServiceJoinPointTypeAccess().getMICROSERVICESEnumLiteralDeclaration_0());
+                    				current = grammarAccess.getServiceJoinPointTypeAccess().getCOMPLEX_TYPESEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
+                    				newLeafNode(enumLiteral_0, grammarAccess.getServiceJoinPointTypeAccess().getCOMPLEX_TYPESEnumLiteralDeclaration_0());
                     			
 
                     }
@@ -17025,15 +17039,15 @@ public class InternalServiceDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalServiceDsl.g:6784:3: (enumLiteral_1= 'interfaces' )
+                    // InternalServiceDsl.g:6784:3: (enumLiteral_1= 'fields' )
                     {
-                    // InternalServiceDsl.g:6784:3: (enumLiteral_1= 'interfaces' )
-                    // InternalServiceDsl.g:6785:4: enumLiteral_1= 'interfaces'
+                    // InternalServiceDsl.g:6784:3: (enumLiteral_1= 'fields' )
+                    // InternalServiceDsl.g:6785:4: enumLiteral_1= 'fields'
                     {
-                    enumLiteral_1=(Token)match(input,27,FOLLOW_2); 
+                    enumLiteral_1=(Token)match(input,83,FOLLOW_2); 
 
-                    				current = grammarAccess.getServiceJoinPointTypeAccess().getINTERFACESEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
-                    				newLeafNode(enumLiteral_1, grammarAccess.getServiceJoinPointTypeAccess().getINTERFACESEnumLiteralDeclaration_1());
+                    				current = grammarAccess.getServiceJoinPointTypeAccess().getDATA_FIELDSEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
+                    				newLeafNode(enumLiteral_1, grammarAccess.getServiceJoinPointTypeAccess().getDATA_FIELDSEnumLiteralDeclaration_1());
                     			
 
                     }
@@ -17042,15 +17056,15 @@ public class InternalServiceDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalServiceDsl.g:6792:3: (enumLiteral_2= 'operations' )
+                    // InternalServiceDsl.g:6792:3: (enumLiteral_2= 'domainOperations' )
                     {
-                    // InternalServiceDsl.g:6792:3: (enumLiteral_2= 'operations' )
-                    // InternalServiceDsl.g:6793:4: enumLiteral_2= 'operations'
+                    // InternalServiceDsl.g:6792:3: (enumLiteral_2= 'domainOperations' )
+                    // InternalServiceDsl.g:6793:4: enumLiteral_2= 'domainOperations'
                     {
-                    enumLiteral_2=(Token)match(input,28,FOLLOW_2); 
+                    enumLiteral_2=(Token)match(input,132,FOLLOW_2); 
 
-                    				current = grammarAccess.getServiceJoinPointTypeAccess().getOPERATIONSEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
-                    				newLeafNode(enumLiteral_2, grammarAccess.getServiceJoinPointTypeAccess().getOPERATIONSEnumLiteralDeclaration_2());
+                    				current = grammarAccess.getServiceJoinPointTypeAccess().getDATA_OPERATIONSEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
+                    				newLeafNode(enumLiteral_2, grammarAccess.getServiceJoinPointTypeAccess().getDATA_OPERATIONSEnumLiteralDeclaration_2());
                     			
 
                     }
@@ -17059,15 +17073,15 @@ public class InternalServiceDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // InternalServiceDsl.g:6800:3: (enumLiteral_3= 'parameters' )
+                    // InternalServiceDsl.g:6800:3: (enumLiteral_3= 'domainParameters' )
                     {
-                    // InternalServiceDsl.g:6800:3: (enumLiteral_3= 'parameters' )
-                    // InternalServiceDsl.g:6801:4: enumLiteral_3= 'parameters'
+                    // InternalServiceDsl.g:6800:3: (enumLiteral_3= 'domainParameters' )
+                    // InternalServiceDsl.g:6801:4: enumLiteral_3= 'domainParameters'
                     {
-                    enumLiteral_3=(Token)match(input,82,FOLLOW_2); 
+                    enumLiteral_3=(Token)match(input,133,FOLLOW_2); 
 
-                    				current = grammarAccess.getServiceJoinPointTypeAccess().getPARAMETERSEnumLiteralDeclaration_3().getEnumLiteral().getInstance();
-                    				newLeafNode(enumLiteral_3, grammarAccess.getServiceJoinPointTypeAccess().getPARAMETERSEnumLiteralDeclaration_3());
+                    				current = grammarAccess.getServiceJoinPointTypeAccess().getDATA_OPERATION_PARAMETERSEnumLiteralDeclaration_3().getEnumLiteral().getInstance();
+                    				newLeafNode(enumLiteral_3, grammarAccess.getServiceJoinPointTypeAccess().getDATA_OPERATION_PARAMETERSEnumLiteralDeclaration_3());
                     			
 
                     }
@@ -17076,15 +17090,15 @@ public class InternalServiceDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 5 :
-                    // InternalServiceDsl.g:6808:3: (enumLiteral_4= 'types' )
+                    // InternalServiceDsl.g:6808:3: (enumLiteral_4= 'microservices' )
                     {
-                    // InternalServiceDsl.g:6808:3: (enumLiteral_4= 'types' )
-                    // InternalServiceDsl.g:6809:4: enumLiteral_4= 'types'
+                    // InternalServiceDsl.g:6808:3: (enumLiteral_4= 'microservices' )
+                    // InternalServiceDsl.g:6809:4: enumLiteral_4= 'microservices'
                     {
-                    enumLiteral_4=(Token)match(input,49,FOLLOW_2); 
+                    enumLiteral_4=(Token)match(input,24,FOLLOW_2); 
 
-                    				current = grammarAccess.getServiceJoinPointTypeAccess().getCOMPLEX_TYPESEnumLiteralDeclaration_4().getEnumLiteral().getInstance();
-                    				newLeafNode(enumLiteral_4, grammarAccess.getServiceJoinPointTypeAccess().getCOMPLEX_TYPESEnumLiteralDeclaration_4());
+                    				current = grammarAccess.getServiceJoinPointTypeAccess().getMICROSERVICESEnumLiteralDeclaration_4().getEnumLiteral().getInstance();
+                    				newLeafNode(enumLiteral_4, grammarAccess.getServiceJoinPointTypeAccess().getMICROSERVICESEnumLiteralDeclaration_4());
                     			
 
                     }
@@ -17093,15 +17107,49 @@ public class InternalServiceDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 6 :
-                    // InternalServiceDsl.g:6816:3: (enumLiteral_5= 'fields' )
+                    // InternalServiceDsl.g:6816:3: (enumLiteral_5= 'interfaces' )
                     {
-                    // InternalServiceDsl.g:6816:3: (enumLiteral_5= 'fields' )
-                    // InternalServiceDsl.g:6817:4: enumLiteral_5= 'fields'
+                    // InternalServiceDsl.g:6816:3: (enumLiteral_5= 'interfaces' )
+                    // InternalServiceDsl.g:6817:4: enumLiteral_5= 'interfaces'
                     {
-                    enumLiteral_5=(Token)match(input,83,FOLLOW_2); 
+                    enumLiteral_5=(Token)match(input,27,FOLLOW_2); 
 
-                    				current = grammarAccess.getServiceJoinPointTypeAccess().getDATA_FIELDSEnumLiteralDeclaration_5().getEnumLiteral().getInstance();
-                    				newLeafNode(enumLiteral_5, grammarAccess.getServiceJoinPointTypeAccess().getDATA_FIELDSEnumLiteralDeclaration_5());
+                    				current = grammarAccess.getServiceJoinPointTypeAccess().getINTERFACESEnumLiteralDeclaration_5().getEnumLiteral().getInstance();
+                    				newLeafNode(enumLiteral_5, grammarAccess.getServiceJoinPointTypeAccess().getINTERFACESEnumLiteralDeclaration_5());
+                    			
+
+                    }
+
+
+                    }
+                    break;
+                case 7 :
+                    // InternalServiceDsl.g:6824:3: (enumLiteral_6= 'operations' )
+                    {
+                    // InternalServiceDsl.g:6824:3: (enumLiteral_6= 'operations' )
+                    // InternalServiceDsl.g:6825:4: enumLiteral_6= 'operations'
+                    {
+                    enumLiteral_6=(Token)match(input,28,FOLLOW_2); 
+
+                    				current = grammarAccess.getServiceJoinPointTypeAccess().getOPERATIONSEnumLiteralDeclaration_6().getEnumLiteral().getInstance();
+                    				newLeafNode(enumLiteral_6, grammarAccess.getServiceJoinPointTypeAccess().getOPERATIONSEnumLiteralDeclaration_6());
+                    			
+
+                    }
+
+
+                    }
+                    break;
+                case 8 :
+                    // InternalServiceDsl.g:6832:3: (enumLiteral_7= 'parameters' )
+                    {
+                    // InternalServiceDsl.g:6832:3: (enumLiteral_7= 'parameters' )
+                    // InternalServiceDsl.g:6833:4: enumLiteral_7= 'parameters'
+                    {
+                    enumLiteral_7=(Token)match(input,82,FOLLOW_2); 
+
+                    				current = grammarAccess.getServiceJoinPointTypeAccess().getPARAMETERSEnumLiteralDeclaration_7().getEnumLiteral().getInstance();
+                    				newLeafNode(enumLiteral_7, grammarAccess.getServiceJoinPointTypeAccess().getPARAMETERSEnumLiteralDeclaration_7());
                     			
 
                     }
@@ -17132,7 +17180,7 @@ public class InternalServiceDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleOperationJoinPointType"
-    // InternalServiceDsl.g:6827:1: ruleOperationJoinPointType returns [Enumerator current=null] : ( (enumLiteral_0= 'containers' ) | (enumLiteral_1= 'infrastructure' ) ) ;
+    // InternalServiceDsl.g:6843:1: ruleOperationJoinPointType returns [Enumerator current=null] : ( (enumLiteral_0= 'containers' ) | (enumLiteral_1= 'infrastructure' ) ) ;
     public final Enumerator ruleOperationJoinPointType() throws RecognitionException {
         Enumerator current = null;
 
@@ -17143,10 +17191,10 @@ public class InternalServiceDslParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalServiceDsl.g:6833:2: ( ( (enumLiteral_0= 'containers' ) | (enumLiteral_1= 'infrastructure' ) ) )
-            // InternalServiceDsl.g:6834:2: ( (enumLiteral_0= 'containers' ) | (enumLiteral_1= 'infrastructure' ) )
+            // InternalServiceDsl.g:6849:2: ( ( (enumLiteral_0= 'containers' ) | (enumLiteral_1= 'infrastructure' ) ) )
+            // InternalServiceDsl.g:6850:2: ( (enumLiteral_0= 'containers' ) | (enumLiteral_1= 'infrastructure' ) )
             {
-            // InternalServiceDsl.g:6834:2: ( (enumLiteral_0= 'containers' ) | (enumLiteral_1= 'infrastructure' ) )
+            // InternalServiceDsl.g:6850:2: ( (enumLiteral_0= 'containers' ) | (enumLiteral_1= 'infrastructure' ) )
             int alt131=2;
             int LA131_0 = input.LA(1);
 
@@ -17164,10 +17212,10 @@ public class InternalServiceDslParser extends AbstractInternalAntlrParser {
             }
             switch (alt131) {
                 case 1 :
-                    // InternalServiceDsl.g:6835:3: (enumLiteral_0= 'containers' )
+                    // InternalServiceDsl.g:6851:3: (enumLiteral_0= 'containers' )
                     {
-                    // InternalServiceDsl.g:6835:3: (enumLiteral_0= 'containers' )
-                    // InternalServiceDsl.g:6836:4: enumLiteral_0= 'containers'
+                    // InternalServiceDsl.g:6851:3: (enumLiteral_0= 'containers' )
+                    // InternalServiceDsl.g:6852:4: enumLiteral_0= 'containers'
                     {
                     enumLiteral_0=(Token)match(input,90,FOLLOW_2); 
 
@@ -17181,10 +17229,10 @@ public class InternalServiceDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalServiceDsl.g:6843:3: (enumLiteral_1= 'infrastructure' )
+                    // InternalServiceDsl.g:6859:3: (enumLiteral_1= 'infrastructure' )
                     {
-                    // InternalServiceDsl.g:6843:3: (enumLiteral_1= 'infrastructure' )
-                    // InternalServiceDsl.g:6844:4: enumLiteral_1= 'infrastructure'
+                    // InternalServiceDsl.g:6859:3: (enumLiteral_1= 'infrastructure' )
+                    // InternalServiceDsl.g:6860:4: enumLiteral_1= 'infrastructure'
                     {
                     enumLiteral_1=(Token)match(input,57,FOLLOW_2); 
 
@@ -17220,7 +17268,7 @@ public class InternalServiceDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleDataStructureFeature"
-    // InternalServiceDsl.g:6854:1: ruleDataStructureFeature returns [Enumerator current=null] : ( (enumLiteral_0= 'aggregate' ) | (enumLiteral_1= 'applicationService' ) | (enumLiteral_2= 'domainEvent' ) | (enumLiteral_3= 'domainService' ) | (enumLiteral_4= 'entity' ) | (enumLiteral_5= 'factory' ) | (enumLiteral_6= 'infrastructureService' ) | (enumLiteral_7= 'repository' ) | (enumLiteral_8= 'service' ) | (enumLiteral_9= 'specification' ) | (enumLiteral_10= 'valueObject' ) ) ;
+    // InternalServiceDsl.g:6870:1: ruleDataStructureFeature returns [Enumerator current=null] : ( (enumLiteral_0= 'aggregate' ) | (enumLiteral_1= 'applicationService' ) | (enumLiteral_2= 'domainEvent' ) | (enumLiteral_3= 'domainService' ) | (enumLiteral_4= 'entity' ) | (enumLiteral_5= 'factory' ) | (enumLiteral_6= 'infrastructureService' ) | (enumLiteral_7= 'repository' ) | (enumLiteral_8= 'service' ) | (enumLiteral_9= 'specification' ) | (enumLiteral_10= 'valueObject' ) ) ;
     public final Enumerator ruleDataStructureFeature() throws RecognitionException {
         Enumerator current = null;
 
@@ -17240,10 +17288,10 @@ public class InternalServiceDslParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalServiceDsl.g:6860:2: ( ( (enumLiteral_0= 'aggregate' ) | (enumLiteral_1= 'applicationService' ) | (enumLiteral_2= 'domainEvent' ) | (enumLiteral_3= 'domainService' ) | (enumLiteral_4= 'entity' ) | (enumLiteral_5= 'factory' ) | (enumLiteral_6= 'infrastructureService' ) | (enumLiteral_7= 'repository' ) | (enumLiteral_8= 'service' ) | (enumLiteral_9= 'specification' ) | (enumLiteral_10= 'valueObject' ) ) )
-            // InternalServiceDsl.g:6861:2: ( (enumLiteral_0= 'aggregate' ) | (enumLiteral_1= 'applicationService' ) | (enumLiteral_2= 'domainEvent' ) | (enumLiteral_3= 'domainService' ) | (enumLiteral_4= 'entity' ) | (enumLiteral_5= 'factory' ) | (enumLiteral_6= 'infrastructureService' ) | (enumLiteral_7= 'repository' ) | (enumLiteral_8= 'service' ) | (enumLiteral_9= 'specification' ) | (enumLiteral_10= 'valueObject' ) )
+            // InternalServiceDsl.g:6876:2: ( ( (enumLiteral_0= 'aggregate' ) | (enumLiteral_1= 'applicationService' ) | (enumLiteral_2= 'domainEvent' ) | (enumLiteral_3= 'domainService' ) | (enumLiteral_4= 'entity' ) | (enumLiteral_5= 'factory' ) | (enumLiteral_6= 'infrastructureService' ) | (enumLiteral_7= 'repository' ) | (enumLiteral_8= 'service' ) | (enumLiteral_9= 'specification' ) | (enumLiteral_10= 'valueObject' ) ) )
+            // InternalServiceDsl.g:6877:2: ( (enumLiteral_0= 'aggregate' ) | (enumLiteral_1= 'applicationService' ) | (enumLiteral_2= 'domainEvent' ) | (enumLiteral_3= 'domainService' ) | (enumLiteral_4= 'entity' ) | (enumLiteral_5= 'factory' ) | (enumLiteral_6= 'infrastructureService' ) | (enumLiteral_7= 'repository' ) | (enumLiteral_8= 'service' ) | (enumLiteral_9= 'specification' ) | (enumLiteral_10= 'valueObject' ) )
             {
-            // InternalServiceDsl.g:6861:2: ( (enumLiteral_0= 'aggregate' ) | (enumLiteral_1= 'applicationService' ) | (enumLiteral_2= 'domainEvent' ) | (enumLiteral_3= 'domainService' ) | (enumLiteral_4= 'entity' ) | (enumLiteral_5= 'factory' ) | (enumLiteral_6= 'infrastructureService' ) | (enumLiteral_7= 'repository' ) | (enumLiteral_8= 'service' ) | (enumLiteral_9= 'specification' ) | (enumLiteral_10= 'valueObject' ) )
+            // InternalServiceDsl.g:6877:2: ( (enumLiteral_0= 'aggregate' ) | (enumLiteral_1= 'applicationService' ) | (enumLiteral_2= 'domainEvent' ) | (enumLiteral_3= 'domainService' ) | (enumLiteral_4= 'entity' ) | (enumLiteral_5= 'factory' ) | (enumLiteral_6= 'infrastructureService' ) | (enumLiteral_7= 'repository' ) | (enumLiteral_8= 'service' ) | (enumLiteral_9= 'specification' ) | (enumLiteral_10= 'valueObject' ) )
             int alt132=11;
             switch ( input.LA(1) ) {
             case 94:
@@ -17310,10 +17358,10 @@ public class InternalServiceDslParser extends AbstractInternalAntlrParser {
 
             switch (alt132) {
                 case 1 :
-                    // InternalServiceDsl.g:6862:3: (enumLiteral_0= 'aggregate' )
+                    // InternalServiceDsl.g:6878:3: (enumLiteral_0= 'aggregate' )
                     {
-                    // InternalServiceDsl.g:6862:3: (enumLiteral_0= 'aggregate' )
-                    // InternalServiceDsl.g:6863:4: enumLiteral_0= 'aggregate'
+                    // InternalServiceDsl.g:6878:3: (enumLiteral_0= 'aggregate' )
+                    // InternalServiceDsl.g:6879:4: enumLiteral_0= 'aggregate'
                     {
                     enumLiteral_0=(Token)match(input,94,FOLLOW_2); 
 
@@ -17327,10 +17375,10 @@ public class InternalServiceDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalServiceDsl.g:6870:3: (enumLiteral_1= 'applicationService' )
+                    // InternalServiceDsl.g:6886:3: (enumLiteral_1= 'applicationService' )
                     {
-                    // InternalServiceDsl.g:6870:3: (enumLiteral_1= 'applicationService' )
-                    // InternalServiceDsl.g:6871:4: enumLiteral_1= 'applicationService'
+                    // InternalServiceDsl.g:6886:3: (enumLiteral_1= 'applicationService' )
+                    // InternalServiceDsl.g:6887:4: enumLiteral_1= 'applicationService'
                     {
                     enumLiteral_1=(Token)match(input,95,FOLLOW_2); 
 
@@ -17344,10 +17392,10 @@ public class InternalServiceDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalServiceDsl.g:6878:3: (enumLiteral_2= 'domainEvent' )
+                    // InternalServiceDsl.g:6894:3: (enumLiteral_2= 'domainEvent' )
                     {
-                    // InternalServiceDsl.g:6878:3: (enumLiteral_2= 'domainEvent' )
-                    // InternalServiceDsl.g:6879:4: enumLiteral_2= 'domainEvent'
+                    // InternalServiceDsl.g:6894:3: (enumLiteral_2= 'domainEvent' )
+                    // InternalServiceDsl.g:6895:4: enumLiteral_2= 'domainEvent'
                     {
                     enumLiteral_2=(Token)match(input,96,FOLLOW_2); 
 
@@ -17361,10 +17409,10 @@ public class InternalServiceDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // InternalServiceDsl.g:6886:3: (enumLiteral_3= 'domainService' )
+                    // InternalServiceDsl.g:6902:3: (enumLiteral_3= 'domainService' )
                     {
-                    // InternalServiceDsl.g:6886:3: (enumLiteral_3= 'domainService' )
-                    // InternalServiceDsl.g:6887:4: enumLiteral_3= 'domainService'
+                    // InternalServiceDsl.g:6902:3: (enumLiteral_3= 'domainService' )
+                    // InternalServiceDsl.g:6903:4: enumLiteral_3= 'domainService'
                     {
                     enumLiteral_3=(Token)match(input,97,FOLLOW_2); 
 
@@ -17378,10 +17426,10 @@ public class InternalServiceDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 5 :
-                    // InternalServiceDsl.g:6894:3: (enumLiteral_4= 'entity' )
+                    // InternalServiceDsl.g:6910:3: (enumLiteral_4= 'entity' )
                     {
-                    // InternalServiceDsl.g:6894:3: (enumLiteral_4= 'entity' )
-                    // InternalServiceDsl.g:6895:4: enumLiteral_4= 'entity'
+                    // InternalServiceDsl.g:6910:3: (enumLiteral_4= 'entity' )
+                    // InternalServiceDsl.g:6911:4: enumLiteral_4= 'entity'
                     {
                     enumLiteral_4=(Token)match(input,98,FOLLOW_2); 
 
@@ -17395,10 +17443,10 @@ public class InternalServiceDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 6 :
-                    // InternalServiceDsl.g:6902:3: (enumLiteral_5= 'factory' )
+                    // InternalServiceDsl.g:6918:3: (enumLiteral_5= 'factory' )
                     {
-                    // InternalServiceDsl.g:6902:3: (enumLiteral_5= 'factory' )
-                    // InternalServiceDsl.g:6903:4: enumLiteral_5= 'factory'
+                    // InternalServiceDsl.g:6918:3: (enumLiteral_5= 'factory' )
+                    // InternalServiceDsl.g:6919:4: enumLiteral_5= 'factory'
                     {
                     enumLiteral_5=(Token)match(input,99,FOLLOW_2); 
 
@@ -17412,10 +17460,10 @@ public class InternalServiceDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 7 :
-                    // InternalServiceDsl.g:6910:3: (enumLiteral_6= 'infrastructureService' )
+                    // InternalServiceDsl.g:6926:3: (enumLiteral_6= 'infrastructureService' )
                     {
-                    // InternalServiceDsl.g:6910:3: (enumLiteral_6= 'infrastructureService' )
-                    // InternalServiceDsl.g:6911:4: enumLiteral_6= 'infrastructureService'
+                    // InternalServiceDsl.g:6926:3: (enumLiteral_6= 'infrastructureService' )
+                    // InternalServiceDsl.g:6927:4: enumLiteral_6= 'infrastructureService'
                     {
                     enumLiteral_6=(Token)match(input,100,FOLLOW_2); 
 
@@ -17429,10 +17477,10 @@ public class InternalServiceDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 8 :
-                    // InternalServiceDsl.g:6918:3: (enumLiteral_7= 'repository' )
+                    // InternalServiceDsl.g:6934:3: (enumLiteral_7= 'repository' )
                     {
-                    // InternalServiceDsl.g:6918:3: (enumLiteral_7= 'repository' )
-                    // InternalServiceDsl.g:6919:4: enumLiteral_7= 'repository'
+                    // InternalServiceDsl.g:6934:3: (enumLiteral_7= 'repository' )
+                    // InternalServiceDsl.g:6935:4: enumLiteral_7= 'repository'
                     {
                     enumLiteral_7=(Token)match(input,101,FOLLOW_2); 
 
@@ -17446,10 +17494,10 @@ public class InternalServiceDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 9 :
-                    // InternalServiceDsl.g:6926:3: (enumLiteral_8= 'service' )
+                    // InternalServiceDsl.g:6942:3: (enumLiteral_8= 'service' )
                     {
-                    // InternalServiceDsl.g:6926:3: (enumLiteral_8= 'service' )
-                    // InternalServiceDsl.g:6927:4: enumLiteral_8= 'service'
+                    // InternalServiceDsl.g:6942:3: (enumLiteral_8= 'service' )
+                    // InternalServiceDsl.g:6943:4: enumLiteral_8= 'service'
                     {
                     enumLiteral_8=(Token)match(input,53,FOLLOW_2); 
 
@@ -17463,10 +17511,10 @@ public class InternalServiceDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 10 :
-                    // InternalServiceDsl.g:6934:3: (enumLiteral_9= 'specification' )
+                    // InternalServiceDsl.g:6950:3: (enumLiteral_9= 'specification' )
                     {
-                    // InternalServiceDsl.g:6934:3: (enumLiteral_9= 'specification' )
-                    // InternalServiceDsl.g:6935:4: enumLiteral_9= 'specification'
+                    // InternalServiceDsl.g:6950:3: (enumLiteral_9= 'specification' )
+                    // InternalServiceDsl.g:6951:4: enumLiteral_9= 'specification'
                     {
                     enumLiteral_9=(Token)match(input,102,FOLLOW_2); 
 
@@ -17480,10 +17528,10 @@ public class InternalServiceDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 11 :
-                    // InternalServiceDsl.g:6942:3: (enumLiteral_10= 'valueObject' )
+                    // InternalServiceDsl.g:6958:3: (enumLiteral_10= 'valueObject' )
                     {
-                    // InternalServiceDsl.g:6942:3: (enumLiteral_10= 'valueObject' )
-                    // InternalServiceDsl.g:6943:4: enumLiteral_10= 'valueObject'
+                    // InternalServiceDsl.g:6958:3: (enumLiteral_10= 'valueObject' )
+                    // InternalServiceDsl.g:6959:4: enumLiteral_10= 'valueObject'
                     {
                     enumLiteral_10=(Token)match(input,103,FOLLOW_2); 
 
@@ -17519,7 +17567,7 @@ public class InternalServiceDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleDataFieldFeature"
-    // InternalServiceDsl.g:6953:1: ruleDataFieldFeature returns [Enumerator current=null] : ( (enumLiteral_0= 'identifier' ) | (enumLiteral_1= 'neverEmpty' ) | (enumLiteral_2= 'part' ) ) ;
+    // InternalServiceDsl.g:6969:1: ruleDataFieldFeature returns [Enumerator current=null] : ( (enumLiteral_0= 'identifier' ) | (enumLiteral_1= 'neverEmpty' ) | (enumLiteral_2= 'part' ) ) ;
     public final Enumerator ruleDataFieldFeature() throws RecognitionException {
         Enumerator current = null;
 
@@ -17531,10 +17579,10 @@ public class InternalServiceDslParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalServiceDsl.g:6959:2: ( ( (enumLiteral_0= 'identifier' ) | (enumLiteral_1= 'neverEmpty' ) | (enumLiteral_2= 'part' ) ) )
-            // InternalServiceDsl.g:6960:2: ( (enumLiteral_0= 'identifier' ) | (enumLiteral_1= 'neverEmpty' ) | (enumLiteral_2= 'part' ) )
+            // InternalServiceDsl.g:6975:2: ( ( (enumLiteral_0= 'identifier' ) | (enumLiteral_1= 'neverEmpty' ) | (enumLiteral_2= 'part' ) ) )
+            // InternalServiceDsl.g:6976:2: ( (enumLiteral_0= 'identifier' ) | (enumLiteral_1= 'neverEmpty' ) | (enumLiteral_2= 'part' ) )
             {
-            // InternalServiceDsl.g:6960:2: ( (enumLiteral_0= 'identifier' ) | (enumLiteral_1= 'neverEmpty' ) | (enumLiteral_2= 'part' ) )
+            // InternalServiceDsl.g:6976:2: ( (enumLiteral_0= 'identifier' ) | (enumLiteral_1= 'neverEmpty' ) | (enumLiteral_2= 'part' ) )
             int alt133=3;
             switch ( input.LA(1) ) {
             case 105:
@@ -17561,10 +17609,10 @@ public class InternalServiceDslParser extends AbstractInternalAntlrParser {
 
             switch (alt133) {
                 case 1 :
-                    // InternalServiceDsl.g:6961:3: (enumLiteral_0= 'identifier' )
+                    // InternalServiceDsl.g:6977:3: (enumLiteral_0= 'identifier' )
                     {
-                    // InternalServiceDsl.g:6961:3: (enumLiteral_0= 'identifier' )
-                    // InternalServiceDsl.g:6962:4: enumLiteral_0= 'identifier'
+                    // InternalServiceDsl.g:6977:3: (enumLiteral_0= 'identifier' )
+                    // InternalServiceDsl.g:6978:4: enumLiteral_0= 'identifier'
                     {
                     enumLiteral_0=(Token)match(input,105,FOLLOW_2); 
 
@@ -17578,10 +17626,10 @@ public class InternalServiceDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalServiceDsl.g:6969:3: (enumLiteral_1= 'neverEmpty' )
+                    // InternalServiceDsl.g:6985:3: (enumLiteral_1= 'neverEmpty' )
                     {
-                    // InternalServiceDsl.g:6969:3: (enumLiteral_1= 'neverEmpty' )
-                    // InternalServiceDsl.g:6970:4: enumLiteral_1= 'neverEmpty'
+                    // InternalServiceDsl.g:6985:3: (enumLiteral_1= 'neverEmpty' )
+                    // InternalServiceDsl.g:6986:4: enumLiteral_1= 'neverEmpty'
                     {
                     enumLiteral_1=(Token)match(input,106,FOLLOW_2); 
 
@@ -17595,10 +17643,10 @@ public class InternalServiceDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalServiceDsl.g:6977:3: (enumLiteral_2= 'part' )
+                    // InternalServiceDsl.g:6993:3: (enumLiteral_2= 'part' )
                     {
-                    // InternalServiceDsl.g:6977:3: (enumLiteral_2= 'part' )
-                    // InternalServiceDsl.g:6978:4: enumLiteral_2= 'part'
+                    // InternalServiceDsl.g:6993:3: (enumLiteral_2= 'part' )
+                    // InternalServiceDsl.g:6994:4: enumLiteral_2= 'part'
                     {
                     enumLiteral_2=(Token)match(input,107,FOLLOW_2); 
 
@@ -17634,7 +17682,7 @@ public class InternalServiceDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleDataOperationFeature"
-    // InternalServiceDsl.g:6988:1: ruleDataOperationFeature returns [Enumerator current=null] : ( (enumLiteral_0= 'closure' ) | (enumLiteral_1= 'identifier' ) | (enumLiteral_2= 'sideEffectFree' ) | (enumLiteral_3= 'validator' ) ) ;
+    // InternalServiceDsl.g:7004:1: ruleDataOperationFeature returns [Enumerator current=null] : ( (enumLiteral_0= 'closure' ) | (enumLiteral_1= 'identifier' ) | (enumLiteral_2= 'sideEffectFree' ) | (enumLiteral_3= 'validator' ) ) ;
     public final Enumerator ruleDataOperationFeature() throws RecognitionException {
         Enumerator current = null;
 
@@ -17647,10 +17695,10 @@ public class InternalServiceDslParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalServiceDsl.g:6994:2: ( ( (enumLiteral_0= 'closure' ) | (enumLiteral_1= 'identifier' ) | (enumLiteral_2= 'sideEffectFree' ) | (enumLiteral_3= 'validator' ) ) )
-            // InternalServiceDsl.g:6995:2: ( (enumLiteral_0= 'closure' ) | (enumLiteral_1= 'identifier' ) | (enumLiteral_2= 'sideEffectFree' ) | (enumLiteral_3= 'validator' ) )
+            // InternalServiceDsl.g:7010:2: ( ( (enumLiteral_0= 'closure' ) | (enumLiteral_1= 'identifier' ) | (enumLiteral_2= 'sideEffectFree' ) | (enumLiteral_3= 'validator' ) ) )
+            // InternalServiceDsl.g:7011:2: ( (enumLiteral_0= 'closure' ) | (enumLiteral_1= 'identifier' ) | (enumLiteral_2= 'sideEffectFree' ) | (enumLiteral_3= 'validator' ) )
             {
-            // InternalServiceDsl.g:6995:2: ( (enumLiteral_0= 'closure' ) | (enumLiteral_1= 'identifier' ) | (enumLiteral_2= 'sideEffectFree' ) | (enumLiteral_3= 'validator' ) )
+            // InternalServiceDsl.g:7011:2: ( (enumLiteral_0= 'closure' ) | (enumLiteral_1= 'identifier' ) | (enumLiteral_2= 'sideEffectFree' ) | (enumLiteral_3= 'validator' ) )
             int alt134=4;
             switch ( input.LA(1) ) {
             case 111:
@@ -17682,10 +17730,10 @@ public class InternalServiceDslParser extends AbstractInternalAntlrParser {
 
             switch (alt134) {
                 case 1 :
-                    // InternalServiceDsl.g:6996:3: (enumLiteral_0= 'closure' )
+                    // InternalServiceDsl.g:7012:3: (enumLiteral_0= 'closure' )
                     {
-                    // InternalServiceDsl.g:6996:3: (enumLiteral_0= 'closure' )
-                    // InternalServiceDsl.g:6997:4: enumLiteral_0= 'closure'
+                    // InternalServiceDsl.g:7012:3: (enumLiteral_0= 'closure' )
+                    // InternalServiceDsl.g:7013:4: enumLiteral_0= 'closure'
                     {
                     enumLiteral_0=(Token)match(input,111,FOLLOW_2); 
 
@@ -17699,10 +17747,10 @@ public class InternalServiceDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalServiceDsl.g:7004:3: (enumLiteral_1= 'identifier' )
+                    // InternalServiceDsl.g:7020:3: (enumLiteral_1= 'identifier' )
                     {
-                    // InternalServiceDsl.g:7004:3: (enumLiteral_1= 'identifier' )
-                    // InternalServiceDsl.g:7005:4: enumLiteral_1= 'identifier'
+                    // InternalServiceDsl.g:7020:3: (enumLiteral_1= 'identifier' )
+                    // InternalServiceDsl.g:7021:4: enumLiteral_1= 'identifier'
                     {
                     enumLiteral_1=(Token)match(input,105,FOLLOW_2); 
 
@@ -17716,10 +17764,10 @@ public class InternalServiceDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalServiceDsl.g:7012:3: (enumLiteral_2= 'sideEffectFree' )
+                    // InternalServiceDsl.g:7028:3: (enumLiteral_2= 'sideEffectFree' )
                     {
-                    // InternalServiceDsl.g:7012:3: (enumLiteral_2= 'sideEffectFree' )
-                    // InternalServiceDsl.g:7013:4: enumLiteral_2= 'sideEffectFree'
+                    // InternalServiceDsl.g:7028:3: (enumLiteral_2= 'sideEffectFree' )
+                    // InternalServiceDsl.g:7029:4: enumLiteral_2= 'sideEffectFree'
                     {
                     enumLiteral_2=(Token)match(input,112,FOLLOW_2); 
 
@@ -17733,10 +17781,10 @@ public class InternalServiceDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // InternalServiceDsl.g:7020:3: (enumLiteral_3= 'validator' )
+                    // InternalServiceDsl.g:7036:3: (enumLiteral_3= 'validator' )
                     {
-                    // InternalServiceDsl.g:7020:3: (enumLiteral_3= 'validator' )
-                    // InternalServiceDsl.g:7021:4: enumLiteral_3= 'validator'
+                    // InternalServiceDsl.g:7036:3: (enumLiteral_3= 'validator' )
+                    // InternalServiceDsl.g:7037:4: enumLiteral_3= 'validator'
                     {
                     enumLiteral_3=(Token)match(input,113,FOLLOW_2); 
 
@@ -18021,7 +18069,7 @@ public class InternalServiceDslParser extends AbstractInternalAntlrParser {
     public static final BitSet FOLLOW_79 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000007L});
     public static final BitSet FOLLOW_80 = new BitSet(new long[]{0x0000000000000000L,0x0000000000F00000L});
     public static final BitSet FOLLOW_81 = new BitSet(new long[]{0x0000000000000000L,0x0000000002000000L});
-    public static final BitSet FOLLOW_82 = new BitSet(new long[]{0x0002000019000000L,0x00000000000C0000L});
+    public static final BitSet FOLLOW_82 = new BitSet(new long[]{0x0002000019000000L,0x00000000000C0000L,0x0000000000000030L});
     public static final BitSet FOLLOW_83 = new BitSet(new long[]{0x0000004002400000L});
     public static final BitSet FOLLOW_84 = new BitSet(new long[]{0x0000000004000000L,0x3FF0000008000000L});
     public static final BitSet FOLLOW_85 = new BitSet(new long[]{0x0200000000000000L,0x0000000004000000L});
