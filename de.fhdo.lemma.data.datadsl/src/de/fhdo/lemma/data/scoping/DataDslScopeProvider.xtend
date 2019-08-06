@@ -16,6 +16,8 @@ import de.fhdo.lemma.data.DataStructure
 import org.eclipse.xtext.scoping.Scopes
 import de.fhdo.lemma.utils.LemmaUtils
 import de.fhdo.lemma.data.DataOperation
+import de.fhdo.lemma.data.DataField
+import de.fhdo.lemma.data.ListType
 
 /**
  * Scope provider for data models.
@@ -37,6 +39,12 @@ class DataDslScopeProvider extends AbstractDataDslScopeProvider {
             /* Data structures */
             DataStructure: context.getScope(reference)
 
+            /* List types */
+            ListType: context.getScope(reference)
+
+            /* Data fields */
+            DataField: context.getScope(reference)
+
             /* Data operations */
             DataOperation: context.getScope(reference)
         }
@@ -54,7 +62,7 @@ class DataDslScopeProvider extends AbstractDataDslScopeProvider {
     private def getScope(DataModel dataModel, EReference reference) {
         switch (reference) {
             case DataPackage::Literals.DATA_FIELD__COMPLEX_TYPE:
-                return Scopes::scopeFor(dataModel.containedComplexTypes)
+                return dataModel.getScopeForPossiblyImportedComplexTypes(null)
         }
     }
 
@@ -67,29 +75,30 @@ class DataDslScopeProvider extends AbstractDataDslScopeProvider {
                 val dataModel = EcoreUtil2.getContainerOfType(complexType, DataModel)
                 return Scopes::scopeFor(dataModel.complexTypeImports)
             }
+
             case DataPackage::Literals.IMPORTED_COMPLEX_TYPE__IMPORTED_TYPE:
                 return complexType
-                    .getScopeForImportedComplexTypes(complexType.import?.importURI)
+                    .getScopeForPossiblyImportedComplexTypes(complexType.import?.importURI)
         }
     }
 
     /**
      * Convenience method to create a scope for imported complex types of certain types
      */
-    private def getScopeForImportedComplexTypes(EObject context, String importUri) {
+    private def getScopeForPossiblyImportedComplexTypes(EObject context, String importUri) {
         /* Determine container and qualified name parts of imported complex type */
         var EObject container
         var List<String> qualifiedNameParts
-        val containingVersion = EcoreUtil2.getContainerOfType(context, Version)
         val containingContext = EcoreUtil2.getContainerOfType(context, Context)
+        val containingVersion = EcoreUtil2.getContainerOfType(context, Version)
         val containingDataModel = EcoreUtil2.getContainerOfType(context, DataModel)
 
-        if (containingVersion !== null) {
-            container = containingVersion
-            qualifiedNameParts = containingVersion.qualifiedNameParts
-        } else if (containingContext !== null) {
+        if (containingContext !== null) {
             container = containingContext
             qualifiedNameParts = containingContext.qualifiedNameParts
+        } else if (containingVersion !== null) {
+            container = containingVersion
+            qualifiedNameParts = containingVersion.qualifiedNameParts
         } else if (containingDataModel !== null) {
             container = containingDataModel
             qualifiedNameParts = null
@@ -107,40 +116,24 @@ class DataDslScopeProvider extends AbstractDataDslScopeProvider {
    }
 
     /**
-     * Build scope for the given reference in the context of a data operation
-     */
-    private def getScope(DataOperation operation, EReference reference) {
-        switch (reference) {
-            case DataPackage::Literals.IMPORTED_COMPLEX_TYPE__IMPORT: {
-                val dataModel = EcoreUtil2.getContainerOfType(operation, DataModel)
-                return Scopes::scopeFor(dataModel.complexTypeImports)
-            }
-            case DataPackage::Literals.DATA_OPERATION_PARAMETER__COMPLEX_TYPE: {
-                val dataModel = EcoreUtil2.getContainerOfType(operation, DataModel)
-                return Scopes::scopeFor(dataModel.containedComplexTypes)
-            }
-        }
-    }
-
-    /**
      * Build scope for the given reference in the context of a data structure
      */
     private def getScope(DataStructure structure, EReference reference) {
         switch (reference) {
             case DataPackage::Literals.DATA_STRUCTURE__SUPER:
                 return structure.getScopeForSuperStructures()
+
             case DataPackage::Literals.IMPORTED_COMPLEX_TYPE__IMPORT: {
                 val dataModel = EcoreUtil2.getContainerOfType(structure, DataModel)
                 return Scopes::scopeFor(dataModel.complexTypeImports)
             }
-            case DataPackage::Literals.DATA_FIELD__COMPLEX_TYPE: {
-                val dataModel = EcoreUtil2.getContainerOfType(structure, DataModel)
-                return Scopes::scopeFor(dataModel.containedComplexTypes)
-            }
+
+            case DataPackage::Literals.DATA_FIELD__COMPLEX_TYPE:
+                return structure.getScopeForPossiblyImportedComplexTypes(null)
         }
     }
 
-   /**
+    /**
     * Convenience method to create a scope for super structures
     */
    private def getScopeForSuperStructures(DataStructure structure) {
@@ -156,4 +149,50 @@ class DataDslScopeProvider extends AbstractDataDslScopeProvider {
             DataModel
         )
    }
+
+    /**
+     * Build scope for the given reference in the context of a data structure
+     */
+    private def getScope(ListType listType, EReference reference) {
+        switch (reference) {
+            case DataPackage::Literals.IMPORTED_COMPLEX_TYPE__IMPORT: {
+                val dataModel = EcoreUtil2.getContainerOfType(listType, DataModel)
+                return Scopes::scopeFor(dataModel.complexTypeImports)
+            }
+
+            case DataPackage::Literals.DATA_FIELD__COMPLEX_TYPE:
+                return listType.getScopeForPossiblyImportedComplexTypes(null)
+        }
+    }
+
+    /**
+     * Build scope for the given reference in the context of a data field
+     */
+    private def getScope(DataField field, EReference reference) {
+        switch (reference) {
+            case DataPackage::Literals.IMPORTED_COMPLEX_TYPE__IMPORT: {
+                val dataModel = EcoreUtil2.getContainerOfType(field, DataModel)
+                return Scopes::scopeFor(dataModel.complexTypeImports)
+            }
+
+            case DataPackage::Literals.DATA_FIELD__COMPLEX_TYPE:
+                return field.getScopeForPossiblyImportedComplexTypes(null)
+        }
+    }
+
+    /**
+     * Build scope for the given reference in the context of a data operation
+     */
+    private def getScope(DataOperation operation, EReference reference) {
+        switch (reference) {
+            case DataPackage::Literals.IMPORTED_COMPLEX_TYPE__IMPORT: {
+                val dataModel = EcoreUtil2.getContainerOfType(operation, DataModel)
+                return Scopes::scopeFor(dataModel.complexTypeImports)
+            }
+
+            case DataPackage::Literals.DATA_OPERATION_PARAMETER__COMPLEX_TYPE,
+            case DataPackage::Literals.DATA_OPERATION__COMPLEX_RETURN_TYPE:
+                return operation.getScopeForPossiblyImportedComplexTypes(null)
+        }
+    }
 }

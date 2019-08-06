@@ -1,5 +1,6 @@
 package de.fhdo.lemma.data;
 
+import de.fhdo.lemma.data.ComplexType;
 import de.fhdo.lemma.data.ComplexTypeImport;
 import de.fhdo.lemma.data.PrimitiveType;
 import org.eclipse.emf.ecore.EObject;
@@ -22,6 +23,11 @@ public class DataDslResourceDescriptionStrategy extends DefaultResourceDescripti
     boolean _matched = false;
     if (eObject instanceof ComplexTypeImport) {
       _matched=true;
+    }
+    if (!_matched) {
+      if (eObject instanceof ComplexType) {
+        _matched=true;
+      }
     }
     if (!_matched) {
       if (eObject instanceof PrimitiveType) {

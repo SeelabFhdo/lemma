@@ -27,7 +27,7 @@ version v01 {
 	context EnvironmentData {
 		// List of Sensor data information
 		list SensorDataList {
-			EnvironmentalSensors.RawSensorData data
+			 EnvironmentalSensors.RawSensorData data
 		}
 
 		// List containing sensor information

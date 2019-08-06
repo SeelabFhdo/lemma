@@ -28,6 +28,8 @@ import de.fhdo.lemma.data.Type
 import de.fhdo.lemma.data.ListType
 import de.fhdo.lemma.data.Enumeration
 import de.fhdo.lemma.data.PrimitiveTypeConstants
+import de.fhdo.lemma.data.ComplexType
+import de.fhdo.lemma.data.DataOperationParameter
 
 /**
  * This class contains validation rules for the Data DSL.
@@ -140,6 +142,51 @@ class DataDslValidator extends AbstractDataDslValidator {
     def checkUniqueTypeNames(Context context) {
         checkUniqueNames(context.complexTypes, "complex type", [name], [name],
             DataPackage::Literals.COMPLEX_TYPE__NAME)
+    }
+
+    /**
+     * Check if non-imported complex type of data field is from same data model
+     */
+    @Check
+    def checkComplexType(DataField dataField) {
+        checkComplexType(dataField, [complexType], DataPackage::Literals.DATA_FIELD__COMPLEX_TYPE)
+    }
+
+    /**
+     * Check if non-imported complex return type of operation is from same data model
+     */
+    @Check
+    def checkComplexType(DataOperation dataOperation) {
+        checkComplexType(dataOperation, [complexReturnType],
+            DataPackage::Literals.DATA_OPERATION__COMPLEX_RETURN_TYPE)
+    }
+
+    /**
+     * Check if non-imported complex type of operation parameter is from same data model
+     */
+    @Check
+    def checkComplexType(DataOperationParameter dataOperationParameter) {
+        checkComplexType(dataOperationParameter, [complexType],
+            DataPackage::Literals.DATA_OPERATION_PARAMETER__COMPLEX_TYPE)
+    }
+
+    /**
+     * Helper to check if a complex type is defined in the same data model as a given context
+     * EObject. This check is necessary, because otherwise complex types from imported data models
+     * leak into the current one without the import alias being used.
+     */
+    private def <T extends EObject> checkComplexType(T context,
+        Function<T, ComplexType> getComplexType, EStructuralFeature feature) {
+        val complexType = getComplexType.apply(context)
+        if (complexType === null || complexType.name === null) {
+            return
+        }
+
+        val localComplexTypes = EcoreUtil2.getContainerOfType(context, DataModel)
+            .containedComplexTypes
+        if (!localComplexTypes.contains(complexType))
+            // Let it look like the default scoping error message for missing referenced objects
+            error('''Couldn't resolve reference to ComplexType '«complexType.name»'.''', feature)
     }
 
     /**

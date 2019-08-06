@@ -17,6 +17,7 @@ class DataDslResourceDescriptionStrategy extends DefaultResourceDescriptionStrat
     override createEObjectDescriptions(EObject eObject, IAcceptor<IEObjectDescription> acceptor) {
         switch (eObject) {
             ComplexTypeImport,  // Don't export imported complex types to prevent transitive imports
+            ComplexType,
             PrimitiveType: return false
         }
 
