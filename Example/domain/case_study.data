@@ -89,7 +89,7 @@ context SensorSystem {
 
 	// A single delineator
 	structure Delineator {
-		int identifier
+		int ^identifier
 	}
 
 	list Delineators { Delineator delineator }

@@ -1,14 +1,14 @@
 import technology from "../technology/java.technology" as java
 import technology from "../technology/python.technology" as python
 import technology from "../technology/shared.technology" as shared
-import microservices from "../microservices/case_study.services" as services
+import microservices from "../microservices/case_study.services" as ^services
 
 /* Containers */
 // Current allocation
 @technology(java)
 @technology(shared)
 container CurrentAllocation deployment technology java::_deployment.docker
-deploys services::com.example.CurrentAllocation {
+deploys ^services::com.example.CurrentAllocation {
 	default values {
 		basic endpoints {
 			shared::_protocols.amqp: "amqp://example.com:5672/ca";
@@ -21,7 +21,7 @@ deploys services::com.example.CurrentAllocation {
 @technology(java)
 @technology(shared)
 container SearchForFreeSpace deployment technology java::_deployment.docker
-deploys services::com.example.SearchForFreeSpace {
+deploys ^services::com.example.SearchForFreeSpace {
 	default values {
 		basic endpoints {
 			shared::_protocols.rest: "http://example.com:8080/sfs";
@@ -33,7 +33,7 @@ deploys services::com.example.SearchForFreeSpace {
 @technology(python)
 @technology(shared)
 container AllocationsOverTime deployment technology python::_deployment.docker
-deploys services::com.example.AllocationsOverTime {
+deploys ^services::com.example.AllocationsOverTime {
 	default values {
 		basic endpoints {
 			shared::_protocols.amqp: "amqp://example.com:5672/aot";
@@ -46,7 +46,7 @@ deploys services::com.example.AllocationsOverTime {
 @technology(java)
 @technology(shared)
 container ParkingSpaceManagement deployment technology java::_deployment.docker
-deploys services::com.example.ParkingSpaceManagement {
+deploys ^services::com.example.ParkingSpaceManagement {
 	default values {
 		basic endpoints {
 			shared::_protocols.amqp: "amqp://example.com:5672/psm";
@@ -59,7 +59,7 @@ deploys services::com.example.ParkingSpaceManagement {
 @technology(java)
 @technology(shared)
 container DataExport deployment technology java::_deployment.docker
-deploys services::com.example.DataExport {
+deploys ^services::com.example.DataExport {
 	default values {
 		basic endpoints {
 			shared::_protocols.soap: "http://example.com:8080/dex";
@@ -71,19 +71,19 @@ deploys services::com.example.DataExport {
 // Service discovery
 @technology(shared)
 ServiceDiscovery is shared::_infrastructure.serviceDiscovery
-used by
-	services::com.example.CurrentAllocation,
-	services::com.example.SearchForFreeSpace,
-	services::com.example.AllocationsOverTime,
-	services::com.example.DataExport,
-	services::com.example.ParkingSpaceManagement {}
+used by services
+	^services::com.example.CurrentAllocation,
+	^services::com.example.SearchForFreeSpace,
+	^services::com.example.AllocationsOverTime,
+	^services::com.example.DataExport,
+	^services::com.example.ParkingSpaceManagement {}
 
 // API Gateway
 @technology(shared)
 ApiGateway is shared::_infrastructure.apiGateway
-used by
-	services::com.example.CurrentAllocation,
-	services::com.example.SearchForFreeSpace,
-	services::com.example.AllocationsOverTime,
-	services::com.example.DataExport,
-	services::com.example.ParkingSpaceManagement {}
+used by services
+	^services::com.example.CurrentAllocation,
+	^services::com.example.SearchForFreeSpace,
+	^services::com.example.AllocationsOverTime,
+	^services::com.example.DataExport,
+	^services::com.example.ParkingSpaceManagement {}

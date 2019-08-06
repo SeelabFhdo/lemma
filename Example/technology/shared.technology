@@ -12,7 +12,7 @@ technology ^operation {
 		aspect HttpStatus for parameters {
 			selector (protocol = rest, exchange_pattern = out);
 			selector (protocol = rest, exchange_pattern = inout);
-			int statusCode mandatory;
+			int statusCode <mandatory>;
 		}
 	}
 

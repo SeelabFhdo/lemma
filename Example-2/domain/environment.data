@@ -27,12 +27,12 @@ version v01 {
 	context EnvironmentData {
 		// List of Sensor data information
 		list SensorDataList {
-			RawSensorData data
+			EnvironmentalSensors.RawSensorData data
 		}
 
 		// List containing sensor information
 		list SensorInformationList {
-			Sensor sensor,
+			EnvironmentalSensors.Sensor sensor,
 			SensorDataList dataValues
 		}
 
