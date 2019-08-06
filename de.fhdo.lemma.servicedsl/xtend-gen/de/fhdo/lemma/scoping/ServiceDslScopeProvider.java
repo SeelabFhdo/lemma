@@ -41,7 +41,9 @@ import de.fhdo.lemma.technology.TechnologySpecificPrimitiveType;
 import de.fhdo.lemma.technology.TechnologySpecificProperty;
 import de.fhdo.lemma.technology.TechnologySpecificPropertyValueAssignment;
 import de.fhdo.lemma.utils.LemmaUtils;
+import java.util.AbstractCollection;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -496,6 +498,36 @@ public class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
   }
   
   /**
+   * Build scope for aspect properties
+   */
+  private IScope getScopeForAspectProperty(final EObject container) {
+    if ((container instanceof TechnologySpecificPropertyValueAssignment)) {
+      final ImportedServiceAspect aspect = EcoreUtil2.<ImportedServiceAspect>getContainerOfType(container, ImportedServiceAspect.class);
+      return Scopes.scopeFor(aspect.getImportedAspect().getProperties());
+    } else {
+      if ((container instanceof ImportedServiceAspect)) {
+        final HashSet<String> alreadyUsedProperties = CollectionLiterals.<String>newHashSet();
+        final Consumer<TechnologySpecificPropertyValueAssignment> _function = (TechnologySpecificPropertyValueAssignment it) -> {
+          PrimitiveValue _value = it.getValue();
+          boolean _tripleNotEquals = (_value != null);
+          if (_tripleNotEquals) {
+            alreadyUsedProperties.add(it.getProperty().getName());
+          }
+        };
+        ((ImportedServiceAspect)container).getValues().forEach(_function);
+        final Function1<TechnologySpecificProperty, Boolean> _function_1 = (TechnologySpecificProperty it) -> {
+          boolean _contains = alreadyUsedProperties.contains(it.getName());
+          return Boolean.valueOf((!_contains));
+        };
+        final Iterable<TechnologySpecificProperty> availableProperties = IterableExtensions.<TechnologySpecificProperty>filter(((ImportedServiceAspect)container).getImportedAspect().getProperties(), _function_1);
+        return Scopes.scopeFor(availableProperties);
+      } else {
+        return IScope.NULLSCOPE;
+      }
+    }
+  }
+  
+  /**
    * Build scope for aspect of imported service aspect
    */
   private IScope getScopeForImportedAspect(final ImportedServiceAspect importedAspect) {
@@ -592,13 +624,13 @@ public class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
       return Boolean.valueOf(it.getJoinPoints().contains(joinPoint));
     };
     final List<ServiceAspect> declaredAspectsForJoinPoint = IterableExtensions.<ServiceAspect>toList(IterableExtensions.<ServiceAspect>filter(((Technology) _get).getServiceAspects(), _function));
-    List<ServiceAspect> _xifexpression = null;
+    Collection<ServiceAspect> _xifexpression = null;
     if ((!bypassFilter)) {
-      _xifexpression = this.filterMatchingAspects(declaredAspectsForJoinPoint, forExchangePattern, forCommunicationType, forProtocolsAndDataFormats);
+      _xifexpression = this.filterAspectsForMatching(joinPoint, declaredAspectsForJoinPoint, forExchangePattern, forCommunicationType, forProtocolsAndDataFormats);
     } else {
       _xifexpression = declaredAspectsForJoinPoint;
     }
-    final List<ServiceAspect> scopeAspects = _xifexpression;
+    final Collection<ServiceAspect> scopeAspects = _xifexpression;
     final Function1<ServiceAspect, IEObjectDescription> _function_1 = (ServiceAspect it) -> {
       IEObjectDescription _xblockexpression = null;
       {
@@ -607,12 +639,51 @@ public class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
       }
       return _xblockexpression;
     };
-    final List<IEObjectDescription> scopeElements = ListExtensions.<ServiceAspect, IEObjectDescription>map(scopeAspects, _function_1);
+    final Iterable<IEObjectDescription> scopeElements = IterableExtensions.<ServiceAspect, IEObjectDescription>map(scopeAspects, _function_1);
     return MapBasedScope.createScope(IScope.NULLSCOPE, scopeElements);
   }
   
   /**
-   * Helper to determine if an aspect is to annotated for an interface or for the first operation
+   * Helper to determine scope aspects from pointcut selector values
+   */
+  protected AbstractCollection<ServiceAspect> filterAspectsForMatching(final JoinPointType joinPoint, final List<ServiceAspect> aspects, final ExchangePattern exchangePattern, final CommunicationType communicationType, final List<Pair<Protocol, DataFormat>> protocolsAndFormats) {
+    if (((protocolsAndFormats == null) || protocolsAndFormats.isEmpty())) {
+      return this.findMatchingAspects(joinPoint, aspects, exchangePattern, communicationType, null, 
+        null);
+    }
+    final HashSet<ServiceAspect> uniqueMatchingAspects = CollectionLiterals.<ServiceAspect>newHashSet();
+    for (final Pair<Protocol, DataFormat> protocolAndFormat : protocolsAndFormats) {
+      uniqueMatchingAspects.addAll(this.findMatchingAspects(joinPoint, aspects, exchangePattern, communicationType, protocolAndFormat.getKey(), protocolAndFormat.getValue()));
+    }
+    return uniqueMatchingAspects;
+  }
+  
+  /**
+   * Filter a list of service aspects for those for which either the passed pointcut selector
+   * values are not applicable or, in case they are applicable, for those that match the given
+   * pointcut selector values
+   */
+  private ArrayList<ServiceAspect> findMatchingAspects(final JoinPointType joinPoint, final List<ServiceAspect> aspects, final ExchangePattern exchangePattern, final CommunicationType communicationType, final Protocol protocol, final DataFormat dataFormat) {
+    final ArrayList<ServiceAspect> matchingAspects = CollectionLiterals.<ServiceAspect>newArrayList();
+    final Consumer<ServiceAspect> _function = (ServiceAspect aspect) -> {
+      final boolean validPointcutSelector = aspect.isValidSelectorForJoinPoint(joinPoint, exchangePattern, communicationType, protocol, dataFormat);
+      boolean _xifexpression = false;
+      if (validPointcutSelector) {
+        _xifexpression = aspect.hasMatchingSelector(exchangePattern, communicationType, protocol, dataFormat);
+      } else {
+        _xifexpression = true;
+      }
+      final boolean matchingAspect = _xifexpression;
+      if (matchingAspect) {
+        matchingAspects.add(aspect);
+      }
+    };
+    aspects.forEach(_function);
+    return matchingAspects;
+  }
+  
+  /**
+   * Helper to determine if an aspect is to be annotated on an interface or the first operation
    * _within_ an interface
    */
   private boolean onFirstInterfaceOperation(final ImportedServiceAspect aspect) {
@@ -632,72 +703,6 @@ public class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
     final Pattern interfaceKeywordInText = Pattern.compile("(.*\\s+interface\\s+.*)|(.*\\s+interface)");
     boolean _find = interfaceKeywordInText.matcher(textBeforeAspect).find();
     return (!_find);
-  }
-  
-  /**
-   * Build scope for aspect properties
-   */
-  private IScope getScopeForAspectProperty(final EObject container) {
-    if ((container instanceof TechnologySpecificPropertyValueAssignment)) {
-      final ImportedServiceAspect aspect = EcoreUtil2.<ImportedServiceAspect>getContainerOfType(container, ImportedServiceAspect.class);
-      return Scopes.scopeFor(aspect.getImportedAspect().getProperties());
-    } else {
-      if ((container instanceof ImportedServiceAspect)) {
-        final HashSet<String> alreadyUsedProperties = CollectionLiterals.<String>newHashSet();
-        final Consumer<TechnologySpecificPropertyValueAssignment> _function = (TechnologySpecificPropertyValueAssignment it) -> {
-          PrimitiveValue _value = it.getValue();
-          boolean _tripleNotEquals = (_value != null);
-          if (_tripleNotEquals) {
-            alreadyUsedProperties.add(it.getProperty().getName());
-          }
-        };
-        ((ImportedServiceAspect)container).getValues().forEach(_function);
-        final Function1<TechnologySpecificProperty, Boolean> _function_1 = (TechnologySpecificProperty it) -> {
-          boolean _contains = alreadyUsedProperties.contains(it.getName());
-          return Boolean.valueOf((!_contains));
-        };
-        final Iterable<TechnologySpecificProperty> availableProperties = IterableExtensions.<TechnologySpecificProperty>filter(((ImportedServiceAspect)container).getImportedAspect().getProperties(), _function_1);
-        return Scopes.scopeFor(availableProperties);
-      } else {
-        return IScope.NULLSCOPE;
-      }
-    }
-  }
-  
-  /**
-   * Helper method to filter a list of service aspects for those that have a selector that matches
-   * the given pointcut values
-   */
-  protected ArrayList<ServiceAspect> filterMatchingAspects(final List<ServiceAspect> serviceAspects, final ExchangePattern forExchangePattern, final CommunicationType forCommunicationType, final List<Pair<Protocol, DataFormat>> forProtocolsAndDataFormats) {
-    final ArrayList<ServiceAspect> matchingAspects = CollectionLiterals.<ServiceAspect>newArrayList();
-    if (((forProtocolsAndDataFormats != null) && (!forProtocolsAndDataFormats.isEmpty()))) {
-      for (final Pair<Protocol, DataFormat> protocolAndDataFormat : forProtocolsAndDataFormats) {
-        {
-          final Protocol forProtocol = protocolAndDataFormat.getKey();
-          DataFormat _elvis = null;
-          DataFormat _value = protocolAndDataFormat.getValue();
-          if (_value != null) {
-            _elvis = _value;
-          } else {
-            DataFormat _defaultFormat = forProtocol.getDefaultFormat();
-            _elvis = _defaultFormat;
-          }
-          final DataFormat forDataFormat = _elvis;
-          final Function1<ServiceAspect, Boolean> _function = (ServiceAspect it) -> {
-            return Boolean.valueOf(it.hasMatchingSelector(forExchangePattern, forCommunicationType, forProtocol, forDataFormat));
-          };
-          matchingAspects.addAll(
-            IterableExtensions.<ServiceAspect>toList(IterableExtensions.<ServiceAspect>filter(serviceAspects, _function)));
-        }
-      }
-    } else {
-      final Function1<ServiceAspect, Boolean> _function = (ServiceAspect it) -> {
-        return Boolean.valueOf(it.hasMatchingSelector(forExchangePattern, forCommunicationType, null, null));
-      };
-      matchingAspects.addAll(
-        IterableExtensions.<ServiceAspect>toList(IterableExtensions.<ServiceAspect>filter(serviceAspects, _function)));
-    }
-    return matchingAspects;
   }
   
   /**

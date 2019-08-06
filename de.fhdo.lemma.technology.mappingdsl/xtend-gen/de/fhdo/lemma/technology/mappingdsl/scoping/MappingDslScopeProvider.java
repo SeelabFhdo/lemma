@@ -58,6 +58,7 @@ import de.fhdo.lemma.technology.mapping.TechnologySpecificProtocol;
 import de.fhdo.lemma.technology.mapping.TechnologySpecificProtocolSpecification;
 import de.fhdo.lemma.technology.mappingdsl.scoping.AbstractMappingDslScopeProvider;
 import de.fhdo.lemma.utils.LemmaUtils;
+import java.util.AbstractCollection;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -1272,7 +1273,7 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
       return Boolean.valueOf(it.getJoinPoints().contains(joinPoint));
     };
     final List<ServiceAspect> declaredAspectsForJoinPoint = IterableExtensions.<ServiceAspect>toList(IterableExtensions.<ServiceAspect>filter(((Technology) _get).getServiceAspects(), _function));
-    final ArrayList<ServiceAspect> scopeAspects = this.filterMatchingAspects(declaredAspectsForJoinPoint, forExchangePattern, forCommunicationType, forProtocolsAndDataFormats);
+    final AbstractCollection<ServiceAspect> scopeAspects = this.filterAspectsForMatching(joinPoint, declaredAspectsForJoinPoint, forExchangePattern, forCommunicationType, forProtocolsAndDataFormats);
     final Function<ServiceAspect, QualifiedName> _function_1 = (ServiceAspect it) -> {
       return QualifiedName.create(it.getQualifiedNameParts());
     };

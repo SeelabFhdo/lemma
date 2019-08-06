@@ -48,8 +48,7 @@ public interface ServiceAspectPointcut extends EObject {
      * <!-- begin-model-doc -->
      * *
      * Implicit Constraints:
-     *     (C1) For exchange pattern and communication type pointcuts the selector's join point must
-     *          be parameters.
+     *     (C1) Pointcut must be applicable to join point.
      *          Ensured by: DSL validator.
      *     (C2) If communication types were selected, protocols of parent selector must be of those
      *          types.
@@ -372,5 +371,17 @@ public interface ServiceAspectPointcut extends EObject {
      * @generated
      */
     EList<PointcutType> getOrderedPointcutTypes();
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * *
+     * Convenience method to check if pointcut is applicable at a given join point
+     * <!-- end-model-doc -->
+     * @model unique="false" joinPointUnique="false"
+     * @generated
+     */
+    boolean isValidSelectorFor(JoinPointType joinPoint);
 
 } // ServiceAspectPointcut

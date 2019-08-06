@@ -80,6 +80,30 @@ public interface ServiceAspect extends TechnologyAspect {
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
      * *
+     * Check if pointcut selector is applicable at a given join point
+     * <!-- end-model-doc -->
+     * @model unique="false" joinPointUnique="false" selectorUnique="false"
+     * @generated
+     */
+    boolean isValidSelectorForJoinPoint(JoinPointType joinPoint, ServiceAspectPointcutSelector selector);
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * *
+     * Check if pointcut selector values are applicable at a given join point
+     * <!-- end-model-doc -->
+     * @model unique="false" joinPointUnique="false" exchangePatternUnique="false" communicationTypeUnique="false" protocolUnique="false" dataFormatUnique="false"
+     * @generated
+     */
+    boolean isValidSelectorForJoinPoint(JoinPointType joinPoint, ExchangePattern exchangePattern, CommunicationType communicationType, Protocol protocol, DataFormat dataFormat);
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * *
      * Check if the aspect has a matching selector for the given pointcuts and their values.
      * Therefore, all pointcut values of a selector must be equal to the given values, i.e., the
      * matching is based on the logical conjunction of all pointcuts ("AND" semantics) as long as

@@ -101,25 +101,6 @@ public interface OperationAspectPointcutSelector extends EObject {
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
      * *
-     * Check if the selector is more generic than the given selector. A selector is more generic
-     * than another selector if it lacks certain pointcuts and overlapping pointcuts have the same
-     * values in both selector. Take for instance the selector
-     *      selector(protocol = rest, data_format = xml)
-     * It is more generic than the selector
-     *      selector(exchange_pattern = in, protocol = rest, data_format = xml)
-     * but less generic than
-     *      selector(protocol = rest)
-     * <!-- end-model-doc -->
-     * @model unique="false" otherSelectorUnique="false"
-     * @generated
-     */
-    boolean isMoreGenericThan(OperationAspectPointcutSelector otherSelector);
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * *
      * Return values of the selector's pointcuts ordered by their types. The return type is a map
      * that preserves the insertion order and assigns a pointcut type to a list of values specified
      * for it in the selector. The ordering of the types matches the ordering as returned by

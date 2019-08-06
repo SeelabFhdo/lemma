@@ -38,6 +38,7 @@ All notable changes to [LEMMA](https://github.com/SeelabFhdo/lemma/) will be doc
 - Technology DSL: Fix validation of default primitive types.
 - Technology DSL: Don't highlight pointcuts in selectors as keywords.
 - Technology DSL: Allow specification of protocols for only one communication type.
+- Technology DSL: Aspect pointcut selectors will only be applied to a join point, if all of their pointcuts are applicable to that join point. For instance, the selector ```protocol=rest, exchange_pattern=in``` will not apply to microservices, because this join point does not support the ```exchange_pattern``` pointcut. Instead, an additional selector would need to be specified for the microservices join point with ```protocol=rest``` alone.
 - Transformation: Only produce intermediate endpoints for all protocol/format combinations, if the protocol does not specify a default data format in its technology model. Applies to intermediate service model transformations.
 - Tooling: The Maven buildscript now shows notifications when the build of a module has finished.
 - UI: Add keyword highlighting for boolean values.

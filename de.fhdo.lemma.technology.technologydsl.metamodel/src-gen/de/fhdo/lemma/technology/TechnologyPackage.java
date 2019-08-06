@@ -1457,13 +1457,31 @@ public interface TechnologyPackage extends EPackage {
     int SERVICE_ASPECT___GET_QUALIFIED_NAME_PARTS = TECHNOLOGY_ASPECT___GET_QUALIFIED_NAME_PARTS;
 
     /**
+     * The operation id for the '<em>Is Valid Selector For Join Point</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SERVICE_ASPECT___IS_VALID_SELECTOR_FOR_JOIN_POINT__JOINPOINTTYPE_SERVICEASPECTPOINTCUTSELECTOR = TECHNOLOGY_ASPECT_OPERATION_COUNT + 0;
+
+    /**
+     * The operation id for the '<em>Is Valid Selector For Join Point</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SERVICE_ASPECT___IS_VALID_SELECTOR_FOR_JOIN_POINT__JOINPOINTTYPE_EXCHANGEPATTERN_COMMUNICATIONTYPE_PROTOCOL_DATAFORMAT = TECHNOLOGY_ASPECT_OPERATION_COUNT + 1;
+
+    /**
      * The operation id for the '<em>Has Matching Selector</em>' operation.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int SERVICE_ASPECT___HAS_MATCHING_SELECTOR__EXCHANGEPATTERN_COMMUNICATIONTYPE_PROTOCOL_DATAFORMAT = TECHNOLOGY_ASPECT_OPERATION_COUNT + 0;
+    int SERVICE_ASPECT___HAS_MATCHING_SELECTOR__EXCHANGEPATTERN_COMMUNICATIONTYPE_PROTOCOL_DATAFORMAT = TECHNOLOGY_ASPECT_OPERATION_COUNT + 2;
 
     /**
      * The number of operations of the '<em>Service Aspect</em>' class.
@@ -1472,7 +1490,7 @@ public interface TechnologyPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SERVICE_ASPECT_OPERATION_COUNT = TECHNOLOGY_ASPECT_OPERATION_COUNT + 1;
+    int SERVICE_ASPECT_OPERATION_COUNT = TECHNOLOGY_ASPECT_OPERATION_COUNT + 3;
 
     /**
      * The meta object id for the '{@link de.fhdo.lemma.technology.impl.ServiceAspectPointcutImpl <em>Service Aspect Pointcut</em>}' class.
@@ -1620,13 +1638,22 @@ public interface TechnologyPackage extends EPackage {
     int SERVICE_ASPECT_POINTCUT_FEATURE_COUNT = 14;
 
     /**
+     * The operation id for the '<em>Is Valid Selector For</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SERVICE_ASPECT_POINTCUT___IS_VALID_SELECTOR_FOR__JOINPOINTTYPE = 0;
+
+    /**
      * The number of operations of the '<em>Service Aspect Pointcut</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int SERVICE_ASPECT_POINTCUT_OPERATION_COUNT = 0;
+    int SERVICE_ASPECT_POINTCUT_OPERATION_COUNT = 1;
 
     /**
      * The meta object id for the '{@link de.fhdo.lemma.technology.impl.ServiceAspectPointcutSelectorImpl <em>Service Aspect Pointcut Selector</em>}' class.
@@ -1675,22 +1702,13 @@ public interface TechnologyPackage extends EPackage {
     int SERVICE_ASPECT_POINTCUT_SELECTOR_FEATURE_COUNT = 3;
 
     /**
-     * The operation id for the '<em>Is More Generic Than</em>' operation.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int SERVICE_ASPECT_POINTCUT_SELECTOR___IS_MORE_GENERIC_THAN__SERVICEASPECTPOINTCUTSELECTOR = 0;
-
-    /**
      * The operation id for the '<em>Ordered Selector Values</em>' operation.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int SERVICE_ASPECT_POINTCUT_SELECTOR___ORDERED_SELECTOR_VALUES = 1;
+    int SERVICE_ASPECT_POINTCUT_SELECTOR___ORDERED_SELECTOR_VALUES = 0;
 
     /**
      * The number of operations of the '<em>Service Aspect Pointcut Selector</em>' class.
@@ -1699,7 +1717,7 @@ public interface TechnologyPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SERVICE_ASPECT_POINTCUT_SELECTOR_OPERATION_COUNT = 2;
+    int SERVICE_ASPECT_POINTCUT_SELECTOR_OPERATION_COUNT = 1;
 
     /**
      * The meta object id for the '{@link de.fhdo.lemma.technology.impl.OperationAspectImpl <em>Operation Aspect</em>}' class.
@@ -1939,22 +1957,13 @@ public interface TechnologyPackage extends EPackage {
     int OPERATION_ASPECT_POINTCUT_SELECTOR_FEATURE_COUNT = 3;
 
     /**
-     * The operation id for the '<em>Is More Generic Than</em>' operation.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int OPERATION_ASPECT_POINTCUT_SELECTOR___IS_MORE_GENERIC_THAN__OPERATIONASPECTPOINTCUTSELECTOR = 0;
-
-    /**
      * The operation id for the '<em>Ordered Selector Values</em>' operation.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int OPERATION_ASPECT_POINTCUT_SELECTOR___ORDERED_SELECTOR_VALUES = 1;
+    int OPERATION_ASPECT_POINTCUT_SELECTOR___ORDERED_SELECTOR_VALUES = 0;
 
     /**
      * The number of operations of the '<em>Operation Aspect Pointcut Selector</em>' class.
@@ -1963,7 +1972,7 @@ public interface TechnologyPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int OPERATION_ASPECT_POINTCUT_SELECTOR_OPERATION_COUNT = 2;
+    int OPERATION_ASPECT_POINTCUT_SELECTOR_OPERATION_COUNT = 1;
 
     /**
      * The meta object id for the '{@link de.fhdo.lemma.technology.ExchangePattern <em>Exchange Pattern</em>}' enum.
@@ -2945,6 +2954,26 @@ public interface TechnologyPackage extends EPackage {
     EReference getServiceAspect_Technology();
 
     /**
+     * Returns the meta object for the '{@link de.fhdo.lemma.technology.ServiceAspect#isValidSelectorForJoinPoint(de.fhdo.lemma.technology.JoinPointType, de.fhdo.lemma.technology.ServiceAspectPointcutSelector) <em>Is Valid Selector For Join Point</em>}' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the '<em>Is Valid Selector For Join Point</em>' operation.
+     * @see de.fhdo.lemma.technology.ServiceAspect#isValidSelectorForJoinPoint(de.fhdo.lemma.technology.JoinPointType, de.fhdo.lemma.technology.ServiceAspectPointcutSelector)
+     * @generated
+     */
+    EOperation getServiceAspect__IsValidSelectorForJoinPoint__JoinPointType_ServiceAspectPointcutSelector();
+
+    /**
+     * Returns the meta object for the '{@link de.fhdo.lemma.technology.ServiceAspect#isValidSelectorForJoinPoint(de.fhdo.lemma.technology.JoinPointType, de.fhdo.lemma.technology.ExchangePattern, de.fhdo.lemma.technology.CommunicationType, de.fhdo.lemma.technology.Protocol, de.fhdo.lemma.technology.DataFormat) <em>Is Valid Selector For Join Point</em>}' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the '<em>Is Valid Selector For Join Point</em>' operation.
+     * @see de.fhdo.lemma.technology.ServiceAspect#isValidSelectorForJoinPoint(de.fhdo.lemma.technology.JoinPointType, de.fhdo.lemma.technology.ExchangePattern, de.fhdo.lemma.technology.CommunicationType, de.fhdo.lemma.technology.Protocol, de.fhdo.lemma.technology.DataFormat)
+     * @generated
+     */
+    EOperation getServiceAspect__IsValidSelectorForJoinPoint__JoinPointType_ExchangePattern_CommunicationType_Protocol_DataFormat();
+
+    /**
      * Returns the meta object for the '{@link de.fhdo.lemma.technology.ServiceAspect#hasMatchingSelector(de.fhdo.lemma.technology.ExchangePattern, de.fhdo.lemma.technology.CommunicationType, de.fhdo.lemma.technology.Protocol, de.fhdo.lemma.technology.DataFormat) <em>Has Matching Selector</em>}' operation.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -3119,6 +3148,16 @@ public interface TechnologyPackage extends EPackage {
     EAttribute getServiceAspectPointcut_OrderedPointcutTypes();
 
     /**
+     * Returns the meta object for the '{@link de.fhdo.lemma.technology.ServiceAspectPointcut#isValidSelectorFor(de.fhdo.lemma.technology.JoinPointType) <em>Is Valid Selector For</em>}' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the '<em>Is Valid Selector For</em>' operation.
+     * @see de.fhdo.lemma.technology.ServiceAspectPointcut#isValidSelectorFor(de.fhdo.lemma.technology.JoinPointType)
+     * @generated
+     */
+    EOperation getServiceAspectPointcut__IsValidSelectorFor__JoinPointType();
+
+    /**
      * Returns the meta object for class '{@link de.fhdo.lemma.technology.ServiceAspectPointcutSelector <em>Service Aspect Pointcut Selector</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -3160,16 +3199,6 @@ public interface TechnologyPackage extends EPackage {
      * @generated
      */
     EAttribute getServiceAspectPointcutSelector_SelectorString();
-
-    /**
-     * Returns the meta object for the '{@link de.fhdo.lemma.technology.ServiceAspectPointcutSelector#isMoreGenericThan(de.fhdo.lemma.technology.ServiceAspectPointcutSelector) <em>Is More Generic Than</em>}' operation.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the '<em>Is More Generic Than</em>' operation.
-     * @see de.fhdo.lemma.technology.ServiceAspectPointcutSelector#isMoreGenericThan(de.fhdo.lemma.technology.ServiceAspectPointcutSelector)
-     * @generated
-     */
-    EOperation getServiceAspectPointcutSelector__IsMoreGenericThan__ServiceAspectPointcutSelector();
 
     /**
      * Returns the meta object for the '{@link de.fhdo.lemma.technology.ServiceAspectPointcutSelector#orderedSelectorValues() <em>Ordered Selector Values</em>}' operation.
@@ -3363,16 +3392,6 @@ public interface TechnologyPackage extends EPackage {
      * @generated
      */
     EAttribute getOperationAspectPointcutSelector_SelectorString();
-
-    /**
-     * Returns the meta object for the '{@link de.fhdo.lemma.technology.OperationAspectPointcutSelector#isMoreGenericThan(de.fhdo.lemma.technology.OperationAspectPointcutSelector) <em>Is More Generic Than</em>}' operation.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the '<em>Is More Generic Than</em>' operation.
-     * @see de.fhdo.lemma.technology.OperationAspectPointcutSelector#isMoreGenericThan(de.fhdo.lemma.technology.OperationAspectPointcutSelector)
-     * @generated
-     */
-    EOperation getOperationAspectPointcutSelector__IsMoreGenericThan__OperationAspectPointcutSelector();
 
     /**
      * Returns the meta object for the '{@link de.fhdo.lemma.technology.OperationAspectPointcutSelector#orderedSelectorValues() <em>Ordered Selector Values</em>}' operation.
@@ -4197,6 +4216,22 @@ public interface TechnologyPackage extends EPackage {
         EReference SERVICE_ASPECT__TECHNOLOGY = eINSTANCE.getServiceAspect_Technology();
 
         /**
+         * The meta object literal for the '<em><b>Is Valid Selector For Join Point</b></em>' operation.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EOperation SERVICE_ASPECT___IS_VALID_SELECTOR_FOR_JOIN_POINT__JOINPOINTTYPE_SERVICEASPECTPOINTCUTSELECTOR = eINSTANCE.getServiceAspect__IsValidSelectorForJoinPoint__JoinPointType_ServiceAspectPointcutSelector();
+
+        /**
+         * The meta object literal for the '<em><b>Is Valid Selector For Join Point</b></em>' operation.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EOperation SERVICE_ASPECT___IS_VALID_SELECTOR_FOR_JOIN_POINT__JOINPOINTTYPE_EXCHANGEPATTERN_COMMUNICATIONTYPE_PROTOCOL_DATAFORMAT = eINSTANCE.getServiceAspect__IsValidSelectorForJoinPoint__JoinPointType_ExchangePattern_CommunicationType_Protocol_DataFormat();
+
+        /**
          * The meta object literal for the '<em><b>Has Matching Selector</b></em>' operation.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -4327,6 +4362,14 @@ public interface TechnologyPackage extends EPackage {
         EAttribute SERVICE_ASPECT_POINTCUT__ORDERED_POINTCUT_TYPES = eINSTANCE.getServiceAspectPointcut_OrderedPointcutTypes();
 
         /**
+         * The meta object literal for the '<em><b>Is Valid Selector For</b></em>' operation.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EOperation SERVICE_ASPECT_POINTCUT___IS_VALID_SELECTOR_FOR__JOINPOINTTYPE = eINSTANCE.getServiceAspectPointcut__IsValidSelectorFor__JoinPointType();
+
+        /**
          * The meta object literal for the '{@link de.fhdo.lemma.technology.impl.ServiceAspectPointcutSelectorImpl <em>Service Aspect Pointcut Selector</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -4359,14 +4402,6 @@ public interface TechnologyPackage extends EPackage {
          * @generated
          */
         EAttribute SERVICE_ASPECT_POINTCUT_SELECTOR__SELECTOR_STRING = eINSTANCE.getServiceAspectPointcutSelector_SelectorString();
-
-        /**
-         * The meta object literal for the '<em><b>Is More Generic Than</b></em>' operation.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EOperation SERVICE_ASPECT_POINTCUT_SELECTOR___IS_MORE_GENERIC_THAN__SERVICEASPECTPOINTCUTSELECTOR = eINSTANCE.getServiceAspectPointcutSelector__IsMoreGenericThan__ServiceAspectPointcutSelector();
 
         /**
          * The meta object literal for the '<em><b>Ordered Selector Values</b></em>' operation.
@@ -4517,14 +4552,6 @@ public interface TechnologyPackage extends EPackage {
          * @generated
          */
         EAttribute OPERATION_ASPECT_POINTCUT_SELECTOR__SELECTOR_STRING = eINSTANCE.getOperationAspectPointcutSelector_SelectorString();
-
-        /**
-         * The meta object literal for the '<em><b>Is More Generic Than</b></em>' operation.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EOperation OPERATION_ASPECT_POINTCUT_SELECTOR___IS_MORE_GENERIC_THAN__OPERATIONASPECTPOINTCUTSELECTOR = eINSTANCE.getOperationAspectPointcutSelector__IsMoreGenericThan__OperationAspectPointcutSelector();
 
         /**
          * The meta object literal for the '<em><b>Ordered Selector Values</b></em>' operation.

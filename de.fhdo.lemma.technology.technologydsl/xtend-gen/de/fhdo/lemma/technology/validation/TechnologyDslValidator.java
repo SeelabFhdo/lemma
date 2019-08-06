@@ -33,7 +33,6 @@ import de.fhdo.lemma.technology.TechnologySpecificProperty;
 import de.fhdo.lemma.technology.validation.AbstractTechnologyDslValidator;
 import de.fhdo.lemma.typechecking.TypecheckingUtils;
 import de.fhdo.lemma.utils.LemmaUtils;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -820,81 +819,89 @@ public class TechnologyDslValidator extends AbstractTechnologyDslValidator {
   }
   
   /**
-   * Check that "exchange pattern" or "communication type" pointcut is specified in conjunction
-   * with "parameters" or "data fields" join point
+   * Check that pointcut is applicable to at least one join point of the aspect
    */
   @Check
-  public void checkParametersPointcut(final ServiceAspectPointcut pointcut) {
-    if (((pointcut.getEffectiveType() != PointcutType.EXCHANGE_PATTERN) && 
-      (pointcut.getEffectiveType() != PointcutType.COMMUNICATION_TYPE))) {
-      return;
-    }
-    final EList<JoinPointType> joinPoints = pointcut.getSelector().getServiceAspect().getJoinPoints();
-    final List<JoinPointType> allowedJoinPoints = Collections.<JoinPointType>unmodifiableList(CollectionLiterals.<JoinPointType>newArrayList(JoinPointType.PARAMETERS, JoinPointType.DATA_FIELDS));
+  public void checkPointcut(final ServiceAspectPointcut pointcut) {
+    final EList<JoinPointType> aspectJoinPoints = pointcut.getSelector().getServiceAspect().getJoinPoints();
     final Function1<JoinPointType, Boolean> _function = (JoinPointType it) -> {
-      return Boolean.valueOf(allowedJoinPoints.contains(it));
+      return Boolean.valueOf(pointcut.isValidSelectorFor(it));
     };
-    boolean _exists = IterableExtensions.<JoinPointType>exists(joinPoints, _function);
+    boolean _exists = IterableExtensions.<JoinPointType>exists(aspectJoinPoints, _function);
     boolean _not = (!_exists);
     if (_not) {
       StringConcatenation _builder = new StringConcatenation();
       _builder.append("Pointcut \"");
       String _effectiveSelectorName = pointcut.getEffectiveSelectorName();
       _builder.append(_effectiveSelectorName);
-      _builder.append("\" may only be specified in ");
-      StringConcatenation _builder_1 = new StringConcatenation();
-      _builder_1.append("conjunction with join point \"parameters\" or \"fields\"");
-      String _plus = (_builder.toString() + _builder_1);
-      this.error(_plus, pointcut, 
+      _builder.append("\" is not applicable to aspect");
+      this.error(_builder.toString(), 
         TechnologyPackage.Literals.SERVICE_ASPECT_POINTCUT__SELECTOR);
     }
   }
   
-  /**
-   * Warn if service aspect pointcut selector is more generic than other
-   */
   @Check
-  public void warnIfSelectorIsMoreGeneric(final ServiceAspectPointcutSelector selector) {
-    final Function1<ServiceAspectPointcutSelector, Boolean> _function = (ServiceAspectPointcutSelector it) -> {
-      return Boolean.valueOf((!Objects.equal(it, selector)));
+  public void warnNotApplicableAtAllJoinPoints(final ServiceAspectPointcutSelector selector) {
+    final ServiceAspect aspect = selector.getServiceAspect();
+    final Function1<JoinPointType, Boolean> _function = (JoinPointType it) -> {
+      boolean _isValidSelectorForJoinPoint = aspect.isValidSelectorForJoinPoint(it, selector);
+      return Boolean.valueOf((!_isValidSelectorForJoinPoint));
     };
-    final Iterable<ServiceAspectPointcutSelector> otherSelectors = IterableExtensions.<ServiceAspectPointcutSelector>filter(selector.getServiceAspect().getPointcutSelectors(), _function);
-    final Consumer<ServiceAspectPointcutSelector> _function_1 = (ServiceAspectPointcutSelector it) -> {
-      boolean _isMoreGenericThan = selector.isMoreGenericThan(it);
-      if (_isMoreGenericThan) {
-        StringConcatenation _builder = new StringConcatenation();
-        _builder.append("Selector \"");
-        String _selectorString = selector.getSelectorString();
-        _builder.append(_selectorString);
-        _builder.append("\" is more generic");
-        this.warning(_builder.toString(), it, 
-          TechnologyPackage.Literals.SERVICE_ASPECT_POINTCUT_SELECTOR__SELECTOR_STRING);
+    final Iterable<JoinPointType> notApplicableJoinPoints = IterableExtensions.<JoinPointType>filter(aspect.getJoinPoints(), _function);
+    boolean _isEmpty = IterableExtensions.isEmpty(notApplicableJoinPoints);
+    if (_isEmpty) {
+      return;
+    }
+    final Function1<JoinPointType, String> _function_1 = (JoinPointType it) -> {
+      String _switchResult = null;
+      if (it != null) {
+        switch (it) {
+          case DATA_OPERATIONS:
+            _switchResult = "domainOperations";
+            break;
+          case DATA_OPERATION_PARAMETERS:
+            _switchResult = "domainParameters";
+            break;
+          case MICROSERVICES:
+            _switchResult = "microservices";
+            break;
+          case INTERFACES:
+            _switchResult = "interfaces";
+            break;
+          case OPERATIONS:
+            _switchResult = "operations";
+            break;
+          case PARAMETERS:
+            _switchResult = "parameters";
+            break;
+          case COMPLEX_TYPES:
+            _switchResult = "types";
+            break;
+          case DATA_FIELDS:
+            _switchResult = "fields";
+            break;
+          default:
+            _switchResult = "";
+            break;
+        }
+      } else {
+        _switchResult = "";
       }
+      return _switchResult;
     };
-    otherSelectors.forEach(_function_1);
-  }
-  
-  /**
-   * Warn if operation aspect pointcut selector is more generic than other
-   */
-  @Check
-  public void warnIfSelectorIsMoreGeneric(final OperationAspectPointcutSelector selector) {
-    final Function1<OperationAspectPointcutSelector, Boolean> _function = (OperationAspectPointcutSelector it) -> {
-      return Boolean.valueOf((!Objects.equal(it, selector)));
-    };
-    final Iterable<OperationAspectPointcutSelector> otherSelectors = IterableExtensions.<OperationAspectPointcutSelector>filter(selector.getOperationAspect().getPointcutSelectors(), _function);
-    final Consumer<OperationAspectPointcutSelector> _function_1 = (OperationAspectPointcutSelector it) -> {
-      boolean _isMoreGenericThan = selector.isMoreGenericThan(it);
-      if (_isMoreGenericThan) {
-        StringConcatenation _builder = new StringConcatenation();
-        _builder.append("Selector \"");
-        String _selectorString = selector.getSelectorString();
-        _builder.append(_selectorString);
-        _builder.append("\" is more generic");
-        this.warning(_builder.toString(), it, 
-          TechnologyPackage.Literals.OPERATION_ASPECT_POINTCUT_SELECTOR__SELECTOR_STRING);
+    final String notApplicableString = IterableExtensions.join(IterableExtensions.<JoinPointType, String>map(notApplicableJoinPoints, _function_1), ",");
+    StringConcatenation _builder = new StringConcatenation();
+    {
+      int _size = IterableExtensions.size(notApplicableJoinPoints);
+      boolean _greaterThan = (_size > 1);
+      if (_greaterThan) {
+        _builder.append("s");
       }
-    };
-    otherSelectors.forEach(_function_1);
+    }
+    _builder.append(" ");
+    _builder.append(notApplicableString);
+    String _plus = ("Selector will not apply to join point" + _builder);
+    this.warning(_plus, 
+      TechnologyPackage.Literals.SERVICE_ASPECT_POINTCUT_SELECTOR__SELECTOR_STRING);
   }
 }

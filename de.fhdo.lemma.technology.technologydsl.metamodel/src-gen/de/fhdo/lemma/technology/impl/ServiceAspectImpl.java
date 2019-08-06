@@ -7,6 +7,7 @@ import com.google.common.base.Objects;
 import de.fhdo.lemma.technology.CommunicationType;
 import de.fhdo.lemma.technology.DataFormat;
 import de.fhdo.lemma.technology.ExchangePattern;
+import de.fhdo.lemma.technology.JoinPointType;
 import de.fhdo.lemma.technology.PointcutType;
 import de.fhdo.lemma.technology.Protocol;
 import de.fhdo.lemma.technology.ServiceAspect;
@@ -146,6 +147,105 @@ public class ServiceAspectImpl extends TechnologyAspectImpl implements ServiceAs
         }
         else if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, TechnologyPackage.SERVICE_ASPECT__TECHNOLOGY, newTechnology, newTechnology));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public boolean isValidSelectorForJoinPoint(final JoinPointType joinPoint, final ServiceAspectPointcutSelector selector) {
+        final Function1<ServiceAspectPointcut, Boolean> _function = new Function1<ServiceAspectPointcut, Boolean>() {
+            public Boolean apply(final ServiceAspectPointcut it) {
+                return Boolean.valueOf(it.isForExchangePattern());
+            }
+        };
+        ServiceAspectPointcut _findFirst = IterableExtensions.<ServiceAspectPointcut>findFirst(selector.getPointcuts(), _function);
+        ExchangePattern _exchangePattern = null;
+        if (_findFirst!=null) {
+            _exchangePattern=_findFirst.getExchangePattern();
+        }
+        final ExchangePattern exchangePattern = _exchangePattern;
+        final Function1<ServiceAspectPointcut, Boolean> _function_1 = new Function1<ServiceAspectPointcut, Boolean>() {
+            public Boolean apply(final ServiceAspectPointcut it) {
+                return Boolean.valueOf(it.isForExchangePattern());
+            }
+        };
+        ServiceAspectPointcut _findFirst_1 = IterableExtensions.<ServiceAspectPointcut>findFirst(selector.getPointcuts(), _function_1);
+        CommunicationType _communicationType = null;
+        if (_findFirst_1!=null) {
+            _communicationType=_findFirst_1.getCommunicationType();
+        }
+        final CommunicationType communicationType = _communicationType;
+        final Function1<ServiceAspectPointcut, Boolean> _function_2 = new Function1<ServiceAspectPointcut, Boolean>() {
+            public Boolean apply(final ServiceAspectPointcut it) {
+                return Boolean.valueOf(it.isForExchangePattern());
+            }
+        };
+        ServiceAspectPointcut _findFirst_2 = IterableExtensions.<ServiceAspectPointcut>findFirst(selector.getPointcuts(), _function_2);
+        Protocol _protocol = null;
+        if (_findFirst_2!=null) {
+            _protocol=_findFirst_2.getProtocol();
+        }
+        final Protocol protocol = _protocol;
+        final Function1<ServiceAspectPointcut, Boolean> _function_3 = new Function1<ServiceAspectPointcut, Boolean>() {
+            public Boolean apply(final ServiceAspectPointcut it) {
+                return Boolean.valueOf(it.isForExchangePattern());
+            }
+        };
+        ServiceAspectPointcut _findFirst_3 = IterableExtensions.<ServiceAspectPointcut>findFirst(selector.getPointcuts(), _function_3);
+        DataFormat _dataFormat = null;
+        if (_findFirst_3!=null) {
+            _dataFormat=_findFirst_3.getDataFormat();
+        }
+        final DataFormat dataFormat = _dataFormat;
+        return this.isValidSelectorForJoinPoint(joinPoint, exchangePattern, communicationType, protocol, dataFormat);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public boolean isValidSelectorForJoinPoint(final JoinPointType joinPoint, final ExchangePattern exchangePattern, final CommunicationType communicationType, final Protocol protocol, final DataFormat dataFormat) {
+        boolean _switchResult = false;
+        if (joinPoint != null) {
+            switch (joinPoint) {
+                case COMPLEX_TYPES:
+                    _switchResult = false;
+                    break;
+                case DATA_FIELDS:
+                    _switchResult = true;
+                    break;
+                case DATA_OPERATIONS:
+                    _switchResult = false;
+                    break;
+                case DATA_OPERATION_PARAMETERS:
+                    _switchResult = false;
+                    break;
+                case MICROSERVICES:
+                    _switchResult = ((exchangePattern == null) && (communicationType == null));
+                    break;
+                case INTERFACES:
+                    _switchResult = ((exchangePattern == null) && (communicationType == null));
+                    break;
+                case OPERATIONS:
+                    _switchResult = ((exchangePattern == null) && (communicationType == null));
+                    break;
+                case PARAMETERS:
+                    _switchResult = true;
+                    break;
+                default:
+                    _switchResult = false;
+                    break;
+            }
+        }
+        else {
+            _switchResult = false;
+        }
+        return _switchResult;
     }
 
     /**
@@ -369,6 +469,10 @@ public class ServiceAspectImpl extends TechnologyAspectImpl implements ServiceAs
     @Override
     public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
         switch (operationID) {
+            case TechnologyPackage.SERVICE_ASPECT___IS_VALID_SELECTOR_FOR_JOIN_POINT__JOINPOINTTYPE_SERVICEASPECTPOINTCUTSELECTOR:
+                return isValidSelectorForJoinPoint((JoinPointType)arguments.get(0), (ServiceAspectPointcutSelector)arguments.get(1));
+            case TechnologyPackage.SERVICE_ASPECT___IS_VALID_SELECTOR_FOR_JOIN_POINT__JOINPOINTTYPE_EXCHANGEPATTERN_COMMUNICATIONTYPE_PROTOCOL_DATAFORMAT:
+                return isValidSelectorForJoinPoint((JoinPointType)arguments.get(0), (ExchangePattern)arguments.get(1), (CommunicationType)arguments.get(2), (Protocol)arguments.get(3), (DataFormat)arguments.get(4));
             case TechnologyPackage.SERVICE_ASPECT___HAS_MATCHING_SELECTOR__EXCHANGEPATTERN_COMMUNICATIONTYPE_PROTOCOL_DATAFORMAT:
                 return hasMatchingSelector((ExchangePattern)arguments.get(0), (CommunicationType)arguments.get(1), (Protocol)arguments.get(2), (DataFormat)arguments.get(3));
         }

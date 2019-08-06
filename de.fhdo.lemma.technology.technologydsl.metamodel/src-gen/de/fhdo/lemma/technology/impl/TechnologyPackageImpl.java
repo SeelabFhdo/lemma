@@ -1179,8 +1179,28 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * @generated
      */
     @Override
-    public EOperation getServiceAspect__HasMatchingSelector__ExchangePattern_CommunicationType_Protocol_DataFormat() {
+    public EOperation getServiceAspect__IsValidSelectorForJoinPoint__JoinPointType_ServiceAspectPointcutSelector() {
         return serviceAspectEClass.getEOperations().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EOperation getServiceAspect__IsValidSelectorForJoinPoint__JoinPointType_ExchangePattern_CommunicationType_Protocol_DataFormat() {
+        return serviceAspectEClass.getEOperations().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EOperation getServiceAspect__HasMatchingSelector__ExchangePattern_CommunicationType_Protocol_DataFormat() {
+        return serviceAspectEClass.getEOperations().get(2);
     }
 
     /**
@@ -1339,6 +1359,16 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * @generated
      */
     @Override
+    public EOperation getServiceAspectPointcut__IsValidSelectorFor__JoinPointType() {
+        return serviceAspectPointcutEClass.getEOperations().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public EClass getServiceAspectPointcutSelector() {
         return serviceAspectPointcutSelectorEClass;
     }
@@ -1379,18 +1409,8 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * @generated
      */
     @Override
-    public EOperation getServiceAspectPointcutSelector__IsMoreGenericThan__ServiceAspectPointcutSelector() {
-        return serviceAspectPointcutSelectorEClass.getEOperations().get(0);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
     public EOperation getServiceAspectPointcutSelector__OrderedSelectorValues() {
-        return serviceAspectPointcutSelectorEClass.getEOperations().get(1);
+        return serviceAspectPointcutSelectorEClass.getEOperations().get(0);
     }
 
     /**
@@ -1569,18 +1589,8 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * @generated
      */
     @Override
-    public EOperation getOperationAspectPointcutSelector__IsMoreGenericThan__OperationAspectPointcutSelector() {
-        return operationAspectPointcutSelectorEClass.getEOperations().get(0);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
     public EOperation getOperationAspectPointcutSelector__OrderedSelectorValues() {
-        return operationAspectPointcutSelectorEClass.getEOperations().get(1);
+        return operationAspectPointcutSelectorEClass.getEOperations().get(0);
     }
 
     /**
@@ -1783,6 +1793,8 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
         serviceAspectEClass = createEClass(SERVICE_ASPECT);
         createEReference(serviceAspectEClass, SERVICE_ASPECT__POINTCUT_SELECTORS);
         createEReference(serviceAspectEClass, SERVICE_ASPECT__TECHNOLOGY);
+        createEOperation(serviceAspectEClass, SERVICE_ASPECT___IS_VALID_SELECTOR_FOR_JOIN_POINT__JOINPOINTTYPE_SERVICEASPECTPOINTCUTSELECTOR);
+        createEOperation(serviceAspectEClass, SERVICE_ASPECT___IS_VALID_SELECTOR_FOR_JOIN_POINT__JOINPOINTTYPE_EXCHANGEPATTERN_COMMUNICATIONTYPE_PROTOCOL_DATAFORMAT);
         createEOperation(serviceAspectEClass, SERVICE_ASPECT___HAS_MATCHING_SELECTOR__EXCHANGEPATTERN_COMMUNICATIONTYPE_PROTOCOL_DATAFORMAT);
 
         serviceAspectPointcutEClass = createEClass(SERVICE_ASPECT_POINTCUT);
@@ -1800,12 +1812,12 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
         createEAttribute(serviceAspectPointcutEClass, SERVICE_ASPECT_POINTCUT__EFFECTIVE_VALUE);
         createEAttribute(serviceAspectPointcutEClass, SERVICE_ASPECT_POINTCUT__PRINTABLE_EFFECTIVE_VALUE);
         createEAttribute(serviceAspectPointcutEClass, SERVICE_ASPECT_POINTCUT__ORDERED_POINTCUT_TYPES);
+        createEOperation(serviceAspectPointcutEClass, SERVICE_ASPECT_POINTCUT___IS_VALID_SELECTOR_FOR__JOINPOINTTYPE);
 
         serviceAspectPointcutSelectorEClass = createEClass(SERVICE_ASPECT_POINTCUT_SELECTOR);
         createEReference(serviceAspectPointcutSelectorEClass, SERVICE_ASPECT_POINTCUT_SELECTOR__POINTCUTS);
         createEReference(serviceAspectPointcutSelectorEClass, SERVICE_ASPECT_POINTCUT_SELECTOR__SERVICE_ASPECT);
         createEAttribute(serviceAspectPointcutSelectorEClass, SERVICE_ASPECT_POINTCUT_SELECTOR__SELECTOR_STRING);
-        createEOperation(serviceAspectPointcutSelectorEClass, SERVICE_ASPECT_POINTCUT_SELECTOR___IS_MORE_GENERIC_THAN__SERVICEASPECTPOINTCUTSELECTOR);
         createEOperation(serviceAspectPointcutSelectorEClass, SERVICE_ASPECT_POINTCUT_SELECTOR___ORDERED_SELECTOR_VALUES);
 
         operationAspectEClass = createEClass(OPERATION_ASPECT);
@@ -1827,7 +1839,6 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
         createEReference(operationAspectPointcutSelectorEClass, OPERATION_ASPECT_POINTCUT_SELECTOR__POINTCUTS);
         createEReference(operationAspectPointcutSelectorEClass, OPERATION_ASPECT_POINTCUT_SELECTOR__OPERATION_ASPECT);
         createEAttribute(operationAspectPointcutSelectorEClass, OPERATION_ASPECT_POINTCUT_SELECTOR__SELECTOR_STRING);
-        createEOperation(operationAspectPointcutSelectorEClass, OPERATION_ASPECT_POINTCUT_SELECTOR___IS_MORE_GENERIC_THAN__OPERATIONASPECTPOINTCUTSELECTOR);
         createEOperation(operationAspectPointcutSelectorEClass, OPERATION_ASPECT_POINTCUT_SELECTOR___ORDERED_SELECTOR_VALUES);
 
         // Create enums
@@ -1998,6 +2009,17 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
         initEReference(getServiceAspect_PointcutSelectors(), this.getServiceAspectPointcutSelector(), this.getServiceAspectPointcutSelector_ServiceAspect(), "pointcutSelectors", null, 0, -1, ServiceAspect.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getServiceAspect_Technology(), this.getTechnology(), this.getTechnology_ServiceAspects(), "technology", null, 0, 1, ServiceAspect.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
+        op = initEOperation(getServiceAspect__IsValidSelectorForJoinPoint__JoinPointType_ServiceAspectPointcutSelector(), theEcorePackage.getEBoolean(), "isValidSelectorForJoinPoint", 0, 1, !IS_UNIQUE, IS_ORDERED);
+        addEParameter(op, this.getJoinPointType(), "joinPoint", 0, 1, !IS_UNIQUE, IS_ORDERED);
+        addEParameter(op, this.getServiceAspectPointcutSelector(), "selector", 0, 1, !IS_UNIQUE, IS_ORDERED);
+
+        op = initEOperation(getServiceAspect__IsValidSelectorForJoinPoint__JoinPointType_ExchangePattern_CommunicationType_Protocol_DataFormat(), theEcorePackage.getEBoolean(), "isValidSelectorForJoinPoint", 0, 1, !IS_UNIQUE, IS_ORDERED);
+        addEParameter(op, this.getJoinPointType(), "joinPoint", 0, 1, !IS_UNIQUE, IS_ORDERED);
+        addEParameter(op, this.getExchangePattern(), "exchangePattern", 0, 1, !IS_UNIQUE, IS_ORDERED);
+        addEParameter(op, this.getCommunicationType(), "communicationType", 0, 1, !IS_UNIQUE, IS_ORDERED);
+        addEParameter(op, this.getProtocol(), "protocol", 0, 1, !IS_UNIQUE, IS_ORDERED);
+        addEParameter(op, this.getDataFormat(), "dataFormat", 0, 1, !IS_UNIQUE, IS_ORDERED);
+
         op = initEOperation(getServiceAspect__HasMatchingSelector__ExchangePattern_CommunicationType_Protocol_DataFormat(), theEcorePackage.getEBoolean(), "hasMatchingSelector", 0, 1, !IS_UNIQUE, IS_ORDERED);
         addEParameter(op, this.getExchangePattern(), "forExchangePattern", 0, 1, !IS_UNIQUE, IS_ORDERED);
         addEParameter(op, this.getCommunicationType(), "forCommunicationType", 0, 1, !IS_UNIQUE, IS_ORDERED);
@@ -2020,13 +2042,13 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
         initEAttribute(getServiceAspectPointcut_PrintableEffectiveValue(), theEcorePackage.getEString(), "printableEffectiveValue", null, 0, 1, ServiceAspectPointcut.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, IS_DERIVED, IS_ORDERED);
         initEAttribute(getServiceAspectPointcut_OrderedPointcutTypes(), this.getPointcutType(), "orderedPointcutTypes", null, 0, -1, ServiceAspectPointcut.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 
+        op = initEOperation(getServiceAspectPointcut__IsValidSelectorFor__JoinPointType(), theEcorePackage.getEBoolean(), "isValidSelectorFor", 0, 1, !IS_UNIQUE, IS_ORDERED);
+        addEParameter(op, this.getJoinPointType(), "joinPoint", 0, 1, !IS_UNIQUE, IS_ORDERED);
+
         initEClass(serviceAspectPointcutSelectorEClass, ServiceAspectPointcutSelector.class, "ServiceAspectPointcutSelector", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getServiceAspectPointcutSelector_Pointcuts(), this.getServiceAspectPointcut(), this.getServiceAspectPointcut_Selector(), "pointcuts", null, 1, -1, ServiceAspectPointcutSelector.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getServiceAspectPointcutSelector_ServiceAspect(), this.getServiceAspect(), this.getServiceAspect_PointcutSelectors(), "serviceAspect", null, 0, 1, ServiceAspectPointcutSelector.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getServiceAspectPointcutSelector_SelectorString(), theEcorePackage.getEString(), "selectorString", null, 0, 1, ServiceAspectPointcutSelector.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, IS_DERIVED, IS_ORDERED);
-
-        op = initEOperation(getServiceAspectPointcutSelector__IsMoreGenericThan__ServiceAspectPointcutSelector(), theEcorePackage.getEBoolean(), "isMoreGenericThan", 0, 1, !IS_UNIQUE, IS_ORDERED);
-        addEParameter(op, this.getServiceAspectPointcutSelector(), "otherSelector", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
         initEOperation(getServiceAspectPointcutSelector__OrderedSelectorValues(), this.getPointcutTypeStringsMap(), "orderedSelectorValues", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
@@ -2051,9 +2073,6 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
         initEReference(getOperationAspectPointcutSelector_Pointcuts(), this.getOperationAspectPointcut(), this.getOperationAspectPointcut_Selector(), "pointcuts", null, 1, -1, OperationAspectPointcutSelector.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getOperationAspectPointcutSelector_OperationAspect(), this.getOperationAspect(), this.getOperationAspect_PointcutSelectors(), "operationAspect", null, 0, 1, OperationAspectPointcutSelector.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getOperationAspectPointcutSelector_SelectorString(), theEcorePackage.getEString(), "selectorString", null, 0, 1, OperationAspectPointcutSelector.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, IS_DERIVED, IS_ORDERED);
-
-        op = initEOperation(getOperationAspectPointcutSelector__IsMoreGenericThan__OperationAspectPointcutSelector(), theEcorePackage.getEBoolean(), "isMoreGenericThan", 0, 1, !IS_UNIQUE, IS_ORDERED);
-        addEParameter(op, this.getOperationAspectPointcutSelector(), "otherSelector", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
         initEOperation(getOperationAspectPointcutSelector__OrderedSelectorValues(), this.getPointcutTypeStringsMap(), "orderedSelectorValues", 0, 1, !IS_UNIQUE, IS_ORDERED);
 

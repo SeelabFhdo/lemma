@@ -467,6 +467,36 @@ class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
     }
 
     /**
+     * Build scope for aspect properties
+     */
+    private def getScopeForAspectProperty(EObject container) {
+        // If we're inside an assignment, we need to return all available properties. Otherwise a
+        // cyclic link resolution exception will occur. However, this also gives rise to possible
+        // duplicate specification of properties for several value assignments. These duplicates get
+        // checked in addition by the validator.
+        if (container instanceof TechnologySpecificPropertyValueAssignment) {
+            val aspect = EcoreUtil2.getContainerOfType(container, ImportedServiceAspect)
+            return Scopes::scopeFor(aspect.importedAspect.properties)
+
+        // If we're inside the aspect itself, i.e., when the modeler _just_ begins to express a new
+        // value assignment for a property, we only provide those properties that haven't received
+        // values yet
+        } else if (container instanceof ImportedServiceAspect) {
+            val alreadyUsedProperties = <String> newHashSet
+            container.values.forEach[
+                if (value !== null)
+                    alreadyUsedProperties.add(property.name)
+            ]
+
+            val availableProperties = container.importedAspect.properties
+                .filter[!alreadyUsedProperties.contains(name)]
+            return Scopes::scopeFor(availableProperties)
+        }
+        else
+            return IScope.NULLSCOPE
+    }
+
+    /**
      * Build scope for aspect of imported service aspect
      */
     private def getScopeForImportedAspect(ImportedServiceAspect importedAspect) {
@@ -554,7 +584,7 @@ class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
         val declaredAspectsForJoinPoint = (resourceContents.get(0) as Technology).serviceAspects
             .filter[joinPoints.contains(joinPoint)].toList
         val scopeAspects = if (!bypassFilter)
-                filterMatchingAspects(declaredAspectsForJoinPoint, forExchangePattern,
+                filterAspectsForMatching(joinPoint, declaredAspectsForJoinPoint, forExchangePattern,
                     forCommunicationType, forProtocolsAndDataFormats)
             else
                 declaredAspectsForJoinPoint
@@ -566,7 +596,51 @@ class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
     }
 
     /**
-     * Helper to determine if an aspect is to annotated for an interface or for the first operation
+     * Helper to determine scope aspects from pointcut selector values
+     */
+    protected def filterAspectsForMatching(JoinPointType joinPoint, List<ServiceAspect> aspects,
+        ExchangePattern exchangePattern, CommunicationType communicationType,
+        List<Pair<Protocol, DataFormat>> protocolsAndFormats) {
+        if (protocolsAndFormats === null || protocolsAndFormats.empty)
+            return findMatchingAspects(joinPoint, aspects, exchangePattern, communicationType, null,
+                null)
+
+        val uniqueMatchingAspects = <ServiceAspect>newHashSet
+        for (protocolAndFormat : protocolsAndFormats)
+            uniqueMatchingAspects.addAll(findMatchingAspects(joinPoint, aspects, exchangePattern,
+                communicationType, protocolAndFormat.key, protocolAndFormat.value))
+        return uniqueMatchingAspects
+    }
+
+    /**
+     * Filter a list of service aspects for those for which either the passed pointcut selector
+     * values are not applicable or, in case they are applicable, for those that match the given
+     * pointcut selector values
+     */
+    private def findMatchingAspects(JoinPointType joinPoint, List<ServiceAspect> aspects,
+        ExchangePattern exchangePattern, CommunicationType communicationType, Protocol protocol,
+        DataFormat dataFormat) {
+        val matchingAspects = <ServiceAspect> newArrayList
+
+        aspects.forEach[aspect |
+            val validPointcutSelector = aspect.isValidSelectorForJoinPoint(joinPoint,
+                exchangePattern, communicationType, protocol, dataFormat)
+
+            val matchingAspect = if (validPointcutSelector)
+                    aspect.hasMatchingSelector(exchangePattern, communicationType, protocol,
+                        dataFormat)
+                else
+                    true
+
+            if (matchingAspect)
+                matchingAspects.add(aspect)
+        ]
+
+        return matchingAspects
+    }
+
+    /**
+     * Helper to determine if an aspect is to be annotated on an interface or the first operation
      * _within_ an interface
      */
     private def onFirstInterfaceOperation(ImportedServiceAspect aspect) {
@@ -576,67 +650,6 @@ class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
 
         val interfaceKeywordInText = Pattern.compile("(.*\\s+interface\\s+.*)|(.*\\s+interface)")
         return !interfaceKeywordInText.matcher(textBeforeAspect).find
-    }
-
-    /**
-     * Build scope for aspect properties
-     */
-    private def getScopeForAspectProperty(EObject container) {
-        // If we're inside an assignment, we need to return all available properties. Otherwise a
-        // cyclic link resolution exception will occur. However, this also gives rise to possible
-        // duplicate specification of properties for several value assignments. These duplicates get
-        // checked in addition by the validator.
-        if (container instanceof TechnologySpecificPropertyValueAssignment) {
-            val aspect = EcoreUtil2.getContainerOfType(container, ImportedServiceAspect)
-            return Scopes::scopeFor(aspect.importedAspect.properties)
-
-        // If we're inside the aspect itself, i.e., when the modeler _just_ begins to express a new
-        // value assignment for a property, we only provide those properties that haven't received
-        // values yet
-        } else if (container instanceof ImportedServiceAspect) {
-            val alreadyUsedProperties = <String> newHashSet
-            container.values.forEach[
-                if (value !== null)
-                    alreadyUsedProperties.add(property.name)
-            ]
-
-            val availableProperties = container.importedAspect.properties
-                .filter[!alreadyUsedProperties.contains(name)]
-            return Scopes::scopeFor(availableProperties)
-        }
-        else
-            return IScope.NULLSCOPE
-    }
-
-    /**
-     * Helper method to filter a list of service aspects for those that have a selector that matches
-     * the given pointcut values
-     */
-    protected def filterMatchingAspects(List<ServiceAspect> serviceAspects,
-        ExchangePattern forExchangePattern, CommunicationType forCommunicationType,
-        List<Pair<Protocol, DataFormat>> forProtocolsAndDataFormats) {
-        val matchingAspects = <ServiceAspect> newArrayList
-        // Match aspects for a variety of protocols and data formats
-        if (forProtocolsAndDataFormats !== null && !forProtocolsAndDataFormats.empty)
-            for (protocolAndDataFormat : forProtocolsAndDataFormats) {
-                val forProtocol = protocolAndDataFormat.key
-                val forDataFormat = protocolAndDataFormat.value ?: forProtocol.defaultFormat
-                matchingAspects.addAll(
-                    serviceAspects.filter[
-                        hasMatchingSelector(forExchangePattern, forCommunicationType, forProtocol,
-                            forDataFormat)
-                    ].toList
-                )
-            }
-        // Match aspects without considering protocols and data formats
-        else
-            matchingAspects.addAll(
-                serviceAspects.filter[
-                    hasMatchingSelector(forExchangePattern, forCommunicationType, null, null)
-                ].toList
-            )
-
-        return matchingAspects
     }
 
     /**

@@ -7,11 +7,14 @@ import com.google.common.base.Objects;
 import de.fhdo.lemma.technology.CommunicationType;
 import de.fhdo.lemma.technology.DataFormat;
 import de.fhdo.lemma.technology.ExchangePattern;
+import de.fhdo.lemma.technology.JoinPointType;
 import de.fhdo.lemma.technology.PointcutType;
 import de.fhdo.lemma.technology.Protocol;
 import de.fhdo.lemma.technology.ServiceAspectPointcut;
 import de.fhdo.lemma.technology.ServiceAspectPointcutSelector;
 import de.fhdo.lemma.technology.TechnologyPackage;
+
+import java.lang.reflect.InvocationTargetException;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -701,6 +704,44 @@ public class ServiceAspectPointcutImpl extends MinimalEObjectImpl.Container impl
      * @generated
      */
     @Override
+    public boolean isValidSelectorFor(final JoinPointType joinPoint) {
+        boolean _switchResult = false;
+        PointcutType _effectiveType = this.getEffectiveType();
+        if (_effectiveType != null) {
+            switch (_effectiveType) {
+                case EXCHANGE_PATTERN:
+                    _switchResult = this.getSelector().getServiceAspect().isValidSelectorForJoinPoint(joinPoint, this.getExchangePattern(), null, 
+                        null, null);
+                    break;
+                case COMMUNICATION_TYPE:
+                    _switchResult = this.getSelector().getServiceAspect().isValidSelectorForJoinPoint(joinPoint, null, 
+                        this.getCommunicationType(), null, null);
+                    break;
+                case PROTOCOL:
+                    _switchResult = this.getSelector().getServiceAspect().isValidSelectorForJoinPoint(joinPoint, null, null, this.getProtocol(), 
+                        null);
+                    break;
+                case DATA_FORMAT:
+                    _switchResult = this.getSelector().getServiceAspect().isValidSelectorForJoinPoint(joinPoint, null, null, null, 
+                        this.getDataFormat());
+                    break;
+                default:
+                    _switchResult = false;
+                    break;
+            }
+        }
+        else {
+            _switchResult = false;
+        }
+        return _switchResult;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
             case TechnologyPackage.SERVICE_ASPECT_POINTCUT__SELECTOR:
@@ -898,6 +939,20 @@ public class ServiceAspectPointcutImpl extends MinimalEObjectImpl.Container impl
                 return !getOrderedPointcutTypes().isEmpty();
         }
         return super.eIsSet(featureID);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+        switch (operationID) {
+            case TechnologyPackage.SERVICE_ASPECT_POINTCUT___IS_VALID_SELECTOR_FOR__JOINPOINTTYPE:
+                return isValidSelectorFor((JoinPointType)arguments.get(0));
+        }
+        return super.eInvoke(operationID, arguments);
     }
 
     /**

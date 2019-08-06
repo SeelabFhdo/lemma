@@ -17,10 +17,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import java.util.Map.Entry;
-
-import java.util.Set;
-
 import java.util.function.Consumer;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -215,51 +211,6 @@ public class ServiceAspectPointcutSelectorImpl extends MinimalEObjectImpl.Contai
      * @generated
      */
     @Override
-    public boolean isMoreGenericThan(final ServiceAspectPointcutSelector otherSelector) {
-        if ((otherSelector == null)) {
-            return true;
-        }
-        else {
-            if ((this == otherSelector)) {
-                return false;
-            }
-        }
-        final Map<PointcutType, List<String>> thisSelectorValues = this.orderedSelectorValues();
-        final Map<PointcutType, List<String>> otherSelectorValues = otherSelector.orderedSelectorValues();
-        Set<Entry<PointcutType, List<String>>> _entrySet = thisSelectorValues.entrySet();
-        for (final Entry<PointcutType, List<String>> entry : _entrySet) {
-            {
-                final PointcutType thisType = entry.getKey();
-                final List<String> thisValuesOfType = entry.getValue();
-                final List<String> otherValuesOfType = otherSelectorValues.get(thisType);
-                final Function1<String, Boolean> _function = new Function1<String, Boolean>() {
-                    public Boolean apply(final String it) {
-                        return Boolean.valueOf(otherValuesOfType.contains(it));
-                    }
-                };
-                boolean _exists = IterableExtensions.<String>exists(thisValuesOfType, _function);
-                if (_exists) {
-                    otherValuesOfType.removeAll(thisValuesOfType);
-                    boolean _isEmpty = otherValuesOfType.isEmpty();
-                    if (_isEmpty) {
-                        otherSelectorValues.remove(thisType);
-                    }
-                }
-                else {
-                    return false;
-                }
-            }
-        }
-        boolean thisHasMorePointcuts = otherSelectorValues.isEmpty();
-        return (!thisHasMorePointcuts);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
     public Map<PointcutType, List<String>> orderedSelectorValues() {
         boolean _isEmpty = this.getPointcuts().isEmpty();
         if (_isEmpty) {
@@ -424,8 +375,6 @@ public class ServiceAspectPointcutSelectorImpl extends MinimalEObjectImpl.Contai
     @Override
     public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
         switch (operationID) {
-            case TechnologyPackage.SERVICE_ASPECT_POINTCUT_SELECTOR___IS_MORE_GENERIC_THAN__SERVICEASPECTPOINTCUTSELECTOR:
-                return isMoreGenericThan((ServiceAspectPointcutSelector)arguments.get(0));
             case TechnologyPackage.SERVICE_ASPECT_POINTCUT_SELECTOR___ORDERED_SELECTOR_VALUES:
                 return orderedSelectorValues();
         }

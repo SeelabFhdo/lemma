@@ -22,7 +22,6 @@ import de.fhdo.lemma.technology.OperationTechnology
 import de.fhdo.lemma.technology.ServiceAspectPointcutSelector
 import de.fhdo.lemma.technology.ServiceAspect
 import de.fhdo.lemma.technology.ServiceAspectPointcut
-import de.fhdo.lemma.technology.PointcutType
 import de.fhdo.lemma.technology.JoinPointType
 import de.fhdo.lemma.technology.TechnologyAspect
 import de.fhdo.lemma.technology.PropertyFeature
@@ -746,49 +745,41 @@ class TechnologyDslValidator extends AbstractTechnologyDslValidator {
     }
 
     /**
-     * Check that "exchange pattern" or "communication type" pointcut is specified in conjunction
-     * with "parameters" or "data fields" join point
+     * Check that pointcut is applicable to at least one join point of the aspect
      */
     @Check
-    def checkParametersPointcut(ServiceAspectPointcut pointcut) {
-        if (
-            pointcut.effectiveType !== PointcutType.EXCHANGE_PATTERN &&
-            pointcut.effectiveType !== PointcutType.COMMUNICATION_TYPE
-        ) {
-            return
-        }
-
-        val joinPoints = pointcut.selector.serviceAspect.joinPoints
-        val allowedJoinPoints = #[JoinPointType.PARAMETERS, JoinPointType.DATA_FIELDS]
-        if (!joinPoints.exists[allowedJoinPoints.contains(it)])
-            error('''Pointcut "«pointcut.effectiveSelectorName»" may only be specified in ''' +
-                '''conjunction with join point "parameters" or "fields"''', pointcut,
+    def checkPointcut(ServiceAspectPointcut pointcut) {
+        val aspectJoinPoints = pointcut.selector.serviceAspect.joinPoints
+        if (!aspectJoinPoints.exists[pointcut.isValidSelectorFor(it)])
+            error('''Pointcut "«pointcut.effectiveSelectorName»" is not applicable to aspect''',
                 TechnologyPackage::Literals.SERVICE_ASPECT_POINTCUT__SELECTOR)
     }
 
-    /**
-     * Warn if service aspect pointcut selector is more generic than other
-     */
     @Check
-    def warnIfSelectorIsMoreGeneric(ServiceAspectPointcutSelector selector) {
-        val otherSelectors = selector.serviceAspect.pointcutSelectors.filter[it != selector]
-        otherSelectors.forEach[
-            if (selector.isMoreGenericThan(it))
-                warning('''Selector "«selector.selectorString»" is more generic''', it,
-                TechnologyPackage::Literals.SERVICE_ASPECT_POINTCUT_SELECTOR__SELECTOR_STRING)
+    def warnNotApplicableAtAllJoinPoints(ServiceAspectPointcutSelector selector) {
+        val aspect = selector.serviceAspect
+        val notApplicableJoinPoints = aspect.joinPoints.filter[
+            !aspect.isValidSelectorForJoinPoint(it, selector)
         ]
-    }
+        if (notApplicableJoinPoints.empty) {
+            return
+        }
 
-    /**
-     * Warn if operation aspect pointcut selector is more generic than other
-     */
-    @Check
-    def warnIfSelectorIsMoreGeneric(OperationAspectPointcutSelector selector) {
-        val otherSelectors = selector.operationAspect.pointcutSelectors.filter[it != selector]
-        otherSelectors.forEach[
-            if (selector.isMoreGenericThan(it))
-                warning('''Selector "«selector.selectorString»" is more generic''', it,
-                TechnologyPackage::Literals.OPERATION_ASPECT_POINTCUT_SELECTOR__SELECTOR_STRING)
-        ]
+        val notApplicableString = notApplicableJoinPoints.map[
+            switch (it) {
+                case JoinPointType.DATA_OPERATIONS: "domainOperations"
+                case JoinPointType.DATA_OPERATION_PARAMETERS: "domainParameters"
+                case JoinPointType.MICROSERVICES: "microservices"
+                case JoinPointType.INTERFACES: "interfaces"
+                case JoinPointType.OPERATIONS:"operations"
+                case JoinPointType.PARAMETERS: "parameters"
+                case JoinPointType.COMPLEX_TYPES: "types"
+                case JoinPointType.DATA_FIELDS: "fields"
+                default: ""
+            }
+        ].join(",")
+        warning("Selector will not apply to join point" +
+            '''«IF notApplicableJoinPoints.size > 1»s«ENDIF» «notApplicableString»''',
+            TechnologyPackage::Literals.SERVICE_ASPECT_POINTCUT_SELECTOR__SELECTOR_STRING)
     }
 }
