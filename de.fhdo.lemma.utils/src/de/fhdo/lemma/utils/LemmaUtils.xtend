@@ -21,6 +21,7 @@ import java.io.File
 import org.eclipse.core.resources.ResourcesPlugin
 import org.eclipse.core.runtime.Path
 import org.eclipse.core.resources.IFile
+import java.util.Properties
 
 /**
  * This class collects _static_ utility methods to be used across DSLs' implementations.
@@ -28,6 +29,35 @@ import org.eclipse.core.resources.IFile
  * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
  */
 final class LemmaUtils {
+    /**
+     * Get the current version of LEMMA as a printable String
+     */
+    def static getLemmaVersionAsString() {
+        val propertyFile = LemmaUtils.getResourceAsStream("/version.properties")
+        if (propertyFile === null)
+            return ""
+
+        try {
+            val versionInfo = new Properties()
+            versionInfo.load(propertyFile)
+            val major = versionInfo.getProperty("major")
+            val minor = versionInfo.getProperty("minor")
+            val patch = versionInfo.getProperty("patch")
+
+            if (major === null || minor === null || patch === null)
+                return ""
+
+            val versionString = '''«major».«minor».«patch»'''
+            val extra = versionInfo.getProperty("extra")
+            return if (extra !== null)
+                    versionString + extra
+                else
+                    versionString
+        } catch(Exception ex) {
+            return ""
+        }
+    }
+
     /**
      * Get direct contents, i.e., EObjects that are direct children on the first level, of a
      * resource represented by an import URI that points to a file

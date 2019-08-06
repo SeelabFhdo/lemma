@@ -12,12 +12,21 @@
             categoryId="de.fhdo.lemma.eclipse.ui.category.lemmaCommands"
             id="de.fhdo.lemma.eclipse.ui.commands.generateIntermediateModels">
       </command>
+      <command
+            name="About"
+            categoryId="de.fhdo.lemma.eclipse.ui.category.lemmaCommands"
+            id="de.fhdo.lemma.eclipse.ui.commands.about">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.handlers">
       <handler
             commandId="de.fhdo.lemma.eclipse.ui.commands.generateIntermediateModels"
             class="de.fhdo.lemma.eclipse.ui.IntermediateModelTransformationController">
+      </handler>
+      <handler
+            commandId="de.fhdo.lemma.eclipse.ui.commands.about"
+            class="de.fhdo.lemma.eclipse.ui.about_dialog.Controller">
       </handler>
    </extension>
    <extension
@@ -41,7 +50,18 @@
                   commandId="de.fhdo.lemma.eclipse.ui.commands.generateIntermediateModels"
                   mnemonic="M"
                   icon="icons/generateIntermediateModels.gif"
-                  id="de.fhdo.lemma.eclipse.ui.lemmaMenu.generateIntermediateModels">
+                  id="de.fhdo.lemma.eclipse.ui.lemmaMenu.generateIntermediateModels"
+                  label="Generate Intermediate Models...">
+            </command>
+            <separator
+                  name="aboutSeparator"
+                  visible="true">
+            </separator>
+            <command
+                  commandId="de.fhdo.lemma.eclipse.ui.commands.about"
+                  icon="icons/about.png"
+                  id="de.fhdo.lemma.eclipse.ui.lemmaMenu.about"
+                  label="About LEMMA">
             </command>
          </menu>
       </menuContribution>

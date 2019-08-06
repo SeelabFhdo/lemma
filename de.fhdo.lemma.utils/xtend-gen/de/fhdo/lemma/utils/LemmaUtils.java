@@ -5,11 +5,13 @@ import com.google.common.base.Objects;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import java.io.File;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 import java.util.function.Consumer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
@@ -20,6 +22,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.EcoreUtil2;
 import org.eclipse.xtext.naming.QualifiedName;
 import org.eclipse.xtext.resource.EObjectDescription;
@@ -41,6 +44,47 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
  */
 @SuppressWarnings("all")
 public final class LemmaUtils {
+  /**
+   * Get the current version of LEMMA as a printable String
+   */
+  public static String getLemmaVersionAsString() {
+    final InputStream propertyFile = LemmaUtils.class.getResourceAsStream("/version.properties");
+    if ((propertyFile == null)) {
+      return "";
+    }
+    try {
+      final Properties versionInfo = new Properties();
+      versionInfo.load(propertyFile);
+      final String major = versionInfo.getProperty("major");
+      final String minor = versionInfo.getProperty("minor");
+      final String patch = versionInfo.getProperty("patch");
+      if ((((major == null) || (minor == null)) || (patch == null))) {
+        return "";
+      }
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append(major);
+      _builder.append(".");
+      _builder.append(minor);
+      _builder.append(".");
+      _builder.append(patch);
+      final String versionString = _builder.toString();
+      final String extra = versionInfo.getProperty("extra");
+      String _xifexpression = null;
+      if ((extra != null)) {
+        _xifexpression = (versionString + extra);
+      } else {
+        _xifexpression = versionString;
+      }
+      return _xifexpression;
+    } catch (final Throwable _t) {
+      if (_t instanceof Exception) {
+        return "";
+      } else {
+        throw Exceptions.sneakyThrow(_t);
+      }
+    }
+  }
+  
   /**
    * Get direct contents, i.e., EObjects that are direct children on the first level, of a
    * resource represented by an import URI that points to a file

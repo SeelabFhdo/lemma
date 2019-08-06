@@ -31,7 +31,6 @@ import org.eclipse.core.runtime.Path
 import org.eclipse.core.resources.IResource
 import java.util.Map
 import de.fhdo.lemma.intermediate.transformations.TransformationModelType
-import de.fhdo.lemma.eclipse.ui.utils.LemmaUiUtils
 
 /**
  * Generic dialog to select the container for a filename. The dialog is inspired by the
