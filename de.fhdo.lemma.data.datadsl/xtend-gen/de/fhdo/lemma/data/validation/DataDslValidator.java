@@ -194,64 +194,6 @@ public class DataDslValidator extends AbstractDataDslValidator {
   }
   
   /**
-   * Check if non-imported complex type of data field is from same data model
-   */
-  @Check
-  public void checkComplexType(final DataField dataField) {
-    final Function<DataField, ComplexType> _function = (DataField it) -> {
-      return it.getComplexType();
-    };
-    this.<DataField>checkComplexType(dataField, _function, DataPackage.Literals.DATA_FIELD__COMPLEX_TYPE);
-  }
-  
-  /**
-   * Check if non-imported complex return type of operation is from same data model
-   */
-  @Check
-  public void checkComplexType(final DataOperation dataOperation) {
-    final Function<DataOperation, ComplexType> _function = (DataOperation it) -> {
-      return it.getComplexReturnType();
-    };
-    this.<DataOperation>checkComplexType(dataOperation, _function, 
-      DataPackage.Literals.DATA_OPERATION__COMPLEX_RETURN_TYPE);
-  }
-  
-  /**
-   * Check if non-imported complex type of operation parameter is from same data model
-   */
-  @Check
-  public void checkComplexType(final DataOperationParameter dataOperationParameter) {
-    final Function<DataOperationParameter, ComplexType> _function = (DataOperationParameter it) -> {
-      return it.getComplexType();
-    };
-    this.<DataOperationParameter>checkComplexType(dataOperationParameter, _function, 
-      DataPackage.Literals.DATA_OPERATION_PARAMETER__COMPLEX_TYPE);
-  }
-  
-  /**
-   * Helper to check if a complex type is defined in the same data model as a given context
-   * EObject. This check is necessary, because otherwise complex types from imported data models
-   * leak into the current one without the import alias being used.
-   */
-  private <T extends EObject> void checkComplexType(final T context, final Function<T, ComplexType> getComplexType, final EStructuralFeature feature) {
-    final ComplexType complexType = getComplexType.apply(context);
-    if (((complexType == null) || (complexType.getName() == null))) {
-      return;
-    }
-    final EList<ComplexType> localComplexTypes = EcoreUtil2.<DataModel>getContainerOfType(context, DataModel.class).getContainedComplexTypes();
-    boolean _contains = localComplexTypes.contains(complexType);
-    boolean _not = (!_contains);
-    if (_not) {
-      StringConcatenation _builder = new StringConcatenation();
-      _builder.append("Couldn\'t resolve reference to ComplexType \'");
-      String _name = complexType.getName();
-      _builder.append(_name);
-      _builder.append("\'.");
-      this.error(_builder.toString(), feature);
-    }
-  }
-  
-  /**
    * Check operation parameters for unique names
    */
   @Check
