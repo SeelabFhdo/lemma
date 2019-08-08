@@ -118,7 +118,8 @@ abstract class IntermediateType {
 class IntermediatePrimitiveType extends IntermediateType {
     Integer size
 
-    container IntermediateEnumerationField enumerationField
+    container IntermediateDataField initializedDataField opposite initializationValueCompatibleTypes
+    container IntermediateEnumerationField initializedEnumerationField
         opposite initializationValueCompatibleTypes
 }
 
@@ -213,7 +214,12 @@ class IntermediateDataField {
     boolean immutable
     boolean inherited
     String[] featureNames
+    // The initialization value is encoded in a single String. However, the validators of the
+    // languages ensure that the value corresponds to the type of the property.
+    String initializationValue
 
+    contains IntermediatePrimitiveType[] initializationValueCompatibleTypes
+        opposite initializedDataField
     contains IntermediateType ^type opposite dataField
     contains IntermediateType originalType
     contains IntermediateImportedAspect[] aspects opposite dataField
@@ -252,7 +258,7 @@ class IntermediateEnumerationField {
     String initializationValue
 
     contains IntermediatePrimitiveType[] initializationValueCompatibleTypes
-        opposite enumerationField
+        opposite initializedEnumerationField
     container IntermediateEnumeration enumeration opposite fields
 }
 

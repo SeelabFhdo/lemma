@@ -498,13 +498,22 @@ public interface IntermediatePackage extends EPackage {
     int INTERMEDIATE_PRIMITIVE_TYPE__SIZE = INTERMEDIATE_TYPE_FEATURE_COUNT + 0;
 
     /**
-     * The feature id for the '<em><b>Enumeration Field</b></em>' container reference.
+     * The feature id for the '<em><b>Initialized Data Field</b></em>' container reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_PRIMITIVE_TYPE__ENUMERATION_FIELD = INTERMEDIATE_TYPE_FEATURE_COUNT + 1;
+    int INTERMEDIATE_PRIMITIVE_TYPE__INITIALIZED_DATA_FIELD = INTERMEDIATE_TYPE_FEATURE_COUNT + 1;
+
+    /**
+     * The feature id for the '<em><b>Initialized Enumeration Field</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_PRIMITIVE_TYPE__INITIALIZED_ENUMERATION_FIELD = INTERMEDIATE_TYPE_FEATURE_COUNT + 2;
 
     /**
      * The number of structural features of the '<em>Primitive Type</em>' class.
@@ -513,7 +522,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_PRIMITIVE_TYPE_FEATURE_COUNT = INTERMEDIATE_TYPE_FEATURE_COUNT + 2;
+    int INTERMEDIATE_PRIMITIVE_TYPE_FEATURE_COUNT = INTERMEDIATE_TYPE_FEATURE_COUNT + 3;
 
     /**
      * The number of operations of the '<em>Primitive Type</em>' class.
@@ -1487,13 +1496,31 @@ public interface IntermediatePackage extends EPackage {
     int INTERMEDIATE_DATA_FIELD__FEATURE_NAMES = 5;
 
     /**
+     * The feature id for the '<em><b>Initialization Value</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_DATA_FIELD__INITIALIZATION_VALUE = 6;
+
+    /**
+     * The feature id for the '<em><b>Initialization Value Compatible Types</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_DATA_FIELD__INITIALIZATION_VALUE_COMPATIBLE_TYPES = 7;
+
+    /**
      * The feature id for the '<em><b>Type</b></em>' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_DATA_FIELD__TYPE = 6;
+    int INTERMEDIATE_DATA_FIELD__TYPE = 8;
 
     /**
      * The feature id for the '<em><b>Original Type</b></em>' containment reference.
@@ -1502,7 +1529,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_DATA_FIELD__ORIGINAL_TYPE = 7;
+    int INTERMEDIATE_DATA_FIELD__ORIGINAL_TYPE = 9;
 
     /**
      * The feature id for the '<em><b>Aspects</b></em>' containment reference list.
@@ -1511,7 +1538,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_DATA_FIELD__ASPECTS = 8;
+    int INTERMEDIATE_DATA_FIELD__ASPECTS = 10;
 
     /**
      * The feature id for the '<em><b>Data Structure</b></em>' container reference.
@@ -1520,7 +1547,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_DATA_FIELD__DATA_STRUCTURE = 9;
+    int INTERMEDIATE_DATA_FIELD__DATA_STRUCTURE = 11;
 
     /**
      * The feature id for the '<em><b>List Type</b></em>' container reference.
@@ -1529,7 +1556,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_DATA_FIELD__LIST_TYPE = 10;
+    int INTERMEDIATE_DATA_FIELD__LIST_TYPE = 12;
 
     /**
      * The number of structural features of the '<em>Data Field</em>' class.
@@ -1538,7 +1565,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_DATA_FIELD_FEATURE_COUNT = 11;
+    int INTERMEDIATE_DATA_FIELD_FEATURE_COUNT = 13;
 
     /**
      * The operation id for the '<em>Get Effective Complex Type</em>' operation.
@@ -2363,15 +2390,26 @@ public interface IntermediatePackage extends EPackage {
     EAttribute getIntermediatePrimitiveType_Size();
 
     /**
-     * Returns the meta object for the container reference '{@link de.fhdo.lemma.data.intermediate.IntermediatePrimitiveType#getEnumerationField <em>Enumeration Field</em>}'.
+     * Returns the meta object for the container reference '{@link de.fhdo.lemma.data.intermediate.IntermediatePrimitiveType#getInitializedDataField <em>Initialized Data Field</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the container reference '<em>Enumeration Field</em>'.
-     * @see de.fhdo.lemma.data.intermediate.IntermediatePrimitiveType#getEnumerationField()
+     * @return the meta object for the container reference '<em>Initialized Data Field</em>'.
+     * @see de.fhdo.lemma.data.intermediate.IntermediatePrimitiveType#getInitializedDataField()
      * @see #getIntermediatePrimitiveType()
      * @generated
      */
-    EReference getIntermediatePrimitiveType_EnumerationField();
+    EReference getIntermediatePrimitiveType_InitializedDataField();
+
+    /**
+     * Returns the meta object for the container reference '{@link de.fhdo.lemma.data.intermediate.IntermediatePrimitiveType#getInitializedEnumerationField <em>Initialized Enumeration Field</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the container reference '<em>Initialized Enumeration Field</em>'.
+     * @see de.fhdo.lemma.data.intermediate.IntermediatePrimitiveType#getInitializedEnumerationField()
+     * @see #getIntermediatePrimitiveType()
+     * @generated
+     */
+    EReference getIntermediatePrimitiveType_InitializedEnumerationField();
 
     /**
      * Returns the meta object for class '{@link de.fhdo.lemma.data.intermediate.IntermediateComplexType <em>Complex Type</em>}'.
@@ -2881,6 +2919,28 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      */
     EAttribute getIntermediateDataField_FeatureNames();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.fhdo.lemma.data.intermediate.IntermediateDataField#getInitializationValue <em>Initialization Value</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Initialization Value</em>'.
+     * @see de.fhdo.lemma.data.intermediate.IntermediateDataField#getInitializationValue()
+     * @see #getIntermediateDataField()
+     * @generated
+     */
+    EAttribute getIntermediateDataField_InitializationValue();
+
+    /**
+     * Returns the meta object for the containment reference list '{@link de.fhdo.lemma.data.intermediate.IntermediateDataField#getInitializationValueCompatibleTypes <em>Initialization Value Compatible Types</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Initialization Value Compatible Types</em>'.
+     * @see de.fhdo.lemma.data.intermediate.IntermediateDataField#getInitializationValueCompatibleTypes()
+     * @see #getIntermediateDataField()
+     * @generated
+     */
+    EReference getIntermediateDataField_InitializationValueCompatibleTypes();
 
     /**
      * Returns the meta object for the containment reference '{@link de.fhdo.lemma.data.intermediate.IntermediateDataField#getType <em>Type</em>}'.
@@ -3551,12 +3611,20 @@ public interface IntermediatePackage extends EPackage {
         EAttribute INTERMEDIATE_PRIMITIVE_TYPE__SIZE = eINSTANCE.getIntermediatePrimitiveType_Size();
 
         /**
-         * The meta object literal for the '<em><b>Enumeration Field</b></em>' container reference feature.
+         * The meta object literal for the '<em><b>Initialized Data Field</b></em>' container reference feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference INTERMEDIATE_PRIMITIVE_TYPE__ENUMERATION_FIELD = eINSTANCE.getIntermediatePrimitiveType_EnumerationField();
+        EReference INTERMEDIATE_PRIMITIVE_TYPE__INITIALIZED_DATA_FIELD = eINSTANCE.getIntermediatePrimitiveType_InitializedDataField();
+
+        /**
+         * The meta object literal for the '<em><b>Initialized Enumeration Field</b></em>' container reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference INTERMEDIATE_PRIMITIVE_TYPE__INITIALIZED_ENUMERATION_FIELD = eINSTANCE.getIntermediatePrimitiveType_InitializedEnumerationField();
 
         /**
          * The meta object literal for the '{@link de.fhdo.lemma.data.intermediate.impl.IntermediateComplexTypeImpl <em>Complex Type</em>}' class.
@@ -3949,6 +4017,22 @@ public interface IntermediatePackage extends EPackage {
          * @generated
          */
         EAttribute INTERMEDIATE_DATA_FIELD__FEATURE_NAMES = eINSTANCE.getIntermediateDataField_FeatureNames();
+
+        /**
+         * The meta object literal for the '<em><b>Initialization Value</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute INTERMEDIATE_DATA_FIELD__INITIALIZATION_VALUE = eINSTANCE.getIntermediateDataField_InitializationValue();
+
+        /**
+         * The meta object literal for the '<em><b>Initialization Value Compatible Types</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference INTERMEDIATE_DATA_FIELD__INITIALIZATION_VALUE_COMPATIBLE_TYPES = eINSTANCE.getIntermediateDataField_InitializationValueCompatibleTypes();
 
         /**
          * The meta object literal for the '<em><b>Type</b></em>' containment reference feature.

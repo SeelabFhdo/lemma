@@ -82,6 +82,7 @@ DataField returns DataField:
         importedComplexType=ImportedComplexType
     )?
     name=ID
+    ('=' initializationValue=PrimitiveValue)?
     ('<' features+=DataFieldFeature (',' features+=DataFieldFeature)* '>')?
 ;
 

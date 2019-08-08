@@ -1433,8 +1433,18 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * @generated
      */
     @Override
+    public EReference getDataField_InitializationValue() {
+        return (EReference)dataFieldEClass.getEStructuralFeatures().get(6);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public EAttribute getDataField_Features() {
-        return (EAttribute)dataFieldEClass.getEStructuralFeatures().get(6);
+        return (EAttribute)dataFieldEClass.getEStructuralFeatures().get(7);
     }
 
     /**
@@ -1444,7 +1454,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      */
     @Override
     public EReference getDataField_DataStructure() {
-        return (EReference)dataFieldEClass.getEStructuralFeatures().get(7);
+        return (EReference)dataFieldEClass.getEStructuralFeatures().get(8);
     }
 
     /**
@@ -1454,7 +1464,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      */
     @Override
     public EReference getDataField_ListType() {
-        return (EReference)dataFieldEClass.getEStructuralFeatures().get(8);
+        return (EReference)dataFieldEClass.getEStructuralFeatures().get(9);
     }
 
     /**
@@ -2007,6 +2017,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
         createEReference(dataFieldEClass, DATA_FIELD__COMPLEX_TYPE);
         createEReference(dataFieldEClass, DATA_FIELD__IMPORTED_COMPLEX_TYPE);
         createEReference(dataFieldEClass, DATA_FIELD__PRIMITIVE_TYPE);
+        createEReference(dataFieldEClass, DATA_FIELD__INITIALIZATION_VALUE);
         createEAttribute(dataFieldEClass, DATA_FIELD__FEATURES);
         createEReference(dataFieldEClass, DATA_FIELD__DATA_STRUCTURE);
         createEReference(dataFieldEClass, DATA_FIELD__LIST_TYPE);
@@ -2281,6 +2292,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
         initEReference(getDataField_ComplexType(), this.getComplexType(), null, "complexType", null, 0, 1, DataField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getDataField_ImportedComplexType(), this.getImportedComplexType(), this.getImportedComplexType_DataField(), "importedComplexType", null, 0, 1, DataField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getDataField_PrimitiveType(), this.getPrimitiveType(), null, "primitiveType", null, 0, 1, DataField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getDataField_InitializationValue(), this.getPrimitiveValue(), null, "initializationValue", null, 0, 1, DataField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getDataField_Features(), this.getDataFieldFeature(), "features", null, 0, -1, DataField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getDataField_DataStructure(), this.getDataStructure(), this.getDataStructure_DataFields(), "dataStructure", null, 0, 1, DataField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getDataField_ListType(), this.getListType(), this.getListType_DataFields(), "listType", null, 0, 1, DataField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

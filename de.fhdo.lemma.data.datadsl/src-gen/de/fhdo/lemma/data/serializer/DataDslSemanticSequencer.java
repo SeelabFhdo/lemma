@@ -171,6 +171,7 @@ public class DataDslSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *         immutable?='immutable'? 
 	 *         (primitiveType=PrimitiveType | complexType=[ComplexType|QualifiedName] | importedComplexType=ImportedComplexType)? 
 	 *         name=ID 
+	 *         initializationValue=PrimitiveValue? 
 	 *         (features+=DataFieldFeature features+=DataFieldFeature*)?
 	 *     )
 	 */
@@ -237,7 +238,7 @@ public class DataDslSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *         name=ID 
 	 *         (features+=DataStructureFeature features+=DataStructureFeature*)? 
 	 *         super=[DataStructure|QualifiedName]? 
-	 *         ((dataFields+=DataField | operations+=DataOperation) dataFields+=DataField? (operations+=DataOperation? dataFields+=DataField?)*)?
+	 *         ((dataFields+=DataField | operations+=DataOperation) operations+=DataOperation? (dataFields+=DataField? operations+=DataOperation?)*)?
 	 *     )
 	 */
 	protected void sequence_DataStructure(ISerializationContext context, DataStructure semanticObject) {

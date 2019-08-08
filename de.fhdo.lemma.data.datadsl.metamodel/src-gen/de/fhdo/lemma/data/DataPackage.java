@@ -2127,13 +2127,22 @@ public interface DataPackage extends EPackage {
     int DATA_FIELD__PRIMITIVE_TYPE = 5;
 
     /**
+     * The feature id for the '<em><b>Initialization Value</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATA_FIELD__INITIALIZATION_VALUE = 6;
+
+    /**
      * The feature id for the '<em><b>Features</b></em>' attribute list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int DATA_FIELD__FEATURES = 6;
+    int DATA_FIELD__FEATURES = 7;
 
     /**
      * The feature id for the '<em><b>Data Structure</b></em>' container reference.
@@ -2142,7 +2151,7 @@ public interface DataPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int DATA_FIELD__DATA_STRUCTURE = 7;
+    int DATA_FIELD__DATA_STRUCTURE = 8;
 
     /**
      * The feature id for the '<em><b>List Type</b></em>' container reference.
@@ -2151,7 +2160,7 @@ public interface DataPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int DATA_FIELD__LIST_TYPE = 8;
+    int DATA_FIELD__LIST_TYPE = 9;
 
     /**
      * The number of structural features of the '<em>Field</em>' class.
@@ -2160,7 +2169,7 @@ public interface DataPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int DATA_FIELD_FEATURE_COUNT = 9;
+    int DATA_FIELD_FEATURE_COUNT = 10;
 
     /**
      * The operation id for the '<em>Get Effective Type</em>' operation.
@@ -3843,6 +3852,17 @@ public interface DataPackage extends EPackage {
     EReference getDataField_PrimitiveType();
 
     /**
+     * Returns the meta object for the containment reference '{@link de.fhdo.lemma.data.DataField#getInitializationValue <em>Initialization Value</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference '<em>Initialization Value</em>'.
+     * @see de.fhdo.lemma.data.DataField#getInitializationValue()
+     * @see #getDataField()
+     * @generated
+     */
+    EReference getDataField_InitializationValue();
+
+    /**
      * Returns the meta object for the attribute list '{@link de.fhdo.lemma.data.DataField#getFeatures <em>Features</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -5213,6 +5233,14 @@ public interface DataPackage extends EPackage {
          * @generated
          */
         EReference DATA_FIELD__PRIMITIVE_TYPE = eINSTANCE.getDataField_PrimitiveType();
+
+        /**
+         * The meta object literal for the '<em><b>Initialization Value</b></em>' containment reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference DATA_FIELD__INITIALIZATION_VALUE = eINSTANCE.getDataField_InitializationValue();
 
         /**
          * The meta object literal for the '<em><b>Features</b></em>' attribute list feature.

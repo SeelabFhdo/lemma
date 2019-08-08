@@ -23,6 +23,7 @@ import de.fhdo.lemma.data.ImportedComplexType;
 import de.fhdo.lemma.data.ListType;
 import de.fhdo.lemma.data.PrimitiveType;
 import de.fhdo.lemma.data.PrimitiveTypeConstants;
+import de.fhdo.lemma.data.PrimitiveValue;
 import de.fhdo.lemma.data.Type;
 import de.fhdo.lemma.data.Version;
 import de.fhdo.lemma.data.validation.AbstractDataDslValidator;
@@ -594,6 +595,38 @@ public class DataDslValidator extends AbstractDataDslValidator {
         DataPackage.Literals.DATA_FIELD__NAME);
       return;
     }
+    PrimitiveValue _initializationValue = dataField.getInitializationValue();
+    boolean _tripleNotEquals = (_initializationValue != null);
+    if (_tripleNotEquals) {
+      PrimitiveType _primitiveType = dataField.getPrimitiveType();
+      boolean _tripleEquals = (_primitiveType == null);
+      if (_tripleEquals) {
+        this.error("Only primitively typed data fields can be initialized", dataField, 
+          DataPackage.Literals.DATA_FIELD__NAME);
+        return;
+      } else {
+        DataStructure _dataStructure = dataField.getDataStructure();
+        boolean _tripleEquals_1 = (_dataStructure == null);
+        if (_tripleEquals_1) {
+          this.error("Only data fields within data structures can be initialized", dataField, 
+            DataPackage.Literals.DATA_FIELD__NAME);
+          return;
+        } else {
+          boolean _isOfType = dataField.getInitializationValue().isOfType(dataField.getPrimitiveType());
+          boolean _not = (!_isOfType);
+          if (_not) {
+            StringConcatenation _builder = new StringConcatenation();
+            _builder.append("Value is not of type ");
+            String _typeName = dataField.getPrimitiveType().getTypeName();
+            _builder.append(_typeName);
+            _builder.append(" ");
+            this.error(_builder.toString(), dataField, 
+              DataPackage.Literals.DATA_FIELD__INITIALIZATION_VALUE);
+            return;
+          }
+        }
+      }
+    }
     final Function<DataFieldFeature, DataFieldFeature> _function = (DataFieldFeature it) -> {
       return it;
     };
@@ -606,24 +639,24 @@ public class DataDslValidator extends AbstractDataDslValidator {
     final DataField equalSuperField = dataField.findEponymousSuperField();
     if (((equalSuperField == null) || equalSuperField.isHidden())) {
       Type _effectiveType = dataField.getEffectiveType();
-      boolean _tripleEquals = (_effectiveType == null);
-      if (_tripleEquals) {
+      boolean _tripleEquals_2 = (_effectiveType == null);
+      if (_tripleEquals_2) {
         this.error("Field must have a type", dataField, DataPackage.Literals.DATA_FIELD__NAME);
       }
     } else {
       String superQualifiedName = QualifiedName.create(equalSuperField.getQualifiedNameParts()).toString();
       Type _effectiveType_1 = dataField.getEffectiveType();
-      boolean _tripleNotEquals = (_effectiveType_1 != null);
-      if (_tripleNotEquals) {
-        StringConcatenation _builder = new StringConcatenation();
-        _builder.append("Field cannot redefine inherited field ");
-        _builder.append(superQualifiedName);
-        this.error(_builder.toString(), dataField, 
+      boolean _tripleNotEquals_1 = (_effectiveType_1 != null);
+      if (_tripleNotEquals_1) {
+        StringConcatenation _builder_1 = new StringConcatenation();
+        _builder_1.append("Field cannot redefine inherited field ");
+        _builder_1.append(superQualifiedName);
+        this.error(_builder_1.toString(), dataField, 
           DataPackage.Literals.DATA_FIELD__NAME);
       } else {
         boolean _isEmpty = dataField.getFeatures().isEmpty();
-        boolean _not = (!_isEmpty);
-        if (_not) {
+        boolean _not_1 = (!_isEmpty);
+        if (_not_1) {
           this.error("Feature assignment is not allowed for inherited fields", dataField, 
             DataPackage.Literals.DATA_FIELD__FEATURES);
         } else {

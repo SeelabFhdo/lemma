@@ -32,15 +32,37 @@ class HighlightingCalculator implements ISemanticHighlightingCalculator {
      */
     private def provideHighlightingForBooleanConstants(XtextResource resource,
         IHighlightedPositionAcceptor acceptor) {
-        resource.allContents.forEach[
-            val booleanInitializedEnumerationField = it instanceof EnumerationField &&
-                (it as EnumerationField).initializationValue?.booleanValue !== null
-            if (booleanInitializedEnumerationField) {
-                NodeModelUtils.findNodesForFeature(
-                    it,
-                    DataPackage::Literals.ENUMERATION_FIELD__INITIALIZATION_VALUE
-                ).forEach[
-                    acceptor.addPosition(offset, length, HighlightingConfiguration.KEYWORD_ID)
+        val booleanConcepts = newHashMap(
+            DataField -> #[
+                [
+                    val value = (it as DataField).initializationValue
+                    value !== null && value.booleanValue !== null
+                ]
+                -> DataPackage::Literals.DATA_FIELD__INITIALIZATION_VALUE
+            ],
+
+            EnumerationField -> #[
+                [
+                    val value = (it as EnumerationField).initializationValue
+                    value !== null && value.booleanValue !== null
+                ]
+                -> DataPackage::Literals.ENUMERATION_FIELD__INITIALIZATION_VALUE
+            ]
+        )
+
+        resource.allContents.forEach[eObject |
+            val matchingBooleanConcept = booleanConcepts.keySet.findFirst[it.isInstance(eObject)]
+            if (matchingBooleanConcept !== null) {
+                val primitiveValueGetters = booleanConcepts.get(matchingBooleanConcept)
+                primitiveValueGetters.forEach[
+                    val isBooleanValue = it.key
+                    val feature = it.value
+
+                    if (isBooleanValue.apply(eObject))
+                        NodeModelUtils.findNodesForFeature(eObject, feature).forEach[
+                            acceptor.addPosition(offset, length,
+                                HighlightingConfiguration.KEYWORD_ID)
+                        ]
                 ]
             }
         ]

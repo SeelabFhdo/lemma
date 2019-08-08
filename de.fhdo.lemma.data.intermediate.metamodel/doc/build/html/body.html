@@ -546,7 +546,15 @@ the following sizes:</p>
 
 <dl class="attribute">
 <dt>
-<code class="descname">IntermediateEnumerationField enumerationField</code></dt>
+<code class="descname">IntermediateDataField initializedDataField</code></dt>
+<dd><p>Link to the
+<a class="reference internal" href="#link-intermediatedatafield"><span class="std std-ref">IntermediateDataField</span></a> whose
+initialization value is compatible with this primitive type.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">IntermediateEnumerationField initializedEnumerationField</code></dt>
 <dd><p>Link to the
 <a class="reference internal" href="#link-intermediateenumerationfield"><span class="std std-ref">IntermediateEnumerationField</span></a>
 whose initialization value is compatible with this primitive type.</p>
@@ -1020,6 +1028,34 @@ violated.</p>
 </div>
 </dd></dl>
 
+<dl class="attribute">
+<dt>
+<code class="descname">String initializationValue</code></dt>
+<dd><p>If the field has an initialization value, it is encoded in this String
+attribute. It is guaranteed that the initialization value is compatible
+to all <a class="reference internal" href="#link-intermediateprimitivetype"><span class="std std-ref">primitive types</span></a> in the
+<code class="docutils literal notranslate"><span class="pre">initializationValueCompatibleTypes</span></code> list.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Only data fields defined in <a class="reference internal" href="#link-intermediatedatastructure"><span class="std std-ref">data structures</span></a> can be initialized.</p>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">IntermediatePrimitiveType[*]</code></dt>
+<dt id="initializationValueCompatibleTypes">
+<code class="descname">initializationValueCompatibleTypes</code><a class="headerlink" href="#initializationValueCompatibleTypes" title="Permalink to this definition">¶</a></dt>
+<dd><p>If the data field exhibits an initialization value, this list comprises
+all <a class="reference internal" href="#link-intermediateprimitivetype"><span class="std std-ref">primitive types</span></a>, with which
+the initialization value is compatible.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">There is no determined order in which the primitive types appear in
+the list.</p>
+</div>
+</dd></dl>
+
 <span class="target" id="link-intermediatedatafield-type"></span><dl class="attribute">
 <dt>
 <code class="descname">IntermediateType[1] type</code></dt>
@@ -1158,8 +1194,8 @@ to all <a class="reference internal" href="#link-intermediateprimitivetype"><spa
 <dl class="attribute">
 <dt>
 <code class="descname">IntermediatePrimitiveType[*]</code></dt>
-<dt id="initializationValueCompatibleTypes">
-<code class="descname">initializationValueCompatibleTypes</code><a class="headerlink" href="#initializationValueCompatibleTypes" title="Permalink to this definition">¶</a></dt>
+<dt>
+<code class="descname">initializationValueCompatibleTypes</code></dt>
 <dd><p>If the enumeration field exhibits an initialization value, this list
 comprises all <a class="reference internal" href="#link-intermediateprimitivetype"><span class="std std-ref">primitive types</span></a>,
 with which the initialization value is compatible.</p>

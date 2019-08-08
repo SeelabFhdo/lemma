@@ -2944,16 +2944,41 @@ ruleDataField returns [EObject current=null]
 			)
 		)
 		(
-			otherlv_6='<'
+			otherlv_6='='
 			{
-				newLeafNode(otherlv_6, grammarAccess.getDataFieldAccess().getLessThanSignKeyword_4_0());
+				newLeafNode(otherlv_6, grammarAccess.getDataFieldAccess().getEqualsSignKeyword_4_0());
 			}
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getDataFieldAccess().getFeaturesDataFieldFeatureEnumRuleCall_4_1_0());
+						newCompositeNode(grammarAccess.getDataFieldAccess().getInitializationValuePrimitiveValueParserRuleCall_4_1_0());
 					}
-					lv_features_7_0=ruleDataFieldFeature
+					lv_initializationValue_7_0=rulePrimitiveValue
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getDataFieldRule());
+						}
+						set(
+							$current,
+							"initializationValue",
+							lv_initializationValue_7_0,
+							"de.fhdo.lemma.data.DataDsl.PrimitiveValue");
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)
+		)?
+		(
+			otherlv_8='<'
+			{
+				newLeafNode(otherlv_8, grammarAccess.getDataFieldAccess().getLessThanSignKeyword_5_0());
+			}
+			(
+				(
+					{
+						newCompositeNode(grammarAccess.getDataFieldAccess().getFeaturesDataFieldFeatureEnumRuleCall_5_1_0());
+					}
+					lv_features_9_0=ruleDataFieldFeature
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getDataFieldRule());
@@ -2961,23 +2986,23 @@ ruleDataField returns [EObject current=null]
 						add(
 							$current,
 							"features",
-							lv_features_7_0,
+							lv_features_9_0,
 							"de.fhdo.lemma.data.DataDsl.DataFieldFeature");
 						afterParserOrEnumRuleCall();
 					}
 				)
 			)
 			(
-				otherlv_8=','
+				otherlv_10=','
 				{
-					newLeafNode(otherlv_8, grammarAccess.getDataFieldAccess().getCommaKeyword_4_2_0());
+					newLeafNode(otherlv_10, grammarAccess.getDataFieldAccess().getCommaKeyword_5_2_0());
 				}
 				(
 					(
 						{
-							newCompositeNode(grammarAccess.getDataFieldAccess().getFeaturesDataFieldFeatureEnumRuleCall_4_2_1_0());
+							newCompositeNode(grammarAccess.getDataFieldAccess().getFeaturesDataFieldFeatureEnumRuleCall_5_2_1_0());
 						}
-						lv_features_9_0=ruleDataFieldFeature
+						lv_features_11_0=ruleDataFieldFeature
 						{
 							if ($current==null) {
 								$current = createModelElementForParent(grammarAccess.getDataFieldRule());
@@ -2985,16 +3010,16 @@ ruleDataField returns [EObject current=null]
 							add(
 								$current,
 								"features",
-								lv_features_9_0,
+								lv_features_11_0,
 								"de.fhdo.lemma.data.DataDsl.DataFieldFeature");
 							afterParserOrEnumRuleCall();
 						}
 					)
 				)
 			)*
-			otherlv_10='>'
+			otherlv_12='>'
 			{
-				newLeafNode(otherlv_10, grammarAccess.getDataFieldAccess().getGreaterThanSignKeyword_4_3());
+				newLeafNode(otherlv_12, grammarAccess.getDataFieldAccess().getGreaterThanSignKeyword_5_3());
 			}
 		)?
 	)

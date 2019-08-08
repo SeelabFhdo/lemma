@@ -26,6 +26,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.fhdo.lemma.data.DataField#getComplexType <em>Complex Type</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.DataField#getImportedComplexType <em>Imported Complex Type</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.DataField#getPrimitiveType <em>Primitive Type</em>}</li>
+ *   <li>{@link de.fhdo.lemma.data.DataField#getInitializationValue <em>Initialization Value</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.DataField#getFeatures <em>Features</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.DataField#getDataStructure <em>Data Structure</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.DataField#getListType <em>List Type</em>}</li>
@@ -58,6 +59,13 @@ public interface DataField extends EObject {
      *     (C5) A feature may only be assigned once.
      *          Ensured by: DSL validator.
      *     (C6) Inherited fields cannot be immutable.
+     *          Ensured by: DSL validator.     *
+     *     (C7) Only data fields within structures are initializable.
+     *          Ensured by: DSL validator.
+     *     (C8) Only primitive data fields are initializable. Together with C3 this automatically
+     *          ensures that inherited fields cannot be initialized (which is desired behavior).
+     *          Ensured by: DSL validator.
+     *     (C9) Initialization value must be compatible to primitive type.
      *          Ensured by: DSL validator.
      * <!-- end-model-doc -->
      * @return the value of the '<em>Name</em>' attribute.
@@ -209,6 +217,32 @@ public interface DataField extends EObject {
      * @generated
      */
     void setPrimitiveType(PrimitiveType value);
+
+    /**
+     * Returns the value of the '<em><b>Initialization Value</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Initialization Value</em>' containment reference isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Initialization Value</em>' containment reference.
+     * @see #setInitializationValue(PrimitiveValue)
+     * @see de.fhdo.lemma.data.DataPackage#getDataField_InitializationValue()
+     * @model containment="true"
+     * @generated
+     */
+    PrimitiveValue getInitializationValue();
+
+    /**
+     * Sets the value of the '{@link de.fhdo.lemma.data.DataField#getInitializationValue <em>Initialization Value</em>}' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Initialization Value</em>' containment reference.
+     * @see #getInitializationValue()
+     * @generated
+     */
+    void setInitializationValue(PrimitiveValue value);
 
     /**
      * Returns the value of the '<em><b>Features</b></em>' attribute list.

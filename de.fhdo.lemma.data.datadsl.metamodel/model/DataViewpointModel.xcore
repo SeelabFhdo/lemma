@@ -1020,6 +1020,13 @@ class DataField {
      *     (C5) A feature may only be assigned once.
      *          Ensured by: DSL validator.
      *     (C6) Inherited fields cannot be immutable.
+     *          Ensured by: DSL validator.     *
+     *     (C7) Only data fields within structures are initializable.
+     *          Ensured by: DSL validator.
+     *     (C8) Only primitive data fields are initializable. Together with C3 this automatically
+     *          ensures that inherited fields cannot be initialized (which is desired behavior).
+     *          Ensured by: DSL validator.
+     *     (C9) Initialization value must be compatible to primitive type.
      *          Ensured by: DSL validator.
      */
 
@@ -1030,6 +1037,7 @@ class DataField {
 
     contains ImportedComplexType[0..1] importedComplexType opposite dataField
     contains PrimitiveType[0..1] primitiveType
+    contains PrimitiveValue[0..1] initializationValue
     DataFieldFeature[] features
 
     container DataStructure dataStructure opposite dataFields

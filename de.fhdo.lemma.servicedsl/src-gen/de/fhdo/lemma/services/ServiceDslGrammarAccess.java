@@ -3084,7 +3084,8 @@ public class ServiceDslGrammarAccess extends AbstractGrammarElementFinder {
 	//	^hidden?='hide'?
 	//	immutable?='immutable'? (primitiveType=PrimitiveType | complexType=[ComplexType|QualifiedName] |
 	//	importedComplexType=ImportedComplexType)?
-	//	name=ID ('<' features+=DataFieldFeature (',' features+=DataFieldFeature)* '>')?;
+	//	name=ID ('=' initializationValue=PrimitiveValue)? ('<' features+=DataFieldFeature (',' features+=DataFieldFeature)*
+	//	'>')?;
 	public DataDslGrammarAccess.DataFieldElements getDataFieldAccess() {
 		return gaDataDsl.getDataFieldAccess();
 	}

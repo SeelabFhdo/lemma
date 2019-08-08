@@ -355,13 +355,21 @@ rule IntermediateDataField(sourceField : Data!DataField,
                 OclUndefined
             endif
             endif;
+
+        compatibleTypes : Map(String, Integer) =
+            if (not sourceField.initializationValue.oclIsUndefined()) then
+                sourceField.initializationValue.inferCompatibleTypes()
+            else
+                Map{}
+            endif;
     }
     to
         t : Intermediate!IntermediateDataField(
             name <- sourceField.name,
             hidden <- sourceField.hidden,
             immutable <- sourceField.immutable,
-            inherited <- inherited
+            inherited <- inherited,
+            initializationValueCompatibleTypes <- Sequence{}
         )
     do {
         if (not inherited) {
@@ -386,6 +394,29 @@ rule IntermediateDataField(sourceField : Data!DataField,
         } else if (targetContainer.oclIsTypeOf(Intermediate!IntermediateListType)) {
             t.listType <- targetContainer;
             t.listType.dataFields->append(t);
+        }
+
+        if (not sourceField.initializationValue.oclIsUndefined())
+            t.initializationValue <- sourceField.initializationValue.valueAsString();
+
+        for (typeName in compatibleTypes.getKeys()) {
+            if (compatibleTypes.get(typeName) > -1)
+                t.initializationValueCompatibleTypes <-
+                    t.initializationValueCompatibleTypes->append(
+                        thisModule.IntermediatePrimitiveType(
+                            typeName,
+                            compatibleTypes.get(typeName)
+                        )
+                    );
+            else
+                t.initializationValueCompatibleTypes <-
+                    t.initializationValueCompatibleTypes->append(
+                        thisModule.IntermediatePrimitiveType(typeName, OclUndefined)
+                    );
+        }
+
+        for (compatibleType in t.initializationValueCompatibleTypes) {
+            compatibleType.initializedDataField <- t;
         }
 
         t;
@@ -501,7 +532,7 @@ rule IntermediateEnumerationField(sourceField : Data!EnumerationField,
         }
 
         for (compatibleType in t.initializationValueCompatibleTypes) {
-            compatibleType.enumerationField <- t;
+            compatibleType.initializedEnumerationField <- t;
         }
 
         t;

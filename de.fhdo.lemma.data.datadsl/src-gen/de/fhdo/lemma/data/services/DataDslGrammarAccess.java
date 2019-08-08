@@ -493,25 +493,30 @@ public class DataDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cNameAssignment_3 = (Assignment)cGroup.eContents().get(3);
 		private final RuleCall cNameIDTerminalRuleCall_3_0 = (RuleCall)cNameAssignment_3.eContents().get(0);
 		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
-		private final Keyword cLessThanSignKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
-		private final Assignment cFeaturesAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
-		private final RuleCall cFeaturesDataFieldFeatureEnumRuleCall_4_1_0 = (RuleCall)cFeaturesAssignment_4_1.eContents().get(0);
-		private final Group cGroup_4_2 = (Group)cGroup_4.eContents().get(2);
-		private final Keyword cCommaKeyword_4_2_0 = (Keyword)cGroup_4_2.eContents().get(0);
-		private final Assignment cFeaturesAssignment_4_2_1 = (Assignment)cGroup_4_2.eContents().get(1);
-		private final RuleCall cFeaturesDataFieldFeatureEnumRuleCall_4_2_1_0 = (RuleCall)cFeaturesAssignment_4_2_1.eContents().get(0);
-		private final Keyword cGreaterThanSignKeyword_4_3 = (Keyword)cGroup_4.eContents().get(3);
+		private final Keyword cEqualsSignKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
+		private final Assignment cInitializationValueAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
+		private final RuleCall cInitializationValuePrimitiveValueParserRuleCall_4_1_0 = (RuleCall)cInitializationValueAssignment_4_1.eContents().get(0);
+		private final Group cGroup_5 = (Group)cGroup.eContents().get(5);
+		private final Keyword cLessThanSignKeyword_5_0 = (Keyword)cGroup_5.eContents().get(0);
+		private final Assignment cFeaturesAssignment_5_1 = (Assignment)cGroup_5.eContents().get(1);
+		private final RuleCall cFeaturesDataFieldFeatureEnumRuleCall_5_1_0 = (RuleCall)cFeaturesAssignment_5_1.eContents().get(0);
+		private final Group cGroup_5_2 = (Group)cGroup_5.eContents().get(2);
+		private final Keyword cCommaKeyword_5_2_0 = (Keyword)cGroup_5_2.eContents().get(0);
+		private final Assignment cFeaturesAssignment_5_2_1 = (Assignment)cGroup_5_2.eContents().get(1);
+		private final RuleCall cFeaturesDataFieldFeatureEnumRuleCall_5_2_1_0 = (RuleCall)cFeaturesAssignment_5_2_1.eContents().get(0);
+		private final Keyword cGreaterThanSignKeyword_5_3 = (Keyword)cGroup_5.eContents().get(3);
 		
 		//DataField:
 		//	^hidden?='hide'?
 		//	immutable?='immutable'? (primitiveType=PrimitiveType | complexType=[ComplexType|QualifiedName] |
 		//	importedComplexType=ImportedComplexType)?
-		//	name=ID ('<' features+=DataFieldFeature (',' features+=DataFieldFeature)* '>')?;
+		//	name=ID ('=' initializationValue=PrimitiveValue)? ('<' features+=DataFieldFeature (',' features+=DataFieldFeature)*
+		//	'>')?;
 		@Override public ParserRule getRule() { return rule; }
 		
 		//^hidden?='hide'? immutable?='immutable'? (primitiveType=PrimitiveType | complexType=[ComplexType|QualifiedName] |
-		//importedComplexType=ImportedComplexType)? name=ID ('<' features+=DataFieldFeature (',' features+=DataFieldFeature)*
-		//'>')?
+		//importedComplexType=ImportedComplexType)? name=ID ('=' initializationValue=PrimitiveValue)? ('<'
+		//features+=DataFieldFeature (',' features+=DataFieldFeature)* '>')?
 		public Group getGroup() { return cGroup; }
 		
 		//^hidden?='hide'?
@@ -556,32 +561,44 @@ public class DataDslGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getNameIDTerminalRuleCall_3_0() { return cNameIDTerminalRuleCall_3_0; }
 		
-		//('<' features+=DataFieldFeature (',' features+=DataFieldFeature)* '>')?
+		//('=' initializationValue=PrimitiveValue)?
 		public Group getGroup_4() { return cGroup_4; }
 		
+		//'='
+		public Keyword getEqualsSignKeyword_4_0() { return cEqualsSignKeyword_4_0; }
+		
+		//initializationValue=PrimitiveValue
+		public Assignment getInitializationValueAssignment_4_1() { return cInitializationValueAssignment_4_1; }
+		
+		//PrimitiveValue
+		public RuleCall getInitializationValuePrimitiveValueParserRuleCall_4_1_0() { return cInitializationValuePrimitiveValueParserRuleCall_4_1_0; }
+		
+		//('<' features+=DataFieldFeature (',' features+=DataFieldFeature)* '>')?
+		public Group getGroup_5() { return cGroup_5; }
+		
 		//'<'
-		public Keyword getLessThanSignKeyword_4_0() { return cLessThanSignKeyword_4_0; }
+		public Keyword getLessThanSignKeyword_5_0() { return cLessThanSignKeyword_5_0; }
 		
 		//features+=DataFieldFeature
-		public Assignment getFeaturesAssignment_4_1() { return cFeaturesAssignment_4_1; }
+		public Assignment getFeaturesAssignment_5_1() { return cFeaturesAssignment_5_1; }
 		
 		//DataFieldFeature
-		public RuleCall getFeaturesDataFieldFeatureEnumRuleCall_4_1_0() { return cFeaturesDataFieldFeatureEnumRuleCall_4_1_0; }
+		public RuleCall getFeaturesDataFieldFeatureEnumRuleCall_5_1_0() { return cFeaturesDataFieldFeatureEnumRuleCall_5_1_0; }
 		
 		//(',' features+=DataFieldFeature)*
-		public Group getGroup_4_2() { return cGroup_4_2; }
+		public Group getGroup_5_2() { return cGroup_5_2; }
 		
 		//','
-		public Keyword getCommaKeyword_4_2_0() { return cCommaKeyword_4_2_0; }
+		public Keyword getCommaKeyword_5_2_0() { return cCommaKeyword_5_2_0; }
 		
 		//features+=DataFieldFeature
-		public Assignment getFeaturesAssignment_4_2_1() { return cFeaturesAssignment_4_2_1; }
+		public Assignment getFeaturesAssignment_5_2_1() { return cFeaturesAssignment_5_2_1; }
 		
 		//DataFieldFeature
-		public RuleCall getFeaturesDataFieldFeatureEnumRuleCall_4_2_1_0() { return cFeaturesDataFieldFeatureEnumRuleCall_4_2_1_0; }
+		public RuleCall getFeaturesDataFieldFeatureEnumRuleCall_5_2_1_0() { return cFeaturesDataFieldFeatureEnumRuleCall_5_2_1_0; }
 		
 		//'>'
-		public Keyword getGreaterThanSignKeyword_4_3() { return cGreaterThanSignKeyword_4_3; }
+		public Keyword getGreaterThanSignKeyword_5_3() { return cGreaterThanSignKeyword_5_3; }
 	}
 	public class EnumerationElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.fhdo.lemma.data.DataDsl.Enumeration");
@@ -1524,7 +1541,8 @@ public class DataDslGrammarAccess extends AbstractGrammarElementFinder {
 	//	^hidden?='hide'?
 	//	immutable?='immutable'? (primitiveType=PrimitiveType | complexType=[ComplexType|QualifiedName] |
 	//	importedComplexType=ImportedComplexType)?
-	//	name=ID ('<' features+=DataFieldFeature (',' features+=DataFieldFeature)* '>')?;
+	//	name=ID ('=' initializationValue=PrimitiveValue)? ('<' features+=DataFieldFeature (',' features+=DataFieldFeature)*
+	//	'>')?;
 	public DataFieldElements getDataFieldAccess() {
 		return pDataField;
 	}

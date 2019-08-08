@@ -580,8 +580,18 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * @generated
      */
     @Override
-    public EReference getIntermediatePrimitiveType_EnumerationField() {
+    public EReference getIntermediatePrimitiveType_InitializedDataField() {
         return (EReference)intermediatePrimitiveTypeEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getIntermediatePrimitiveType_InitializedEnumerationField() {
+        return (EReference)intermediatePrimitiveTypeEClass.getEStructuralFeatures().get(2);
     }
 
     /**
@@ -1060,8 +1070,8 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * @generated
      */
     @Override
-    public EReference getIntermediateDataField_Type() {
-        return (EReference)intermediateDataFieldEClass.getEStructuralFeatures().get(6);
+    public EAttribute getIntermediateDataField_InitializationValue() {
+        return (EAttribute)intermediateDataFieldEClass.getEStructuralFeatures().get(6);
     }
 
     /**
@@ -1070,7 +1080,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * @generated
      */
     @Override
-    public EReference getIntermediateDataField_OriginalType() {
+    public EReference getIntermediateDataField_InitializationValueCompatibleTypes() {
         return (EReference)intermediateDataFieldEClass.getEStructuralFeatures().get(7);
     }
 
@@ -1080,7 +1090,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * @generated
      */
     @Override
-    public EReference getIntermediateDataField_Aspects() {
+    public EReference getIntermediateDataField_Type() {
         return (EReference)intermediateDataFieldEClass.getEStructuralFeatures().get(8);
     }
 
@@ -1090,7 +1100,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * @generated
      */
     @Override
-    public EReference getIntermediateDataField_DataStructure() {
+    public EReference getIntermediateDataField_OriginalType() {
         return (EReference)intermediateDataFieldEClass.getEStructuralFeatures().get(9);
     }
 
@@ -1100,8 +1110,28 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * @generated
      */
     @Override
-    public EReference getIntermediateDataField_ListType() {
+    public EReference getIntermediateDataField_Aspects() {
         return (EReference)intermediateDataFieldEClass.getEStructuralFeatures().get(10);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getIntermediateDataField_DataStructure() {
+        return (EReference)intermediateDataFieldEClass.getEStructuralFeatures().get(11);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getIntermediateDataField_ListType() {
+        return (EReference)intermediateDataFieldEClass.getEStructuralFeatures().get(12);
     }
 
     /**
@@ -1470,7 +1500,8 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
 
         intermediatePrimitiveTypeEClass = createEClass(INTERMEDIATE_PRIMITIVE_TYPE);
         createEAttribute(intermediatePrimitiveTypeEClass, INTERMEDIATE_PRIMITIVE_TYPE__SIZE);
-        createEReference(intermediatePrimitiveTypeEClass, INTERMEDIATE_PRIMITIVE_TYPE__ENUMERATION_FIELD);
+        createEReference(intermediatePrimitiveTypeEClass, INTERMEDIATE_PRIMITIVE_TYPE__INITIALIZED_DATA_FIELD);
+        createEReference(intermediatePrimitiveTypeEClass, INTERMEDIATE_PRIMITIVE_TYPE__INITIALIZED_ENUMERATION_FIELD);
 
         intermediateComplexTypeEClass = createEClass(INTERMEDIATE_COMPLEX_TYPE);
         createEAttribute(intermediateComplexTypeEClass, INTERMEDIATE_COMPLEX_TYPE__QUALIFIED_NAME);
@@ -1526,6 +1557,8 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
         createEAttribute(intermediateDataFieldEClass, INTERMEDIATE_DATA_FIELD__IMMUTABLE);
         createEAttribute(intermediateDataFieldEClass, INTERMEDIATE_DATA_FIELD__INHERITED);
         createEAttribute(intermediateDataFieldEClass, INTERMEDIATE_DATA_FIELD__FEATURE_NAMES);
+        createEAttribute(intermediateDataFieldEClass, INTERMEDIATE_DATA_FIELD__INITIALIZATION_VALUE);
+        createEReference(intermediateDataFieldEClass, INTERMEDIATE_DATA_FIELD__INITIALIZATION_VALUE_COMPATIBLE_TYPES);
         createEReference(intermediateDataFieldEClass, INTERMEDIATE_DATA_FIELD__TYPE);
         createEReference(intermediateDataFieldEClass, INTERMEDIATE_DATA_FIELD__ORIGINAL_TYPE);
         createEReference(intermediateDataFieldEClass, INTERMEDIATE_DATA_FIELD__ASPECTS);
@@ -1647,7 +1680,8 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
 
         initEClass(intermediatePrimitiveTypeEClass, IntermediatePrimitiveType.class, "IntermediatePrimitiveType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getIntermediatePrimitiveType_Size(), theEcorePackage.getEIntegerObject(), "size", null, 0, 1, IntermediatePrimitiveType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getIntermediatePrimitiveType_EnumerationField(), this.getIntermediateEnumerationField(), this.getIntermediateEnumerationField_InitializationValueCompatibleTypes(), "enumerationField", null, 0, 1, IntermediatePrimitiveType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getIntermediatePrimitiveType_InitializedDataField(), this.getIntermediateDataField(), this.getIntermediateDataField_InitializationValueCompatibleTypes(), "initializedDataField", null, 0, 1, IntermediatePrimitiveType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getIntermediatePrimitiveType_InitializedEnumerationField(), this.getIntermediateEnumerationField(), this.getIntermediateEnumerationField_InitializationValueCompatibleTypes(), "initializedEnumerationField", null, 0, 1, IntermediatePrimitiveType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(intermediateComplexTypeEClass, IntermediateComplexType.class, "IntermediateComplexType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getIntermediateComplexType_QualifiedName(), theEcorePackage.getEString(), "qualifiedName", null, 0, 1, IntermediateComplexType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1703,6 +1737,8 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
         initEAttribute(getIntermediateDataField_Immutable(), theEcorePackage.getEBoolean(), "immutable", null, 0, 1, IntermediateDataField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getIntermediateDataField_Inherited(), theEcorePackage.getEBoolean(), "inherited", null, 0, 1, IntermediateDataField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getIntermediateDataField_FeatureNames(), theEcorePackage.getEString(), "featureNames", null, 0, -1, IntermediateDataField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getIntermediateDataField_InitializationValue(), theEcorePackage.getEString(), "initializationValue", null, 0, 1, IntermediateDataField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getIntermediateDataField_InitializationValueCompatibleTypes(), this.getIntermediatePrimitiveType(), this.getIntermediatePrimitiveType_InitializedDataField(), "initializationValueCompatibleTypes", null, 0, -1, IntermediateDataField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getIntermediateDataField_Type(), this.getIntermediateType(), this.getIntermediateType_DataField(), "type", null, 0, 1, IntermediateDataField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getIntermediateDataField_OriginalType(), this.getIntermediateType(), null, "originalType", null, 0, 1, IntermediateDataField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getIntermediateDataField_Aspects(), this.getIntermediateImportedAspect(), this.getIntermediateImportedAspect_DataField(), "aspects", null, 0, -1, IntermediateDataField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1718,7 +1754,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
         initEAttribute(getIntermediateEnumerationField_Name(), theEcorePackage.getEString(), "name", null, 0, 1, IntermediateEnumerationField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getIntermediateEnumerationField_QualifiedName(), theEcorePackage.getEString(), "qualifiedName", null, 0, 1, IntermediateEnumerationField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getIntermediateEnumerationField_InitializationValue(), theEcorePackage.getEString(), "initializationValue", null, 0, 1, IntermediateEnumerationField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getIntermediateEnumerationField_InitializationValueCompatibleTypes(), this.getIntermediatePrimitiveType(), this.getIntermediatePrimitiveType_EnumerationField(), "initializationValueCompatibleTypes", null, 0, -1, IntermediateEnumerationField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getIntermediateEnumerationField_InitializationValueCompatibleTypes(), this.getIntermediatePrimitiveType(), this.getIntermediatePrimitiveType_InitializedEnumerationField(), "initializationValueCompatibleTypes", null, 0, -1, IntermediateEnumerationField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getIntermediateEnumerationField_Enumeration(), this.getIntermediateEnumeration(), this.getIntermediateEnumeration_Fields(), "enumeration", null, 0, 1, IntermediateEnumerationField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(intermediateImportedAspectEClass, IntermediateImportedAspect.class, "IntermediateImportedAspect", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);

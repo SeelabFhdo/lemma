@@ -12,6 +12,7 @@ import de.fhdo.lemma.data.DataStructure;
 import de.fhdo.lemma.data.ImportedComplexType;
 import de.fhdo.lemma.data.ListType;
 import de.fhdo.lemma.data.PrimitiveType;
+import de.fhdo.lemma.data.PrimitiveValue;
 import de.fhdo.lemma.data.Type;
 
 import java.lang.reflect.InvocationTargetException;
@@ -54,6 +55,7 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
  *   <li>{@link de.fhdo.lemma.data.impl.DataFieldImpl#getComplexType <em>Complex Type</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.impl.DataFieldImpl#getImportedComplexType <em>Imported Complex Type</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.impl.DataFieldImpl#getPrimitiveType <em>Primitive Type</em>}</li>
+ *   <li>{@link de.fhdo.lemma.data.impl.DataFieldImpl#getInitializationValue <em>Initialization Value</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.impl.DataFieldImpl#getFeatures <em>Features</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.impl.DataFieldImpl#getDataStructure <em>Data Structure</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.impl.DataFieldImpl#getListType <em>List Type</em>}</li>
@@ -151,6 +153,16 @@ public class DataFieldImpl extends MinimalEObjectImpl.Container implements DataF
      * @ordered
      */
     protected PrimitiveType primitiveType;
+
+    /**
+     * The cached value of the '{@link #getInitializationValue() <em>Initialization Value</em>}' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getInitializationValue()
+     * @generated
+     * @ordered
+     */
+    protected PrimitiveValue initializationValue;
 
     /**
      * The cached value of the '{@link #getFeatures() <em>Features</em>}' attribute list.
@@ -378,6 +390,51 @@ public class DataFieldImpl extends MinimalEObjectImpl.Container implements DataF
         }
         else if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.DATA_FIELD__PRIMITIVE_TYPE, newPrimitiveType, newPrimitiveType));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public PrimitiveValue getInitializationValue() {
+        return initializationValue;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public NotificationChain basicSetInitializationValue(PrimitiveValue newInitializationValue, NotificationChain msgs) {
+        PrimitiveValue oldInitializationValue = initializationValue;
+        initializationValue = newInitializationValue;
+        if (eNotificationRequired()) {
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, DataPackage.DATA_FIELD__INITIALIZATION_VALUE, oldInitializationValue, newInitializationValue);
+            if (msgs == null) msgs = notification; else msgs.add(notification);
+        }
+        return msgs;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void setInitializationValue(PrimitiveValue newInitializationValue) {
+        if (newInitializationValue != initializationValue) {
+            NotificationChain msgs = null;
+            if (initializationValue != null)
+                msgs = ((InternalEObject)initializationValue).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - DataPackage.DATA_FIELD__INITIALIZATION_VALUE, null, msgs);
+            if (newInitializationValue != null)
+                msgs = ((InternalEObject)newInitializationValue).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - DataPackage.DATA_FIELD__INITIALIZATION_VALUE, null, msgs);
+            msgs = basicSetInitializationValue(newInitializationValue, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.DATA_FIELD__INITIALIZATION_VALUE, newInitializationValue, newInitializationValue));
     }
 
     /**
@@ -674,6 +731,8 @@ public class DataFieldImpl extends MinimalEObjectImpl.Container implements DataF
                 return basicSetImportedComplexType(null, msgs);
             case DataPackage.DATA_FIELD__PRIMITIVE_TYPE:
                 return basicSetPrimitiveType(null, msgs);
+            case DataPackage.DATA_FIELD__INITIALIZATION_VALUE:
+                return basicSetInitializationValue(null, msgs);
             case DataPackage.DATA_FIELD__DATA_STRUCTURE:
                 return basicSetDataStructure(null, msgs);
             case DataPackage.DATA_FIELD__LIST_TYPE:
@@ -719,6 +778,8 @@ public class DataFieldImpl extends MinimalEObjectImpl.Container implements DataF
                 return getImportedComplexType();
             case DataPackage.DATA_FIELD__PRIMITIVE_TYPE:
                 return getPrimitiveType();
+            case DataPackage.DATA_FIELD__INITIALIZATION_VALUE:
+                return getInitializationValue();
             case DataPackage.DATA_FIELD__FEATURES:
                 return getFeatures();
             case DataPackage.DATA_FIELD__DATA_STRUCTURE:
@@ -757,6 +818,9 @@ public class DataFieldImpl extends MinimalEObjectImpl.Container implements DataF
                 return;
             case DataPackage.DATA_FIELD__PRIMITIVE_TYPE:
                 setPrimitiveType((PrimitiveType)newValue);
+                return;
+            case DataPackage.DATA_FIELD__INITIALIZATION_VALUE:
+                setInitializationValue((PrimitiveValue)newValue);
                 return;
             case DataPackage.DATA_FIELD__FEATURES:
                 getFeatures().clear();
@@ -798,6 +862,9 @@ public class DataFieldImpl extends MinimalEObjectImpl.Container implements DataF
             case DataPackage.DATA_FIELD__PRIMITIVE_TYPE:
                 setPrimitiveType((PrimitiveType)null);
                 return;
+            case DataPackage.DATA_FIELD__INITIALIZATION_VALUE:
+                setInitializationValue((PrimitiveValue)null);
+                return;
             case DataPackage.DATA_FIELD__FEATURES:
                 getFeatures().clear();
                 return;
@@ -831,6 +898,8 @@ public class DataFieldImpl extends MinimalEObjectImpl.Container implements DataF
                 return importedComplexType != null;
             case DataPackage.DATA_FIELD__PRIMITIVE_TYPE:
                 return primitiveType != null;
+            case DataPackage.DATA_FIELD__INITIALIZATION_VALUE:
+                return initializationValue != null;
             case DataPackage.DATA_FIELD__FEATURES:
                 return features != null && !features.isEmpty();
             case DataPackage.DATA_FIELD__DATA_STRUCTURE:

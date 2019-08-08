@@ -113,7 +113,7 @@ public interface IntermediateEnumerationField extends EObject {
     /**
      * Returns the value of the '<em><b>Initialization Value Compatible Types</b></em>' containment reference list.
      * The list contents are of type {@link de.fhdo.lemma.data.intermediate.IntermediatePrimitiveType}.
-     * It is bidirectional and its opposite is '{@link de.fhdo.lemma.data.intermediate.IntermediatePrimitiveType#getEnumerationField <em>Enumeration Field</em>}'.
+     * It is bidirectional and its opposite is '{@link de.fhdo.lemma.data.intermediate.IntermediatePrimitiveType#getInitializedEnumerationField <em>Initialized Enumeration Field</em>}'.
      * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Initialization Value Compatible Types</em>' containment reference list isn't clear,
@@ -122,8 +122,8 @@ public interface IntermediateEnumerationField extends EObject {
      * <!-- end-user-doc -->
      * @return the value of the '<em>Initialization Value Compatible Types</em>' containment reference list.
      * @see de.fhdo.lemma.data.intermediate.IntermediatePackage#getIntermediateEnumerationField_InitializationValueCompatibleTypes()
-     * @see de.fhdo.lemma.data.intermediate.IntermediatePrimitiveType#getEnumerationField
-     * @model opposite="enumerationField" containment="true"
+     * @see de.fhdo.lemma.data.intermediate.IntermediatePrimitiveType#getInitializedEnumerationField
+     * @model opposite="initializedEnumerationField" containment="true"
      * @generated
      */
     EList<IntermediatePrimitiveType> getInitializationValueCompatibleTypes();

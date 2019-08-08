@@ -231,7 +231,7 @@ class TechnologyDslValidator extends AbstractTechnologyDslValidator {
 
         if (specificDefaultPrimitivesBasics.empty) {
             error("Technology must define at least one default primitive type for each built-in " +
-                  "primitive type", technology, TechnologyPackage::Literals.TECHNOLOGY__NAME)
+                "primitive type", technology, TechnologyPackage::Literals.TECHNOLOGY__NAME)
             return
         }
 

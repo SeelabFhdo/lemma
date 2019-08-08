@@ -26,6 +26,8 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateDataField#isImmutable <em>Immutable</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateDataField#isInherited <em>Inherited</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateDataField#getFeatureNames <em>Feature Names</em>}</li>
+ *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateDataField#getInitializationValue <em>Initialization Value</em>}</li>
+ *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateDataField#getInitializationValueCompatibleTypes <em>Initialization Value Compatible Types</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateDataField#getType <em>Type</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateDataField#getOriginalType <em>Original Type</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateDataField#getAspects <em>Aspects</em>}</li>
@@ -183,6 +185,50 @@ public interface IntermediateDataField extends EObject {
      * @generated
      */
     EList<String> getFeatureNames();
+
+    /**
+     * Returns the value of the '<em><b>Initialization Value</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Initialization Value</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Initialization Value</em>' attribute.
+     * @see #setInitializationValue(String)
+     * @see de.fhdo.lemma.data.intermediate.IntermediatePackage#getIntermediateDataField_InitializationValue()
+     * @model unique="false"
+     * @generated
+     */
+    String getInitializationValue();
+
+    /**
+     * Sets the value of the '{@link de.fhdo.lemma.data.intermediate.IntermediateDataField#getInitializationValue <em>Initialization Value</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Initialization Value</em>' attribute.
+     * @see #getInitializationValue()
+     * @generated
+     */
+    void setInitializationValue(String value);
+
+    /**
+     * Returns the value of the '<em><b>Initialization Value Compatible Types</b></em>' containment reference list.
+     * The list contents are of type {@link de.fhdo.lemma.data.intermediate.IntermediatePrimitiveType}.
+     * It is bidirectional and its opposite is '{@link de.fhdo.lemma.data.intermediate.IntermediatePrimitiveType#getInitializedDataField <em>Initialized Data Field</em>}'.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Initialization Value Compatible Types</em>' containment reference list isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Initialization Value Compatible Types</em>' containment reference list.
+     * @see de.fhdo.lemma.data.intermediate.IntermediatePackage#getIntermediateDataField_InitializationValueCompatibleTypes()
+     * @see de.fhdo.lemma.data.intermediate.IntermediatePrimitiveType#getInitializedDataField
+     * @model opposite="initializedDataField" containment="true"
+     * @generated
+     */
+    EList<IntermediatePrimitiveType> getInitializationValueCompatibleTypes();
 
     /**
      * Returns the value of the '<em><b>Type</b></em>' containment reference.

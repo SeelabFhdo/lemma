@@ -18,7 +18,8 @@ package de.fhdo.lemma.data.intermediate;
  * </p>
  * <ul>
  *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediatePrimitiveType#getSize <em>Size</em>}</li>
- *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediatePrimitiveType#getEnumerationField <em>Enumeration Field</em>}</li>
+ *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediatePrimitiveType#getInitializedDataField <em>Initialized Data Field</em>}</li>
+ *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediatePrimitiveType#getInitializedEnumerationField <em>Initialized Enumeration Field</em>}</li>
  * </ul>
  *
  * @see de.fhdo.lemma.data.intermediate.IntermediatePackage#getIntermediatePrimitiveType()
@@ -53,31 +54,59 @@ public interface IntermediatePrimitiveType extends IntermediateType {
     void setSize(Integer value);
 
     /**
-     * Returns the value of the '<em><b>Enumeration Field</b></em>' container reference.
-     * It is bidirectional and its opposite is '{@link de.fhdo.lemma.data.intermediate.IntermediateEnumerationField#getInitializationValueCompatibleTypes <em>Initialization Value Compatible Types</em>}'.
+     * Returns the value of the '<em><b>Initialized Data Field</b></em>' container reference.
+     * It is bidirectional and its opposite is '{@link de.fhdo.lemma.data.intermediate.IntermediateDataField#getInitializationValueCompatibleTypes <em>Initialization Value Compatible Types</em>}'.
      * <!-- begin-user-doc -->
      * <p>
-     * If the meaning of the '<em>Enumeration Field</em>' container reference isn't clear,
+     * If the meaning of the '<em>Initialized Data Field</em>' container reference isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Enumeration Field</em>' container reference.
-     * @see #setEnumerationField(IntermediateEnumerationField)
-     * @see de.fhdo.lemma.data.intermediate.IntermediatePackage#getIntermediatePrimitiveType_EnumerationField()
+     * @return the value of the '<em>Initialized Data Field</em>' container reference.
+     * @see #setInitializedDataField(IntermediateDataField)
+     * @see de.fhdo.lemma.data.intermediate.IntermediatePackage#getIntermediatePrimitiveType_InitializedDataField()
+     * @see de.fhdo.lemma.data.intermediate.IntermediateDataField#getInitializationValueCompatibleTypes
+     * @model opposite="initializationValueCompatibleTypes" transient="false"
+     * @generated
+     */
+    IntermediateDataField getInitializedDataField();
+
+    /**
+     * Sets the value of the '{@link de.fhdo.lemma.data.intermediate.IntermediatePrimitiveType#getInitializedDataField <em>Initialized Data Field</em>}' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Initialized Data Field</em>' container reference.
+     * @see #getInitializedDataField()
+     * @generated
+     */
+    void setInitializedDataField(IntermediateDataField value);
+
+    /**
+     * Returns the value of the '<em><b>Initialized Enumeration Field</b></em>' container reference.
+     * It is bidirectional and its opposite is '{@link de.fhdo.lemma.data.intermediate.IntermediateEnumerationField#getInitializationValueCompatibleTypes <em>Initialization Value Compatible Types</em>}'.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Initialized Enumeration Field</em>' container reference isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Initialized Enumeration Field</em>' container reference.
+     * @see #setInitializedEnumerationField(IntermediateEnumerationField)
+     * @see de.fhdo.lemma.data.intermediate.IntermediatePackage#getIntermediatePrimitiveType_InitializedEnumerationField()
      * @see de.fhdo.lemma.data.intermediate.IntermediateEnumerationField#getInitializationValueCompatibleTypes
      * @model opposite="initializationValueCompatibleTypes" transient="false"
      * @generated
      */
-    IntermediateEnumerationField getEnumerationField();
+    IntermediateEnumerationField getInitializedEnumerationField();
 
     /**
-     * Sets the value of the '{@link de.fhdo.lemma.data.intermediate.IntermediatePrimitiveType#getEnumerationField <em>Enumeration Field</em>}' container reference.
+     * Sets the value of the '{@link de.fhdo.lemma.data.intermediate.IntermediatePrimitiveType#getInitializedEnumerationField <em>Initialized Enumeration Field</em>}' container reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Enumeration Field</em>' container reference.
-     * @see #getEnumerationField()
+     * @param value the new value of the '<em>Initialized Enumeration Field</em>' container reference.
+     * @see #getInitializedEnumerationField()
      * @generated
      */
-    void setEnumerationField(IntermediateEnumerationField value);
+    void setInitializedEnumerationField(IntermediateEnumerationField value);
 
 } // IntermediatePrimitiveType

@@ -478,8 +478,28 @@ class DataDslValidator extends AbstractDataDslValidator {
         if (dataField.effectiveType === null && !dataField.hidden) {
             error("Field must have a type or be hidden", dataField,
                     DataPackage::Literals.DATA_FIELD__NAME)
-
             return
+        }
+
+        /* Check data field initialization */
+        if (dataField.initializationValue !== null) {
+            // Only primitive data fields are initializable
+            if (dataField.primitiveType === null) {
+                error("Only primitively typed data fields can be initialized", dataField,
+                    DataPackage::Literals.DATA_FIELD__NAME)
+                    return
+
+            // Only data fields within data structures are initializable
+            } else if (dataField.dataStructure === null) {
+                error("Only data fields within data structures can be initialized", dataField,
+                    DataPackage::Literals.DATA_FIELD__NAME)
+                return
+
+            } else if (!dataField.initializationValue.isOfType(dataField.primitiveType)) {
+                error('''Value is not of type «dataField.primitiveType.typeName» ''', dataField,
+                    DataPackage::Literals.DATA_FIELD__INITIALIZATION_VALUE)
+                return
+            }
         }
 
         /* A feature may only be assigned once to a data field */
@@ -487,7 +507,6 @@ class DataDslValidator extends AbstractDataDslValidator {
         if (duplicateFeatureIndex > -1) {
             error("Duplicate feature", dataField,
                 DataPackage::Literals.DATA_FIELD__FEATURES, duplicateFeatureIndex)
-
             return
         }
 

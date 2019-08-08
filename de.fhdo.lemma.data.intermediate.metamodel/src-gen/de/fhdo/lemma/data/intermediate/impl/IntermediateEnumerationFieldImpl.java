@@ -208,7 +208,7 @@ public class IntermediateEnumerationFieldImpl extends MinimalEObjectImpl.Contain
     @Override
     public EList<IntermediatePrimitiveType> getInitializationValueCompatibleTypes() {
         if (initializationValueCompatibleTypes == null) {
-            initializationValueCompatibleTypes = new EObjectContainmentWithInverseEList<IntermediatePrimitiveType>(IntermediatePrimitiveType.class, this, IntermediatePackage.INTERMEDIATE_ENUMERATION_FIELD__INITIALIZATION_VALUE_COMPATIBLE_TYPES, IntermediatePackage.INTERMEDIATE_PRIMITIVE_TYPE__ENUMERATION_FIELD);
+            initializationValueCompatibleTypes = new EObjectContainmentWithInverseEList<IntermediatePrimitiveType>(IntermediatePrimitiveType.class, this, IntermediatePackage.INTERMEDIATE_ENUMERATION_FIELD__INITIALIZATION_VALUE_COMPATIBLE_TYPES, IntermediatePackage.INTERMEDIATE_PRIMITIVE_TYPE__INITIALIZED_ENUMERATION_FIELD);
         }
         return initializationValueCompatibleTypes;
     }

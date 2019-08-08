@@ -426,7 +426,13 @@ value-providing enumeration.
         string      null (object type)
         =========   ==================
 
-    .. py:attribute:: IntermediateEnumerationField enumerationField
+    .. py:attribute:: IntermediateDataField initializedDataField
+
+        Link to the 
+        :ref:`IntermediateDataField <link__IntermediateDataField>` whose
+        initialization value is compatible with this primitive type.
+
+    .. py:attribute:: IntermediateEnumerationField initializedEnumerationField
 
         Link to the 
         :ref:`IntermediateEnumerationField <link__IntermediateEnumerationField>`
@@ -830,6 +836,30 @@ Custom, domain-specific Types
             a warning in case they are violated. Code generators are free to
             also check the constraints and deny code generation in case they are
             violated.
+
+    .. py:attribute:: String initializationValue
+
+        If the field has an initialization value, it is encoded in this String 
+        attribute. It is guaranteed that the initialization value is compatible
+        to all :ref:`primitive types <link__IntermediatePrimitiveType>` in the
+        ``initializationValueCompatibleTypes`` list.
+
+        .. NOTE::
+
+            Only data fields defined in :ref:`data structures
+            <link__IntermediateDataStructure>` can be initialized.
+    
+    .. py:attribute:: IntermediatePrimitiveType[*]
+        initializationValueCompatibleTypes
+
+        If the data field exhibits an initialization value, this list comprises
+        all :ref:`primitive types <link__IntermediatePrimitiveType>`, with which
+        the initialization value is compatible.
+
+        .. NOTE::
+
+            There is no determined order in which the primitive types appear in 
+            the list.
 
     .. _link__IntermediateDataField_type:
 

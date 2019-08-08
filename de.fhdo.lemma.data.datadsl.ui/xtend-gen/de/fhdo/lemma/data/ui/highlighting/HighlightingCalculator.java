@@ -7,9 +7,12 @@ import de.fhdo.lemma.data.DataStructure;
 import de.fhdo.lemma.data.EnumerationField;
 import de.fhdo.lemma.data.PrimitiveValue;
 import de.fhdo.lemma.data.ui.highlighting.HighlightingConfiguration;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.function.Consumer;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.xtext.ide.editor.syntaxcoloring.IHighlightedPositionAcceptor;
 import org.eclipse.xtext.ide.editor.syntaxcoloring.ISemanticHighlightingCalculator;
 import org.eclipse.xtext.nodemodel.INode;
@@ -17,7 +20,10 @@ import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
 import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.util.CancelIndicator;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
+import org.eclipse.xtext.xbase.lib.Functions.Function1;
+import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.IteratorExtensions;
+import org.eclipse.xtext.xbase.lib.Pair;
 import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
 
 /**
@@ -40,29 +46,50 @@ public class HighlightingCalculator implements ISemanticHighlightingCalculator {
    * Provide highlighting for boolean values
    */
   private void provideHighlightingForBooleanConstants(final XtextResource resource, final IHighlightedPositionAcceptor acceptor) {
-    final Procedure1<EObject> _function = (EObject it) -> {
-      boolean _and = false;
-      if (!(it instanceof EnumerationField)) {
-        _and = false;
-      } else {
-        PrimitiveValue _initializationValue = ((EnumerationField) it).getInitializationValue();
-        Boolean _booleanValue = null;
-        if (_initializationValue!=null) {
-          _booleanValue=_initializationValue.getBooleanValue();
-        }
-        boolean _tripleNotEquals = (_booleanValue != null);
-        _and = _tripleNotEquals;
+    final Function1<EObject, Boolean> _function = (EObject it) -> {
+      boolean _xblockexpression = false;
+      {
+        final PrimitiveValue value = ((DataField) it).getInitializationValue();
+        _xblockexpression = ((value != null) && (value.getBooleanValue() != null));
       }
-      final boolean booleanInitializedEnumerationField = _and;
-      if (booleanInitializedEnumerationField) {
-        final Consumer<INode> _function_1 = (INode it_1) -> {
-          acceptor.addPosition(it_1.getOffset(), it_1.getLength(), HighlightingConfiguration.KEYWORD_ID);
+      return Boolean.valueOf(_xblockexpression);
+    };
+    Pair<Function1<EObject, Boolean>, EReference> _mappedTo = Pair.<Function1<EObject, Boolean>, EReference>of(_function, DataPackage.Literals.DATA_FIELD__INITIALIZATION_VALUE);
+    Pair<Class<DataField>, List<Pair<Function1<EObject, Boolean>, EReference>>> _mappedTo_1 = Pair.<Class<DataField>, List<Pair<Function1<EObject, Boolean>, EReference>>>of(DataField.class, Collections.<Pair<Function1<EObject, Boolean>, EReference>>unmodifiableList(CollectionLiterals.<Pair<Function1<EObject, Boolean>, EReference>>newArrayList(_mappedTo)));
+    final Function1<EObject, Boolean> _function_1 = (EObject it) -> {
+      boolean _xblockexpression = false;
+      {
+        final PrimitiveValue value = ((EnumerationField) it).getInitializationValue();
+        _xblockexpression = ((value != null) && (value.getBooleanValue() != null));
+      }
+      return Boolean.valueOf(_xblockexpression);
+    };
+    Pair<Function1<EObject, Boolean>, EReference> _mappedTo_2 = Pair.<Function1<EObject, Boolean>, EReference>of(_function_1, DataPackage.Literals.ENUMERATION_FIELD__INITIALIZATION_VALUE);
+    Pair<Class<EnumerationField>, List<Pair<Function1<EObject, Boolean>, EReference>>> _mappedTo_3 = Pair.<Class<EnumerationField>, List<Pair<Function1<EObject, Boolean>, EReference>>>of(EnumerationField.class, Collections.<Pair<Function1<EObject, Boolean>, EReference>>unmodifiableList(CollectionLiterals.<Pair<Function1<EObject, Boolean>, EReference>>newArrayList(_mappedTo_2)));
+    final HashMap<Class<? extends EObject>, List<Pair<Function1<EObject, Boolean>, EReference>>> booleanConcepts = CollectionLiterals.<Class<? extends EObject>, List<Pair<Function1<EObject, Boolean>, EReference>>>newHashMap(_mappedTo_1, _mappedTo_3);
+    final Procedure1<EObject> _function_2 = (EObject eObject) -> {
+      final Function1<Class<? extends EObject>, Boolean> _function_3 = (Class<? extends EObject> it) -> {
+        return Boolean.valueOf(it.isInstance(eObject));
+      };
+      final Class<? extends EObject> matchingBooleanConcept = IterableExtensions.<Class<? extends EObject>>findFirst(booleanConcepts.keySet(), _function_3);
+      if ((matchingBooleanConcept != null)) {
+        final List<Pair<Function1<EObject, Boolean>, EReference>> primitiveValueGetters = booleanConcepts.get(matchingBooleanConcept);
+        final Consumer<Pair<Function1<EObject, Boolean>, EReference>> _function_4 = (Pair<Function1<EObject, Boolean>, EReference> it) -> {
+          final Function1<EObject, Boolean> isBooleanValue = it.getKey();
+          final EReference feature = it.getValue();
+          Boolean _apply = isBooleanValue.apply(eObject);
+          if ((_apply).booleanValue()) {
+            final Consumer<INode> _function_5 = (INode it_1) -> {
+              acceptor.addPosition(it_1.getOffset(), it_1.getLength(), 
+                HighlightingConfiguration.KEYWORD_ID);
+            };
+            NodeModelUtils.findNodesForFeature(eObject, feature).forEach(_function_5);
+          }
         };
-        NodeModelUtils.findNodesForFeature(it, 
-          DataPackage.Literals.ENUMERATION_FIELD__INITIALIZATION_VALUE).forEach(_function_1);
+        primitiveValueGetters.forEach(_function_4);
       }
     };
-    IteratorExtensions.<EObject>forEach(resource.getAllContents(), _function);
+    IteratorExtensions.<EObject>forEach(resource.getAllContents(), _function_2);
   }
   
   /**

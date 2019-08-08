@@ -8,6 +8,7 @@ import de.fhdo.lemma.data.intermediate.IntermediateDataStructure;
 import de.fhdo.lemma.data.intermediate.IntermediateImportedAspect;
 import de.fhdo.lemma.data.intermediate.IntermediateListType;
 import de.fhdo.lemma.data.intermediate.IntermediatePackage;
+import de.fhdo.lemma.data.intermediate.IntermediatePrimitiveType;
 import de.fhdo.lemma.data.intermediate.IntermediateType;
 
 import java.lang.reflect.InvocationTargetException;
@@ -44,6 +45,8 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.fhdo.lemma.data.intermediate.impl.IntermediateDataFieldImpl#isImmutable <em>Immutable</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.impl.IntermediateDataFieldImpl#isInherited <em>Inherited</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.impl.IntermediateDataFieldImpl#getFeatureNames <em>Feature Names</em>}</li>
+ *   <li>{@link de.fhdo.lemma.data.intermediate.impl.IntermediateDataFieldImpl#getInitializationValue <em>Initialization Value</em>}</li>
+ *   <li>{@link de.fhdo.lemma.data.intermediate.impl.IntermediateDataFieldImpl#getInitializationValueCompatibleTypes <em>Initialization Value Compatible Types</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.impl.IntermediateDataFieldImpl#getType <em>Type</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.impl.IntermediateDataFieldImpl#getOriginalType <em>Original Type</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.impl.IntermediateDataFieldImpl#getAspects <em>Aspects</em>}</li>
@@ -163,6 +166,36 @@ public class IntermediateDataFieldImpl extends MinimalEObjectImpl.Container impl
      * @ordered
      */
     protected EList<String> featureNames;
+
+    /**
+     * The default value of the '{@link #getInitializationValue() <em>Initialization Value</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getInitializationValue()
+     * @generated
+     * @ordered
+     */
+    protected static final String INITIALIZATION_VALUE_EDEFAULT = null;
+
+    /**
+     * The cached value of the '{@link #getInitializationValue() <em>Initialization Value</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getInitializationValue()
+     * @generated
+     * @ordered
+     */
+    protected String initializationValue = INITIALIZATION_VALUE_EDEFAULT;
+
+    /**
+     * The cached value of the '{@link #getInitializationValueCompatibleTypes() <em>Initialization Value Compatible Types</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getInitializationValueCompatibleTypes()
+     * @generated
+     * @ordered
+     */
+    protected EList<IntermediatePrimitiveType> initializationValueCompatibleTypes;
 
     /**
      * The cached value of the '{@link #getType() <em>Type</em>}' containment reference.
@@ -339,6 +372,42 @@ public class IntermediateDataFieldImpl extends MinimalEObjectImpl.Container impl
             featureNames = new EDataTypeEList<String>(String.class, this, IntermediatePackage.INTERMEDIATE_DATA_FIELD__FEATURE_NAMES);
         }
         return featureNames;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public String getInitializationValue() {
+        return initializationValue;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void setInitializationValue(String newInitializationValue) {
+        String oldInitializationValue = initializationValue;
+        initializationValue = newInitializationValue;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, IntermediatePackage.INTERMEDIATE_DATA_FIELD__INITIALIZATION_VALUE, oldInitializationValue, initializationValue));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EList<IntermediatePrimitiveType> getInitializationValueCompatibleTypes() {
+        if (initializationValueCompatibleTypes == null) {
+            initializationValueCompatibleTypes = new EObjectContainmentWithInverseEList<IntermediatePrimitiveType>(IntermediatePrimitiveType.class, this, IntermediatePackage.INTERMEDIATE_DATA_FIELD__INITIALIZATION_VALUE_COMPATIBLE_TYPES, IntermediatePackage.INTERMEDIATE_PRIMITIVE_TYPE__INITIALIZED_DATA_FIELD);
+        }
+        return initializationValueCompatibleTypes;
     }
 
     /**
@@ -587,6 +656,8 @@ public class IntermediateDataFieldImpl extends MinimalEObjectImpl.Container impl
     @Override
     public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
+            case IntermediatePackage.INTERMEDIATE_DATA_FIELD__INITIALIZATION_VALUE_COMPATIBLE_TYPES:
+                return ((InternalEList<InternalEObject>)(InternalEList<?>)getInitializationValueCompatibleTypes()).basicAdd(otherEnd, msgs);
             case IntermediatePackage.INTERMEDIATE_DATA_FIELD__TYPE:
                 if (type != null)
                     msgs = ((InternalEObject)type).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - IntermediatePackage.INTERMEDIATE_DATA_FIELD__TYPE, null, msgs);
@@ -613,6 +684,8 @@ public class IntermediateDataFieldImpl extends MinimalEObjectImpl.Container impl
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
+            case IntermediatePackage.INTERMEDIATE_DATA_FIELD__INITIALIZATION_VALUE_COMPATIBLE_TYPES:
+                return ((InternalEList<?>)getInitializationValueCompatibleTypes()).basicRemove(otherEnd, msgs);
             case IntermediatePackage.INTERMEDIATE_DATA_FIELD__TYPE:
                 return basicSetType(null, msgs);
             case IntermediatePackage.INTERMEDIATE_DATA_FIELD__ORIGINAL_TYPE:
@@ -663,6 +736,10 @@ public class IntermediateDataFieldImpl extends MinimalEObjectImpl.Container impl
                 return isInherited();
             case IntermediatePackage.INTERMEDIATE_DATA_FIELD__FEATURE_NAMES:
                 return getFeatureNames();
+            case IntermediatePackage.INTERMEDIATE_DATA_FIELD__INITIALIZATION_VALUE:
+                return getInitializationValue();
+            case IntermediatePackage.INTERMEDIATE_DATA_FIELD__INITIALIZATION_VALUE_COMPATIBLE_TYPES:
+                return getInitializationValueCompatibleTypes();
             case IntermediatePackage.INTERMEDIATE_DATA_FIELD__TYPE:
                 return getType();
             case IntermediatePackage.INTERMEDIATE_DATA_FIELD__ORIGINAL_TYPE:
@@ -706,6 +783,13 @@ public class IntermediateDataFieldImpl extends MinimalEObjectImpl.Container impl
             case IntermediatePackage.INTERMEDIATE_DATA_FIELD__FEATURE_NAMES:
                 getFeatureNames().clear();
                 getFeatureNames().addAll((Collection<? extends String>)newValue);
+                return;
+            case IntermediatePackage.INTERMEDIATE_DATA_FIELD__INITIALIZATION_VALUE:
+                setInitializationValue((String)newValue);
+                return;
+            case IntermediatePackage.INTERMEDIATE_DATA_FIELD__INITIALIZATION_VALUE_COMPATIBLE_TYPES:
+                getInitializationValueCompatibleTypes().clear();
+                getInitializationValueCompatibleTypes().addAll((Collection<? extends IntermediatePrimitiveType>)newValue);
                 return;
             case IntermediatePackage.INTERMEDIATE_DATA_FIELD__TYPE:
                 setType((IntermediateType)newValue);
@@ -753,6 +837,12 @@ public class IntermediateDataFieldImpl extends MinimalEObjectImpl.Container impl
             case IntermediatePackage.INTERMEDIATE_DATA_FIELD__FEATURE_NAMES:
                 getFeatureNames().clear();
                 return;
+            case IntermediatePackage.INTERMEDIATE_DATA_FIELD__INITIALIZATION_VALUE:
+                setInitializationValue(INITIALIZATION_VALUE_EDEFAULT);
+                return;
+            case IntermediatePackage.INTERMEDIATE_DATA_FIELD__INITIALIZATION_VALUE_COMPATIBLE_TYPES:
+                getInitializationValueCompatibleTypes().clear();
+                return;
             case IntermediatePackage.INTERMEDIATE_DATA_FIELD__TYPE:
                 setType((IntermediateType)null);
                 return;
@@ -792,6 +882,10 @@ public class IntermediateDataFieldImpl extends MinimalEObjectImpl.Container impl
                 return inherited != INHERITED_EDEFAULT;
             case IntermediatePackage.INTERMEDIATE_DATA_FIELD__FEATURE_NAMES:
                 return featureNames != null && !featureNames.isEmpty();
+            case IntermediatePackage.INTERMEDIATE_DATA_FIELD__INITIALIZATION_VALUE:
+                return INITIALIZATION_VALUE_EDEFAULT == null ? initializationValue != null : !INITIALIZATION_VALUE_EDEFAULT.equals(initializationValue);
+            case IntermediatePackage.INTERMEDIATE_DATA_FIELD__INITIALIZATION_VALUE_COMPATIBLE_TYPES:
+                return initializationValueCompatibleTypes != null && !initializationValueCompatibleTypes.isEmpty();
             case IntermediatePackage.INTERMEDIATE_DATA_FIELD__TYPE:
                 return type != null;
             case IntermediatePackage.INTERMEDIATE_DATA_FIELD__ORIGINAL_TYPE:
@@ -842,6 +936,8 @@ public class IntermediateDataFieldImpl extends MinimalEObjectImpl.Container impl
         result.append(inherited);
         result.append(", featureNames: ");
         result.append(featureNames);
+        result.append(", initializationValue: ");
+        result.append(initializationValue);
         result.append(')');
         return result.toString();
     }
