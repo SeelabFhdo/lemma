@@ -495,13 +495,13 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
    * Build scope that comprises annotated technologies of a technology-annotatable concept
    * instance or its technology-annotatable container
    */
-  private IScope getScopeForAnnotatedTechnologies(final EObject mapping) {
+  private IScope getScopeForAnnotatedTechnologies(final EObject element) {
     EObject _elvis = null;
-    ComplexTypeMapping _containerOfType = EcoreUtil2.<ComplexTypeMapping>getContainerOfType(mapping, ComplexTypeMapping.class);
+    ComplexTypeMapping _containerOfType = EcoreUtil2.<ComplexTypeMapping>getContainerOfType(element, ComplexTypeMapping.class);
     if (_containerOfType != null) {
       _elvis = _containerOfType;
     } else {
-      MicroserviceMapping _containerOfType_1 = EcoreUtil2.<MicroserviceMapping>getContainerOfType(mapping, MicroserviceMapping.class);
+      MicroserviceMapping _containerOfType_1 = EcoreUtil2.<MicroserviceMapping>getContainerOfType(element, MicroserviceMapping.class);
       _elvis = _containerOfType_1;
     }
     final EObject parentMapping = _elvis;
@@ -1106,14 +1106,13 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
   }
   
   /**
-   * Build scope for imported service aspects used to annotate microservices, interfaces,
-   * operations, parameters, or data fields
+   * Build scope for imported service aspects used to annotate several modeled elements
    */
   private IScope getScope(final TechnologySpecificImportedServiceAspect importedAspect, final EReference reference) {
     boolean _matched = false;
     if (Objects.equal(reference, MappingPackage.Literals.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__TECHNOLOGY)) {
       _matched=true;
-      return this.getScopeForTechnologies(importedAspect);
+      return this.getScopeForAnnotatedTechnologies(importedAspect);
     }
     if (!_matched) {
       if (Objects.equal(reference, MappingPackage.Literals.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__ASPECT)) {
@@ -1148,21 +1147,6 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
    */
   private IScope getScopeForAspectProperty(final TechnologySpecificImportedServiceAspect importedAspect) {
     return Scopes.scopeFor(importedAspect.getAspect().getProperties());
-  }
-  
-  /**
-   * Build scope for technologies of imported service aspect
-   */
-  private IScope getScopeForTechnologies(final TechnologySpecificImportedServiceAspect aspect) {
-    IScope _xifexpression = null;
-    ComplexTypeMapping _typeMapping = aspect.getTypeMapping();
-    boolean _tripleNotEquals = (_typeMapping != null);
-    if (_tripleNotEquals) {
-      _xifexpression = this.getScopeForAnnotatedTechnologies(aspect);
-    } else {
-      _xifexpression = this.getScopeForAnnotatedTechnologies(EcoreUtil2.<MicroserviceMapping>getContainerOfType(aspect, MicroserviceMapping.class));
-    }
-    return _xifexpression;
   }
   
   /**

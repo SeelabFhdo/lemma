@@ -380,9 +380,9 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
      * Build scope that comprises annotated technologies of a technology-annotatable concept
      * instance or its technology-annotatable container
      */
-    private def getScopeForAnnotatedTechnologies(EObject mapping) {
-        val EObject parentMapping = EcoreUtil2.getContainerOfType(mapping, ComplexTypeMapping) ?:
-            EcoreUtil2.getContainerOfType(mapping, MicroserviceMapping)
+    private def getScopeForAnnotatedTechnologies(EObject element) {
+        val EObject parentMapping = EcoreUtil2.getContainerOfType(element, ComplexTypeMapping) ?:
+            EcoreUtil2.getContainerOfType(element, MicroserviceMapping)
 
         if (parentMapping === null)
             return null
@@ -784,15 +784,14 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     }
 
     /**
-     * Build scope for imported service aspects used to annotate microservices, interfaces,
-     * operations, parameters, or data fields
+     * Build scope for imported service aspects used to annotate several modeled elements
      */
     private def getScope(TechnologySpecificImportedServiceAspect importedAspect,
         EReference reference) {
         switch (reference) {
             /* Technologies */
             case MappingPackage::Literals.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__TECHNOLOGY:
-                return importedAspect.getScopeForTechnologies()
+                return importedAspect.getScopeForAnnotatedTechnologies()
 
             /* Aspects */
             case MappingPackage.Literals.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__ASPECT:
@@ -825,17 +824,6 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
      */
     private def getScopeForAspectProperty(TechnologySpecificImportedServiceAspect importedAspect) {
         return Scopes::scopeFor(importedAspect.aspect.properties)
-    }
-
-    /**
-     * Build scope for technologies of imported service aspect
-     */
-    private def getScopeForTechnologies(TechnologySpecificImportedServiceAspect aspect) {
-        return if (aspect.typeMapping !== null)
-                aspect.getScopeForAnnotatedTechnologies()
-            else
-                EcoreUtil2.getContainerOfType(aspect, MicroserviceMapping)
-                    .getScopeForAnnotatedTechnologies()
     }
 
     /**
