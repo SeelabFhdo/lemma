@@ -18,6 +18,7 @@ import de.fhdo.lemma.utils.LemmaUtils
 import de.fhdo.lemma.data.DataOperation
 import de.fhdo.lemma.data.DataField
 import de.fhdo.lemma.data.ListType
+import de.fhdo.lemma.data.ComplexType
 
 /**
  * Scope provider for data models.
@@ -110,10 +111,30 @@ class DataDslScopeProvider extends AbstractDataDslScopeProvider {
             qualifiedNameParts,
             DataModel,
             importUri,
-            [containedComplexTypes.toList],
+            [allComplexTypesDefinedIn(it)],
             [it.qualifiedNameParts]
         )
    }
+
+    /**
+     * Helper to get all complex types being defined in a data model
+     */
+    private def List<ComplexType> allComplexTypesDefinedIn(DataModel dataModel) {
+        val allComplexTypes = <ComplexType>newArrayList
+
+        // Get ComplexTypes encapsulated in versions
+        dataModel.versions.forEach[
+            allComplexTypes.addAll(contexts.map[complexTypes].flatten.toList)
+            allComplexTypes.addAll(complexTypes)
+        ]
+
+        // Get ComplexTypes encapsulated in contexts
+        allComplexTypes.addAll(dataModel.contexts.map[complexTypes].flatten.toList)
+
+        allComplexTypes.addAll(dataModel.complexTypes)
+
+        return allComplexTypes
+    }
 
     /**
      * Build scope for the given reference in the context of a data structure
@@ -139,7 +160,7 @@ class DataDslScopeProvider extends AbstractDataDslScopeProvider {
    private def getScopeForSuperStructures(DataStructure structure) {
         // Data structures may only inherit from data structures in the same model
         val modelRoot = EcoreUtil2.getContainerOfType(structure, DataModel)
-        val localStructures = modelRoot.containedComplexTypes
+        val localStructures = allComplexTypesDefinedIn(modelRoot)
             .filter[it instanceof DataStructure && it != structure]
         return LemmaUtils.getScopeWithRelativeQualifiedNames(
             localStructures.toList,

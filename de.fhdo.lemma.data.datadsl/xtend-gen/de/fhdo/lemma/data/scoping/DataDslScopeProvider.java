@@ -5,6 +5,7 @@ package de.fhdo.lemma.data.scoping;
 
 import com.google.common.base.Function;
 import com.google.common.base.Objects;
+import com.google.common.collect.Iterables;
 import de.fhdo.lemma.data.ComplexType;
 import de.fhdo.lemma.data.ComplexTypeImport;
 import de.fhdo.lemma.data.Context;
@@ -18,14 +19,19 @@ import de.fhdo.lemma.data.ListType;
 import de.fhdo.lemma.data.Version;
 import de.fhdo.lemma.data.scoping.AbstractDataDslScopeProvider;
 import de.fhdo.lemma.utils.LemmaUtils;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.xtext.EcoreUtil2;
 import org.eclipse.xtext.scoping.IScope;
 import org.eclipse.xtext.scoping.Scopes;
+import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
+import org.eclipse.xtext.xbase.lib.ListExtensions;
 
 /**
  * Scope provider for data models.
@@ -146,13 +152,34 @@ public class DataDslScopeProvider extends AbstractDataDslScopeProvider {
       }
     }
     final Function<DataModel, List<ComplexType>> _function = (DataModel it) -> {
-      return IterableExtensions.<ComplexType>toList(it.getContainedComplexTypes());
+      return this.allComplexTypesDefinedIn(it);
     };
     final Function<ComplexType, List<String>> _function_1 = (ComplexType it) -> {
       return it.getQualifiedNameParts();
     };
     return LemmaUtils.<EObject, DataModel, ComplexType>getScopeForPossiblyImportedConcept(container, qualifiedNameParts, 
       DataModel.class, importUri, _function, _function_1);
+  }
+  
+  /**
+   * Helper to get all complex types being defined in a data model
+   */
+  private List<ComplexType> allComplexTypesDefinedIn(final DataModel dataModel) {
+    final ArrayList<ComplexType> allComplexTypes = CollectionLiterals.<ComplexType>newArrayList();
+    final Consumer<Version> _function = (Version it) -> {
+      final Function1<Context, EList<ComplexType>> _function_1 = (Context it_1) -> {
+        return it_1.getComplexTypes();
+      };
+      allComplexTypes.addAll(IterableExtensions.<ComplexType>toList(Iterables.<ComplexType>concat(ListExtensions.<Context, EList<ComplexType>>map(it.getContexts(), _function_1))));
+      allComplexTypes.addAll(it.getComplexTypes());
+    };
+    dataModel.getVersions().forEach(_function);
+    final Function1<Context, EList<ComplexType>> _function_1 = (Context it) -> {
+      return it.getComplexTypes();
+    };
+    allComplexTypes.addAll(IterableExtensions.<ComplexType>toList(Iterables.<ComplexType>concat(ListExtensions.<Context, EList<ComplexType>>map(dataModel.getContexts(), _function_1))));
+    allComplexTypes.addAll(dataModel.getComplexTypes());
+    return allComplexTypes;
   }
   
   /**
@@ -188,7 +215,7 @@ public class DataDslScopeProvider extends AbstractDataDslScopeProvider {
     final Function1<ComplexType, Boolean> _function = (ComplexType it) -> {
       return Boolean.valueOf(((it instanceof DataStructure) && (!Objects.equal(it, structure))));
     };
-    final Iterable<ComplexType> localStructures = IterableExtensions.<ComplexType>filter(modelRoot.getContainedComplexTypes(), _function);
+    final Iterable<ComplexType> localStructures = IterableExtensions.<ComplexType>filter(this.allComplexTypesDefinedIn(modelRoot), _function);
     final Function<ComplexType, List<String>> _function_1 = (ComplexType it) -> {
       return it.getQualifiedNameParts();
     };
