@@ -69,6 +69,7 @@ public class ServiceFactoryImpl extends EFactoryImpl implements ServiceFactory {
             case ServicePackage.IMPORT: return createImport();
             case ServicePackage.MAPPED_COMPLEX_TYPE: return createMappedComplexType();
             case ServicePackage.MAPPED_DATA_OPERATION: return createMappedDataOperation();
+            case ServicePackage.MAPPED_DATA_OPERATION_RETURN_TYPE: return createMappedDataOperationReturnType();
             case ServicePackage.MAPPED_DATA_OPERATION_PARAMETER: return createMappedDataOperationParameter();
             case ServicePackage.MAPPED_FIELD: return createMappedField();
             case ServicePackage.MICROSERVICE: return createMicroservice();
@@ -184,6 +185,17 @@ public class ServiceFactoryImpl extends EFactoryImpl implements ServiceFactory {
     public MappedDataOperation createMappedDataOperation() {
         MappedDataOperationImpl mappedDataOperation = new MappedDataOperationImpl();
         return mappedDataOperation;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public MappedDataOperationReturnType createMappedDataOperationReturnType() {
+        MappedDataOperationReturnTypeImpl mappedDataOperationReturnType = new MappedDataOperationReturnTypeImpl();
+        return mappedDataOperationReturnType;
     }
 
     /**

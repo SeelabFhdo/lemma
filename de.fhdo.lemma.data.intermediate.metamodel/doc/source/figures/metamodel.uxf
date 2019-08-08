@@ -647,7 +647,7 @@ m1=*</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>250</x>
+      <x>140</x>
       <y>590</y>
       <w>240</w>
       <h>130</h>
@@ -658,7 +658,6 @@ name : String
 qualifiedName : String
 hidden : Boolean
 inherited : Boolean
-hasNoReturnType : Boolean
 featureNames : String[*]</panel_attributes>
     <additional_attributes/>
   </element>
@@ -679,10 +678,10 @@ qualifiedName : String</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>700</x>
+      <x>900</x>
       <y>580</y>
       <w>170</w>
-      <h>30</h>
+      <h>60</h>
     </coordinates>
     <panel_attributes>/*IntermediateType*/</panel_attributes>
     <additional_attributes/>
@@ -690,123 +689,87 @@ qualifiedName : String</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>480</x>
-      <y>580</y>
-      <w>240</w>
-      <h>50</h>
-    </coordinates>
-    <panel_attributes>lt=-&gt;&gt;&gt;&gt;&gt;
-m1=0..1
-r1=returnType</panel_attributes>
-    <additional_attributes>220.0;20.0;10.0;20.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>480</x>
-      <y>670</y>
-      <w>150</w>
+      <x>370</x>
+      <y>700</y>
+      <w>260</w>
       <h>40</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;&gt;&gt;
 m1=*</panel_attributes>
-    <additional_attributes>130.0;10.0;10.0;10.0</additional_attributes>
+    <additional_attributes>240.0;10.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
       <x>20</x>
-      <y>680</y>
-      <w>180</w>
-      <h>40</h>
+      <y>660</y>
+      <w>110</w>
+      <h>60</h>
     </coordinates>
-    <panel_attributes>*IntermediateImported*
+    <panel_attributes>*Intermediate*
+*Imported*
 *Aspect*</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>100</x>
+      <x>50</x>
       <y>620</y>
-      <w>170</w>
-      <h>80</h>
+      <w>110</w>
+      <h>60</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;&gt;&gt;
 m1=*</panel_attributes>
-    <additional_attributes>10.0;60.0;10.0;10.0;150.0;10.0</additional_attributes>
+    <additional_attributes>10.0;40.0;10.0;10.0;90.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>350</x>
+      <x>240</x>
       <y>440</y>
-      <w>200</w>
+      <w>310</w>
       <h>170</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;&gt;&gt;
 m1=*</panel_attributes>
-    <additional_attributes>10.0;150.0;10.0;130.0;180.0;130.0;180.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>760</x>
-      <y>600</y>
-      <w>60</w>
-      <h>80</h>
-    </coordinates>
-    <panel_attributes>lt=-&gt;&gt;&gt;&gt;&gt;
-r2=type</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;60.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>810</x>
-      <y>600</y>
-      <w>120</w>
-      <h>80</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-&gt;&gt;&gt;&gt;&gt;
-r2=  originalType</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;60.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>930</x>
-      <y>590</y>
-      <w>180</w>
-      <h>40</h>
-    </coordinates>
-    <panel_attributes>*IntermediateImported*
-*Aspect*</panel_attributes>
-    <additional_attributes/>
+    <additional_attributes>10.0;150.0;10.0;130.0;290.0;130.0;290.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>920</x>
-      <y>620</y>
-      <w>130</w>
+      <y>630</y>
+      <w>100</w>
       <h>70</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;&gt;&gt;
-m1=*</panel_attributes>
-    <additional_attributes>100.0;10.0;100.0;50.0;10.0;50.0</additional_attributes>
+r1=type</panel_attributes>
+    <additional_attributes>50.0;10.0;50.0;50.0;10.0;50.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>480</x>
-      <y>600</y>
-      <w>280</w>
-      <h>60</h>
+      <x>920</x>
+      <y>630</y>
+      <w>180</w>
+      <h>100</h>
     </coordinates>
     <panel_attributes>lt=&lt;-&gt;&gt;&gt;&gt;&gt;
-m1=0..1</panel_attributes>
-    <additional_attributes>230.0;10.0;230.0;40.0;10.0;40.0</additional_attributes>
+r1=original\nType</panel_attributes>
+    <additional_attributes>110.0;10.0;110.0;80.0;10.0;80.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>500</x>
+      <y>660</y>
+      <w>130</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;&gt;&gt;&gt;
+m1=*</panel_attributes>
+    <additional_attributes>10.0;10.0;110.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
@@ -821,14 +784,77 @@ m1=*</panel_attributes>
     <additional_attributes>290.0;10.0;10.0;10.0</additional_attributes>
   </element>
   <element>
-    <id>Text</id>
+    <id>UMLClass</id>
     <coordinates>
-      <x>570</x>
-      <y>620</y>
-      <w>150</w>
-      <h>30</h>
+      <x>610</x>
+      <y>580</y>
+      <w>130</w>
+      <h>60</h>
     </coordinates>
-    <panel_attributes>originalReturnType</panel_attributes>
+    <panel_attributes>*Intermediate*
+*DataOperation*
+*ReturnType*</panel_attributes>
     <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>370</x>
+      <y>590</y>
+      <w>260</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;&gt;&gt;&gt;
+m1=0..1</panel_attributes>
+    <additional_attributes>240.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>400</x>
+      <y>620</y>
+      <w>110</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>*Intermediate*
+*Imported*
+*Aspect*</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>500</x>
+      <y>620</y>
+      <w>130</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;&gt;&gt;&gt;
+m1=*</panel_attributes>
+    <additional_attributes>10.0;10.0;110.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>730</x>
+      <y>580</y>
+      <w>190</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;&gt;&gt;&gt;
+r1=type</panel_attributes>
+    <additional_attributes>170.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>730</x>
+      <y>610</y>
+      <w>190</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-&gt;&gt;&gt;&gt;&gt;
+r1=originalType</panel_attributes>
+    <additional_attributes>170.0;20.0;10.0;20.0</additional_attributes>
   </element>
 </diagram>

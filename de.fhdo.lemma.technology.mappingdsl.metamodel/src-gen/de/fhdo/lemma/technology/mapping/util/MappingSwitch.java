@@ -146,6 +146,12 @@ public class MappingSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
+            case MappingPackage.DATA_OPERATION_RETURN_TYPE_MAPPING: {
+                DataOperationReturnTypeMapping dataOperationReturnTypeMapping = (DataOperationReturnTypeMapping)theEObject;
+                T result = caseDataOperationReturnTypeMapping(dataOperationReturnTypeMapping);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
             case MappingPackage.DATA_OPERATION_PARAMETER_MAPPING: {
                 DataOperationParameterMapping dataOperationParameterMapping = (DataOperationParameterMapping)theEObject;
                 T result = caseDataOperationParameterMapping(dataOperationParameterMapping);
@@ -372,6 +378,21 @@ public class MappingSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseDataOperationMapping(DataOperationMapping object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Data Operation Return Type Mapping</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Data Operation Return Type Mapping</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseDataOperationReturnTypeMapping(DataOperationReturnTypeMapping object) {
         return null;
     }
 

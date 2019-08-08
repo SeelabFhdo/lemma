@@ -10,6 +10,7 @@ import de.fhdo.lemma.service.Interface;
 import de.fhdo.lemma.service.MappedComplexType;
 import de.fhdo.lemma.service.MappedDataOperation;
 import de.fhdo.lemma.service.MappedDataOperationParameter;
+import de.fhdo.lemma.service.MappedDataOperationReturnType;
 import de.fhdo.lemma.service.MappedField;
 import de.fhdo.lemma.service.Microservice;
 import de.fhdo.lemma.service.Operation;
@@ -57,6 +58,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.fhdo.lemma.service.impl.ImportedServiceAspectImpl#getMappedComplexType <em>Mapped Complex Type</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.impl.ImportedServiceAspectImpl#getMappedField <em>Mapped Field</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.impl.ImportedServiceAspectImpl#getMappedDataOperation <em>Mapped Data Operation</em>}</li>
+ *   <li>{@link de.fhdo.lemma.service.impl.ImportedServiceAspectImpl#getMappedDataOperationReturnType <em>Mapped Data Operation Return Type</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.impl.ImportedServiceAspectImpl#getMappedDataOperationParameter <em>Mapped Data Operation Parameter</em>}</li>
  * </ul>
  *
@@ -690,6 +692,59 @@ public class ImportedServiceAspectImpl extends MinimalEObjectImpl.Container impl
      * @generated
      */
     @Override
+    public MappedDataOperationReturnType getMappedDataOperationReturnType() {
+        if (eContainerFeatureID() != ServicePackage.IMPORTED_SERVICE_ASPECT__MAPPED_DATA_OPERATION_RETURN_TYPE) return null;
+        return (MappedDataOperationReturnType)eContainer();
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public MappedDataOperationReturnType basicGetMappedDataOperationReturnType() {
+        if (eContainerFeatureID() != ServicePackage.IMPORTED_SERVICE_ASPECT__MAPPED_DATA_OPERATION_RETURN_TYPE) return null;
+        return (MappedDataOperationReturnType)eInternalContainer();
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public NotificationChain basicSetMappedDataOperationReturnType(MappedDataOperationReturnType newMappedDataOperationReturnType, NotificationChain msgs) {
+        msgs = eBasicSetContainer((InternalEObject)newMappedDataOperationReturnType, ServicePackage.IMPORTED_SERVICE_ASPECT__MAPPED_DATA_OPERATION_RETURN_TYPE, msgs);
+        return msgs;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void setMappedDataOperationReturnType(MappedDataOperationReturnType newMappedDataOperationReturnType) {
+        if (newMappedDataOperationReturnType != eInternalContainer() || (eContainerFeatureID() != ServicePackage.IMPORTED_SERVICE_ASPECT__MAPPED_DATA_OPERATION_RETURN_TYPE && newMappedDataOperationReturnType != null)) {
+            if (EcoreUtil.isAncestor(this, newMappedDataOperationReturnType))
+                throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
+            NotificationChain msgs = null;
+            if (eInternalContainer() != null)
+                msgs = eBasicRemoveFromContainer(msgs);
+            if (newMappedDataOperationReturnType != null)
+                msgs = ((InternalEObject)newMappedDataOperationReturnType).eInverseAdd(this, ServicePackage.MAPPED_DATA_OPERATION_RETURN_TYPE__ASPECTS, MappedDataOperationReturnType.class, msgs);
+            msgs = basicSetMappedDataOperationReturnType(newMappedDataOperationReturnType, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ServicePackage.IMPORTED_SERVICE_ASPECT__MAPPED_DATA_OPERATION_RETURN_TYPE, newMappedDataOperationReturnType, newMappedDataOperationReturnType));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public MappedDataOperationParameter getMappedDataOperationParameter() {
         if (eContainerFeatureID() != ServicePackage.IMPORTED_SERVICE_ASPECT__MAPPED_DATA_OPERATION_PARAMETER) return null;
         return (MappedDataOperationParameter)eContainer();
@@ -777,6 +832,10 @@ public class ImportedServiceAspectImpl extends MinimalEObjectImpl.Container impl
                 if (eInternalContainer() != null)
                     msgs = eBasicRemoveFromContainer(msgs);
                 return basicSetMappedDataOperation((MappedDataOperation)otherEnd, msgs);
+            case ServicePackage.IMPORTED_SERVICE_ASPECT__MAPPED_DATA_OPERATION_RETURN_TYPE:
+                if (eInternalContainer() != null)
+                    msgs = eBasicRemoveFromContainer(msgs);
+                return basicSetMappedDataOperationReturnType((MappedDataOperationReturnType)otherEnd, msgs);
             case ServicePackage.IMPORTED_SERVICE_ASPECT__MAPPED_DATA_OPERATION_PARAMETER:
                 if (eInternalContainer() != null)
                     msgs = eBasicRemoveFromContainer(msgs);
@@ -813,6 +872,8 @@ public class ImportedServiceAspectImpl extends MinimalEObjectImpl.Container impl
                 return basicSetMappedField(null, msgs);
             case ServicePackage.IMPORTED_SERVICE_ASPECT__MAPPED_DATA_OPERATION:
                 return basicSetMappedDataOperation(null, msgs);
+            case ServicePackage.IMPORTED_SERVICE_ASPECT__MAPPED_DATA_OPERATION_RETURN_TYPE:
+                return basicSetMappedDataOperationReturnType(null, msgs);
             case ServicePackage.IMPORTED_SERVICE_ASPECT__MAPPED_DATA_OPERATION_PARAMETER:
                 return basicSetMappedDataOperationParameter(null, msgs);
         }
@@ -843,6 +904,8 @@ public class ImportedServiceAspectImpl extends MinimalEObjectImpl.Container impl
                 return eInternalContainer().eInverseRemove(this, ServicePackage.MAPPED_FIELD__ASPECTS, MappedField.class, msgs);
             case ServicePackage.IMPORTED_SERVICE_ASPECT__MAPPED_DATA_OPERATION:
                 return eInternalContainer().eInverseRemove(this, ServicePackage.MAPPED_DATA_OPERATION__ASPECTS, MappedDataOperation.class, msgs);
+            case ServicePackage.IMPORTED_SERVICE_ASPECT__MAPPED_DATA_OPERATION_RETURN_TYPE:
+                return eInternalContainer().eInverseRemove(this, ServicePackage.MAPPED_DATA_OPERATION_RETURN_TYPE__ASPECTS, MappedDataOperationReturnType.class, msgs);
             case ServicePackage.IMPORTED_SERVICE_ASPECT__MAPPED_DATA_OPERATION_PARAMETER:
                 return eInternalContainer().eInverseRemove(this, ServicePackage.MAPPED_DATA_OPERATION_PARAMETER__ASPECTS, MappedDataOperationParameter.class, msgs);
         }
@@ -891,6 +954,9 @@ public class ImportedServiceAspectImpl extends MinimalEObjectImpl.Container impl
             case ServicePackage.IMPORTED_SERVICE_ASPECT__MAPPED_DATA_OPERATION:
                 if (resolve) return getMappedDataOperation();
                 return basicGetMappedDataOperation();
+            case ServicePackage.IMPORTED_SERVICE_ASPECT__MAPPED_DATA_OPERATION_RETURN_TYPE:
+                if (resolve) return getMappedDataOperationReturnType();
+                return basicGetMappedDataOperationReturnType();
             case ServicePackage.IMPORTED_SERVICE_ASPECT__MAPPED_DATA_OPERATION_PARAMETER:
                 if (resolve) return getMappedDataOperationParameter();
                 return basicGetMappedDataOperationParameter();
@@ -944,6 +1010,9 @@ public class ImportedServiceAspectImpl extends MinimalEObjectImpl.Container impl
             case ServicePackage.IMPORTED_SERVICE_ASPECT__MAPPED_DATA_OPERATION:
                 setMappedDataOperation((MappedDataOperation)newValue);
                 return;
+            case ServicePackage.IMPORTED_SERVICE_ASPECT__MAPPED_DATA_OPERATION_RETURN_TYPE:
+                setMappedDataOperationReturnType((MappedDataOperationReturnType)newValue);
+                return;
             case ServicePackage.IMPORTED_SERVICE_ASPECT__MAPPED_DATA_OPERATION_PARAMETER:
                 setMappedDataOperationParameter((MappedDataOperationParameter)newValue);
                 return;
@@ -995,6 +1064,9 @@ public class ImportedServiceAspectImpl extends MinimalEObjectImpl.Container impl
             case ServicePackage.IMPORTED_SERVICE_ASPECT__MAPPED_DATA_OPERATION:
                 setMappedDataOperation((MappedDataOperation)null);
                 return;
+            case ServicePackage.IMPORTED_SERVICE_ASPECT__MAPPED_DATA_OPERATION_RETURN_TYPE:
+                setMappedDataOperationReturnType((MappedDataOperationReturnType)null);
+                return;
             case ServicePackage.IMPORTED_SERVICE_ASPECT__MAPPED_DATA_OPERATION_PARAMETER:
                 setMappedDataOperationParameter((MappedDataOperationParameter)null);
                 return;
@@ -1034,6 +1106,8 @@ public class ImportedServiceAspectImpl extends MinimalEObjectImpl.Container impl
                 return basicGetMappedField() != null;
             case ServicePackage.IMPORTED_SERVICE_ASPECT__MAPPED_DATA_OPERATION:
                 return basicGetMappedDataOperation() != null;
+            case ServicePackage.IMPORTED_SERVICE_ASPECT__MAPPED_DATA_OPERATION_RETURN_TYPE:
+                return basicGetMappedDataOperationReturnType() != null;
             case ServicePackage.IMPORTED_SERVICE_ASPECT__MAPPED_DATA_OPERATION_PARAMETER:
                 return basicGetMappedDataOperationParameter() != null;
         }

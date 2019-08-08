@@ -418,12 +418,29 @@ class DataOperationMapping {
      */
 
     refers DataOperation dataOperation
-    refers Import[0..1] technology
-    refers Type[0..1] returnType
     contains TechnologySpecificImportedServiceAspect[] aspects opposite dataOperationMapping
+    contains DataOperationReturnTypeMapping[0..1] returnTypeMapping opposite operationMapping
     contains DataOperationParameterMapping[] parameterMappings opposite operationMapping
 
     container ComplexTypeMapping typeMapping opposite operationMappings
+}
+
+/**
+ * Technology mapping for return types of data operations
+ */
+class DataOperationReturnTypeMapping {
+    /**
+     * Implicit Constraints:
+     *     (C1) A return type may be mapped only once.
+     *          Ensured by: DSL validator.
+     */
+
+    refers Import[0..1] technology
+    refers Type[0..1] ^type
+    contains TechnologySpecificImportedServiceAspect[] aspects
+        opposite dataOperationReturnTypeMapping
+
+    container DataOperationMapping operationMapping opposite returnTypeMapping
 }
 
 /**
@@ -528,6 +545,7 @@ class TechnologySpecificImportedServiceAspect {
     container ParameterMapping parameterMapping opposite aspects
     container TechnologySpecificFieldMapping fieldMapping opposite aspects
     container DataOperationMapping dataOperationMapping opposite aspects
+    container DataOperationReturnTypeMapping dataOperationReturnTypeMapping opposite aspects
     container DataOperationParameterMapping dataOperationParameterMapping opposite aspects
 }
 

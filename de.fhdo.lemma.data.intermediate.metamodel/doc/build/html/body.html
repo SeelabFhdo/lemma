@@ -782,12 +782,6 @@ inheritance hierarchy.</p>
 <a class="reference internal" href="#link-intermediatedatastructure"><span class="std std-ref">structure</span></a>.</p>
 </dd></dl>
 
-<span class="target" id="link-intermediatedataoperation-hasnoreturntype"></span><dl class="attribute">
-<dt>
-<code class="descname">boolean hasNoReturnType</code></dt>
-<dd><p>Flag to indicate whether this operation has a return type or not.</p>
-</dd></dl>
-
 <dl class="attribute">
 <dt>
 <code class="descname">String[*] featureNames</code></dt>
@@ -831,39 +825,12 @@ violated.</p>
 </div>
 </dd></dl>
 
-<span class="target" id="link-intermediatedataoperation-returntype"></span><dl class="attribute">
+<dl class="attribute">
 <dt>
-<code class="descname">IntermediateType returnType</code></dt>
-<dd><p>The return type of the operation.</p>
-<div class="admonition hint">
-<p class="first admonition-title">Hint</p>
-<p class="last">The <code class="docutils literal notranslate"><span class="pre">type</span></code> attribute always holds a unique instance of
-<code class="xref py py-class docutils literal notranslate"><span class="pre">IntermediateType</span></code>, if the <a class="reference internal" href="#link-intermediatedataoperation-hasnoreturntype"><span class="std std-ref">hasNoReturnType</span></a> attribute is
-false. Moreover, instances of the same types are not reused for
-return types.</p>
-</div>
-<div class="admonition hint">
-<p class="first admonition-title">Hint</p>
-<p class="last">Code generators must use this type as the operation’s return type
-and not its <a class="reference internal" href="#link-intermediatedataoperation-originalreturntype"><span class="std std-ref">original return type</span></a>.</p>
-</div>
-</dd></dl>
-
-<span class="target" id="link-intermediatedataoperation-originalreturntype"></span><dl class="attribute">
-<dt>
-<code class="descname">IntermediateType originalReturnType</code></dt>
-<dd><p>The original return type of the operation in case it got mapped within a
-Mapping Model.</p>
-<div class="admonition hint">
-<p class="first admonition-title">Hint</p>
-<p class="last">In case the operation has a <a class="reference internal" href="#link-intermediatedataoperation-returntype"><span class="std std-ref">return type</span></a>, this attribute also
-holds a value. If it differs from the <a class="reference internal" href="#link-intermediatedataoperation-returntype"><span class="std std-ref">return type</span></a> of the operation, the
-return got mapped and the
-<a class="reference internal" href="#link-intermediatedataoperation-returntype"><span class="std std-ref">returnType</span></a>
-attribute holds an
-<a class="reference internal" href="#IntermediateImportedTechnologySpecificType" title="IntermediateImportedTechnologySpecificType"><code class="xref java java-type docutils literal notranslate"><span class="pre">IntermediateImportedTechnologySpecificType</span></code></a> instance that points
-to the technology-specific type to which the return type was mapped.</p>
-</div>
+<code class="descname">IntermediateDataOperationReturnType returnType</code></dt>
+<dd><p>The <a class="reference internal" href="#link-intermediatedataoperationreturntype"><span class="std std-ref">return type</span></a> of
+the operation. This is empty when no return type for the operation was
+specified.</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -878,6 +845,54 @@ operation.</p>
 <code class="descname">IntermediateImportedAspect[*] aspects</code></dt>
 <dd><p>The <a class="reference internal" href="#IntermediateImportedAspect" title="IntermediateImportedAspect"><code class="xref java java-type docutils literal notranslate"><span class="pre">aspects</span></code></a> that were assigned
 to the operation within a Mapping Model.</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="link-intermediatedataoperationreturntype"></span><dl class="type">
+<dt id="IntermediateDataOperationReturnType">
+ class <code class="descname">IntermediateDataOperationReturnType</code><a class="headerlink" href="#IntermediateDataOperationReturnType" title="Permalink to this definition">¶</a></dt>
+<dd><p>The return type of an
+<a class="reference internal" href="#link-intermediatedataoperation"><span class="std std-ref">IntermediateDataOperation</span></a>.</p>
+<span class="target" id="link-intermediatedataoperationreturntype-type"></span><dl class="attribute">
+<dt>
+<code class="descname">IntermediateType[1] type</code></dt>
+<dd><p>The return type.</p>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">The <code class="docutils literal notranslate"><span class="pre">type</span></code> attribute always holds a unique instance of
+<code class="xref py py-class docutils literal notranslate"><span class="pre">IntermediateType</span></code>, i.e., instances of the same types are
+not reused.</p>
+</div>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">Code generators must use this type as the operation’s return type
+and not <a class="reference internal" href="#link-intermediatedataoperationreturntype-originaltype"><span class="std std-ref">originalType</span></a>.</p>
+</div>
+</dd></dl>
+
+<span class="target" id="link-intermediatedataoperationreturntype-originaltype"></span><dl class="attribute">
+<dt>
+<code class="descname">IntermediateType[1] originalType</code></dt>
+<dd><p>The original return type of the operation in case it got mapped within a
+Mapping Model.</p>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">This attribute always holds a value. In case it differs from the
+<a class="reference internal" href="#link-intermediatedataoperationreturntype-type"><span class="std std-ref">type</span></a>, the
+return type got mapped and the
+<a class="reference internal" href="#link-intermediatedataoperationreturntype-type"><span class="std std-ref">type</span></a>
+attribute holds an
+<a class="reference internal" href="#IntermediateImportedTechnologySpecificType" title="IntermediateImportedTechnologySpecificType"><code class="xref java java-type docutils literal notranslate"><span class="pre">IntermediateImportedTechnologySpecificType</span></code></a> instance that points
+to the technology-specific type to which the return type was mapped.</p>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">IntermediateImportedAspect[*] aspects</code></dt>
+<dd><p>The <a class="reference internal" href="#IntermediateImportedAspect" title="IntermediateImportedAspect"><code class="xref java java-type docutils literal notranslate"><span class="pre">aspects</span></code></a> that were assigned
+to the return type within a Mapping Model.</p>
 </dd></dl>
 
 </dd></dl>

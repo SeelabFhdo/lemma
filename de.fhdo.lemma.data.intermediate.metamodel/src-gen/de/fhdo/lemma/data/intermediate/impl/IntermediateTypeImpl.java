@@ -3,8 +3,8 @@
 package de.fhdo.lemma.data.intermediate.impl;
 
 import de.fhdo.lemma.data.intermediate.IntermediateDataField;
-import de.fhdo.lemma.data.intermediate.IntermediateDataOperation;
 import de.fhdo.lemma.data.intermediate.IntermediateDataOperationParameter;
+import de.fhdo.lemma.data.intermediate.IntermediateDataOperationReturnType;
 import de.fhdo.lemma.data.intermediate.IntermediatePackage;
 import de.fhdo.lemma.data.intermediate.IntermediateType;
 import de.fhdo.lemma.data.intermediate.IntermediateTypeKind;
@@ -32,7 +32,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  *   <li>{@link de.fhdo.lemma.data.intermediate.impl.IntermediateTypeImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.impl.IntermediateTypeImpl#getOrigin <em>Origin</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.impl.IntermediateTypeImpl#getKind <em>Kind</em>}</li>
- *   <li>{@link de.fhdo.lemma.data.intermediate.impl.IntermediateTypeImpl#getOperation <em>Operation</em>}</li>
+ *   <li>{@link de.fhdo.lemma.data.intermediate.impl.IntermediateTypeImpl#getReturnType <em>Return Type</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.impl.IntermediateTypeImpl#getParameter <em>Parameter</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.impl.IntermediateTypeImpl#getDataField <em>Data Field</em>}</li>
  * </ul>
@@ -194,9 +194,9 @@ public abstract class IntermediateTypeImpl extends MinimalEObjectImpl.Container 
      * @generated
      */
     @Override
-    public IntermediateDataOperation getOperation() {
-        if (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_TYPE__OPERATION) return null;
-        return (IntermediateDataOperation)eContainer();
+    public IntermediateDataOperationReturnType getReturnType() {
+        if (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_TYPE__RETURN_TYPE) return null;
+        return (IntermediateDataOperationReturnType)eContainer();
     }
 
     /**
@@ -204,9 +204,9 @@ public abstract class IntermediateTypeImpl extends MinimalEObjectImpl.Container 
      * <!-- end-user-doc -->
      * @generated
      */
-    public IntermediateDataOperation basicGetOperation() {
-        if (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_TYPE__OPERATION) return null;
-        return (IntermediateDataOperation)eInternalContainer();
+    public IntermediateDataOperationReturnType basicGetReturnType() {
+        if (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_TYPE__RETURN_TYPE) return null;
+        return (IntermediateDataOperationReturnType)eInternalContainer();
     }
 
     /**
@@ -214,8 +214,8 @@ public abstract class IntermediateTypeImpl extends MinimalEObjectImpl.Container 
      * <!-- end-user-doc -->
      * @generated
      */
-    public NotificationChain basicSetOperation(IntermediateDataOperation newOperation, NotificationChain msgs) {
-        msgs = eBasicSetContainer((InternalEObject)newOperation, IntermediatePackage.INTERMEDIATE_TYPE__OPERATION, msgs);
+    public NotificationChain basicSetReturnType(IntermediateDataOperationReturnType newReturnType, NotificationChain msgs) {
+        msgs = eBasicSetContainer((InternalEObject)newReturnType, IntermediatePackage.INTERMEDIATE_TYPE__RETURN_TYPE, msgs);
         return msgs;
     }
 
@@ -225,20 +225,20 @@ public abstract class IntermediateTypeImpl extends MinimalEObjectImpl.Container 
      * @generated
      */
     @Override
-    public void setOperation(IntermediateDataOperation newOperation) {
-        if (newOperation != eInternalContainer() || (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_TYPE__OPERATION && newOperation != null)) {
-            if (EcoreUtil.isAncestor(this, newOperation))
+    public void setReturnType(IntermediateDataOperationReturnType newReturnType) {
+        if (newReturnType != eInternalContainer() || (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_TYPE__RETURN_TYPE && newReturnType != null)) {
+            if (EcoreUtil.isAncestor(this, newReturnType))
                 throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
             NotificationChain msgs = null;
             if (eInternalContainer() != null)
                 msgs = eBasicRemoveFromContainer(msgs);
-            if (newOperation != null)
-                msgs = ((InternalEObject)newOperation).eInverseAdd(this, IntermediatePackage.INTERMEDIATE_DATA_OPERATION__RETURN_TYPE, IntermediateDataOperation.class, msgs);
-            msgs = basicSetOperation(newOperation, msgs);
+            if (newReturnType != null)
+                msgs = ((InternalEObject)newReturnType).eInverseAdd(this, IntermediatePackage.INTERMEDIATE_DATA_OPERATION_RETURN_TYPE__TYPE, IntermediateDataOperationReturnType.class, msgs);
+            msgs = basicSetReturnType(newReturnType, msgs);
             if (msgs != null) msgs.dispatch();
         }
         else if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, IntermediatePackage.INTERMEDIATE_TYPE__OPERATION, newOperation, newOperation));
+            eNotify(new ENotificationImpl(this, Notification.SET, IntermediatePackage.INTERMEDIATE_TYPE__RETURN_TYPE, newReturnType, newReturnType));
     }
 
     /**
@@ -355,10 +355,10 @@ public abstract class IntermediateTypeImpl extends MinimalEObjectImpl.Container 
     @Override
     public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
-            case IntermediatePackage.INTERMEDIATE_TYPE__OPERATION:
+            case IntermediatePackage.INTERMEDIATE_TYPE__RETURN_TYPE:
                 if (eInternalContainer() != null)
                     msgs = eBasicRemoveFromContainer(msgs);
-                return basicSetOperation((IntermediateDataOperation)otherEnd, msgs);
+                return basicSetReturnType((IntermediateDataOperationReturnType)otherEnd, msgs);
             case IntermediatePackage.INTERMEDIATE_TYPE__PARAMETER:
                 if (eInternalContainer() != null)
                     msgs = eBasicRemoveFromContainer(msgs);
@@ -379,8 +379,8 @@ public abstract class IntermediateTypeImpl extends MinimalEObjectImpl.Container 
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
-            case IntermediatePackage.INTERMEDIATE_TYPE__OPERATION:
-                return basicSetOperation(null, msgs);
+            case IntermediatePackage.INTERMEDIATE_TYPE__RETURN_TYPE:
+                return basicSetReturnType(null, msgs);
             case IntermediatePackage.INTERMEDIATE_TYPE__PARAMETER:
                 return basicSetParameter(null, msgs);
             case IntermediatePackage.INTERMEDIATE_TYPE__DATA_FIELD:
@@ -397,8 +397,8 @@ public abstract class IntermediateTypeImpl extends MinimalEObjectImpl.Container 
     @Override
     public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
         switch (eContainerFeatureID()) {
-            case IntermediatePackage.INTERMEDIATE_TYPE__OPERATION:
-                return eInternalContainer().eInverseRemove(this, IntermediatePackage.INTERMEDIATE_DATA_OPERATION__RETURN_TYPE, IntermediateDataOperation.class, msgs);
+            case IntermediatePackage.INTERMEDIATE_TYPE__RETURN_TYPE:
+                return eInternalContainer().eInverseRemove(this, IntermediatePackage.INTERMEDIATE_DATA_OPERATION_RETURN_TYPE__TYPE, IntermediateDataOperationReturnType.class, msgs);
             case IntermediatePackage.INTERMEDIATE_TYPE__PARAMETER:
                 return eInternalContainer().eInverseRemove(this, IntermediatePackage.INTERMEDIATE_DATA_OPERATION_PARAMETER__TYPE, IntermediateDataOperationParameter.class, msgs);
             case IntermediatePackage.INTERMEDIATE_TYPE__DATA_FIELD:
@@ -421,9 +421,9 @@ public abstract class IntermediateTypeImpl extends MinimalEObjectImpl.Container 
                 return getOrigin();
             case IntermediatePackage.INTERMEDIATE_TYPE__KIND:
                 return getKind();
-            case IntermediatePackage.INTERMEDIATE_TYPE__OPERATION:
-                if (resolve) return getOperation();
-                return basicGetOperation();
+            case IntermediatePackage.INTERMEDIATE_TYPE__RETURN_TYPE:
+                if (resolve) return getReturnType();
+                return basicGetReturnType();
             case IntermediatePackage.INTERMEDIATE_TYPE__PARAMETER:
                 if (resolve) return getParameter();
                 return basicGetParameter();
@@ -451,8 +451,8 @@ public abstract class IntermediateTypeImpl extends MinimalEObjectImpl.Container 
             case IntermediatePackage.INTERMEDIATE_TYPE__KIND:
                 setKind((IntermediateTypeKind)newValue);
                 return;
-            case IntermediatePackage.INTERMEDIATE_TYPE__OPERATION:
-                setOperation((IntermediateDataOperation)newValue);
+            case IntermediatePackage.INTERMEDIATE_TYPE__RETURN_TYPE:
+                setReturnType((IntermediateDataOperationReturnType)newValue);
                 return;
             case IntermediatePackage.INTERMEDIATE_TYPE__PARAMETER:
                 setParameter((IntermediateDataOperationParameter)newValue);
@@ -481,8 +481,8 @@ public abstract class IntermediateTypeImpl extends MinimalEObjectImpl.Container 
             case IntermediatePackage.INTERMEDIATE_TYPE__KIND:
                 setKind(KIND_EDEFAULT);
                 return;
-            case IntermediatePackage.INTERMEDIATE_TYPE__OPERATION:
-                setOperation((IntermediateDataOperation)null);
+            case IntermediatePackage.INTERMEDIATE_TYPE__RETURN_TYPE:
+                setReturnType((IntermediateDataOperationReturnType)null);
                 return;
             case IntermediatePackage.INTERMEDIATE_TYPE__PARAMETER:
                 setParameter((IntermediateDataOperationParameter)null);
@@ -508,8 +508,8 @@ public abstract class IntermediateTypeImpl extends MinimalEObjectImpl.Container 
                 return origin != ORIGIN_EDEFAULT;
             case IntermediatePackage.INTERMEDIATE_TYPE__KIND:
                 return kind != KIND_EDEFAULT;
-            case IntermediatePackage.INTERMEDIATE_TYPE__OPERATION:
-                return basicGetOperation() != null;
+            case IntermediatePackage.INTERMEDIATE_TYPE__RETURN_TYPE:
+                return basicGetReturnType() != null;
             case IntermediatePackage.INTERMEDIATE_TYPE__PARAMETER:
                 return basicGetParameter() != null;
             case IntermediatePackage.INTERMEDIATE_TYPE__DATA_FIELD:

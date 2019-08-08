@@ -128,6 +128,21 @@ helper def : findMappedDataOperation(operation : Intermediate!IntermediateDataOp
         mappedDataOperation
 ;
 
+--- Find a MappedDataOperationReturnType from an IntermediateDataOperationReturnType instance based
+--- on their fully-qualified names
+helper def : findMappedDataOperationReturnType(
+    returnType : Intermediate!IntermediateDataOperationReturnType)
+    : Service!MappedDataOperationReturnType =
+    let mappedDataOperation : Service!MappedDataOperation
+        = thisModule.findMappedDataOperation(returnType.operation)
+    in
+        if (not mappedDataOperation.oclIsUndefined()) then
+            mappedDataOperation.mappedReturnType
+        else
+            OclUndefined
+        endif
+;
+
 --- Find a MappedDataOperationParameter from an IntermediateDataOperationParameter instance based on
 --- their fully-qualified names
 helper def : findMappedDataOperationParameter(
@@ -177,8 +192,29 @@ rule RefineIntermediateDataOperation {
     from
         s : Intermediate!IntermediateDataOperation
     using {
+        mappedDataOperation : Service!MappedDataOperation = thisModule.findMappedDataOperation(s);
+    }
+    to
+        t : Intermediate!IntermediateDataOperation
+    do {
+        if (not mappedDataOperation.oclIsUndefined())
+            for (aspect in mappedDataOperation.aspects) {
+                t.aspects <- t.aspects->append(
+                    thisModule.IntermediateImportedAspect(aspect, t, 'operation')
+                );
+            }
+
+        t;
+    }
+}
+
+--- Refine an IntermediateDataOperationReturnType for which a technology-specific mapping exists
+rule RefineIntermediateDataOperationReturnType {
+    from
+        s : Intermediate!IntermediateDataOperationReturnType
+    using {
         mappedComplexType : Service!MappedComplexType =
-            thisModule.findMappedComplexType(s.dataStructure);
+            thisModule.findMappedComplexType(s.operation.dataStructure);
         typeDefinitionTechnology : Service!Technology =
             if (not mappedComplexType.oclIsUndefined()) then
                 mappedComplexType.t_typeDefinitionTechnology
@@ -191,40 +227,38 @@ rule RefineIntermediateDataOperation {
             else
                 OclUndefined
             endif;
-        mappedDataOperation : Service!MappedDataOperation = thisModule.findMappedDataOperation(s);
-        mappedReturnType: Service!ImportedType =
-            if (not mappedDataOperation.oclIsUndefined()) then
-                mappedDataOperation.mappedReturnType
+        mappedDataOperationReturnType : Service!MappedDataOperationReturnType
+            = thisModule.findMappedDataOperationReturnType(s);
+        mappedType : Service!ImportedType =
+            if (not mappedDataOperationReturnType.oclIsUndefined()) then
+                mappedDataOperationReturnType.mappedType
             else
                 OclUndefined
             endif;
     }
     to
-        t : Intermediate!IntermediateDataOperation(
-            originalReturnType <- s.returnType
+        t : Intermediate!IntermediateDataOperationReturnType(
+            originalType <- s.type
         )
     do {
         -- Transform aspects
-        if (not mappedDataOperation.oclIsUndefined())
-            for (aspect in mappedDataOperation.aspects) {
+        if (not mappedDataOperationReturnType.oclIsUndefined())
+            for (aspect in mappedDataOperationReturnType.aspects) {
                 t.aspects <- t.aspects->append(
-                    thisModule.IntermediateImportedAspect(aspect, t, 'operation')
+                    thisModule.IntermediateImportedAspect(aspect, t, 'returnType')
                 );
             }
 
-        -- Determine return type
+        -- Determine type
         if (not typeDefinitionTechnology.oclIsUndefined()) {
-            if (not mappedReturnType.oclIsUndefined())
-                t.returnType <- thisModule.IntermediateImportedTechnologySpecificType(t,
-                    'operation', mappedReturnType, typeDefinitionTechnology);
-            else if (not t.originalReturnType.oclIsUndefined())
-                if (thisModule.hasDefaultPrimitiveTechnologySpecificType(t.originalReturnType,
+            if (not mappedType.oclIsUndefined())
+                t.type <- thisModule.IntermediateImportedTechnologySpecificType(t, 'returnType',
+                    mappedType, typeDefinitionTechnology);
+            else if (not t.originalType.oclIsUndefined())
+                if (thisModule.hasDefaultPrimitiveTechnologySpecificType(t.originalType,
                     typeDefinitionTechnology))
-                    t.returnType <- thisModule.TechnologySpecificPrimitiveIntermediateType(
-                        t.originalReturnType,
-                        typeDefinitionTechnology,
-                        typeDefinitionTechnologyImport
-                    );
+                    t.type <- thisModule.TechnologySpecificPrimitiveIntermediateType(t.originalType,
+                        typeDefinitionTechnology, typeDefinitionTechnologyImport);
         }
 
         t;

@@ -112,6 +112,10 @@ public class IntermediateAdapterFactory extends AdapterFactoryImpl {
                 return createIntermediateDataOperationAdapter();
             }
             @Override
+            public Adapter caseIntermediateDataOperationReturnType(IntermediateDataOperationReturnType object) {
+                return createIntermediateDataOperationReturnTypeAdapter();
+            }
+            @Override
             public Adapter caseIntermediateDataOperationParameter(IntermediateDataOperationParameter object) {
                 return createIntermediateDataOperationParameterAdapter();
             }
@@ -314,6 +318,20 @@ public class IntermediateAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createIntermediateDataOperationAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.fhdo.lemma.data.intermediate.IntermediateDataOperationReturnType <em>Data Operation Return Type</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.fhdo.lemma.data.intermediate.IntermediateDataOperationReturnType
+     * @generated
+     */
+    public Adapter createIntermediateDataOperationReturnTypeAdapter() {
         return null;
     }
 

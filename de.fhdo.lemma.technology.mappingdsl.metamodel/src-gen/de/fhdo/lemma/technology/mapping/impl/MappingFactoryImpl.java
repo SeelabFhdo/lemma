@@ -73,6 +73,7 @@ public class MappingFactoryImpl extends EFactoryImpl implements MappingFactory {
             case MappingPackage.COMPLEX_PARAMETER_MAPPING: return createComplexParameterMapping();
             case MappingPackage.TECHNOLOGY_SPECIFIC_FIELD_MAPPING: return createTechnologySpecificFieldMapping();
             case MappingPackage.DATA_OPERATION_MAPPING: return createDataOperationMapping();
+            case MappingPackage.DATA_OPERATION_RETURN_TYPE_MAPPING: return createDataOperationReturnTypeMapping();
             case MappingPackage.DATA_OPERATION_PARAMETER_MAPPING: return createDataOperationParameterMapping();
             case MappingPackage.TECHNOLOGY_SPECIFIC_PROTOCOL_SPECIFICATION: return createTechnologySpecificProtocolSpecification();
             case MappingPackage.TECHNOLOGY_SPECIFIC_PROTOCOL: return createTechnologySpecificProtocol();
@@ -243,6 +244,17 @@ public class MappingFactoryImpl extends EFactoryImpl implements MappingFactory {
     public DataOperationMapping createDataOperationMapping() {
         DataOperationMappingImpl dataOperationMapping = new DataOperationMappingImpl();
         return dataOperationMapping;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public DataOperationReturnTypeMapping createDataOperationReturnTypeMapping() {
+        DataOperationReturnTypeMappingImpl dataOperationReturnTypeMapping = new DataOperationReturnTypeMappingImpl();
+        return dataOperationReturnTypeMapping;
     }
 
     /**

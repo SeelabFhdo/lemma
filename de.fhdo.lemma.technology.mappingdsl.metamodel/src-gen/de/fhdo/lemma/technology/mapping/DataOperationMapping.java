@@ -3,9 +3,6 @@
 package de.fhdo.lemma.technology.mapping;
 
 import de.fhdo.lemma.data.DataOperation;
-import de.fhdo.lemma.data.Type;
-
-import de.fhdo.lemma.service.Import;
 
 import org.eclipse.emf.common.util.EList;
 
@@ -26,9 +23,8 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  * <ul>
  *   <li>{@link de.fhdo.lemma.technology.mapping.DataOperationMapping#getDataOperation <em>Data Operation</em>}</li>
- *   <li>{@link de.fhdo.lemma.technology.mapping.DataOperationMapping#getTechnology <em>Technology</em>}</li>
- *   <li>{@link de.fhdo.lemma.technology.mapping.DataOperationMapping#getReturnType <em>Return Type</em>}</li>
  *   <li>{@link de.fhdo.lemma.technology.mapping.DataOperationMapping#getAspects <em>Aspects</em>}</li>
+ *   <li>{@link de.fhdo.lemma.technology.mapping.DataOperationMapping#getReturnTypeMapping <em>Return Type Mapping</em>}</li>
  *   <li>{@link de.fhdo.lemma.technology.mapping.DataOperationMapping#getParameterMappings <em>Parameter Mappings</em>}</li>
  *   <li>{@link de.fhdo.lemma.technology.mapping.DataOperationMapping#getTypeMapping <em>Type Mapping</em>}</li>
  * </ul>
@@ -68,58 +64,6 @@ public interface DataOperationMapping extends EObject {
     void setDataOperation(DataOperation value);
 
     /**
-     * Returns the value of the '<em><b>Technology</b></em>' reference.
-     * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Technology</em>' reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
-     * @return the value of the '<em>Technology</em>' reference.
-     * @see #setTechnology(Import)
-     * @see de.fhdo.lemma.technology.mapping.MappingPackage#getDataOperationMapping_Technology()
-     * @model
-     * @generated
-     */
-    Import getTechnology();
-
-    /**
-     * Sets the value of the '{@link de.fhdo.lemma.technology.mapping.DataOperationMapping#getTechnology <em>Technology</em>}' reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Technology</em>' reference.
-     * @see #getTechnology()
-     * @generated
-     */
-    void setTechnology(Import value);
-
-    /**
-     * Returns the value of the '<em><b>Return Type</b></em>' reference.
-     * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Return Type</em>' reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
-     * @return the value of the '<em>Return Type</em>' reference.
-     * @see #setReturnType(Type)
-     * @see de.fhdo.lemma.technology.mapping.MappingPackage#getDataOperationMapping_ReturnType()
-     * @model
-     * @generated
-     */
-    Type getReturnType();
-
-    /**
-     * Sets the value of the '{@link de.fhdo.lemma.technology.mapping.DataOperationMapping#getReturnType <em>Return Type</em>}' reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Return Type</em>' reference.
-     * @see #getReturnType()
-     * @generated
-     */
-    void setReturnType(Type value);
-
-    /**
      * Returns the value of the '<em><b>Aspects</b></em>' containment reference list.
      * The list contents are of type {@link de.fhdo.lemma.technology.mapping.TechnologySpecificImportedServiceAspect}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.technology.mapping.TechnologySpecificImportedServiceAspect#getDataOperationMapping <em>Data Operation Mapping</em>}'.
@@ -136,6 +80,34 @@ public interface DataOperationMapping extends EObject {
      * @generated
      */
     EList<TechnologySpecificImportedServiceAspect> getAspects();
+
+    /**
+     * Returns the value of the '<em><b>Return Type Mapping</b></em>' containment reference.
+     * It is bidirectional and its opposite is '{@link de.fhdo.lemma.technology.mapping.DataOperationReturnTypeMapping#getOperationMapping <em>Operation Mapping</em>}'.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Return Type Mapping</em>' containment reference isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Return Type Mapping</em>' containment reference.
+     * @see #setReturnTypeMapping(DataOperationReturnTypeMapping)
+     * @see de.fhdo.lemma.technology.mapping.MappingPackage#getDataOperationMapping_ReturnTypeMapping()
+     * @see de.fhdo.lemma.technology.mapping.DataOperationReturnTypeMapping#getOperationMapping
+     * @model opposite="operationMapping" containment="true"
+     * @generated
+     */
+    DataOperationReturnTypeMapping getReturnTypeMapping();
+
+    /**
+     * Sets the value of the '{@link de.fhdo.lemma.technology.mapping.DataOperationMapping#getReturnTypeMapping <em>Return Type Mapping</em>}' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Return Type Mapping</em>' containment reference.
+     * @see #getReturnTypeMapping()
+     * @generated
+     */
+    void setReturnTypeMapping(DataOperationReturnTypeMapping value);
 
     /**
      * Returns the value of the '<em><b>Parameter Mappings</b></em>' containment reference list.

@@ -112,6 +112,15 @@ public interface IntermediateFactory extends EFactory {
     IntermediateDataOperation createIntermediateDataOperation();
 
     /**
+     * Returns a new object of class '<em>Data Operation Return Type</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Data Operation Return Type</em>'.
+     * @generated
+     */
+    IntermediateDataOperationReturnType createIntermediateDataOperationReturnType();
+
+    /**
      * Returns a new object of class '<em>Data Operation Parameter</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

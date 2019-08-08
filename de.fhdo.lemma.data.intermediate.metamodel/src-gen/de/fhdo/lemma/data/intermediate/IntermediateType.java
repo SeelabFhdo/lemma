@@ -28,7 +28,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateType#getName <em>Name</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateType#getOrigin <em>Origin</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateType#getKind <em>Kind</em>}</li>
- *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateType#getOperation <em>Operation</em>}</li>
+ *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateType#getReturnType <em>Return Type</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateType#getParameter <em>Parameter</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateType#getDataField <em>Data Field</em>}</li>
  * </ul>
@@ -123,32 +123,32 @@ public interface IntermediateType extends EObject {
     void setKind(IntermediateTypeKind value);
 
     /**
-     * Returns the value of the '<em><b>Operation</b></em>' container reference.
-     * It is bidirectional and its opposite is '{@link de.fhdo.lemma.data.intermediate.IntermediateDataOperation#getReturnType <em>Return Type</em>}'.
+     * Returns the value of the '<em><b>Return Type</b></em>' container reference.
+     * It is bidirectional and its opposite is '{@link de.fhdo.lemma.data.intermediate.IntermediateDataOperationReturnType#getType <em>Type</em>}'.
      * <!-- begin-user-doc -->
      * <p>
-     * If the meaning of the '<em>Operation</em>' container reference isn't clear,
+     * If the meaning of the '<em>Return Type</em>' container reference isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Operation</em>' container reference.
-     * @see #setOperation(IntermediateDataOperation)
-     * @see de.fhdo.lemma.data.intermediate.IntermediatePackage#getIntermediateType_Operation()
-     * @see de.fhdo.lemma.data.intermediate.IntermediateDataOperation#getReturnType
-     * @model opposite="returnType" transient="false"
+     * @return the value of the '<em>Return Type</em>' container reference.
+     * @see #setReturnType(IntermediateDataOperationReturnType)
+     * @see de.fhdo.lemma.data.intermediate.IntermediatePackage#getIntermediateType_ReturnType()
+     * @see de.fhdo.lemma.data.intermediate.IntermediateDataOperationReturnType#getType
+     * @model opposite="type" transient="false"
      * @generated
      */
-    IntermediateDataOperation getOperation();
+    IntermediateDataOperationReturnType getReturnType();
 
     /**
-     * Sets the value of the '{@link de.fhdo.lemma.data.intermediate.IntermediateType#getOperation <em>Operation</em>}' container reference.
+     * Sets the value of the '{@link de.fhdo.lemma.data.intermediate.IntermediateType#getReturnType <em>Return Type</em>}' container reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Operation</em>' container reference.
-     * @see #getOperation()
+     * @param value the new value of the '<em>Return Type</em>' container reference.
+     * @see #getReturnType()
      * @generated
      */
-    void setOperation(IntermediateDataOperation value);
+    void setReturnType(IntermediateDataOperationReturnType value);
 
     /**
      * Returns the value of the '<em><b>Parameter</b></em>' container reference.

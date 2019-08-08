@@ -890,6 +890,7 @@ rule IntermediateImportedAspect {
             -- intermediate data models instead of intermediate service models
             if (not a.mappedComplexType.oclIsUndefined() or
                 not a.mappedDataOperation.oclIsUndefined() or
+                not a.mappedDataOperationReturnType.oclIsUndefined() or
                 not a.mappedDataOperationParameter.oclIsUndefined()) then
                 false
             -- Aspects of mapped fields are only handled if they are assigned to the fields in the

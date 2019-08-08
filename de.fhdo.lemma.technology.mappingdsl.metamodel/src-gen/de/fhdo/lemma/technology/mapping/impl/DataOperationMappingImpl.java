@@ -3,13 +3,11 @@
 package de.fhdo.lemma.technology.mapping.impl;
 
 import de.fhdo.lemma.data.DataOperation;
-import de.fhdo.lemma.data.Type;
-
-import de.fhdo.lemma.service.Import;
 
 import de.fhdo.lemma.technology.mapping.ComplexTypeMapping;
 import de.fhdo.lemma.technology.mapping.DataOperationMapping;
 import de.fhdo.lemma.technology.mapping.DataOperationParameterMapping;
+import de.fhdo.lemma.technology.mapping.DataOperationReturnTypeMapping;
 import de.fhdo.lemma.technology.mapping.MappingPackage;
 import de.fhdo.lemma.technology.mapping.TechnologySpecificImportedServiceAspect;
 
@@ -39,9 +37,8 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * </p>
  * <ul>
  *   <li>{@link de.fhdo.lemma.technology.mapping.impl.DataOperationMappingImpl#getDataOperation <em>Data Operation</em>}</li>
- *   <li>{@link de.fhdo.lemma.technology.mapping.impl.DataOperationMappingImpl#getTechnology <em>Technology</em>}</li>
- *   <li>{@link de.fhdo.lemma.technology.mapping.impl.DataOperationMappingImpl#getReturnType <em>Return Type</em>}</li>
  *   <li>{@link de.fhdo.lemma.technology.mapping.impl.DataOperationMappingImpl#getAspects <em>Aspects</em>}</li>
+ *   <li>{@link de.fhdo.lemma.technology.mapping.impl.DataOperationMappingImpl#getReturnTypeMapping <em>Return Type Mapping</em>}</li>
  *   <li>{@link de.fhdo.lemma.technology.mapping.impl.DataOperationMappingImpl#getParameterMappings <em>Parameter Mappings</em>}</li>
  *   <li>{@link de.fhdo.lemma.technology.mapping.impl.DataOperationMappingImpl#getTypeMapping <em>Type Mapping</em>}</li>
  * </ul>
@@ -60,26 +57,6 @@ public class DataOperationMappingImpl extends MinimalEObjectImpl.Container imple
     protected DataOperation dataOperation;
 
     /**
-     * The cached value of the '{@link #getTechnology() <em>Technology</em>}' reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getTechnology()
-     * @generated
-     * @ordered
-     */
-    protected Import technology;
-
-    /**
-     * The cached value of the '{@link #getReturnType() <em>Return Type</em>}' reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getReturnType()
-     * @generated
-     * @ordered
-     */
-    protected Type returnType;
-
-    /**
      * The cached value of the '{@link #getAspects() <em>Aspects</em>}' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -88,6 +65,16 @@ public class DataOperationMappingImpl extends MinimalEObjectImpl.Container imple
      * @ordered
      */
     protected EList<TechnologySpecificImportedServiceAspect> aspects;
+
+    /**
+     * The cached value of the '{@link #getReturnTypeMapping() <em>Return Type Mapping</em>}' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getReturnTypeMapping()
+     * @generated
+     * @ordered
+     */
+    protected DataOperationReturnTypeMapping returnTypeMapping;
 
     /**
      * The cached value of the '{@link #getParameterMappings() <em>Parameter Mappings</em>}' containment reference list.
@@ -164,91 +151,56 @@ public class DataOperationMappingImpl extends MinimalEObjectImpl.Container imple
      * @generated
      */
     @Override
-    public Import getTechnology() {
-        if (technology != null && technology.eIsProxy()) {
-            InternalEObject oldTechnology = (InternalEObject)technology;
-            technology = (Import)eResolveProxy(oldTechnology);
-            if (technology != oldTechnology) {
-                if (eNotificationRequired())
-                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, MappingPackage.DATA_OPERATION_MAPPING__TECHNOLOGY, oldTechnology, technology));
-            }
-        }
-        return technology;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public Import basicGetTechnology() {
-        return technology;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public void setTechnology(Import newTechnology) {
-        Import oldTechnology = technology;
-        technology = newTechnology;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.DATA_OPERATION_MAPPING__TECHNOLOGY, oldTechnology, technology));
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public Type getReturnType() {
-        if (returnType != null && returnType.eIsProxy()) {
-            InternalEObject oldReturnType = (InternalEObject)returnType;
-            returnType = (Type)eResolveProxy(oldReturnType);
-            if (returnType != oldReturnType) {
-                if (eNotificationRequired())
-                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, MappingPackage.DATA_OPERATION_MAPPING__RETURN_TYPE, oldReturnType, returnType));
-            }
-        }
-        return returnType;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public Type basicGetReturnType() {
-        return returnType;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public void setReturnType(Type newReturnType) {
-        Type oldReturnType = returnType;
-        returnType = newReturnType;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.DATA_OPERATION_MAPPING__RETURN_TYPE, oldReturnType, returnType));
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
     public EList<TechnologySpecificImportedServiceAspect> getAspects() {
         if (aspects == null) {
             aspects = new EObjectContainmentWithInverseEList<TechnologySpecificImportedServiceAspect>(TechnologySpecificImportedServiceAspect.class, this, MappingPackage.DATA_OPERATION_MAPPING__ASPECTS, MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__DATA_OPERATION_MAPPING);
         }
         return aspects;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public DataOperationReturnTypeMapping getReturnTypeMapping() {
+        return returnTypeMapping;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public NotificationChain basicSetReturnTypeMapping(DataOperationReturnTypeMapping newReturnTypeMapping, NotificationChain msgs) {
+        DataOperationReturnTypeMapping oldReturnTypeMapping = returnTypeMapping;
+        returnTypeMapping = newReturnTypeMapping;
+        if (eNotificationRequired()) {
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, MappingPackage.DATA_OPERATION_MAPPING__RETURN_TYPE_MAPPING, oldReturnTypeMapping, newReturnTypeMapping);
+            if (msgs == null) msgs = notification; else msgs.add(notification);
+        }
+        return msgs;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void setReturnTypeMapping(DataOperationReturnTypeMapping newReturnTypeMapping) {
+        if (newReturnTypeMapping != returnTypeMapping) {
+            NotificationChain msgs = null;
+            if (returnTypeMapping != null)
+                msgs = ((InternalEObject)returnTypeMapping).eInverseRemove(this, MappingPackage.DATA_OPERATION_RETURN_TYPE_MAPPING__OPERATION_MAPPING, DataOperationReturnTypeMapping.class, msgs);
+            if (newReturnTypeMapping != null)
+                msgs = ((InternalEObject)newReturnTypeMapping).eInverseAdd(this, MappingPackage.DATA_OPERATION_RETURN_TYPE_MAPPING__OPERATION_MAPPING, DataOperationReturnTypeMapping.class, msgs);
+            msgs = basicSetReturnTypeMapping(newReturnTypeMapping, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.DATA_OPERATION_MAPPING__RETURN_TYPE_MAPPING, newReturnTypeMapping, newReturnTypeMapping));
     }
 
     /**
@@ -328,6 +280,10 @@ public class DataOperationMappingImpl extends MinimalEObjectImpl.Container imple
         switch (featureID) {
             case MappingPackage.DATA_OPERATION_MAPPING__ASPECTS:
                 return ((InternalEList<InternalEObject>)(InternalEList<?>)getAspects()).basicAdd(otherEnd, msgs);
+            case MappingPackage.DATA_OPERATION_MAPPING__RETURN_TYPE_MAPPING:
+                if (returnTypeMapping != null)
+                    msgs = ((InternalEObject)returnTypeMapping).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - MappingPackage.DATA_OPERATION_MAPPING__RETURN_TYPE_MAPPING, null, msgs);
+                return basicSetReturnTypeMapping((DataOperationReturnTypeMapping)otherEnd, msgs);
             case MappingPackage.DATA_OPERATION_MAPPING__PARAMETER_MAPPINGS:
                 return ((InternalEList<InternalEObject>)(InternalEList<?>)getParameterMappings()).basicAdd(otherEnd, msgs);
             case MappingPackage.DATA_OPERATION_MAPPING__TYPE_MAPPING:
@@ -348,6 +304,8 @@ public class DataOperationMappingImpl extends MinimalEObjectImpl.Container imple
         switch (featureID) {
             case MappingPackage.DATA_OPERATION_MAPPING__ASPECTS:
                 return ((InternalEList<?>)getAspects()).basicRemove(otherEnd, msgs);
+            case MappingPackage.DATA_OPERATION_MAPPING__RETURN_TYPE_MAPPING:
+                return basicSetReturnTypeMapping(null, msgs);
             case MappingPackage.DATA_OPERATION_MAPPING__PARAMETER_MAPPINGS:
                 return ((InternalEList<?>)getParameterMappings()).basicRemove(otherEnd, msgs);
             case MappingPackage.DATA_OPERATION_MAPPING__TYPE_MAPPING:
@@ -381,14 +339,10 @@ public class DataOperationMappingImpl extends MinimalEObjectImpl.Container imple
             case MappingPackage.DATA_OPERATION_MAPPING__DATA_OPERATION:
                 if (resolve) return getDataOperation();
                 return basicGetDataOperation();
-            case MappingPackage.DATA_OPERATION_MAPPING__TECHNOLOGY:
-                if (resolve) return getTechnology();
-                return basicGetTechnology();
-            case MappingPackage.DATA_OPERATION_MAPPING__RETURN_TYPE:
-                if (resolve) return getReturnType();
-                return basicGetReturnType();
             case MappingPackage.DATA_OPERATION_MAPPING__ASPECTS:
                 return getAspects();
+            case MappingPackage.DATA_OPERATION_MAPPING__RETURN_TYPE_MAPPING:
+                return getReturnTypeMapping();
             case MappingPackage.DATA_OPERATION_MAPPING__PARAMETER_MAPPINGS:
                 return getParameterMappings();
             case MappingPackage.DATA_OPERATION_MAPPING__TYPE_MAPPING:
@@ -410,15 +364,12 @@ public class DataOperationMappingImpl extends MinimalEObjectImpl.Container imple
             case MappingPackage.DATA_OPERATION_MAPPING__DATA_OPERATION:
                 setDataOperation((DataOperation)newValue);
                 return;
-            case MappingPackage.DATA_OPERATION_MAPPING__TECHNOLOGY:
-                setTechnology((Import)newValue);
-                return;
-            case MappingPackage.DATA_OPERATION_MAPPING__RETURN_TYPE:
-                setReturnType((Type)newValue);
-                return;
             case MappingPackage.DATA_OPERATION_MAPPING__ASPECTS:
                 getAspects().clear();
                 getAspects().addAll((Collection<? extends TechnologySpecificImportedServiceAspect>)newValue);
+                return;
+            case MappingPackage.DATA_OPERATION_MAPPING__RETURN_TYPE_MAPPING:
+                setReturnTypeMapping((DataOperationReturnTypeMapping)newValue);
                 return;
             case MappingPackage.DATA_OPERATION_MAPPING__PARAMETER_MAPPINGS:
                 getParameterMappings().clear();
@@ -442,14 +393,11 @@ public class DataOperationMappingImpl extends MinimalEObjectImpl.Container imple
             case MappingPackage.DATA_OPERATION_MAPPING__DATA_OPERATION:
                 setDataOperation((DataOperation)null);
                 return;
-            case MappingPackage.DATA_OPERATION_MAPPING__TECHNOLOGY:
-                setTechnology((Import)null);
-                return;
-            case MappingPackage.DATA_OPERATION_MAPPING__RETURN_TYPE:
-                setReturnType((Type)null);
-                return;
             case MappingPackage.DATA_OPERATION_MAPPING__ASPECTS:
                 getAspects().clear();
+                return;
+            case MappingPackage.DATA_OPERATION_MAPPING__RETURN_TYPE_MAPPING:
+                setReturnTypeMapping((DataOperationReturnTypeMapping)null);
                 return;
             case MappingPackage.DATA_OPERATION_MAPPING__PARAMETER_MAPPINGS:
                 getParameterMappings().clear();
@@ -471,12 +419,10 @@ public class DataOperationMappingImpl extends MinimalEObjectImpl.Container imple
         switch (featureID) {
             case MappingPackage.DATA_OPERATION_MAPPING__DATA_OPERATION:
                 return dataOperation != null;
-            case MappingPackage.DATA_OPERATION_MAPPING__TECHNOLOGY:
-                return technology != null;
-            case MappingPackage.DATA_OPERATION_MAPPING__RETURN_TYPE:
-                return returnType != null;
             case MappingPackage.DATA_OPERATION_MAPPING__ASPECTS:
                 return aspects != null && !aspects.isEmpty();
+            case MappingPackage.DATA_OPERATION_MAPPING__RETURN_TYPE_MAPPING:
+                return returnTypeMapping != null;
             case MappingPackage.DATA_OPERATION_MAPPING__PARAMETER_MAPPINGS:
                 return parameterMappings != null && !parameterMappings.isEmpty();
             case MappingPackage.DATA_OPERATION_MAPPING__TYPE_MAPPING:

@@ -56,6 +56,7 @@ import de.fhdo.lemma.service.ServicePackage
 import de.fhdo.lemma.utils.LemmaUtils
 import de.fhdo.lemma.technology.mapping.DataOperationMapping
 import de.fhdo.lemma.technology.mapping.DataOperationParameterMapping
+import de.fhdo.lemma.technology.mapping.DataOperationReturnTypeMapping
 
 /**
  * This class implements a custom scope provider for the Mapping DSL.
@@ -76,6 +77,9 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
 
             /* Data operation mappings */
             DataOperationMapping: context.getScope(reference)
+
+            /* Data operation return type mapping */
+            DataOperationReturnTypeMapping: context.getScope(reference)
 
             /* Data operation parameter mappings */
             DataOperationParameterMapping: context.getScope(reference)
@@ -190,17 +194,30 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
             case MappingPackage::Literals.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__TECHNOLOGY:
                 return mapping.getScopeForAnnotatedTechnologies()
 
-            /* Data type technologies */
-            case MappingPackage::Literals.DATA_OPERATION_MAPPING__TECHNOLOGY:
-                return mapping.getScopeForAnnotatedTechnologies()
-
-            /* Return types */
-            case MappingPackage::Literals.DATA_OPERATION_MAPPING__RETURN_TYPE:
-                return mapping.getScopeForMappingTypes()
-
             /* Parameters */
             case MappingPackage::Literals.DATA_OPERATION_PARAMETER_MAPPING__PARAMETER:
                 return Scopes::scopeFor(mapping.dataOperation.parameters)
+        }
+
+        return null
+    }
+
+    /**
+     * Build scope for data operation parameter mappings and the given reference
+     */
+    private def getScope(DataOperationReturnTypeMapping mapping, EReference reference) {
+        switch (reference) {
+            /* Aspect technologies */
+            case MappingPackage::Literals.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__TECHNOLOGY:
+                return mapping.getScopeForAnnotatedTechnologies()
+
+            /* Return type technologies */
+            case MappingPackage::Literals.DATA_OPERATION_RETURN_TYPE_MAPPING__TECHNOLOGY:
+                return mapping.getScopeForAnnotatedTechnologies()
+
+            /* Types */
+            case MappingPackage::Literals.DATA_OPERATION_RETURN_TYPE_MAPPING__TYPE:
+                return mapping.getScopeForMappingTypes()
         }
 
         return null
@@ -222,6 +239,10 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
             /* Data type technologies */
             case MappingPackage::Literals.DATA_OPERATION_PARAMETER_MAPPING__TECHNOLOGY:
                 return mapping.getScopeForAnnotatedTechnologies()
+
+            /* Types */
+            case MappingPackage::Literals.DATA_OPERATION_PARAMETER_MAPPING__TYPE:
+                return mapping.getScopeForMappingTypes()
         }
 
         return null
@@ -579,8 +600,8 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
                 originalType = mapping.dataField.effectiveType
                 technology = mapping.technology
             }
-            DataOperationMapping: {
-                originalType = mapping.dataOperation.primitiveOrComplexReturnType
+            DataOperationReturnTypeMapping: {
+                originalType = mapping.operationMapping.dataOperation.primitiveOrComplexReturnType
                 technology = mapping.technology
             }
             default: return IScope.NULLSCOPE
@@ -840,7 +861,8 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
             DataOperationMapping: {
                 JoinPointType.DATA_OPERATIONS
             }
-            DataOperationParameterMapping: {
+            DataOperationParameterMapping,
+            DataOperationReturnTypeMapping: {
                 JoinPointType.DATA_OPERATION_PARAMETERS
             }
             MicroserviceMapping: {

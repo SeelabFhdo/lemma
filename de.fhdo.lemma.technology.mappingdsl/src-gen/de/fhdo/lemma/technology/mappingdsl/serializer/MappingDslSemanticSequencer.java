@@ -72,6 +72,7 @@ import de.fhdo.lemma.technology.mapping.ComplexParameterMapping;
 import de.fhdo.lemma.technology.mapping.ComplexTypeMapping;
 import de.fhdo.lemma.technology.mapping.DataOperationMapping;
 import de.fhdo.lemma.technology.mapping.DataOperationParameterMapping;
+import de.fhdo.lemma.technology.mapping.DataOperationReturnTypeMapping;
 import de.fhdo.lemma.technology.mapping.ImportedComplexTypeToMap;
 import de.fhdo.lemma.technology.mapping.ImportedMicroservice;
 import de.fhdo.lemma.technology.mapping.InterfaceMapping;
@@ -194,6 +195,9 @@ public class MappingDslSemanticSequencer extends ServiceDslSemanticSequencer {
 				return; 
 			case MappingPackage.DATA_OPERATION_PARAMETER_MAPPING:
 				sequence_DataOperationParameterMapping(context, (DataOperationParameterMapping) semanticObject); 
+				return; 
+			case MappingPackage.DATA_OPERATION_RETURN_TYPE_MAPPING:
+				sequence_DataOperationReturnTypeMapping(context, (DataOperationReturnTypeMapping) semanticObject); 
 				return; 
 			case MappingPackage.IMPORTED_COMPLEX_TYPE_TO_MAP:
 				sequence_ImportedComplexTypeToMap(context, (ImportedComplexTypeToMap) semanticObject); 
@@ -402,8 +406,8 @@ public class MappingDslSemanticSequencer extends ServiceDslSemanticSequencer {
 	 * Constraint:
 	 *     (
 	 *         dataOperation=[DataOperation|ID] 
-	 *         (technology=[Import|ID] returnType=[Type|QualifiedName])? 
 	 *         aspects+=TechnologySpecificImportedServiceAspect* 
+	 *         returnTypeMapping=DataOperationReturnTypeMapping? 
 	 *         parameterMappings+=DataOperationParameterMapping*
 	 *     )
 	 */
@@ -420,6 +424,18 @@ public class MappingDslSemanticSequencer extends ServiceDslSemanticSequencer {
 	 *     (parameter=[DataOperationParameter|ID] (technology=[Import|ID] type=[Type|QualifiedName])? aspects+=TechnologySpecificImportedServiceAspect*)
 	 */
 	protected void sequence_DataOperationParameterMapping(ISerializationContext context, DataOperationParameterMapping semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     DataOperationReturnTypeMapping returns DataOperationReturnTypeMapping
+	 *
+	 * Constraint:
+	 *     ((technology=[Import|ID] type=[Type|QualifiedName])? aspects+=TechnologySpecificImportedServiceAspect*)
+	 */
+	protected void sequence_DataOperationReturnTypeMapping(ISerializationContext context, DataOperationReturnTypeMapping semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

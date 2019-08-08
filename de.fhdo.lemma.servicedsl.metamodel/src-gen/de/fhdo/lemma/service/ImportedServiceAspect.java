@@ -37,6 +37,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.fhdo.lemma.service.ImportedServiceAspect#getMappedComplexType <em>Mapped Complex Type</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.ImportedServiceAspect#getMappedField <em>Mapped Field</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.ImportedServiceAspect#getMappedDataOperation <em>Mapped Data Operation</em>}</li>
+ *   <li>{@link de.fhdo.lemma.service.ImportedServiceAspect#getMappedDataOperationReturnType <em>Mapped Data Operation Return Type</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.ImportedServiceAspect#getMappedDataOperationParameter <em>Mapped Data Operation Parameter</em>}</li>
  * </ul>
  *
@@ -373,6 +374,34 @@ public interface ImportedServiceAspect extends EObject {
      * @generated
      */
     void setMappedDataOperation(MappedDataOperation value);
+
+    /**
+     * Returns the value of the '<em><b>Mapped Data Operation Return Type</b></em>' container reference.
+     * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.MappedDataOperationReturnType#getAspects <em>Aspects</em>}'.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Mapped Data Operation Return Type</em>' container reference isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Mapped Data Operation Return Type</em>' container reference.
+     * @see #setMappedDataOperationReturnType(MappedDataOperationReturnType)
+     * @see de.fhdo.lemma.service.ServicePackage#getImportedServiceAspect_MappedDataOperationReturnType()
+     * @see de.fhdo.lemma.service.MappedDataOperationReturnType#getAspects
+     * @model opposite="aspects" transient="false"
+     * @generated
+     */
+    MappedDataOperationReturnType getMappedDataOperationReturnType();
+
+    /**
+     * Sets the value of the '{@link de.fhdo.lemma.service.ImportedServiceAspect#getMappedDataOperationReturnType <em>Mapped Data Operation Return Type</em>}' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Mapped Data Operation Return Type</em>' container reference.
+     * @see #getMappedDataOperationReturnType()
+     * @generated
+     */
+    void setMappedDataOperationReturnType(MappedDataOperationReturnType value);
 
     /**
      * Returns the value of the '<em><b>Mapped Data Operation Parameter</b></em>' container reference.

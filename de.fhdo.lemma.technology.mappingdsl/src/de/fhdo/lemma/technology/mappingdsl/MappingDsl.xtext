@@ -185,13 +185,13 @@ TechnologySpecificFieldMapping returns TechnologySpecificFieldMapping:
 
 DataOperationMapping returns DataOperationMapping:
     'op' dataOperation=[data::DataOperation]
-    (':' technology=[service::Import] '::' returnType=[data::Type|QualifiedName])?
-
     (
         ('{'
             ('aspects' '{'
                 aspects+=TechnologySpecificImportedServiceAspect+
             '}')?
+
+            ('return' 'type' returnTypeMapping=DataOperationReturnTypeMapping)?
 
             ('parameters' '{'
                 parameterMappings+=DataOperationParameterMapping+
@@ -202,11 +202,29 @@ DataOperationMapping returns DataOperationMapping:
     )
 ;
 
+DataOperationReturnTypeMapping returns DataOperationReturnTypeMapping:
+    {DataOperationReturnTypeMapping}
+    (
+        ':' technology=[service::Import] '::'
+        type=[data::Type|QualifiedName]
+    )?
+    (
+        '{'
+            'aspects' '{'
+                aspects+=TechnologySpecificImportedServiceAspect+
+            '}'
+        '}'
+    |
+        ';'
+    )
+;
+
+
 DataOperationParameterMapping returns DataOperationParameterMapping:
     parameter=[data::DataOperationParameter]
     (
-     ':' technology=[service::Import] '::'
-     type=[data::Type|QualifiedName]
+        ':' technology=[service::Import] '::'
+        type=[data::Type|QualifiedName]
     )?
     (
         '{'

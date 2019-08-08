@@ -107,7 +107,7 @@ abstract class IntermediateType {
     IntermediateTypeOrigin origin
     IntermediateTypeKind kind
 
-    container IntermediateDataOperation operation opposite returnType
+    container IntermediateDataOperationReturnType returnType opposite ^type
     container IntermediateDataOperationParameter parameter opposite ^type
     container IntermediateDataField dataField opposite ^type
 }
@@ -168,15 +168,24 @@ class IntermediateDataOperation {
     String qualifiedName
     boolean hidden
     boolean inherited
-    boolean hasNoReturnType
     String[] featureNames
 
-    contains IntermediateType[0..1] returnType opposite operation
-    contains IntermediateType[0..1] originalReturnType
+    contains IntermediateDataOperationReturnType[0..1] returnType opposite operation
     contains IntermediateDataOperationParameter[] parameters opposite operation
     contains IntermediateImportedAspect[] aspects opposite operation
 
     container IntermediateDataStructure dataStructure opposite operations
+}
+
+/**
+ * Data operation return type
+ */
+class IntermediateDataOperationReturnType {
+    contains IntermediateType ^type opposite returnType
+    contains IntermediateType originalType
+    contains IntermediateImportedAspect[] aspects opposite returnType
+
+    container IntermediateDataOperation operation opposite returnType
 }
 
 /**
@@ -274,6 +283,7 @@ class IntermediateImportedAspect {
 
     container IntermediateComplexType complexType opposite aspects
     container IntermediateDataOperation operation opposite aspects
+    container IntermediateDataOperationReturnType returnType opposite aspects
     container IntermediateDataOperationParameter parameter opposite aspects
     container IntermediateDataField dataField opposite aspects
 }

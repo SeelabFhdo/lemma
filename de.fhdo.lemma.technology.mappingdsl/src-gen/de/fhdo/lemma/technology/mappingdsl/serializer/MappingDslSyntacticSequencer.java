@@ -22,7 +22,7 @@ import org.eclipse.xtext.serializer.sequencer.AbstractSyntacticSequencer;
 public class MappingDslSyntacticSequencer extends AbstractSyntacticSequencer {
 
 	protected MappingDslGrammarAccess grammarAccess;
-	protected AbstractElementAlias match_DataOperationMapping_SemicolonKeyword_3_1_or___LeftCurlyBracketKeyword_3_0_0_RightCurlyBracketKeyword_3_0_3__;
+	protected AbstractElementAlias match_DataOperationMapping_SemicolonKeyword_2_1_or___LeftCurlyBracketKeyword_2_0_0_RightCurlyBracketKeyword_2_0_4__;
 	protected AbstractElementAlias match_DataOperation___LeftParenthesisKeyword_3_0_RightParenthesisKeyword_3_3__q;
 	protected AbstractElementAlias match_MicroserviceMapping___EndpointsKeyword_4_0_LeftCurlyBracketKeyword_4_1_RightCurlyBracketKeyword_4_3__q;
 	protected AbstractElementAlias match_OperationAspect_SemicolonKeyword_5_1_or___LeftCurlyBracketKeyword_5_0_0_RightCurlyBracketKeyword_5_0_3__;
@@ -31,7 +31,7 @@ public class MappingDslSyntacticSequencer extends AbstractSyntacticSequencer {
 	@Inject
 	protected void init(IGrammarAccess access) {
 		grammarAccess = (MappingDslGrammarAccess) access;
-		match_DataOperationMapping_SemicolonKeyword_3_1_or___LeftCurlyBracketKeyword_3_0_0_RightCurlyBracketKeyword_3_0_3__ = new AlternativeAlias(false, false, new GroupAlias(false, false, new TokenAlias(false, false, grammarAccess.getDataOperationMappingAccess().getLeftCurlyBracketKeyword_3_0_0()), new TokenAlias(false, false, grammarAccess.getDataOperationMappingAccess().getRightCurlyBracketKeyword_3_0_3())), new TokenAlias(false, false, grammarAccess.getDataOperationMappingAccess().getSemicolonKeyword_3_1()));
+		match_DataOperationMapping_SemicolonKeyword_2_1_or___LeftCurlyBracketKeyword_2_0_0_RightCurlyBracketKeyword_2_0_4__ = new AlternativeAlias(false, false, new GroupAlias(false, false, new TokenAlias(false, false, grammarAccess.getDataOperationMappingAccess().getLeftCurlyBracketKeyword_2_0_0()), new TokenAlias(false, false, grammarAccess.getDataOperationMappingAccess().getRightCurlyBracketKeyword_2_0_4())), new TokenAlias(false, false, grammarAccess.getDataOperationMappingAccess().getSemicolonKeyword_2_1()));
 		match_DataOperation___LeftParenthesisKeyword_3_0_RightParenthesisKeyword_3_3__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getDataOperationAccess().getLeftParenthesisKeyword_3_0()), new TokenAlias(false, false, grammarAccess.getDataOperationAccess().getRightParenthesisKeyword_3_3()));
 		match_MicroserviceMapping___EndpointsKeyword_4_0_LeftCurlyBracketKeyword_4_1_RightCurlyBracketKeyword_4_3__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getMicroserviceMappingAccess().getEndpointsKeyword_4_0()), new TokenAlias(false, false, grammarAccess.getMicroserviceMappingAccess().getLeftCurlyBracketKeyword_4_1()), new TokenAlias(false, false, grammarAccess.getMicroserviceMappingAccess().getRightCurlyBracketKeyword_4_3()));
 		match_OperationAspect_SemicolonKeyword_5_1_or___LeftCurlyBracketKeyword_5_0_0_RightCurlyBracketKeyword_5_0_3__ = new AlternativeAlias(false, false, new GroupAlias(false, false, new TokenAlias(false, false, grammarAccess.getOperationAspectAccess().getLeftCurlyBracketKeyword_5_0_0()), new TokenAlias(false, false, grammarAccess.getOperationAspectAccess().getRightCurlyBracketKeyword_5_0_3())), new TokenAlias(false, false, grammarAccess.getOperationAspectAccess().getSemicolonKeyword_5_1()));
@@ -50,8 +50,8 @@ public class MappingDslSyntacticSequencer extends AbstractSyntacticSequencer {
 		List<INode> transitionNodes = collectNodes(fromNode, toNode);
 		for (AbstractElementAlias syntax : transition.getAmbiguousSyntaxes()) {
 			List<INode> syntaxNodes = getNodesFor(transitionNodes, syntax);
-			if (match_DataOperationMapping_SemicolonKeyword_3_1_or___LeftCurlyBracketKeyword_3_0_0_RightCurlyBracketKeyword_3_0_3__.equals(syntax))
-				emit_DataOperationMapping_SemicolonKeyword_3_1_or___LeftCurlyBracketKeyword_3_0_0_RightCurlyBracketKeyword_3_0_3__(semanticObject, getLastNavigableState(), syntaxNodes);
+			if (match_DataOperationMapping_SemicolonKeyword_2_1_or___LeftCurlyBracketKeyword_2_0_0_RightCurlyBracketKeyword_2_0_4__.equals(syntax))
+				emit_DataOperationMapping_SemicolonKeyword_2_1_or___LeftCurlyBracketKeyword_2_0_0_RightCurlyBracketKeyword_2_0_4__(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_DataOperation___LeftParenthesisKeyword_3_0_RightParenthesisKeyword_3_3__q.equals(syntax))
 				emit_DataOperation___LeftParenthesisKeyword_3_0_RightParenthesisKeyword_3_3__q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_MicroserviceMapping___EndpointsKeyword_4_0_LeftCurlyBracketKeyword_4_1_RightCurlyBracketKeyword_4_3__q.equals(syntax))
@@ -70,9 +70,8 @@ public class MappingDslSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     dataOperation=[DataOperation|ID] (ambiguity) (rule end)
-	 *     returnType=[Type|QualifiedName] (ambiguity) (rule end)
 	 */
-	protected void emit_DataOperationMapping_SemicolonKeyword_3_1_or___LeftCurlyBracketKeyword_3_0_0_RightCurlyBracketKeyword_3_0_3__(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_DataOperationMapping_SemicolonKeyword_2_1_or___LeftCurlyBracketKeyword_2_0_0_RightCurlyBracketKeyword_2_0_4__(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	

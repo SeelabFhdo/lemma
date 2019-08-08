@@ -67,6 +67,7 @@ public class IntermediateFactoryImpl extends EFactoryImpl implements Intermediat
             case IntermediatePackage.INTERMEDIATE_IMPORTED_TECHNOLOGY_SPECIFIC_TYPE: return createIntermediateImportedTechnologySpecificType();
             case IntermediatePackage.INTERMEDIATE_DATA_STRUCTURE: return createIntermediateDataStructure();
             case IntermediatePackage.INTERMEDIATE_DATA_OPERATION: return createIntermediateDataOperation();
+            case IntermediatePackage.INTERMEDIATE_DATA_OPERATION_RETURN_TYPE: return createIntermediateDataOperationReturnType();
             case IntermediatePackage.INTERMEDIATE_DATA_OPERATION_PARAMETER: return createIntermediateDataOperationParameter();
             case IntermediatePackage.INTERMEDIATE_LIST_TYPE: return createIntermediateListType();
             case IntermediatePackage.INTERMEDIATE_DATA_FIELD: return createIntermediateDataField();
@@ -222,6 +223,17 @@ public class IntermediateFactoryImpl extends EFactoryImpl implements Intermediat
     public IntermediateDataOperation createIntermediateDataOperation() {
         IntermediateDataOperationImpl intermediateDataOperation = new IntermediateDataOperationImpl();
         return intermediateDataOperation;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public IntermediateDataOperationReturnType createIntermediateDataOperationReturnType() {
+        IntermediateDataOperationReturnTypeImpl intermediateDataOperationReturnType = new IntermediateDataOperationReturnTypeImpl();
+        return intermediateDataOperationReturnType;
     }
 
     /**

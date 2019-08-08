@@ -90,6 +90,12 @@ public class ServiceSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
+            case ServicePackage.MAPPED_DATA_OPERATION_RETURN_TYPE: {
+                MappedDataOperationReturnType mappedDataOperationReturnType = (MappedDataOperationReturnType)theEObject;
+                T result = caseMappedDataOperationReturnType(mappedDataOperationReturnType);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
             case ServicePackage.MAPPED_DATA_OPERATION_PARAMETER: {
                 MappedDataOperationParameter mappedDataOperationParameter = (MappedDataOperationParameter)theEObject;
                 T result = caseMappedDataOperationParameter(mappedDataOperationParameter);
@@ -259,6 +265,21 @@ public class ServiceSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseMappedDataOperation(MappedDataOperation object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Mapped Data Operation Return Type</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Mapped Data Operation Return Type</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseMappedDataOperationReturnType(MappedDataOperationReturnType object) {
         return null;
     }
 

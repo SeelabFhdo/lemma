@@ -139,6 +139,12 @@ public class IntermediateSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
+            case IntermediatePackage.INTERMEDIATE_DATA_OPERATION_RETURN_TYPE: {
+                IntermediateDataOperationReturnType intermediateDataOperationReturnType = (IntermediateDataOperationReturnType)theEObject;
+                T result = caseIntermediateDataOperationReturnType(intermediateDataOperationReturnType);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
             case IntermediatePackage.INTERMEDIATE_DATA_OPERATION_PARAMETER: {
                 IntermediateDataOperationParameter intermediateDataOperationParameter = (IntermediateDataOperationParameter)theEObject;
                 T result = caseIntermediateDataOperationParameter(intermediateDataOperationParameter);
@@ -357,6 +363,21 @@ public class IntermediateSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseIntermediateDataOperation(IntermediateDataOperation object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Data Operation Return Type</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Data Operation Return Type</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseIntermediateDataOperationReturnType(IntermediateDataOperationReturnType object) {
         return null;
     }
 

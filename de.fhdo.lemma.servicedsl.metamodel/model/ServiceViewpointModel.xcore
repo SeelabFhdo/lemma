@@ -206,11 +206,22 @@ class MappedComplexType {
  */
 class MappedDataOperation {
     refers DataOperation dataOperation
-    contains ImportedType[0..1] mappedReturnType
     contains ImportedServiceAspect[] aspects opposite mappedDataOperation
+    contains MappedDataOperationReturnType[0..1] mappedReturnType opposite mappedOperation
     contains MappedDataOperationParameter[] mappedParameters opposite mappedOperation
 
     container MappedComplexType mappedComplexType opposite mappedOperations
+}
+
+/**
+ * Concept to express technology-specific information, which was assigned to the return type of a
+ * data operation leveraging the Mapping DSL
+ */
+class MappedDataOperationReturnType {
+    contains ImportedType[0..1] mappedType
+    contains ImportedServiceAspect[] aspects opposite mappedDataOperationReturnType
+
+    container MappedDataOperation mappedOperation opposite mappedReturnType
 }
 
 /**
@@ -1540,6 +1551,7 @@ class ImportedServiceAspect {
     container MappedComplexType mappedComplexType opposite aspects
     container MappedField mappedField opposite aspects
     container MappedDataOperation mappedDataOperation opposite aspects
+    container MappedDataOperationReturnType mappedDataOperationReturnType opposite aspects
     container MappedDataOperationParameter mappedDataOperationParameter opposite aspects
 }
 

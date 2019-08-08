@@ -9,6 +9,7 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import de.fhdo.lemma.data.ComplexType;
 import de.fhdo.lemma.data.DataField;
+import de.fhdo.lemma.data.DataOperation;
 import de.fhdo.lemma.data.EnumerationField;
 import de.fhdo.lemma.data.PrimitiveType;
 import de.fhdo.lemma.data.PrimitiveValue;
@@ -37,6 +38,7 @@ import de.fhdo.lemma.technology.mapping.ComplexParameterMapping;
 import de.fhdo.lemma.technology.mapping.ComplexTypeMapping;
 import de.fhdo.lemma.technology.mapping.DataOperationMapping;
 import de.fhdo.lemma.technology.mapping.DataOperationParameterMapping;
+import de.fhdo.lemma.technology.mapping.DataOperationReturnTypeMapping;
 import de.fhdo.lemma.technology.mapping.ImportedComplexTypeToMap;
 import de.fhdo.lemma.technology.mapping.ImportedMicroservice;
 import de.fhdo.lemma.technology.mapping.InterfaceMapping;
@@ -603,6 +605,26 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
   }
   
   /**
+   * Check that data operation maps its return type only if the original data operation has a
+   * return type
+   */
+  @Check
+  public void checkDataOperationReturnTypeMapping(final DataOperationReturnTypeMapping returnTypeMapping) {
+    final DataOperation originalOperation = returnTypeMapping.getOperationMapping().getDataOperation();
+    boolean _isHasNoReturnType = originalOperation.isHasNoReturnType();
+    if (_isHasNoReturnType) {
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("Domain operation ");
+      String _name = originalOperation.getName();
+      _builder.append(_name);
+      _builder.append(" has no return type");
+      this.error(_builder.toString(), 
+        returnTypeMapping.getOperationMapping(), 
+        MappingPackage.Literals.DATA_OPERATION_MAPPING__RETURN_TYPE_MAPPING);
+    }
+  }
+  
+  /**
    * Check that data operation parameter mappings are unique
    */
   @Check
@@ -1063,6 +1085,19 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
   }
   
   /**
+   * Check and warn if types of a data operation mapping with primitive return type are not
+   * compatible. Note that we just place a warning in case of (suspected) type incompatibility, as
+   * we also do it in the Service DSL.
+   */
+  @Check
+  public void warnReturnTypeCompatibility(final DataOperationReturnTypeMapping mapping) {
+    boolean _isPrimitiveTypeMapping = this.isPrimitiveTypeMapping(mapping);
+    if (_isPrimitiveTypeMapping) {
+      this.warnPrimitiveTypeMappingCompatibility(mapping);
+    }
+  }
+  
+  /**
    * Check and warn if types of a primitive parameter mapping are not compatible. Note that we
    * just place a warning in case of (suspected) type incompatibility, as we also do it in the
    * Service DSL.
@@ -1082,19 +1117,6 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
    */
   @Check
   public void warnFieldMappingTypeCompatibility(final TechnologySpecificFieldMapping mapping) {
-    boolean _isPrimitiveTypeMapping = this.isPrimitiveTypeMapping(mapping);
-    if (_isPrimitiveTypeMapping) {
-      this.warnPrimitiveTypeMappingCompatibility(mapping);
-    }
-  }
-  
-  /**
-   * Check and warn if types of a data operation mapping with primitive return type are not
-   * compatible. Note that we just place a warning in case of (suspected) type incompatibility, as
-   * we also do it in the Service DSL.
-   */
-  @Check
-  public void warnReturnTypeCompatibility(final DataOperationMapping mapping) {
     boolean _isPrimitiveTypeMapping = this.isPrimitiveTypeMapping(mapping);
     if (_isPrimitiveTypeMapping) {
       this.warnPrimitiveTypeMappingCompatibility(mapping);
@@ -1137,12 +1159,12 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
       erroneousMappingFeature = MappingPackage.Literals.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__DATA_FIELD;
     }
     if (!_matched) {
-      if (mapping instanceof DataOperationMapping) {
+      if (mapping instanceof DataOperationReturnTypeMapping) {
         _matched=true;
-        mappedType = ((DataOperationMapping)mapping).getReturnType();
+        mappedType = ((DataOperationReturnTypeMapping)mapping).getType();
         mappedTypeName = ((TechnologySpecificPrimitiveType) mappedType).getName();
-        originalType = ((DataOperationMapping)mapping).getDataOperation().getPrimitiveReturnType();
-        erroneousMappingFeature = MappingPackage.Literals.DATA_OPERATION_MAPPING__DATA_OPERATION;
+        originalType = ((DataOperationReturnTypeMapping)mapping).getOperationMapping().getDataOperation().getPrimitiveReturnType();
+        erroneousMappingFeature = MappingPackage.Literals.DATA_OPERATION_RETURN_TYPE_MAPPING__TYPE;
       }
     }
     if (!_matched) {
@@ -1211,14 +1233,14 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
         _xifexpression = (_type instanceof TechnologySpecificPrimitiveType);
       } else {
         boolean _xifexpression_1 = false;
-        if ((mapping instanceof DataOperationMapping)) {
-          Type _returnType = ((DataOperationMapping)mapping).getReturnType();
-          _xifexpression_1 = (_returnType instanceof TechnologySpecificPrimitiveType);
+        if ((mapping instanceof DataOperationReturnTypeMapping)) {
+          Type _type_1 = ((DataOperationReturnTypeMapping)mapping).getType();
+          _xifexpression_1 = (_type_1 instanceof TechnologySpecificPrimitiveType);
         } else {
           boolean _xifexpression_2 = false;
           if ((mapping instanceof DataOperationParameterMapping)) {
-            Type _type_1 = ((DataOperationParameterMapping)mapping).getType();
-            _xifexpression_2 = (_type_1 instanceof TechnologySpecificPrimitiveType);
+            Type _type_2 = ((DataOperationParameterMapping)mapping).getType();
+            _xifexpression_2 = (_type_2 instanceof TechnologySpecificPrimitiveType);
           } else {
             _xifexpression_2 = false;
           }
@@ -1464,7 +1486,7 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
       return;
     }
     if (((mapping.getType() == null) && mapping.getAspects().isEmpty())) {
-      this.error("Data field mapping must not be empty", mapping, 
+      this.error("Mapping must not be empty", mapping, 
         MappingPackage.Literals.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__DATA_FIELD);
     }
   }
@@ -1474,9 +1496,22 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
    */
   @Check
   public void checkDataOperationMappingNotEmpty(final DataOperationMapping mapping) {
-    if (((mapping.getReturnType() == null) && mapping.getAspects().isEmpty())) {
-      this.error("Data operation mapping must not be empty", mapping, 
+    if ((((mapping.getReturnTypeMapping() == null) && 
+      mapping.getParameterMappings().isEmpty()) && 
+      mapping.getAspects().isEmpty())) {
+      this.error("Mapping must not be empty", mapping, 
         MappingPackage.Literals.DATA_OPERATION_MAPPING__DATA_OPERATION);
+    }
+  }
+  
+  /**
+   * Check that a data operation return type mapping is not empty
+   */
+  @Check
+  public void checkDataOperationReturnTypeMappingNotEmpty(final DataOperationReturnTypeMapping mapping) {
+    if (((mapping.getType() == null) && mapping.getAspects().isEmpty())) {
+      this.error("Mapping must not be empty", mapping.getOperationMapping(), 
+        MappingPackage.Literals.DATA_OPERATION_MAPPING__RETURN_TYPE_MAPPING);
     }
   }
   

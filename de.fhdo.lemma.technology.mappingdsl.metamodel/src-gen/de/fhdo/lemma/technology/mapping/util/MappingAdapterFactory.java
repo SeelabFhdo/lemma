@@ -120,6 +120,10 @@ public class MappingAdapterFactory extends AdapterFactoryImpl {
                 return createDataOperationMappingAdapter();
             }
             @Override
+            public Adapter caseDataOperationReturnTypeMapping(DataOperationReturnTypeMapping object) {
+                return createDataOperationReturnTypeMappingAdapter();
+            }
+            @Override
             public Adapter caseDataOperationParameterMapping(DataOperationParameterMapping object) {
                 return createDataOperationParameterMappingAdapter();
             }
@@ -338,6 +342,20 @@ public class MappingAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createDataOperationMappingAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.fhdo.lemma.technology.mapping.DataOperationReturnTypeMapping <em>Data Operation Return Type Mapping</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.fhdo.lemma.technology.mapping.DataOperationReturnTypeMapping
+     * @generated
+     */
+    public Adapter createDataOperationReturnTypeMappingAdapter() {
         return null;
     }
 

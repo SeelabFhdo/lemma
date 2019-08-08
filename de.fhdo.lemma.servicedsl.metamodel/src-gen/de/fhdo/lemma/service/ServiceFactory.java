@@ -58,6 +58,15 @@ public interface ServiceFactory extends EFactory {
     MappedDataOperation createMappedDataOperation();
 
     /**
+     * Returns a new object of class '<em>Mapped Data Operation Return Type</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Mapped Data Operation Return Type</em>'.
+     * @generated
+     */
+    MappedDataOperationReturnType createMappedDataOperationReturnType();
+
+    /**
      * Returns a new object of class '<em>Mapped Data Operation Parameter</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

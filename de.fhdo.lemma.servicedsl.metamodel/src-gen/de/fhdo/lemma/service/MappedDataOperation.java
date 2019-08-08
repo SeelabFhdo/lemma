@@ -24,8 +24,8 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  * <ul>
  *   <li>{@link de.fhdo.lemma.service.MappedDataOperation#getDataOperation <em>Data Operation</em>}</li>
- *   <li>{@link de.fhdo.lemma.service.MappedDataOperation#getMappedReturnType <em>Mapped Return Type</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.MappedDataOperation#getAspects <em>Aspects</em>}</li>
+ *   <li>{@link de.fhdo.lemma.service.MappedDataOperation#getMappedReturnType <em>Mapped Return Type</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.MappedDataOperation#getMappedParameters <em>Mapped Parameters</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.MappedDataOperation#getMappedComplexType <em>Mapped Complex Type</em>}</li>
  * </ul>
@@ -62,32 +62,6 @@ public interface MappedDataOperation extends EObject {
     void setDataOperation(DataOperation value);
 
     /**
-     * Returns the value of the '<em><b>Mapped Return Type</b></em>' containment reference.
-     * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Mapped Return Type</em>' containment reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
-     * @return the value of the '<em>Mapped Return Type</em>' containment reference.
-     * @see #setMappedReturnType(ImportedType)
-     * @see de.fhdo.lemma.service.ServicePackage#getMappedDataOperation_MappedReturnType()
-     * @model containment="true"
-     * @generated
-     */
-    ImportedType getMappedReturnType();
-
-    /**
-     * Sets the value of the '{@link de.fhdo.lemma.service.MappedDataOperation#getMappedReturnType <em>Mapped Return Type</em>}' containment reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Mapped Return Type</em>' containment reference.
-     * @see #getMappedReturnType()
-     * @generated
-     */
-    void setMappedReturnType(ImportedType value);
-
-    /**
      * Returns the value of the '<em><b>Aspects</b></em>' containment reference list.
      * The list contents are of type {@link de.fhdo.lemma.service.ImportedServiceAspect}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.ImportedServiceAspect#getMappedDataOperation <em>Mapped Data Operation</em>}'.
@@ -104,6 +78,34 @@ public interface MappedDataOperation extends EObject {
      * @generated
      */
     EList<ImportedServiceAspect> getAspects();
+
+    /**
+     * Returns the value of the '<em><b>Mapped Return Type</b></em>' containment reference.
+     * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.MappedDataOperationReturnType#getMappedOperation <em>Mapped Operation</em>}'.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Mapped Return Type</em>' containment reference isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Mapped Return Type</em>' containment reference.
+     * @see #setMappedReturnType(MappedDataOperationReturnType)
+     * @see de.fhdo.lemma.service.ServicePackage#getMappedDataOperation_MappedReturnType()
+     * @see de.fhdo.lemma.service.MappedDataOperationReturnType#getMappedOperation
+     * @model opposite="mappedOperation" containment="true"
+     * @generated
+     */
+    MappedDataOperationReturnType getMappedReturnType();
+
+    /**
+     * Sets the value of the '{@link de.fhdo.lemma.service.MappedDataOperation#getMappedReturnType <em>Mapped Return Type</em>}' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Mapped Return Type</em>' containment reference.
+     * @see #getMappedReturnType()
+     * @generated
+     */
+    void setMappedReturnType(MappedDataOperationReturnType value);
 
     /**
      * Returns the value of the '<em><b>Mapped Parameters</b></em>' containment reference list.

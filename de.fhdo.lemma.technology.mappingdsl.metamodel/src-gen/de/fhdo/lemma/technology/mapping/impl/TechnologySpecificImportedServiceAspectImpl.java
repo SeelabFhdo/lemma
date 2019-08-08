@@ -12,6 +12,7 @@ import de.fhdo.lemma.technology.TechnologySpecificPropertyValueAssignment;
 import de.fhdo.lemma.technology.mapping.ComplexTypeMapping;
 import de.fhdo.lemma.technology.mapping.DataOperationMapping;
 import de.fhdo.lemma.technology.mapping.DataOperationParameterMapping;
+import de.fhdo.lemma.technology.mapping.DataOperationReturnTypeMapping;
 import de.fhdo.lemma.technology.mapping.InterfaceMapping;
 import de.fhdo.lemma.technology.mapping.MappingPackage;
 import de.fhdo.lemma.technology.mapping.MicroserviceMapping;
@@ -58,6 +59,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.fhdo.lemma.technology.mapping.impl.TechnologySpecificImportedServiceAspectImpl#getParameterMapping <em>Parameter Mapping</em>}</li>
  *   <li>{@link de.fhdo.lemma.technology.mapping.impl.TechnologySpecificImportedServiceAspectImpl#getFieldMapping <em>Field Mapping</em>}</li>
  *   <li>{@link de.fhdo.lemma.technology.mapping.impl.TechnologySpecificImportedServiceAspectImpl#getDataOperationMapping <em>Data Operation Mapping</em>}</li>
+ *   <li>{@link de.fhdo.lemma.technology.mapping.impl.TechnologySpecificImportedServiceAspectImpl#getDataOperationReturnTypeMapping <em>Data Operation Return Type Mapping</em>}</li>
  *   <li>{@link de.fhdo.lemma.technology.mapping.impl.TechnologySpecificImportedServiceAspectImpl#getDataOperationParameterMapping <em>Data Operation Parameter Mapping</em>}</li>
  * </ul>
  *
@@ -691,6 +693,59 @@ public class TechnologySpecificImportedServiceAspectImpl extends MinimalEObjectI
      * @generated
      */
     @Override
+    public DataOperationReturnTypeMapping getDataOperationReturnTypeMapping() {
+        if (eContainerFeatureID() != MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__DATA_OPERATION_RETURN_TYPE_MAPPING) return null;
+        return (DataOperationReturnTypeMapping)eContainer();
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public DataOperationReturnTypeMapping basicGetDataOperationReturnTypeMapping() {
+        if (eContainerFeatureID() != MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__DATA_OPERATION_RETURN_TYPE_MAPPING) return null;
+        return (DataOperationReturnTypeMapping)eInternalContainer();
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public NotificationChain basicSetDataOperationReturnTypeMapping(DataOperationReturnTypeMapping newDataOperationReturnTypeMapping, NotificationChain msgs) {
+        msgs = eBasicSetContainer((InternalEObject)newDataOperationReturnTypeMapping, MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__DATA_OPERATION_RETURN_TYPE_MAPPING, msgs);
+        return msgs;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void setDataOperationReturnTypeMapping(DataOperationReturnTypeMapping newDataOperationReturnTypeMapping) {
+        if (newDataOperationReturnTypeMapping != eInternalContainer() || (eContainerFeatureID() != MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__DATA_OPERATION_RETURN_TYPE_MAPPING && newDataOperationReturnTypeMapping != null)) {
+            if (EcoreUtil.isAncestor(this, newDataOperationReturnTypeMapping))
+                throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
+            NotificationChain msgs = null;
+            if (eInternalContainer() != null)
+                msgs = eBasicRemoveFromContainer(msgs);
+            if (newDataOperationReturnTypeMapping != null)
+                msgs = ((InternalEObject)newDataOperationReturnTypeMapping).eInverseAdd(this, MappingPackage.DATA_OPERATION_RETURN_TYPE_MAPPING__ASPECTS, DataOperationReturnTypeMapping.class, msgs);
+            msgs = basicSetDataOperationReturnTypeMapping(newDataOperationReturnTypeMapping, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__DATA_OPERATION_RETURN_TYPE_MAPPING, newDataOperationReturnTypeMapping, newDataOperationReturnTypeMapping));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public DataOperationParameterMapping getDataOperationParameterMapping() {
         if (eContainerFeatureID() != MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__DATA_OPERATION_PARAMETER_MAPPING) return null;
         return (DataOperationParameterMapping)eContainer();
@@ -778,6 +833,10 @@ public class TechnologySpecificImportedServiceAspectImpl extends MinimalEObjectI
                 if (eInternalContainer() != null)
                     msgs = eBasicRemoveFromContainer(msgs);
                 return basicSetDataOperationMapping((DataOperationMapping)otherEnd, msgs);
+            case MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__DATA_OPERATION_RETURN_TYPE_MAPPING:
+                if (eInternalContainer() != null)
+                    msgs = eBasicRemoveFromContainer(msgs);
+                return basicSetDataOperationReturnTypeMapping((DataOperationReturnTypeMapping)otherEnd, msgs);
             case MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__DATA_OPERATION_PARAMETER_MAPPING:
                 if (eInternalContainer() != null)
                     msgs = eBasicRemoveFromContainer(msgs);
@@ -814,6 +873,8 @@ public class TechnologySpecificImportedServiceAspectImpl extends MinimalEObjectI
                 return basicSetFieldMapping(null, msgs);
             case MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__DATA_OPERATION_MAPPING:
                 return basicSetDataOperationMapping(null, msgs);
+            case MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__DATA_OPERATION_RETURN_TYPE_MAPPING:
+                return basicSetDataOperationReturnTypeMapping(null, msgs);
             case MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__DATA_OPERATION_PARAMETER_MAPPING:
                 return basicSetDataOperationParameterMapping(null, msgs);
         }
@@ -844,6 +905,8 @@ public class TechnologySpecificImportedServiceAspectImpl extends MinimalEObjectI
                 return eInternalContainer().eInverseRemove(this, MappingPackage.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__ASPECTS, TechnologySpecificFieldMapping.class, msgs);
             case MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__DATA_OPERATION_MAPPING:
                 return eInternalContainer().eInverseRemove(this, MappingPackage.DATA_OPERATION_MAPPING__ASPECTS, DataOperationMapping.class, msgs);
+            case MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__DATA_OPERATION_RETURN_TYPE_MAPPING:
+                return eInternalContainer().eInverseRemove(this, MappingPackage.DATA_OPERATION_RETURN_TYPE_MAPPING__ASPECTS, DataOperationReturnTypeMapping.class, msgs);
             case MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__DATA_OPERATION_PARAMETER_MAPPING:
                 return eInternalContainer().eInverseRemove(this, MappingPackage.DATA_OPERATION_PARAMETER_MAPPING__ASPECTS, DataOperationParameterMapping.class, msgs);
         }
@@ -892,6 +955,9 @@ public class TechnologySpecificImportedServiceAspectImpl extends MinimalEObjectI
             case MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__DATA_OPERATION_MAPPING:
                 if (resolve) return getDataOperationMapping();
                 return basicGetDataOperationMapping();
+            case MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__DATA_OPERATION_RETURN_TYPE_MAPPING:
+                if (resolve) return getDataOperationReturnTypeMapping();
+                return basicGetDataOperationReturnTypeMapping();
             case MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__DATA_OPERATION_PARAMETER_MAPPING:
                 if (resolve) return getDataOperationParameterMapping();
                 return basicGetDataOperationParameterMapping();
@@ -945,6 +1011,9 @@ public class TechnologySpecificImportedServiceAspectImpl extends MinimalEObjectI
             case MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__DATA_OPERATION_MAPPING:
                 setDataOperationMapping((DataOperationMapping)newValue);
                 return;
+            case MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__DATA_OPERATION_RETURN_TYPE_MAPPING:
+                setDataOperationReturnTypeMapping((DataOperationReturnTypeMapping)newValue);
+                return;
             case MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__DATA_OPERATION_PARAMETER_MAPPING:
                 setDataOperationParameterMapping((DataOperationParameterMapping)newValue);
                 return;
@@ -996,6 +1065,9 @@ public class TechnologySpecificImportedServiceAspectImpl extends MinimalEObjectI
             case MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__DATA_OPERATION_MAPPING:
                 setDataOperationMapping((DataOperationMapping)null);
                 return;
+            case MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__DATA_OPERATION_RETURN_TYPE_MAPPING:
+                setDataOperationReturnTypeMapping((DataOperationReturnTypeMapping)null);
+                return;
             case MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__DATA_OPERATION_PARAMETER_MAPPING:
                 setDataOperationParameterMapping((DataOperationParameterMapping)null);
                 return;
@@ -1035,6 +1107,8 @@ public class TechnologySpecificImportedServiceAspectImpl extends MinimalEObjectI
                 return basicGetFieldMapping() != null;
             case MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__DATA_OPERATION_MAPPING:
                 return basicGetDataOperationMapping() != null;
+            case MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__DATA_OPERATION_RETURN_TYPE_MAPPING:
+                return basicGetDataOperationReturnTypeMapping() != null;
             case MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__DATA_OPERATION_PARAMETER_MAPPING:
                 return basicGetDataOperationParameterMapping() != null;
         }

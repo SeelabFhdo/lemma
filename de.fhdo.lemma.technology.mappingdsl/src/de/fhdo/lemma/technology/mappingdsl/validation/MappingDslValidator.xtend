@@ -43,6 +43,7 @@ import de.fhdo.lemma.service.TechnologyReference
 import de.fhdo.lemma.utils.LemmaUtils
 import de.fhdo.lemma.technology.mapping.DataOperationMapping
 import de.fhdo.lemma.technology.mapping.DataOperationParameterMapping
+import de.fhdo.lemma.technology.mapping.DataOperationReturnTypeMapping
 
 /**
  * This class contains validation rules for the Mapping DSL.
@@ -471,6 +472,19 @@ class MappingDslValidator extends AbstractMappingDslValidator {
     }
 
     /**
+     * Check that data operation maps its return type only if the original data operation has a
+     * return type
+     */
+    @Check
+    def checkDataOperationReturnTypeMapping(DataOperationReturnTypeMapping returnTypeMapping) {
+        val originalOperation = returnTypeMapping.operationMapping.dataOperation
+        if (originalOperation.hasNoReturnType)
+            error('''Domain operation «originalOperation.name» has no return type''',
+                returnTypeMapping.operationMapping,
+                MappingPackage::Literals.DATA_OPERATION_MAPPING__RETURN_TYPE_MAPPING)
+    }
+
+    /**
      * Check that data operation parameter mappings are unique
      */
     @Check
@@ -796,6 +810,21 @@ class MappingDslValidator extends AbstractMappingDslValidator {
     }
 
     /**
+     * Check and warn if types of a data operation mapping with primitive return type are not
+     * compatible. Note that we just place a warning in case of (suspected) type incompatibility, as
+     * we also do it in the Service DSL.
+     */
+    @Check
+    def warnReturnTypeCompatibility(DataOperationReturnTypeMapping mapping) {
+        // We only consider primitive mappings for checking type compatibility, because if the
+        // mapped type is a technology-specific complex type, type checking makes no sense at all
+        // because technology-specific complex types don't exhibit any type-checking relevant
+        // information, e.g., a structure consisting of typed fields
+        if (mapping.isPrimitiveTypeMapping)
+            warnPrimitiveTypeMappingCompatibility(mapping)
+    }
+
+    /**
      * Check and warn if types of a primitive parameter mapping are not compatible. Note that we
      * just place a warning in case of (suspected) type incompatibility, as we also do it in the
      * Service DSL.
@@ -813,23 +842,8 @@ class MappingDslValidator extends AbstractMappingDslValidator {
     @Check
     def warnFieldMappingTypeCompatibility(TechnologySpecificFieldMapping mapping) {
         // We only consider primitive mappings for checking type compatibility, because if the
-        // mapped type is a technology-specific complex type, type checking makes not sense at all
-        // because technology-specific complex type don't exhibit any type-checking relevant
-        // information, e.g., a structure consisting of typed fields
-        if (mapping.isPrimitiveTypeMapping)
-            warnPrimitiveTypeMappingCompatibility(mapping)
-    }
-
-    /**
-     * Check and warn if types of a data operation mapping with primitive return type are not
-     * compatible. Note that we just place a warning in case of (suspected) type incompatibility, as
-     * we also do it in the Service DSL.
-     */
-    @Check
-    def warnReturnTypeCompatibility(DataOperationMapping mapping) {
-        // We only consider primitive mappings for checking type compatibility, because if the
-        // mapped type is a technology-specific complex type, type checking makes not sense at all
-        // because technology-specific complex type don't exhibit any type-checking relevant
+        // mapped type is a technology-specific complex type, type checking makes no sense at all
+        // because technology-specific complex types don't exhibit any type-checking relevant
         // information, e.g., a structure consisting of typed fields
         if (mapping.isPrimitiveTypeMapping)
             warnPrimitiveTypeMappingCompatibility(mapping)
@@ -843,8 +857,8 @@ class MappingDslValidator extends AbstractMappingDslValidator {
     @Check
     def warnDataOperationParameterTypeCompatibility(DataOperationParameterMapping mapping) {
         // We only consider primitive mappings for checking type compatibility, because if the
-        // mapped type is a technology-specific complex type, type checking makes not sense at all
-        // because technology-specific complex type don't exhibit any type-checking relevant
+        // mapped type is a technology-specific complex type, type checking makes no sense at all
+        // because technology-specific complex types don't exhibit any type-checking relevant
         // information, e.g., a structure consisting of typed fields
         if (mapping.isPrimitiveTypeMapping)
             warnPrimitiveTypeMappingCompatibility(mapping)
@@ -877,12 +891,12 @@ class MappingDslValidator extends AbstractMappingDslValidator {
             }
 
             // Mapping of data operation with primitive return type
-            DataOperationMapping: {
-                mappedType = mapping.returnType
+            DataOperationReturnTypeMapping: {
+                mappedType = mapping.type
                 mappedTypeName = (mappedType as TechnologySpecificPrimitiveType).name
-                originalType = mapping.dataOperation.primitiveReturnType
+                originalType = mapping.operationMapping.dataOperation.primitiveReturnType
                 erroneousMappingFeature = MappingPackage::Literals
-                    .DATA_OPERATION_MAPPING__DATA_OPERATION
+                    .DATA_OPERATION_RETURN_TYPE_MAPPING__TYPE
             }
 
             // Primitive data operation parameter mapping
@@ -932,8 +946,8 @@ class MappingDslValidator extends AbstractMappingDslValidator {
         return mapping instanceof PrimitiveParameterMapping ||
             if (mapping instanceof TechnologySpecificFieldMapping)
                 mapping.type instanceof TechnologySpecificPrimitiveType
-            else if (mapping instanceof DataOperationMapping)
-                mapping.returnType instanceof TechnologySpecificPrimitiveType
+            else if (mapping instanceof DataOperationReturnTypeMapping)
+                mapping.type instanceof TechnologySpecificPrimitiveType
             else if (mapping instanceof DataOperationParameterMapping)
                 mapping.type instanceof TechnologySpecificPrimitiveType
             else
@@ -1135,7 +1149,7 @@ class MappingDslValidator extends AbstractMappingDslValidator {
         }
 
         if (mapping.type === null && mapping.aspects.empty)
-            error("Data field mapping must not be empty", mapping,
+            error("Mapping must not be empty", mapping,
                 MappingPackage::Literals.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__DATA_FIELD)
     }
 
@@ -1144,9 +1158,21 @@ class MappingDslValidator extends AbstractMappingDslValidator {
      */
     @Check
     def checkDataOperationMappingNotEmpty(DataOperationMapping mapping) {
-        if (mapping.returnType === null && mapping.aspects.empty)
-            error("Data operation mapping must not be empty", mapping,
+        if (mapping.returnTypeMapping === null &&
+            mapping.parameterMappings.empty &&
+            mapping.aspects.empty)
+            error("Mapping must not be empty", mapping,
                 MappingPackage::Literals.DATA_OPERATION_MAPPING__DATA_OPERATION)
+    }
+
+    /**
+     * Check that a data operation return type mapping is not empty
+     */
+    @Check
+    def checkDataOperationReturnTypeMappingNotEmpty(DataOperationReturnTypeMapping mapping) {
+        if (mapping.type === null && mapping.aspects.empty)
+            error("Mapping must not be empty", mapping.operationMapping,
+                MappingPackage::Literals.DATA_OPERATION_MAPPING__RETURN_TYPE_MAPPING)
     }
 
     /**

@@ -389,22 +389,22 @@ public interface ServicePackage extends EPackage {
     int MAPPED_DATA_OPERATION__DATA_OPERATION = 0;
 
     /**
-     * The feature id for the '<em><b>Mapped Return Type</b></em>' containment reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int MAPPED_DATA_OPERATION__MAPPED_RETURN_TYPE = 1;
-
-    /**
      * The feature id for the '<em><b>Aspects</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int MAPPED_DATA_OPERATION__ASPECTS = 2;
+    int MAPPED_DATA_OPERATION__ASPECTS = 1;
+
+    /**
+     * The feature id for the '<em><b>Mapped Return Type</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MAPPED_DATA_OPERATION__MAPPED_RETURN_TYPE = 2;
 
     /**
      * The feature id for the '<em><b>Mapped Parameters</b></em>' containment reference list.
@@ -443,6 +443,61 @@ public interface ServicePackage extends EPackage {
     int MAPPED_DATA_OPERATION_OPERATION_COUNT = 0;
 
     /**
+     * The meta object id for the '{@link de.fhdo.lemma.service.impl.MappedDataOperationReturnTypeImpl <em>Mapped Data Operation Return Type</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.fhdo.lemma.service.impl.MappedDataOperationReturnTypeImpl
+     * @see de.fhdo.lemma.service.impl.ServicePackageImpl#getMappedDataOperationReturnType()
+     * @generated
+     */
+    int MAPPED_DATA_OPERATION_RETURN_TYPE = 4;
+
+    /**
+     * The feature id for the '<em><b>Mapped Type</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MAPPED_DATA_OPERATION_RETURN_TYPE__MAPPED_TYPE = 0;
+
+    /**
+     * The feature id for the '<em><b>Aspects</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MAPPED_DATA_OPERATION_RETURN_TYPE__ASPECTS = 1;
+
+    /**
+     * The feature id for the '<em><b>Mapped Operation</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MAPPED_DATA_OPERATION_RETURN_TYPE__MAPPED_OPERATION = 2;
+
+    /**
+     * The number of structural features of the '<em>Mapped Data Operation Return Type</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MAPPED_DATA_OPERATION_RETURN_TYPE_FEATURE_COUNT = 3;
+
+    /**
+     * The number of operations of the '<em>Mapped Data Operation Return Type</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MAPPED_DATA_OPERATION_RETURN_TYPE_OPERATION_COUNT = 0;
+
+    /**
      * The meta object id for the '{@link de.fhdo.lemma.service.impl.MappedDataOperationParameterImpl <em>Mapped Data Operation Parameter</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -450,7 +505,7 @@ public interface ServicePackage extends EPackage {
      * @see de.fhdo.lemma.service.impl.ServicePackageImpl#getMappedDataOperationParameter()
      * @generated
      */
-    int MAPPED_DATA_OPERATION_PARAMETER = 4;
+    int MAPPED_DATA_OPERATION_PARAMETER = 5;
 
     /**
      * The feature id for the '<em><b>Parameter</b></em>' reference.
@@ -514,7 +569,7 @@ public interface ServicePackage extends EPackage {
      * @see de.fhdo.lemma.service.impl.ServicePackageImpl#getMappedField()
      * @generated
      */
-    int MAPPED_FIELD = 5;
+    int MAPPED_FIELD = 6;
 
     /**
      * The feature id for the '<em><b>Data Field</b></em>' reference.
@@ -632,7 +687,7 @@ public interface ServicePackage extends EPackage {
      * @see de.fhdo.lemma.service.impl.ServicePackageImpl#getMicroservice()
      * @generated
      */
-    int MICROSERVICE = 6;
+    int MICROSERVICE = 7;
 
     /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -975,7 +1030,7 @@ public interface ServicePackage extends EPackage {
      * @see de.fhdo.lemma.service.impl.ServicePackageImpl#getTechnologyReference()
      * @generated
      */
-    int TECHNOLOGY_REFERENCE = 7;
+    int TECHNOLOGY_REFERENCE = 8;
 
     /**
      * The feature id for the '<em><b>Is Type Definition Technology</b></em>' attribute.
@@ -1039,7 +1094,7 @@ public interface ServicePackage extends EPackage {
      * @see de.fhdo.lemma.service.impl.ServicePackageImpl#getInterface()
      * @generated
      */
-    int INTERFACE = 8;
+    int INTERFACE = 9;
 
     /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1202,7 +1257,7 @@ public interface ServicePackage extends EPackage {
      * @see de.fhdo.lemma.service.impl.ServicePackageImpl#getOperation()
      * @generated
      */
-    int OPERATION = 9;
+    int OPERATION = 10;
 
     /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1374,7 +1429,7 @@ public interface ServicePackage extends EPackage {
      * @see de.fhdo.lemma.service.impl.ServicePackageImpl#getApiOperationComment()
      * @generated
      */
-    int API_OPERATION_COMMENT = 10;
+    int API_OPERATION_COMMENT = 11;
 
     /**
      * The feature id for the '<em><b>Comment</b></em>' attribute.
@@ -1429,7 +1484,7 @@ public interface ServicePackage extends EPackage {
      * @see de.fhdo.lemma.service.impl.ServicePackageImpl#getApiParameterComment()
      * @generated
      */
-    int API_PARAMETER_COMMENT = 11;
+    int API_PARAMETER_COMMENT = 12;
 
     /**
      * The feature id for the '<em><b>Comment</b></em>' attribute.
@@ -1493,7 +1548,7 @@ public interface ServicePackage extends EPackage {
      * @see de.fhdo.lemma.service.impl.ServicePackageImpl#getReferredOperation()
      * @generated
      */
-    int REFERRED_OPERATION = 12;
+    int REFERRED_OPERATION = 13;
 
     /**
      * The feature id for the '<em><b>Operation</b></em>' reference.
@@ -1593,7 +1648,7 @@ public interface ServicePackage extends EPackage {
      * @see de.fhdo.lemma.service.impl.ServicePackageImpl#getParameter()
      * @generated
      */
-    int PARAMETER = 13;
+    int PARAMETER = 14;
 
     /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1774,7 +1829,7 @@ public interface ServicePackage extends EPackage {
      * @see de.fhdo.lemma.service.impl.ServicePackageImpl#getPossiblyImportedMicroservice()
      * @generated
      */
-    int POSSIBLY_IMPORTED_MICROSERVICE = 14;
+    int POSSIBLY_IMPORTED_MICROSERVICE = 15;
 
     /**
      * The feature id for the '<em><b>Import</b></em>' reference.
@@ -1829,7 +1884,7 @@ public interface ServicePackage extends EPackage {
      * @see de.fhdo.lemma.service.impl.ServicePackageImpl#getPossiblyImportedInterface()
      * @generated
      */
-    int POSSIBLY_IMPORTED_INTERFACE = 15;
+    int POSSIBLY_IMPORTED_INTERFACE = 16;
 
     /**
      * The feature id for the '<em><b>Import</b></em>' reference.
@@ -1902,7 +1957,7 @@ public interface ServicePackage extends EPackage {
      * @see de.fhdo.lemma.service.impl.ServicePackageImpl#getPossiblyImportedOperation()
      * @generated
      */
-    int POSSIBLY_IMPORTED_OPERATION = 16;
+    int POSSIBLY_IMPORTED_OPERATION = 17;
 
     /**
      * The feature id for the '<em><b>Import</b></em>' reference.
@@ -2002,7 +2057,7 @@ public interface ServicePackage extends EPackage {
      * @see de.fhdo.lemma.service.impl.ServicePackageImpl#getImportedType()
      * @generated
      */
-    int IMPORTED_TYPE = 17;
+    int IMPORTED_TYPE = 18;
 
     /**
      * The feature id for the '<em><b>Import</b></em>' reference.
@@ -2048,7 +2103,7 @@ public interface ServicePackage extends EPackage {
      * @see de.fhdo.lemma.service.impl.ServicePackageImpl#getImportedProtocolAndDataFormat()
      * @generated
      */
-    int IMPORTED_PROTOCOL_AND_DATA_FORMAT = 18;
+    int IMPORTED_PROTOCOL_AND_DATA_FORMAT = 19;
 
     /**
      * The feature id for the '<em><b>Import</b></em>' reference.
@@ -2121,7 +2176,7 @@ public interface ServicePackage extends EPackage {
      * @see de.fhdo.lemma.service.impl.ServicePackageImpl#getProtocolSpecification()
      * @generated
      */
-    int PROTOCOL_SPECIFICATION = 19;
+    int PROTOCOL_SPECIFICATION = 20;
 
     /**
      * The feature id for the '<em><b>Communication Type</b></em>' attribute.
@@ -2176,7 +2231,7 @@ public interface ServicePackage extends EPackage {
      * @see de.fhdo.lemma.service.impl.ServicePackageImpl#getEndpoint()
      * @generated
      */
-    int ENDPOINT = 20;
+    int ENDPOINT = 21;
 
     /**
      * The feature id for the '<em><b>Addresses</b></em>' attribute list.
@@ -2258,7 +2313,7 @@ public interface ServicePackage extends EPackage {
      * @see de.fhdo.lemma.service.impl.ServicePackageImpl#getImportedServiceAspect()
      * @generated
      */
-    int IMPORTED_SERVICE_ASPECT = 21;
+    int IMPORTED_SERVICE_ASPECT = 22;
 
     /**
      * The feature id for the '<em><b>Import</b></em>' reference.
@@ -2369,13 +2424,22 @@ public interface ServicePackage extends EPackage {
     int IMPORTED_SERVICE_ASPECT__MAPPED_DATA_OPERATION = 11;
 
     /**
+     * The feature id for the '<em><b>Mapped Data Operation Return Type</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int IMPORTED_SERVICE_ASPECT__MAPPED_DATA_OPERATION_RETURN_TYPE = 12;
+
+    /**
      * The feature id for the '<em><b>Mapped Data Operation Parameter</b></em>' container reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int IMPORTED_SERVICE_ASPECT__MAPPED_DATA_OPERATION_PARAMETER = 12;
+    int IMPORTED_SERVICE_ASPECT__MAPPED_DATA_OPERATION_PARAMETER = 13;
 
     /**
      * The number of structural features of the '<em>Imported Service Aspect</em>' class.
@@ -2384,7 +2448,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int IMPORTED_SERVICE_ASPECT_FEATURE_COUNT = 13;
+    int IMPORTED_SERVICE_ASPECT_FEATURE_COUNT = 14;
 
     /**
      * The number of operations of the '<em>Imported Service Aspect</em>' class.
@@ -2403,7 +2467,7 @@ public interface ServicePackage extends EPackage {
      * @see de.fhdo.lemma.service.impl.ServicePackageImpl#getImportType()
      * @generated
      */
-    int IMPORT_TYPE = 22;
+    int IMPORT_TYPE = 23;
 
     /**
      * The meta object id for the '{@link de.fhdo.lemma.service.MicroserviceType <em>Microservice Type</em>}' enum.
@@ -2413,7 +2477,7 @@ public interface ServicePackage extends EPackage {
      * @see de.fhdo.lemma.service.impl.ServicePackageImpl#getMicroserviceType()
      * @generated
      */
-    int MICROSERVICE_TYPE = 23;
+    int MICROSERVICE_TYPE = 24;
 
     /**
      * The meta object id for the '{@link de.fhdo.lemma.service.Visibility <em>Visibility</em>}' enum.
@@ -2423,7 +2487,7 @@ public interface ServicePackage extends EPackage {
      * @see de.fhdo.lemma.service.impl.ServicePackageImpl#getVisibility()
      * @generated
      */
-    int VISIBILITY = 24;
+    int VISIBILITY = 25;
 
     /**
      * The meta object id for the '<em>Tuple List</em>' data type.
@@ -2433,7 +2497,7 @@ public interface ServicePackage extends EPackage {
      * @see de.fhdo.lemma.service.impl.ServicePackageImpl#getTupleList()
      * @generated
      */
-    int TUPLE_LIST = 25;
+    int TUPLE_LIST = 26;
 
     /**
      * The meta object id for the '<em>Microservice Import Map</em>' data type.
@@ -2443,7 +2507,7 @@ public interface ServicePackage extends EPackage {
      * @see de.fhdo.lemma.service.impl.ServicePackageImpl#getMicroserviceImportMap()
      * @generated
      */
-    int MICROSERVICE_IMPORT_MAP = 26;
+    int MICROSERVICE_IMPORT_MAP = 27;
 
     /**
      * The meta object id for the '<em>Default Protocols</em>' data type.
@@ -2453,7 +2517,7 @@ public interface ServicePackage extends EPackage {
      * @see de.fhdo.lemma.service.impl.ServicePackageImpl#getDefaultProtocols()
      * @generated
      */
-    int DEFAULT_PROTOCOLS = 27;
+    int DEFAULT_PROTOCOLS = 28;
 
 
     /**
@@ -2775,17 +2839,6 @@ public interface ServicePackage extends EPackage {
     EReference getMappedDataOperation_DataOperation();
 
     /**
-     * Returns the meta object for the containment reference '{@link de.fhdo.lemma.service.MappedDataOperation#getMappedReturnType <em>Mapped Return Type</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the containment reference '<em>Mapped Return Type</em>'.
-     * @see de.fhdo.lemma.service.MappedDataOperation#getMappedReturnType()
-     * @see #getMappedDataOperation()
-     * @generated
-     */
-    EReference getMappedDataOperation_MappedReturnType();
-
-    /**
      * Returns the meta object for the containment reference list '{@link de.fhdo.lemma.service.MappedDataOperation#getAspects <em>Aspects</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2795,6 +2848,17 @@ public interface ServicePackage extends EPackage {
      * @generated
      */
     EReference getMappedDataOperation_Aspects();
+
+    /**
+     * Returns the meta object for the containment reference '{@link de.fhdo.lemma.service.MappedDataOperation#getMappedReturnType <em>Mapped Return Type</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference '<em>Mapped Return Type</em>'.
+     * @see de.fhdo.lemma.service.MappedDataOperation#getMappedReturnType()
+     * @see #getMappedDataOperation()
+     * @generated
+     */
+    EReference getMappedDataOperation_MappedReturnType();
 
     /**
      * Returns the meta object for the containment reference list '{@link de.fhdo.lemma.service.MappedDataOperation#getMappedParameters <em>Mapped Parameters</em>}'.
@@ -2817,6 +2881,49 @@ public interface ServicePackage extends EPackage {
      * @generated
      */
     EReference getMappedDataOperation_MappedComplexType();
+
+    /**
+     * Returns the meta object for class '{@link de.fhdo.lemma.service.MappedDataOperationReturnType <em>Mapped Data Operation Return Type</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Mapped Data Operation Return Type</em>'.
+     * @see de.fhdo.lemma.service.MappedDataOperationReturnType
+     * @generated
+     */
+    EClass getMappedDataOperationReturnType();
+
+    /**
+     * Returns the meta object for the containment reference '{@link de.fhdo.lemma.service.MappedDataOperationReturnType#getMappedType <em>Mapped Type</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference '<em>Mapped Type</em>'.
+     * @see de.fhdo.lemma.service.MappedDataOperationReturnType#getMappedType()
+     * @see #getMappedDataOperationReturnType()
+     * @generated
+     */
+    EReference getMappedDataOperationReturnType_MappedType();
+
+    /**
+     * Returns the meta object for the containment reference list '{@link de.fhdo.lemma.service.MappedDataOperationReturnType#getAspects <em>Aspects</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Aspects</em>'.
+     * @see de.fhdo.lemma.service.MappedDataOperationReturnType#getAspects()
+     * @see #getMappedDataOperationReturnType()
+     * @generated
+     */
+    EReference getMappedDataOperationReturnType_Aspects();
+
+    /**
+     * Returns the meta object for the container reference '{@link de.fhdo.lemma.service.MappedDataOperationReturnType#getMappedOperation <em>Mapped Operation</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the container reference '<em>Mapped Operation</em>'.
+     * @see de.fhdo.lemma.service.MappedDataOperationReturnType#getMappedOperation()
+     * @see #getMappedDataOperationReturnType()
+     * @generated
+     */
+    EReference getMappedDataOperationReturnType_MappedOperation();
 
     /**
      * Returns the meta object for class '{@link de.fhdo.lemma.service.MappedDataOperationParameter <em>Mapped Data Operation Parameter</em>}'.
@@ -4725,6 +4832,17 @@ public interface ServicePackage extends EPackage {
     EReference getImportedServiceAspect_MappedDataOperation();
 
     /**
+     * Returns the meta object for the container reference '{@link de.fhdo.lemma.service.ImportedServiceAspect#getMappedDataOperationReturnType <em>Mapped Data Operation Return Type</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the container reference '<em>Mapped Data Operation Return Type</em>'.
+     * @see de.fhdo.lemma.service.ImportedServiceAspect#getMappedDataOperationReturnType()
+     * @see #getImportedServiceAspect()
+     * @generated
+     */
+    EReference getImportedServiceAspect_MappedDataOperationReturnType();
+
+    /**
      * Returns the meta object for the container reference '{@link de.fhdo.lemma.service.ImportedServiceAspect#getMappedDataOperationParameter <em>Mapped Data Operation Parameter</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -5070,20 +5188,20 @@ public interface ServicePackage extends EPackage {
         EReference MAPPED_DATA_OPERATION__DATA_OPERATION = eINSTANCE.getMappedDataOperation_DataOperation();
 
         /**
-         * The meta object literal for the '<em><b>Mapped Return Type</b></em>' containment reference feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference MAPPED_DATA_OPERATION__MAPPED_RETURN_TYPE = eINSTANCE.getMappedDataOperation_MappedReturnType();
-
-        /**
          * The meta object literal for the '<em><b>Aspects</b></em>' containment reference list feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
         EReference MAPPED_DATA_OPERATION__ASPECTS = eINSTANCE.getMappedDataOperation_Aspects();
+
+        /**
+         * The meta object literal for the '<em><b>Mapped Return Type</b></em>' containment reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference MAPPED_DATA_OPERATION__MAPPED_RETURN_TYPE = eINSTANCE.getMappedDataOperation_MappedReturnType();
 
         /**
          * The meta object literal for the '<em><b>Mapped Parameters</b></em>' containment reference list feature.
@@ -5100,6 +5218,40 @@ public interface ServicePackage extends EPackage {
          * @generated
          */
         EReference MAPPED_DATA_OPERATION__MAPPED_COMPLEX_TYPE = eINSTANCE.getMappedDataOperation_MappedComplexType();
+
+        /**
+         * The meta object literal for the '{@link de.fhdo.lemma.service.impl.MappedDataOperationReturnTypeImpl <em>Mapped Data Operation Return Type</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.fhdo.lemma.service.impl.MappedDataOperationReturnTypeImpl
+         * @see de.fhdo.lemma.service.impl.ServicePackageImpl#getMappedDataOperationReturnType()
+         * @generated
+         */
+        EClass MAPPED_DATA_OPERATION_RETURN_TYPE = eINSTANCE.getMappedDataOperationReturnType();
+
+        /**
+         * The meta object literal for the '<em><b>Mapped Type</b></em>' containment reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference MAPPED_DATA_OPERATION_RETURN_TYPE__MAPPED_TYPE = eINSTANCE.getMappedDataOperationReturnType_MappedType();
+
+        /**
+         * The meta object literal for the '<em><b>Aspects</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference MAPPED_DATA_OPERATION_RETURN_TYPE__ASPECTS = eINSTANCE.getMappedDataOperationReturnType_Aspects();
+
+        /**
+         * The meta object literal for the '<em><b>Mapped Operation</b></em>' container reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference MAPPED_DATA_OPERATION_RETURN_TYPE__MAPPED_OPERATION = eINSTANCE.getMappedDataOperationReturnType_MappedOperation();
 
         /**
          * The meta object literal for the '{@link de.fhdo.lemma.service.impl.MappedDataOperationParameterImpl <em>Mapped Data Operation Parameter</em>}' class.
@@ -6560,6 +6712,14 @@ public interface ServicePackage extends EPackage {
          * @generated
          */
         EReference IMPORTED_SERVICE_ASPECT__MAPPED_DATA_OPERATION = eINSTANCE.getImportedServiceAspect_MappedDataOperation();
+
+        /**
+         * The meta object literal for the '<em><b>Mapped Data Operation Return Type</b></em>' container reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference IMPORTED_SERVICE_ASPECT__MAPPED_DATA_OPERATION_RETURN_TYPE = eINSTANCE.getImportedServiceAspect_MappedDataOperationReturnType();
 
         /**
          * The meta object literal for the '<em><b>Mapped Data Operation Parameter</b></em>' container reference feature.

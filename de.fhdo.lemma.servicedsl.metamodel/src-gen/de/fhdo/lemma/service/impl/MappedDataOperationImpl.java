@@ -5,10 +5,10 @@ package de.fhdo.lemma.service.impl;
 import de.fhdo.lemma.data.DataOperation;
 
 import de.fhdo.lemma.service.ImportedServiceAspect;
-import de.fhdo.lemma.service.ImportedType;
 import de.fhdo.lemma.service.MappedComplexType;
 import de.fhdo.lemma.service.MappedDataOperation;
 import de.fhdo.lemma.service.MappedDataOperationParameter;
+import de.fhdo.lemma.service.MappedDataOperationReturnType;
 import de.fhdo.lemma.service.ServicePackage;
 
 import java.util.Collection;
@@ -37,8 +37,8 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * </p>
  * <ul>
  *   <li>{@link de.fhdo.lemma.service.impl.MappedDataOperationImpl#getDataOperation <em>Data Operation</em>}</li>
- *   <li>{@link de.fhdo.lemma.service.impl.MappedDataOperationImpl#getMappedReturnType <em>Mapped Return Type</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.impl.MappedDataOperationImpl#getAspects <em>Aspects</em>}</li>
+ *   <li>{@link de.fhdo.lemma.service.impl.MappedDataOperationImpl#getMappedReturnType <em>Mapped Return Type</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.impl.MappedDataOperationImpl#getMappedParameters <em>Mapped Parameters</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.impl.MappedDataOperationImpl#getMappedComplexType <em>Mapped Complex Type</em>}</li>
  * </ul>
@@ -57,16 +57,6 @@ public class MappedDataOperationImpl extends MinimalEObjectImpl.Container implem
     protected DataOperation dataOperation;
 
     /**
-     * The cached value of the '{@link #getMappedReturnType() <em>Mapped Return Type</em>}' containment reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getMappedReturnType()
-     * @generated
-     * @ordered
-     */
-    protected ImportedType mappedReturnType;
-
-    /**
      * The cached value of the '{@link #getAspects() <em>Aspects</em>}' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -75,6 +65,16 @@ public class MappedDataOperationImpl extends MinimalEObjectImpl.Container implem
      * @ordered
      */
     protected EList<ImportedServiceAspect> aspects;
+
+    /**
+     * The cached value of the '{@link #getMappedReturnType() <em>Mapped Return Type</em>}' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getMappedReturnType()
+     * @generated
+     * @ordered
+     */
+    protected MappedDataOperationReturnType mappedReturnType;
 
     /**
      * The cached value of the '{@link #getMappedParameters() <em>Mapped Parameters</em>}' containment reference list.
@@ -151,7 +151,20 @@ public class MappedDataOperationImpl extends MinimalEObjectImpl.Container implem
      * @generated
      */
     @Override
-    public ImportedType getMappedReturnType() {
+    public EList<ImportedServiceAspect> getAspects() {
+        if (aspects == null) {
+            aspects = new EObjectContainmentWithInverseEList<ImportedServiceAspect>(ImportedServiceAspect.class, this, ServicePackage.MAPPED_DATA_OPERATION__ASPECTS, ServicePackage.IMPORTED_SERVICE_ASPECT__MAPPED_DATA_OPERATION);
+        }
+        return aspects;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public MappedDataOperationReturnType getMappedReturnType() {
         return mappedReturnType;
     }
 
@@ -160,8 +173,8 @@ public class MappedDataOperationImpl extends MinimalEObjectImpl.Container implem
      * <!-- end-user-doc -->
      * @generated
      */
-    public NotificationChain basicSetMappedReturnType(ImportedType newMappedReturnType, NotificationChain msgs) {
-        ImportedType oldMappedReturnType = mappedReturnType;
+    public NotificationChain basicSetMappedReturnType(MappedDataOperationReturnType newMappedReturnType, NotificationChain msgs) {
+        MappedDataOperationReturnType oldMappedReturnType = mappedReturnType;
         mappedReturnType = newMappedReturnType;
         if (eNotificationRequired()) {
             ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ServicePackage.MAPPED_DATA_OPERATION__MAPPED_RETURN_TYPE, oldMappedReturnType, newMappedReturnType);
@@ -176,31 +189,18 @@ public class MappedDataOperationImpl extends MinimalEObjectImpl.Container implem
      * @generated
      */
     @Override
-    public void setMappedReturnType(ImportedType newMappedReturnType) {
+    public void setMappedReturnType(MappedDataOperationReturnType newMappedReturnType) {
         if (newMappedReturnType != mappedReturnType) {
             NotificationChain msgs = null;
             if (mappedReturnType != null)
-                msgs = ((InternalEObject)mappedReturnType).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ServicePackage.MAPPED_DATA_OPERATION__MAPPED_RETURN_TYPE, null, msgs);
+                msgs = ((InternalEObject)mappedReturnType).eInverseRemove(this, ServicePackage.MAPPED_DATA_OPERATION_RETURN_TYPE__MAPPED_OPERATION, MappedDataOperationReturnType.class, msgs);
             if (newMappedReturnType != null)
-                msgs = ((InternalEObject)newMappedReturnType).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ServicePackage.MAPPED_DATA_OPERATION__MAPPED_RETURN_TYPE, null, msgs);
+                msgs = ((InternalEObject)newMappedReturnType).eInverseAdd(this, ServicePackage.MAPPED_DATA_OPERATION_RETURN_TYPE__MAPPED_OPERATION, MappedDataOperationReturnType.class, msgs);
             msgs = basicSetMappedReturnType(newMappedReturnType, msgs);
             if (msgs != null) msgs.dispatch();
         }
         else if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, ServicePackage.MAPPED_DATA_OPERATION__MAPPED_RETURN_TYPE, newMappedReturnType, newMappedReturnType));
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public EList<ImportedServiceAspect> getAspects() {
-        if (aspects == null) {
-            aspects = new EObjectContainmentWithInverseEList<ImportedServiceAspect>(ImportedServiceAspect.class, this, ServicePackage.MAPPED_DATA_OPERATION__ASPECTS, ServicePackage.IMPORTED_SERVICE_ASPECT__MAPPED_DATA_OPERATION);
-        }
-        return aspects;
     }
 
     /**
@@ -280,6 +280,10 @@ public class MappedDataOperationImpl extends MinimalEObjectImpl.Container implem
         switch (featureID) {
             case ServicePackage.MAPPED_DATA_OPERATION__ASPECTS:
                 return ((InternalEList<InternalEObject>)(InternalEList<?>)getAspects()).basicAdd(otherEnd, msgs);
+            case ServicePackage.MAPPED_DATA_OPERATION__MAPPED_RETURN_TYPE:
+                if (mappedReturnType != null)
+                    msgs = ((InternalEObject)mappedReturnType).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ServicePackage.MAPPED_DATA_OPERATION__MAPPED_RETURN_TYPE, null, msgs);
+                return basicSetMappedReturnType((MappedDataOperationReturnType)otherEnd, msgs);
             case ServicePackage.MAPPED_DATA_OPERATION__MAPPED_PARAMETERS:
                 return ((InternalEList<InternalEObject>)(InternalEList<?>)getMappedParameters()).basicAdd(otherEnd, msgs);
             case ServicePackage.MAPPED_DATA_OPERATION__MAPPED_COMPLEX_TYPE:
@@ -298,10 +302,10 @@ public class MappedDataOperationImpl extends MinimalEObjectImpl.Container implem
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
-            case ServicePackage.MAPPED_DATA_OPERATION__MAPPED_RETURN_TYPE:
-                return basicSetMappedReturnType(null, msgs);
             case ServicePackage.MAPPED_DATA_OPERATION__ASPECTS:
                 return ((InternalEList<?>)getAspects()).basicRemove(otherEnd, msgs);
+            case ServicePackage.MAPPED_DATA_OPERATION__MAPPED_RETURN_TYPE:
+                return basicSetMappedReturnType(null, msgs);
             case ServicePackage.MAPPED_DATA_OPERATION__MAPPED_PARAMETERS:
                 return ((InternalEList<?>)getMappedParameters()).basicRemove(otherEnd, msgs);
             case ServicePackage.MAPPED_DATA_OPERATION__MAPPED_COMPLEX_TYPE:
@@ -335,10 +339,10 @@ public class MappedDataOperationImpl extends MinimalEObjectImpl.Container implem
             case ServicePackage.MAPPED_DATA_OPERATION__DATA_OPERATION:
                 if (resolve) return getDataOperation();
                 return basicGetDataOperation();
-            case ServicePackage.MAPPED_DATA_OPERATION__MAPPED_RETURN_TYPE:
-                return getMappedReturnType();
             case ServicePackage.MAPPED_DATA_OPERATION__ASPECTS:
                 return getAspects();
+            case ServicePackage.MAPPED_DATA_OPERATION__MAPPED_RETURN_TYPE:
+                return getMappedReturnType();
             case ServicePackage.MAPPED_DATA_OPERATION__MAPPED_PARAMETERS:
                 return getMappedParameters();
             case ServicePackage.MAPPED_DATA_OPERATION__MAPPED_COMPLEX_TYPE:
@@ -360,12 +364,12 @@ public class MappedDataOperationImpl extends MinimalEObjectImpl.Container implem
             case ServicePackage.MAPPED_DATA_OPERATION__DATA_OPERATION:
                 setDataOperation((DataOperation)newValue);
                 return;
-            case ServicePackage.MAPPED_DATA_OPERATION__MAPPED_RETURN_TYPE:
-                setMappedReturnType((ImportedType)newValue);
-                return;
             case ServicePackage.MAPPED_DATA_OPERATION__ASPECTS:
                 getAspects().clear();
                 getAspects().addAll((Collection<? extends ImportedServiceAspect>)newValue);
+                return;
+            case ServicePackage.MAPPED_DATA_OPERATION__MAPPED_RETURN_TYPE:
+                setMappedReturnType((MappedDataOperationReturnType)newValue);
                 return;
             case ServicePackage.MAPPED_DATA_OPERATION__MAPPED_PARAMETERS:
                 getMappedParameters().clear();
@@ -389,11 +393,11 @@ public class MappedDataOperationImpl extends MinimalEObjectImpl.Container implem
             case ServicePackage.MAPPED_DATA_OPERATION__DATA_OPERATION:
                 setDataOperation((DataOperation)null);
                 return;
-            case ServicePackage.MAPPED_DATA_OPERATION__MAPPED_RETURN_TYPE:
-                setMappedReturnType((ImportedType)null);
-                return;
             case ServicePackage.MAPPED_DATA_OPERATION__ASPECTS:
                 getAspects().clear();
+                return;
+            case ServicePackage.MAPPED_DATA_OPERATION__MAPPED_RETURN_TYPE:
+                setMappedReturnType((MappedDataOperationReturnType)null);
                 return;
             case ServicePackage.MAPPED_DATA_OPERATION__MAPPED_PARAMETERS:
                 getMappedParameters().clear();
@@ -415,10 +419,10 @@ public class MappedDataOperationImpl extends MinimalEObjectImpl.Container implem
         switch (featureID) {
             case ServicePackage.MAPPED_DATA_OPERATION__DATA_OPERATION:
                 return dataOperation != null;
-            case ServicePackage.MAPPED_DATA_OPERATION__MAPPED_RETURN_TYPE:
-                return mappedReturnType != null;
             case ServicePackage.MAPPED_DATA_OPERATION__ASPECTS:
                 return aspects != null && !aspects.isEmpty();
+            case ServicePackage.MAPPED_DATA_OPERATION__MAPPED_RETURN_TYPE:
+                return mappedReturnType != null;
             case ServicePackage.MAPPED_DATA_OPERATION__MAPPED_PARAMETERS:
                 return mappedParameters != null && !mappedParameters.isEmpty();
             case ServicePackage.MAPPED_DATA_OPERATION__MAPPED_COMPLEX_TYPE:

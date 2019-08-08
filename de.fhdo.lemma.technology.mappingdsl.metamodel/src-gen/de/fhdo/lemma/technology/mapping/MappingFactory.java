@@ -130,6 +130,15 @@ public interface MappingFactory extends EFactory {
     DataOperationMapping createDataOperationMapping();
 
     /**
+     * Returns a new object of class '<em>Data Operation Return Type Mapping</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Data Operation Return Type Mapping</em>'.
+     * @generated
+     */
+    DataOperationReturnTypeMapping createDataOperationReturnTypeMapping();
+
+    /**
      * Returns a new object of class '<em>Data Operation Parameter Mapping</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

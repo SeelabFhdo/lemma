@@ -41,6 +41,7 @@ import de.fhdo.lemma.technology.mapping.ComplexParameterMapping;
 import de.fhdo.lemma.technology.mapping.ComplexTypeMapping;
 import de.fhdo.lemma.technology.mapping.DataOperationMapping;
 import de.fhdo.lemma.technology.mapping.DataOperationParameterMapping;
+import de.fhdo.lemma.technology.mapping.DataOperationReturnTypeMapping;
 import de.fhdo.lemma.technology.mapping.ImportedComplexTypeToMap;
 import de.fhdo.lemma.technology.mapping.ImportedMicroservice;
 import de.fhdo.lemma.technology.mapping.InterfaceMapping;
@@ -107,6 +108,12 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
       if (context instanceof DataOperationMapping) {
         _matched=true;
         _switchResult = this.getScope(((DataOperationMapping)context), reference);
+      }
+    }
+    if (!_matched) {
+      if (context instanceof DataOperationReturnTypeMapping) {
+        _matched=true;
+        _switchResult = this.getScope(((DataOperationReturnTypeMapping)context), reference);
       }
     }
     if (!_matched) {
@@ -284,21 +291,33 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
       }
     }
     if (!_matched) {
-      if (Objects.equal(reference, MappingPackage.Literals.DATA_OPERATION_MAPPING__TECHNOLOGY)) {
+      if (Objects.equal(reference, MappingPackage.Literals.DATA_OPERATION_PARAMETER_MAPPING__PARAMETER)) {
+        _matched=true;
+        return Scopes.scopeFor(mapping.getDataOperation().getParameters());
+      }
+    }
+    return null;
+  }
+  
+  /**
+   * Build scope for data operation parameter mappings and the given reference
+   */
+  private IScope getScope(final DataOperationReturnTypeMapping mapping, final EReference reference) {
+    boolean _matched = false;
+    if (Objects.equal(reference, MappingPackage.Literals.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__TECHNOLOGY)) {
+      _matched=true;
+      return this.getScopeForAnnotatedTechnologies(mapping);
+    }
+    if (!_matched) {
+      if (Objects.equal(reference, MappingPackage.Literals.DATA_OPERATION_RETURN_TYPE_MAPPING__TECHNOLOGY)) {
         _matched=true;
         return this.getScopeForAnnotatedTechnologies(mapping);
       }
     }
     if (!_matched) {
-      if (Objects.equal(reference, MappingPackage.Literals.DATA_OPERATION_MAPPING__RETURN_TYPE)) {
+      if (Objects.equal(reference, MappingPackage.Literals.DATA_OPERATION_RETURN_TYPE_MAPPING__TYPE)) {
         _matched=true;
         return this.getScopeForMappingTypes(mapping);
-      }
-    }
-    if (!_matched) {
-      if (Objects.equal(reference, MappingPackage.Literals.DATA_OPERATION_PARAMETER_MAPPING__PARAMETER)) {
-        _matched=true;
-        return Scopes.scopeFor(mapping.getDataOperation().getParameters());
       }
     }
     return null;
@@ -323,6 +342,12 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
       if (Objects.equal(reference, MappingPackage.Literals.DATA_OPERATION_PARAMETER_MAPPING__TECHNOLOGY)) {
         _matched=true;
         return this.getScopeForAnnotatedTechnologies(mapping);
+      }
+    }
+    if (!_matched) {
+      if (Objects.equal(reference, MappingPackage.Literals.DATA_OPERATION_PARAMETER_MAPPING__TYPE)) {
+        _matched=true;
+        return this.getScopeForMappingTypes(mapping);
       }
     }
     return null;
@@ -782,10 +807,10 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
       }
     }
     if (!_matched) {
-      if (mapping instanceof DataOperationMapping) {
+      if (mapping instanceof DataOperationReturnTypeMapping) {
         _matched=true;
-        originalType = ((DataOperationMapping)mapping).getDataOperation().getPrimitiveOrComplexReturnType();
-        technology = ((DataOperationMapping)mapping).getTechnology();
+        originalType = ((DataOperationReturnTypeMapping)mapping).getOperationMapping().getDataOperation().getPrimitiveOrComplexReturnType();
+        technology = ((DataOperationReturnTypeMapping)mapping).getTechnology();
       }
     }
     if (!_matched) {
@@ -1168,6 +1193,13 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     if (!_matched) {
       if (mapping instanceof DataOperationParameterMapping) {
         _matched=true;
+      }
+      if (!_matched) {
+        if (mapping instanceof DataOperationReturnTypeMapping) {
+          _matched=true;
+        }
+      }
+      if (_matched) {
         _switchResult = JoinPointType.DATA_OPERATION_PARAMETERS;
       }
     }

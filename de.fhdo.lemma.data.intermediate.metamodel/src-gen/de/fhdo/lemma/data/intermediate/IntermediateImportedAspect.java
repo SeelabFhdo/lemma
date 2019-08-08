@@ -26,6 +26,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateImportedAspect#getPropertyValues <em>Property Values</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateImportedAspect#getComplexType <em>Complex Type</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateImportedAspect#getOperation <em>Operation</em>}</li>
+ *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateImportedAspect#getReturnType <em>Return Type</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateImportedAspect#getParameter <em>Parameter</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateImportedAspect#getDataField <em>Data Field</em>}</li>
  * </ul>
@@ -178,6 +179,34 @@ public interface IntermediateImportedAspect extends EObject {
      * @generated
      */
     void setOperation(IntermediateDataOperation value);
+
+    /**
+     * Returns the value of the '<em><b>Return Type</b></em>' container reference.
+     * It is bidirectional and its opposite is '{@link de.fhdo.lemma.data.intermediate.IntermediateDataOperationReturnType#getAspects <em>Aspects</em>}'.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Return Type</em>' container reference isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Return Type</em>' container reference.
+     * @see #setReturnType(IntermediateDataOperationReturnType)
+     * @see de.fhdo.lemma.data.intermediate.IntermediatePackage#getIntermediateImportedAspect_ReturnType()
+     * @see de.fhdo.lemma.data.intermediate.IntermediateDataOperationReturnType#getAspects
+     * @model opposite="aspects" transient="false"
+     * @generated
+     */
+    IntermediateDataOperationReturnType getReturnType();
+
+    /**
+     * Sets the value of the '{@link de.fhdo.lemma.data.intermediate.IntermediateImportedAspect#getReturnType <em>Return Type</em>}' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Return Type</em>' container reference.
+     * @see #getReturnType()
+     * @generated
+     */
+    void setReturnType(IntermediateDataOperationReturnType value);
 
     /**
      * Returns the value of the '<em><b>Parameter</b></em>' container reference.

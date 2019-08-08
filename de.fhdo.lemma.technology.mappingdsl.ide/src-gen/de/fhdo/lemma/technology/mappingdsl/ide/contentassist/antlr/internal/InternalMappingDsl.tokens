@@ -3,7 +3,7 @@
 ','=19
 '-'=24
 '--'=25
-'---'=133
+'---'=134
 '->'=61
 '.'=23
 '/'=26
@@ -18,7 +18,7 @@
 '?'=27
 '@'=29
 '@param'=14
-'@required'=136
+'@required'=137
 'aggregate'=82
 'applicationService'=83
 'architecture'=115
@@ -38,7 +38,7 @@
 'context'=81
 'data'=45
 'data_format'=76
-'datatypes'=135
+'datatypes'=136
 'date'=107
 'default'=47
 'deployment'=38
@@ -101,7 +101,8 @@
 'refers'=124
 'repository'=89
 'required'=119
-'selector'=134
+'return'=133
+'selector'=135
 'service'=36
 'short'=112
 'sideEffectFree'=100
@@ -168,6 +169,7 @@ T__133=133
 T__134=134
 T__135=135
 T__136=136
+T__137=137
 T__13=13
 T__14=14
 T__15=15

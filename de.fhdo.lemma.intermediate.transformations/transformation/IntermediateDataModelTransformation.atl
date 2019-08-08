@@ -283,7 +283,6 @@ rule IntermediateDataOperation(sourceOperation : Data!DataOperation,
             name <- sourceOperation.name,
             hidden <- sourceOperation.hidden,
             inherited <- inherited,
-            hasNoReturnType <- sourceOperation.hasNoReturnType,
             dataStructure <- dataStructure
         )
     do {
@@ -297,22 +296,37 @@ rule IntermediateDataOperation(sourceOperation : Data!DataOperation,
                 .concat('.')
                 .concat(sourceOperation.name);
 
-        if (not sourceOperation.primitiveReturnType.oclIsUndefined())
-            t.returnType <- thisModule.IntermediatePrimitiveType(
-                sourceOperation.primitiveReturnType.typeName,
-                sourceOperation.primitiveReturnType.typeSize);
-        else if (not sourceOperation.complexReturnType.oclIsUndefined())
-            t.returnType <- thisModule.IntermediateComplexType(sourceOperation.complexReturnType);
-        else if (not sourceOperation.importedComplexReturnType.oclIsUndefined())
-            t.returnType <- thisModule.IntermediateImportedComplexType(
-                sourceOperation.importedComplexReturnType
-            );
+        if (not sourceOperation.hasNoReturnType)
+            t.returnType <- thisModule.IntermediateDataOperationReturnType(sourceOperation, t);
 
         for (parameter in sourceOperation.parameters) {
             thisModule.IntermediateDataOperationParameter(parameter, t);
         }
 
         t.dataStructure.dataFields->append(t);
+        t;
+    }
+}
+
+--- Called rule to create an IntermediateDataOperationReturnType
+rule IntermediateDataOperationReturnType(sourceOperation : Data!DataOperation,
+    targetOperation : Intermediate!IntermediateDataOperation) {
+    to
+        t : Intermediate!IntermediateDataOperationReturnType(
+            operation <- targetOperation
+        )
+    do {
+        if (not sourceOperation.primitiveReturnType.oclIsUndefined())
+            t.type <- thisModule.IntermediatePrimitiveType(
+                sourceOperation.primitiveReturnType.typeName,
+                sourceOperation.primitiveReturnType.typeSize);
+        else if (not sourceOperation.complexReturnType.oclIsUndefined())
+            t.type <- thisModule.IntermediateComplexType(sourceOperation.complexReturnType);
+        else if (not sourceOperation.importedComplexReturnType.oclIsUndefined())
+            t.type <- thisModule.IntermediateImportedComplexType(
+                sourceOperation.importedComplexReturnType
+            );
+
         t;
     }
 }

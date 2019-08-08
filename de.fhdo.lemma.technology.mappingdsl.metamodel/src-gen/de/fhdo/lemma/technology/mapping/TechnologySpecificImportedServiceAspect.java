@@ -39,6 +39,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.fhdo.lemma.technology.mapping.TechnologySpecificImportedServiceAspect#getParameterMapping <em>Parameter Mapping</em>}</li>
  *   <li>{@link de.fhdo.lemma.technology.mapping.TechnologySpecificImportedServiceAspect#getFieldMapping <em>Field Mapping</em>}</li>
  *   <li>{@link de.fhdo.lemma.technology.mapping.TechnologySpecificImportedServiceAspect#getDataOperationMapping <em>Data Operation Mapping</em>}</li>
+ *   <li>{@link de.fhdo.lemma.technology.mapping.TechnologySpecificImportedServiceAspect#getDataOperationReturnTypeMapping <em>Data Operation Return Type Mapping</em>}</li>
  *   <li>{@link de.fhdo.lemma.technology.mapping.TechnologySpecificImportedServiceAspect#getDataOperationParameterMapping <em>Data Operation Parameter Mapping</em>}</li>
  * </ul>
  *
@@ -375,6 +376,34 @@ public interface TechnologySpecificImportedServiceAspect extends EObject {
      * @generated
      */
     void setDataOperationMapping(DataOperationMapping value);
+
+    /**
+     * Returns the value of the '<em><b>Data Operation Return Type Mapping</b></em>' container reference.
+     * It is bidirectional and its opposite is '{@link de.fhdo.lemma.technology.mapping.DataOperationReturnTypeMapping#getAspects <em>Aspects</em>}'.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Data Operation Return Type Mapping</em>' container reference isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Data Operation Return Type Mapping</em>' container reference.
+     * @see #setDataOperationReturnTypeMapping(DataOperationReturnTypeMapping)
+     * @see de.fhdo.lemma.technology.mapping.MappingPackage#getTechnologySpecificImportedServiceAspect_DataOperationReturnTypeMapping()
+     * @see de.fhdo.lemma.technology.mapping.DataOperationReturnTypeMapping#getAspects
+     * @model opposite="aspects" transient="false"
+     * @generated
+     */
+    DataOperationReturnTypeMapping getDataOperationReturnTypeMapping();
+
+    /**
+     * Sets the value of the '{@link de.fhdo.lemma.technology.mapping.TechnologySpecificImportedServiceAspect#getDataOperationReturnTypeMapping <em>Data Operation Return Type Mapping</em>}' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Data Operation Return Type Mapping</em>' container reference.
+     * @see #getDataOperationReturnTypeMapping()
+     * @generated
+     */
+    void setDataOperationReturnTypeMapping(DataOperationReturnTypeMapping value);
 
     /**
      * Returns the value of the '<em><b>Data Operation Parameter Mapping</b></em>' container reference.

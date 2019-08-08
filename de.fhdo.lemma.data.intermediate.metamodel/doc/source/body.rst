@@ -622,13 +622,7 @@ Custom, domain-specific Types
       
         Flag to indicate whether this operation was inherited from a super
         :ref:`structure <link__IntermediateDataStructure>`.
-
-    .. _link__IntermediateDataOperation_hasNoReturnType:
-
-    .. py:attribute:: boolean hasNoReturnType
-      
-        Flag to indicate whether this operation has a return type or not.
-
+    
     .. py:attribute:: String[*] featureNames
 
         This attribute contains the names of all features specified for the data
@@ -661,45 +655,11 @@ Custom, domain-specific Types
             also check the constraints and deny code generation in case they are
             violated.
 
-    .. _link__IntermediateDataOperation_returnType:
+    .. py:attribute:: IntermediateDataOperationReturnType returnType
 
-    .. py:attribute:: IntermediateType returnType
-
-        The return type of the operation.
-
-        .. HINT::
-
-            The ``type`` attribute always holds a unique instance of 
-            :py:class:`IntermediateType`, if the :ref:`hasNoReturnType
-            <link__IntermediateDataOperation_hasNoReturnType>` attribute is 
-            false. Moreover, instances of the same types are not reused for
-            return types.
-
-        .. HINT::
-
-            Code generators must use this type as the operation's return type
-            and not its :ref:`original return type
-            <link__IntermediateDataOperation_originalReturnType>`.
-
-    .. _link__IntermediateDataOperation_originalReturnType:
-
-    .. py:attribute:: IntermediateType originalReturnType
-
-        The original return type of the operation in case it got mapped within a 
-        Mapping Model.
-
-        .. HINT::
-
-            In case the operation has a :ref:`return type 
-            <link__IntermediateDataOperation_returnType>`, this attribute also
-            holds a value. If it differs from the :ref:`return type 
-            <link__IntermediateDataOperation_returnType>` of the operation, the
-            return got mapped and the 
-            :ref:`returnType <link__IntermediateDataOperation_returnType>` 
-            attribute holds an 
-            :java:type:`IntermediateImportedTechnologySpecificType 
-            <IntermediateImportedTechnologySpecificType>` instance that points
-            to the technology-specific type to which the return type was mapped.
+        The :ref:`return type <link__IntermediateDataOperationReturnType>` of 
+        the operation. This is empty when no return type for the operation was
+        specified.
 
     .. py:attribute:: IntermediateDataOperationParameter[*] parameters
 
@@ -710,6 +670,54 @@ Custom, domain-specific Types
 
         The :java:type:`aspects <IntermediateImportedAspect>` that were assigned
         to the operation within a Mapping Model.
+
+.. _link__IntermediateDataOperationReturnType:
+
+.. java:type:: class IntermediateDataOperationReturnType
+
+    The return type of an
+    :ref:`IntermediateDataOperation <link__IntermediateDataOperation>`.
+
+    .. _link__IntermediateDataOperationReturnType_type:
+
+    .. py:attribute:: IntermediateType[1] type
+
+        The return type.
+
+        .. HINT::
+
+            The ``type`` attribute always holds a unique instance of 
+            :py:class:`IntermediateType`, i.e., instances of the same types are
+            not reused.
+
+        .. HINT::
+
+            Code generators must use this type as the operation's return type
+            and not :ref:`originalType
+            <link__IntermediateDataOperationReturnType_originalType>`.
+
+    .. _link__IntermediateDataOperationReturnType_originalType:
+
+    .. py:attribute:: IntermediateType[1] originalType
+
+        The original return type of the operation in case it got mapped within a 
+        Mapping Model.
+
+        .. HINT::
+
+            This attribute always holds a value. In case it differs from the
+            :ref:`type <link__IntermediateDataOperationReturnType_type>`, the
+            return type got mapped and the 
+            :ref:`type <link__IntermediateDataOperationReturnType_type>` 
+            attribute holds an 
+            :java:type:`IntermediateImportedTechnologySpecificType 
+            <IntermediateImportedTechnologySpecificType>` instance that points
+            to the technology-specific type to which the return type was mapped.
+
+    .. py:attribute:: IntermediateImportedAspect[*] aspects
+
+        The :java:type:`aspects <IntermediateImportedAspect>` that were assigned
+        to the return type within a Mapping Model.
 
 .. _link__IntermediateDataOperationParameter:
 

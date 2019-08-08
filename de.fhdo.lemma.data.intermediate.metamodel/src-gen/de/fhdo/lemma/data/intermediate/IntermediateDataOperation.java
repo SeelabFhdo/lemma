@@ -24,10 +24,8 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateDataOperation#getQualifiedName <em>Qualified Name</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateDataOperation#isHidden <em>Hidden</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateDataOperation#isInherited <em>Inherited</em>}</li>
- *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateDataOperation#isHasNoReturnType <em>Has No Return Type</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateDataOperation#getFeatureNames <em>Feature Names</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateDataOperation#getReturnType <em>Return Type</em>}</li>
- *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateDataOperation#getOriginalReturnType <em>Original Return Type</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateDataOperation#getParameters <em>Parameters</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateDataOperation#getAspects <em>Aspects</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateDataOperation#getDataStructure <em>Data Structure</em>}</li>
@@ -143,32 +141,6 @@ public interface IntermediateDataOperation extends EObject {
     void setInherited(boolean value);
 
     /**
-     * Returns the value of the '<em><b>Has No Return Type</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Has No Return Type</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
-     * @return the value of the '<em>Has No Return Type</em>' attribute.
-     * @see #setHasNoReturnType(boolean)
-     * @see de.fhdo.lemma.data.intermediate.IntermediatePackage#getIntermediateDataOperation_HasNoReturnType()
-     * @model unique="false"
-     * @generated
-     */
-    boolean isHasNoReturnType();
-
-    /**
-     * Sets the value of the '{@link de.fhdo.lemma.data.intermediate.IntermediateDataOperation#isHasNoReturnType <em>Has No Return Type</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Has No Return Type</em>' attribute.
-     * @see #isHasNoReturnType()
-     * @generated
-     */
-    void setHasNoReturnType(boolean value);
-
-    /**
      * Returns the value of the '<em><b>Feature Names</b></em>' attribute list.
      * The list contents are of type {@link java.lang.String}.
      * <!-- begin-user-doc -->
@@ -186,7 +158,7 @@ public interface IntermediateDataOperation extends EObject {
 
     /**
      * Returns the value of the '<em><b>Return Type</b></em>' containment reference.
-     * It is bidirectional and its opposite is '{@link de.fhdo.lemma.data.intermediate.IntermediateType#getOperation <em>Operation</em>}'.
+     * It is bidirectional and its opposite is '{@link de.fhdo.lemma.data.intermediate.IntermediateDataOperationReturnType#getOperation <em>Operation</em>}'.
      * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Return Type</em>' containment reference isn't clear,
@@ -194,13 +166,13 @@ public interface IntermediateDataOperation extends EObject {
      * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Return Type</em>' containment reference.
-     * @see #setReturnType(IntermediateType)
+     * @see #setReturnType(IntermediateDataOperationReturnType)
      * @see de.fhdo.lemma.data.intermediate.IntermediatePackage#getIntermediateDataOperation_ReturnType()
-     * @see de.fhdo.lemma.data.intermediate.IntermediateType#getOperation
+     * @see de.fhdo.lemma.data.intermediate.IntermediateDataOperationReturnType#getOperation
      * @model opposite="operation" containment="true"
      * @generated
      */
-    IntermediateType getReturnType();
+    IntermediateDataOperationReturnType getReturnType();
 
     /**
      * Sets the value of the '{@link de.fhdo.lemma.data.intermediate.IntermediateDataOperation#getReturnType <em>Return Type</em>}' containment reference.
@@ -210,33 +182,7 @@ public interface IntermediateDataOperation extends EObject {
      * @see #getReturnType()
      * @generated
      */
-    void setReturnType(IntermediateType value);
-
-    /**
-     * Returns the value of the '<em><b>Original Return Type</b></em>' containment reference.
-     * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Original Return Type</em>' containment reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
-     * @return the value of the '<em>Original Return Type</em>' containment reference.
-     * @see #setOriginalReturnType(IntermediateType)
-     * @see de.fhdo.lemma.data.intermediate.IntermediatePackage#getIntermediateDataOperation_OriginalReturnType()
-     * @model containment="true"
-     * @generated
-     */
-    IntermediateType getOriginalReturnType();
-
-    /**
-     * Sets the value of the '{@link de.fhdo.lemma.data.intermediate.IntermediateDataOperation#getOriginalReturnType <em>Original Return Type</em>}' containment reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Original Return Type</em>' containment reference.
-     * @see #getOriginalReturnType()
-     * @generated
-     */
-    void setOriginalReturnType(IntermediateType value);
+    void setReturnType(IntermediateDataOperationReturnType value);
 
     /**
      * Returns the value of the '<em><b>Parameters</b></em>' containment reference list.

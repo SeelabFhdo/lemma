@@ -689,8 +689,8 @@ rule Parameter(sourceParameter : Service!Parameter, parameterMapping : Mapping!P
 }
 
 --- Generic called rule for creating a MappedDataOperation
-rule MappedDataOperation(operationMapping : Mapping!MappedDataOperation,
-    mappedComplexType : Mapping!MappedComplexType) {
+rule MappedDataOperation(operationMapping : Mapping!DataOperationMapping,
+    mappedComplexType : Service!MappedComplexType) {
     to
         t : Service!MappedDataOperation(
             dataOperation <- operationMapping.dataOperation,
@@ -699,10 +699,8 @@ rule MappedDataOperation(operationMapping : Mapping!MappedDataOperation,
             mappedComplexType <- mappedComplexType
         )
     do {
-        if (not operationMapping.technology.oclIsUndefined() and
-            not operationMapping.returnType.oclIsUndefined())
-            t.mappedReturnType <- thisModule.ImportedType(operationMapping.technology,
-                operationMapping.returnType);
+        if (not operationMapping.returnTypeMapping.oclIsUndefined())
+            thisModule.MappedDataOperationReturnType(operationMapping.returnTypeMapping, t);
 
         for (parameterMapping in operationMapping.parameterMappings) {
             thisModule.MappedDataOperationParameter(parameterMapping, t);
@@ -712,9 +710,28 @@ rule MappedDataOperation(operationMapping : Mapping!MappedDataOperation,
     }
 }
 
+--- Generic called rule for creating a MappedDataOperationReturnType
+rule MappedDataOperationReturnType(returnTypeMapping : Mapping!DataOperationReturnTypeMapping,
+    mappedDataOperation : Service!MappedDataOperation) {
+    to
+        t : Service!MappedDataOperationReturnType(
+            aspects <- thisModule.createImportedServiceAspects(returnTypeMapping.aspects,
+                'mappedDataOperationReturnType', t),
+            mappedOperation <- mappedDataOperation
+        )
+    do {
+        if (not returnTypeMapping.technology.oclIsUndefined() and
+            not returnTypeMapping.type.oclIsUndefined())
+            t.mappedType <- thisModule.ImportedType(returnTypeMapping.technology,
+                returnTypeMapping.type);
+
+        t;
+    }
+}
+
 --- Generic called rule for creating a MappedDataOperationParameter
-rule MappedDataOperationParameter(parameterMapping : Mapping!MappedDataOperationParameter,
-    mappedDataOperation : Mapping!MappedDataOperation) {
+rule MappedDataOperationParameter(parameterMapping : Mapping!DataOperationParameterMapping,
+    mappedDataOperation : Service!MappedDataOperation) {
     to
         t : Service!MappedDataOperationParameter(
             parameter <- parameterMapping.parameter,
