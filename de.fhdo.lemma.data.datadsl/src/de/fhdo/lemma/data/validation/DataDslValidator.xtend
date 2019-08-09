@@ -487,7 +487,7 @@ class DataDslValidator extends AbstractDataDslValidator {
             if (dataField.primitiveType === null) {
                 error("Only primitively typed data fields can be initialized", dataField,
                     DataPackage::Literals.DATA_FIELD__NAME)
-                    return
+                return
 
             // Only data fields within data structures are initializable
             } else if (dataField.dataStructure === null) {
@@ -495,11 +495,22 @@ class DataDslValidator extends AbstractDataDslValidator {
                     DataPackage::Literals.DATA_FIELD__NAME)
                 return
 
+            // Type of initialization value must be compatible with data field type
             } else if (!dataField.initializationValue.isOfType(dataField.primitiveType)) {
                 error('''Value is not of type «dataField.primitiveType.typeName» ''', dataField,
                     DataPackage::Literals.DATA_FIELD__INITIALIZATION_VALUE)
                 return
             }
+        }
+
+        /* Hidden immutable, primitively typed fields need an initialization value */
+        if (dataField.hidden &&
+            dataField.immutable &&
+            dataField.primitiveType !== null &&
+            dataField.initializationValue === null) {
+            error("Hidden immutable fields need to be initialized", dataField,
+                    DataPackage::Literals.DATA_FIELD__NAME)
+            return
         }
 
         /* A feature may only be assigned once to a data field */

@@ -627,6 +627,14 @@ public class DataDslValidator extends AbstractDataDslValidator {
         }
       }
     }
+    if ((((dataField.isHidden() && 
+      dataField.isImmutable()) && 
+      (dataField.getPrimitiveType() != null)) && 
+      (dataField.getInitializationValue() == null))) {
+      this.error("Hidden immutable fields need to be initialized", dataField, 
+        DataPackage.Literals.DATA_FIELD__NAME);
+      return;
+    }
     final Function<DataFieldFeature, DataFieldFeature> _function = (DataFieldFeature it) -> {
       return it;
     };
