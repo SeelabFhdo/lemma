@@ -244,20 +244,18 @@ class HighlightingCalculator implements ISemanticHighlightingCalculator {
         if (colorStartNode)
             acceptor.addPosition(startNode.offset, startNode.length, highlightId)
 
-        var nextNode = getNextNode.apply(startNode)
-        if (nextNode === null) {
+        if (until == startNode.text) {
             return
         }
 
+        var nextNode = startNode
         var endReached = false
         do {
-            acceptor.addPosition(nextNode.offset, nextNode.length, highlightId)
             nextNode = getNextNode.apply(nextNode)
-            endReached = until == nextNode?.text
-
-            // Also color last node
-            if (endReached)
+            if (nextNode !== null) {
                 acceptor.addPosition(nextNode.offset, nextNode.length, highlightId)
+                endReached = until == nextNode.text
+            }
         } while (nextNode !== null && !endReached)
     }
 }

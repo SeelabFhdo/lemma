@@ -257,23 +257,21 @@ public class HighlightingCalculator implements ISemanticHighlightingCalculator {
     if (colorStartNode) {
       acceptor.addPosition(startNode.getOffset(), startNode.getLength(), highlightId);
     }
-    INode nextNode = getNextNode.apply(startNode);
-    if ((nextNode == null)) {
+    String _text = startNode.getText();
+    boolean _equals = Objects.equal(until, _text);
+    if (_equals) {
       return;
     }
+    INode nextNode = startNode;
     boolean endReached = false;
     do {
       {
-        acceptor.addPosition(nextNode.getOffset(), nextNode.getLength(), highlightId);
         nextNode = getNextNode.apply(nextNode);
-        String _text = null;
-        if (nextNode!=null) {
-          _text=nextNode.getText();
-        }
-        boolean _equals = Objects.equal(until, _text);
-        endReached = _equals;
-        if (endReached) {
+        if ((nextNode != null)) {
           acceptor.addPosition(nextNode.getOffset(), nextNode.getLength(), highlightId);
+          String _text_1 = nextNode.getText();
+          boolean _equals_1 = Objects.equal(until, _text_1);
+          endReached = _equals_1;
         }
       }
     } while(((nextNode != null) && (!endReached)));
