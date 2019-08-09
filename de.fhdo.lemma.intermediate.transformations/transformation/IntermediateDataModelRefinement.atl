@@ -522,6 +522,11 @@ rule IntermediateImportedAspect(sourceAspect : Service!ImportedServiceAspect, co
             name <- importedAspect.name
         )
     do {
+        -- Aspect features
+        for (feature in importedAspect.features) {
+            i.featureNames <- i.featureNames.append(feature.toString());
+        }
+
         -- Establish reference to container. Note that this cannot be done in the to-clause via
         -- containerFeatureName <- container. Honestly, I have no clue why this is...
         i.refSetValue(containerFeatureName, container);

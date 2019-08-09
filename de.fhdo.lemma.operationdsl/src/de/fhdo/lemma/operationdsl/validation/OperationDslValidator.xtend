@@ -615,8 +615,14 @@ class OperationDslValidator extends AbstractOperationDslValidator {
      */
     @Check
     def checkAspectUniqueness(ImportedOperationAspect importedAspect) {
-        val allAspectsOfContainer = EcoreUtil2.getSiblingsOfType(importedAspect.eContainer,
-            ImportedOperationAspect)
+        if (!importedAspect.aspect.isSingleValued) {
+            return
+        }
+
+        val allAspectsOfContainer = newArrayList(importedAspect)
+        allAspectsOfContainer.addAll(
+            EcoreUtil2.getSiblingsOfType(importedAspect, ImportedOperationAspect)
+        )
         val duplicateIndex = LemmaUtils.getDuplicateIndex(allAspectsOfContainer, [aspect.name])
         if (duplicateIndex > -1) {
             val duplicateAspect = allAspectsOfContainer.get(duplicateIndex)

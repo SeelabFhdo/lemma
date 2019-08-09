@@ -2058,8 +2058,20 @@ public class OperationDslGrammarAccess extends AbstractGrammarElementFinder {
 		return getServiceAspectPointcutSelectorAccess().getRule();
 	}
 	
+	//enum AspectFeature:
+	//	SINGLE_VALUED='singleval';
+	public TechnologyDslGrammarAccess.AspectFeatureElements getAspectFeatureAccess() {
+		return gaTechnologyDsl.getAspectFeatureAccess();
+	}
+	
+	public EnumRule getAspectFeatureRule() {
+		return getAspectFeatureAccess().getRule();
+	}
+	
 	//ServiceAspect:
-	//	'aspect' name=ID
+	//	'aspect' name=ID ('<'
+	//	features+=AspectFeature (',' features+=AspectFeature)*
+	//	'>')?
 	//	'for' joinPoints+=ServiceJoinPointType (',' joinPoints+=ServiceJoinPointType)* ('{'
 	//	pointcutSelectors+=ServiceAspectPointcutSelector*
 	//	properties+=TechnologySpecificProperty*
@@ -2106,7 +2118,9 @@ public class OperationDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//OperationAspect:
-	//	'aspect' name=ID
+	//	'aspect' name=ID ('<'
+	//	features+=AspectFeature (',' features+=AspectFeature)*
+	//	'>')?
 	//	'for' joinPoints+=OperationJoinPointType (',' joinPoints+=OperationJoinPointType)* ('{'
 	//	pointcutSelectors+=OperationAspectPointcutSelector*
 	//	properties+=TechnologySpecificProperty*

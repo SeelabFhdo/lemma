@@ -26,6 +26,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
+import org.eclipse.emf.ecore.util.EDataTypeEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -39,6 +40,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * </p>
  * <ul>
  *   <li>{@link de.fhdo.lemma.data.intermediate.impl.IntermediateImportedAspectImpl#getName <em>Name</em>}</li>
+ *   <li>{@link de.fhdo.lemma.data.intermediate.impl.IntermediateImportedAspectImpl#getFeatureNames <em>Feature Names</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.impl.IntermediateImportedAspectImpl#getImport <em>Import</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.impl.IntermediateImportedAspectImpl#getProperties <em>Properties</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.impl.IntermediateImportedAspectImpl#getPropertyValues <em>Property Values</em>}</li>
@@ -71,6 +73,16 @@ public class IntermediateImportedAspectImpl extends MinimalEObjectImpl.Container
      * @ordered
      */
     protected String name = NAME_EDEFAULT;
+
+    /**
+     * The cached value of the '{@link #getFeatureNames() <em>Feature Names</em>}' attribute list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getFeatureNames()
+     * @generated
+     * @ordered
+     */
+    protected EList<String> featureNames;
 
     /**
      * The cached value of the '{@link #getImport() <em>Import</em>}' reference.
@@ -142,6 +154,19 @@ public class IntermediateImportedAspectImpl extends MinimalEObjectImpl.Container
         name = newName;
         if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__NAME, oldName, name));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EList<String> getFeatureNames() {
+        if (featureNames == null) {
+            featureNames = new EDataTypeEList<String>(String.class, this, IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__FEATURE_NAMES);
+        }
+        return featureNames;
     }
 
     /**
@@ -570,6 +595,8 @@ public class IntermediateImportedAspectImpl extends MinimalEObjectImpl.Container
         switch (featureID) {
             case IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__NAME:
                 return getName();
+            case IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__FEATURE_NAMES:
+                return getFeatureNames();
             case IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__IMPORT:
                 if (resolve) return getImport();
                 return basicGetImport();
@@ -607,6 +634,10 @@ public class IntermediateImportedAspectImpl extends MinimalEObjectImpl.Container
         switch (featureID) {
             case IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__NAME:
                 setName((String)newValue);
+                return;
+            case IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__FEATURE_NAMES:
+                getFeatureNames().clear();
+                getFeatureNames().addAll((Collection<? extends String>)newValue);
                 return;
             case IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__IMPORT:
                 setImport((IntermediateImport)newValue);
@@ -649,6 +680,9 @@ public class IntermediateImportedAspectImpl extends MinimalEObjectImpl.Container
             case IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__NAME:
                 setName(NAME_EDEFAULT);
                 return;
+            case IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__FEATURE_NAMES:
+                getFeatureNames().clear();
+                return;
             case IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__IMPORT:
                 setImport((IntermediateImport)null);
                 return;
@@ -687,6 +721,8 @@ public class IntermediateImportedAspectImpl extends MinimalEObjectImpl.Container
         switch (featureID) {
             case IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__NAME:
                 return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+            case IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__FEATURE_NAMES:
+                return featureNames != null && !featureNames.isEmpty();
             case IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__IMPORT:
                 return import_ != null;
             case IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__PROPERTIES:
@@ -719,6 +755,8 @@ public class IntermediateImportedAspectImpl extends MinimalEObjectImpl.Container
         StringBuilder result = new StringBuilder(super.toString());
         result.append(" (name: ");
         result.append(name);
+        result.append(", featureNames: ");
+        result.append(featureNames);
         result.append(')');
         return result.toString();
     }

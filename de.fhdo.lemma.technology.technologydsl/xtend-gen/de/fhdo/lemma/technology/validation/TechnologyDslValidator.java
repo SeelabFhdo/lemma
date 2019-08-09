@@ -9,6 +9,7 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import de.fhdo.lemma.data.PrimitiveType;
 import de.fhdo.lemma.data.PrimitiveValue;
+import de.fhdo.lemma.technology.AspectFeature;
 import de.fhdo.lemma.technology.CompatibilityDirection;
 import de.fhdo.lemma.technology.CompatibilityMatrixEntry;
 import de.fhdo.lemma.technology.DataFormat;
@@ -770,6 +771,21 @@ public class TechnologyDslValidator extends AbstractTechnologyDslValidator {
     if (((duplicateIndex).intValue() > (-1))) {
       this.error("Duplicate join point", 
         TechnologyPackage.Literals.TECHNOLOGY_ASPECT__JOIN_POINTS, (duplicateIndex).intValue());
+    }
+  }
+  
+  /**
+   * Check that features on technology aspects are unique
+   */
+  @Check
+  public void checkFeatureUniqueness(final TechnologyAspect aspect) {
+    final Function<AspectFeature, AspectFeature> _function = (AspectFeature it) -> {
+      return it;
+    };
+    final Integer duplicateIndex = LemmaUtils.<AspectFeature, AspectFeature>getDuplicateIndex(aspect.getFeatures(), _function);
+    if (((duplicateIndex).intValue() > (-1))) {
+      this.error("Duplicate feature", aspect, 
+        TechnologyPackage.Literals.TECHNOLOGY_ASPECT__FEATURES, (duplicateIndex).intValue());
     }
   }
   

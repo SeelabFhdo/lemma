@@ -21,6 +21,7 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  * <ul>
  *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateImportedAspect#getName <em>Name</em>}</li>
+ *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateImportedAspect#getFeatureNames <em>Feature Names</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateImportedAspect#getImport <em>Import</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateImportedAspect#getProperties <em>Properties</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateImportedAspect#getPropertyValues <em>Property Values</em>}</li>
@@ -61,6 +62,22 @@ public interface IntermediateImportedAspect extends EObject {
      * @generated
      */
     void setName(String value);
+
+    /**
+     * Returns the value of the '<em><b>Feature Names</b></em>' attribute list.
+     * The list contents are of type {@link java.lang.String}.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Feature Names</em>' attribute list isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Feature Names</em>' attribute list.
+     * @see de.fhdo.lemma.data.intermediate.IntermediatePackage#getIntermediateImportedAspect_FeatureNames()
+     * @model unique="false"
+     * @generated
+     */
+    EList<String> getFeatureNames();
 
     /**
      * Returns the value of the '<em><b>Import</b></em>' reference.

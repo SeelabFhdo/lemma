@@ -909,6 +909,11 @@ rule IntermediateImportedAspect {
             import <- thisModule.getCreatedImport(a.import)
         )
     do {
+        -- Aspect features
+        for (feature in a.importedAspect.features) {
+            i.featureNames <- i.featureNames.append(feature.toString());
+        }
+
         -- Create properties of aspect and link them with the aspect
         for (property in a.importedAspect.properties) {
             i.properties <- i.properties->append(

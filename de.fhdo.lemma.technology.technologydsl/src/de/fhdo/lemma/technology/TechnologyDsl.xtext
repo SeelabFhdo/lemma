@@ -168,8 +168,15 @@ ServiceAspectPointcutSelector returns ServiceAspectPointcutSelector:
     ')' ';'
 ;
 
+enum AspectFeature returns AspectFeature:
+    SINGLE_VALUED = 'singleval'
+;
+
 ServiceAspect returns ServiceAspect:
     'aspect' name=ID
+    ('<'
+        features+=AspectFeature (',' features+=AspectFeature)*
+    '>')?
     'for' joinPoints+=ServiceJoinPointType (',' joinPoints+=ServiceJoinPointType)*
     (
         ('{'
@@ -197,6 +204,9 @@ OperationAspectPointcutSelector returns OperationAspectPointcutSelector:
 
 OperationAspect returns OperationAspect:
     'aspect' name=ID
+    ('<'
+        features+=AspectFeature (',' features+=AspectFeature)*
+    '>')?
     'for' joinPoints+=OperationJoinPointType (',' joinPoints+=OperationJoinPointType)*
     (
         ('{'

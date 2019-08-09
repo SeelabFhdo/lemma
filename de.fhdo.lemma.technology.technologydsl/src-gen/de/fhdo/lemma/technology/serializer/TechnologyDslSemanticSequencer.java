@@ -307,6 +307,7 @@ public class TechnologyDslSemanticSequencer extends DataDslSemanticSequencer {
 	 * Constraint:
 	 *     (
 	 *         name=ID 
+	 *         (features+=AspectFeature features+=AspectFeature*)? 
 	 *         joinPoints+=OperationJoinPointType 
 	 *         joinPoints+=OperationJoinPointType* 
 	 *         pointcutSelectors+=OperationAspectPointcutSelector* 
@@ -390,6 +391,7 @@ public class TechnologyDslSemanticSequencer extends DataDslSemanticSequencer {
 	 * Constraint:
 	 *     (
 	 *         name=ID 
+	 *         (features+=AspectFeature features+=AspectFeature*)? 
 	 *         joinPoints+=ServiceJoinPointType 
 	 *         joinPoints+=ServiceJoinPointType* 
 	 *         pointcutSelectors+=ServiceAspectPointcutSelector* 

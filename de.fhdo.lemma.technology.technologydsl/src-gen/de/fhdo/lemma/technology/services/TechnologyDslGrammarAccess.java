@@ -1199,25 +1199,36 @@ public class TechnologyDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cAspectKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cNameIDTerminalRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
-		private final Keyword cForKeyword_2 = (Keyword)cGroup.eContents().get(2);
-		private final Assignment cJoinPointsAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final RuleCall cJoinPointsServiceJoinPointTypeEnumRuleCall_3_0 = (RuleCall)cJoinPointsAssignment_3.eContents().get(0);
-		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
-		private final Keyword cCommaKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
-		private final Assignment cJoinPointsAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
-		private final RuleCall cJoinPointsServiceJoinPointTypeEnumRuleCall_4_1_0 = (RuleCall)cJoinPointsAssignment_4_1.eContents().get(0);
-		private final Alternatives cAlternatives_5 = (Alternatives)cGroup.eContents().get(5);
-		private final Group cGroup_5_0 = (Group)cAlternatives_5.eContents().get(0);
-		private final Keyword cLeftCurlyBracketKeyword_5_0_0 = (Keyword)cGroup_5_0.eContents().get(0);
-		private final Assignment cPointcutSelectorsAssignment_5_0_1 = (Assignment)cGroup_5_0.eContents().get(1);
-		private final RuleCall cPointcutSelectorsServiceAspectPointcutSelectorParserRuleCall_5_0_1_0 = (RuleCall)cPointcutSelectorsAssignment_5_0_1.eContents().get(0);
-		private final Assignment cPropertiesAssignment_5_0_2 = (Assignment)cGroup_5_0.eContents().get(2);
-		private final RuleCall cPropertiesTechnologySpecificPropertyParserRuleCall_5_0_2_0 = (RuleCall)cPropertiesAssignment_5_0_2.eContents().get(0);
-		private final Keyword cRightCurlyBracketKeyword_5_0_3 = (Keyword)cGroup_5_0.eContents().get(3);
-		private final Keyword cSemicolonKeyword_5_1 = (Keyword)cAlternatives_5.eContents().get(1);
+		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
+		private final Keyword cLessThanSignKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Assignment cFeaturesAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
+		private final RuleCall cFeaturesAspectFeatureEnumRuleCall_2_1_0 = (RuleCall)cFeaturesAssignment_2_1.eContents().get(0);
+		private final Group cGroup_2_2 = (Group)cGroup_2.eContents().get(2);
+		private final Keyword cCommaKeyword_2_2_0 = (Keyword)cGroup_2_2.eContents().get(0);
+		private final Assignment cFeaturesAssignment_2_2_1 = (Assignment)cGroup_2_2.eContents().get(1);
+		private final RuleCall cFeaturesAspectFeatureEnumRuleCall_2_2_1_0 = (RuleCall)cFeaturesAssignment_2_2_1.eContents().get(0);
+		private final Keyword cGreaterThanSignKeyword_2_3 = (Keyword)cGroup_2.eContents().get(3);
+		private final Keyword cForKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		private final Assignment cJoinPointsAssignment_4 = (Assignment)cGroup.eContents().get(4);
+		private final RuleCall cJoinPointsServiceJoinPointTypeEnumRuleCall_4_0 = (RuleCall)cJoinPointsAssignment_4.eContents().get(0);
+		private final Group cGroup_5 = (Group)cGroup.eContents().get(5);
+		private final Keyword cCommaKeyword_5_0 = (Keyword)cGroup_5.eContents().get(0);
+		private final Assignment cJoinPointsAssignment_5_1 = (Assignment)cGroup_5.eContents().get(1);
+		private final RuleCall cJoinPointsServiceJoinPointTypeEnumRuleCall_5_1_0 = (RuleCall)cJoinPointsAssignment_5_1.eContents().get(0);
+		private final Alternatives cAlternatives_6 = (Alternatives)cGroup.eContents().get(6);
+		private final Group cGroup_6_0 = (Group)cAlternatives_6.eContents().get(0);
+		private final Keyword cLeftCurlyBracketKeyword_6_0_0 = (Keyword)cGroup_6_0.eContents().get(0);
+		private final Assignment cPointcutSelectorsAssignment_6_0_1 = (Assignment)cGroup_6_0.eContents().get(1);
+		private final RuleCall cPointcutSelectorsServiceAspectPointcutSelectorParserRuleCall_6_0_1_0 = (RuleCall)cPointcutSelectorsAssignment_6_0_1.eContents().get(0);
+		private final Assignment cPropertiesAssignment_6_0_2 = (Assignment)cGroup_6_0.eContents().get(2);
+		private final RuleCall cPropertiesTechnologySpecificPropertyParserRuleCall_6_0_2_0 = (RuleCall)cPropertiesAssignment_6_0_2.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_6_0_3 = (Keyword)cGroup_6_0.eContents().get(3);
+		private final Keyword cSemicolonKeyword_6_1 = (Keyword)cAlternatives_6.eContents().get(1);
 		
 		//ServiceAspect:
-		//	'aspect' name=ID
+		//	'aspect' name=ID ('<'
+		//	features+=AspectFeature (',' features+=AspectFeature)*
+		//	'>')?
 		//	'for' joinPoints+=ServiceJoinPointType (',' joinPoints+=ServiceJoinPointType)* ('{'
 		//	pointcutSelectors+=ServiceAspectPointcutSelector*
 		//	properties+=TechnologySpecificProperty*
@@ -1225,7 +1236,8 @@ public class TechnologyDslGrammarAccess extends AbstractGrammarElementFinder {
 		//	';');
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'aspect' name=ID 'for' joinPoints+=ServiceJoinPointType (',' joinPoints+=ServiceJoinPointType)* ('{'
+		//'aspect' name=ID ('<' features+=AspectFeature (',' features+=AspectFeature)* '>')? 'for'
+		//joinPoints+=ServiceJoinPointType (',' joinPoints+=ServiceJoinPointType)* ('{'
 		//pointcutSelectors+=ServiceAspectPointcutSelector* properties+=TechnologySpecificProperty* '}' | ';')
 		public Group getGroup() { return cGroup; }
 		
@@ -1238,53 +1250,80 @@ public class TechnologyDslGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getNameIDTerminalRuleCall_1_0() { return cNameIDTerminalRuleCall_1_0; }
 		
-		//'for'
-		public Keyword getForKeyword_2() { return cForKeyword_2; }
+		//('<' features+=AspectFeature (',' features+=AspectFeature)* '>')?
+		public Group getGroup_2() { return cGroup_2; }
 		
-		//joinPoints+=ServiceJoinPointType
-		public Assignment getJoinPointsAssignment_3() { return cJoinPointsAssignment_3; }
+		//'<'
+		public Keyword getLessThanSignKeyword_2_0() { return cLessThanSignKeyword_2_0; }
 		
-		//ServiceJoinPointType
-		public RuleCall getJoinPointsServiceJoinPointTypeEnumRuleCall_3_0() { return cJoinPointsServiceJoinPointTypeEnumRuleCall_3_0; }
+		//features+=AspectFeature
+		public Assignment getFeaturesAssignment_2_1() { return cFeaturesAssignment_2_1; }
 		
-		//(',' joinPoints+=ServiceJoinPointType)*
-		public Group getGroup_4() { return cGroup_4; }
+		//AspectFeature
+		public RuleCall getFeaturesAspectFeatureEnumRuleCall_2_1_0() { return cFeaturesAspectFeatureEnumRuleCall_2_1_0; }
+		
+		//(',' features+=AspectFeature)*
+		public Group getGroup_2_2() { return cGroup_2_2; }
 		
 		//','
-		public Keyword getCommaKeyword_4_0() { return cCommaKeyword_4_0; }
+		public Keyword getCommaKeyword_2_2_0() { return cCommaKeyword_2_2_0; }
+		
+		//features+=AspectFeature
+		public Assignment getFeaturesAssignment_2_2_1() { return cFeaturesAssignment_2_2_1; }
+		
+		//AspectFeature
+		public RuleCall getFeaturesAspectFeatureEnumRuleCall_2_2_1_0() { return cFeaturesAspectFeatureEnumRuleCall_2_2_1_0; }
+		
+		//'>'
+		public Keyword getGreaterThanSignKeyword_2_3() { return cGreaterThanSignKeyword_2_3; }
+		
+		//'for'
+		public Keyword getForKeyword_3() { return cForKeyword_3; }
 		
 		//joinPoints+=ServiceJoinPointType
-		public Assignment getJoinPointsAssignment_4_1() { return cJoinPointsAssignment_4_1; }
+		public Assignment getJoinPointsAssignment_4() { return cJoinPointsAssignment_4; }
 		
 		//ServiceJoinPointType
-		public RuleCall getJoinPointsServiceJoinPointTypeEnumRuleCall_4_1_0() { return cJoinPointsServiceJoinPointTypeEnumRuleCall_4_1_0; }
+		public RuleCall getJoinPointsServiceJoinPointTypeEnumRuleCall_4_0() { return cJoinPointsServiceJoinPointTypeEnumRuleCall_4_0; }
+		
+		//(',' joinPoints+=ServiceJoinPointType)*
+		public Group getGroup_5() { return cGroup_5; }
+		
+		//','
+		public Keyword getCommaKeyword_5_0() { return cCommaKeyword_5_0; }
+		
+		//joinPoints+=ServiceJoinPointType
+		public Assignment getJoinPointsAssignment_5_1() { return cJoinPointsAssignment_5_1; }
+		
+		//ServiceJoinPointType
+		public RuleCall getJoinPointsServiceJoinPointTypeEnumRuleCall_5_1_0() { return cJoinPointsServiceJoinPointTypeEnumRuleCall_5_1_0; }
 		
 		//'{' pointcutSelectors+=ServiceAspectPointcutSelector* properties+=TechnologySpecificProperty* '}' | ';'
-		public Alternatives getAlternatives_5() { return cAlternatives_5; }
+		public Alternatives getAlternatives_6() { return cAlternatives_6; }
 		
 		//'{' pointcutSelectors+=ServiceAspectPointcutSelector* properties+=TechnologySpecificProperty* '}'
-		public Group getGroup_5_0() { return cGroup_5_0; }
+		public Group getGroup_6_0() { return cGroup_6_0; }
 		
 		//'{'
-		public Keyword getLeftCurlyBracketKeyword_5_0_0() { return cLeftCurlyBracketKeyword_5_0_0; }
+		public Keyword getLeftCurlyBracketKeyword_6_0_0() { return cLeftCurlyBracketKeyword_6_0_0; }
 		
 		//pointcutSelectors+=ServiceAspectPointcutSelector*
-		public Assignment getPointcutSelectorsAssignment_5_0_1() { return cPointcutSelectorsAssignment_5_0_1; }
+		public Assignment getPointcutSelectorsAssignment_6_0_1() { return cPointcutSelectorsAssignment_6_0_1; }
 		
 		//ServiceAspectPointcutSelector
-		public RuleCall getPointcutSelectorsServiceAspectPointcutSelectorParserRuleCall_5_0_1_0() { return cPointcutSelectorsServiceAspectPointcutSelectorParserRuleCall_5_0_1_0; }
+		public RuleCall getPointcutSelectorsServiceAspectPointcutSelectorParserRuleCall_6_0_1_0() { return cPointcutSelectorsServiceAspectPointcutSelectorParserRuleCall_6_0_1_0; }
 		
 		//properties+=TechnologySpecificProperty*
-		public Assignment getPropertiesAssignment_5_0_2() { return cPropertiesAssignment_5_0_2; }
+		public Assignment getPropertiesAssignment_6_0_2() { return cPropertiesAssignment_6_0_2; }
 		
 		//TechnologySpecificProperty
-		public RuleCall getPropertiesTechnologySpecificPropertyParserRuleCall_5_0_2_0() { return cPropertiesTechnologySpecificPropertyParserRuleCall_5_0_2_0; }
+		public RuleCall getPropertiesTechnologySpecificPropertyParserRuleCall_6_0_2_0() { return cPropertiesTechnologySpecificPropertyParserRuleCall_6_0_2_0; }
 		
 		//'}'
-		public Keyword getRightCurlyBracketKeyword_5_0_3() { return cRightCurlyBracketKeyword_5_0_3; }
+		public Keyword getRightCurlyBracketKeyword_6_0_3() { return cRightCurlyBracketKeyword_6_0_3; }
 		
 		//';'
-		public Keyword getSemicolonKeyword_5_1() { return cSemicolonKeyword_5_1; }
+		public Keyword getSemicolonKeyword_6_1() { return cSemicolonKeyword_6_1; }
 	}
 	public class OperationAspectPointcutElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.fhdo.lemma.technology.TechnologyDsl.OperationAspectPointcut");
@@ -1380,25 +1419,36 @@ public class TechnologyDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cAspectKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cNameIDTerminalRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
-		private final Keyword cForKeyword_2 = (Keyword)cGroup.eContents().get(2);
-		private final Assignment cJoinPointsAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final RuleCall cJoinPointsOperationJoinPointTypeEnumRuleCall_3_0 = (RuleCall)cJoinPointsAssignment_3.eContents().get(0);
-		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
-		private final Keyword cCommaKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
-		private final Assignment cJoinPointsAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
-		private final RuleCall cJoinPointsOperationJoinPointTypeEnumRuleCall_4_1_0 = (RuleCall)cJoinPointsAssignment_4_1.eContents().get(0);
-		private final Alternatives cAlternatives_5 = (Alternatives)cGroup.eContents().get(5);
-		private final Group cGroup_5_0 = (Group)cAlternatives_5.eContents().get(0);
-		private final Keyword cLeftCurlyBracketKeyword_5_0_0 = (Keyword)cGroup_5_0.eContents().get(0);
-		private final Assignment cPointcutSelectorsAssignment_5_0_1 = (Assignment)cGroup_5_0.eContents().get(1);
-		private final RuleCall cPointcutSelectorsOperationAspectPointcutSelectorParserRuleCall_5_0_1_0 = (RuleCall)cPointcutSelectorsAssignment_5_0_1.eContents().get(0);
-		private final Assignment cPropertiesAssignment_5_0_2 = (Assignment)cGroup_5_0.eContents().get(2);
-		private final RuleCall cPropertiesTechnologySpecificPropertyParserRuleCall_5_0_2_0 = (RuleCall)cPropertiesAssignment_5_0_2.eContents().get(0);
-		private final Keyword cRightCurlyBracketKeyword_5_0_3 = (Keyword)cGroup_5_0.eContents().get(3);
-		private final Keyword cSemicolonKeyword_5_1 = (Keyword)cAlternatives_5.eContents().get(1);
+		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
+		private final Keyword cLessThanSignKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Assignment cFeaturesAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
+		private final RuleCall cFeaturesAspectFeatureEnumRuleCall_2_1_0 = (RuleCall)cFeaturesAssignment_2_1.eContents().get(0);
+		private final Group cGroup_2_2 = (Group)cGroup_2.eContents().get(2);
+		private final Keyword cCommaKeyword_2_2_0 = (Keyword)cGroup_2_2.eContents().get(0);
+		private final Assignment cFeaturesAssignment_2_2_1 = (Assignment)cGroup_2_2.eContents().get(1);
+		private final RuleCall cFeaturesAspectFeatureEnumRuleCall_2_2_1_0 = (RuleCall)cFeaturesAssignment_2_2_1.eContents().get(0);
+		private final Keyword cGreaterThanSignKeyword_2_3 = (Keyword)cGroup_2.eContents().get(3);
+		private final Keyword cForKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		private final Assignment cJoinPointsAssignment_4 = (Assignment)cGroup.eContents().get(4);
+		private final RuleCall cJoinPointsOperationJoinPointTypeEnumRuleCall_4_0 = (RuleCall)cJoinPointsAssignment_4.eContents().get(0);
+		private final Group cGroup_5 = (Group)cGroup.eContents().get(5);
+		private final Keyword cCommaKeyword_5_0 = (Keyword)cGroup_5.eContents().get(0);
+		private final Assignment cJoinPointsAssignment_5_1 = (Assignment)cGroup_5.eContents().get(1);
+		private final RuleCall cJoinPointsOperationJoinPointTypeEnumRuleCall_5_1_0 = (RuleCall)cJoinPointsAssignment_5_1.eContents().get(0);
+		private final Alternatives cAlternatives_6 = (Alternatives)cGroup.eContents().get(6);
+		private final Group cGroup_6_0 = (Group)cAlternatives_6.eContents().get(0);
+		private final Keyword cLeftCurlyBracketKeyword_6_0_0 = (Keyword)cGroup_6_0.eContents().get(0);
+		private final Assignment cPointcutSelectorsAssignment_6_0_1 = (Assignment)cGroup_6_0.eContents().get(1);
+		private final RuleCall cPointcutSelectorsOperationAspectPointcutSelectorParserRuleCall_6_0_1_0 = (RuleCall)cPointcutSelectorsAssignment_6_0_1.eContents().get(0);
+		private final Assignment cPropertiesAssignment_6_0_2 = (Assignment)cGroup_6_0.eContents().get(2);
+		private final RuleCall cPropertiesTechnologySpecificPropertyParserRuleCall_6_0_2_0 = (RuleCall)cPropertiesAssignment_6_0_2.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_6_0_3 = (Keyword)cGroup_6_0.eContents().get(3);
+		private final Keyword cSemicolonKeyword_6_1 = (Keyword)cAlternatives_6.eContents().get(1);
 		
 		//OperationAspect:
-		//	'aspect' name=ID
+		//	'aspect' name=ID ('<'
+		//	features+=AspectFeature (',' features+=AspectFeature)*
+		//	'>')?
 		//	'for' joinPoints+=OperationJoinPointType (',' joinPoints+=OperationJoinPointType)* ('{'
 		//	pointcutSelectors+=OperationAspectPointcutSelector*
 		//	properties+=TechnologySpecificProperty*
@@ -1406,7 +1456,8 @@ public class TechnologyDslGrammarAccess extends AbstractGrammarElementFinder {
 		//	';');
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'aspect' name=ID 'for' joinPoints+=OperationJoinPointType (',' joinPoints+=OperationJoinPointType)* ('{'
+		//'aspect' name=ID ('<' features+=AspectFeature (',' features+=AspectFeature)* '>')? 'for'
+		//joinPoints+=OperationJoinPointType (',' joinPoints+=OperationJoinPointType)* ('{'
 		//pointcutSelectors+=OperationAspectPointcutSelector* properties+=TechnologySpecificProperty* '}' | ';')
 		public Group getGroup() { return cGroup; }
 		
@@ -1419,53 +1470,80 @@ public class TechnologyDslGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getNameIDTerminalRuleCall_1_0() { return cNameIDTerminalRuleCall_1_0; }
 		
-		//'for'
-		public Keyword getForKeyword_2() { return cForKeyword_2; }
+		//('<' features+=AspectFeature (',' features+=AspectFeature)* '>')?
+		public Group getGroup_2() { return cGroup_2; }
 		
-		//joinPoints+=OperationJoinPointType
-		public Assignment getJoinPointsAssignment_3() { return cJoinPointsAssignment_3; }
+		//'<'
+		public Keyword getLessThanSignKeyword_2_0() { return cLessThanSignKeyword_2_0; }
 		
-		//OperationJoinPointType
-		public RuleCall getJoinPointsOperationJoinPointTypeEnumRuleCall_3_0() { return cJoinPointsOperationJoinPointTypeEnumRuleCall_3_0; }
+		//features+=AspectFeature
+		public Assignment getFeaturesAssignment_2_1() { return cFeaturesAssignment_2_1; }
 		
-		//(',' joinPoints+=OperationJoinPointType)*
-		public Group getGroup_4() { return cGroup_4; }
+		//AspectFeature
+		public RuleCall getFeaturesAspectFeatureEnumRuleCall_2_1_0() { return cFeaturesAspectFeatureEnumRuleCall_2_1_0; }
+		
+		//(',' features+=AspectFeature)*
+		public Group getGroup_2_2() { return cGroup_2_2; }
 		
 		//','
-		public Keyword getCommaKeyword_4_0() { return cCommaKeyword_4_0; }
+		public Keyword getCommaKeyword_2_2_0() { return cCommaKeyword_2_2_0; }
+		
+		//features+=AspectFeature
+		public Assignment getFeaturesAssignment_2_2_1() { return cFeaturesAssignment_2_2_1; }
+		
+		//AspectFeature
+		public RuleCall getFeaturesAspectFeatureEnumRuleCall_2_2_1_0() { return cFeaturesAspectFeatureEnumRuleCall_2_2_1_0; }
+		
+		//'>'
+		public Keyword getGreaterThanSignKeyword_2_3() { return cGreaterThanSignKeyword_2_3; }
+		
+		//'for'
+		public Keyword getForKeyword_3() { return cForKeyword_3; }
 		
 		//joinPoints+=OperationJoinPointType
-		public Assignment getJoinPointsAssignment_4_1() { return cJoinPointsAssignment_4_1; }
+		public Assignment getJoinPointsAssignment_4() { return cJoinPointsAssignment_4; }
 		
 		//OperationJoinPointType
-		public RuleCall getJoinPointsOperationJoinPointTypeEnumRuleCall_4_1_0() { return cJoinPointsOperationJoinPointTypeEnumRuleCall_4_1_0; }
+		public RuleCall getJoinPointsOperationJoinPointTypeEnumRuleCall_4_0() { return cJoinPointsOperationJoinPointTypeEnumRuleCall_4_0; }
+		
+		//(',' joinPoints+=OperationJoinPointType)*
+		public Group getGroup_5() { return cGroup_5; }
+		
+		//','
+		public Keyword getCommaKeyword_5_0() { return cCommaKeyword_5_0; }
+		
+		//joinPoints+=OperationJoinPointType
+		public Assignment getJoinPointsAssignment_5_1() { return cJoinPointsAssignment_5_1; }
+		
+		//OperationJoinPointType
+		public RuleCall getJoinPointsOperationJoinPointTypeEnumRuleCall_5_1_0() { return cJoinPointsOperationJoinPointTypeEnumRuleCall_5_1_0; }
 		
 		//'{' pointcutSelectors+=OperationAspectPointcutSelector* properties+=TechnologySpecificProperty* '}' | ';'
-		public Alternatives getAlternatives_5() { return cAlternatives_5; }
+		public Alternatives getAlternatives_6() { return cAlternatives_6; }
 		
 		//'{' pointcutSelectors+=OperationAspectPointcutSelector* properties+=TechnologySpecificProperty* '}'
-		public Group getGroup_5_0() { return cGroup_5_0; }
+		public Group getGroup_6_0() { return cGroup_6_0; }
 		
 		//'{'
-		public Keyword getLeftCurlyBracketKeyword_5_0_0() { return cLeftCurlyBracketKeyword_5_0_0; }
+		public Keyword getLeftCurlyBracketKeyword_6_0_0() { return cLeftCurlyBracketKeyword_6_0_0; }
 		
 		//pointcutSelectors+=OperationAspectPointcutSelector*
-		public Assignment getPointcutSelectorsAssignment_5_0_1() { return cPointcutSelectorsAssignment_5_0_1; }
+		public Assignment getPointcutSelectorsAssignment_6_0_1() { return cPointcutSelectorsAssignment_6_0_1; }
 		
 		//OperationAspectPointcutSelector
-		public RuleCall getPointcutSelectorsOperationAspectPointcutSelectorParserRuleCall_5_0_1_0() { return cPointcutSelectorsOperationAspectPointcutSelectorParserRuleCall_5_0_1_0; }
+		public RuleCall getPointcutSelectorsOperationAspectPointcutSelectorParserRuleCall_6_0_1_0() { return cPointcutSelectorsOperationAspectPointcutSelectorParserRuleCall_6_0_1_0; }
 		
 		//properties+=TechnologySpecificProperty*
-		public Assignment getPropertiesAssignment_5_0_2() { return cPropertiesAssignment_5_0_2; }
+		public Assignment getPropertiesAssignment_6_0_2() { return cPropertiesAssignment_6_0_2; }
 		
 		//TechnologySpecificProperty
-		public RuleCall getPropertiesTechnologySpecificPropertyParserRuleCall_5_0_2_0() { return cPropertiesTechnologySpecificPropertyParserRuleCall_5_0_2_0; }
+		public RuleCall getPropertiesTechnologySpecificPropertyParserRuleCall_6_0_2_0() { return cPropertiesTechnologySpecificPropertyParserRuleCall_6_0_2_0; }
 		
 		//'}'
-		public Keyword getRightCurlyBracketKeyword_5_0_3() { return cRightCurlyBracketKeyword_5_0_3; }
+		public Keyword getRightCurlyBracketKeyword_6_0_3() { return cRightCurlyBracketKeyword_6_0_3; }
 		
 		//';'
-		public Keyword getSemicolonKeyword_5_1() { return cSemicolonKeyword_5_1; }
+		public Keyword getSemicolonKeyword_6_1() { return cSemicolonKeyword_6_1; }
 	}
 	
 	public class ExchangePatternElements extends AbstractEnumRuleElementFinder {
@@ -1679,6 +1757,21 @@ public class TechnologyDslGrammarAccess extends AbstractGrammarElementFinder {
 		//'parameters'
 		public Keyword getPARAMETERSParametersKeyword_7_0() { return cPARAMETERSParametersKeyword_7_0; }
 	}
+	public class AspectFeatureElements extends AbstractEnumRuleElementFinder {
+		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.fhdo.lemma.technology.TechnologyDsl.AspectFeature");
+		private final EnumLiteralDeclaration cSINGLE_VALUEDEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
+		private final Keyword cSINGLE_VALUEDSinglevalKeyword_0 = (Keyword)cSINGLE_VALUEDEnumLiteralDeclaration.eContents().get(0);
+		
+		//enum AspectFeature:
+		//	SINGLE_VALUED='singleval';
+		public EnumRule getRule() { return rule; }
+		
+		//SINGLE_VALUED='singleval'
+		public EnumLiteralDeclaration getSINGLE_VALUEDEnumLiteralDeclaration() { return cSINGLE_VALUEDEnumLiteralDeclaration; }
+		
+		//'singleval'
+		public Keyword getSINGLE_VALUEDSinglevalKeyword_0() { return cSINGLE_VALUEDSinglevalKeyword_0; }
+	}
 	public class OperationJoinPointTypeElements extends AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.fhdo.lemma.technology.TechnologyDsl.OperationJoinPointType");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
@@ -1727,6 +1820,7 @@ public class TechnologyDslGrammarAccess extends AbstractGrammarElementFinder {
 	private final ServiceJoinPointTypeElements eServiceJoinPointType;
 	private final ServiceAspectPointcutElements pServiceAspectPointcut;
 	private final ServiceAspectPointcutSelectorElements pServiceAspectPointcutSelector;
+	private final AspectFeatureElements eAspectFeature;
 	private final ServiceAspectElements pServiceAspect;
 	private final OperationJoinPointTypeElements eOperationJoinPointType;
 	private final OperationAspectPointcutElements pOperationAspectPointcut;
@@ -1766,6 +1860,7 @@ public class TechnologyDslGrammarAccess extends AbstractGrammarElementFinder {
 		this.eServiceJoinPointType = new ServiceJoinPointTypeElements();
 		this.pServiceAspectPointcut = new ServiceAspectPointcutElements();
 		this.pServiceAspectPointcutSelector = new ServiceAspectPointcutSelectorElements();
+		this.eAspectFeature = new AspectFeatureElements();
 		this.pServiceAspect = new ServiceAspectElements();
 		this.eOperationJoinPointType = new OperationJoinPointTypeElements();
 		this.pOperationAspectPointcut = new OperationAspectPointcutElements();
@@ -2059,8 +2154,20 @@ public class TechnologyDslGrammarAccess extends AbstractGrammarElementFinder {
 		return getServiceAspectPointcutSelectorAccess().getRule();
 	}
 	
+	//enum AspectFeature:
+	//	SINGLE_VALUED='singleval';
+	public AspectFeatureElements getAspectFeatureAccess() {
+		return eAspectFeature;
+	}
+	
+	public EnumRule getAspectFeatureRule() {
+		return getAspectFeatureAccess().getRule();
+	}
+	
 	//ServiceAspect:
-	//	'aspect' name=ID
+	//	'aspect' name=ID ('<'
+	//	features+=AspectFeature (',' features+=AspectFeature)*
+	//	'>')?
 	//	'for' joinPoints+=ServiceJoinPointType (',' joinPoints+=ServiceJoinPointType)* ('{'
 	//	pointcutSelectors+=ServiceAspectPointcutSelector*
 	//	properties+=TechnologySpecificProperty*
@@ -2107,7 +2214,9 @@ public class TechnologyDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//OperationAspect:
-	//	'aspect' name=ID
+	//	'aspect' name=ID ('<'
+	//	features+=AspectFeature (',' features+=AspectFeature)*
+	//	'>')?
 	//	'for' joinPoints+=OperationJoinPointType (',' joinPoints+=OperationJoinPointType)* ('{'
 	//	pointcutSelectors+=OperationAspectPointcutSelector*
 	//	properties+=TechnologySpecificProperty*

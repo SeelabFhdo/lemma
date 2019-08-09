@@ -47,6 +47,7 @@ import de.fhdo.lemma.typechecking.TypeChecker;
 import de.fhdo.lemma.typechecking.TypesNotCompatibleException;
 import de.fhdo.lemma.utils.LemmaUtils;
 import de.fhdo.lemma.validation.AbstractServiceDslValidator;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -1170,8 +1171,13 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
    */
   @Check
   public void checkUniqueAspects(final ImportedServiceAspect aspect) {
-    final List<ImportedServiceAspect> allAspectsOfContainer = EcoreUtil2.<ImportedServiceAspect>getSiblingsOfType(aspect.eContainer(), 
-      ImportedServiceAspect.class);
+    boolean _isIsSingleValued = aspect.getImportedAspect().isIsSingleValued();
+    boolean _not = (!_isIsSingleValued);
+    if (_not) {
+      return;
+    }
+    final ArrayList<ImportedServiceAspect> allAspectsOfContainer = CollectionLiterals.<ImportedServiceAspect>newArrayList(aspect);
+    allAspectsOfContainer.addAll(EcoreUtil2.<ImportedServiceAspect>getSiblingsOfType(aspect, ImportedServiceAspect.class));
     final Function<ImportedServiceAspect, String> _function = (ImportedServiceAspect it) -> {
       return it.getImportedAspect().getName();
     };

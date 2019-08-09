@@ -1598,12 +1598,19 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
    */
   @Check
   public void checkAspectsUniqueness(final TechnologySpecificImportedServiceAspect importedAspect) {
-    if (((((importedAspect.getTechnology() == null) || (importedAspect.getTechnology().getName() == null)) || 
-      (importedAspect.getAspect() == null)) || (importedAspect.getAspect().getName() == null))) {
+    if ((((((importedAspect.getTechnology() == null) || (importedAspect.getTechnology().getName() == null)) || 
+      (importedAspect.getAspect() == null)) || (importedAspect.getAspect().getName() == null)) || 
+      (!importedAspect.getAspect().isIsSingleValued()))) {
       return;
     }
-    final List<TechnologySpecificImportedServiceAspect> allAspectsOfContainer = EcoreUtil2.<TechnologySpecificImportedServiceAspect>getSiblingsOfType(importedAspect.eContainer(), 
-      TechnologySpecificImportedServiceAspect.class);
+    boolean _isIsSingleValued = importedAspect.getAspect().isIsSingleValued();
+    boolean _not = (!_isIsSingleValued);
+    if (_not) {
+      return;
+    }
+    final ArrayList<TechnologySpecificImportedServiceAspect> allAspectsOfContainer = CollectionLiterals.<TechnologySpecificImportedServiceAspect>newArrayList(importedAspect);
+    allAspectsOfContainer.addAll(
+      EcoreUtil2.<TechnologySpecificImportedServiceAspect>getSiblingsOfType(importedAspect, TechnologySpecificImportedServiceAspect.class));
     final Function<TechnologySpecificImportedServiceAspect, String> _function = (TechnologySpecificImportedServiceAspect it) -> {
       return QualifiedName.create(importedAspect.getTechnology().getName(), it.getAspect().getName()).toString();
     };

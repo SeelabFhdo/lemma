@@ -1280,6 +1280,29 @@ service operation’s execution.</p>
 
 <dl class="attribute">
 <dt>
+<code class="descname">String[*] featureNames</code></dt>
+<dd><p>This attribute contains the names of all features specified for the
+aspect. The following values are possible:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="25%" />
+<col width="75%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>Feature Name</strong></td>
+<td><strong>Description</strong></td>
+</tr>
+<tr class="row-even"><td>SINGE_VALUED</td>
+<td>Flag to indicate that an aspect may only receive a
+value once, i.e., it may only be specified once at a
+target element.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
 <code class="descname">IntermediateImport[1] import</code></dt>
 <dd><p><a class="reference internal" href="#IntermediateImport" title="IntermediateImport"><code class="xref java java-type docutils literal notranslate"><span class="pre">Import</span></code></a> of the Technology Model which
 defines the aspect.</p>
@@ -1394,7 +1417,7 @@ value when the respective
 value once. Note that for <a class="reference internal" href="#IntermediateImportedAspect" title="IntermediateImportedAspect"><code class="xref java java-type docutils literal notranslate"><span class="pre">aspects</span></code></a> the languages’
 validators guarantee that properties receive values
 only once. However, it is not guaranteed that aspect
-properties exhibits this feature.</td>
+properties exhibit this feature.</td>
 </tr>
 </tbody>
 </table>

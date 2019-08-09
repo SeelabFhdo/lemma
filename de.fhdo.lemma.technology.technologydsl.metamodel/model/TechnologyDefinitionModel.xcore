@@ -502,6 +502,13 @@ enum PointcutType {
 }
 
 /**
+ * Possible features for a technology aspect
+ */
+enum AspectFeature {
+    SINGLE_VALUED
+}
+
+/**
  * Abstract superclass for technology aspects
  */
 abstract class TechnologyAspect {
@@ -511,12 +518,25 @@ abstract class TechnologyAspect {
      *          Ensured by: DSL validator.
      *     (C2) Properties must be unique.
      *          Ensured by: DSL validator.
+     *     (C3) A feature may only be assigned once.
+     *          Ensured by: DSL validator.
      */
 
     String name
+    AspectFeature[] features
     JoinPointType[1..*] joinPoints
 
     contains TechnologySpecificProperty[] properties opposite technologyAspect
+
+    /**
+     * Convenience getter to determine if the aspect exhibits the "single-valued" feature
+     */
+    derived boolean isSingleValued get {
+        return if (features !== null)
+                features.contains(AspectFeature.SINGLE_VALUED)
+            else
+                false
+    }
 
     /**
      * Get parts of the technology aspect for creating a qualified name

@@ -276,6 +276,7 @@ class IntermediateEnumerationField {
  */
 class IntermediateImportedAspect {
     String name
+    String[] featureNames
 
     refers IntermediateImport ^import
     contains IntermediateAspectProperty[] properties opposite aspect

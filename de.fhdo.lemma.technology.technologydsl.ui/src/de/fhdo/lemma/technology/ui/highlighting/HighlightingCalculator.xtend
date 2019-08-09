@@ -10,6 +10,8 @@ import de.fhdo.lemma.technology.TechnologyPackage
 import de.fhdo.lemma.technology.OperationAspectPointcut
 import org.eclipse.xtext.ui.editor.syntaxcoloring.DefaultHighlightingConfiguration
 import de.fhdo.lemma.technology.TechnologySpecificProperty
+import org.eclipse.emf.ecore.EObject
+import de.fhdo.lemma.technology.TechnologyAspect
 
 /**
  * Provide custom syntax highlighting for certain elements.
@@ -98,14 +100,21 @@ class HighlightingCalculator implements ISemanticHighlightingCalculator {
      */
     private def provideHighlightingForFeatures(XtextResource resource,
         IHighlightedPositionAcceptor acceptor) {
-        resource.allContents.forEach[
-            if (it instanceof TechnologySpecificProperty)
-                NodeModelUtils.findNodesForFeature(
-                    it,
-                    TechnologyPackage::Literals.TECHNOLOGY_SPECIFIC_PROPERTY__FEATURES
-                ).forEach[
-                    acceptor.addPosition(offset, length, HighlightingConfiguration.FEATURE_ID)
-                ]
-        ]
+        resource.allContents.forEach[nodesWithFeatures.forEach[
+            acceptor.addPosition(offset, length, HighlightingConfiguration.FEATURE_ID)
+        ]]
+    }
+
+    /**
+     * Get feature nodes on EObjects that support feature specification
+     */
+    private def getNodesWithFeatures(EObject eObject) {
+        return switch (eObject) {
+            TechnologyAspect: NodeModelUtils.findNodesForFeature(eObject,
+                TechnologyPackage::Literals.TECHNOLOGY_ASPECT__FEATURES),
+            TechnologySpecificProperty: NodeModelUtils.findNodesForFeature(eObject,
+                TechnologyPackage::Literals.TECHNOLOGY_SPECIFIC_PROPERTY__FEATURES)
+            default: emptyList
+        }
     }
 }

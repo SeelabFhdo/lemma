@@ -21,8 +21,10 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  * <ul>
  *   <li>{@link de.fhdo.lemma.technology.TechnologyAspect#getName <em>Name</em>}</li>
+ *   <li>{@link de.fhdo.lemma.technology.TechnologyAspect#getFeatures <em>Features</em>}</li>
  *   <li>{@link de.fhdo.lemma.technology.TechnologyAspect#getJoinPoints <em>Join Points</em>}</li>
  *   <li>{@link de.fhdo.lemma.technology.TechnologyAspect#getProperties <em>Properties</em>}</li>
+ *   <li>{@link de.fhdo.lemma.technology.TechnologyAspect#isIsSingleValued <em>Is Single Valued</em>}</li>
  * </ul>
  *
  * @see de.fhdo.lemma.technology.TechnologyPackage#getTechnologyAspect()
@@ -40,6 +42,8 @@ public interface TechnologyAspect extends EObject {
      *     (C1) Join points must be unique.
      *          Ensured by: DSL validator.
      *     (C2) Properties must be unique.
+     *          Ensured by: DSL validator.
+     *     (C3) A feature may only be assigned once.
      *          Ensured by: DSL validator.
      * <!-- end-model-doc -->
      * @return the value of the '<em>Name</em>' attribute.
@@ -59,6 +63,24 @@ public interface TechnologyAspect extends EObject {
      * @generated
      */
     void setName(String value);
+
+    /**
+     * Returns the value of the '<em><b>Features</b></em>' attribute list.
+     * The list contents are of type {@link de.fhdo.lemma.technology.AspectFeature}.
+     * The literals are from the enumeration {@link de.fhdo.lemma.technology.AspectFeature}.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Features</em>' attribute list isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Features</em>' attribute list.
+     * @see de.fhdo.lemma.technology.AspectFeature
+     * @see de.fhdo.lemma.technology.TechnologyPackage#getTechnologyAspect_Features()
+     * @model unique="false"
+     * @generated
+     */
+    EList<AspectFeature> getFeatures();
 
     /**
      * Returns the value of the '<em><b>Join Points</b></em>' attribute list.
@@ -95,6 +117,21 @@ public interface TechnologyAspect extends EObject {
      * @generated
      */
     EList<TechnologySpecificProperty> getProperties();
+
+    /**
+     * Returns the value of the '<em><b>Is Single Valued</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * *
+     * Convenience getter to determine if the aspect exhibits the "single-valued" feature
+     * <!-- end-model-doc -->
+     * @return the value of the '<em>Is Single Valued</em>' attribute.
+     * @see de.fhdo.lemma.technology.TechnologyPackage#getTechnologyAspect_IsSingleValued()
+     * @model unique="false" transient="true" changeable="false" volatile="true" derived="true"
+     * @generated
+     */
+    boolean isIsSingleValued();
 
     /**
      * <!-- begin-user-doc -->

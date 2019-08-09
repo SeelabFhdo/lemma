@@ -4,6 +4,7 @@ package de.fhdo.lemma.technology.impl;
 
 import de.fhdo.lemma.data.DataPackage;
 
+import de.fhdo.lemma.technology.AspectFeature;
 import de.fhdo.lemma.technology.CommunicationType;
 import de.fhdo.lemma.technology.CompatibilityDirection;
 import de.fhdo.lemma.technology.CompatibilityMatrixEntry;
@@ -250,6 +251,13 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * @generated
      */
     private EEnum pointcutTypeEEnum = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EEnum aspectFeatureEEnum = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -1119,7 +1127,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * @generated
      */
     @Override
-    public EAttribute getTechnologyAspect_JoinPoints() {
+    public EAttribute getTechnologyAspect_Features() {
         return (EAttribute)technologyAspectEClass.getEStructuralFeatures().get(1);
     }
 
@@ -1129,8 +1137,28 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * @generated
      */
     @Override
+    public EAttribute getTechnologyAspect_JoinPoints() {
+        return (EAttribute)technologyAspectEClass.getEStructuralFeatures().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public EReference getTechnologyAspect_Properties() {
-        return (EReference)technologyAspectEClass.getEStructuralFeatures().get(2);
+        return (EReference)technologyAspectEClass.getEStructuralFeatures().get(3);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EAttribute getTechnologyAspect_IsSingleValued() {
+        return (EAttribute)technologyAspectEClass.getEStructuralFeatures().get(4);
     }
 
     /**
@@ -1659,6 +1687,16 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * @generated
      */
     @Override
+    public EEnum getAspectFeature() {
+        return aspectFeatureEEnum;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public EDataType getPointcutTypeStringsMap() {
         return pointcutTypeStringsMapEDataType;
     }
@@ -1786,8 +1824,10 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
 
         technologyAspectEClass = createEClass(TECHNOLOGY_ASPECT);
         createEAttribute(technologyAspectEClass, TECHNOLOGY_ASPECT__NAME);
+        createEAttribute(technologyAspectEClass, TECHNOLOGY_ASPECT__FEATURES);
         createEAttribute(technologyAspectEClass, TECHNOLOGY_ASPECT__JOIN_POINTS);
         createEReference(technologyAspectEClass, TECHNOLOGY_ASPECT__PROPERTIES);
+        createEAttribute(technologyAspectEClass, TECHNOLOGY_ASPECT__IS_SINGLE_VALUED);
         createEOperation(technologyAspectEClass, TECHNOLOGY_ASPECT___GET_QUALIFIED_NAME_PARTS);
 
         serviceAspectEClass = createEClass(SERVICE_ASPECT);
@@ -1848,6 +1888,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
         propertyFeatureEEnum = createEEnum(PROPERTY_FEATURE);
         joinPointTypeEEnum = createEEnum(JOIN_POINT_TYPE);
         pointcutTypeEEnum = createEEnum(POINTCUT_TYPE);
+        aspectFeatureEEnum = createEEnum(ASPECT_FEATURE);
 
         // Create data types
         pointcutTypeStringsMapEDataType = createEDataType(POINTCUT_TYPE_STRINGS_MAP);
@@ -2000,8 +2041,10 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
 
         initEClass(technologyAspectEClass, TechnologyAspect.class, "TechnologyAspect", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getTechnologyAspect_Name(), theEcorePackage.getEString(), "name", null, 0, 1, TechnologyAspect.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getTechnologyAspect_Features(), this.getAspectFeature(), "features", null, 0, -1, TechnologyAspect.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getTechnologyAspect_JoinPoints(), this.getJoinPointType(), "joinPoints", null, 1, -1, TechnologyAspect.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getTechnologyAspect_Properties(), this.getTechnologySpecificProperty(), this.getTechnologySpecificProperty_TechnologyAspect(), "properties", null, 0, -1, TechnologyAspect.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getTechnologyAspect_IsSingleValued(), theEcorePackage.getEBoolean(), "isSingleValued", null, 0, 1, TechnologyAspect.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 
         initEOperation(getTechnologyAspect__GetQualifiedNameParts(), theEcorePackage.getEString(), "getQualifiedNameParts", 0, -1, !IS_UNIQUE, IS_ORDERED);
 
@@ -2113,6 +2156,9 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
         addEEnumLiteral(pointcutTypeEEnum, PointcutType.PROTOCOL);
         addEEnumLiteral(pointcutTypeEEnum, PointcutType.DATA_FORMAT);
         addEEnumLiteral(pointcutTypeEEnum, PointcutType.TECHNOLOGY);
+
+        initEEnum(aspectFeatureEEnum, AspectFeature.class, "AspectFeature");
+        addEEnumLiteral(aspectFeatureEEnum, AspectFeature.SINGLE_VALUED);
 
         // Initialize data types
         initEDataType(pointcutTypeStringsMapEDataType, Map.class, "PointcutTypeStringsMap", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS, "java.util.Map<de.fhdo.lemma.technology.PointcutType, java.util.List<java.lang.String>>");

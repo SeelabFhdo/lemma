@@ -1050,6 +1050,19 @@ and other modeling concepts such as :java:type:`microservices
 
         Name of the aspect.
 
+    .. py:attribute:: String[*] featureNames
+
+        This attribute contains the names of all features specified for the
+        aspect. The following values are possible:
+
+        =================   ====================================================
+        **Feature Name**      **Description**
+        -----------------   ----------------------------------------------------
+          SINGE_VALUED      Flag to indicate that an aspect may only receive a
+                            value once, i.e., it may only be specified once at a
+                            target element.
+        =================   ====================================================
+
     .. py:attribute:: IntermediateImport[1] import
 
         :java:type:`Import <IntermediateImport>` of the Technology Model which 
@@ -1138,7 +1151,7 @@ and other modeling concepts such as :java:type:`microservices
                             <IntermediateImportedAspect>` the languages' 
                             validators guarantee that properties receive values
                             only once. However, it is not guaranteed that aspect
-                            properties exhibits this feature.
+                            properties exhibit this feature.
         =================   ====================================================
 
     .. py:attribute:: IntermediateImportedAspect aspect

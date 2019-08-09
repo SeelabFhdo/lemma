@@ -1235,12 +1235,19 @@ class MappingDslValidator extends AbstractMappingDslValidator {
     @Check
     def checkAspectsUniqueness(TechnologySpecificImportedServiceAspect importedAspect) {
         if (importedAspect.technology === null || importedAspect.technology.name === null ||
-            importedAspect.aspect === null || importedAspect.aspect.name === null) {
+            importedAspect.aspect === null || importedAspect.aspect.name === null ||
+            !importedAspect.aspect.isSingleValued) {
             return
         }
 
-        val allAspectsOfContainer = EcoreUtil2.getSiblingsOfType(importedAspect.eContainer,
-            TechnologySpecificImportedServiceAspect)
+        if (!importedAspect.aspect.isSingleValued) {
+            return
+        }
+
+        val allAspectsOfContainer = newArrayList(importedAspect)
+        allAspectsOfContainer.addAll(
+            EcoreUtil2.getSiblingsOfType(importedAspect, TechnologySpecificImportedServiceAspect)
+        )
         val duplicateIndex = LemmaUtils.getDuplicateIndex(allAspectsOfContainer,
             [QualifiedName.create(importedAspect.technology.name, aspect.name).toString],
             [aspect.name !== null])

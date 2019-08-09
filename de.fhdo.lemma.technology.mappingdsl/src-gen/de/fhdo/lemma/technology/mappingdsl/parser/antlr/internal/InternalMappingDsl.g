@@ -6771,16 +6771,70 @@ ruleServiceAspect returns [EObject current=null]
 				}
 			)
 		)
-		otherlv_2='for'
+		(
+			otherlv_2='<'
+			{
+				newLeafNode(otherlv_2, grammarAccess.getServiceAspectAccess().getLessThanSignKeyword_2_0());
+			}
+			(
+				(
+					{
+						newCompositeNode(grammarAccess.getServiceAspectAccess().getFeaturesAspectFeatureEnumRuleCall_2_1_0());
+					}
+					lv_features_3_0=ruleAspectFeature
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getServiceAspectRule());
+						}
+						add(
+							$current,
+							"features",
+							lv_features_3_0,
+							"de.fhdo.lemma.technology.TechnologyDsl.AspectFeature");
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)
+			(
+				otherlv_4=','
+				{
+					newLeafNode(otherlv_4, grammarAccess.getServiceAspectAccess().getCommaKeyword_2_2_0());
+				}
+				(
+					(
+						{
+							newCompositeNode(grammarAccess.getServiceAspectAccess().getFeaturesAspectFeatureEnumRuleCall_2_2_1_0());
+						}
+						lv_features_5_0=ruleAspectFeature
+						{
+							if ($current==null) {
+								$current = createModelElementForParent(grammarAccess.getServiceAspectRule());
+							}
+							add(
+								$current,
+								"features",
+								lv_features_5_0,
+								"de.fhdo.lemma.technology.TechnologyDsl.AspectFeature");
+							afterParserOrEnumRuleCall();
+						}
+					)
+				)
+			)*
+			otherlv_6='>'
+			{
+				newLeafNode(otherlv_6, grammarAccess.getServiceAspectAccess().getGreaterThanSignKeyword_2_3());
+			}
+		)?
+		otherlv_7='for'
 		{
-			newLeafNode(otherlv_2, grammarAccess.getServiceAspectAccess().getForKeyword_2());
+			newLeafNode(otherlv_7, grammarAccess.getServiceAspectAccess().getForKeyword_3());
 		}
 		(
 			(
 				{
-					newCompositeNode(grammarAccess.getServiceAspectAccess().getJoinPointsServiceJoinPointTypeEnumRuleCall_3_0());
+					newCompositeNode(grammarAccess.getServiceAspectAccess().getJoinPointsServiceJoinPointTypeEnumRuleCall_4_0());
 				}
-				lv_joinPoints_3_0=ruleServiceJoinPointType
+				lv_joinPoints_8_0=ruleServiceJoinPointType
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getServiceAspectRule());
@@ -6788,23 +6842,23 @@ ruleServiceAspect returns [EObject current=null]
 					add(
 						$current,
 						"joinPoints",
-						lv_joinPoints_3_0,
+						lv_joinPoints_8_0,
 						"de.fhdo.lemma.technology.TechnologyDsl.ServiceJoinPointType");
 					afterParserOrEnumRuleCall();
 				}
 			)
 		)
 		(
-			otherlv_4=','
+			otherlv_9=','
 			{
-				newLeafNode(otherlv_4, grammarAccess.getServiceAspectAccess().getCommaKeyword_4_0());
+				newLeafNode(otherlv_9, grammarAccess.getServiceAspectAccess().getCommaKeyword_5_0());
 			}
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getServiceAspectAccess().getJoinPointsServiceJoinPointTypeEnumRuleCall_4_1_0());
+						newCompositeNode(grammarAccess.getServiceAspectAccess().getJoinPointsServiceJoinPointTypeEnumRuleCall_5_1_0());
 					}
-					lv_joinPoints_5_0=ruleServiceJoinPointType
+					lv_joinPoints_10_0=ruleServiceJoinPointType
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getServiceAspectRule());
@@ -6812,7 +6866,7 @@ ruleServiceAspect returns [EObject current=null]
 						add(
 							$current,
 							"joinPoints",
-							lv_joinPoints_5_0,
+							lv_joinPoints_10_0,
 							"de.fhdo.lemma.technology.TechnologyDsl.ServiceJoinPointType");
 						afterParserOrEnumRuleCall();
 					}
@@ -6821,16 +6875,16 @@ ruleServiceAspect returns [EObject current=null]
 		)*
 		(
 			(
-				otherlv_6='{'
+				otherlv_11='{'
 				{
-					newLeafNode(otherlv_6, grammarAccess.getServiceAspectAccess().getLeftCurlyBracketKeyword_5_0_0());
+					newLeafNode(otherlv_11, grammarAccess.getServiceAspectAccess().getLeftCurlyBracketKeyword_6_0_0());
 				}
 				(
 					(
 						{
-							newCompositeNode(grammarAccess.getServiceAspectAccess().getPointcutSelectorsServiceAspectPointcutSelectorParserRuleCall_5_0_1_0());
+							newCompositeNode(grammarAccess.getServiceAspectAccess().getPointcutSelectorsServiceAspectPointcutSelectorParserRuleCall_6_0_1_0());
 						}
-						lv_pointcutSelectors_7_0=ruleServiceAspectPointcutSelector
+						lv_pointcutSelectors_12_0=ruleServiceAspectPointcutSelector
 						{
 							if ($current==null) {
 								$current = createModelElementForParent(grammarAccess.getServiceAspectRule());
@@ -6838,7 +6892,7 @@ ruleServiceAspect returns [EObject current=null]
 							add(
 								$current,
 								"pointcutSelectors",
-								lv_pointcutSelectors_7_0,
+								lv_pointcutSelectors_12_0,
 								"de.fhdo.lemma.technology.TechnologyDsl.ServiceAspectPointcutSelector");
 							afterParserOrEnumRuleCall();
 						}
@@ -6847,9 +6901,9 @@ ruleServiceAspect returns [EObject current=null]
 				(
 					(
 						{
-							newCompositeNode(grammarAccess.getServiceAspectAccess().getPropertiesTechnologySpecificPropertyParserRuleCall_5_0_2_0());
+							newCompositeNode(grammarAccess.getServiceAspectAccess().getPropertiesTechnologySpecificPropertyParserRuleCall_6_0_2_0());
 						}
-						lv_properties_8_0=ruleTechnologySpecificProperty
+						lv_properties_13_0=ruleTechnologySpecificProperty
 						{
 							if ($current==null) {
 								$current = createModelElementForParent(grammarAccess.getServiceAspectRule());
@@ -6857,21 +6911,21 @@ ruleServiceAspect returns [EObject current=null]
 							add(
 								$current,
 								"properties",
-								lv_properties_8_0,
+								lv_properties_13_0,
 								"de.fhdo.lemma.technology.TechnologyDsl.TechnologySpecificProperty");
 							afterParserOrEnumRuleCall();
 						}
 					)
 				)*
-				otherlv_9='}'
+				otherlv_14='}'
 				{
-					newLeafNode(otherlv_9, grammarAccess.getServiceAspectAccess().getRightCurlyBracketKeyword_5_0_3());
+					newLeafNode(otherlv_14, grammarAccess.getServiceAspectAccess().getRightCurlyBracketKeyword_6_0_3());
 				}
 			)
 			    |
-			otherlv_10=';'
+			otherlv_15=';'
 			{
-				newLeafNode(otherlv_10, grammarAccess.getServiceAspectAccess().getSemicolonKeyword_5_1());
+				newLeafNode(otherlv_15, grammarAccess.getServiceAspectAccess().getSemicolonKeyword_6_1());
 			}
 		)
 	)
@@ -7044,16 +7098,70 @@ ruleOperationAspect returns [EObject current=null]
 				}
 			)
 		)
-		otherlv_2='for'
+		(
+			otherlv_2='<'
+			{
+				newLeafNode(otherlv_2, grammarAccess.getOperationAspectAccess().getLessThanSignKeyword_2_0());
+			}
+			(
+				(
+					{
+						newCompositeNode(grammarAccess.getOperationAspectAccess().getFeaturesAspectFeatureEnumRuleCall_2_1_0());
+					}
+					lv_features_3_0=ruleAspectFeature
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getOperationAspectRule());
+						}
+						add(
+							$current,
+							"features",
+							lv_features_3_0,
+							"de.fhdo.lemma.technology.TechnologyDsl.AspectFeature");
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)
+			(
+				otherlv_4=','
+				{
+					newLeafNode(otherlv_4, grammarAccess.getOperationAspectAccess().getCommaKeyword_2_2_0());
+				}
+				(
+					(
+						{
+							newCompositeNode(grammarAccess.getOperationAspectAccess().getFeaturesAspectFeatureEnumRuleCall_2_2_1_0());
+						}
+						lv_features_5_0=ruleAspectFeature
+						{
+							if ($current==null) {
+								$current = createModelElementForParent(grammarAccess.getOperationAspectRule());
+							}
+							add(
+								$current,
+								"features",
+								lv_features_5_0,
+								"de.fhdo.lemma.technology.TechnologyDsl.AspectFeature");
+							afterParserOrEnumRuleCall();
+						}
+					)
+				)
+			)*
+			otherlv_6='>'
+			{
+				newLeafNode(otherlv_6, grammarAccess.getOperationAspectAccess().getGreaterThanSignKeyword_2_3());
+			}
+		)?
+		otherlv_7='for'
 		{
-			newLeafNode(otherlv_2, grammarAccess.getOperationAspectAccess().getForKeyword_2());
+			newLeafNode(otherlv_7, grammarAccess.getOperationAspectAccess().getForKeyword_3());
 		}
 		(
 			(
 				{
-					newCompositeNode(grammarAccess.getOperationAspectAccess().getJoinPointsOperationJoinPointTypeEnumRuleCall_3_0());
+					newCompositeNode(grammarAccess.getOperationAspectAccess().getJoinPointsOperationJoinPointTypeEnumRuleCall_4_0());
 				}
-				lv_joinPoints_3_0=ruleOperationJoinPointType
+				lv_joinPoints_8_0=ruleOperationJoinPointType
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getOperationAspectRule());
@@ -7061,23 +7169,23 @@ ruleOperationAspect returns [EObject current=null]
 					add(
 						$current,
 						"joinPoints",
-						lv_joinPoints_3_0,
+						lv_joinPoints_8_0,
 						"de.fhdo.lemma.technology.TechnologyDsl.OperationJoinPointType");
 					afterParserOrEnumRuleCall();
 				}
 			)
 		)
 		(
-			otherlv_4=','
+			otherlv_9=','
 			{
-				newLeafNode(otherlv_4, grammarAccess.getOperationAspectAccess().getCommaKeyword_4_0());
+				newLeafNode(otherlv_9, grammarAccess.getOperationAspectAccess().getCommaKeyword_5_0());
 			}
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getOperationAspectAccess().getJoinPointsOperationJoinPointTypeEnumRuleCall_4_1_0());
+						newCompositeNode(grammarAccess.getOperationAspectAccess().getJoinPointsOperationJoinPointTypeEnumRuleCall_5_1_0());
 					}
-					lv_joinPoints_5_0=ruleOperationJoinPointType
+					lv_joinPoints_10_0=ruleOperationJoinPointType
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getOperationAspectRule());
@@ -7085,7 +7193,7 @@ ruleOperationAspect returns [EObject current=null]
 						add(
 							$current,
 							"joinPoints",
-							lv_joinPoints_5_0,
+							lv_joinPoints_10_0,
 							"de.fhdo.lemma.technology.TechnologyDsl.OperationJoinPointType");
 						afterParserOrEnumRuleCall();
 					}
@@ -7094,16 +7202,16 @@ ruleOperationAspect returns [EObject current=null]
 		)*
 		(
 			(
-				otherlv_6='{'
+				otherlv_11='{'
 				{
-					newLeafNode(otherlv_6, grammarAccess.getOperationAspectAccess().getLeftCurlyBracketKeyword_5_0_0());
+					newLeafNode(otherlv_11, grammarAccess.getOperationAspectAccess().getLeftCurlyBracketKeyword_6_0_0());
 				}
 				(
 					(
 						{
-							newCompositeNode(grammarAccess.getOperationAspectAccess().getPointcutSelectorsOperationAspectPointcutSelectorParserRuleCall_5_0_1_0());
+							newCompositeNode(grammarAccess.getOperationAspectAccess().getPointcutSelectorsOperationAspectPointcutSelectorParserRuleCall_6_0_1_0());
 						}
-						lv_pointcutSelectors_7_0=ruleOperationAspectPointcutSelector
+						lv_pointcutSelectors_12_0=ruleOperationAspectPointcutSelector
 						{
 							if ($current==null) {
 								$current = createModelElementForParent(grammarAccess.getOperationAspectRule());
@@ -7111,7 +7219,7 @@ ruleOperationAspect returns [EObject current=null]
 							add(
 								$current,
 								"pointcutSelectors",
-								lv_pointcutSelectors_7_0,
+								lv_pointcutSelectors_12_0,
 								"de.fhdo.lemma.technology.TechnologyDsl.OperationAspectPointcutSelector");
 							afterParserOrEnumRuleCall();
 						}
@@ -7120,9 +7228,9 @@ ruleOperationAspect returns [EObject current=null]
 				(
 					(
 						{
-							newCompositeNode(grammarAccess.getOperationAspectAccess().getPropertiesTechnologySpecificPropertyParserRuleCall_5_0_2_0());
+							newCompositeNode(grammarAccess.getOperationAspectAccess().getPropertiesTechnologySpecificPropertyParserRuleCall_6_0_2_0());
 						}
-						lv_properties_8_0=ruleTechnologySpecificProperty
+						lv_properties_13_0=ruleTechnologySpecificProperty
 						{
 							if ($current==null) {
 								$current = createModelElementForParent(grammarAccess.getOperationAspectRule());
@@ -7130,21 +7238,21 @@ ruleOperationAspect returns [EObject current=null]
 							add(
 								$current,
 								"properties",
-								lv_properties_8_0,
+								lv_properties_13_0,
 								"de.fhdo.lemma.technology.TechnologyDsl.TechnologySpecificProperty");
 							afterParserOrEnumRuleCall();
 						}
 					)
 				)*
-				otherlv_9='}'
+				otherlv_14='}'
 				{
-					newLeafNode(otherlv_9, grammarAccess.getOperationAspectAccess().getRightCurlyBracketKeyword_5_0_3());
+					newLeafNode(otherlv_14, grammarAccess.getOperationAspectAccess().getRightCurlyBracketKeyword_6_0_3());
 				}
 			)
 			    |
-			otherlv_10=';'
+			otherlv_15=';'
 			{
-				newLeafNode(otherlv_10, grammarAccess.getOperationAspectAccess().getSemicolonKeyword_5_1());
+				newLeafNode(otherlv_15, grammarAccess.getOperationAspectAccess().getSemicolonKeyword_6_1());
 			}
 		)
 	)
@@ -9100,6 +9208,23 @@ ruleServiceJoinPointType returns [Enumerator current=null]
 				newLeafNode(enumLiteral_7, grammarAccess.getServiceJoinPointTypeAccess().getPARAMETERSEnumLiteralDeclaration_7());
 			}
 		)
+	)
+;
+
+// Rule AspectFeature
+ruleAspectFeature returns [Enumerator current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		enumLiteral_0='singleval'
+		{
+			$current = grammarAccess.getAspectFeatureAccess().getSINGLE_VALUEDEnumLiteralDeclaration().getEnumLiteral().getInstance();
+			newLeafNode(enumLiteral_0, grammarAccess.getAspectFeatureAccess().getSINGLE_VALUEDEnumLiteralDeclaration());
+		}
 	)
 ;
 

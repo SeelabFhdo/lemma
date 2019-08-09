@@ -3,6 +3,7 @@ package de.fhdo.lemma.technology.ui.highlighting;
 import de.fhdo.lemma.data.PrimitiveValue;
 import de.fhdo.lemma.technology.OperationAspectPointcut;
 import de.fhdo.lemma.technology.ServiceAspectPointcut;
+import de.fhdo.lemma.technology.TechnologyAspect;
 import de.fhdo.lemma.technology.TechnologyPackage;
 import de.fhdo.lemma.technology.TechnologySpecificProperty;
 import de.fhdo.lemma.technology.ui.highlighting.HighlightingConfiguration;
@@ -123,14 +124,40 @@ public class HighlightingCalculator implements ISemanticHighlightingCalculator {
    */
   private void provideHighlightingForFeatures(final XtextResource resource, final IHighlightedPositionAcceptor acceptor) {
     final Procedure1<EObject> _function = (EObject it) -> {
-      if ((it instanceof TechnologySpecificProperty)) {
-        final Consumer<INode> _function_1 = (INode it_1) -> {
-          acceptor.addPosition(it_1.getOffset(), it_1.getLength(), HighlightingConfiguration.FEATURE_ID);
-        };
-        NodeModelUtils.findNodesForFeature(it, 
-          TechnologyPackage.Literals.TECHNOLOGY_SPECIFIC_PROPERTY__FEATURES).forEach(_function_1);
-      }
+      final Consumer<INode> _function_1 = (INode it_1) -> {
+        acceptor.addPosition(it_1.getOffset(), it_1.getLength(), HighlightingConfiguration.FEATURE_ID);
+      };
+      this.getNodesWithFeatures(it).forEach(_function_1);
     };
     IteratorExtensions.<EObject>forEach(resource.getAllContents(), _function);
+  }
+  
+  /**
+   * Get feature nodes on EObjects that support feature specification
+   */
+  private List<INode> getNodesWithFeatures(final EObject eObject) {
+    List<INode> _switchResult = null;
+    boolean _matched = false;
+    if (eObject instanceof TechnologyAspect) {
+      _matched=true;
+      _switchResult = NodeModelUtils.findNodesForFeature(eObject, 
+        TechnologyPackage.Literals.TECHNOLOGY_ASPECT__FEATURES);
+    }
+    if (!_matched) {
+      _matched=true;
+      if (!_matched) {
+        if (eObject instanceof TechnologySpecificProperty) {
+          _matched=true;
+        }
+      }
+      if (_matched) {
+        _switchResult = NodeModelUtils.findNodesForFeature(eObject, 
+          TechnologyPackage.Literals.TECHNOLOGY_SPECIFIC_PROPERTY__FEATURES);
+      }
+    }
+    if (!_matched) {
+      _switchResult = CollectionLiterals.<INode>emptyList();
+    }
+    return _switchResult;
   }
 }

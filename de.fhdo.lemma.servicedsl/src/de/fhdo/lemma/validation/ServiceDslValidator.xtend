@@ -845,8 +845,12 @@ class ServiceDslValidator extends AbstractServiceDslValidator {
      */
     @Check
     def checkUniqueAspects(ImportedServiceAspect aspect) {
-        val allAspectsOfContainer = EcoreUtil2.getSiblingsOfType(aspect.eContainer,
-            ImportedServiceAspect)
+        if (!aspect.importedAspect.isSingleValued) {
+            return
+        }
+
+        val allAspectsOfContainer = newArrayList(aspect)
+        allAspectsOfContainer.addAll(EcoreUtil2.getSiblingsOfType(aspect, ImportedServiceAspect))
         val duplicateIndex = LemmaUtils.getDuplicateIndex(allAspectsOfContainer,
             [importedAspect.name])
         if (duplicateIndex > -1) {

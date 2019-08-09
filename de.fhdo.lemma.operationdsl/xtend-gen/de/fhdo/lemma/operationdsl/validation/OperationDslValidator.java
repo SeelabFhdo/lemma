@@ -29,6 +29,7 @@ import de.fhdo.lemma.technology.TechnologyPackage;
 import de.fhdo.lemma.technology.TechnologySpecificProperty;
 import de.fhdo.lemma.technology.TechnologySpecificPropertyValueAssignment;
 import de.fhdo.lemma.utils.LemmaUtils;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -833,8 +834,14 @@ public class OperationDslValidator extends AbstractOperationDslValidator {
    */
   @Check
   public void checkAspectUniqueness(final ImportedOperationAspect importedAspect) {
-    final List<ImportedOperationAspect> allAspectsOfContainer = EcoreUtil2.<ImportedOperationAspect>getSiblingsOfType(importedAspect.eContainer(), 
-      ImportedOperationAspect.class);
+    boolean _isIsSingleValued = importedAspect.getAspect().isIsSingleValued();
+    boolean _not = (!_isIsSingleValued);
+    if (_not) {
+      return;
+    }
+    final ArrayList<ImportedOperationAspect> allAspectsOfContainer = CollectionLiterals.<ImportedOperationAspect>newArrayList(importedAspect);
+    allAspectsOfContainer.addAll(
+      EcoreUtil2.<ImportedOperationAspect>getSiblingsOfType(importedAspect, ImportedOperationAspect.class));
     final Function<ImportedOperationAspect, String> _function = (ImportedOperationAspect it) -> {
       return it.getAspect().getName();
     };

@@ -1860,13 +1860,22 @@ public interface IntermediatePackage extends EPackage {
     int INTERMEDIATE_IMPORTED_ASPECT__NAME = 0;
 
     /**
+     * The feature id for the '<em><b>Feature Names</b></em>' attribute list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_IMPORTED_ASPECT__FEATURE_NAMES = 1;
+
+    /**
      * The feature id for the '<em><b>Import</b></em>' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_IMPORTED_ASPECT__IMPORT = 1;
+    int INTERMEDIATE_IMPORTED_ASPECT__IMPORT = 2;
 
     /**
      * The feature id for the '<em><b>Properties</b></em>' containment reference list.
@@ -1875,7 +1884,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_IMPORTED_ASPECT__PROPERTIES = 2;
+    int INTERMEDIATE_IMPORTED_ASPECT__PROPERTIES = 3;
 
     /**
      * The feature id for the '<em><b>Property Values</b></em>' containment reference list.
@@ -1884,7 +1893,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_IMPORTED_ASPECT__PROPERTY_VALUES = 3;
+    int INTERMEDIATE_IMPORTED_ASPECT__PROPERTY_VALUES = 4;
 
     /**
      * The feature id for the '<em><b>Complex Type</b></em>' container reference.
@@ -1893,7 +1902,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_IMPORTED_ASPECT__COMPLEX_TYPE = 4;
+    int INTERMEDIATE_IMPORTED_ASPECT__COMPLEX_TYPE = 5;
 
     /**
      * The feature id for the '<em><b>Operation</b></em>' container reference.
@@ -1902,7 +1911,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_IMPORTED_ASPECT__OPERATION = 5;
+    int INTERMEDIATE_IMPORTED_ASPECT__OPERATION = 6;
 
     /**
      * The feature id for the '<em><b>Return Type</b></em>' container reference.
@@ -1911,7 +1920,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_IMPORTED_ASPECT__RETURN_TYPE = 6;
+    int INTERMEDIATE_IMPORTED_ASPECT__RETURN_TYPE = 7;
 
     /**
      * The feature id for the '<em><b>Parameter</b></em>' container reference.
@@ -1920,7 +1929,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_IMPORTED_ASPECT__PARAMETER = 7;
+    int INTERMEDIATE_IMPORTED_ASPECT__PARAMETER = 8;
 
     /**
      * The feature id for the '<em><b>Data Field</b></em>' container reference.
@@ -1929,7 +1938,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_IMPORTED_ASPECT__DATA_FIELD = 8;
+    int INTERMEDIATE_IMPORTED_ASPECT__DATA_FIELD = 9;
 
     /**
      * The number of structural features of the '<em>Imported Aspect</em>' class.
@@ -1938,7 +1947,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_IMPORTED_ASPECT_FEATURE_COUNT = 9;
+    int INTERMEDIATE_IMPORTED_ASPECT_FEATURE_COUNT = 10;
 
     /**
      * The number of operations of the '<em>Imported Aspect</em>' class.
@@ -3202,6 +3211,17 @@ public interface IntermediatePackage extends EPackage {
     EAttribute getIntermediateImportedAspect_Name();
 
     /**
+     * Returns the meta object for the attribute list '{@link de.fhdo.lemma.data.intermediate.IntermediateImportedAspect#getFeatureNames <em>Feature Names</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute list '<em>Feature Names</em>'.
+     * @see de.fhdo.lemma.data.intermediate.IntermediateImportedAspect#getFeatureNames()
+     * @see #getIntermediateImportedAspect()
+     * @generated
+     */
+    EAttribute getIntermediateImportedAspect_FeatureNames();
+
+    /**
      * Returns the meta object for the reference '{@link de.fhdo.lemma.data.intermediate.IntermediateImportedAspect#getImport <em>Import</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -4291,6 +4311,14 @@ public interface IntermediatePackage extends EPackage {
          * @generated
          */
         EAttribute INTERMEDIATE_IMPORTED_ASPECT__NAME = eINSTANCE.getIntermediateImportedAspect_Name();
+
+        /**
+         * The meta object literal for the '<em><b>Feature Names</b></em>' attribute list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute INTERMEDIATE_IMPORTED_ASPECT__FEATURE_NAMES = eINSTANCE.getIntermediateImportedAspect_FeatureNames();
 
         /**
          * The meta object literal for the '<em><b>Import</b></em>' reference feature.

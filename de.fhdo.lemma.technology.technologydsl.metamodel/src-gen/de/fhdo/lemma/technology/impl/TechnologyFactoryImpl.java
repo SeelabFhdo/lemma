@@ -105,6 +105,8 @@ public class TechnologyFactoryImpl extends EFactoryImpl implements TechnologyFac
                 return createJoinPointTypeFromString(eDataType, initialValue);
             case TechnologyPackage.POINTCUT_TYPE:
                 return createPointcutTypeFromString(eDataType, initialValue);
+            case TechnologyPackage.ASPECT_FEATURE:
+                return createAspectFeatureFromString(eDataType, initialValue);
             case TechnologyPackage.POINTCUT_TYPE_STRINGS_MAP:
                 return createPointcutTypeStringsMapFromString(eDataType, initialValue);
             default:
@@ -132,6 +134,8 @@ public class TechnologyFactoryImpl extends EFactoryImpl implements TechnologyFac
                 return convertJoinPointTypeToString(eDataType, instanceValue);
             case TechnologyPackage.POINTCUT_TYPE:
                 return convertPointcutTypeToString(eDataType, instanceValue);
+            case TechnologyPackage.ASPECT_FEATURE:
+                return convertAspectFeatureToString(eDataType, instanceValue);
             case TechnologyPackage.POINTCUT_TYPE_STRINGS_MAP:
                 return convertPointcutTypeStringsMapToString(eDataType, instanceValue);
             default:
@@ -476,6 +480,26 @@ public class TechnologyFactoryImpl extends EFactoryImpl implements TechnologyFac
      * @generated
      */
     public String convertPointcutTypeToString(EDataType eDataType, Object instanceValue) {
+        return instanceValue == null ? null : instanceValue.toString();
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public AspectFeature createAspectFeatureFromString(EDataType eDataType, String initialValue) {
+        AspectFeature result = AspectFeature.get(initialValue);
+        if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+        return result;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public String convertAspectFeatureToString(EDataType eDataType, Object instanceValue) {
         return instanceValue == null ? null : instanceValue.toString();
     }
 

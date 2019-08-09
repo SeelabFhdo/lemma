@@ -1339,13 +1339,22 @@ public interface TechnologyPackage extends EPackage {
     int TECHNOLOGY_ASPECT__NAME = 0;
 
     /**
+     * The feature id for the '<em><b>Features</b></em>' attribute list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TECHNOLOGY_ASPECT__FEATURES = 1;
+
+    /**
      * The feature id for the '<em><b>Join Points</b></em>' attribute list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int TECHNOLOGY_ASPECT__JOIN_POINTS = 1;
+    int TECHNOLOGY_ASPECT__JOIN_POINTS = 2;
 
     /**
      * The feature id for the '<em><b>Properties</b></em>' containment reference list.
@@ -1354,7 +1363,16 @@ public interface TechnologyPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TECHNOLOGY_ASPECT__PROPERTIES = 2;
+    int TECHNOLOGY_ASPECT__PROPERTIES = 3;
+
+    /**
+     * The feature id for the '<em><b>Is Single Valued</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TECHNOLOGY_ASPECT__IS_SINGLE_VALUED = 4;
 
     /**
      * The number of structural features of the '<em>Aspect</em>' class.
@@ -1363,7 +1381,7 @@ public interface TechnologyPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TECHNOLOGY_ASPECT_FEATURE_COUNT = 3;
+    int TECHNOLOGY_ASPECT_FEATURE_COUNT = 5;
 
     /**
      * The operation id for the '<em>Get Qualified Name Parts</em>' operation.
@@ -1403,6 +1421,15 @@ public interface TechnologyPackage extends EPackage {
     int SERVICE_ASPECT__NAME = TECHNOLOGY_ASPECT__NAME;
 
     /**
+     * The feature id for the '<em><b>Features</b></em>' attribute list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SERVICE_ASPECT__FEATURES = TECHNOLOGY_ASPECT__FEATURES;
+
+    /**
      * The feature id for the '<em><b>Join Points</b></em>' attribute list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1419,6 +1446,15 @@ public interface TechnologyPackage extends EPackage {
      * @ordered
      */
     int SERVICE_ASPECT__PROPERTIES = TECHNOLOGY_ASPECT__PROPERTIES;
+
+    /**
+     * The feature id for the '<em><b>Is Single Valued</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SERVICE_ASPECT__IS_SINGLE_VALUED = TECHNOLOGY_ASPECT__IS_SINGLE_VALUED;
 
     /**
      * The feature id for the '<em><b>Pointcut Selectors</b></em>' containment reference list.
@@ -1739,6 +1775,15 @@ public interface TechnologyPackage extends EPackage {
     int OPERATION_ASPECT__NAME = TECHNOLOGY_ASPECT__NAME;
 
     /**
+     * The feature id for the '<em><b>Features</b></em>' attribute list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int OPERATION_ASPECT__FEATURES = TECHNOLOGY_ASPECT__FEATURES;
+
+    /**
      * The feature id for the '<em><b>Join Points</b></em>' attribute list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1755,6 +1800,15 @@ public interface TechnologyPackage extends EPackage {
      * @ordered
      */
     int OPERATION_ASPECT__PROPERTIES = TECHNOLOGY_ASPECT__PROPERTIES;
+
+    /**
+     * The feature id for the '<em><b>Is Single Valued</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int OPERATION_ASPECT__IS_SINGLE_VALUED = TECHNOLOGY_ASPECT__IS_SINGLE_VALUED;
 
     /**
      * The feature id for the '<em><b>Pointcut Selectors</b></em>' containment reference list.
@@ -2035,6 +2089,16 @@ public interface TechnologyPackage extends EPackage {
     int POINTCUT_TYPE = 27;
 
     /**
+     * The meta object id for the '{@link de.fhdo.lemma.technology.AspectFeature <em>Aspect Feature</em>}' enum.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.fhdo.lemma.technology.AspectFeature
+     * @see de.fhdo.lemma.technology.impl.TechnologyPackageImpl#getAspectFeature()
+     * @generated
+     */
+    int ASPECT_FEATURE = 28;
+
+    /**
      * The meta object id for the '<em>Pointcut Type Strings Map</em>' data type.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2042,7 +2106,7 @@ public interface TechnologyPackage extends EPackage {
      * @see de.fhdo.lemma.technology.impl.TechnologyPackageImpl#getPointcutTypeStringsMap()
      * @generated
      */
-    int POINTCUT_TYPE_STRINGS_MAP = 28;
+    int POINTCUT_TYPE_STRINGS_MAP = 29;
 
 
     /**
@@ -2890,6 +2954,17 @@ public interface TechnologyPackage extends EPackage {
     EAttribute getTechnologyAspect_Name();
 
     /**
+     * Returns the meta object for the attribute list '{@link de.fhdo.lemma.technology.TechnologyAspect#getFeatures <em>Features</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute list '<em>Features</em>'.
+     * @see de.fhdo.lemma.technology.TechnologyAspect#getFeatures()
+     * @see #getTechnologyAspect()
+     * @generated
+     */
+    EAttribute getTechnologyAspect_Features();
+
+    /**
      * Returns the meta object for the attribute list '{@link de.fhdo.lemma.technology.TechnologyAspect#getJoinPoints <em>Join Points</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2910,6 +2985,17 @@ public interface TechnologyPackage extends EPackage {
      * @generated
      */
     EReference getTechnologyAspect_Properties();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.fhdo.lemma.technology.TechnologyAspect#isIsSingleValued <em>Is Single Valued</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Is Single Valued</em>'.
+     * @see de.fhdo.lemma.technology.TechnologyAspect#isIsSingleValued()
+     * @see #getTechnologyAspect()
+     * @generated
+     */
+    EAttribute getTechnologyAspect_IsSingleValued();
 
     /**
      * Returns the meta object for the '{@link de.fhdo.lemma.technology.TechnologyAspect#getQualifiedNameParts() <em>Get Qualified Name Parts</em>}' operation.
@@ -3462,6 +3548,16 @@ public interface TechnologyPackage extends EPackage {
      * @generated
      */
     EEnum getPointcutType();
+
+    /**
+     * Returns the meta object for enum '{@link de.fhdo.lemma.technology.AspectFeature <em>Aspect Feature</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for enum '<em>Aspect Feature</em>'.
+     * @see de.fhdo.lemma.technology.AspectFeature
+     * @generated
+     */
+    EEnum getAspectFeature();
 
     /**
      * Returns the meta object for data type '{@link java.util.Map <em>Pointcut Type Strings Map</em>}'.
@@ -4166,6 +4262,14 @@ public interface TechnologyPackage extends EPackage {
         EAttribute TECHNOLOGY_ASPECT__NAME = eINSTANCE.getTechnologyAspect_Name();
 
         /**
+         * The meta object literal for the '<em><b>Features</b></em>' attribute list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute TECHNOLOGY_ASPECT__FEATURES = eINSTANCE.getTechnologyAspect_Features();
+
+        /**
          * The meta object literal for the '<em><b>Join Points</b></em>' attribute list feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -4180,6 +4284,14 @@ public interface TechnologyPackage extends EPackage {
          * @generated
          */
         EReference TECHNOLOGY_ASPECT__PROPERTIES = eINSTANCE.getTechnologyAspect_Properties();
+
+        /**
+         * The meta object literal for the '<em><b>Is Single Valued</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute TECHNOLOGY_ASPECT__IS_SINGLE_VALUED = eINSTANCE.getTechnologyAspect_IsSingleValued();
 
         /**
          * The meta object literal for the '<em><b>Get Qualified Name Parts</b></em>' operation.
@@ -4620,6 +4732,16 @@ public interface TechnologyPackage extends EPackage {
          * @generated
          */
         EEnum POINTCUT_TYPE = eINSTANCE.getPointcutType();
+
+        /**
+         * The meta object literal for the '{@link de.fhdo.lemma.technology.AspectFeature <em>Aspect Feature</em>}' enum.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.fhdo.lemma.technology.AspectFeature
+         * @see de.fhdo.lemma.technology.impl.TechnologyPackageImpl#getAspectFeature()
+         * @generated
+         */
+        EEnum ASPECT_FEATURE = eINSTANCE.getAspectFeature();
 
         /**
          * The meta object literal for the '<em>Pointcut Type Strings Map</em>' data type.

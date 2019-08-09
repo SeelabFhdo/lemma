@@ -2,6 +2,7 @@
  */
 package de.fhdo.lemma.technology.impl;
 
+import de.fhdo.lemma.technology.AspectFeature;
 import de.fhdo.lemma.technology.JoinPointType;
 import de.fhdo.lemma.technology.TechnologyAspect;
 import de.fhdo.lemma.technology.TechnologyPackage;
@@ -39,8 +40,10 @@ import org.eclipse.xtext.xbase.lib.CollectionLiterals;
  * </p>
  * <ul>
  *   <li>{@link de.fhdo.lemma.technology.impl.TechnologyAspectImpl#getName <em>Name</em>}</li>
+ *   <li>{@link de.fhdo.lemma.technology.impl.TechnologyAspectImpl#getFeatures <em>Features</em>}</li>
  *   <li>{@link de.fhdo.lemma.technology.impl.TechnologyAspectImpl#getJoinPoints <em>Join Points</em>}</li>
  *   <li>{@link de.fhdo.lemma.technology.impl.TechnologyAspectImpl#getProperties <em>Properties</em>}</li>
+ *   <li>{@link de.fhdo.lemma.technology.impl.TechnologyAspectImpl#isIsSingleValued <em>Is Single Valued</em>}</li>
  * </ul>
  *
  * @generated
@@ -67,6 +70,16 @@ public abstract class TechnologyAspectImpl extends MinimalEObjectImpl.Container 
     protected String name = NAME_EDEFAULT;
 
     /**
+     * The cached value of the '{@link #getFeatures() <em>Features</em>}' attribute list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getFeatures()
+     * @generated
+     * @ordered
+     */
+    protected EList<AspectFeature> features;
+
+    /**
      * The cached value of the '{@link #getJoinPoints() <em>Join Points</em>}' attribute list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -85,6 +98,16 @@ public abstract class TechnologyAspectImpl extends MinimalEObjectImpl.Container 
      * @ordered
      */
     protected EList<TechnologySpecificProperty> properties;
+
+    /**
+     * The default value of the '{@link #isIsSingleValued() <em>Is Single Valued</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isIsSingleValued()
+     * @generated
+     * @ordered
+     */
+    protected static final boolean IS_SINGLE_VALUED_EDEFAULT = false;
 
     /**
      * <!-- begin-user-doc -->
@@ -134,6 +157,19 @@ public abstract class TechnologyAspectImpl extends MinimalEObjectImpl.Container 
      * @generated
      */
     @Override
+    public EList<AspectFeature> getFeatures() {
+        if (features == null) {
+            features = new EDataTypeEList<AspectFeature>(AspectFeature.class, this, TechnologyPackage.TECHNOLOGY_ASPECT__FEATURES);
+        }
+        return features;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public EList<JoinPointType> getJoinPoints() {
         if (joinPoints == null) {
             joinPoints = new EDataTypeEList<JoinPointType>(JoinPointType.class, this, TechnologyPackage.TECHNOLOGY_ASPECT__JOIN_POINTS);
@@ -152,6 +188,25 @@ public abstract class TechnologyAspectImpl extends MinimalEObjectImpl.Container 
             properties = new EObjectContainmentWithInverseEList<TechnologySpecificProperty>(TechnologySpecificProperty.class, this, TechnologyPackage.TECHNOLOGY_ASPECT__PROPERTIES, TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__TECHNOLOGY_ASPECT);
         }
         return properties;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public boolean isIsSingleValued() {
+        boolean _xifexpression = false;
+        EList<AspectFeature> _features = this.getFeatures();
+        boolean _tripleNotEquals = (_features != null);
+        if (_tripleNotEquals) {
+            _xifexpression = this.getFeatures().contains(AspectFeature.SINGLE_VALUED);
+        }
+        else {
+            _xifexpression = false;
+        }
+        return _xifexpression;
     }
 
     /**
@@ -213,10 +268,14 @@ public abstract class TechnologyAspectImpl extends MinimalEObjectImpl.Container 
         switch (featureID) {
             case TechnologyPackage.TECHNOLOGY_ASPECT__NAME:
                 return getName();
+            case TechnologyPackage.TECHNOLOGY_ASPECT__FEATURES:
+                return getFeatures();
             case TechnologyPackage.TECHNOLOGY_ASPECT__JOIN_POINTS:
                 return getJoinPoints();
             case TechnologyPackage.TECHNOLOGY_ASPECT__PROPERTIES:
                 return getProperties();
+            case TechnologyPackage.TECHNOLOGY_ASPECT__IS_SINGLE_VALUED:
+                return isIsSingleValued();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -232,6 +291,10 @@ public abstract class TechnologyAspectImpl extends MinimalEObjectImpl.Container 
         switch (featureID) {
             case TechnologyPackage.TECHNOLOGY_ASPECT__NAME:
                 setName((String)newValue);
+                return;
+            case TechnologyPackage.TECHNOLOGY_ASPECT__FEATURES:
+                getFeatures().clear();
+                getFeatures().addAll((Collection<? extends AspectFeature>)newValue);
                 return;
             case TechnologyPackage.TECHNOLOGY_ASPECT__JOIN_POINTS:
                 getJoinPoints().clear();
@@ -256,6 +319,9 @@ public abstract class TechnologyAspectImpl extends MinimalEObjectImpl.Container 
             case TechnologyPackage.TECHNOLOGY_ASPECT__NAME:
                 setName(NAME_EDEFAULT);
                 return;
+            case TechnologyPackage.TECHNOLOGY_ASPECT__FEATURES:
+                getFeatures().clear();
+                return;
             case TechnologyPackage.TECHNOLOGY_ASPECT__JOIN_POINTS:
                 getJoinPoints().clear();
                 return;
@@ -276,10 +342,14 @@ public abstract class TechnologyAspectImpl extends MinimalEObjectImpl.Container 
         switch (featureID) {
             case TechnologyPackage.TECHNOLOGY_ASPECT__NAME:
                 return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+            case TechnologyPackage.TECHNOLOGY_ASPECT__FEATURES:
+                return features != null && !features.isEmpty();
             case TechnologyPackage.TECHNOLOGY_ASPECT__JOIN_POINTS:
                 return joinPoints != null && !joinPoints.isEmpty();
             case TechnologyPackage.TECHNOLOGY_ASPECT__PROPERTIES:
                 return properties != null && !properties.isEmpty();
+            case TechnologyPackage.TECHNOLOGY_ASPECT__IS_SINGLE_VALUED:
+                return isIsSingleValued() != IS_SINGLE_VALUED_EDEFAULT;
         }
         return super.eIsSet(featureID);
     }
@@ -310,6 +380,8 @@ public abstract class TechnologyAspectImpl extends MinimalEObjectImpl.Container 
         StringBuilder result = new StringBuilder(super.toString());
         result.append(" (name: ");
         result.append(name);
+        result.append(", features: ");
+        result.append(features);
         result.append(", joinPoints: ");
         result.append(joinPoints);
         result.append(')');

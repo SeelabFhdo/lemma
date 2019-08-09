@@ -712,6 +712,17 @@ class TechnologyDslValidator extends AbstractTechnologyDslValidator {
     }
 
     /**
+     * Check that features on technology aspects are unique
+     */
+    @Check
+    def checkFeatureUniqueness(TechnologyAspect aspect) {
+        val duplicateIndex = LemmaUtils.getDuplicateIndex(aspect.features, [it])
+        if (duplicateIndex > -1)
+            error("Duplicate feature", aspect,
+                TechnologyPackage::Literals.TECHNOLOGY_ASPECT__FEATURES, duplicateIndex)
+    }
+
+    /**
      * Check that properties of an aspect are unique
      */
     @Check
