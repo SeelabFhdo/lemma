@@ -101,23 +101,23 @@ public class ServiceModelTransformationStrategy extends AbstractUiModelTransform
    */
   private LinkedHashMap<String, ModelFileTypeDescription> setupModelFileTypeDescriptions() {
     Image _createImage = LemmaUiUtils.createImage(ServiceModelTransformationStrategy.RESOURCE_MANAGER, this.getClass(), "dataModelFile.gif");
-    IntermediateDataModelTransformation _intermediateDataModelTransformation = new IntermediateDataModelTransformation();
     ModelFileTypeDescription _modelFileTypeDescription = new ModelFileTypeDescription(_createImage, 
       "Data Model", 
-      ServiceModelTransformationStrategy.DATA_MODEL_FILE_EXTENSIONS, _intermediateDataModelTransformation);
+      ServiceModelTransformationStrategy.DATA_MODEL_FILE_EXTENSIONS, 
+      IntermediateDataModelTransformation.class);
     Pair<String, ModelFileTypeDescription> _mappedTo = Pair.<String, ModelFileTypeDescription>of(ServiceModelTransformationStrategy.DATA_MODEL_FILE_TYPE_ID, _modelFileTypeDescription);
     Image _createImage_1 = LemmaUiUtils.createImage(ServiceModelTransformationStrategy.RESOURCE_MANAGER, this.getClass(), "mappingModelFile.gif");
-    MappingModelTransformation _mappingModelTransformation = new MappingModelTransformation();
-    IntermediateServiceModelTransformation _intermediateServiceModelTransformation = new IntermediateServiceModelTransformation();
     ModelFileTypeDescription _modelFileTypeDescription_1 = new ModelFileTypeDescription(_createImage_1, 
       "Mapping Model", 
-      ServiceModelTransformationStrategy.MAPPING_MODEL_FILE_EXTENSIONS, _mappingModelTransformation, _intermediateServiceModelTransformation);
+      ServiceModelTransformationStrategy.MAPPING_MODEL_FILE_EXTENSIONS, 
+      MappingModelTransformation.class, 
+      IntermediateServiceModelTransformation.class);
     Pair<String, ModelFileTypeDescription> _mappedTo_1 = Pair.<String, ModelFileTypeDescription>of(ServiceModelTransformationStrategy.MAPPING_MODEL_FILE_TYPE_ID, _modelFileTypeDescription_1);
     Image _createImage_2 = LemmaUiUtils.createImage(ServiceModelTransformationStrategy.RESOURCE_MANAGER, this.getClass(), "serviceModelFile.gif");
-    IntermediateServiceModelTransformation _intermediateServiceModelTransformation_1 = new IntermediateServiceModelTransformation();
     ModelFileTypeDescription _modelFileTypeDescription_2 = new ModelFileTypeDescription(_createImage_2, 
       "Service Model", 
-      ServiceModelTransformationStrategy.SERVICE_MODEL_FILE_EXTENSIONS, _intermediateServiceModelTransformation_1);
+      ServiceModelTransformationStrategy.SERVICE_MODEL_FILE_EXTENSIONS, 
+      IntermediateServiceModelTransformation.class);
     Pair<String, ModelFileTypeDescription> _mappedTo_2 = Pair.<String, ModelFileTypeDescription>of(ServiceModelTransformationStrategy.SERVICE_MODEL_FILE_TYPE_ID, _modelFileTypeDescription_2);
     return this.modelFileTypeDescriptions = CollectionLiterals.<String, ModelFileTypeDescription>newLinkedHashMap(_mappedTo, _mappedTo_1, _mappedTo_2);
   }

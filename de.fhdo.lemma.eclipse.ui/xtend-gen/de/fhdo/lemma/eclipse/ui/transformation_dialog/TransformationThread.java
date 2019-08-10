@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiFunction;
@@ -159,11 +158,11 @@ public class TransformationThread extends Thread {
    */
   private List<String> buildTransformationOutputPaths(final String initialOutputPath, final ModelFileTypeDescription fileTypeDescription, final boolean outputRefinementModels) {
     final ArrayList<String> outputPaths = CollectionLiterals.<String>newArrayList();
-    final int refiningStrategiesCount = fileTypeDescription.getRefiningTransformationStrategies().size();
-    if (((refiningStrategiesCount > 0) && outputRefinementModels)) {
+    if (((fileTypeDescription.refiningStrategiesCount() > 0) && outputRefinementModels)) {
       final String basicFilename = LemmaUiUtils.removeExtension(initialOutputPath);
       final String ext = LemmaUiUtils.getExtension(initialOutputPath);
-      ExclusiveRange _doubleDotLessThan = new ExclusiveRange(0, refiningStrategiesCount, true);
+      int _refiningStrategiesCount = fileTypeDescription.refiningStrategiesCount();
+      ExclusiveRange _doubleDotLessThan = new ExclusiveRange(0, _refiningStrategiesCount, true);
       for (final Integer i : _doubleDotLessThan) {
         StringConcatenation _builder = new StringConcatenation();
         _builder.append("_");
@@ -182,7 +181,7 @@ public class TransformationThread extends Thread {
    * Perform main transformation on a model file
    */
   private AbstractIntermediateModelTransformationStrategy.TransformationResult mainTransformation(final ModelFile modelFile, final String outputPath, final List<BiFunction<List<AbstractIntermediateModelTransformationStrategy.TransformationResult>, Predicate<IntermediateTransformationException>, Void>> transformationsFinishedListeners) {
-    final AbstractIntermediateModelTransformationStrategy strategy = modelFile.getFileTypeDescription().getMainTransformationStrategy();
+    final AbstractIntermediateModelTransformationStrategy strategy = modelFile.getFileTypeDescription().createMainTransformationStrategy();
     final Function1<ModelFile, String> _function = (ModelFile it) -> {
       return it.getImportAlias();
     };
@@ -215,8 +214,10 @@ public class TransformationThread extends Thread {
   private List<AbstractIntermediateModelTransformationStrategy.TransformationResult> refiningTransformations(final ModelFile modelFile, final List<String> outputPaths, final List<BiFunction<List<AbstractIntermediateModelTransformationStrategy.TransformationResult>, Predicate<IntermediateTransformationException>, Void>> transformationsFinishedListeners) {
     final ArrayList<AbstractIntermediateModelTransformationStrategy.TransformationResult> transformationResults = CollectionLiterals.<AbstractIntermediateModelTransformationStrategy.TransformationResult>newArrayList();
     int outputPathIndex = 0;
-    LinkedList<AbstractIntermediateModelTransformationStrategy> _refiningTransformationStrategies = modelFile.getFileTypeDescription().getRefiningTransformationStrategies();
-    for (final AbstractIntermediateModelTransformationStrategy strategy : _refiningTransformationStrategies) {
+    final ModelFileTypeDescription fileTypeDescription = modelFile.getFileTypeDescription();
+    int _refiningStrategiesCount = fileTypeDescription.refiningStrategiesCount();
+    ExclusiveRange _doubleDotLessThan = new ExclusiveRange(0, _refiningStrategiesCount, true);
+    for (final Integer strategyIndex : _doubleDotLessThan) {
       {
         Path inputFilePath = null;
         String outputFilePath = null;
@@ -232,6 +233,7 @@ public class TransformationThread extends Thread {
           inputFilePath = _path_1;
           outputFilePath = outputPaths.get(0);
         }
+        final AbstractIntermediateModelTransformationStrategy strategy = fileTypeDescription.createRefiningTransformationStrategy((strategyIndex).intValue());
         final IFile inputFile = ResourcesPlugin.getWorkspace().getRoot().getFile(inputFilePath);
         final AbstractIntermediateModelTransformationStrategy.TransformationResult transformationResult = this.executeTransformation(inputFile, strategy, outputFilePath, 
           null, transformationsFinishedListeners);

@@ -236,13 +236,14 @@ class MappingModelTransformation
         ) {
             /*
              * Execute refinements and collect refined models in a map that assigns the path of
-             * the original intermediate data model to its refined version. This map is then
-             * assigned to the service model that triggered the model refinements. That is, in the
-             * end we have a map that clusters information about which service models produced which
+             * the original intermediate data model to its refined version specifically for the
+             * input mapping model. This map is then assigned to the service model that triggered
+             * the model refinements. That is, in the end we have a map that clusters information
+             * about which service models being mapped in the input mapping model produced which
              * intermediate data model refinements from which non-refined intermediate data models.
              */
             val refinedModelsPerServiceModel = <OutputModel, Map<String, OutputModel>>newHashMap
-            results.intermediateDataModelsPerServiceModel.forEach[
+            results.intermediateDataModelsPerServiceModelFor(inputMappingModel).forEach[
                 serviceModel, intermediateDataModels |
                 linkTechnologyModels(serviceModel, inputMappingModel)
 
@@ -312,16 +313,25 @@ class MappingModelTransformation
 
         /**
          * Helper to retrieve intermediate data models that are imported by intermediate service
-         * models produced from a mapping model. Note that the helper maps the service model that
-         * precedes the intermediate service model in a mapping model transformation to the found
-         * intermediate data models. The reason for this is, that the service model does comprise
-         * complex type mappings expressed in mapping models, while the intermediate service model
-         * does not.
+         * models produced from the input mapping model. Note that the helper maps the original
+         * service model of the intermediate service model in a mapping model transformation to the
+         * found intermediate data models. The reason for this is, that the service model does
+         * comprise complex type mappings expressed in mapping models, while the intermediate
+         * service model does not.
          */
         private static def Map<OutputModel, Set<OutputModel>>
-        intermediateDataModelsPerServiceModel(List<TransformationResult> results) {
+        intermediateDataModelsPerServiceModelFor(
+            List<TransformationResult> results,
+            TechnologyMapping inputMappingModel
+        ) {
+            val inputMappingModelUri = inputMappingModel.eResource.URI.toString
+            val inputMappingModelPath = LemmaUtils.convertToWorkspaceFileUri(inputMappingModelUri)
+
             val serviceModelsCreatedFromMappingModels = results
-                .filter[inputModels.exists[namespaceUri == MappingPackage.eNS_URI]]
+                .filter[inputModels.exists[
+                    namespaceUri == MappingPackage.eNS_URI &&
+                    inputPath == inputMappingModelPath
+                ]]
                 .map[outputModel]
 
             val mappedComplexTypesPerServiceModel = serviceModelsCreatedFromMappingModels

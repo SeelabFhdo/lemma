@@ -65,10 +65,8 @@ class TransformationDialog  extends TitleAreaDialog {
         else if (inputModelFiles === null || inputModelFiles.empty)
             throw new IllegalArgumentException("Input models must not be null or empty")
 
-        // Model files that lack transformation strategies cannot be transformed
-        filesToTransform = inputModelFiles
-            .filter[fileTypeDescription.mainTransformationStrategy !== null]
-            .toList
+        // Filter model files that can be transformed to other files
+        filesToTransform = inputModelFiles.filter[fileTypeDescription.canBeTransformed].toList
 
         this.outputRefinementModels = outputRefinementModels
     }

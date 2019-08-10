@@ -5,7 +5,6 @@ import de.fhdo.lemma.eclipse.ui.AbstractUiModelTransformationStrategy;
 import de.fhdo.lemma.eclipse.ui.ModelFile;
 import de.fhdo.lemma.eclipse.ui.transformation_dialog.TransformationThread;
 import de.fhdo.lemma.eclipse.ui.utils.LemmaUiUtils;
-import de.fhdo.lemma.intermediate.transformations.AbstractIntermediateModelTransformationStrategy;
 import de.fhdo.lemma.intermediate.transformations.IntermediateTransformationException;
 import de.fhdo.lemma.intermediate.transformations.IntermediateTransformationPhase;
 import java.io.PrintWriter;
@@ -94,8 +93,7 @@ public class TransformationDialog extends TitleAreaDialog {
       }
     }
     final Function1<ModelFile, Boolean> _function = (ModelFile it) -> {
-      AbstractIntermediateModelTransformationStrategy _mainTransformationStrategy = it.getFileTypeDescription().getMainTransformationStrategy();
-      return Boolean.valueOf((_mainTransformationStrategy != null));
+      return Boolean.valueOf(it.getFileTypeDescription().canBeTransformed());
     };
     this.filesToTransform = IterableExtensions.<ModelFile>toList(IterableExtensions.<ModelFile>filter(inputModelFiles, _function));
     this.outputRefinementModels = outputRefinementModels;

@@ -114,7 +114,7 @@ public class MappingModelTransformation extends AbstractAtlInputOutputIntermedia
         };
         MapExtensions.<String, AbstractIntermediateModelTransformationStrategy.TransformationResult>filter(refinedModels, _function_3).forEach(_function_4);
       };
-      MappingModelTransformation.MappingModelRefinementExecutor.intermediateDataModelsPerServiceModel(results).forEach(_function);
+      MappingModelTransformation.MappingModelRefinementExecutor.intermediateDataModelsPerServiceModelFor(results, inputMappingModel).forEach(_function);
       final BiConsumer<AbstractIntermediateModelTransformationStrategy.OutputModel, Map<String, AbstractIntermediateModelTransformationStrategy.OutputModel>> _function_1 = (AbstractIntermediateModelTransformationStrategy.OutputModel serviceModel, Map<String, AbstractIntermediateModelTransformationStrategy.OutputModel> refinedDataModels) -> {
         final AbstractIntermediateModelTransformationStrategy.OutputModel intermediateServiceModel = MappingModelTransformation.MappingModelRefinementExecutor.findIntermediateServiceModel(results, serviceModel);
         final Function<EObject, List<IntermediateImport>> _function_2 = (EObject it) -> {
@@ -159,17 +159,19 @@ public class MappingModelTransformation extends AbstractAtlInputOutputIntermedia
     
     /**
      * Helper to retrieve intermediate data models that are imported by intermediate service
-     * models produced from a mapping model. Note that the helper maps the service model that
-     * precedes the intermediate service model in a mapping model transformation to the found
-     * intermediate data models. The reason for this is, that the service model does comprise
-     * complex type mappings expressed in mapping models, while the intermediate service model
-     * does not.
+     * models produced from the input mapping model. Note that the helper maps the original
+     * service model of the intermediate service model in a mapping model transformation to the
+     * found intermediate data models. The reason for this is, that the service model does
+     * comprise complex type mappings expressed in mapping models, while the intermediate
+     * service model does not.
      */
-    private static Map<AbstractIntermediateModelTransformationStrategy.OutputModel, Set<AbstractIntermediateModelTransformationStrategy.OutputModel>> intermediateDataModelsPerServiceModel(final List<AbstractIntermediateModelTransformationStrategy.TransformationResult> results) {
+    private static Map<AbstractIntermediateModelTransformationStrategy.OutputModel, Set<AbstractIntermediateModelTransformationStrategy.OutputModel>> intermediateDataModelsPerServiceModelFor(final List<AbstractIntermediateModelTransformationStrategy.TransformationResult> results, final TechnologyMapping inputMappingModel) {
+      final String inputMappingModelUri = inputMappingModel.eResource().getURI().toString();
+      final String inputMappingModelPath = LemmaUtils.convertToWorkspaceFileUri(inputMappingModelUri);
       final Function1<AbstractIntermediateModelTransformationStrategy.TransformationResult, Boolean> _function = (AbstractIntermediateModelTransformationStrategy.TransformationResult it) -> {
         final Function1<AbstractIntermediateModelTransformationStrategy.InputModel, Boolean> _function_1 = (AbstractIntermediateModelTransformationStrategy.InputModel it_1) -> {
-          String _namespaceUri = it_1.getNamespaceUri();
-          return Boolean.valueOf(Objects.equal(_namespaceUri, MappingPackage.eNS_URI));
+          return Boolean.valueOf((Objects.equal(it_1.getNamespaceUri(), MappingPackage.eNS_URI) && 
+            Objects.equal(it_1.getInputPath(), inputMappingModelPath)));
         };
         return Boolean.valueOf(IterableExtensions.<AbstractIntermediateModelTransformationStrategy.InputModel>exists(it.getInputModels(), _function_1));
       };

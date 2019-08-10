@@ -156,11 +156,10 @@ class TransformationThread extends Thread {
     private def List<String> buildTransformationOutputPaths(String initialOutputPath,
         ModelFileTypeDescription fileTypeDescription, boolean outputRefinementModels) {
         val outputPaths = <String>newArrayList
-        val refiningStrategiesCount = fileTypeDescription.refiningTransformationStrategies.size
-        if (refiningStrategiesCount > 0 && outputRefinementModels) {
-            val basicFilename = de.fhdo.lemma.eclipse.ui.utils.LemmaUiUtils.removeExtension(initialOutputPath)
-            val ext = de.fhdo.lemma.eclipse.ui.utils.LemmaUiUtils.getExtension(initialOutputPath)
-            for (i : 0..<refiningStrategiesCount)
+        if (fileTypeDescription.refiningStrategiesCount > 0 && outputRefinementModels) {
+            val basicFilename = LemmaUiUtils.removeExtension(initialOutputPath)
+            val ext = LemmaUiUtils.getExtension(initialOutputPath)
+            for (i : 0..<fileTypeDescription.refiningStrategiesCount)
                 outputPaths.add(basicFilename + '''_«i+1».«ext»''')
         }
 
@@ -178,7 +177,7 @@ class TransformationThread extends Thread {
             List<TransformationResult>,Predicate<IntermediateTransformationException>, Void
         >> transformationsFinishedListeners
     ) {
-        val strategy = modelFile.fileTypeDescription.mainTransformationStrategy
+        val strategy = modelFile.fileTypeDescription.createMainTransformationStrategy
         val importTargetPaths = modelFile.children.toMap([importAlias], [transformationTargetPath])
 
         /* Enrich target paths of imports with children's children of current model if necessary */
@@ -211,7 +210,8 @@ class TransformationThread extends Thread {
         val transformationResults = <TransformationResult>newArrayList
 
         var outputPathIndex = 0
-        for (strategy : modelFile.fileTypeDescription.refiningTransformationStrategies) {
+        val fileTypeDescription = modelFile.fileTypeDescription
+        for (strategyIndex : 0..<fileTypeDescription.refiningStrategiesCount) {
             /*
              * Determine input and output file path, depending on the user's decision to output
              * refined models or not
@@ -229,6 +229,7 @@ class TransformationThread extends Thread {
             }
 
             /* Execute the actual transformation */
+            val strategy = fileTypeDescription.createRefiningTransformationStrategy(strategyIndex)
             val inputFile = ResourcesPlugin.getWorkspace().getRoot().getFile(inputFilePath)
             val transformationResult = inputFile.executeTransformation(
                 strategy,
@@ -287,7 +288,7 @@ class TransformationThread extends Thread {
     ) {
         /* Convert input and output model paths to file URIs */
         results.forEach[
-            inputModels.forEach[inputPath = de.fhdo.lemma.utils.LemmaUtils.convertToWorkspaceFileUri(inputPath)]
+            inputModels.forEach[inputPath = LemmaUtils.convertToWorkspaceFileUri(inputPath)]
             outputModel.outputPath = LemmaUtils.convertToWorkspaceFileUri(outputModel.outputPath)
         ]
 

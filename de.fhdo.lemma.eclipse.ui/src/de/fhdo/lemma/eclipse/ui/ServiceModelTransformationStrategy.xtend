@@ -72,24 +72,24 @@ class ServiceModelTransformationStrategy extends AbstractUiModelTransformationSt
                 LemmaUiUtils.createImage(RESOURCE_MANAGER, class, "dataModelFile.gif"),
                 "Data Model",
                 DATA_MODEL_FILE_EXTENSIONS,
-                new IntermediateDataModelTransformation()
+                typeof(IntermediateDataModelTransformation)
             ),
 
             MAPPING_MODEL_FILE_TYPE_ID -> new ModelFileTypeDescription(
                 LemmaUiUtils.createImage(RESOURCE_MANAGER, class, "mappingModelFile.gif"),
                 "Mapping Model",
                 MAPPING_MODEL_FILE_EXTENSIONS,
-                new MappingModelTransformation(),
+                typeof(MappingModelTransformation),
                 // Refining transformation: Mapping model gets transformed to service model, which
                 // then gets refined to an intermediate service model
-                new IntermediateServiceModelTransformation()
+                typeof(IntermediateServiceModelTransformation)
             ),
 
             SERVICE_MODEL_FILE_TYPE_ID -> new ModelFileTypeDescription(
                 LemmaUiUtils.createImage(RESOURCE_MANAGER, class, "serviceModelFile.gif"),
                 "Service Model",
                 SERVICE_MODEL_FILE_EXTENSIONS,
-                new IntermediateServiceModelTransformation()
+                typeof(IntermediateServiceModelTransformation)
             )
         )
     }

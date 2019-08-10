@@ -4,8 +4,6 @@ import com.google.common.base.Function;
 import de.fhdo.lemma.eclipse.ui.ModelFile;
 import de.fhdo.lemma.eclipse.ui.file_container_selection_dialog.FileContainerSelectionTreeContentProvider;
 import de.fhdo.lemma.eclipse.ui.utils.LemmaUiUtils;
-import de.fhdo.lemma.intermediate.transformations.AbstractIntermediateModelTransformationStrategy;
-import de.fhdo.lemma.intermediate.transformations.TransformationModelType;
 import java.util.ArrayList;
 import java.util.Map;
 import org.eclipse.core.resources.IContainer;
@@ -351,9 +349,7 @@ public class FileContainerSelectionDialog extends TitleAreaDialog {
         boolean _xblockexpression = false;
         {
           final EObject root = xmiResource.getContents().get(0);
-          final AbstractIntermediateModelTransformationStrategy strategy = this.modelFile.getFileTypeDescription().getMainTransformationStrategy();
-          Object _get = strategy.getOutputModelTypes().get(0);
-          final Class<? extends EObject> expectedRootClass = ((TransformationModelType) _get).getRootClass();
+          final Class<? extends EObject> expectedRootClass = this.modelFile.getFileTypeDescription().getOutputModelTypes().get(0).getRootClass();
           boolean _isAssignableFrom = expectedRootClass.isAssignableFrom(root.getClass());
           _xblockexpression = (!_isAssignableFrom);
         }
@@ -406,9 +402,7 @@ public class FileContainerSelectionDialog extends TitleAreaDialog {
   private void createContainerSelection(final Composite parent) {
     TreeViewer _treeViewer = new TreeViewer(parent);
     this.containerSelectionTree = _treeViewer;
-    final AbstractIntermediateModelTransformationStrategy transformationStrategy = this.modelFile.getFileTypeDescription().getMainTransformationStrategy();
-    Object _get = transformationStrategy.getOutputModelTypes().get(0);
-    final Class<? extends EObject> intermediateModelRootClass = ((TransformationModelType) _get).getRootClass();
+    final Class<? extends EObject> intermediateModelRootClass = this.modelFile.getFileTypeDescription().getOutputModelTypes().get(0).getRootClass();
     FileContainerSelectionTreeContentProvider _fileContainerSelectionTreeContentProvider = new FileContainerSelectionTreeContentProvider(intermediateModelRootClass);
     this.containerSelectionTree.setContentProvider(_fileContainerSelectionTreeContentProvider);
     this.containerSelectionTree.setLabelProvider(

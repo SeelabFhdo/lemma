@@ -30,7 +30,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.core.runtime.Path
 import org.eclipse.core.resources.IResource
 import java.util.Map
-import de.fhdo.lemma.intermediate.transformations.TransformationModelType
+import de.fhdo.lemma.eclipse.ui.utils.LemmaUiUtils
 
 /**
  * Generic dialog to select the container for a filename. The dialog is inspired by the
@@ -249,17 +249,16 @@ class FileContainerSelectionDialog extends TitleAreaDialog {
         // Warn if the specified file exists, but its contained intermediate model does not fit the
         // expected one
         } else {
-            val xmiResource = de.fhdo.lemma.eclipse.ui.utils.LemmaUiUtils.loadXmiResource(selectedFile)
+            val xmiResource = LemmaUiUtils.loadXmiResource(selectedFile)
             val showConfirmDialog = if (xmiResource.contents.empty)
                     true
                 else {
                     val root = xmiResource.contents.get(0)
-                    val strategy = modelFile.fileTypeDescription.mainTransformationStrategy
 
                     // Currently, we only support model transformation strategies that produce
                     // exactly one output model
-                    val expectedRootClass =
-                        (strategy.outputModelTypes.get(0) as TransformationModelType).rootClass
+                    val expectedRootClass = modelFile.fileTypeDescription.outputModelTypes.get(0)
+                        .rootClass
                     !expectedRootClass.isAssignableFrom(root.class)
                 }
 
@@ -298,11 +297,10 @@ class FileContainerSelectionDialog extends TitleAreaDialog {
      */
     private def createContainerSelection(Composite parent) {
         containerSelectionTree = new TreeViewer(parent)
-        val transformationStrategy = modelFile.fileTypeDescription.mainTransformationStrategy
         // Currently, we only support model transformation strategies that produce exactly one
         // output model
-        val intermediateModelRootClass =
-            (transformationStrategy.outputModelTypes.get(0) as TransformationModelType).rootClass
+        val intermediateModelRootClass = modelFile.fileTypeDescription.outputModelTypes.get(0)
+            .rootClass
         containerSelectionTree.contentProvider =
             new FileContainerSelectionTreeContentProvider(intermediateModelRootClass)
         containerSelectionTree.labelProvider =
@@ -361,7 +359,7 @@ class FileContainerSelectionDialog extends TitleAreaDialog {
 
                 // Set file path text field depending on the type of the selected resource
                 if (selectedResource instanceof IFile)
-                    filepathField.text = de.fhdo.lemma.eclipse.ui.utils.LemmaUiUtils.removeExtension(selectedResource,
+                    filepathField.text = LemmaUiUtils.removeExtension(selectedResource,
                         [fullPath.toString])
                 else if (selectedResource instanceof IContainer)
                     filepathField.text = selectedResource.fullPath.toString + "/"

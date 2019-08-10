@@ -82,8 +82,8 @@ class SpecifyPathsDialog extends TitleAreaDialog {
         this.strategy = strategy
         this.inputModelFiles = inputModelFiles
 
-        checkboxActive = de.fhdo.lemma.eclipse.ui.utils.LemmaUiUtils.createImage(RESOURCE_MANAGER, class, "checkboxActive.gif")
-        checkboxInactive = de.fhdo.lemma.eclipse.ui.utils.LemmaUiUtils.createImage(RESOURCE_MANAGER, class, "checkboxInactive.gif")
+        checkboxActive = LemmaUiUtils.createImage(RESOURCE_MANAGER, class, "checkboxActive.gif")
+        checkboxInactive = LemmaUiUtils.createImage(RESOURCE_MANAGER, class, "checkboxInactive.gif")
     }
 
     /**
