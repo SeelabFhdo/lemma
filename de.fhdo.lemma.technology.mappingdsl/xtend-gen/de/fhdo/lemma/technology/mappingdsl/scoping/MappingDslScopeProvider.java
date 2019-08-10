@@ -997,8 +997,7 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     ComplexType _type = mapping.getTypeMapping().getType().getType();
     ComplexType complexType = ((ComplexType) _type);
     IScope _xifexpression = null;
-    boolean _isIsStructure = complexType.isIsStructure();
-    if (_isIsStructure) {
+    if (((complexType != null) && complexType.isIsStructure())) {
       _xifexpression = Scopes.scopeFor(((DataStructure) complexType).getOperations());
     } else {
       _xifexpression = IScope.NULLSCOPE;

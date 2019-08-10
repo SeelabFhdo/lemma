@@ -698,7 +698,7 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     private def getScopeForDataOperations(DataOperationMapping mapping) {
         var ComplexType complexType = mapping.typeMapping.type.type as ComplexType
 
-        return if (complexType.isStructure)
+        return if (complexType !== null && complexType.isStructure)
                 Scopes::scopeFor((complexType as DataStructure).operations)
             else
                 IScope.NULLSCOPE
