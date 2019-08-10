@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiFunction;
@@ -59,7 +60,7 @@ public class TransformationThread extends Thread {
   /**
    * Constructor
    */
-  public TransformationThread(final List<ModelFile> modelFiles, final boolean outputRefinementModels, final Display display, final Predicate<ModelFile> nextTransformationCallback, final Predicate<IntermediateTransformationException> transformationWarningCallback, final Predicate<Exception> transformationExceptionCallback, final Predicate<Void> currentTransformationFinishedCallback, final Predicate<Void> transformationsFinishedCallback) {
+  public TransformationThread(final LinkedList<ModelFile> modelFiles, final boolean outputRefinementModels, final Display display, final Predicate<ModelFile> nextTransformationCallback, final Predicate<IntermediateTransformationException> transformationWarningCallback, final Predicate<Exception> transformationExceptionCallback, final Predicate<Void> currentTransformationFinishedCallback, final Predicate<Void> transformationsFinishedCallback) {
     super();
     if (((modelFiles == null) || modelFiles.isEmpty())) {
       throw new IllegalArgumentException("Input models must not be null or empty");

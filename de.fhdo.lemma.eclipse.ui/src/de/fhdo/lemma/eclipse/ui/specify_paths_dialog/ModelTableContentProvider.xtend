@@ -31,8 +31,8 @@ class ModelTableContentProvider implements IStructuredContentProvider {
     override getElements(Object inputElement) {
         val inputModelFiles = inputElement as Map<String, List<ModelFile>>
 
-        val tableEntries = <ModelFile> newLinkedList
-        val modelTypeOrdering = strategy.modelTypeOrdering
+        val tableEntries = <ModelFile>newLinkedList
+        val modelTypeOrdering = strategy.modelTypeDisplayOrdering
         modelTypeOrdering.forEach[modelType |
             val tableEntriesForType = inputModelFiles.get(modelType)
             if (tableEntriesForType !== null)

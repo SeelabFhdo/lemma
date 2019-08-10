@@ -96,9 +96,13 @@ public abstract class AbstractIntermediateModelTransformationStrategy<TIM_TYPE e
     @Accessors
     private String namespaceUri;
     
-    public InputModel(final String inputPath, final String namespaceUri) {
+    @Accessors
+    private IFile file;
+    
+    public InputModel(final String inputPath, final String namespaceUri, final IFile file) {
       this.inputPath = inputPath;
       this.namespaceUri = namespaceUri;
+      this.file = file;
     }
     
     @Pure
@@ -117,6 +121,15 @@ public abstract class AbstractIntermediateModelTransformationStrategy<TIM_TYPE e
     
     public void setNamespaceUri(final String namespaceUri) {
       this.namespaceUri = namespaceUri;
+    }
+    
+    @Pure
+    public IFile getFile() {
+      return this.file;
+    }
+    
+    public void setFile(final IFile file) {
+      this.file = file;
     }
   }
   
@@ -648,7 +661,8 @@ public abstract class AbstractIntermediateModelTransformationStrategy<TIM_TYPE e
     final Function1<Map.Entry<TransformationModelDescription, IFile>, AbstractIntermediateModelTransformationStrategy.InputModel> _function = (Map.Entry<TransformationModelDescription, IFile> it) -> {
       String _absolutePath = this.absolutePath(it.getValue());
       String _namespaceUri = this.modelTypes.get(it.getKey()).getNamespaceUri();
-      return new AbstractIntermediateModelTransformationStrategy.InputModel(_absolutePath, _namespaceUri);
+      IFile _value = it.getValue();
+      return new AbstractIntermediateModelTransformationStrategy.InputModel(_absolutePath, _namespaceUri, _value);
     };
     final List<AbstractIntermediateModelTransformationStrategy.InputModel> resultInputModels = IterableExtensions.<AbstractIntermediateModelTransformationStrategy.InputModel>toList(IterableExtensions.<Map.Entry<TransformationModelDescription, IFile>, AbstractIntermediateModelTransformationStrategy.InputModel>map(inputModels.entrySet(), _function));
     String _namespaceUri = this.modelTypes.get(outputModelDescription).getNamespaceUri();

@@ -33,6 +33,8 @@ All notable changes to [LEMMA](https://github.com/SeelabFhdo/lemma/) will be doc
 - Mapping DSL: Don't show a type incompatibility warning for complex types.
 - Mapping DSL: Consider existing endpoints in service models when checking for duplicate endpoints.
 - Mapping DSL: Duplicate endpoint addresses now produce warnings instead of errors.
+- Intermediate Model Transformations: Fix mapping model transformation so that it correctly relates service models and corresponding mapping models.
+- Intermediate Model Transformations: Fix simultaneous transformation of service and mapping models that map elements from the service models.
 - Operation DSL: Consider protocols when validating if technology models are usable in operation models.
 - Service DSL: Fixed scoping of aspects that specify protocol and data format selectors.
 - Service DSL: Fixed scoping of aspects on first operation of an interface.

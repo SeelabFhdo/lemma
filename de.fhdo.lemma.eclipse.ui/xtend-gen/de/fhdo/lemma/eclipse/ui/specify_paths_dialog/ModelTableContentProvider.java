@@ -38,7 +38,7 @@ public class ModelTableContentProvider implements IStructuredContentProvider {
   public Object[] getElements(final Object inputElement) {
     final Map<String, List<ModelFile>> inputModelFiles = ((Map<String, List<ModelFile>>) inputElement);
     final LinkedList<ModelFile> tableEntries = CollectionLiterals.<ModelFile>newLinkedList();
-    final List<String> modelTypeOrdering = this.strategy.getModelTypeOrdering();
+    final LinkedList<String> modelTypeOrdering = this.strategy.getModelTypeDisplayOrdering();
     final Consumer<String> _function = (String modelType) -> {
       final List<ModelFile> tableEntriesForType = inputModelFiles.get(modelType);
       if ((tableEntriesForType != null)) {

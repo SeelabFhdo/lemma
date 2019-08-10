@@ -18,6 +18,9 @@ import org.eclipse.xtext.xbase.lib.Pure;
 @SuppressWarnings("all")
 public class ModelFileTypeDescription {
   @Accessors
+  private String fileType;
+  
+  @Accessors
   private Image icon;
   
   @Accessors
@@ -35,7 +38,8 @@ public class ModelFileTypeDescription {
   /**
    * Constructor
    */
-  public ModelFileTypeDescription(final Image icon, final String description, final List<String> extensions, final Class<? extends AbstractIntermediateModelTransformationStrategy> mainTransformationStrategy, final Class<? extends AbstractIntermediateModelTransformationStrategy>... refiningTransformationStrategies) {
+  public ModelFileTypeDescription(final String fileType, final Image icon, final String description, final List<String> extensions, final Class<? extends AbstractIntermediateModelTransformationStrategy> mainTransformationStrategy, final Class<? extends AbstractIntermediateModelTransformationStrategy>... refiningTransformationStrategies) {
+    this.fileType = fileType;
     this.icon = icon;
     this.description = description;
     this.extensions = extensions;
@@ -115,6 +119,15 @@ public class ModelFileTypeDescription {
       _xifexpression = (-1);
     }
     return _xifexpression;
+  }
+  
+  @Pure
+  public String getFileType() {
+    return this.fileType;
+  }
+  
+  public void setFileType(final String fileType) {
+    this.fileType = fileType;
   }
   
   @Pure

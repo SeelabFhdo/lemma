@@ -17,6 +17,7 @@ import org.eclipse.core.resources.IFile
 import java.util.Map
 import de.fhdo.lemma.utils.LemmaUtils
 import de.fhdo.lemma.eclipse.ui.utils.LemmaUiUtils
+import java.util.LinkedList
 
 /**
  * Thread to perform actual intermediate model transformations.
@@ -38,7 +39,7 @@ class TransformationThread extends Thread {
     /**
      * Constructor
      */
-    new(List<ModelFile> modelFiles,
+    new(LinkedList<ModelFile> modelFiles,
         boolean outputRefinementModels,
         Display display,
         Predicate<ModelFile> nextTransformationCallback,

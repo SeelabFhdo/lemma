@@ -14,6 +14,9 @@ import de.fhdo.lemma.intermediate.transformations.TransformationModelType
  */
 class ModelFileTypeDescription {
     @Accessors
+    String fileType
+
+    @Accessors
     Image icon
 
     @Accessors
@@ -42,11 +45,12 @@ class ModelFileTypeDescription {
     /**
      * Constructor
      */
-    new(Image icon, String description, List<String> extensions,
+    new(String fileType, Image icon, String description, List<String> extensions,
         Class<? extends AbstractIntermediateModelTransformationStrategy> mainTransformationStrategy,
         Class<? extends AbstractIntermediateModelTransformationStrategy>...
             refiningTransformationStrategies
     ) {
+        this.fileType = fileType
         this.icon = icon
         this.description = description
         this.extensions = extensions

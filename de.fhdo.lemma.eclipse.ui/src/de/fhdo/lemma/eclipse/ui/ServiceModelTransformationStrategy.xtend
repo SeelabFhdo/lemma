@@ -69,6 +69,7 @@ class ServiceModelTransformationStrategy extends AbstractUiModelTransformationSt
     private def setupModelFileTypeDescriptions() {
         modelFileTypeDescriptions = newLinkedHashMap(
             DATA_MODEL_FILE_TYPE_ID -> new ModelFileTypeDescription(
+                DATA_MODEL_FILE_TYPE_ID,
                 LemmaUiUtils.createImage(RESOURCE_MANAGER, class, "dataModelFile.gif"),
                 "Data Model",
                 DATA_MODEL_FILE_EXTENSIONS,
@@ -76,6 +77,7 @@ class ServiceModelTransformationStrategy extends AbstractUiModelTransformationSt
             ),
 
             MAPPING_MODEL_FILE_TYPE_ID -> new ModelFileTypeDescription(
+                MAPPING_MODEL_FILE_TYPE_ID,
                 LemmaUiUtils.createImage(RESOURCE_MANAGER, class, "mappingModelFile.gif"),
                 "Mapping Model",
                 MAPPING_MODEL_FILE_EXTENSIONS,
@@ -86,6 +88,7 @@ class ServiceModelTransformationStrategy extends AbstractUiModelTransformationSt
             ),
 
             SERVICE_MODEL_FILE_TYPE_ID -> new ModelFileTypeDescription(
+                SERVICE_MODEL_FILE_TYPE_ID,
                 LemmaUiUtils.createImage(RESOURCE_MANAGER, class, "serviceModelFile.gif"),
                 "Service Model",
                 SERVICE_MODEL_FILE_EXTENSIONS,
@@ -102,10 +105,25 @@ class ServiceModelTransformationStrategy extends AbstractUiModelTransformationSt
     }
 
     /**
-     * Get model types' ordering
+     * Get model types' ordering for displaying purposes
      */
-    override getModelTypeOrdering() {
-        return #[DATA_MODEL_FILE_TYPE_ID, MAPPING_MODEL_FILE_TYPE_ID, SERVICE_MODEL_FILE_TYPE_ID]
+    override getModelTypeDisplayOrdering() {
+        return newLinkedList(
+            DATA_MODEL_FILE_TYPE_ID,
+            MAPPING_MODEL_FILE_TYPE_ID,
+            SERVICE_MODEL_FILE_TYPE_ID
+        )
+    }
+
+    /**
+     * Get model types' ordering for transformation
+     */
+    override getModelTypeTransformationOrdering() {
+        return newLinkedList(
+            DATA_MODEL_FILE_TYPE_ID,
+            SERVICE_MODEL_FILE_TYPE_ID,
+            MAPPING_MODEL_FILE_TYPE_ID
+        )
     }
 
     /**

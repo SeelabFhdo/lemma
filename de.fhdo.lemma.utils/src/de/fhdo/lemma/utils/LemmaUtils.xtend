@@ -271,19 +271,27 @@ final class LemmaUtils {
     }
 
     /**
-     * Convenience method to convert a relative path to an absolute "file" URI by using a
-     * Resource as base
+     * Convenience method to convert a relative path to an absolute "file" URI by using an IFile as
+     * basis
      */
-    def static convertToAbsoluteFileUri(String relativeFilePath, Resource base) {
+    def static convertToAbsoluteFileUri(String relativeFilePath, IFile file) {
         return if (isFileUri(relativeFilePath))
             relativeFilePath
-        else if (isFileUri(base.URI.toString))
-            convertToAbsoluteFileUri(relativeFilePath, base.URI.toString)
-        else {
-            val absoluteResourceFilePath = getFileForResource(base)
-                .rawLocation.makeAbsolute.toString
-            convertToAbsoluteFileUri(relativeFilePath, absoluteResourceFilePath)
-        }
+        else
+            convertToAbsoluteFileUri(relativeFilePath, file.rawLocation.makeAbsolute.toString)
+    }
+
+    /**
+     * Convenience method to convert a relative path to an absolute "file" URI by using a Resource
+     * as basis
+     */
+    def static convertToAbsoluteFileUri(String relativeFilePath, Resource basis) {
+        return if (isFileUri(relativeFilePath))
+            relativeFilePath
+        else if (isFileUri(basis.URI.toString))
+            convertToAbsoluteFileUri(relativeFilePath, basis.URI.toString)
+        else
+            convertToAbsoluteFileUri(relativeFilePath, getFileForResource(basis))
     }
 
     /**

@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -101,20 +102,23 @@ public class ServiceModelTransformationStrategy extends AbstractUiModelTransform
    */
   private LinkedHashMap<String, ModelFileTypeDescription> setupModelFileTypeDescriptions() {
     Image _createImage = LemmaUiUtils.createImage(ServiceModelTransformationStrategy.RESOURCE_MANAGER, this.getClass(), "dataModelFile.gif");
-    ModelFileTypeDescription _modelFileTypeDescription = new ModelFileTypeDescription(_createImage, 
+    ModelFileTypeDescription _modelFileTypeDescription = new ModelFileTypeDescription(
+      ServiceModelTransformationStrategy.DATA_MODEL_FILE_TYPE_ID, _createImage, 
       "Data Model", 
       ServiceModelTransformationStrategy.DATA_MODEL_FILE_EXTENSIONS, 
       IntermediateDataModelTransformation.class);
     Pair<String, ModelFileTypeDescription> _mappedTo = Pair.<String, ModelFileTypeDescription>of(ServiceModelTransformationStrategy.DATA_MODEL_FILE_TYPE_ID, _modelFileTypeDescription);
     Image _createImage_1 = LemmaUiUtils.createImage(ServiceModelTransformationStrategy.RESOURCE_MANAGER, this.getClass(), "mappingModelFile.gif");
-    ModelFileTypeDescription _modelFileTypeDescription_1 = new ModelFileTypeDescription(_createImage_1, 
+    ModelFileTypeDescription _modelFileTypeDescription_1 = new ModelFileTypeDescription(
+      ServiceModelTransformationStrategy.MAPPING_MODEL_FILE_TYPE_ID, _createImage_1, 
       "Mapping Model", 
       ServiceModelTransformationStrategy.MAPPING_MODEL_FILE_EXTENSIONS, 
       MappingModelTransformation.class, 
       IntermediateServiceModelTransformation.class);
     Pair<String, ModelFileTypeDescription> _mappedTo_1 = Pair.<String, ModelFileTypeDescription>of(ServiceModelTransformationStrategy.MAPPING_MODEL_FILE_TYPE_ID, _modelFileTypeDescription_1);
     Image _createImage_2 = LemmaUiUtils.createImage(ServiceModelTransformationStrategy.RESOURCE_MANAGER, this.getClass(), "serviceModelFile.gif");
-    ModelFileTypeDescription _modelFileTypeDescription_2 = new ModelFileTypeDescription(_createImage_2, 
+    ModelFileTypeDescription _modelFileTypeDescription_2 = new ModelFileTypeDescription(
+      ServiceModelTransformationStrategy.SERVICE_MODEL_FILE_TYPE_ID, _createImage_2, 
       "Service Model", 
       ServiceModelTransformationStrategy.SERVICE_MODEL_FILE_EXTENSIONS, 
       IntermediateServiceModelTransformation.class);
@@ -131,11 +135,25 @@ public class ServiceModelTransformationStrategy extends AbstractUiModelTransform
   }
   
   /**
-   * Get model types' ordering
+   * Get model types' ordering for displaying purposes
    */
   @Override
-  public List<String> getModelTypeOrdering() {
-    return Collections.<String>unmodifiableList(CollectionLiterals.<String>newArrayList(ServiceModelTransformationStrategy.DATA_MODEL_FILE_TYPE_ID, ServiceModelTransformationStrategy.MAPPING_MODEL_FILE_TYPE_ID, ServiceModelTransformationStrategy.SERVICE_MODEL_FILE_TYPE_ID));
+  public LinkedList<String> getModelTypeDisplayOrdering() {
+    return CollectionLiterals.<String>newLinkedList(
+      ServiceModelTransformationStrategy.DATA_MODEL_FILE_TYPE_ID, 
+      ServiceModelTransformationStrategy.MAPPING_MODEL_FILE_TYPE_ID, 
+      ServiceModelTransformationStrategy.SERVICE_MODEL_FILE_TYPE_ID);
+  }
+  
+  /**
+   * Get model types' ordering for transformation
+   */
+  @Override
+  public LinkedList<String> getModelTypeTransformationOrdering() {
+    return CollectionLiterals.<String>newLinkedList(
+      ServiceModelTransformationStrategy.DATA_MODEL_FILE_TYPE_ID, 
+      ServiceModelTransformationStrategy.SERVICE_MODEL_FILE_TYPE_ID, 
+      ServiceModelTransformationStrategy.MAPPING_MODEL_FILE_TYPE_ID);
   }
   
   /**

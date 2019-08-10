@@ -1,6 +1,7 @@
 package de.fhdo.lemma.eclipse.ui.transformation_dialog;
 
 import com.google.common.base.Predicate;
+import com.google.common.collect.Iterables;
 import de.fhdo.lemma.eclipse.ui.AbstractUiModelTransformationStrategy;
 import de.fhdo.lemma.eclipse.ui.ModelFile;
 import de.fhdo.lemma.eclipse.ui.transformation_dialog.TransformationThread;
@@ -9,6 +10,9 @@ import de.fhdo.lemma.intermediate.transformations.IntermediateTransformationExce
 import de.fhdo.lemma.intermediate.transformations.IntermediateTransformationPhase;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.LinkedList;
 import java.util.List;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -31,6 +35,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.ProgressBar;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.xtend2.lib.StringConcatenation;
+import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.slf4j.Logger;
@@ -46,7 +51,7 @@ public class TransformationDialog extends TitleAreaDialog {
   
   private static final Logger LOGGER = LoggerFactory.getLogger(TransformationDialog.class);
   
-  private List<ModelFile> filesToTransform;
+  private LinkedList<ModelFile> filesToTransform;
   
   private boolean outputRefinementModels;
   
@@ -92,11 +97,31 @@ public class TransformationDialog extends TitleAreaDialog {
         }
       }
     }
+    this.filesToTransform = this.filterAndOrderForTransformation(inputModelFiles, strategy);
+    this.outputRefinementModels = outputRefinementModels;
+  }
+  
+  /**
+   * Filter input files for files that can actually be transformed and order thos files as
+   * determined by the current model transformation strategy
+   */
+  private LinkedList<ModelFile> filterAndOrderForTransformation(final List<ModelFile> inputModelFiles, final AbstractUiModelTransformationStrategy strategy) {
+    final LinkedList<ModelFile> filteredAndOrderedFiles = CollectionLiterals.<ModelFile>newLinkedList();
     final Function1<ModelFile, Boolean> _function = (ModelFile it) -> {
       return Boolean.valueOf(it.getFileTypeDescription().canBeTransformed());
     };
-    this.filesToTransform = IterableExtensions.<ModelFile>toList(IterableExtensions.<ModelFile>filter(inputModelFiles, _function));
-    this.outputRefinementModels = outputRefinementModels;
+    Iterables.<ModelFile>addAll(filteredAndOrderedFiles, IterableExtensions.<ModelFile>filter(inputModelFiles, _function));
+    Collections.<ModelFile>sort(filteredAndOrderedFiles, new Comparator() {
+      @Override
+      public int compare(final Object o1, final Object o2) {
+        final ModelFile file1 = ((ModelFile) o1);
+        final int fileTypeIndex1 = strategy.getModelTypeTransformationOrdering().indexOf(file1.getFileTypeDescription().getFileType());
+        final ModelFile file2 = ((ModelFile) o2);
+        final int fileTypeIndex2 = strategy.getModelTypeTransformationOrdering().indexOf(file2.getFileTypeDescription().getFileType());
+        return Integer.compare(fileTypeIndex1, fileTypeIndex2);
+      }
+    });
+    return filteredAndOrderedFiles;
   }
   
   /**

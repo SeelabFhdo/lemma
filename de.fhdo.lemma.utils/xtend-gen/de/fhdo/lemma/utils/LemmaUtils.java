@@ -340,26 +340,36 @@ public final class LemmaUtils {
   }
   
   /**
-   * Convenience method to convert a relative path to an absolute "file" URI by using a
-   * Resource as base
+   * Convenience method to convert a relative path to an absolute "file" URI by using an IFile as
+   * basis
    */
-  public static String convertToAbsoluteFileUri(final String relativeFilePath, final Resource base) {
+  public static String convertToAbsoluteFileUri(final String relativeFilePath, final IFile file) {
+    String _xifexpression = null;
+    boolean _isFileUri = LemmaUtils.isFileUri(relativeFilePath);
+    if (_isFileUri) {
+      _xifexpression = relativeFilePath;
+    } else {
+      _xifexpression = LemmaUtils.convertToAbsoluteFileUri(relativeFilePath, file.getRawLocation().makeAbsolute().toString());
+    }
+    return _xifexpression;
+  }
+  
+  /**
+   * Convenience method to convert a relative path to an absolute "file" URI by using a Resource
+   * as basis
+   */
+  public static String convertToAbsoluteFileUri(final String relativeFilePath, final Resource basis) {
     String _xifexpression = null;
     boolean _isFileUri = LemmaUtils.isFileUri(relativeFilePath);
     if (_isFileUri) {
       _xifexpression = relativeFilePath;
     } else {
       String _xifexpression_1 = null;
-      boolean _isFileUri_1 = LemmaUtils.isFileUri(base.getURI().toString());
+      boolean _isFileUri_1 = LemmaUtils.isFileUri(basis.getURI().toString());
       if (_isFileUri_1) {
-        _xifexpression_1 = LemmaUtils.convertToAbsoluteFileUri(relativeFilePath, base.getURI().toString());
+        _xifexpression_1 = LemmaUtils.convertToAbsoluteFileUri(relativeFilePath, basis.getURI().toString());
       } else {
-        String _xblockexpression = null;
-        {
-          final String absoluteResourceFilePath = LemmaUtils.getFileForResource(base).getRawLocation().makeAbsolute().toString();
-          _xblockexpression = LemmaUtils.convertToAbsoluteFileUri(relativeFilePath, absoluteResourceFilePath);
-        }
-        _xifexpression_1 = _xblockexpression;
+        _xifexpression_1 = LemmaUtils.convertToAbsoluteFileUri(relativeFilePath, LemmaUtils.getFileForResource(basis));
       }
       _xifexpression = _xifexpression_1;
     }

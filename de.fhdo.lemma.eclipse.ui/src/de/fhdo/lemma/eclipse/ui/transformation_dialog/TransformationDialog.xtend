@@ -27,6 +27,9 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import de.fhdo.lemma.intermediate.transformations.IntermediateTransformationException
 import de.fhdo.lemma.eclipse.ui.utils.LemmaUiUtils
+import java.util.LinkedList
+import java.util.Collections
+import java.util.Comparator
 
 class TransformationDialog  extends TitleAreaDialog {
     static val MIN_DIALOG_WIDTH = 200
@@ -34,7 +37,7 @@ class TransformationDialog  extends TitleAreaDialog {
     static val PROGRESS_TITLE_TEXT = "Performing intermediate model transformations"
     static final Logger LOGGER = LoggerFactory.getLogger(TransformationDialog)
 
-    List<ModelFile> filesToTransform
+    LinkedList<ModelFile> filesToTransform
     boolean outputRefinementModels
     ModelFile currentModelFile
     static val ResourceManager RESOURCE_MANAGER =
@@ -65,10 +68,33 @@ class TransformationDialog  extends TitleAreaDialog {
         else if (inputModelFiles === null || inputModelFiles.empty)
             throw new IllegalArgumentException("Input models must not be null or empty")
 
-        // Filter model files that can be transformed to other files
-        filesToTransform = inputModelFiles.filter[fileTypeDescription.canBeTransformed].toList
-
+        filesToTransform = inputModelFiles.filterAndOrderForTransformation(strategy)
         this.outputRefinementModels = outputRefinementModels
+    }
+
+    /**
+     * Filter input files for files that can actually be transformed and order thos files as
+     * determined by the current model transformation strategy
+     */
+    private def filterAndOrderForTransformation(List<ModelFile> inputModelFiles,
+        AbstractUiModelTransformationStrategy strategy) {
+        val filteredAndOrderedFiles = <ModelFile>newLinkedList
+        filteredAndOrderedFiles.addAll(inputModelFiles.filter[fileTypeDescription.canBeTransformed])
+
+        Collections.sort(filteredAndOrderedFiles, new Comparator {
+            override compare(Object o1, Object o2) {
+                val file1 = o1 as ModelFile
+                val fileTypeIndex1 = strategy.modelTypeTransformationOrdering
+                    .indexOf(file1.fileTypeDescription.fileType)
+
+                val file2 = o2 as ModelFile
+                val fileTypeIndex2 = strategy.modelTypeTransformationOrdering
+                    .indexOf(file2.fileTypeDescription.fileType)
+                return Integer.compare(fileTypeIndex1, fileTypeIndex2)
+            }
+        })
+
+        return filteredAndOrderedFiles
     }
 
     /**

@@ -27,6 +27,7 @@ import de.fhdo.lemma.technology.mapping.TechnologySpecificFieldMapping
 import de.fhdo.lemma.technology.mapping.MicroserviceMapping
 import java.util.Set
 import de.fhdo.lemma.utils.LemmaUtils
+import de.fhdo.lemma.service.ImportType
 
 /**
  * Implementation of the ATL-based model-to-model transformation of mapping models to intermediate
@@ -249,7 +250,7 @@ class MappingModelTransformation
 
                 val refinedModels = intermediateDataModels.toMap(
                     [outputPath],
-                    [runRefininingTransformation(serviceModel, it, warningCallback)]
+                    [runRefininingTransformation(results, serviceModel, it, warningCallback)]
                 )
 
                 refinedModels.filter[path, model | model !== null].forEach[
@@ -327,14 +328,14 @@ class MappingModelTransformation
             val inputMappingModelUri = inputMappingModel.eResource.URI.toString
             val inputMappingModelPath = LemmaUtils.convertToWorkspaceFileUri(inputMappingModelUri)
 
-            val serviceModelsCreatedFromMappingModels = results
+            val serviceModelsCreatedFromMappingModel = results
                 .filter[inputModels.exists[
                     namespaceUri == MappingPackage.eNS_URI &&
                     inputPath == inputMappingModelPath
                 ]]
                 .map[outputModel]
 
-            val mappedComplexTypesPerServiceModel = serviceModelsCreatedFromMappingModels
+            val mappedComplexTypesPerServiceModel = serviceModelsCreatedFromMappingModel
                 .toMap([it], [(resource.contents.get(0) as ServiceModel).mappedComplexTypes])
 
             val resultMap = <OutputModel, Set<OutputModel>>newHashMap
@@ -345,7 +346,15 @@ class MappingModelTransformation
                     // model transformation
                     results.filter[
                         outputModel.namespaceUri == IntermediatePackage.eNS_URI &&
-                        outputModel.outputPath == mappedComplexType.type.import.importURI
+                        (
+                            outputModel.outputPath == mappedComplexType.type.import.importURI ||
+
+                            // This needed when the mapping model and the service model, whose
+                            // imported data models it maps, are transformed together. Then the
+                            // intermediate data model isn't produced as part of the mapping model
+                            // transformation..
+                            inputModels.get(0).inputPath == mappedComplexType.t_sourceModelUri
+                        )
                     ].forEach[
                         // Assign intermediate data models to those service models, whose derived
                         // intermediate service models import the data models
@@ -400,6 +409,7 @@ class MappingModelTransformation
          * Run refining transformation on an intermediate data model
          */
         private static def TransformationResult runRefininingTransformation(
+            List<TransformationResult> results,
             OutputModel serviceModel,
             OutputModel intermediateDataModel,
             Predicate<IntermediateTransformationException> warningCallback
@@ -414,7 +424,7 @@ class MappingModelTransformation
             val outputModelPaths = <TransformationModelDescription, String>newHashMap(
                 // The "IN" model in the refinement transformation is effectively an inout model
                 IntermediateDataModelRefinement.IN_MODEL_DESCRIPTION ->
-                    buildOutputPathForRefiningTransformation(serviceModel, intermediateDataModel)
+                    buildOutputPathForRefiningTransformation(results, serviceModel, intermediateDataModel)
             )
 
             val refiningTransformation = new IntermediateDataModelRefinement()
@@ -438,18 +448,47 @@ class MappingModelTransformation
          * becomes a folder to host the refined models.
          */
         private static def String buildOutputPathForRefiningTransformation(
+            List<TransformationResult> results,
             OutputModel serviceModel,
             OutputModel intermediateDataModel
         ) {
             val serviceModelRoot = serviceModel.resource.contents.get(0) as ServiceModel
-            val dataModelAlias = serviceModelRoot.imports
+            var dataModelImport = serviceModelRoot.imports
                 .findFirst[importURI == intermediateDataModel.outputPath]
-                .name
+
+            // The corresponding data model import may not be found in case the service model was
+            // not produced form the mapping model. This is the case when the mapping model and the
+            // service model, whose components are mapped, are being transformed together. Then the
+            // intermediate data model gets produced as part of the intermediate service and not the
+            // mapping model transformation.
+            if (dataModelImport === null) {
+                val inputServiceModel = results.findInputModelFor(serviceModel)
+                val inputDataModel = results.findInputModelFor(intermediateDataModel)
+                dataModelImport = serviceModelRoot.imports.findFirst[
+                    if (importType == ImportType.DATATYPES) {
+                        val absoluteDataModelImportUri = LemmaUtils.convertToAbsoluteFileUri(
+                            importURI,
+                            inputServiceModel.file
+                        )
+                        absoluteDataModelImportUri == inputDataModel.inputPath
+                    } else
+                        false
+                ]
+            }
 
             val refinedModelTargetFolder = LemmaUtils.removeExtension(serviceModel.outputPath)
             val refinedModelName = new File(intermediateDataModel.outputPath).name
-            val prefixedRefinedModelName = '''«dataModelAlias»_«refinedModelName»'''
+            val prefixedRefinedModelName = '''«dataModelImport.name»_«refinedModelName»'''
             return LemmaUtils.joinPathSegments(refinedModelTargetFolder, prefixedRefinedModelName)
         }
+    }
+
+    /**
+     * Helper to find the input model, which resulted in the given output model from the list of
+     * transformation results
+     */
+    private static def findInputModelFor(List<TransformationResult> results,
+        OutputModel outputModel) {
+        return results.filter[it.outputModel == outputModel]?.get(0)?.inputModels?.get(0)
     }
 }

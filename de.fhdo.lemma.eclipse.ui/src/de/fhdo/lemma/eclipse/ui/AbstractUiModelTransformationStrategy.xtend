@@ -6,6 +6,7 @@ import java.util.List
 import org.eclipse.core.resources.IFile
 import de.fhdo.lemma.intermediate.transformations.AbstractIntermediateModelTransformationStrategy
 import java.util.LinkedHashMap
+import java.util.LinkedList
 
 /**
  * Abstract strategy for preparing, displaying and controlling intermediate models' transformation
@@ -34,9 +35,14 @@ abstract class AbstractUiModelTransformationStrategy {
     abstract def String getModelTypePrefix()
 
     /**
-     * Get model types' ordering
+     * Get model types' ordering for displaying purposes
      */
-    abstract def List<String> getModelTypeOrdering()
+    abstract def LinkedList<String> getModelTypeDisplayOrdering()
+
+    /**
+     * Get model types' ordering for transformation
+     */
+    abstract def LinkedList<String> getModelTypeTransformationOrdering()
 
     /**
      * Get file extensions of the model type. Files being found in the workspace that exhibit one of

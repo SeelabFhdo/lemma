@@ -551,7 +551,7 @@ abstract class AbstractIntermediateModelTransformationStrategy<TIM_TYPE, TOM_TYP
         Resource outputResource
     ) {
         val resultInputModels = inputModels.entrySet.map [
-            new InputModel(value.absolutePath, modelTypes.get(key).namespaceUri)
+            new InputModel(value.absolutePath, modelTypes.get(key).namespaceUri, value)
         ].toList
 
         val outputModel = new OutputModel(
@@ -597,9 +597,13 @@ abstract class AbstractIntermediateModelTransformationStrategy<TIM_TYPE, TOM_TYP
         @Accessors
         String namespaceUri
 
-        new(String inputPath, String namespaceUri) {
+        @Accessors
+        IFile file
+
+        new(String inputPath, String namespaceUri, IFile file) {
             this.inputPath = inputPath
             this.namespaceUri = namespaceUri
+            this.file = file
         }
     }
 

@@ -16,6 +16,7 @@ import de.fhdo.lemma.intermediate.transformations.TransformationModelType;
 import de.fhdo.lemma.intermediate.transformations.service.IntermediateDataModelRefinement;
 import de.fhdo.lemma.intermediate.transformations.service.MappingModelTransformationValidator;
 import de.fhdo.lemma.service.Import;
+import de.fhdo.lemma.service.ImportType;
 import de.fhdo.lemma.service.MappedComplexType;
 import de.fhdo.lemma.service.ServiceModel;
 import de.fhdo.lemma.service.ServicePackage;
@@ -97,7 +98,7 @@ public class MappingModelTransformation extends AbstractAtlInputOutputIntermedia
           return it.getOutputPath();
         };
         final Function1<AbstractIntermediateModelTransformationStrategy.OutputModel, AbstractIntermediateModelTransformationStrategy.TransformationResult> _function_2 = (AbstractIntermediateModelTransformationStrategy.OutputModel it) -> {
-          return MappingModelTransformation.MappingModelRefinementExecutor.runRefininingTransformation(serviceModel, it, warningCallback);
+          return MappingModelTransformation.MappingModelRefinementExecutor.runRefininingTransformation(results, serviceModel, it, warningCallback);
         };
         final Map<String, AbstractIntermediateModelTransformationStrategy.TransformationResult> refinedModels = IterableExtensions.<AbstractIntermediateModelTransformationStrategy.OutputModel, String, AbstractIntermediateModelTransformationStrategy.TransformationResult>toMap(intermediateDataModels, _function_1, _function_2);
         final Function2<String, AbstractIntermediateModelTransformationStrategy.TransformationResult, Boolean> _function_3 = (String path, AbstractIntermediateModelTransformationStrategy.TransformationResult model) -> {
@@ -178,7 +179,7 @@ public class MappingModelTransformation extends AbstractAtlInputOutputIntermedia
       final Function1<AbstractIntermediateModelTransformationStrategy.TransformationResult, AbstractIntermediateModelTransformationStrategy.OutputModel> _function_1 = (AbstractIntermediateModelTransformationStrategy.TransformationResult it) -> {
         return it.getOutputModel();
       };
-      final Iterable<AbstractIntermediateModelTransformationStrategy.OutputModel> serviceModelsCreatedFromMappingModels = IterableExtensions.<AbstractIntermediateModelTransformationStrategy.TransformationResult, AbstractIntermediateModelTransformationStrategy.OutputModel>map(IterableExtensions.<AbstractIntermediateModelTransformationStrategy.TransformationResult>filter(results, _function), _function_1);
+      final Iterable<AbstractIntermediateModelTransformationStrategy.OutputModel> serviceModelsCreatedFromMappingModel = IterableExtensions.<AbstractIntermediateModelTransformationStrategy.TransformationResult, AbstractIntermediateModelTransformationStrategy.OutputModel>map(IterableExtensions.<AbstractIntermediateModelTransformationStrategy.TransformationResult>filter(results, _function), _function_1);
       final Function1<AbstractIntermediateModelTransformationStrategy.OutputModel, AbstractIntermediateModelTransformationStrategy.OutputModel> _function_2 = (AbstractIntermediateModelTransformationStrategy.OutputModel it) -> {
         return it;
       };
@@ -186,13 +187,14 @@ public class MappingModelTransformation extends AbstractAtlInputOutputIntermedia
         EObject _get = it.getResource().getContents().get(0);
         return ((ServiceModel) _get).getMappedComplexTypes();
       };
-      final Map<AbstractIntermediateModelTransformationStrategy.OutputModel, EList<MappedComplexType>> mappedComplexTypesPerServiceModel = IterableExtensions.<AbstractIntermediateModelTransformationStrategy.OutputModel, AbstractIntermediateModelTransformationStrategy.OutputModel, EList<MappedComplexType>>toMap(serviceModelsCreatedFromMappingModels, _function_2, _function_3);
+      final Map<AbstractIntermediateModelTransformationStrategy.OutputModel, EList<MappedComplexType>> mappedComplexTypesPerServiceModel = IterableExtensions.<AbstractIntermediateModelTransformationStrategy.OutputModel, AbstractIntermediateModelTransformationStrategy.OutputModel, EList<MappedComplexType>>toMap(serviceModelsCreatedFromMappingModel, _function_2, _function_3);
       final HashMap<AbstractIntermediateModelTransformationStrategy.OutputModel, Set<AbstractIntermediateModelTransformationStrategy.OutputModel>> resultMap = CollectionLiterals.<AbstractIntermediateModelTransformationStrategy.OutputModel, Set<AbstractIntermediateModelTransformationStrategy.OutputModel>>newHashMap();
       final BiConsumer<AbstractIntermediateModelTransformationStrategy.OutputModel, EList<MappedComplexType>> _function_4 = (AbstractIntermediateModelTransformationStrategy.OutputModel serviceModel, EList<MappedComplexType> mappedComplexTypes) -> {
         final Consumer<MappedComplexType> _function_5 = (MappedComplexType mappedComplexType) -> {
           final Function1<AbstractIntermediateModelTransformationStrategy.TransformationResult, Boolean> _function_6 = (AbstractIntermediateModelTransformationStrategy.TransformationResult it) -> {
             return Boolean.valueOf((Objects.equal(it.getOutputModel().getNamespaceUri(), IntermediatePackage.eNS_URI) && 
-              Objects.equal(it.getOutputModel().getOutputPath(), mappedComplexType.getType().getImport().getImportURI())));
+              (Objects.equal(it.getOutputModel().getOutputPath(), mappedComplexType.getType().getImport().getImportURI()) || 
+                Objects.equal(it.getInputModels().get(0).getInputPath(), mappedComplexType.getT_sourceModelUri()))));
           };
           final Consumer<AbstractIntermediateModelTransformationStrategy.TransformationResult> _function_7 = (AbstractIntermediateModelTransformationStrategy.TransformationResult it) -> {
             Set<AbstractIntermediateModelTransformationStrategy.OutputModel> _putIfAbsent = resultMap.putIfAbsent(serviceModel, CollectionLiterals.<AbstractIntermediateModelTransformationStrategy.OutputModel>newHashSet(it.getOutputModel()));
@@ -264,13 +266,13 @@ public class MappingModelTransformation extends AbstractAtlInputOutputIntermedia
     /**
      * Run refining transformation on an intermediate data model
      */
-    private static AbstractIntermediateModelTransformationStrategy.TransformationResult runRefininingTransformation(final AbstractIntermediateModelTransformationStrategy.OutputModel serviceModel, final AbstractIntermediateModelTransformationStrategy.OutputModel intermediateDataModel, final Predicate<IntermediateTransformationException> warningCallback) {
+    private static AbstractIntermediateModelTransformationStrategy.TransformationResult runRefininingTransformation(final List<AbstractIntermediateModelTransformationStrategy.TransformationResult> results, final AbstractIntermediateModelTransformationStrategy.OutputModel serviceModel, final AbstractIntermediateModelTransformationStrategy.OutputModel intermediateDataModel, final Predicate<IntermediateTransformationException> warningCallback) {
       Resource _resource = intermediateDataModel.getResource();
       Pair<TransformationModelDescription, Resource> _mappedTo = Pair.<TransformationModelDescription, Resource>of(IntermediateDataModelRefinement.IN_MODEL_DESCRIPTION, _resource);
       Resource _resource_1 = serviceModel.getResource();
       Pair<TransformationModelDescription, Resource> _mappedTo_1 = Pair.<TransformationModelDescription, Resource>of(IntermediateDataModelRefinement.SERVICE_MODEL_DESCRIPTION, _resource_1);
       final HashMap<TransformationModelDescription, Resource> inputModelResources = CollectionLiterals.<TransformationModelDescription, Resource>newHashMap(_mappedTo, _mappedTo_1);
-      String _buildOutputPathForRefiningTransformation = MappingModelTransformation.MappingModelRefinementExecutor.buildOutputPathForRefiningTransformation(serviceModel, intermediateDataModel);
+      String _buildOutputPathForRefiningTransformation = MappingModelTransformation.MappingModelRefinementExecutor.buildOutputPathForRefiningTransformation(results, serviceModel, intermediateDataModel);
       Pair<TransformationModelDescription, String> _mappedTo_2 = Pair.<TransformationModelDescription, String>of(IntermediateDataModelRefinement.IN_MODEL_DESCRIPTION, _buildOutputPathForRefiningTransformation);
       final HashMap<TransformationModelDescription, String> outputModelPaths = CollectionLiterals.<TransformationModelDescription, String>newHashMap(_mappedTo_2);
       final IntermediateDataModelRefinement refiningTransformation = new IntermediateDataModelRefinement();
@@ -289,7 +291,7 @@ public class MappingModelTransformation extends AbstractAtlInputOutputIntermedia
      * "/foo/bar/ServiceModel/domain_DataModel.xmi". Note, that the name of the service models
      * becomes a folder to host the refined models.
      */
-    private static String buildOutputPathForRefiningTransformation(final AbstractIntermediateModelTransformationStrategy.OutputModel serviceModel, final AbstractIntermediateModelTransformationStrategy.OutputModel intermediateDataModel) {
+    private static String buildOutputPathForRefiningTransformation(final List<AbstractIntermediateModelTransformationStrategy.TransformationResult> results, final AbstractIntermediateModelTransformationStrategy.OutputModel serviceModel, final AbstractIntermediateModelTransformationStrategy.OutputModel intermediateDataModel) {
       EObject _get = serviceModel.getResource().getContents().get(0);
       final ServiceModel serviceModelRoot = ((ServiceModel) _get);
       final Function1<Import, Boolean> _function = (Import it) -> {
@@ -297,12 +299,37 @@ public class MappingModelTransformation extends AbstractAtlInputOutputIntermedia
         String _outputPath = intermediateDataModel.getOutputPath();
         return Boolean.valueOf(Objects.equal(_importURI, _outputPath));
       };
-      final String dataModelAlias = IterableExtensions.<Import>findFirst(serviceModelRoot.getImports(), _function).getName();
+      Import dataModelImport = IterableExtensions.<Import>findFirst(serviceModelRoot.getImports(), _function);
+      if ((dataModelImport == null)) {
+        final AbstractIntermediateModelTransformationStrategy.InputModel inputServiceModel = MappingModelTransformation.findInputModelFor(results, serviceModel);
+        final AbstractIntermediateModelTransformationStrategy.InputModel inputDataModel = MappingModelTransformation.findInputModelFor(results, intermediateDataModel);
+        final Function1<Import, Boolean> _function_1 = (Import it) -> {
+          boolean _xifexpression = false;
+          ImportType _importType = it.getImportType();
+          boolean _equals = Objects.equal(_importType, ImportType.DATATYPES);
+          if (_equals) {
+            boolean _xblockexpression = false;
+            {
+              final String absoluteDataModelImportUri = LemmaUtils.convertToAbsoluteFileUri(
+                it.getImportURI(), 
+                inputServiceModel.getFile());
+              String _inputPath = inputDataModel.getInputPath();
+              _xblockexpression = Objects.equal(absoluteDataModelImportUri, _inputPath);
+            }
+            _xifexpression = _xblockexpression;
+          } else {
+            _xifexpression = false;
+          }
+          return Boolean.valueOf(_xifexpression);
+        };
+        dataModelImport = IterableExtensions.<Import>findFirst(serviceModelRoot.getImports(), _function_1);
+      }
       final String refinedModelTargetFolder = LemmaUtils.removeExtension(serviceModel.getOutputPath());
       String _outputPath = intermediateDataModel.getOutputPath();
       final String refinedModelName = new File(_outputPath).getName();
       StringConcatenation _builder = new StringConcatenation();
-      _builder.append(dataModelAlias);
+      String _name = dataModelImport.getName();
+      _builder.append(_name);
       _builder.append("_");
       _builder.append(refinedModelName);
       final String prefixedRefinedModelName = _builder.toString();
@@ -500,6 +527,31 @@ public class MappingModelTransformation extends AbstractAtlInputOutputIntermedia
       return MappingModelTransformation.MappingModelRefinementExecutor.executeRefinements(this.inputMappingModel, results, warningCallback);
     };
     return _function;
+  }
+  
+  /**
+   * Helper to find the input model, which resulted in the given output model from the list of
+   * transformation results
+   */
+  private static AbstractIntermediateModelTransformationStrategy.InputModel findInputModelFor(final List<AbstractIntermediateModelTransformationStrategy.TransformationResult> results, final AbstractIntermediateModelTransformationStrategy.OutputModel outputModel) {
+    final Function1<AbstractIntermediateModelTransformationStrategy.TransformationResult, Boolean> _function = (AbstractIntermediateModelTransformationStrategy.TransformationResult it) -> {
+      AbstractIntermediateModelTransformationStrategy.OutputModel _outputModel = it.getOutputModel();
+      return Boolean.valueOf(Objects.equal(_outputModel, outputModel));
+    };
+    Iterable<AbstractIntermediateModelTransformationStrategy.TransformationResult> _filter = IterableExtensions.<AbstractIntermediateModelTransformationStrategy.TransformationResult>filter(results, _function);
+    AbstractIntermediateModelTransformationStrategy.TransformationResult _get = null;
+    if (((AbstractIntermediateModelTransformationStrategy.TransformationResult[])Conversions.unwrapArray(_filter, AbstractIntermediateModelTransformationStrategy.TransformationResult.class))!=null) {
+      _get=((AbstractIntermediateModelTransformationStrategy.TransformationResult[])Conversions.unwrapArray(_filter, AbstractIntermediateModelTransformationStrategy.TransformationResult.class))[0];
+    }
+    List<AbstractIntermediateModelTransformationStrategy.InputModel> _inputModels = null;
+    if (_get!=null) {
+      _inputModels=_get.getInputModels();
+    }
+    AbstractIntermediateModelTransformationStrategy.InputModel _get_1 = null;
+    if (_inputModels!=null) {
+      _get_1=_inputModels.get(0);
+    }
+    return _get_1;
   }
   
   private String getServiceModelUri(final EObject complexTypeMapping) {

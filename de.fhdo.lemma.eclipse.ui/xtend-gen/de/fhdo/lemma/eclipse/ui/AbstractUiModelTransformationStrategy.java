@@ -4,6 +4,7 @@ import de.fhdo.lemma.eclipse.ui.ModelFile;
 import de.fhdo.lemma.eclipse.ui.ModelFileTypeDescription;
 import de.fhdo.lemma.intermediate.transformations.AbstractIntermediateModelTransformationStrategy;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import org.eclipse.core.resources.IFile;
@@ -38,9 +39,14 @@ public abstract class AbstractUiModelTransformationStrategy {
   public abstract String getModelTypePrefix();
   
   /**
-   * Get model types' ordering
+   * Get model types' ordering for displaying purposes
    */
-  public abstract List<String> getModelTypeOrdering();
+  public abstract LinkedList<String> getModelTypeDisplayOrdering();
+  
+  /**
+   * Get model types' ordering for transformation
+   */
+  public abstract LinkedList<String> getModelTypeTransformationOrdering();
   
   /**
    * Get file extensions of the model type. Files being found in the workspace that exhibit one of
