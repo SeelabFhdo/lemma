@@ -32,7 +32,7 @@ buildscript {
     extra.set("groovyVersion", "2.5.6")
     extra.set("log4jVersion", "2.11.2")
     extra.set("loggingVersion", "1.6.24")
-    extra.set("lsp4jVersion", "0.7.0")
+    extra.set("lsp4jVersion", "0.7.2")
     extra.set("picocliVersion", "3.9.3")
 }
 

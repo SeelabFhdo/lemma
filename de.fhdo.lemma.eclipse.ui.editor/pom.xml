@@ -10,8 +10,28 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>de.fhdo.lemma.eclipse.ui</artifactId>
+    <artifactId>de.fhdo.lemma.eclipse.ui.editor</artifactId>
     <packaging>eclipse-plugin</packaging>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.eclipse.lsp4j</groupId>
+            <artifactId>org.eclipse.lsp4j</artifactId>
+            <version>${lsp4j-version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.eclipse.lsp4j</groupId>
+            <artifactId>org.eclipse.lsp4j.jsonrpc</artifactId>
+            <version>${lsp4j-version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>de.fhdo.ddmm</groupId>
+            <artifactId>live_validation</artifactId>
+            <version>${live-validation-version}</version>
+        </dependency>
+    </dependencies>
 
     <build>
         <pluginManagement>

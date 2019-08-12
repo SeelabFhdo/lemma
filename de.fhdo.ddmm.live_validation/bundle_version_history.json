@@ -26,7 +26,9 @@
                 "i20190428193058": "MjAxOTA0MjgxOTMwNTE",
                 "i20190506223558": "MjAxOTA1MDYyMjM1NTM",
                 "i20190506224420": "MjAxOTA1MDYyMjQ0MTQ",
-                "i20190506224534": "MjAxOTA1MDYyMjQ1MjU"
+                "i20190506224534": "MjAxOTA1MDYyMjQ1MjU",
+                "i20190812085243": "MjAxOTA4MTIwODUyMzM",
+                "i20190812091256": "MjAxOTA4MTIwOTEyNTI"
             }
         },
         "org.jetbrains.kotlin.stdlib": {
@@ -55,7 +57,9 @@
                 "i20190428193058": "MjAxOTA0MjgxOTMwNTE",
                 "i20190506223558": "MjAxOTA1MDYyMjM1NTM",
                 "i20190506224420": "MjAxOTA1MDYyMjQ0MTQ",
-                "i20190506224534": "MjAxOTA1MDYyMjQ1MjU"
+                "i20190506224534": "MjAxOTA1MDYyMjQ1MjU",
+                "i20190812085242": "MjAxOTA4MTIwODUyMzM",
+                "i20190812091256": "MjAxOTA4MTIwOTEyNTI"
             }
         },
         "org.jetbrains.kotlin.stdlib-common": {
@@ -84,7 +88,9 @@
                 "i20190428193058": "MjAxOTA0MjgxOTMwNTE",
                 "i20190506223558": "MjAxOTA1MDYyMjM1NTM",
                 "i20190506224420": "MjAxOTA1MDYyMjQ0MTQ",
-                "i20190506224534": "MjAxOTA1MDYyMjQ1MjU"
+                "i20190506224534": "MjAxOTA1MDYyMjQ1MjU",
+                "i20190812085243": "MjAxOTA4MTIwODUyMzM",
+                "i20190812091256": "MjAxOTA4MTIwOTEyNTI"
             }
         },
         "org.jetbrains.kotlin.stdlib-jdk7": {
@@ -113,7 +119,9 @@
                 "i20190428193058": "MjAxOTA0MjgxOTMwNTE",
                 "i20190506223558": "MjAxOTA1MDYyMjM1NTM",
                 "i20190506224420": "MjAxOTA1MDYyMjQ0MTQ",
-                "i20190506224534": "MjAxOTA1MDYyMjQ1MjU"
+                "i20190506224534": "MjAxOTA1MDYyMjQ1MjU",
+                "i20190812085243": "MjAxOTA4MTIwODUyMzM",
+                "i20190812091256": "MjAxOTA4MTIwOTEyNTI"
             }
         },
         "org.jetbrains.kotlin.stdlib-jdk8": {
@@ -142,7 +150,9 @@
                 "i20190428193058": "MjAxOTA0MjgxOTMwNTE",
                 "i20190506223558": "MjAxOTA1MDYyMjM1NTM",
                 "i20190506224420": "MjAxOTA1MDYyMjQ0MTQ",
-                "i20190506224534": "MjAxOTA1MDYyMjQ1MjU"
+                "i20190506224534": "MjAxOTA1MDYyMjQ1MjU",
+                "i20190812085243": "MjAxOTA4MTIwODUyMzM",
+                "i20190812091256": "MjAxOTA4MTIwOTEyNTI"
             }
         }
     },
@@ -176,7 +186,9 @@
                 "i20190428193100": "MjAxOTA0MjgxOTMwNTE",
                 "i20190506223600": "MjAxOTA1MDYyMjM1NTM",
                 "i20190506224422": "MjAxOTA1MDYyMjQ0MTQ",
-                "i20190506224538": "MjAxOTA1MDYyMjQ1MjU"
+                "i20190506224538": "MjAxOTA1MDYyMjQ1MjU",
+                "i20190812085244": "MjAxOTA4MTIwODUyMzM",
+                "i20190812091257": "MjAxOTA4MTIwOTEyNTI"
             }
         }
     }
