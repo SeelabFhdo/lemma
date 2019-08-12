@@ -16,6 +16,7 @@ de.fhdo.lemma.ocl/
 HOWTO Lemma Release.md
 *.java._trace
 *.xtendbin
+de.fhdo.ddmm.ocl/
 out/
 build/
 .gradle/
