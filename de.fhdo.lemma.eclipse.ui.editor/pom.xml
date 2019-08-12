@@ -27,8 +27,8 @@
         </dependency>
 
         <dependency>
-            <groupId>de.fhdo.ddmm</groupId>
-            <artifactId>live_validation</artifactId>
+            <groupId>de.fhdo.lemma.live_validation</groupId>
+            <artifactId>de.fhdo.lemma.live_validation</artifactId>
             <version>${live-validation-version}</version>
         </dependency>
     </dependencies>

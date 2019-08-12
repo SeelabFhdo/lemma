@@ -1,7 +1,7 @@
 package de.fhdo.lemma.eclipse.ui.editor;
 
 import com.google.inject.Inject;
-import de.fhdo.ddmm.live_validation.common.IssueDiagnostic;
+import de.fhdo.lemma.live_validation.common.IssueDiagnostic;
 import java.util.List;
 import java.util.function.Consumer;
 import org.eclipse.jface.text.source.IAnnotationModel;

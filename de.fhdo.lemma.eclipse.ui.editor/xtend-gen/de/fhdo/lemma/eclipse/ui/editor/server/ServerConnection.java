@@ -1,10 +1,10 @@
 package de.fhdo.lemma.eclipse.ui.editor.server;
 
 import com.google.common.base.Objects;
-import de.fhdo.ddmm.live_validation.clients.AbstractLiveValidationInitiator;
-import de.fhdo.ddmm.live_validation.protocol.PublishIssuesParams;
 import de.fhdo.lemma.eclipse.ui.editor.LiveValidationCapableXtextEditor;
 import de.fhdo.lemma.eclipse.ui.utils.LemmaUiUtils;
+import de.fhdo.lemma.live_validation.clients.AbstractLiveValidationInitiator;
+import de.fhdo.lemma.live_validation.protocol.PublishIssuesParams;
 import java.util.function.Consumer;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.xtext.xbase.lib.Exceptions;

@@ -1,7 +1,7 @@
 package de.fhdo.lemma.eclipse.ui.editor
 
 import org.eclipse.xtext.ui.editor.XtextEditor
-import de.fhdo.ddmm.live_validation.common.IssueDiagnostic
+import de.fhdo.lemma.live_validation.common.IssueDiagnostic
 import java.util.List
 import org.eclipse.xtext.validation.Issue.IssueImpl
 import org.eclipse.xtext.diagnostics.Severity

@@ -12,7 +12,7 @@ import org.eclipse.swt.layout.GridLayout
 import org.eclipse.swt.widgets.Label
 import org.eclipse.jface.dialogs.MessageDialog
 import org.eclipse.swt.graphics.Point
-import de.fhdo.ddmm.live_validation.protocol.LiveValidationServer
+import de.fhdo.lemma.live_validation.protocol.LiveValidationServer
 
 /**
  * Dialog to request data needed to connect to a Live Validation server.

@@ -19,6 +19,6 @@ Require-Bundle: com.google.guava,
  org.eclipse.lsp4j.jsonrpc;bundle-version="0.7.2",
  org.eclipse.core.expressions;bundle-version="3.6.200",
  org.eclipse.ui.ide;bundle-version="3.14.200",
- de.fhdo.ddmm.live_validation;bundle-version="0.0.2",
  de.fhdo.lemma.utils;bundle-version="0.0.1",
- de.fhdo.lemma.eclipse.ui.utils;bundle-version="0.0.1"
+ de.fhdo.lemma.eclipse.ui.utils;bundle-version="0.0.1",
+ de.fhdo.lemma.live_validation;bundle-version="0.0.2"

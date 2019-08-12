@@ -20,8 +20,17 @@ modules=(
     # Transformations
     de.fhdo.lemma.intermediate.transformations.parent
 
+    # Live Validation Framework
+    de.fhdo.lemma.live_validation
+
     # UI Components
     de.fhdo.lemma.eclipse.ui.parent
+
+    # OCL
+    de.fhdo.lemma.ocl
+
+    # Model Processing Framework
+    de.fhdo.lemma.model_processing
 )
 
 do_build() {
@@ -29,7 +38,17 @@ do_build() {
     echo -e "\033[1;35m------------------------------------------------------------------------"
     echo "Building module $MODULE ($2/$3)"
     echo -e "------------------------------------------------------------------------\033[0m"
-    mvn -f $MODULE/pom.xml clean install || { echo -e "\033[0;31mBuild of $MODULE ($2/$3) unsuccessful\033[0m"; notify_error "LEMMA Build Process Error: Build of $MODULE ($2/$3) unsuccessful!"; exit 1; }
+
+    # Builds can be customized with a separate "build.sh" script in the modules' root folders. 
+    # Otherwise, Maven's "clean" and "install" tasks will be used by default to build modules.
+    if [ -f $MODULE/build.sh ]
+    then
+        buildCommand="cd $MODULE && bash build.sh && cd .."
+    else
+        buildCommand="mvn -f $MODULE/pom.xml clean install"
+    fi
+
+    eval $buildCommand || { echo -e "\033[0;31mBuild of $MODULE ($2/$3) unsuccessful\033[0m"; notify_error "LEMMA Build Process Error: Build of $MODULE ($2/$3) unsuccessful!"; exit 1; }
     notify "LEMMA Build Process: $MODULE ($2/$3) successfully built"
 }
 
