@@ -3,12 +3,12 @@
  */
 package de.fhdo.lemma.data.ui;
 
-import de.fhdo.ddmm.eclipse.ui.editor.LiveValidationCapableXtextEditor;
-import de.fhdo.ddmm.eclipse.ui.editor.LiveValidationXtextDocumentProvider;
-import de.fhdo.ddmm.eclipse.ui.editor.server.ServerConnection;
 import de.fhdo.lemma.data.ui.AbstractDataDslUiModule;
 import de.fhdo.lemma.data.ui.highlighting.HighlightingCalculator;
 import de.fhdo.lemma.data.ui.highlighting.HighlightingConfiguration;
+import de.fhdo.lemma.eclipse.ui.editor.LiveValidationCapableXtextEditor;
+import de.fhdo.lemma.eclipse.ui.editor.LiveValidationXtextDocumentProvider;
+import de.fhdo.lemma.eclipse.ui.editor.server.ServerConnection;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor;
 import org.eclipse.xtext.ide.editor.syntaxcoloring.ISemanticHighlightingCalculator;

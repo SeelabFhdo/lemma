@@ -3,9 +3,9 @@
  */
 package de.fhdo.lemma.operationdsl.ui;
 
-import de.fhdo.ddmm.eclipse.ui.editor.LiveValidationCapableXtextEditor;
-import de.fhdo.ddmm.eclipse.ui.editor.LiveValidationXtextDocumentProvider;
-import de.fhdo.ddmm.eclipse.ui.editor.server.ServerConnection;
+import de.fhdo.lemma.eclipse.ui.editor.LiveValidationCapableXtextEditor;
+import de.fhdo.lemma.eclipse.ui.editor.LiveValidationXtextDocumentProvider;
+import de.fhdo.lemma.eclipse.ui.editor.server.ServerConnection;
 import de.fhdo.lemma.operationdsl.ui.AbstractOperationDslUiModule;
 import de.fhdo.lemma.operationdsl.ui.highlighting.HighlightingCalculator;
 import de.fhdo.lemma.operationdsl.ui.highlighting.HighlightingConfiguration;
