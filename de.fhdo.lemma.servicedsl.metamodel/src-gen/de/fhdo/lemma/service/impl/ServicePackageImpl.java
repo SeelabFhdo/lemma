@@ -421,7 +421,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     @Override
-    public EAttribute getImport_Name() {
+    public EAttribute getImport_T_relatedImportAlias() {
         return (EAttribute)importEClass.getEStructuralFeatures().get(0);
     }
 
@@ -431,7 +431,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     @Override
-    public EAttribute getImport_ImportURI() {
+    public EAttribute getImport_Name() {
         return (EAttribute)importEClass.getEStructuralFeatures().get(1);
     }
 
@@ -441,7 +441,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     @Override
-    public EAttribute getImport_ImportType() {
+    public EAttribute getImport_ImportURI() {
         return (EAttribute)importEClass.getEStructuralFeatures().get(2);
     }
 
@@ -451,8 +451,18 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     @Override
+    public EAttribute getImport_ImportType() {
+        return (EAttribute)importEClass.getEStructuralFeatures().get(3);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public EReference getImport_ServiceModel() {
-        return (EReference)importEClass.getEStructuralFeatures().get(3);
+        return (EReference)importEClass.getEStructuralFeatures().get(4);
     }
 
     /**
@@ -2604,6 +2614,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
         createEOperation(serviceModelEClass, SERVICE_MODEL___GET_CONTAINED_INTERFACES);
 
         importEClass = createEClass(IMPORT);
+        createEAttribute(importEClass, IMPORT__TRELATED_IMPORT_ALIAS);
         createEAttribute(importEClass, IMPORT__NAME);
         createEAttribute(importEClass, IMPORT__IMPORT_URI);
         createEAttribute(importEClass, IMPORT__IMPORT_TYPE);
@@ -2894,6 +2905,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
         initEOperation(getServiceModel__GetContainedInterfaces(), this.getInterface(), "getContainedInterfaces", 0, -1, !IS_UNIQUE, IS_ORDERED);
 
         initEClass(importEClass, Import.class, "Import", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getImport_T_relatedImportAlias(), theEcorePackage.getEString(), "t_relatedImportAlias", null, 0, 1, Import.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getImport_Name(), theEcorePackage.getEString(), "name", null, 0, 1, Import.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getImport_ImportURI(), theEcorePackage.getEString(), "importURI", null, 0, 1, Import.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getImport_ImportType(), this.getImportType(), "importType", null, 0, 1, Import.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

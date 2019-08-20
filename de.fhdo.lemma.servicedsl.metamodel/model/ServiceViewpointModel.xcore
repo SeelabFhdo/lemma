@@ -84,6 +84,11 @@ class Import {
      *          Ensured by: DSL validator.
      */
 
+    // TRANSFORMATION ONLY: Alias of a "somehow" related import. This is, for instance, used by the
+    //                      mapping model transformation to determine from which service model an
+    //                      imported data model originates.
+    String t_relatedImportAlias
+
     String name
     String importURI
     ImportType importType

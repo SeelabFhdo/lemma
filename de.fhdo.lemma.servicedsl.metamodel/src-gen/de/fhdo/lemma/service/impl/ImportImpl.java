@@ -26,6 +26,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link de.fhdo.lemma.service.impl.ImportImpl#getT_relatedImportAlias <em>Trelated Import Alias</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.impl.ImportImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.impl.ImportImpl#getImportURI <em>Import URI</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.impl.ImportImpl#getImportType <em>Import Type</em>}</li>
@@ -35,6 +36,26 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  * @generated
  */
 public class ImportImpl extends MinimalEObjectImpl.Container implements Import {
+    /**
+     * The default value of the '{@link #getT_relatedImportAlias() <em>Trelated Import Alias</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getT_relatedImportAlias()
+     * @generated
+     * @ordered
+     */
+    protected static final String TRELATED_IMPORT_ALIAS_EDEFAULT = null;
+
+    /**
+     * The cached value of the '{@link #getT_relatedImportAlias() <em>Trelated Import Alias</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getT_relatedImportAlias()
+     * @generated
+     * @ordered
+     */
+    protected String t_relatedImportAlias = TRELATED_IMPORT_ALIAS_EDEFAULT;
+
     /**
      * The default value of the '{@link #getName() <em>Name</em>}' attribute.
      * <!-- begin-user-doc -->
@@ -112,6 +133,29 @@ public class ImportImpl extends MinimalEObjectImpl.Container implements Import {
     @Override
     protected EClass eStaticClass() {
         return ServicePackage.Literals.IMPORT;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public String getT_relatedImportAlias() {
+        return t_relatedImportAlias;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void setT_relatedImportAlias(String newT_relatedImportAlias) {
+        String oldT_relatedImportAlias = t_relatedImportAlias;
+        t_relatedImportAlias = newT_relatedImportAlias;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ServicePackage.IMPORT__TRELATED_IMPORT_ALIAS, oldT_relatedImportAlias, t_relatedImportAlias));
     }
 
     /**
@@ -288,6 +332,8 @@ public class ImportImpl extends MinimalEObjectImpl.Container implements Import {
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
+            case ServicePackage.IMPORT__TRELATED_IMPORT_ALIAS:
+                return getT_relatedImportAlias();
             case ServicePackage.IMPORT__NAME:
                 return getName();
             case ServicePackage.IMPORT__IMPORT_URI:
@@ -309,6 +355,9 @@ public class ImportImpl extends MinimalEObjectImpl.Container implements Import {
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
+            case ServicePackage.IMPORT__TRELATED_IMPORT_ALIAS:
+                setT_relatedImportAlias((String)newValue);
+                return;
             case ServicePackage.IMPORT__NAME:
                 setName((String)newValue);
                 return;
@@ -333,6 +382,9 @@ public class ImportImpl extends MinimalEObjectImpl.Container implements Import {
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
+            case ServicePackage.IMPORT__TRELATED_IMPORT_ALIAS:
+                setT_relatedImportAlias(TRELATED_IMPORT_ALIAS_EDEFAULT);
+                return;
             case ServicePackage.IMPORT__NAME:
                 setName(NAME_EDEFAULT);
                 return;
@@ -357,6 +409,8 @@ public class ImportImpl extends MinimalEObjectImpl.Container implements Import {
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
+            case ServicePackage.IMPORT__TRELATED_IMPORT_ALIAS:
+                return TRELATED_IMPORT_ALIAS_EDEFAULT == null ? t_relatedImportAlias != null : !TRELATED_IMPORT_ALIAS_EDEFAULT.equals(t_relatedImportAlias);
             case ServicePackage.IMPORT__NAME:
                 return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
             case ServicePackage.IMPORT__IMPORT_URI:
@@ -379,7 +433,9 @@ public class ImportImpl extends MinimalEObjectImpl.Container implements Import {
         if (eIsProxy()) return super.toString();
 
         StringBuilder result = new StringBuilder(super.toString());
-        result.append(" (name: ");
+        result.append(" (t_relatedImportAlias: ");
+        result.append(t_relatedImportAlias);
+        result.append(", name: ");
         result.append(name);
         result.append(", importURI: ");
         result.append(importURI);

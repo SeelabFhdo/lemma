@@ -290,18 +290,19 @@ rule MappedImport {
     from
         m : Mapping!Import
     do {
-        thisModule.Import(m);
+        thisModule.Import(m, OclUndefined);
     }
 }
 
 --- Generic called rule to create service Imports
-rule Import(sourceImport : Mapping!Import) {
+rule Import(sourceImport : Mapping!Import, relatedImportAlias : String) {
     to
         t : Service!Import(
             name <- sourceImport.name,
             importURI <- sourceImport.importURI,
             importType <- sourceImport.importType,
-            serviceModel <- thisModule.ServiceModel()
+            serviceModel <- thisModule.ServiceModel(),
+            t_relatedImportAlias <- relatedImportAlias
         )
     do {
         thisModule.ServiceModel().imports <- thisModule.ServiceModel().imports->append(t);

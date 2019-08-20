@@ -162,13 +162,22 @@ public interface ServicePackage extends EPackage {
     int IMPORT = 1;
 
     /**
+     * The feature id for the '<em><b>Trelated Import Alias</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int IMPORT__TRELATED_IMPORT_ALIAS = 0;
+
+    /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int IMPORT__NAME = 0;
+    int IMPORT__NAME = 1;
 
     /**
      * The feature id for the '<em><b>Import URI</b></em>' attribute.
@@ -177,7 +186,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int IMPORT__IMPORT_URI = 1;
+    int IMPORT__IMPORT_URI = 2;
 
     /**
      * The feature id for the '<em><b>Import Type</b></em>' attribute.
@@ -186,7 +195,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int IMPORT__IMPORT_TYPE = 2;
+    int IMPORT__IMPORT_TYPE = 3;
 
     /**
      * The feature id for the '<em><b>Service Model</b></em>' container reference.
@@ -195,7 +204,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int IMPORT__SERVICE_MODEL = 3;
+    int IMPORT__SERVICE_MODEL = 4;
 
     /**
      * The number of structural features of the '<em>Import</em>' class.
@@ -204,7 +213,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int IMPORT_FEATURE_COUNT = 4;
+    int IMPORT_FEATURE_COUNT = 5;
 
     /**
      * The number of operations of the '<em>Import</em>' class.
@@ -2615,6 +2624,17 @@ public interface ServicePackage extends EPackage {
     EClass getImport();
 
     /**
+     * Returns the meta object for the attribute '{@link de.fhdo.lemma.service.Import#getT_relatedImportAlias <em>Trelated Import Alias</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Trelated Import Alias</em>'.
+     * @see de.fhdo.lemma.service.Import#getT_relatedImportAlias()
+     * @see #getImport()
+     * @generated
+     */
+    EAttribute getImport_T_relatedImportAlias();
+
+    /**
      * Returns the meta object for the attribute '{@link de.fhdo.lemma.service.Import#getName <em>Name</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -5014,6 +5034,14 @@ public interface ServicePackage extends EPackage {
          * @generated
          */
         EClass IMPORT = eINSTANCE.getImport();
+
+        /**
+         * The meta object literal for the '<em><b>Trelated Import Alias</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute IMPORT__TRELATED_IMPORT_ALIAS = eINSTANCE.getImport_T_relatedImportAlias();
 
         /**
          * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
