@@ -537,19 +537,6 @@ abstract class TechnologyAspect {
             else
                 false
     }
-
-    /**
-     * Get parts of the technology aspect for creating a qualified name
-     */
-    op String[] getQualifiedNameParts() {
-        if (name === null || name.empty)
-            return newArrayList.asEList
-
-        val nameParts = newArrayList
-        nameParts.add("_aspects")
-        nameParts.add(name)
-        nameParts.asEList
-    }
 }
 
 /**
@@ -565,6 +552,39 @@ class ServiceAspect extends TechnologyAspect {
     contains ServiceAspectPointcutSelector[] pointcutSelectors opposite serviceAspect
 
     container Technology technology opposite serviceAspects
+
+    /**
+     * Get parts of the technology aspect for creating a qualified name
+     */
+    op String[] getQualifiedNameParts(boolean withTechnologyName, boolean withNamespace) {
+        if (name === null || name.empty)
+            return newArrayList.asEList
+
+        val nameParts = newArrayList
+        if (withTechnologyName)
+            nameParts.add(technology.name)
+        if (withNamespace)
+            nameParts.add("_aspects")
+        nameParts.add(name)
+        nameParts.asEList
+    }
+
+    /**
+     * Build qualified name from qualified name parts
+     */
+    op String buildQualifiedName(String separator, boolean withTechnologyName,
+        boolean withNamespace) {
+        if (separator === null)
+            return null
+
+        var String qualifiedName = ""
+        for (part : getQualifiedNameParts(withTechnologyName, withNamespace))
+            qualifiedName += separator + part
+        // Remove leading separator
+        if (!qualifiedName.empty)
+            qualifiedName = qualifiedName.substring(separator.length)
+        return qualifiedName
+    }
 
     /**
      * Check if pointcut selector is applicable at a given join point
@@ -892,6 +912,39 @@ class OperationAspect extends TechnologyAspect {
     contains OperationAspectPointcutSelector[] pointcutSelectors opposite operationAspect
 
     container Technology technology opposite operationAspects
+
+    /**
+     * Get parts of the technology aspect for creating a qualified name
+     */
+    op String[] getQualifiedNameParts(boolean withTechnologyName, boolean withNamespace) {
+        if (name === null || name.empty)
+            return newArrayList.asEList
+
+        val nameParts = newArrayList
+        if (withTechnologyName)
+            nameParts.add(technology.name)
+        if (withNamespace)
+            nameParts.add("_aspects")
+        nameParts.add(name)
+        nameParts.asEList
+    }
+
+    /**
+     * Build qualified name from qualified name parts
+     */
+    op String buildQualifiedName(String separator, boolean withTechnologyName,
+        boolean withNamespace) {
+        if (separator === null)
+            return null
+
+        var String qualifiedName = ""
+        for (part : getQualifiedNameParts(withTechnologyName, withNamespace))
+            qualifiedName += separator + part
+        // Remove leading separator
+        if (!qualifiedName.empty)
+            qualifiedName = qualifiedName.substring(separator.length)
+        return qualifiedName
+    }
 
     /**
      * Check if the aspect has a matching selector for the given pointcuts and their values.

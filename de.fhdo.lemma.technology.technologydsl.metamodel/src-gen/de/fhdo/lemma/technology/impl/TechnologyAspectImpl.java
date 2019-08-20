@@ -8,15 +8,11 @@ import de.fhdo.lemma.technology.TechnologyAspect;
 import de.fhdo.lemma.technology.TechnologyPackage;
 import de.fhdo.lemma.technology.TechnologySpecificProperty;
 
-import java.lang.reflect.InvocationTargetException;
-
-import java.util.ArrayList;
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
-import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
@@ -28,8 +24,6 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EDataTypeEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.InternalEList;
-
-import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 
 /**
  * <!-- begin-user-doc -->
@@ -214,26 +208,6 @@ public abstract class TechnologyAspectImpl extends MinimalEObjectImpl.Container 
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
-    public EList<String> getQualifiedNameParts() {
-        EList<String> _xblockexpression = null;
-        {
-            if (((this.getName() == null) || this.getName().isEmpty())) {
-                return ECollections.<String>asEList(CollectionLiterals.<String>newArrayList());
-            }
-            final ArrayList<String> nameParts = CollectionLiterals.<String>newArrayList();
-            nameParts.add("_aspects");
-            nameParts.add(this.getName());
-            _xblockexpression = ECollections.<String>asEList(nameParts);
-        }
-        return _xblockexpression;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     @SuppressWarnings("unchecked")
     @Override
     public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
@@ -352,20 +326,6 @@ public abstract class TechnologyAspectImpl extends MinimalEObjectImpl.Container 
                 return isIsSingleValued() != IS_SINGLE_VALUED_EDEFAULT;
         }
         return super.eIsSet(featureID);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
-        switch (operationID) {
-            case TechnologyPackage.TECHNOLOGY_ASPECT___GET_QUALIFIED_NAME_PARTS:
-                return getQualifiedNameParts();
-        }
-        return super.eInvoke(operationID, arguments);
     }
 
     /**

@@ -80,6 +80,30 @@ public interface ServiceAspect extends TechnologyAspect {
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
      * *
+     * Get parts of the technology aspect for creating a qualified name
+     * <!-- end-model-doc -->
+     * @model unique="false" withTechnologyNameUnique="false" withNamespaceUnique="false"
+     * @generated
+     */
+    EList<String> getQualifiedNameParts(boolean withTechnologyName, boolean withNamespace);
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * *
+     * Build qualified name from qualified name parts
+     * <!-- end-model-doc -->
+     * @model unique="false" separatorUnique="false" withTechnologyNameUnique="false" withNamespaceUnique="false"
+     * @generated
+     */
+    String buildQualifiedName(String separator, boolean withTechnologyName, boolean withNamespace);
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * *
      * Check if pointcut selector is applicable at a given join point
      * <!-- end-model-doc -->
      * @model unique="false" joinPointUnique="false" selectorUnique="false"

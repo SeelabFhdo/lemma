@@ -589,7 +589,7 @@ class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
             else
                 declaredAspectsForJoinPoint
         val scopeElements = scopeAspects.map[
-            val protocolName = QualifiedName.create(it.qualifiedNameParts)
+            val protocolName = QualifiedName.create(it.getQualifiedNameParts(false, true))
             EObjectDescription.create(protocolName, it)
         ]
         return MapBasedScope.createScope(IScope.NULLSCOPE, scopeElements)

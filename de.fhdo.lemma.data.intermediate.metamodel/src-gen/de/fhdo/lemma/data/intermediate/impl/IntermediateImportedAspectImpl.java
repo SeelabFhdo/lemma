@@ -40,6 +40,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * </p>
  * <ul>
  *   <li>{@link de.fhdo.lemma.data.intermediate.impl.IntermediateImportedAspectImpl#getName <em>Name</em>}</li>
+ *   <li>{@link de.fhdo.lemma.data.intermediate.impl.IntermediateImportedAspectImpl#getQualifiedName <em>Qualified Name</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.impl.IntermediateImportedAspectImpl#getFeatureNames <em>Feature Names</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.impl.IntermediateImportedAspectImpl#getImport <em>Import</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.impl.IntermediateImportedAspectImpl#getProperties <em>Properties</em>}</li>
@@ -73,6 +74,26 @@ public class IntermediateImportedAspectImpl extends MinimalEObjectImpl.Container
      * @ordered
      */
     protected String name = NAME_EDEFAULT;
+
+    /**
+     * The default value of the '{@link #getQualifiedName() <em>Qualified Name</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getQualifiedName()
+     * @generated
+     * @ordered
+     */
+    protected static final String QUALIFIED_NAME_EDEFAULT = null;
+
+    /**
+     * The cached value of the '{@link #getQualifiedName() <em>Qualified Name</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getQualifiedName()
+     * @generated
+     * @ordered
+     */
+    protected String qualifiedName = QUALIFIED_NAME_EDEFAULT;
 
     /**
      * The cached value of the '{@link #getFeatureNames() <em>Feature Names</em>}' attribute list.
@@ -154,6 +175,29 @@ public class IntermediateImportedAspectImpl extends MinimalEObjectImpl.Container
         name = newName;
         if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__NAME, oldName, name));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public String getQualifiedName() {
+        return qualifiedName;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void setQualifiedName(String newQualifiedName) {
+        String oldQualifiedName = qualifiedName;
+        qualifiedName = newQualifiedName;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__QUALIFIED_NAME, oldQualifiedName, qualifiedName));
     }
 
     /**
@@ -595,6 +639,8 @@ public class IntermediateImportedAspectImpl extends MinimalEObjectImpl.Container
         switch (featureID) {
             case IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__NAME:
                 return getName();
+            case IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__QUALIFIED_NAME:
+                return getQualifiedName();
             case IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__FEATURE_NAMES:
                 return getFeatureNames();
             case IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__IMPORT:
@@ -634,6 +680,9 @@ public class IntermediateImportedAspectImpl extends MinimalEObjectImpl.Container
         switch (featureID) {
             case IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__NAME:
                 setName((String)newValue);
+                return;
+            case IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__QUALIFIED_NAME:
+                setQualifiedName((String)newValue);
                 return;
             case IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__FEATURE_NAMES:
                 getFeatureNames().clear();
@@ -680,6 +729,9 @@ public class IntermediateImportedAspectImpl extends MinimalEObjectImpl.Container
             case IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__NAME:
                 setName(NAME_EDEFAULT);
                 return;
+            case IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__QUALIFIED_NAME:
+                setQualifiedName(QUALIFIED_NAME_EDEFAULT);
+                return;
             case IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__FEATURE_NAMES:
                 getFeatureNames().clear();
                 return;
@@ -721,6 +773,8 @@ public class IntermediateImportedAspectImpl extends MinimalEObjectImpl.Container
         switch (featureID) {
             case IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__NAME:
                 return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+            case IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__QUALIFIED_NAME:
+                return QUALIFIED_NAME_EDEFAULT == null ? qualifiedName != null : !QUALIFIED_NAME_EDEFAULT.equals(qualifiedName);
             case IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__FEATURE_NAMES:
                 return featureNames != null && !featureNames.isEmpty();
             case IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__IMPORT:
@@ -755,6 +809,8 @@ public class IntermediateImportedAspectImpl extends MinimalEObjectImpl.Container
         StringBuilder result = new StringBuilder(super.toString());
         result.append(" (name: ");
         result.append(name);
+        result.append(", qualifiedName: ");
+        result.append(qualifiedName);
         result.append(", featureNames: ");
         result.append(featureNames);
         result.append(')');

@@ -189,7 +189,7 @@ class OperationDslScopeProvider extends AbstractOperationDslScopeProvider {
             Technology,
             importedAspect.technology.importURI,
             [operationAspects.toList],
-            [qualifiedNameParts],
+            [getQualifiedNameParts(false, true)],
             [
                 joinPoints.contains(joinPoint) &&
                 hasMatchingSelector(technology)

@@ -1069,6 +1069,12 @@ and other modeling concepts such as :java:type:`microservices
 
         Name of the aspect.
 
+    .. py:attribute:: String[1] qualifiedName
+
+        Qualified name of the aspect. The qualified name of the aspect
+        consists of the name of its defining technology, e.g., `\"java\"`, and
+        the name of the aspect, separated by a dot.
+
     .. py:attribute:: String[*] featureNames
 
         This attribute contains the names of all features specified for the

@@ -1384,22 +1384,13 @@ public interface TechnologyPackage extends EPackage {
     int TECHNOLOGY_ASPECT_FEATURE_COUNT = 5;
 
     /**
-     * The operation id for the '<em>Get Qualified Name Parts</em>' operation.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int TECHNOLOGY_ASPECT___GET_QUALIFIED_NAME_PARTS = 0;
-
-    /**
      * The number of operations of the '<em>Aspect</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int TECHNOLOGY_ASPECT_OPERATION_COUNT = 1;
+    int TECHNOLOGY_ASPECT_OPERATION_COUNT = 0;
 
     /**
      * The meta object id for the '{@link de.fhdo.lemma.technology.impl.ServiceAspectImpl <em>Service Aspect</em>}' class.
@@ -1490,7 +1481,16 @@ public interface TechnologyPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SERVICE_ASPECT___GET_QUALIFIED_NAME_PARTS = TECHNOLOGY_ASPECT___GET_QUALIFIED_NAME_PARTS;
+    int SERVICE_ASPECT___GET_QUALIFIED_NAME_PARTS__BOOLEAN_BOOLEAN = TECHNOLOGY_ASPECT_OPERATION_COUNT + 0;
+
+    /**
+     * The operation id for the '<em>Build Qualified Name</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SERVICE_ASPECT___BUILD_QUALIFIED_NAME__STRING_BOOLEAN_BOOLEAN = TECHNOLOGY_ASPECT_OPERATION_COUNT + 1;
 
     /**
      * The operation id for the '<em>Is Valid Selector For Join Point</em>' operation.
@@ -1499,7 +1499,7 @@ public interface TechnologyPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SERVICE_ASPECT___IS_VALID_SELECTOR_FOR_JOIN_POINT__JOINPOINTTYPE_SERVICEASPECTPOINTCUTSELECTOR = TECHNOLOGY_ASPECT_OPERATION_COUNT + 0;
+    int SERVICE_ASPECT___IS_VALID_SELECTOR_FOR_JOIN_POINT__JOINPOINTTYPE_SERVICEASPECTPOINTCUTSELECTOR = TECHNOLOGY_ASPECT_OPERATION_COUNT + 2;
 
     /**
      * The operation id for the '<em>Is Valid Selector For Join Point</em>' operation.
@@ -1508,7 +1508,7 @@ public interface TechnologyPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SERVICE_ASPECT___IS_VALID_SELECTOR_FOR_JOIN_POINT__JOINPOINTTYPE_EXCHANGEPATTERN_COMMUNICATIONTYPE_PROTOCOL_DATAFORMAT = TECHNOLOGY_ASPECT_OPERATION_COUNT + 1;
+    int SERVICE_ASPECT___IS_VALID_SELECTOR_FOR_JOIN_POINT__JOINPOINTTYPE_EXCHANGEPATTERN_COMMUNICATIONTYPE_PROTOCOL_DATAFORMAT = TECHNOLOGY_ASPECT_OPERATION_COUNT + 3;
 
     /**
      * The operation id for the '<em>Has Matching Selector</em>' operation.
@@ -1517,7 +1517,7 @@ public interface TechnologyPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SERVICE_ASPECT___HAS_MATCHING_SELECTOR__EXCHANGEPATTERN_COMMUNICATIONTYPE_PROTOCOL_DATAFORMAT = TECHNOLOGY_ASPECT_OPERATION_COUNT + 2;
+    int SERVICE_ASPECT___HAS_MATCHING_SELECTOR__EXCHANGEPATTERN_COMMUNICATIONTYPE_PROTOCOL_DATAFORMAT = TECHNOLOGY_ASPECT_OPERATION_COUNT + 4;
 
     /**
      * The number of operations of the '<em>Service Aspect</em>' class.
@@ -1526,7 +1526,7 @@ public interface TechnologyPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SERVICE_ASPECT_OPERATION_COUNT = TECHNOLOGY_ASPECT_OPERATION_COUNT + 3;
+    int SERVICE_ASPECT_OPERATION_COUNT = TECHNOLOGY_ASPECT_OPERATION_COUNT + 5;
 
     /**
      * The meta object id for the '{@link de.fhdo.lemma.technology.impl.ServiceAspectPointcutImpl <em>Service Aspect Pointcut</em>}' class.
@@ -1844,7 +1844,16 @@ public interface TechnologyPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int OPERATION_ASPECT___GET_QUALIFIED_NAME_PARTS = TECHNOLOGY_ASPECT___GET_QUALIFIED_NAME_PARTS;
+    int OPERATION_ASPECT___GET_QUALIFIED_NAME_PARTS__BOOLEAN_BOOLEAN = TECHNOLOGY_ASPECT_OPERATION_COUNT + 0;
+
+    /**
+     * The operation id for the '<em>Build Qualified Name</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int OPERATION_ASPECT___BUILD_QUALIFIED_NAME__STRING_BOOLEAN_BOOLEAN = TECHNOLOGY_ASPECT_OPERATION_COUNT + 1;
 
     /**
      * The operation id for the '<em>Has Matching Selector</em>' operation.
@@ -1853,7 +1862,7 @@ public interface TechnologyPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int OPERATION_ASPECT___HAS_MATCHING_SELECTOR__EOBJECT = TECHNOLOGY_ASPECT_OPERATION_COUNT + 0;
+    int OPERATION_ASPECT___HAS_MATCHING_SELECTOR__EOBJECT = TECHNOLOGY_ASPECT_OPERATION_COUNT + 2;
 
     /**
      * The number of operations of the '<em>Operation Aspect</em>' class.
@@ -1862,7 +1871,7 @@ public interface TechnologyPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int OPERATION_ASPECT_OPERATION_COUNT = TECHNOLOGY_ASPECT_OPERATION_COUNT + 1;
+    int OPERATION_ASPECT_OPERATION_COUNT = TECHNOLOGY_ASPECT_OPERATION_COUNT + 3;
 
     /**
      * The meta object id for the '{@link de.fhdo.lemma.technology.impl.OperationAspectPointcutImpl <em>Operation Aspect Pointcut</em>}' class.
@@ -2998,16 +3007,6 @@ public interface TechnologyPackage extends EPackage {
     EAttribute getTechnologyAspect_IsSingleValued();
 
     /**
-     * Returns the meta object for the '{@link de.fhdo.lemma.technology.TechnologyAspect#getQualifiedNameParts() <em>Get Qualified Name Parts</em>}' operation.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the '<em>Get Qualified Name Parts</em>' operation.
-     * @see de.fhdo.lemma.technology.TechnologyAspect#getQualifiedNameParts()
-     * @generated
-     */
-    EOperation getTechnologyAspect__GetQualifiedNameParts();
-
-    /**
      * Returns the meta object for class '{@link de.fhdo.lemma.technology.ServiceAspect <em>Service Aspect</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -3038,6 +3037,26 @@ public interface TechnologyPackage extends EPackage {
      * @generated
      */
     EReference getServiceAspect_Technology();
+
+    /**
+     * Returns the meta object for the '{@link de.fhdo.lemma.technology.ServiceAspect#getQualifiedNameParts(boolean, boolean) <em>Get Qualified Name Parts</em>}' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the '<em>Get Qualified Name Parts</em>' operation.
+     * @see de.fhdo.lemma.technology.ServiceAspect#getQualifiedNameParts(boolean, boolean)
+     * @generated
+     */
+    EOperation getServiceAspect__GetQualifiedNameParts__boolean_boolean();
+
+    /**
+     * Returns the meta object for the '{@link de.fhdo.lemma.technology.ServiceAspect#buildQualifiedName(java.lang.String, boolean, boolean) <em>Build Qualified Name</em>}' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the '<em>Build Qualified Name</em>' operation.
+     * @see de.fhdo.lemma.technology.ServiceAspect#buildQualifiedName(java.lang.String, boolean, boolean)
+     * @generated
+     */
+    EOperation getServiceAspect__BuildQualifiedName__String_boolean_boolean();
 
     /**
      * Returns the meta object for the '{@link de.fhdo.lemma.technology.ServiceAspect#isValidSelectorForJoinPoint(de.fhdo.lemma.technology.JoinPointType, de.fhdo.lemma.technology.ServiceAspectPointcutSelector) <em>Is Valid Selector For Join Point</em>}' operation.
@@ -3327,6 +3346,26 @@ public interface TechnologyPackage extends EPackage {
      * @generated
      */
     EReference getOperationAspect_Technology();
+
+    /**
+     * Returns the meta object for the '{@link de.fhdo.lemma.technology.OperationAspect#getQualifiedNameParts(boolean, boolean) <em>Get Qualified Name Parts</em>}' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the '<em>Get Qualified Name Parts</em>' operation.
+     * @see de.fhdo.lemma.technology.OperationAspect#getQualifiedNameParts(boolean, boolean)
+     * @generated
+     */
+    EOperation getOperationAspect__GetQualifiedNameParts__boolean_boolean();
+
+    /**
+     * Returns the meta object for the '{@link de.fhdo.lemma.technology.OperationAspect#buildQualifiedName(java.lang.String, boolean, boolean) <em>Build Qualified Name</em>}' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the '<em>Build Qualified Name</em>' operation.
+     * @see de.fhdo.lemma.technology.OperationAspect#buildQualifiedName(java.lang.String, boolean, boolean)
+     * @generated
+     */
+    EOperation getOperationAspect__BuildQualifiedName__String_boolean_boolean();
 
     /**
      * Returns the meta object for the '{@link de.fhdo.lemma.technology.OperationAspect#hasMatchingSelector(org.eclipse.emf.ecore.EObject) <em>Has Matching Selector</em>}' operation.
@@ -4294,14 +4333,6 @@ public interface TechnologyPackage extends EPackage {
         EAttribute TECHNOLOGY_ASPECT__IS_SINGLE_VALUED = eINSTANCE.getTechnologyAspect_IsSingleValued();
 
         /**
-         * The meta object literal for the '<em><b>Get Qualified Name Parts</b></em>' operation.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EOperation TECHNOLOGY_ASPECT___GET_QUALIFIED_NAME_PARTS = eINSTANCE.getTechnologyAspect__GetQualifiedNameParts();
-
-        /**
          * The meta object literal for the '{@link de.fhdo.lemma.technology.impl.ServiceAspectImpl <em>Service Aspect</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -4326,6 +4357,22 @@ public interface TechnologyPackage extends EPackage {
          * @generated
          */
         EReference SERVICE_ASPECT__TECHNOLOGY = eINSTANCE.getServiceAspect_Technology();
+
+        /**
+         * The meta object literal for the '<em><b>Get Qualified Name Parts</b></em>' operation.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EOperation SERVICE_ASPECT___GET_QUALIFIED_NAME_PARTS__BOOLEAN_BOOLEAN = eINSTANCE.getServiceAspect__GetQualifiedNameParts__boolean_boolean();
+
+        /**
+         * The meta object literal for the '<em><b>Build Qualified Name</b></em>' operation.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EOperation SERVICE_ASPECT___BUILD_QUALIFIED_NAME__STRING_BOOLEAN_BOOLEAN = eINSTANCE.getServiceAspect__BuildQualifiedName__String_boolean_boolean();
 
         /**
          * The meta object literal for the '<em><b>Is Valid Selector For Join Point</b></em>' operation.
@@ -4548,6 +4595,22 @@ public interface TechnologyPackage extends EPackage {
          * @generated
          */
         EReference OPERATION_ASPECT__TECHNOLOGY = eINSTANCE.getOperationAspect_Technology();
+
+        /**
+         * The meta object literal for the '<em><b>Get Qualified Name Parts</b></em>' operation.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EOperation OPERATION_ASPECT___GET_QUALIFIED_NAME_PARTS__BOOLEAN_BOOLEAN = eINSTANCE.getOperationAspect__GetQualifiedNameParts__boolean_boolean();
+
+        /**
+         * The meta object literal for the '<em><b>Build Qualified Name</b></em>' operation.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EOperation OPERATION_ASPECT___BUILD_QUALIFIED_NAME__STRING_BOOLEAN_BOOLEAN = eINSTANCE.getOperationAspect__BuildQualifiedName__String_boolean_boolean();
 
         /**
          * The meta object literal for the '<em><b>Has Matching Selector</b></em>' operation.

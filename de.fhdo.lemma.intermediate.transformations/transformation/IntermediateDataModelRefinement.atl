@@ -510,7 +510,8 @@ rule IntermediateImportedAspect(sourceAspect : Service!ImportedServiceAspect, co
     }
     to
         i : Intermediate!IntermediateImportedAspect (
-            name <- importedAspect.name
+            name <- importedAspect.name,
+            qualifiedName <- importedAspect.buildQualifiedName('.', true, false)
         )
     do {
         -- Aspect features

@@ -18,12 +18,14 @@ import de.fhdo.lemma.technology.TechnologyPackage;
 
 import java.lang.reflect.InvocationTargetException;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
+import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
@@ -34,6 +36,8 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
+
+import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 
@@ -147,6 +151,55 @@ public class ServiceAspectImpl extends TechnologyAspectImpl implements ServiceAs
         }
         else if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, TechnologyPackage.SERVICE_ASPECT__TECHNOLOGY, newTechnology, newTechnology));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EList<String> getQualifiedNameParts(final boolean withTechnologyName, final boolean withNamespace) {
+        EList<String> _xblockexpression = null;
+        {
+            if (((this.getName() == null) || this.getName().isEmpty())) {
+                return ECollections.<String>asEList(CollectionLiterals.<String>newArrayList());
+            }
+            final ArrayList<String> nameParts = CollectionLiterals.<String>newArrayList();
+            if (withTechnologyName) {
+                nameParts.add(this.getTechnology().getName());
+            }
+            if (withNamespace) {
+                nameParts.add("_aspects");
+            }
+            nameParts.add(this.getName());
+            _xblockexpression = ECollections.<String>asEList(nameParts);
+        }
+        return _xblockexpression;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public String buildQualifiedName(final String separator, final boolean withTechnologyName, final boolean withNamespace) {
+        if ((separator == null)) {
+            return null;
+        }
+        String qualifiedName = "";
+        EList<String> _qualifiedNameParts = this.getQualifiedNameParts(withTechnologyName, withNamespace);
+        for (final String part : _qualifiedNameParts) {
+            String _qualifiedName = qualifiedName;
+            qualifiedName = (_qualifiedName + (separator + part));
+        }
+        boolean _isEmpty = qualifiedName.isEmpty();
+        boolean _not = (!_isEmpty);
+        if (_not) {
+            qualifiedName = qualifiedName.substring(separator.length());
+        }
+        return qualifiedName;
     }
 
     /**
@@ -469,6 +522,10 @@ public class ServiceAspectImpl extends TechnologyAspectImpl implements ServiceAs
     @Override
     public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
         switch (operationID) {
+            case TechnologyPackage.SERVICE_ASPECT___GET_QUALIFIED_NAME_PARTS__BOOLEAN_BOOLEAN:
+                return getQualifiedNameParts((Boolean)arguments.get(0), (Boolean)arguments.get(1));
+            case TechnologyPackage.SERVICE_ASPECT___BUILD_QUALIFIED_NAME__STRING_BOOLEAN_BOOLEAN:
+                return buildQualifiedName((String)arguments.get(0), (Boolean)arguments.get(1), (Boolean)arguments.get(2));
             case TechnologyPackage.SERVICE_ASPECT___IS_VALID_SELECTOR_FOR_JOIN_POINT__JOINPOINTTYPE_SERVICEASPECTPOINTCUTSELECTOR:
                 return isValidSelectorForJoinPoint((JoinPointType)arguments.get(0), (ServiceAspectPointcutSelector)arguments.get(1));
             case TechnologyPackage.SERVICE_ASPECT___IS_VALID_SELECTOR_FOR_JOIN_POINT__JOINPOINTTYPE_EXCHANGEPATTERN_COMMUNICATIONTYPE_PROTOCOL_DATAFORMAT:

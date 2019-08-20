@@ -82,6 +82,30 @@ public interface OperationAspect extends TechnologyAspect {
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
      * *
+     * Get parts of the technology aspect for creating a qualified name
+     * <!-- end-model-doc -->
+     * @model unique="false" withTechnologyNameUnique="false" withNamespaceUnique="false"
+     * @generated
+     */
+    EList<String> getQualifiedNameParts(boolean withTechnologyName, boolean withNamespace);
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * *
+     * Build qualified name from qualified name parts
+     * <!-- end-model-doc -->
+     * @model unique="false" separatorUnique="false" withTechnologyNameUnique="false" withNamespaceUnique="false"
+     * @generated
+     */
+    String buildQualifiedName(String separator, boolean withTechnologyName, boolean withNamespace);
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * *
      * Check if the aspect has a matching selector for the given pointcuts and their values.
      * Therefore, all pointcut values of a selector must be equal to the given values, i.e., the
      * matching is based on the logical conjunction of all pointcuts ("AND" semantics) as long as

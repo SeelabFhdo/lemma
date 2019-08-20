@@ -47,7 +47,8 @@
                 "i20190812124942": "MjAxOTA4MTIxMjQ5Mzk",
                 "i20190812125315": "MjAxOTA4MTIxMjUzMTA",
                 "i20190812131022": "MjAxOTA4MTIxMzEwMTk",
-                "i20190812141913": "MjAxOTA4MTIxNDE5MDk"
+                "i20190812141913": "MjAxOTA4MTIxNDE5MDk",
+                "i20190820164026": "MjAxOTA4MjAxNjQwMTM"
             }
         },
         "org.jetbrains.kotlin.stdlib": {
@@ -94,7 +95,8 @@
                 "i20190812124942": "MjAxOTA4MTIxMjQ5Mzk",
                 "i20190812125315": "MjAxOTA4MTIxMjUzMTA",
                 "i20190812131022": "MjAxOTA4MTIxMzEwMTk",
-                "i20190812141913": "MjAxOTA4MTIxNDE5MDk"
+                "i20190812141913": "MjAxOTA4MTIxNDE5MDk",
+                "i20190820164026": "MjAxOTA4MjAxNjQwMTM"
             }
         },
         "org.jetbrains.kotlin.stdlib-common": {
@@ -141,7 +143,8 @@
                 "i20190812124942": "MjAxOTA4MTIxMjQ5Mzk",
                 "i20190812125315": "MjAxOTA4MTIxMjUzMTA",
                 "i20190812131022": "MjAxOTA4MTIxMzEwMTk",
-                "i20190812141913": "MjAxOTA4MTIxNDE5MDk"
+                "i20190812141913": "MjAxOTA4MTIxNDE5MDk",
+                "i20190820164026": "MjAxOTA4MjAxNjQwMTM"
             }
         },
         "org.jetbrains.kotlin.stdlib-jdk7": {
@@ -188,7 +191,8 @@
                 "i20190812124942": "MjAxOTA4MTIxMjQ5Mzk",
                 "i20190812125315": "MjAxOTA4MTIxMjUzMTA",
                 "i20190812131022": "MjAxOTA4MTIxMzEwMTk",
-                "i20190812141913": "MjAxOTA4MTIxNDE5MDk"
+                "i20190812141913": "MjAxOTA4MTIxNDE5MDk",
+                "i20190820164026": "MjAxOTA4MjAxNjQwMTM"
             }
         },
         "org.jetbrains.kotlin.stdlib-jdk8": {
@@ -235,7 +239,8 @@
                 "i20190812124942": "MjAxOTA4MTIxMjQ5Mzk",
                 "i20190812125315": "MjAxOTA4MTIxMjUzMTA",
                 "i20190812131022": "MjAxOTA4MTIxMzEwMTk",
-                "i20190812141913": "MjAxOTA4MTIxNDE5MDk"
+                "i20190812141913": "MjAxOTA4MTIxNDE5MDk",
+                "i20190820164026": "MjAxOTA4MjAxNjQwMTM"
             }
         }
     },
@@ -290,7 +295,8 @@
                 "i20190812124943": "MjAxOTA4MTIxMjQ5Mzk",
                 "i20190812125316": "MjAxOTA4MTIxMjUzMTA",
                 "i20190812131023": "MjAxOTA4MTIxMzEwMTk",
-                "i20190812141915": "MjAxOTA4MTIxNDE5MDk"
+                "i20190812141915": "MjAxOTA4MTIxNDE5MDk",
+                "i20190820164028": "MjAxOTA4MjAxNjQwMTM"
             }
         }
     }

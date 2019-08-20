@@ -634,7 +634,7 @@ public class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
     final Function1<ServiceAspect, IEObjectDescription> _function_1 = (ServiceAspect it) -> {
       IEObjectDescription _xblockexpression = null;
       {
-        final QualifiedName protocolName = QualifiedName.create(it.getQualifiedNameParts());
+        final QualifiedName protocolName = QualifiedName.create(it.getQualifiedNameParts(false, true));
         _xblockexpression = EObjectDescription.create(protocolName, it);
       }
       return _xblockexpression;

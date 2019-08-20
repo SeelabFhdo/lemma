@@ -1290,7 +1290,7 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     final List<ServiceAspect> declaredAspectsForJoinPoint = IterableExtensions.<ServiceAspect>toList(IterableExtensions.<ServiceAspect>filter(((Technology) _get).getServiceAspects(), _function));
     final AbstractCollection<ServiceAspect> scopeAspects = this.filterAspectsForMatching(joinPoint, declaredAspectsForJoinPoint, forExchangePattern, forCommunicationType, forProtocolsAndDataFormats);
     final Function<ServiceAspect, QualifiedName> _function_1 = (ServiceAspect it) -> {
-      return QualifiedName.create(it.getQualifiedNameParts());
+      return QualifiedName.create(it.getQualifiedNameParts(false, true));
     };
     return Scopes.<ServiceAspect>scopeFor(scopeAspects, _function_1, 
       IScope.NULLSCOPE);
