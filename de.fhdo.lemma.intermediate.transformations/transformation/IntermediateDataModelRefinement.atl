@@ -237,9 +237,7 @@ rule RefineIntermediateDataOperationReturnType {
             endif;
     }
     to
-        t : Intermediate!IntermediateDataOperationReturnType(
-            originalType <- s.type
-        )
+        t : Intermediate!IntermediateDataOperationReturnType
     do {
         -- Transform aspects
         if (not mappedDataOperationReturnType.oclIsUndefined())
@@ -254,11 +252,10 @@ rule RefineIntermediateDataOperationReturnType {
             if (not mappedType.oclIsUndefined())
                 t.type <- thisModule.IntermediateImportedTechnologySpecificType(t, 'returnType',
                     mappedType, typeDefinitionTechnology);
-            else if (not t.originalType.oclIsUndefined())
-                if (thisModule.hasDefaultPrimitiveTechnologySpecificType(t.originalType,
-                    typeDefinitionTechnology))
-                    t.type <- thisModule.TechnologySpecificPrimitiveIntermediateType(t.originalType,
-                        typeDefinitionTechnology, typeDefinitionTechnologyImport);
+            else if (thisModule.hasDefaultPrimitiveTechnologySpecificType(s.originalType,
+                        typeDefinitionTechnology))
+                t.type <- thisModule.TechnologySpecificPrimitiveIntermediateType(s.originalType,
+                    typeDefinitionTechnology, typeDefinitionTechnologyImport);
         }
 
         t;
@@ -294,9 +291,7 @@ rule RefineIntermediateDataOperationParameter {
             endif;
     }
     to
-        t : Intermediate!IntermediateDataOperationParameter(
-            originalType <- s.type
-        )
+        t : Intermediate!IntermediateDataOperationParameter
     do {
         -- Transform aspects
         if (not mappedDataOperationParameter.oclIsUndefined())
@@ -311,11 +306,10 @@ rule RefineIntermediateDataOperationParameter {
             if (not mappedType.oclIsUndefined())
                 t.type <- thisModule.IntermediateImportedTechnologySpecificType(t,
                     'parameter', mappedType, typeDefinitionTechnology);
-            else if (not t.originalType.oclIsUndefined())
-                if (thisModule.hasDefaultPrimitiveTechnologySpecificType(t.originalType,
-                    typeDefinitionTechnology))
-                    t.type <- thisModule.TechnologySpecificPrimitiveIntermediateType(t.originalType,
-                        typeDefinitionTechnology, typeDefinitionTechnologyImport);
+            else if (thisModule.hasDefaultPrimitiveTechnologySpecificType(s.originalType,
+                        typeDefinitionTechnology))
+                t.type <- thisModule.TechnologySpecificPrimitiveIntermediateType(s.originalType,
+                    typeDefinitionTechnology, typeDefinitionTechnologyImport);
         }
 
         t;
@@ -350,9 +344,7 @@ rule RefineIntermediateDataField {
             endif;
     }
     to
-        t : Intermediate!IntermediateDataField(
-            originalType <- s.type
-        )
+        t : Intermediate!IntermediateDataField
     do {
         -- Transform aspects
         if (not mappedField.oclIsUndefined())
@@ -367,11 +359,10 @@ rule RefineIntermediateDataField {
             if (not mappedType.oclIsUndefined())
                 t.type <- thisModule.IntermediateImportedTechnologySpecificType(t, 'dataField',
                     mappedType, typeDefinitionTechnology);
-            else if (not t.originalType.oclIsUndefined())
-                if (thisModule.hasDefaultPrimitiveTechnologySpecificType(t.originalType,
-                    typeDefinitionTechnology))
-                    t.type <- thisModule.TechnologySpecificPrimitiveIntermediateType(t.originalType,
-                        typeDefinitionTechnology, typeDefinitionTechnologyImport);
+            else if (thisModule.hasDefaultPrimitiveTechnologySpecificType(s.originalType,
+                        typeDefinitionTechnology))
+                t.type <- thisModule.TechnologySpecificPrimitiveIntermediateType(s.originalType,
+                    typeDefinitionTechnology, typeDefinitionTechnologyImport);
         }
 
         t;
