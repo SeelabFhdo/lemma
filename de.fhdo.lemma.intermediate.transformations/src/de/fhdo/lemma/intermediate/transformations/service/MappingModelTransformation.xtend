@@ -508,12 +508,28 @@ class MappingModelTransformation
             )
 
             val refiningTransformation = new IntermediateDataModelRefinement()
-            return refiningTransformation.doTransformationFromResources(
+            val refiningResult = refiningTransformation.doTransformationFromResources(
                     inputModelResources,
                     outputModelPaths,
                     null,
                     warningCallback
                 ).get(IntermediateDataModelRefinement.IN_MODEL_DESCRIPTION)
+
+            // Remove leftover elements of the refining transformation. This is necessary, because
+            // if we replace types in the refining transformation with their technology-specific
+            // counterparts, the original type instances will remain in the model, but on the
+            // top-level since they do not have containment references anymore. Another option
+            // could be to change the ATL transformation so that it removes the instances itself
+            // (cf. https://wiki.eclipse.org/ATL/EMFTVM#In-place_transformation). However, the
+            // below code is the simplest solution, yet it is the sledgehammer approach. It removes
+            // all elements on the top-level of the resulting model, which are not instances of
+            // IntermediateDataModel.
+            val iter = refiningResult.outputModel.resource.contents.iterator
+            while (iter.hasNext)
+                if (!(iter.next instanceof IntermediateDataModel))
+                    iter.remove();
+
+            return refiningResult
         }
 
         /**
