@@ -488,6 +488,11 @@ Custom, domain-specific Types
         :ref:`version <link__IntermediateVersion>` or
         :ref:`context <link__IntermediateContext>`.
 
+    .. py:attribute:: IntermediateImportedAspect[*] aspects
+
+        The :java:type:`aspects <IntermediateImportedAspect>` that were assigned
+        to the complex type.
+
 .. java:type:: class IntermediateImportedComplexType extends \
     IntermediateComplexType
 
