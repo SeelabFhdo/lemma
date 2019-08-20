@@ -26,8 +26,7 @@ Require-Bundle: de.fhdo.lemma.operationdsl,
  de.fhdo.lemma.servicedsl.ui;bundle-version="0.0.1",
  de.fhdo.lemma.technology.technologydsl;bundle-version="0.0.1",
  de.fhdo.lemma.technology.technologydsl.ide;bundle-version="0.0.1",
- de.fhdo.lemma.technology.technologydsl.ui;bundle-version="0.0.1",
- de.fhdo.lemma.eclipse.ui.editor;bundle-version="0.0.1"
+ de.fhdo.lemma.technology.technologydsl.ui;bundle-version="0.0.1"
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: de.fhdo.lemma.operationdsl.ui.quickfix,

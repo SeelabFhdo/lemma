@@ -8,12 +8,12 @@ import org.eclipse.xtext.ui.editor.syntaxcoloring.IHighlightingConfiguration
 import org.eclipse.xtext.ide.editor.syntaxcoloring.ISemanticHighlightingCalculator
 import de.fhdo.lemma.operationdsl.ui.highlighting.HighlightingCalculator
 import de.fhdo.lemma.operationdsl.ui.highlighting.HighlightingConfiguration
-import org.eclipse.xtext.ui.editor.XtextEditor
+/*import org.eclipse.xtext.ui.editor.XtextEditor
 import de.fhdo.lemma.eclipse.ui.editor.LiveValidationCapableXtextEditor
 import org.eclipse.xtext.ui.editor.model.XtextDocumentProvider
 import de.fhdo.lemma.eclipse.ui.editor.LiveValidationXtextDocumentProvider
 import org.eclipse.xtext.service.SingletonBinding
-import de.fhdo.lemma.eclipse.ui.editor.server.ServerConnection
+import de.fhdo.lemma.eclipse.ui.editor.server.ServerConnection*/
 
 /**
  * Use this class to register components to be used within the Eclipse IDE.
@@ -22,7 +22,7 @@ import de.fhdo.lemma.eclipse.ui.editor.server.ServerConnection
  */
 @FinalFieldsConstructor
 class OperationDslUiModule extends AbstractOperationDslUiModule {
-    def Class<? extends XtextEditor> bindXtextEditor() {
+    /*def Class<? extends XtextEditor> bindXtextEditor() {
         LiveValidationCapableXtextEditor
     }
 
@@ -33,7 +33,7 @@ class OperationDslUiModule extends AbstractOperationDslUiModule {
     @SingletonBinding(eager=true)
     def ServerConnection bindServerConnection() {
         return ServerConnection.instance
-    }
+    }*/
 
     def Class<? extends IHighlightingConfiguration> bindIHighlightingConfiguration() {
         HighlightingConfiguration
