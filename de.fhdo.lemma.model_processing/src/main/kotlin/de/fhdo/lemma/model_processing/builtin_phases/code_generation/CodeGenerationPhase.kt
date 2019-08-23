@@ -12,6 +12,7 @@ import de.fhdo.lemma.model_processing.phases.AbstractModelProcessingPhase
 import de.fhdo.lemma.model_processing.builtin_phases.intermediate_model_validation.IntermediateModelValidationPhase
 import de.fhdo.lemma.model_processing.command_line.BasicCommandLine
 import de.fhdo.lemma.model_processing.command_line.BasicOption
+import de.fhdo.lemma.model_processing.command_line.parseCommandLine
 import de.fhdo.lemma.model_processing.extendsImplementsOrException
 import de.fhdo.lemma.model_processing.isChildPathOf
 import de.fhdo.lemma.model_processing.languages.registerLanguages
@@ -56,18 +57,26 @@ internal class CodeGenerationPhase : AbstractModelProcessingPhase() {
      * Execute the phase
      */
     override fun process(args: Array<String>) {
-        /* Parse commandline */
-        try {
-            PhaseCommandLine(args)
-        } catch (ex: Exception) {
-            throw PhaseException(ex.message)
-        }
-
         /* Get code generation properties from provider, if any */
         val propertyProvider = findCodeGenerationPropertyProvider(processorImplementationPackage)
         val codeGenerationProperties = propertyProvider?.getProperties() ?: emptyMap()
 
-        // Only print properties if requested by user
+        /* Find and initialize code generation modules */
+        val (modules, dependencyRelationships) = findAndInitCodeGenerationModules(processorImplementationPackage,
+            codeGenerationProperties)
+        if (modules.isEmpty())
+            throw PhaseException("No code generation modules were found on the classpath")
+        val loadedModuleNames = modules.keys.toList()
+
+        /* Parse commandline */
+        val (phaseArguments, modulesArguments) = parseCommandLine(args, loadedModuleNames)
+        try {
+            PhaseCommandLine(phaseArguments)
+        } catch (ex: Exception) {
+            throw PhaseException(ex.message)
+        }
+
+        /* Only print properties if requested by user */
         if (PhaseCommandLine.printProperties) {
             if (codeGenerationProperties.isNotEmpty())
                 codeGenerationProperties.forEach { println("${it.key}: ${it.value}") }
@@ -77,21 +86,6 @@ internal class CodeGenerationPhase : AbstractModelProcessingPhase() {
             return
         }
 
-        /* Find and initialize code generation modules */
-        val (modules, dependencyRelationships) = findAndInitCodeGenerationModules(processorImplementationPackage,
-            codeGenerationProperties)
-        if (modules.isEmpty())
-            throw PhaseException("No code generation modules were found on the classpath")
-        val loadedModuleNames = modules.keys
-
-        // If the user requested to only execute specific modules, check that they all could be found on the classpath
-        if (PhaseCommandLine.modules != null) {
-            val nonExistingModules = PhaseCommandLine.modules!!.toList() - loadedModuleNames
-            if (nonExistingModules.isNotEmpty())
-                printlnWarning("The following specified code generation modules could not be found: " +
-                    "${nonExistingModules.joinToString()}")
-        }
-
         // Only print names of generation modules if requested by user
         if (PhaseCommandLine.printModules) {
             loadedModuleNames.forEach { println(it) }
@@ -99,11 +93,30 @@ internal class CodeGenerationPhase : AbstractModelProcessingPhase() {
         }
 
         /* Calculate module execution plan that considers possible module dependencies */
-        val executionPlan = calculateExecutionPlan(modules, dependencyRelationships)
+        val modulesToExecute = if (PhaseCommandLine.invokeOnlySpecifiedModules)
+                modules.filter { it.key in modulesArguments.keys }
+            else
+                modules
+
+        if (modulesToExecute.isEmpty())
+            throw PhaseException("No modules found to execute. Probably the " +
+                "${PhaseCommandLine.INVOKE_ONLY_SPECIFIED_MODULES} option was specified without a module.")
+        else {
+            val missingDependency = dependencyRelationships.keys.find { it !in modulesToExecute.keys }
+            if (missingDependency != null)
+                throw PhaseException("Some code generation modules depend on module \"$missingDependency\", which " +
+                    "was not found on the classpath. Probably it was excluded with the " +
+                    "${PhaseCommandLine.INVOKE_ONLY_SPECIFIED_MODULES} option.")
+        }
+
+        val executionPlan = calculateExecutionPlan(modulesToExecute, dependencyRelationships)
 
         /* Execute code generation modules */
         val generatedFiles = mutableMapOf<String, Pair<String, Charset>>()
-        executionPlan.forEach { generatedFiles.putAll(it.execute(args)) }
+        executionPlan.forEach {
+            val moduleArguments = modulesArguments[it.name]?.toTypedArray() ?: emptyArray()
+            generatedFiles.putAll(it.execute(phaseArguments.toTypedArray(), moduleArguments))
+        }
 
         if (generatedFiles.isEmpty()) {
             println("No files were generated by the code generation modules")
@@ -200,8 +213,8 @@ private fun findAndInitCodeGenerationModules(processorPackage: String,
 
         // Create and initialize module instance
         val dependsOnModule = annotationInfo.parameterValues["dependsOn"] as String
-        val moduleInstance = initCodeGenerationModuleInstanceIfSelected(classInfo, moduleName, dependsOnModule,
-             codeGenerationProperties) ?: continue
+        val moduleInstance = initCodeGenerationModuleInstance(classInfo, moduleName, dependsOnModule,
+             codeGenerationProperties)
         loadedModules += moduleName to moduleInstance
 
         // Add module to the map of dependency relationships, which assigns the list of dependent modules (values) to
@@ -213,15 +226,6 @@ private fun findAndInitCodeGenerationModules(processorPackage: String,
             )?.add(moduleName)
     }
 
-    // Check for missing dependencies. A missing dependency is a module from which other modules depend and which was
-    // not found on the classpath, possibly the user filtered it out when invoking the model processor.
-    val missingDependency = dependencyRelationships.keys.find { it !in loadedModules.keys }
-    if (missingDependency != null)
-        throw PhaseException("Some code generation modules depend on module \"$missingDependency\", which " +
-            "was not found on the classpath. Was it excluded with one of the " +
-            "${PhaseCommandLine.MODULE_SELECTION_SHORT_OPTION_NAME} or " +
-            "${PhaseCommandLine.MODULE_SELECTION_LONG_OPTION_NAME} options?")
-
     return loadedModules to dependencyRelationships
 }
 
@@ -230,13 +234,8 @@ private fun findAndInitCodeGenerationModules(processorPackage: String,
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-private fun initCodeGenerationModuleInstanceIfSelected(classInfo: ClassInfo, moduleName: String, dependsOn: String,
-    codeGenerationProperties: Map<String, String>) : AbstractCodeGenerationModule? {
-    // Determine if module shall be considered ("selected") depending on user input
-    val isModuleSelected = PhaseCommandLine.modules == null || PhaseCommandLine.modules!!.contains(moduleName)
-    if (!isModuleSelected)
-        return null
-
+private fun initCodeGenerationModuleInstance(classInfo: ClassInfo, moduleName: String, dependsOn: String,
+    codeGenerationProperties: Map<String, String>) : AbstractCodeGenerationModule {
     // Create instance
     val moduleInstance = classInfo.loadClass(AbstractCodeGenerationModule::class.java)
         .getDeclaredConstructor()
@@ -253,7 +252,7 @@ private fun initCodeGenerationModuleInstanceIfSelected(classInfo: ClassInfo, mod
 
     // Initialize module instance
     moduleInstance.initialize(moduleName, dependsOn, codeGenerationProperties, BasicCommandLine.intermediateModelFile!!,
-        intermediateModelResource, relevantModelElements, modelElementQuery)
+        BasicCommandLine.targetFolder!!, intermediateModelResource, relevantModelElements, modelElementQuery)
     return moduleInstance
 }
 

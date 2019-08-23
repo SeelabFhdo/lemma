@@ -11,6 +11,8 @@ import de.fhdo.lemma.model_processing.phases.loadExplicitlyInvokedProcessingPhas
 import de.fhdo.lemma.model_processing.phases.loadProcessingPhases
 import de.fhdo.lemma.model_processing.phases.validate
 import org.fusesource.jansi.AnsiConsole
+import picocli.CommandLine
+import kotlin.system.exitProcess
 
 val MODEL_PROCESSING_PACKAGE: String = object{}.javaClass.packageName
 
@@ -42,7 +44,13 @@ abstract class AbstractModelProcessor(private val processorImplementationPackage
         val allPhaseIds = mutableListOf(*explicitlyInvokedPhaseIds.toTypedArray())
         allPhaseIds.addAll(loadedPhases.map { it.id })
         val (basicParameters, phaseParameters) = parseCommandLine(args, allPhaseIds)
-        BasicCommandLine(basicParameters)
+
+        try {
+            BasicCommandLine(basicParameters)
+        } catch (ex: CommandLine.ParameterException) {
+            printlnError(ex.message!!)
+            processingFinished(4)
+        }
 
         /* Initialize language descriptions singleton so that the phases can make use of it */
         LanguageDescriptions.initialize(processorImplementationPackage)
@@ -72,14 +80,14 @@ abstract class AbstractModelProcessor(private val processorImplementationPackage
      */
     protected fun processingFinished(returnCode: Int) {
         AnsiConsole.systemUninstall()
-        System.exit(returnCode)
+        exitProcess(returnCode)
     }
 
     /**
      * Helper to execute a set of model processing phases with phase-specific parameters, if any
      */
     private fun executePhases(phasesToExecute: Set<AbstractModelProcessingPhase>,
-                              phaseParameters: Map<String, List<String>>) {
+        phaseParameters: Map<String, List<String>>) {
         var blockingPhaseExecuted = false
         phasesToExecute.forEach {
             executePhase(it, phaseParameters[it.id])

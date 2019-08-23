@@ -22,6 +22,8 @@ abstract class AbstractCodeGenerationModule {
         private set
     lateinit var intermediateModelFile: String
         private set
+    lateinit var targetFolder: String
+        private set
     lateinit var intermediateModelResource: Resource
         private set
     var relevantModelElements: List<EObject>? = null
@@ -35,11 +37,18 @@ abstract class AbstractCodeGenerationModule {
     abstract fun getLanguageDescription() : LanguageDescription
 
     /**
-     * Implementation of the actual code generation. The arguments of the [CodeGenerationPhase] invocation will be
-     * passed to the implementation, which is expected to return a map consisting of the target path of a generated
-     * file, and its content and charset.
+     * Flag to indicate if this module accepts its own module-specific arguments
      */
-    abstract fun execute(args: Array<String>) : Map<String, Pair<String, Charset>>
+    protected fun acceptsModuleSpecificArguments() = false
+
+    /**
+     * Implementation of the actual code generation. The arguments of the [CodeGenerationPhase] invocation will be
+     * passed within the [phaseArguments]. If the module accepts its own specific arguments, these will be passed within
+     * the [moduleArguments]. The code generation implementation is expected to return a map consisting of the target
+     * path of a generated file, and its content and charset.
+     */
+    abstract fun execute(phaseArguments: Array<String>, moduleArguments: Array<String>)
+        : Map<String, Pair<String, Charset>>
 
     /**
      * Helper to convert a map of generated files (key: path, value: content) to a map that assigns a common charset to
@@ -57,8 +66,8 @@ abstract class AbstractCodeGenerationModule {
      * Initializes the module. Gets invoked by [CodeGenerationPhase].
      */
     internal fun initialize(name: String, dependsOn: String, properties: Map<String, String>,
-        intermediateModelFile: String, intermediateModelResource: Resource, relevantModelElements: List<EObject>?,
-        modelElementQuery: String?) {
+        intermediateModelFile: String, targetFolder: String, intermediateModelResource: Resource,
+        relevantModelElements: List<EObject>?, modelElementQuery: String?) {
         if (initialized)
             throw IllegalStateException("Module was already initialized")
 
@@ -66,6 +75,7 @@ abstract class AbstractCodeGenerationModule {
         this.dependsOn = dependsOn
         this.properties = properties
         this.intermediateModelFile = intermediateModelFile
+        this.targetFolder = targetFolder
         this.intermediateModelResource = intermediateModelResource
         this.relevantModelElements = relevantModelElements
         this.modelElementQuery = modelElementQuery

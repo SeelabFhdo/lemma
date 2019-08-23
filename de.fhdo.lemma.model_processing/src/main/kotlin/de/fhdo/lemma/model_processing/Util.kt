@@ -54,9 +54,9 @@ internal fun <E> List<E>.subList(fromIndex: Int) = subList(fromIndex, size)
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-internal fun String.asFile() = File(this)
+fun String.asFile() = File(this)
 
-internal fun String.asXmiResource() : Resource {
+fun String.asXmiResource() : Resource {
     val file = this.asFile()
     if (!file.exists())
         throw IllegalArgumentException("String \"$this\" does not represent a file")

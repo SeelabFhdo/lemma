@@ -11,8 +11,7 @@ import picocli.CommandLine.Model.CommandSpec
 internal object PhaseCommandLine {
     const val ALLOW_CODE_GENERATION_OUTSIDE_TARGET_FOLDER_OPTION_NAME = "--allow_code_generation_outside_target_folder"
     const val PRESERVE_EXISTING_FILES_OPTION_NAME = "--preserve_existing_files"
-    const val MODULE_SELECTION_SHORT_OPTION_NAME = "-m"
-    const val MODULE_SELECTION_LONG_OPTION_NAME = "--modules"
+    const val INVOKE_ONLY_SPECIFIED_MODULES = "--invoke_only_specified_modules"
 
     @CommandLine.Spec
     private lateinit var commandSpec: CommandSpec
@@ -45,20 +44,19 @@ internal object PhaseCommandLine {
     )
     var preserveExistingFiles: Boolean = false
 
-    // Invoke selected modules commandline option
+    // Invoke specified modules commandline option
     @CommandLine.Option(
-        names = [MODULE_SELECTION_SHORT_OPTION_NAME, MODULE_SELECTION_LONG_OPTION_NAME],
-        description = ["only invoke specified code generation modules"],
-        arity = "*"
+        names = [INVOKE_ONLY_SPECIFIED_MODULES],
+        description = ["invoke only those modules that were explicitly specified as phase parameters"]
     )
-    var modules: Array<String>? = null
+    var invokeOnlySpecifiedModules: Boolean = false
 
     /**
      * Invoke the singleton instance to parse the commandline arguments
      */
-    internal operator fun invoke(args: Array<String>) {
+    internal operator fun invoke(args: List<String>) {
         CommandLine(this)
             .setOverwrittenOptionsAllowed(true)
-            .parse(*args)
+            .parse(*args.toTypedArray())
     }
 }

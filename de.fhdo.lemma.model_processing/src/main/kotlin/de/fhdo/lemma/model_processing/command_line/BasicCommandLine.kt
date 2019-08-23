@@ -25,7 +25,7 @@ enum class BasicOption(val names: List<String>) {
 }
 
 /**
- * Object to represent the
+ * Object to represent the basic commandline
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
