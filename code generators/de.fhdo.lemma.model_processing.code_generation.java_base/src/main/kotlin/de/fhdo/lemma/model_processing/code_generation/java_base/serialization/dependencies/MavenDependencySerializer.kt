@@ -11,6 +11,7 @@ import org.koin.core.KoinComponent
 import org.redundent.kotlin.xml.Node
 import org.redundent.kotlin.xml.PrintOptions
 import org.redundent.kotlin.xml.XmlVersion
+import org.redundent.kotlin.xml.node
 import org.redundent.kotlin.xml.xml
 import java.io.File
 import java.util.regex.Pattern
@@ -56,20 +57,11 @@ private class MavenDependencySerializerBase : KoinComponent {
         val (group, artifact, version) = DependencyDescription.fromString(artifactIdentifier)
         val root = createRoot()
         root merge projectIdentifier(group, artifact, if (version !== null) version else DEFAULT_VERSION)
+
+        if (dependencyDescriptions.isNotEmpty())
+            root.addNode(dependencies(dependencyDescriptions))
+
         return root
-    }
-
-    fun serialize(model : Node, targetFolderPath : String, targetFilePath : String) : Pair<String, String> {
-        val targetFilePath = "$targetFolderPath${File.separator}$targetFilePath"
-        val generatedContent = model.toString(PrintOptions(singleLineTextElements = true))
-        return targetFilePath to generatedContent
-    }
-
-    fun fragmentProviderClass() = MavenDependencyFragmentProviderI::class.java
-
-    fun addFragment(model : Node, fragment : Node) : Node {
-        model merge fragment
-        return model
     }
 
     private fun createRoot() =
@@ -91,6 +83,28 @@ private class MavenDependencySerializerBase : KoinComponent {
             "artifactId" { -artifact.toMavenArtifactId() }
             "version" { -if (version !== DEFAULT_VERSION) version.toMavenVersionId() else version }
         }
+
+    private fun dependencies(dependencyDescriptions : Set<DependencyDescription>) : Node {
+        val dependencyRoot = node("dependencies")
+        dependencyDescriptions.forEach {
+            dependencyRoot.addNode(dependency(it))
+        }
+        return dependencyRoot
+    }
+
+    private fun dependency(dependencyDescription: DependencyDescription) : Node {
+        val dependencyNode = node("dependency") {
+            "groupId" { -dependencyDescription.group }
+            "artifactId" { -dependencyDescription.artifact }
+        }
+
+        if (dependencyDescription.version !== null)
+            dependencyNode.addNode(
+                node("version") { dependencyDescription.version }
+            )
+
+        return dependencyNode
+    }
 
     private fun String.toMavenArtifactId() : String {
         var artifactId = ""
@@ -122,6 +136,19 @@ private class MavenDependencySerializerBase : KoinComponent {
             }
         }
         return versionId
+    }
+
+    fun serialize(model : Node, targetFolderPath : String, targetFilePath : String) : Pair<String, String> {
+        val targetFilePath = "$targetFolderPath${File.separator}$targetFilePath"
+        val generatedContent = model.toString(PrintOptions(singleLineTextElements = true))
+        return targetFilePath to generatedContent
+    }
+
+    fun fragmentProviderClass() = MavenDependencyFragmentProviderI::class.java
+
+    fun addFragment(model : Node, fragment : Node) : Node {
+        model merge fragment
+        return model
     }
 }
 

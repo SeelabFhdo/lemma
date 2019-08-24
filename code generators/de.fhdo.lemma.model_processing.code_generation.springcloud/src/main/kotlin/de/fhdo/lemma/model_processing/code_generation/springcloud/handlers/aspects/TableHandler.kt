@@ -1,4 +1,4 @@
-package de.fhdo.lemma.model_processing.code_generation.java_base.modules.common.aspects.handlers
+package de.fhdo.lemma.model_processing.code_generation.springcloud.handlers.aspects
 
 import com.github.javaparser.ast.Node
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration
@@ -31,8 +31,7 @@ class TableHandler : AspectHandlerI {
             tableAnnotation.addPair("name", tableName)
         generatedClass.addImport("javax.persistence.Table")
 
-        // DEBUG
-        generatedClass.addDependency("org.example:GreatPackage:0.0.1-SNAPSHOT")
+        generatedClass.addDependency("org.springframework.boot:spring-boot-starter-data-jpa")
 
         return node
     }

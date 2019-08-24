@@ -71,14 +71,34 @@ internal fun newJavaClass(packageName: String, classname: String) : ClassOrInter
 }
 
 /**
+ * Get the name of a [CompilationUnit] instance's package declaration.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+internal fun CompilationUnit.packageName() = packageDeclaration.get().name.asString()
+
+/**
+ * Get the name of a [ClassOrInterfaceDeclaration] instance's package declaration. This assumes that the instance is
+ * bundled within a [CompilationUnit].
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+internal fun ClassOrInterfaceDeclaration.packageName() = (parentNode.get() as CompilationUnit).packageName()
+
+/**
  * Add an import statement to the Java class represented by a [ClassOrInterfaceDeclaration] instance. The import will
  * not be added, if it already exists. This function should only be invoked on [ClassOrInterfaceDeclaration] instances
  * created via [newJavaClass].
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-internal fun ClassOrInterfaceDeclaration.addImport(import: String) {
+fun ClassOrInterfaceDeclaration.addImport(import: String, onlyAddIfDifferentPackage: Boolean = true) {
     val compilationUnit = parentNode.get() as CompilationUnit
+    if (onlyAddIfDifferentPackage) {
+        val importPackage = import.substringBeforeLast(".")
+        if (packageName() == importPackage)
+            return
+    }
     val existingImports = compilationUnit.imports.map { name.asString() }
     if (import !in existingImports)
         compilationUnit.addImport(import)
@@ -91,7 +111,7 @@ internal fun ClassOrInterfaceDeclaration.addImport(import: String) {
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-internal fun ClassOrInterfaceDeclaration.addImports(imports: Set<String>) = imports.forEach { addImport(it) }
+fun ClassOrInterfaceDeclaration.addImports(imports: Set<String>) = imports.forEach { addImport(it) }
 
 /**
  * Add an attribute to the Java class represented by a [ClassOrInterfaceDeclaration] instance. The created attribute is

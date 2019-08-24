@@ -146,7 +146,7 @@ private fun String.inferDefaultGenletClassname() : String {
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 internal fun Genlet.findAspectHandlers(classLoader: ClassLoader)
-        = baseFindAspectHandlers(nameOfAspectHandlerPackage(), classLoader)
+    = baseFindAspectHandlers(nameOfAspectHandlerPackage(), classLoader)
 
 /**
  * Convenience function to find code generation handlers in the context of a given [Genlet].

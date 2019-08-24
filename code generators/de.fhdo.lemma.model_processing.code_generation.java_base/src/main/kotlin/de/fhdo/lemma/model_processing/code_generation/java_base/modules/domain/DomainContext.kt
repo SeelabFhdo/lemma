@@ -70,8 +70,8 @@ internal object DomainContext {
          * domain-specific sub-folder, currently called "domain".
          */
         private fun currentDomainTargetFolderPath() : String {
-            val currentMicroserviceTargetFolderPath: String by MainState
-            return "$currentMicroserviceTargetFolderPath${File.separator}$DOMAIN_SUBFOLDER_NAME"
+            val currentMicroserviceTargetFolderPathForJavaFiles: String by MainState
+            return "$currentMicroserviceTargetFolderPathForJavaFiles${File.separator}$DOMAIN_SUBFOLDER_NAME"
         }
 
         /**
