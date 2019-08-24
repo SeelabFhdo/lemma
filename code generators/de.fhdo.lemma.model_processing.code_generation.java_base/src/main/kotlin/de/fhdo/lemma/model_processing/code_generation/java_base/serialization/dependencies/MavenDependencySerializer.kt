@@ -3,20 +3,21 @@ package de.fhdo.lemma.model_processing.code_generation.java_base.serialization.d
 import de.fhdo.lemma.model_processing.code_generation.java_base.dependencies.DependencyDescription
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.DependencyFragmentProviderI
 import de.fhdo.lemma.model_processing.code_generation.java_base.dependencies.DependencyType
-import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.configuration.AbstractSerializationConfiguration
+import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.LineCountInfo
+import de.fhdo.lemma.model_processing.code_generation.java_base.modules.MainContext.State as MainState
 import de.fhdo.lemma.model_processing.utils.countLines
 import de.fhdo.lemma.model_processing.utils.isNumeric
 import org.koin.core.KoinComponent
-import org.koin.core.inject
 import org.redundent.kotlin.xml.Node
 import org.redundent.kotlin.xml.PrintOptions
 import org.redundent.kotlin.xml.XmlVersion
 import org.redundent.kotlin.xml.xml
+import java.io.File
 import java.util.regex.Pattern
 
 internal class MavenDependencySerializer(override val dependencyType: DependencyType = DependencyType.MAVEN)
     : DependencySerializerI<Node, Node> {
-    private val delegate: MavenDependencySerializerHelper = MavenDependencySerializerHelper()
+    private val delegate: MavenDependencySerializerBase = MavenDependencySerializerBase()
 
     override fun buildModel(artifactIdentifier: String, dependencyDescriptions: Set<DependencyDescription>)
         = delegate.buildModel(artifactIdentifier, dependencyDescriptions)
@@ -31,23 +32,15 @@ internal class MavenDependencySerializer(override val dependencyType: Dependency
 
 internal class CountingMavenDependencySerializer(override val dependencyType: DependencyType = DependencyType.MAVEN)
     : DependencySerializerI<Node, Node> {
-    private val delegate: MavenDependencySerializerHelper = MavenDependencySerializerHelper()
+    private val delegate: MavenDependencySerializerBase = MavenDependencySerializerBase()
 
     override fun buildModel(artifactIdentifier: String, dependencyDescriptions: Set<DependencyDescription>)
         = delegate.buildModel(artifactIdentifier, dependencyDescriptions)
 
-    override fun serialize(model: Node, targetFolderPath: String, targetFilePath: String) : String {
-        val serializationResult = delegate.serialize(model, targetFolderPath, targetFilePath)
-
-        val lineCount = serializationResult.countLines()
-        println(
-            """
-                Generated line count: $lineCount
-                Target file: $targetFolderPath/$targetFilePath
-            """.trimIndent()
-        )
-
-        return serializationResult
+    override fun serialize(model: Node, targetFolderPath: String, targetFilePath: String) : Pair<String, String> {
+        val (targetFilePath, generatedContent) = delegate.serialize(model, targetFolderPath, targetFilePath)
+        MainState.addGeneratedLineCountInfo(LineCountInfo(targetFilePath, generatedContent.countLines()))
+        return targetFilePath to generatedContent
     }
 
     override fun fragmentProviderClass() = delegate.fragmentProviderClass()
@@ -55,11 +48,9 @@ internal class CountingMavenDependencySerializer(override val dependencyType: De
     override fun addFragment(model : Node, fragment : Node) = delegate.addFragment(model, fragment)
 }
 
-private class MavenDependencySerializerHelper : KoinComponent {
+private class MavenDependencySerializerBase : KoinComponent {
     private val DEFAULT_VERSION = "0.0.1-SNAPSHOT"
     private val VERSION_PATTERN = Pattern.compile(".*v(?<version>((\\p{Alnum}+_)+\\p{Alnum}+)|\\p{Alnum}+)")
-
-    private val serializationConfiguration: AbstractSerializationConfiguration by inject()
 
     fun buildModel(artifactIdentifier : String, dependencyDescriptions : Set<DependencyDescription>) : Node {
         val (group, artifact, version) = DependencyDescription.fromString(artifactIdentifier)
@@ -68,8 +59,11 @@ private class MavenDependencySerializerHelper : KoinComponent {
         return root
     }
 
-    fun serialize(model : Node, targetFolderPath : String, targetFilePath : String)
-        = model.toString(PrintOptions(singleLineTextElements = true))
+    fun serialize(model : Node, targetFolderPath : String, targetFilePath : String) : Pair<String, String> {
+        val targetFilePath = "$targetFolderPath${File.separator}$targetFilePath"
+        val generatedContent = model.toString(PrintOptions(singleLineTextElements = true))
+        return targetFilePath to generatedContent
+    }
 
     fun fragmentProviderClass() = MavenDependencyFragmentProviderI::class.java
 

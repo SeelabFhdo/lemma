@@ -9,7 +9,9 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.languages.INTERM
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.MainContext.State as MainState
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.domain.DomainCodeGenerationSubModule
 import de.fhdo.lemma.model_processing.code_generation.java_base.packageName
+import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.LineCountInfo
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.dependencies.DependencySerializerI
+import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.serializeLineCountInfo
 import de.fhdo.lemma.model_processing.code_generation.java_base.simpleName
 import de.fhdo.lemma.model_processing.phases.PhaseException
 import de.fhdo.lemma.model_processing.utils.asXmiResource
@@ -17,6 +19,7 @@ import de.fhdo.lemma.service.intermediate.IntermediateMicroservice
 import de.fhdo.lemma.service.intermediate.IntermediateServiceModel
 import org.koin.core.KoinComponent
 import org.koin.core.inject
+import java.io.File
 import java.nio.charset.Charset
 
 /**
@@ -65,9 +68,9 @@ internal class MainModule : AbstractCodeGenerationModule(), KoinComponent {
         MainState.initialize(intermediateServiceModelResource, intermediateModelResource, targetFolder)
 
         /*
-        * Generate domain concepts per microservice from the determined service model, as well as the service
-        * themselves
-        */
+         * Generate domain concepts per microservice from the determined service model, as well as the services
+         * themselves
+         */
         val intermediateServiceModel: IntermediateServiceModel by MainState
         intermediateServiceModel.microservices.forEach {
             MainState.currentMicroservicePackage = it.packageName
@@ -81,6 +84,18 @@ internal class MainModule : AbstractCodeGenerationModule(), KoinComponent {
             serializeDependencies(it)
         }
 
+        /* Serialize line count information if it were collected during the code generation run */
+        val generatedLineCountInfo: List<LineCountInfo> by MainState
+        if (generatedLineCountInfo.isNotEmpty())
+            MainState.addGeneratedFileContent(
+                serializeLineCountInfo(generatedLineCountInfo),
+                "$targetFolder${File.separator}_LineCountInfo.csv"
+            )
+
+        /*
+         * Return the map of generated file contents and their charsets per path for the model processor framework to
+         * write the files to disk
+         */
         val generatedFileContents: Map<String, Pair<String, Charset>> by MainState
         return generatedFileContents
     }
@@ -93,14 +108,14 @@ internal class MainModule : AbstractCodeGenerationModule(), KoinComponent {
         val dependencyFragmentProviderInstances: List<DependencyFragmentProviderI<Any, Any>> by MainState
         val currentMicroserviceTargetFolderPath: String by MainState
 
-        val serializationResult = dependencySerializer.invoke(
+        val (targetFilePath, generatedContent) = dependencySerializer.invoke(
             microservice.artifactIdentifier(),
             collectedDependencies,
             dependencyFragmentProviderInstances,
             currentMicroserviceTargetFolderPath,
             "pom.xml"
         )
-        MainState.addGeneratedFileContent(serializationResult, currentMicroserviceTargetFolderPath, "pom.xml")
+        MainState.addGeneratedFileContent(generatedContent, targetFilePath)
 
         MainState.clearCollectedDependencies()
     }

@@ -16,5 +16,5 @@ internal interface CodeGenerationSerializerI {
         intermediateEObject: EObject,
         intermediateModelFilePath: String,
         originalModelFilePath: String
-    ) : String
+    ) : Pair<String, String>
 }

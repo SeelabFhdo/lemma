@@ -14,6 +14,7 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.findDepe
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.loadGenlets
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.buildAspectHandlerQualifiedName
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.findAspectHandlers
+import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.LineCountInfo
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.configuration.AbstractSerializationConfiguration
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.dependencies.DependencySerializerI
 import de.fhdo.lemma.model_processing.utils.mainInterface
@@ -48,6 +49,7 @@ internal object MainContext {
         private val dependencyFragmentProviders
             = mutableMapOf<Genlet, List<Class<DependencyFragmentProviderI<Any, Any>>>>()
         private val generatedFileContents = mutableMapOf<String, Pair<String, Charset>>()
+        private val generatedLineCountInfo = mutableListOf<LineCountInfo>()
 
         private lateinit var intermediateServiceModel: IntermediateServiceModel
         private lateinit var intermediateServiceModelForDomainModels: IntermediateServiceModel
@@ -105,6 +107,7 @@ internal object MainContext {
                 "genlets" -> genlets.keys
                 "intermediateServiceModel" -> intermediateServiceModel
                 "intermediateServiceModelForDomainModels" -> intermediateServiceModelForDomainModels
+                "generatedLineCountInfo" -> generatedLineCountInfo.toList()
                 else -> throw IllegalArgumentException("Main state does not comprise property ${property.name}")
             }
 
@@ -139,13 +142,18 @@ internal object MainContext {
         fun clearCollectedDependencies() = collectedDependencies.clear()
 
         /**
-         * Add content of a generated to the set of collected file contents. Note that the eventual writing of the
-         * collected files happens by the model processor framework, which expects a map that assigns file contents and
-         * charsets to file paths for that purpose.
+         * Add content of a generated file to the set of collected generated file contents
          */
-        fun addGeneratedFileContent(content: String, targetFolderPath: String, targetFilePath: String) {
-            val fullFilePath = "$targetFolderPath${File.separator}$targetFilePath"
-            generatedFileContents[fullFilePath] = content to serializationConfiguration.charset
+        fun addGeneratedFileContent(content: String, targetFilePath: String) {
+            generatedFileContents[targetFilePath] = content to serializationConfiguration.charset
+        }
+
+        /**
+         * Add a [LineCountInfo] object to the set of line count information generated during the current code
+         * generation run
+         */
+        fun addGeneratedLineCountInfo(lineCountInfo: LineCountInfo) {
+            generatedLineCountInfo.add(lineCountInfo)
         }
     }
 

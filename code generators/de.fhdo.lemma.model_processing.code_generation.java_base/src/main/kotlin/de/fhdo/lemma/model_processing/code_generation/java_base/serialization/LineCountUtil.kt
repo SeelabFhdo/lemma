@@ -1,4 +1,4 @@
-package de.fhdo.lemma.model_processing.code_generation.java_base.serialization.code_generation
+package de.fhdo.lemma.model_processing.code_generation.java_base.serialization
 
 import de.fhdo.lemma.data.ComplexType
 import de.fhdo.lemma.data.DataModel
@@ -12,8 +12,11 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.qualifiedName
 import de.fhdo.lemma.model_processing.languages.registerLanguage
 import de.fhdo.lemma.model_processing.loadXtextResource
 import de.fhdo.lemma.model_processing.utils.countLines
+import de.fhdo.lemma.model_processing.utils.mainInterface
+import de.fhdo.lemma.model_processing.utils.trimToSingleLine
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils
+import java.io.File
 import java.lang.IllegalArgumentException
 
 /**
@@ -23,18 +26,25 @@ import java.lang.IllegalArgumentException
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-internal fun countLines(serializationResult: String, intermediateEObject: EObject, originalModelFilePath: String)
-    : LineCountInfo {
-    /* Count lines of serialization result */
-    val serializationResultLineCount = serializationResult.countLines()
+internal fun countLines(serializationResult: Pair<String, String>, intermediateEObject: EObject,
+    originalModelFilePath: String) : LineCountInfo {
+    /* Count lines of generated code */
+    val (targetFilePath, generatedCode) = serializationResult
+    val generatedCodeLineCount = generatedCode.countLines()
 
     /* Count lines and determine additional information of original EObject */
     val originalEObject = intermediateEObject.loadOriginalEObject(originalModelFilePath)
     val originalEObjectParserNode = NodeModelUtils.getNode(originalEObject)
     val originalEObjectLineCount = originalEObjectParserNode.text.countLines()
-    val originalEObjectAdditionalInfo = originalEObject.deriveAdditionalLineCountInfo()
+    val originalEObjectAdditionalInfo = originalEObject.deriveAdditionalLineCountInfo(originalModelFilePath)
+    originalEObjectAdditionalInfo[ORIGINAL_EOBJECT_TYPE_INFO_FIELD] = originalEObject.mainInterface.simpleName
 
-    return LineCountInfo(serializationResultLineCount, originalEObjectLineCount, originalEObjectAdditionalInfo)
+    return LineCountInfo(
+        targetFilePath,
+        generatedCodeLineCount,
+        originalEObjectLineCount,
+        originalEObjectAdditionalInfo
+    )
 }
 
 /**
@@ -44,8 +54,8 @@ internal fun countLines(serializationResult: String, intermediateEObject: EObjec
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-internal class LineCountInfo(var serializationResultLineCount: Int = 0, var originalEObjectLineCount: Int = 0,
-    val additionalInfo: Map<String, String> = mutableMapOf())
+internal class LineCountInfo(var serializationTargetFilePath: String, var serializationResultLineCount: Int = 0,
+    var originalEObjectLineCount: Int = 0, val additionalInfo: Map<String, String> = mutableMapOf())
 
 /**
  * Load the original [EObject] of the given intermediate [EObject] from the specified [originalModelFilePath]. The
@@ -65,6 +75,42 @@ private fun EObject.loadOriginalEObject(originalModelFilePath: String) : EObject
             "could not be loaded")
 
     return originalEObject
+}
+
+/**
+ * Helper to serialize a list of [LineCountInfo] instances to a CSV string.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+internal fun serializeLineCountInfo(lineCountInfoList: List<LineCountInfo>) : String {
+    val serializationResult = mutableListOf<String>()
+    val additionalInfoFieldNames = lineCountInfoList.map { it.additionalInfo.keys }.flatten().toSortedSet()
+
+    /* Add heading */
+    serializationResult.add(
+        """
+            Generated file path; 
+            Generated line count;
+            Original line count;
+            ${additionalInfoFieldNames.joinToString(";")}
+        """.trimToSingleLine()
+    )
+
+    /* Add line count information */
+    for (lineCountInfo in lineCountInfoList) {
+        val additionalInfo = lineCountInfo.additionalInfo
+        val additionalInfoCsv = additionalInfoFieldNames.map { additionalInfo[it] ?: "n/a" }.joinToString(";")
+        serializationResult.add(
+            """
+                ${lineCountInfo.serializationTargetFilePath}; 
+                ${lineCountInfo.serializationResultLineCount};
+                ${lineCountInfo.originalEObjectLineCount};
+                $additionalInfoCsv
+            """.trimToSingleLine()
+        )
+    }
+
+    return serializationResult.joinToString("\n")
 }
 
 /**
@@ -136,9 +182,9 @@ private fun registerDataDsl() {
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-private fun EObject.deriveAdditionalLineCountInfo() : MutableMap<String, String> {
+private fun EObject.deriveAdditionalLineCountInfo(originalModelFilePath: String) : MutableMap<String, String> {
     return when (this) {
-        is ComplexType -> deriveAdditionalLineCountInfo()
+        is ComplexType -> deriveAdditionalLineCountInfo(originalModelFilePath)
         else -> mutableMapOf()
     }
 }
@@ -149,13 +195,31 @@ private fun EObject.deriveAdditionalLineCountInfo() : MutableMap<String, String>
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-private fun ComplexType.deriveAdditionalLineCountInfo() : MutableMap<String, String> {
-    return when (this) {
-        is DataStructure -> mutableMapOf(FIELD_COUNT_INFO_FIELD to dataFields.size.toString())
-        is ListType -> mutableMapOf(FIELD_COUNT_INFO_FIELD to dataFields.size.toString())
-        else -> mutableMapOf()
+private fun ComplexType.deriveAdditionalLineCountInfo(originalModelFilePath: String) : MutableMap<String, String> {
+    val resultMap = mutableMapOf(ORIGINAL_EOBJECT_PATH_INFO_FIELD to "$originalModelFilePath${File.separator}$name")
+
+    when (this) {
+        is DataStructure -> resultMap[COMPLEX_TYPE_FIELD_COUNT_INFO_FIELD] = dataFields.size.toString()
+        is ListType -> resultMap[COMPLEX_TYPE_FIELD_COUNT_INFO_FIELD] = dataFields.size.toString()
     }
+
+    return resultMap
 }
+
+/**
+ * Constant for the additional line count information "original EObject type".
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+internal const val ORIGINAL_EOBJECT_TYPE_INFO_FIELD = "originalEObjectType"
+
+/**
+ * Constant for the additional line count information "original EObject path", valid for all counted [EObject]
+ * instances.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+internal const val ORIGINAL_EOBJECT_PATH_INFO_FIELD = "originalEObjectPath"
 
 /**
  * Constant for the additional line count information "field count" of a [ComplexType] instance, e.g., a [DataStructure]
@@ -163,5 +227,4 @@ private fun ComplexType.deriveAdditionalLineCountInfo() : MutableMap<String, Str
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-internal val ComplexType.FIELD_COUNT_INFO_FIELD
-    get() = "fieldCount"
+internal const val COMPLEX_TYPE_FIELD_COUNT_INFO_FIELD = "fieldCount"
