@@ -11,6 +11,7 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.languages.SERVIC
 import de.fhdo.lemma.model_processing.code_generation.java_base.qualifiedName
 import de.fhdo.lemma.model_processing.languages.registerLanguage
 import de.fhdo.lemma.model_processing.loadXtextResource
+import de.fhdo.lemma.model_processing.utils.countLines
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils
 import java.lang.IllegalArgumentException
@@ -45,17 +46,6 @@ internal fun countLines(serializationResult: String, intermediateEObject: EObjec
  */
 internal class LineCountInfo(var serializationResultLineCount: Int = 0, var originalEObjectLineCount: Int = 0,
     val additionalInfo: Map<String, String> = mutableMapOf())
-
-/**
- * Count lines of a String. CRLF, LF, and CR will be considered as linebreak separators.
- *
- * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
- */
-private fun String.countLines(includeEmptyLines: Boolean = false)
-    = if (includeEmptyLines)
-            lines().count()
-        else
-            lines().filter { it.isNotEmpty() && !it.matches("\\s+".toRegex()) }.count()
 
 /**
  * Load the original [EObject] of the given intermediate [EObject] from the specified [originalModelFilePath]. The

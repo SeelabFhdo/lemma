@@ -54,16 +54,20 @@ internal fun <T> Set<T>.containsAny(elements: Iterable<T>) = elements.any{ conta
 internal fun <E> List<E>.subList(fromIndex: Int) = subList(fromIndex, size)
 
 /**
- * Convert a [String] to a [File] object
+ * Convert a [String] to a [File] object.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 fun String.asFile() = File(this)
 
+/**
+ * Convert a [String] to an XMI [Resource] object.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
 fun String.asXmiResource() : Resource {
     val file = this.asFile()
-    if (!file.exists())
-        throw IllegalArgumentException("String \"$this\" does not represent a file")
+    require(file.exists()) { "String \"$this\" does not represent a file" }
 
     val resourceSet = ResourceSetImpl()
     val extensionFactoryMap = Resource.Factory.Registry.INSTANCE.extensionToFactoryMap

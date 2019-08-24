@@ -39,14 +39,14 @@ internal interface DependencySerializerI<M: Any, F: Any> {
      * Serialize the given dependency model, which is the model produced by [buildModel] including portions provided by
      * [DependencyFragmentProviderI] implementations within Genlets
      */
-    fun serialize(model: M, targetFolderPath: String, targetFilePath: String)
+    fun serialize(model: M, targetFolderPath: String, targetFilePath: String) : String
 
     /**
      * Function to invoke the dependency serialization process. This is not meant to be overridden or called externally.
      */
     fun invoke(artifactIdentifier: String, dependencyDescriptions: Set<DependencyDescription>,
         dependencyFragmentProviders: List<DependencyFragmentProviderI<M, F>>, targetFolderPath: String,
-        targetFilePath: String) {
+        targetFilePath: String) : String {
         // Build internal model
         var model = buildModel(artifactIdentifier, dependencyDescriptions)
 
@@ -56,6 +56,6 @@ internal interface DependencySerializerI<M: Any, F: Any> {
         }
 
         // Serialize the internal model
-        serialize(model, targetFolderPath, targetFilePath)
+        return serialize(model, targetFolderPath, targetFilePath)
     }
 }

@@ -143,3 +143,14 @@ val EObject.mainInterface
  */
 fun EList<IntermediateImport>.filterByType(importType: ImportType)
     = this.filter { it.importTypeName == importType.toString() }
+
+/**
+ * Count lines of a String. CRLF, LF, and CR will be considered as linebreak separators.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+fun String.countLines(includeEmptyLines: Boolean = false)
+    = if (includeEmptyLines)
+        lines().count()
+    else
+        lines().filter { it.isNotEmpty() && !it.matches("\\s+".toRegex()) }.count()

@@ -14,6 +14,7 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.findDepe
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.loadGenlets
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.buildAspectHandlerQualifiedName
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.findAspectHandlers
+import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.configuration.AbstractSerializationConfiguration
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.dependencies.DependencySerializerI
 import de.fhdo.lemma.model_processing.utils.mainInterface
 import de.fhdo.lemma.model_processing.utils.modelRoot
@@ -25,6 +26,7 @@ import org.koin.core.KoinComponent
 import org.koin.core.inject
 import java.io.File
 import java.net.URLClassLoader
+import java.nio.charset.Charset
 import kotlin.reflect.KProperty
 
 /**
@@ -36,18 +38,23 @@ import kotlin.reflect.KProperty
 internal object MainContext {
     /* State object of the context */
     object State : KoinComponent {
-        lateinit var currentMicroservicePackage: String
+        private val serializationConfiguration: AbstractSerializationConfiguration by inject()
+        private val dependencySerializer: DependencySerializerI<*, *> by inject()
+
+        private val collectedDependencies = mutableSetOf<DependencyDescription>()
+        private val aspectHandlers = mutableMapOf<Genlet?, Map<String, Class<AspectHandlerI>>>()
+        private val genletCodeGenerationHandlers
+            = mutableMapOf<Genlet, Map<String, Class<GenletCodeGenerationHandlerI<EObject, Node, Any>>>>()
+        private val dependencyFragmentProviders
+            = mutableMapOf<Genlet, List<Class<DependencyFragmentProviderI<Any, Any>>>>()
+        private val generatedFileContents = mutableMapOf<String, Pair<String, Charset>>()
 
         private lateinit var intermediateServiceModel: IntermediateServiceModel
         private lateinit var intermediateServiceModelForDomainModels: IntermediateServiceModel
         private lateinit var targetFolderPath: String
-        private val collectedDependencies = mutableSetOf<DependencyDescription>()
         private lateinit var genlets: Map<Genlet, URLClassLoader>
-        private val aspectHandlers = mutableMapOf<Genlet?, Map<String, Class<AspectHandlerI>>>()
-        private val genletCodeGenerationHandlers
-                = mutableMapOf<Genlet, Map<String, Class<GenletCodeGenerationHandlerI<EObject, Node, Any>>>>()
-        private val dependencyFragmentProviders
-            = mutableMapOf<Genlet, List<Class<DependencyFragmentProviderI<Any, Any>>>>()
+
+        lateinit var currentMicroservicePackage: String
 
         /**
          * Initialize the state of the context
@@ -74,7 +81,6 @@ internal object MainContext {
          * providers
          */
         private fun loadGenlets() {
-            val dependencySerializer: DependencySerializerI<*, *> by inject()
             genlets = loadGenlets(CommandLine.genlets())
             genlets.forEach { (genlet, classLoader) -> with(genlet) {
                 genletCodeGenerationHandlers[this] = findCodeGenerationHandlers(classLoader)
@@ -94,6 +100,7 @@ internal object MainContext {
                 "currentMicroservicePackage" -> currentMicroservicePackage
                 "currentMicroserviceTargetFolderPath" -> currentMicroserviceTargetFolderPath()
                 "dependencyFragmentProviderInstances" -> dependencyFragmentProviderInstances()
+                "generatedFileContents" -> generatedFileContents.toMap()
                 "genletCodeGenerationHandlers" -> genletCodeGenerationHandlers.toMap()
                 "genlets" -> genlets.keys
                 "intermediateServiceModel" -> intermediateServiceModel
@@ -130,6 +137,16 @@ internal object MainContext {
          * when the dependencies were serialized.
          */
         fun clearCollectedDependencies() = collectedDependencies.clear()
+
+        /**
+         * Add content of a generated to the set of collected file contents. Note that the eventual writing of the
+         * collected files happens by the model processor framework, which expects a map that assigns file contents and
+         * charsets to file paths for that purpose.
+         */
+        fun addGeneratedFileContent(content: String, targetFolderPath: String, targetFilePath: String) {
+            val fullFilePath = "$targetFolderPath${File.separator}$targetFilePath"
+            generatedFileContents[fullFilePath] = content to serializationConfiguration.charset
+        }
     }
 
     /**

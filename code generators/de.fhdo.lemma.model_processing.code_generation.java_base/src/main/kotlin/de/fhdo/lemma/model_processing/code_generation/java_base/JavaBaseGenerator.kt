@@ -1,12 +1,12 @@
 package de.fhdo.lemma.model_processing.code_generation.java_base
 
-import com.github.javaparser.printer.PrettyPrinterConfiguration
 import de.fhdo.lemma.model_processing.AbstractModelProcessor
+import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.configuration.AbstractSerializationConfiguration
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.code_generation.CodeGenerationSerializerI
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.code_generation.CountingPlainCodeGenerationSerializer
-import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.code_generation.DefaultCodeGenerationSerializationPrettyPrinterConfiguration
+import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.configuration.DefaultSerializationConfiguration
+import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.dependencies.CountingMavenDependencySerializer
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.dependencies.DependencySerializerI
-import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.dependencies.MavenDependencySerializer
 import org.koin.core.context.startKoin
 import org.koin.dsl.module
 
@@ -18,9 +18,9 @@ import org.koin.dsl.module
 fun main(args: Array<String>) {
     /* Setup dependency injections and determine the injected implementations per expected interface */
     startKoin { modules( module {
-        factory<PrettyPrinterConfiguration> { DefaultCodeGenerationSerializationPrettyPrinterConfiguration }
+        factory<AbstractSerializationConfiguration> { DefaultSerializationConfiguration }
         factory<CodeGenerationSerializerI> { CountingPlainCodeGenerationSerializer() }
-        factory<DependencySerializerI<*, *>> { MavenDependencySerializer() }
+        factory<DependencySerializerI<*, *>> { CountingMavenDependencySerializer() }
     } ) }
 
     /* Run the Java base generator */

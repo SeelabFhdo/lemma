@@ -5,7 +5,6 @@ import de.fhdo.lemma.model_processing.builtin_phases.code_generation.AbstractCod
 import de.fhdo.lemma.model_processing.code_generation.java_base.commandline.CommandLine
 import de.fhdo.lemma.model_processing.code_generation.java_base.dependencies.DependencyDescription
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.DependencyFragmentProviderI
-import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.Genlet
 import de.fhdo.lemma.model_processing.code_generation.java_base.languages.INTERMEDIATE_SERVICE_MODEL_LANGUAGE_DESCRIPTION
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.MainContext.State as MainState
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.domain.DomainCodeGenerationSubModule
@@ -82,7 +81,8 @@ internal class MainModule : AbstractCodeGenerationModule(), KoinComponent {
             serializeDependencies(it)
         }
 
-        return emptyMap()
+        val generatedFileContents: Map<String, Pair<String, Charset>> by MainState
+        return generatedFileContents
     }
 
     /**
@@ -93,13 +93,14 @@ internal class MainModule : AbstractCodeGenerationModule(), KoinComponent {
         val dependencyFragmentProviderInstances: List<DependencyFragmentProviderI<Any, Any>> by MainState
         val currentMicroserviceTargetFolderPath: String by MainState
 
-        dependencySerializer.invoke(
+        val serializationResult = dependencySerializer.invoke(
             microservice.artifactIdentifier(),
             collectedDependencies,
             dependencyFragmentProviderInstances,
             currentMicroserviceTargetFolderPath,
             "pom.xml"
         )
+        MainState.addGeneratedFileContent(serializationResult, currentMicroserviceTargetFolderPath, "pom.xml")
 
         MainState.clearCollectedDependencies()
     }

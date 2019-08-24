@@ -3,7 +3,11 @@ package de.fhdo.lemma.model_processing.code_generation.java_base.serialization.d
 import de.fhdo.lemma.model_processing.code_generation.java_base.dependencies.DependencyDescription
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.DependencyFragmentProviderI
 import de.fhdo.lemma.model_processing.code_generation.java_base.dependencies.DependencyType
+import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.configuration.AbstractSerializationConfiguration
+import de.fhdo.lemma.model_processing.utils.countLines
 import de.fhdo.lemma.model_processing.utils.isNumeric
+import org.koin.core.KoinComponent
+import org.koin.core.inject
 import org.redundent.kotlin.xml.Node
 import org.redundent.kotlin.xml.PrintOptions
 import org.redundent.kotlin.xml.XmlVersion
@@ -11,24 +15,65 @@ import org.redundent.kotlin.xml.xml
 import java.util.regex.Pattern
 
 internal class MavenDependencySerializer(override val dependencyType: DependencyType = DependencyType.MAVEN)
-    :
-    DependencySerializerI<Node, Node> {
+    : DependencySerializerI<Node, Node> {
+    private val delegate: MavenDependencySerializerHelper = MavenDependencySerializerHelper()
+
+    override fun buildModel(artifactIdentifier: String, dependencyDescriptions: Set<DependencyDescription>)
+        = delegate.buildModel(artifactIdentifier, dependencyDescriptions)
+
+    override fun serialize(model: Node, targetFolderPath: String, targetFilePath: String)
+        = delegate.serialize(model, targetFolderPath, targetFilePath)
+
+    override fun fragmentProviderClass() = delegate.fragmentProviderClass()
+
+    override fun addFragment(model : Node, fragment : Node) = delegate.addFragment(model, fragment)
+}
+
+internal class CountingMavenDependencySerializer(override val dependencyType: DependencyType = DependencyType.MAVEN)
+    : DependencySerializerI<Node, Node> {
+    private val delegate: MavenDependencySerializerHelper = MavenDependencySerializerHelper()
+
+    override fun buildModel(artifactIdentifier: String, dependencyDescriptions: Set<DependencyDescription>)
+        = delegate.buildModel(artifactIdentifier, dependencyDescriptions)
+
+    override fun serialize(model: Node, targetFolderPath: String, targetFilePath: String) : String {
+        val serializationResult = delegate.serialize(model, targetFolderPath, targetFilePath)
+
+        val lineCount = serializationResult.countLines()
+        println(
+            """
+                Generated line count: $lineCount
+                Target file: $targetFolderPath/$targetFilePath
+            """.trimIndent()
+        )
+
+        return serializationResult
+    }
+
+    override fun fragmentProviderClass() = delegate.fragmentProviderClass()
+
+    override fun addFragment(model : Node, fragment : Node) = delegate.addFragment(model, fragment)
+}
+
+private class MavenDependencySerializerHelper : KoinComponent {
     private val DEFAULT_VERSION = "0.0.1-SNAPSHOT"
     private val VERSION_PATTERN = Pattern.compile(".*v(?<version>((\\p{Alnum}+_)+\\p{Alnum}+)|\\p{Alnum}+)")
 
-    override fun buildModel(artifactIdentifier : String, dependencyDescriptions : Set<DependencyDescription>) : Node {
+    private val serializationConfiguration: AbstractSerializationConfiguration by inject()
+
+    fun buildModel(artifactIdentifier : String, dependencyDescriptions : Set<DependencyDescription>) : Node {
         val (group, artifact, version) = DependencyDescription.fromString(artifactIdentifier)
         val root = createRoot()
         root merge projectIdentifier(group, artifact, if (version !== null) version else DEFAULT_VERSION)
         return root
     }
 
-    override fun serialize(model : Node, targetFolderPath : String, targetFilePath : String) {
-        println(model.toString(PrintOptions(singleLineTextElements = true)))
-    }
+    fun serialize(model : Node, targetFolderPath : String, targetFilePath : String)
+        = model.toString(PrintOptions(singleLineTextElements = true))
 
-    override fun fragmentProviderClass() = MavenDependencyFragmentProviderI::class.java
-    override fun addFragment(model : Node, fragment : Node) : Node {
+    fun fragmentProviderClass() = MavenDependencyFragmentProviderI::class.java
+
+    fun addFragment(model : Node, fragment : Node) : Node {
         model merge fragment
         return model
     }

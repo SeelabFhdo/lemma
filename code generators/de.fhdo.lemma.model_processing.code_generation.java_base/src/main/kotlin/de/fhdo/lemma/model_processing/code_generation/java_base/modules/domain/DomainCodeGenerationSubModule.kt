@@ -80,7 +80,8 @@ internal class DomainCodeGenerationSubModule : KoinComponent {
         val currentIntermediateDomainModel: IntermediateDataModel by DomainState
         val originalModelPath = currentIntermediateDomainModel.sourceModelUri.removeFileUri()
 
-        serializer.serialize(generatedNode, currentDomainTargetFolderPath, targetFile, eObject,
-            currentIntermediateDomainModelFilePath, originalModelPath)
+        val serializationResult = serializer.serialize(generatedNode, currentDomainTargetFolderPath, targetFile,
+            eObject, currentIntermediateDomainModelFilePath, originalModelPath)
+        MainState.addGeneratedFileContent(serializationResult, currentDomainTargetFolderPath, targetFile)
     }
 }
