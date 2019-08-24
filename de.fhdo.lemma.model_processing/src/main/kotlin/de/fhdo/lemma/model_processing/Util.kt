@@ -6,9 +6,13 @@ import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl
+import org.eclipse.xtext.ISetup
+import org.eclipse.xtext.resource.XtextResource
+import org.eclipse.xtext.resource.XtextResourceSet
 import org.fusesource.jansi.Ansi.ansi
 import java.io.File
 import java.io.FileInputStream
+import java.io.InputStream
 import java.lang.IllegalArgumentException
 import java.lang.IllegalStateException
 import java.nio.file.Paths
@@ -244,3 +248,17 @@ internal fun readModelingNamespacesFromXmi(xmiFile: String) : Set<String> {
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 internal infix fun String.isChildPathOf(parent: String) = Paths.get(this).startsWith(Paths.get(parent).normalize())
+
+/**
+ * Load a file as an Xtext resource.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+fun loadXtextResource(languageSetup: ISetup, filepath: String, inputStream: InputStream) : XtextResource {
+    val injector = languageSetup.createInjectorAndDoEMFRegistration()
+    val resourceSet = injector.getInstance(XtextResourceSet::class.java)
+    resourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, java.lang.Boolean.TRUE)
+    val resource = resourceSet.createResource(URI.createURI(filepath))
+    resource.load(inputStream, resourceSet.loadOptions)
+    return resource as XtextResource
+}

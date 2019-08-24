@@ -1,5 +1,9 @@
 package de.fhdo.lemma.model_processing.code_generation.java_base
 
+import de.fhdo.lemma.data.ComplexType
+import de.fhdo.lemma.data.DataStructure
+import de.fhdo.lemma.data.Enumeration
+import de.fhdo.lemma.data.ListType
 import de.fhdo.lemma.data.intermediate.IntermediateComplexType
 import de.fhdo.lemma.data.intermediate.IntermediateDataField
 import de.fhdo.lemma.data.intermediate.IntermediateDataStructure
@@ -11,6 +15,46 @@ import de.fhdo.lemma.model_processing.utils.trimToSingleLine
 import de.fhdo.lemma.service.intermediate.IntermediateMicroservice
 import io.github.classgraph.ClassGraph
 import io.github.classgraph.ClassInfo
+import java.lang.IllegalStateException
+
+/**
+ * Derived property of [ComplexType] that represents the qualified name of the type. This handles all kinds of complex
+ * types, i.e., [DataStructure], [ListType], and [Enumeration].
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+internal val ComplexType.qualifiedName
+    get() = when(this) {
+            is DataStructure -> qualifiedName
+            is ListType -> qualifiedName
+            is Enumeration -> qualifiedName
+            else -> throw IllegalStateException("Derivation of qualified name for complex type of type "+
+                "${this::class.java.name} is not supported")
+        }
+
+/**
+ * Derived property of [DataStructure] that represents the qualified name of the structure.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+internal val DataStructure.qualifiedName
+    get() = buildQualifiedName(".")
+
+/**
+ * Derived property of [ListType] that represents the qualified name of the list type.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+internal val ListType.qualifiedName
+    get() = buildQualifiedName(".")
+
+/**
+ * Derived property of [Enumeration] that represents the qualified name of the enumeration.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+internal val Enumeration.qualifiedName
+    get() = buildQualifiedName(".")
 
 /**
  * Get the value of the property with the given name from an [IntermediateImportedAspect].
