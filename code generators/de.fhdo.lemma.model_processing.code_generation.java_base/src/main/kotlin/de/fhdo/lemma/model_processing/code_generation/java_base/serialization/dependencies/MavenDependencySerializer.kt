@@ -39,9 +39,9 @@ internal class CountingMavenDependencySerializer(override val dependencyType: De
         = delegate.buildModel(artifactIdentifier, dependencyDescriptions)
 
     override fun serialize(model: Node, targetFolderPath: String, targetFilePath: String) : Pair<String, String> {
-        val (targetFilePath, generatedContent) = delegate.serialize(model, targetFolderPath, targetFilePath)
-        MainState.addGeneratedLineCountInfo(LineCountInfo(targetFilePath, generatedContent.countLines()))
-        return targetFilePath to generatedContent
+        val (serializationFilePath, generatedContent) = delegate.serialize(model, targetFolderPath, targetFilePath)
+        MainState.addGeneratedLineCountInfo(LineCountInfo(serializationFilePath, generatedContent.countLines()))
+        return serializationFilePath to generatedContent
     }
 
     override fun fragmentProviderClass() = delegate.fragmentProviderClass()
@@ -171,9 +171,9 @@ private class MavenDependencySerializerBase : KoinComponent {
     }
 
     fun serialize(model : Node, targetFolderPath : String, targetFilePath : String) : Pair<String, String> {
-        val targetFilePath = "$targetFolderPath${File.separator}$targetFilePath"
+        val serializationTargetFilePath = "$targetFolderPath${File.separator}$targetFilePath"
         val generatedContent = model.toString(PrintOptions(singleLineTextElements = true))
-        return targetFilePath to generatedContent
+        return serializationTargetFilePath to generatedContent
     }
 
     fun fragmentProviderClass() = MavenDependencyFragmentProviderI::class.java
