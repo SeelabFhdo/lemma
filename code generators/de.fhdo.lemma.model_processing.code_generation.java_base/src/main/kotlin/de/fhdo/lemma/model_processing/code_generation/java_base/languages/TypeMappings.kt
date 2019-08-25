@@ -21,7 +21,7 @@ private val primitiveTypeMappings = primitiveTypeMappings {
         PrimitiveTypeConstants.BOOLEAN.literal mapsTo "boolean"
         PrimitiveTypeConstants.BYTE.literal mapsTo "byte"
         PrimitiveTypeConstants.CHARACTER.literal mapsTo "char"
-        PrimitiveTypeConstants.DATE.literal mapsTo "LocalDateTime" withImport "java.time.LocalDateTime"
+        PrimitiveTypeConstants.DATE.literal mapsTo "Date" withImport "java.util.Date"
         PrimitiveTypeConstants.DOUBLE.literal mapsTo "double"
         PrimitiveTypeConstants.FLOAT.literal mapsTo "float"
         PrimitiveTypeConstants.INTEGER.literal mapsTo "int"
@@ -40,7 +40,7 @@ private val primitiveTypeMappings = primitiveTypeMappings {
         "Byte".mapsToSelf()
         "Character".mapsToSelf()
         "Currency" withImport "java.util.Currency"
-        "Date" mapsTo "LocalDateTime" withImport "java.time.LocalDateTime"
+        "Date".mapsToSelf() withImport "java.util.Date"
         "Double".mapsToSelf()
         "Float".mapsToSelf()
         "Integer".mapsToSelf()
@@ -230,13 +230,12 @@ class PrimitiveTypeMappingsRegistry(private val builtin: MutableMap<String, Type
 }
 
 /**
- * Convenience function to determine if an [IntermediateType] is of built-in or technology-specific, i.e., Java object
- * wrapper, type String.
+ * Convenience function to determine if an [IntermediateType] is of a given built-in or technology-specific, i.e., Java
+ * object wrapper, type.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-val IntermediateType.isString
-    get() = primitiveTypeMappings[this]?.mappedTypeName == "String"
+fun IntermediateType.isA(typeName: String) = primitiveTypeMappings[this]?.mappedTypeName == typeName
 
 /**
  * Convenience function to determine if an [IntermediateType] is nullable, which is the case when the type is not
@@ -246,7 +245,7 @@ val IntermediateType.isString
  */
 val IntermediateType.isNullable
     get() = when(this) {
-        is IntermediatePrimitiveType -> this.isString || "LocalDateTime" == primitiveTypeMappings[this]?.mappedTypeName
+        is IntermediatePrimitiveType -> this.isA("String") || this.isA("Date")
         is IntermediateImportedTechnologySpecificType -> true
         is IntermediateComplexType -> true
         else -> false

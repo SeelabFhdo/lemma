@@ -8,8 +8,6 @@ import de.fhdo.lemma.data.intermediate.IntermediateComplexType
 import de.fhdo.lemma.data.intermediate.IntermediateDataField
 import de.fhdo.lemma.data.intermediate.IntermediateDataStructure
 import de.fhdo.lemma.data.intermediate.IntermediateImportedAspect
-import de.fhdo.lemma.data.intermediate.IntermediatePrimitiveType
-import de.fhdo.lemma.model_processing.code_generation.java_base.languages.isString
 import de.fhdo.lemma.model_processing.utils.packageToPath
 import de.fhdo.lemma.model_processing.utils.trimToSingleLine
 import de.fhdo.lemma.service.intermediate.IntermediateMicroservice
@@ -145,23 +143,6 @@ fun IntermediateDataStructure.hasAspect(aspectName: String) = aspects.any { it.n
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 fun IntermediateDataField.hasFeature(feature: String) = featureNames.contains(feature)
-
-/**
- * Get the initialization value of an [IntermediateDataField] as string. Note, that only data fields with an
- * [IntermediatePrimitiveType] can have an initialization value.
- *
- * In case the type of the field is String, the value will be returned within double quotes. Otherwise, the value itself
- * will be returned. If the field does not have an initialization value at all, two double quotes will be returned
- * (field has String type) or an empty String will be returned (else).
- *
- * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
- */
-internal val IntermediateDataField.typeSpecificInitializationValueString
-    get() = if (initializationValue === null) {
-        if ((type as IntermediatePrimitiveType).isString) "\"\"" else ""
-    } else {
-        if ((type as IntermediatePrimitiveType).isString) "\"$initializationValue\"" else initializationValue
-    }
 
 /**
  * Helper to find annotated classes, possibly within other JAR archives leveraging the given [classLoaders].
