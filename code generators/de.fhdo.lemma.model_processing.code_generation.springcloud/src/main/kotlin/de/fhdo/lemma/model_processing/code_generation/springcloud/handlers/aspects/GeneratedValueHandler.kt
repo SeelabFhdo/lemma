@@ -20,8 +20,6 @@ class GeneratedValueHandler : AspectHandlerI {
     override fun handlesAspects() = setOf("java.GeneratedValue")
 
     override fun execute(eObject : EObject, node : Node, aspect : IntermediateImportedAspect) : Node {
-        println("HELLO FROM GENLET")
-
         val generatedField = (node as FieldDeclaration)
         generatedField.addAnnotation("GeneratedValue")
         generatedField.addImport("javax.persistence.GeneratedValue")
