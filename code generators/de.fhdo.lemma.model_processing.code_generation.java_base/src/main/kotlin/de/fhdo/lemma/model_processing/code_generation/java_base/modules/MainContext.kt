@@ -8,6 +8,7 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.Dependen
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.AspectHandlerI
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.Genlet
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletCodeGenerationHandlerI
+import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletCodeGenerationHandlerResult
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.findAspectHandlers
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.findCodeGenerationHandlers
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.findDependencyFragmentProviders
@@ -203,10 +204,13 @@ internal object MainContext {
     /**
      * Helper to invoke a [Genlet]-specific code generation handler on a given [EObject] and [Node] instance
      */
-    internal fun invokeGenletCodeGenerationHandler(eObject: EObject, node: Node, genlet: Genlet) : Node {
+    internal fun invokeGenletCodeGenerationHandler(eObject: EObject, node: Node, genlet: Genlet)
+        : GenletCodeGenerationHandlerResult<Node> {
         val genletCodeGenerationHandlers:
             Map<Genlet, Map<String, Class<GenletCodeGenerationHandlerI<EObject, Node, Any>>>> by State
-        val handler = genletCodeGenerationHandlers[genlet]?.get(eObject.mainInterface.name) ?: return node
-        return handler.getConstructor().newInstance().invoke(eObject, node = node) ?: return node
+        val handler = genletCodeGenerationHandlers[genlet]?.get(eObject.mainInterface.name)
+            ?: return GenletCodeGenerationHandlerResult(node)
+        return handler.getConstructor().newInstance().invoke(eObject, node = node)
+            ?: GenletCodeGenerationHandlerResult(node)
     }
 }
