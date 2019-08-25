@@ -9,6 +9,7 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.modules.domain.D
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.MainContext.State as MainState
 import de.fhdo.lemma.model_processing.utils.loadModelRoot
 import de.fhdo.lemma.model_processing.utils.mainInterface
+import de.fhdo.lemma.model_processing.utils.removeFileUri
 import org.eclipse.emf.ecore.EObject
 import java.io.File
 import java.lang.IllegalArgumentException
@@ -25,7 +26,8 @@ internal object DomainContext {
     object State {
         private const val DOMAIN_SUBFOLDER_NAME = "domain"
 
-        lateinit var currentIntermediateDomainModelFilePath: String
+        private lateinit var currentIntermediateDomainModelUri: String
+        private lateinit var currentIntermediateDomainModelFilePath: String
         private var currentIntermediateDomainModel: IntermediateDataModel? = null
         internal lateinit var visitingDomainCodeGenerationHandlers
             : Map<String, Class<VisitingCodeGenerationHandlerI<EObject, Node, Any>>>
@@ -40,6 +42,14 @@ internal object DomainContext {
         }
 
         /**
+         * Set the URI of the current intermediate domain model. Automatically updates the path of the model, too.
+         */
+        fun setCurrentIntermediateDomainModelUri(uri: String) {
+            currentIntermediateDomainModelUri = uri
+            currentIntermediateDomainModelFilePath = uri.removeFileUri()
+        }
+
+        /**
          * Provide delegated property values back to callers
          */
         @Suppress("IMPLICIT_CAST_TO_ANY", "UNCHECKED_CAST")
@@ -48,6 +58,7 @@ internal object DomainContext {
                 "currentDomainPackage" -> currentDomainPackage()
                 "currentDomainTargetFolderPath" -> currentDomainTargetFolderPath()
                 "currentIntermediateDomainModel" -> currentIntermediateDomainModel()
+                "currentIntermediateDomainModelUri" -> currentIntermediateDomainModelUri
                 "currentIntermediateDomainModelFilePath" -> currentIntermediateDomainModelFilePath
                 else -> throw IllegalArgumentException("Domain state does not comprise property ${property.name}")
             }

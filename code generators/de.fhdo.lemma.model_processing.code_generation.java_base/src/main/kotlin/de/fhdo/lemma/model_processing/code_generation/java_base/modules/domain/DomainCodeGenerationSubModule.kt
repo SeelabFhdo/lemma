@@ -37,30 +37,30 @@ internal class DomainCodeGenerationSubModule : KoinComponent {
         DomainState.initialize()
 
         val intermediateServiceModelForDomainModels: IntermediateServiceModel by MainState
-        val allDomainModelPaths = resolveImportedDomainModelPathsTransitively(intermediateServiceModelForDomainModels)
-        allDomainModelPaths.forEach { domainModelPath ->
-            DomainState.currentIntermediateDomainModelFilePath = domainModelPath
+        val allDomainModelUris = resolveImportedDomainModelUrisTransitively(intermediateServiceModelForDomainModels)
+        allDomainModelUris.forEach { uri ->
+            DomainState.setCurrentIntermediateDomainModelUri(uri)
             val currentIntermediateDomainModel: IntermediateDataModel by DomainState
             currentIntermediateDomainModel.eAllContents().forEach { invokeVisitingCodeGenerationHandler(it) }
         }
     }
 
     /**
-     * Helper to get all paths of domain models being imported by the given service model and, transitively, of all
-     * domain models being imported by previously resolved domain models.
+     * Helper to get all URIs of domain models being imported by the given service model and, transitively, of all
+     * domain models being imported by previously resolved domain models
      */
-    private fun resolveImportedDomainModelPathsTransitively(startModel: IntermediateServiceModel) : List<String> {
-        val resolvedModelPaths = mutableListOf<String>()
-        val pathsTodo = ArrayDeque(startModel.imports.filterByType(ImportType.DATATYPES).map { it.path })
+    private fun resolveImportedDomainModelUrisTransitively(startModel: IntermediateServiceModel) : Set<String> {
+        val resolvedModelUris = mutableSetOf<String>()
+        val urisTodo = ArrayDeque(startModel.imports.filterByType(ImportType.DATATYPES).map { it.importUri })
 
-        while (pathsTodo.isNotEmpty()) {
-            val currentModel = pathsTodo.pop()
-            resolvedModelPaths.add(currentModel)
-            val modelRoot = loadModelRoot<IntermediateDataModel>(currentModel)
-            modelRoot.imports.filterByType(ImportType.DATATYPES).map { it.path }.forEach(pathsTodo::push)
+        while (urisTodo.isNotEmpty()) {
+            val currentUri = urisTodo.pop()
+            resolvedModelUris.add(currentUri)
+            val modelRoot = loadModelRoot<IntermediateDataModel>(currentUri.removeFileUri())
+            modelRoot.imports.filterByType(ImportType.DATATYPES).forEach { urisTodo.push(it.importUri) }
         }
 
-        return resolvedModelPaths
+        return resolvedModelUris
     }
 
     /**
