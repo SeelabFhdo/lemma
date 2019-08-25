@@ -6,8 +6,11 @@ import de.fhdo.lemma.data.Enumeration
 import de.fhdo.lemma.data.ListType
 import de.fhdo.lemma.data.intermediate.IntermediateComplexType
 import de.fhdo.lemma.data.intermediate.IntermediateDataField
+import de.fhdo.lemma.data.intermediate.IntermediateDataModel
 import de.fhdo.lemma.data.intermediate.IntermediateDataStructure
 import de.fhdo.lemma.data.intermediate.IntermediateImportedAspect
+import de.fhdo.lemma.data.intermediate.IntermediateImportedComplexType
+import de.fhdo.lemma.model_processing.utils.loadModelRoot
 import de.fhdo.lemma.model_processing.utils.packageToPath
 import de.fhdo.lemma.model_processing.utils.trimToSingleLine
 import de.fhdo.lemma.service.intermediate.IntermediateMicroservice
@@ -80,6 +83,92 @@ val IntermediateMicroservice.simpleName
  */
 internal val IntermediateMicroservice.packageName
     get() = qualifiedName.substringBeforeLast(".")
+
+/**
+ * Resolve the original [IntermediateComplexType] from this instance. To keep the intermediate models is lightweight as
+ * possible, references have been omitted where possible. Instead, types, for example, are embedded as containments
+ * at most places and the "reference" to the original type is established leveraging the import URI (for
+ * [IntermediateImportedComplexType] instances) and the type's [qualifiedName]. This functions allows for finding the
+ * original [IntermediateComplexType] to which this [IntermediateComplexType] is referencing.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+fun IntermediateComplexType.resolve() : IntermediateComplexType {
+    /* Determine the defining model and referencing parts (version name, context name, and simple name) of this type */
+    val definingModelUri = if (this is IntermediateImportedComplexType) import.importUri else null
+    val definingModel = if (definingModelUri !== null) loadModelRoot(definingModelUri) else getContainingDataModel()
+    val (versionName, contextName, simpleName) = getQualifiedNameParts()
+
+    /* Determine sources of this type's referencing parts (version and context instances) */
+    val version = if (versionName !== null) definingModel.versions.find { it.name == versionName } else null
+
+    val context = if (contextName !== null) {
+            // A context may be part of a version or reside on the top-level of a data model
+            if (version !== null)
+                version.contexts.find { it.name == contextName }
+            else
+                definingModel.contexts.find { it.name == contextName }
+        } else
+            null
+
+    /* Resolve the type */
+    val resolvedType = if (version !== null && context !== null)
+            // According to its qualified name, the type is defined in a context within a version
+            context.complexTypes.find { it.name == simpleName }
+        else if (version !== null && context === null)
+            // According to its qualified name, the type is directly defined in a version
+            version.complexTypes.find { it.name == simpleName }
+        else if (context !== null)
+            // According to its qualified name, the type is directly defined in a context
+            context.complexTypes.find { it.name == simpleName }
+        else
+            // There is neither a version nor a context surrounding the type (according to its qualified name), i.e.,
+            // the type is defined on the top-level of the model itself
+            definingModel.complexTypes.find { it.name == simpleName }
+
+    require(resolvedType !== null) { "Complex type $qualifiedName could not be resolved" }
+    return resolvedType!!
+}
+
+/**
+ * Helper to find the data model that contains the [IntermediateComplexType].
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+private fun IntermediateComplexType.getContainingDataModel() : IntermediateDataModel {
+    var container = eContainer()
+    while (container !is IntermediateDataModel)
+        container = container.eContainer()
+    return container
+}
+
+/**
+ * Helper to get the parts of the [qualifiedName] of an [IntermediateComplexType]. The result is a [Triple], whose
+ *      - first component is the type's version (or null, if the type has no version),
+ *      - second component is the type's context (or null, if the type has no context),
+ *      - third component is the type's name, without a qualifying part (i.e., its "simple" name).
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+private fun IntermediateComplexType.getQualifiedNameParts() : Triple<String?, String?, String> {
+    val qualifiedNameParts = qualifiedName.split(".")
+
+    val version = if (qualifiedNameParts.size == 3) qualifiedNameParts[0] else null
+
+    val context = when(qualifiedNameParts.size) {
+        3 -> qualifiedNameParts[1]
+        2 -> qualifiedNameParts[0]
+        else -> null
+    }
+
+    val simpleName = when(qualifiedNameParts.size) {
+        3 -> qualifiedNameParts[2]
+        2 -> qualifiedNameParts[1]
+        else -> qualifiedNameParts[0]
+    }
+
+    return Triple(version, context, simpleName)
+}
 
 /**
  * Derived property of [IntermediateComplexType] that represent the name of the complex type as a Java classname.
