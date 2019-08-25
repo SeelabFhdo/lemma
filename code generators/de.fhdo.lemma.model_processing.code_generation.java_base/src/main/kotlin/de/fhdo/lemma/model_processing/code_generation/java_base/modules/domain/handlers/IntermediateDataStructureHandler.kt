@@ -2,8 +2,10 @@ package de.fhdo.lemma.model_processing.code_generation.java_base.modules.domain.
 
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration
 import de.fhdo.lemma.data.intermediate.IntermediateDataStructure
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addImport
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.newJavaClass
 import de.fhdo.lemma.model_processing.code_generation.java_base.classname
+import de.fhdo.lemma.model_processing.code_generation.java_base.fullyQualifiedClassname
 import de.fhdo.lemma.model_processing.code_generation.java_base.fullyQualifiedClasspath
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.VisitingCodeGenerationHandlerI
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.CodeGenerationHandler
@@ -17,15 +19,22 @@ internal class IntermediateDataStructureHandler
 
     override fun handlesEObjectsOfInstance() = IntermediateDataStructure::class.java
     override fun generatesNodesOfInstance() = ClassOrInterfaceDeclaration::class.java
-    override fun getAspects(structure : IntermediateDataStructure) = structure.aspects!!
+    override fun getAspects(structure: IntermediateDataStructure) = structure.aspects!!
 
     private lateinit var generatedClass: ClassOrInterfaceDeclaration
 
-    override fun execute(structure : IntermediateDataStructure, context : Nothing?)
+    override fun execute(structure: IntermediateDataStructure, context: Nothing?)
         : Pair<ClassOrInterfaceDeclaration, String?>? {
         val packageName = "$currentDomainPackage.${structure.packageName}"
 
         generatedClass = newJavaClass(packageName, structure.classname)
+        if (structure.`super` !== null) {
+            generatedClass.addExtendedType(structure.`super`.name)
+
+            val fullyQualifiedClassname = structure.`super`.fullyQualifiedClassname
+            generatedClass.addImport("$currentDomainPackage.$fullyQualifiedClassname")
+        }
+
         structure.dataFields.forEach { CalledIntermediateDataFieldHandler.invoke(it, generatedClass) }
         return generatedClass to structure.fullyQualifiedClasspath()
     }

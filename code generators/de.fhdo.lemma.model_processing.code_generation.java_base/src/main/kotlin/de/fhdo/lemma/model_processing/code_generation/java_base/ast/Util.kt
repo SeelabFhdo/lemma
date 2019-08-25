@@ -65,6 +65,7 @@ internal fun newJavaClass(packageName: String, classname: String) : ClassOrInter
     val compilationUnit = CompilationUnit(packageName)
     val clazz = ClassOrInterfaceDeclaration()
     clazz.setName(classname)
+    clazz.addModifier(Modifier.Keyword.PUBLIC)
     clazz.setParentNode(compilationUnit)
     compilationUnit.addType(clazz)
     return clazz
@@ -173,9 +174,13 @@ internal fun ClassOrInterfaceDeclaration.addGetterForInheritedAttribute(attribut
     // For consistency, we rely on the getter creation process of JavaParser. Therefore, we create a "fake" getter
     // producer attribute to the current class, leverage it to create the getter, and then remove it again.
     val getterProducer = addPrivateAttribute(attributeName, typeName)
+
     val getter = getterProducer.createGetter()
     getter.setParentNode(this)
+
     getterProducer.setParentNode(null)
+    members.remove(getterProducer)
+
     return getter
 }
 

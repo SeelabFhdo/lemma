@@ -49,9 +49,9 @@ internal class CalledIntermediateDataFieldHandler :
         var generatedAttribute: FieldDeclaration? = null
 
         if (field.dataStructure !== null) {
-            if (!field.visibilitySubsequentlyConstrained)
+            if (!field.isInherited)
                 generatedAttribute = field.generateJavaAttribute(parentClass!!)
-            else
+            else if (field.visibilitySubsequentlyConstrained)
                 field.generateNotImplementedGetter(parentClass!!)
         }
 
@@ -111,7 +111,7 @@ internal class CalledIntermediateDataFieldHandler :
         getter.setBody(
             """
             throw new UnsupportedOperationException(
-                "The method ${getter.nameAsString}" is not visible on this type
+                "The method \"${getter.nameAsString}\" is not visible on this type"
             );
             """.trimToSingleLine())
     }
