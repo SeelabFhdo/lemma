@@ -74,9 +74,9 @@ fun <K: Any, V: Any> MutableMap<K, MutableList<V>>.insertValue(key: K, value: V)
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-fun <K1: Any, K2: Any, V: Any> MutableMap<K1, MutableMap<K2, V>>.putValue(key1: K1, key2: K2, value: V) {
+fun <K1: Any?, K2: Any?, V: Any?> MutableMap<K1, MutableMap<K2, V>>.putValue(key1: K1, key2: K2, value: V) {
     if (!this.containsKey(key1))
-        this[key1] = mutableMapOf<K2, V>()
+        this[key1] = mutableMapOf()
     this[key1]!![key2] = value
 }
 
