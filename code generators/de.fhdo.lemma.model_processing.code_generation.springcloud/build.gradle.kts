@@ -43,14 +43,14 @@ dependencies {
     implementation("com.github.javaparser:javaparser-core:$javaParserVersion")
     implementation("de.fhdo.lemma.data.datadsl:de.fhdo.lemma.data.datadsl.metamodel:$dataDslVersion")
     implementation("de.fhdo.lemma.intermediate:de.fhdo.lemma.data.intermediate.metamodel:" +
-            "$intermediateDataModelVersion")
+        "$intermediateDataModelVersion")
     implementation("de.fhdo.lemma.intermediate:de.fhdo.lemma.service.intermediate.metamodel:" +
-            "$intermediateServiceModelVersion")
+        "$intermediateServiceModelVersion")
     implementation("de.fhdo.lemma.model_processing.code_generation.java_base:" +
-            "de.fhdo.lemma.model_processing.code_generation.java_base:$javaBaseGeneratorVersion")
+        "de.fhdo.lemma.model_processing.code_generation.java_base:$javaBaseGeneratorVersion")
     implementation("de.fhdo.lemma.model_processing:de.fhdo.lemma.model_processing:$modelProcessingVersion")
     implementation("de.fhdo.lemma.model_processing.utils:de.fhdo.lemma.model_processing.utils:" +
-            "$modelProcessingUtilsVersion")
+        "$modelProcessingUtilsVersion")
     implementation("de.fhdo.lemma.servicedsl:de.fhdo.lemma.servicedsl:$serviceDslVersion")
     implementation("io.github.classgraph:classgraph:$classgraphVersion")
     implementation("org.redundent:kotlin-xml-builder:$xmlBuilderVersion")
