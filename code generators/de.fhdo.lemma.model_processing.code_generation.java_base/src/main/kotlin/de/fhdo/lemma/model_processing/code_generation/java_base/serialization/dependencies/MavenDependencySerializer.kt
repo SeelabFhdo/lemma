@@ -57,9 +57,12 @@ private class MavenDependencySerializerBase : KoinComponent {
         val (group, artifact, version) = DependencyDescription.fromString(artifactIdentifier)
         val root = createRoot()
         root merge projectIdentifier(group, artifact, if (version !== null) version else DEFAULT_VERSION)
+        root merge properties()
 
         if (dependencyDescriptions.isNotEmpty())
-            root.addNode(dependencies(dependencyDescriptions))
+            root merge dependencies(dependencyDescriptions)
+
+        root.addPlugins()
 
         return root
     }
@@ -83,28 +86,6 @@ private class MavenDependencySerializerBase : KoinComponent {
             "artifactId" { -artifact.toMavenArtifactId() }
             "version" { -if (version !== DEFAULT_VERSION) version.toMavenVersionId() else version }
         }
-
-    private fun dependencies(dependencyDescriptions : Set<DependencyDescription>) : Node {
-        val dependencyRoot = node("dependencies")
-        dependencyDescriptions.forEach {
-            dependencyRoot.addNode(dependency(it))
-        }
-        return dependencyRoot
-    }
-
-    private fun dependency(dependencyDescription: DependencyDescription) : Node {
-        val dependencyNode = node("dependency") {
-            "groupId" { -dependencyDescription.group }
-            "artifactId" { -dependencyDescription.artifact }
-        }
-
-        if (dependencyDescription.version !== null)
-            dependencyNode.addNode(
-                node("version") { dependencyDescription.version }
-            )
-
-        return dependencyNode
-    }
 
     private fun String.toMavenArtifactId() : String {
         var artifactId = ""
@@ -136,6 +117,57 @@ private class MavenDependencySerializerBase : KoinComponent {
             }
         }
         return versionId
+    }
+
+    private fun properties() =
+        node("properties") {
+            "project.build.sourceEncoding" { -"UTF-8" }
+            "project.reporting.outputEncoding" { -"UTF-8" }
+            "java.version" { -"12" }
+        }
+
+    private fun dependencies(dependencyDescriptions : Set<DependencyDescription>) : Node {
+        val dependencyRoot = node("dependencies")
+        dependencyDescriptions.forEach {
+            dependencyRoot.addNode(dependency(it))
+        }
+        return dependencyRoot
+    }
+
+    private fun dependency(dependencyDescription: DependencyDescription) : Node {
+        val dependencyNode = node("dependency") {
+            "groupId" { -dependencyDescription.group }
+            "artifactId" { -dependencyDescription.artifact }
+        }
+
+        if (dependencyDescription.version !== null)
+            dependencyNode.addNode(
+                node("version") { dependencyDescription.version }
+            )
+
+        return dependencyNode
+    }
+
+    private fun Node.addPlugins() {
+        this merge
+            elements {
+                "properties" {
+                    "maven.compiler.plugin.version" { -"3.8.0" }
+                }
+            }
+
+        this merge
+            elements {
+                "build" {
+                    "plugins" {
+                        "plugin" {
+                            "groupId" { -"org.apache.maven.plugins" }
+                            "artifactId" { -"maven-compiler-plugin" }
+                            "version" { -"\${maven.compiler.plugin.version}" }
+                        }
+                    }
+                }
+            }
     }
 
     fun serialize(model : Node, targetFolderPath : String, targetFilePath : String) : Pair<String, String> {

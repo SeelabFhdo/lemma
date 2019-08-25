@@ -38,13 +38,25 @@ fun elements(init: Node.() -> Unit) : Node {
  *                  element1
  *                  element2.
  *
- * This function is particularly useful when the other node was created with the [elements] function. Note that the
- * merging process starts at the second level, not at the root level of both nodes.
+ * This function is particularly useful when the other node was created with the [elements] function.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 infix fun Node.merge(otherNode: Node) {
-    // Iterate over the child nodes of the other node
+    /*
+     * If the other node has a name, i.e., it was not created with elements() for example, and it differs from the name
+     * of this node, directly add the other node to this node as a child, because both nodes already differ at the
+     * root-level and merging is thus trivial
+     */
+    if (otherNode.nodeName.isNotEmpty() && otherNode.nodeName !== this.nodeName) {
+        addNode(otherNode)
+        return
+    }
+
+    /*
+     * If no trivial difference at the root-level was determined, iterate over the child nodes of the other node for
+     * non-trivial merging
+     */
     for (currentOtherChild in otherNode.childNodes) {
         // If there does not exist an eponymous child of this node, we add the other child to the current level (which
         // is the second level, i.e., the one under the root node)
