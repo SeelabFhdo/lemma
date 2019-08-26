@@ -5,6 +5,9 @@ import de.fhdo.lemma.data.intermediate.IntermediateImportedAspect
 import de.fhdo.lemma.model_processing.code_generation.java_base.findAndMapAnnotatedClassesWithInterface
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.Genlet
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.MainContext
+import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.LineCountInfo
+import de.fhdo.lemma.model_processing.utils.countLines
+import de.fhdo.lemma.model_processing.code_generation.java_base.modules.MainContext.State as MainState
 import org.eclipse.emf.ecore.EObject
 
 /**
@@ -79,12 +82,18 @@ interface CodeGenerationHandlerI<T: EObject, N: Node, C: Any> {
         var adaptedNode = MainContext.invokeLocalAspectHandlers(eObject, node, aspects)
 
         /* Execute Genlets' code generation and aspect handlers */
-        val genlets: Set<Genlet> by MainContext.State
+        val genlets: Set<Genlet> by MainState
+        val writeLineCountInfo: Boolean by MainState
         genlets.forEach {
             val (reifiedNode, generatedFiles) = MainContext.invokeGenletCodeGenerationHandler(eObject, adaptedNode, it)
             adaptedNode = reifiedNode
             generatedFiles.forEach { fileContent ->
-                MainContext.State.addGeneratedFileContent(fileContent.generatedContent, fileContent.getFullPath())
+                val generatedContent = fileContent.generatedContent
+                val fullPath = fileContent.getFullPath()
+                MainState.addGeneratedFileContent(generatedContent, fullPath)
+
+                if (writeLineCountInfo)
+                    MainState.addGeneratedLineCountInfo(LineCountInfo(fullPath, generatedContent.countLines()))
             }
             adaptedNode = MainContext.invokeAspectHandlers(eObject, node, aspects, it)
         }

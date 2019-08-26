@@ -199,7 +199,10 @@ private fun ComplexType.deriveAdditionalLineCountInfo(originalModelFilePath: Str
     val resultMap = mutableMapOf(ORIGINAL_EOBJECT_PATH_INFO_FIELD to "$originalModelFilePath${File.separator}$name")
 
     when (this) {
-        is DataStructure -> resultMap[COMPLEX_TYPE_FIELD_COUNT_INFO_FIELD] = dataFields.size.toString()
+        is DataStructure -> {
+            resultMap[COMPLEX_TYPE_FIELD_COUNT_INFO_FIELD] = dataFields.size.toString()
+            resultMap[DATA_STRUCTURE_OPERATION_COUNT_INFO_FIELD] = operations.size.toString()
+        }
         is ListType -> resultMap[COMPLEX_TYPE_FIELD_COUNT_INFO_FIELD] = dataFields.size.toString()
     }
 
@@ -228,3 +231,10 @@ internal const val ORIGINAL_EOBJECT_PATH_INFO_FIELD = "originalEObjectPath"
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 internal const val COMPLEX_TYPE_FIELD_COUNT_INFO_FIELD = "fieldCount"
+
+/**
+ * Constant for the additional line count information "operation count" of a [DataStructure] instance.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+internal const val DATA_STRUCTURE_OPERATION_COUNT_INFO_FIELD = "operationCount"

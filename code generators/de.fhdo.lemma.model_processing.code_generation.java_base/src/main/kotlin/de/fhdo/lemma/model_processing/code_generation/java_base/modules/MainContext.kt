@@ -55,6 +55,7 @@ internal object MainContext {
         private lateinit var intermediateServiceModel: IntermediateServiceModel
         private lateinit var intermediateServiceModelForDomainModels: IntermediateServiceModel
         private lateinit var targetFolderPath: String
+        private var lineCountInfoFilePath: String? = null
         private lateinit var genlets: Map<Genlet, URLClassLoader>
 
         lateinit var currentMicroservicePackage: String
@@ -63,10 +64,12 @@ internal object MainContext {
          * Initialize the state of the context
          */
         fun initialize(intermediateServiceModelResource: Resource,
-            intermediateServiceModelResourceForDomainModels: Resource, targetFolderPath: String) {
+            intermediateServiceModelResourceForDomainModels: Resource, targetFolderPath: String,
+            lineCountInfoFilePath: String? = null) {
             intermediateServiceModel = intermediateServiceModelResource.modelRoot()
             intermediateServiceModelForDomainModels = intermediateServiceModelResourceForDomainModels.modelRoot()
             this.targetFolderPath = targetFolderPath.trimEnd(File.separatorChar)
+            this.lineCountInfoFilePath = lineCountInfoFilePath
 
             findLocalAspectHandlers()
             loadGenlets()
@@ -105,11 +108,13 @@ internal object MainContext {
                 "currentMicroserviceTargetFolderPathForJavaFiles" -> currentMicroserviceTargetFolderPathForJavaFiles()
                 "dependencyFragmentProviderInstances" -> dependencyFragmentProviderInstances()
                 "generatedFileContents" -> generatedFileContents.toMap()
+                "generatedLineCountInfo" -> generatedLineCountInfo.toList()
                 "genletCodeGenerationHandlers" -> genletCodeGenerationHandlers.toMap()
                 "genlets" -> genlets.keys
                 "intermediateServiceModel" -> intermediateServiceModel
                 "intermediateServiceModelForDomainModels" -> intermediateServiceModelForDomainModels
-                "generatedLineCountInfo" -> generatedLineCountInfo.toList()
+                "lineCountInfoFilePath" -> lineCountInfoFilePath
+                "writeLineCountInfo" -> lineCountInfoFilePath !== null
                 else -> throw IllegalArgumentException("Main state does not comprise property ${property.name}")
             }
 

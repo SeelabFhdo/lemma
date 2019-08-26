@@ -10,7 +10,13 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.modules.MainCont
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.domain.DomainCodeGenerationSubModule
 import de.fhdo.lemma.model_processing.code_generation.java_base.packageName
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.LineCountInfo
+import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.code_generation.CountingPlainCodeGenerationSerializer
+import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.code_generation.PlainCodeGenerationSerializer
+import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.configuration.AbstractSerializationConfiguration
+import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.configuration.DefaultSerializationConfiguration
+import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.dependencies.CountingMavenDependencySerializer
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.dependencies.DependencySerializerI
+import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.dependencies.MavenDependencySerializer
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.serializeLineCountInfo
 import de.fhdo.lemma.model_processing.code_generation.java_base.simpleName
 import de.fhdo.lemma.model_processing.phases.PhaseException
@@ -18,8 +24,9 @@ import de.fhdo.lemma.model_processing.utils.asXmiResource
 import de.fhdo.lemma.service.intermediate.IntermediateMicroservice
 import de.fhdo.lemma.service.intermediate.IntermediateServiceModel
 import org.koin.core.KoinComponent
+import org.koin.core.context.startKoin
 import org.koin.core.inject
-import java.io.File
+import org.koin.dsl.module
 import java.nio.charset.Charset
 
 /**
@@ -29,8 +36,6 @@ import java.nio.charset.Charset
  */
 @CodeGenerationModule("main")
 internal class MainModule : AbstractCodeGenerationModule(), KoinComponent {
-    private val dependencySerializer: DependencySerializerI<Any, Any> by inject()
-
     /**
      * Return the language description for the intermediate model kind with which this code generator can deal, i.e.,
      * intermediate service models
@@ -50,6 +55,24 @@ internal class MainModule : AbstractCodeGenerationModule(), KoinComponent {
             throw PhaseException(ex.message)
         }
 
+        /* Setup dependency injection and determine the injected implementations per expected interface */
+        val writeLineCountInfo = CommandLine.parameterLineCountFile !== null
+        startKoin { modules( module {
+            factory<AbstractSerializationConfiguration> { DefaultSerializationConfiguration }
+            factory {
+                if (writeLineCountInfo)
+                    CountingPlainCodeGenerationSerializer()
+                else
+                    PlainCodeGenerationSerializer()
+            }
+            factory<DependencySerializerI<*, *>> {
+                if (writeLineCountInfo)
+                    CountingMavenDependencySerializer()
+                else
+                    MavenDependencySerializer()
+            }
+        } ) }
+
         /*
          * Determine the service model to be used to generate microservices from. The generator allows for passing an
          * alternative service model file for that reason. If an alternative service model file is passed to the
@@ -65,7 +88,8 @@ internal class MainModule : AbstractCodeGenerationModule(), KoinComponent {
             ?: intermediateModelResource
 
         /* Initialize the main state hold by the main context */
-        MainState.initialize(intermediateServiceModelResource, intermediateModelResource, targetFolder)
+        MainState.initialize(intermediateServiceModelResource, intermediateModelResource, targetFolder,
+            CommandLine.parameterLineCountFile)
 
         /*
          * Generate domain concepts per microservice from the determined service model, as well as the services
@@ -85,12 +109,11 @@ internal class MainModule : AbstractCodeGenerationModule(), KoinComponent {
         }
 
         /* Serialize line count information if it were collected during the code generation run */
-        val generatedLineCountInfo: List<LineCountInfo> by MainState
-        if (generatedLineCountInfo.isNotEmpty())
-            MainState.addGeneratedFileContent(
-                serializeLineCountInfo(generatedLineCountInfo),
-                "$targetFolder${File.separator}_LineCountInfo.csv"
-            )
+        if (writeLineCountInfo) {
+            val generatedLineCountInfo: List<LineCountInfo> by MainState
+            val lineCountInfoFilePath: String by MainState
+            MainState.addGeneratedFileContent(serializeLineCountInfo(generatedLineCountInfo), lineCountInfoFilePath)
+        }
 
         /*
          * Return the map of generated file contents and their charsets per path for the model processor framework to
@@ -104,6 +127,7 @@ internal class MainModule : AbstractCodeGenerationModule(), KoinComponent {
      * Helper to run the serialization of the dependencies collected for the current service code generation
      */
     private fun serializeDependencies(microservice: IntermediateMicroservice) {
+        val dependencySerializer: DependencySerializerI<Any, Any> by inject()
         val collectedDependencies: Set<DependencyDescription> by MainState
         val dependencyFragmentProviderInstances: List<DependencyFragmentProviderI<Any, Any>> by MainState
         val currentMicroserviceTargetFolderPath: String by MainState

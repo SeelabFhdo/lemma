@@ -55,7 +55,7 @@ internal object CommandLine {
      */
     private var parameterFullQualifiedGenlets: Map<String, String>? = null
         @CommandLine.Option(
-            names = ["--genletFullQualified"],
+            names = ["--genlet_full_qualified"],
             paramLabel = "GENLET_FULL_QUALIFIED",
             description = ["path to a Genlet's JAR archive and full qualified name of the Genlet class to load"]
         )
@@ -69,6 +69,14 @@ internal object CommandLine {
 
             field = value
         }
+
+    /* Commandline option for a path to a file in which line count information will be stored */
+    @CommandLine.Option(
+        names = ["--line_count_file_path"],
+        paramLabel = "LINE_COUNT_FILE_PATH",
+        description = ["path to a file in which line count information will be stored"]
+    )
+    var parameterLineCountFile: String? = null
 
     /**
      * Get paths to all Genlets. The key of the map is the Genlet path and the value is the name of the explicitly
