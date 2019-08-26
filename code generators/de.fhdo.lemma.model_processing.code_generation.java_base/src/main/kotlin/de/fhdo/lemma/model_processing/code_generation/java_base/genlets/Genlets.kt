@@ -239,11 +239,11 @@ private fun createGenletClassLoaders(genletFilePaths: Iterable<String>) : Map<St
  */
 private fun String.inferDefaultGenletClassname() : String {
     val inferredClasspathFromFilePath = listOf(
-                // Pattern with version, e.g., org.example.my_genlet-0.0.1-SNAPSHOT.jar
-                Pattern.compile("(?<classpath>.*?)\\-.*\\.jar"),
+            // Pattern with version, e.g., org.example.my_genlet-0.0.1-SNAPSHOT.jar
+            Pattern.compile("(?<classpath>.*?)\\-.*\\.jar"),
 
-                // Pattern without version, e.g., org.example.my_genlet.jar
-                Pattern.compile("(?<classpath>.*?)\\.jar")
+            // Pattern without version, e.g., org.example.my_genlet.jar
+            Pattern.compile("(?<classpath>.*?)\\.jar")
         ).map { it.matcher(this.asFile().name) }
         .find { it.matches() }
         ?.group("classpath") ?: ""
