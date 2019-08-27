@@ -2,7 +2,7 @@
 
 ![Version](https://img.shields.io/github/tag/seelabfhdo/lemma?label=version) ![Eclipse]( https://img.shields.io/badge/eclipse-%3E%3D%202018--12-green) ![License](https://img.shields.io/github/license/seelabfhdo/lemma)
 
-This repository contains the modeling languages, model transformations, and related artifacts of the Language Ecosystem for Modeling Microservice Architecture (LEMMA). LEMMA provides means for the model-driven development of distributed software systems following the Microservice Architecture approach. The conceptual foundations of the languages are described in several publications [1&ndash;3].
+This repository contains the modeling languages, model transformations, and related artifacts of the Language Ecosystem for Modeling Microservice Architecture (LEMMA). LEMMA provides means for the model-driven development of distributed software systems following the Microservice Architecture approach. The conceptual foundations of the languages are described in several publications [1&ndash;3]. For information about the current version of LEMMA refer to the [Changelog](https://github.com/SeelabFhdo/ddmm/blob/master/CHANGELOG.md).
 
 Please follow these steps if you want to try out LEMMA on the basis of the case study example described in [3]:
 1. The easiest way to try out LEMMA is to download one of the prepackaged [releases](https://github.com/SeelabFhdo/lemma/releases) for your OS. Then clone the repository to your harddrive, run the ``eclipse`` executable, and go to step 11.  
@@ -21,11 +21,11 @@ Please follow these steps if you want to try out LEMMA on the basis of the case 
 12. In the popup dialog, select the folder of the cloned repository as ``Import Source`` and deselect all entries in the folder list, except the one for the ``Example``.
 13. Click the ``Finish`` button and wait until the importing has completed.
 
-The example models are now available in the Project Explorer of the Eclipse runtime environment under the project "Example". The folders "domain", "microservices", "operation", and "technology" contain the complete models of the case study as described in [3].
+The example models are now available in the Project Explorer of the Eclipse runtime environment under the project "Example". The folders "domain", "microservices", "operation", and "technology" contain the complete models of the case study as described in [3]. Further example models may be found in the repository folders ``Example-2`` and ``Example-3``. Simply execute step 11 repeatedly in order to import them into your running Eclipse instance with the LEMMA plugins.
 
 ## References
-[1] F. Rademacher, J. Sorgalla, S. Sachweh, and A. Zündorf, "A model-driven workflow for distributed microservice development," in Proceedings of the 34th Symposium On Applied Computing (SAC). ACM, 2019, in press.
+[1] F. Rademacher, J. Sorgalla, S. Sachweh, and A. Zündorf, "A model-driven workflow for distributed microservice development," in Proceedings of the 34th Symposium On Applied Computing (SAC). ACM, 2019.
 
-[2] F. Rademacher, J. Sorgalla, S. Sachweh, and A. Zündorf, "Viewpoint-specific model-driven microservice development with interlinked modeling languages,” in Proceedings of the 13th International Conference on Service-Oriented System Engineering (SOSE). IEEE, 2019, in press.
+[2] F. Rademacher, J. Sorgalla, S. Sachweh, and A. Zündorf, "Viewpoint-specific model-driven microservice development with interlinked modeling languages,” in Proceedings of the 13th International Conference on Service-Oriented System Engineering (SOSE). IEEE, 2019.
 
-[3] F. Rademacher, S. Sachweh, and A. Zündorf, "Aspect-oriented Modeling of Technology Heterogeneity in Microservice Architecture," in Proceedings of the 3rd International Conference on Software Architecture (ICSA; previously WICSA). IEEE, 2019, in press.
+[3] F. Rademacher, S. Sachweh, and A. Zündorf, "Aspect-oriented Modeling of Technology Heterogeneity in Microservice Architecture," in Proceedings of the 3rd International Conference on Software Architecture (ICSA; previously WICSA). IEEE, 2019.

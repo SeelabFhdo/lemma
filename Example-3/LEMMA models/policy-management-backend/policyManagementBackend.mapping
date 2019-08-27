@@ -1,0 +1,212 @@
+import technology from "../technology/java.technology" as java
+import technology from "../technology/eadr.technology" as eadr
+import technology from "../technology/map.technology" as map
+import microservices from "policyManagementBackend.services" as policyManagementBackendServices
+
+@technology(java)
+@technology(eadr)
+type policyManagementBackendServices::policyManagementBackend::customer.CustomerId {
+	aspects {
+		java::_aspects.Embeddable;
+		eadr::_aspects.MADR(
+			value = 2,
+			title = "Separation between domain data model and infrastructure data model",
+			contextAndProblem = "
+				JPA / Spring Data annotations usually belong into a separate data model in the
+				infrastructure layer
+			",
+			alternatives = "
+				Keep the JPA / Spring Data annotations in the domain data model,
+				Implement a separate data model with JPA / Spring Data annotations in the
+				infrastructure layer
+			",
+			chosenAlternative = "Keep the JPA / Spring Data annotations in the domain data model",
+			justification = "
+				The relatively small size of this application does not warrant the additional
+				complexity (yet).
+			"
+		);
+	}
+}
+
+@technology(java)
+type policyManagementBackendServices::policyManagementBackend::policy.InsuringAgreementEntity {
+	aspects { java::_aspects.Table("insuringagreements"); }
+
+	agreementItems { aspects { java::_aspects.OneToMany; } }
+}
+
+@technology(java)
+type policyManagementBackendServices::policyManagementBackend::policy.InsuringAgreementItem {
+	aspects { java::_aspects.Table("insuranceagreementitems"); }
+}
+
+@technology(java)
+type policyManagementBackendServices::policyManagementBackend::policy.MoneyAmount {
+	aspects { java::_aspects.Embeddable; }
+
+	amount : java::_types.BigDecimal;
+	currency : java::_types.Currency;
+}
+
+@technology(java)
+@technology(eadr)
+type policyManagementBackendServices::policyManagementBackend::policy.PolicyAggregateRoot {
+	aspects {
+		java::_aspects.Table("insurancepolicies");
+		eadr::_aspects.MADR(
+			value = 2,
+			title = "Separation between domain data model and infrastructure data model",
+			contextAndProblem = "
+				JPA / Spring Data annotations usually belong into a separate data model in the
+				infrastructure layer
+			",
+			alternatives = "
+				Keep the JPA / Spring Data annotations in the domain data model,
+				Implement a separate data model with JPA / Spring Data annotations in the
+				infrastructure layer
+			",
+			chosenAlternative = "Keep the JPA / Spring Data annotations in the domain data model",
+			justification = "
+				The relatively small size of this application does not warrant the additional
+				complexity (yet).
+			"
+		);
+	}
+
+	id { aspects { java::_aspects.EmbeddedId; } }
+	FIELD_CREATION_DATE { aspects { java::_aspects.Constant; } }
+	policyPeriod { aspects { java::_aspects.Embedded; } }
+	policyType { aspects { java::_aspects.Embedded; } }
+	insuringAgreement { aspects { java::_aspects.OneToOne; } }
+	customerId {
+		aspects {
+			java::_aspects.Embedded;
+			java::_aspects.AttributeOverrideColumn(name="id", column="customerId");
+		}
+	}
+	policyLimit {
+		aspects {
+			java::_aspects.Embedded;
+			java::_aspects.AttributeOverrideColumn(name="amount", column="limitAmount");
+			java::_aspects.AttributeOverrideColumn(name="currency", column="limitCurrency");
+		}
+	}
+	insurancePremium {
+		aspects {
+			java::_aspects.Embedded;
+			java::_aspects.AttributeOverrideColumn(name="amount", column="premiumAmount");
+			java::_aspects.AttributeOverrideColumn(name="currency", column="premiumCurrency");
+		}
+	}
+}
+
+@technology(java)
+type policyManagementBackendServices::policyManagementBackend::policy.PolicyId {
+	aspects { java::_aspects.Embeddable; }
+}
+
+@technology(java)
+type policyManagementBackendServices::policyManagementBackend::policy.PolicyPeriod {
+	aspects { java::_aspects.Embeddable; }
+}
+
+@technology(java)
+type policyManagementBackendServices::policyManagementBackend
+	::domainInfrastructure.CustomerCoreService {
+	customerCoreBaseURL { aspects { java::_aspects.Value("${customercore.baseURL}"); } }
+	apiKeyHeader { aspects { java::_aspects.Value("${apikey.header}"); } }
+	apikeyValue { aspects { java::_aspects.Value("${apikey.value}"); } }
+}
+
+@technology(java)
+type policyManagementBackendServices::policyManagementBackend
+	::domainInfrastructure.PolicyRepository {
+	op findFirstByCustomerIdOrderByCreationDateDesc {
+		return type { aspects { java::_aspects.Optional; } }
+	}
+}
+
+@technology(java)
+type policyManagementBackendServices::policyManagementBackend
+	::domainInfrastructure.RiskManagementService {
+	queueName { aspects { java::_aspects.Value("${riskmanagement.queueName}"); } }
+}
+
+@technology(java)
+type policyManagementBackendServices::policyManagementBackend::customer_dtos.CustomerDto {
+	aspects { java::_aspects.ResourceSupport; }
+
+	customerProfile {
+		aspects { java::_aspects.JsonUnwrapped; }
+	}
+}
+
+@technology(java)
+type policyManagementBackendServices::policyManagementBackend::customer_dtos.CustomerProfileDto {
+	currentAddress { aspects { java::_aspects.JsonUnwrapped; } }
+}
+
+@technology(java)
+type policyManagementBackendServices::policyManagementBackend::customer_dtos.CustomersDto {
+	aspects { java::_aspects.ResourceSupport; }
+}
+
+@technology(java)
+type policyManagementBackendServices::policyManagementBackend
+	::customer_dtos.PaginatedCustomerResponseDto {
+	aspects { java::_aspects.ResourceSupport; }
+}
+
+@technology(java)
+type policyManagementBackendServices::policyManagementBackend::policy_dtos.CreatePolicyRequestDto {
+	customerId { aspects { java::_aspects.Valid; } }
+	policyPeriod { aspects { java::_aspects.Valid; } }
+	policyType { aspects { java::_aspects.Valid; } }
+	policyLimit { aspects { java::_aspects.Valid; } }
+	insurancePremium { aspects { java::_aspects.Valid; } }
+	insuringAgreement { aspects { java::_aspects.Valid; } }
+}
+
+@technology(java)
+type policyManagementBackendServices::policyManagementBackend::policy_dtos.InsuringAgreementDto {
+	agreementItems { aspects { java::_aspects.NotNull; } }
+}
+
+@technology(java)
+type policyManagementBackendServices::policyManagementBackend
+	::policy_dtos.InsuringAgreementItemDto {
+	title { aspects { java::_aspects.Valid; } }
+	description { aspects { java::_aspects.Valid; } }
+}
+
+@technology(java)
+type policyManagementBackendServices::policyManagementBackend::policy_dtos.MoneyAmountDto {
+	amount : java::_types.BigDecimal {
+		aspects {
+			java::_aspects.DecimalMax(value="1000000000000");
+			java::_aspects.DecimalMin(value="0");
+		}
+	}
+}
+
+@technology(java)
+@technology(map)
+type policyManagementBackendServices::policyManagementBackend
+	::policy_dtos.PaginatedPolicyResponseDto {
+	aspects {
+		java::_aspects.ResourceSupport;
+		map::_aspects.Pagination;
+	}
+}
+
+@technology(java)
+type policyManagementBackendServices::policyManagementBackend::policy_dtos.PolicyDto {
+	customer : java::_types.Object;
+	expandable {
+		aspects {
+			java::_aspects.Array;
+			java::_aspects.JsonProperty("_expandable");
+		}
+	}
+}

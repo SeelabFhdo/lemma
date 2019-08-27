@@ -1,0 +1,59 @@
+import microservices from "customerSelfServiceBackend.services" as customerSelfServiceBackend
+import technology from "../technology/docker.technology" as containerTechnology
+import technology from "../technology/java.technology" as protocolTechnology
+
+@technology(containerTechnology)
+@technology(protocolTechnology)
+container CustomerSelfServiceBackendContainer
+	deployment technology containerTechnology::_deployment.Docker
+	deploys customerSelfServiceBackend::com.lakesidemutual.customerselfservice.CustomerSelfServiceBackend {
+	aspects {
+		containerTechnology::_aspects.Dockerfile(
+			'
+			FROM maven:3.6.1-jdk-8-alpine AS build
+			ARG BASE=/usr/src/app
+			COPY pom.xml ${BASE}/
+			COPY src ${BASE}/src
+			RUN mvn -f ${BASE}/pom.xml install -DskipTests
+
+			FROM openjdk:8-jdk-alpine
+			COPY --from=build /usr/src/app/target/dependency/BOOT-INF/lib/* /app/lib/
+			COPY --from=build /usr/src/app/target/dependency/META-INF /app/META-INF
+			COPY --from=build /usr/src/app/target/dependency/BOOT-INF/classes /app
+
+			EXPOSE 8080
+			ENTRYPOINT ["java","-cp","app:app/lib/*","com.lakesidemutual.customerselfservice.CustomerSelfServiceApplication"]
+			'
+		);
+
+		containerTechnology::_aspects.ComposePart(
+			'
+			customer-self-service-backend:
+			    build: customer-self-service-backend
+			    image: lakesidemutual/customer-self-service-backend
+			    depends_on:
+			      - customer-core
+			    environment:
+			      - "CUSTOMERCORE_BASEURL=http://customer-core:8110"
+			      - "SPRING_BOOT_ADMIN_CLIENT_URL=http://spring-boot-admin:9000"
+			    ports:
+			      - "8080:8080"
+			    volumes:
+			      - "maven_repo:/root/.m2"
+			'
+		);
+	}
+
+	default values {
+		adminClientUrl = "http://localhost:9000"
+		endpointsWebExposureInclude = "*"
+		infoGitMode = "full"
+
+		apiKeyHeader = "Authorization"
+		apiKeyValue = "9b93ebe19e16bbbd"
+
+		basic endpoints {
+			protocolTechnology::_protocols.rest: "http://localhost:8080";
+		}
+	}
+}

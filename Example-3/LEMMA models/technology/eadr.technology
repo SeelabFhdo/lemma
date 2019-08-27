@@ -1,0 +1,12 @@
+technology eadr {
+	service aspects {
+		aspect MADR for domainOperations, types {
+			int value;
+			string title;
+			string contextAndProblem;
+			string alternatives;
+			string chosenAlternative;
+			string justification;
+		}
+	}
+}

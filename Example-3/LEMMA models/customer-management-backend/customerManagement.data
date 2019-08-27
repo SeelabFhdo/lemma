@@ -1,0 +1,117 @@
+context customer {
+	structure CustomerId<valueObject> {
+		string id
+	}
+}
+
+context customer_dtos {
+	structure AddressDto {
+		string streetAddress,
+		string postalCode,
+		string city
+	}
+
+	list Addresses { AddressDto d }
+
+	structure CustomerDto {
+		string customerId,
+		CustomerProfileDto customerProfile
+	}
+
+	list Customers { CustomerDto d }
+
+	structure CustomerProfileDto {
+		string firstname,
+		string lastname,
+		date birthday,
+		AddressDto currentAddress,
+		string email,
+		string phoneNumber,
+		Addresses moveHistory
+	}
+
+	structure CustomersDto {
+		Customers customers
+	}
+
+	structure PaginatedCustomerResponseDto {
+		string filter,
+		int limit,
+		int offset,
+		int size,
+		Customers customers
+	}
+
+	structure MessageDto {
+		string id,
+		date ^date,
+		string customerId,
+		string username <neverEmpty>,
+		string content <neverEmpty>,
+		boolean sentByOperator
+	}
+}
+
+context interactionLog {
+	structure InteractionEntity<entity> {
+		string id <identifier>,
+		date ^date,
+		string content,
+		boolean sentByOperator
+	}
+
+	structure InteractionLogAggregateRoot<entity, aggregate> {
+		immutable string customerId <identifier>,
+		immutable string username,
+		string lastAcknowledgedInteractionId,
+		immutable Interactions interactions,
+
+		function int getNumberOfUnacknowledgedInteractions
+	}
+
+	list Interactions { InteractionEntity i }
+
+	structure InteractionLogService<domainService> {
+		hide domainInfrastructure.InteractionLogRepository interactionLogRepository,
+		function Notifications getNotifications
+	}
+
+	structure Notification<valueObject> {
+		immutable string customerId,
+		immutable string username,
+		immutable int count
+	}
+
+	list Notifications { Notification n }
+}
+
+context interactionLog_dtos {
+	structure InteractionAcknowledgementDto {
+		string lastAcknowledgedInteractionId <neverEmpty>
+	}
+
+	structure NotificationDto {
+		string customerId,
+		string username,
+		int count
+	}
+}
+
+context domainInfrastructure {
+	structure CustomerCoreService<infrastructureService> {
+		string customerCoreBaseURL,
+		string apiKeyHeader,
+		string apiKeyValue,
+
+		function customer_dtos.CustomerDto getCustomer(customer.CustomerId customerId),
+		function customer_dtos.PaginatedCustomerResponseDto getCustomers(string filter, int limit,
+			int offset),
+		function customer_dtos.CustomerDto updateCustomer(customer.CustomerId customerId,
+			 customer_dtos.CustomerProfileDto customerProfile)
+	}
+
+	structure InteractionLogRepository<repository> {
+		immutable interactionLog.InteractionLogAggregateRoot interactionLogAggregateAggregate,
+		immutable string customerId
+	}
+}

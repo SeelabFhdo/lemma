@@ -1,0 +1,246 @@
+import datatypes from "policyManagementBackend.data" as policyManagementBackend
+import technology from "../technology/java.technology" as java
+import technology from "../technology/map.technology" as map
+
+@technology(java)
+@technology(map)
+@java::_aspects.ApplicationName("Policy Management Backend")
+@java::_aspects.JacksonConfiguration(INDENT_OUTPUT=true, defaultPropertyInclusion="NON_NULL")
+@java::_aspects.DatasourceConfiguration(
+	url="jdbc:h2:file:./policymanagement",
+	username="sa",
+	password="sa",
+	driverClassName="org.h2.Driver"
+)
+@java::_aspects.HibernateConfiguration("create-drop")
+@java::_aspects.JpaShowSql
+@java::_aspects.CustomProperty(name="customercore.baseURL", value="http://localhost:8110")
+@java::_aspects.CustomProperty(
+	name="riskmanagement.stompBrokerBindAddress",
+	value="stomp://localhost:61613"
+)
+@java::_aspects.CustomProperty(
+	name="riskmanagement.tcpBrokerBindAddress",
+	value="tcp://localhost:61616"
+)
+@java::_aspects.CustomProperty(name="riskmanagement.queueName", value="newpolicies")
+functional microservice com.lakesidemutual.policymanagement.PolicyManagementBackend {
+	@endpoints(java::_protocols.rest: "/customers";)
+	@map::_aspects.InformationHolderResource
+	@map::_aspects.MasterDataHolder
+	interface customerInformationHolder {
+		---
+		Get all customers
+
+		@param filter search terms to filter the customers by name
+		@param limit the maximum number of customers per page
+		@param offset the offset of the page's first customer
+		---
+		@java::_aspects.GetMapping
+		getCustomers(
+			@java::_aspects.RequestParam(value="filter")
+			sync filter? : string,
+
+			@java::_aspects.RequestParam(value="limit", defaultValue="10")
+			sync limit? : int,
+
+			@java::_aspects.RequestParam(value="offset", defaultValue="0")
+			sync offset? : int,
+
+			@java::_aspects.ResponseEntity
+			sync out paginatedResponseOut
+				: policyManagementBackend::customer_dtos.PaginatedCustomerResponseDto
+		);
+
+		internal createPaginatedCustomerResponseDto(
+			sync filter : string,
+			sync limit : int,
+			sync offset : int,
+			sync size : int,
+			sync customerDtos : policyManagementBackend::customer_dtos.Customers,
+			sync out paginatedCustomerResponseDto
+				: policyManagementBackend::customer_dtos.PaginatedCustomerResponseDto
+		);
+
+		---
+		Get customer with a given customer id.
+
+		@required customerIdDto the customer's unique id
+		---
+		@java::_aspects.GetMapping("/{customerIdDto}")
+		getCustomer(
+			@java::_aspects.PathVariable
+			sync customerIdDto : policyManagementBackend::customer_dtos.CustomerIdDto,
+
+			@java::_aspects.ResponseEntity
+			sync out customer : policyManagementBackend::customer_dtos.CustomerDto,
+
+			@java::_aspects.ResponseStatus("NOT_FOUND")
+			sync out fault customerNotFound : string
+		);
+
+		---
+		Get a customer's policy history.
+
+		@required customerIdDto the customer's unique id
+		@param expand a comma-separated list of the fields that should be expanded in the response
+		---
+		@java::_aspects.GetMapping("/{customerIdDto}/policy-history")
+		getPolicyHistory(
+			@java::_aspects.PathVariable
+			sync customerIdDto : policyManagementBackend::customer_dtos.CustomerIdDto,
+
+			@java::_aspects.RequestParam(value="expand")
+			sync expand? : string,
+
+			@java::_aspects.ResponseEntity
+			sync out policyDtos : policyManagementBackend::policy_dtos.Policies
+		);
+
+		---
+		Get a customer's active policy.
+
+		@required customerIdDto the customer's unique id
+		@param expand a comma-separated list of the fields that should be expanded in the response
+		---
+		@java::_aspects.GetMapping
+		getActivePolicy(
+			@java::_aspects.PathVariable
+			sync customerIdDto : policyManagementBackend::customer_dtos.CustomerIdDto,
+
+			@java::_aspects.RequestParam(value="expand")
+			sync expand? : string,
+
+			@java::_aspects.ResponseEntity
+			sync out policyDto : policyManagementBackend::policy_dtos.PolicyDto
+		);
+
+		internal createPolicyDto(
+			sync policy : policyManagementBackend::policy.PolicyAggregateRoot,
+			sync expand : string,
+			sync out policyDto : policyManagementBackend::policy_dtos.PolicyDto
+		);
+	}
+
+	@endpoints(java::_protocols.rest: "/policies";)
+	@map::_aspects.InformationHolderResource
+	@map::_aspects.MasterDataHolder
+	interface policyInformationHolder {
+		---
+		Create a new policy.
+
+		@required createPolicyDto the policy that is to be added
+		---
+		@java::_aspects.PostMapping
+		createPolicy(
+			@java::_aspects.Valid
+			@java::_aspects.RequestBody
+			sync createPolicyDto : policyManagementBackend::policy_dtos.CreatePolicyRequestDto,
+
+			sync request : java::_types.HttpServletRequest,
+
+			@java::_aspects.ResponseEntity
+			sync out policyDto : policyManagementBackend::policy_dtos.PolicyDto,
+
+			@java::_aspects.ResponseStatus("FAILED_DEPENDENCY")
+			sync out fault customerNotFound : string
+		);
+
+		internal createPolicyDtos(
+			sync policies : policyManagementBackend::policy.Policies,
+			sync expand : string,
+			sync result : policyManagementBackend::policy_dtos.Policies
+		);
+
+		internal createPaginatedPolicyResponseDto(
+			sync limit : int,
+			sync offset : int,
+			sync expand : string,
+			sync szie : int,
+			sync policyDtos : policyManagementBackend::policy_dtos.Policies,
+			sync out paginatedPolicyResponseDto
+				: policyManagementBackend::policy_dtos.PaginatedPolicyResponseDto
+		);
+
+		---
+		Get all policies, newest first.
+
+		@param limit the maximum number of policies per page
+		@param offset the offset of the page's first policy
+		@param expand a comma-separated list of the fields that should be expanded in the response
+		---
+		@java::_aspects.GetMapping
+		getPolicies(
+			@java::_aspects.RequestParam(value="limit", defaultValue="10")
+			sync limit? : int,
+
+			@java::_aspects.RequestParam(value="offset", defaultValue="0")
+			sync offset? : int,
+
+			@java::_aspects.RequestParam(value="expand")
+			sync expand? : string,
+
+			@java::_aspects.ResponseEntity
+			sync out paginatedPolicyResponse
+				: policyManagementBackend::policy_dtos.PaginatedPolicyResponseDto
+		);
+
+		---
+		Get a single policy.
+
+		@required policyId the policy's unique id
+		@param expand a comma-separated list of the fields that should be expanded in the response
+		---
+		@endpoints(java::_protocols.rest: "/{policyId}";)
+		@java::_aspects.GetMapping
+		getPolicy(
+			@java::_aspects.PathVariable
+			sync policyId : policyManagementBackend::policy.PolicyId,
+
+			@java::_aspects.RequestParam(value="expand")
+			sync expand? : string,
+
+			@java::_aspects.ResponseEntity
+			sync out response : policyManagementBackend::policy_dtos.PolicyDto
+		);
+	}
+
+	@endpoints(java::_protocols.rest: "/riskfactor";)
+	@map::_aspects.ComputationFunction
+	interface riskComputation {
+		---
+		Computes the risk factor for a given customer.
+
+		@required riskFactorRequest the request containing relevant customer attributes (e.g.,
+									postal code, birthday)
+		---
+		@endpoints(java::_protocols.rest: "/computer";)
+		@java::_aspects.PostMapping
+		computeRiskFactor(
+			@java::_aspects.Valid
+			@java::_aspects.RequestBody
+			sync riskFactorRequest : policyManagementBackend::risk_dtos.RiskFactorRequestDto
+		);
+
+		internal getAge(
+			sync birthday : date,
+			sync out age : int
+		);
+
+		internal doRiskFactorComputation(
+			sync age : int,
+			sync postalCode : string,
+			sync out factor : int
+		);
+
+		internal computeAgeGroupRiskFactor(
+			sync age : int,
+			sync out factor : int
+		);
+
+		internal computeLocalityRiskFactor(
+			sync postalCodeStr : string,
+			sync out factor : int
+		);
+	}
+}

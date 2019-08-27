@@ -1,0 +1,71 @@
+import microservices from "policyManagementBackend.services" as policyManagementBackendServices
+import technology from "../technology/docker.technology" as containerTechnology
+import technology from "../technology/java.technology" as protocolTechnology
+import technology from "../technology/activemq.technology" as activeMq
+
+@technology(containerTechnology)
+@technology(protocolTechnology)
+container CustomerManagementContainer deployment technology containerTechnology::_deployment.Docker
+	deploys policyManagementBackendServices
+		::com.lakesidemutual.policymanagement.PolicyManagementBackend {
+	aspects {
+		containerTechnology::_aspects.Dockerfile(
+			'
+			FROM maven:3.6.1-jdk-8-alpine AS build
+			ARG BASE=/usr/src/app
+			COPY pom.xml ${BASE}/
+			COPY src ${BASE}/src
+			RUN mvn -f ${BASE}/pom.xml install -DskipTests
+
+			FROM openjdk:8-jdk-alpine
+			COPY --from=build /usr/src/app/target/dependency/BOOT-INF/lib/* /app/lib/
+			COPY --from=build /usr/src/app/target/dependency/META-INF /app/META-INF
+			COPY --from=build /usr/src/app/target/dependency/BOOT-INF/classes /app
+
+			EXPOSE 8090
+			ENTRYPOINT ["java","-cp","app:app/lib/*","com.lakesidemutual.policymanagement.PolicyManagementApplication"]
+			'
+		);
+
+		containerTechnology::_aspects.ComposePart(
+			'
+			policy-management-backend:
+			    build: policy-management-backend
+			    image: lakesidemutual/policy-management-backend
+			    depends_on:
+			      - customer-core
+			    environment:
+			      - "CUSTOMERCORE_BASEURL=http://customer-core:8110"
+			      - "SPRING_BOOT_ADMIN_CLIENT_URL=http://spring-boot-admin:9000"
+			    ports:
+			      - "8090:8090"
+			      - "61613:61613"
+			    volumes:
+			      - "maven_repo:/root/.m2"
+			'
+		);
+	}
+
+	default values {
+		adminClientUrl = "http://localhost:9000"
+		endpointsWebExposureInclude = "*"
+		infoGitMode = "full"
+
+		apiKeyHeader = "Authorization"
+		apiKeyValidKey = "999ab497f8ec1052"
+
+		basic endpoints {
+			protocolTechnology::_protocols.rest: "http://localhost:8090";
+		}
+	}
+}
+
+@technology(activeMq)
+activeMqBroker is activeMq::_infrastructure.activeMQ
+	used by services policyManagementBackendServices
+		::com.lakesidemutual.policymanagement.PolicyManagementBackend {
+	default values {
+		user = "queueuser"
+		password = "secret"
+	}
+}

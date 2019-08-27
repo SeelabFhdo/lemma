@@ -1,0 +1,94 @@
+import microservices from "customerSelfServiceBackend.services" as selfServiceBackendServices
+import technology from "../technology/java.technology" as java
+import technology from "../technology/lakesideMutual.technology" as lakesideMutual
+
+@technology(java)
+type selfServiceBackendServices::customerSelfServiceBackend::customer.Address {
+	aspects { java::_aspects.Table("addresses"); }
+}
+
+@technology(java)
+type selfServiceBackendServices::customerSelfServiceBackend::customer.CustomerId {
+	aspects { java::_aspects.Embeddable; }
+
+	op random { aspects { java::_aspects.static; } }
+}
+
+@technology(java)
+type selfServiceBackendServices::customerSelfServiceBackend::identityAccess.UserLogin {
+	aspects { java::_aspects.Table("user_logins"); }
+
+	customerId {
+		aspects {
+			java::_aspects.Embedded;
+			java::_aspects.AttributeOverrideColumn(name="id", column="customerId");
+		}
+	}
+}
+
+@technology(java)
+type selfServiceBackendServices::customerSelfServiceBackend::identityAccess.UserSecurityDetails {
+	aspects { java::_aspects.UserDetails; }
+
+	accountNonExpired { aspects { java::_aspects.JsonIgnore; } }
+	accountNonLocked { aspects { java::_aspects.JsonIgnore; } }
+	authorities : java::_types.GrantedAuthorities;
+	credentialsNonExpired { aspects { java::_aspects.JsonIgnore; } }
+	enabled { aspects { java::_aspects.JsonIgnore; } }
+	password { aspects { java::_aspects.JsonIgnore; } }
+}
+
+@technology(java)
+type selfServiceBackendServices::customerSelfServiceBackend::identityAccess.UserDetailsServiceImpl {
+	op loadUserByUsername {
+		return type { aspects { java::_aspects.UserDetails; } }
+	}
+}
+
+@technology(java)
+type selfServiceBackendServices::customerSelfServiceBackend
+	::domainInfrastructure.CustomerCoreService {
+	customerCoreBaseURL { aspects { java::_aspects.Value("${customercore.baseURL}"); } }
+	apiKeyHeader { aspects { java::_aspects.Value("${apikey.header}"); } }
+	apiKeyValue { aspects { java::_aspects.Value("${apikey.value}"); } }
+
+	op changeAddress {
+		return type { aspects { java::_aspects.ResponseEntity; } }
+	}
+
+	op getCitiesForPostalCode {
+		return type { aspects { java::_aspects.ResponseEntity; } }
+	}
+}
+
+@technology(java)
+type selfServiceBackendServices::customerSelfServiceBackend::customer_dtos.AddressDto {
+	op create { aspects { java::_aspects.static; } }
+}
+
+@technology(java)
+type selfServiceBackendServices::customerSelfServiceBackend::customer_dtos.CustomerProfileDto {
+	currentAddress { aspects { java::_aspects.JsonUnwrapped; } }
+}
+
+@technology(java, typedef=true)
+@technology(lakesideMutual)
+type selfServiceBackendServices::customerSelfServiceBackend
+	::customer_dtos.CustomerProfileUpdateRequestDto {
+	birthday { aspects { java::_aspects.JsonFormat("yyyy-MM-dd"); } }
+	email { aspects { java::_aspects.Email; } }
+	phoneNumber { aspects { lakesideMutual::_aspects.PhoneNumber; } }
+}
+
+@technology(java, typedef=true)
+@technology(lakesideMutual)
+type selfServiceBackendServices::customerSelfServiceBackend
+	::customer_dtos.CustomerRegistrationRequestDto {
+	birthday { aspects { java::_aspects.JsonFormat("yyyy-MM-dd"); } }
+	phoneNumber { aspects { lakesideMutual::_aspects.PhoneNumber; } }
+}
+
+@technology(java)
+type selfServiceBackendServices::customerSelfServiceBackend::identityAccess_dtos.SignupRequestDto {
+	email { aspects { java::_aspects.Email; } }
+}

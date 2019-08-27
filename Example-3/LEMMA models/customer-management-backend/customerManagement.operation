@@ -1,0 +1,64 @@
+import microservices from "customerManagement.services" as customerManagementServices
+import technology from "../technology/docker.technology" as containerTechnology
+import technology from "../technology/java.technology" as protocolTechnology
+
+@technology(containerTechnology)
+@technology(protocolTechnology)
+container CustomerManagementContainer deployment technology containerTechnology::_deployment.Docker
+	deploys customerManagementServices::com.lakesidemutual.customermanagement.CustomerManagement {
+	aspects {
+		containerTechnology::_aspects.Dockerfile(
+			'
+			FROM maven:3.6.1-jdk-8-alpine AS build
+			ARG BASE=/usr/src/app
+			COPY pom.xml ${BASE}/
+			COPY src ${BASE}/src
+			RUN mvn -f ${BASE}/pom.xml install -DskipTests
+
+			FROM openjdk:8-jdk-alpine
+			COPY --from=build /usr/src/app/target/dependency/BOOT-INF/lib/* /app/lib/
+			COPY --from=build /usr/src/app/target/dependency/META-INF /app/META-INF
+			COPY --from=build /usr/src/app/target/dependency/BOOT-INF/classes /app
+
+			EXPOSE 8100
+			ENTRYPOINT ["java","-cp","app:app/lib/*","com.lakesidemutual.customermanagement.CustomerManagementApplication"]
+			'
+		);
+
+		containerTechnology::_aspects.ComposePart(
+			'
+			customer-management-backend:
+			    build: customer-management-backend
+			    image: lakesidemutual/customer-management-backend
+			    depends_on:
+			      - customer-core
+			    environment:
+			      - "CUSTOMERCORE_BASEURL=http://customer-core:8110"
+			      - "SPRING_BOOT_ADMIN_CLIENT_URL=http://spring-boot-admin:9000"
+			    ports:
+			      - "8100:8100"
+			    volumes:
+			      - "maven_repo:/root/.m2"
+			'
+		);
+	}
+
+	default values {
+		adminClientUrl = "http://localhost:9000"
+		endpointsWebExposureInclude = "*"
+		infoGitMode = "full"
+
+		apiKeyHeader = "Authorization"
+		apiKeyValidKey = "9b93ebe19e16bbbd"
+
+		rateLimitPerMinute = 60
+
+		tokenHeader = "X-Auth-Token"
+		tokenSecret = "so-secret"
+		tokenExpiration = 604800
+
+		basic endpoints {
+			protocolTechnology::_protocols.rest: "http://localhost:8100";
+		}
+	}
+}

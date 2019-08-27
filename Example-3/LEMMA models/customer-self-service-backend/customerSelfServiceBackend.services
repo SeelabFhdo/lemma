@@ -1,0 +1,143 @@
+import datatypes from "customerSelfServiceBackend.data" as customerSelfServiceBackend
+import technology from "../technology/java.technology" as java
+import technology from "../technology/map.technology" as map
+
+@technology(java)
+@technology(map)
+@java::_aspects.ApplicationName("Customer Self-Service Backend")
+@java::_aspects.JacksonConfiguration(INDENT_OUTPUT=true, defaultPropertyInclusion="NON_NULL")
+@java::_aspects.DatasourceConfiguration(
+	url="jdbc:h2:file:./customerselfservice",
+	username="sa",
+	password="sa",
+	driverClassName="org.h2.Driver"
+)
+@java::_aspects.HibernateConfiguration("create-drop")
+@java::_aspects.CustomProperty(name="customercore.baseURL", value="http://localhost:8110")
+functional microservice com.lakesidemutual.customerselfservice.CustomerSelfServiceBackend {
+	@endpoints(java::_protocols.rest: "/auth";)
+	interface authenticationController {
+		---
+		Authenticate a user based on a given email address and password.
+
+		@required authenticationRequest the email and password used to authenticate the user
+		---
+		@java::_aspects.PostMapping
+		authenticationRequest(
+			@java::_aspects.RequestBody
+			sync authenticationRequest
+				: customerSelfServiceBackend::identityAccess_dtos.AuthenticationRequestDto,
+
+			@java::_aspects.ResponseEntity
+			sync out authenticationResponse
+				: customerSelfServiceBackend::identityAccess_dtos.AuthenticationResponseDto,
+
+			sync out fault authenticationException : java::_types.AuthenticationException
+		);
+
+		---
+		Create a new user.
+
+		@required registration the email and password used to create a new user
+		---
+		@endpoints(java::_protocols.rest: "/signup";)
+		@java::_aspects.PostMapping("/signup")
+		signupUser(
+			@java::_aspects.Valid
+			@java::_aspects.RequestBody
+			sync registration : customerSelfServiceBackend::identityAccess_dtos.SignupRequestDto,
+
+			@java::_aspects.ResponseEntity
+			sync out userResponse : customerSelfServiceBackend::identityAccess_dtos.UserResponseDto,
+
+			sync out fault userAlreadyExists : string
+		);
+	}
+
+	@endpoints(java::_protocols.rest: "/cities";)
+	interface cityStaticDataHolder {
+		---
+		Get the cities for a particular postal code.
+
+		@required postcalCode the postal code
+		---
+		@java::_aspects.GetMapping("/{postalCode}")
+		getCitiesForPostalCode(
+			@java::_aspects.PathVariable
+			sync postcalCode : string,
+
+			@java::_aspects.ResponseEntity
+			sync out result : customerSelfServiceBackend::city_dtos.CitiesResponseDto
+		);
+	}
+
+	@endpoints(java::_protocols.rest: "/customers";)
+	interface customerInformationHolder {
+		---
+		Change a customer's address.
+
+		@required customerId the customer's unique id
+		@required requestDto the customer's new address
+		---
+		@java::_aspects.PutMapping("/{customerId}/address")
+		changeAddress(
+			@java::_aspects.PathVariable
+			sync customerId : customerSelfServiceBackend::customer.CustomerId,
+
+			@java::_aspects.RequestBody
+			@java::_aspects.Valid
+			sync requestDto : customerSelfServiceBackend::customer_dtos.AddressDto,
+
+			@java::_aspects.ResponseEntity
+			sync out result : customerSelfServiceBackend::customer_dtos.AddressDto
+		);
+
+		---
+		Get customer with a given customer id.
+
+		@required customerId the customer's unique id
+		---
+		@endpoints(java::_protocols.rest: "/{customerId}";)
+		@java::_aspects.GetMapping("/{customerId}")
+		getCustomer(
+			@java::_aspects.PathVariable
+			sync customerId : customerSelfServiceBackend::customer.CustomerId,
+
+			@java::_aspects.ResponseEntity
+			sync out result : customerSelfServiceBackend::customer_dtos.CustomerDto,
+
+			@java::_aspects.ResponseStatus("NOT_FOUND")
+			sync out fault customerNotFound : string
+		);
+
+		---
+		Complete the registration of a new customer.
+
+		@required requestDto the customer's profile information
+		---
+		@java::_aspects.PostMapping
+		registerCustomer(
+			@java::_aspects.Valid
+			@java::_aspects.RequestBody
+			sync requestDto
+				: customerSelfServiceBackend::customer_dtos.CustomerRegistrationRequestDto,
+
+			@java::_aspects.ResponseEntity
+			sync out result : customerSelfServiceBackend::customer_dtos.CustomerDto
+		);
+	}
+
+	@endpoints(java::_protocols.rest: "/user";)
+	@map::_aspects.InformationHolderResource
+	@map::_aspects.MasterDataHolder
+	interface userInformationHolder {
+		---
+		Get the user details for the currently logged-in user.
+		---
+		@java::_aspects.GetMapping
+		getCurrentUser(
+			@java::_aspects.ResponseEntity
+			sync out response : customerSelfServiceBackend::identityAccess_dtos.UserResponseDto
+		);
+	}
+}

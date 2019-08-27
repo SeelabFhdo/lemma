@@ -1,0 +1,148 @@
+context customer {
+	structure Address<valueObject> {
+		hide long id <identifier>,
+		immutable string streetAddress,
+		immutable string postalCode,
+		immutable string city
+	}
+
+	structure CustomerId<valueObject> {
+		string id <identifier>,
+		function CustomerId random()
+	}
+}
+
+context customer_dtos {
+	structure AddressDto {
+		string streetAddress<neverEmpty>,
+		string postalCode<neverEmpty>,
+		string city<neverEmpty>,
+		function AddressDto create(customer.Address address)
+	}
+
+	list Addresses { AddressDto d }
+
+	structure CustomerIdDto {
+		string id
+	}
+
+	structure CustomerDto {
+		Customers customers
+	}
+
+	list Customers { CustomerDto d }
+
+	structure CustomerProfileDto {
+		string firstname,
+		string lastname,
+		date birthday,
+		AddressDto currentAddress,
+		string email,
+		string phoneNumber,
+		Addresses moveHistory
+	}
+
+	structure CustomerProfileUpdateRequestDto {
+		string firstname<neverEmpty>,
+		string lastname<neverEmpty>,
+		date birthday,
+		string streetAddress<neverEmpty>,
+		string postalCode<neverEmpty>,
+		string city<neverEmpty>,
+		string email<neverEmpty>,
+		string phoneNumber
+	}
+
+	structure CustomerRegistrationRequestDto {
+		string firstname<neverEmpty>,
+		string lastname<neverEmpty>,
+		date birthday,
+		string city<neverEmpty>,
+		string streetAddress<neverEmpty>,
+		string postalCode<neverEmpty>,
+		string phoneNumber
+	}
+}
+
+context identityAccess {
+	structure UserLogin<entity> {
+		long id <identifier>,
+		string authorities,
+		string email,
+		string password,
+		customer.CustomerId customerId
+	}
+
+	structure UserSecurityDetails {
+		boolean accountNonExpired = true,
+		boolean accountNonLocked = true,
+		AuthorityCollection authorities,
+		boolean credentialsNonExpired = true,
+		string email,
+		boolean enabled,
+		long id,
+		string password
+	}
+
+	list AuthorityCollection { string authority }
+
+	structure UserDetailsServiceImpl <domainService> {
+		hide domainInfrastructure.UserLoginRepository userRepository,
+		function UserDetails loadUserByUsername(string email)
+	}
+
+	list UserDetails { string username }
+}
+
+context identityAccess_dtos {
+	structure AuthenticationRequestDto {
+		string email,
+		string password
+	}
+
+	structure AuthenticationResponseDto {
+		string email,
+		string token
+	}
+
+	structure SignupRequestDto {
+		string email<neverEmpty>,
+		string password<neverEmpty>
+	}
+
+	structure UserResponseDto {
+		immutable string email,
+		immutable string customerId
+	}
+}
+
+context domainInfrastructure {
+	structure CustomerCoreService<infrastructureService> {
+		string customerCoreBaseURL,
+		string apiKeyHeader,
+		string apiKeyValue,
+		function customer_dtos.CustomerDto getCustomer(customer.CustomerId customerId),
+		function customer_dtos.AddressDto changeAddress(
+			customer.CustomerId customerId,
+			customer_dtos.AddressDto requestDto
+		),
+		function customer_dtos.CustomerDto createCustomer(
+			customer_dtos.CustomerProfileUpdateRequestDto requestDto
+		),
+		function city_dtos.CitiesResponseDto getCitiesForPostalCode(string postalCode)
+	}
+
+	structure UserLoginRepository<repository> {
+		immutable identityAccess.UserLogin login,
+		immutable long id,
+		function identityAccess.UserLogin findByEmail(string email)
+	}
+}
+
+context city_dtos {
+	structure CitiesResponseDto {
+		Cities cities
+	}
+
+	list Cities { string }
+}

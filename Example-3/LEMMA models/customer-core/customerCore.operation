@@ -1,0 +1,58 @@
+// See Listing 14 on p. 28 of the technical report
+import microservices from "customerCore.services" as customerCoreServices
+import technology from "../technology/docker.technology" as containerTechnology
+import technology from "../technology/java.technology" as protocolTechnology
+
+@technology(containerTechnology)
+@technology(protocolTechnology)
+container CustomerCoreContainer deployment technology containerTechnology::_deployment.Docker
+	deploys customerCoreServices::com.lakesidemutual.customercore.CustomerCore {
+	aspects {
+		containerTechnology::_aspects.Dockerfile(
+			'
+			FROM maven:3.6.1-jdk-8-alpine AS build
+			ARG BASE=/usr/src/app
+			COPY pom.xml ${BASE}/
+			COPY src ${BASE}/src
+			RUN mvn -f ${BASE}/pom.xml install -DskipTests
+
+			FROM openjdk:8-jdk-alpine
+			COPY --from=build /usr/src/app/target/dependency/BOOT-INF/lib/* /app/lib/
+			COPY --from=build /usr/src/app/target/dependency/META-INF /app/META-INF
+			COPY --from=build /usr/src/app/target/dependency/BOOT-INF/classes /app
+
+			EXPOSE 8110
+			ENTRYPOINT ["java","-cp","app:app/lib/*","com.lakesidemutual.customercore.CustomerCoreApplication"]
+			'
+		);
+
+		containerTechnology::_aspects.ComposePart(
+			'
+			customer-core:
+				build: customer-core
+    			image: lakesidemutual/customer-core
+    			environment:
+      				- "SPRING_BOOT_ADMIN_CLIENT_URL=http://spring-boot-admin:9000"
+    			ports:
+      				- "8110:8110"
+    			volumes:
+      				- "maven_repo:/root/.m2"
+			'
+		);
+	}
+
+	default values {
+		adminClientUrl = "http://localhost:9000"
+		endpointsWebExposureInclude = "*"
+		infoGitMode = "full"
+
+		apiKeyHeader = "Authorization"
+		apiKeyValidKey = "b318ad736c6c844b"
+		apiKeyValidKey = "999ab497f8ec1052"
+		apiKeyValidKey = "9b93ebe19e16bbbd"
+
+		basic endpoints {
+			protocolTechnology::_protocols.rest: "http://localhost:8110";
+		}
+	}
+}

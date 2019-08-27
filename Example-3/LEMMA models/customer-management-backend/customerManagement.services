@@ -1,0 +1,151 @@
+import datatypes from "customerManagement.data" as customerManagement
+import technology from "../technology/java.technology" as java
+import technology from "../technology/map.technology" as map
+import microservices from "../customer-core/customerCore.services" as customerCoreServices
+
+@technology(java)
+@technology(map)
+@java::_aspects.ApplicationName("Customer Management Backend")
+@java::_aspects.JacksonConfiguration(INDENT_OUTPUT=true, defaultPropertyInclusion="NON_NULL")
+@java::_aspects.DatasourceConfiguration(
+	url="jdbc:h2:file:./customermanagement",
+	username="sa",
+	password="sa",
+	driverClassName="org.h2.Driver"
+)
+@java::_aspects.HibernateConfiguration("create-drop")
+@java::_aspects.CustomProperty(name="customercore.baseURL", value="http://localhost:8110")
+public functional microservice com.lakesidemutual.customermanagement.CustomerManagement {
+	required microservices {
+		customerCoreServices::com.lakesidemutual.customercore.CustomerCore
+	}
+
+	@endpoints(java::_protocols.rest: "/customers";)
+	@map::_aspects.InformationHolderResource
+	@map::_aspects.MasterDataHolder
+	interface customerInformationHolder {
+		---
+		Get all customers.
+
+		@param filter search terms to filter the customers by name
+		@param limit the maximum number of customers per page
+		@param offset the offset of the page's first customer
+		---
+		@java::_aspects.GetMapping
+		getCustomers(
+			@java::_aspects.RequestParam(value="filter")
+			sync filter? : string,
+
+			@java::_aspects.RequestParam(value="limit", defaultValue="10")
+			sync limit? : int,
+
+			@java::_aspects.RequestParam(value="offset", defaultValue="0")
+			sync offset? : int,
+
+			@java::_aspects.ResponseEntity
+			sync out customers : customerManagement::customer_dtos.PaginatedCustomerResponseDto
+		);
+
+		---
+		Get customer with a given customer id.
+
+		@required customerId the customer's unique id
+		---
+		@endpoints(java::_protocols.rest: "/{customerId}";)
+		@java::_aspects.GetMapping
+		getCustomer(
+			@java::_aspects.PathVariable
+			sync customerId : customerManagement::customer.CustomerId,
+
+			@java::_aspects.ResponseEntity
+			sync out customer : customerManagement::customer_dtos.CustomerDto,
+
+			@java::_aspects.ResponseStatus("NOT_FOUND")
+			sync out fault customerNotFound : string
+		);
+
+		---
+		Update the profile of the customer with the given customer id
+
+		@required customerId the customer's unique id
+		@required customerProfile the customer's updated profile
+		---
+		@endpoints(java::_protocols.rest: "/{customerId}";)
+		@java::_aspects.PutMapping
+		updateCustomer(
+			@java::_aspects.PathVariable
+			sync customerId : customerManagement::customer.CustomerId,
+
+			@java::_aspects.Valid
+			@java::_aspects.RequestBody
+			sync customerProfile : customerManagement::customer_dtos.CustomerProfileDto,
+
+			@java::_aspects.ResponseEntity
+			sync out customer : customerManagement::customer_dtos.CustomerDto
+		);
+	}
+
+	@endpoints(java::_protocols.rest: "/interaction-logs";)
+	@map::_aspects.InformationHolderResource
+	@map::_aspects.MasterDataHolder
+	interface interactionLogInformationHolder {
+		---
+		Get the interaction log for a customer with a given customer id.
+
+		@required customerId the customer's unique id
+		---
+		@endpoints(java::_protocols.rest: "/{customerId}";)
+		@java::_aspects.GetMapping
+		getInteractionLog(
+			@java::_aspects.PathVariable
+			sync customerId : customerManagement::customer.CustomerId,
+
+			@java::_aspects.ResponseEntity
+			sync out interactionLog : customerManagement::interactionLog.InteractionLogAggregateRoot
+		);
+
+		---
+		Acknowledge all of a given customer's interactions up to the given interaction id.
+
+		@required customerId the customer's unique id
+		@required interactionAcknowledgementDto the id of the newest acknowledged interaction
+		---
+		@endpoints(java::_protocols.rest: "/{customerId}";)
+		acknowledgeInteractions(
+			@java::_aspects.PathVariable
+			sync customerId : customerManagement::customer.CustomerId,
+
+			@java::_aspects.Valid
+			@java::_aspects.RequestBody
+			sync interactionAcknowledgementDto
+				: customerManagement::interactionLog_dtos.InteractionAcknowledgementDto,
+
+			@java::_aspects.ResponseEntity
+			sync out interactionLog : customerManagement::interactionLog.InteractionLogAggregateRoot,
+
+			@java::_aspects.ResponseStatus("NOT_FOUND")
+			sync out fault InteractionLogNotFound : string
+		);
+	}
+
+	@endpoints(java::_protocols.rest: "/notifications";)
+	interface notificationInformationHolder {
+		---
+		Get a list of all unacknowledged notifications.
+		---
+		@java::_aspects.GetMapping
+		getNotifications(sync out notifications : customerManagement::interactionLog.Notifications);
+	}
+}
+
+@technology(java)
+infrastructure microservice com.lakesidemutual.customermanagement.CustomerMessageController {
+	interface messageProcessor {
+		@java::_aspects.MessageMapping("/chat/messages")
+		@java::_aspects.SendTo("/topic/messages")
+		processMessage(
+			sync message : customerManagement::customer_dtos.MessageDto,
+			sync out broadcastMessage : customerManagement::customer_dtos.MessageDto
+		);
+	}
+}

@@ -1,0 +1,56 @@
+import microservices from "customerManagement.services" as managementServices
+import technology from "../technology/java.technology" as java
+
+@technology(java)
+type managementServices::customerManagement::customer_dtos.CustomerDto {
+	aspects { java::_aspects.ResourceSupport; }
+
+	customerProfile { aspects { java::_aspects.JsonUnwrapped; } }
+}
+
+@technology(java)
+type managementServices::customerManagement::customer_dtos.CustomerProfileDto {
+	currentAddress { aspects { java::_aspects.JsonUnwrapped; } }
+}
+
+@technology(java)
+type managementServices::customerManagement::customer_dtos.CustomersDto {
+	aspects { java::_aspects.ResourceSupport; }
+}
+
+@technology(java)
+type managementServices::customerManagement::customer_dtos.PaginatedCustomerResponseDto {
+	aspects { java::_aspects.ResourceSupport; }
+}
+
+@technology(java)
+type managementServices::customerManagement::interactionLog.InteractionEntity {
+	aspects {
+		java::_aspects.Table("interactions");
+	}
+}
+
+@technology(java)
+type managementServices::customerManagement::interactionLog.InteractionLogAggregateRoot {
+	aspects {
+		java::_aspects.Table("interactionlogs");
+	}
+
+	interactions {
+		aspects {
+			java::_aspects.Collection;
+			java::_aspects.OneToMany(fetch="EAGER");
+		}
+	}
+}
+
+@technology(java)
+type managementServices::customerManagement::domainInfrastructure.CustomerCoreService {
+	customerCoreBaseURL { aspects { java::_aspects.Value("${customercore.baseURL}"); } }
+	apiKeyHeader { aspects { java::_aspects.Value("${apikey.header}"); } }
+	apiKeyValue { aspects { java::_aspects.Value("${apikey.value}"); } }
+
+	op updateCustomer {
+		return type { aspects { java::_aspects.ResponseEntity; } }
+	}
+}

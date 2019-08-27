@@ -1,0 +1,20 @@
+technology lakesideMutual {
+	types {
+		primitive type Boolean based on boolean default;
+		primitive type Byte based on byte default;
+		primitive type Character based on char default;
+		primitive type Date based on date default;
+		primitive type Double based on double default;
+		primitive type Float based on float default;
+		primitive type Integer based on int default;
+		primitive type Long based on long default;
+		primitive type Short based on short default;
+		primitive type String based on string default;
+
+		list type Page;
+	}
+
+	service aspects {
+		aspect PhoneNumber for fields;
+	}
+}

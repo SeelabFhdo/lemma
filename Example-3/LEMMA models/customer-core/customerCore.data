@@ -1,0 +1,125 @@
+context customer {
+	structure Address <valueObject> {
+		hide long id <identifier>,
+		immutable string streetAddress,
+		immutable string postalCode,
+		immutable string city
+	}
+
+	structure AddressInherited extends Address {}
+
+	list Addresses {Address a}
+
+	// See Listing 1 on p. 16 of the technical report
+	structure CustomerId<valueObject> {
+		string id,
+		function CustomerId random
+	}
+
+	structure CustomerProfileEntity <entity> {
+		string firstname,
+		string lastname,
+		date birthday,
+		Address currentAddress,
+		string email,
+		string phoneNumber,
+		Addresses moveHistory
+	}
+
+	// See Listing 2 on p. 17 of the technical report
+	structure CustomerAggregateRoot <entity, aggregate> {
+		immutable CustomerId id <identifier, part>,
+		immutable CustomerProfileEntity customerProfile <part>,
+		procedure moveToAddress(Address address),
+		procedure updateCustomerProfile(CustomerProfileEntity updatedCustomerProfile)
+	}
+
+	list CustomerAggregateRoots { CustomerAggregateRoot r }
+
+	structure CustomerFactory <factory> {
+		immutable CustomerRepository customerRepository,
+		function CustomerAggregateRoot create(CustomerProfileEntity customerProfile),
+		function string formatPhoneNumber(string phoneNumberStr) <identifier>
+	}
+
+	structure CustomerRepository <repository> {
+		immutable CustomerAggregateRoot customerAggregate,
+		immutable CustomerId customerId,
+		function CustomerId nextId
+	}
+
+	structure CustomerService <applicationService> {
+		function CustomerAggregateRoot updateAddress(CustomerId customerId, Address updatedAddress),
+		function CustomerAggregateRoot updateCustomerProfile(CustomerId customerId,
+			CustomerProfileEntity updatedCustomerProfile),
+		function CustomerAggregateRoot createCustomer(CustomerProfileEntity customerProfile),
+		function CustomerAggregateRoots getCustomers(string ids),
+		function CustomerAggregateRoots getCustomersPaginated(string filter, int limit, int offset),
+		function boolean matchesFilter(CustomerAggregateRoot customer, string filter)
+	}
+}
+
+context customer_dtos {
+	structure AddressDto {
+		string streetAddress <neverEmpty>,
+		string postalCode <neverEmpty>,
+		string city <neverEmpty>
+	}
+
+	structure CustomerProfileUpdateRequestDto {
+		string firstname <neverEmpty>,
+		string lastname <neverEmpty>,
+		date birthday,
+		string streetAddress <neverEmpty>,
+		string postalCode <neverEmpty>,
+		string city <neverEmpty>,
+		string email <neverEmpty>,
+		string phoneNumber
+	}
+
+	structure CustomerResponseDto {
+		immutable string customerId,
+		immutable string firstname,
+		immutable string lastname,
+		immutable date birthday,
+		immutable string streetAddress,
+		immutable string postalCode,
+		immutable string city,
+		immutable string email,
+		immutable string phoneNumber,
+		immutable customer.Addresses moveHistory
+	}
+
+	list CustomerResponses { CustomerResponseDto d }
+
+	structure CustomersResponseDto {
+		immutable CustomerResponses customers
+	}
+
+	structure PaginatedCustomerResponseDto {
+		immutable string filter,
+		immutable int limit,
+		immutable int offset,
+		immutable int size,
+		immutable CustomerResponses customers
+	}
+}
+
+context city {
+	list PostalCodesAndCities {string postalCode, string city}
+	list Cities {string city}
+	list FieldNames { string }
+
+	// See Listing 3 on p. 17 of the technical report
+	structure CityLookupService <domainService> {
+		hide function PostalCodesAndCities loadLookupMap(),
+		hide function PostalCodesAndCities getLookupMap(),
+		function Cities getCitiesForPostalCode (string postalCode)
+	}
+}
+
+context city_dtos {
+	structure CitiesResponseDto {
+		immutable city.Cities cities
+	}
+}
