@@ -1,7 +1,7 @@
 # Changelog
 All notable changes to [LEMMA](https://github.com/SeelabFhdo/lemma/) will be documented in this file.
 
-## [0.6.0] - 2019-MM-DD
+## [0.6.0] - 2019-08-28
 ### Added
 - Data DSL: Enable modeling of operations (functions and procedures) within data structures.
 - Data DSL: Enable specification of prescribed features for data structures, data fields, and data operations. The initial set of supported features comprises patterns from [Domain-driven Design (DDD)](https://www.domainlanguage.com). Constraint violations of pattern specifications are checked and shown as warnings in the Data DSL editor according to our [2018 paper](http://fmse.di.unimi.it/faacs2017/papers/paperMSE1.pdf). Furthermore, the initial set of provided features includes the ```neverEmpty``` feature, which allows to express that a data field should never be empty, i.e., always provide a value to callers.

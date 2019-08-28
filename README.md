@@ -7,7 +7,7 @@ This repository contains the modeling languages, model transformations, and rela
 Please follow these steps if you want to try out LEMMA on the basis of the case study example described in [3]:
 1. The easiest way to try out LEMMA is to download one of the prepackaged [releases](https://github.com/SeelabFhdo/lemma/releases) for your OS. Then clone the repository to your harddrive, run the ``eclipse`` executable, and go to step 11.  
 
-   If you are interested in LEMMA's implementation, either download one of the prepackaged [releases](https://github.com/SeelabFhdo/lemma/releases) for your OS and go to step 4. Otherwise, if you instead want to setup your own Eclipse environment for both studying LEMMA's implementation and trying it out, download the [Eclipse IDE for Java and DSL Developers](https://www.eclipse.org/downloads/packages/release/2019-03/r/eclipse-ide-java-and-dsl-developers) first. Then continue with step 2.
+   If you are interested in LEMMA's implementation, either download one of the prepackaged [releases](https://github.com/SeelabFhdo/lemma/releases) for your OS and go to step 4. Otherwise, if you instead want to setup your own Eclipse environment for both studying LEMMA's implementation and trying it out, download the [Eclipse IDE for Java and DSL Developers](https://www.eclipse.org/downloads/packages/release/2019-06/r/eclipse-ide-java-and-dsl-developers) first. Then continue with step 2.
 2. Run the downloaded Eclipse package by starting the ``eclipse`` executable.
 3. Install the [ATL Transformation Language](https://marketplace.eclipse.org/content/atl) from the Eclipse Marketplace in the downloaded Eclipse package.
 4. Clone the repository to your harddrive.
