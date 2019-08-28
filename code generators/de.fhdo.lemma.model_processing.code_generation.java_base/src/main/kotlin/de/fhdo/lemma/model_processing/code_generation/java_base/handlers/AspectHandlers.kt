@@ -138,7 +138,7 @@ internal fun findAspectHandlers(searchPackage: String, vararg classLoaders: Clas
     val aspectHandlers = findAnnotatedClassesWithInterface<AspectHandlerI>(searchPackage, annotationName,
         *classLoaders)
 
-    // For the found aspect handlers we build a map that comprises an entry for each aspect handler class, and the
+    // From the found aspect handlers we build a map that comprises an entry for each aspect handler class, and the
     // combination of EObjects, AST nodes, and aspects it is capable in dealing with. For example, if a handler can
     // handle the combinations
     //      (IntermediateDataStructure, ClassOrInterfaceDeclaration)

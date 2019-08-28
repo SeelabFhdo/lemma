@@ -7,11 +7,11 @@ import com.github.javaparser.ast.body.MethodDeclaration
 import de.fhdo.lemma.data.DateUtils
 import de.fhdo.lemma.data.intermediate.IntermediateComplexType
 import de.fhdo.lemma.data.intermediate.IntermediateDataField
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.ImportTargetElementType
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addDependencies
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addGetter
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addGetterForInheritedAttribute
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addImport
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addImports
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addPrivateAttribute
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addSetter
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.insertStatement
@@ -20,12 +20,12 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.ast.setInitializ
 import de.fhdo.lemma.model_processing.code_generation.java_base.fullyQualifiedClassname
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.CallableCodeGenerationHandlerI
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.CodeGenerationHandler
-import de.fhdo.lemma.model_processing.code_generation.java_base.hasAspect
 import de.fhdo.lemma.model_processing.code_generation.java_base.hasFeature
+import de.fhdo.lemma.model_processing.code_generation.java_base.languages.TypeMappingDescription
 import de.fhdo.lemma.model_processing.code_generation.java_base.languages.getTypeMapping
 import de.fhdo.lemma.model_processing.code_generation.java_base.languages.isA
 import de.fhdo.lemma.model_processing.code_generation.java_base.languages.isNullable
-import de.fhdo.lemma.model_processing.code_generation.java_base.modules.domain.DomainContext
+import de.fhdo.lemma.model_processing.code_generation.java_base.modules.domain.DomainContext.State as DomainState
 import de.fhdo.lemma.model_processing.utils.trimToSingleLine
 import java.lang.IllegalArgumentException
 import java.time.format.DateTimeFormatter
@@ -33,11 +33,11 @@ import java.time.format.DateTimeFormatter
 @CodeGenerationHandler
 internal class CalledIntermediateDataFieldHandler :
     CallableCodeGenerationHandlerI<IntermediateDataField, FieldDeclaration, ClassOrInterfaceDeclaration> {
-    private val currentDomainPackage: String by DomainContext.State
+    private val currentDomainPackage: String by DomainState
 
     override fun handlesEObjectsOfInstance() = IntermediateDataField::class.java
     override fun generatesNodesOfInstance() = FieldDeclaration::class.java
-    override fun getAspects(field : IntermediateDataField) = field.aspects
+    override fun getAspects(field: IntermediateDataField) = field.aspects
 
     companion object {
         fun invoke(field: IntermediateDataField, parentClass: ClassOrInterfaceDeclaration)
@@ -63,34 +63,42 @@ internal class CalledIntermediateDataFieldHandler :
 
     private fun IntermediateDataField.generateJavaAttribute(parentClass: ClassOrInterfaceDeclaration)
         : FieldDeclaration? {
-        val (typeName, isComplexTypeMapping, imports, dependencies) = this.type.getTypeMapping() ?: return null
+        val typeMapping = type.getTypeMapping()
+        val generatedAttribute = if (typeMapping !== null) {
+            val (mappedTypeName, isComplexTypeMapping, imports, dependencies) = typeMapping
+            val attribute = parentClass.addPrivateAttribute(name, mappedTypeName)
+            imports.forEach { attribute.addImport(it, ImportTargetElementType.FIELD) }
+            parentClass.addDependencies(dependencies)
 
-        parentClass.addImports(imports)
-        if (isComplexTypeMapping) {
-            val fullyQualifiedClassname = (this.type as IntermediateComplexType).fullyQualifiedClassname
-            parentClass.addImport("$currentDomainPackage.$fullyQualifiedClassname")
-        }
+            val getterMethod = if (needsGetter) {
+                    val (getterName, getterMethod) = parentClass.addGetter(attribute)
+                    if (hasFeature("NEVER_EMPTY") && type.isNullable)
+                        addNeverEmptyCheckToGetter(getterName, getterMethod)
+                    getterMethod
+                } else
+                    null
 
-        parentClass.addDependencies(dependencies)
+            val setterMethod = if (needsSetter) {
+                    val (setterName, setterMethod) = parentClass.addSetter(attribute)
+                    if (hasFeature("NEVER_EMPTY") && type.isNullable)
+                        addNeverEmptyCheckToSetter(setterName, setterMethod)
+                    setterMethod
+                } else
+                    null
 
-        val generatedAttribute = parentClass.addPrivateAttribute(name, typeName)
+            if (isComplexTypeMapping) {
+                val fullyQualifiedClassname = (type as IntermediateComplexType).fullyQualifiedClassname
+                val complexTypeFullyQualifiedName = "$currentDomainPackage.$fullyQualifiedClassname"
+                attribute.addImport(complexTypeFullyQualifiedName, ImportTargetElementType.FIELD)
 
-        if (hasFeature("IDENTIFIER") && dataStructure.hasAspect("Table")) {
-            parentClass.addImport("javax.persistence.Id")
-            generatedAttribute.addAnnotation("Id")
-        }
+                // Add them for copy purposes, e.g., by code generation serializers for Extended Generation Gap Pattern
+                getterMethod?.addImport(complexTypeFullyQualifiedName, ImportTargetElementType.METHOD)
+                setterMethod?.addImport(complexTypeFullyQualifiedName, ImportTargetElementType.METHOD)
+            }
 
-        if (needsGetter) {
-            val getter = parentClass.addGetter(generatedAttribute)
-            if (hasFeature("NEVER_EMPTY") && type.isNullable)
-                addNeverEmptyCheckToGetter(getter)
-        }
-
-        if (needsSetter) {
-            val setter = parentClass.addSetter(generatedAttribute)
-            if (hasFeature("NEVER_EMPTY") && type.isNullable)
-                addNeverEmptyCheckToSetter(setter)
-        }
+            attribute
+        } else
+            parentClass.addPrivateAttribute(name, "${type.name}_ExpectedFromGenlet")
 
         if (willBeFinal)
             generatedAttribute.addModifier(Modifier.Keyword.FINAL)
@@ -98,26 +106,26 @@ internal class CalledIntermediateDataFieldHandler :
         if (initializationValue !== null) {
             val (typeSpecificInitializationValue, additionalImports) = getTypeSpecificInitializationValueString()
             generatedAttribute.setInitializationValue(typeSpecificInitializationValue)
-            parentClass.addImports(additionalImports)
+            additionalImports.forEach { generatedAttribute.addImport(it, ImportTargetElementType.FIELD) }
         }
 
         return generatedAttribute
     }
 
     private fun IntermediateDataField.generateNotImplementedGetter(parentClass: ClassOrInterfaceDeclaration) {
-        val (typeName, _) = this.type.getTypeMapping()!!
-        val getter = parentClass.addGetterForInheritedAttribute(this.name, typeName)
+        val (typeName, _) = type.getTypeMapping()!!
+        val getter = parentClass.addGetterForInheritedAttribute(name, typeName)
         getter.addAnnotation("Override")
         getter.setBody(
             """
             throw new UnsupportedOperationException(
                 "The method \"${getter.nameAsString}\" is not visible on this type"
             );
-            """.trimToSingleLine())
+            """.trimToSingleLine()
+        )
     }
 
-    private fun addNeverEmptyCheckToGetter(getter: Pair<String, MethodDeclaration>) {
-        val (fieldName, method) = getter
+    private fun addNeverEmptyCheckToGetter(fieldName: String, method: MethodDeclaration) {
         method.insertStatement(
             """
             if ($fieldName == null)
@@ -126,8 +134,7 @@ internal class CalledIntermediateDataFieldHandler :
         )
     }
 
-    private fun addNeverEmptyCheckToSetter(setter: Pair<String, MethodDeclaration>) {
-        val (fieldName, method) = setter
+    private fun addNeverEmptyCheckToSetter(fieldName: String, method: MethodDeclaration) {
         method.insertStatement(
             """
             if ($fieldName == null)

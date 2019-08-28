@@ -194,7 +194,7 @@ internal val IntermediateComplexType.packageName
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-internal val IntermediateComplexType.fullyQualifiedClassname
+val IntermediateComplexType.fullyQualifiedClassname
     get() = "$packageName.$classname"
 
 /**

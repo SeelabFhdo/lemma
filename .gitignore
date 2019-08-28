@@ -23,3 +23,4 @@ build/
 .idea/
 de.fhdo.lemma.live_validation/set_java_home.sh
 de.fhdo.lemma.model_processing/set_java_home.sh
+HOWTO Lemma Release.md

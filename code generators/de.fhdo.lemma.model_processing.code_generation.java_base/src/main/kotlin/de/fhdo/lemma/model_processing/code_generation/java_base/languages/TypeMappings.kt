@@ -57,7 +57,7 @@ private val primitiveTypeMappings = primitiveTypeMappings {
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-internal fun IntermediateType.getTypeMapping() : TypeMappingDescription? {
+fun IntermediateType.getTypeMapping() : TypeMappingDescription? {
     return when(this) {
         is IntermediatePrimitiveType -> primitiveTypeMappings[this]
         is IntermediateImportedTechnologySpecificType -> primitiveTypeMappings[this]

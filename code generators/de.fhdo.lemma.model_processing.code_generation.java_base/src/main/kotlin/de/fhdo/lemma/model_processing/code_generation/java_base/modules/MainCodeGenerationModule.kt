@@ -10,8 +10,8 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.modules.MainCont
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.domain.DomainCodeGenerationSubModule
 import de.fhdo.lemma.model_processing.code_generation.java_base.packageName
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.LineCountInfo
-import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.code_generation.CountingPlainCodeGenerationSerializer
-import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.code_generation.PlainCodeGenerationSerializer
+import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.code_generation.CodeGenerationSerializerI
+import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.code_generation.findCodeGenerationSerializers
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.configuration.AbstractSerializationConfiguration
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.configuration.DefaultSerializationConfiguration
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.dependencies.CountingMavenDependencySerializer
@@ -48,23 +48,29 @@ internal class MainModule : AbstractCodeGenerationModule(), KoinComponent {
     override fun execute(phaseArguments: Array<String>, moduleArguments: Array<String>)
         : Map<String, Pair<String, Charset>> {
 
+        /* Find available code generation serializers */
+        val serializerPackage = javaClass.packageName.substringBeforeLast(".") + ".serialization.code_generation"
+        val supportedCodeGenerationSerializers = findCodeGenerationSerializers(serializerPackage)
+
         /* Parse commandline */
         try {
-            CommandLine(moduleArguments)
+            CommandLine(moduleArguments, supportedCodeGenerationSerializers)
         } catch (ex: Exception) {
             throw PhaseException(ex.message)
         }
 
-        /* Setup dependency injection and determine the injected implementations per expected interface */
+        // If the chosen code generation serializer does not support line counting, there should be no path to the
+        // line counting information file
         val writeLineCountInfo = CommandLine.parameterLineCountFile !== null
+        val (codeGenerationSerializer, codeGenerationSerializerInfo) = CommandLine.codeGenerationSerializer
+        if (writeLineCountInfo && !codeGenerationSerializerInfo.supportsLineCounting)
+            throw PhaseException("Selected code generation serializer ${codeGenerationSerializerInfo.name} does not " +
+                "support line counting")
+
+        /* Setup dependency injection and determine the injected implementations per expected interface */
         startKoin { modules( module {
             factory<AbstractSerializationConfiguration> { DefaultSerializationConfiguration }
-            factory {
-                if (writeLineCountInfo)
-                    CountingPlainCodeGenerationSerializer()
-                else
-                    PlainCodeGenerationSerializer()
-            }
+            factory { codeGenerationSerializer }
             factory<DependencySerializerI<*, *>> {
                 if (writeLineCountInfo)
                     CountingMavenDependencySerializer()
@@ -108,6 +114,15 @@ internal class MainModule : AbstractCodeGenerationModule(), KoinComponent {
             serializeDependencies(it)
         }
 
+        /*
+         * Enable code generation serializers to adapt (or create even new) generated files in a "code generation
+         * completed" callback
+         */
+        val generatedFileContents: Map<String, Pair<String, Charset>> by MainState
+        val serializer: CodeGenerationSerializerI by inject()
+        val adaptedOrNewFiles = serializer.codeGenerationPhaseCompleted(generatedFileContents)
+        adaptedOrNewFiles.forEach { (filePath, content) -> MainState.addGeneratedFileContent(content, filePath) }
+
         /* Serialize line count information if it were collected during the code generation run */
         if (writeLineCountInfo) {
             val generatedLineCountInfo: List<LineCountInfo> by MainState
@@ -119,7 +134,6 @@ internal class MainModule : AbstractCodeGenerationModule(), KoinComponent {
          * Return the map of generated file contents and their charsets per path for the model processor framework to
          * write the files to disk
          */
-        val generatedFileContents: Map<String, Pair<String, Charset>> by MainState
         return generatedFileContents
     }
 

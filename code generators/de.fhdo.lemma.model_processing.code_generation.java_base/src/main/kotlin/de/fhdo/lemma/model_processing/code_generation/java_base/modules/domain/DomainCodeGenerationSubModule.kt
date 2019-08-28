@@ -4,7 +4,6 @@ import de.fhdo.lemma.data.intermediate.IntermediateDataModel
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.code_generation.CodeGenerationSerializerI
 import de.fhdo.lemma.model_processing.utils.filterByType
 import de.fhdo.lemma.model_processing.utils.loadModelRoot
-import de.fhdo.lemma.model_processing.utils.path
 import de.fhdo.lemma.model_processing.utils.removeFileUri
 import de.fhdo.lemma.service.ImportType
 import de.fhdo.lemma.service.intermediate.IntermediateServiceModel
@@ -80,7 +79,7 @@ internal class DomainCodeGenerationSubModule : KoinComponent {
         val currentIntermediateDomainModel: IntermediateDataModel by DomainState
         val originalModelPath = currentIntermediateDomainModel.sourceModelUri.removeFileUri()
 
-        val (serializationTargetFilePath, generatedCode) = serializer.serialize(
+        val generatedFileContents = serializer.serialize(
             generatedNode,
             currentDomainTargetFolderPath,
             targetFile,
@@ -88,6 +87,8 @@ internal class DomainCodeGenerationSubModule : KoinComponent {
             currentIntermediateDomainModelFilePath,
             originalModelPath
         )
-        MainState.addGeneratedFileContent(generatedCode, serializationTargetFilePath)
+        generatedFileContents.forEach { (targetFilePath, generatedContent) ->
+            MainState.addGeneratedFileContent(generatedContent, targetFilePath)
+        }
     }
 }

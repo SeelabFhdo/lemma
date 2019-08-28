@@ -1,6 +1,8 @@
 package de.fhdo.lemma.model_processing.code_generation.java_base.commandline
 
 import de.fhdo.lemma.model_processing.asFile
+import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.code_generation.CodeGenerationSerializerI
+import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.code_generation.CodeGenerationSerializerInfo
 import picocli.CommandLine
 import picocli.CommandLine.Model.CommandSpec
 
@@ -12,6 +14,9 @@ import picocli.CommandLine.Model.CommandSpec
 internal object CommandLine {
     @CommandLine.Spec
     private lateinit var commandSpec: CommandSpec
+
+    private lateinit var defaultCodeGenerationSerializer: CodeGenerationSerializerInfo
+    private lateinit var supportedCodeGenerationSerializers: Map<String, CodeGenerationSerializerInfo>
 
     /*
      * Commandline option that specifies an alternative intermediate service model file to be used
@@ -70,6 +75,36 @@ internal object CommandLine {
             field = value
         }
 
+    /* Commandline option for the code generation serializer to use */
+    private var parameterCodeGenerationSerializerName: String? = null
+        @CommandLine.Option(
+            names = ["--code_generation_serializer"],
+            paramLabel = "CODE_GENERATION_SERIALIZER",
+            description = ["name of the code generation serializer to use"]
+        )
+        set(value) {
+            if (value !== null && value !in supportedCodeGenerationSerializers)
+                throw CommandLine.ParameterException(commandSpec.commandLine(), "Unknown code generation serializer" +
+                    "$value")
+
+            field = value
+        }
+
+    /*
+     * Convenience property to retrieve the chosen code generation serializer instance (or the default one) in
+     * combination with its info object
+     */
+    internal val codeGenerationSerializer: Pair<CodeGenerationSerializerI, CodeGenerationSerializerInfo>
+        get() {
+            val serializerInfo = if (parameterCodeGenerationSerializerName !== null)
+                    supportedCodeGenerationSerializers[parameterCodeGenerationSerializerName!!]!!
+                else
+                    defaultCodeGenerationSerializer
+
+            val serializerInstance = serializerInfo.clazz.getConstructor().newInstance()
+            return serializerInstance to serializerInfo
+        }
+
     /* Commandline option for a path to a file in which line count information will be stored */
     @CommandLine.Option(
         names = ["--line_count_file_path"],
@@ -94,7 +129,10 @@ internal object CommandLine {
     /**
      * Invoke the singleton instance to parse the commandline arguments
      */
-    internal operator fun invoke(args: Array<String>) {
+    internal operator fun invoke(args: Array<String>,
+        supportedCodeGenerationSerializers: Map<String, CodeGenerationSerializerInfo>) {
+        this.supportedCodeGenerationSerializers = supportedCodeGenerationSerializers
+        defaultCodeGenerationSerializer = supportedCodeGenerationSerializers.values.find { it.default }!!
         CommandLine(this)
             .setOverwrittenOptionsAllowed(true)
             .parse(*args)

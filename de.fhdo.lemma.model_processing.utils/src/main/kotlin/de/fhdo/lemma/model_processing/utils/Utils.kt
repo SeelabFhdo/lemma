@@ -45,7 +45,9 @@ fun String.pathToPackage(nameSeparator: String = ".") = replace(File.separator, 
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-fun String.trimToSingleLine() = trimIndent().split("\n").joinToString("") { it.trim() }
+fun String.trimToSingleLine(preserveTrailingWhitespaces: Boolean = false) = trimIndent().split("\n").joinToString("") {
+    if (!preserveTrailingWhitespaces) it.trim() else it.trimStart()
+}
 
 /**
  * Get an element at a given index in a list. If the index is invalid, return null.
@@ -78,6 +80,17 @@ fun <K1: Any?, K2: Any?, V: Any?> MutableMap<K1, MutableMap<K2, V>>.putValue(key
     if (!this.containsKey(key1))
         this[key1] = mutableMapOf()
     this[key1]!![key2] = value
+}
+
+/**
+ * Convert a [List] of [Pair] instances to a [MutableMap] instance.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+fun <A: Any?, B: Any?> List<Pair<A, B>>.toMutableMap() : MutableMap<A, B> {
+    val map = mutableMapOf<A, B>()
+    forEach { (first, second) -> map[first] = second }
+    return map
 }
 
 /**

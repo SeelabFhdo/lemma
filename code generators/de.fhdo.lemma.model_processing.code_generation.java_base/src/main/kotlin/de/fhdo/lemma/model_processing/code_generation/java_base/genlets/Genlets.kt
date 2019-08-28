@@ -109,14 +109,14 @@ class GenletCodeGenerationHandlerResult<N: Node>(val reifiedNode: N,
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-class GenletGeneratedFileContent(val baseTargetFolderSpecifier: GENLET_PATH_SPECIFIER, val filename: String,
+class GenletGeneratedFileContent(val baseTargetFolderSpecifier: GenletPathSpecifier, val filename: String,
     val generatedContent: String)  {
     /**
      * Get the full path of the generated file. It consists of the resolved path of the [baseTargetFolderSpecifier] and
      * the [filename] of this [GenletGeneratedFileContent] instance.
      */
     fun getFullPath(fileContent: GenletGeneratedFileContent = this) : String {
-        val baseTargetFolderPath = GENLET_PATH_SPECIFIER.resolvePathSpecifier(fileContent.baseTargetFolderSpecifier)
+        val baseTargetFolderPath = GenletPathSpecifier.resolvePathSpecifier(fileContent.baseTargetFolderSpecifier)
         return "$baseTargetFolderPath${File.separator}${fileContent.filename}"
     }
 
@@ -148,14 +148,14 @@ class GenletGeneratedFileContent(val baseTargetFolderSpecifier: GENLET_PATH_SPEC
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-enum class GENLET_PATH_SPECIFIER {
+enum class GenletPathSpecifier {
     CURRENT_MICROSERVICE_PATH;
 
     companion object {
         /**
-         * Resolve a [GENLET_PATH_SPECIFIER] value to a concrete path
+         * Resolve a [GenletPathSpecifier] value to a concrete path
          */
-        internal fun resolvePathSpecifier(specifier : GENLET_PATH_SPECIFIER) : String {
+        internal fun resolvePathSpecifier(specifier: GenletPathSpecifier) : String {
             return when (specifier) {
                 CURRENT_MICROSERVICE_PATH -> {
                     val currentMicroserviceTargetFolderPathForJavaFiles: String by MainState
