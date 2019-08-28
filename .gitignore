@@ -7,8 +7,12 @@ LibraryExample/
 ZMS-Book-Metamodel/
 zorg.xtext.example*
 target/
-de.fhdo.ddmm.model_processing/
+de.fhdo.lemma.model_processing/
+de.fhdo.lemma.model_processing.utils/
 releases/
 de.fhdo.ddmm.acceleo/
-de.fhdo.ddmm.live_validation/
-de.fhdo.ddmm.ocl/
+de.fhdo.lemma.live_validation/
+de.fhdo.lemma.ocl/
+.gradle/
+code generators/
+HOWTO Lemma Release.md
