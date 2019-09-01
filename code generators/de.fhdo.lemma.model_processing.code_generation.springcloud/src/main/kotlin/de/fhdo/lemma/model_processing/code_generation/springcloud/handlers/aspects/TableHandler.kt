@@ -39,7 +39,6 @@ class TableHandler : AspectHandlerI {
                 .hasFeature("IDENTIFIER")
         }
         identifierMembers.forEach {
-            println(it)
             generatedClass.addImport("javax.persistence.Id", ImportTargetElementType.FIELD)
             it.addAnnotation("Id")
         }
