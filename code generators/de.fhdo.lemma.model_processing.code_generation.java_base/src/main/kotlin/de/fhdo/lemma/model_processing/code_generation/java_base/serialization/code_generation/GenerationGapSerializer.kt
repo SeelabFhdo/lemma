@@ -1,26 +1,26 @@
 package de.fhdo.lemma.model_processing.code_generation.java_base.serialization.code_generation
 
-import com.github.javaparser.StaticJavaParser
-import com.github.javaparser.ast.CompilationUnit
 import com.github.javaparser.ast.DataKey
 import com.github.javaparser.ast.Modifier
 import com.github.javaparser.ast.Node
-import com.github.javaparser.ast.body.CallableDeclaration
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration
 import com.github.javaparser.ast.body.ConstructorDeclaration
-import com.github.javaparser.ast.body.MethodDeclaration
 import com.github.javaparser.ast.body.Parameter
 import com.github.javaparser.ast.comments.BlockComment
-import com.github.javaparser.printer.PrettyPrinter
 import de.fhdo.lemma.model_processing.asFile
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.ImportTargetElementType
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addImport
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.copyTo
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.diffCallables
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.getAllImportsForTargetElementsOfType
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.getClassDeclaration
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.getEponymousJavaClassOrInterface
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.getSuperclass
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.getFilePath
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.methodsExcludingPropertyAccessors
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.newJavaClassOrInterface
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.getPackageName
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.serialize
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.setBody
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.setSuperclass
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.setFilePath
@@ -36,8 +36,6 @@ import org.eclipse.emf.ecore.EObject
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 import java.io.File
-import java.lang.Exception
-import java.lang.IllegalArgumentException
 import java.nio.charset.Charset
 
 /**
@@ -65,7 +63,7 @@ internal class GenerationGapSerializer : CodeGenerationSerializerI {
      * inherited classes.
      */
     override fun codeGenerationPhaseCompleted(allGeneratedFiles : Map<String, Pair<String, Charset>>)
-        = delegate.codeGenerationPhaseCompletedCallback(allGeneratedFiles)
+        = delegate.codeGenerationPhaseCompletedCallback()
 }
 
 /**
@@ -106,7 +104,7 @@ internal class CountingGenerationGapSerializer : CodeGenerationSerializerI {
      */
     override fun codeGenerationPhaseCompleted(allGeneratedFiles : Map<String, Pair<String, Charset>>)
         : Map<String, String> {
-        val adaptedFiles = delegate.codeGenerationPhaseCompletedCallback(allGeneratedFiles)
+        val adaptedFiles = delegate.codeGenerationPhaseCompletedCallback()
 
         // Also adapt existing line count information
         val generatedLineCountInfo: List<LineCountInfo> by MainState
@@ -144,23 +142,23 @@ internal class CountingGenerationGapSerializer : CodeGenerationSerializerI {
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-private class GenerationGapSerializerBase : KoinComponent {
+internal class GenerationGapSerializerBase : KoinComponent {
     private val serializationConfiguration: AbstractSerializationConfiguration by inject()
 
     companion object {
-        private const val GENERATION_SUBFOLDER = "gen"
+        internal const val GENERATION_SUBFOLDER = "gen"
         private const val GEN_IMPL_CLASS_SUFFIX = "GenImpl"
     }
 
     /**
      * Do the actual serialization according to the Generation Gap Pattern
      */
-    fun serialize(node: Node, targetFolderPath: String, targetFilePath: String) : Map<String, String> {
+    internal fun serialize(node: Node, targetFolderPath: String, targetFilePath: String) : Map<String, String> {
         val originalClass = node.getClassDeclaration()
 
         /* If the node does not comprise a class (e.g., its an enum) do the plain serialization */
         if (originalClass === null) {
-            val generatedCode = node.serialize()
+            val generatedCode = node.serialize(serializationConfiguration)
             return mapOf("$targetFolderPath${File.separator}$targetFilePath" to generatedCode)
         }
 
@@ -185,7 +183,7 @@ private class GenerationGapSerializerBase : KoinComponent {
         val genInterfaceFilePath = "$targetFolderPath${File.separator}$genSubfolderName${File.separator}" +
             "${genInterface.nameAsString}.java"
         genInterface.setFilePath(genInterfaceFilePath)
-        generatedFiles[genInterfaceFilePath] = genInterface.serialize()
+        generatedFiles[genInterfaceFilePath] = genInterface.serialize(serializationConfiguration)
 
         /*
          * The original class becomes the *GenImpl class, because it already comprises all elements needed in the
@@ -197,7 +195,7 @@ private class GenerationGapSerializerBase : KoinComponent {
         val genImplClassFilePath = "$targetFolderPath${File.separator}$genSubfolderName${File.separator}" +
             "${originalClass.nameAsString}.java"
         originalClass.setFilePath(genImplClassFilePath)
-        generatedFiles[genImplClassFilePath] = originalClass.serialize()
+        generatedFiles[genImplClassFilePath] = originalClass.serialize(serializationConfiguration)
 
         // Collect all constructors of the class in order to enable codeGenerationPhaseCompletedCallback() to derive
         // delegating super-constructors from them if necessary
@@ -205,10 +203,17 @@ private class GenerationGapSerializerBase : KoinComponent {
 
         /* Generate the class for adding custom code */
         var customImplClass = generateCustomImplClass(originalClass, originalClassnameBeforeAdaptation,
-            originalClassPackageBeforeAdaptation)
+            originalClassPackageBeforeAdaptation,
+            """
+                This class might comprise custom code. It will not be overwritten by the code generator as long as it
+                extends ${originalClass.nameAsString}. As soon as this is not the case anymore, this file will be 
+                overwritten, when the code generator is not explicitly invoked with the --preserve_existing_files 
+                command line option!
+            """.trimIndent()
+        )
         val classFilePath = "$targetFolderPath${File.separator}$targetClassname.java"
         customImplClass.setFilePath(classFilePath)
-        generatedFiles[classFilePath] = customImplClass.serialize()
+        generatedFiles[classFilePath] = customImplClass.serialize(serializationConfiguration)
 
         // Collect all constructors of the class in order to enable codeGenerationPhaseCompletedCallback() to derive
         // delegating super-constructors from them if necessary
@@ -224,7 +229,7 @@ private class GenerationGapSerializerBase : KoinComponent {
     /**
      * Helper to create the *Gen interface
      */
-    private fun generateGenInterface(originalClass: ClassOrInterfaceDeclaration, subpackage: String)
+    internal fun generateGenInterface(originalClass: ClassOrInterfaceDeclaration, subpackage: String)
         : ClassOrInterfaceDeclaration {
         /*
          * Determine the name and package of the interface. The name corresponds to the name of the original class with
@@ -260,7 +265,7 @@ private class GenerationGapSerializerBase : KoinComponent {
     /**
      * Adapt the given class to be compliant with the *GenImpl class as prescribed by the Generation Gap Pattern
      */
-    private fun adaptToGenImplClass(genImplClass: ClassOrInterfaceDeclaration,
+    internal fun adaptToGenImplClass(genImplClass: ClassOrInterfaceDeclaration,
         genInterface: ClassOrInterfaceDeclaration) {
         /* Adapt name, package, visibility, and let the class implement the *Gen interface */
         genImplClass.setPackageName(genInterface.getPackageName())
@@ -321,18 +326,11 @@ private class GenerationGapSerializerBase : KoinComponent {
     /**
      * Generate the class, which may hold custom code according to the Generation Gap Pattern
      */
-    private fun generateCustomImplClass(genImplClass: ClassOrInterfaceDeclaration, classname: String,
-        packageName: String) : ClassOrInterfaceDeclaration {
+    internal fun generateCustomImplClass(genImplClass: ClassOrInterfaceDeclaration, classname: String,
+        packageName: String, comment: String) : ClassOrInterfaceDeclaration {
         /* The class extends the *GenImpl class */
         val customImplClass = newJavaClassOrInterface(packageName, classname)
-        customImplClass.setComment(BlockComment(
-            """
-                This class might comprise custom code. It will not be overwritten by the code generator as long as it
-                extends ${genImplClass.nameAsString}. As soon as this is not the case anymore, this file will be 
-                overwritten, when the code generator is not explicitly invoked with the --preserve_existing_files 
-                command line option!
-            """.trimIndent()
-        ))
+        customImplClass.setComment(BlockComment(comment))
         customImplClass.setSuperclass(genImplClass.fullyQualifiedName.get())
 
         /* Mark the class to comprise custom code in order to safely distinguish it from other generated classes */
@@ -358,37 +356,10 @@ private class GenerationGapSerializerBase : KoinComponent {
     }
 
     /**
-     * Helper to retrieve the [ClassOrInterfaceDeclaration] from a [Node]. This only returns classes, not interfaces.
-     */
-    private fun Node.getClassDeclaration() : ClassOrInterfaceDeclaration?
-        = when(this) {
-                is CompilationUnit -> findFirst(ClassOrInterfaceDeclaration::class.java) { !it.isInterface }
-                    .orElseGet { null }
-                is ClassOrInterfaceDeclaration -> this
-                else -> null
-            }
-
-    /**
-     * Helper to serialize an AST [Node]
-     */
-    private fun Node.serialize() : String {
-        val compilationUnit = when(this) {
-            is CompilationUnit -> this
-            is ClassOrInterfaceDeclaration -> this.parentNode.get() as CompilationUnit
-            else -> throw IllegalArgumentException("Serialization of nodes of type ${this::class.java.name} is not" +
-                "supported")
-        }
-
-        val prettyPrinter = PrettyPrinter(serializationConfiguration)
-        return prettyPrinter.print(compilationUnit)
-    }
-
-    /**
      * Callback when the end of the code generation phase is reached. Its main purpose is to add missing constructors
      * to generated classes.
      */
-    fun codeGenerationPhaseCompletedCallback(allGeneratedFiles : Map<String, Pair<String, Charset>>)
-        : Map<String, String> {
+    internal fun codeGenerationPhaseCompletedCallback() : Map<String, String> {
         val adaptedFiles = mutableMapOf<String, String>()
 
         /*
@@ -432,7 +403,7 @@ private class GenerationGapSerializerBase : KoinComponent {
                 if (nextClass.isCustomImpl() && comprisesCustomCode(nextClassFile))
                     nextClass = mergeWithExistingCustomImplClass(nextClass, nextClassFile)
 
-                adaptedFiles[nextClassFilePath] = nextClass.serialize()
+                adaptedFiles[nextClassFilePath] = nextClass.serialize(serializationConfiguration)
             }
         }
 
@@ -459,19 +430,6 @@ private class GenerationGapSerializerBase : KoinComponent {
     }
 
     /**
-     * Helper to get a [ClassOrInterfaceDeclaration] that has the same name as this [File] instance.
-     */
-    private fun File.getEponymousJavaClassOrInterface()
-        = try {
-        val parsedCompilationUnit = StaticJavaParser.parse(this)
-        parsedCompilationUnit.findFirst(ClassOrInterfaceDeclaration::class.java) {
-            it.nameAsString == nameWithoutExtension
-        }.orElseGet { null }
-    } catch (ex: Exception) {
-        null
-    }
-
-    /**
      * Helper to merge the given generated custom implementation class with an already existing one. The merging logic
      * copies constructors and methods of the generated into the existing class.
      */
@@ -489,62 +447,6 @@ private class GenerationGapSerializerBase : KoinComponent {
         missingMethods.forEach { it.copyTo(existingClass) }
 
         return existingClass
-    }
-
-    /**
-     * Helper to diff two classes based on their [CallableDeclaration] lists, i.e., their constructors or methods. The
-     * functions returns all [CallableDeclaration] instances of the [source] list that are not in the [target] list. The
-     * diff of the callables is based on their signatures (name and parameter types).
-     */
-    private fun <T: CallableDeclaration<*>> diffCallables(source: List<T>, target: List<T>) : List<T> {
-        val missingCallablesInTarget = mutableListOf<T>()
-        val targetSignatures = target.map { targetCallable ->
-            val parameterTypesString = targetCallable.parameters.joinToString { it.typeAsString }
-            "${targetCallable.name}$parameterTypesString"
-        }
-
-        source.forEach { sourceCallable ->
-            val parameterTypesString = sourceCallable.parameters.joinToString { it.typeAsString }
-            val signatureString = "${sourceCallable.name}$parameterTypesString"
-            if (signatureString !in targetSignatures)
-                missingCallablesInTarget.add(sourceCallable)
-        }
-
-        return missingCallablesInTarget
-    }
-
-    /**
-     * Helper to copy this [ConstructorDeclaration] to the given [target] [ClassOrInterfaceDeclaration]
-     */
-    private fun ConstructorDeclaration.copyTo(target: ClassOrInterfaceDeclaration) {
-        val copiedConstructor = target.addConstructor()
-        copiedConstructor.modifiers = modifiers
-
-        parameters.forEach {
-            val parameter = Parameter()
-            parameter.setType(it.typeAsString)
-            parameter.setName(it.nameAsString)
-            copiedConstructor.addParameter(parameter)
-        }
-
-        copiedConstructor.body = body
-    }
-
-    /**
-     * Helper to copy this [MethodDeclaration] to the given [target] [ClassOrInterfaceDeclaration]
-     */
-    private fun MethodDeclaration.copyTo(target: ClassOrInterfaceDeclaration) {
-        val copiedMethod = target.addMethod(name.asString())
-        copiedMethod.modifiers = modifiers
-
-        parameters.forEach {
-            val parameter = Parameter()
-            parameter.setType(it.typeAsString)
-            parameter.setName(it.nameAsString)
-            copiedMethod.addParameter(parameter)
-        }
-
-        copiedMethod.setBody(body.toString())
     }
 
     /**

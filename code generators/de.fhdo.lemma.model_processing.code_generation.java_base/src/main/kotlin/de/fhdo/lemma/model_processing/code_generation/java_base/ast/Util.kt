@@ -5,10 +5,12 @@ import com.github.javaparser.ast.CompilationUnit
 import com.github.javaparser.ast.DataKey
 import com.github.javaparser.ast.Modifier
 import com.github.javaparser.ast.Node
+import com.github.javaparser.ast.body.CallableDeclaration
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration
 import com.github.javaparser.ast.body.ConstructorDeclaration
 import com.github.javaparser.ast.body.FieldDeclaration
 import com.github.javaparser.ast.body.MethodDeclaration
+import com.github.javaparser.ast.body.Parameter
 import com.github.javaparser.ast.comments.BlockComment
 import com.github.javaparser.ast.comments.LineComment
 import com.github.javaparser.ast.expr.AssignExpr
@@ -16,11 +18,54 @@ import com.github.javaparser.ast.expr.NameExpr
 import com.github.javaparser.ast.stmt.BlockStmt
 import com.github.javaparser.ast.stmt.ExpressionStmt
 import com.github.javaparser.ast.stmt.ReturnStmt
+import com.github.javaparser.printer.PrettyPrinter
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.ImportTargetElementType.ANNOTATION
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.ImportTargetElementType.METHOD
 import de.fhdo.lemma.model_processing.code_generation.java_base.dependencies.DependencyDescription
+import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.configuration.AbstractSerializationConfiguration
+import java.io.File
+import java.lang.Exception
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.MainContext.State as MainState
 import java.lang.IllegalArgumentException
+
+/**
+ * Helper to get a [ClassOrInterfaceDeclaration] that has the same name as this [File] instance.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+internal fun File.getEponymousJavaClassOrInterface()
+    = try {
+        val parsedCompilationUnit = StaticJavaParser.parse(this)
+        parsedCompilationUnit.findFirst(ClassOrInterfaceDeclaration::class.java) {
+            it.nameAsString == nameWithoutExtension
+        }.orElseGet { null }
+    } catch (ex: Exception) {
+        null
+    }
+
+/**
+ * Helper to diff two classes based on their [CallableDeclaration] lists, i.e., their constructors or methods. The
+ * functions returns all [CallableDeclaration] instances of the [source] list that are not in the [target] list. The
+ * diff of the callables is based on their signatures (name and parameter types).
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+internal fun <T: CallableDeclaration<*>> diffCallables(source: List<T>, target: List<T>) : List<T> {
+    val missingCallablesInTarget = mutableListOf<T>()
+    val targetSignatures = target.map { targetCallable ->
+        val parameterTypesString = targetCallable.parameters.joinToString { it.typeAsString }
+        "${targetCallable.name}$parameterTypesString"
+    }
+
+    source.forEach { sourceCallable ->
+        val parameterTypesString = sourceCallable.parameters.joinToString { it.typeAsString }
+        val signatureString = "${sourceCallable.name}$parameterTypesString"
+        if (signatureString !in targetSignatures)
+            missingCallablesInTarget.add(sourceCallable)
+    }
+
+    return missingCallablesInTarget
+}
 
 /**
  * Enumeration to distinguish the various types of Java code elements that may be targeted by a certain import. For
@@ -123,6 +168,35 @@ fun Node.addDependency(descriptionString: String) {
  */
 fun Node.addDependencies(dependencies: Iterable<DependencyDescription>) {
     dependencies.forEach { addDependency(it) }
+}
+
+/**
+ * Helper to retrieve the [ClassOrInterfaceDeclaration] from a [Node]. This only returns classes, not interfaces.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+internal fun Node.getClassDeclaration() : ClassOrInterfaceDeclaration?
+    = when(this) {
+        is CompilationUnit -> findFirst(ClassOrInterfaceDeclaration::class.java) { !it.isInterface }.orElseGet { null }
+        is ClassOrInterfaceDeclaration -> this
+        else -> null
+    }
+
+/**
+ * Helper to serialize an AST [Node].
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+internal fun Node.serialize(serializationConfiguration: AbstractSerializationConfiguration) : String {
+    val compilationUnit = when(this) {
+        is CompilationUnit -> this
+        is ClassOrInterfaceDeclaration -> this.parentNode.get() as CompilationUnit
+        else -> throw IllegalArgumentException("Serialization of nodes of type ${this::class.java.name} is not" +
+            "supported")
+    }
+
+    val prettyPrinter = PrettyPrinter(serializationConfiguration)
+    return prettyPrinter.print(compilationUnit)
 }
 
 /**
@@ -403,6 +477,25 @@ fun MethodDeclaration.addImport(import: String, targetElementType: ImportTargetE
 }
 
 /**
+ * Helper to copy this [MethodDeclaration] to the given [target] [ClassOrInterfaceDeclaration].
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+internal fun MethodDeclaration.copyTo(target: ClassOrInterfaceDeclaration) {
+    val copiedMethod = target.addMethod(name.asString())
+    copiedMethod.modifiers = modifiers
+
+    parameters.forEach {
+        val parameter = Parameter()
+        parameter.setType(it.typeAsString)
+        parameter.setName(it.nameAsString)
+        copiedMethod.addParameter(parameter)
+    }
+
+    copiedMethod.setBody(body.toString())
+}
+
+/**
  * Set the implementation body of a Java method. The implementation body is provided in the form of plain Java code.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
@@ -424,6 +517,25 @@ internal fun MethodDeclaration.setBody(code: String, withLineComment: String = "
 
     if (comment !== null)
         newBody.statements[0].setComment(comment)
+}
+
+/**
+ * Helper to copy this [ConstructorDeclaration] to the given [target] [ClassOrInterfaceDeclaration].
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+internal fun ConstructorDeclaration.copyTo(target: ClassOrInterfaceDeclaration) {
+    val copiedConstructor = target.addConstructor()
+    copiedConstructor.modifiers = modifiers
+
+    parameters.forEach {
+        val parameter = Parameter()
+        parameter.setType(it.typeAsString)
+        parameter.setName(it.nameAsString)
+        copiedConstructor.addParameter(parameter)
+    }
+
+    copiedConstructor.body = body
 }
 
 /**
