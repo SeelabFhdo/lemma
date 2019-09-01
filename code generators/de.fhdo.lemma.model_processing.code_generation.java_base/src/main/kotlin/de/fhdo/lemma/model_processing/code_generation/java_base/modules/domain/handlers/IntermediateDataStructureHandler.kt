@@ -1,8 +1,11 @@
 package de.fhdo.lemma.model_processing.code_generation.java_base.modules.domain.handlers
 
+import com.github.javaparser.ast.Modifier
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration
+import com.github.javaparser.ast.body.Parameter
 import de.fhdo.lemma.data.intermediate.IntermediateDataStructure
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.newJavaClassOrInterface
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.setBody
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.setSuperclass
 import de.fhdo.lemma.model_processing.code_generation.java_base.classname
 import de.fhdo.lemma.model_processing.code_generation.java_base.fullyQualifiedClassname
@@ -35,6 +38,25 @@ internal class IntermediateDataStructureHandler
 
         structure.dataFields.forEach { CalledIntermediateDataFieldHandler.invoke(it, generatedClass) }
         structure.operations.forEach { CalledIntermediateDataOperationHandler.invoke(it, generatedClass) }
+        generatedClass.generateConstructors()
         return generatedClass to structure.fullyQualifiedClasspath()
+    }
+
+    private fun ClassOrInterfaceDeclaration.generateConstructors() {
+        addConstructor(Modifier.Keyword.PUBLIC)
+
+        if (fields.isEmpty())
+            return
+
+        val allFieldsConstructor = addConstructor(Modifier.Keyword.PUBLIC)
+        val allFieldsConstructorBody = mutableListOf<String>()
+        fields.map { it.variables[0] }.forEach {
+            val parameter = Parameter()
+            parameter.setType(it.typeAsString)
+            parameter.setName(it.nameAsString)
+            allFieldsConstructor.addParameter(parameter)
+            allFieldsConstructorBody.add("""this.${it.nameAsString} = ${it.nameAsString};""")
+        }
+        allFieldsConstructor.setBody(*allFieldsConstructorBody.toTypedArray())
     }
 }
