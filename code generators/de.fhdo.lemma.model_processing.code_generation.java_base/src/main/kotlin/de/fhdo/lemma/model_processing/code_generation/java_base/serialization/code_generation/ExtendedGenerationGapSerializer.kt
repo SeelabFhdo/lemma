@@ -5,6 +5,7 @@ import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration
 import de.fhdo.lemma.model_processing.asFile
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.ImportTargetElementType
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addImport
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.getAllImportsForTargetElementsOfType
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.getClassDeclaration
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.getEponymousJavaClassOrInterface
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.isGeneratedPropertyAccessor
@@ -237,14 +238,9 @@ private class ExtendedGenerationGapSerializerBase : KoinComponent {
         targetFolderPath: String, genSubfolderName: String, targetClassname: String) : Map<String, String> {
         val generatedFiles = mutableMapOf<String, String>()
 
-        /* Create the *Gen interface and let it extend the extension interface */
-        val genInterface = generationGapDelegate.generateGenInterface(originalClass, genSubfolderName)
-        genInterface.addImport(extInterface.fullyQualifiedName.get(), ImportTargetElementType.SUPER)
-        genInterface.addExtendedType(extInterface.nameAsString)
-
-        val genInterfaceFilePath = "$targetFolderPath${File.separator}$genSubfolderName${File.separator}" +
-            "${genInterface.nameAsString}.java"
-        genInterface.setFilePath(genInterfaceFilePath)
+        /* Create the *Gen interface */
+        val (genInterfaceFilePath, genInterface) = generateGenInterface(originalClass, extInterface, targetFolderPath,
+            genSubfolderName)
         generatedFiles[genInterfaceFilePath] = genInterface.serialize(serializationConfiguration)
 
         /*
@@ -253,19 +249,65 @@ private class ExtendedGenerationGapSerializerBase : KoinComponent {
          */
         val originalClassnameBeforeAdaptation = originalClass.nameAsString
         val originalClassPackageBeforeAdaptation = originalClass.getPackageName()
+        val genImplClassFilePath = adaptToGenImplClass(originalClass, genInterface, targetFolderPath, genSubfolderName)
+        generatedFiles[genImplClassFilePath] = originalClass.serialize(serializationConfiguration)
+
+        /* Generate the class for adding custom code */
+        val (classFilePath, customImplClass) = generateCustomImplClass(originalClass, originalClassnameBeforeAdaptation,
+            originalClassPackageBeforeAdaptation, extInterface, targetFolderPath, targetClassname)
+        generatedFiles[classFilePath] = customImplClass.serialize(serializationConfiguration)
+
+        return generatedFiles
+    }
+
+    /**
+     * Helper to generate the *Gen interface
+     */
+    private fun generateGenInterface(originalClass: ClassOrInterfaceDeclaration,
+        extInterface: ClassOrInterfaceDeclaration, targetFolderPath: String, genSubfolderName: String)
+        : Pair<String, ClassOrInterfaceDeclaration> {
+        val genInterface = generationGapDelegate.generateGenInterface(originalClass, genSubfolderName)
+        genInterface.addImport(extInterface.fullyQualifiedName.get(), ImportTargetElementType.SUPER)
+        genInterface.addExtendedType(extInterface.nameAsString)
+
+        val genInterfaceFilePath = "$targetFolderPath${File.separator}$genSubfolderName${File.separator}" +
+            "${genInterface.nameAsString}.java"
+        genInterface.setFilePath(genInterfaceFilePath)
+        return genInterfaceFilePath to genInterface
+    }
+
+    /**
+     * Helper to adapt the original class to become the *GenImpl class
+     */
+    private fun adaptToGenImplClass(originalClass: ClassOrInterfaceDeclaration,
+        genInterface: ClassOrInterfaceDeclaration, targetFolderPath: String, genSubfolderName: String) : String {
         generationGapDelegate.adaptToGenImplClass(originalClass, genInterface)
+
         val genImplClassFilePath = "$targetFolderPath${File.separator}$genSubfolderName${File.separator}" +
             "${originalClass.nameAsString}.java"
         originalClass.setFilePath(genImplClassFilePath)
-        generatedFiles[genImplClassFilePath] = originalClass.serialize(serializationConfiguration)
 
         // Collect all constructors of the class in order to enable codeGenerationPhaseCompletedCallback() to derive
         // delegating super-constructors from them if necessary
         AvailableSuperConstructors.addFrom(originalClass)
 
-        /* Generate the class for adding custom code */
-        var customImplClass = generationGapDelegate.generateCustomImplClass(originalClass,
-            originalClassnameBeforeAdaptation, originalClassPackageBeforeAdaptation,
+        return genImplClassFilePath
+    }
+
+    /**
+     * Helper to generate the class for adding custom code
+     */
+    private fun generateCustomImplClass(
+        originalClass: ClassOrInterfaceDeclaration,
+        originalClassnameBeforeGenImplAdaptation: String,
+        originalClassPackageBeforeGenImplAdaptation: String,
+        extInterface: ClassOrInterfaceDeclaration,
+        targetFolderPath: String, targetClassname: String)
+        : Pair<String, ClassOrInterfaceDeclaration> {
+        val customImplClass = generationGapDelegate.generateCustomImplClass(
+            originalClass,
+            originalClassnameBeforeGenImplAdaptation,
+            originalClassPackageBeforeGenImplAdaptation,
             """
                 This class might comprise custom code. It will not be overwritten by the code generator as long as its
                 extension interface ${extInterface.nameAsString} exists and the class extends 
@@ -274,9 +316,9 @@ private class ExtendedGenerationGapSerializerBase : KoinComponent {
                 --preserve_existing_files command line option!
             """.trimIndent()
         )
+
         val classFilePath = "$targetFolderPath${File.separator}$targetClassname.java"
         customImplClass.setFilePath(classFilePath)
-        generatedFiles[classFilePath] = customImplClass.serialize(serializationConfiguration)
 
         // Collect all constructors of the class in order to enable codeGenerationPhaseCompletedCallback() to derive
         // delegating super-constructors from them if necessary
@@ -286,7 +328,7 @@ private class ExtendedGenerationGapSerializerBase : KoinComponent {
         // phase when all super-constructors are definitely known
         DelayedConstructors.add(customImplClass)
 
-        return generatedFiles
+        return classFilePath to customImplClass
     }
 
     /**
