@@ -242,7 +242,7 @@ internal class GenerationGapSerializerBase : KoinComponent {
         val genInterface = newJavaClassOrInterface(interfacePackage, interfaceName, true)
 
         /*
-         * Because the interface comprises all methods of the original class copy all method-related imports to it */
+         * Because the interface comprises all methods of the original class, copy all method-related imports to it */
         originalClass.getAllImportsForTargetElementsOfType(ImportTargetElementType.METHOD).forEach {
             genInterface.addImport(it, ImportTargetElementType.METHOD)
         }
@@ -268,10 +268,18 @@ internal class GenerationGapSerializerBase : KoinComponent {
     internal fun adaptToGenImplClass(genImplClass: ClassOrInterfaceDeclaration,
         genInterface: ClassOrInterfaceDeclaration) {
         /* Adapt name, package, visibility, and let the class implement the *Gen interface */
+        val oldPackageName = genImplClass.getPackageName()
         genImplClass.setPackageName(genInterface.getPackageName())
         genImplClass.setName("${genImplClass.nameAsString}$GEN_IMPL_CLASS_SUFFIX")
         genImplClass.isAbstract = true
         genImplClass.addImplementedType(genInterface.nameAsString)
+
+        // If the package name changed, re-add all imports of the class to make them "visible"
+        if (oldPackageName != genImplClass.getPackageName())
+            ImportTargetElementType.values().forEach { targetElementType ->
+                val importsOfTargetElementType = genImplClass.getAllImportsForTargetElementsOfType(targetElementType)
+                importsOfTargetElementType.forEach { genImplClass.addImport(it, targetElementType) }
+            }
 
         /*
          * In case the class that shall become the *GenImpl class extends a superclass, it gets all imports related to
