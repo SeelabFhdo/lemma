@@ -110,7 +110,7 @@ internal class CountingGenerationGapSerializer : CodeGenerationSerializerI {
         val generatedLineCountInfo: List<LineCountInfo> by MainState
         generatedLineCountInfo.forEach {
             val adaptedContentWithLineCountInfo = adaptedFiles[it.serializationTargetFilePath]
-            if (adaptedContentWithLineCountInfo !== null)
+            if (adaptedContentWithLineCountInfo != null)
                 it.serializationResultLineCount = adaptedContentWithLineCountInfo.countLines()
         }
 
@@ -157,7 +157,7 @@ internal class GenerationGapSerializerBase : KoinComponent {
         val originalClass = node.getClassDeclaration()
 
         /* If the node does not comprise a class (e.g., its an enum) do the plain serialization */
-        if (originalClass === null) {
+        if (originalClass == null) {
             val generatedCode = node.serialize(serializationConfiguration)
             return mapOf("$targetFolderPath${File.separator}$targetFilePath" to generatedCode)
         }
@@ -289,7 +289,7 @@ internal class GenerationGapSerializerBase : KoinComponent {
          * called by the *GenImpl class.
          */
         val extendedClass = genImplClass.getSuperclass()
-        if (extendedClass !== null) {
+        if (extendedClass != null) {
             genImplClass.getAllImportsForTargetElementsOfType(ImportTargetElementType.SUPER).forEach {
                 genImplClass.addImport(it, ImportTargetElementType.SUPER)
             }
@@ -385,14 +385,14 @@ internal class GenerationGapSerializerBase : KoinComponent {
             var nextClassSuperName : String?
             do {
                 nextClassSuperName = nextClass.getSuperclass()
-                var superWithoutConstructors = if (nextClassSuperName !== null)
+                var superWithoutConstructors = if (nextClassSuperName != null)
                         classesToFullyQualifiedNames[nextClassSuperName]
                     else
                         null
 
-                if (superWithoutConstructors !== null)
+                if (superWithoutConstructors != null)
                     nextClass = superWithoutConstructors
-            } while (superWithoutConstructors !== null)
+            } while (superWithoutConstructors != null)
 
             // Shrink the lists of classes to do
             val nextClassFullyQualifiedName = nextClass.fullyQualifiedName.get()
@@ -400,7 +400,7 @@ internal class GenerationGapSerializerBase : KoinComponent {
             classesToFullyQualifiedNames.remove(nextClassFullyQualifiedName)
 
             // Add the missing constructors to the next class, based on its superclass, and re-serialize the class
-            if (nextClassSuperName !== null) {
+            if (nextClassSuperName != null) {
                 nextClass.addConstructors(AvailableSuperConstructors[nextClassSuperName]!!)
                 AvailableSuperConstructors[nextClassFullyQualifiedName] = nextClass.constructors
 
@@ -430,7 +430,7 @@ internal class GenerationGapSerializerBase : KoinComponent {
         // In case the class comprises syntax errors and could thus not be parsed (which must be the case, because we
         // know here that the file actually exists), it might be safer to not overwrite the existing code, because it
         // was somehow changed already
-        if (existingCustomImplClass === null)
+        if (existingCustomImplClass == null)
             return true
 
         val expectedGenImplClassname = "${existingCustomImplClass.nameAsString}$GEN_IMPL_CLASS_SUFFIX"
@@ -444,7 +444,7 @@ internal class GenerationGapSerializerBase : KoinComponent {
     private fun mergeWithExistingCustomImplClass(customImplClass: ClassOrInterfaceDeclaration, existingClassFile: File)
         : ClassOrInterfaceDeclaration {
         val existingClass = existingClassFile.getEponymousJavaClassOrInterface()
-        if (existingClass === null || existingClass.isInterface)
+        if (existingClass == null || existingClass.isInterface)
             throw PhaseException("Could not parse existing custom implementation file ${existingClassFile.path}. " +
                 "Either it contains syntax errors or is not a Java class.")
 

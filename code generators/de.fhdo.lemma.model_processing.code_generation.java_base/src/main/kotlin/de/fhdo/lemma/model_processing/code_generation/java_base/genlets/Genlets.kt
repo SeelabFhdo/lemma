@@ -127,7 +127,7 @@ class GenletGeneratedFileContent(val baseTargetFolderSpecifier: GenletPathSpecif
         if (this === other)
             return true
 
-        if (other === null)
+        if (other == null)
             return false
         else if (other !is GenletGeneratedFileContent)
             return false

@@ -515,7 +515,7 @@ internal fun MethodDeclaration.setBody(code: String, withLineComment: String = "
     else
         null
 
-    if (comment !== null)
+    if (comment != null)
         newBody.statements[0].setComment(comment)
 }
 
@@ -559,7 +559,7 @@ internal fun ConstructorDeclaration.setBody(vararg rawStatements: String, firstS
         else
             null
 
-    if (comment !== null)
+    if (comment != null)
         body.statements[0].setComment(comment)
 }
 

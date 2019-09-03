@@ -15,7 +15,7 @@ import java.util.LinkedList
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-fun String.isNumeric() = toIntOrNull() !== null
+fun String.isNumeric() = toIntOrNull() != null
 
 /**
  * Turn a package name into a sub-path by replacing name separators (default value = ".") with OS-specific file

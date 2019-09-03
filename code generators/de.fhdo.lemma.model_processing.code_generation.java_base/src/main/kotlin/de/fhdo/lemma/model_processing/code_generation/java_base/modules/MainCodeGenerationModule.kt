@@ -61,7 +61,7 @@ internal class MainModule : AbstractCodeGenerationModule(), KoinComponent {
 
         // If the chosen code generation serializer does not support line counting, there should be no path to the
         // line counting information file
-        val writeLineCountInfo = CommandLine.parameterLineCountFile !== null
+        val writeLineCountInfo = CommandLine.parameterLineCountFile != null
         val (codeGenerationSerializer, codeGenerationSerializerInfo) = CommandLine.codeGenerationSerializer
         if (writeLineCountInfo && !codeGenerationSerializerInfo.supportsLineCounting)
             throw PhaseException("Selected code generation serializer ${codeGenerationSerializerInfo.name} does not " +
@@ -165,7 +165,7 @@ internal class MainModule : AbstractCodeGenerationModule(), KoinComponent {
      */
     private fun IntermediateMicroservice.artifactIdentifier() : String {
         var identifier = "$packageName${DependencyDescription.PART_SEP}$simpleName"
-        if (version !== null)
+        if (version != null)
             identifier += "${DependencyDescription.PART_SEP}$version"
         return identifier
     }

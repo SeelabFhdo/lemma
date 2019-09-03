@@ -56,13 +56,13 @@ internal class CalledIntermediateDataOperationHandler :
     private fun MethodDeclaration.setReturnType(originalOperation: IntermediateDataOperation,
         parentClass: ClassOrInterfaceDeclaration) {
         val returnType = originalOperation.returnType?.type
-        if (returnType === null) {
+        if (returnType == null) {
             setType("void")
             return
         }
 
         val typeMapping = returnType.getTypeMapping()
-        if (typeMapping !== null) {
+        if (typeMapping != null) {
             val (mappedTypeName, isComplexTypeMapping, imports, dependencies) = typeMapping
             imports.forEach { addImport(it, ImportTargetElementType.METHOD) }
             parentClass.addDependencies(dependencies)
@@ -95,7 +95,7 @@ internal class CalledIntermediateDataOperationHandler :
         generatedParameter.setName(parameter.name)
 
         val typeMapping = parameter.type.getTypeMapping()
-        if (typeMapping !== null) {
+        if (typeMapping != null) {
             val (mappedTypeName, isComplexTypeMapping, imports, dependencies) = typeMapping
             imports.forEach { addImport(it, ImportTargetElementType.METHOD) }
             parentClass.addDependencies(dependencies)

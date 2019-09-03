@@ -70,9 +70,8 @@ private fun EObject.loadOriginalEObject(originalModelFilePath: String) : EObject
             "${this::class.java.name} is not supported")
     }
 
-    if (originalEObject === null)
-        throw IllegalArgumentException("Original EObject of intermediate EObject of type ${this::class.java.name} " +
-            "could not be loaded")
+    require(originalEObject != null) { "Original EObject of intermediate EObject of type ${this::class.java.name} " +
+        "could not be loaded" }
 
     return originalEObject
 }
@@ -139,7 +138,7 @@ private val loadedOriginalModelRootsCache = mutableMapOf<String, EObject>()
 @Suppress("UNCHECKED_CAST")
 private fun <T: EObject> loadOriginalModelRoot(modelFilePath: String) : T {
     val alreadyLoadedModelRoot = loadedOriginalModelRootsCache[modelFilePath]
-    if (alreadyLoadedModelRoot !== null)
+    if (alreadyLoadedModelRoot != null)
         return alreadyLoadedModelRoot as T
 
     val modelFile = modelFilePath.asFile()

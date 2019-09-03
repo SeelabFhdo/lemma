@@ -31,7 +31,7 @@ internal class IntermediateDataStructureHandler
         val packageName = "$currentDomainPackage.${structure.packageName}"
 
         generatedClass = newJavaClassOrInterface(packageName, structure.classname)
-        if (structure.`super` !== null) {
+        if (structure.`super` != null) {
             val fullyQualifiedClassname = structure.`super`.fullyQualifiedClassname
             generatedClass.setSuperclass("$currentDomainPackage.$fullyQualifiedClassname")
         }

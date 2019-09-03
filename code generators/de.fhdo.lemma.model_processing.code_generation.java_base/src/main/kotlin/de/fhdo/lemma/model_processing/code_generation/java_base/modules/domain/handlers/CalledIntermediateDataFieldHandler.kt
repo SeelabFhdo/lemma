@@ -48,14 +48,14 @@ internal class CalledIntermediateDataFieldHandler :
         : Pair<FieldDeclaration, String?>? {
         var generatedAttribute: FieldDeclaration? = null
 
-        if (field.dataStructure !== null) {
+        if (field.dataStructure != null) {
             if (!field.isInherited)
                 generatedAttribute = field.generateJavaAttribute(parentClass!!)
             else if (field.visibilitySubsequentlyConstrained)
                 field.generateNotImplementedGetter(parentClass!!)
         }
 
-        return if (generatedAttribute !== null)
+        return if (generatedAttribute != null)
                 generatedAttribute to null
             else
                 null
@@ -64,7 +64,7 @@ internal class CalledIntermediateDataFieldHandler :
     private fun IntermediateDataField.generateJavaAttribute(parentClass: ClassOrInterfaceDeclaration)
         : FieldDeclaration? {
         val typeMapping = type.getTypeMapping()
-        val generatedAttribute = if (typeMapping !== null) {
+        val generatedAttribute = if (typeMapping != null) {
             val (mappedTypeName, isComplexTypeMapping, imports, dependencies) = typeMapping
             val attribute = parentClass.addPrivateAttribute(name, mappedTypeName)
             imports.forEach { attribute.addImport(it, ImportTargetElementType.FIELD) }
@@ -103,7 +103,7 @@ internal class CalledIntermediateDataFieldHandler :
         if (willBeFinal)
             generatedAttribute.addModifier(Modifier.Keyword.FINAL)
 
-        if (initializationValue !== null) {
+        if (initializationValue != null) {
             val (typeSpecificInitializationValue, additionalImports) = getTypeSpecificInitializationValueString()
             generatedAttribute.setInitializationValue(typeSpecificInitializationValue)
             additionalImports.forEach { generatedAttribute.addImport(it, ImportTargetElementType.FIELD) }
@@ -144,7 +144,7 @@ internal class CalledIntermediateDataFieldHandler :
     }
 
     private fun IntermediateDataField.getTypeSpecificInitializationValueString() : Pair<String, Set<String>> {
-        if (initializationValue === null)
+        if (initializationValue == null)
             return "" to emptySet()
 
         var valueString = ""
@@ -175,7 +175,7 @@ internal class CalledIntermediateDataFieldHandler :
 
     private fun deriveInitializationValueForDate(dateString: String) : Pair<String, Set<String>> {
         val format = DateUtils.determineDateFormat(dateString)
-        require(format !== null) {
+        require(format != null) {
             "Cannot derive initialization value for date string $dateString. Unsupported date format."
         }
 
@@ -286,5 +286,5 @@ internal class CalledIntermediateDataFieldHandler :
     private val IntermediateDataField.visibilitySubsequentlyConstrained get() = isInherited && isHidden
     private val IntermediateDataField.needsGetter get() = !isHidden
     private val IntermediateDataField.needsSetter get() = !isImmutable && !isHidden
-    private val IntermediateDataField.willBeFinal get() = isImmutable && initializationValue !== null
+    private val IntermediateDataField.willBeFinal get() = isImmutable && initializationValue != null
 }

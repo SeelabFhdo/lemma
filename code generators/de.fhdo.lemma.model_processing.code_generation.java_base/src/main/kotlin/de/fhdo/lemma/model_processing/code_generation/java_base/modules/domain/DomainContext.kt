@@ -70,7 +70,7 @@ internal object DomainContext {
          * Helper to get the [IntermediateDataModel] instance from the state's [currentIntermediateDomainModelFilePath]
          */
         private fun currentIntermediateDomainModel() : IntermediateDataModel {
-            if (currentIntermediateDomainModel === null)
+            if (currentIntermediateDomainModel == null)
                 currentIntermediateDomainModel = loadModelRoot(currentIntermediateDomainModelFilePath)
             return currentIntermediateDomainModel!!
         }

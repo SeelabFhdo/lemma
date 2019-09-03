@@ -56,7 +56,7 @@ private class MavenDependencySerializerBase : KoinComponent {
     fun buildModel(artifactIdentifier : String, dependencyDescriptions : Set<DependencyDescription>) : Node {
         val (group, artifact, version) = DependencyDescription.fromString(artifactIdentifier)
         val root = createRoot()
-        root merge projectIdentifier(group, artifact, if (version !== null) version else DEFAULT_VERSION)
+        root merge projectIdentifier(group, artifact, version ?: DEFAULT_VERSION)
         root merge properties()
 
         if (dependencyDescriptions.isNotEmpty())
@@ -84,7 +84,7 @@ private class MavenDependencySerializerBase : KoinComponent {
         elements {
             "groupId" { -group }
             "artifactId" { -artifact.toMavenArtifactId() }
-            "version" { -if (version !== DEFAULT_VERSION) version.toMavenVersionId() else version }
+            "version" { -if (version != DEFAULT_VERSION) version.toMavenVersionId() else version }
         }
 
     private fun String.toMavenArtifactId() : String {
@@ -140,7 +140,7 @@ private class MavenDependencySerializerBase : KoinComponent {
             "artifactId" { -dependencyDescription.artifact }
         }
 
-        if (dependencyDescription.version !== null)
+        if (dependencyDescription.version != null)
             dependencyNode.addNode(
                 node("version") { dependencyDescription.version }
             )

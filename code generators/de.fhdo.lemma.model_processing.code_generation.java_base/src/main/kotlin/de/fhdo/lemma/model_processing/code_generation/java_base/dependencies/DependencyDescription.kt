@@ -47,7 +47,7 @@ data class DependencyDescription(val group: String, val artifact: String, val ve
      * signs)
      */
     override fun toString() : String {
-        return if (version !== null)
+        return if (version != null)
                 "$group$PART_SEP$artifact$PART_SEP$version"
             else
                 "$group$PART_SEP$artifact"

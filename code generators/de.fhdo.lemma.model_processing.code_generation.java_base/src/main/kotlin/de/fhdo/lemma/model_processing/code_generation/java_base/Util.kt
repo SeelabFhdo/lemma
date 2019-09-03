@@ -96,15 +96,15 @@ internal val IntermediateMicroservice.packageName
 fun IntermediateComplexType.resolve() : IntermediateComplexType {
     /* Determine the defining model and referencing parts (version name, context name, and simple name) of this type */
     val definingModelUri = if (this is IntermediateImportedComplexType) import.importUri else null
-    val definingModel = if (definingModelUri !== null) loadModelRoot(definingModelUri) else getContainingDataModel()
+    val definingModel = if (definingModelUri != null) loadModelRoot(definingModelUri) else getContainingDataModel()
     val (versionName, contextName, simpleName) = getQualifiedNameParts()
 
     /* Determine sources of this type's referencing parts (version and context instances) */
-    val version = if (versionName !== null) definingModel.versions.find { it.name == versionName } else null
+    val version = if (versionName != null) definingModel.versions.find { it.name == versionName } else null
 
-    val context = if (contextName !== null) {
+    val context = if (contextName != null) {
             // A context may be part of a version or reside on the top-level of a data model
-            if (version !== null)
+            if (version != null)
                 version.contexts.find { it.name == contextName }
             else
                 definingModel.contexts.find { it.name == contextName }
@@ -112,13 +112,13 @@ fun IntermediateComplexType.resolve() : IntermediateComplexType {
             null
 
     /* Resolve the type */
-    val resolvedType = if (version !== null && context !== null)
+    val resolvedType = if (version != null && context != null)
             // According to its qualified name, the type is defined in a context within a version
             context.complexTypes.find { it.name == simpleName }
-        else if (version !== null && context === null)
+        else if (version != null && context == null)
             // According to its qualified name, the type is directly defined in a version
             version.complexTypes.find { it.name == simpleName }
-        else if (context !== null)
+        else if (context != null)
             // According to its qualified name, the type is directly defined in a context
             context.complexTypes.find { it.name == simpleName }
         else
@@ -126,7 +126,7 @@ fun IntermediateComplexType.resolve() : IntermediateComplexType {
             // the type is defined on the top-level of the model itself
             definingModel.complexTypes.find { it.name == simpleName }
 
-    require(resolvedType !== null) { "Complex type $qualifiedName could not be resolved" }
+    require(resolvedType != null) { "Complex type $qualifiedName could not be resolved" }
     return resolvedType!!
 }
 

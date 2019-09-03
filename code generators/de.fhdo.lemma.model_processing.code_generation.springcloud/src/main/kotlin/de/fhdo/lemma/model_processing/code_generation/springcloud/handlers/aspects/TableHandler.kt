@@ -29,7 +29,7 @@ class TableHandler : AspectHandlerI {
 
         val tableAnnotation = generatedClass.addAndGetAnnotation("Table")
         val tableName = aspect.getPropertyValue("name")
-        if (tableName !== null)
+        if (tableName != null)
             tableAnnotation.addPair("name", "\"$tableName\"")
         generatedClass.addImport("javax.persistence.Table", ImportTargetElementType.ANNOTATION)
 

@@ -97,7 +97,7 @@ internal class CountingExtendedGenerationGapSerializer : CodeGenerationSerialize
         val generatedLineCountInfo: List<LineCountInfo> by MainState
         generatedLineCountInfo.forEach {
             val adaptedContentWithLineCountInfo = adaptedFiles[it.serializationTargetFilePath]
-            if (adaptedContentWithLineCountInfo !== null)
+            if (adaptedContentWithLineCountInfo != null)
                 it.serializationResultLineCount = adaptedContentWithLineCountInfo.countLines()
         }
 
@@ -149,7 +149,7 @@ private class ExtendedGenerationGapSerializerBase : KoinComponent {
         val originalClass = node.getClassDeclaration()
 
         /* If the node does not comprise a class (e.g., its an enum) do the plain serialization */
-        if (originalClass === null) {
+        if (originalClass == null) {
             val generatedCode = node.serialize(serializationConfiguration)
             return mapOf("$targetFolderPath${File.separator}$targetFilePath" to generatedCode)
         }
@@ -160,7 +160,7 @@ private class ExtendedGenerationGapSerializerBase : KoinComponent {
         val targetClassname = fullTargetFile.nameWithoutExtension
 
         val extensionInterface = findExtensionInterface(fullTargetFolderPath, targetClassname)
-        return if (extensionInterface === null)
+        return if (extensionInterface == null)
                 generateWithoutGap(originalClass, fullTargetFolderPath,
                     GenerationGapSerializerBase.GENERATION_SUBFOLDER, targetClassname)
             else
@@ -176,7 +176,7 @@ private class ExtendedGenerationGapSerializerBase : KoinComponent {
     private fun findExtensionInterface(folderPath: String, classname: String) : ClassOrInterfaceDeclaration? {
         val extensionFilePath = "$folderPath${File.separator}${classname}Ext.java"
         val extensionInterface = extensionFilePath.asFile().getEponymousJavaClassOrInterface()
-        return if (extensionInterface !== null && extensionInterface.isInterface)
+        return if (extensionInterface != null && extensionInterface.isInterface)
                 extensionInterface
             else
                 null

@@ -48,7 +48,7 @@ infix fun Node.merge(otherNode: Node) {
      * of this node, directly add the other node to this node as a child, because both nodes already differ at the
      * root-level and merging is thus trivial
      */
-    if (otherNode.nodeName.isNotEmpty() && otherNode.nodeName !== this.nodeName) {
+    if (otherNode.nodeName.isNotEmpty() && otherNode.nodeName != this.nodeName) {
         addNode(otherNode)
         return
     }
@@ -61,7 +61,7 @@ infix fun Node.merge(otherNode: Node) {
         // If there does not exist an eponymous child of this node, we add the other child to the current level (which
         // is the second level, i.e., the one under the root node)
         var equalNodeOnNextLevel = findEponymousChildNode(currentOtherChild)
-        if (equalNodeOnNextLevel === null) {
+        if (equalNodeOnNextLevel == null) {
             addNode(currentOtherChild)
             continue
         }
@@ -70,11 +70,11 @@ infix fun Node.merge(otherNode: Node) {
         // eponymous node anymore. Then at this level, all non-eponymous sub-nodes of the other node are added.
         var mergeNode = equalNodeOnNextLevel
         var equalChildNodeOnNextLevel = currentOtherChild
-        while (equalNodeOnNextLevel !== null) {
+        while (equalNodeOnNextLevel != null) {
             equalNodeOnNextLevel = equalNodeOnNextLevel.findEponymousChildNode(equalChildNodeOnNextLevel.childNodes)
 
             // Go to the next level
-            if (equalNodeOnNextLevel !== null) {
+            if (equalNodeOnNextLevel != null) {
                 equalChildNodeOnNextLevel = equalChildNodeOnNextLevel.findEponymousChildNode(equalNodeOnNextLevel)!!
                 mergeNode = equalNodeOnNextLevel
             }

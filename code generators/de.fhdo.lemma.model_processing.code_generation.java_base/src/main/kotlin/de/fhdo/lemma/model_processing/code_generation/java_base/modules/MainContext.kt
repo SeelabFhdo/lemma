@@ -114,7 +114,7 @@ internal object MainContext {
                 "intermediateServiceModel" -> intermediateServiceModel
                 "intermediateServiceModelForDomainModels" -> intermediateServiceModelForDomainModels
                 "lineCountInfoFilePath" -> lineCountInfoFilePath
-                "writeLineCountInfo" -> lineCountInfoFilePath !== null
+                "writeLineCountInfo" -> lineCountInfoFilePath != null
                 else -> throw IllegalArgumentException("Main state does not comprise property ${property.name}")
             }
 

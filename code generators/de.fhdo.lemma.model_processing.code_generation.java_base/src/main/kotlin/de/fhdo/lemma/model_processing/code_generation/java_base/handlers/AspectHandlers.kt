@@ -52,9 +52,8 @@ interface AspectHandlerI {
      */
     fun invoke(eObject: EObject, node: Node, aspect: IntermediateImportedAspect) : Node {
         val adaptedNode = execute(eObject, node, aspect)
-        if (adaptedNode !== node)
-            throw IllegalStateException("Aspect handler for aspect $aspect did not return the same Node instance for " +
-                    "EObject type ${eObject::class.java.name} and input Node type ${node::class.java.name}")
+        check(adaptedNode == node) { "Aspect handler for aspect $aspect did not return the same Node instance for " +
+            "EObject type ${eObject::class.java.name} and input Node type ${node::class.java.name}" }
         return adaptedNode
     }
 }

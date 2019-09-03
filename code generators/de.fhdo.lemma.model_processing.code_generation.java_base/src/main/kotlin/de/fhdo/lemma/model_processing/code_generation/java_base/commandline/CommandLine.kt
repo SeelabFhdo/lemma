@@ -28,7 +28,7 @@ internal object CommandLine {
             description = ["an alternative intermediate model to generate microservices from"]
         )
         set(value) {
-            if (value !== null && !value.asFile().exists())
+            if (value != null && !value.asFile().exists())
                 throw CommandLine.ParameterException(commandSpec.commandLine(), "Alternative intermediate service " +
                     "model file $value does not exist")
 
@@ -43,7 +43,7 @@ internal object CommandLine {
             description = ["path to a Genlet's JAR archive"]
         )
         set(value) {
-            if (value !== null)
+            if (value != null)
                 value.forEach {
                     if (!it.asFile().exists())
                         throw CommandLine.ParameterException(commandSpec.commandLine(), "Genlet file $it does not " +
@@ -65,7 +65,7 @@ internal object CommandLine {
             description = ["path to a Genlet's JAR archive and full qualified name of the Genlet class to load"]
         )
         set(value) {
-            if (value !== null)
+            if (value != null)
                 value.keys.forEach {
                     if (!it.asFile().exists())
                         throw CommandLine.ParameterException(commandSpec.commandLine(), "Genlet file $it does not " +
@@ -83,7 +83,7 @@ internal object CommandLine {
             description = ["name of the code generation serializer to use"]
         )
         set(value) {
-            if (value !== null && value !in supportedCodeGenerationSerializers)
+            if (value != null && value !in supportedCodeGenerationSerializers)
                 throw CommandLine.ParameterException(commandSpec.commandLine(), "Unknown code generation serializer" +
                     "$value")
 
@@ -96,7 +96,7 @@ internal object CommandLine {
      */
     internal val codeGenerationSerializer: Pair<CodeGenerationSerializerI, CodeGenerationSerializerInfo>
         get() {
-            val serializerInfo = if (parameterCodeGenerationSerializerName !== null)
+            val serializerInfo = if (parameterCodeGenerationSerializerName != null)
                     supportedCodeGenerationSerializers[parameterCodeGenerationSerializerName!!]!!
                 else
                     defaultCodeGenerationSerializer
@@ -119,9 +119,9 @@ internal object CommandLine {
      */
     fun genlets() : Map<String, String?> {
         val genlets = mutableMapOf<String, String?>()
-        if (parameterFullQualifiedGenlets !== null)
+        if (parameterFullQualifiedGenlets != null)
             genlets.putAll(parameterFullQualifiedGenlets!!)
-        if (parameterGenlets !== null)
+        if (parameterGenlets != null)
             genlets.putAll(parameterGenlets!!.map { it to null })
         return genlets
     }

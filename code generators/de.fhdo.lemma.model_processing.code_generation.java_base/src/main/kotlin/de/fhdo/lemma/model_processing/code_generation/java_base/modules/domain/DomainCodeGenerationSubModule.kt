@@ -71,7 +71,7 @@ internal class DomainCodeGenerationSubModule : KoinComponent {
     private fun invokeVisitingCodeGenerationHandler(eObject: EObject) {
         val serializer: CodeGenerationSerializerI by inject()
         val (generatedNode, targetFile) = DomainContext.invokeVisitingCodeGenerationHandler(eObject) ?: return
-        if (targetFile === null)
+        if (targetFile == null)
             return
 
         val currentDomainTargetFolderPath: String by DomainState
