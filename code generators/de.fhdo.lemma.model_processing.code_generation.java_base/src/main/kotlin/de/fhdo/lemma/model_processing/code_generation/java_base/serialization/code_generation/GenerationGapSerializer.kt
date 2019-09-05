@@ -9,6 +9,7 @@ import com.github.javaparser.ast.body.Parameter
 import com.github.javaparser.ast.comments.BlockComment
 import de.fhdo.lemma.model_processing.asFile
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.ImportTargetElementType
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.SuperclassInfo
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addImport
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.diffCallables
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.getAllImportsForTargetElementsOfType
@@ -266,10 +267,12 @@ internal class GenerationGapSerializerBase : KoinComponent {
      */
     internal fun adaptToGenImplClass(genImplClass: ClassOrInterfaceDeclaration,
         genInterface: ClassOrInterfaceDeclaration) {
-        /* Adapt name, package, visibility, and let the class implement the *Gen interface */
         val oldPackageName = genImplClass.getPackageName()
+        val oldClassname = genImplClass.nameAsString
+
+        /* Adapt name, package, visibility, and let the class implement the *Gen interface */
         genImplClass.setPackageName(genInterface.getPackageName())
-        genImplClass.setName("${genImplClass.nameAsString}$GEN_IMPL_CLASS_SUFFIX")
+        genImplClass.setName("$oldClassname$GEN_IMPL_CLASS_SUFFIX")
         genImplClass.isAbstract = true
         genImplClass.addImplementedType(genInterface.nameAsString)
 
@@ -282,16 +285,22 @@ internal class GenerationGapSerializerBase : KoinComponent {
 
         /*
          * In case the class that shall become the *GenImpl class extends a superclass, it gets all imports related to
-         * that superclass. However, and for now, its constructors are removed. They will be later added back to the
-         * class within codeGenerationPhaseCompletedCallback(). This is necessary, because we only know when all code
-         * generations were done, the final "shape" of the superclass comprising its field constructors, which will be
-         * called by the *GenImpl class.
+         * that superclass and possible qualifiers of type parameters that point to the class are adapted to the
+         * *GenImpl class. However, and for now, the constructors of the original class are removed. They will be later
+         * added back to the class within codeGenerationPhaseCompletedCallback(). This is necessary, because we only
+         * know when all code generations were done, the final "shape" of the superclass comprising its field
+         * constructors, which will be called by the *GenImpl class.
          */
-        val extendedClass = genImplClass.getSuperclass()
-        if (extendedClass != null) {
+        val superclassInfo = genImplClass.getSuperclass()
+        if (superclassInfo != null) {
             genImplClass.getAllImportsForTargetElementsOfType(ImportTargetElementType.SUPER).forEach {
                 genImplClass.addImport(it, ImportTargetElementType.SUPER)
             }
+
+            // If the superclass has type parameters with qualifiers, e.g., ArrayList<OriginalClassname.NestedClass>,
+            // the will be adapted according to the *GenImpl classname, e.g.,
+            // ArrayList<OriginalClassnameGenImpl.NestedClass>,
+            replaceSuperclassTypeParameterQualifiers(genImplClass, superclassInfo, oldClassname)
 
             // Remove constructors and delay their generation
             genImplClass.constructors.forEach { genImplClass.remove(it) }
@@ -327,6 +336,27 @@ internal class GenerationGapSerializerBase : KoinComponent {
             // Set "not implemented yet" stub body
             it.setBody("""throw new UnsupportedOperationException("Not implemented yet");""")
         }
+    }
+
+    /**
+     * Helper to replace qualifiers in type parameters of superclasses with the name of the given [clazz]
+     */
+    private fun replaceSuperclassTypeParameterQualifiers(clazz : ClassOrInterfaceDeclaration,
+        superclassInfo: SuperclassInfo, oldQualifier: String) {
+        if (superclassInfo.typeParameters.isEmpty())
+            return
+
+        // Replace qualifiers at the beginning of the superclass's type parameters, i.e., ArrayList<OldQualifier.Nested>
+        // becomes ArrayList<ClazzName.Nested>
+        val newTypeParameters = superclassInfo.typeParameters.map {
+            if (it.startsWith("$oldQualifier."))
+                it.replaceBefore(".", clazz.nameAsString)
+            else
+                it
+        }
+
+        // Replace old superclass with the new one including the adapted type parameters
+        clazz.setSuperclass(superclassInfo.fullyQualifiedClassname, newTypeParameters)
     }
 
     /**
@@ -384,7 +414,7 @@ internal class GenerationGapSerializerBase : KoinComponent {
             var nextClass = classesWithoutConstructors.first()
             var nextClassSuperName : String?
             do {
-                nextClassSuperName = nextClass.getSuperclass()
+                nextClassSuperName = nextClass.getSuperclass()?.fullyQualifiedClassname
                 var superWithoutConstructors = if (nextClassSuperName != null)
                         classesToFullyQualifiedNames[nextClassSuperName]
                     else
@@ -399,20 +429,26 @@ internal class GenerationGapSerializerBase : KoinComponent {
             classesWithoutConstructors.remove(nextClass)
             classesToFullyQualifiedNames.remove(nextClassFullyQualifiedName)
 
+            if (nextClassSuperName == null)
+                continue
+
+            // Determine the missing constructors from the list of available constructors. There might be no available
+            // constructors, e.g., when the superclass is from the Collections Framework and thus from Java's standard
+            // library
+            val missingConstructors = AvailableSuperConstructors[nextClassSuperName] ?: continue
+
             // Add the missing constructors to the next class, based on its superclass, and re-serialize the class
-            if (nextClassSuperName != null) {
-                nextClass.addConstructors(AvailableSuperConstructors[nextClassSuperName]!!)
-                AvailableSuperConstructors[nextClassFullyQualifiedName] = nextClass.constructors
+            nextClass.addConstructors(missingConstructors)
+            AvailableSuperConstructors[nextClassFullyQualifiedName] = nextClass.constructors
 
-                val nextClassFilePath = nextClass.getFilePath()!!
-                val nextClassFile = nextClassFilePath.asFile()
-                // In case the class is the one for custom implementations and already exists, merge the generated one
-                // with it
-                if (nextClass.isCustomImpl() && comprisesCustomCode(nextClassFile))
-                    nextClass = mergeWithExistingCustomImplClass(nextClass, nextClassFile)
+            val nextClassFilePath = nextClass.getFilePath()!!
+            val nextClassFile = nextClassFilePath.asFile()
+            // In case the class is the one for custom implementations and already exists, merge the generated one
+            // with it
+            if (nextClass.isCustomImpl() && comprisesCustomCode(nextClassFile))
+                nextClass = mergeWithExistingCustomImplClass(nextClass, nextClassFile)
 
-                adaptedFiles[nextClassFilePath] = nextClass.serialize(serializationConfiguration)
-            }
+            adaptedFiles[nextClassFilePath] = nextClass.serialize(serializationConfiguration)
         }
 
         return adaptedFiles
@@ -426,12 +462,10 @@ internal class GenerationGapSerializerBase : KoinComponent {
         if (!customImplFile.exists())
             return false
 
-        val existingCustomImplClass = customImplFile.getEponymousJavaClassOrInterface()
         // In case the class comprises syntax errors and could thus not be parsed (which must be the case, because we
         // know here that the file actually exists), it might be safer to not overwrite the existing code, because it
         // was somehow changed already
-        if (existingCustomImplClass == null)
-            return true
+        val existingCustomImplClass = customImplFile.getEponymousJavaClassOrInterface() ?: return true
 
         val expectedGenImplClassname = "${existingCustomImplClass.nameAsString}$GEN_IMPL_CLASS_SUFFIX"
         return expectedGenImplClassname in existingCustomImplClass.extendedTypes.map { it.nameAsString }
@@ -556,7 +590,7 @@ internal object DelayedConstructors : HashMap<ClassOrInterfaceDeclaration, Strin
      * Convenience method to add a new [clazz]
      */
     fun add(clazz: ClassOrInterfaceDeclaration) {
-        this[clazz] = clazz.getSuperclass()!!
+        this[clazz] = clazz.getSuperclass()!!.fullyQualifiedClassname
     }
 }
 

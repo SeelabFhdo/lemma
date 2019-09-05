@@ -62,7 +62,34 @@ fun IntermediateType.getTypeMapping() : TypeMappingDescription? {
         is IntermediatePrimitiveType -> primitiveTypeMappings[this]
         is IntermediateImportedTechnologySpecificType -> primitiveTypeMappings[this]
         is IntermediateComplexType -> TypeMappingDescription(classname, classname, true)
-        else -> throw PhaseException("Cannot derive Java type for unknown type kind${this::class.java.name}")
+        else -> throw PhaseException("Cannot derive Java type for unknown type kind ${this::class.java.name}")
+    }
+}
+
+/**
+ * Convenience function to get the Java object type mapping for a built-in [IntermediatePrimitiveType]. For instance,
+ * the Java object type for the built-in primitive type "boolean" is "java.lang.Boolean".
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+internal fun IntermediatePrimitiveType.getObjectTypeMapping() : TypeMappingDescription {
+    require(origin == IntermediateTypeOrigin.BUILTIN) { "A Java object type mapping may only be derived for built-in " +
+        "primitive types" }
+
+    return when (name) {
+        PrimitiveTypeConstants.BOOLEAN.literal -> primitiveTypeMappings.getTechnologySpecificMapping("Boolean")!!
+        PrimitiveTypeConstants.BYTE.literal -> primitiveTypeMappings.getTechnologySpecificMapping("Byte")!!
+        PrimitiveTypeConstants.CHARACTER.literal -> primitiveTypeMappings.getTechnologySpecificMapping("Character")!!
+        PrimitiveTypeConstants.DATE.literal -> primitiveTypeMappings.getTechnologySpecificMapping("Date")!!
+        PrimitiveTypeConstants.DOUBLE.literal -> primitiveTypeMappings.getTechnologySpecificMapping("Double")!!
+        PrimitiveTypeConstants.FLOAT.literal -> primitiveTypeMappings.getTechnologySpecificMapping("Float")!!
+        PrimitiveTypeConstants.INTEGER.literal -> primitiveTypeMappings.getTechnologySpecificMapping("Integer")!!
+        PrimitiveTypeConstants.LONG.literal -> primitiveTypeMappings.getTechnologySpecificMapping("Long")!!
+        PrimitiveTypeConstants.SHORT.literal -> primitiveTypeMappings.getTechnologySpecificMapping("Short")!!
+        PrimitiveTypeConstants.STRING.literal -> primitiveTypeMappings.getTechnologySpecificMapping("String")!!
+
+        else -> throw PhaseException("Cannot derive Java object type mapping for unknown built-in primitive type " +
+            "kind ${this::class.java.name}")
     }
 }
 
@@ -82,6 +109,11 @@ class TypeMappingDescription(val originalTypeName: String, val mappedTypeName: S
     fun addImport(import: String) {
         imports.add(import)
     }
+
+    /**
+     * Get the imports hold by this type mapping description
+     */
+    fun getImports() = imports.toSet()
 
     /**
      * Add a dependency to the type mapping, e.g., when the mapped type originates from a framework
@@ -220,13 +252,18 @@ class PrimitiveTypeMappingsRegistry(private val builtin: MutableMap<String, Type
     /**
      * Get a registered built-in or technology-specific type mapping for an [IntermediateType]
      */
-    operator fun get(primitiveType: IntermediateType) : TypeMappingDescription? {
-        return when(primitiveType.origin) {
-            IntermediateTypeOrigin.BUILTIN -> builtin[primitiveType.name]
-            IntermediateTypeOrigin.TECHNOLOGY -> technology[primitiveType.name]
+    operator fun get(type: IntermediateType) : TypeMappingDescription? {
+        return when(type.origin) {
+            IntermediateTypeOrigin.BUILTIN -> builtin[type.name]
+            IntermediateTypeOrigin.TECHNOLOGY -> technology[type.name]
             else -> null
         }
     }
+
+    /**
+     * Get a registered technology-specific type mapping for an [IntermediateType]
+     */
+    fun getTechnologySpecificMapping(typeName: String) = technology[typeName]
 }
 
 /**

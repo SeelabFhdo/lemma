@@ -48,12 +48,10 @@ internal class CalledIntermediateDataFieldHandler :
         : Pair<FieldDeclaration, String?>? {
         var generatedAttribute: FieldDeclaration? = null
 
-        if (field.dataStructure != null) {
-            if (!field.isInherited)
-                generatedAttribute = field.generateJavaAttribute(parentClass!!)
-            else if (field.visibilitySubsequentlyConstrained)
-                field.generateNotImplementedGetter(parentClass!!)
-        }
+        if (!field.isInherited)
+            generatedAttribute = field.generateJavaAttribute(parentClass!!)
+        else if (field.visibilitySubsequentlyConstrained)
+            field.generateNotImplementedGetter(parentClass!!)
 
         return if (generatedAttribute != null)
                 generatedAttribute to null
@@ -72,6 +70,7 @@ internal class CalledIntermediateDataFieldHandler :
 
             val getterMethod = if (needsGetter) {
                     val (getterName, getterMethod) = parentClass.addGetter(attribute)
+                    imports.forEach { getterMethod.addImport(it, ImportTargetElementType.METHOD) }
                     if (hasFeature("NEVER_EMPTY") && type.isNullable)
                         addNeverEmptyCheckToGetter(getterName, getterMethod)
                     getterMethod
@@ -82,6 +81,7 @@ internal class CalledIntermediateDataFieldHandler :
                     val (setterName, setterMethod) = parentClass.addSetter(attribute)
                     if (hasFeature("NEVER_EMPTY") && type.isNullable)
                         addNeverEmptyCheckToSetter(setterName, setterMethod)
+                    imports.forEach { setterMethod.addImport(it, ImportTargetElementType.METHOD) }
                     setterMethod
                 } else
                     null

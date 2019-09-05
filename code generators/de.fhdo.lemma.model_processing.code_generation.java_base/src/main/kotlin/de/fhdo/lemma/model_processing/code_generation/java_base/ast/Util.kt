@@ -18,6 +18,7 @@ import com.github.javaparser.ast.expr.NameExpr
 import com.github.javaparser.ast.stmt.BlockStmt
 import com.github.javaparser.ast.stmt.ExpressionStmt
 import com.github.javaparser.ast.stmt.ReturnStmt
+import com.github.javaparser.ast.type.ClassOrInterfaceType
 import com.github.javaparser.printer.PrettyPrinter
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.ImportTargetElementType.ANNOTATION
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.ImportTargetElementType.METHOD
@@ -109,6 +110,19 @@ internal class ImportInfo() : HashMap<String, MutableSet<ImportTargetElementType
 }
 
 /**
+ * Find the parent node of a [Node], which is of the given type [T].
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+@Suppress("UNCHECKED_CAST")
+private inline fun <reified T: Node> Node.findParentNode() : T? {
+    var currentParentNode = parentNode.orElseGet(null)
+    while (currentParentNode != null && currentParentNode !is T)
+        currentParentNode = currentParentNode.parentNode.orElseGet(null)
+    return currentParentNode as T?
+}
+
+/**
  * Data key for AST [Node] instances that clusters an [ImportInfo].
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
@@ -190,7 +204,7 @@ internal fun Node.getClassDeclaration() : ClassOrInterfaceDeclaration?
 internal fun Node.serialize(serializationConfiguration: AbstractSerializationConfiguration) : String {
     val compilationUnit = when(this) {
         is CompilationUnit -> this
-        is ClassOrInterfaceDeclaration -> this.parentNode.get() as CompilationUnit
+        is ClassOrInterfaceDeclaration -> findParentNode<CompilationUnit>()!!
         else -> throw IllegalArgumentException("Serialization of nodes of type ${this::class.java.name} is not" +
             "supported")
     }
@@ -247,6 +261,23 @@ internal fun newJavaClassOrInterface(packageName: String, classname: String, isI
 }
 
 /**
+ * Create a new inner Java class named [classname], which is nested inside the given [parentClass]. The result is the
+ * created [ClassOrInterfaceDeclaration] instance.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+internal fun newInnerJavaClass(classname: String, parentClass: ClassOrInterfaceDeclaration, isStatic: Boolean = false)
+    : ClassOrInterfaceDeclaration {
+    val clazz = ClassOrInterfaceDeclaration()
+    clazz.addModifier(Modifier.Keyword.PUBLIC)
+    clazz.isStatic = isStatic
+    clazz.setName(classname)
+    clazz.setParentNode(parentClass)
+    parentClass.addMember(clazz)
+    return clazz
+}
+
+/**
  * Get the name of a [CompilationUnit] instance's package declaration.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
@@ -259,7 +290,7 @@ internal fun CompilationUnit.getPackageName() = packageDeclaration.get().name.as
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-internal fun ClassOrInterfaceDeclaration.getPackageName() = (parentNode.get() as CompilationUnit).getPackageName()
+internal fun ClassOrInterfaceDeclaration.getPackageName() = findParentNode<CompilationUnit>()!!.getPackageName()
 
 /**
  * Set the package name of a [ClassOrInterfaceDeclaration]. This assumes that the instance is bundled within a
@@ -268,7 +299,7 @@ internal fun ClassOrInterfaceDeclaration.getPackageName() = (parentNode.get() as
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 internal fun ClassOrInterfaceDeclaration.setPackageName(packageName: String)
-    = (parentNode.get() as CompilationUnit).setPackageDeclaration(packageName)
+    = findParentNode<CompilationUnit>()!!.setPackageDeclaration(packageName)
 
 /**
  * Add an import statement to the Java class/interface represented by a [ClassOrInterfaceDeclaration] instance. The
@@ -282,9 +313,10 @@ fun ClassOrInterfaceDeclaration.addImport(import: String, targetElementType : Im
     // Independent of whether the import exists on the class/interface or not it will be added to the "invisible" data
     // of the class's/interface's AST node. That is, to allow functions like getAllImportsForTargetElementsOfType() to
     // retrieve import information even if it is not "visible" in the class/interface.
-    addToNodeImports(import, targetElementType)
+    val targetNodeForImports = if (isNestedType) findParentNode<ClassOrInterfaceDeclaration>()!! else this
+    targetNodeForImports.addToNodeImports(import, targetElementType)
 
-    val compilationUnit = parentNode.get() as CompilationUnit
+    val compilationUnit = findParentNode<CompilationUnit>()!!
     if (onlyAddActualIfDifferentPackage) {
         val importPackage = import.substringBeforeLast(".")
         if (getPackageName() == importPackage)
@@ -316,14 +348,20 @@ internal fun ClassOrInterfaceDeclaration.getAllImportsForTargetElementsOfType
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-internal fun ClassOrInterfaceDeclaration.setSuperclass(fullyQualifiedSuperClassname: String) {
-    // Because Java only supports single inheritance on classes, clear the list of extended types
+internal fun ClassOrInterfaceDeclaration.setSuperclass(fullyQualifiedSuperClassname: String,
+    typeParameters: List<String> = emptyList()) {
     require(!isInterface) { "Only classes may have a superclass" }
 
-    val simpleName = fullyQualifiedSuperClassname.substringAfterLast(".")
-    addExtendedType(simpleName)
+    // Because Java only supports single inheritance on classes, clear the list of extended types
+    extendedTypes.clear()
+
     addImport(fullyQualifiedSuperClassname, ImportTargetElementType.SUPER)
-    setData(SuperclassDataKey, fullyQualifiedSuperClassname)
+
+    var extendedTypeName = fullyQualifiedSuperClassname.substringAfterLast(".")
+    if (typeParameters.isNotEmpty())
+        extendedTypeName = "$extendedTypeName<${typeParameters.joinToString()}>"
+    addExtendedType(extendedTypeName)
+    setData(SuperclassDataKey, SuperclassInfo(fullyQualifiedSuperClassname, typeParameters, extendedTypes.last()))
 }
 
 /**
@@ -331,7 +369,7 @@ internal fun ClassOrInterfaceDeclaration.setSuperclass(fullyQualifiedSuperClassn
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-internal fun ClassOrInterfaceDeclaration.getSuperclass() : String? {
+internal fun ClassOrInterfaceDeclaration.getSuperclass() : SuperclassInfo? {
     return if (containsData(SuperclassDataKey))
             getData(SuperclassDataKey)
         else
@@ -339,11 +377,19 @@ internal fun ClassOrInterfaceDeclaration.getSuperclass() : String? {
 }
 
 /**
+ * Information about a superclass of a [ClassOrInterfaceDeclaration] being stored in [SuperclassDataKey] instances.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+internal class SuperclassInfo(val fullyQualifiedClassname: String, val typeParameters: List<String>,
+    val superclassType: ClassOrInterfaceType)
+
+/**
  * Data key for [ClassOrInterfaceDeclaration] instances' superclasses.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-private object SuperclassDataKey : DataKey<String>()
+private object SuperclassDataKey : DataKey<SuperclassInfo>()
 
 /**
  * Add an attribute to the Java class/interface represented by a [ClassOrInterfaceDeclaration] instance. The created
@@ -366,6 +412,27 @@ internal fun ClassOrInterfaceDeclaration.addAttribute(attributeName: String, typ
  */
 internal fun ClassOrInterfaceDeclaration.addPrivateAttribute(attributeName: String, typeName: String,
     vararg modifiers: Modifier.Keyword) = addAttribute(attributeName, typeName, Modifier.Keyword.PRIVATE, *modifiers)
+
+/**
+ * Add a constructor for initializing all attributes of the given [ClassOrInterfaceDeclaration] instance at once.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+internal fun ClassOrInterfaceDeclaration.addAllAttributesConstructor() {
+    if (fields.isEmpty())
+        return
+
+    val constructor = addConstructor(Modifier.Keyword.PUBLIC)
+    val constructorBody = mutableListOf<String>()
+    fields.map { it.variables[0] }.forEach {
+        val parameter = Parameter()
+        parameter.setType(it.typeAsString)
+        parameter.setName(it.nameAsString)
+        constructor.addParameter(parameter)
+        constructorBody.add("""this.${it.nameAsString} = ${it.nameAsString};""")
+    }
+    constructor.setBody(*constructorBody.toTypedArray())
+}
 
 /**
  * Enumeration to distinguish generated property accessors (i.e., getters and setters created by [addGetter] and
@@ -463,7 +530,7 @@ internal fun FieldDeclaration.setInitializationValue(value: String) = variables[
  */
 fun FieldDeclaration.addImport(import: String, targetElementType: ImportTargetElementType) {
     addToNodeImports(import, targetElementType)
-    (parentNode.get() as ClassOrInterfaceDeclaration).addImport(import, targetElementType)
+    findParentNode<ClassOrInterfaceDeclaration>()!!.addImport(import, targetElementType)
 }
 
 /**
@@ -473,26 +540,7 @@ fun FieldDeclaration.addImport(import: String, targetElementType: ImportTargetEl
  */
 fun MethodDeclaration.addImport(import: String, targetElementType: ImportTargetElementType)  {
     addToNodeImports(import, targetElementType)
-    (parentNode.get() as ClassOrInterfaceDeclaration).addImport(import, targetElementType)
-}
-
-/**
- * Helper to copy this [MethodDeclaration] to the given [target] [ClassOrInterfaceDeclaration].
- *
- * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
- */
-internal fun MethodDeclaration.copyTo(target: ClassOrInterfaceDeclaration) {
-    val copiedMethod = target.addMethod(name.asString())
-    copiedMethod.modifiers = modifiers
-
-    parameters.forEach {
-        val parameter = Parameter()
-        parameter.setType(it.typeAsString)
-        parameter.setName(it.nameAsString)
-        copiedMethod.addParameter(parameter)
-    }
-
-    copiedMethod.setBody(body.toString())
+    findParentNode<ClassOrInterfaceDeclaration>()!!.addImport(import, targetElementType)
 }
 
 /**
@@ -517,25 +565,6 @@ internal fun MethodDeclaration.setBody(code: String, withLineComment: String = "
 
     if (comment != null)
         newBody.statements[0].setComment(comment)
-}
-
-/**
- * Helper to copy this [ConstructorDeclaration] to the given [target] [ClassOrInterfaceDeclaration].
- *
- * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
- */
-internal fun ConstructorDeclaration.copyTo(target: ClassOrInterfaceDeclaration) {
-    val copiedConstructor = target.addConstructor()
-    copiedConstructor.modifiers = modifiers
-
-    parameters.forEach {
-        val parameter = Parameter()
-        parameter.setType(it.typeAsString)
-        parameter.setName(it.nameAsString)
-        copiedConstructor.addParameter(parameter)
-    }
-
-    copiedConstructor.body = body
 }
 
 /**
