@@ -25,7 +25,7 @@ internal class CalledIntermediateDataOperationHandler :
 
     override fun handlesEObjectsOfInstance() = IntermediateDataOperation::class.java
     override fun generatesNodesOfInstance() = MethodDeclaration::class.java
-    override fun getAspects(operation: IntermediateDataOperation) = operation.aspects
+    override fun getAspects(operation: IntermediateDataOperation) = operation.aspects!!
 
     companion object {
         fun invoke(operation: IntermediateDataOperation, parentClass: ClassOrInterfaceDeclaration)

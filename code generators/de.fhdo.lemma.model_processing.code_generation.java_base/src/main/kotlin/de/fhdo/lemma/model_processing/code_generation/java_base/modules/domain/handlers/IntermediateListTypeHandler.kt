@@ -23,7 +23,6 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.modules.domain.D
 internal class IntermediateListTypeHandler
     : VisitingCodeGenerationHandlerI<IntermediateListType, ClassOrInterfaceDeclaration, Nothing> {
     private val currentDomainPackage: String by DomainState
-    private lateinit var generatedClass: ClassOrInterfaceDeclaration
 
     override fun handlesEObjectsOfInstance() = IntermediateListType::class.java
     override fun generatesNodesOfInstance() = ClassOrInterfaceDeclaration::class.java
@@ -32,7 +31,7 @@ internal class IntermediateListTypeHandler
     override fun execute(list: IntermediateListType, context: Nothing?) : Pair<ClassOrInterfaceDeclaration, String?>? {
         val packageName = "$currentDomainPackage.${list.packageName}"
 
-        generatedClass = newJavaClassOrInterface(packageName, list.classname)
+        val generatedClass = newJavaClassOrInterface(packageName, list.classname)
         val collectionTypeDescription = list.determineJavaCollectionType()
         val typeParameterNames = if (list.isStructuredList)
                 generatedClass.addNestedItemClasses(list, collectionTypeDescription.typeParameterCount)

@@ -8,6 +8,7 @@ import com.github.javaparser.ast.Node
 import com.github.javaparser.ast.body.CallableDeclaration
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration
 import com.github.javaparser.ast.body.ConstructorDeclaration
+import com.github.javaparser.ast.body.EnumDeclaration
 import com.github.javaparser.ast.body.FieldDeclaration
 import com.github.javaparser.ast.body.MethodDeclaration
 import com.github.javaparser.ast.body.Parameter
@@ -204,8 +205,9 @@ internal fun Node.getClassDeclaration() : ClassOrInterfaceDeclaration?
 internal fun Node.serialize(serializationConfiguration: AbstractSerializationConfiguration) : String {
     val compilationUnit = when(this) {
         is CompilationUnit -> this
-        is ClassOrInterfaceDeclaration -> findParentNode<CompilationUnit>()!!
-        else -> throw IllegalArgumentException("Serialization of nodes of type ${this::class.java.name} is not" +
+        is ClassOrInterfaceDeclaration,
+        is EnumDeclaration -> findParentNode<CompilationUnit>()!!
+        else -> throw IllegalArgumentException("Serialization of nodes of type ${this::class.java.name} is not " +
             "supported")
     }
 
@@ -275,6 +277,22 @@ internal fun newInnerJavaClass(classname: String, parentClass: ClassOrInterfaceD
     clazz.setParentNode(parentClass)
     parentClass.addMember(clazz)
     return clazz
+}
+
+/**
+ * Create a new Java enumeration named [enumName] in the package with the given [packageName]. The result is an
+ * AST node of type [EnumDeclaration] that also comprises a [CompilationUnit] instance holding the [packageName].
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+internal fun newEnum(packageName: String, enumName: String) : EnumDeclaration {
+    val compilationUnit = CompilationUnit(packageName)
+    val enum = EnumDeclaration()
+    enum.addModifier(Modifier.Keyword.PUBLIC)
+    enum.setName(enumName)
+    enum.setParentNode(compilationUnit)
+    compilationUnit.addType(enum)
+    return enum
 }
 
 /**
@@ -514,6 +532,39 @@ internal fun ClassOrInterfaceDeclaration.addGetterForInheritedAttribute(attribut
  */
 internal val ClassOrInterfaceDeclaration.methodsExcludingPropertyAccessors
     get() = methods.filter { !it.isGeneratedPropertyAccessor }
+
+/**
+ * Get the name of an [EnumDeclaration] instance's package declaration. This assumes that the instance is bundled within
+ * a [CompilationUnit].
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+internal fun EnumDeclaration.getPackageName() = findParentNode<CompilationUnit>()!!.getPackageName()
+
+/**
+ * Add an import statement to the Java enumeration represented by an [EnumDeclaration] instance. The import will not be
+ * added by default, if it already exists. This function should only be invoked on [EnumDeclaration] instances created
+ * via [newEnum].
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+fun EnumDeclaration.addImport(import: String, targetElementType : ImportTargetElementType,
+    onlyAddActualIfDifferentPackage: Boolean = true) {
+    // Independent of whether the import exists on the enumeration or not it will be added to the "invisible" data of
+    // the enumeration's AST node. That is, to allow functions like getAllImportsForTargetElementsOfType() to retrieve
+    // import information even if it is not "visible" in the enumeration.
+    addToNodeImports(import, targetElementType)
+
+    val compilationUnit = findParentNode<CompilationUnit>()!!
+    if (onlyAddActualIfDifferentPackage) {
+        val importPackage = import.substringBeforeLast(".")
+        if (getPackageName() == importPackage)
+            return
+    }
+    val existingImports = compilationUnit.imports.map { it.name.asString() }
+    if (import !in existingImports)
+        compilationUnit.addImport(import)
+}
 
 /**
  * Set the initialization value of a class's attribute being created by [addAttribute] or its wrappers, e.g.,

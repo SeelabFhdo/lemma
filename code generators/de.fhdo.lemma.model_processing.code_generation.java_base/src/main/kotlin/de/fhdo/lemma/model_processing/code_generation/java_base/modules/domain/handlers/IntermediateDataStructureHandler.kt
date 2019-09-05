@@ -20,7 +20,6 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.packageName
 internal class IntermediateDataStructureHandler
     : VisitingCodeGenerationHandlerI<IntermediateDataStructure, ClassOrInterfaceDeclaration, Nothing> {
     private val currentDomainPackage: String by DomainState
-    private lateinit var generatedClass: ClassOrInterfaceDeclaration
 
     override fun handlesEObjectsOfInstance() = IntermediateDataStructure::class.java
     override fun generatesNodesOfInstance() = ClassOrInterfaceDeclaration::class.java
@@ -30,7 +29,7 @@ internal class IntermediateDataStructureHandler
         : Pair<ClassOrInterfaceDeclaration, String?>? {
         val packageName = "$currentDomainPackage.${structure.packageName}"
 
-        generatedClass = newJavaClassOrInterface(packageName, structure.classname)
+        val generatedClass = newJavaClassOrInterface(packageName, structure.classname)
         if (structure.`super` != null) {
             val fullyQualifiedClassname = structure.`super`.fullyQualifiedClassname
             generatedClass.setSuperclass("$currentDomainPackage.$fullyQualifiedClassname")

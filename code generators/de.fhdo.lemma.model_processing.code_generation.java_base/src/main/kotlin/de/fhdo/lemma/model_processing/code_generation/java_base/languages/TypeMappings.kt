@@ -1,5 +1,6 @@
 package de.fhdo.lemma.model_processing.code_generation.java_base.languages
 
+import de.fhdo.lemma.data.DateUtils
 import de.fhdo.lemma.data.PrimitiveTypeConstants
 import de.fhdo.lemma.data.intermediate.IntermediateComplexType
 import de.fhdo.lemma.data.intermediate.IntermediateImportedTechnologySpecificType
@@ -9,6 +10,9 @@ import de.fhdo.lemma.data.intermediate.IntermediateTypeOrigin
 import de.fhdo.lemma.model_processing.code_generation.java_base.classname
 import de.fhdo.lemma.model_processing.code_generation.java_base.dependencies.DependencyDescription
 import de.fhdo.lemma.model_processing.phases.PhaseException
+import de.fhdo.lemma.model_processing.utils.trimToSingleLine
+import java.lang.IllegalArgumentException
+import java.time.format.DateTimeFormatter
 
 /**
  * Collection of mappings of LEMMA's built-in or Java-specific primitive types to Java types.
@@ -267,12 +271,164 @@ class PrimitiveTypeMappingsRegistry(private val builtin: MutableMap<String, Type
 }
 
 /**
+ * Create a String for the given [value] dependent on this [IntermediateType] instance. For instance, if this
+ * [IntermediateType] represents a Character and the given value is "c", the result will be the String "'c'". If this
+ * [IntermediateType] represents a Float and the given value is "1.23", the result will be the String "1.23F".
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+fun IntermediateType.createTypeSpecificValueString(value: String) : Pair<String, Set<String>> {
+    if (value == null)
+        return "" to emptySet()
+
+    var valueString = ""
+    val additionalImports = mutableSetOf<String>()
+
+    val isACharacter = isA(PrimitiveTypeConstants.CHARACTER.literal) || isA("Character")
+    val isAString = isA(PrimitiveTypeConstants.STRING.literal) || isA("String")
+    when {
+        isACharacter -> valueString += "'"
+        isAString -> valueString += '"'
+    }
+
+    val isADate = isA(PrimitiveTypeConstants.DATE.literal) || isA("Date")
+    if (!isADate)
+        valueString += value
+    else {
+        val (dateValueString, dateImports) = deriveValueForDate(value)
+        valueString += dateValueString
+        additionalImports.addAll(dateImports)
+    }
+
+    when {
+        isACharacter -> valueString += "'"
+        isA(PrimitiveTypeConstants.FLOAT.literal) || isA("Float") -> valueString += "F"
+        isA(PrimitiveTypeConstants.LONG.literal) || isA("Long") -> valueString += "L"
+        isAString -> valueString += '"'
+    }
+
+    return valueString to additionalImports
+}
+
+/**
  * Convenience function to determine if an [IntermediateType] is of a given built-in or technology-specific, i.e., Java
  * object wrapper, type.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-fun IntermediateType.isA(typeName: String) = primitiveTypeMappings[this]?.mappedTypeName == typeName
+private fun IntermediateType.isA(typeName: String) = primitiveTypeMappings[this]?.mappedTypeName == typeName
+
+/**
+ * Derive a Java code string that creates a Date object from the given [dateString].
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+private fun deriveValueForDate(dateString: String) : Pair<String, Set<String>> {
+    val format = DateUtils.determineDateFormat(dateString)
+    require(format != null) { "Cannot derive value for date string $dateString. Unsupported date format." }
+
+    return when (format) {
+        DateTimeFormatter.ISO_LOCAL_DATE -> {
+            """
+                Date.from(LocalDate.parse("$dateString", DateTimeFormatter.ISO_LOCAL_DATE)
+                    .atStartOfDay(ZoneId.systemDefault()).toInstant())
+            """.trimToSingleLine() to setOf(
+                "java.time.format.DateTimeFormatter",
+                "java.time.LocalDate",
+                "java.time.ZoneId"
+            )
+        }
+
+        DateTimeFormatter.ISO_OFFSET_DATE -> {
+            """ 
+                Date.from(LocalDate.parse("$dateString", DateTimeFormatter.ISO_OFFSET_DATE)
+                    .atStartOfDay(ZoneId.systemDefault()).toInstant())
+            """.trimToSingleLine() to setOf(
+                "java.time.format.DateTimeFormatter",
+                "java.time.LocalDate",
+                "java.time.ZoneId"
+            )
+        }
+
+        DateTimeFormatter.ISO_DATE -> {
+            """ 
+                Date.from(LocalDate.parse("$dateString", DateTimeFormatter.ISO_DATE)
+                    .atStartOfDay(ZoneId.systemDefault()).toInstant())
+            """.trimToSingleLine() to setOf(
+                "java.time.format.DateTimeFormatter",
+                "java.time.LocalDate",
+                "java.time.ZoneId"
+            )
+        }
+
+        DateTimeFormatter.ISO_LOCAL_TIME -> {
+            """ 
+                Date.from(LocalTime.parse("$dateString", DateTimeFormatter.ISO_LOCAL_TIME)
+                    .atDate(LocalDate.now()).atZone(ZoneId.systemDefault()).toInstant()
+            """.trimToSingleLine() to setOf(
+                "java.time.format.DateTimeFormatter",
+                "java.time.LocalTime",
+                "java.time.ZoneId"
+            )
+        }
+
+        DateTimeFormatter.ISO_OFFSET_TIME -> {
+            """ 
+                Date.from(LocalTime.parse("$dateString", DateTimeFormatter.ISO_OFFSET_TIME)
+                    .atDate(LocalDate.now()).atZone(ZoneId.systemDefault()).toInstant()
+            """.trimToSingleLine() to setOf(
+                "java.time.format.DateTimeFormatter",
+                "java.time.LocalTime",
+                "java.time.ZoneId"
+            )
+        }
+        DateTimeFormatter.ISO_TIME -> {
+            """ 
+                Date.from(LocalTime.parse("$dateString", DateTimeFormatter.ISO_TIME)
+                    .atDate(LocalDate.now()).atZone(ZoneId.systemDefault()).toInstant()
+            """.trimToSingleLine() to setOf(
+                "java.time.format.DateTimeFormatter",
+                "java.time.LocalTime",
+                "java.time.ZoneId"
+            )
+        }
+
+        DateTimeFormatter.ISO_LOCAL_DATE_TIME -> {
+            """ 
+                Date.from(LocalDateTime.parse("$dateString", DateTimeFormatter.ISO_LOCAL_DATE_TIME)
+                    .atZone(ZoneId.systemDefault()).toInstant()
+            """.trimToSingleLine() to setOf(
+                "java.time.format.DateTimeFormatter",
+                "java.time.LocalDateTime",
+                "java.time.ZoneId"
+            )
+        }
+
+        DateTimeFormatter.ISO_OFFSET_DATE_TIME -> {
+            """ 
+                Date.from(LocalDateTime.parse("$dateString", DateTimeFormatter.ISO_OFFSET_DATE_TIME)
+                    .atZone(ZoneId.systemDefault()).toInstant()
+            """.trimToSingleLine() to setOf(
+                "java.time.format.DateTimeFormatter",
+                "java.time.LocalDateTime",
+                "java.time.ZoneId"
+            )
+        }
+
+        DateTimeFormatter.ISO_DATE_TIME -> {
+            """ 
+                Date.from(LocalDateTime.parse("$dateString", DateTimeFormatter.ISO_DATE_TIME)
+                    .atZone(ZoneId.systemDefault()).toInstant()
+            """.trimToSingleLine() to setOf(
+                "java.time.format.DateTimeFormatter",
+                "java.time.LocalDateTime",
+                "java.time.ZoneId"
+            )
+        }
+
+        else -> throw IllegalArgumentException("Cannot derive value string for date string $dateString")
+    }
+}
 
 /**
  * Convenience function to determine if an [IntermediateType] is nullable, which is the case when the type is not
