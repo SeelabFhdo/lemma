@@ -123,17 +123,13 @@ class GenletGeneratedFileContent(val baseTargetFolderSpecifier: GenletPathSpecif
     /**
      * Two [GenletGeneratedFileContent] instances are equal, if their full paths are equal
      */
-    override fun equals(other: Any?) : Boolean {
-        if (this === other)
-            return true
-
-        if (other == null)
-            return false
-        else if (other !is GenletGeneratedFileContent)
-            return false
-
-        return getFullPath() == getFullPath(other)
-    }
+    override fun equals(other: Any?)
+        = when {
+            this === other -> true
+            other == null -> false
+            other !is GenletGeneratedFileContent -> false
+            else -> getFullPath() == getFullPath(other)
+        }
 
     /**
      * The hash code of a [GenletGeneratedFileContent] is equal to the hash code of its full path

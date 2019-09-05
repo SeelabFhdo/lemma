@@ -10,7 +10,6 @@ import com.github.javaparser.ast.comments.BlockComment
 import de.fhdo.lemma.model_processing.asFile
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.ImportTargetElementType
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addImport
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.copyTo
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.diffCallables
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.getAllImportsForTargetElementsOfType
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.getClassDeclaration
@@ -248,7 +247,7 @@ internal class GenerationGapSerializerBase : KoinComponent {
         }
 
         /* Copy all method signatures of the original class */
-        originalClass.methods.forEach { method ->
+        originalClass.methods.filter { it.isPublic }.forEach { method ->
             val methodSignature = genInterface.addMethod(method.nameAsString).removeBody()
             methodSignature.type = method.type
             method.parameters.forEach {
@@ -314,17 +313,16 @@ internal class GenerationGapSerializerBase : KoinComponent {
 
         /* Change bodies of non-trivial getters/setters to "not implemented yet" stubs */
         genImplClass.methodsExcludingPropertyAccessors.forEach {
-            // The methods of the *Gen interface being implemented by this class are equivalent to its already existing
-            // non-trivial getters/setters created by the visiting handlers. Thus, we just add the @Override annotation
-            // to them here.
-            it.addMarkerAnnotation("Override")
-
             // In case the method in the original class is private, we make it protected in the adapted *GenImpl class,
             // because otherwise it cannot be overridden with a non-stub body
             if (it.isPrivate) {
                 it.removeModifier(Modifier.Keyword.PRIVATE)
                 it.addModifier(Modifier.Keyword.PROTECTED)
-            }
+            } else
+                // The methods of the *Gen interface being implemented by this class are equivalent to its already
+                // existing non-private, non-trivial getters/setters created by the visiting handlers. Thus, we just add
+                // the @Override annotation to them here.
+                it.addMarkerAnnotation("Override")
 
             // Set "not implemented yet" stub body
             it.setBody("""throw new UnsupportedOperationException("Not implemented yet");""")
@@ -349,15 +347,17 @@ internal class GenerationGapSerializerBase : KoinComponent {
          * code
          */
         genImplClass.methodsExcludingPropertyAccessors.forEach { method ->
-            method.addMarkerAnnotation("Override")
+            if (!method.annotations.map { it.nameAsString }.contains("Override"))
+                method.addMarkerAnnotation("Override")
             val parameterString = method.parameters.map { it.name }.joinToString()
             method.setBody(
                 if (method.type.isVoidType)
                     """super.${method.name}($parameterString);"""
                 else
                     """return super.${method.name}($parameterString);""",
-                "// TODO Implement me. Will otherwise throw UnsupportedOperationException from super call."
+                "TODO Implement me. Will otherwise throw UnsupportedOperationException from super call."
             )
+            customImplClass.members.add(method)
         }
 
         return customImplClass
@@ -449,10 +449,10 @@ internal class GenerationGapSerializerBase : KoinComponent {
                 "Either it contains syntax errors or is not a Java class.")
 
         val missingConstructors = diffCallables(customImplClass.constructors, existingClass.constructors)
-        missingConstructors.forEach { it.copyTo(existingClass) }
+        missingConstructors.forEach { existingClass.members.add(it) }
 
         val missingMethods = diffCallables(customImplClass.methods, existingClass.methods)
-        missingMethods.forEach { it.copyTo(existingClass) }
+        missingMethods.forEach { existingClass.members.add(it) }
 
         return existingClass
     }

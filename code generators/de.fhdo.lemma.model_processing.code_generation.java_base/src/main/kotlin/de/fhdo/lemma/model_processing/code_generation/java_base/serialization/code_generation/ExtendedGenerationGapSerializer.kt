@@ -205,12 +205,13 @@ private class ExtendedGenerationGapSerializerBase : KoinComponent {
         AvailableSuperConstructors.addFrom(originalClass)
 
         /*
-         * The *Gen interface comprises by definition the signatures of all methods of the original class. They are thus
-         * marked as being overridden in the original class. In case the method is not a trivial getter/setter and to
-         * prevent syntax errors, we set its body to throw a "not implemented" exception.
+         * The *Gen interface comprises by definition the signatures of all non-private methods of the original class.
+         * They are thus marked as being overridden in the original class. In case the method is not a trivial
+         * getter/setter and to prevent syntax errors, we set its body to throw a "not implemented" exception.
          */
         originalClass.methods.forEach {
-            it.addMarkerAnnotation("Override")
+            if (!it.isPrivate)
+                it.addMarkerAnnotation("Override")
 
             if (!it.isGeneratedPropertyAccessor)
                 it.setBody(
