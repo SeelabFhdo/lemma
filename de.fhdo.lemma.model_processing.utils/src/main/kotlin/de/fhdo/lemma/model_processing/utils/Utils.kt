@@ -162,8 +162,32 @@ fun EList<IntermediateImport>.filterByType(importType: ImportType)
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-fun String.countLines(includeEmptyLines: Boolean = false)
-    = if (includeEmptyLines)
-        lines().count()
-    else
-        lines().filter { it.isNotEmpty() && !it.matches("\\s+".toRegex()) }.count()
+fun String.countLines(includeEmptyLines: Boolean = false, includeComments: Boolean = false) : Int {
+    val linesToCount = if (includeEmptyLines)
+            lines()
+        else
+            lines().filter { it.isNotEmpty() && !it.matches("\\s+".toRegex()) }
+    val lineCount = linesToCount.count()
+
+    if (includeComments)
+        return lineCount
+
+    var commentLineCount = 0
+    var inBlockComment = false
+    linesToCount.map { it.trim() }.forEach {
+        if (!inBlockComment) {
+            if (it.startsWith("//"))
+                commentLineCount++
+            else if (it.startsWith("/*"))
+                inBlockComment = true
+        }
+
+        if (inBlockComment)
+            commentLineCount++
+
+        if (it.endsWith("*/"))
+            inBlockComment = false
+    }
+
+    return lineCount - commentLineCount
+}
