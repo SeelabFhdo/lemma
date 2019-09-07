@@ -458,12 +458,13 @@ internal fun ClassOrInterfaceDeclaration.addPrivateAttribute(attributeName: Stri
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 internal fun ClassOrInterfaceDeclaration.addAllAttributesConstructor() {
-    if (attributes.isEmpty())
+    val mutableAttributes = attributes.filter { !(it.parentNode.get() as FieldDeclaration).isFinal }
+    if (mutableAttributes.isEmpty())
         return
 
     val constructor = addConstructor(Modifier.Keyword.PUBLIC)
     val constructorBody = mutableListOf<String>()
-    attributes.forEach {
+    mutableAttributes.forEach {
         val parameter = Parameter()
         parameter.setType(it.typeAsString)
         parameter.setName(it.nameAsString)
