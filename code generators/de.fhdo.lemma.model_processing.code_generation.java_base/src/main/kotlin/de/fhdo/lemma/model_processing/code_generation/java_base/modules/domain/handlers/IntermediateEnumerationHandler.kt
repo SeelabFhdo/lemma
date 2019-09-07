@@ -41,7 +41,7 @@ internal class IntermediateEnumerationHandler
                 val (typeSpecificValueString, additionalImports)
                     = compatibleType.createTypeSpecificValueString(field.initializationValue)
                 enumConstant.addArgument(typeSpecificValueString)
-                additionalImports.forEach { generatedEnum.addImport(it, ImportTargetElementType.FIELD) }
+                additionalImports.forEach { generatedEnum.addImport(it, ImportTargetElementType.ATTRIBUTE) }
             }
         }
 

@@ -12,6 +12,7 @@ import com.github.javaparser.ast.body.EnumDeclaration
 import com.github.javaparser.ast.body.FieldDeclaration
 import com.github.javaparser.ast.body.MethodDeclaration
 import com.github.javaparser.ast.body.Parameter
+import com.github.javaparser.ast.body.VariableDeclarator
 import com.github.javaparser.ast.comments.BlockComment
 import com.github.javaparser.ast.comments.LineComment
 import com.github.javaparser.ast.expr.AssignExpr
@@ -21,8 +22,6 @@ import com.github.javaparser.ast.stmt.ExpressionStmt
 import com.github.javaparser.ast.stmt.ReturnStmt
 import com.github.javaparser.ast.type.ClassOrInterfaceType
 import com.github.javaparser.printer.PrettyPrinter
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.ImportTargetElementType.ANNOTATION
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.ImportTargetElementType.METHOD
 import de.fhdo.lemma.model_processing.code_generation.java_base.dependencies.DependencyDescription
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.configuration.AbstractSerializationConfiguration
 import java.io.File
@@ -78,7 +77,8 @@ internal fun <T: CallableDeclaration<*>> diffCallables(source: List<T>, target: 
  */
 enum class ImportTargetElementType {
     ANNOTATION,
-    FIELD,
+    ATTRIBUTE,
+    ATTRIBUTE_TYPE,
     IMPLEMENTED_INTERFACE,
     METHOD,
     SUPER
@@ -111,6 +111,13 @@ internal class ImportInfo() : HashMap<String, MutableSet<ImportTargetElementType
 }
 
 /**
+ * Data key for AST [Node] instances that clusters an [ImportInfo].
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+private object ImportInfoDataKey : DataKey<ImportInfo>()
+
+/**
  * Find the parent node of a [Node], which is of the given type [T].
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
@@ -122,13 +129,6 @@ private inline fun <reified T: Node> Node.findParentNode() : T? {
         currentParentNode = currentParentNode.parentNode.orElseGet(null)
     return currentParentNode as T?
 }
-
-/**
- * Data key for AST [Node] instances that clusters an [ImportInfo].
- *
- * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
- */
-private object ImportInfoDataKey : DataKey<ImportInfo>()
 
 /**
  * Add an [import] together with its [targetElementType] to the data of an AST [Node] in the form of an [ImportInfo]
@@ -145,6 +145,17 @@ private fun Node.addToNodeImports(import: String, targetElementType: ImportTarge
         setData(ImportInfoDataKey, existingImportInfo)
     }
 }
+
+/**
+ * Return all [ImportInfo] instances being assigned to this AST [Node].
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+internal fun Node.getNodeImports()
+    = if (containsData(ImportInfoDataKey))
+            getData(ImportInfoDataKey)
+        else
+            ImportInfo()
 
 /**
  * Add a new [DependencyDescription] to the collected dependencies of the [MainState] in the context of a certain
@@ -421,6 +432,16 @@ internal fun ClassOrInterfaceDeclaration.addAttribute(attributeName: String, typ
 }
 
 /**
+ * Get all attributes of this [ClassOrInterfaceDeclaration] instance. The result is a [VariableDeclarator] list that
+ * contains the first variable of each of this class's fields, which conforms to what [addAttribute] results in (a
+ * [FieldDeclaration] with a single variable, i.e., the actual "attribute").
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+internal val ClassOrInterfaceDeclaration.attributes
+    get() = fields.map { it.variables[0] }
+
+/**
  * Add a private attribute to the Java class/interface represented by a [ClassOrInterfaceDeclaration] instance. The
  * created attribute is an AST node of type [FieldDeclaration] with the modifier [Modifier.Keyword.PRIVATE] and will be
  * returned to the caller. An additional [Modifier] list may be passed to the function to add further modifiers to the
@@ -437,12 +458,12 @@ internal fun ClassOrInterfaceDeclaration.addPrivateAttribute(attributeName: Stri
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 internal fun ClassOrInterfaceDeclaration.addAllAttributesConstructor() {
-    if (fields.isEmpty())
+    if (attributes.isEmpty())
         return
 
     val constructor = addConstructor(Modifier.Keyword.PUBLIC)
     val constructorBody = mutableListOf<String>()
-    fields.map { it.variables[0] }.forEach {
+    attributes.forEach {
         val parameter = Parameter()
         parameter.setType(it.typeAsString)
         parameter.setName(it.nameAsString)

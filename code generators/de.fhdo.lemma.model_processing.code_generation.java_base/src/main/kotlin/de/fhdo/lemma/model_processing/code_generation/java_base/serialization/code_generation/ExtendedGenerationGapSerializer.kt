@@ -5,7 +5,6 @@ import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration
 import de.fhdo.lemma.model_processing.asFile
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.ImportTargetElementType
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addImport
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.getAllImportsForTargetElementsOfType
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.getClassDeclaration
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.getEponymousJavaClassOrInterface
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.isGeneratedPropertyAccessor

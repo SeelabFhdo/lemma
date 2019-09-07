@@ -61,7 +61,7 @@ internal class CalledIntermediateDataFieldHandler :
         val generatedAttribute = if (typeMapping != null) {
             val (mappedTypeName, isComplexTypeMapping, imports, dependencies) = typeMapping
             val attribute = parentClass.addPrivateAttribute(name, mappedTypeName)
-            imports.forEach { attribute.addImport(it, ImportTargetElementType.FIELD) }
+            imports.forEach { attribute.addImport(it, ImportTargetElementType.ATTRIBUTE_TYPE) }
             parentClass.addDependencies(dependencies)
 
             val getterMethod = if (needsGetter) {
@@ -85,7 +85,7 @@ internal class CalledIntermediateDataFieldHandler :
             if (isComplexTypeMapping) {
                 val fullyQualifiedClassname = (type as IntermediateComplexType).fullyQualifiedClassname
                 val complexTypeFullyQualifiedName = "$currentDomainPackage.$fullyQualifiedClassname"
-                attribute.addImport(complexTypeFullyQualifiedName, ImportTargetElementType.FIELD)
+                attribute.addImport(complexTypeFullyQualifiedName, ImportTargetElementType.ATTRIBUTE_TYPE)
 
                 // Add them for copy purposes, e.g., by code generation serializers for Extended Generation Gap Pattern
                 getterMethod?.addImport(complexTypeFullyQualifiedName, ImportTargetElementType.METHOD)
@@ -103,7 +103,7 @@ internal class CalledIntermediateDataFieldHandler :
             val (typeSpecificInitializationValue, additionalImports)
                 = type.createTypeSpecificValueString(initializationValue)
             generatedAttribute.setInitializationValue(typeSpecificInitializationValue)
-            additionalImports.forEach { generatedAttribute.addImport(it, ImportTargetElementType.FIELD) }
+            additionalImports.forEach { generatedAttribute.addImport(it, ImportTargetElementType.ATTRIBUTE) }
         }
 
         return generatedAttribute

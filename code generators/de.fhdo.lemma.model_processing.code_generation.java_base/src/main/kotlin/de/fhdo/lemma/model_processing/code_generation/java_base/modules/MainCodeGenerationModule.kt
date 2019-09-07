@@ -104,13 +104,7 @@ internal class MainModule : AbstractCodeGenerationModule(), KoinComponent {
         val intermediateServiceModel: IntermediateServiceModel by MainState
         intermediateServiceModel.microservices.forEach {
             MainState.currentMicroservicePackage = it.packageName
-
-            try {
-                DomainCodeGenerationSubModule.invoke()
-            } catch(ex: PhaseException) {
-                // DEBUG
-            }
-
+            DomainCodeGenerationSubModule.invoke()
             serializeDependencies(it)
         }
 

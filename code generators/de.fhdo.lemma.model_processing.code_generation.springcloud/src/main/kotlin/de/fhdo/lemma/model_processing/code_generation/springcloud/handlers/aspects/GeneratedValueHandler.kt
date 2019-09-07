@@ -23,7 +23,7 @@ class GeneratedValueHandler : AspectHandlerI {
     override fun execute(eObject : EObject, node : Node, aspect : IntermediateImportedAspect) : Node {
         val generatedField = (node as FieldDeclaration)
         generatedField.addAnnotation("GeneratedValue")
-        generatedField.addImport("javax.persistence.GeneratedValue", ImportTargetElementType.FIELD)
+        generatedField.addImport("javax.persistence.GeneratedValue", ImportTargetElementType.ATTRIBUTE)
         generatedField.addDependency("org.springframework.boot:spring-boot-starter-data-jpa")
         return node
     }

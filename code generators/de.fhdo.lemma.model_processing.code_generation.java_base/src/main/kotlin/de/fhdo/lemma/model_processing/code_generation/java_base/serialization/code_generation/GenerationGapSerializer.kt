@@ -11,12 +11,14 @@ import de.fhdo.lemma.model_processing.asFile
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.ImportTargetElementType
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.SuperclassInfo
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addImport
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.attributes
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.diffCallables
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.getAllImportsForTargetElementsOfType
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.getClassDeclaration
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.getEponymousJavaClassOrInterface
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.getSuperclass
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.getFilePath
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.getNodeImports
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.methodsExcludingPropertyAccessors
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.newJavaClassOrInterface
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.getPackageName
@@ -241,8 +243,7 @@ internal class GenerationGapSerializerBase : KoinComponent {
         val interfacePackage = originalClass.getPackageName() + if (subpackage.isNotEmpty()) ".$subpackage" else ""
         val genInterface = newJavaClassOrInterface(interfacePackage, interfaceName, true)
 
-        /*
-         * Because the interface comprises all methods of the original class, copy all method-related imports to it */
+        /* Because the interface comprises all methods of the original class, copy all method-related imports to it */
         originalClass.getAllImportsForTargetElementsOfType(ImportTargetElementType.METHOD).forEach {
             genInterface.addImport(it, ImportTargetElementType.METHOD)
         }
@@ -373,10 +374,24 @@ internal class GenerationGapSerializerBase : KoinComponent {
         customImplClass.markAsCustomImpl()
 
         /*
+         * Because the class will receive constructors (cf. codeGenerationPhaseCompletedCallback()) that delegate to the
+         * constructors of its superclass, i.e., *GenImpl, copy all imports related to attributes' types. This is
+         * necessary due to the *GenImpl class comprising "all-attributes-constructors".
+         */
+        genImplClass.getAllImportsForTargetElementsOfType(ImportTargetElementType.ATTRIBUTE_TYPE).forEach {
+            customImplClass.addImport(it, ImportTargetElementType.ATTRIBUTE_TYPE)
+        }
+
+        /*
          * For each non-trivial getter/setter generate a stub delegating implementation that can be replaced with custom
          * code
          */
         genImplClass.methodsExcludingPropertyAccessors.forEach { method ->
+            // Copy method-related imports
+            method.getNodeImports().forEach { (import, targetElementTypes) ->
+                targetElementTypes.forEach { customImplClass.addImport(import, it) }
+            }
+
             if (!method.annotations.map { it.nameAsString }.contains("Override"))
                 method.addMarkerAnnotation("Override")
             val parameterString = method.parameters.map { it.name }.joinToString()
@@ -537,11 +552,10 @@ internal class GenerationGapSerializerBase : KoinComponent {
          */
         // Create a reusable list of parameters for the field constructors
         val allFieldsConstructorParameters = mutableListOf<Parameter>()
-        fields.forEach {
-            val attribute = it.variables[0]
+        attributes.forEach {
             val parameter = Parameter()
-            parameter.setType(attribute.typeAsString)
-            parameter.setName(attribute.nameAsString)
+            parameter.setType(it.typeAsString)
+            parameter.setName(it.nameAsString)
             allFieldsConstructorParameters.add(parameter)
         }
 
