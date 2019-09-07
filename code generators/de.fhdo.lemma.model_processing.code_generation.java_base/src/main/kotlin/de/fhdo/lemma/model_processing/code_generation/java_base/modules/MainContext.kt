@@ -50,7 +50,7 @@ internal object MainContext {
         private val dependencyFragmentProviders
             = mutableMapOf<Genlet, List<Class<DependencyFragmentProviderI<Any, Any>>>>()
         private val generatedFileContents = mutableMapOf<String, Pair<String, Charset>>()
-        private val generatedLineCountInfo = mutableListOf<LineCountInfo>()
+        private val generatedLineCountInfo = mutableSetOf<LineCountInfo>()
 
         private lateinit var intermediateServiceModel: IntermediateServiceModel
         private lateinit var intermediateServiceModelForDomainModels: IntermediateServiceModel
@@ -173,8 +173,12 @@ internal object MainContext {
          * Add a [LineCountInfo] object to the set of line count information generated during the current code
          * generation run
          */
-        fun addGeneratedLineCountInfo(lineCountInfo: LineCountInfo) {
-            generatedLineCountInfo.add(lineCountInfo)
+        fun addOrUpdateGeneratedLineCountInfo(lineCountInfo: LineCountInfo) {
+            val infoAlreadyExists = !generatedLineCountInfo.add(lineCountInfo)
+            if (infoAlreadyExists) {
+                generatedLineCountInfo.remove(lineCountInfo)
+                generatedLineCountInfo.add(lineCountInfo)
+            }
         }
     }
 

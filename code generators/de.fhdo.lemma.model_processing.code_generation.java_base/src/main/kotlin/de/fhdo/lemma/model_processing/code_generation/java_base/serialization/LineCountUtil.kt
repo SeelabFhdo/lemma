@@ -55,7 +55,23 @@ internal fun countLines(serializationResult: Pair<String, String>, intermediateE
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 internal class LineCountInfo(var serializationTargetFilePath: String, var serializationResultLineCount: Int = 0,
-    var originalEObjectLineCount: Int = 0, val additionalInfo: Map<String, String> = mutableMapOf())
+    var originalEObjectLineCount: Int = 0, val additionalInfo: Map<String, String> = mutableMapOf()) {
+    /**
+     * Two [LineCountInfo] instances are equal, if their [serializationTargetFilePath] are equal
+     */
+    override fun equals(other: Any?)
+        = when {
+            this === other -> true
+            other == null -> false
+            other !is LineCountInfo -> false
+            else -> serializationTargetFilePath == other.serializationTargetFilePath
+        }
+
+    /**
+     * The hash code of a [LineCountInfo] is equal to the hash code of its [serializationTargetFilePath]
+     */
+    override fun hashCode() = serializationTargetFilePath.hashCode()
+}
 
 /**
  * Load the original [EObject] of the given intermediate [EObject] from the specified [originalModelFilePath]. The

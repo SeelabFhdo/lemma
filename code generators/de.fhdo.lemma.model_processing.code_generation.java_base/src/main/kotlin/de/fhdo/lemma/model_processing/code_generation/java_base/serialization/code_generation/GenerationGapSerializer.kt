@@ -88,7 +88,7 @@ internal class CountingGenerationGapSerializer : CodeGenerationSerializerI {
         val serializationResults = delegate.serialize(node, targetFolderPath, targetFilePath)
 
         serializationResults.forEach{ (path, result) ->
-            MainState.addGeneratedLineCountInfo(
+            MainState.addOrUpdateGeneratedLineCountInfo(
                 countLines(
                     path to result,
                     intermediateEObject,

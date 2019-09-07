@@ -93,7 +93,7 @@ interface CodeGenerationHandlerI<T: EObject, N: Node, C: Any> {
                 MainState.addGeneratedFileContent(generatedContent, fullPath)
 
                 if (writeLineCountInfo)
-                    MainState.addGeneratedLineCountInfo(LineCountInfo(fullPath, generatedContent.countLines()))
+                    MainState.addOrUpdateGeneratedLineCountInfo(LineCountInfo(fullPath, generatedContent.countLines()))
             }
             adaptedNode = MainContext.invokeAspectHandlers(eObject, node, aspects, it)
         }

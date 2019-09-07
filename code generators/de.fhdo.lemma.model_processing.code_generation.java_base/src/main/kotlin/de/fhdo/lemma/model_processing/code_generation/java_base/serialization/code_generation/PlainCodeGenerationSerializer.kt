@@ -44,7 +44,7 @@ internal class CountingPlainCodeGenerationSerializer : CodeGenerationSerializerI
         : Map<String, String> {
         val serializationResult = CodeGenerationSerializerBase.serialize(node, targetFolderPath, targetFilePath)
 
-        MainState.addGeneratedLineCountInfo(
+        MainState.addOrUpdateGeneratedLineCountInfo(
             countLines(
                 serializationResult,
                 intermediateEObject,
