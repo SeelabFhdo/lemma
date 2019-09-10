@@ -243,13 +243,21 @@ internal class GenerationGapSerializerBase : KoinComponent {
         val interfacePackage = originalClass.getPackageName() + if (subpackage.isNotEmpty()) ".$subpackage" else ""
         val genInterface = newJavaClassOrInterface(interfacePackage, interfaceName, true)
 
+        /*
+         * Determine methods from original class to copy. If there are not methods, stop here, i.e., we do not add
+         * imports to the interface, because it will not comprise any methods and hence be empty.
+         */
+        val originalMethods = originalClass.methods.filter { it.isPublic }
+        if (originalMethods.isEmpty())
+            return genInterface
+
         /* Because the interface comprises all methods of the original class, copy all method-related imports to it */
         originalClass.getAllImportsForTargetElementsOfType(ImportTargetElementType.METHOD).forEach {
             genInterface.addImport(it, ImportTargetElementType.METHOD)
         }
 
         /* Copy all method signatures of the original class */
-        originalClass.methods.filter { it.isPublic }.forEach { method ->
+        originalMethods.forEach { method ->
             val methodSignature = genInterface.addMethod(method.nameAsString).removeBody()
             methodSignature.type = method.type
             method.parameters.forEach {
