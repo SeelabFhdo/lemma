@@ -18,6 +18,8 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils
 import java.io.File
 import java.lang.IllegalArgumentException
+import java.math.BigDecimal
+import java.math.RoundingMode
 
 /**
  * Helper to count the lines of a [serializationResult] as well as of the original [EObject] in the file at the
@@ -112,9 +114,11 @@ internal fun serializeLineCountInfo(lineCountInfoList: List<LineCountInfo>) : St
     )
 
     /* Add line count information */
+    var fileExtensionSums = mutableMapOf<String, Pair<Int, Int>>()
+    var summarizedEObjects = mutableSetOf<String>()
     for (lineCountInfo in lineCountInfoList) {
         val additionalInfo = lineCountInfo.additionalInfo
-        val additionalInfoCsv = additionalInfoFieldNames.map { additionalInfo[it] ?: "n/a" }.joinToString(";")
+        val additionalInfoCsv = additionalInfoFieldNames.joinToString(";") { additionalInfo[it] ?: "n/a" }
         serializationResult.add(
             """
                 ${lineCountInfo.serializationTargetFilePath}; 
@@ -123,10 +127,67 @@ internal fun serializeLineCountInfo(lineCountInfoList: List<LineCountInfo>) : St
                 $additionalInfoCsv
             """.trimToSingleLine()
         )
+
+        // Collect line count sums per file type
+        val fileExtension = lineCountInfo.serializationTargetFilePath.asFile().extension.toLowerCase()
+        var (serializationResultLineCountSum, originalEObjectLineCountSum) =
+            if (fileExtension in fileExtensionSums)
+                fileExtensionSums[fileExtension]!!
+            else
+                0 to 0
+        serializationResultLineCountSum += lineCountInfo.serializationResultLineCount
+        val originalEObjectPath = lineCountInfo.additionalInfo[ORIGINAL_EOBJECT_PATH_INFO_FIELD]
+        if (originalEObjectPath != null && originalEObjectPath !in summarizedEObjects) {
+            originalEObjectLineCountSum += lineCountInfo.originalEObjectLineCount
+            summarizedEObjects.add(originalEObjectPath)
+        }
+        fileExtensionSums[fileExtension] = serializationResultLineCountSum to originalEObjectLineCountSum
     }
+
+    /* Write line count sums */
+    serializationResult.add("\nLine count sums")
+    serializationResult.add("Extension;Manual LOC;Generated LOC;Diff (How much code was truly generated?);" +
+        "Ratio (What is the share of truly generated code to overall generated code?)")
+
+    var serializationResultLineCountSumOverall = 0
+    var originalEObjectLineCountSumOverall = 0
+    fileExtensionSums.forEach { (fileExtension, sums) ->
+        val (serializationResultLineCountSum, originalEObjectLineCountSum) = sums
+        val diff = serializationResultLineCountSum - originalEObjectLineCountSum
+        serializationResult.add(
+            """
+                $fileExtension;
+                $originalEObjectLineCountSum;
+                $serializationResultLineCountSum;
+                $diff;
+                ${calculatePercentage(diff, serializationResultLineCountSum)}
+            """.trimToSingleLine()
+        )
+
+        serializationResultLineCountSumOverall += serializationResultLineCountSum
+        originalEObjectLineCountSumOverall += originalEObjectLineCountSum
+    }
+    val overallDiff = serializationResultLineCountSumOverall - originalEObjectLineCountSumOverall
+    serializationResult.add(
+        """
+            ;
+            $originalEObjectLineCountSumOverall;
+            $serializationResultLineCountSumOverall;
+            $overallDiff;
+            ${calculatePercentage(overallDiff, serializationResultLineCountSumOverall)}
+        """.trimToSingleLine()
+    )
 
     return serializationResult.joinToString("\n")
 }
+
+/**
+ * Helper to calculate the share of [value] in [absolute]. The result is a percentage with two decimals.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+private fun calculatePercentage(value: Int, absolute: Int)
+    = BigDecimal((value * 1.0 / absolute) * 100.0).setScale(2, RoundingMode.HALF_EVEN).toFloat()
 
 /**
  * Load the original [EObject] of the given [IntermediateComplexType]from the specified [originalModelFilePath]. The
