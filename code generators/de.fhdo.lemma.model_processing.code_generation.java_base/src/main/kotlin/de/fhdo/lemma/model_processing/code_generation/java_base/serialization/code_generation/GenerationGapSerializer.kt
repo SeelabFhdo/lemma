@@ -33,7 +33,7 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.ast.getPackageNa
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.getSerializationCharacteristics
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.hasEmptyBody
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.hasSerializationCharacteristic
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.overridable
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.isOverridable
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.removeImport
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.serialize
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.setBody
@@ -377,14 +377,15 @@ internal class GenerationGapSerializerBase : KoinComponent {
             if (it.isPrivate) {
                 it.removeModifier(Modifier.Keyword.PRIVATE)
                 it.addModifier(Modifier.Keyword.PROTECTED)
-            } else
+            } else if (it.isOverridable)
                 // The methods of the *Gen interface being implemented by this class are equivalent to its already
-                // existing non-private, non-trivial getters/setters created by the visiting handlers. Thus, we just add
-                // the @Override annotation to them here.
+                // existing non-private, non-static, methods created by the visiting handlers. Thus, we just add the
+                // @Override annotation to them here.
                 it.addMarkerAnnotation("Override")
 
             // Set "not implemented yet" stub body
-            it.setBody("""throw new UnsupportedOperationException("Not implemented yet");""")
+            if (it.hasEmptyBody())
+                it.setBody("""throw new UnsupportedOperationException("Not implemented yet");""")
         }
 
         return serializationCharacteristics
@@ -462,7 +463,7 @@ internal class GenerationGapSerializerBase : KoinComponent {
             }
 
             // When the method is relocatable, delegate it to the relocated version in the *GenImpl class
-            if (method.isPublic && method.overridable)
+            if (method.isPublic && method.isOverridable)
                 method.addMarkerAnnotation("Override")
             val parameterString = method.parameters.map { it.name }.joinToString()
             val delegatingClassName = if (!method.isStatic) "super" else genImplClass.nameAsString
