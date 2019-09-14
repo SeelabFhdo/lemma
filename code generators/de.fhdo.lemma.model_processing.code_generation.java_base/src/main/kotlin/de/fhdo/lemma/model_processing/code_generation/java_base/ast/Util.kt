@@ -39,7 +39,7 @@ internal fun File.getEponymousJavaClassOrInterface()
         val parsedCompilationUnit = StaticJavaParser.parse(this)
         parsedCompilationUnit.findFirst(ClassOrInterfaceDeclaration::class.java) {
             it.nameAsString == nameWithoutExtension
-        }.orElseGet { null }
+        }.orElse(null)
     } catch (ex: Exception) {
         null
     }
@@ -69,6 +69,68 @@ internal fun <T: CallableDeclaration<*>> diffCallables(source: List<T>, target: 
 }
 
 /**
+ * Enumeration to allow code generators to influence serialization of generate Java AST [Node] instances.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+enum class SerializationCharacteristic {
+    // Do not relocate elements from their defining compilation unit. For instance, do not pull up methods to
+    // interfaces.
+    DONT_RELOCATE,
+
+    // Do not generate additional constructors for the class exhibiting this characteristic
+    NO_CONSTRUCTORS
+}
+
+/**
+ * Add a [SerializationCharacteristic] to a [Node].
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+fun Node.addSerializationCharacteristic(characteristic: SerializationCharacteristic) {
+    if (!containsData(SerializationCharacteristicDataKey))
+        setData(SerializationCharacteristicDataKey, mutableSetOf(characteristic))
+    else
+        getData(SerializationCharacteristicDataKey).add(characteristic)
+}
+
+/**
+ * Get all [SerializationCharacteristic] instances of a [Node].
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+internal fun Node.getSerializationCharacteristics() : Set<SerializationCharacteristic>
+    = if (containsData(SerializationCharacteristicDataKey))
+    getData(SerializationCharacteristicDataKey)
+else
+    emptySet()
+
+/**
+ * Verify if a [Node] exhibits a certain [SerializationCharacteristic].
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+internal fun Node.hasSerializationCharacteristic(characteristic: SerializationCharacteristic)
+    = characteristic in getSerializationCharacteristics()
+
+/**
+ * Clear the set of [SerializationCharacteristic] instances of a [Node].
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+internal fun Node.clearSerializationCharacteristics() {
+    if (containsData(SerializationCharacteristicDataKey))
+        setData(SerializationCharacteristicDataKey, mutableSetOf())
+}
+
+/**
+ * Data key for a set of [SerializationCharacteristic] instances on a [Node].
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+private object SerializationCharacteristicDataKey : DataKey<MutableSet<SerializationCharacteristic>>()
+
+/**
  * Enumeration to distinguish the various types of Java code elements that may be targeted by a certain import. For
  * instance, an import may be necessary because a [METHOD] parameter is typed by a class provided by the import. Another
  * example is an [ANNOTATION] provided by a framework dependency.
@@ -85,29 +147,73 @@ enum class ImportTargetElementType {
 }
 
 /**
- * Represents information about an import that has been added to an AST [Node]. Effectively, this is a [HashMap], which
- * associates an import with a set of [ImportTargetElementType] instances. It is encapsulated in its own type, because
- * JavaParser's Data API distinguishes data keys by the types of the data elements (cf. [ImportInfoDataKey]).
+ * Represents information about imports that were added to an AST [Node].
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-internal class ImportInfo() : HashMap<String, MutableSet<ImportTargetElementType>>() {
+internal class ImportsInfo() {
+    private val importsInfoMap = mutableMapOf<String, SingleImportInfo>()
+
     /**
      * Constructor to initialize the import map with a single import
      */
-    constructor(initialImport: String, initialImportTargetElementType: ImportTargetElementType) : this() {
-        this[initialImport] = mutableSetOf(initialImportTargetElementType)
+    constructor(initialImport: String, initialImportTargetElementType: ImportTargetElementType,
+        vararg characteristics: SerializationCharacteristic) : this() {
+        addImportInfo(initialImport, initialImportTargetElementType, *characteristics)
     }
 
     /**
-     * Add an additional import to this instance
+     * Add an [import]. Note that the [characteristics] always apply for an [import] in combination with its
+     * [targetElementType].
      */
-    fun addImport(import: String, targetElementType: ImportTargetElementType) {
-        if (containsKey(import))
-            this[import]!!.add(targetElementType)
-        else
-            this[import] = mutableSetOf(targetElementType)
+    fun addImportInfo(import: String, targetElementType: ImportTargetElementType,
+        vararg characteristics: SerializationCharacteristic) {
+        val mapKey = importsInfoMapKey(import, targetElementType)
+        if (mapKey !in importsInfoMap)
+            importsInfoMap[mapKey] = SingleImportInfo(import, targetElementType, *characteristics)
     }
+
+    /**
+     * Remove an [import] for the given [targetElementType]
+     */
+    fun removeImportInfo(import: String, targetElementType: ImportTargetElementType) {
+        val mapKey = importsInfoMapKey(import, targetElementType)
+        importsInfoMap.remove(mapKey)
+    }
+
+    /**
+     * Enable [forEach] iteration over the list of stored [SingleImportInfo] instances
+     */
+    inline fun forEach(action: (SingleImportInfo) -> Unit) = importsInfoMap.values.forEach(action)
+
+    /**
+     * Enable [filter] iteration over the list of stored [SingleImportInfo] instances
+     */
+    inline fun filter(predicate: (SingleImportInfo) -> Boolean) = importsInfoMap.values.filter(predicate)
+
+    /**
+     * Enable [any] iteration over the list of stored [SingleImportInfo] instances
+     */
+    inline fun any(predicate: (SingleImportInfo) -> Boolean) = importsInfoMap.values.any(predicate)
+
+    /**
+     * Helper to create the key for the map of [SingleImportInfo] instances
+     */
+    private fun importsInfoMapKey(import: String, targetElementType: ImportTargetElementType)
+        = "$import::${targetElementType.name}"
+}
+
+/**
+ * Class that represents information about a single [import] at a certain [targetElementType].
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+internal class SingleImportInfo(val import: String, val targetElementType: ImportTargetElementType,
+    vararg val characteristics: SerializationCharacteristic) {
+    /**
+     * Helper to determine if the single import exhibits the given serialization [characteristic]
+     */
+    fun hasSerializationCharacteristic(characteristic: SerializationCharacteristic) = characteristic in characteristics
 }
 
 /**
@@ -115,20 +221,7 @@ internal class ImportInfo() : HashMap<String, MutableSet<ImportTargetElementType
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-private object ImportInfoDataKey : DataKey<ImportInfo>()
-
-/**
- * Find the parent node of a [Node], which is of the given type [T].
- *
- * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
- */
-@Suppress("UNCHECKED_CAST")
-private inline fun <reified T: Node> Node.findParentNode() : T? {
-    var currentParentNode = parentNode.orElseGet(null)
-    while (currentParentNode != null && currentParentNode !is T)
-        currentParentNode = currentParentNode.parentNode.orElseGet(null)
-    return currentParentNode as T?
-}
+private object ImportsInfoDataKey : DataKey<ImportsInfo>()
 
 /**
  * Add an [import] together with its [targetElementType] to the data of an AST [Node] in the form of an [ImportInfo]
@@ -136,13 +229,14 @@ private inline fun <reified T: Node> Node.findParentNode() : T? {
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-private fun Node.addToNodeImports(import: String, targetElementType: ImportTargetElementType) {
-    if (!containsData(ImportInfoDataKey))
-        setData(ImportInfoDataKey, ImportInfo(import, targetElementType))
+private fun Node.addToNodeImportsInfo(import: String, targetElementType: ImportTargetElementType,
+    vararg characteristics: SerializationCharacteristic) {
+    if (!containsData(ImportsInfoDataKey))
+        setData(ImportsInfoDataKey, ImportsInfo(import, targetElementType, *characteristics))
     else {
-        val existingImportInfo = getData(ImportInfoDataKey)
-        existingImportInfo.addImport(import, targetElementType)
-        setData(ImportInfoDataKey, existingImportInfo)
+        val existingImportsInfo = getData(ImportsInfoDataKey)
+        existingImportsInfo.addImportInfo(import, targetElementType, *characteristics)
+        setData(ImportsInfoDataKey, existingImportsInfo)
     }
 }
 
@@ -151,11 +245,19 @@ private fun Node.addToNodeImports(import: String, targetElementType: ImportTarge
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-internal fun Node.getNodeImports()
-    = if (containsData(ImportInfoDataKey))
-            getData(ImportInfoDataKey)
+internal fun Node.getNodeImportsInfo()
+    = if (containsData(ImportsInfoDataKey))
+            getData(ImportsInfoDataKey)
         else
-            ImportInfo()
+            ImportsInfo()
+
+/**
+ * Remove information about an [import] for its [targetElementType] from this [Node].
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+private fun Node.removeImportsInfo(import: String, targetElementType: ImportTargetElementType)
+    = getNodeImportsInfo().removeImportInfo(import, targetElementType)
 
 /**
  * Add a new [DependencyDescription] to the collected dependencies of the [MainState] in the context of a certain
@@ -197,13 +299,26 @@ fun Node.addDependencies(dependencies: Iterable<DependencyDescription>) {
 }
 
 /**
+ * Find the parent node of a [Node], which is of the given type [T].
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+@Suppress("UNCHECKED_CAST")
+private inline fun <reified T: Node> Node.findParentNode() : T? {
+    var currentParentNode = parentNode.orElse(null)
+    while (currentParentNode != null && currentParentNode !is T)
+        currentParentNode = currentParentNode.parentNode.orElse(null)
+    return currentParentNode as T?
+}
+
+/**
  * Helper to retrieve the [ClassOrInterfaceDeclaration] from a [Node]. This only returns classes, not interfaces.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 internal fun Node.getClassDeclaration() : ClassOrInterfaceDeclaration?
     = when(this) {
-        is CompilationUnit -> findFirst(ClassOrInterfaceDeclaration::class.java) { !it.isInterface }.orElseGet { null }
+        is CompilationUnit -> findFirst(ClassOrInterfaceDeclaration::class.java) { !it.isInterface }.orElse(null)
         is ClassOrInterfaceDeclaration -> this
         else -> null
     }
@@ -337,13 +452,13 @@ internal fun ClassOrInterfaceDeclaration.setPackageName(packageName: String)
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-fun ClassOrInterfaceDeclaration.addImport(import: String, targetElementType : ImportTargetElementType,
-    onlyAddActualIfDifferentPackage: Boolean = true) {
+fun ClassOrInterfaceDeclaration.addImport(import: String, targetElementType: ImportTargetElementType,
+    vararg characteristics: SerializationCharacteristic, onlyAddActualIfDifferentPackage: Boolean = true) {
     // Independent of whether the import exists on the class/interface or not it will be added to the "invisible" data
     // of the class's/interface's AST node. That is, to allow functions like getAllImportsForTargetElementsOfType() to
     // retrieve import information even if it is not "visible" in the class/interface.
-    val targetNodeForImports = if (isNestedType) findParentNode<ClassOrInterfaceDeclaration>()!! else this
-    targetNodeForImports.addToNodeImports(import, targetElementType)
+    val targetNodeForImports = if (isNestedType) findParentNode()!! else this
+    targetNodeForImports.addToNodeImportsInfo(import, targetElementType, *characteristics)
 
     val compilationUnit = findParentNode<CompilationUnit>()!!
     if (onlyAddActualIfDifferentPackage) {
@@ -357,19 +472,37 @@ fun ClassOrInterfaceDeclaration.addImport(import: String, targetElementType : Im
 }
 
 /**
- * Get all imports of a class/interface for a given [targetElementType].
+ * Remove the given [import] for the given [targetElementType] from this [ClassOrInterfaceDeclaration]. In case the
+ * [import] does not exist anymore on any elements of the [ClassOrInterfaceDeclaration], it will also be removed from
+ * the compilation unit entirely.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-internal fun ClassOrInterfaceDeclaration.getAllImportsForTargetElementsOfType
-    (targetElementType : ImportTargetElementType) : Set<String> {
-    return if (containsData(ImportInfoDataKey))
-        getData(ImportInfoDataKey).filter { (import, targetElementTypes) ->
-            targetElementType in targetElementTypes
-        }.keys
-    else
-        emptySet()
+internal fun ClassOrInterfaceDeclaration.removeImport(import: String, targetElementType: ImportTargetElementType) {
+    val targetNodeForImports = if (isNestedType) findParentNode()!! else this
+    targetNodeForImports.removeImportsInfo(import, targetElementType)
+
+    val importStillExistsInClass = getNodeImportsInfo().any { it.import == import }
+    if (importStillExistsInClass)
+        return
+
+    val compilationUnit = findParentNode<CompilationUnit>()!!
+    val importInUnit = compilationUnit.imports.find { it.nameAsString == import }
+    if (importInUnit !== null)
+        compilationUnit.imports.remove(importInUnit)
 }
+
+/**
+ * Get all [SingleImportInfo] instances assigned to this [ClassOrInterfaceDeclaration] that exhibit any of the given
+ * [characteristics].
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+internal fun ClassOrInterfaceDeclaration.getAllImportsWithSerializationCharacteristics
+    (vararg characteristics: SerializationCharacteristic)
+    = getNodeImportsInfo()
+        .filter { importInfo -> importInfo.characteristics.any { it in characteristics } }
+        .toList()
 
 /**
  * Set the superclass that is extended by this [ClassOrInterfaceDeclaration]. Note that this only works for classes.
@@ -571,11 +704,11 @@ internal fun EnumDeclaration.getPackageName() = findParentNode<CompilationUnit>(
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 fun EnumDeclaration.addImport(import: String, targetElementType : ImportTargetElementType,
-    onlyAddActualIfDifferentPackage: Boolean = true) {
+    vararg characteristics: SerializationCharacteristic, onlyAddActualIfDifferentPackage: Boolean = true) {
     // Independent of whether the import exists on the enumeration or not it will be added to the "invisible" data of
     // the enumeration's AST node. That is, to allow functions like getAllImportsForTargetElementsOfType() to retrieve
     // import information even if it is not "visible" in the enumeration.
-    addToNodeImports(import, targetElementType)
+    addToNodeImportsInfo(import, targetElementType, *characteristics)
 
     val compilationUnit = findParentNode<CompilationUnit>()!!
     if (onlyAddActualIfDifferentPackage) {
@@ -602,7 +735,7 @@ internal fun FieldDeclaration.setInitializationValue(value: String) = variables[
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 fun FieldDeclaration.addImport(import: String, targetElementType: ImportTargetElementType) {
-    addToNodeImports(import, targetElementType)
+    addToNodeImportsInfo(import, targetElementType)
     findParentNode<ClassOrInterfaceDeclaration>()!!.addImport(import, targetElementType)
 }
 
@@ -612,7 +745,7 @@ fun FieldDeclaration.addImport(import: String, targetElementType: ImportTargetEl
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 fun MethodDeclaration.addImport(import: String, targetElementType: ImportTargetElementType)  {
-    addToNodeImports(import, targetElementType)
+    addToNodeImportsInfo(import, targetElementType)
     findParentNode<ClassOrInterfaceDeclaration>()!!.addImport(import, targetElementType)
 }
 
@@ -621,7 +754,7 @@ fun MethodDeclaration.addImport(import: String, targetElementType: ImportTargetE
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-internal fun MethodDeclaration.setBody(code: String, withLineComment: String = "", withBlockComment: String = "") {
+fun MethodDeclaration.setBody(code: String, withLineComment: String = "", withBlockComment: String = "") {
     val statement = BlockStmt()
     statement.addStatement(code)
     setBody(statement)
@@ -638,6 +771,84 @@ internal fun MethodDeclaration.setBody(code: String, withLineComment: String = "
 
     if (comment != null)
         newBody.statements[0].setComment(comment)
+}
+
+/**
+ * Check if this [MethodDeclaration] has an empty body.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+internal fun MethodDeclaration.hasEmptyBody() : Boolean {
+    val thisBody = body.orElse(null)
+    return thisBody?.statements?.isEmpty() ?: true
+}
+
+/**
+ * Check if this [MethodDeclaration] is overridable.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+internal val MethodDeclaration.isOverridable
+    get() = !isPrivate && !isStatic && "Override" !in annotations.map { it.nameAsString }
+
+/**
+ * Copy this [MethodDeclaration] to a new [MethodDeclaration] instance.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+internal fun MethodDeclaration.copy() : MethodDeclaration {
+    val copyBody = if (!hasEmptyBody()) body.get() else BlockStmt()
+    return MethodDeclaration(modifiers, annotations, typeParameters, type, name, parameters, thrownExceptions,
+        copyBody, receiverParameter?.orElse(null))
+}
+
+/**
+ * Copy the signature of this [MethodDeclaration] to a new [MethodDeclaration] instance.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+internal fun MethodDeclaration.copySignature() : MethodDeclaration {
+    val signatureMethod = MethodDeclaration()
+    signatureMethod.setName(nameAsString)
+    signatureMethod.removeBody()
+    signatureMethod.type = type
+
+    parameters.forEach {
+        val signatureParameter = Parameter()
+        signatureParameter.setType(it.typeAsString)
+        signatureParameter.setName(it.nameAsString)
+        signatureMethod.addParameter(signatureParameter)
+    }
+
+    return signatureMethod
+}
+
+/**
+ * Create a delegating constructor from this [ConstructorDeclaration]. The result will be a new [ConstructorDeclaration]
+ * instance.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+internal fun ConstructorDeclaration.createDelegatingConstructor(name: String) : ConstructorDeclaration {
+    val delegatingConstructor = ConstructorDeclaration()
+    delegatingConstructor.setName(name)
+    delegatingConstructor.modifiers = modifiers
+
+    // Copy parameters
+    val parameterNames = mutableListOf<String>()
+    parameters.forEach {
+        val copyParameter = Parameter()
+        copyParameter.setType(it.typeAsString)
+        copyParameter.setName(it.nameAsString)
+        delegatingConstructor.addParameter(copyParameter)
+
+        parameterNames.add(it.nameAsString)
+    }
+
+    // Add delegating body
+    delegatingConstructor.setBody("""super(${parameterNames.joinToString()});""")
+
+    return delegatingConstructor
 }
 
 /**

@@ -5,23 +5,36 @@ import com.github.javaparser.ast.Modifier
 import com.github.javaparser.ast.Node
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration
 import com.github.javaparser.ast.body.ConstructorDeclaration
+import com.github.javaparser.ast.body.MethodDeclaration
 import com.github.javaparser.ast.body.Parameter
 import com.github.javaparser.ast.comments.BlockComment
 import de.fhdo.lemma.model_processing.asFile
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.ImportTargetElementType
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.SerializationCharacteristic
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.SingleImportInfo
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.SuperclassInfo
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addImport
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addSerializationCharacteristic
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.attributes
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.clearSerializationCharacteristics
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.copy
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.copySignature
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.createDelegatingConstructor
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.diffCallables
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.getAllImportsForTargetElementsOfType
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.getAllImportsWithSerializationCharacteristics
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.getClassDeclaration
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.getEponymousJavaClassOrInterface
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.getSuperclass
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.getFilePath
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.getNodeImports
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.getNodeImportsInfo
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.methodsExcludingPropertyAccessors
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.newJavaClassOrInterface
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.getPackageName
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.getSerializationCharacteristics
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.hasEmptyBody
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.hasSerializationCharacteristic
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.overridable
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.removeImport
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.serialize
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.setBody
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.setSuperclass
@@ -185,7 +198,6 @@ internal class GenerationGapSerializerBase : KoinComponent {
         val genInterfaceFilePath = "$targetFolderPath${File.separator}$genSubfolderName${File.separator}" +
             "${genInterface.nameAsString}.java"
         genInterface.setFilePath(genInterfaceFilePath)
-        generatedFiles[genInterfaceFilePath] = genInterface.serialize(serializationConfiguration)
 
         /*
          * The original class becomes the *GenImpl class, because it already comprises all elements needed in the
@@ -193,19 +205,18 @@ internal class GenerationGapSerializerBase : KoinComponent {
          */
         val originalClassnameBeforeAdaptation = originalClass.nameAsString
         val originalClassPackageBeforeAdaptation = originalClass.getPackageName()
-        adaptToGenImplClass(originalClass, genInterface)
+        val originalSerializationCharacteristics = adaptToGenImplClass(originalClass, genInterface)
         val genImplClassFilePath = "$targetFolderPath${File.separator}$genSubfolderName${File.separator}" +
             "${originalClass.nameAsString}.java"
         originalClass.setFilePath(genImplClassFilePath)
-        generatedFiles[genImplClassFilePath] = originalClass.serialize(serializationConfiguration)
 
         // Collect all constructors of the class in order to enable codeGenerationPhaseCompletedCallback() to derive
         // delegating super-constructors from them if necessary
         AvailableSuperConstructors.addFrom(originalClass)
 
         /* Generate the class for adding custom code */
-        var customImplClass = generateCustomImplClass(originalClass, originalClassnameBeforeAdaptation,
-            originalClassPackageBeforeAdaptation,
+        var customImplClass = generateCustomImplClass(originalClass, originalSerializationCharacteristics,
+            originalClassnameBeforeAdaptation, originalClassPackageBeforeAdaptation,
             """
                 This class might comprise custom code. It will not be overwritten by the code generator as long as it
                 extends ${originalClass.nameAsString}. As soon as this is not the case anymore, this file will be 
@@ -213,9 +224,8 @@ internal class GenerationGapSerializerBase : KoinComponent {
                 command line option!
             """.trimIndent()
         )
-        val classFilePath = "$targetFolderPath${File.separator}$targetClassname.java"
-        customImplClass.setFilePath(classFilePath)
-        generatedFiles[classFilePath] = customImplClass.serialize(serializationConfiguration)
+        val customImplClassFilePath = "$targetFolderPath${File.separator}$targetClassname.java"
+        customImplClass.setFilePath(customImplClassFilePath)
 
         // Collect all constructors of the class in order to enable codeGenerationPhaseCompletedCallback() to derive
         // delegating super-constructors from them if necessary
@@ -224,6 +234,14 @@ internal class GenerationGapSerializerBase : KoinComponent {
         // The creation of constructors for the custom implementation class is delayed to the end of the code generation
         // phase when all super-constructors are definitely known
         DelayedConstructors.add(customImplClass)
+
+        /*
+         * Do the actual serialization. This needs to be done when all generation methods have run, because there might
+         * be adaptations subsequent to class' original generations.
+         */
+        generatedFiles[genInterfaceFilePath] = genInterface.serialize(serializationConfiguration)
+        generatedFiles[genImplClassFilePath] = originalClass.serialize(serializationConfiguration)
+        generatedFiles[customImplClassFilePath] = customImplClass.serialize(serializationConfiguration)
 
         return generatedFiles
     }
@@ -243,43 +261,71 @@ internal class GenerationGapSerializerBase : KoinComponent {
         val interfacePackage = originalClass.getPackageName() + if (subpackage.isNotEmpty()) ".$subpackage" else ""
         val genInterface = newJavaClassOrInterface(interfacePackage, interfaceName, true)
 
-        /*
-         * Determine methods from original class to copy. If there are not methods, stop here, i.e., we do not add
-         * imports to the interface, because it will not comprise any methods and hence be empty.
-         */
-        val originalMethods = originalClass.methods.filter { it.isPublic }
+        /* Determine methods from original class to copy */
+        val originalMethods = originalClass.methods.filter { it.relocatableInGenInterface }
         if (originalMethods.isEmpty())
             return genInterface
 
-        /* Because the interface comprises all methods of the original class, copy all method-related imports to it */
-        originalClass.getAllImportsForTargetElementsOfType(ImportTargetElementType.METHOD).forEach {
-            genInterface.addImport(it, ImportTargetElementType.METHOD)
-        }
+        /*
+         * Because the interface comprises all methods of the original class, copy all method-related, relocatable
+         * imports to it
+         */
+        copyImportsForType(ImportTargetElementType.METHOD, originalClass, genInterface, onlyWhenRelocatable = true)
 
         /* Copy all method signatures of the original class */
-        originalMethods.forEach { method ->
-            val methodSignature = genInterface.addMethod(method.nameAsString).removeBody()
-            methodSignature.type = method.type
-            method.parameters.forEach {
-                val parameter = Parameter()
-                parameter.setType(it.typeAsString)
-                parameter.setName(it.nameAsString)
-                methodSignature.addParameter(parameter)
-            }
-        }
+        originalMethods.forEach { genInterface.addMember(it.copySignature()) }
 
         return genInterface
     }
 
     /**
+     * Helper property, which determines if a [MethodDeclaration] can be relocated in the *Gen interface
+     */
+    private val MethodDeclaration.relocatableInGenInterface
+        get() = relocatable && isPublic && !isStatic
+
+    /**
+     * Helper to copy relocatable imports from the [source] class/interface to the [target] class/interface
+     */
+    private fun copyImportsForType(targetElementType : ImportTargetElementType, source: Node,
+        target: ClassOrInterfaceDeclaration, onlyWhenRelocatable: Boolean = false) {
+        source.getNodeImportsInfo().forEach {
+            val isRelocatable = !onlyWhenRelocatable || it.relocatable
+            if (isRelocatable && it.targetElementType == targetElementType)
+                target.addImport(it.import, targetElementType, *it.characteristics)
+        }
+    }
+
+    /**
+     * Shorthand convenience property to determine if a [Node] is relocatable
+     */
+    private val Node.relocatable
+        get() = !hasSerializationCharacteristic(SerializationCharacteristic.DONT_RELOCATE)
+
+    /**
+     * Shorthand convenience property to determine if a [SingleImportInfo] is relocatable
+     */
+    private val SingleImportInfo.relocatable
+        get() = !hasSerializationCharacteristic(SerializationCharacteristic.DONT_RELOCATE)
+
+    /**
      * Adapt the given class to be compliant with the *GenImpl class as prescribed by the Generation Gap Pattern
      */
     internal fun adaptToGenImplClass(genImplClass: ClassOrInterfaceDeclaration,
-        genInterface: ClassOrInterfaceDeclaration) {
-        val oldPackageName = genImplClass.getPackageName()
-        val oldClassname = genImplClass.nameAsString
+        genInterface: ClassOrInterfaceDeclaration) : Set<SerializationCharacteristic> {
+        /*
+         * Clear the serialization characteristics. They will be added to the custom implementation class, which will
+         * later be generated. That is, because from the perspective of the code generators, they only generate custom
+         * implementation classes. However, as we adapt these classes to become the *GenImpl classes for the sake of
+         * convenience, we need to move the original serialization characteristics to the custom implementation classes
+         * so that they can be treated at their intended locations.
+         */
+        val serializationCharacteristics = genImplClass.getSerializationCharacteristics()
+        genImplClass.clearSerializationCharacteristics()
 
         /* Adapt name, package, visibility, and let the class implement the *Gen interface */
+        val oldPackageName = genImplClass.getPackageName()
+        val oldClassname = genImplClass.nameAsString
         genImplClass.setPackageName(genInterface.getPackageName())
         genImplClass.setName("$oldClassname$GEN_IMPL_CLASS_SUFFIX")
         genImplClass.isAbstract = true
@@ -287,10 +333,7 @@ internal class GenerationGapSerializerBase : KoinComponent {
 
         // If the package name changed, re-add all imports of the class to make them "visible"
         if (oldPackageName != genImplClass.getPackageName())
-            ImportTargetElementType.values().forEach { targetElementType ->
-                val importsOfTargetElementType = genImplClass.getAllImportsForTargetElementsOfType(targetElementType)
-                importsOfTargetElementType.forEach { genImplClass.addImport(it, targetElementType) }
-            }
+            copyAllImports(genImplClass, genImplClass)
 
         /*
          * In case the class that shall become the *GenImpl class extends a superclass, it gets all imports related to
@@ -302,9 +345,7 @@ internal class GenerationGapSerializerBase : KoinComponent {
          */
         val superclassInfo = genImplClass.getSuperclass()
         if (superclassInfo != null) {
-            genImplClass.getAllImportsForTargetElementsOfType(ImportTargetElementType.SUPER).forEach {
-                genImplClass.addImport(it, ImportTargetElementType.SUPER)
-            }
+            copyImportsForType(ImportTargetElementType.SUPER, genImplClass, genImplClass)
 
             // If the superclass has type parameters with qualifiers, e.g., ArrayList<OriginalClassname.NestedClass>,
             // the will be adapted according to the *GenImpl classname, e.g.,
@@ -329,8 +370,8 @@ internal class GenerationGapSerializerBase : KoinComponent {
             }
         }
 
-        /* Change bodies of non-trivial getters/setters to "not implemented yet" stubs */
-        genImplClass.methodsExcludingPropertyAccessors.forEach {
+        /* Adapt methods */
+        genImplClass.methods.forEach {
             // In case the method in the original class is private, we make it protected in the adapted *GenImpl class,
             // because otherwise it cannot be overridden with a non-stub body
             if (it.isPrivate) {
@@ -344,6 +385,17 @@ internal class GenerationGapSerializerBase : KoinComponent {
 
             // Set "not implemented yet" stub body
             it.setBody("""throw new UnsupportedOperationException("Not implemented yet");""")
+        }
+
+        return serializationCharacteristics
+    }
+
+    /**
+     * Helper to copy all imports from the [source] class/interface to the [target] class/interface
+     */
+    private fun copyAllImports(source: Node, target: ClassOrInterfaceDeclaration) {
+        source.getNodeImportsInfo().forEach {
+            target.addImport(it.import, it.targetElementType, *it.characteristics)
         }
     }
 
@@ -371,10 +423,12 @@ internal class GenerationGapSerializerBase : KoinComponent {
     /**
      * Generate the class, which may hold custom code according to the Generation Gap Pattern
      */
-    internal fun generateCustomImplClass(genImplClass: ClassOrInterfaceDeclaration, classname: String,
-        packageName: String, comment: String) : ClassOrInterfaceDeclaration {
+    internal fun generateCustomImplClass(genImplClass: ClassOrInterfaceDeclaration,
+        originalSerializationCharacteristics: Set<SerializationCharacteristic>, classname: String, packageName: String,
+        comment: String) : ClassOrInterfaceDeclaration {
         /* The class extends the *GenImpl class */
         val customImplClass = newJavaClassOrInterface(packageName, classname)
+        originalSerializationCharacteristics.forEach { customImplClass.addSerializationCharacteristic(it) }
         customImplClass.setComment(BlockComment(comment))
         customImplClass.setSuperclass(genImplClass.fullyQualifiedName.get())
 
@@ -386,34 +440,67 @@ internal class GenerationGapSerializerBase : KoinComponent {
          * constructors of its superclass, i.e., *GenImpl, copy all imports related to attributes' types. This is
          * necessary due to the *GenImpl class comprising "all-attributes-constructors".
          */
-        genImplClass.getAllImportsForTargetElementsOfType(ImportTargetElementType.ATTRIBUTE_TYPE).forEach {
-            customImplClass.addImport(it, ImportTargetElementType.ATTRIBUTE_TYPE)
-        }
+        copyImportsForType(ImportTargetElementType.ATTRIBUTE_TYPE, genImplClass, customImplClass)
 
         /*
          * For each non-trivial getter/setter generate a stub delegating implementation that can be replaced with custom
          * code
          */
-        genImplClass.methodsExcludingPropertyAccessors.forEach { method ->
+        for (originalMethod in genImplClass.methodsExcludingPropertyAccessors) {
+            val method = originalMethod.copy()
+            customImplClass.addMember(method)
+
             // Copy method-related imports
-            method.getNodeImports().forEach { (import, targetElementTypes) ->
-                targetElementTypes.forEach { customImplClass.addImport(import, it) }
+            copyAllImports(originalMethod, customImplClass)
+
+            // If the method is not relocatable, stop right here (after we copied it to the custom implementation class)
+            // and remove it from the *GenImpl class. Hence, it won't be relocated, but remain at the implementation
+            // class (from the perspective of the code generation result).
+            if (!originalMethod.relocatable) {
+                genImplClass.members.remove(originalMethod)
+                continue
             }
 
-            if (!method.annotations.map { it.nameAsString }.contains("Override"))
+            // When the method is relocatable, delegate it to the relocated version in the *GenImpl class
+            if (method.isPublic && method.overridable)
                 method.addMarkerAnnotation("Override")
             val parameterString = method.parameters.map { it.name }.joinToString()
+            val delegatingClassName = if (!method.isStatic) "super" else genImplClass.nameAsString
             method.setBody(
                 if (method.type.isVoidType)
-                    """super.${method.name}($parameterString);"""
+                    """$delegatingClassName.${method.name}($parameterString);"""
                 else
-                    """return super.${method.name}($parameterString);""",
-                "TODO Implement me. Will otherwise throw UnsupportedOperationException from super call."
+                    """return $delegatingClassName.${method.name}($parameterString);""",
+                "TODO Implement this. Might otherwise throw UnsupportedOperationException from delegating call."
             )
-            customImplClass.members.add(method)
         }
 
+        /* Undo element relocations, if necessary */
+        undoElementRelocations(genImplClass, customImplClass)
+
         return customImplClass
+    }
+
+    /**
+     * Helper to remove relocated elements from the *GenImpl class and add the to the custom implementation class, i.e.,
+     * from the perspective of the code generation result, they were never relocated
+     */
+    private fun undoElementRelocations(genImplClass: ClassOrInterfaceDeclaration,
+        customImplClass: ClassOrInterfaceDeclaration) {
+        // Class imports
+        val notRelocatableImports = genImplClass
+            .getAllImportsWithSerializationCharacteristics(SerializationCharacteristic.DONT_RELOCATE)
+        notRelocatableImports.forEach {
+            customImplClass.addImport(it.import, it.targetElementType)
+            genImplClass.removeImport(it.import, it.targetElementType)
+        }
+
+        // Class annotations
+        val notRelocatableAnnotations = genImplClass.annotations.filter { !it.relocatable }
+        notRelocatableAnnotations.forEach {
+            customImplClass.addAnnotation(it)
+            genImplClass.remove(it)
+        }
     }
 
     /**
@@ -460,14 +547,18 @@ internal class GenerationGapSerializerBase : KoinComponent {
             // library
             val missingConstructors = AvailableSuperConstructors[nextClassSuperName] ?: continue
 
-            // Add the missing constructors to the next class, based on its superclass, and re-serialize the class
-            nextClass.addConstructors(missingConstructors)
-            AvailableSuperConstructors[nextClassFullyQualifiedName] = nextClass.constructors
+            // Add the missing constructors to the next class, based on its superclass. Note that code generators might
+            // determine that a class shall not have constructors.
+            if (!nextClass.hasSerializationCharacteristic(SerializationCharacteristic.NO_CONSTRUCTORS)) {
+                nextClass.addConstructors(missingConstructors)
+                AvailableSuperConstructors[nextClassFullyQualifiedName] = nextClass.constructors
+            }
 
             val nextClassFilePath = nextClass.getFilePath()!!
             val nextClassFile = nextClassFilePath.asFile()
-            // In case the class is the one for custom implementations and already exists, merge the generated one
-            // with it
+
+            // In case the class is the one for custom implementations and already exists, merge the generated one with
+            // it
             if (nextClass.isCustomImpl() && comprisesCustomCode(nextClassFile))
                 nextClass = mergeWithExistingCustomImplClass(nextClass, nextClassFile)
 
@@ -518,46 +609,33 @@ internal class GenerationGapSerializerBase : KoinComponent {
      * Helper to add constructors to a class based on a list of [superConstructors]
      */
     private fun ClassOrInterfaceDeclaration.addConstructors(superConstructors: List<ConstructorDeclaration>) {
-        // Make sure that each class has an empty constructor
-        var emptyConstructorAdded = false
+        // Make sure that each class has a parameterless constructor
+        var parameterlessConstructorAdded = false
 
         /*
-         * First, create the trivial delegating constructors, i.e., those constructors that invoke super(). There will
-         * be a delegating constructor for each super-constructor
+         * Create the trivial delegating constructors, i.e., those constructors that invoke super(). There will be a
+         * delegating constructor for each super-constructor.
          */
         val generatedDelegatingConstructors = mutableListOf<ConstructorDeclaration>()
-        superConstructors.forEach { constructor ->
-            val delegatingConstructor = addConstructor()
-            // Copy modifiers
-            delegatingConstructor.modifiers = constructor.modifiers
-
-            // Copy parameters
-            val parameterNames = mutableListOf<String>()
-            constructor.parameters.forEach {
-                parameterNames.add(it.nameAsString)
-                val parameter = Parameter()
-                parameter.setType(it.typeAsString)
-                parameter.setName(it.nameAsString)
-                delegatingConstructor.addParameter(parameter)
-            }
-
-            // Add delegating body to invoke super() and keep track whether this was an empty constructor
-            delegatingConstructor.setBody("""super(${parameterNames.joinToString()});""")
-            emptyConstructorAdded = emptyConstructorAdded || constructor.parameters.isEmpty()
+        superConstructors.forEach {
+            val delegatingConstructor = it.createDelegatingConstructor(nameAsString)
+            addMember(delegatingConstructor)
             generatedDelegatingConstructors.add(delegatingConstructor)
+
+            parameterlessConstructorAdded = parameterlessConstructorAdded || it.parameters.isEmpty()
         }
 
-        /* Add missing empty constructor */
-        if (!emptyConstructorAdded)
+        /* Add missing parameterless constructor */
+        if (!parameterlessConstructorAdded)
             addConstructor(Modifier.Keyword.PUBLIC)
 
+        /*
+         * Add constructors for all fields (if any) of the class and each delegating super-constructor. That is, field
+         * constructors delegate to super constructors, before they initialize the fields of the class.
+         */
         if (fields.isEmpty())
             return
 
-        /*
-         * Add constructors for all fields of the class and each delegating super-constructor. That is, field
-         * constructors delegate to super constructors, before they initialize the fields of the class.
-         */
         // Create a reusable list of parameters for the field constructors
         val allFieldsConstructorParameters = mutableListOf<Parameter>()
         attributes.forEach {
@@ -567,7 +645,7 @@ internal class GenerationGapSerializerBase : KoinComponent {
             allFieldsConstructorParameters.add(parameter)
         }
 
-        // Create a delegating field constructor for all previously created delegating constructor
+        // Create a delegating field constructor for all previously created delegating constructors
         generatedDelegatingConstructors.forEach { delegatingConstructor ->
             // Create constructor and add parameters
             val allFieldsConstructor = addConstructor(Modifier.Keyword.PUBLIC)
@@ -638,5 +716,5 @@ internal fun ClassOrInterfaceDeclaration.markAsCustomImpl() {
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-internal fun ClassOrInterfaceDeclaration.isCustomImpl()
+private fun ClassOrInterfaceDeclaration.isCustomImpl()
     = containsData(CustomImplMarkerDataKey) && getData(CustomImplMarkerDataKey)

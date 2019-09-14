@@ -4,11 +4,14 @@ import com.github.javaparser.ast.Node
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration
 import de.fhdo.lemma.model_processing.asFile
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.ImportTargetElementType
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.SerializationCharacteristic
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addImport
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.getClassDeclaration
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.getEponymousJavaClassOrInterface
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.isGeneratedPropertyAccessor
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.getPackageName
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.hasEmptyBody
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.isOverridable
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.serialize
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.setBody
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.setFilePath
@@ -197,7 +200,6 @@ private class ExtendedGenerationGapSerializerBase : KoinComponent {
         val genInterfaceFilePath = "$targetFolderPath${File.separator}$genSubfolderName${File.separator}" +
             "$genInterfaceName.java"
         genInterface.setFilePath(genInterfaceFilePath)
-        generatedFiles[genInterfaceFilePath] = genInterface.serialize(serializationConfiguration)
 
         // Collect all constructors of the class in order to enable codeGenerationPhaseCompletedCallback() to derive
         // delegating super-constructors from them if necessary
@@ -226,6 +228,12 @@ private class ExtendedGenerationGapSerializerBase : KoinComponent {
 
         val originalClassFilePath = "$targetFolderPath${File.separator}$targetClassname.java"
         originalClass.setFilePath(originalClassFilePath)
+
+        /*
+         * Do the actual serialization. This needs to be done when all generation methods have run, because there might
+         * be adaptations subsequent to class' original generations.
+         */
+        generatedFiles[genInterfaceFilePath] = genInterface.serialize(serializationConfiguration)
         generatedFiles[originalClassFilePath] = originalClass.serialize(serializationConfiguration)
 
         return generatedFiles
@@ -241,7 +249,6 @@ private class ExtendedGenerationGapSerializerBase : KoinComponent {
         /* Create the *Gen interface */
         val (genInterfaceFilePath, genInterface) = generateGenInterface(originalClass, extInterface, targetFolderPath,
             genSubfolderName)
-        generatedFiles[genInterfaceFilePath] = genInterface.serialize(serializationConfiguration)
 
         /*
          * The original class becomes the *GenImpl class, because it already comprises all elements needed in the
@@ -249,13 +256,21 @@ private class ExtendedGenerationGapSerializerBase : KoinComponent {
          */
         val originalClassnameBeforeAdaptation = originalClass.nameAsString
         val originalClassPackageBeforeAdaptation = originalClass.getPackageName()
-        val genImplClassFilePath = adaptToGenImplClass(originalClass, genInterface, targetFolderPath, genSubfolderName)
-        generatedFiles[genImplClassFilePath] = originalClass.serialize(serializationConfiguration)
+        val (originalSerializationCharacteristics, genImplClassFilePath) = adaptToGenImplClass(originalClass,
+            genInterface, targetFolderPath, genSubfolderName)
 
         /* Generate the class for adding custom code */
-        val (classFilePath, customImplClass) = generateCustomImplClass(originalClass, originalClassnameBeforeAdaptation,
+        val (customImplClassFilePath, customImplClass) = generateCustomImplClass(originalClass,
+            originalSerializationCharacteristics, originalClassnameBeforeAdaptation,
             originalClassPackageBeforeAdaptation, extInterface, targetFolderPath, targetClassname)
-        generatedFiles[classFilePath] = customImplClass.serialize(serializationConfiguration)
+
+        /*
+         * Do the actual serialization. This needs to be done when all generation methods have run, because there might
+         * be adaptations subsequent to class' original generations.
+         */
+        generatedFiles[genInterfaceFilePath] = genInterface.serialize(serializationConfiguration)
+        generatedFiles[genImplClassFilePath] = originalClass.serialize(serializationConfiguration)
+        generatedFiles[customImplClassFilePath] = customImplClass.serialize(serializationConfiguration)
 
         return generatedFiles
     }
@@ -280,8 +295,10 @@ private class ExtendedGenerationGapSerializerBase : KoinComponent {
      * Helper to adapt the original class to become the *GenImpl class
      */
     private fun adaptToGenImplClass(originalClass: ClassOrInterfaceDeclaration,
-        genInterface: ClassOrInterfaceDeclaration, targetFolderPath: String, genSubfolderName: String) : String {
-        generationGapDelegate.adaptToGenImplClass(originalClass, genInterface)
+        genInterface: ClassOrInterfaceDeclaration, targetFolderPath: String, genSubfolderName: String)
+        : Pair<Set<SerializationCharacteristic>, String> {
+        val originalSerializationCharacteristics = generationGapDelegate.adaptToGenImplClass(originalClass,
+            genInterface)
 
         val genImplClassFilePath = "$targetFolderPath${File.separator}$genSubfolderName${File.separator}" +
             "${originalClass.nameAsString}.java"
@@ -291,7 +308,7 @@ private class ExtendedGenerationGapSerializerBase : KoinComponent {
         // delegating super-constructors from them if necessary
         AvailableSuperConstructors.addFrom(originalClass)
 
-        return genImplClassFilePath
+        return originalSerializationCharacteristics to genImplClassFilePath
     }
 
     /**
@@ -299,6 +316,7 @@ private class ExtendedGenerationGapSerializerBase : KoinComponent {
      */
     private fun generateCustomImplClass(
         originalClass: ClassOrInterfaceDeclaration,
+        originalSerializationCharacteristics: Set<SerializationCharacteristic>,
         originalClassnameBeforeGenImplAdaptation: String,
         originalClassPackageBeforeGenImplAdaptation: String,
         extInterface: ClassOrInterfaceDeclaration,
@@ -306,6 +324,7 @@ private class ExtendedGenerationGapSerializerBase : KoinComponent {
         : Pair<String, ClassOrInterfaceDeclaration> {
         val customImplClass = generationGapDelegate.generateCustomImplClass(
             originalClass,
+            originalSerializationCharacteristics,
             originalClassnameBeforeGenImplAdaptation,
             originalClassPackageBeforeGenImplAdaptation,
             """
