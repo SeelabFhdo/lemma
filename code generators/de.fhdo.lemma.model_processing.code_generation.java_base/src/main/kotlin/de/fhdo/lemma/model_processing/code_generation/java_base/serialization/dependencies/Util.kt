@@ -18,7 +18,7 @@ fun elements(init: Node.() -> Unit) : Node {
  * will be created.
  *
  * By merging, we mean the action of adding child nodes of the other XML node under those child nodes of the current
- * node that are one the same hierarchy and have the same name. For instance, if this node represents the XML node tree
+ * node that are on the same hierarchy and have the same name. For instance, if this node represents the XML node tree
  *      node1
  *          node2
  *              node3
@@ -89,7 +89,7 @@ infix fun Node.merge(otherNode: Node) {
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-private val Node.childNodes
+internal val Node.childNodes
     get() = children.filterIsInstance<Node>()
 
 /**

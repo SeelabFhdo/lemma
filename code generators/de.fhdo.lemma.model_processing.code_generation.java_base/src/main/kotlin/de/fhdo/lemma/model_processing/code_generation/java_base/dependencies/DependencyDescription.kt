@@ -1,7 +1,5 @@
 package de.fhdo.lemma.model_processing.code_generation.java_base.dependencies
 
-import java.lang.IllegalArgumentException
-
 /**
  * Enum to distinguish the supported, concrete dependency formats.
  *
@@ -30,8 +28,7 @@ data class DependencyDescription(val group: String, val artifact: String, val ve
          */
         fun fromString(s: String) : DependencyDescription {
             val dependencyParts = s.split(PART_SEP)
-            if (dependencyParts.size < 2)
-                throw IllegalArgumentException("Dependency description string $s lacks group, artifact, or both")
+            require(dependencyParts.size >= 2) { "Dependency description string $s lacks group, artifact, or both" }
 
             return DependencyDescription(
                 dependencyParts[0],

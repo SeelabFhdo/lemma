@@ -3,7 +3,6 @@ package de.fhdo.lemma.model_processing.code_generation.java_base.genlets
 import de.fhdo.lemma.model_processing.code_generation.java_base.dependencies.DependencyType
 import de.fhdo.lemma.model_processing.code_generation.java_base.findAnnotatedClassesWithInterface
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.dependencies.DependencySerializerI
-import java.lang.IllegalArgumentException
 
 /**
  * Annotation for dependency fragment providers. Dependency fragment providers allow Genlets to enrich dependency
@@ -39,8 +38,7 @@ interface DependencyFragmentProviderI<I: Any, O: Any> {
  */
 internal fun findDependencyFragmentProviders(searchPackage: String, dependencySerializer: DependencySerializerI<*, *>,
     vararg classLoaders: ClassLoader) : List<Class<DependencyFragmentProviderI<Any, Any>>> {
-    if (classLoaders.isEmpty())
-        throw IllegalArgumentException("Class loaders must be passed in order to find dependency fragment providers")
+    require(classLoaders.isNotEmpty()) { "Class loaders must be passed in order to find dependency fragment providers" }
 
     val expectedProviderClass = dependencySerializer.fragmentProviderClass() ?: return emptyList()
     return findAnnotatedClassesWithInterface<DependencyFragmentProviderI<Any, Any>>(
