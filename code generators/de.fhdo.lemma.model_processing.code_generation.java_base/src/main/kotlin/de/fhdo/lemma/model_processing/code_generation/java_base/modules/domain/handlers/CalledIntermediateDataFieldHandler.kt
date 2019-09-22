@@ -115,8 +115,8 @@ internal class CalledIntermediateDataFieldHandler :
         getter.addAnnotation("Override")
         getter.setBody(
             """
-            throw new UnsupportedOperationException(
-                "The method \"${getter.nameAsString}\" is not visible on this type"
+                throw new UnsupportedOperationException(
+                    "The method \"${getter.nameAsString}\" is not visible on this type"
             );
             """.trimToSingleLine()
         )
