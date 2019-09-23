@@ -21,6 +21,7 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.se
 import de.fhdo.lemma.model_processing.code_generation.java_base.simpleName
 import de.fhdo.lemma.model_processing.phases.PhaseException
 import de.fhdo.lemma.model_processing.utils.asXmiResource
+import de.fhdo.lemma.model_processing.utils.hasTechnology
 import de.fhdo.lemma.service.intermediate.IntermediateMicroservice
 import de.fhdo.lemma.service.intermediate.IntermediateServiceModel
 import org.koin.core.KoinComponent
@@ -102,8 +103,7 @@ internal class MainCodeGenerationModule : AbstractCodeGenerationModule(), KoinCo
          * themselves
          */
         val intermediateServiceModel: IntermediateServiceModel by MainState
-        intermediateServiceModel.microservices.forEach {
-            MainState.currentMicroservicePackage = it.packageName
+        intermediateServiceModel.microservices.filter { it.hasTechnology("java") }.forEach {
             DomainCodeGenerationSubModule.invoke()
             serializeDependencies(it)
         }

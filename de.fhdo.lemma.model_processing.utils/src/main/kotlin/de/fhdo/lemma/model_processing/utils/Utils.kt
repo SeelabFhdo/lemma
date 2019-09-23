@@ -4,6 +4,7 @@ import de.fhdo.lemma.data.intermediate.IntermediateImport
 import de.fhdo.lemma.model_processing.asXmiResource as asXmiResourceSimple
 import de.fhdo.lemma.utils.LemmaUtils
 import de.fhdo.lemma.service.ImportType
+import de.fhdo.lemma.service.intermediate.IntermediateMicroservice
 import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.resource.Resource
@@ -191,3 +192,11 @@ fun String.countLines(includeEmptyLines: Boolean = false, includeComments: Boole
 
     return lineCount - commentLineCount
 }
+
+/**
+ * Check if the technology with the given [technologyName] was assigned to this [IntermediateMicroservice].
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+fun IntermediateMicroservice.hasTechnology(technologyName: String)
+    = technologies.any { it.name == technologyName }
