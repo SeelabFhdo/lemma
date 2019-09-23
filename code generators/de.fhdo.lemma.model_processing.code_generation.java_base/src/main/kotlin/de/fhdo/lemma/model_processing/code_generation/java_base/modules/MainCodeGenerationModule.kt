@@ -35,7 +35,7 @@ import java.nio.charset.Charset
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 @CodeGenerationModule("main")
-internal class MainModule : AbstractCodeGenerationModule(), KoinComponent {
+internal class MainCodeGenerationModule : AbstractCodeGenerationModule(), KoinComponent {
     /**
      * Return the language description for the intermediate model kind with which this code generator can deal, i.e.,
      * intermediate service models

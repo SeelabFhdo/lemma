@@ -76,10 +76,18 @@ internal object MainContext {
         }
 
         /**
+         * Set the state's current microservice
+         */
+        fun setCurrentMicroservice(microservice : IntermediateMicroservice) {
+            currentMicroservice = microservice
+            currentMicroservicePackage = microservice.packageName
+        }
+
+        /**
          * Helper to find aspect handlers of the Java base generator itself
          */
         private fun findLocalAspectHandlers() {
-            aspectHandlers[null] = findAspectHandlers("${MainModule::class.java.packageName}.common.aspects.handlers")
+            aspectHandlers[null] = findAspectHandlers("${MainCodeGenerationModule::class.java.packageName}.common.aspects.handlers")
         }
 
         /**

@@ -4,7 +4,7 @@ import com.github.javaparser.ast.Node
 import de.fhdo.lemma.data.intermediate.IntermediateDataModel
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.VisitingCodeGenerationHandlerI
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.findCodeGenerationHandlers
-import de.fhdo.lemma.model_processing.code_generation.java_base.modules.MainModule
+import de.fhdo.lemma.model_processing.code_generation.java_base.modules.MainCodeGenerationModule
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.domain.DomainContext.State.visitingDomainCodeGenerationHandlers
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.MainContext.State as MainState
 import de.fhdo.lemma.model_processing.utils.loadModelRoot
@@ -37,7 +37,7 @@ internal object DomainContext {
          */
         fun initialize() {
             visitingDomainCodeGenerationHandlers = findCodeGenerationHandlers(
-                "${MainModule::class.java.packageName}.domain.handlers"
+                "${MainCodeGenerationModule::class.java.packageName}.domain.handlers"
             )
         }
 
@@ -50,7 +50,7 @@ internal object DomainContext {
         }
 
         /**
-         * Provide delegated property values back to callers
+         * Provide delegated property values for callers
          */
         @Suppress("IMPLICIT_CAST_TO_ANY", "UNCHECKED_CAST")
         operator fun <T: Any> getValue(thisRef: Any?, property: KProperty<*>) : T {

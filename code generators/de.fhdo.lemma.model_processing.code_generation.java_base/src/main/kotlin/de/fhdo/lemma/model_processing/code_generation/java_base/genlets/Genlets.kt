@@ -5,6 +5,7 @@ import de.fhdo.lemma.model_processing.asFile
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.CodeGenerationHandlerI
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.MainContext.State as MainState
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.domain.DomainContext.State as DomainState
+import de.fhdo.lemma.model_processing.code_generation.java_base.modules.services.ServicesContext.State as ServicesState
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.dependencies.DependencySerializerI
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.findAspectHandlers as baseFindAspectHandlers
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.findCodeGenerationHandlers as baseFindCodeGenerationHandlers
@@ -145,7 +146,9 @@ class GenletGeneratedFileContent(val baseTargetFolderSpecifier: GenletPathSpecif
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 enum class GenletPathSpecifier {
-    CURRENT_MICROSERVICE_PATH;
+    CURRENT_MICROSERVICE_JAVA_ROOT_PATH,
+    CURRENT_MICROSERVICE_GENERATION_TARGET_PATH,
+    CURRENT_INTERFACE_GENERATION_TARGET_PATH;
 
     companion object {
         /**
@@ -153,9 +156,19 @@ enum class GenletPathSpecifier {
          */
         internal fun resolvePathSpecifier(specifier: GenletPathSpecifier) : String {
             return when (specifier) {
-                CURRENT_MICROSERVICE_PATH -> {
+                CURRENT_MICROSERVICE_JAVA_ROOT_PATH -> {
                     val currentMicroserviceTargetFolderPathForJavaFiles: String by MainState
                     currentMicroserviceTargetFolderPathForJavaFiles
+                }
+
+                CURRENT_MICROSERVICE_GENERATION_TARGET_PATH -> {
+                    val currentMicroserviceGenerationTargetFolderPath: String by ServicesState
+                    currentMicroserviceGenerationTargetFolderPath
+                }
+
+                CURRENT_INTERFACE_GENERATION_TARGET_PATH -> {
+                    val currentInterfacesGenerationTargetFolderPath: String by ServicesState
+                    currentInterfacesGenerationTargetFolderPath
                 }
             }
         }

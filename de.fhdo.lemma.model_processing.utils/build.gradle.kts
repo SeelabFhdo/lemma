@@ -15,19 +15,23 @@ repositories {
 
 buildscript {
     extra.set("intermediateDataModelVersion", "0.0.1-SNAPSHOT")
+    extra.set("intermediateServiceModelVersion", "0.0.1-SNAPSHOT")
     extra.set("lemmaUtilsVersion", "0.0.1-SNAPSHOT")
     extra.set("modelProcessingVersion", "0.0.1-SNAPSHOT")
 }
 
 dependencies {
     val intermediateDataModelVersion: String by rootProject.extra
+    val intermediateServiceModelVersion: String by rootProject.extra
     val lemmaUtilsVersion: String by rootProject.extra
     val modelProcessingVersion: String by rootProject.extra
 
     implementation(kotlin("stdlib"))
     implementation("de.fhdo.lemma:de.fhdo.lemma.utils:$lemmaUtilsVersion")
     implementation("de.fhdo.lemma.intermediate:de.fhdo.lemma.data.intermediate.metamodel:" +
-            "$intermediateDataModelVersion")
+        "$intermediateDataModelVersion")
+    implementation("de.fhdo.lemma.intermediate:de.fhdo.lemma.service.intermediate.metamodel:" +
+        "$intermediateServiceModelVersion")
     implementation("de.fhdo.lemma.model_processing:de.fhdo.lemma.model_processing:$modelProcessingVersion")
 }
 

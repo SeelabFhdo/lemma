@@ -11,12 +11,28 @@ import de.fhdo.lemma.data.intermediate.IntermediateDataStructure
 import de.fhdo.lemma.data.intermediate.IntermediateImportedAspect
 import de.fhdo.lemma.data.intermediate.IntermediateImportedComplexType
 import de.fhdo.lemma.model_processing.utils.loadModelRoot
+import de.fhdo.lemma.model_processing.utils.mainInterface
 import de.fhdo.lemma.model_processing.utils.packageToPath
 import de.fhdo.lemma.model_processing.utils.trimToSingleLine
+import de.fhdo.lemma.service.intermediate.IntermediateInterface
 import de.fhdo.lemma.service.intermediate.IntermediateMicroservice
 import io.github.classgraph.ClassGraph
 import io.github.classgraph.ClassInfo
+import org.eclipse.emf.ecore.EObject
+import java.lang.IllegalArgumentException
 import java.lang.IllegalStateException
+
+/**
+ * Helper to get the simple name of an [EObject], e.g., an [IntermediateMicroservice] or [IntermediateInterface].
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+val EObject.simpleName
+    get() = when(this) {
+        is IntermediateMicroservice -> name.substringAfterLast(".")
+        is IntermediateInterface -> name.substringAfterLast(".")
+        else -> throw IllegalArgumentException("EObject of type ${this.mainInterface.name} does not have a simple name")
+    }
 
 /**
  * Derived property of [ComplexType] that represents the qualified name of the type. This handles all kinds of complex
