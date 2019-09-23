@@ -46,6 +46,11 @@ interface CodeGenerationHandlerI<T: EObject, N: Node, C: Any> {
     fun getAspects(eObject: T) : List<IntermediateImportedAspect> = emptyList()
 
     /**
+     * Disable Genlet invocations
+     */
+    fun disableGenlets() = false
+
+    /**
      * Function to invoke this handler. It is not meant to be implemented by concrete handler implementations. They
      * need to implement [execute] instead. Moreover, never call this function directly. It will be called
      * automatically.
@@ -76,10 +81,13 @@ interface CodeGenerationHandlerI<T: EObject, N: Node, C: Any> {
      * a generated AST [Node] in order to adapt it
      */
     @Suppress("UNCHECKED_CAST")
-    fun executeSubActions(eObject: T, node: N) : N {
+    private fun executeSubActions(eObject: T, node: N) : N {
         /* Execute local aspect handlers */
         val aspects = getAspects(eObject)
         var adaptedNode = MainContext.invokeLocalAspectHandlers(eObject, node, aspects)
+
+        if (disableGenlets())
+            return adaptedNode as N
 
         /* Execute Genlets' code generation and aspect handlers */
         val genlets: Set<Genlet> by MainState
@@ -125,7 +133,9 @@ interface CallableCodeGenerationHandlerI<T: EObject, N: Node, C: Any> : CodeGene
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 internal inline fun <reified T: CodeGenerationHandlerI<*, *, *>> findCodeGenerationHandlers(searchPackage: String,
-    vararg classLoaders: ClassLoader) : Map<String, Class<T>> {
-    return findAndMapAnnotatedClassesWithInterface(searchPackage, CodeGenerationHandler::class.qualifiedName!!,
-        *classLoaders) { it.handlesEObjectsOfInstance().name }
-}
+    vararg classLoaders: ClassLoader)
+    = findAndMapAnnotatedClassesWithInterface<T>(
+        searchPackage,
+        CodeGenerationHandler::class.qualifiedName!!,
+        *classLoaders
+    ) { it.handlesEObjectsOfInstance().name }
