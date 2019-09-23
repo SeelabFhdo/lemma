@@ -225,9 +225,14 @@ internal object MainContext {
         : GenletCodeGenerationHandlerResult<Node> {
         val genletCodeGenerationHandlers:
             Map<Genlet, Map<String, Class<GenletCodeGenerationHandlerI<EObject, Node, Any>>>> by State
-        val handler = genletCodeGenerationHandlers[genlet]?.get(eObject.mainInterface.name)
+
+        val handlerClass = genletCodeGenerationHandlers[genlet]?.get(eObject.mainInterface.name)
             ?: return GenletCodeGenerationHandlerResult(node)
-        return handler.getConstructor().newInstance().invoke(eObject, node = node)
-            ?: GenletCodeGenerationHandlerResult(node)
+
+        val handlerInstance = handlerClass.getConstructor().newInstance()
+        if (!handlerInstance.generatesNodesOfInstance().isAssignableFrom(node::class.java))
+            return GenletCodeGenerationHandlerResult(node)
+
+        return handlerInstance.invoke(eObject, node = node) ?: GenletCodeGenerationHandlerResult(node)
     }
 }
