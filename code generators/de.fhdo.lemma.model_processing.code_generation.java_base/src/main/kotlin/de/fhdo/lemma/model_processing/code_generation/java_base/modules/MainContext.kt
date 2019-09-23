@@ -15,12 +15,14 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.findDepe
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.loadGenlets
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.buildAspectHandlerQualifiedName
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.findAspectHandlers
+import de.fhdo.lemma.model_processing.code_generation.java_base.packageName
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.LineCountInfo
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.configuration.AbstractSerializationConfiguration
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.dependencies.DependencySerializerI
 import de.fhdo.lemma.model_processing.utils.mainInterface
 import de.fhdo.lemma.model_processing.utils.modelRoot
 import de.fhdo.lemma.model_processing.utils.packageToPath
+import de.fhdo.lemma.service.intermediate.IntermediateMicroservice
 import de.fhdo.lemma.service.intermediate.IntermediateServiceModel
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.resource.Resource
@@ -52,20 +54,28 @@ internal object MainContext {
         private val generatedFileContents = mutableMapOf<String, Pair<String, Charset>>()
         private val generatedLineCountInfo = mutableSetOf<LineCountInfo>()
 
+        private lateinit var intermediateServiceModelFilePath: String
         private lateinit var intermediateServiceModel: IntermediateServiceModel
         private lateinit var intermediateServiceModelForDomainModels: IntermediateServiceModel
         private lateinit var targetFolderPath: String
         private var lineCountInfoFilePath: String? = null
         private lateinit var genlets: Map<Genlet, URLClassLoader>
+        private lateinit var currentMicroservicePackage: String
 
-        lateinit var currentMicroservicePackage: String
+        lateinit var currentMicroservice: IntermediateMicroservice
+            private set
 
         /**
          * Initialize the state of the context
          */
-        fun initialize(intermediateServiceModelResource: Resource,
-            intermediateServiceModelResourceForDomainModels: Resource, targetFolderPath: String,
-            lineCountInfoFilePath: String? = null) {
+        fun initialize(
+            intermediateServiceModelFilePath: String,
+            intermediateServiceModelResource: Resource,
+            intermediateServiceModelResourceForDomainModels: Resource,
+            targetFolderPath: String,
+            lineCountInfoFilePath: String? = null
+        ) {
+            this.intermediateServiceModelFilePath = intermediateServiceModelFilePath
             intermediateServiceModel = intermediateServiceModelResource.modelRoot()
             intermediateServiceModelForDomainModels = intermediateServiceModelResourceForDomainModels.modelRoot()
             this.targetFolderPath = targetFolderPath.trimEnd(File.separatorChar)
@@ -119,6 +129,7 @@ internal object MainContext {
                 "generatedLineCountInfo" -> generatedLineCountInfo.toList()
                 "genletCodeGenerationHandlers" -> genletCodeGenerationHandlers.toMap()
                 "genlets" -> genlets.keys
+                "intermediateServiceModelFilePath" -> intermediateServiceModelFilePath
                 "intermediateServiceModel" -> intermediateServiceModel
                 "intermediateServiceModelForDomainModels" -> intermediateServiceModelForDomainModels
                 "lineCountInfoFilePath" -> lineCountInfoFilePath

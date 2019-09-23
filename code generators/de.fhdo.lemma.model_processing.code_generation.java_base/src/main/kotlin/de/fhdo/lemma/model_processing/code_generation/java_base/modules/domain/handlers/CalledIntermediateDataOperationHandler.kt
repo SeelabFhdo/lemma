@@ -3,18 +3,10 @@ package de.fhdo.lemma.model_processing.code_generation.java_base.modules.domain.
 import com.github.javaparser.ast.Modifier
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration
 import com.github.javaparser.ast.body.MethodDeclaration
-import com.github.javaparser.ast.body.Parameter
-import de.fhdo.lemma.data.intermediate.IntermediateComplexType
 import de.fhdo.lemma.data.intermediate.IntermediateDataOperation
-import de.fhdo.lemma.data.intermediate.IntermediateDataOperationParameter
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.ImportTargetElementType
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addDependencies
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addImport
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.setBody
-import de.fhdo.lemma.model_processing.code_generation.java_base.fullyQualifiedClassname
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.CallableCodeGenerationHandlerI
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.CodeGenerationHandler
-import de.fhdo.lemma.model_processing.code_generation.java_base.languages.getTypeMapping
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.domain.DomainContext.State as DomainState
 import de.fhdo.lemma.model_processing.utils.trimToSingleLine
 
@@ -34,14 +26,19 @@ internal class CalledIntermediateDataOperationHandler :
 
     override fun execute(operation: IntermediateDataOperation, parentClass: ClassOrInterfaceDeclaration?)
         : Pair<MethodDeclaration, String?>? {
-        val generatedMethod = parentClass!!.addMethod(operation.name)
+        var generatedMethod = parentClass!!.addMethod(operation.name)
         if (!operation.isInherited) {
             generatedMethod.setVisibility(operation)
-            generatedMethod.setReturnType(operation, parentClass)
+            generatedMethod = CalledIntermediateDataOperationReturnTypeHandler.invoke(
+                operation.returnType,
+                generatedMethod
+            )!!.first
         } else if (operation.visibilitySubsequentlyConstrained)
             generatedMethod.addNotImplementedBody()
 
-        operation.parameters.forEach { generatedMethod.addParameter(it, parentClass) }
+        operation.parameters.forEach {
+            generatedMethod = CalledIntermediateDataOperationParameterHandler.invoke(it, generatedMethod)!!.first
+        }
 
         return generatedMethod to null
     }
@@ -53,31 +50,6 @@ internal class CalledIntermediateDataOperationHandler :
             addModifier(Modifier.Keyword.PRIVATE)
     }
 
-    private fun MethodDeclaration.setReturnType(originalOperation: IntermediateDataOperation,
-        parentClass: ClassOrInterfaceDeclaration) {
-        val returnType = originalOperation.returnType?.type
-        if (returnType == null) {
-            setType("void")
-            return
-        }
-
-        val typeMapping = returnType.getTypeMapping()
-        if (typeMapping != null) {
-            val (mappedTypeName, isComplexTypeMapping, imports, dependencies) = typeMapping
-            imports.forEach { addImport(it, ImportTargetElementType.METHOD) }
-            parentClass.addDependencies(dependencies)
-
-            if (isComplexTypeMapping) {
-                val fullyQualifiedClassname = (returnType as IntermediateComplexType).fullyQualifiedClassname
-                val complexTypeFullyQualifiedName = "$currentDomainPackage.$fullyQualifiedClassname"
-                addImport(complexTypeFullyQualifiedName, ImportTargetElementType.METHOD)
-            }
-
-            setType(mappedTypeName)
-        } else
-            setType("${returnType.name}_ExpectedFromGenlet")
-    }
-
     private fun MethodDeclaration.addNotImplementedBody() {
         addAnnotation("Override")
         setBody(
@@ -87,30 +59,6 @@ internal class CalledIntermediateDataOperationHandler :
             );
             """.trimToSingleLine()
         )
-    }
-
-    private fun MethodDeclaration.addParameter(parameter: IntermediateDataOperationParameter,
-        parentClass: ClassOrInterfaceDeclaration) {
-        val generatedParameter = Parameter()
-        generatedParameter.setName(parameter.name)
-
-        val typeMapping = parameter.type.getTypeMapping()
-        if (typeMapping != null) {
-            val (mappedTypeName, isComplexTypeMapping, imports, dependencies) = typeMapping
-            imports.forEach { addImport(it, ImportTargetElementType.METHOD) }
-            parentClass.addDependencies(dependencies)
-
-            if (isComplexTypeMapping) {
-                val fullyQualifiedClassname = (parameter.type as IntermediateComplexType).fullyQualifiedClassname
-                val complexTypeFullyQualifiedName = "$currentDomainPackage.$fullyQualifiedClassname"
-                addImport(complexTypeFullyQualifiedName, ImportTargetElementType.METHOD)
-            }
-
-            generatedParameter.setType(mappedTypeName)
-        } else
-            generatedParameter.setType("${parameter.type.name}_ExpectedFromGenlet")
-
-        addParameter(generatedParameter)
     }
 
     private val IntermediateDataOperation.visibilitySubsequentlyConstrained get() = isInherited && isHidden

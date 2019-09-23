@@ -8,6 +8,7 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.Dependen
 import de.fhdo.lemma.model_processing.code_generation.java_base.languages.INTERMEDIATE_SERVICE_MODEL_LANGUAGE_DESCRIPTION
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.MainContext.State as MainState
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.domain.DomainCodeGenerationSubModule
+import de.fhdo.lemma.model_processing.code_generation.java_base.modules.services.ServicesCodeGenerationSubModule
 import de.fhdo.lemma.model_processing.code_generation.java_base.packageName
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.LineCountInfo
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.code_generation.CodeGenerationSerializerI
@@ -95,8 +96,13 @@ internal class MainCodeGenerationModule : AbstractCodeGenerationModule(), KoinCo
             ?: intermediateModelResource
 
         /* Initialize the main state hold by the main context */
-        MainState.initialize(intermediateServiceModelResource, intermediateModelResource, targetFolder,
-            CommandLine.parameterLineCountFile)
+        MainState.initialize(
+            intermediateModelFile,
+            intermediateServiceModelResource,
+            intermediateModelResource,
+            targetFolder,
+            CommandLine.parameterLineCountFile
+        )
 
         /*
          * Generate domain concepts per microservice from the determined service model, as well as the services
@@ -104,7 +110,9 @@ internal class MainCodeGenerationModule : AbstractCodeGenerationModule(), KoinCo
          */
         val intermediateServiceModel: IntermediateServiceModel by MainState
         intermediateServiceModel.microservices.filter { it.hasTechnology("java") }.forEach {
+            MainState.setCurrentMicroservice(it)
             DomainCodeGenerationSubModule.invoke()
+            ServicesCodeGenerationSubModule.invoke()
             serializeDependencies(it)
         }
 

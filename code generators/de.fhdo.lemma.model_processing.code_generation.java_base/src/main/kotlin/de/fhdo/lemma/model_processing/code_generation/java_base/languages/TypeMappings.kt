@@ -278,9 +278,6 @@ class PrimitiveTypeMappingsRegistry(private val builtin: MutableMap<String, Type
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 fun IntermediateType.createTypeSpecificValueString(value: String) : Pair<String, Set<String>> {
-    if (value == null)
-        return "" to emptySet()
-
     var valueString = ""
     val additionalImports = mutableSetOf<String>()
 

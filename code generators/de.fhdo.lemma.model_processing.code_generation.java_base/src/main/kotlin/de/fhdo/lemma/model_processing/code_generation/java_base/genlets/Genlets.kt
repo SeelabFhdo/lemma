@@ -184,6 +184,7 @@ object GenletStateAccess {
     /**
      * Get the value of a specific state information
      */
+    @Suppress("UNCHECKED_CAST")
     operator fun <T: Any> getValue(thisRef: Any?, property: KProperty<*>) : T {
         val value = when(property.name) {
             "currentMicroservicePackage" -> {

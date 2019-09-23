@@ -1,6 +1,5 @@
 package de.fhdo.lemma.model_processing.code_generation.java_base
 
-import de.fhdo.lemma.data.ComplexType
 import de.fhdo.lemma.data.DataStructure
 import de.fhdo.lemma.data.Enumeration
 import de.fhdo.lemma.data.ListType
@@ -14,16 +13,26 @@ import de.fhdo.lemma.model_processing.utils.loadModelRoot
 import de.fhdo.lemma.model_processing.utils.mainInterface
 import de.fhdo.lemma.model_processing.utils.packageToPath
 import de.fhdo.lemma.model_processing.utils.trimToSingleLine
+import de.fhdo.lemma.service.Interface
+import de.fhdo.lemma.service.Microservice
+import de.fhdo.lemma.service.Operation
+import de.fhdo.lemma.service.intermediate.IntermediateEndpoint
 import de.fhdo.lemma.service.intermediate.IntermediateInterface
 import de.fhdo.lemma.service.intermediate.IntermediateMicroservice
+import de.fhdo.lemma.service.intermediate.IntermediateOperation
+import de.fhdo.lemma.service.intermediate.IntermediateParameter
+import de.fhdo.lemma.service.intermediate.IntermediateReferredOperation
+import de.fhdo.lemma.technology.CommunicationType
+import de.fhdo.lemma.technology.ExchangePattern
 import io.github.classgraph.ClassGraph
 import io.github.classgraph.ClassInfo
+import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.EObject
 import java.lang.IllegalArgumentException
-import java.lang.IllegalStateException
 
 /**
- * Helper to get the simple name of an [EObject], e.g., an [IntermediateMicroservice] or [IntermediateInterface].
+ * Property representing the simple name of an [EObject], e.g., an [IntermediateMicroservice] or
+ * [IntermediateInterface].
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
@@ -35,70 +44,159 @@ val EObject.simpleName
     }
 
 /**
- * Derived property of [ComplexType] that represents the qualified name of the type. This handles all kinds of complex
- * types, i.e., [DataStructure], [ListType], and [Enumeration].
+ * Property representing the classname of an [EObject], e.g., an [IntermediateMicroservice] or [IntermediateInterface].
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-internal val ComplexType.qualifiedName
+val EObject.classname
     get() = when(this) {
-            is DataStructure -> qualifiedName
-            is ListType -> qualifiedName
-            is Enumeration -> qualifiedName
-            else -> throw IllegalStateException("Derivation of qualified name for complex type of type "+
-                "${this::class.java.name} is not supported")
-        }
+        is IntermediateComplexType -> name.capitalize()
+        is IntermediateMicroservice -> simpleName.capitalize()
+        is IntermediateInterface -> simpleName.capitalize()
+        is IntermediateOperation -> name.capitalize()
+        else -> throw IllegalArgumentException("EObject of type ${this.mainInterface.name} does not have a classname")
+    }
 
 /**
- * Derived property of [DataStructure] that represents the qualified name of the structure.
+ * Property representing the Java filename of an [EObject], e.g., an [IntermediateMicroservice] or
+ * [IntermediateInterface].
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-internal val DataStructure.qualifiedName
-    get() = buildQualifiedName(".")
+val EObject.javaFileName
+    get() = when(this) {
+        is IntermediateMicroservice -> "$classname.java"
+        is IntermediateInterface -> "$classname.java"
+        else -> throw IllegalArgumentException("EObject of type ${this.mainInterface.name} does not have a simple " +
+            "file name")
+    }
 
 /**
- * Derived property of [ListType] that represents the qualified name of the list type.
+ * Property representing the qualified name of an [EObject], e.g., a [DataStructure] or [Microservice].
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-internal val ListType.qualifiedName
-    get() = buildQualifiedName(".")
+val EObject.qualifiedName : String
+    get() = when(this) {
+        is DataStructure -> buildQualifiedName(".")
+        is ListType -> buildQualifiedName(".")
+        is Enumeration -> buildQualifiedName(".")
+        is Microservice -> buildQualifiedName(".")
+        is Interface -> buildQualifiedName(".")
+        is Operation -> buildQualifiedName(".")
+        else -> throw IllegalArgumentException("EObject of type ${this.mainInterface.name} does not have a qualified " +
+            "name")
+    }
 
 /**
- * Derived property of [Enumeration] that represents the qualified name of the enumeration.
+ * Property representing the package name of an [EObject], e.g., an [IntermediateComplexType] or an
+ * [IntermediateMicroservice]. The package name corresponds to the [fullyQualifiedClassname] without the [classname]
+ * part.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-internal val Enumeration.qualifiedName
-    get() = buildQualifiedName(".")
+internal val EObject.packageName
+    get() = when(this) {
+        is IntermediateComplexType -> qualifiedName.substringBeforeLast(".")
+        is IntermediateMicroservice -> qualifiedName.substringBeforeLast(".")
+        else -> throw IllegalArgumentException("EObject of type ${this.mainInterface.name} does not have a package " +
+            "name")
+    }
 
 /**
- * Get the value of the property with the given name from an [IntermediateImportedAspect].
+ * Property representing the fully-qualified classname of an [EObject], e.g., an [IntermediateComplexType] or an
+ * [IntermediateMicroservice].
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-fun IntermediateImportedAspect.getPropertyValue(propertyName: String) : String? {
-    return propertyValues.find { it.property.name == propertyName }?.value
+internal val EObject.fullyQualifiedClassname
+    get() = when(this) {
+        is IntermediateComplexType -> "$packageName.$classname"
+        is IntermediateMicroservice -> "$packageName.$classname"
+        else -> throw IllegalArgumentException("EObject of type ${this.mainInterface.name} does not have a " +
+            "fully-qualified classname")
+    }
+
+/**
+ * Get endpoints of an [IntermediateMicroservice], [IntermediateInterface], or [IntermediateOperation] for the given
+ * [protocol].
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+fun EObject.getEndpoint(protocol: String)
+    = when(this) {
+        is IntermediateMicroservice -> endpoints.find { it.protocol == protocol }
+        is IntermediateInterface -> endpoints.find { it.protocol == protocol }
+        is IntermediateOperation -> endpoints.find { it.protocol == protocol }
+        else -> throw IllegalArgumentException("EObject of type ${this.mainInterface.name} does not have endpoints")
+    }
+
+/**
+ * Determine if [IntermediateInterface], [IntermediateOperation], or [IntermediateReferredOperation] makes use of the
+ * given [protocol].
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+fun EObject.usesProtocol(protocol: String) : Boolean {
+    require(this is IntermediateInterface || this is IntermediateOperation || this is IntermediateReferredOperation)
+        { "EObject of type ${this.mainInterface.name} does not use protocols" }
+
+    val protocols = when (this) {
+        is IntermediateInterface -> protocols
+        is IntermediateOperation -> protocols
+        is IntermediateReferredOperation -> protocols
+        else -> null
+    }
+
+    val endpoints = when (this) {
+        is IntermediateInterface -> endpoints
+        is IntermediateOperation -> endpoints
+        is IntermediateReferredOperation -> endpoints
+        else -> null
+    }
+
+    val operations = when (this) {
+        is IntermediateInterface -> operations
+        else -> null
+    }
+
+    val referredOperations = when (this) {
+        is IntermediateInterface -> referredOperations
+        else -> null
+    }
+
+    return (protocols?.any { it.protocol == protocol } ?: false) ||
+        (endpoints?.any { it.protocol == protocol } ?: false) ||
+        // The following calls are recursive
+        (operations?.any { it.usesProtocol(protocol) } ?: false) ||
+        (referredOperations?.any { it.usesProtocol(protocol) } ?: false)
 }
 
 /**
- * Derived property of [IntermediateMicroservice] that represents the simple name of the microservice, i.e., its non-
- * qualified name. This will be "Service" for the example service "org.example.Service".
+ * [fullyQualifiedClassname] of [IntermediateComplexType] turned into a path. That is, the separating dots are replaced
+ * by OS-specific file separators.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-val IntermediateMicroservice.simpleName
-    get() = name.substringAfterLast(".")
+internal fun IntermediateComplexType.fullyQualifiedClasspath(withExtension: Boolean = true)
+    = """
+        ${fullyQualifiedClassname.packageToPath()}
+        ${if (withExtension) ".java" else ""}
+      """.trimToSingleLine()
 
 /**
- * Derived property of [IntermediateMicroservice] that represents the package name of the microservice, i.e., its fully-
- * qualified name without the [simpleName]. This will be "org.example" for the example service "org.example.Service".
+ * Check if an [IntermediateDataStructure] has a certain aspect assigned.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-internal val IntermediateMicroservice.packageName
-    get() = qualifiedName.substringBeforeLast(".")
+fun IntermediateDataStructure.hasAspect(aspectName: String) = aspects.any { it.name == aspectName }
+
+/**
+ * Check if an [IntermediateDataField] exhibits a certain feature.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+fun IntermediateDataField.hasFeature(feature: String) = featureNames.contains(feature)
 
 /**
  * Resolve the original [IntermediateComplexType] from this instance. To keep the intermediate models is lightweight as
@@ -119,31 +217,31 @@ fun IntermediateComplexType.resolve() : IntermediateComplexType {
     val version = if (versionName != null) definingModel.versions.find { it.name == versionName } else null
 
     val context = if (contextName != null) {
-            // A context may be part of a version or reside on the top-level of a data model
-            if (version != null)
-                version.contexts.find { it.name == contextName }
-            else
-                definingModel.contexts.find { it.name == contextName }
-        } else
-            null
+        // A context may be part of a version or reside on the top-level of a data model
+        if (version != null)
+            version.contexts.find { it.name == contextName }
+        else
+            definingModel.contexts.find { it.name == contextName }
+    } else
+        null
 
     /* Resolve the type */
     val resolvedType = if (version != null && context != null)
-            // According to its qualified name, the type is defined in a context within a version
-            context.complexTypes.find { it.name == simpleName }
-        else if (version != null && context == null)
-            // According to its qualified name, the type is directly defined in a version
-            version.complexTypes.find { it.name == simpleName }
-        else if (context != null)
-            // According to its qualified name, the type is directly defined in a context
-            context.complexTypes.find { it.name == simpleName }
-        else
-            // There is neither a version nor a context surrounding the type (according to its qualified name), i.e.,
-            // the type is defined on the top-level of the model itself
-            definingModel.complexTypes.find { it.name == simpleName }
+    // According to its qualified name, the type is defined in a context within a version
+        context.complexTypes.find { it.name == simpleName }
+    else if (version != null && context == null)
+    // According to its qualified name, the type is directly defined in a version
+        version.complexTypes.find { it.name == simpleName }
+    else if (context != null)
+    // According to its qualified name, the type is directly defined in a context
+        context.complexTypes.find { it.name == simpleName }
+    else
+    // There is neither a version nor a context surrounding the type (according to its qualified name), i.e.,
+    // the type is defined on the top-level of the model itself
+        definingModel.complexTypes.find { it.name == simpleName }
 
     require(resolvedType != null) { "Complex type $qualifiedName could not be resolved" }
-    return resolvedType!!
+    return resolvedType
 }
 
 /**
@@ -187,67 +285,91 @@ private fun IntermediateComplexType.getQualifiedNameParts() : Triple<String?, St
 }
 
 /**
- * Derived property of [IntermediateComplexType] that represent the name of the complex type as a Java classname.
- * Essentially, this is the capitalized version of the name of the complex type.
+ * Property that indicates if any of the operations of this [IntermediateMicroservice] has an API comment.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-internal val IntermediateComplexType.classname
-    get() = name.capitalize()
+val IntermediateMicroservice.hasApiComments
+    get() = interfaces.map { it.operations }.flatten().any { it.apiOperationComment != null }
 
 /**
- * Derived property of [IntermediateComplexType] that represents the package name of the complex type, i.e., its fully-
- * qualified name without the [classname]. This will be "org.example" for the complex type "org.example.ComplexType".
+ * Determine if this [IntermediateOperation] has parameters of the specified [communicationType].
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-internal val IntermediateComplexType.packageName
-    get() = qualifiedName.substringBeforeLast(".")
+internal fun IntermediateOperation.hasParametersOfCommunicationType(communicationType: CommunicationType)
+    = parameters.any { it.communicationType == communicationType }
 
 /**
- * Derived property of [IntermediateComplexType] that represents the fully-qualified Java classname of the complex type.
- * That is, its [packageName] and [classname] separated by a dot.
+ * Get non-fault parameters of this [IntermediateOperation] having the specified [communicationType] and whose exchange
+ * pattern is IN or INOUT.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-val IntermediateComplexType.fullyQualifiedClassname
-    get() = "$packageName.$classname"
+internal fun IntermediateOperation.getInputParameters(communicationType: CommunicationType)
+    = parameters.filter { it.communicationType == communicationType && it.isInputParameter }
 
 /**
- * [fullyQualifiedClassname] of [IntermediateComplexType] turned into a path. That is, the separating dots are replaced
- * by OS-specific file separators.
+ * Determine if this [IntermediateParameter] is an input parameter, i.e., it has the exchange pattern IN or INOUT and is
+ * not a fault parameter.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-internal fun IntermediateComplexType.fullyQualifiedClasspath(withExtension: Boolean = true)
-    =
-        """
-            ${fullyQualifiedClassname.packageToPath()}
-            ${if (withExtension) ".java" else ""}
-        """.trimToSingleLine()
+private val IntermediateParameter.isInputParameter
+    get() = !isCommunicatesFault && (exchangePattern == ExchangePattern.INOUT || exchangePattern == ExchangePattern.IN)
 
 /**
- * [packageName] of [IntermediateComplexType] turned into a path. That is, the separating dots are replaced by
- * OS-specific file separators.
+ * Get non-optional input parameters of this [IntermediateOperation].
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-internal val IntermediateComplexType.packagePath
-    get() = packageName.packageToPath()
+internal fun IntermediateOperation.getRequiredInputParameters(communicationType: CommunicationType)
+    = getInputParameters(communicationType).filter { !it.isOptional }
 
 /**
- * Check if an [IntermediateDataStructure] has a certain aspect assigned.
+ * Get non-fault parameters of this [IntermediateOperation] having the specified [communicationType] and whose exchange
+ * pattern is OUT or INOUT.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-fun IntermediateDataStructure.hasAspect(aspectName: String) = aspects.any { it.name == aspectName }
+internal fun IntermediateOperation.getResultParameters(communicationType: CommunicationType)
+    = parameters.filter { it.communicationType == communicationType && it.isResultParameter }
 
 /**
- * Check if an [IntermediateDataField] exhibits a certain feature.
+ * Determine if this [IntermediateParameter] is a result parameter, i.e., it has the exchange pattern IN or INOUT and is
+ * not a fault parameter.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-fun IntermediateDataField.hasFeature(feature: String) = featureNames.contains(feature)
+private val IntermediateParameter.isResultParameter
+    get() = !isCommunicatesFault && (exchangePattern == ExchangePattern.INOUT || exchangePattern == ExchangePattern.OUT)
+
+/**
+ * Determine if this [IntermediateOperation] returns a composite result for the specified [communicationType]. That is,
+ * it has more than one result parameter.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+internal fun IntermediateOperation.hasCompositeResult(communicationType: CommunicationType)
+    = parameters.count { it.communicationType == communicationType && it.isResultParameter } > 1
+
+/**
+ * Determine if this [IntermediateOperation] returns a single result for the specified [communicationType]. That is, it
+ * has exactly one result parameter.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+internal fun IntermediateOperation.hasSingleResult(communicationType: CommunicationType)
+    = parameters.count { it.communicationType == communicationType && it.isResultParameter } == 1
+
+/**
+ * Get the value of the property with the given name from an [IntermediateImportedAspect].
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+fun IntermediateImportedAspect.getPropertyValue(propertyName: String) : String? {
+    return propertyValues.find { it.property.name == propertyName }?.value
+}
 
 /**
  * Helper to find annotated classes, possibly within other JAR archives leveraging the given [classLoaders].

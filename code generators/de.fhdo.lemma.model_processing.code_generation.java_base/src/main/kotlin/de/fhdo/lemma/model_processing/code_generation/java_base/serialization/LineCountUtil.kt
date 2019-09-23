@@ -14,6 +14,10 @@ import de.fhdo.lemma.model_processing.loadXtextResource
 import de.fhdo.lemma.model_processing.utils.countLines
 import de.fhdo.lemma.model_processing.utils.mainInterface
 import de.fhdo.lemma.model_processing.utils.trimToSingleLine
+import de.fhdo.lemma.service.ServiceModel
+import de.fhdo.lemma.service.intermediate.IntermediateInterface
+import de.fhdo.lemma.service.intermediate.IntermediateMicroservice
+import de.fhdo.lemma.service.intermediate.IntermediateOperation
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils
 import java.io.File
@@ -73,25 +77,6 @@ internal class LineCountInfo(var serializationTargetFilePath: String, var serial
      * The hash code of a [LineCountInfo] is equal to the hash code of its [serializationTargetFilePath]
      */
     override fun hashCode() = serializationTargetFilePath.hashCode()
-}
-
-/**
- * Load the original [EObject] of the given intermediate [EObject] from the specified [originalModelFilePath]. The
- * result depends on the concrete runtime type of this [EObject].
- *
- * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
- */
-private fun EObject.loadOriginalEObject(originalModelFilePath: String) : EObject {
-    val originalEObject = when (this) {
-        is IntermediateComplexType -> loadOriginalEObject(originalModelFilePath)
-        else -> throw IllegalArgumentException("Loading original EObject for intermediate EObject of type " +
-            "${this::class.java.name} is not supported")
-    }
-
-    require(originalEObject != null) { "Original EObject of intermediate EObject of type ${this::class.java.name} " +
-        "could not be loaded" }
-
-    return originalEObject
 }
 
 /**
@@ -190,6 +175,28 @@ private fun calculatePercentage(value: Int, absolute: Int)
     = BigDecimal((value * 1.0 / absolute) * 100.0).setScale(2, RoundingMode.HALF_EVEN).toFloat()
 
 /**
+ * Load the original [EObject] of the given intermediate [EObject] from the specified [originalModelFilePath]. The
+ * result depends on the concrete runtime type of this [EObject].
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+private fun EObject.loadOriginalEObject(originalModelFilePath: String) : EObject {
+    val originalEObject = when (this) {
+        is IntermediateComplexType -> loadOriginalEObject(originalModelFilePath)
+        is IntermediateMicroservice -> loadOriginalEObject(originalModelFilePath)
+        is IntermediateInterface -> loadOriginalEObject(originalModelFilePath)
+        is IntermediateOperation -> loadOriginalEObject(originalModelFilePath)
+        else -> throw IllegalArgumentException("Loading original EObject for intermediate EObject of type " +
+            "${this.mainInterface.name} is not supported")
+    }
+
+    require(originalEObject != null) { "Original EObject of intermediate EObject of type ${this.mainInterface.name} " +
+        "could not be loaded" }
+
+    return originalEObject
+}
+
+/**
  * Load the original [EObject] of the given [IntermediateComplexType]from the specified [originalModelFilePath]. The
  * result will be an [EObject] of type [ComplexType].
  *
@@ -200,12 +207,23 @@ private fun IntermediateComplexType.loadOriginalEObject(originalModelFilePath: S
     return modelRoot.containedComplexTypes.find { it.qualifiedName == this.qualifiedName }
 }
 
-/**
- * Cache of loaded model roots.
- *
- * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
- */
-private val loadedOriginalModelRootsCache = mutableMapOf<String, EObject>()
+private fun IntermediateMicroservice.loadOriginalEObject(originalModelFilePath: String) : EObject? {
+    val modelRoot = loadOriginalModelRoot<ServiceModel>(originalModelFilePath)
+    return modelRoot.microservices.find { it.qualifiedName == this.qualifiedName }
+}
+
+private fun IntermediateInterface.loadOriginalEObject(originalModelFilePath: String) : EObject? {
+    val modelRoot = loadOriginalModelRoot<ServiceModel>(originalModelFilePath)
+    return modelRoot.microservices.map { it.interfaces }.flatten().find { it.qualifiedName == this.qualifiedName }
+}
+
+private fun IntermediateOperation.loadOriginalEObject(originalModelFilePath: String) : EObject? {
+    val modelRoot = loadOriginalModelRoot<ServiceModel>(originalModelFilePath)
+    return modelRoot.microservices.asSequence()
+        .map { it.interfaces }.flatten()
+        .map { it.operations }.flatten()
+        .find { it.qualifiedName == this.qualifiedName }
+}
 
 /**
  * Load the root of the model file at the given [modelFilePath], which must point to an Xtext resource.
@@ -234,6 +252,13 @@ private fun <T: EObject> loadOriginalModelRoot(modelFilePath: String) : T {
     loadedOriginalModelRootsCache[modelFilePath] = loadedModelRoot
     return loadedModelRoot
 }
+
+/**
+ * Cache of loaded model roots.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+private val loadedOriginalModelRootsCache = mutableMapOf<String, EObject>()
 
 /**
  * Flag to indicate whether the [DATA_DSL_LANGUAGE_DESCRIPTION] was already added to the EPackage registry.

@@ -17,6 +17,7 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.ast.SingleImport
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.SuperclassInfo
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addImport
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addSerializationCharacteristic
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addSerializationCharacteristics
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.attributes
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.clearSerializationCharacteristics
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.copy
@@ -459,9 +460,7 @@ internal class GenerationGapSerializerBase : KoinComponent {
         comment: String) : ClassOrInterfaceDeclaration {
         /* The class extends the *GenImpl class */
         val customImplClass = newJavaClassOrInterface(packageName, classname)
-        genImplAdaptationResult.originalSerializationCharacteristics.forEach {
-            customImplClass.addSerializationCharacteristic(it)
-        }
+        customImplClass.addSerializationCharacteristics(genImplAdaptationResult.originalSerializationCharacteristics)
         customImplClass.setComment(BlockComment(comment))
         customImplClass.setSuperclass(genImplClass.fullyQualifiedName.get())
 

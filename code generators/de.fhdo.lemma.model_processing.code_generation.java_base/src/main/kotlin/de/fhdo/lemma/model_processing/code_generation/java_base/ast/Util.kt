@@ -5,6 +5,7 @@ import com.github.javaparser.ast.CompilationUnit
 import com.github.javaparser.ast.DataKey
 import com.github.javaparser.ast.Modifier
 import com.github.javaparser.ast.Node
+import com.github.javaparser.ast.NodeList
 import com.github.javaparser.ast.body.CallableDeclaration
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration
 import com.github.javaparser.ast.body.ConstructorDeclaration
@@ -15,12 +16,20 @@ import com.github.javaparser.ast.body.Parameter
 import com.github.javaparser.ast.body.VariableDeclarator
 import com.github.javaparser.ast.comments.BlockComment
 import com.github.javaparser.ast.comments.LineComment
+import com.github.javaparser.ast.expr.AnnotationExpr
 import com.github.javaparser.ast.expr.AssignExpr
+import com.github.javaparser.ast.expr.MarkerAnnotationExpr
+import com.github.javaparser.ast.expr.MemberValuePair
 import com.github.javaparser.ast.expr.NameExpr
+import com.github.javaparser.ast.expr.NormalAnnotationExpr
+import com.github.javaparser.ast.expr.SimpleName
+import com.github.javaparser.ast.nodeTypes.NodeWithAnnotations
 import com.github.javaparser.ast.stmt.BlockStmt
 import com.github.javaparser.ast.stmt.ExpressionStmt
 import com.github.javaparser.ast.stmt.ReturnStmt
+import com.github.javaparser.ast.stmt.Statement
 import com.github.javaparser.ast.type.ClassOrInterfaceType
+import com.github.javaparser.ast.type.TypeParameter
 import com.github.javaparser.printer.PrettyPrinter
 import de.fhdo.lemma.model_processing.code_generation.java_base.dependencies.DependencyDescription
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.configuration.AbstractSerializationConfiguration
@@ -104,6 +113,22 @@ fun Node.addSerializationCharacteristic(characteristic: SerializationCharacteris
 }
 
 /**
+ * Add [SerializationCharacteristic] instances to a [Node].
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+fun Node.addSerializationCharacteristics(characteristics: Iterable<SerializationCharacteristic>)
+    = characteristics.forEach { addSerializationCharacteristic(it) }
+
+/**
+ * Add [SerializationCharacteristic] instances represented as an [Array] to a [Node].
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+fun Node.addSerializationCharacteristics(characteristics: Array<out SerializationCharacteristic>)
+    = characteristics.forEach { addSerializationCharacteristic(it) }
+
+/**
  * Get all [SerializationCharacteristic] instances of a [Node].
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
@@ -131,6 +156,55 @@ internal fun Node.clearSerializationCharacteristics() {
     if (containsData(SerializationCharacteristicDataKey))
         setData(SerializationCharacteristicDataKey, mutableSetOf())
 }
+
+/**
+ * Convenience function to add an annotation with the given [name] and serialization [characteristics] to this
+ * [NodeWithAnnotations].
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+fun NodeWithAnnotations<out Node>.addAnnotation(name: String,
+    vararg characteristics: SerializationCharacteristic) : NodeWithAnnotations<out Node> {
+    val annotation = this.addAndGetAnnotation(name)
+    annotation.addSerializationCharacteristics(characteristics)
+    return this
+}
+
+/**
+ * Convenience function to add an annotation with the given [name] and serialization [characteristics] to this
+ * [NodeWithAnnotations]. Returns the created annotation.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+fun NodeWithAnnotations<out Node>.addAndGetAnnotation(name: String,
+    vararg characteristics: SerializationCharacteristic) : NormalAnnotationExpr {
+    val annotation = this.addAndGetAnnotation(name)
+    annotation.addSerializationCharacteristics(characteristics)
+    return annotation
+}
+
+/**
+ * Check if this [NodeWithAnnotations] has an annotation of the given [name].
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+fun NodeWithAnnotations<out Node>.hasAnnotation(name: String) = annotations.any { it.nameAsString == name }
+
+/**
+ * Get the annotation specified by its [name] from this [NodeWithAnnotations]. Returns null if the annotation does not
+ * exist on this node.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+inline fun <reified T: AnnotationExpr> NodeWithAnnotations<out Node>.getAnnotation(name: String)
+    = annotations.find { it.nameAsString == name && it is T } as? T
+
+/**
+ * Get the value for the specified [key] in a value-pair of this [NormalAnnotationExpr].
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+fun NormalAnnotationExpr.getValueAsString(key: String) = pairs.find { it.nameAsString == key }?.value?.toString()
 
 /**
  * Data key for a set of [SerializationCharacteristic] instances on a [Node].
@@ -313,7 +387,7 @@ fun Node.addDependencies(dependencies: Iterable<DependencyDescription>) {
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 @Suppress("UNCHECKED_CAST")
-private inline fun <reified T: Node> Node.findParentNode() : T? {
+inline fun <reified T: Node> Node.findParentNode() : T? {
     var currentParentNode = parentNode.orElse(null)
     while (currentParentNode != null && currentParentNode !is T)
         currentParentNode = currentParentNode.parentNode.orElse(null)
@@ -341,7 +415,7 @@ internal fun Node.serialize(serializationConfiguration: AbstractSerializationCon
     val compilationUnit = when(this) {
         is CompilationUnit -> this
         is ClassOrInterfaceDeclaration,
-        is EnumDeclaration -> findParentNode<CompilationUnit>()!!
+            is EnumDeclaration -> findParentNode()!!
         else -> throw IllegalArgumentException("Serialization of nodes of type ${this::class.java.name} is not " +
             "supported")
     }
@@ -753,9 +827,10 @@ fun FieldDeclaration.addImport(import: String, targetElementType: ImportTargetEl
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-fun MethodDeclaration.addImport(import: String, targetElementType: ImportTargetElementType)  {
+fun MethodDeclaration.addImport(import: String, targetElementType: ImportTargetElementType,
+    vararg characteristics: SerializationCharacteristic)  {
     addToNodeImportsInfo(import, targetElementType)
-    findParentNode<ClassOrInterfaceDeclaration>()!!.addImport(import, targetElementType)
+    findParentNode<ClassOrInterfaceDeclaration>()!!.addImport(import, targetElementType, *characteristics)
 }
 
 /**
@@ -763,12 +838,14 @@ fun MethodDeclaration.addImport(import: String, targetElementType: ImportTargetE
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-fun MethodDeclaration.setBody(code: String, withLineComment: String = "", withBlockComment: String = "") {
+fun MethodDeclaration.setBody(code: String, withLineComment: String = "", withBlockComment: String = "",
+    vararg characteristics: SerializationCharacteristic) {
     val statement = BlockStmt()
     statement.addStatement(code)
     setBody(statement)
 
     val newBody = body.get()
+    newBody.addSerializationCharacteristics(characteristics)
     val comment = if (newBody.statements.isNotEmpty())
         when {
             withLineComment.isNotEmpty() -> LineComment(withLineComment)
@@ -801,11 +878,48 @@ internal fun MethodDeclaration.insertBody(otherBody: BlockStmt,
     body.get().statements.addAll(0, statementsToInsert)
 }
 
+/**
+ * Insert an implementation statement at a specified index in a Java method's implementation body. The statement is
+ * provided in the form of plain Java code.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
+internal fun MethodDeclaration.insertStatement(code: String, index: Int = 0) {
+    if (!body.isPresent) {
+        setBody(code)
+        return
+    }
+
+    val body = body.get()
+    val statements = body.statements
+    require(index in 0 until statements.size) { "Invalid index for insertion of statement into method $name" }
+
+    val newStatement = StaticJavaParser.parseStatement(code)
+    statements.add(index, newStatement)
+    body.statements = statements
 }
 
+/**
+ * Helper to check if a [MethodDeclaration] is a property accessor generated by [addGetter]/[addSetter].
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+internal val MethodDeclaration.isGeneratedPropertyAccessor
+    get() = containsData(GeneratedPropertyAccessorTypeDataKey)
+
+/**
+ * Convenience function to retrieve the parameter with the specified [name] from this [MethodDeclaration]. Returns null
+ * in case the parameter does not exist.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+fun MethodDeclaration.getParameter(name: String) = parameters.find { it.nameAsString == name }
+
+/**
+ * Check if this [MethodDeclaration] has an empty body.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
 internal val MethodDeclaration.emptyBody
     get() = body.orElse(null)?.statements?.isEmpty() ?: true
 
@@ -823,9 +937,85 @@ internal val MethodDeclaration.isOverridable
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 internal fun MethodDeclaration.copy() : MethodDeclaration {
-    val copyBody = if (!hasEmptyBody()) body.get() else BlockStmt()
-    return MethodDeclaration(modifiers, annotations, typeParameters, type, name, parameters, thrownExceptions,
-        copyBody, receiverParameter?.orElse(null))
+    val copyModifiers = NodeList(modifiers.map { it.copy() })
+    val copyAnnotations = NodeList(annotations.map { it.copy() })
+    val copyTypeParameters = NodeList(typeParameters.map { it.copy() })
+    val copyParameters = NodeList(parameters.map { it.copy() })
+
+    // TODO Do a real copy of the body.get() result
+    val copyBody = if (!emptyBody) body.get() else BlockStmt()
+
+    // TODO Copy type
+    // TODO Copy thrownExceptions
+    // TODO Copy receiverParameter
+    return MethodDeclaration(copyModifiers, copyAnnotations, copyTypeParameters, type, name, copyParameters,
+        thrownExceptions, copyBody, receiverParameter?.orElse(null))
+}
+
+/**
+ * Copy this [Modifier] to a new [Modifier] instance.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+private fun Modifier.copy() = Modifier(keyword)
+
+/**
+ * Copy this [AnnotationExpr] to a new [AnnotationExpr] instance.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+private fun AnnotationExpr.copy()
+    = when(this) {
+        is NormalAnnotationExpr -> copy()
+        is MarkerAnnotationExpr -> copy()
+        else -> throw IllegalArgumentException("Copying of ${javaClass.simpleName} is not supported")
+    }
+
+/**
+ * Copy this [NormalAnnotationExpr] to a new [NormalAnnotationExpr] instance.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+private fun NormalAnnotationExpr.copy() : NormalAnnotationExpr {
+    val copyName = StaticJavaParser.parseName(nameAsString)
+    val copyPairs = NodeList(pairs.map { MemberValuePair(it.nameAsString, NameExpr(it.value.toString())) })
+    return NormalAnnotationExpr(copyName, copyPairs)
+}
+
+/**
+ * Copy this [MarkerAnnotationExpr] to a new [MarkerAnnotationExpr] instance.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+private fun MarkerAnnotationExpr.copy() : MarkerAnnotationExpr {
+    val copyName = StaticJavaParser.parseName(nameAsString)
+    return MarkerAnnotationExpr(copyName)
+}
+
+/**
+ * Copy this [TypeParameter] to a new [TypeParameter] instance.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+private fun TypeParameter.copy() : TypeParameter {
+    val copyName = SimpleName(nameAsString)
+    val copyAnnotations = NodeList(annotations.map { it.copy() })
+    // TODO Copy typeBound
+    return TypeParameter(copyName, NodeList(), copyAnnotations)
+}
+
+/**
+ * Copy this [Parameter] to a new [Parameter] instance.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+private fun Parameter.copy() : Parameter {
+    val copyModifiers = NodeList(modifiers.map { it.copy() })
+    val copyName = SimpleName(nameAsString)
+    val copyAnnotations = NodeList(annotations.map { it.copy() })
+    val copyVarArgAnnotations = NodeList(varArgsAnnotations.map { it.copy() })
+    // TODO Copy type
+    return Parameter(copyModifiers, copyAnnotations, type, isVarArgs, copyVarArgAnnotations, copyName)
 }
 
 /**
@@ -901,33 +1091,3 @@ internal fun ConstructorDeclaration.setBody(vararg rawStatements: String, firstS
     if (comment != null)
         body.statements[0].setComment(comment)
 }
-
-/**
- * Insert an implementation statement at a specified index in a Java method's implementation body. The statement is
- * provided in the form of plain Java code.
- *
- * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
- */
-internal fun MethodDeclaration.insertStatement(code: String, index: Int = 0) {
-    if (!body.isPresent) {
-        setBody(code)
-        return
-    }
-
-    val body = body.get()
-    val statements = body.statements
-    if (index !in 0 until statements.size)
-        throw IllegalArgumentException("Invalid index for insertion of statement into method $name")
-
-    val newStatement = StaticJavaParser.parseStatement(code)
-    statements.add(index, newStatement)
-    body.statements = statements
-}
-
-/**
- * Helper to check if a [MethodDeclaration] is a property accessort generated by [addGetter]/[addSetter].
- *
- * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
- */
-internal val MethodDeclaration.isGeneratedPropertyAccessor
-    get() = containsData(GeneratedPropertyAccessorTypeDataKey)
