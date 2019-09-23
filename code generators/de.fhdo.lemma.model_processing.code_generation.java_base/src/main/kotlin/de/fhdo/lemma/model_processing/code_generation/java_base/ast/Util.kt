@@ -69,7 +69,7 @@ internal fun <T: CallableDeclaration<*>> diffCallables(source: List<T>, target: 
 }
 
 /**
- * Enumeration to allow code generators to influence serialization of generate Java AST [Node] instances.
+ * Enumeration to allow code generators to influence serialization of generated Java AST [Node] instances.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
@@ -77,6 +77,15 @@ enum class SerializationCharacteristic {
     // Do not relocate elements from their defining compilation unit. For instance, do not pull up methods to
     // interfaces.
     DONT_RELOCATE,
+
+    // Merge method bodies on relocation
+    MERGE_ON_RELOCATION,
+
+    // Adapt method bodies to delegate to super methods on relocation
+    DELEGATE_ON_RELOCATION,
+
+    // Remove node on relocation
+    REMOVE_ON_RELOCATION,
 
     // Do not generate additional constructors for the class exhibiting this characteristic
     NO_CONSTRUCTORS
@@ -101,9 +110,9 @@ fun Node.addSerializationCharacteristic(characteristic: SerializationCharacteris
  */
 internal fun Node.getSerializationCharacteristics() : Set<SerializationCharacteristic>
     = if (containsData(SerializationCharacteristicDataKey))
-    getData(SerializationCharacteristicDataKey)
-else
-    emptySet()
+        getData(SerializationCharacteristicDataKey)
+    else
+        emptySet()
 
 /**
  * Verify if a [Node] exhibits a certain [SerializationCharacteristic].
@@ -316,7 +325,7 @@ private inline fun <reified T: Node> Node.findParentNode() : T? {
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-internal fun Node.getClassDeclaration() : ClassOrInterfaceDeclaration?
+internal fun Node.asClassDeclaration() : ClassOrInterfaceDeclaration?
     = when(this) {
         is CompilationUnit -> findFirst(ClassOrInterfaceDeclaration::class.java) { !it.isInterface }.orElse(null)
         is ClassOrInterfaceDeclaration -> this
@@ -774,14 +783,31 @@ fun MethodDeclaration.setBody(code: String, withLineComment: String = "", withBl
 }
 
 /**
- * Check if this [MethodDeclaration] has an empty body.
+ * Insert statements of a [BlockStmt] into the body of this [MethodDeclaration]. The statements will be inserted prior
+ * to any other possibly existing statements.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-internal fun MethodDeclaration.hasEmptyBody() : Boolean {
-    val thisBody = body.orElse(null)
-    return thisBody?.statements?.isEmpty() ?: true
+internal fun MethodDeclaration.insertBody(otherBody: BlockStmt,
+    adaptStatementBeforeInsertion: ((Statement) -> Statement)? = null) {
+    val statementsToInsert = if (adaptStatementBeforeInsertion != null)
+            otherBody.statements.map { adaptStatementBeforeInsertion.invoke(it) }
+        else
+            otherBody.statements
+
+    if (emptyBody)
+        setBody(BlockStmt())
+
+    body.get().statements.addAll(0, statementsToInsert)
 }
+
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+}
+
+internal val MethodDeclaration.emptyBody
+    get() = body.orElse(null)?.statements?.isEmpty() ?: true
 
 /**
  * Check if this [MethodDeclaration] is overridable.

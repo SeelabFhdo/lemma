@@ -8,6 +8,8 @@ import com.github.javaparser.ast.body.ConstructorDeclaration
 import com.github.javaparser.ast.body.MethodDeclaration
 import com.github.javaparser.ast.body.Parameter
 import com.github.javaparser.ast.comments.BlockComment
+import com.github.javaparser.ast.stmt.BlockStmt
+import com.github.javaparser.ast.stmt.ExpressionStmt
 import de.fhdo.lemma.model_processing.asFile
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.ImportTargetElementType
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.SerializationCharacteristic
@@ -22,7 +24,8 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.ast.copySignatur
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.createDelegatingConstructor
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.diffCallables
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.getAllImportsWithSerializationCharacteristics
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.getClassDeclaration
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.asClassDeclaration
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.emptyBody
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.getEponymousJavaClassOrInterface
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.getSuperclass
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.getFilePath
@@ -31,8 +34,8 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.ast.methodsExclu
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.newJavaClassOrInterface
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.getPackageName
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.getSerializationCharacteristics
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.hasEmptyBody
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.hasSerializationCharacteristic
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.insertBody
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.isOverridable
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.removeImport
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.serialize
@@ -169,7 +172,7 @@ internal class GenerationGapSerializerBase : KoinComponent {
      * Do the actual serialization according to the Generation Gap Pattern
      */
     internal fun serialize(node: Node, targetFolderPath: String, targetFilePath: String) : Map<String, String> {
-        val originalClass = node.getClassDeclaration()
+        val originalClass = node.asClassDeclaration()
 
         /* If the node does not comprise a class (e.g., its an enum) do the plain serialization */
         if (originalClass == null) {
@@ -262,7 +265,7 @@ internal class GenerationGapSerializerBase : KoinComponent {
         val genInterface = newJavaClassOrInterface(interfacePackage, interfaceName, true)
 
         /* Determine methods from original class to copy */
-        val originalMethods = originalClass.methods.filter { it.relocatableInGenInterface }
+        val originalMethods = originalClass.methods.filter { it.isRelocatableInGenInterface }
         if (originalMethods.isEmpty())
             return genInterface
 
@@ -281,8 +284,8 @@ internal class GenerationGapSerializerBase : KoinComponent {
     /**
      * Helper property, which determines if a [MethodDeclaration] can be relocated in the *Gen interface
      */
-    private val MethodDeclaration.relocatableInGenInterface
-        get() = relocatable && isPublic && !isStatic
+    private val MethodDeclaration.isRelocatableInGenInterface
+        get() = isRelocatable && isPublic && !isStatic
 
     /**
      * Helper to copy relocatable imports from the [source] class/interface to the [target] class/interface
@@ -290,7 +293,7 @@ internal class GenerationGapSerializerBase : KoinComponent {
     private fun copyImportsForType(targetElementType : ImportTargetElementType, source: Node,
         target: ClassOrInterfaceDeclaration, onlyWhenRelocatable: Boolean = false) {
         source.getNodeImportsInfo().forEach {
-            val isRelocatable = !onlyWhenRelocatable || it.relocatable
+            val isRelocatable = !onlyWhenRelocatable || it.isRelocatable
             if (isRelocatable && it.targetElementType == targetElementType)
                 target.addImport(it.import, targetElementType, *it.characteristics)
         }
@@ -299,20 +302,20 @@ internal class GenerationGapSerializerBase : KoinComponent {
     /**
      * Shorthand convenience property to determine if a [Node] is relocatable
      */
-    private val Node.relocatable
+    private val Node.isRelocatable
         get() = !hasSerializationCharacteristic(SerializationCharacteristic.DONT_RELOCATE)
 
     /**
      * Shorthand convenience property to determine if a [SingleImportInfo] is relocatable
      */
-    private val SingleImportInfo.relocatable
+    private val SingleImportInfo.isRelocatable
         get() = !hasSerializationCharacteristic(SerializationCharacteristic.DONT_RELOCATE)
 
     /**
      * Adapt the given class to be compliant with the *GenImpl class as prescribed by the Generation Gap Pattern
      */
     internal fun adaptToGenImplClass(genImplClass: ClassOrInterfaceDeclaration,
-        genInterface: ClassOrInterfaceDeclaration) : Set<SerializationCharacteristic> {
+        genInterface: ClassOrInterfaceDeclaration) : GenImplAdaptationResult {
         /*
          * Clear the serialization characteristics. They will be added to the custom implementation class, which will
          * later be generated. That is, because from the perspective of the code generators, they only generate custom
@@ -371,6 +374,8 @@ internal class GenerationGapSerializerBase : KoinComponent {
         }
 
         /* Adapt methods */
+        val methodBodiesToMerge = mutableMapOf<String, BlockStmt>()
+        val methodBodiesToDelegate = mutableMapOf<String, BlockStmt>()
         genImplClass.methods.forEach {
             // In case the method in the original class is private, we make it protected in the adapted *GenImpl class,
             // because otherwise it cannot be overridden with a non-stub body
@@ -383,12 +388,21 @@ internal class GenerationGapSerializerBase : KoinComponent {
                 // @Override annotation to them here.
                 it.addMarkerAnnotation("Override")
 
-            // Set "not implemented yet" stub body
-            if (it.hasEmptyBody())
+            // Collect bodies that need to be merged or delegated upon relocation in the *CustomImpl class
+            if (!it.emptyBody) {
+                if (it.mergeBodyOnRelocation)
+                    methodBodiesToMerge[it.nameAsString] = it.body.get()
+                else if (it.delegateBodyOnRelocation)
+                    methodBodiesToDelegate[it.nameAsString] = it.body.get()
+            }
+
+            // Set "not implemented yet" stub body on methods whose body will delegate in *CustomImpl to *GenImpl
+            // classes
+            if (it.emptyBody || it.mergeBodyOnRelocation || it.delegateBodyOnRelocation)
                 it.setBody("""throw new UnsupportedOperationException("Not implemented yet");""")
         }
 
-        return serializationCharacteristics
+        return GenImplAdaptationResult(serializationCharacteristics, methodBodiesToMerge, methodBodiesToDelegate)
     }
 
     /**
@@ -422,14 +436,32 @@ internal class GenerationGapSerializerBase : KoinComponent {
     }
 
     /**
+     * Shorthand convenience property to determine if the body of a [MethodDeclaration] needs to be merged upon
+     * relocation
+     */
+    private val MethodDeclaration.mergeBodyOnRelocation
+        get() = body.orElse(null)?.hasSerializationCharacteristic(SerializationCharacteristic.MERGE_ON_RELOCATION)
+            ?: false
+
+    /**
+     * Shorthand convenience property to determine if the body of a [MethodDeclaration] needs to be delegated upon
+     * relocation
+     */
+    private val MethodDeclaration.delegateBodyOnRelocation
+        get() = body.orElse(null)?.hasSerializationCharacteristic(SerializationCharacteristic.DELEGATE_ON_RELOCATION)
+            ?: false
+
+    /**
      * Generate the class, which may hold custom code according to the Generation Gap Pattern
      */
     internal fun generateCustomImplClass(genImplClass: ClassOrInterfaceDeclaration,
-        originalSerializationCharacteristics: Set<SerializationCharacteristic>, classname: String, packageName: String,
+        genImplAdaptationResult: GenImplAdaptationResult, classname: String, packageName: String,
         comment: String) : ClassOrInterfaceDeclaration {
         /* The class extends the *GenImpl class */
         val customImplClass = newJavaClassOrInterface(packageName, classname)
-        originalSerializationCharacteristics.forEach { customImplClass.addSerializationCharacteristic(it) }
+        genImplAdaptationResult.originalSerializationCharacteristics.forEach {
+            customImplClass.addSerializationCharacteristic(it)
+        }
         customImplClass.setComment(BlockComment(comment))
         customImplClass.setSuperclass(genImplClass.fullyQualifiedName.get())
 
@@ -443,11 +475,18 @@ internal class GenerationGapSerializerBase : KoinComponent {
          */
         copyImportsForType(ImportTargetElementType.ATTRIBUTE_TYPE, genImplClass, customImplClass)
 
+        /* Remove imports that exhibit the "remove on relocation" characteristic */
+        genImplClass.getAllImportsWithSerializationCharacteristics(SerializationCharacteristic.REMOVE_ON_RELOCATION)
+            .forEach { customImplClass.removeImport(it.import, it.targetElementType) }
+
         /*
          * For each non-trivial getter/setter generate a stub delegating implementation that can be replaced with custom
          * code
          */
         for (originalMethod in genImplClass.methodsExcludingPropertyAccessors) {
+            if (originalMethod.isFinal || originalMethod.removeOnRelocation)
+                continue
+
             val method = originalMethod.copy()
             customImplClass.addMember(method)
 
@@ -457,12 +496,16 @@ internal class GenerationGapSerializerBase : KoinComponent {
             // If the method is not relocatable, stop right here (after we copied it to the custom implementation class)
             // and remove it from the *GenImpl class. Hence, it won't be relocated, but remain at the implementation
             // class (from the perspective of the code generation result).
-            if (!originalMethod.relocatable) {
+            if (!originalMethod.isRelocatable) {
                 genImplClass.members.remove(originalMethod)
                 continue
             }
 
-            // When the method is relocatable, delegate it to the relocated version in the *GenImpl class
+            // When the method is relocatable, remove members depending on their serialization characteristics
+            removeNotRelocatableElements(originalMethod)
+            removeElementsFromGeneratedMethodOnRelocation(originalMethod, method)
+
+            // Create body of the method that delegated to the relocated version in the *GenImpl class
             if (method.isPublic && method.isOverridable)
                 method.addMarkerAnnotation("Override")
             val parameterString = method.parameters.map { it.name }.joinToString()
@@ -474,34 +517,127 @@ internal class GenerationGapSerializerBase : KoinComponent {
                     """return $delegatingClassName.${method.name}($parameterString);""",
                 "TODO Implement this. Might otherwise throw UnsupportedOperationException from delegating call."
             )
+
+            // Adapt method bodies, if specified by code generators
+            mergeBodyIfSpecified(method, genImplAdaptationResult)
+            delegateBodyIfSpecified(method, genImplAdaptationResult)
         }
 
-        /* Undo element relocations, if necessary */
-        undoElementRelocations(genImplClass, customImplClass)
+        /* Undo element top-level relocations, if necessary */
+        undoTopLevelElementRelocations(genImplClass, customImplClass)
+
+        /* Remove top-level elements that exhibit the "remove on relocation" serialization characteristic */
+        removeTopLevelElementsOnRelocation(genImplClass, customImplClass)
 
         return customImplClass
     }
 
     /**
-     * Helper to remove relocated elements from the *GenImpl class and add the to the custom implementation class, i.e.,
-     * from the perspective of the code generation result, they were never relocated
+     * Shorthand convenience property to determine if a [Node] needs to be removed upon relocation
      */
-    private fun undoElementRelocations(genImplClass: ClassOrInterfaceDeclaration,
-        customImplClass: ClassOrInterfaceDeclaration) {
+    private val Node.removeOnRelocation
+        get() = hasSerializationCharacteristic(SerializationCharacteristic.REMOVE_ON_RELOCATION)
+
+    /**
+     * Helper to remove not relocatable elements from a [MethodDeclaration]
+     */
+    private fun removeNotRelocatableElements(method: MethodDeclaration) {
+        // Method annotations
+        method.annotations.removeAll(method.annotations.filter { !it.isRelocatable })
+
+        // Parameter annotations
+        val notRelocatableParameterAnnotations = method.parameters
+            .map { it.annotations }.flatten()
+            .filter { !it.isRelocatable }
+        method.parameters.forEach { it.annotations.removeAll(notRelocatableParameterAnnotations) }
+    }
+
+    /**
+     * Helper to remove elements of the [originalMethod] that exhibit the serialization characteristic "remove on
+     * relocation" from the [generatedMethod]
+     */
+    private fun removeElementsFromGeneratedMethodOnRelocation(originalMethod: MethodDeclaration,
+        generatedMethod: MethodDeclaration) {
+        // Method annotations
+        val annotationsToRemove = originalMethod.annotations
+            .filter { it.removeOnRelocation }
+            .map { it.nameAsString }
+        generatedMethod.annotations.removeAll(generatedMethod.annotations.filter {
+            it.nameAsString in annotationsToRemove
+        })
+
+        // Parameter annotations
+        val parameterAnnotationsToRemove = originalMethod.parameters
+            .map { it.annotations }.flatten()
+            .filter { it.removeOnRelocation }
+        generatedMethod.parameters.forEach { it.annotations.removeAll(parameterAnnotationsToRemove) }
+    }
+
+    /**
+     * Helper to merge the body of the given [method] with a body created by code generators. This only happens when
+     * code generators specify the "merge on relocation" serialization characteristic on the method's body.
+     */
+    private fun mergeBodyIfSpecified(method: MethodDeclaration, genImplAdaptationResult: GenImplAdaptationResult) {
+        val bodyToMerge = genImplAdaptationResult.methodBodiesToMerge[method.nameAsString]
+        if (bodyToMerge != null)
+            method.insertBody(bodyToMerge)
+    }
+
+    /**
+     * Helper to adapt method-call-statements in the body of the given [method] so that they delegate to the body of the
+     * the relocated version of the [method]. This only happens when code generators specify the "delegate on
+     * relocation" serialization characteristic on the method's body.
+     */
+    private fun delegateBodyIfSpecified(method: MethodDeclaration, genImplAdaptationResult: GenImplAdaptationResult) {
+        val bodyToDelegate = genImplAdaptationResult.methodBodiesToDelegate[method.nameAsString] ?: return
+        method.insertBody(bodyToDelegate, adaptStatementBeforeInsertion = {
+            if (it !is ExpressionStmt || !it.expression.isMethodCallExpr)
+                it
+
+            var delegatingMethodCall = (it as ExpressionStmt).expression.toString()
+            if (!delegatingMethodCall.startsWith("super."))
+                delegatingMethodCall = "super.$delegatingMethodCall"
+            it.setExpression(delegatingMethodCall)
+            it
+        })
+    }
+
+    /**
+     * Helper to remove relocated top-level elements from the [originalClass] and add them to the [generatedClass],
+     * i.e., from the perspective of the code generation result, they were never relocated
+     */
+    private fun undoTopLevelElementRelocations(originalClass: ClassOrInterfaceDeclaration,
+        generatedClass: ClassOrInterfaceDeclaration) {
         // Class imports
-        val notRelocatableImports = genImplClass
+        val notRelocatableImports = originalClass
             .getAllImportsWithSerializationCharacteristics(SerializationCharacteristic.DONT_RELOCATE)
         notRelocatableImports.forEach {
-            customImplClass.addImport(it.import, it.targetElementType)
-            genImplClass.removeImport(it.import, it.targetElementType)
+            generatedClass.addImport(it.import, it.targetElementType)
+            originalClass.removeImport(it.import, it.targetElementType)
         }
 
         // Class annotations
-        val notRelocatableAnnotations = genImplClass.annotations.filter { !it.relocatable }
+        val notRelocatableAnnotations = originalClass.annotations.filter { !it.isRelocatable }
         notRelocatableAnnotations.forEach {
-            customImplClass.addAnnotation(it)
-            genImplClass.remove(it)
+            generatedClass.addAnnotation(it)
+            originalClass.remove(it)
         }
+    }
+
+    /**
+     * Remove top-level elements from the [generatedClass] that exhibit the "remove on relocation" serialization
+     * characteristic within the [originalClass]
+     */
+    private fun removeTopLevelElementsOnRelocation(originalClass: ClassOrInterfaceDeclaration,
+        generatedClass: ClassOrInterfaceDeclaration) {
+        // Class imports
+        val importsToRemove = originalClass
+            .getAllImportsWithSerializationCharacteristics(SerializationCharacteristic.REMOVE_ON_RELOCATION)
+        importsToRemove.forEach { generatedClass.removeImport(it.import, it.targetElementType) }
+
+        // Class annotations
+        val annotationsToRemove = originalClass.annotations.filter { it.removeOnRelocation }
+        annotationsToRemove.forEach { generatedClass.remove(it) }
     }
 
     /**
@@ -719,3 +855,11 @@ internal fun ClassOrInterfaceDeclaration.markAsCustomImpl() {
  */
 private fun ClassOrInterfaceDeclaration.isCustomImpl()
     = containsData(CustomImplMarkerDataKey) && getData(CustomImplMarkerDataKey)
+
+/**
+ * Represents parts of the result of adapting a given class to the *GenImpl class.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+internal class GenImplAdaptationResult(val originalSerializationCharacteristics: Set<SerializationCharacteristic>,
+    val methodBodiesToMerge: Map<String, BlockStmt>, val methodBodiesToDelegate: Map<String, BlockStmt>)
