@@ -4,7 +4,6 @@ import com.github.javaparser.ast.Modifier
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration
 import com.github.javaparser.ast.body.MethodDeclaration
 import de.fhdo.lemma.data.intermediate.IntermediateComplexType
-import de.fhdo.lemma.data.intermediate.IntermediateImportedAspect
 import de.fhdo.lemma.data.intermediate.IntermediateType
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.ImportTargetElementType
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addAttribute
@@ -22,11 +21,11 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.Visitin
 import de.fhdo.lemma.model_processing.code_generation.java_base.hasCompositeResult
 import de.fhdo.lemma.model_processing.code_generation.java_base.hasSingleResult
 import de.fhdo.lemma.model_processing.code_generation.java_base.languages.getTypeMapping
+import de.fhdo.lemma.model_processing.code_generation.java_base.modules.domain.DomainContext.State as DomainState
+import de.fhdo.lemma.model_processing.code_generation.java_base.modules.services.ServicesContext.State as ServicesState
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.services.handlers.IntermediateOperationCompositeResultHandlerBase.Companion.buildCompositeResultClassFullyQualifiedName
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.services.handlers.IntermediateOperationCompositeResultHandlerBase.Companion.buildCompositeResultClassName
 import de.fhdo.lemma.model_processing.utils.packageToPath
-import de.fhdo.lemma.model_processing.code_generation.java_base.modules.services.ServicesContext.State as ServicesState
-import de.fhdo.lemma.model_processing.code_generation.java_base.modules.domain.DomainContext.State as DomainState
 import de.fhdo.lemma.service.intermediate.IntermediateOperation
 import de.fhdo.lemma.service.intermediate.IntermediateParameter
 import de.fhdo.lemma.technology.CommunicationType
@@ -93,14 +92,15 @@ internal class IntermediateOperationCompositeResultHandlerAsync
 
 internal open class IntermediateOperationCompositeResultHandlerBase(private val communicationType: CommunicationType)
     : VisitingCodeGenerationHandlerI<IntermediateOperation, ClassOrInterfaceDeclaration, Nothing> {
-    private val interfaceSubFolderName: String by ServicesState
-
-    override fun handlesEObjectsOfInstance() = IntermediateOperation::class.java
-    override fun generatesNodesOfInstance() = ClassOrInterfaceDeclaration::class.java
-
     companion object {
         private val currentInterfacesGenerationPackage: String by ServicesState
         private val currentDomainPackage: String by DomainState
+
+        fun buildCompositeResultClassFullyQualifiedName(operation: IntermediateOperation,
+            communicationType: CommunicationType) : String {
+            return "${buildCompositeResultClassPackage(operation)}." +
+                buildCompositeResultClassName(operation, communicationType)
+        }
 
         fun buildCompositeResultClassName(operation: IntermediateOperation, communicationType: CommunicationType)
             : String {
@@ -112,12 +112,6 @@ internal open class IntermediateOperationCompositeResultHandlerBase(private val 
             return "${operation.classname}${communicationTypeIdentifier}Result"
         }
 
-        fun buildCompositeResultClassFullyQualifiedName(operation: IntermediateOperation,
-            communicationType: CommunicationType) : String {
-            return "${buildCompositeResultClassPackage(operation)}." +
-                buildCompositeResultClassName(operation, communicationType)
-        }
-
         fun buildCompositeResultClassPackage(operation: IntermediateOperation)
             = "$currentInterfacesGenerationPackage.${buildCompositeResultClassSubPackage(operation)}"
 
@@ -126,6 +120,11 @@ internal open class IntermediateOperationCompositeResultHandlerBase(private val 
             return "operations.$interfaceName.${operation.name}"
         }
     }
+
+    private val interfaceSubFolderName: String by ServicesState
+
+    override fun handlesEObjectsOfInstance() = IntermediateOperation::class.java
+    override fun generatesNodesOfInstance() = ClassOrInterfaceDeclaration::class.java
 
     override fun execute(operation: IntermediateOperation, context: Nothing?)
         : Pair<ClassOrInterfaceDeclaration, String?>? {
@@ -141,7 +140,7 @@ internal open class IntermediateOperationCompositeResultHandlerBase(private val 
             val typeMapping = parameter.type.getTypeMapping()
             val parameterType = if (typeMapping != null) {
                 val (mappedTypeName, isComplexTypeMapping, imports, dependencies) = typeMapping
-                imports.forEach { generatedClass.addImport(it, ImportTargetElementType.ATTRIBUTE_TYPE) }
+                imports.forEach { generatedClass.addImport(it, ImportTargetElementType.METHOD) }
                 generatedClass.addDependencies(dependencies)
 
                 if (isComplexTypeMapping) {
