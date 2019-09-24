@@ -371,13 +371,14 @@ internal fun IntermediateOperation.hasSingleResult(communicationType: Communicat
     = parameters.count { it.communicationType == communicationType && it.isResultParameter } == 1
 
 /**
- * Get the value of the property with the given name from an [IntermediateImportedAspect].
+ * Get the value of the property with the given name from an [IntermediateImportedAspect]. Returns the default value (if
+ * any) in case the property does not have a value.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-fun IntermediateImportedAspect.getPropertyValue(propertyName: String) : String? {
-    return propertyValues.find { it.property.name == propertyName }?.value
-}
+fun IntermediateImportedAspect.getPropertyValue(propertyName: String)
+    = propertyValues.find { it.property.name == propertyName }?.value
+        ?: properties.find { it.name == propertyName }?.defaultValue
 
 /**
  * Helper to find annotated classes, possibly within other JAR archives leveraging the given [classLoaders].
