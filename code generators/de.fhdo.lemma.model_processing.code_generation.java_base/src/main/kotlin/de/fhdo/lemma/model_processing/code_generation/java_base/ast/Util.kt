@@ -593,20 +593,22 @@ internal fun ClassOrInterfaceDeclaration.getAllImportsWithSerializationCharacter
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-internal fun ClassOrInterfaceDeclaration.setSuperclass(fullyQualifiedSuperClassname: String,
+internal fun ClassOrInterfaceDeclaration.setSuperclass(superClassname: String, isExternalSuperclass: Boolean = false,
     typeParameters: List<String> = emptyList()) {
     require(!isInterface) { "Only classes may have a superclass" }
 
     // Because Java only supports single inheritance on classes, clear the list of extended types
     extendedTypes.clear()
 
-    addImport(fullyQualifiedSuperClassname, ImportTargetElementType.SUPER)
+    if (!isExternalSuperclass)
+        addImport(superClassname, ImportTargetElementType.SUPER)
 
-    var extendedTypeName = fullyQualifiedSuperClassname.substringAfterLast(".")
+    var extendedTypeName = superClassname.substringAfterLast(".")
     if (typeParameters.isNotEmpty())
         extendedTypeName = "$extendedTypeName<${typeParameters.joinToString()}>"
     addExtendedType(extendedTypeName)
-    setData(SuperclassDataKey, SuperclassInfo(fullyQualifiedSuperClassname, typeParameters, extendedTypes.last()))
+    setData(SuperclassDataKey, SuperclassInfo(superClassname, isExternalSuperclass, typeParameters,
+        extendedTypes.last()))
 }
 
 /**
@@ -626,8 +628,8 @@ internal fun ClassOrInterfaceDeclaration.getSuperclass() : SuperclassInfo? {
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-internal class SuperclassInfo(val fullyQualifiedClassname: String, val typeParameters: List<String>,
-    val superclassType: ClassOrInterfaceType)
+internal class SuperclassInfo(val fullyQualifiedClassname: String, val isExternal: Boolean,
+    val typeParameters: List<String>, val superclassType: ClassOrInterfaceType)
 
 /**
  * Data key for [ClassOrInterfaceDeclaration] instances' superclasses.

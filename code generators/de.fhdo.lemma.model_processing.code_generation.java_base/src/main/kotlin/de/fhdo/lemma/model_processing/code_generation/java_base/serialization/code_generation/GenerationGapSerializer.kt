@@ -16,7 +16,6 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.ast.Serializatio
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.SingleImportInfo
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.SuperclassInfo
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addImport
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addSerializationCharacteristic
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addSerializationCharacteristics
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.attributes
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.clearSerializationCharacteristics
@@ -50,7 +49,6 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.co
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.countLines
 import de.fhdo.lemma.model_processing.phases.PhaseException
 import de.fhdo.lemma.model_processing.utils.countLines
-import de.fhdo.lemma.model_processing.utils.toMutableMap
 import org.eclipse.emf.ecore.EObject
 import org.koin.core.KoinComponent
 import org.koin.core.inject
@@ -342,11 +340,11 @@ internal class GenerationGapSerializerBase : KoinComponent {
         /*
          * In case the class that shall become the *GenImpl class extends a superclass, it gets all imports related to
          * that superclass and possible qualifiers of type parameters that point to the class are adapted to the
-         * *GenImpl class. However, and for now, the constructors of the original class are removed. They will be later
-         * added back to the class within codeGenerationPhaseCompletedCallback(). This is necessary, because we only
-         * know when all code generations were done, the final "shape" of the superclass comprising its field
-         * constructors, which will be called by the *GenImpl class.
+         * *GenImpl class. However, the generation of constructors is delayed. They will later be added back to the
+         * class within codeGenerationPhaseCompletedCallback(). This is necessary, because we only know when all code
+         * generations were done, the final "shape" of the superclass comprising its field constructors.
          */
+        genImplClass.constructors.forEach { it.setName(genImplClass.nameAsString) }
         val superclassInfo = genImplClass.getSuperclass()
         if (superclassInfo != null) {
             copyImportsForType(ImportTargetElementType.SUPER, genImplClass, genImplClass)
@@ -356,12 +354,9 @@ internal class GenerationGapSerializerBase : KoinComponent {
             // ArrayList<OriginalClassnameGenImpl.NestedClass>,
             replaceSuperclassTypeParameterQualifiers(genImplClass, superclassInfo, oldClassname)
 
-            // Remove constructors and delay their generation
-            genImplClass.constructors.forEach { genImplClass.remove(it) }
+            // Delay constructor generation
             DelayedConstructors.add(genImplClass)
-        } else
-            // In case the class has no superclass, its constructors are just adapted to the new *GenImpl name
-            genImplClass.constructors.forEach { it.setName(genImplClass.nameAsString) }
+        }
 
         /*
          * Switch visibility of private fields to protected for convenient access to them in the custom implementation
@@ -433,7 +428,8 @@ internal class GenerationGapSerializerBase : KoinComponent {
         }
 
         // Replace old superclass with the new one including the adapted type parameters
-        clazz.setSuperclass(superclassInfo.fullyQualifiedClassname, newTypeParameters)
+        clazz.setSuperclass(superclassInfo.fullyQualifiedClassname, isExternalSuperclass = superclassInfo.isExternal,
+            typeParameters = newTypeParameters)
     }
 
     /**
@@ -640,53 +636,43 @@ internal class GenerationGapSerializerBase : KoinComponent {
     }
 
     /**
-     * Callback when the end of the code generation phase is reached. Its main purpose is to add missing constructors
-     * to generated classes.
+     * Callback when the end of the code generation phase is reached. Its main purpose is to add constructors to
+     * generated classes.
      */
     internal fun codeGenerationPhaseCompletedCallback() : Map<String, String> {
         val adaptedFiles = mutableMapOf<String, String>()
 
         /*
-         * Iterate over the list of missing (delayed constructors), determine the next class to which to add missing
-         * constructors (this is always those class with missing constructors at the top of the inheritance hierarchy,
-         * because constructor generation must rely on super constructors).
+         * Iterate over the list of delayed constructors, determine the next class to which to add constructors (this is
+         * always the class with delayed constructors at the top of the inheritance hierarchy, because constructor
+         * generation must rely on super constructors).
          */
-        val classesWithoutConstructors = DelayedConstructors.keys.toMutableList()
-        val classesToFullyQualifiedNames = classesWithoutConstructors
-            .map { it.fullyQualifiedName.get() to it }
-            .toMutableMap()
-        while (classesWithoutConstructors.isNotEmpty()) {
-            // Determine the class with missing constructors at the top of the inheritance hierarchy
-            var nextClass = classesWithoutConstructors.first()
+        val classesTodo = DelayedConstructors.keys.toMutableList()
+        while (classesTodo.isNotEmpty()) {
+            // Determine the class with delayed constructors at the top of the inheritance hierarchy
+            var nextClass = DelayedConstructors.getClass(classesTodo.first())!!
             var nextClassSuperName : String?
             do {
                 nextClassSuperName = nextClass.getSuperclass()?.fullyQualifiedClassname
-                var superWithoutConstructors = if (nextClassSuperName != null)
-                        classesToFullyQualifiedNames[nextClassSuperName]
+                val superWithDelayedConstructors = if (nextClassSuperName != null && nextClassSuperName in classesTodo)
+                        DelayedConstructors.getClass(nextClassSuperName)
                     else
                         null
 
-                if (superWithoutConstructors != null)
-                    nextClass = superWithoutConstructors
-            } while (superWithoutConstructors != null)
+                if (superWithDelayedConstructors != null)
+                    nextClass = superWithDelayedConstructors
+            } while (superWithDelayedConstructors != null)
 
             // Shrink the lists of classes to do
             val nextClassFullyQualifiedName = nextClass.fullyQualifiedName.get()
-            classesWithoutConstructors.remove(nextClass)
-            classesToFullyQualifiedNames.remove(nextClassFullyQualifiedName)
+            classesTodo.remove(nextClassFullyQualifiedName)
 
             if (nextClassSuperName == null)
                 continue
 
-            // Determine the missing constructors from the list of available constructors. There might be no available
-            // constructors, e.g., when the superclass is from the Collections Framework and thus from Java's standard
-            // library
-            val missingConstructors = AvailableSuperConstructors[nextClassSuperName] ?: continue
-
-            // Add the missing constructors to the next class, based on its superclass. Note that code generators might
-            // determine that a class shall not have constructors.
+            // Add constructors to the next class, if not otherwise stated by code generators
             if (!nextClass.hasSerializationCharacteristic(SerializationCharacteristic.NO_CONSTRUCTORS)) {
-                nextClass.addConstructors(missingConstructors)
+                nextClass.addConstructors(nextClassSuperName)
                 AvailableSuperConstructors[nextClassFullyQualifiedName] = nextClass.constructors
             }
 
@@ -742,17 +728,36 @@ internal class GenerationGapSerializerBase : KoinComponent {
     }
 
     /**
-     * Helper to add constructors to a class based on a list of [superConstructors]
+     * Helper to add constructors to a class based on its superclass
      */
-    private fun ClassOrInterfaceDeclaration.addConstructors(superConstructors: List<ConstructorDeclaration>) {
-        // Make sure that each class has a parameterless constructor
+    private fun ClassOrInterfaceDeclaration.addConstructors(superclassName: String) {
         var parameterlessConstructorAdded = false
+        val hasExternalSuperclass = getSuperclass()?.isExternal ?: false
+        val keepAlreadyExistingConstructors = !isCustomImpl() && hasExternalSuperclass
+        val onlyAddDelegatingConstructors = isCustomImpl() && (getSuperSuperclass()?.isExternal ?: false)
+
+        /*
+         * We keep already existing constructors in case the class is not a *CustomImpl class and has an external
+         * superclass, e.g., ArrayList or RuntimeException. In that case, we can't add any sensible constructors but
+         * simply rely on the constructors being provided by code generators.
+         */
+        if (keepAlreadyExistingConstructors)
+            return
+
+        /*
+         * We add only delegating constructors to custom implementation classes, whose *GenImpl superclass is an
+         * external class and not a class being created by code generators. That is, we rely on the constructors being
+         * provided by *GenImpl classes solely.
+         */
+        if (!onlyAddDelegatingConstructors)
+            constructors.forEach { remove(it) }
 
         /*
          * Create the trivial delegating constructors, i.e., those constructors that invoke super(). There will be a
          * delegating constructor for each super-constructor.
          */
         val generatedDelegatingConstructors = mutableListOf<ConstructorDeclaration>()
+        val superConstructors = AvailableSuperConstructors[superclassName]!!
         superConstructors.forEach {
             val delegatingConstructor = it.createDelegatingConstructor(nameAsString)
             addMember(delegatingConstructor)
@@ -760,6 +765,9 @@ internal class GenerationGapSerializerBase : KoinComponent {
 
             parameterlessConstructorAdded = parameterlessConstructorAdded || it.parameters.isEmpty()
         }
+
+        if (onlyAddDelegatingConstructors)
+            return
 
         /* Add missing parameterless constructor */
         if (!parameterlessConstructorAdded)
@@ -799,6 +807,15 @@ internal class GenerationGapSerializerBase : KoinComponent {
 
         AvailableSuperConstructors.addFrom(this)
     }
+
+    /**
+     * The superclass of the superclass of this [ClassOrInterfaceDeclaration]
+     */
+    private fun ClassOrInterfaceDeclaration.getSuperSuperclass() : SuperclassInfo? {
+        val superclassInfo = getSuperclass() ?: return null
+        val superclass = DelayedConstructors.getClass(superclassInfo.fullyQualifiedClassname) ?: return null
+        return superclass.getSuperclass()
+    }
 }
 
 /**
@@ -816,18 +833,25 @@ internal object AvailableSuperConstructors : HashMap<String, List<ConstructorDec
 }
 
 /**
- * Helper object to store all classes with delayed constructors that will be added to the after the code generation
- * phase has completed. Assigned to the [ClassOrInterfaceDeclaration] instance is the name of its superclass.
+ * Helper object to store all classes with delayed constructors that will be added to classes after the code generation
+ * phase has completed. Assigned to the class with delayed constructors is the name of its superclass.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-internal object DelayedConstructors : HashMap<ClassOrInterfaceDeclaration, String>() {
+internal object DelayedConstructors : HashMap<String, Pair<ClassOrInterfaceDeclaration, String>>() {
     /**
      * Convenience method to add a new [clazz]
      */
     fun add(clazz: ClassOrInterfaceDeclaration) {
-        this[clazz] = clazz.getSuperclass()!!.fullyQualifiedClassname
+        val superclassName = clazz.getSuperclass()!!.fullyQualifiedClassname
+        this[clazz.fullyQualifiedName.get()] = clazz to superclassName
     }
+
+    /**
+     * Convenience method to get a [ClassOrInterfaceDeclaration] with delayed constructors named
+     * [fullyQualifiedClassname]
+     */
+    fun getClass(fullyQualifiedClassname: String) : ClassOrInterfaceDeclaration? = this[fullyQualifiedClassname]?.first
 }
 
 /**

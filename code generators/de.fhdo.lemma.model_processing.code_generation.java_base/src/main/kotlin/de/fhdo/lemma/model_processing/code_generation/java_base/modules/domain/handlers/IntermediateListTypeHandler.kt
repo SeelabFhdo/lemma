@@ -47,7 +47,8 @@ internal class IntermediateListTypeHandler
         typeParameterNames: List<String>
     ) {
         collectionTypeDescription.imports.forEach { addImport(it, ImportTargetElementType.SUPER) }
-        setSuperclass(collectionTypeDescription.fullyQualifiedCollectionClassName, typeParameterNames)
+        setSuperclass(collectionTypeDescription.fullyQualifiedCollectionClassName, isExternalSuperclass = true,
+            typeParameters = typeParameterNames)
     }
 
     private fun ClassOrInterfaceDeclaration.addNestedItemClasses(list: IntermediateListType,
