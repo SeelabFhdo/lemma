@@ -18,6 +18,7 @@ import de.fhdo.lemma.service.ServiceModel
 import de.fhdo.lemma.service.intermediate.IntermediateInterface
 import de.fhdo.lemma.service.intermediate.IntermediateMicroservice
 import de.fhdo.lemma.service.intermediate.IntermediateOperation
+import de.fhdo.lemma.service.intermediate.IntermediateParameter
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils
 import java.io.File
@@ -186,6 +187,7 @@ private fun EObject.loadOriginalEObject(originalModelFilePath: String) : EObject
         is IntermediateMicroservice -> loadOriginalEObject(originalModelFilePath)
         is IntermediateInterface -> loadOriginalEObject(originalModelFilePath)
         is IntermediateOperation -> loadOriginalEObject(originalModelFilePath)
+        is IntermediateParameter -> loadOriginalEObject(originalModelFilePath)
         else -> throw IllegalArgumentException("Loading original EObject for intermediate EObject of type " +
             "${this.mainInterface.name} is not supported")
     }
@@ -197,8 +199,8 @@ private fun EObject.loadOriginalEObject(originalModelFilePath: String) : EObject
 }
 
 /**
- * Load the original [EObject] of the given [IntermediateComplexType]from the specified [originalModelFilePath]. The
- * result will be an [EObject] of type [ComplexType].
+ * Load the original [EObject] of this [IntermediateComplexType] from the specified [originalModelFilePath]. The result
+ * will be an [EObject] of type [ComplexType].
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
@@ -207,21 +209,54 @@ private fun IntermediateComplexType.loadOriginalEObject(originalModelFilePath: S
     return modelRoot.containedComplexTypes.find { it.qualifiedName == this.qualifiedName }
 }
 
+/**
+ * Load the original [EObject] of this [IntermediateMicroservice] from the specified [originalModelFilePath]. The result
+ * will be an [EObject] of type Microservice.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
 private fun IntermediateMicroservice.loadOriginalEObject(originalModelFilePath: String) : EObject? {
     val modelRoot = loadOriginalModelRoot<ServiceModel>(originalModelFilePath)
     return modelRoot.microservices.find { it.qualifiedName == this.qualifiedName }
 }
 
+/**
+ * Load the original [EObject] of this [IntermediateInterface] from the specified [originalModelFilePath]. The result
+ * will be an [EObject] of type Interface.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
 private fun IntermediateInterface.loadOriginalEObject(originalModelFilePath: String) : EObject? {
     val modelRoot = loadOriginalModelRoot<ServiceModel>(originalModelFilePath)
     return modelRoot.microservices.map { it.interfaces }.flatten().find { it.qualifiedName == this.qualifiedName }
 }
 
+/**
+ * Load the original [EObject] of this [IntermediateOperation] from the specified [originalModelFilePath]. The result
+ * will be an [EObject] of type Operation.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
 private fun IntermediateOperation.loadOriginalEObject(originalModelFilePath: String) : EObject? {
     val modelRoot = loadOriginalModelRoot<ServiceModel>(originalModelFilePath)
     return modelRoot.microservices.asSequence()
         .map { it.interfaces }.flatten()
         .map { it.operations }.flatten()
+        .find { it.qualifiedName == this.qualifiedName }
+}
+
+/**
+ * Load the original [EObject] of this [IntermediateParameter] from the specified [originalModelFilePath]. The result
+ * will be an [EObject] of type Parameter.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+private fun IntermediateParameter.loadOriginalEObject(originalModelFilePath: String) : EObject? {
+    val modelRoot = loadOriginalModelRoot<ServiceModel>(originalModelFilePath)
+    return modelRoot.microservices.asSequence()
+        .map { it.interfaces }.flatten()
+        .map { it.operations }.flatten()
+        .map { it.parameters }.flatten()
         .find { it.qualifiedName == this.qualifiedName }
 }
 

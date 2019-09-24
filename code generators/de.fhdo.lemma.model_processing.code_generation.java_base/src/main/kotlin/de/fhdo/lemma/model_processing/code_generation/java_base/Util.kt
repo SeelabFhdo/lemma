@@ -16,7 +16,7 @@ import de.fhdo.lemma.model_processing.utils.trimToSingleLine
 import de.fhdo.lemma.service.Interface
 import de.fhdo.lemma.service.Microservice
 import de.fhdo.lemma.service.Operation
-import de.fhdo.lemma.service.intermediate.IntermediateEndpoint
+import de.fhdo.lemma.service.Parameter
 import de.fhdo.lemma.service.intermediate.IntermediateInterface
 import de.fhdo.lemma.service.intermediate.IntermediateMicroservice
 import de.fhdo.lemma.service.intermediate.IntermediateOperation
@@ -26,7 +26,6 @@ import de.fhdo.lemma.technology.CommunicationType
 import de.fhdo.lemma.technology.ExchangePattern
 import io.github.classgraph.ClassGraph
 import io.github.classgraph.ClassInfo
-import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.EObject
 import java.lang.IllegalArgumentException
 
@@ -84,6 +83,7 @@ val EObject.qualifiedName : String
         is Microservice -> buildQualifiedName(".")
         is Interface -> buildQualifiedName(".")
         is Operation -> buildQualifiedName(".")
+        is Parameter -> buildQualifiedName(".")
         else -> throw IllegalArgumentException("EObject of type ${this.mainInterface.name} does not have a qualified " +
             "name")
     }
@@ -109,7 +109,7 @@ internal val EObject.packageName
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-internal val EObject.fullyQualifiedClassname
+val EObject.fullyQualifiedClassname
     get() = when(this) {
         is IntermediateComplexType -> "$packageName.$classname"
         is IntermediateMicroservice -> "$packageName.$classname"
@@ -325,6 +325,14 @@ private val IntermediateParameter.isInputParameter
  */
 internal fun IntermediateOperation.getRequiredInputParameters(communicationType: CommunicationType)
     = getInputParameters(communicationType).filter { !it.isOptional }
+
+/**
+ * Get fault parameters of this [IntermediateOperation] having the specified [communicationType].
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+internal fun IntermediateOperation.getFaultParameters(communicationType: CommunicationType)
+    = parameters.filter { it.isCommunicatesFault }
 
 /**
  * Get non-fault parameters of this [IntermediateOperation] having the specified [communicationType] and whose exchange

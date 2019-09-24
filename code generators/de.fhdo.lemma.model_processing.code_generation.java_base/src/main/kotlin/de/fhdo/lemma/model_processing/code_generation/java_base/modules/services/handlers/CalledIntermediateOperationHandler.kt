@@ -1,9 +1,13 @@
 package de.fhdo.lemma.model_processing.code_generation.java_base.modules.services.handlers
 
+import com.github.javaparser.StaticJavaParser
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration
 import com.github.javaparser.ast.body.MethodDeclaration
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.ImportTargetElementType
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.SerializationCharacteristic
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addImport
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.setBody
+import de.fhdo.lemma.model_processing.code_generation.java_base.getFaultParameters
 import de.fhdo.lemma.model_processing.code_generation.java_base.getInputParameters
 import de.fhdo.lemma.model_processing.code_generation.java_base.getRequiredInputParameters
 import de.fhdo.lemma.model_processing.code_generation.java_base.getResultParameters
@@ -47,6 +51,19 @@ internal class CalledIntermediateOperationHandlerBase(private val communicationT
 
         val generatedMethod = MethodDeclaration()
         parentClass!!.addMember(generatedMethod)
+
+        val faultParameters = operation.getFaultParameters(communicationType)
+            // Currently we only support synchronous fault parameters
+            .filter { it.communicationType == CommunicationType.SYNCHRONOUS }
+            .associate {
+                val exceptionClassImport = IntermediateFaultParameterHandler.buildExceptionClassFullyQualifiedName(it)
+                val exceptionClassName = IntermediateFaultParameterHandler.buildExceptionClassName(it)
+                exceptionClassImport to exceptionClassName
+            }
+        faultParameters.forEach { (import, classname) ->
+            generatedMethod.addImport(import, ImportTargetElementType.METHOD)
+            generatedMethod.addThrownException(StaticJavaParser.parseClassOrInterfaceType(classname))
+        }
 
         val resultParametersHandler = when(communicationType) {
             CommunicationType.ASYNCHRONOUS -> {

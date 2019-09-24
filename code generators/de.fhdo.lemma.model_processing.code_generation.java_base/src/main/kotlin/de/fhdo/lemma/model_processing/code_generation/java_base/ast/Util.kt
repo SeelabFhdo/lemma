@@ -29,6 +29,7 @@ import com.github.javaparser.ast.stmt.ExpressionStmt
 import com.github.javaparser.ast.stmt.ReturnStmt
 import com.github.javaparser.ast.stmt.Statement
 import com.github.javaparser.ast.type.ClassOrInterfaceType
+import com.github.javaparser.ast.type.ReferenceType
 import com.github.javaparser.ast.type.TypeParameter
 import com.github.javaparser.printer.PrettyPrinter
 import de.fhdo.lemma.model_processing.code_generation.java_base.dependencies.DependencyDescription
@@ -675,10 +676,10 @@ internal fun ClassOrInterfaceDeclaration.addPrivateAttribute(attributeName: Stri
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-internal fun ClassOrInterfaceDeclaration.addAllAttributesConstructor() {
+internal fun ClassOrInterfaceDeclaration.addAllAttributesConstructor() : ConstructorDeclaration? {
     val mutableAttributes = attributes.filter { !(it.parentNode.get() as FieldDeclaration).isFinal }
     if (mutableAttributes.isEmpty())
-        return
+        return null
 
     val constructor = addConstructor(Modifier.Keyword.PUBLIC)
     val constructorBody = mutableListOf<String>()
@@ -690,6 +691,7 @@ internal fun ClassOrInterfaceDeclaration.addAllAttributesConstructor() {
         constructorBody.add("""this.${it.nameAsString} = ${it.nameAsString};""")
     }
     constructor.setBody(*constructorBody.toTypedArray())
+    return constructor
 }
 
 /**
@@ -943,15 +945,15 @@ internal fun MethodDeclaration.copy() : MethodDeclaration {
     val copyAnnotations = NodeList(annotations.map { it.copy() })
     val copyTypeParameters = NodeList(typeParameters.map { it.copy() })
     val copyParameters = NodeList(parameters.map { it.copy() })
+    val copyThrownExpressions = NodeList(thrownExceptions.map { it.copy() })
 
     // TODO Do a real copy of the body.get() result
     val copyBody = if (!emptyBody) body.get() else BlockStmt()
 
     // TODO Copy type
-    // TODO Copy thrownExceptions
     // TODO Copy receiverParameter
     return MethodDeclaration(copyModifiers, copyAnnotations, copyTypeParameters, type, name, copyParameters,
-        thrownExceptions, copyBody, receiverParameter?.orElse(null))
+        copyThrownExpressions, copyBody, receiverParameter?.orElse(null))
 }
 
 /**
@@ -1018,6 +1020,15 @@ private fun Parameter.copy() : Parameter {
     val copyVarArgAnnotations = NodeList(varArgsAnnotations.map { it.copy() })
     // TODO Copy type
     return Parameter(copyModifiers, copyAnnotations, type, isVarArgs, copyVarArgAnnotations, copyName)
+}
+
+/**
+ * Copy this [ReferenceType] to a new [ReferenceType] instance.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+private fun ReferenceType.copy() : ReferenceType {
+    return StaticJavaParser.parseClassOrInterfaceType(toString())
 }
 
 /**
@@ -1092,4 +1103,24 @@ internal fun ConstructorDeclaration.setBody(vararg rawStatements: String, firstS
 
     if (comment != null)
         body.statements[0].setComment(comment)
+}
+
+/**
+ * Insert an implementation statement at a specified index in a Java method's implementation body. The statement is
+ * provided in the form of plain Java code.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+internal fun ConstructorDeclaration.insertStatement(code: String, index: Int = 0) {
+    if (body.isEmpty) {
+        setBody(code)
+        return
+    }
+
+    val statements = body.statements
+    require(index in 0 until statements.size) { "Invalid index for insertion of statement into method $name" }
+
+    val newStatement = StaticJavaParser.parseStatement(code)
+    statements.add(index, newStatement)
+    body.statements = statements
 }
