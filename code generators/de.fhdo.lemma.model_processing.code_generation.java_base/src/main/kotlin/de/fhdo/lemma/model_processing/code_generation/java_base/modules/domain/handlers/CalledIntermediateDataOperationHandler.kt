@@ -8,7 +8,6 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.ast.setBody
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.CallableCodeGenerationHandlerI
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.CodeGenerationHandler
 import de.fhdo.lemma.model_processing.code_generation.java_base.hasAspect
-import de.fhdo.lemma.model_processing.code_generation.java_base.modules.domain.DomainContext.State as DomainState
 import de.fhdo.lemma.model_processing.utils.trimToSingleLine
 
 @CodeGenerationHandler

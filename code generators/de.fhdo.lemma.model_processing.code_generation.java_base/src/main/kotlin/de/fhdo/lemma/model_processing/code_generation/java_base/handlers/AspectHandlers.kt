@@ -6,7 +6,6 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.findAnnotatedCla
 import de.fhdo.lemma.model_processing.utils.mainInterface
 import de.fhdo.lemma.model_processing.utils.map
 import org.eclipse.emf.ecore.EObject
-import java.lang.IllegalStateException
 
 /**
  * Annotation for aspect handlers. Aspect handlers provide the Java base generator and Genlets with an easy-to-use

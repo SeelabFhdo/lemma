@@ -3,11 +3,8 @@ package de.fhdo.lemma.model_processing.code_generation.java_base.modules.service
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration
 import com.github.javaparser.ast.body.MethodDeclaration
 import com.github.javaparser.ast.stmt.BlockStmt
-import com.github.javaparser.ast.stmt.Statement
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.SerializationCharacteristic
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addSerializationCharacteristic
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.setBody
-import de.fhdo.lemma.model_processing.code_generation.java_base.getInputParameters
 import de.fhdo.lemma.model_processing.code_generation.java_base.getRequiredInputParameters
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.CallableCodeGenerationHandlerI
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.CodeGenerationHandler
