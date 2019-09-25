@@ -7,14 +7,13 @@ import de.fhdo.lemma.data.intermediate.IntermediateDataOperation
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.setBody
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.CallableCodeGenerationHandlerI
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.CodeGenerationHandler
+import de.fhdo.lemma.model_processing.code_generation.java_base.hasAspect
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.domain.DomainContext.State as DomainState
 import de.fhdo.lemma.model_processing.utils.trimToSingleLine
 
 @CodeGenerationHandler
 internal class CalledIntermediateDataOperationHandler :
     CallableCodeGenerationHandlerI<IntermediateDataOperation, MethodDeclaration, ClassOrInterfaceDeclaration> {
-    private val currentDomainPackage: String by DomainState
-
     override fun handlesEObjectsOfInstance() = IntermediateDataOperation::class.java
     override fun generatesNodesOfInstance() = MethodDeclaration::class.java
     override fun getAspects(operation: IntermediateDataOperation) = operation.aspects!!
@@ -35,6 +34,8 @@ internal class CalledIntermediateDataOperationHandler :
             )!!.first
         } else if (operation.visibilitySubsequentlyConstrained)
             generatedMethod.addNotImplementedBody()
+
+        generatedMethod.isStatic = operation.hasAspect("static")
 
         operation.parameters.forEach {
             generatedMethod = CalledIntermediateDataOperationParameterHandler.invoke(it, generatedMethod)!!.first

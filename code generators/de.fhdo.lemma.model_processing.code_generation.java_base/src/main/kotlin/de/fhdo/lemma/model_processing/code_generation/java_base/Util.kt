@@ -6,6 +6,7 @@ import de.fhdo.lemma.data.ListType
 import de.fhdo.lemma.data.intermediate.IntermediateComplexType
 import de.fhdo.lemma.data.intermediate.IntermediateDataField
 import de.fhdo.lemma.data.intermediate.IntermediateDataModel
+import de.fhdo.lemma.data.intermediate.IntermediateDataOperation
 import de.fhdo.lemma.data.intermediate.IntermediateDataStructure
 import de.fhdo.lemma.data.intermediate.IntermediateImportedAspect
 import de.fhdo.lemma.data.intermediate.IntermediateImportedComplexType
@@ -173,6 +174,19 @@ fun EObject.usesProtocol(protocol: String) : Boolean {
 }
 
 /**
+ * Check if an [EObject] like [IntermediateDataStructure] and [IntermediateDataOperation] have a certain aspect
+ * assigned.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+fun EObject.hasAspect(aspectName: String)
+    = when(this) {
+        is IntermediateDataStructure -> aspects.any { it.name == aspectName }
+        is IntermediateDataOperation -> aspects.any { it.name == aspectName }
+        else -> throw IllegalArgumentException("EObject of type ${this.mainInterface.name} does not have aspects")
+    }
+
+/**
  * [fullyQualifiedClassname] of [IntermediateComplexType] turned into a path. That is, the separating dots are replaced
  * by OS-specific file separators.
  *
@@ -183,13 +197,6 @@ internal fun IntermediateComplexType.fullyQualifiedClasspath(withExtension: Bool
         ${fullyQualifiedClassname.packageToPath()}
         ${if (withExtension) ".java" else ""}
       """.trimToSingleLine()
-
-/**
- * Check if an [IntermediateDataStructure] has a certain aspect assigned.
- *
- * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
- */
-fun IntermediateDataStructure.hasAspect(aspectName: String) = aspects.any { it.name == aspectName }
 
 /**
  * Check if an [IntermediateDataField] exhibits a certain feature.
