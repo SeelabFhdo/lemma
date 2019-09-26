@@ -148,6 +148,7 @@ class GenletGeneratedFileContent(val baseTargetFolderSpecifier: GenletPathSpecif
 enum class GenletPathSpecifier {
     CURRENT_MICROSERVICE_JAVA_ROOT_PATH,
     CURRENT_MICROSERVICE_GENERATION_TARGET_PATH,
+    CURRENT_DOMAIN_GENERATION_TARGET_PATH,
     CURRENT_INTERFACE_GENERATION_TARGET_PATH;
 
     companion object {
@@ -164,6 +165,11 @@ enum class GenletPathSpecifier {
                 CURRENT_MICROSERVICE_GENERATION_TARGET_PATH -> {
                     val currentMicroserviceGenerationTargetFolderPath: String by ServicesState
                     currentMicroserviceGenerationTargetFolderPath
+                }
+
+                CURRENT_DOMAIN_GENERATION_TARGET_PATH -> {
+                    val currentDomainTargetFolderPath: String by DomainState
+                    currentDomainTargetFolderPath
                 }
 
                 CURRENT_INTERFACE_GENERATION_TARGET_PATH -> {
@@ -196,6 +202,7 @@ object GenletStateAccess {
                 val currentDomainPackage: String by DomainState
                 currentDomainPackage
             }
+
             else -> throw IllegalArgumentException("Genlet state does not comprise property ${property.name}")
         }
 
