@@ -208,16 +208,20 @@ private class ExtendedGenerationGapSerializerBase : KoinComponent {
             if (it.isOverridable)
                 it.addMarkerAnnotation("Override")
 
-            if (it.emptyBody)
-                it.setBody(
-                    """throw new UnsupportedOperationException("Not implemented");""",
-                    withBlockComment = """
+            if (it.emptyBody) {
+                val comment =
+                    """
                         FIXME If you safely want to implement this method, create an extension interface called 
                         ${originalClass.nameAsString}Ext in the same folder as this class file and run the code 
                         generator again. Otherwise, this file and all your changes to it will probably get overwritten 
                         the next time the code generator is executed.
                     """.trimIndent()
+
+                it.setBody(
+                    """throw new UnsupportedOperationException("Not implemented");""",
+                    withBlockComment = " $comment "
                 )
+            }
         }
 
         val originalClassFilePath = "$targetFolderPath${File.separator}$targetClassname.java"

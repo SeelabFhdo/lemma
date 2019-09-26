@@ -217,15 +217,15 @@ internal class GenerationGapSerializerBase : KoinComponent {
         AvailableSuperConstructors.addFrom(originalClass)
 
         /* Generate the class for adding custom code */
-        var customImplClass = generateCustomImplClass(originalClass, originalSerializationCharacteristics,
-            originalClassnameBeforeAdaptation, originalClassPackageBeforeAdaptation,
+        val customImplClassComment =
             """
                 This class might comprise custom code. It will not be overwritten by the code generator as long as it
                 extends ${originalClass.nameAsString}. As soon as this is not the case anymore, this file will be 
                 overwritten, when the code generator is not explicitly invoked with the --preserve_existing_files 
                 command line option!
             """.trimIndent()
-        )
+        var customImplClass = generateCustomImplClass(originalClass, originalSerializationCharacteristics,
+            originalClassnameBeforeAdaptation, originalClassPackageBeforeAdaptation, " $customImplClassComment ")
         val customImplClassFilePath = "$targetFolderPath${File.separator}$targetClassname.java"
         customImplClass.setFilePath(customImplClassFilePath)
 
@@ -507,10 +507,10 @@ internal class GenerationGapSerializerBase : KoinComponent {
             val delegatingClassName = if (!method.isStatic) "super" else genImplClass.nameAsString
             method.setBody(
                 if (method.type.isVoidType)
-                    """$delegatingClassName.${method.name}($parameterString);"""
+                    "$delegatingClassName.${method.name}($parameterString);"
                 else
-                    """return $delegatingClassName.${method.name}($parameterString);""",
-                "TODO Implement this. Might otherwise throw UnsupportedOperationException from delegating call."
+                    "return $delegatingClassName.${method.name}($parameterString);",
+                " TODO Implement this. Might otherwise throw UnsupportedOperationException from delegating call."
             )
 
             // Adapt method bodies, if specified by code generators
@@ -716,7 +716,7 @@ internal class GenerationGapSerializerBase : KoinComponent {
         val existingClass = existingClassFile.getEponymousJavaClassOrInterface()
         if (existingClass == null || existingClass.isInterface)
             throw PhaseException("Could not parse existing custom implementation file ${existingClassFile.path}. " +
-                "Either it contains syntax errors or is not a Java class.")
+                "It either contains syntax errors or is not a Java class.")
 
         val missingConstructors = diffCallables(customImplClass.constructors, existingClass.constructors)
         missingConstructors.forEach { existingClass.members.add(it) }
@@ -800,7 +800,7 @@ internal class GenerationGapSerializerBase : KoinComponent {
             val bodyStatements = mutableListOf(delegatingConstructor.body.statements.joinToString { it.toString() })
             allFieldsConstructorParameters.forEach {
                 allFieldsConstructor.addParameter(it)
-                bodyStatements.add("""this.${it.nameAsString} = ${it.nameAsString};""")
+                bodyStatements.add("this.${it.nameAsString} = ${it.nameAsString};")
             }
             allFieldsConstructor.setBody(*bodyStatements.toTypedArray())
         }
