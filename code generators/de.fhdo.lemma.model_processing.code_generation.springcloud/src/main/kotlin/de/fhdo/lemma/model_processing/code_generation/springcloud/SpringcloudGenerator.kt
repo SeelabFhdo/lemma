@@ -10,6 +10,7 @@ class SpringcloudGenerator : AbstractModelProcessor(BASE_PACKAGE), Genlet {
     override fun nameOfAspectHandlerPackage() = "${nameOfCodeGenerationHandlerPackage()}.aspects"
     override fun nameOfDependencyFragmentProviderPackage() = "$BASE_PACKAGE.dependencies"
 }
+
 fun main(args: Array<String>) {
     SpringcloudGenerator().run(args)
 }

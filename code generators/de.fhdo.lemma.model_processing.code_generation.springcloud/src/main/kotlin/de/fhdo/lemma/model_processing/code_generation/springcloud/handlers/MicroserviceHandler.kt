@@ -5,8 +5,6 @@ import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.*
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletCodeGenerationHandlerI
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletCodeGenerationHandlerResult
-import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletGeneratedFileContent
-import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletPathSpecifier
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.CodeGenerationHandler
 import de.fhdo.lemma.model_processing.code_generation.java_base.hasApiComments
 import de.fhdo.lemma.model_processing.utils.trimToSingleLine
