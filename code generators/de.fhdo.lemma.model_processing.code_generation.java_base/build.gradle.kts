@@ -47,12 +47,12 @@ dependencies {
     implementation("de.fhdo.lemma.data.datadsl:de.fhdo.lemma.data.datadsl:$dataDslVersion")
     implementation("de.fhdo.lemma.data.datadsl:de.fhdo.lemma.data.datadsl.metamodel:$dataDslVersion")
     implementation("de.fhdo.lemma.intermediate:de.fhdo.lemma.data.intermediate.metamodel:" +
-            "$intermediateDataModelVersion")
+        intermediateDataModelVersion)
     implementation("de.fhdo.lemma.intermediate:de.fhdo.lemma.service.intermediate.metamodel:" +
-        "$intermediateServiceModelVersion")
+        intermediateServiceModelVersion)
     implementation("de.fhdo.lemma.model_processing:de.fhdo.lemma.model_processing:$modelProcessingVersion")
     implementation("de.fhdo.lemma.model_processing.utils:de.fhdo.lemma.model_processing.utils:" +
-        "$modelProcessingUtilsVersion")
+        modelProcessingUtilsVersion)
     implementation("de.fhdo.lemma.servicedsl:de.fhdo.lemma.servicedsl:$serviceDslVersion")
     implementation("info.picocli:picocli:$picocliVersion")
     implementation("io.github.classgraph:classgraph:$classgraphVersion")
