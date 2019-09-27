@@ -5,8 +5,12 @@ import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.*
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletCodeGenerationHandlerI
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletCodeGenerationHandlerResult
+import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletGeneratedFileContent
+import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletPathSpecifier
+import de.fhdo.lemma.model_processing.code_generation.java_base.getAspectPropertyValue
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.CodeGenerationHandler
 import de.fhdo.lemma.model_processing.code_generation.java_base.hasApiComments
+import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.property_files.openPropertyFile
 import de.fhdo.lemma.model_processing.utils.trimToSingleLine
 import de.fhdo.lemma.service.intermediate.IntermediateMicroservice
 
@@ -18,6 +22,8 @@ internal class MicroserviceHandler
 
     override fun execute(intermediateService: IntermediateMicroservice, serviceClass: ClassOrInterfaceDeclaration,
         context: Nothing?) : GenletCodeGenerationHandlerResult<ClassOrInterfaceDeclaration>? {
+        val generatedFileContents = mutableSetOf<GenletGeneratedFileContent>()
+
         serviceClass.addSerializationCharacteristic(SerializationCharacteristic.NO_CONSTRUCTORS)
         serviceClass.addImport("org.springframework.boot.SpringApplication", ImportTargetElementType.ANNOTATION,
             SerializationCharacteristic.DONT_RELOCATE)
@@ -41,6 +47,14 @@ internal class MicroserviceHandler
         )
         mainMethod.addSerializationCharacteristic(SerializationCharacteristic.DONT_RELOCATE)
 
-        return GenletCodeGenerationHandlerResult(serviceClass)
+        val applicationName = intermediateService.getAspectPropertyValue("java.ApplicationName", "value")
+        if (applicationName != null) {
+            val applicationPropertiesFile = openPropertyFile(GenletPathSpecifier.CURRENT_MICROSERVICE_RESOURCES_PATH,
+                "application.properties")
+            applicationPropertiesFile["spring.application.name"] = applicationName
+            generatedFileContents.add(GenletGeneratedFileContent(applicationPropertiesFile))
+        }
+
+        return GenletCodeGenerationHandlerResult(serviceClass, generatedFileContents)
     }
 }
