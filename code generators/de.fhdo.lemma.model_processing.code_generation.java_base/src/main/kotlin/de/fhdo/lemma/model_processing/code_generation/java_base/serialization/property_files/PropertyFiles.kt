@@ -17,13 +17,13 @@ import java.util.Properties
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-class PropertyFile(val filePath: String, private val properties: Properties) {
+class PropertyFile(val filePath: String, private val properties: SortableProperties) {
     companion object {
         /**
          * Load a [PropertyFile] at the specified [filePath]
          */
         internal fun loadFromFilePath(filePath: String) : PropertyFile {
-            val properties = Properties()
+            val properties = SortableProperties()
             properties.load(FileInputStream(filePath))
             return PropertyFile(filePath, properties)
         }
@@ -135,7 +135,7 @@ internal fun openPropertyFile(filePath: String) : PropertyFile {
         if (filePath.asFile().exists())
             PropertyFile.loadFromFilePath(filePath)
         else
-            PropertyFile(filePath, Properties())
+            PropertyFile(filePath, SortableProperties())
 
     OpenedPropertyFiles.addOrReplace(propertyFile)
     return propertyFile
@@ -157,7 +157,7 @@ internal fun openPropertyFile(folderPath: String, filename: String)
  */
 fun openPropertyFile(genletPathSpecifier: GenletPathSpecifier, filename: String) : PropertyFile {
     val filePath = "${GenletPathSpecifier.resolvePathSpecifier(genletPathSpecifier)}${File.separator}$filename"
-    return PropertyFile(filePath, Properties())
+    return PropertyFile(filePath, SortableProperties())
 }
 
 /**
