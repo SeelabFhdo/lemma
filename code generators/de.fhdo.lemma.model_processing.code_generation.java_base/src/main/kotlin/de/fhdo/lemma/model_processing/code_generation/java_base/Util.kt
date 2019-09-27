@@ -174,18 +174,27 @@ fun EObject.usesProtocol(protocol: String) : Boolean {
 }
 
 /**
+ * Get all [IntermediateImportedAspect] instances of this [EObject]. Throws an [IllegalArgumentException] if the
+ * [EObject] does not support having aspects.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+internal fun EObject.getAllAspects()
+    = when(this) {
+        is IntermediateDataStructure -> aspects
+        is IntermediateDataOperation -> aspects
+        is IntermediateMicroservice -> aspects
+        else -> throw IllegalArgumentException("EObject of type ${this.mainInterface.name} does not have aspects")
+    }
+
+/**
  * Check if an [EObject] has a certain aspect with the given [fullyQualifiedAspectName] assigned. Throws an
  * [IllegalArgumentException] if the [EObject] does not support having aspects.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 fun EObject.hasAspect(fullyQualifiedAspectName: String)
-    = when(this) {
-        is IntermediateDataStructure -> aspects.any { it.qualifiedName == fullyQualifiedAspectName }
-        is IntermediateDataOperation -> aspects.any { it.qualifiedName == fullyQualifiedAspectName }
-        is IntermediateMicroservice -> aspects.any { it.qualifiedName == fullyQualifiedAspectName }
-        else -> throw IllegalArgumentException("EObject of type ${this.mainInterface.name} does not have aspects")
-    }
+    = getAllAspects().any { it.qualifiedName == fullyQualifiedAspectName }
 
 /**
  * Get the [IntermediateImportedAspect] of this [EObject] with the given [fullyQualifiedAspectName] assigned. Throws an
@@ -194,12 +203,16 @@ fun EObject.hasAspect(fullyQualifiedAspectName: String)
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 fun EObject.getAspect(fullyQualifiedAspectName: String)
-    = when(this) {
-        is IntermediateDataStructure -> aspects.find { it.qualifiedName == fullyQualifiedAspectName }
-        is IntermediateDataOperation -> aspects.find { it.qualifiedName == fullyQualifiedAspectName }
-        is IntermediateMicroservice -> aspects.find { it.qualifiedName == fullyQualifiedAspectName }
-        else -> throw IllegalArgumentException("EObject of type ${this.mainInterface.name} does not have aspects")
-}
+    = getAllAspects().find { it.qualifiedName == fullyQualifiedAspectName }
+
+/**
+ * Iterate over all [IntermediateImportedAspect] instances of this [EObject] with the given [fullyQualifiedAspectName].
+ * Throws an [IllegalArgumentException] if the [EObject] does not support having aspects.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+fun EObject.forEachAspect(fullyQualifiedAspectName: String, action: (IntermediateImportedAspect) -> Unit)
+    = getAllAspects().forEach { if (it.qualifiedName == fullyQualifiedAspectName) action(it) }
 
 /**
  * Get the value of the property [propertyName] of the aspect [fullyQualifiedAspectName] being specified for this

@@ -35,7 +35,7 @@ class TableHandler : AspectHandlerI {
 
         val dataStructure = (eObject as IntermediateDataStructure)
         val identifierMembers = generatedClass.fields.filter { generatedField ->
-            dataStructure.dataFields.find{ it.name == generatedField.variables[0].nameAsString }!!
+            dataStructure.dataFields.find { it.name == generatedField.variables[0].nameAsString }!!
                 .hasFeature("IDENTIFIER")
         }
         identifierMembers.forEach {

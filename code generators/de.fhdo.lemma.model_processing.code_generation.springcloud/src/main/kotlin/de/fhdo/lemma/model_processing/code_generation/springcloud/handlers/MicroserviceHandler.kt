@@ -2,14 +2,15 @@ package de.fhdo.lemma.model_processing.code_generation.springcloud.handlers
 
 import com.github.javaparser.ast.Modifier
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration
+import de.fhdo.lemma.data.intermediate.IntermediateImportedAspect
+import de.fhdo.lemma.model_processing.code_generation.java_base.*
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.*
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletCodeGenerationHandlerI
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletCodeGenerationHandlerResult
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletGeneratedFileContent
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletPathSpecifier
-import de.fhdo.lemma.model_processing.code_generation.java_base.getAspectPropertyValue
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.CodeGenerationHandler
-import de.fhdo.lemma.model_processing.code_generation.java_base.hasApiComments
+import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.property_files.PropertyFile
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.property_files.openPropertyFile
 import de.fhdo.lemma.model_processing.utils.trimToSingleLine
 import de.fhdo.lemma.service.intermediate.IntermediateMicroservice
@@ -17,13 +18,13 @@ import de.fhdo.lemma.service.intermediate.IntermediateMicroservice
 @CodeGenerationHandler
 internal class MicroserviceHandler
     : GenletCodeGenerationHandlerI<IntermediateMicroservice, ClassOrInterfaceDeclaration, Nothing> {
+    private lateinit var applicationPropertiesFile: PropertyFile
+
     override fun handlesEObjectsOfInstance() = IntermediateMicroservice::class.java
     override fun generatesNodesOfInstance() = ClassOrInterfaceDeclaration::class.java
 
     override fun execute(intermediateService: IntermediateMicroservice, serviceClass: ClassOrInterfaceDeclaration,
         context: Nothing?) : GenletCodeGenerationHandlerResult<ClassOrInterfaceDeclaration>? {
-        val generatedFileContents = mutableSetOf<GenletGeneratedFileContent>()
-
         serviceClass.addSerializationCharacteristic(SerializationCharacteristic.NO_CONSTRUCTORS)
         serviceClass.addImport("org.springframework.boot.SpringApplication", ImportTargetElementType.ANNOTATION,
             SerializationCharacteristic.DONT_RELOCATE)
@@ -47,14 +48,74 @@ internal class MicroserviceHandler
         )
         mainMethod.addSerializationCharacteristic(SerializationCharacteristic.DONT_RELOCATE)
 
-        val applicationName = intermediateService.getAspectPropertyValue("java.ApplicationName", "value")
-        if (applicationName != null) {
-            val applicationPropertiesFile = openPropertyFile(GenletPathSpecifier.CURRENT_MICROSERVICE_RESOURCES_PATH,
-                "application.properties")
-            applicationPropertiesFile["spring.application.name"] = applicationName
-            generatedFileContents.add(GenletGeneratedFileContent(applicationPropertiesFile))
+        // Do this here to prevent custom properties overriding built-in ones (see below)
+        handleCustomPropertyAspect(intermediateService)
+
+        handleApplicationNameAspect(intermediateService)
+        handleJacksonConfigurationAspect(intermediateService)
+        handleDatasourceConfigurationAspect(intermediateService, serviceClass)
+        handleHibernateConfigurationAspect(intermediateService)
+        handleJpaShowSqlAspect(intermediateService)
+
+        return GenletCodeGenerationHandlerResult(serviceClass, generateApplicationPropertiesFileIfNecessary())
+    }
+
+    private fun handleCustomPropertyAspect(intermediateService: IntermediateMicroservice)
+        = intermediateService.forEachAspect("java.CustomProperty") {
+            val customPropertyName = it.getPropertyValue("name")!!
+            it.valueToProperty(customPropertyName, customPropertyName)
         }
 
-        return GenletCodeGenerationHandlerResult(serviceClass, generatedFileContents)
+    private fun IntermediateImportedAspect.valueToProperty(aspectPropertyName: String, targetPropertyName: String)
+        : String? {
+        val propertyValue = getPropertyValue(aspectPropertyName) ?: return null
+        getApplicationProperties()[targetPropertyName] = propertyValue
+        return propertyValue
+    }
+
+    private fun getApplicationProperties() : PropertyFile {
+        if (!::applicationPropertiesFile.isInitialized)
+            applicationPropertiesFile = openPropertyFile(GenletPathSpecifier.CURRENT_MICROSERVICE_RESOURCES_PATH,
+                "application.properties")
+
+        return applicationPropertiesFile
+    }
+
+    private fun handleApplicationNameAspect(intermediateService: IntermediateMicroservice)
+        = intermediateService.getAspect("java.ApplicationName")?.valueToProperty("value", "spring.application.name")
+
+    private fun handleJacksonConfigurationAspect(intermediateService: IntermediateMicroservice) {
+        val aspect = intermediateService.getAspect("java.JacksonConfiguration") ?: return
+        aspect.valueToProperty("INDENT_OUTPUT", "spring.jackson.serialization.INDENT_OUTPUT")
+        aspect.valueToProperty("defaultPropertyInclusion", "spring.jackson.default-property-inclusion")
+    }
+
+    private fun handleDatasourceConfigurationAspect(intermediateService: IntermediateMicroservice,
+        serviceClass: ClassOrInterfaceDeclaration) {
+        val aspect = intermediateService.getAspect("java.DatasourceConfiguration") ?: return
+        aspect.valueToProperty("url", "spring.datasource.url")
+        aspect.valueToProperty("username", "spring.datasource.username")
+        aspect.valueToProperty("password", "spring.datasource.password")
+
+        val driverClassName = aspect.valueToProperty("driverClassName", "spring.datasource.driverClassName") ?: return
+        if (driverClassName == "org.h2.Driver")
+            serviceClass.addDependency("com.h2database:h2")
+    }
+
+    private fun handleHibernateConfigurationAspect(intermediateService: IntermediateMicroservice) {
+        val aspect = intermediateService.getAspect("java.HibernateConfiguration") ?: return
+        aspect.valueToProperty("ddlAuto", "spring.jpa.hibernate.ddl-auto")
+    }
+
+    private fun handleJpaShowSqlAspect(intermediateService: IntermediateMicroservice) {
+        val aspect = intermediateService.getAspect("java.JpaShowSql") ?: return
+        aspect.valueToProperty("showSql", "spring.jpa.show-sql")
+    }
+
+    private fun generateApplicationPropertiesFileIfNecessary() : MutableSet<GenletGeneratedFileContent> {
+        return if (applicationPropertiesFile != null)
+            mutableSetOf(GenletGeneratedFileContent(applicationPropertiesFile))
+        else
+            mutableSetOf()
     }
 }
