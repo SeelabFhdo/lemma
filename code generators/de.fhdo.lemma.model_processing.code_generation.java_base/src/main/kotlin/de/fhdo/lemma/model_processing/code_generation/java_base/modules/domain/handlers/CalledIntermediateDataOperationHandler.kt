@@ -34,7 +34,7 @@ internal class CalledIntermediateDataOperationHandler :
         } else if (operation.visibilitySubsequentlyConstrained)
             generatedMethod.addNotImplementedBody()
 
-        generatedMethod.isStatic = operation.hasAspect("static")
+        generatedMethod.isStatic = operation.hasAspect("java.static")
 
         operation.parameters.forEach {
             generatedMethod = CalledIntermediateDataOperationParameterHandler.invoke(it, generatedMethod)!!.first

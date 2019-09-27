@@ -174,15 +174,15 @@ fun EObject.usesProtocol(protocol: String) : Boolean {
 }
 
 /**
- * Check if an [EObject] like [IntermediateDataStructure] and [IntermediateDataOperation] have a certain aspect
- * assigned.
+ * Check if an [EObject] has a certain aspect with the given [fullyQualifiedAspectName] assigned. Throws an
+ * [IllegalArgumentException] if the [EObject] does not support having aspects.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-fun EObject.hasAspect(aspectName: String)
+fun EObject.hasAspect(fullyQualifiedAspectName: String)
     = when(this) {
-        is IntermediateDataStructure -> aspects.any { it.name == aspectName }
-        is IntermediateDataOperation -> aspects.any { it.name == aspectName }
+        is IntermediateDataStructure -> aspects.any { it.qualifiedName == fullyQualifiedAspectName }
+        is IntermediateDataOperation -> aspects.any { it.qualifiedName == fullyQualifiedAspectName }
         else -> throw IllegalArgumentException("EObject of type ${this.mainInterface.name} does not have aspects")
     }
 
