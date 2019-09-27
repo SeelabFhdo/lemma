@@ -54,16 +54,45 @@ class PropertyFile(val filePath: String, private val properties: SortablePropert
     operator fun get(propertyName: String) : String? = properties.getProperty(propertyName)
 
     /**
-     * Serialize the property file. Note, that we are not relying on the store() method of the [Properties] class (cf.
-     * [toString]).
+     * Serialize the property file. Note, that we are not relying directly on the store() method of the [Properties]
+     * class (cf. [toString]).
      */
     internal fun serialize() : Int {
         val targetFile = filePath.asFile()
         targetFile.parentFile?.mkdirs()
 
-        val fileContent = toString()
-        targetFile.writeText(fileContent)
-        return fileContent.length
+        val thisContent = toString().lines().toMutableList()
+        thisContent.insertCommentsFromExistingFile(targetFile)
+        val serializedText = thisContent.joinToString("\n")
+        targetFile.writeText(serializedText)
+        return serializedText.length
+    }
+
+    /**
+     * Helper to insert comments from a possibly existing property [file] to this [MutableList] instance
+     */
+    private fun MutableList<String>.insertCommentsFromExistingFile(file: File) {
+        if (!file.exists())
+            return
+
+        val existingLines = file.readLines()
+        var currentLineIndex = 0
+        while (currentLineIndex < existingLines.size) {
+            val currentLine = existingLines[currentLineIndex]
+
+            if (currentLine.startsWith("#")) {
+                // Preserve existing comments at their indices. However, in case properties got added by the user
+                // without obeying to the alphabetical order of the properties, related comments will appear at the
+                // wrong position. Currently, we accept this behavior, because we cannot tell from a comment if it
+                // belongs to a subsequent property or not.
+                if (currentLineIndex < size)
+                    add(currentLineIndex, currentLine)
+                else
+                    add(currentLine)
+            }
+
+            currentLineIndex++
+        }
     }
 
     /**
