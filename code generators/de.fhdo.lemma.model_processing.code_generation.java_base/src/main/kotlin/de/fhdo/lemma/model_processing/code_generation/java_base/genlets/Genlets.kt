@@ -7,6 +7,7 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.modules.MainCont
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.domain.DomainContext.State as DomainState
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.services.ServicesContext.State as ServicesState
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.dependencies.DependencySerializerI
+import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.property_files.PropertyFile
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.findAspectHandlers as baseFindAspectHandlers
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.findCodeGenerationHandlers as baseFindCodeGenerationHandlers
 import de.fhdo.lemma.model_processing.phases.PhaseException
@@ -110,32 +111,58 @@ class GenletCodeGenerationHandlerResult<N: Node>(val reifiedNode: N,
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-class GenletGeneratedFileContent(val baseTargetFolderSpecifier: GenletPathSpecifier, val filename: String,
-    val generatedContent: String)  {
+class GenletGeneratedFileContent {
+    private var generatedContent: String? = null
+    private var propertyFile: PropertyFile? = null
+    var filePath: String
+        private set
+
     /**
-     * Get the full path of the generated file. It consists of the resolved path of the [baseTargetFolderSpecifier] and
-     * the [filename] of this [GenletGeneratedFileContent] instance.
+     * Constructor for [generatedContent] of the file [filename] to be stored in the given [baseTargetFolderSpecifier].
      */
-    fun getFullPath(fileContent: GenletGeneratedFileContent = this) : String {
-        val baseTargetFolderPath = GenletPathSpecifier.resolvePathSpecifier(fileContent.baseTargetFolderSpecifier)
-        return "$baseTargetFolderPath${File.separator}${fileContent.filename}"
+    constructor(baseTargetFolderSpecifier: GenletPathSpecifier, filename: String, generatedContent: String) {
+        this.generatedContent = generatedContent
+        filePath = "${GenletPathSpecifier.resolvePathSpecifier(baseTargetFolderSpecifier)}${File.separator}$filename"
     }
 
     /**
-     * Two [GenletGeneratedFileContent] instances are equal, if their full paths are equal
+     * Constructor for a [propertyFile] created by the Genlet.
+     */
+    constructor(propertyFile: PropertyFile) {
+        this.propertyFile = propertyFile
+        filePath = propertyFile.filePath
+    }
+
+    /**
+     * Get the full [filePath] of this content
+     */
+    operator fun component1() = filePath
+
+    /**
+     * Get the [generatedContent]. If null, the Genlet created a [propertyFile] instead.
+     */
+    operator fun component2() = generatedContent
+
+    /**
+     * Get the [propertyFile]. If null, the Genlet created [generatedContent] instead.
+     */
+    operator fun component3() = propertyFile
+
+    /**
+     * Two [GenletGeneratedFileContent] instances are equal, if their file paths are equal
      */
     override fun equals(other: Any?)
         = when {
             this === other -> true
             other == null -> false
             other !is GenletGeneratedFileContent -> false
-            else -> getFullPath() == getFullPath(other)
+            else -> filePath == other.filePath
         }
 
     /**
-     * The hash code of a [GenletGeneratedFileContent] is equal to the hash code of its full path
+     * The hash code of a [GenletGeneratedFileContent] is equal to the hash code of its file path
      */
-    override fun hashCode() = getFullPath().hashCode()
+    override fun hashCode() = filePath.hashCode()
 }
 
 /**
@@ -147,6 +174,7 @@ class GenletGeneratedFileContent(val baseTargetFolderSpecifier: GenletPathSpecif
  */
 enum class GenletPathSpecifier {
     CURRENT_MICROSERVICE_JAVA_ROOT_PATH,
+    CURRENT_MICROSERVICE_RESOURCES_PATH,
     CURRENT_MICROSERVICE_GENERATION_TARGET_PATH,
     CURRENT_DOMAIN_GENERATION_TARGET_PATH,
     CURRENT_INTERFACE_GENERATION_TARGET_PATH;
@@ -160,6 +188,11 @@ enum class GenletPathSpecifier {
                 CURRENT_MICROSERVICE_JAVA_ROOT_PATH -> {
                     val currentMicroserviceTargetFolderPathForJavaFiles: String by MainState
                     currentMicroserviceTargetFolderPathForJavaFiles
+                }
+
+                CURRENT_MICROSERVICE_RESOURCES_PATH -> {
+                    val currentMicroserviceTargetFolderPathForResourceFiles: String by MainState
+                    currentMicroserviceTargetFolderPathForResourceFiles
                 }
 
                 CURRENT_MICROSERVICE_GENERATION_TARGET_PATH -> {

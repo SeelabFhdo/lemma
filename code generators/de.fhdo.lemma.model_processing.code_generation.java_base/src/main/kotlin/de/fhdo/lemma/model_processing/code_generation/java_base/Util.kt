@@ -183,8 +183,32 @@ fun EObject.hasAspect(fullyQualifiedAspectName: String)
     = when(this) {
         is IntermediateDataStructure -> aspects.any { it.qualifiedName == fullyQualifiedAspectName }
         is IntermediateDataOperation -> aspects.any { it.qualifiedName == fullyQualifiedAspectName }
+        is IntermediateMicroservice -> aspects.any { it.qualifiedName == fullyQualifiedAspectName }
         else -> throw IllegalArgumentException("EObject of type ${this.mainInterface.name} does not have aspects")
     }
+
+/**
+ * Get the [IntermediateImportedAspect] of this [EObject] with the given [fullyQualifiedAspectName] assigned. Throws an
+ * [IllegalArgumentException] if the [EObject] does not support having aspects.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+fun EObject.getAspect(fullyQualifiedAspectName: String)
+    = when(this) {
+        is IntermediateDataStructure -> aspects.find { it.qualifiedName == fullyQualifiedAspectName }
+        is IntermediateDataOperation -> aspects.find { it.qualifiedName == fullyQualifiedAspectName }
+        is IntermediateMicroservice -> aspects.find { it.qualifiedName == fullyQualifiedAspectName }
+        else -> throw IllegalArgumentException("EObject of type ${this.mainInterface.name} does not have aspects")
+}
+
+/**
+ * Get the value of the property [propertyName] of the aspect [fullyQualifiedAspectName] being specified for this
+ * [EObject]. Throws an [IllegalArgumentException] if the [EObject] does not support having aspects.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+fun EObject.getAspectPropertyValue(fullyQualifiedAspectName: String, propertyName: String)
+    = getAspect(fullyQualifiedAspectName)?.getPropertyValue(propertyName)
 
 /**
  * [fullyQualifiedClassname] of [IntermediateComplexType] turned into a path. That is, the separating dots are replaced

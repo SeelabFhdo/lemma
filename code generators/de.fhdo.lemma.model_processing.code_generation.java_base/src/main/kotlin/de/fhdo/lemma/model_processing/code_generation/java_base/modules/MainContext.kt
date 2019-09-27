@@ -124,6 +124,8 @@ internal object MainContext {
                 "currentMicroservicePackage" -> currentMicroservicePackage
                 "currentMicroserviceTargetFolderPath" -> currentMicroserviceTargetFolderPath()
                 "currentMicroserviceTargetFolderPathForJavaFiles" -> currentMicroserviceTargetFolderPathForJavaFiles()
+                "currentMicroserviceTargetFolderPathForResourceFiles" ->
+                    currentMicroserviceTargetFolderPathForResourceFiles()
                 "dependencyFragmentProviderInstances" -> dependencyFragmentProviderInstances()
                 "generatedFileContents" -> generatedFileContents.toMap()
                 "generatedLineCountInfo" -> generatedLineCountInfo.toList()
@@ -149,7 +151,7 @@ internal object MainContext {
         }
 
         /**
-         * Helper to calculate the target folder path of the state's [currentMicroservicePackage]
+         * Helper to calculate the target folder path for Java files of the state's [currentMicroservicePackage]
          */
         private fun currentMicroserviceTargetFolderPathForJavaFiles() : String {
             val microservicePackageFolderPath = currentMicroservicePackage.packageToPath()
@@ -159,6 +161,19 @@ internal object MainContext {
                 microservicePackageFolderPath,
                 "src", "main", "java",
                 microservicePackageFolderPath
+            ).joinToString(File.separator)
+        }
+
+        /**
+         * Helper to calculate the target folder path for resource files of the state's [currentMicroservicePackage]
+         */
+        private fun currentMicroserviceTargetFolderPathForResourceFiles() : String {
+            val microservicePackageFolderPath = currentMicroservicePackage.packageToPath()
+
+            return listOf(
+                targetFolderPath,
+                microservicePackageFolderPath,
+                "src", "main", "resources"
             ).joinToString(File.separator)
         }
 

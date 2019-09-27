@@ -18,6 +18,8 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.co
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.dependencies.CountingMavenDependencySerializer
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.dependencies.DependencySerializerI
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.dependencies.MavenDependencySerializer
+import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.property_files.closeOpenedPropertyFiles
+import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.property_files.serializeOpenedPropertyFiles
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.serializeLineCountInfo
 import de.fhdo.lemma.model_processing.code_generation.java_base.simpleName
 import de.fhdo.lemma.model_processing.phases.PhaseException
@@ -113,7 +115,11 @@ internal class MainCodeGenerationModule : AbstractCodeGenerationModule(), KoinCo
             MainState.setCurrentMicroservice(it)
             DomainCodeGenerationSubModule.invoke()
             ServicesCodeGenerationSubModule.invoke()
+
             serializeDependencies(it)
+
+            serializeOpenedPropertyFiles()
+            closeOpenedPropertyFiles()
         }
 
         /*

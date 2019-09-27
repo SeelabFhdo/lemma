@@ -6,6 +6,7 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.findAndMapAnnota
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.Genlet
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.MainContext
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.LineCountInfo
+import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.property_files.mergePropertyFile
 import de.fhdo.lemma.model_processing.utils.countLines
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.MainContext.State as MainState
 import org.eclipse.emf.ecore.EObject
@@ -96,12 +97,19 @@ interface CodeGenerationHandlerI<T: EObject, N: Node, C: Any> {
             val (reifiedNode, generatedFiles) = MainContext.invokeGenletCodeGenerationHandler(eObject, adaptedNode, it)
             adaptedNode = reifiedNode
             generatedFiles.forEach { fileContent ->
-                val generatedContent = fileContent.generatedContent
-                val fullPath = fileContent.getFullPath()
-                MainState.addGeneratedFileContent(generatedContent, fullPath)
+                val (filePath, generatedContent, generatedPropertyFile) = fileContent
+                if (generatedContent != null) {
+                    MainState.addGeneratedFileContent(generatedContent, filePath)
 
-                if (writeLineCountInfo)
-                    MainState.addOrUpdateGeneratedLineCountInfo(LineCountInfo(fullPath, generatedContent.countLines()))
+                    if (writeLineCountInfo)
+                        MainState.addOrUpdateGeneratedLineCountInfo(
+                            LineCountInfo(filePath, generatedContent.countLines())
+                        )
+                } else
+                    // If the Genlet did not generate the raw string content of a file, it must have created a property
+                    // file. Created property files are merged into existing property files, if possible. Line counting
+                    // of property files is done later when they are serialized.
+                    mergePropertyFile(generatedPropertyFile!!)
             }
             adaptedNode = MainContext.invokeAspectHandlers(eObject, node, aspects, it)
         }
