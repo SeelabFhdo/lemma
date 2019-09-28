@@ -26,7 +26,7 @@ internal class MicroserviceHandler
     override fun execute(intermediateService: IntermediateMicroservice, serviceClass: ClassOrInterfaceDeclaration,
         context: Nothing?) : GenletCodeGenerationHandlerResult<ClassOrInterfaceDeclaration>? {
         serviceClass.addSerializationCharacteristic(SerializationCharacteristic.NO_CONSTRUCTORS)
-        serviceClass.addImport("org.springframework.boot.SpringApplication", ImportTargetElementType.ANNOTATION,
+        serviceClass.addImport("org.springframework.boot.SpringApplication", ImportTargetElementType.METHOD_BODY,
             SerializationCharacteristic.DONT_RELOCATE)
         serviceClass.addImport("org.springframework.boot.autoconfigure.SpringBootApplication",
             ImportTargetElementType.ANNOTATION, SerializationCharacteristic.DONT_RELOCATE)

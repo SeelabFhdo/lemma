@@ -227,6 +227,7 @@ enum class ImportTargetElementType {
     ATTRIBUTE_TYPE,
     IMPLEMENTED_INTERFACE,
     METHOD,
+    METHOD_BODY,
     SUPER
 }
 
