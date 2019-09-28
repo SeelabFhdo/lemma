@@ -1063,6 +1063,10 @@ internal fun MethodDeclaration.copySignature() : MethodDeclaration {
         signatureMethod.addParameter(signatureParameter)
     }
 
+    thrownExceptions.forEach {
+        signatureMethod.addThrownException(StaticJavaParser.parseClassOrInterfaceType(it.toString()))
+    }
+
     return signatureMethod
 }
 
