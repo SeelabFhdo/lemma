@@ -12,6 +12,7 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.ast.insertStatem
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.newJavaClassOrInterface
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.setBody
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.setSuperclass
+import de.fhdo.lemma.model_processing.code_generation.java_base.buildOperationPackageName
 import de.fhdo.lemma.model_processing.code_generation.java_base.fullyQualifiedClassname
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.CodeGenerationHandler
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.VisitingCodeGenerationHandlerI
@@ -27,24 +28,14 @@ import java.io.File
 class IntermediateFaultParameterHandler
     : VisitingCodeGenerationHandlerI<IntermediateParameter, ClassOrInterfaceDeclaration, Nothing> {
     companion object {
-        private val currentInterfacesGenerationPackage: String by ServicesState
         private val currentDomainPackage: String by DomainState
 
         fun buildExceptionClassFullyQualifiedName(parameter: IntermediateParameter) : String {
-            return "${buildExceptionClassPackage(parameter)}.${buildExceptionClassName(parameter)}"
+            return "${parameter.buildOperationPackageName()}.${buildExceptionClassName(parameter)}"
         }
 
         fun buildExceptionClassName(parameter: IntermediateParameter) : String {
             return "${parameter.name.capitalize()}Exception"
-        }
-
-        fun buildExceptionClassPackage(parameter: IntermediateParameter)
-            = "$currentInterfacesGenerationPackage.${buildExceptionClassSubPackage(parameter)}"
-
-        private fun buildExceptionClassSubPackage(parameter: IntermediateParameter) : String {
-            val operation = parameter.operation
-            val interfaceName = operation.`interface`.name
-            return "operations.$interfaceName.${operation.name}"
         }
     }
 
@@ -59,7 +50,7 @@ class IntermediateFaultParameterHandler
         if (!parameter.isCommunicatesFault || parameter.communicationType == CommunicationType.ASYNCHRONOUS)
             return null
 
-        val packageName = buildExceptionClassPackage(parameter)
+        val packageName = parameter.buildOperationPackageName()
         val classname = buildExceptionClassName(parameter)
         val generatedClass = newJavaClassOrInterface(packageName, classname)
         generatedClass.setSuperclass("RuntimeException", isExternalSuperclass = true)
@@ -97,7 +88,7 @@ class IntermediateFaultParameterHandler
         generatedClass.addAllAttributesConstructor()!!
             .insertStatement("super($errorMessageAttribute);")
 
-        val operationSubFolder = buildExceptionClassSubPackage(parameter).packageToPath()
+        val operationSubFolder = parameter.buildOperationPackageName(subPackageOnly = true).packageToPath()
         val generatedFilePath = listOf(interfaceSubFolderName, operationSubFolder, "$classname.java")
             .joinToString(File.separator)
         return generatedClass to generatedFilePath

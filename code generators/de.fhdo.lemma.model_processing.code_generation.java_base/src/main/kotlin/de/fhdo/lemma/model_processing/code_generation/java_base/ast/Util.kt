@@ -267,9 +267,25 @@ internal class ImportsInfo() {
     }
 
     /**
+     * Retrieve all [SingleImportInfo] instances
+     */
+    fun getAllImportsInfo() = importsInfoMap.values.toList()
+
+    /**
+     * Get [SingleImportInfo] for the given [import] and [targetElementType]
+     */
+    operator fun get(import: String, targetElementType: ImportTargetElementType)
+        = importsInfoMap[importsInfoMapKey(import, targetElementType)]
+
+    /**
      * Enable [forEach] iteration over the list of stored [SingleImportInfo] instances
      */
     inline fun forEach(action: (SingleImportInfo) -> Unit) = importsInfoMap.values.forEach(action)
+
+    /**
+     * Enable iteration over the list of stored [SingleImportInfo] instances
+     */
+    operator fun iterator() = importsInfoMap.values.iterator()
 
     /**
      * Enable [filter] iteration over the list of stored [SingleImportInfo] instances
@@ -671,7 +687,7 @@ internal fun ClassOrInterfaceDeclaration.addAttribute(attributeName: String, typ
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-internal val ClassOrInterfaceDeclaration.attributes
+val ClassOrInterfaceDeclaration.attributes
     get() = fields.map { it.variables[0] }
 
 /**
@@ -682,7 +698,7 @@ internal val ClassOrInterfaceDeclaration.attributes
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-internal fun ClassOrInterfaceDeclaration.addPrivateAttribute(attributeName: String, typeName: String,
+fun ClassOrInterfaceDeclaration.addPrivateAttribute(attributeName: String, typeName: String,
     vararg modifiers: Modifier.Keyword) = addAttribute(attributeName, typeName, Modifier.Keyword.PRIVATE, *modifiers)
 
 /**
@@ -849,6 +865,17 @@ fun MethodDeclaration.addImport(import: String, targetElementType: ImportTargetE
     vararg characteristics: SerializationCharacteristic)  {
     addImportsInfo(import, targetElementType, *characteristics)
     findParentNode<ClassOrInterfaceDeclaration>()!!.addImport(import, targetElementType, *characteristics)
+}
+
+/**
+ * Remove the given [import] for the given [targetElementType] from this [MethodDeclaration] and also its defining
+ * [ClassOrInterfaceDeclaration].
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+fun MethodDeclaration.removeImport(import: String, targetElementType: ImportTargetElementType)  {
+    removeImportsInfo(import, targetElementType)
+    findParentNode<ClassOrInterfaceDeclaration>()!!.removeImport(import, targetElementType)
 }
 
 /**

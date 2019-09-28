@@ -12,6 +12,7 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addGetter
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addImport
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addSetter
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.newJavaClassOrInterface
+import de.fhdo.lemma.model_processing.code_generation.java_base.buildOperationPackageName
 import de.fhdo.lemma.model_processing.code_generation.java_base.classname
 import de.fhdo.lemma.model_processing.code_generation.java_base.fullyQualifiedClassname
 import de.fhdo.lemma.model_processing.code_generation.java_base.getResultParameters
@@ -98,7 +99,7 @@ internal open class IntermediateOperationCompositeResultHandlerBase(private val 
 
         fun buildCompositeResultClassFullyQualifiedName(operation: IntermediateOperation,
             communicationType: CommunicationType) : String {
-            return "${buildCompositeResultClassPackage(operation)}." +
+            return "${operation.buildOperationPackageName()}." +
                 buildCompositeResultClassName(operation, communicationType)
         }
 
@@ -111,14 +112,6 @@ internal open class IntermediateOperationCompositeResultHandlerBase(private val 
 
             return "${operation.classname}${communicationTypeIdentifier}Result"
         }
-
-        fun buildCompositeResultClassPackage(operation: IntermediateOperation)
-            = "$currentInterfacesGenerationPackage.${buildCompositeResultClassSubPackage(operation)}"
-
-        private fun buildCompositeResultClassSubPackage(operation: IntermediateOperation) : String {
-            val interfaceName = operation.`interface`.name
-            return "operations.$interfaceName.${operation.name}"
-        }
     }
 
     private val interfaceSubFolderName: String by ServicesState
@@ -128,7 +121,7 @@ internal open class IntermediateOperationCompositeResultHandlerBase(private val 
 
     override fun execute(operation: IntermediateOperation, context: Nothing?)
         : Pair<ClassOrInterfaceDeclaration, String?>? {
-        val packageName = buildCompositeResultClassPackage(operation)
+        val packageName = operation.buildOperationPackageName()
         val classname = buildCompositeResultClassName(operation, communicationType)
         val generatedClass = newJavaClassOrInterface(packageName, classname)
 
@@ -159,7 +152,7 @@ internal open class IntermediateOperationCompositeResultHandlerBase(private val 
             generatedClass.addGetter(parameterAttribute)
         }
 
-        val operationSubFolder = buildCompositeResultClassSubPackage(operation).packageToPath()
+        val operationSubFolder = operation.buildOperationPackageName(subPackageOnly = true).packageToPath()
         val generatedFilePath = listOf(interfaceSubFolderName, operationSubFolder, "$classname.java")
             .joinToString(File.separator)
         return generatedClass to generatedFilePath

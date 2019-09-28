@@ -114,6 +114,35 @@ internal val EObject.packageName
     }
 
 /**
+ * Build the name of the package for operation-related, generated types like Exception classes for fault parameters or
+ * composite result classes. This function works for [IntermediateOperation] and [IntermediateParameter] instances. In
+ * case no [targetInterfaceName] is passed, the interface comprising this operation or this parameter's operation is
+ * used. If [subPackageOnly] is specified, only the sub-package for the operation and not the fully-qualified package
+ * (including the interface name) is returned.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+internal fun EObject.buildOperationPackageName(targetInterfaceName: String = "", subPackageOnly: Boolean = false)
+    : String {
+    val (parentInterfaceName, operationName) = when(this) {
+        is IntermediateOperation -> `interface`.name to name
+        is IntermediateParameter -> operation.`interface`.name to operation.name
+        else -> throw IllegalArgumentException("EObject of type ${this.mainInterface.name} does not have a elements " +
+            "that support building of an operation package name")
+    }
+
+    val interfaceName = if (targetInterfaceName.isEmpty()) parentInterfaceName else targetInterfaceName
+    val subPackage = "operations.$interfaceName.$operationName"
+    return if (subPackageOnly)
+            subPackage
+        else {
+            val currentInterfacesGenerationPackage: String by ServicesState
+            "$currentInterfacesGenerationPackage.$subPackage"
+        }
+}
+
+
+/**
  * Property representing the fully-qualified classname of an [EObject], e.g., an [IntermediateComplexType] or an
  * [IntermediateMicroservice].
  *
