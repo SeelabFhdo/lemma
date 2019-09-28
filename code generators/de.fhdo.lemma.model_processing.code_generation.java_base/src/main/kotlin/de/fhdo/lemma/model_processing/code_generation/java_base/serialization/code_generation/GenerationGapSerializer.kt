@@ -409,7 +409,7 @@ internal class GenerationGapSerializerBase : KoinComponent {
      * Helper to copy all imports from the [source] class/interface to the [target] class/interface
      */
     private fun copyAllImports(source: Node, target: ClassOrInterfaceDeclaration)
-        = target.addImports(source.getImportsInfo().getAllImportsInfo())
+        = target.addImports(source.getImportsInfo().getAllImportInfo())
 
     /**
      * Helper to replace qualifiers in type parameters of superclasses with the name of the given [clazz]

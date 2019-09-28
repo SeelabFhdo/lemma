@@ -269,7 +269,7 @@ internal class ImportsInfo() {
     /**
      * Retrieve all [SingleImportInfo] instances
      */
-    fun getAllImportsInfo() = importsInfoMap.values.toList()
+    fun getAllImportInfo() = importsInfoMap.values.toList()
 
     /**
      * Get [SingleImportInfo] for the given [import] and [targetElementType]
