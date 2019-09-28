@@ -15,7 +15,7 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.hasFeature
 import org.eclipse.emf.ecore.EObject
 
 @AspectHandler
-class TableHandler : AspectHandlerI {
+internal class TableHandler : AspectHandlerI {
     override fun handlesEObjectNodeCombinations() = combinations {
         IntermediateDataStructure::class.java with ClassOrInterfaceDeclaration::class.java
     }

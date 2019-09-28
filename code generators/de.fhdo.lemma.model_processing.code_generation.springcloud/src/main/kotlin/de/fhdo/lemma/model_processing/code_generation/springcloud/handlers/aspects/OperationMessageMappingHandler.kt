@@ -20,7 +20,7 @@ internal class OperationMessageMappingHandler : AspectHandlerI {
         IntermediateOperation::class.java with MethodDeclaration::class.java
     }
 
-    override fun execute(eObject: EObject, node: Node, aspect: IntermediateImportedAspect): Node {
+    override fun execute(eObject: EObject, node: Node, aspect: IntermediateImportedAspect) : Node {
         val generatedMethod = node as MethodDeclaration
         generatedMethod.addImport(
             "org.springframework.messaging.handler.annotation.${aspect.name}",

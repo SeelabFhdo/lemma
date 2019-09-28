@@ -14,7 +14,7 @@ import de.fhdo.lemma.service.intermediate.IntermediateOperation
 import org.eclipse.emf.ecore.EObject
 
 @AspectHandler
-class OperationRestMappingsHandler : AspectHandlerI {
+internal class OperationRestMappingsHandler : AspectHandlerI {
     override fun handlesAspects() = setOf(
         "java.GetMapping",
         "java.PostMapping",

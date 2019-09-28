@@ -17,7 +17,7 @@ internal class InterfaceHandler
     override fun generatesNodesOfInstance() = ClassOrInterfaceDeclaration::class.java
 
     override fun execute(iface: IntermediateInterface, ifaceClass: ClassOrInterfaceDeclaration, context: Nothing?)
-            : GenletCodeGenerationHandlerResult<ClassOrInterfaceDeclaration>? {
+        : GenletCodeGenerationHandlerResult<ClassOrInterfaceDeclaration>? {
         if (!iface.usesProtocol("rest"))
             return GenletCodeGenerationHandlerResult(ifaceClass)
 

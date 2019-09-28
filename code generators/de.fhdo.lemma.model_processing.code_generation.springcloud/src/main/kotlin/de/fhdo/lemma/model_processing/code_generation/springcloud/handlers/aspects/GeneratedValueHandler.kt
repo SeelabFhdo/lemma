@@ -13,7 +13,7 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.combina
 import org.eclipse.emf.ecore.EObject
 
 @AspectHandler
-class GeneratedValueHandler : AspectHandlerI {
+internal class GeneratedValueHandler : AspectHandlerI {
     override fun handlesEObjectNodeCombinations() = combinations {
         IntermediateDataField::class.java with FieldDeclaration::class.java
     }
