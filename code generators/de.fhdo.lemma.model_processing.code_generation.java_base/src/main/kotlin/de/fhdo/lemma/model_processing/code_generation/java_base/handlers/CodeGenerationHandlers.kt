@@ -103,7 +103,7 @@ interface CodeGenerationHandlerI<T: EObject, N: Node, C: Any> {
 
                     if (writeLineCountInfo)
                         MainState.addOrUpdateGeneratedLineCountInfo(
-                            LineCountInfo(filePath, generatedContent.countLines())
+                            LineCountInfo(filePath, generatedContent.countLines(forFile = filePath))
                         )
                 } else
                     // If the Genlet did not generate the raw string content of a file, it must have created a property

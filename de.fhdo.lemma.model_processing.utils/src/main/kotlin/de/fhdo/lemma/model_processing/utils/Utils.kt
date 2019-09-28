@@ -1,6 +1,7 @@
 package de.fhdo.lemma.model_processing.utils
 
 import de.fhdo.lemma.data.intermediate.IntermediateImport
+import de.fhdo.lemma.model_processing.asFile
 import de.fhdo.lemma.model_processing.asXmiResource as asXmiResourceSimple
 import de.fhdo.lemma.utils.LemmaUtils
 import de.fhdo.lemma.service.ImportType
@@ -163,7 +164,8 @@ fun EList<IntermediateImport>.filterByType(importType: ImportType)
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-fun String.countLines(includeEmptyLines: Boolean = false, includeComments: Boolean = false) : Int {
+fun String.countLines(includeEmptyLines: Boolean = false, includeComments: Boolean = false,
+    commentDescription: CommentDescription = JavaCommentDescription) : Int {
     val linesToCount = if (includeEmptyLines)
             lines()
         else
@@ -175,22 +177,107 @@ fun String.countLines(includeEmptyLines: Boolean = false, includeComments: Boole
 
     var commentLineCount = 0
     var inBlockComment = false
+    val (blockCommentBegin, blockCommentEnd, lineCommentBegin) = commentDescription
     linesToCount.map { it.trim() }.forEach {
         if (!inBlockComment) {
-            if (it.startsWith("//"))
+            if (it.startsWithPrefix(lineCommentBegin))
                 commentLineCount++
-            else if (it.startsWith("/*"))
+            else if (it.startsWithPrefix(blockCommentBegin))
                 inBlockComment = true
         }
 
         if (inBlockComment)
             commentLineCount++
 
-        if (it.endsWith("*/"))
+        if (it.endsWithSuffix(blockCommentEnd))
             inBlockComment = false
     }
 
     return lineCount - commentLineCount
+}
+
+/**
+ * Represents a description of block and line comments for a certain file format as expected by [countLines].
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+open class CommentDescription(
+    private val blockCommentBegin: String? = null,
+    private val blockCommentEnd: String? = null,
+    private val lineCommentBegin: String? = null
+) {
+    /**
+     * Return [blockCommentBegin] in destructuring declarations
+     */
+    operator fun component1() = blockCommentBegin
+
+    /**
+     * Return [blockCommentEnd] in destructuring declarations in case [blockCommentBegin] is defined. Returns null
+     * otherwise.
+     */
+    operator fun component2() = if (blockCommentBegin != null) blockCommentEnd else null
+
+    /**
+     * Return [lineCommentBegin] in destructuring declarations
+     */
+    operator fun component3() = lineCommentBegin
+}
+
+/**
+ * [CommentDescription] implementation for Java.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+object JavaCommentDescription : CommentDescription("/*", "*/", "//")
+
+/**
+ * [CommentDescription] implementation for Java properties files.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+object PropertiesCommentDescription : CommentDescription(lineCommentBegin = "#")
+
+/**
+ * [CommentDescription] implementation for XML.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+object XmlCommentDescription : CommentDescription("<!--", "-->")
+
+/**
+ * Implementation of [startsWith] that accepts a nullable [prefix]. Returns false, in case the [prefix] is null.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+private fun String.startsWithPrefix(prefix: String?) = if (prefix != null) startsWith(prefix) else false
+
+/**
+ * Implementation of [endsWith] that accepts a nullable [suffix]. Returns false, in case the [suffix] is null.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+private fun String.endsWithSuffix(suffix: String?) = if (suffix != null) endsWith(suffix) else false
+
+/**
+ * Count lines of a String. CRLF, LF, and CR will be considered as linebreak separators. The [CommentDescription] to be
+ * used when [includeComments] is false is determined based on the extension of the [forFile] parameter. If [forFile] is
+ * empty, [JavaCommentDescription] will be used as default [CommentDescription].
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+fun String.countLines(includeEmptyLines: Boolean = false, includeComments: Boolean = false, forFile: String = "")
+    = countLines(includeEmptyLines, includeComments, commentDescriptionForFile(forFile))
+
+/**
+ * Helper to determine the [CommentDescription] for the given [filePath].
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+private fun commentDescriptionForFile(filePath: String)
+    = when(filePath.asFile().extension.toLowerCase()) {
+        "properties" -> PropertiesCommentDescription
+        "xml" -> XmlCommentDescription
+        else -> JavaCommentDescription
 }
 
 /**

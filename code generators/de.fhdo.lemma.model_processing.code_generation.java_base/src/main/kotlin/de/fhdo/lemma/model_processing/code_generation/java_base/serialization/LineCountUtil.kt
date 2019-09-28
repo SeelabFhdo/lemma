@@ -37,12 +37,12 @@ internal fun countLines(serializationResult: Pair<String, String>, intermediateE
     originalModelFilePath: String) : LineCountInfo {
     /* Count lines of generated code */
     val (targetFilePath, generatedCode) = serializationResult
-    val generatedCodeLineCount = generatedCode.countLines()
+    val generatedCodeLineCount = generatedCode.countLines(forFile = targetFilePath)
 
     /* Count lines and determine additional information of original EObject */
     val originalEObject = intermediateEObject.loadOriginalEObject(originalModelFilePath)
     val originalEObjectParserNode = NodeModelUtils.getNode(originalEObject)
-    val originalEObjectLineCount = originalEObjectParserNode.text.countLines()
+    val originalEObjectLineCount = originalEObjectParserNode.text.countLines(forFile = originalModelFilePath)
     val originalEObjectAdditionalInfo = originalEObject.deriveAdditionalLineCountInfo(originalModelFilePath)
     originalEObjectAdditionalInfo[ORIGINAL_EOBJECT_TYPE_INFO_FIELD] = originalEObject.mainInterface.simpleName
 

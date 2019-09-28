@@ -128,7 +128,9 @@ internal class CountingGenerationGapSerializer : CodeGenerationSerializerI {
         generatedLineCountInfo.forEach {
             val adaptedContentWithLineCountInfo = adaptedFiles[it.serializationTargetFilePath]
             if (adaptedContentWithLineCountInfo != null)
-                it.serializationResultLineCount = adaptedContentWithLineCountInfo.countLines()
+                it.serializationResultLineCount = adaptedContentWithLineCountInfo.countLines(
+                    forFile = it.serializationTargetFilePath
+                )
         }
 
         return adaptedFiles

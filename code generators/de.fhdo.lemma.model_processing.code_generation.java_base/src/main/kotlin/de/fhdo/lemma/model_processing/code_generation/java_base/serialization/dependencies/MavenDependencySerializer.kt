@@ -72,7 +72,9 @@ internal class CountingMavenDependencySerializer(override val dependencyType: De
      */
     override fun serialize(model: Node, targetFolderPath: String, targetFilePath: String) : Pair<String, String> {
         val (serializationFilePath, generatedContent) = delegate.serialize(model, targetFolderPath, targetFilePath)
-        MainState.addOrUpdateGeneratedLineCountInfo(LineCountInfo(serializationFilePath, generatedContent.countLines()))
+        MainState.addOrUpdateGeneratedLineCountInfo(
+            LineCountInfo(serializationFilePath, generatedContent.countLines(forFile = serializationFilePath))
+        )
         return serializationFilePath to generatedContent
     }
 
