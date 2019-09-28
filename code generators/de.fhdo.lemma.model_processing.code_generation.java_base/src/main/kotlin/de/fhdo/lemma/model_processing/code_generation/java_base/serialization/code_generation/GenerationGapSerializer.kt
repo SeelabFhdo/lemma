@@ -271,14 +271,15 @@ internal class GenerationGapSerializerBase : KoinComponent {
         if (originalMethods.isEmpty())
             return genInterface
 
-        /*
-         * Because the interface comprises all methods of the original class, copy all method-related, relocatable
-         * imports to it
-         */
-        copyImportsForType(ImportTargetElementType.METHOD, originalClass, genInterface, onlyWhenRelocatable = true)
+        /* Copy all method's import and signatures of the original class to the *Gen interface */
+        originalMethods.forEach { method ->
+            val neededImports = method.getImportsInfo().filter {
+                it.targetElementType == ImportTargetElementType.METHOD && it.isRelocatable
+            }
+            genInterface.addImports(neededImports)
 
-        /* Copy all method signatures of the original class */
-        originalMethods.forEach { genInterface.addMember(it.copySignature()) }
+            genInterface.addMember(method.copySignature())
+        }
 
         return genInterface
     }
