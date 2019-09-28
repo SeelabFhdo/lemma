@@ -54,7 +54,7 @@ internal class CalledIntermediateOperationHandlerBase(private val communicationT
 
         val faultParameters = operation.getFaultParameters(communicationType)
             // Currently we only support synchronous fault parameters
-            .filter { it.communicationType == CommunicationType.SYNCHRONOUS }
+            .filter { it.communicationType == communicationType }
             .associate {
                 val exceptionClassImport = IntermediateFaultParameterHandler.buildExceptionClassFullyQualifiedName(it)
                 val exceptionClassName = IntermediateFaultParameterHandler.buildExceptionClassName(it)
@@ -99,7 +99,7 @@ internal class CalledIntermediateOperationHandlerBase(private val communicationT
                 """.trimToSingleLine()
             )
         } else {
-            val requiredParameters = operation.getRequiredInputParameters(CommunicationType.SYNCHRONOUS)
+            val requiredParameters = operation.getRequiredInputParameters(communicationType)
             if (requiredParameters.isNotEmpty()) {
                 val requiredParametersCheckMethod = operation.buildCheckMethodName()
                 val requiredParametersString = requiredParameters.joinToString() { it.name }
