@@ -1,5 +1,7 @@
 package de.fhdo.lemma.model_processing.code_generation.java_base
 
+import de.fhdo.lemma.data.ComplexType
+import de.fhdo.lemma.data.DataModel
 import de.fhdo.lemma.data.DataStructure
 import de.fhdo.lemma.data.Enumeration
 import de.fhdo.lemma.data.ListType
@@ -10,6 +12,12 @@ import de.fhdo.lemma.data.intermediate.IntermediateDataOperation
 import de.fhdo.lemma.data.intermediate.IntermediateDataStructure
 import de.fhdo.lemma.data.intermediate.IntermediateImportedAspect
 import de.fhdo.lemma.data.intermediate.IntermediateImportedComplexType
+import de.fhdo.lemma.model_processing.asFile
+import de.fhdo.lemma.model_processing.code_generation.java_base.languages.DATA_DSL_LANGUAGE_DESCRIPTION
+import de.fhdo.lemma.model_processing.code_generation.java_base.languages.SERVICE_DSL_LANGUAGE_DESCRIPTION
+import de.fhdo.lemma.model_processing.code_generation.java_base.modules.services.ServicesContext.State as ServicesState
+import de.fhdo.lemma.model_processing.languages.registerLanguage
+import de.fhdo.lemma.model_processing.loadXtextResource
 import de.fhdo.lemma.model_processing.utils.loadModelRoot
 import de.fhdo.lemma.model_processing.utils.mainInterface
 import de.fhdo.lemma.model_processing.utils.packageToPath
@@ -18,6 +26,7 @@ import de.fhdo.lemma.service.Interface
 import de.fhdo.lemma.service.Microservice
 import de.fhdo.lemma.service.Operation
 import de.fhdo.lemma.service.Parameter
+import de.fhdo.lemma.service.ServiceModel
 import de.fhdo.lemma.service.intermediate.IntermediateInterface
 import de.fhdo.lemma.service.intermediate.IntermediateMicroservice
 import de.fhdo.lemma.service.intermediate.IntermediateOperation
@@ -224,6 +233,82 @@ fun EObject.getAspectPropertyValue(fullyQualifiedAspectName: String, propertyNam
     = getAspect(fullyQualifiedAspectName)?.getPropertyValue(propertyName)
 
 /**
+ * Load the original [EObject] of the given intermediate [EObject] from the specified [originalModelFilePath]. The
+ * result depends on the concrete runtime type of this [EObject].
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+internal fun EObject.loadOriginalEObject(originalModelFilePath: String) : EObject {
+    val originalEObject = when (this) {
+        is IntermediateComplexType -> loadOriginalEObject(originalModelFilePath)
+        is IntermediateMicroservice -> loadOriginalEObject(originalModelFilePath)
+        is IntermediateInterface -> loadOriginalEObject(originalModelFilePath)
+        is IntermediateOperation -> loadOriginalEObject(originalModelFilePath)
+        is IntermediateParameter -> loadOriginalEObject(originalModelFilePath)
+        else -> throw IllegalArgumentException("Loading original EObject for intermediate EObject of type " +
+            "${this.mainInterface.name} is not supported")
+    }
+
+    require(originalEObject != null) { "Original EObject of intermediate EObject of type ${this.mainInterface.name} " +
+        "could not be loaded" }
+
+    return originalEObject
+}
+
+/**
+ * Load the root of the model file at the given [modelFilePath], which must point to an Xtext resource.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+@Suppress("UNCHECKED_CAST")
+private fun <T: EObject> loadOriginalModelRoot(modelFilePath: String) : T {
+    val alreadyLoadedModelRoot = loadedOriginalModelRootsCache[modelFilePath]
+    if (alreadyLoadedModelRoot != null)
+        return alreadyLoadedModelRoot as T
+
+    val modelFile = modelFilePath.asFile()
+    val languageSetup = when (modelFile.extension) {
+        "data" -> {
+            registerDataDsl()
+            DATA_DSL_LANGUAGE_DESCRIPTION.languageSetup
+        }
+        "services" -> SERVICE_DSL_LANGUAGE_DESCRIPTION.languageSetup
+        else -> throw IllegalArgumentException("Line counting in model files with extension ${modelFile.extension} " +
+            "is not supported")
+    }
+
+    val loadedModel = loadXtextResource(languageSetup, modelFilePath, modelFile.inputStream())
+    val loadedModelRoot = loadedModel.contents[0] as T
+    loadedOriginalModelRootsCache[modelFilePath] = loadedModelRoot
+    return loadedModelRoot
+}
+
+/**
+ * Flag to indicate whether the [DATA_DSL_LANGUAGE_DESCRIPTION] was already added to the EPackage registry.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+private var dataDslRegistered = false
+
+/**
+ * Add the [DATA_DSL_LANGUAGE_DESCRIPTION] to the EPackage registry, if this did not happen already.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+private fun registerDataDsl() {
+    if (!dataDslRegistered)
+        registerLanguage(DATA_DSL_LANGUAGE_DESCRIPTION.nsUri)
+    dataDslRegistered = true
+}
+
+/**
+ * Cache of loaded model roots.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+private val loadedOriginalModelRootsCache = mutableMapOf<String, EObject>()
+
+/**
  * [fullyQualifiedClassname] of [IntermediateComplexType] turned into a path. That is, the separating dots are replaced
  * by OS-specific file separators.
  *
@@ -329,12 +414,45 @@ private fun IntermediateComplexType.getQualifiedNameParts() : Triple<String?, St
 }
 
 /**
+ * Load the original [EObject] of this [IntermediateComplexType] from the specified [originalModelFilePath]. The result
+ * will be an [EObject] of type [ComplexType].
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+private fun IntermediateComplexType.loadOriginalEObject(originalModelFilePath: String) : EObject? {
+    val modelRoot = loadOriginalModelRoot<DataModel>(originalModelFilePath)
+    return modelRoot.containedComplexTypes.find { it.qualifiedName == this.qualifiedName }
+}
+
+/**
  * Property that indicates if any of the operations of this [IntermediateMicroservice] has an API comment.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 val IntermediateMicroservice.hasApiComments
     get() = interfaces.map { it.operations }.flatten().any { it.apiOperationComment != null }
+
+/**
+ * Load the original [EObject] of this [IntermediateMicroservice] from the specified [originalModelFilePath]. The result
+ * will be an [EObject] of type Microservice.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+private fun IntermediateMicroservice.loadOriginalEObject(originalModelFilePath: String) : EObject? {
+    val modelRoot = loadOriginalModelRoot<ServiceModel>(originalModelFilePath)
+    return modelRoot.microservices.find { it.qualifiedName == this.qualifiedName }
+}
+
+/**
+ * Load the original [EObject] of this [IntermediateInterface] from the specified [originalModelFilePath]. The result
+ * will be an [EObject] of type Interface.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+internal fun IntermediateInterface.loadOriginalEObject(originalModelFilePath: String) : EObject? {
+    val modelRoot = loadOriginalModelRoot<ServiceModel>(originalModelFilePath)
+    return modelRoot.microservices.map { it.interfaces }.flatten().find { it.qualifiedName == this.qualifiedName }
+}
 
 /**
  * Determine if this [IntermediateOperation] has parameters of the specified [communicationType].
@@ -388,6 +506,20 @@ internal fun IntermediateOperation.getResultParameters(communicationType: Commun
     = parameters.filter { it.communicationType == communicationType && it.isResultParameter }
 
 /**
+ * Load the original [EObject] of this [IntermediateOperation] from the specified [originalModelFilePath]. The result
+ * will be an [EObject] of type Operation.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+private fun IntermediateOperation.loadOriginalEObject(originalModelFilePath: String) : EObject? {
+    val modelRoot = loadOriginalModelRoot<ServiceModel>(originalModelFilePath)
+    return modelRoot.microservices.asSequence()
+        .map { it.interfaces }.flatten()
+        .map { it.operations }.flatten()
+        .find { it.qualifiedName == this.qualifiedName }
+}
+
+/**
  * Determine if this [IntermediateParameter] is a result parameter, i.e., it has the exchange pattern IN or INOUT and is
  * not a fault parameter.
  *
@@ -413,6 +545,21 @@ internal fun IntermediateOperation.hasCompositeResult(communicationType: Communi
  */
 internal fun IntermediateOperation.hasSingleResult(communicationType: CommunicationType)
     = parameters.count { it.communicationType == communicationType && it.isResultParameter } == 1
+
+/**
+ * Load the original [EObject] of this [IntermediateParameter] from the specified [originalModelFilePath]. The result
+ * will be an [EObject] of type Parameter.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+private fun IntermediateParameter.loadOriginalEObject(originalModelFilePath: String) : EObject? {
+    val modelRoot = loadOriginalModelRoot<ServiceModel>(originalModelFilePath)
+    return modelRoot.microservices.asSequence()
+        .map { it.interfaces }.flatten()
+        .map { it.operations }.flatten()
+        .map { it.parameters }.flatten()
+        .find { it.qualifiedName == this.qualifiedName }
+}
 
 /**
  * Get the value of the property with the given name from an [IntermediateImportedAspect]. Returns the default value (if
