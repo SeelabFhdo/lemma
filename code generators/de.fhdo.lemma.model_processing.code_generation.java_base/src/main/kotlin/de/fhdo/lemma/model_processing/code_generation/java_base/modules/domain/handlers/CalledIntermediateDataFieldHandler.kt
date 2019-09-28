@@ -65,22 +65,22 @@ internal class CalledIntermediateDataFieldHandler :
             parentClass.addDependencies(dependencies)
 
             val getterMethod = if (needsGetter) {
-                    val (getterName, getterMethod) = parentClass.addGetter(attribute)
-                    imports.forEach { getterMethod.addImport(it, ImportTargetElementType.METHOD) }
-                    if (hasFeature("NEVER_EMPTY") && type.isNullable)
-                        addNeverEmptyCheckToGetter(getterName, getterMethod)
-                    getterMethod
-                } else
-                    null
+                val (getterName, getterMethod) = parentClass.addGetter(attribute)
+                imports.forEach { getterMethod.addImport(it, ImportTargetElementType.METHOD) }
+                if (hasFeature("NEVER_EMPTY") && type.isNullable)
+                    addNeverEmptyCheckToGetter(getterName, getterMethod)
+                getterMethod
+            } else
+                null
 
             val setterMethod = if (needsSetter) {
-                    val (setterName, setterMethod) = parentClass.addSetter(attribute)
-                    if (hasFeature("NEVER_EMPTY") && type.isNullable)
-                        addNeverEmptyCheckToSetter(setterName, setterMethod)
-                    imports.forEach { setterMethod.addImport(it, ImportTargetElementType.METHOD) }
-                    setterMethod
-                } else
-                    null
+                val (setterName, setterMethod) = parentClass.addSetter(attribute)
+                if (hasFeature("NEVER_EMPTY") && type.isNullable)
+                    addNeverEmptyCheckToSetter(setterName, setterMethod)
+                imports.forEach { setterMethod.addImport(it, ImportTargetElementType.METHOD) }
+                setterMethod
+            } else
+                null
 
             if (isComplexTypeMapping) {
                 val fullyQualifiedClassname = (type as IntermediateComplexType).fullyQualifiedClassname

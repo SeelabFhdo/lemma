@@ -14,7 +14,7 @@ internal class OperationHandler
     override fun generatesNodesOfInstance() = MethodDeclaration::class.java
 
     override fun execute(operation: IntermediateOperation, method: MethodDeclaration, context: Nothing?)
-            : GenletCodeGenerationHandlerResult<MethodDeclaration>? {
+        : GenletCodeGenerationHandlerResult<MethodDeclaration>? {
         if (operation.apiOperationComment == null)
             return null
 
