@@ -16,6 +16,7 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.ast.Serializatio
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.SingleImportInfo
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.SuperclassInfo
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addImport
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addImports
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addSerializationCharacteristics
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.attributes
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.clearSerializationCharacteristics
@@ -29,7 +30,7 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.ast.emptyBody
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.getEponymousJavaClassOrInterface
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.getSuperclass
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.getFilePath
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.getNodeImportsInfo
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.getImportsInfo
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.methodsExcludingPropertyAccessors
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.newJavaClassOrInterface
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.getPackageName
@@ -226,7 +227,7 @@ internal class GenerationGapSerializerBase : KoinComponent {
                 overwritten, when the code generator is not explicitly invoked with the --preserve_existing_files 
                 command line option!
             """.trimIndent()
-        var customImplClass = generateCustomImplClass(originalClass, originalSerializationCharacteristics,
+        val customImplClass = generateCustomImplClass(originalClass, originalSerializationCharacteristics,
             originalClassnameBeforeAdaptation, originalClassPackageBeforeAdaptation, " $customImplClassComment ")
         val customImplClassFilePath = "$targetFolderPath${File.separator}$targetClassname.java"
         customImplClass.setFilePath(customImplClassFilePath)
@@ -291,13 +292,13 @@ internal class GenerationGapSerializerBase : KoinComponent {
     /**
      * Helper to copy relocatable imports from the [source] class/interface to the [target] class/interface
      */
-    private fun copyImportsForType(targetElementType : ImportTargetElementType, source: Node,
+    private fun copyImportsForType(targetElementType: ImportTargetElementType, source: Node,
         target: ClassOrInterfaceDeclaration, onlyWhenRelocatable: Boolean = false) {
-        source.getNodeImportsInfo().forEach {
+        val imports = source.getImportsInfo().filter {
             val isRelocatable = !onlyWhenRelocatable || it.isRelocatable
-            if (isRelocatable && it.targetElementType == targetElementType)
-                target.addImport(it.import, targetElementType, *it.characteristics)
+            isRelocatable && it.targetElementType == targetElementType
         }
+        target.addImports(imports)
     }
 
     /**
@@ -406,11 +407,8 @@ internal class GenerationGapSerializerBase : KoinComponent {
     /**
      * Helper to copy all imports from the [source] class/interface to the [target] class/interface
      */
-    private fun copyAllImports(source: Node, target: ClassOrInterfaceDeclaration) {
-        source.getNodeImportsInfo().forEach {
-            target.addImport(it.import, it.targetElementType, *it.characteristics)
-        }
-    }
+    private fun copyAllImports(source: Node, target: ClassOrInterfaceDeclaration)
+        = target.addImports(source.getImportsInfo().getAllImportsInfo())
 
     /**
      * Helper to replace qualifiers in type parameters of superclasses with the name of the given [clazz]

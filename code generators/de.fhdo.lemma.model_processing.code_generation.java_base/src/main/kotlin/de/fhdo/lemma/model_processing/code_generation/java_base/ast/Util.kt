@@ -314,7 +314,7 @@ private object ImportsInfoDataKey : DataKey<ImportsInfo>()
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-private fun Node.addToNodeImportsInfo(import: String, targetElementType: ImportTargetElementType,
+private fun Node.addImportsInfo(import: String, targetElementType: ImportTargetElementType,
     vararg characteristics: SerializationCharacteristic) {
     if (!containsData(ImportsInfoDataKey))
         setData(ImportsInfoDataKey, ImportsInfo(import, targetElementType, *characteristics))
@@ -330,7 +330,7 @@ private fun Node.addToNodeImportsInfo(import: String, targetElementType: ImportT
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-internal fun Node.getNodeImportsInfo()
+internal fun Node.getImportsInfo()
     = if (containsData(ImportsInfoDataKey))
             getData(ImportsInfoDataKey)
         else
@@ -342,7 +342,7 @@ internal fun Node.getNodeImportsInfo()
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 private fun Node.removeImportsInfo(import: String, targetElementType: ImportTargetElementType)
-    = getNodeImportsInfo().removeImportInfo(import, targetElementType)
+    = getImportsInfo().removeImportInfo(import, targetElementType)
 
 /**
  * Add a new [DependencyDescription] to the collected dependencies of the [MainState] in the context of a certain
@@ -543,7 +543,7 @@ fun ClassOrInterfaceDeclaration.addImport(import: String, targetElementType: Imp
     // of the class's/interface's AST node. That is, to allow functions like getAllImportsForTargetElementsOfType() to
     // retrieve import information even if it is not "visible" in the class/interface.
     val targetNodeForImports = if (isNestedType) findParentNode()!! else this
-    targetNodeForImports.addToNodeImportsInfo(import, targetElementType, *characteristics)
+    targetNodeForImports.addImportsInfo(import, targetElementType, *characteristics)
 
     val compilationUnit = findParentNode<CompilationUnit>()!!
     if (onlyAddActualIfDifferentPackage) {
@@ -557,6 +557,19 @@ fun ClassOrInterfaceDeclaration.addImport(import: String, targetElementType: Imp
 }
 
 /**
+ * Convenience function to add a list of [imports] to this [ClassOrInterfaceDeclaration].
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+internal fun ClassOrInterfaceDeclaration.addImports(imports: List<SingleImportInfo>,
+    onlyAddActualIfDifferentPackage: Boolean = true) {
+    imports.forEach {
+        addImport(it.import, it.targetElementType, *it.characteristics,
+            onlyAddActualIfDifferentPackage = onlyAddActualIfDifferentPackage)
+    }
+}
+
+/**
  * Remove the given [import] for the given [targetElementType] from this [ClassOrInterfaceDeclaration]. In case the
  * [import] does not exist anymore on any elements of the [ClassOrInterfaceDeclaration], it will also be removed from
  * the compilation unit entirely.
@@ -567,7 +580,7 @@ internal fun ClassOrInterfaceDeclaration.removeImport(import: String, targetElem
     val targetNodeForImports = if (isNestedType) findParentNode()!! else this
     targetNodeForImports.removeImportsInfo(import, targetElementType)
 
-    val importStillExistsInClass = getNodeImportsInfo().any { it.import == import }
+    val importStillExistsInClass = getImportsInfo().any { it.import == import }
     if (importStillExistsInClass)
         return
 
@@ -585,7 +598,7 @@ internal fun ClassOrInterfaceDeclaration.removeImport(import: String, targetElem
  */
 internal fun ClassOrInterfaceDeclaration.getAllImportsWithSerializationCharacteristics
     (vararg characteristics: SerializationCharacteristic)
-    = getNodeImportsInfo()
+    = getImportsInfo()
         .filter { importInfo -> importInfo.characteristics.any { it in characteristics } }
         .toList()
 
@@ -796,7 +809,7 @@ fun EnumDeclaration.addImport(import: String, targetElementType : ImportTargetEl
     // Independent of whether the import exists on the enumeration or not it will be added to the "invisible" data of
     // the enumeration's AST node. That is, to allow functions like getAllImportsForTargetElementsOfType() to retrieve
     // import information even if it is not "visible" in the enumeration.
-    addToNodeImportsInfo(import, targetElementType, *characteristics)
+    addImportsInfo(import, targetElementType, *characteristics)
 
     val compilationUnit = findParentNode<CompilationUnit>()!!
     if (onlyAddActualIfDifferentPackage) {
@@ -823,7 +836,7 @@ internal fun FieldDeclaration.setInitializationValue(value: String) = variables[
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 fun FieldDeclaration.addImport(import: String, targetElementType: ImportTargetElementType) {
-    addToNodeImportsInfo(import, targetElementType)
+    addImportsInfo(import, targetElementType)
     findParentNode<ClassOrInterfaceDeclaration>()!!.addImport(import, targetElementType)
 }
 
@@ -834,7 +847,7 @@ fun FieldDeclaration.addImport(import: String, targetElementType: ImportTargetEl
  */
 fun MethodDeclaration.addImport(import: String, targetElementType: ImportTargetElementType,
     vararg characteristics: SerializationCharacteristic)  {
-    addToNodeImportsInfo(import, targetElementType)
+    addImportsInfo(import, targetElementType, *characteristics)
     findParentNode<ClassOrInterfaceDeclaration>()!!.addImport(import, targetElementType, *characteristics)
 }
 
