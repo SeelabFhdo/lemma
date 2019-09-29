@@ -2,8 +2,16 @@ package de.fhdo.lemma.model_processing.code_generation.springcloud.handlers.aspe
 
 import com.github.javaparser.ast.Node
 import com.github.javaparser.ast.body.MethodDeclaration
-import de.fhdo.lemma.data.intermediate.*
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.*
+import de.fhdo.lemma.data.intermediate.IntermediateComplexType
+import de.fhdo.lemma.data.intermediate.IntermediateDataOperation
+import de.fhdo.lemma.data.intermediate.IntermediateImportedAspect
+import de.fhdo.lemma.data.intermediate.IntermediateListType
+import de.fhdo.lemma.data.intermediate.IntermediateType
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.ImportTargetElementType
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addDependencies
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addDependency
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addImport
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.removeImport
 import de.fhdo.lemma.model_processing.code_generation.java_base.fullyQualifiedClassname
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletStateAccess
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.AspectHandler

@@ -1,7 +1,10 @@
 package de.fhdo.lemma.model_processing.code_generation.springcloud.handlers
 
 import com.github.javaparser.ast.body.MethodDeclaration
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.*
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.ImportTargetElementType
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.SerializationCharacteristic
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addAndGetAnnotation
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addImport
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletCodeGenerationHandlerI
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletCodeGenerationHandlerResult
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.CodeGenerationHandler
