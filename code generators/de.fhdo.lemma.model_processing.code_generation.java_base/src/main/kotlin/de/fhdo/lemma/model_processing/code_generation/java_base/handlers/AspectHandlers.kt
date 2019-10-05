@@ -108,7 +108,7 @@ private const val ASPECT_HANDLER_PART_SEP = "::"
  */
 private fun buildAspectHandlerQualifiedName(eObjectNodeCombination: Pair<Class<out EObject>, Class<out Node>>,
     aspectName: String) : String {
-    val (eObjectClassname, nodeClassname) = eObjectNodeCombination.map { it::class.java.name }
+    val (eObjectClassname, nodeClassname) = eObjectNodeCombination.map { it.name }
     return "$eObjectClassname$ASPECT_HANDLER_PART_SEP$nodeClassname$ASPECT_HANDLER_PART_SEP$aspectName"
 }
 
