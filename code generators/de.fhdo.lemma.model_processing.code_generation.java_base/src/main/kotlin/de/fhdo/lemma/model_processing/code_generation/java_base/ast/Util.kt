@@ -35,6 +35,7 @@ import com.github.javaparser.ast.type.TypeParameter
 import com.github.javaparser.printer.PrettyPrinter
 import de.fhdo.lemma.model_processing.code_generation.java_base.dependencies.DependencyDescription
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.configuration.AbstractSerializationConfiguration
+import de.fhdo.lemma.technology.CommunicationType
 import java.io.File
 import java.lang.Exception
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.MainContext.State as MainState
@@ -478,7 +479,7 @@ private object FilePathDataKey : DataKey<String>()
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-internal fun newJavaClassOrInterface(packageName: String, classname: String, isInterface: Boolean = false)
+fun newJavaClassOrInterface(packageName: String, classname: String, isInterface: Boolean = false)
     : ClassOrInterfaceDeclaration {
     val compilationUnit = CompilationUnit(packageName)
     val clazz = ClassOrInterfaceDeclaration()
@@ -536,7 +537,7 @@ internal fun CompilationUnit.getPackageName() = packageDeclaration.get().name.as
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-internal fun ClassOrInterfaceDeclaration.getPackageName() = findParentNode<CompilationUnit>()!!.getPackageName()
+fun ClassOrInterfaceDeclaration.getPackageName() = findParentNode<CompilationUnit>()!!.getPackageName()
 
 /**
  * Set the package name of a [ClassOrInterfaceDeclaration]. This assumes that the instance is bundled within a
@@ -671,14 +672,18 @@ internal class SuperclassInfo(val fullyQualifiedClassname: String, val isExterna
 private object SuperclassDataKey : DataKey<SuperclassInfo>()
 
 /**
- * Add an attribute to the Java class/interface represented by a [ClassOrInterfaceDeclaration] instance. The created
- * attribute is an AST node of type [FieldDeclaration] and will be returned to the caller.
+ * Add an attribute with an optional [initializer] value to the Java class/interface represented by a
+ * [ClassOrInterfaceDeclaration] instance. The created attribute is an AST node of type [FieldDeclaration] and will be
+ * returned to the caller.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 internal fun ClassOrInterfaceDeclaration.addAttribute(attributeName: String, typeName: String,
-    vararg modifiers: Modifier.Keyword) : FieldDeclaration {
-    return addField(typeName, attributeName, *modifiers)
+    vararg modifiers: Modifier.Keyword, initializer: String? = null) : FieldDeclaration {
+    val attributeField = addField(typeName, attributeName, *modifiers)
+    if (initializer != null)
+        attributeField.setInitializationValue(initializer)
+    return attributeField
 }
 
 /**
@@ -692,15 +697,16 @@ val ClassOrInterfaceDeclaration.attributes
     get() = fields.map { it.variables[0] }
 
 /**
- * Add a private attribute to the Java class/interface represented by a [ClassOrInterfaceDeclaration] instance. The
- * created attribute is an AST node of type [FieldDeclaration] with the modifier [Modifier.Keyword.PRIVATE] and will be
- * returned to the caller. An additional [Modifier] list may be passed to the function to add further modifiers to the
- * attribute.
+ * Add a private attribute with an optional [initializer] value to the Java class/interface represented by a
+ * [ClassOrInterfaceDeclaration] instance. The created attribute is an AST node of type [FieldDeclaration] with the
+ * modifier [Modifier.Keyword.PRIVATE] and will be returned to the caller. An additional [Modifier] list may be passed
+ * to the function to add further modifiers to the attribute.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 fun ClassOrInterfaceDeclaration.addPrivateAttribute(attributeName: String, typeName: String,
-    vararg modifiers: Modifier.Keyword) = addAttribute(attributeName, typeName, Modifier.Keyword.PRIVATE, *modifiers)
+    vararg modifiers: Modifier.Keyword, initializer: String? = null)
+        = addAttribute(attributeName, typeName, Modifier.Keyword.PRIVATE, *modifiers, initializer = initializer)
 
 /**
  * Add a constructor for initializing all attributes of the given [ClassOrInterfaceDeclaration] instance at once.
@@ -1009,24 +1015,45 @@ internal fun MethodDeclaration.insertBody(otherBody: BlockStmt,
 }
 
 /**
- * Insert an implementation statement at a specified index in a Java method's implementation body. The statement is
- * provided in the form of plain Java code.
+ * Append the statements represented by the lines of the passed [body] to the body of this [MethodDeclaration].
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+fun MethodDeclaration.addStatements(body: String) {
+    val bodyLines = body.lines()
+    for (i in bodyLines.indices) {
+        val line = bodyLines[i]
+        if (line.isNotEmpty())
+            insertStatement(line, i)
+    }
+}
+
+/**
+ * Insert an implementation statement at a specified [index] in a Java method's implementation body. The statement is
+ * provided in the form of plain Java [code]. If the [index] is greater than the current amount of statements in the
+ * method's implementation body, the statement's [code] is appended as the last statement to the body.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 internal fun MethodDeclaration.insertStatement(code: String, index: Int = 0) {
-    if (!body.isPresent) {
+    require(code.isNotEmpty()) { "Code statement to insert must not be empty" }
+
+    if (emptyBody) {
         setBody(code)
         return
     }
 
-    val body = body.get()
-    val statements = body.statements
-    require(index in 0 until statements.size) { "Invalid index for insertion of statement into method $name" }
+    require(index >= 0) { "Invalid index for insertion of statement into method $name" }
 
+    val currentBody = body.orElse(null)
+    val statements = currentBody!!.statements
     val newStatement = StaticJavaParser.parseStatement(code)
-    statements.add(index, newStatement)
-    body.statements = statements
+    if (index <= statements.size)
+        statements.add(index, newStatement)
+    else
+        statements.add(newStatement)
+
+    currentBody.statements = statements
 }
 
 /**
@@ -1183,6 +1210,20 @@ internal fun MethodDeclaration.copySignature() : MethodDeclaration {
 }
 
 /**
+ * Replace the given list of parameters in the signature of this method with a composite [Parameter] of the specified
+ * [type] and [name].
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+internal fun MethodDeclaration.addCompositeParameter(type: String, name: String, communicationType: CommunicationType,
+    replacedParameters: List<Parameter>) : Parameter {
+    replacedParameters.forEach { remove(it) }
+    val compositeParameter = addAndGetParameter(type, name)
+    compositeParameter.markAsCompositeParameterFor(communicationType, replacedParameters)
+    return compositeParameter
+}
+
+/**
  * Create a delegating constructor from this [ConstructorDeclaration]. The result will be a new [ConstructorDeclaration]
  * instance.
  *
@@ -1254,3 +1295,80 @@ internal fun ConstructorDeclaration.insertStatement(code: String, index: Int = 0
     statements.add(index, newStatement)
     body.statements = statements
 }
+
+/**
+ * Mark this [Parameter] as being a composite parameter that replaced the previously existing list of
+ * [replacedParameters] in its defining method.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+internal fun Parameter.markAsCompositeParameterFor(communicationType: CommunicationType,
+    replacedParameters: List<Parameter>)
+        = setData(CompositeParameterDataKey, communicationType to replacedParameters.map { it.nameAsString })
+
+/**
+ * Data key for composite parameters of generated methods.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+private object CompositeParameterDataKey : DataKey<Pair<CommunicationType, List<String>>>()
+
+/**
+ * Verify if this [Parameter] is a composite [Parameter] for the given [communicationType]. If no [communicationType] is
+ * passed, this function returns true when the [Parameter] exhibits the [CompositeParameterDataKey], independent of its
+ * assigned communication type.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+internal fun Parameter.isCompositeParameter(communicationType: CommunicationType? = null) : Boolean {
+    if (!containsData(CompositeParameterDataKey))
+        return false
+    else if (communicationType == null)
+        return true
+
+    val (parameterCommunicationType, _) = getData(CompositeParameterDataKey)
+    return parameterCommunicationType == communicationType
+}
+
+/**
+ * Get all composite parameters of this [MethodDeclaration].
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+internal fun MethodDeclaration.getCompositeParameters(communicationType: CommunicationType? = null)
+    = parameters.filter {
+        it.isCompositeParameter() &&
+        (communicationType == null || it.getData(CompositeParameterDataKey).first == communicationType)
+    }
+
+/**
+ * Get a map that assigns to each replaced parameter of this [MethodDeclaration] the name of the composite parameter by
+ * which it was replaced.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+internal fun MethodDeclaration.getParametersToCompositeParameters(communicationType: CommunicationType? = null)
+    : Map<String, String> {
+    val compositeParameters = getCompositeParameters(communicationType)
+    if (compositeParameters.isEmpty())
+        return emptyMap()
+
+    val resultMap = mutableMapOf<String, String>()
+    compositeParameters.forEach { compositeParameter ->
+        compositeParameter.getReplacedParameterNames().forEach { resultMap[it] = compositeParameter.nameAsString }
+    }
+
+    return resultMap
+}
+
+/**
+ * If this [Parameter] is a composite parameter, retrieve a list of the names of the parameters it replaced. Returns an
+ * empty list in case this [Parameter] is not a composite parameter.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+internal fun Parameter.getReplacedParameterNames()
+    = if (isCompositeParameter())
+            getData(CompositeParameterDataKey).second
+        else
+            emptyList()

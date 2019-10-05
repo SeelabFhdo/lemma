@@ -24,22 +24,35 @@ internal class InterfaceHandler
 
     override fun execute(iface: IntermediateInterface, ifaceClass: ClassOrInterfaceDeclaration, context: Nothing?)
         : GenletCodeGenerationHandlerResult<ClassOrInterfaceDeclaration>? {
-        if (!iface.usesProtocol("rest"))
-            return GenletCodeGenerationHandlerResult(ifaceClass)
+        ifaceClass.addImport(
+            "org.springframework.stereotype.Component",
+            ImportTargetElementType.ANNOTATION,
+            SerializationCharacteristic.DONT_RELOCATE
+        )
+        ifaceClass.addAnnotation("Component", SerializationCharacteristic.DONT_RELOCATE)
 
-        ifaceClass.addImport("org.springframework.web.bind.annotation.RestController",
-            ImportTargetElementType.ANNOTATION, SerializationCharacteristic.DONT_RELOCATE)
-        ifaceClass.addDependency("org.springframework.boot:spring-boot-starter-web")
-        ifaceClass.addSerializationCharacteristic(SerializationCharacteristic.NO_CONSTRUCTORS)
-        ifaceClass.addAnnotation("RestController", SerializationCharacteristic.DONT_RELOCATE)
+        if (iface.usesProtocol("rest")) {
+            ifaceClass.addImport(
+                "org.springframework.web.bind.annotation.RestController",
+                ImportTargetElementType.ANNOTATION,
+                SerializationCharacteristic.DONT_RELOCATE
+            )
+            ifaceClass.addDependency("org.springframework.boot:spring-boot-starter-web")
+            ifaceClass.addSerializationCharacteristic(SerializationCharacteristic.NO_CONSTRUCTORS)
+            ifaceClass.addAnnotation("RestController", SerializationCharacteristic.DONT_RELOCATE)
 
-        val restEndpoint = iface.getEndpoint("rest") ?: return GenletCodeGenerationHandlerResult(ifaceClass)
-        ifaceClass.addImport("org.springframework.web.bind.annotation.RequestMapping",
-            ImportTargetElementType.ANNOTATION, SerializationCharacteristic.REMOVE_ON_RELOCATION)
-        val requestMappingAnnotation = ifaceClass.addAndGetAnnotation("RequestMapping",
-            SerializationCharacteristic.REMOVE_ON_RELOCATION)
-        val addressesAnnotationValue = "{" + buildEndpointAddresses(restEndpoint) + "}"
-        requestMappingAnnotation.addPair("value", addressesAnnotationValue)
+            val restEndpoint = iface.getEndpoint("rest") ?: return GenletCodeGenerationHandlerResult(ifaceClass)
+            ifaceClass.addImport(
+                "org.springframework.web.bind.annotation.RequestMapping",
+                ImportTargetElementType.ANNOTATION, SerializationCharacteristic.REMOVE_ON_RELOCATION
+            )
+            val requestMappingAnnotation = ifaceClass.addAndGetAnnotation(
+                "RequestMapping",
+                SerializationCharacteristic.REMOVE_ON_RELOCATION
+            )
+            val addressesAnnotationValue = "{" + buildEndpointAddresses(restEndpoint) + "}"
+            requestMappingAnnotation.addPair("value", addressesAnnotationValue)
+        }
 
         return GenletCodeGenerationHandlerResult(ifaceClass)
     }

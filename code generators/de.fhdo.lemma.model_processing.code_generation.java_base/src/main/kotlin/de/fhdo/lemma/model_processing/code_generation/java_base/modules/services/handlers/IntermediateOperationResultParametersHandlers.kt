@@ -1,65 +1,73 @@
 package de.fhdo.lemma.model_processing.code_generation.java_base.modules.services.handlers
 
-import com.github.javaparser.ast.Modifier
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration
 import com.github.javaparser.ast.body.MethodDeclaration
+import com.github.javaparser.ast.comments.LineComment
 import de.fhdo.lemma.data.intermediate.IntermediateComplexType
 import de.fhdo.lemma.data.intermediate.IntermediateType
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.ImportTargetElementType
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addAttribute
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addBodyComment
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addDependencies
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addGetter
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addImport
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addSetter
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.newJavaClassOrInterface
-import de.fhdo.lemma.model_processing.code_generation.java_base.buildOperationPackageName
-import de.fhdo.lemma.model_processing.code_generation.java_base.classname
+import de.fhdo.lemma.model_processing.code_generation.java_base.buildCompositeClassName
+import de.fhdo.lemma.model_processing.code_generation.java_base.buildFullyQualifiedCompositeClassName
 import de.fhdo.lemma.model_processing.code_generation.java_base.fullyQualifiedClassname
 import de.fhdo.lemma.model_processing.code_generation.java_base.getResultParameters
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.CallableCodeGenerationHandlerI
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.CodeGenerationHandler
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.VisitingCodeGenerationHandlerI
 import de.fhdo.lemma.model_processing.code_generation.java_base.hasCompositeResult
-import de.fhdo.lemma.model_processing.code_generation.java_base.hasSingleResult
+import de.fhdo.lemma.model_processing.code_generation.java_base.hasResultParameters
 import de.fhdo.lemma.model_processing.code_generation.java_base.languages.getTypeMapping
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.domain.DomainContext.State as DomainState
-import de.fhdo.lemma.model_processing.code_generation.java_base.modules.services.ServicesContext.State as ServicesState
-import de.fhdo.lemma.model_processing.code_generation.java_base.modules.services.handlers.IntermediateOperationCompositeResultHandlerBase.Companion.buildCompositeResultClassFullyQualifiedName
-import de.fhdo.lemma.model_processing.code_generation.java_base.modules.services.handlers.IntermediateOperationCompositeResultHandlerBase.Companion.buildCompositeResultClassName
-import de.fhdo.lemma.model_processing.utils.packageToPath
+import de.fhdo.lemma.model_processing.code_generation.java_base.toCompositeClass
 import de.fhdo.lemma.service.intermediate.IntermediateOperation
-import de.fhdo.lemma.service.intermediate.IntermediateParameter
 import de.fhdo.lemma.technology.CommunicationType
-import java.io.File
 
 @CodeGenerationHandler
-internal class CalledIntermediateOperationResultParametersHandlerSync
-    : CalledIntermediateOperationResultParametersHandlerBase(CommunicationType.SYNCHRONOUS)
+internal open class CalledIntermediateOperationResultParametersHandler
+    : CallableCodeGenerationHandlerI<IntermediateOperation, MethodDeclaration, MethodDeclaration> {
+    companion object {
+        fun invoke(operation: IntermediateOperation, generatedMethod: MethodDeclaration?)
+            = CalledIntermediateOperationResultParametersHandler().invoke(operation, generatedMethod)
+    }
 
-@CodeGenerationHandler
-internal class CalledIntermediateOperationResultParametersHandlerAsync
-    : CalledIntermediateOperationResultParametersHandlerBase(CommunicationType.ASYNCHRONOUS)
-
-internal open class CalledIntermediateOperationResultParametersHandlerBase
-    (private val communicationType: CommunicationType)
-    : CallableCodeGenerationHandlerI<IntermediateParameter, MethodDeclaration,
-        Pair<IntermediateOperation, MethodDeclaration>> {
     private val currentDomainPackage: String by DomainState
 
-    override fun handlesEObjectsOfInstance() = IntermediateParameter::class.java
+    override fun handlesEObjectsOfInstance() = IntermediateOperation::class.java
     override fun generatesNodesOfInstance() = MethodDeclaration::class.java
-    override fun getAspects(resultParameter: IntermediateParameter) = resultParameter.aspects!!
 
-    override fun execute(resultParameter: IntermediateParameter,
-        methodGenerationInputOutput: Pair<IntermediateOperation, MethodDeclaration>?)
+    // Disable treatment of output parameters. They should be treated by Genlets targeting the EObject-node-combination
+    // IntermediateOperation to MethodDeclaration, i.e., when the return type of the method was eventually determined.
+    override fun disableGenlets() = true
+
+    override fun execute(operation: IntermediateOperation, context: MethodDeclaration?)
         : Pair<MethodDeclaration, String?>? {
-        val (operation, generatedMethod) = methodGenerationInputOutput!!
-        if (operation.hasCompositeResult(communicationType)) {
-            generatedMethod.setType(buildCompositeResultClassName(operation, communicationType))
-            generatedMethod.addImport(buildCompositeResultClassFullyQualifiedName(operation, communicationType),
-                ImportTargetElementType.METHOD)
-        } else if (operation.hasSingleResult(communicationType))
-            generatedMethod.setType(determineType(resultParameter.type, generatedMethod))
+        val generatedMethod = context!!
+
+        if (operation.hasResultParameters(CommunicationType.ASYNCHRONOUS)) {
+            val compositeResultClass = operation.buildCompositeClassName(CommunicationType.ASYNCHRONOUS, true)
+            generatedMethod.addBodyComment(LineComment(
+                "TODO Method should asynchronously return one or more instances of $compositeResultClass"
+            ))
+        }
+
+        if (!operation.hasResultParameters(CommunicationType.SYNCHRONOUS)) {
+            // Asynchronous output parameters are never returned directly
+            generatedMethod.setType("void")
+            return generatedMethod to null
+        }
+
+        if (operation.hasCompositeResult(CommunicationType.SYNCHRONOUS)) {
+            generatedMethod.setType(operation.buildCompositeClassName(CommunicationType.SYNCHRONOUS, true))
+            generatedMethod.addImport(
+                operation.buildFullyQualifiedCompositeClassName(CommunicationType.SYNCHRONOUS, true),
+                ImportTargetElementType.METHOD
+            )
+        } else {
+            val singleResultParameter = operation.getResultParameters(CommunicationType.SYNCHRONOUS)[0]
+            generatedMethod.setType(determineType(singleResultParameter.type, generatedMethod))
+        }
 
         return generatedMethod to null
     }
@@ -93,68 +101,21 @@ internal class IntermediateOperationCompositeResultHandlerAsync
 
 internal open class IntermediateOperationCompositeResultHandlerBase(private val communicationType: CommunicationType)
     : VisitingCodeGenerationHandlerI<IntermediateOperation, ClassOrInterfaceDeclaration, Nothing> {
-    companion object {
-        private val currentInterfacesGenerationPackage: String by ServicesState
-        private val currentDomainPackage: String by DomainState
-
-        fun buildCompositeResultClassFullyQualifiedName(operation: IntermediateOperation,
-            communicationType: CommunicationType) : String {
-            return "${operation.buildOperationPackageName()}." +
-                buildCompositeResultClassName(operation, communicationType)
-        }
-
-        fun buildCompositeResultClassName(operation: IntermediateOperation, communicationType: CommunicationType)
-            : String {
-            val communicationTypeIdentifier = when(communicationType) {
-                CommunicationType.ASYNCHRONOUS -> "Async"
-                CommunicationType.SYNCHRONOUS -> ""
-            }
-
-            return "${operation.classname}${communicationTypeIdentifier}Result"
-        }
-    }
-
-    private val interfaceSubFolderName: String by ServicesState
-
     override fun handlesEObjectsOfInstance() = IntermediateOperation::class.java
     override fun generatesNodesOfInstance() = ClassOrInterfaceDeclaration::class.java
 
     override fun execute(operation: IntermediateOperation, context: Nothing?)
         : Pair<ClassOrInterfaceDeclaration, String?>? {
-        val packageName = operation.buildOperationPackageName()
-        val classname = buildCompositeResultClassName(operation, communicationType)
-        val generatedClass = newJavaClassOrInterface(packageName, classname)
+        val generateCompositeClass = when(communicationType) {
+            CommunicationType.SYNCHRONOUS -> operation.hasCompositeResult(CommunicationType.SYNCHRONOUS)
 
-        if (!operation.hasCompositeResult(communicationType))
-            return generatedClass to null
-
-        val compositeResultParameters = operation.getResultParameters(communicationType)
-        compositeResultParameters.forEach { parameter ->
-            val typeMapping = parameter.type.getTypeMapping()
-            val parameterType = if (typeMapping != null) {
-                val (mappedTypeName, isComplexTypeMapping, imports, dependencies) = typeMapping
-                imports.forEach { generatedClass.addImport(it, ImportTargetElementType.METHOD) }
-                generatedClass.addDependencies(dependencies)
-
-                if (isComplexTypeMapping) {
-                    val fullyQualifiedClassname = (parameter.type as IntermediateComplexType).fullyQualifiedClassname
-                    val complexTypeFullyQualifiedName = "$currentDomainPackage.$fullyQualifiedClassname"
-                    generatedClass.addImport(complexTypeFullyQualifiedName, ImportTargetElementType.METHOD)
-                }
-
-                mappedTypeName
-            } else
-                "${parameter.type.name}_ExpectedFromGenlet"
-
-            val parameterAttribute = generatedClass.addAttribute(parameter.name, parameterType,
-                Modifier.Keyword.PRIVATE)
-            generatedClass.addSetter(parameterAttribute)
-            generatedClass.addGetter(parameterAttribute)
+            // Always build result class for asynchronous output parameters
+            CommunicationType.ASYNCHRONOUS -> operation.hasResultParameters(CommunicationType.ASYNCHRONOUS)
         }
 
-        val operationSubFolder = operation.buildOperationPackageName(subPackageOnly = true).packageToPath()
-        val generatedFilePath = listOf(interfaceSubFolderName, operationSubFolder, "$classname.java")
-            .joinToString(File.separator)
-        return generatedClass to generatedFilePath
+        return if (generateCompositeClass)
+                operation.getResultParameters(communicationType).toCompositeClass(communicationType, true)
+            else
+                null
     }
 }

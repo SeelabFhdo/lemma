@@ -1,5 +1,6 @@
 package de.fhdo.lemma.model_processing.code_generation.java_base
 
+import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration
 import de.fhdo.lemma.data.ComplexType
 import de.fhdo.lemma.data.DataModel
 import de.fhdo.lemma.data.DataStructure
@@ -13,14 +14,24 @@ import de.fhdo.lemma.data.intermediate.IntermediateDataStructure
 import de.fhdo.lemma.data.intermediate.IntermediateImportedAspect
 import de.fhdo.lemma.data.intermediate.IntermediateImportedComplexType
 import de.fhdo.lemma.model_processing.asFile
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.ImportTargetElementType
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addDependencies
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addGetter
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addImport
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addPrivateAttribute
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addSetter
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.newJavaClassOrInterface
 import de.fhdo.lemma.model_processing.code_generation.java_base.languages.DATA_DSL_LANGUAGE_DESCRIPTION
 import de.fhdo.lemma.model_processing.code_generation.java_base.languages.SERVICE_DSL_LANGUAGE_DESCRIPTION
+import de.fhdo.lemma.model_processing.code_generation.java_base.languages.getTypeMapping
+import de.fhdo.lemma.model_processing.code_generation.java_base.modules.domain.DomainContext.State as DomainState
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.services.ServicesContext.State as ServicesState
 import de.fhdo.lemma.model_processing.languages.registerLanguage
 import de.fhdo.lemma.model_processing.loadXtextResource
 import de.fhdo.lemma.model_processing.utils.loadModelRoot
 import de.fhdo.lemma.model_processing.utils.mainInterface
 import de.fhdo.lemma.model_processing.utils.packageToPath
+import de.fhdo.lemma.model_processing.utils.putValue
 import de.fhdo.lemma.model_processing.utils.trimToSingleLine
 import de.fhdo.lemma.service.Interface
 import de.fhdo.lemma.service.Microservice
@@ -37,6 +48,7 @@ import de.fhdo.lemma.technology.ExchangePattern
 import io.github.classgraph.ClassGraph
 import io.github.classgraph.ClassInfo
 import org.eclipse.emf.ecore.EObject
+import java.io.File
 import java.lang.IllegalArgumentException
 
 /**
@@ -141,7 +153,6 @@ internal fun EObject.buildOperationPackageName(targetInterfaceName: String = "",
         }
 }
 
-
 /**
  * Property representing the fully-qualified classname of an [EObject], e.g., an [IntermediateComplexType] or an
  * [IntermediateMicroservice].
@@ -171,16 +182,21 @@ fun EObject.getEndpoint(protocol: String)
     }
 
 /**
- * Determine if [IntermediateInterface], [IntermediateOperation], or [IntermediateReferredOperation] makes use of the
- * given [protocol].
+ * Determine if [IntermediateMicroservice], [IntermediateInterface], [IntermediateOperation], or
+ * [IntermediateReferredOperation] makes use of the given [protocol].
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 fun EObject.usesProtocol(protocol: String) : Boolean {
-    require(this is IntermediateInterface || this is IntermediateOperation || this is IntermediateReferredOperation)
-        { "EObject of type ${this.mainInterface.name} does not use protocols" }
+    require(
+        this is IntermediateMicroservice ||
+        this is IntermediateInterface ||
+        this is IntermediateOperation ||
+        this is IntermediateReferredOperation
+    ) { "EObject of type ${this.mainInterface.name} does not use protocols" }
 
     val protocols = when (this) {
+        is IntermediateMicroservice -> protocols
         is IntermediateInterface -> protocols
         is IntermediateOperation -> protocols
         is IntermediateReferredOperation -> protocols
@@ -188,6 +204,7 @@ fun EObject.usesProtocol(protocol: String) : Boolean {
     }
 
     val endpoints = when (this) {
+        is IntermediateMicroservice -> endpoints
         is IntermediateInterface -> endpoints
         is IntermediateOperation -> endpoints
         is IntermediateReferredOperation -> endpoints
@@ -222,6 +239,7 @@ internal fun EObject.getAllAspects()
         is IntermediateDataStructure -> aspects
         is IntermediateDataOperation -> aspects
         is IntermediateMicroservice -> aspects
+        is IntermediateParameter -> aspects
         else -> throw IllegalArgumentException("EObject of type ${this.mainInterface.name} does not have aspects")
     }
 
@@ -484,21 +502,12 @@ internal fun IntermediateInterface.loadOriginalEObject(originalModelFilePath: St
 }
 
 /**
- * Determine if this [IntermediateOperation] has parameters of the specified [communicationType].
+ * Determine if this [IntermediateOperation] has input parameters of the specified [communicationType].
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-internal fun IntermediateOperation.hasParametersOfCommunicationType(communicationType: CommunicationType)
-    = parameters.any { it.communicationType == communicationType }
-
-/**
- * Get non-fault parameters of this [IntermediateOperation] having the specified [communicationType] and whose exchange
- * pattern is IN or INOUT.
- *
- * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
- */
-internal fun IntermediateOperation.getInputParameters(communicationType: CommunicationType)
-    = parameters.filter { it.communicationType == communicationType && it.isInputParameter }
+fun IntermediateOperation.hasInputParameters(communicationType: CommunicationType)
+    = parameters.any { it.communicationType == communicationType && it.isInputParameter }
 
 /**
  * Determine if this [IntermediateParameter] is an input parameter, i.e., it has the exchange pattern IN or INOUT and is
@@ -510,12 +519,58 @@ private val IntermediateParameter.isInputParameter
     get() = !isCommunicatesFault && (exchangePattern == ExchangePattern.INOUT || exchangePattern == ExchangePattern.IN)
 
 /**
- * Get non-optional input parameters of this [IntermediateOperation].
+ * Get all input parameters of this [IntermediateOperation] for the specified [communicationType]. In case no
+ * [communicationType] is passed, all input parameters will be returned.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-internal fun IntermediateOperation.getRequiredInputParameters(communicationType: CommunicationType)
+fun IntermediateOperation.getInputParameters(communicationType: CommunicationType? = null)
+    = parameters.filter {
+    (communicationType == null || it.communicationType == communicationType) && it.isInputParameter
+}
+
+/**
+ * Determine if this [IntermediateOperation] has required input parameters of the specified [communicationType]. In case
+ * no [communicationType] is passed, the function will return true if there is at least one required input parameter.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+internal fun IntermediateOperation.hasRequiredInputParameters(communicationType: CommunicationType? = null)
+    = getInputParameters(communicationType).any { !it.isOptional }
+
+/**
+ * Get all required input parameters of this [IntermediateOperation] for the specified [communicationType]. In case no
+ * [communicationType] is passed, all required input parameters will be returned.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+internal fun IntermediateOperation.getRequiredInputParameters(communicationType: CommunicationType? = null)
     = getInputParameters(communicationType).filter { !it.isOptional }
+
+/**
+ * Determine if this [IntermediateOperation] has result parameters of the specified [communicationType].
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+fun IntermediateOperation.hasResultParameters(communicationType: CommunicationType)
+    = parameters.any { it.communicationType == communicationType && it.isResultParameter }
+
+/**
+ * Determine if this [IntermediateParameter] is a result parameter, i.e., it has the exchange pattern IN or INOUT and is
+ * not a fault parameter.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+private val IntermediateParameter.isResultParameter
+    get() = !isCommunicatesFault && (exchangePattern == ExchangePattern.INOUT || exchangePattern == ExchangePattern.OUT)
+
+/**
+ * Get result parameters of this [IntermediateOperation] having the specified [communicationType].
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+fun IntermediateOperation.getResultParameters(communicationType: CommunicationType)
+    = parameters.filter { it.communicationType == communicationType && it.isResultParameter }
 
 /**
  * Get fault parameters of this [IntermediateOperation] having the specified [communicationType].
@@ -523,16 +578,7 @@ internal fun IntermediateOperation.getRequiredInputParameters(communicationType:
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 internal fun IntermediateOperation.getFaultParameters(communicationType: CommunicationType)
-    = parameters.filter { it.isCommunicatesFault }
-
-/**
- * Get non-fault parameters of this [IntermediateOperation] having the specified [communicationType] and whose exchange
- * pattern is OUT or INOUT.
- *
- * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
- */
-internal fun IntermediateOperation.getResultParameters(communicationType: CommunicationType)
-    = parameters.filter { it.communicationType == communicationType && it.isResultParameter }
+    = parameters.filter { it.communicationType == communicationType && it.isCommunicatesFault }
 
 /**
  * Load the original [EObject] of this [IntermediateOperation] from the specified [originalModelFilePath]. The result
@@ -549,15 +595,6 @@ private fun IntermediateOperation.loadOriginalEObject(originalModelFilePath: Str
 }
 
 /**
- * Determine if this [IntermediateParameter] is a result parameter, i.e., it has the exchange pattern IN or INOUT and is
- * not a fault parameter.
- *
- * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
- */
-private val IntermediateParameter.isResultParameter
-    get() = !isCommunicatesFault && (exchangePattern == ExchangePattern.INOUT || exchangePattern == ExchangePattern.OUT)
-
-/**
  * Determine if this [IntermediateOperation] returns a composite result for the specified [communicationType]. That is,
  * it has more than one result parameter.
  *
@@ -567,13 +604,83 @@ internal fun IntermediateOperation.hasCompositeResult(communicationType: Communi
     = parameters.count { it.communicationType == communicationType && it.isResultParameter } > 1
 
 /**
- * Determine if this [IntermediateOperation] returns a single result for the specified [communicationType]. That is, it
- * has exactly one result parameter.
+ * Determine the name of a composite class that represents a composite input or result object of this
+ * [IntermediateOperation] depending on the passed [communicationType].
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-internal fun IntermediateOperation.hasSingleResult(communicationType: CommunicationType)
-    = parameters.count { it.communicationType == communicationType && it.isResultParameter } == 1
+fun IntermediateOperation.buildCompositeClassName(communicationType: CommunicationType, forResult: Boolean = false)
+    : String {
+    val communicationTypeSuffix = when(communicationType) {
+        CommunicationType.SYNCHRONOUS -> ""
+        CommunicationType.ASYNCHRONOUS -> "Async"
+    }
+
+    val resultSuffix = if (forResult) "Result" else ""
+    return "$classname$communicationTypeSuffix$resultSuffix"
+}
+
+/**
+ * Build the fully-qualified name of a composite class related to this [IntermediateOperation] (cf.
+ * [buildCompositeClassName]).
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+fun IntermediateOperation.buildFullyQualifiedCompositeClassName(communicationType: CommunicationType,
+    forResult: Boolean = false)
+    = "${buildOperationPackageName()}.${buildCompositeClassName(communicationType, forResult)}"
+
+/**
+ * Build a composite class from this list of [IntermediateParameter] instances. The composite class is a POJO with
+ * fields, getters, and setters corresponding to the [IntermediateParameter] instances in the list. This function will
+ * return a [ClassOrInterfaceDeclaration] instance, which represents the class, and the path in which the class shall be
+ * serialized.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+internal fun List<IntermediateParameter>.toCompositeClass(communicationType: CommunicationType,
+    forResult: Boolean = false) : Pair<ClassOrInterfaceDeclaration, String> {
+    require(isNotEmpty()) { "List of parameters for building composite class must not be empty" }
+    val operation = first().operation
+    require(!any { it.operation != operation })
+        { "When building composite class for parameters, all parameters must belong to the same operation" }
+
+    val packageName = operation.buildOperationPackageName()
+    val classname = operation.buildCompositeClassName(communicationType, forResult)
+    val generatedClass = newJavaClassOrInterface(packageName, classname)
+
+    // Generate fields, getters, and setters for each IntermediateParameter instance in this list
+    val currentDomainPackage: String by DomainState
+    val interfaceSubFolderName: String by ServicesState
+    forEach { parameter ->
+        // Determine type
+        val typeMapping = parameter.type.getTypeMapping()
+        val parameterType = if (typeMapping != null) {
+            val (mappedTypeName, isComplexTypeMapping, imports, dependencies) = typeMapping
+            imports.forEach { generatedClass.addImport(it, ImportTargetElementType.METHOD) }
+            generatedClass.addDependencies(dependencies)
+
+            if (isComplexTypeMapping) {
+                val fullyQualifiedClassname = (parameter.type as IntermediateComplexType).fullyQualifiedClassname
+                val complexTypeFullyQualifiedName = "$currentDomainPackage.$fullyQualifiedClassname"
+                generatedClass.addImport(complexTypeFullyQualifiedName, ImportTargetElementType.METHOD)
+            }
+
+            mappedTypeName
+        } else
+            "${parameter.type.name}_ExpectedFromGenlet"
+
+        // Add field, getter, and setter
+        val parameterAttribute = generatedClass.addPrivateAttribute(parameter.name, parameterType)
+        generatedClass.addSetter(parameterAttribute)
+        generatedClass.addGetter(parameterAttribute)
+    }
+
+    val operationSubFolder = operation.buildOperationPackageName(subPackageOnly = true).packageToPath()
+    val generatedFilePath = listOf(interfaceSubFolderName, operationSubFolder, "$classname.java")
+        .joinToString(File.separator)
+    return generatedClass to generatedFilePath
+}
 
 /**
  * Load the original [EObject] of this [IntermediateParameter] from the specified [originalModelFilePath]. The result
@@ -648,17 +755,15 @@ internal inline fun <reified T> findAnnotatedClassesWithInterface(searchPackage:
  */
 internal inline fun <reified T> findAndMapAnnotatedClassesWithInterface(searchPackage: String, annotation: String,
     vararg classLoaders: ClassLoader, interfaceClassname: String = T::class.java.name,
-    identifierBuilder: (T) -> String)
-    : Map<String, Class<T>> {
+    identifierBuilder: (T) -> String) : Map<String, Set<Class<T>>> {
     val foundClasses = findAnnotatedClassesWithInterface<T>(searchPackage, annotation, *classLoaders,
         interfaceClassname = interfaceClassname)
 
-    val resultMap = mutableMapOf<String, Class<T>>()
-    resultMap.putAll(
-        pairs = foundClasses.map {
-            val identifier = identifierBuilder(it.getDeclaredConstructor().newInstance())
-            identifier to it
-        }
-    )
+    val resultMap = mutableMapOf<String, MutableSet<Class<T>>>()
+    foundClasses.forEach {
+        val identifier = identifierBuilder(it.getDeclaredConstructor().newInstance())
+        resultMap.putValue(identifier, it)
+    }
+
     return resultMap
 }

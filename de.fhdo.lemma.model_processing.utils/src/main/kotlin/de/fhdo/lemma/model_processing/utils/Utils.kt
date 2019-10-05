@@ -85,6 +85,23 @@ fun <K1: Any?, K2: Any?, V: Any?> MutableMap<K1, MutableMap<K2, V>>.putValue(key
 }
 
 /**
+ * Put a value in a map, whose value-type is a [MutableCollection]. That is, the value will be put to the
+ * [MutableCollection] being assigned to the given key. In case the key is not part of the main map yet, it will be
+ * inserted and get a [MutableCollection] assigned that comprises the given value.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+inline fun <K: Any?, reified V: Any?, reified C: MutableCollection<V>> MutableMap<K, C>.putValue(key: K, value: V) {
+    if (!this.containsKey(key))
+        this[key] = when (C::class.java.name) {
+            MutableSet::class.java.name -> mutableSetOf<V>() as C
+            else -> mutableListOf<V>() as C
+        }
+
+    this[key]!!.add(value)
+}
+
+/**
  * Convert a [List] of [Pair] instances to a [MutableMap] instance.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)

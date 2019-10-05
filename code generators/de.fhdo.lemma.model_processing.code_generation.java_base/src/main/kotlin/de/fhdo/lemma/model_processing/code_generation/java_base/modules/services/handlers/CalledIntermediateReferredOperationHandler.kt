@@ -21,26 +21,18 @@ import de.fhdo.lemma.technology.CommunicationType
 import org.eclipse.emf.ecore.util.EcoreUtil
 
 @CodeGenerationHandler
-internal class CalledIntermediateReferredOperationHandlerSync {
+internal class CalledIntermediateReferredOperationHandler {
     companion object {
         fun invoke(operation: IntermediateReferredOperation, parentClass: ClassOrInterfaceDeclaration)
-            = operation.generate(parentClass, CommunicationType.SYNCHRONOUS)
+            = operation.generate(parentClass)
     }
 }
 
-@CodeGenerationHandler
-internal class CalledIntermediateReferredOperationHandlerAsync {
-    companion object {
-        fun invoke(operation: IntermediateReferredOperation, parentClass: ClassOrInterfaceDeclaration)
-            = operation.generate(parentClass, CommunicationType.ASYNCHRONOUS)
-    }
-}
-
-private fun IntermediateReferredOperation.generate(parentClass: ClassOrInterfaceDeclaration,
-    communicationType: CommunicationType) : Pair<MethodDeclaration, String?>? {
+private fun IntermediateReferredOperation.generate(parentClass: ClassOrInterfaceDeclaration)
+    : Pair<MethodDeclaration, String?>? {
     val derivedOperationForGeneration = toOperation()
-    val operationGenerationResult = CalledIntermediateOperationHandlerBase(communicationType)
-        .invoke(derivedOperationForGeneration, parentClass)
+    val operationGenerationResult =
+        CalledIntermediateOperationHandler.invoke(derivedOperationForGeneration, parentClass)
     restoreFrom(derivedOperationForGeneration)
 
     if (operationGenerationResult == null)

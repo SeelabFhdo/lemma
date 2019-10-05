@@ -4,7 +4,6 @@ import com.github.javaparser.ast.Node
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration
 import com.github.javaparser.ast.body.MethodDeclaration
 import com.github.javaparser.ast.expr.NormalAnnotationExpr
-import com.github.javaparser.ast.type.ClassOrInterfaceType
 import de.fhdo.lemma.data.intermediate.IntermediateImportedAspect
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.ImportTargetElementType
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addImport
@@ -26,7 +25,6 @@ internal class ParameterHandler : AspectHandlerI {
         "java.PathVariable" to listOf(MethodDeclaration::class.java),
         "java.RequestBody" to listOf(MethodDeclaration::class.java),
         "java.RequestParam" to listOf(MethodDeclaration::class.java),
-        "java.ResponseEntity" to listOf(MethodDeclaration::class.java),
         "java.Valid" to listOf(MethodDeclaration::class.java)
     )
 
@@ -74,22 +72,13 @@ internal class ParameterHandler : AspectHandlerI {
         aspect: IntermediateImportedAspect) : Node {
         val (import, targetElementType) = when(aspect.name) {
             "Valid" -> "javax.validation.Valid" to ImportTargetElementType.ANNOTATION
-            "ResponseEntity" -> "org.springframework.http.ResponseEntity" to ImportTargetElementType.METHOD
             else -> "org.springframework.web.bind.annotation.${aspect.name}" to ImportTargetElementType.ANNOTATION
         }
 
         generatedMethod.addImport(import, targetElementType)
-
-        if (aspect.name != "ResponseEntity") {
-            val generatedParameter = generatedMethod.getParameter(parameter.name)!!
-            val annotation = generatedParameter.addAndGetAnnotation(aspect.name)
-            annotation.refine(parameter, aspect)
-        } else if (generatedMethod.type is ClassOrInterfaceType) {
-            val currentType = (generatedMethod.type as ClassOrInterfaceType).nameAsString
-            if (currentType != "ResponseEntity")
-                generatedMethod.setType("ResponseEntity<$currentType>")
-        }
-
+        val generatedParameter = generatedMethod.getParameter(parameter.name)!!
+        val annotation = generatedParameter.addAndGetAnnotation(aspect.name)
+        annotation.refine(parameter, aspect)
         return generatedMethod
     }
 

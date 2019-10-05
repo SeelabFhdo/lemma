@@ -1,6 +1,7 @@
 package de.fhdo.lemma.model_processing.code_generation.java_base.modules.services.handlers
 
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration
+import com.github.javaparser.ast.body.MethodDeclaration
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.newJavaClassOrInterface
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.setBody
 import de.fhdo.lemma.model_processing.code_generation.java_base.classname
@@ -34,41 +35,36 @@ internal class IntermediateInterfaceHandler
         )
 
         intermediateInterface.operations.forEach {
-            it.generateMethod(generatedInterfaceClass, CommunicationType.ASYNCHRONOUS)
-            it.generateMethod(generatedInterfaceClass, CommunicationType.SYNCHRONOUS)
-            CalledRequiredIntermediateOperationHandler.invoke(it, generatedInterfaceClass)
+            val generatedMethod = it.generateMethod(generatedInterfaceClass)
+            if (generatedMethod != null) {
+                CalledRequiredIntermediateOperationHandler.invoke(it, generatedInterfaceClass,
+                    CommunicationType.SYNCHRONOUS)
+                CalledRequiredIntermediateOperationHandler.invoke(it, generatedInterfaceClass,
+                    CommunicationType.ASYNCHRONOUS)
+            }
         }
 
         intermediateInterface.referredOperations.forEach {
-            it.generateMethod(generatedInterfaceClass, CommunicationType.ASYNCHRONOUS)
-            it.generateMethod(generatedInterfaceClass, CommunicationType.SYNCHRONOUS)
+            it.generateMethod(generatedInterfaceClass)
         }
 
         return generatedInterfaceClass to "$interfaceSubFolderName${File.separator}" +
             intermediateInterface.javaFileName
     }
 
-    private fun EObject.generateMethod(parentClass: ClassOrInterfaceDeclaration, communicationType: CommunicationType) {
-        val methodGenerationResultAndIntermediateInterface = when(this) {
-            is IntermediateOperation -> when(communicationType) {
-                CommunicationType.ASYNCHRONOUS ->
-                    CalledIntermediateOperationHandlerAsync.invoke(this, parentClass) to this.`interface`
-                CommunicationType.SYNCHRONOUS ->
-                    CalledIntermediateOperationHandlerSync.invoke(this, parentClass)  to this.`interface`
-            }
+    private fun EObject.generateMethod(parentClass: ClassOrInterfaceDeclaration)
+        : MethodDeclaration? {
+        val (methodGenerationResult, intermediateInterface) = when(this) {
+            is IntermediateOperation -> CalledIntermediateOperationHandler.invoke(this, parentClass) to this.`interface`
 
-            is IntermediateReferredOperation -> when(communicationType) {
-                CommunicationType.ASYNCHRONOUS ->
-                    CalledIntermediateReferredOperationHandlerAsync.invoke(this, parentClass) to this.referringInterface
-                CommunicationType.SYNCHRONOUS ->
-                    CalledIntermediateReferredOperationHandlerSync.invoke(this, parentClass) to this.referringInterface
-            }
+            is IntermediateReferredOperation ->
+                CalledIntermediateReferredOperationHandler.invoke(this, parentClass) to this.referringInterface
 
-            else -> null
-        } ?: return
-        val (methodGenerationResult, intermediateInterface) = methodGenerationResultAndIntermediateInterface
+            else -> return null
+        }
+
         if (methodGenerationResult == null)
-            return
+            return null
 
         val (generatedMethod, _) = methodGenerationResult
         if (!generatedMethod.isPrivate && intermediateInterface.isNotImplemented) {
@@ -79,5 +75,7 @@ internal class IntermediateInterfaceHandler
                 """.trimToSingleLine()
             )
         }
+
+        return generatedMethod
     }
 }
