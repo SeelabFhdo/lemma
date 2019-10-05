@@ -75,7 +75,7 @@ internal class IntermediateInterfaceHandler
             generatedMethod.isFinal = true
             generatedMethod.setBody(
                 """
-                    throw new UnsupportedOperationException("This service operation is not implemented");
+                    throw new UnsupportedOperationException("This service operation is not implemented")
                 """.trimToSingleLine()
             )
         }

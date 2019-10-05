@@ -68,13 +68,13 @@ internal class IntermediateEnumerationHandler
     private fun EnumDeclaration.addRawValueGetter(valueFieldName: String) {
         val rawValueGetter = addMethod("rawValue", Modifier.Keyword.PUBLIC)
         rawValueGetter.setType("Object")
-        rawValueGetter.setBody("return $valueFieldName;")
+        rawValueGetter.setBody("return $valueFieldName")
     }
 
     private fun EnumDeclaration.addTypedValueGetter(valueFieldName: String) {
         val rawValueGetter = addMethod("value", Modifier.Keyword.PUBLIC)
         rawValueGetter.addTypeParameter("T")
         rawValueGetter.setType("T")
-        rawValueGetter.setBody("return (T) $valueFieldName;")
+        rawValueGetter.setBody("return (T) $valueFieldName")
     }
 }

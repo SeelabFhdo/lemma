@@ -399,7 +399,7 @@ internal class GenerationGapSerializerBase : KoinComponent {
             // Set "not implemented yet" stub body on methods whose body will delegate in *CustomImpl to *GenImpl
             // classes
             if (it.emptyBody || it.mergeBodyOnRelocation || it.delegateBodyOnRelocation)
-                it.setBody("""throw new UnsupportedOperationException("Not implemented yet");""")
+                it.setBody("""throw new UnsupportedOperationException("Not implemented yet")""")
         }
 
         return GenImplAdaptationResult(serializationCharacteristics, methodBodiesToMerge, methodBodiesToDelegate)
@@ -508,9 +508,9 @@ internal class GenerationGapSerializerBase : KoinComponent {
             val delegatingClassName = if (!method.isStatic) "super" else genImplClass.nameAsString
             method.setBody(
                 if (method.type.isVoidType)
-                    "$delegatingClassName.${method.name}($parameterString);"
+                    "$delegatingClassName.${method.name}($parameterString)"
                 else
-                    "return $delegatingClassName.${method.name}($parameterString);",
+                    "return $delegatingClassName.${method.name}($parameterString)",
                 " TODO Implement this. Might otherwise throw UnsupportedOperationException from delegating call."
             )
 

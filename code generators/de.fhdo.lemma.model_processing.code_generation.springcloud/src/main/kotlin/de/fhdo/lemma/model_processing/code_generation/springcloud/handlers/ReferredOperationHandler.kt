@@ -33,7 +33,7 @@ internal class ReferredOperationHandler
         delegationAttribute.addAnnotation("Autowired")
 
         val parametersString = method.parameters.joinToString { it.nameAsString }
-        var delegatingBody = "$delegationAttributeName.${referredOperation.operation.name}($parametersString);"
+        var delegatingBody = "$delegationAttributeName.${referredOperation.operation.name}($parametersString)"
         if (!method.type.isVoidType)
             delegatingBody = "return $delegatingBody"
         method.setBody(delegatingBody)

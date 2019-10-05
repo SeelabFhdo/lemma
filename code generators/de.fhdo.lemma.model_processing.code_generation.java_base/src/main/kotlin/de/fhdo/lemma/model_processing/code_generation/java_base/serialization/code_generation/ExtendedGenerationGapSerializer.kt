@@ -219,7 +219,7 @@ private class ExtendedGenerationGapSerializerBase : KoinComponent {
                     """.trimIndent()
 
                 it.setBody(
-                    """throw new UnsupportedOperationException("Not implemented");""",
+                    """throw new UnsupportedOperationException("Not implemented")""",
                     withBlockComment = " $comment "
                 )
             }

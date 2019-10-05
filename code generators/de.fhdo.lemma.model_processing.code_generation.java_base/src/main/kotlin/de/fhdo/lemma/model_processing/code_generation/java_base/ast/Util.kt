@@ -15,6 +15,7 @@ import com.github.javaparser.ast.body.MethodDeclaration
 import com.github.javaparser.ast.body.Parameter
 import com.github.javaparser.ast.body.VariableDeclarator
 import com.github.javaparser.ast.comments.BlockComment
+import com.github.javaparser.ast.comments.Comment
 import com.github.javaparser.ast.comments.LineComment
 import com.github.javaparser.ast.expr.AnnotationExpr
 import com.github.javaparser.ast.expr.AssignExpr
@@ -885,23 +886,106 @@ fun MethodDeclaration.removeImport(import: String, targetElementType: ImportTarg
  */
 fun MethodDeclaration.setBody(code: String, withLineComment: String = "", withBlockComment: String = "",
     vararg characteristics: SerializationCharacteristic) {
-    val statement = BlockStmt()
-    statement.addStatement(code)
-    setBody(statement)
+    val (existingBodyComments, existingStatementsComments) = getAndRemoveComments()
+    val existingComments = existingBodyComments.toMutableList()
+    existingComments.addAll(existingStatementsComments)
 
-    val newBody = body.get()
+    val newBody = BlockStmt()
     newBody.addSerializationCharacteristics(characteristics)
-    val comment = if (newBody.statements.isNotEmpty())
-        when {
-            withLineComment.isNotEmpty() -> LineComment(withLineComment)
-            withBlockComment.isNotEmpty() -> BlockComment(withBlockComment)
-            else -> null
-        }
-    else
-        null
 
-    if (comment != null)
-        newBody.statements[0].setComment(comment)
+    val bodyStatement = newBody.addAndGetStatement(code)
+    setBody(newBody)
+
+    when {
+        withLineComment.isNotEmpty() -> bodyStatement.addComments(existingComments, LineComment(withLineComment))
+        withBlockComment.isNotEmpty() -> bodyStatement.addComments(existingComments, BlockComment(withBlockComment))
+        else -> bodyStatement.addComments(existingComments)
+    }
+}
+
+/**
+ * Get all comments of this [MethodDeclaration] and remove them in parallel.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+private fun MethodDeclaration.getAndRemoveComments() : Pair<List<Comment>, List<Comment>> {
+    val actualBody = body.orElse(null) ?: return emptyList<Comment>() to emptyList()
+
+    // Collect and remove body comment
+    val collectedBodyComments = mutableListOf<Comment>()
+    if (actualBody.comment.isPresent) {
+        collectedBodyComments.add(actualBody.comment.get())
+        actualBody.removeComment()
+    }
+
+    // Collect and remove orphan comments from the body
+    actualBody.orphanComments.forEach {
+        collectedBodyComments.add(it)
+        actualBody.removeOrphanComment(it)
+    }
+
+    // Collect and remove, possibly nested statements' comments and orphan comments
+    val collectedStatementsComments = mutableListOf<Comment>()
+    actualBody.statements.forEach { statement ->
+        if (statement.comment.isPresent) {
+            collectedStatementsComments.add(statement.comment.get())
+            statement.removeComment()
+        }
+
+        collectedStatementsComments.addAll(statement.allContainedComments)
+        statement.allContainedComments.forEach { statement.removeOrphanComment(it) }
+    }
+
+    return collectedBodyComments to collectedStatementsComments
+}
+
+/**
+ * Add comments to this [ExpressionStmt]. The [additionalComments] are appended to the list of [comments]. Note that in
+ * any case [createCompositeComment] will be called with all given [Comment] instances and that the resulting composite
+ * [Comment] will be added to the [ExpressionStmt].
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+private fun ExpressionStmt.addComments(comments: List<Comment>, vararg additionalComments: Comment) {
+    if (comments.isEmpty() && additionalComments.isEmpty())
+        return
+
+    val commentsToAdd = comments.toMutableList()
+    commentsToAdd.addAll(additionalComments)
+    val compositeComment = createCompositeComment(commentsToAdd) ?: return
+    setComment(compositeComment)
+}
+
+/**
+ * Create a composite [Comment] from the given list of [comments] or null, if the list is empty. A composite [Comment]
+ * comprises all passed comments' contents. If there is more than one passed comment, a new [BlockComment] will be
+ * created that holds the contents of all passed [comments] separated by a linebreak.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+private fun createCompositeComment(comments: List<Comment>) : Comment? {
+    return when {
+        comments.isEmpty() -> null
+        comments.size == 1 -> return comments[0]
+        else -> BlockComment(comments.joinToString("\n") { it.content })
+    }
+}
+
+/**
+ * Add the given [comment] as an orphan comment to the body of this [MethodDeclaration]. In case the [MethodDeclaration]
+ * does not have a body yet, an empty [BlockStmt] for the comment will be created and assigned as its body.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+fun MethodDeclaration.addBodyComment(comment: Comment) {
+    var currentBody = body.orElse(null)
+
+    if (currentBody == null) {
+        currentBody = BlockStmt()
+        setBody(currentBody)
+    }
+
+    currentBody.addOrphanComment(comment)
 }
 
 /**
@@ -912,6 +996,7 @@ fun MethodDeclaration.setBody(code: String, withLineComment: String = "", withBl
  */
 internal fun MethodDeclaration.insertBody(otherBody: BlockStmt,
     adaptStatementBeforeInsertion: ((Statement) -> Statement)? = null) {
+
     val statementsToInsert = if (adaptStatementBeforeInsertion != null)
             otherBody.statements.map { adaptStatementBeforeInsertion.invoke(it) }
         else

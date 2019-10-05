@@ -52,7 +52,7 @@ internal class MicroserviceHandler
         mainMethod.addParameter("String[]", "args")
         mainMethod.setBody(
             """
-                SpringApplication.run(${serviceClass.nameAsString}.class, args);
+                SpringApplication.run(${serviceClass.nameAsString}.class, args)
             """.trimToSingleLine()
         )
         mainMethod.addSerializationCharacteristic(SerializationCharacteristic.DONT_RELOCATE)

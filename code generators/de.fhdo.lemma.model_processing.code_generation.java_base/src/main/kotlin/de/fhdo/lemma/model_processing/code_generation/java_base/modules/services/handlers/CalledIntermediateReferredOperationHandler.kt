@@ -75,7 +75,7 @@ private fun IntermediateReferredOperation.generate(parentClass: ClassOrInterface
         ImportTargetElementType.METHOD_BODY, SerializationCharacteristic.REMOVE_ON_RELOCATION)
 
     val parametersString = generatedMethod.parameters.joinToString { it.nameAsString }
-    var delegatingBody = "new $sourceInterfaceClassname().${operation.name}($parametersString);"
+    var delegatingBody = "new $sourceInterfaceClassname().${operation.name}($parametersString)"
     if (!generatedMethod.type.isVoidType)
         delegatingBody = "return $delegatingBody"
     generatedMethod.setBody(delegatingBody)

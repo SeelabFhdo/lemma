@@ -54,9 +54,9 @@ internal class CalledIntermediateDataOperationHandler :
         addAnnotation("Override")
         setBody(
             """
-            throw new UnsupportedOperationException(
-                "The method \"${nameAsString}\" is not visible on this type"
-            );
+                throw new UnsupportedOperationException(
+                    "The method \"${nameAsString}\" is not visible on this type"
+                )
             """.trimToSingleLine()
         )
     }
