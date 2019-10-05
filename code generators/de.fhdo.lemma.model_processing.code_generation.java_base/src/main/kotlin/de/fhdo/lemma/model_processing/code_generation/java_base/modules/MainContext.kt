@@ -51,7 +51,7 @@ internal object MainContext {
         private val collectedDependencies = mutableSetOf<DependencyDescription>()
         private val aspectHandlers = mutableMapOf<Genlet?, Map<String, Class<AspectHandlerI>>>()
         private val genletCodeGenerationHandlers
-            = mutableMapOf<Genlet, Map<String, Class<GenletCodeGenerationHandlerI<EObject, Node, Any>>>>()
+            = mutableMapOf<Genlet, Map<String, Set<Class<GenletCodeGenerationHandlerI<EObject, Node, Any>>>>>()
         private val dependencyFragmentProviders
             = mutableMapOf<Genlet, List<Class<DependencyFragmentProviderI<Any, Any>>>>()
         private val generatedFileContents = mutableMapOf<String, Pair<String, Charset>>()
@@ -251,16 +251,21 @@ internal object MainContext {
         = invokeAspectHandlers(eObject, node, aspects, null)
 
     /**
+     * Get all code generation handlers for the [EObject] within the given [Genlet]
+     */
+    internal fun getGenletCodeGenerationHandlers(eObject: EObject, genlet: Genlet)
+        : Set<Class<GenletCodeGenerationHandlerI<EObject, Node, Any>>> {
+        val genletCodeGenerationHandlers:
+            Map<Genlet, Map<String, Set<Class<GenletCodeGenerationHandlerI<EObject, Node, Any>>>>> by State
+        return genletCodeGenerationHandlers[genlet]?.get(eObject.mainInterface.name) ?: emptySet()
+    }
+
+    /**
      * Helper to invoke a [Genlet]-specific code generation handler on a given [EObject] and [Node] instance
      */
-    internal fun invokeGenletCodeGenerationHandler(eObject: EObject, node: Node, genlet: Genlet)
+    internal fun invokeGenletCodeGenerationHandler(eObject: EObject, node: Node,
+        handlerClass: Class<GenletCodeGenerationHandlerI<EObject, Node, Any>>)
         : GenletCodeGenerationHandlerResult<Node> {
-        val genletCodeGenerationHandlers:
-            Map<Genlet, Map<String, Class<GenletCodeGenerationHandlerI<EObject, Node, Any>>>> by State
-
-        val handlerClass = genletCodeGenerationHandlers[genlet]?.get(eObject.mainInterface.name)
-            ?: return GenletCodeGenerationHandlerResult(node)
-
         val handlerInstance = handlerClass.getConstructor().newInstance()
         if (!handlerInstance.generatesNodesOfInstance().isAssignableFrom(node::class.java))
             return GenletCodeGenerationHandlerResult(node)

@@ -91,7 +91,7 @@ interface CodeGenerationHandlerI<T: EObject, N: Node, C: Any> {
         /* Execute Genlets' code generation and aspect handlers */
         val genlets: Set<Genlet> by MainState
         genlets.forEach { genlet ->
-            MainContext.getGenletCodeGenerationHandlers(eObject, adaptedNode, genlet).forEach {
+            MainContext.getGenletCodeGenerationHandlers(eObject, genlet).forEach {
                 val (reifiedNode, generatedFiles) = MainContext.invokeGenletCodeGenerationHandler(eObject, node, it)
                 storeGeneratedFileContentsOfGenlet(generatedFiles)
                 adaptedNode = MainContext.invokeAspectHandlers(eObject, reifiedNode, aspects, genlet)

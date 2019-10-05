@@ -63,32 +63,34 @@ internal class DomainCodeGenerationSubModule : KoinComponent {
     }
 
     /**
-     * Trigger invocation of visiting code generation handler on [EObject]. This will also lead to the invocation of
+     * Trigger invocation of visiting code generation handlers on [EObject]. This will also lead to the invocation of
      * subsequent actions, e.g., aspect handlers and Genlet-specific code generation handlers (cf. the
      * executeSubActions() function in
      * [de.fhdo.lemma.model_processing.code_generation.java_base.handlers.CodeGenerationHandlerI]).
      */
     private fun invokeVisitingCodeGenerationHandler(eObject: EObject) {
-        val serializer: CodeGenerationSerializerI by inject()
-        val (generatedNode, targetFile) = DomainContext.invokeVisitingCodeGenerationHandler(eObject) ?: return
-        if (targetFile == null)
-            return
-
         val currentDomainTargetFolderPath: String by DomainState
-        val currentIntermediateDomainModelFilePath: String by DomainState
         val currentIntermediateDomainModel: IntermediateDataModel by DomainState
         val originalModelPath = currentIntermediateDomainModel.sourceModelUri.removeFileUri()
+        val serializer: CodeGenerationSerializerI by inject()
 
-        val generatedFileContents = serializer.serialize(
-            generatedNode,
-            currentDomainTargetFolderPath,
-            targetFile,
-            eObject,
-            currentIntermediateDomainModelFilePath,
-            originalModelPath
-        )
-        generatedFileContents.forEach { (targetFilePath, generatedContent) ->
-            MainState.addGeneratedFileContent(generatedContent, targetFilePath)
+        val generatedNodesAndTargetFiles = DomainContext.invokeVisitingCodeGenerationHandlers(eObject)
+        for((generatedNode, targetFile) in generatedNodesAndTargetFiles) {
+            if (targetFile == null)
+                continue
+
+            val generatedFileContents = serializer.serialize(
+                generatedNode,
+                currentDomainTargetFolderPath,
+                targetFile,
+                eObject,
+                originalModelPath
+            )
+
+            generatedFileContents.forEach { (targetFilePath, generationResult) ->
+                val (generatedContent, _) = generationResult
+                MainState.addGeneratedFileContent(generatedContent, targetFilePath)
+            }
         }
     }
 }

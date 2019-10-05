@@ -26,7 +26,7 @@ internal object ServicesContext {
         private const val INTERFACE_SUBFOLDER_NAME = "interfaces"
 
         internal lateinit var visitingServicesCodeGenerationHandlers
-            : Map<String, Class<VisitingCodeGenerationHandlerI<EObject, Node, Any>>>
+            : Map<String, Set<Class<VisitingCodeGenerationHandlerI<EObject, Node, Any>>>>
 
         /**
          * Initialize the state of the context
@@ -102,11 +102,18 @@ internal object ServicesContext {
     }
 
     /**
-     * Helper to invoke a [VisitingCodeGenerationHandlerI] instance hold by the service [State] for service-specific
-     * code generation purposes
+     * Helper to invoke [VisitingCodeGenerationHandlerI] instances hold by the service [State] for service-specific
+     * code generation purposes related to the specified [eObject]
      */
-    internal fun invokeVisitingCodeGenerationHandler(eObject: EObject) : Pair<Node, String?>? {
-        val handler = visitingServicesCodeGenerationHandlers[eObject.mainInterface.name] ?: return null
-        return handler.getConstructor().newInstance().invoke(eObject)
+    internal fun invokeVisitingCodeGenerationHandlers(eObject: EObject) : List<Pair<Node, String?>> {
+        val handlers = visitingServicesCodeGenerationHandlers[eObject.mainInterface.name] ?: return emptyList()
+        val results = mutableListOf<Pair<Node, String?>>()
+        handlers.forEach {
+            val handlerResult = it.getConstructor().newInstance().invoke(eObject)
+            if (handlerResult != null)
+                results.add(handlerResult)
+        }
+
+        return results
     }
 }
