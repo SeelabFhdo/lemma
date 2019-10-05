@@ -618,6 +618,13 @@ internal class GenerationGapSerializerBase : KoinComponent {
             generatedClass.addAnnotation(it)
             originalClass.remove(it)
         }
+
+        // Attributes
+        val notRelocatableAttributes = originalClass.fields.filter { !it.isRelocatable }
+        notRelocatableAttributes.forEach {
+            generatedClass.members.addFirst(it)
+            originalClass.remove(it)
+        }
     }
 
     /**
