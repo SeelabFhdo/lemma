@@ -4,10 +4,8 @@ import com.github.javaparser.ast.Node
 import de.fhdo.lemma.data.intermediate.IntermediateImportedAspect
 import de.fhdo.lemma.model_processing.code_generation.java_base.findAndMapAnnotatedClassesWithInterface
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.Genlet
+import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.storeGeneratedFileContentsOfGenlet
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.MainContext
-import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.LineCountInfo
-import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.property_files.mergePropertyFile
-import de.fhdo.lemma.model_processing.utils.countLines
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.MainContext.State as MainState
 import org.eclipse.emf.ecore.EObject
 
@@ -92,26 +90,12 @@ interface CodeGenerationHandlerI<T: EObject, N: Node, C: Any> {
 
         /* Execute Genlets' code generation and aspect handlers */
         val genlets: Set<Genlet> by MainState
-        val writeLineCountInfo: Boolean by MainState
-        genlets.forEach {
-            val (reifiedNode, generatedFiles) = MainContext.invokeGenletCodeGenerationHandler(eObject, adaptedNode, it)
-            adaptedNode = reifiedNode
-            generatedFiles.forEach { fileContent ->
-                val (filePath, generatedContent, generatedPropertyFile) = fileContent
-                if (generatedContent != null) {
-                    MainState.addGeneratedFileContent(generatedContent, filePath)
-
-                    if (writeLineCountInfo)
-                        MainState.addOrUpdateGeneratedLineCountInfo(
-                            LineCountInfo(filePath, generatedContent.countLines(forFile = filePath))
-                        )
-                } else
-                    // If the Genlet did not generate the raw string content of a file, it must have created a property
-                    // file. Created property files are merged into existing property files, if possible. Line counting
-                    // of property files is done later when they are serialized.
-                    mergePropertyFile(generatedPropertyFile!!)
+        genlets.forEach { genlet ->
+            MainContext.getGenletCodeGenerationHandlers(eObject, adaptedNode, genlet).forEach {
+                val (reifiedNode, generatedFiles) = MainContext.invokeGenletCodeGenerationHandler(eObject, node, it)
+                storeGeneratedFileContentsOfGenlet(generatedFiles)
+                adaptedNode = MainContext.invokeAspectHandlers(eObject, reifiedNode, aspects, genlet)
             }
-            adaptedNode = MainContext.invokeAspectHandlers(eObject, node, aspects, it)
         }
 
         return adaptedNode as N

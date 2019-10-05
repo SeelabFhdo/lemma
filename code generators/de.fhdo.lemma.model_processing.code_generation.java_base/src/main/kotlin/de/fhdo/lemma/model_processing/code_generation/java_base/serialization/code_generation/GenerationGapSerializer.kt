@@ -69,9 +69,8 @@ internal class GenerationGapSerializer : CodeGenerationSerializerI {
     /**
      * Do the serialization (delegates to [GenerationGapSerializerBase])
      */
-    override fun serialize(node: Node, targetFolderPath: String, targetFilePath: String,
-        intermediateEObject: EObject, intermediateModelFilePath: String, originalModelFilePath: String)
-        : Map<String, String> {
+    override fun serialize(node: Node, targetFolderPath: String, targetFilePath: String, intermediateEObject: EObject?,
+        originalModelFilePath: String?) : Map<String, Pair<String, Node?>> {
         delegate = GenerationGapSerializerBase()
         return delegate.serialize(node, targetFolderPath, targetFilePath)
     }
@@ -98,15 +97,16 @@ internal class CountingGenerationGapSerializer : CodeGenerationSerializerI {
     /**
      * Do the serialization (delegates to [GenerationGapSerializerBase])
      */
-    override fun serialize(node: Node, targetFolderPath: String, targetFilePath: String, intermediateEObject: EObject,
-        intermediateModelFilePath: String, originalModelFilePath: String) : Map<String, String> {
+    override fun serialize(node: Node, targetFolderPath: String, targetFilePath: String, intermediateEObject: EObject?,
+        originalModelFilePath: String?) : Map<String, Pair<String, Node?>> {
         delegate = GenerationGapSerializerBase()
         val serializationResults = delegate.serialize(node, targetFolderPath, targetFilePath)
 
         serializationResults.forEach{ (path, result) ->
+            val (generatedCode, _) = result
             MainState.addOrUpdateGeneratedLineCountInfo(
                 countLines(
-                    path to result,
+                    path to generatedCode,
                     intermediateEObject,
                     originalModelFilePath
                 )
@@ -173,13 +173,14 @@ internal class GenerationGapSerializerBase : KoinComponent {
     /**
      * Do the actual serialization according to the Generation Gap Pattern
      */
-    internal fun serialize(node: Node, targetFolderPath: String, targetFilePath: String) : Map<String, String> {
+    internal fun serialize(node: Node, targetFolderPath: String, targetFilePath: String)
+        : Map<String, Pair<String, Node?>> {
         val originalClass = node.asClassDeclaration()
 
         /* If the node does not comprise a class (e.g., its an enum) do the plain serialization */
         if (originalClass == null) {
-            val generatedCode = node.serialize(serializationConfiguration)
-            return mapOf("$targetFolderPath${File.separator}$targetFilePath" to generatedCode)
+            val generatedCodeToNode = node.serialize(serializationConfiguration) to node
+            return mapOf("$targetFolderPath${File.separator}$targetFilePath" to generatedCodeToNode)
         }
 
         /* If the node comprises a class, do the serialization according to the Generation Gap Pattern */
@@ -194,9 +195,7 @@ internal class GenerationGapSerializerBase : KoinComponent {
      * Do the generation with the "gap files"
      */
     private fun generate(originalClass: ClassOrInterfaceDeclaration, targetFolderPath: String,
-        genSubfolderName: String, targetClassname: String) : Map<String, String> {
-        val generatedFiles = mutableMapOf<String, String>()
-
+        genSubfolderName: String, targetClassname: String) : Map<String, Pair<String, Node?>> {
         /* Create the *Gen interface */
         val genInterface = generateGenInterface(originalClass, genSubfolderName)
 
@@ -244,11 +243,12 @@ internal class GenerationGapSerializerBase : KoinComponent {
          * Do the actual serialization. This needs to be done when all generation methods have run, because there might
          * be adaptations subsequent to class' original generations.
          */
-        generatedFiles[genInterfaceFilePath] = genInterface.serialize(serializationConfiguration)
-        generatedFiles[genImplClassFilePath] = originalClass.serialize(serializationConfiguration)
-        generatedFiles[customImplClassFilePath] = customImplClass.serialize(serializationConfiguration)
+        val results = mutableMapOf<String, Pair<String, Node?>>()
+        results[genInterfaceFilePath] = genInterface.serialize(serializationConfiguration) to genInterface
+        results[genImplClassFilePath] = originalClass.serialize(serializationConfiguration) to originalClass
+        results[customImplClassFilePath] = customImplClass.serialize(serializationConfiguration) to customImplClass
 
-        return generatedFiles
+        return results
     }
 
     /**
@@ -650,7 +650,9 @@ internal class GenerationGapSerializerBase : KoinComponent {
          */
         val classesTodo = DelayedConstructors.keys.toMutableList()
         while (classesTodo.isNotEmpty()) {
-            // Determine the class with delayed constructors at the top of the inheritance hierarchy
+            // Determine the class with delayed constructors at the top of the inheritance hierarchy. This class will
+            // then get parsed again, because between its initial treatment by the serializer and this point in time it
+            // might have been adapted again by Genlets that listen to, e.g., the Microservice Generation Finished event
             var nextClass = DelayedConstructors.getClass(classesTodo.first())!!
             var nextClassSuperName : String?
             do {

@@ -2,15 +2,21 @@ package de.fhdo.lemma.model_processing.code_generation.java_base.genlets
 
 import com.github.javaparser.ast.Node
 import de.fhdo.lemma.model_processing.asFile
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.serialize
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.CodeGenerationHandlerI
+import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.LineCountInfo
+import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.code_generation.CodeGenerationSerializerI
+import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.configuration.AbstractSerializationConfiguration
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.MainContext.State as MainState
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.domain.DomainContext.State as DomainState
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.services.ServicesContext.State as ServicesState
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.dependencies.DependencySerializerI
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.property_files.PropertyFile
+import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.property_files.mergePropertyFile
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.findAspectHandlers as baseFindAspectHandlers
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.findCodeGenerationHandlers as baseFindCodeGenerationHandlers
 import de.fhdo.lemma.model_processing.phases.PhaseException
+import de.fhdo.lemma.model_processing.utils.countLines
 import org.eclipse.emf.ecore.EObject
 import java.io.File
 import java.net.URLClassLoader
@@ -44,6 +50,144 @@ interface Genlet {
      * of the Genlet-specific code generation handlers.
      */
     fun nameOfDependencyFragmentProviderPackage() = nameOfCodeGenerationHandlerPackage()
+
+    /**
+     * Send an event to this Genlet. This function is not meant to be overridden by Genlets. To react to an event,
+     * Genlets should implement [onEvent] instead.
+     */
+    fun sendEvent(event: GenletEvent) {
+        val generatedNodesAndFiles = onEvent(event) ?: return
+        val (generatedNodes, generatedFiles) = generatedNodesAndFiles
+
+        // Serialize Node instances being received from the event leveraging the current serializer
+        val codeGenerationSerializer: CodeGenerationSerializerI by MainState
+        generatedNodes.forEach {
+            val generatedFileContents = codeGenerationSerializer.serialize(it.generatedNode, it.folderPath, it.filePath)
+            generatedFileContents.forEach { (targetFilePath, generationResult) ->
+                val (generatedContent, _) = generationResult
+                MainState.addGeneratedFileContent(generatedContent, targetFilePath)
+            }
+        }
+
+        // Generated file contents from the event are directly stored in the main state without any additional
+        // serialization action
+        storeGeneratedFileContentsOfGenlet(generatedFiles)
+    }
+
+    /**
+     * React to a certain event, e.g., the end of the generation process for the current microservice. During events,
+     * Genlets may generate an arbitrary number of new Nodes, adapt existing Nodes, or produce new file contents.
+     * Returned Node instances will be passed to the current serializer, while generated file contents are not
+     * processed, but stored "as is".
+     */
+    fun onEvent(event: GenletEvent) : Pair<Set<GenletGeneratedNode>, Set<GenletGeneratedFileContent>>? = null
+}
+
+/**
+ * This class clusters information about a Genlet event. More specifically, it assigns a [GenletEventType] to a set of
+ * [GenletEventObject] instances and object-specific values.
+ */
+class GenletEvent(val type: GenletEventType) {
+    private val eventInfo = mutableMapOf<GenletEventObject, Any>()
+
+    /**
+     * Constructor
+     */
+    constructor(type: GenletEventType, vararg eventInfo: Pair<GenletEventObject, Any>) : this(type) {
+        this.eventInfo.putAll(eventInfo)
+    }
+
+    /**
+     * Assign a (new) [value] to the given [eventObject]
+     */
+    operator fun set(eventObject: GenletEventObject, value: Any) {
+        eventInfo[eventObject] = value
+    }
+
+    /**
+     * Get the current value of the given [eventObject] or null, if it does not have a value
+     */
+    @Suppress("UNCHECKED_CAST")
+    operator fun <T : Any> get(eventObject: GenletEventObject)
+        = if (eventObject in eventInfo) eventInfo[eventObject] as T else null
+}
+
+/**
+ * Enumeration that identifies possible Genlet events.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+enum class GenletEventType {
+    // Generation of current microservice was finished
+    MICROSERVICE_GENERATION_FINISHED
+}
+
+/**
+ * Enumeration that identifies possible Genlet event objects.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+enum class GenletEventObject {
+    // Generated microservice class in the form of a ClassOrInterfaceDeclaration instance
+    GENERATED_MICROSERVICE_CLASS
+}
+
+/**
+ * Helper to store [GenletGeneratedFileContent] instances in the main state.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+internal fun storeGeneratedFileContentsOfGenlet(generatedFiles: Set<GenletGeneratedFileContent>) {
+    val writeLineCountInfo: Boolean by MainState
+    generatedFiles.forEach { fileContent ->
+        val (filePath, generatedContent, generatedPropertyFile) = fileContent
+        if (generatedContent != null) {
+            MainState.addGeneratedFileContent(generatedContent, filePath)
+
+            if (writeLineCountInfo)
+                MainState.addOrUpdateGeneratedLineCountInfo(
+                    LineCountInfo(filePath, generatedContent.countLines(forFile = filePath))
+                )
+        } else
+            // If the Genlet did not generate the raw string content of a file, it must have created a property
+            // file. Created property files are merged into existing property files, if possible. Line counting
+            // of property files is done later when they are serialized.
+            mergePropertyFile(generatedPropertyFile!!)
+    }
+}
+
+/**
+ * Represents a Node instance generated by a Genlet's onEvent() callback.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+class GenletGeneratedNode(baseTargetFolderSpecifier: GenletPathSpecifier, val filePath: String,
+    val generatedNode: Node) {
+    var folderPath: String
+        private set
+
+    /**
+     * Init block
+     */
+    init {
+        folderPath = GenletPathSpecifier.resolvePathSpecifier(baseTargetFolderSpecifier)
+    }
+
+    /**
+     * Two [GenletGeneratedNode] instances are equal, if their [filePath] values are equal
+     */
+    override fun equals(other: Any?)
+        = when {
+        this === other -> true
+        other == null -> false
+        other !is GenletGeneratedFileContent -> false
+        else -> filePath == other.filePath
+    }
+
+    /**
+     * The hash code of a [GenletGeneratedNode] is equal to the hash code of its [filePath]
+     */
+    override fun hashCode() = filePath.hashCode()
 }
 
 /**
@@ -122,6 +266,16 @@ class GenletGeneratedFileContent {
      */
     constructor(baseTargetFolderSpecifier: GenletPathSpecifier, filename: String, generatedContent: String) {
         this.generatedContent = generatedContent
+        filePath = "${GenletPathSpecifier.resolvePathSpecifier(baseTargetFolderSpecifier)}${File.separator}$filename"
+    }
+
+    /**
+     * Constructor for [generatedNode] of the file [filename] to be stored in the given [baseTargetFolderSpecifier]. The
+     * [generatedNode] will directly be serialized.
+     */
+    constructor(baseTargetFolderSpecifier: GenletPathSpecifier, filename: String, generatedNode: Node) {
+        val serializationConfiguration: AbstractSerializationConfiguration by MainState
+        this.generatedContent = generatedNode.serialize(serializationConfiguration)
         filePath = "${GenletPathSpecifier.resolvePathSpecifier(baseTargetFolderSpecifier)}${File.separator}$filename"
     }
 

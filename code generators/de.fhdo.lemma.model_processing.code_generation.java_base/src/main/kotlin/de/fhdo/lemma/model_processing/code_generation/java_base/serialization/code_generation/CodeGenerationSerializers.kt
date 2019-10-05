@@ -24,8 +24,8 @@ internal interface CodeGenerationSerializerI {
     /**
      * Serialization callback
      */
-    fun serialize(node: Node, targetFolderPath: String, targetFilePath: String, intermediateEObject: EObject,
-        intermediateModelFilePath: String, originalModelFilePath: String) : Map<String, String>
+    fun serialize(node: Node, targetFolderPath: String, targetFilePath: String, intermediateEObject: EObject? = null,
+        originalModelFilePath: String ?= null) : Map<String, Pair<String, Node?>>
 
     /**
      * Callback for when the code generation phase has completed. Code generation serializers might adapt the passed

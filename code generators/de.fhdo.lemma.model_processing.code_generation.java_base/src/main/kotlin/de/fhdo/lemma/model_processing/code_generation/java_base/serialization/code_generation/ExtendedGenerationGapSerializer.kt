@@ -38,9 +38,8 @@ internal class ExtendedGenerationGapSerializer : CodeGenerationSerializerI {
     /**
      * Do the serialization (delegates to [ExtendedGenerationGapSerializerBase])
      */
-    override fun serialize(node: Node, targetFolderPath: String, targetFilePath: String,
-        intermediateEObject: EObject, intermediateModelFilePath: String, originalModelFilePath: String)
-        : Map<String, String> {
+    override fun serialize(node: Node, targetFolderPath: String, targetFilePath: String, intermediateEObject: EObject?,
+        originalModelFilePath: String?) : Map<String, Pair<String, Node?>> {
         delegate = ExtendedGenerationGapSerializerBase()
         return delegate.serialize(node, targetFolderPath, targetFilePath)
     }
@@ -67,15 +66,16 @@ internal class CountingExtendedGenerationGapSerializer : CodeGenerationSerialize
     /**
      * Do the serialization (delegates to [ExtendedGenerationGapSerializerBase])
      */
-    override fun serialize(node: Node, targetFolderPath: String, targetFilePath: String, intermediateEObject: EObject,
-        intermediateModelFilePath: String, originalModelFilePath: String) : Map<String, String> {
+    override fun serialize(node: Node, targetFolderPath: String, targetFilePath: String, intermediateEObject: EObject?,
+        originalModelFilePath: String?) : Map<String, Pair<String, Node?>> {
         delegate = ExtendedGenerationGapSerializerBase()
         val serializationResults = delegate.serialize(node, targetFolderPath, targetFilePath)
 
         serializationResults.forEach{ (path, result) ->
+            val (generatedCode, _) = result
             MainState.addOrUpdateGeneratedLineCountInfo(
                 countLines(
-                    path to result,
+                    path to generatedCode,
                     intermediateEObject,
                     originalModelFilePath
                 )
@@ -147,13 +147,14 @@ private class ExtendedGenerationGapSerializerBase : KoinComponent {
     /**
      * Do the actual serialization according to the Extended Generation Gap Pattern
      */
-    internal fun serialize(node: Node, targetFolderPath: String, targetFilePath: String) : Map<String, String> {
+    internal fun serialize(node: Node, targetFolderPath: String, targetFilePath: String)
+        : Map<String, Pair<String, Node?>> {
         val originalClass = node.asClassDeclaration()
 
         /* If the node does not comprise a class (e.g., its an enum) do the plain serialization */
         if (originalClass == null) {
-            val generatedCode = node.serialize(serializationConfiguration)
-            return mapOf("$targetFolderPath${File.separator}$targetFilePath" to generatedCode)
+            val generatedCodeToNode = node.serialize(serializationConfiguration) to node
+            return mapOf("$targetFolderPath${File.separator}$targetFilePath" to generatedCodeToNode)
         }
 
         /* If the node comprises a class, do the serialization according to the Extended Generation Gap Pattern */
@@ -188,9 +189,7 @@ private class ExtendedGenerationGapSerializerBase : KoinComponent {
      * Do the generation without adding the *GenImpl "gap file"
      */
     private fun generateWithoutGap(originalClass: ClassOrInterfaceDeclaration, targetFolderPath: String,
-        genSubfolderName: String, targetClassname: String) : Map<String, String> {
-        val generatedFiles = mutableMapOf<String, String>()
-
+        genSubfolderName: String, targetClassname: String) : Map<String, Pair<String, Node?>> {
         /* Create the *Gen interface and let the original class implement it */
         val genInterface = generationGapDelegate.generateGenInterface(originalClass, genSubfolderName)
         val genInterfaceName = genInterface.nameAsString
@@ -233,19 +232,19 @@ private class ExtendedGenerationGapSerializerBase : KoinComponent {
          * Do the actual serialization. This needs to be done when all generation methods have run, because there might
          * be adaptations subsequent to class' original generations.
          */
-        generatedFiles[genInterfaceFilePath] = genInterface.serialize(serializationConfiguration)
-        generatedFiles[originalClassFilePath] = originalClass.serialize(serializationConfiguration)
+        val results = mutableMapOf<String, Pair<String, Node?>>()
+        results[genInterfaceFilePath] = genInterface.serialize(serializationConfiguration) to genInterface
+        results[originalClassFilePath] = originalClass.serialize(serializationConfiguration) to originalClass
 
-        return generatedFiles
+        return results
     }
 
     /**
      * Do the generation with the "gap files"
      */
     private fun generateWithGap(originalClass: ClassOrInterfaceDeclaration, extInterface: ClassOrInterfaceDeclaration,
-        targetFolderPath: String, genSubfolderName: String, targetClassname: String) : Map<String, String> {
-        val generatedFiles = mutableMapOf<String, String>()
-
+        targetFolderPath: String, genSubfolderName: String, targetClassname: String)
+        : Map<String, Pair<String, Node?>> {
         /* Create the *Gen interface */
         val (genInterfaceFilePath, genInterface) = generateGenInterface(originalClass, extInterface, targetFolderPath,
             genSubfolderName)
@@ -268,11 +267,12 @@ private class ExtendedGenerationGapSerializerBase : KoinComponent {
          * Do the actual serialization. This needs to be done when all generation methods have run, because there might
          * be adaptations subsequent to class' original generations.
          */
-        generatedFiles[genInterfaceFilePath] = genInterface.serialize(serializationConfiguration)
-        generatedFiles[genImplClassFilePath] = originalClass.serialize(serializationConfiguration)
-        generatedFiles[customImplClassFilePath] = customImplClass.serialize(serializationConfiguration)
+        val results = mutableMapOf<String, Pair<String, Node?>>()
+        results[genInterfaceFilePath] = genInterface.serialize(serializationConfiguration) to genInterface
+        results[genImplClassFilePath] = originalClass.serialize(serializationConfiguration) to originalClass
+        results[customImplClassFilePath] = customImplClass.serialize(serializationConfiguration) to customImplClass
 
-        return generatedFiles
+        return results
     }
 
     /**

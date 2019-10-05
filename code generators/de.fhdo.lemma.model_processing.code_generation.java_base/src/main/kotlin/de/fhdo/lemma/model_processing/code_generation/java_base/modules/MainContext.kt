@@ -9,6 +9,7 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.AspectH
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.Genlet
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletCodeGenerationHandlerI
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletCodeGenerationHandlerResult
+import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletEvent
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.findAspectHandlers
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.findCodeGenerationHandlers
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.findDependencyFragmentProviders
@@ -17,6 +18,7 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.buildAs
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.findAspectHandlers
 import de.fhdo.lemma.model_processing.code_generation.java_base.packageName
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.LineCountInfo
+import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.code_generation.CodeGenerationSerializerI
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.configuration.AbstractSerializationConfiguration
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.dependencies.DependencySerializerI
 import de.fhdo.lemma.model_processing.utils.mainInterface
@@ -43,6 +45,7 @@ internal object MainContext {
     /* State object of the context */
     object State : KoinComponent {
         private val serializationConfiguration: AbstractSerializationConfiguration by inject()
+        private val codeGenerationSerializer: CodeGenerationSerializerI by inject()
         private val dependencySerializer: DependencySerializerI<*, *> by inject()
 
         private val collectedDependencies = mutableSetOf<DependencyDescription>()
@@ -97,7 +100,8 @@ internal object MainContext {
          * Helper to find aspect handlers of the Java base generator itself
          */
         private fun findLocalAspectHandlers() {
-            aspectHandlers[null] = findAspectHandlers("${MainCodeGenerationModule::class.java.packageName}.common.aspects.handlers")
+            aspectHandlers[null] = findAspectHandlers("${MainCodeGenerationModule::class.java.packageName}.common" +
+                ".aspects.handlers")
         }
 
         /**
@@ -136,6 +140,8 @@ internal object MainContext {
                 "intermediateServiceModelForDomainModels" -> intermediateServiceModelForDomainModels
                 "lineCountInfoFilePath" -> lineCountInfoFilePath
                 "writeLineCountInfo" -> lineCountInfoFilePath != null
+                "codeGenerationSerializer" -> codeGenerationSerializer
+                "serializationConfiguration" -> serializationConfiguration
                 else -> throw IllegalArgumentException("Main state does not comprise property ${property.name}")
             }
 
@@ -260,5 +266,13 @@ internal object MainContext {
             return GenletCodeGenerationHandlerResult(node)
 
         return handlerInstance.invoke(eObject, node = node) ?: GenletCodeGenerationHandlerResult(node)
+    }
+
+    /**
+     * Send an event to all known Genlets
+     */
+    internal fun sendEventToGenlets(event: GenletEvent) {
+        val genlets: Set<Genlet> by State
+        genlets.forEach { it.sendEvent(event) }
     }
 }

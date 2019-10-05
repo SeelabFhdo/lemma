@@ -21,13 +21,16 @@ import java.math.RoundingMode
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-internal fun countLines(serializationResult: Pair<String, String>, intermediateEObject: EObject,
-    originalModelFilePath: String) : LineCountInfo {
+internal fun countLines(serializationResult: Pair<String, String>, intermediateEObject: EObject? = null,
+    originalModelFilePath: String? = null) : LineCountInfo {
     /* Count lines of generated code */
     val (targetFilePath, generatedCode) = serializationResult
     val generatedCodeLineCount = generatedCode.countLines(forFile = targetFilePath)
 
-    /* Count lines and determine additional information of original EObject */
+    if (intermediateEObject == null || originalModelFilePath == null)
+        return LineCountInfo(targetFilePath, generatedCodeLineCount)
+
+    /* Count lines and determine additional information of original EObject if specified */
     val originalEObject = intermediateEObject.loadOriginalEObject(originalModelFilePath)
     val originalEObjectParserNode = NodeModelUtils.getNode(originalEObject)
     val originalEObjectLineCount = originalEObjectParserNode.text.countLines(forFile = originalModelFilePath)
@@ -52,7 +55,7 @@ internal fun countLines(serializationResult: Pair<String, String>, intermediateE
 internal class LineCountInfo(var serializationTargetFilePath: String, var serializationResultLineCount: Int = 0,
     var originalEObjectLineCount: Int = 0, val additionalInfo: Map<String, String> = mutableMapOf()) {
     /**
-     * Two [LineCountInfo] instances are equal, if their [serializationTargetFilePath] are equal
+     * Two [LineCountInfo] instances are equal, if their [serializationTargetFilePath] values are equal
      */
     override fun equals(other: Any?)
         = when {

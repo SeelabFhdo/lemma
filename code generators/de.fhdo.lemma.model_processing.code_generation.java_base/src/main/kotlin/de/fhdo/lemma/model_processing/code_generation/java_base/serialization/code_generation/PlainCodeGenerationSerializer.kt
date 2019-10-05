@@ -23,8 +23,8 @@ internal open class PlainCodeGenerationSerializer : CodeGenerationSerializerI {
     /**
      * Do the serialization (delegates to [CodeGenerationSerializerBase])
      */
-    override fun serialize(node: Node, targetFolderPath: String, targetFilePath: String,
-        intermediateEObject: EObject, intermediateModelFilePath: String, originalModelFilePath: String)
+    override fun serialize(node: Node, targetFolderPath: String, targetFilePath: String, intermediateEObject: EObject?,
+        originalModelFilePath: String?)
             = mapOf(CodeGenerationSerializerBase.serialize(node, targetFolderPath, targetFilePath))
 }
 
@@ -39,20 +39,20 @@ internal class CountingPlainCodeGenerationSerializer : CodeGenerationSerializerI
     /**
      * Do the serialization (delegates to [CodeGenerationSerializerBase])
      */
-    override fun serialize(node: Node, targetFolderPath: String, targetFilePath: String,
-        intermediateEObject: EObject, intermediateModelFilePath: String, originalModelFilePath: String)
-        : Map<String, String> {
-        val serializationResult = CodeGenerationSerializerBase.serialize(node, targetFolderPath, targetFilePath)
+    override fun serialize(node: Node, targetFolderPath: String, targetFilePath: String, intermediateEObject: EObject?,
+        originalModelFilePath: String?) : Map<String, Pair<String, Node?>> {
+        val (resultPath, result) = CodeGenerationSerializerBase.serialize(node, targetFolderPath, targetFilePath)
+        val (generatedCode, _) = result
 
         MainState.addOrUpdateGeneratedLineCountInfo(
             countLines(
-                serializationResult,
+                resultPath to generatedCode,
                 intermediateEObject,
                 originalModelFilePath
             )
         )
 
-        return mapOf(serializationResult)
+        return mapOf(resultPath to result)
     }
 }
 
@@ -75,14 +75,15 @@ private class CodeGenerationSerializerBase : KoinComponent {
     /**
      * Do the actual serialization
      */
-    fun serialize(node: Node, targetFolderPath: String, targetFilePath: String) : Pair<String, String> {
+    fun serialize(node: Node, targetFolderPath: String, targetFilePath: String) : Pair<String, Pair<String, Node?>> {
         val generatedCode = when(node) {
             is CompilationUnit -> node.serialize()
             is ClassOrInterfaceDeclaration -> (node.parentNode.get() as CompilationUnit).serialize()
             else -> throw PhaseException("Serialization of nodes of type ${node::class.java.name} is not supported")
         }
 
-        return "$targetFolderPath${File.separator}$targetFilePath" to generatedCode
+        val codeToNode = generatedCode to node
+        return "$targetFolderPath${File.separator}$targetFilePath" to codeToNode
     }
 
     /**
