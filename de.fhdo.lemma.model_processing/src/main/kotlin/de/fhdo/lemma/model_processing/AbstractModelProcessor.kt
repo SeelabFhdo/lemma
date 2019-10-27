@@ -78,7 +78,7 @@ abstract class AbstractModelProcessor(private val processorImplementationPackage
     /**
      * Callback that the model processor's execution has finished
      */
-    protected fun processingFinished(returnCode: Int) {
+    protected open fun processingFinished(returnCode: Int) {
         AnsiConsole.systemUninstall()
         exitProcess(returnCode)
     }
