@@ -60,10 +60,7 @@ annotation class Before
 
 /**
  * Annotation to mark functions that have to be executed after a phase was executed. The actual semantics and usage
- * depends on the respective phase. If a phase has more than one @After function, the order of their executions is
- * random.
- *
- * Currently, @After is not supported by any phase. However, it exhibits the same characteristics as [@Before](Before).
+ * depends on the respective phase. However, it exhibits the same characteristics as [@Before](Before).
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */

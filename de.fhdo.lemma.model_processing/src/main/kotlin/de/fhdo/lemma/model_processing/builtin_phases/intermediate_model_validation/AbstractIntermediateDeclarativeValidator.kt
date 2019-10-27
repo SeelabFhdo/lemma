@@ -1,5 +1,6 @@
 package de.fhdo.lemma.model_processing.builtin_phases.intermediate_model_validation
 
+import de.fhdo.lemma.model_processing.annotations.After
 import de.fhdo.lemma.model_processing.annotations.Before
 import de.fhdo.lemma.model_processing.annotations.findAnnotatedMethods
 import de.fhdo.lemma.model_processing.builtin_phases.ValidationResult
@@ -48,6 +49,9 @@ abstract class AbstractIntermediateDeclarativeValidator : AbstractDeclarativeVal
 
         // Execute the validator
         validate(resource, relevantModelElements)
+
+        // Call @After methods in concrete subclasses
+        this.callAnnotatedMethods<Nothing>(After::class)
 
         // Return validation results
         return (messageAcceptor as ValidationResultCollector).validationResults
