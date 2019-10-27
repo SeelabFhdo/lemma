@@ -31,6 +31,7 @@ import com.github.javaparser.ast.stmt.ReturnStmt
 import com.github.javaparser.ast.stmt.Statement
 import com.github.javaparser.ast.type.ClassOrInterfaceType
 import com.github.javaparser.ast.type.ReferenceType
+import com.github.javaparser.ast.type.Type
 import com.github.javaparser.ast.type.TypeParameter
 import com.github.javaparser.printer.PrettyPrinter
 import de.fhdo.lemma.data.intermediate.IntermediateType
@@ -445,6 +446,13 @@ internal fun Node.serialize(serializationConfiguration: AbstractSerializationCon
     val prettyPrinter = PrettyPrinter(serializationConfiguration)
     return prettyPrinter.print(compilationUnit)
 }
+
+/**
+ * Helper to check if this [Type] is a generic type.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+fun Type.isGenericType() = (this as? ClassOrInterfaceType)?.typeArguments?.isPresent ?: false
 
 /**
  * Associate this [ClassOrInterfaceDeclaration] with a [filePath].

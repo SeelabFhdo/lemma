@@ -10,6 +10,7 @@ import de.fhdo.lemma.data.intermediate.IntermediateComplexType
 import de.fhdo.lemma.data.intermediate.IntermediateDataField
 import de.fhdo.lemma.data.intermediate.IntermediateDataModel
 import de.fhdo.lemma.data.intermediate.IntermediateDataOperation
+import de.fhdo.lemma.data.intermediate.IntermediateDataOperationReturnType
 import de.fhdo.lemma.data.intermediate.IntermediateDataStructure
 import de.fhdo.lemma.data.intermediate.IntermediateImportedAspect
 import de.fhdo.lemma.data.intermediate.IntermediateImportedComplexType
@@ -236,6 +237,7 @@ internal fun EObject.getAllAspects()
     = when(this) {
         is IntermediateDataStructure -> aspects
         is IntermediateDataOperation -> aspects
+        is IntermediateDataOperationReturnType -> aspects
         is IntermediateMicroservice -> aspects
         is IntermediateParameter -> aspects
         else -> throw IllegalArgumentException("EObject of type ${this.mainInterface.name} does not have aspects")

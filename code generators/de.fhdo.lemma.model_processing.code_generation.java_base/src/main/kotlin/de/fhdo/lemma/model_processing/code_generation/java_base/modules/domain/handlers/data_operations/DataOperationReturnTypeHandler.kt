@@ -6,6 +6,7 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.ast.ImportTarget
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addImport
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.CallableCodeGenerationHandlerI
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.CodeGenerationHandler
+import de.fhdo.lemma.model_processing.code_generation.java_base.hasAspect
 import de.fhdo.lemma.model_processing.code_generation.java_base.languages.setJavaTypeFrom
 
 /**
@@ -34,6 +35,13 @@ internal class DataOperationReturnTypeHandler
     override fun execute(returnType: IntermediateDataOperationReturnType, method: MethodDeclaration?)
         : Pair<MethodDeclaration, String?>? {
         method!!.setJavaTypeFrom(returnType.type, method) { method.addImport(it, ImportTargetElementType.METHOD) }
+
+        // Add Optional return type
+        if (returnType.hasAspect("java.Optional") && !method.type.isVoidType) {
+            method.addImport("java.util.Optional", ImportTargetElementType.METHOD)
+            method.setType("Optional<${method.typeAsString}>")
+        }
+
         return method to null
     }
 }

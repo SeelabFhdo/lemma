@@ -61,7 +61,6 @@ internal class DataOperationHandler :
         if (operation.returnType == null)
             setType("void")
         else
-            // Invoke handler, mainly for Genlet delegation purposes
             DataOperationReturnTypeHandler.invoke(operation.returnType, this)
     }
 }
