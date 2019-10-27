@@ -15,7 +15,6 @@ import de.fhdo.lemma.data.intermediate.IntermediateImportedAspect
 import de.fhdo.lemma.data.intermediate.IntermediateImportedComplexType
 import de.fhdo.lemma.model_processing.asFile
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.ImportTargetElementType
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addDependencies
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addGetter
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addImport
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addPrivateAttribute
@@ -23,7 +22,6 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addSetter
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.newJavaClassOrInterface
 import de.fhdo.lemma.model_processing.code_generation.java_base.languages.DATA_DSL_LANGUAGE_DESCRIPTION
 import de.fhdo.lemma.model_processing.code_generation.java_base.languages.SERVICE_DSL_LANGUAGE_DESCRIPTION
-import de.fhdo.lemma.model_processing.code_generation.java_base.languages.getTypeMapping
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.domain.DomainContext.State as DomainState
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.services.ServicesContext.State as ServicesState
 import de.fhdo.lemma.model_processing.languages.registerLanguage
@@ -375,7 +373,7 @@ internal fun IntermediateComplexType.fullyQualifiedClasspath(withExtension: Bool
 fun IntermediateDataField.hasFeature(feature: String) = featureNames.contains(feature)
 
 /**
- * Resolve the original [IntermediateComplexType] from this instance. To keep the intermediate models is lightweight as
+ * Resolve the original [IntermediateComplexType] from this instance. To keep the intermediate models as lightweight as
  * possible, references have been omitted where possible. Instead, types, for example, are embedded as containments
  * at most places and the "reference" to the original type is established leveraging the import URI (for
  * [IntermediateImportedComplexType] instances) and the type's [qualifiedName]. This functions allows for finding the
@@ -604,6 +602,20 @@ internal fun IntermediateOperation.hasCompositeResult(communicationType: Communi
     = parameters.count { it.communicationType == communicationType && it.isResultParameter } > 1
 
 /**
+ * Constant to be used when a generated element refers to synchronous parameters and/or behavior.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+private const val SYNCHRONOUS_NAME_FRAGMENT = ""
+
+/**
+ * Constant to be used when a generated element refers to asynchronous parameters and/or behavior.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+private const val ASYNCHRONOUS_NAME_FRAGMENT = "Async"
+
+/**
  * Determine the name of a composite class that represents a composite input or result object of this
  * [IntermediateOperation] depending on the passed [communicationType].
  *
@@ -612,8 +624,8 @@ internal fun IntermediateOperation.hasCompositeResult(communicationType: Communi
 fun IntermediateOperation.buildCompositeClassName(communicationType: CommunicationType, forResult: Boolean = false)
     : String {
     val communicationTypeSuffix = when(communicationType) {
-        CommunicationType.SYNCHRONOUS -> ""
-        CommunicationType.ASYNCHRONOUS -> "Async"
+        CommunicationType.SYNCHRONOUS -> SYNCHRONOUS_NAME_FRAGMENT
+        CommunicationType.ASYNCHRONOUS -> ASYNCHRONOUS_NAME_FRAGMENT
     }
 
     val resultSuffix = if (forResult) "Result" else ""
@@ -629,6 +641,37 @@ fun IntermediateOperation.buildCompositeClassName(communicationType: Communicati
 fun IntermediateOperation.buildFullyQualifiedCompositeClassName(communicationType: CommunicationType,
     forResult: Boolean = false)
     = "${buildOperationPackageName()}.${buildCompositeClassName(communicationType, forResult)}"
+
+/**
+ * Build the name of the guard method for checking required input parameters of this [IntermediateOperation] with the
+ * given [communicationType].
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+internal fun IntermediateOperation.buildRequiredInputParameterGuardName(communicationType: CommunicationType) : String {
+    val prefix = if (communicationType == CommunicationType.ASYNCHRONOUS)
+            ASYNCHRONOUS_NAME_FRAGMENT
+        else
+            SYNCHRONOUS_NAME_FRAGMENT
+
+    return "checkRequired${prefix}ParametersOf${name.capitalize()}"
+}
+
+/**
+ * Determine the name of the Exception class in case this parameter is a fault parameter.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+fun IntermediateParameter.buildExceptionClassName()
+    = "${name.capitalize()}Exception"
+
+/**
+ * Determine the fully-qualified name of the Exception class in case this parameter is a fault parameter.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+fun IntermediateParameter.buildFullyQualifiedExceptionClassName()
+    = "${buildOperationPackageName()}.${buildExceptionClassName()}"
 
 /**
  * Build a composite class from this list of [IntermediateParameter] instances. The composite class is a POJO with
@@ -653,25 +696,12 @@ internal fun List<IntermediateParameter>.toCompositeClass(communicationType: Com
     val currentDomainPackage: String by DomainState
     val interfaceSubFolderName: String by ServicesState
     forEach { parameter ->
-        // Determine type
-        val typeMapping = parameter.type.getTypeMapping()
-        val parameterType = if (typeMapping != null) {
-            val (mappedTypeName, isComplexTypeMapping, imports, dependencies) = typeMapping
-            imports.forEach { generatedClass.addImport(it, ImportTargetElementType.METHOD) }
-            generatedClass.addDependencies(dependencies)
+        // Add attribute
+        val parameterAttribute = generatedClass.addPrivateAttribute(parameter.name, parameter.type, generatedClass) {
+            generatedClass.addImport(it, ImportTargetElementType.METHOD)
+        }
 
-            if (isComplexTypeMapping) {
-                val fullyQualifiedClassname = (parameter.type as IntermediateComplexType).fullyQualifiedClassname
-                val complexTypeFullyQualifiedName = "$currentDomainPackage.$fullyQualifiedClassname"
-                generatedClass.addImport(complexTypeFullyQualifiedName, ImportTargetElementType.METHOD)
-            }
-
-            mappedTypeName
-        } else
-            "${parameter.type.name}_ExpectedFromGenlet"
-
-        // Add field, getter, and setter
-        val parameterAttribute = generatedClass.addPrivateAttribute(parameter.name, parameterType)
+        // Add getter and setter
         generatedClass.addSetter(parameterAttribute)
         generatedClass.addGetter(parameterAttribute)
     }

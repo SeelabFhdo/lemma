@@ -33,7 +33,9 @@ import com.github.javaparser.ast.type.ClassOrInterfaceType
 import com.github.javaparser.ast.type.ReferenceType
 import com.github.javaparser.ast.type.TypeParameter
 import com.github.javaparser.printer.PrettyPrinter
+import de.fhdo.lemma.data.intermediate.IntermediateType
 import de.fhdo.lemma.model_processing.code_generation.java_base.dependencies.DependencyDescription
+import de.fhdo.lemma.model_processing.code_generation.java_base.languages.setJavaTypeFrom
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.configuration.AbstractSerializationConfiguration
 import de.fhdo.lemma.technology.CommunicationType
 import java.io.File
@@ -687,6 +689,24 @@ internal fun ClassOrInterfaceDeclaration.addAttribute(attributeName: String, typ
 }
 
 /**
+ * Add an attribute with the given intermediate [type] to this class, and add type-specific imports to the
+ * [importsTargetNode] leveraging the [addImportToTargetNode] function.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+internal fun <P: Node> ClassOrInterfaceDeclaration.addAttribute(attributeName: String, type: IntermediateType,
+    importsTargetNode: P, vararg modifiers: Modifier.Keyword, initializer: String? = null,
+    addImportToTargetNode: P.(String) -> Unit) : FieldDeclaration {
+    val attributeField = addField("TODO", attributeName, *modifiers)
+    attributeField.variables[0].setJavaTypeFrom(type, importsTargetNode, addImportToTargetNode)
+
+    if (initializer != null)
+        attributeField.setInitializationValue(initializer)
+
+    return attributeField
+}
+
+/**
  * Get all attributes of this [ClassOrInterfaceDeclaration] instance. The result is a [VariableDeclarator] list that
  * contains the first variable of each of this class's fields, which conforms to what [addAttribute] results in (a
  * [FieldDeclaration] with a single variable, i.e., the actual "attribute").
@@ -707,6 +727,18 @@ val ClassOrInterfaceDeclaration.attributes
 fun ClassOrInterfaceDeclaration.addPrivateAttribute(attributeName: String, typeName: String,
     vararg modifiers: Modifier.Keyword, initializer: String? = null)
         = addAttribute(attributeName, typeName, Modifier.Keyword.PRIVATE, *modifiers, initializer = initializer)
+
+/**
+ * Add a private attribute with the given intermediate [type] to this class, and add type-specific imports to the
+ * [importsTargetNode] leveraging the [addImportToTargetNode] function.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+fun <P: Node> ClassOrInterfaceDeclaration.addPrivateAttribute(attributeName: String, type: IntermediateType,
+    importsTargetNode: P, vararg modifiers: Modifier.Keyword, initializer: String? = null,
+    addImportToTargetNode: P.(String) -> Unit)
+        = addAttribute(attributeName, type, importsTargetNode, Modifier.Keyword.PRIVATE, *modifiers,
+            initializer = initializer, addImportToTargetNode = addImportToTargetNode)
 
 /**
  * Add a constructor for initializing all attributes of the given [ClassOrInterfaceDeclaration] instance at once.
@@ -884,6 +916,14 @@ fun MethodDeclaration.removeImport(import: String, targetElementType: ImportTarg
     removeImportsInfo(import, targetElementType)
     findParentNode<ClassOrInterfaceDeclaration>()!!.removeImport(import, targetElementType)
 }
+
+/**
+ * Convenience method to add a thrown Exception class represented by a String name to this method's signature.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+internal fun MethodDeclaration.addThrownException(exceptionClassName: String)
+    = addThrownException(StaticJavaParser.parseClassOrInterfaceType(exceptionClassName))
 
 /**
  * Set the implementation body of a Java method. The implementation body is provided in the form of plain Java code.
@@ -1277,22 +1317,29 @@ internal fun ConstructorDeclaration.setBody(vararg rawStatements: String, firstS
 }
 
 /**
- * Insert an implementation statement at a specified index in a Java method's implementation body. The statement is
- * provided in the form of plain Java code.
+ * Insert an implementation statement at a specified [index] in a Java constructor's implementation body. The statement
+ * is provided in the form of plain Java [code]. If the [index] is greater than the current amount of statements in the
+ * constructor's implementation body, the statement's [code] is appended as the last statement to the body.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 internal fun ConstructorDeclaration.insertStatement(code: String, index: Int = 0) {
+    require(code.isNotEmpty()) { "Code statement to insert must not be empty" }
+
     if (body.isEmpty) {
         setBody(code)
         return
     }
 
-    val statements = body.statements
-    require(index in 0 until statements.size) { "Invalid index for insertion of statement into method $name" }
+    require(index >= 0) { "Invalid index for insertion of statement into constructor $name" }
 
+    val statements = body.statements
     val newStatement = StaticJavaParser.parseStatement(code)
-    statements.add(index, newStatement)
+    if (index <= statements.size)
+        statements.add(index, newStatement)
+    else
+        statements.add(newStatement)
+
     body.statements = statements
 }
 

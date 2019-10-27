@@ -178,11 +178,11 @@ class GenletGeneratedNode(baseTargetFolderSpecifier: GenletPathSpecifier, val fi
      */
     override fun equals(other: Any?)
         = when {
-        this === other -> true
-        other == null -> false
-        other !is GenletGeneratedFileContent -> false
-        else -> filePath == other.filePath
-    }
+            this === other -> true
+            other == null -> false
+            other !is GenletGeneratedFileContent -> false
+            else -> filePath == other.filePath
+        }
 
     /**
      * The hash code of a [GenletGeneratedNode] is equal to the hash code of its [filePath]

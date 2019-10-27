@@ -17,6 +17,11 @@ import de.fhdo.lemma.service.intermediate.IntermediateParameter
 import org.eclipse.emf.ecore.EObject
 import java.lang.IllegalArgumentException
 
+/**
+ * Handler for [IntermediateParameter] aspects.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
 @AspectHandler
 internal class ParameterHandler : AspectHandlerI {
     private val aspectNodeTypeCombinations = mapOf<String, List<Class<out Node>>>(
@@ -35,65 +40,88 @@ internal class ParameterHandler : AspectHandlerI {
         IntermediateParameter::class.java with ClassOrInterfaceDeclaration::class.java
     }
 
+    /**
+     * Execution logic of the handler
+     */
     override fun execute(eObject: EObject, node: Node, aspect: IntermediateImportedAspect) : Node {
         val supportedNodeTypes = aspectNodeTypeCombinations[aspect.qualifiedName]!!
         if (node::class.java !in supportedNodeTypes)
             return node
 
         return when(node) {
-            is ClassOrInterfaceDeclaration -> execute(eObject as IntermediateParameter, node, aspect)
+            is ClassOrInterfaceDeclaration -> execute(node, aspect)
             is MethodDeclaration -> execute(eObject as IntermediateParameter, node, aspect)
             else -> node
         }
     }
 
-    private fun execute(parameter: IntermediateParameter, generatedClass: ClassOrInterfaceDeclaration,
-        aspect: IntermediateImportedAspect) : Node {
+    /**
+     * Execution logic for when the generated Node is a [ClassOrInterfaceDeclaration].
+     */
+    private fun execute(generatedClass: ClassOrInterfaceDeclaration, aspect: IntermediateImportedAspect) : Node {
+        /* The aspect must be java.ResponseStatus according to handlesEObjectNodeCombinations() */
         generatedClass.addImport("org.springframework.http.HttpStatus", ImportTargetElementType.ANNOTATION)
         generatedClass.addImport("org.springframework.web.bind.annotation.ResponseStatus",
             ImportTargetElementType.ANNOTATION)
 
+        /*
+         * Determine the value of the "status" property of the ResponseStatus annotation starting from Spring's
+         * HttpStatus enumeration. First, it is tried to map the aspect's value for "status" directly to a value of
+         * HttpStatus, i.e., the number of the HTTP status. If no such number exists, it is tried to interpret the value
+         * of the aspect's "status" property either as HTTP reason phrase, e.g., "No Content", or raw constant
+         * identifier, e.g., "NO_CONTENT". If this still does not work, use "Internal Server Error" as default HTTP
+         * status code.
+         */
         val aspectStatus = aspect.getPropertyValue("status")
         val statusName = try {
             HttpStatus.valueOf(aspectStatus!!).toString()
         } catch (ex: IllegalArgumentException) {
             HttpStatus.values()
-                .firstOrNull { it.value.toString() == aspectStatus || it.reasonPhrase == aspectStatus }
+                .firstOrNull { it.reasonPhrase == aspectStatus || it.value.toString() == aspectStatus }
                 ?.toString()
                 ?: HttpStatus.INTERNAL_SERVER_ERROR.toString()
         }
 
-        val responseStatusAnnotation = generatedClass.addAndGetAnnotation("ResponseStatus")
-        responseStatusAnnotation.addPair("value", "HttpStatus.$statusName")
+        /* Add the annotation together with the determined HTTP status */
+        val annotation = generatedClass.addAndGetAnnotation("ResponseStatus")
+        annotation.addPair("value", "HttpStatus.$statusName")
         return generatedClass
     }
 
+    /**
+     * Execution logic for when the generated Node is a [MethodDeclaration].
+     */
     private fun execute(parameter: IntermediateParameter, generatedMethod: MethodDeclaration,
         aspect: IntermediateImportedAspect) : Node {
-        val (import, targetElementType) = when(aspect.name) {
-            "Valid" -> "javax.validation.Valid" to ImportTargetElementType.ANNOTATION
-            else -> "org.springframework.web.bind.annotation.${aspect.name}" to ImportTargetElementType.ANNOTATION
-        }
+        /* Add annotation import */
+        val import = if (aspect.name == "Valid")
+                "javax.validation.Valid"
+            else
+                "org.springframework.web.bind.annotation.${aspect.name}"
 
-        generatedMethod.addImport(import, targetElementType)
+        generatedMethod.addImport(import, ImportTargetElementType.ANNOTATION)
+
+        /* Add annotation to the method */
         val generatedParameter = generatedMethod.getParameter(parameter.name)!!
         val annotation = generatedParameter.addAndGetAnnotation(aspect.name)
-        annotation.refine(parameter, aspect)
+        if (aspect.name == "RequestParam")
+            annotation.addRequestParamInformation(parameter, aspect)
         return generatedMethod
     }
 
-    private fun NormalAnnotationExpr.refine(parameter: IntermediateParameter, aspect: IntermediateImportedAspect) {
-        if (aspect.name != "RequestParam")
-            return
-
+    /**
+     * Helper to add property values to this [NormalAnnotationExpr] from the java.RequestParam [requestParamAspect]
+     */
+    private fun NormalAnnotationExpr.addRequestParamInformation(parameter: IntermediateParameter,
+        requestParamAspect: IntermediateImportedAspect) {
         if (parameter.isOptional)
             addPair("required", "false")
 
-        val value = aspect.getPropertyValue("value")
+        val value = requestParamAspect.getPropertyValue("value")
         if (value != null)
             addPair("value", "\"$value\"")
 
-        val defaultValue = aspect.getPropertyValue("defaultValue")
+        val defaultValue = requestParamAspect.getPropertyValue("defaultValue")
         if (defaultValue != null)
             addPair("defaultValue", "\"$defaultValue\"")
     }

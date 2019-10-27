@@ -14,26 +14,46 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.modules.services
 import de.fhdo.lemma.model_processing.code_generation.java_base.javaFileName
 import de.fhdo.lemma.service.intermediate.IntermediateMicroservice
 
+/**
+ * Code generation handler for IntermediateMicroservice instances.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
 @CodeGenerationHandler
-internal class IntermediateMicroserviceHandler
+internal class MicroserviceHandler
     : VisitingCodeGenerationHandlerI<IntermediateMicroservice, ClassOrInterfaceDeclaration, Nothing> {
-    private val currentMicroserviceGenerationPackage: String by ServicesState
-
     override fun handlesEObjectsOfInstance() = IntermediateMicroservice::class.java
     override fun generatesNodesOfInstance() = ClassOrInterfaceDeclaration::class.java
     override fun getAspects(microservice: IntermediateMicroservice) = microservice.aspects!!
 
+    private val currentMicroserviceGenerationPackage: String by ServicesState
+
+    /**
+     * Execution logic of the handler
+     */
     override fun execute(microservice: IntermediateMicroservice, context: Nothing?)
         : Pair<ClassOrInterfaceDeclaration, String?>? {
+        /*
+         * Each IntermediateMicroservice will be mapped to its own Java class in the current microservice generation
+         * package
+         */
         val generatedClass = newJavaClassOrInterface(currentMicroserviceGenerationPackage, microservice.classname)
 
+        /*
+         * The class is marked with the LemmaMicroservice annotation in order to determine the type of the microservice,
+         * i.e., functional, infrastructure, or utility, as specified in the service model
+         */
         generatedClass.addDependency("de.fhdo.lemma.msa:de.fhdo.lemma.msa:0.0.1-SNAPSHOT")
+
         generatedClass.addImport("de.fhdo.lemma.msa.services.LemmaMicroservice", ImportTargetElementType.ANNOTATION,
             SerializationCharacteristic.DONT_RELOCATE)
         generatedClass.addImport("de.fhdo.lemma.msa.services.LemmaMicroserviceType", ImportTargetElementType.ANNOTATION,
             SerializationCharacteristic.DONT_RELOCATE)
-        val serviceAnnotation = generatedClass.addAndGetAnnotation("LemmaMicroservice",
-            SerializationCharacteristic.DONT_RELOCATE)
+
+        val serviceAnnotation = generatedClass.addAndGetAnnotation(
+            "LemmaMicroservice",
+            SerializationCharacteristic.DONT_RELOCATE
+        )
         serviceAnnotation.addPair("type", "LemmaMicroserviceType.${microservice.type.name}")
 
         return generatedClass to microservice.javaFileName

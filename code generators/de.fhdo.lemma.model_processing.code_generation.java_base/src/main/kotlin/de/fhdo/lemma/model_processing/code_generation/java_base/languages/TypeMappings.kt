@@ -1,14 +1,20 @@
 package de.fhdo.lemma.model_processing.code_generation.java_base.languages
 
+import com.github.javaparser.ast.Node
+import com.github.javaparser.ast.nodeTypes.NodeWithType
 import de.fhdo.lemma.data.DateUtils
 import de.fhdo.lemma.data.PrimitiveTypeConstants
 import de.fhdo.lemma.data.intermediate.IntermediateComplexType
+import de.fhdo.lemma.data.intermediate.IntermediateEnumerationField
 import de.fhdo.lemma.data.intermediate.IntermediateImportedTechnologySpecificType
 import de.fhdo.lemma.data.intermediate.IntermediatePrimitiveType
 import de.fhdo.lemma.data.intermediate.IntermediateType
 import de.fhdo.lemma.data.intermediate.IntermediateTypeOrigin
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addDependencies
 import de.fhdo.lemma.model_processing.code_generation.java_base.classname
 import de.fhdo.lemma.model_processing.code_generation.java_base.dependencies.DependencyDescription
+import de.fhdo.lemma.model_processing.code_generation.java_base.fullyQualifiedClassname
+import de.fhdo.lemma.model_processing.code_generation.java_base.modules.domain.DomainContext.State as DomainState
 import de.fhdo.lemma.model_processing.phases.PhaseException
 import de.fhdo.lemma.model_processing.utils.trimToSingleLine
 import java.lang.IllegalArgumentException
@@ -76,7 +82,7 @@ fun IntermediateType.getTypeMapping() : TypeMappingDescription? {
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-internal fun IntermediatePrimitiveType.getObjectTypeMapping() : TypeMappingDescription {
+internal fun IntermediatePrimitiveType.getObjectWrapperMapping() : TypeMappingDescription {
     require(origin == IntermediateTypeOrigin.BUILTIN) { "A Java object type mapping may only be derived for built-in " +
         "primitive types" }
 
@@ -440,3 +446,32 @@ val IntermediateType.isNullable
         is IntermediateComplexType -> true
         else -> false
     }
+
+/**
+ * Helper to set the Java type for this [NodeWithType] from the intermediate [type]. Type-specific imports will be added
+ * to the [importsTargetNode] leveraging the [addImportToTargetNode] function.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+internal fun <P: Node> NodeWithType<*, *>.setJavaTypeFrom(type: IntermediateType, importsTargetNode: P,
+    addImportToTargetNode: P.(String) -> Unit) : TypeMappingDescription? {
+    val typeMapping = type.getTypeMapping()
+    if (typeMapping == null) {
+        setType("${type.name}_ExpectedFromGenlet")
+        return null
+    }
+
+    val (mappedType, complexTypeMapping, imports, dependencies) = typeMapping
+    setType(mappedType)
+    imports.forEach { addImportToTargetNode(importsTargetNode, it) }
+    importsTargetNode.addDependencies(dependencies)
+
+    if (complexTypeMapping) {
+        val currentDomainPackage: String by DomainState
+        val fullyQualifiedClassname = (type as IntermediateComplexType).fullyQualifiedClassname
+        val complexTypeFullyQualifiedName = "$currentDomainPackage.$fullyQualifiedClassname"
+        addImportToTargetNode(importsTargetNode, complexTypeFullyQualifiedName)
+    }
+
+    return typeMapping
+}

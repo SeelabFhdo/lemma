@@ -2,21 +2,40 @@ package de.fhdo.lemma.model_processing.code_generation.springcloud
 
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration
 import com.github.javaparser.ast.body.MethodDeclaration
+import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletPathSpecifier
+import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.property_files.PropertyFile
+import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.property_files.openPropertyFile
 import de.fhdo.lemma.service.intermediate.IntermediateMicroservice
 import de.fhdo.lemma.service.intermediate.IntermediateOperation
 import de.fhdo.lemma.technology.CommunicationType
 import java.lang.IllegalArgumentException
 import kotlin.reflect.KProperty
 
+/**
+ * Represents the context of the Genlet. The context provides state handling for the Genlet and Genlet-specific helpers.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
 internal object Context {
+    /* State object of the context */
     object State {
         private val asynchronousOperations = mutableMapOf<String, MutableSet<AsynchronousOperationInfo>>()
         private var currentIntermediateMicroservice: IntermediateMicroservice? = null
+        private var currentApplicationPropertiesFile: PropertyFile? = null
 
-        fun setCurrentIntermediateMicroservice(currentIntermediateMicroservice: IntermediateMicroservice) {
+        /**
+         * Initialize the state
+         */
+        fun initialize(currentIntermediateMicroservice: IntermediateMicroservice) {
             State.currentIntermediateMicroservice = currentIntermediateMicroservice
+            currentApplicationPropertiesFile = openPropertyFile(GenletPathSpecifier.CURRENT_MICROSERVICE_RESOURCES_PATH,
+                "application.properties")
         }
 
+        /**
+         * Helper to add or update an existing [AsynchronousOperationInfo] for the given [operation], and based on one
+         * or more of the given [generatedMethod], [compositeInputClass], and [compositeInputClass] parameters.
+         */
         fun addOrUpdateAsynchronousOperationInfo(
             operation: IntermediateOperation,
             generatedMethod: MethodDeclaration? = null,
@@ -28,6 +47,10 @@ internal object Context {
                 "operation"
             }
 
+            /*
+             * Add operation to the set of asynchronous operations for its asynchronous protocol, and create or
+             * retrieve its corresponding AsynchronousOperationInfo instance
+             */
             val protocol = operation.protocols
                 .find { it.communicationType == CommunicationType.ASYNCHRONOUS }!!
                 .protocol
@@ -41,6 +64,10 @@ internal object Context {
                 asynchronousOperations[protocol]!!.add(operationInfo)
             }
 
+            /*
+             * Add generated method, composite input class, and composite result class information to the
+             * AsynchronousOperationInfo instance
+             */
             if (generatedMethod != null)
                 operationInfo.generatedMethod = generatedMethod
 
@@ -51,6 +78,10 @@ internal object Context {
                 operationInfo.compositeResultClass = compositeResultClass
         }
 
+        /**
+         * Retrieve all composite input and result classes stored for the given [protocol] in the
+         * [asynchronousOperations] map.
+         */
         fun getAsynchronousCompositeClasses(protocol: String) : Set<String> {
             val operations = asynchronousOperations[protocol] ?: return emptySet()
 
@@ -66,6 +97,11 @@ internal object Context {
             return compositeClasses
         }
 
+        /**
+         * Retrieve all receiver classes stored for the given [protocol] in the [asynchronousOperations] map. The
+         * receiver class is the defining class of the asynchronous method and automatically determined when a new
+         * [AsynchronousOperationInfo] instance is constructed.
+         */
         fun getAsynchronousReceiverClasses(protocol: String) : Set<String> {
             val operations = asynchronousOperations[protocol] ?: return emptySet()
 
@@ -78,14 +114,22 @@ internal object Context {
             return receiverClasses
         }
 
-        fun getAsynchronousOperationInputInfo (protocol: String) : Set<AsynchronousOperationInfo> {
-            val operations = asynchronousOperations[protocol] ?: return emptySet()
-            return operations.filter { it.compositeInputClass != null }.toSet()
-        }
+        /**
+         * Retrieve all [AsynchronousOperationInfo] instances with a composite input class stored for the given
+         * [protocol]
+         */
+        fun getAsynchronousOperationInputInfoSet(protocol: String) : Set<AsynchronousOperationInfo>
+            = asynchronousOperations[protocol]
+                ?.filter { it.compositeInputClass != null }?.toSet()
+                ?: emptySet()
 
+        /**
+         * Reset the state
+         */
         fun reset() {
             asynchronousOperations.clear()
             currentIntermediateMicroservice = null
+            currentApplicationPropertiesFile = null
         }
 
         /**
@@ -95,6 +139,7 @@ internal object Context {
         operator fun <T: Any> getValue(thisRef: Any?, property: KProperty<*>) : T {
             val value = when(property.name) {
                 "currentIntermediateMicroservice" -> currentIntermediateMicroservice
+                "currentApplicationPropertiesFile" -> currentApplicationPropertiesFile
                 else -> throw IllegalArgumentException("State does not comprise property ${property.name}")
             }
 
@@ -103,12 +148,24 @@ internal object Context {
     }
 }
 
+/**
+ * This class holds information about an asynchronous operation. Those information comprise
+ *      - the name of the asynchronous protocol
+ *      - the IntermediateOperation instance
+ *      - the generated MethodDeclaration instance
+ *      - the name of the composite input class
+ *      - the name of the composite result class
+ *      - the name of the receiver class, which is the class that defines the generated MethodDeclaration instance
+ */
 internal class AsynchronousOperationInfo(val protocol: String, val operation: IntermediateOperation,
     generatedMethod: MethodDeclaration? = null, var compositeInputClass: String? = null,
     var compositeResultClass: String? = null) {
     var receiverClassName: String? = null
         private set
 
+    /**
+     * Set generated method and also initialize the receiver class name
+     */
     var generatedMethod: MethodDeclaration? = generatedMethod
         set(value) {
             if (value != null)
@@ -117,17 +174,24 @@ internal class AsynchronousOperationInfo(val protocol: String, val operation: In
             field = value
         }
 
+    /**
+     * Init block to derive the receiver class name in case a generated method has been passed to the constructor
+     */
     init {
         if (generatedMethod != null)
-            initializeReceiverClassName(generatedMethod!!)
+            initializeReceiverClassName(generatedMethod)
     }
 
+    /**
+     * Helper to initialize the receiver class name
+     */
     private fun initializeReceiverClassName(generatedMethod: MethodDeclaration) {
-        val receiverClass = generatedMethod.parentNode.get() as ClassOrInterfaceDeclaration
-        // Capture here, because class might get adapted by code generation serializers
-        receiverClassName = receiverClass.fullyQualifiedName.get()
+        receiverClassName = (generatedMethod.parentNode.get() as ClassOrInterfaceDeclaration).fullyQualifiedName.get()
     }
 
+    /**
+     * Two [AsynchronousOperationInfo] instance are equal when their [operation] instances' qualified names are equal
+     */
     override fun equals(other: Any?)
         = when {
             this === other -> true
@@ -136,5 +200,9 @@ internal class AsynchronousOperationInfo(val protocol: String, val operation: In
             else -> operation.qualifiedName == operation.qualifiedName
         }
 
+    /**
+     * The hash code of an [AsynchronousOperationInfo] is equivalent to the hash code the qualified name of its
+     * [operation]
+     */
     override fun hashCode() = operation.qualifiedName.hashCode()
 }

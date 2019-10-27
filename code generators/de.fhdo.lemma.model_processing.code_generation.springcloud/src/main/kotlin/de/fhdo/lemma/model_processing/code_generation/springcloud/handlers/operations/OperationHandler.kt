@@ -1,4 +1,4 @@
-package de.fhdo.lemma.model_processing.code_generation.springcloud.handlers
+package de.fhdo.lemma.model_processing.code_generation.springcloud.handlers.operations
 
 import com.github.javaparser.ast.body.MethodDeclaration
 import com.github.javaparser.ast.type.ClassOrInterfaceType
@@ -18,14 +18,22 @@ import de.fhdo.lemma.model_processing.code_generation.springcloud.Context.State 
 import de.fhdo.lemma.service.intermediate.IntermediateOperation
 import de.fhdo.lemma.technology.CommunicationType
 
+/**
+ * Code generation handler for IntermediateOperation instances.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
 @CodeGenerationHandler
-internal class OperationHandler
-    : GenletCodeGenerationHandlerI<IntermediateOperation, MethodDeclaration, Nothing> {
+internal class OperationHandler : GenletCodeGenerationHandlerI<IntermediateOperation, MethodDeclaration, Nothing> {
     override fun handlesEObjectsOfInstance() = IntermediateOperation::class.java
     override fun generatesNodesOfInstance() = MethodDeclaration::class.java
 
+    /**
+     * Execution logic of the handler
+     */
     override fun execute(operation: IntermediateOperation, method: MethodDeclaration, context: Nothing?)
         : GenletCodeGenerationHandlerResult<MethodDeclaration>? {
+        /* Add imports and annotations related to API comments */
         if (operation.apiOperationComment != null) {
             method.addImport(
                 "io.swagger.annotations.ApiOperation", ImportTargetElementType.ANNOTATION,
@@ -38,23 +46,29 @@ internal class OperationHandler
             apiOperationAnnotation.addPair("value", "\"${operation.apiOperationComment.comment}\"")
         }
 
+        /* In case any of the operation's parameters exhibits the java.ResponseEntity aspect, the return type of the
+         * generated method will be adapted to be ResponseEntity with the current return type as type argument. This,
+         * however, is only possible when the return type is a ClassOrInterfaceType.
+         */
         if (operation.parameters.any { it.hasAspect("java.ResponseEntity") } && method.type is ClassOrInterfaceType) {
-            val currentType = (method.type as ClassOrInterfaceType).nameAsString
-            if (currentType != "ResponseEntity") {
+            val currentReturnType = (method.type as ClassOrInterfaceType).nameAsString
+            if (currentReturnType != "ResponseEntity") {
                 method.addImport("org.springframework.http.ResponseEntity", ImportTargetElementType.METHOD)
-                method.setType("ResponseEntity<$currentType>")
+                method.setType("ResponseEntity<$currentReturnType>")
             }
         }
 
+        /*
+         * Gather asynchronous input parameters in the Genlet's state to later handle them after generation of the
+         * current microservice has been finished (cf. MicroserviceHandler)
+         */
         if (operation.hasInputParameters(CommunicationType.ASYNCHRONOUS)) {
-            val compositeInputClassName = if (!operation.hasInputParameters(CommunicationType.SYNCHRONOUS)) {
-                    // There can only be one asynchronous parameter
-                    val asynchronousParameter = operation.getInputParameters(CommunicationType.ASYNCHRONOUS)[0].type
-                    (asynchronousParameter as? IntermediateComplexType)?.fullyQualifiedClassname ?: null
-                } else
-                    null
-
-            State.addOrUpdateAsynchronousOperationInfo(operation, method, compositeInputClassName)
+            // Asynchronous input parameters will be condensed into a single composite class by the Java base
+            // generator
+            val asynchronousParameter = operation.getInputParameters(CommunicationType.ASYNCHRONOUS)[0].type
+            val compositeClass = (asynchronousParameter as? IntermediateComplexType)?.fullyQualifiedClassname
+            if (compositeClass != null)
+                State.addOrUpdateAsynchronousOperationInfo(operation, method, compositeClass)
         }
 
         return GenletCodeGenerationHandlerResult(method)

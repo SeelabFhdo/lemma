@@ -14,36 +14,49 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.combina
 import de.fhdo.lemma.model_processing.code_generation.java_base.hasFeature
 import org.eclipse.emf.ecore.EObject
 
+/**
+ * Handler for the java.Table aspect.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
 @AspectHandler
 internal class TableHandler : AspectHandlerI {
+    override fun handlesAspects() = setOf("java.Table")
     override fun handlesEObjectNodeCombinations() = combinations {
         IntermediateDataStructure::class.java with ClassOrInterfaceDeclaration::class.java
     }
 
-    override fun handlesAspects() = setOf("java.Table")
-
-    override fun execute(eObject : EObject, node : Node, aspect : IntermediateImportedAspect) : Node {
+    /**
+     * Execution logic of the handler
+     */
+    override fun execute(eObject: EObject, node: Node, aspect: IntermediateImportedAspect) : Node {
+        /* Add JPA import */
         val generatedClass = (node as ClassOrInterfaceDeclaration)
+        generatedClass.addDependency("org.springframework.boot:spring-boot-starter-data-jpa")
+
+        /* Each Table automatically becomes an Entity, too */
         generatedClass.addAnnotation("Entity")
         generatedClass.addImport("javax.persistence.Entity", ImportTargetElementType.ANNOTATION)
 
+        /* Add the Table annotation together with its "name" value if specified for the aspect */
         val tableAnnotation = generatedClass.addAndGetAnnotation("Table")
         val tableName = aspect.getPropertyValue("name")
         if (tableName != null)
             tableAnnotation.addPair("name", "\"$tableName\"")
         generatedClass.addImport("javax.persistence.Table", ImportTargetElementType.ANNOTATION)
 
+        /*
+         * Add Id annotation to all attributes of the generated class whose corresponding data structure fields are
+         * identifiers
+         */
         val dataStructure = (eObject as IntermediateDataStructure)
-        val identifierMembers = generatedClass.fields.filter { generatedField ->
-            dataStructure.dataFields.find { it.name == generatedField.variables[0].nameAsString }!!
-                .hasFeature("IDENTIFIER")
+        val generatedIdentifierAttributes = generatedClass.fields.filter { generatedField ->
+            val dataField = dataStructure.dataFields.find { it.name == generatedField.variables[0].nameAsString }!!
+            dataField.hasFeature("IDENTIFIER")
         }
-        identifierMembers.forEach {
+        if (generatedIdentifierAttributes.isNotEmpty())
             generatedClass.addImport("javax.persistence.Id", ImportTargetElementType.ATTRIBUTE)
-            it.addAnnotation("Id")
-        }
-
-        generatedClass.addDependency("org.springframework.boot:spring-boot-starter-data-jpa")
+        generatedIdentifierAttributes.forEach { it.addAnnotation("Id") }
 
         return node
     }

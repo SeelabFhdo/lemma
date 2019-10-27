@@ -12,14 +12,21 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.AspectH
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.combinations
 import org.eclipse.emf.ecore.EObject
 
+/**
+ * Handler for the java.GeneratedValue aspect.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
 @AspectHandler
 internal class GeneratedValueHandler : AspectHandlerI {
+    override fun handlesAspects() = setOf("java.GeneratedValue")
     override fun handlesEObjectNodeCombinations() = combinations {
         IntermediateDataField::class.java with FieldDeclaration::class.java
     }
 
-    override fun handlesAspects() = setOf("java.GeneratedValue")
-
+    /**
+     * Execution logic of the handler
+     */
     override fun execute(eObject : EObject, node : Node, aspect : IntermediateImportedAspect) : Node {
         val generatedField = (node as FieldDeclaration)
         generatedField.addAnnotation("GeneratedValue")

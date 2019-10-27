@@ -1,4 +1,4 @@
-package de.fhdo.lemma.model_processing.code_generation.springcloud.handlers
+package de.fhdo.lemma.model_processing.code_generation.springcloud.handlers.parameters
 
 import com.github.javaparser.ast.body.MethodDeclaration
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.ImportTargetElementType
@@ -11,27 +11,34 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletCo
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.CodeGenerationHandler
 import de.fhdo.lemma.service.intermediate.IntermediateParameter
 
+/**
+ * Code generation handler for IntermediateParameter instances.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
 @CodeGenerationHandler
-internal class ParameterHandler
-    : GenletCodeGenerationHandlerI<IntermediateParameter, MethodDeclaration, Nothing> {
+internal class ParameterHandler : GenletCodeGenerationHandlerI<IntermediateParameter, MethodDeclaration, Nothing> {
     override fun handlesEObjectsOfInstance() = IntermediateParameter::class.java
     override fun generatesNodesOfInstance() = MethodDeclaration::class.java
 
-    override fun execute(intermediateParameter: IntermediateParameter, method: MethodDeclaration, context: Nothing?)
+    /**
+     * Execution logic of the handler
+     */
+    override fun execute(parameter: IntermediateParameter, method: MethodDeclaration, context: Nothing?)
         : GenletCodeGenerationHandlerResult<MethodDeclaration>? {
-        val apiOperationComment = intermediateParameter.operation.apiOperationComment ?: return null
-        val apiParameterComment = apiOperationComment.parameterComments
-            .find { it.parameter.name == intermediateParameter.name }
-            ?: return null
+        /* Currently, this handler only covers information related to API comments of parameters */
+        val apiComment = parameter.operation.apiOperationComment ?: return null
+        val parameterComment = apiComment.parameterComments.find { it.parameter.name == parameter.name } ?: return null
 
-        val methodParameter = method.getParameter(intermediateParameter.name)!!
+        /* Add imports and annotations related to API comments to parameter */
+        val generatedParameter = method.getParameter(parameter.name)!!
         method.addImport("io.swagger.annotations.ApiParam", ImportTargetElementType.ANNOTATION,
             SerializationCharacteristic.REMOVE_ON_RELOCATION)
-        val apiParamAnnotation = methodParameter.addAndGetAnnotation("ApiParam",
+        val annotation = generatedParameter.addAndGetAnnotation("ApiParam",
             SerializationCharacteristic.REMOVE_ON_RELOCATION)
-        apiParamAnnotation.addPair("value", "\"${apiParameterComment.comment}\"")
-        if (apiParameterComment.isRequired)
-            apiParamAnnotation.addPair("required", "true")
+        annotation.addPair("value", "\"${parameterComment.comment}\"")
+        if (parameterComment.isRequired)
+            annotation.addPair("required", "true")
 
         return GenletCodeGenerationHandlerResult(method)
     }

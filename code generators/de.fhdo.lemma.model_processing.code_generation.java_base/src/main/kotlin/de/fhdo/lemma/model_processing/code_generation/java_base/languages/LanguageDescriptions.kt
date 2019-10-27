@@ -12,6 +12,24 @@ import de.fhdo.lemma.model_processing.languages.XtextLanguageDescription
 import de.fhdo.lemma.service.ServicePackage
 
 /**
+ * [LanguageDescriptionProvider] for the Java base generator as expected by LEMMA's model processing framework.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+@LanguageDescriptionProvider
+internal class DescriptionProvider : LanguageDescriptionProviderI {
+    override fun getLanguageDescription(forLanguageNamespace: String) : LanguageDescription? {
+        return when(forLanguageNamespace) {
+            DataPackage.eNS_URI -> DATA_DSL_LANGUAGE_DESCRIPTION
+            IntermediateDataPackage.eNS_URI -> INTERMEDIATE_DATA_MODEL_LANGUAGE_DESCRIPTION
+            IntermediateServicePackage.eNS_URI -> INTERMEDIATE_SERVICE_MODEL_LANGUAGE_DESCRIPTION
+            ServicePackage.eNS_URI -> SERVICE_DSL_LANGUAGE_DESCRIPTION
+            else -> null
+        }
+    }
+}
+
+/**
  * [XtextLanguageDescription] for the Data DSL.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
@@ -39,21 +57,3 @@ internal val INTERMEDIATE_DATA_MODEL_LANGUAGE_DESCRIPTION = LanguageDescription(
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 internal val INTERMEDIATE_SERVICE_MODEL_LANGUAGE_DESCRIPTION = LanguageDescription(IntermediateServicePackage.eINSTANCE)
-
-/**
- * [LanguageDescriptionProvider] for the Java base generator as expected by LEMMA's model processing framework.
- *
- * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
- */
-@LanguageDescriptionProvider
-internal class DescriptionProvider : LanguageDescriptionProviderI {
-    override fun getLanguageDescription(forLanguageNamespace: String) : LanguageDescription? {
-        return when(forLanguageNamespace) {
-            DataPackage.eNS_URI -> DATA_DSL_LANGUAGE_DESCRIPTION
-            IntermediateDataPackage.eNS_URI -> INTERMEDIATE_DATA_MODEL_LANGUAGE_DESCRIPTION
-            IntermediateServicePackage.eNS_URI -> INTERMEDIATE_SERVICE_MODEL_LANGUAGE_DESCRIPTION
-            ServicePackage.eNS_URI -> SERVICE_DSL_LANGUAGE_DESCRIPTION
-            else -> null
-        }
-    }
-}

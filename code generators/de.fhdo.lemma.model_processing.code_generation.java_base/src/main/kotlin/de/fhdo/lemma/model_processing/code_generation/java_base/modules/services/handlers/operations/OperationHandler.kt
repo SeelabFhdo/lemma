@@ -1,0 +1,275 @@
+package de.fhdo.lemma.model_processing.code_generation.java_base.modules.services.handlers.operations
+
+import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration
+import com.github.javaparser.ast.body.MethodDeclaration
+import com.github.javaparser.ast.comments.LineComment
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.ImportTargetElementType
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.SerializationCharacteristic
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addBodyComment
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addCompositeParameter
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addImport
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addThrownException
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.emptyBody
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.getParametersToCompositeParameters
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.insertStatement
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.setBody
+import de.fhdo.lemma.model_processing.code_generation.java_base.buildCompositeClassName
+import de.fhdo.lemma.model_processing.code_generation.java_base.buildExceptionClassName
+import de.fhdo.lemma.model_processing.code_generation.java_base.buildFullyQualifiedCompositeClassName
+import de.fhdo.lemma.model_processing.code_generation.java_base.buildFullyQualifiedExceptionClassName
+import de.fhdo.lemma.model_processing.code_generation.java_base.buildRequiredInputParameterGuardName
+import de.fhdo.lemma.model_processing.code_generation.java_base.getFaultParameters
+import de.fhdo.lemma.model_processing.code_generation.java_base.getInputParameters
+import de.fhdo.lemma.model_processing.code_generation.java_base.getRequiredInputParameters
+import de.fhdo.lemma.model_processing.code_generation.java_base.getResultParameters
+import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.CallableCodeGenerationHandlerI
+import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.CodeGenerationHandler
+import de.fhdo.lemma.model_processing.code_generation.java_base.hasCompositeResult
+import de.fhdo.lemma.model_processing.code_generation.java_base.hasInputParameters
+import de.fhdo.lemma.model_processing.code_generation.java_base.hasRequiredInputParameters
+import de.fhdo.lemma.model_processing.code_generation.java_base.hasResultParameters
+import de.fhdo.lemma.model_processing.code_generation.java_base.languages.setJavaTypeFrom
+import de.fhdo.lemma.model_processing.code_generation.java_base.modules.services.handlers.parameters.ParameterHandler
+import de.fhdo.lemma.model_processing.utils.trimToSingleLine
+import de.fhdo.lemma.service.Visibility
+import de.fhdo.lemma.service.intermediate.IntermediateOperation
+import de.fhdo.lemma.technology.CommunicationType
+
+/**
+ * Called code generation handler for IntermediateOperation instances.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+@CodeGenerationHandler
+internal class OperationHandler
+    : CallableCodeGenerationHandlerI<IntermediateOperation, MethodDeclaration, ClassOrInterfaceDeclaration> {
+    override fun handlesEObjectsOfInstance() = IntermediateOperation::class.java
+    override fun generatesNodesOfInstance() = MethodDeclaration::class.java
+    override fun getAspects(operation: IntermediateOperation) = operation.aspects!!
+
+    companion object {
+        /**
+         * Convenience companion method to invoke the handler
+         */
+        fun invoke(operation: IntermediateOperation, parentClass: ClassOrInterfaceDeclaration)
+            = OperationHandler().invoke(operation, parentClass)
+    }
+
+    /**
+     * Execution logic of the handler
+     */
+    override fun execute(operation: IntermediateOperation, parentClass: ClassOrInterfaceDeclaration?)
+        : Pair<MethodDeclaration, String?>? {
+        /* Each IntermediateOperation will become a method in the given parent class */
+        val generatedMethod = MethodDeclaration()
+        parentClass!!.addMember(generatedMethod)
+        generatedMethod.setName(operation.name)
+        generatedMethod.setVisibility(operation.visibility)
+
+        /* Generate method parameters from input IntermediateParameters */
+        operation.getInputParameters().forEach { ParameterHandler.invoke( it, generatedMethod) }
+
+        /*
+         * Handle asynchronous input parameters. If the method does not have additional synchronous input parameters, it
+         * will keep a single asynchronous input parameter. In case the methods has more than one asynchronous input
+         * parameter, it will be replaced by a composite POJO that holds fields, getters, and setters for all
+         * asynchronous input parameters.
+         *
+         * If the method has both, synchronous and asynchronous input parameters, the asynchronous parameters will be
+         * removed from the signature. Semantically, this means that the method can only be invoked if all required
+         * synchronous input parameters were passed and it has to fetch the asynchronous input parameter or the
+         * composite class on its own during its execution.
+         */
+        if (operation.hasInputParameters(CommunicationType.ASYNCHRONOUS))
+            handleAsynchronousInputParameters(operation, generatedMethod)
+
+        /*
+         * Handle synchronous fault parameters (currently we only support synchronous ones). For each fault parameter,
+         * a thrown Exception will be added to the generated method. The Exception class itself is then generated by
+         * the FaultParameterHandler.
+         */
+        handleSynchronousFaultParameters(operation, generatedMethod)
+
+        /* Handle non-fault result parameters */
+        handleResultParameters(operation, generatedMethod)
+
+        /* Set the body of the generated method. This needs to be done here, because asynchronous parameters might have
+         * been turned to composite ones (see above) and thus the original method signature might have been changed.
+         */
+        generatedMethod.generateBody(operation)
+
+        return generatedMethod to null
+    }
+
+    /**
+     * Helper to set the visibility of the generated [MethodDeclaration] depending on the IntermediateOperation's
+     * [visibility]
+     */
+    private fun MethodDeclaration.setVisibility(visibility: Visibility)
+        = when(visibility) {
+            Visibility.NONE, Visibility.PUBLIC -> isPublic = true
+            Visibility.ARCHITECTURE -> isProtected = true
+            else -> isPrivate = true
+        }
+
+    /**
+     * Helper to deal with asynchronous input parameters in the given intermediate [operation]
+     */
+    private fun handleAsynchronousInputParameters(operation: IntermediateOperation, method: MethodDeclaration) {
+        /* Get all generated asynchronous input parameters from the generated method */
+        val asynchronousInputParameters = operation.getInputParameters(CommunicationType.ASYNCHRONOUS)
+            .map { p -> method.parameters.find { it.nameAsString == p.name }!! }
+
+        /*
+         * If the method is not meant to have asynchronous input parameters in its signature, remove the ones which
+         * have already been generated
+         */
+        if (!operation.hasAsynchronousParametersInSignature()) {
+            asynchronousInputParameters.forEach { method.remove(it) }
+            val compositeClassName = operation.buildCompositeClassName(CommunicationType.ASYNCHRONOUS)
+            method.addBodyComment(
+                LineComment("TODO Method may asynchronously receive one or more instances of $compositeClassName")
+            )
+
+            return
+        }
+
+        /*
+         * If the method is meant to have asynchronous input parameters in its signature and has only a single
+         * asynchronous input parameters, this will simply stick to the method
+         */
+        if (asynchronousInputParameters.size == 1)
+            return
+
+        /*
+         * The method is meant to have asynchronous input parameters in its signature and has several asynchronous
+         * input parameters. In this case they will be replaced with a single parameter that is typed by a composite
+         * POJO class generated from the parameters. The generation of this class is done by
+         * AsynchronousInputParametersHandler.
+         */
+        // Add import for the composite class
+        method.addImport(
+            operation.buildFullyQualifiedCompositeClassName(CommunicationType.ASYNCHRONOUS),
+            ImportTargetElementType.METHOD
+        )
+
+        // Replace asynchronous input parameters with composite parameter
+        val compositeClassName = operation.buildCompositeClassName(CommunicationType.ASYNCHRONOUS)
+        method.addCompositeParameter(compositeClassName, compositeClassName.decapitalize(),
+            CommunicationType.ASYNCHRONOUS, asynchronousInputParameters)
+    }
+
+    /**
+     * A method generated from this [IntermediateOperation] will have asynchronous parameters in its signature when it
+     * comprises asynchronous and no synchronous input parameters. That is, service operations having both types of
+     * input parameters will keep their synchronous ones, because the semantics goes that such a method needs to be
+     * synchronously invoked and may receive data asynchronously while its being executed.
+     */
+    private fun IntermediateOperation.hasAsynchronousParametersInSignature()
+        = hasInputParameters(CommunicationType.ASYNCHRONOUS) && !hasInputParameters(CommunicationType.SYNCHRONOUS)
+
+    /**
+     * Helper to handle synchronous fault parameters
+     */
+    private fun handleSynchronousFaultParameters(operation: IntermediateOperation, generatedMethod: MethodDeclaration)
+        = operation.getFaultParameters(CommunicationType.SYNCHRONOUS).forEach {
+            generatedMethod.addImport(it.buildFullyQualifiedExceptionClassName(), ImportTargetElementType.METHOD)
+            generatedMethod.addThrownException(it.buildExceptionClassName())
+        }
+
+    /**
+     * Helper to handle non-fault result parameters
+     */
+    private fun handleResultParameters(operation: IntermediateOperation, generatedMethod: MethodDeclaration) {
+        // Asynchronous result parameters always become a composite class (cf.
+        // AsynchronousCompositeResultParametersHandler)
+        if (operation.hasResultParameters(CommunicationType.ASYNCHRONOUS)) {
+            val compositeResultClass = operation.buildCompositeClassName(CommunicationType.ASYNCHRONOUS, true)
+            generatedMethod.addBodyComment(LineComment(
+                "TODO Method should asynchronously return one or more instances of $compositeResultClass"
+            ))
+        }
+
+        // Set void-type based on the existence of synchronous result parameters. Asynchronous result parameters are
+        // never returned directly
+        if (!operation.hasResultParameters(CommunicationType.SYNCHRONOUS))
+            generatedMethod.setType("void")
+
+        // Turn more than one synchronous result parameter into a composite return type
+        else if (operation.hasCompositeResult(CommunicationType.SYNCHRONOUS)) {
+            generatedMethod.setType(operation.buildCompositeClassName(CommunicationType.SYNCHRONOUS, true))
+            generatedMethod.addImport(
+                operation.buildFullyQualifiedCompositeClassName(CommunicationType.SYNCHRONOUS, true),
+                ImportTargetElementType.METHOD
+            )
+        }
+
+        // The operation has exactly one synchronous result parameter. Set the method's return type to its Java type.
+        val resultParameter = operation.getResultParameters(CommunicationType.SYNCHRONOUS)[0]
+        generatedMethod.setJavaTypeFrom(resultParameter.type, generatedMethod) {
+            generatedMethod.addImport(it, ImportTargetElementType.METHOD)
+        }
+    }
+
+    /**
+     * Generate the body of the method
+     */
+    private fun MethodDeclaration.generateBody(operation: IntermediateOperation) {
+        /* Handle "not implemented" case */
+        if (operation.isNotImplemented) {
+            isFinal = !isPrivate
+            setBody(
+                """
+                    throw new UnsupportedOperationException("This service operation is not implemented")
+                """.trimToSingleLine()
+            )
+            return
+        }
+
+        /* Add guard call for required synchronous input parameters */
+        addRequiredInputParametersCheck(operation, CommunicationType.SYNCHRONOUS)
+
+        /*
+         * A guard call for required asynchronous input parameters will only be added, if the signature of the
+         * generated method actually comprises such parameters. If otherwise the original operation defines required
+         * asynchronous input parameters, without those having been added to the signature of the generated method,
+         * a hinting comment that still the guard method was generated and may be invoked on eventually received
+         * asynchronous data.
+         */
+        if (operation.hasAsynchronousParametersInSignature())
+            addRequiredInputParametersCheck(operation, CommunicationType.ASYNCHRONOUS)
+        else if (operation.hasRequiredInputParameters(CommunicationType.ASYNCHRONOUS))
+            addBodyComment(LineComment(" " +
+                """
+                    TODO Use ${operation.buildRequiredInputParameterGuardName(CommunicationType.ASYNCHRONOUS)} if you
+                    want to check for the existence of mandatory asynchronous input parameters as soon as they are
+                    available from asynchronous interactions
+                """.trimToSingleLine(preserveTrailingWhitespaces = true)
+            ))
+    }
+
+    /**
+     * Helper to add a call to the guard method for checking the existence of required input parameters of the
+     * given [communicationType] to this method's body
+     */
+    private fun MethodDeclaration.addRequiredInputParametersCheck(operation: IntermediateOperation,
+        communicationType: CommunicationType) {
+        if (!operation.hasRequiredInputParameters(communicationType))
+            return
+
+        val requiredParametersNames = operation.getRequiredInputParameters(communicationType).map { it.name }
+        val parametersToCompositeParameters = getParametersToCompositeParameters(communicationType)
+        val parametersString = requiredParametersNames.joinToString {
+            val compositeParameterName = parametersToCompositeParameters[it]
+            // In case the original parameter was replaced by a composite one, prefix it in the call to the guard with
+            // the name of the composite class parameter and the call to the corresponding getter in the composite class
+            compositeParameterName?.plus(".get${it.capitalize()}()") ?: it
+        }
+
+        val callStatement = "${operation.buildRequiredInputParameterGuardName(communicationType)}($parametersString)"
+        if (emptyBody)
+            setBody(callStatement, characteristics = *arrayOf(SerializationCharacteristic.MERGE_ON_RELOCATION))
+        else
+            insertStatement("$callStatement;", 1)
+    }
+}
