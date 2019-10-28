@@ -52,57 +52,52 @@ internal fun <P: Node> IntermediateType.addTypeInformationTo(targetNode: P,
 }
 
 /**
- * Helper to check if this [NormalAnnotationExpr] has a String [property] with value [checkValue].
+ * Helper to check if this [NormalAnnotationExpr] has a [property] with value [checkValue].
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-internal fun NormalAnnotationExpr.hasStringValue(property: String, checkValue: String) : Boolean {
+internal fun NormalAnnotationExpr.hasValue(property: String, checkValue: String) : Boolean {
     val annotationValue = getValueAsString(property) ?: return false
-    val values = parseMultipleAnnotationStringValue(annotationValue) ?: return checkValue == annotationValue
+    val values = parseMultiValueAnnotation(annotationValue) ?: return checkValue == annotationValue
     return checkValue in values
 }
 
 /**
- * Helper to parse the [value] of a multi-value annotation String property. Those values have the form
- *      {"foo", "bar"}
+ * Helper to parse the [value] of a multi-value annotation property. Those values have the form
+ *      {"foo", "bar"} or {foo, bar}
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-private fun parseMultipleAnnotationStringValue(value: String) : List<String>? {
+private fun parseMultiValueAnnotation(value: String) : List<String>? {
     if (!value.startsWith("{") && !value.endsWith("}"))
         return null
 
-    val containedValues = value.trimStart('}').trimEnd('}').split(",")
-    val allContainedValuesAreStrings = !containedValues.any { !it.startsWith("\"") && !it.endsWith("\"") }
-    return if (allContainedValuesAreStrings)
-        containedValues
-    else
-        null
+    return value.trimStart('{').trimEnd('}').split(",")
 }
 
 /**
- * Add the specified String [value] to the property called [property] of this [NormalAnnotationExpr]. If the [property]
- * is already present, the [value] will be added to the [property] in the form of a multi-value String. Note, that no
- * duplicate check will be performed.
+ * Add the specified [value] to the property called [property] of this [NormalAnnotationExpr]. If the [property] is
+ * already present, the [value] will be added to the [property] in the form of a multi-value annotation property. Note,
+ * that no duplicate check will be performed.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-internal fun NormalAnnotationExpr.addStringValue(property: String, value: String) {
+internal fun NormalAnnotationExpr.addValue(property: String, value: String) {
     /* Get and parse the existing value*/
     val existingValue = getValueAsString(property)
     val existingMultipleValues = if (existingValue != null)
-        parseMultipleAnnotationStringValue(existingValue)
+        parseMultiValueAnnotation(existingValue)
     else
         null
 
     /*
      * Prepare the value to be added. This either extends an existing multi-value property's value, creates a new
-     * multi-value property's value, or an all-new String value.
+     * multi-value property's value, or an all-new value.
      */
     val valueToAdd = when {
-        existingMultipleValues != null -> "{" + existingMultipleValues.joinToString(",") + ", \"$value\"" + "}"
-        existingValue != null -> "{$existingValue, \"$value\"}"
-        else -> "\"$value\""
+        existingMultipleValues != null -> "{" + existingMultipleValues.joinToString(",") + ", $value}"
+        existingValue != null -> "{$existingValue, $value}"
+        else -> value
     }
 
     /* Add the prepared value to the annotation */

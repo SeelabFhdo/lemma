@@ -17,9 +17,11 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.ast.setInitializ
 import de.fhdo.lemma.model_processing.code_generation.java_base.fullyQualifiedClassname
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.CallableCodeGenerationHandlerI
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.CodeGenerationHandler
+import de.fhdo.lemma.model_processing.code_generation.java_base.hasAspect
 import de.fhdo.lemma.model_processing.code_generation.java_base.hasFeature
 import de.fhdo.lemma.model_processing.code_generation.java_base.languages.TypeMappingDescription
 import de.fhdo.lemma.model_processing.code_generation.java_base.languages.createTypeSpecificValueString
+import de.fhdo.lemma.model_processing.code_generation.java_base.languages.getBasicType
 import de.fhdo.lemma.model_processing.code_generation.java_base.languages.getTypeMapping
 import de.fhdo.lemma.model_processing.code_generation.java_base.languages.isNullable
 import de.fhdo.lemma.model_processing.code_generation.java_base.languages.setJavaTypeFrom
@@ -75,10 +77,7 @@ internal class DataFieldHandler :
         val attribute = addPrivateAttribute(field.name, "TODO")
         attribute.setInitializationValueIfNeeded(field)
         attribute.isFinal = field.isImmutable && field.initializationValue != null
-
-        val typeMapping = attribute.variables[0].setJavaTypeFrom(field.type, attribute) {
-            attribute.addImport(it, ImportTargetElementType.ATTRIBUTE_TYPE)
-        }
+        val typeMapping = attribute.determineAndGetTypeMapping(field)
 
         if (typeMapping != null) {
             addGetterFromIfNeeded(field, attribute, typeMapping)
@@ -86,6 +85,50 @@ internal class DataFieldHandler :
         }
 
         return attribute
+    }
+
+    /**
+     * Helper to determine the [TypeMappingDescription] for this attribute based on the given intermediate [field]
+     */
+    private fun FieldDeclaration.determineAndGetTypeMapping(field: IntermediateDataField) : TypeMappingDescription? {
+        /*
+         * Handle multi-value aspects, such as Array or Collection. When the intermediate field exhibits one of those
+         * aspects, it's basic type for the multi-value specification will be determined. In all cases except an
+         * intermediate list type, this basic type corresponds to the intermediate field's type. For intermediate list
+         * types, however, the basic type is either the primitive type of the list or the type of a single data field in
+         * a structured list. Ultimately, this results in type mappings such as "String[]" (i.e., the aspect is "Array"
+         * and the basic type is String, which could be the type of a primitive list) or "Collection<Address>" (i.e.,
+         * the aspect is "Collection" and the basic type is Address, which could be the type of the single data field of
+         * a structured list).
+         */
+        var mappedForMultiValueAspect = false
+        val intermediateType = if (field.hasAspect("java.Array") || field.hasAspect("java.Collection")) {
+            val basicTypeForMultiValueAspect = field.type.getBasicType()
+            mappedForMultiValueAspect = basicTypeForMultiValueAspect != null
+            basicTypeForMultiValueAspect ?: field.type
+        } else
+            field.type
+
+        /* Set the (basic) type of the attribute */
+        val typeMapping = variables[0].setJavaTypeFrom(intermediateType, this) {
+            addImport(it, ImportTargetElementType.ATTRIBUTE_TYPE)
+        }
+
+        if (!mappedForMultiValueAspect || typeMapping == null)
+            return typeMapping
+
+        /* Adapt the basic type of the attribute to multi-value aspects */
+        val mappedTypeName = if (field.hasAspect("java.Array"))
+                "${variables[0].typeAsString}[]"
+            else {
+                typeMapping.addImport("java.util.Collection")
+                addImport("java.util.Collection", ImportTargetElementType.ATTRIBUTE_TYPE)
+                "Collection<${variables[0].typeAsString}>"
+            }
+
+        variables[0].setType(mappedTypeName)
+        typeMapping.mappedTypeName = mappedTypeName
+        return typeMapping
     }
 
     /**

@@ -31,7 +31,7 @@ internal class TableHandler : AspectHandlerI {
      */
     override fun execute(eObject: EObject, node: Node, aspect: IntermediateImportedAspect) : Node {
         /* Add JPA import */
-        val generatedClass = (node as ClassOrInterfaceDeclaration)
+        val generatedClass = node as ClassOrInterfaceDeclaration
         generatedClass.addDependency("org.springframework.boot:spring-boot-starter-data-jpa")
 
         /* Each Table automatically becomes an Entity, too */

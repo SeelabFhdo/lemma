@@ -235,9 +235,10 @@ fun EObject.usesProtocol(protocol: String) : Boolean {
  */
 internal fun EObject.getAllAspects()
     = when(this) {
-        is IntermediateDataStructure -> aspects
+        is IntermediateDataField -> aspects
         is IntermediateDataOperation -> aspects
         is IntermediateDataOperationReturnType -> aspects
+        is IntermediateDataStructure -> aspects
         is IntermediateMicroservice -> aspects
         is IntermediateParameter -> aspects
         else -> throw IllegalArgumentException("EObject of type ${this.mainInterface.name} does not have aspects")
@@ -403,17 +404,17 @@ fun IntermediateComplexType.resolve() : IntermediateComplexType {
 
     /* Resolve the type */
     val resolvedType = if (version != null && context != null)
-    // According to its qualified name, the type is defined in a context within a version
+        // According to its qualified name, the type is defined in a context within a version
         context.complexTypes.find { it.name == simpleName }
     else if (version != null && context == null)
-    // According to its qualified name, the type is directly defined in a version
+        // According to its qualified name, the type is directly defined in a version
         version.complexTypes.find { it.name == simpleName }
     else if (context != null)
-    // According to its qualified name, the type is directly defined in a context
+        // According to its qualified name, the type is directly defined in a context
         context.complexTypes.find { it.name == simpleName }
     else
-    // There is neither a version nor a context surrounding the type (according to its qualified name), i.e.,
-    // the type is defined on the top-level of the model itself
+        // There is neither a version nor a context surrounding the type (according to its qualified name), i.e., the
+        // type is defined on the top-level of the model itself
         definingModel.complexTypes.find { it.name == simpleName }
 
     require(resolvedType != null) { "Complex type $qualifiedName could not be resolved" }

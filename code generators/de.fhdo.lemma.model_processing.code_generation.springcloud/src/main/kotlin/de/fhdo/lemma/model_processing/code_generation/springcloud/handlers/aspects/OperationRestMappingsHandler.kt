@@ -13,8 +13,8 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.getEndpoint
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.AspectHandler
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.AspectHandlerI
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.combinations
-import de.fhdo.lemma.model_processing.code_generation.springcloud.addStringValue
-import de.fhdo.lemma.model_processing.code_generation.springcloud.hasStringValue
+import de.fhdo.lemma.model_processing.code_generation.springcloud.addValue
+import de.fhdo.lemma.model_processing.code_generation.springcloud.hasValue
 import de.fhdo.lemma.service.intermediate.IntermediateOperation
 import org.eclipse.emf.ecore.EObject
 
@@ -50,7 +50,7 @@ internal class OperationRestMappingsHandler : AspectHandlerI {
         generatedMethod.addImport(importClassname, ImportTargetElementType.ANNOTATION,
             SerializationCharacteristic.REMOVE_ON_RELOCATION)
 
-        /* Add REST mapping annotation to the operation, if is not present already */
+        /* Add REST mapping annotation to the operation, if it is not present already */
         val operation = eObject as IntermediateOperation
         val existingAnnotation = generatedMethod.getAnnotation<NormalAnnotationExpr>(aspect.name)
         val targetAnnotation = existingAnnotation ?: generatedMethod.addAndGetAnnotation(aspect.name,
@@ -58,8 +58,8 @@ internal class OperationRestMappingsHandler : AspectHandlerI {
 
         /* Add missing endpoint addresses */
         operation.getEndpoint("rest")?.addresses?.forEach {
-            if (!targetAnnotation.hasStringValue("value", it))
-                targetAnnotation.addStringValue("value", it)
+            if (!targetAnnotation.hasValue("value", "\"$it\""))
+                targetAnnotation.addValue("value", "\"$it\"")
         }
 
         return generatedMethod

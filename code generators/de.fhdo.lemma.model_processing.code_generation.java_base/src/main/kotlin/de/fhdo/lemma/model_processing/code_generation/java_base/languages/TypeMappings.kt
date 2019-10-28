@@ -5,15 +5,17 @@ import com.github.javaparser.ast.nodeTypes.NodeWithType
 import de.fhdo.lemma.data.DateUtils
 import de.fhdo.lemma.data.PrimitiveTypeConstants
 import de.fhdo.lemma.data.intermediate.IntermediateComplexType
-import de.fhdo.lemma.data.intermediate.IntermediateEnumerationField
 import de.fhdo.lemma.data.intermediate.IntermediateImportedTechnologySpecificType
+import de.fhdo.lemma.data.intermediate.IntermediateListType
 import de.fhdo.lemma.data.intermediate.IntermediatePrimitiveType
 import de.fhdo.lemma.data.intermediate.IntermediateType
+import de.fhdo.lemma.data.intermediate.IntermediateTypeKind
 import de.fhdo.lemma.data.intermediate.IntermediateTypeOrigin
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addDependencies
 import de.fhdo.lemma.model_processing.code_generation.java_base.classname
 import de.fhdo.lemma.model_processing.code_generation.java_base.dependencies.DependencyDescription
 import de.fhdo.lemma.model_processing.code_generation.java_base.fullyQualifiedClassname
+import de.fhdo.lemma.model_processing.code_generation.java_base.resolve
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.domain.DomainContext.State as DomainState
 import de.fhdo.lemma.model_processing.phases.PhaseException
 import de.fhdo.lemma.model_processing.utils.trimToSingleLine
@@ -108,7 +110,7 @@ internal fun IntermediatePrimitiveType.getObjectWrapperMapping() : TypeMappingDe
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-class TypeMappingDescription(val originalTypeName: String, val mappedTypeName: String,
+class TypeMappingDescription(val originalTypeName: String, var mappedTypeName: String,
     val isComplexTypeMapping: Boolean) {
     private val imports = mutableSetOf<String>()
     private val dependencies = mutableSetOf<DependencyDescription>()
@@ -475,3 +477,28 @@ internal fun <P: Node> NodeWithType<*, *>.setJavaTypeFrom(type: IntermediateType
 
     return typeMapping
 }
+
+/**
+ * Get the basic type of this [IntermediateType]. For all type kinds and origins except lists defined in a data model
+ * the basic type is this [IntermediateType] itself. For list types defined in a data model, the basic type is either
+ * a primitive type (primitive lists) or the type of the single data field (structured lists). Note that the method
+ * returns null in case this [IntermediateType] is a structured list with more than one data field.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+internal fun IntermediateType.getBasicType()
+    = if (kind == IntermediateTypeKind.LIST && origin == IntermediateTypeOrigin.DATA_MODEL) {
+            val resolvedType = (this as IntermediateComplexType).resolve() as IntermediateListType
+            when {
+                resolvedType.isPrimitiveList -> resolvedType.primitiveType
+                resolvedType.dataFields.size == 1 -> resolvedType.dataFields[0].type
+                // FIXME Currently, we cannot deal with structured lists that have more than one data field. This is
+                // contrary, however, to what we do in ListTypeHandler, where we meld multiple fields of a structured
+                // list to a single nested item of the generated Collection subclass, which represents the list type. In
+                // the future, to be consistent in behavior, this method should also cope with structured lists with
+                // more than one data field, e.g., by pointing to the (yet) public nested items in generated Collection
+                // subclasses.
+                else -> null
+            }
+        } else
+            this

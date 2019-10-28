@@ -636,7 +636,7 @@ internal fun ClassOrInterfaceDeclaration.getAllImportsWithSerializationCharacter
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-internal fun ClassOrInterfaceDeclaration.setSuperclass(superClassname: String, isExternalSuperclass: Boolean = false,
+fun ClassOrInterfaceDeclaration.setSuperclass(superClassname: String, isExternalSuperclass: Boolean = false,
     typeParameters: List<String> = emptyList()) {
     require(!isInterface) { "Only classes may have a superclass" }
 
