@@ -6,6 +6,8 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.ast.ImportTarget
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addImport
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.CallableCodeGenerationHandlerI
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.CodeGenerationHandler
+import de.fhdo.lemma.model_processing.code_generation.java_base.hasAspect
+import de.fhdo.lemma.model_processing.code_generation.java_base.languages.getBasicType
 import de.fhdo.lemma.model_processing.code_generation.java_base.languages.setJavaTypeFrom
 import de.fhdo.lemma.service.intermediate.IntermediateParameter
 
@@ -39,9 +41,19 @@ internal class ParameterHandler(private val disableGenlets: Boolean)
         : Pair<MethodDeclaration, String?>? {
         val generatedParameter = Parameter()
         generatedParameter.setName(parameter.name)
-        generatedParameter.setJavaTypeFrom(parameter.type, parentMethod!!) {
+
+        val parameterType = if (parameter.hasAspect("java.Set")) {
+            parentMethod!!.addImport("java.util.Set", ImportTargetElementType.METHOD)
+            parameter.type.getBasicType() ?: parameter.type
+        } else
+            parameter.type
+
+        generatedParameter.setJavaTypeFrom(parameterType, parentMethod!!) {
             parentMethod.addImport(it, ImportTargetElementType.METHOD)
         }
+
+        if (parameter.hasAspect("java.Set"))
+            generatedParameter.setType("Set<${generatedParameter.typeAsString}>")
 
         parentMethod.addParameter(generatedParameter)
         return parentMethod to null

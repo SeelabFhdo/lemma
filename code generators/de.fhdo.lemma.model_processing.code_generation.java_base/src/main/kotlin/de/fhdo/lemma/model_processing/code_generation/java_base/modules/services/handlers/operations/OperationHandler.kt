@@ -24,10 +24,12 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.getRequiredInput
 import de.fhdo.lemma.model_processing.code_generation.java_base.getResultParameters
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.CallableCodeGenerationHandlerI
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.CodeGenerationHandler
+import de.fhdo.lemma.model_processing.code_generation.java_base.hasAspect
 import de.fhdo.lemma.model_processing.code_generation.java_base.hasCompositeResult
 import de.fhdo.lemma.model_processing.code_generation.java_base.hasInputParameters
 import de.fhdo.lemma.model_processing.code_generation.java_base.hasRequiredInputParameters
 import de.fhdo.lemma.model_processing.code_generation.java_base.hasResultParameters
+import de.fhdo.lemma.model_processing.code_generation.java_base.languages.getBasicType
 import de.fhdo.lemma.model_processing.code_generation.java_base.languages.setJavaTypeFrom
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.services.handlers.parameters.ParameterHandler
 import de.fhdo.lemma.model_processing.utils.trimToSingleLine
@@ -181,8 +183,10 @@ internal class OperationHandler
      * Helper to handle non-fault result parameters
      */
     private fun handleResultParameters(operation: IntermediateOperation, generatedMethod: MethodDeclaration) {
-        // Asynchronous result parameters always become a composite class (cf.
-        // AsynchronousCompositeResultParametersHandler)
+        /*
+         * Asynchronous result parameters always become a composite class (cf.
+         * AsynchronousCompositeResultParametersHandler)
+         */
         if (operation.hasResultParameters(CommunicationType.ASYNCHRONOUS)) {
             val compositeResultClass = operation.buildCompositeClassName(CommunicationType.ASYNCHRONOUS, true)
             generatedMethod.addBodyComment(LineComment(
@@ -190,25 +194,51 @@ internal class OperationHandler
             ))
         }
 
-        // Set void-type based on the existence of synchronous result parameters. Asynchronous result parameters are
-        // never returned directly
-        if (!operation.hasResultParameters(CommunicationType.SYNCHRONOUS))
+        /*
+         * Return type of method is void, in case no synchronous result parameters were modeled. Asynchronous result
+         * parameters are never returned directly
+         */
+        if (!operation.hasResultParameters(CommunicationType.SYNCHRONOUS)) {
             generatedMethod.setType("void")
+            return
+        }
 
-        // Turn more than one synchronous result parameter into a composite return type
-        else if (operation.hasCompositeResult(CommunicationType.SYNCHRONOUS)) {
-            generatedMethod.setType(operation.buildCompositeClassName(CommunicationType.SYNCHRONOUS, true))
+        /* Add import of java.util.Set in case one of the synchronous result parameters exhibits the java.Set aspect */
+        val resultIsSet = operation.getResultParameters(CommunicationType.SYNCHRONOUS).any { it.hasAspect("java.Set") }
+        if (resultIsSet)
+            generatedMethod.addImport("java.util.Set", ImportTargetElementType.METHOD)
+
+        /* Turn more than one synchronous result parameter into a composite return type */
+        if (operation.hasCompositeResult(CommunicationType.SYNCHRONOUS)) {
+            val returnType = operation.buildCompositeClassName(CommunicationType.SYNCHRONOUS, true)
+            if (resultIsSet)
+                generatedMethod.setType("Set<$returnType>")
+            else
+                generatedMethod.setType(returnType)
+
             generatedMethod.addImport(
                 operation.buildFullyQualifiedCompositeClassName(CommunicationType.SYNCHRONOUS, true),
                 ImportTargetElementType.METHOD
             )
+
+            return
         }
 
-        // The operation has exactly one synchronous result parameter. Set the method's return type to its Java type.
+        /* The operation has exactly one synchronous result parameter */
         val resultParameter = operation.getResultParameters(CommunicationType.SYNCHRONOUS)[0]
-        generatedMethod.setJavaTypeFrom(resultParameter.type, generatedMethod) {
+
+        // If the result is a Set, we use the basic type of the intermediate return type as the Sets type parameter
+        val returnType = if (resultIsSet)
+                resultParameter.type.getBasicType() ?: resultParameter.type
+            else
+                resultParameter.type
+
+        generatedMethod.setJavaTypeFrom(returnType, generatedMethod) {
             generatedMethod.addImport(it, ImportTargetElementType.METHOD)
         }
+
+        if (resultIsSet)
+            generatedMethod.setType("Set<${generatedMethod.typeAsString}>")
     }
 
     /**
