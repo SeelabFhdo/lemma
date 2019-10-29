@@ -17,21 +17,18 @@ import de.fhdo.lemma.service.intermediate.IntermediateParameter
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 @CodeGenerationHandler
-internal class ParameterHandler(private val disableGenlets: Boolean)
+internal class ParameterHandler
     : CallableCodeGenerationHandlerI<IntermediateParameter, MethodDeclaration, MethodDeclaration> {
     override fun handlesEObjectsOfInstance() = IntermediateParameter::class.java
     override fun generatesNodesOfInstance() = MethodDeclaration::class.java
     override fun getAspects(parameter: IntermediateParameter) = parameter.aspects!!
-    override fun disableGenlets() = disableGenlets
 
     companion object {
         /**
-         * Convenience companion method to invoke the handler. Note that the activation of subsequent Genlets may be
-         * deactivated on demand. This is for example done by the RequiredInputParametersHandler, which leverages this
-         * handler to only determine the type of a parameter.
+         * Convenience companion method to invoke the handler
          */
-        fun invoke(parameter: IntermediateParameter, parentMethod: MethodDeclaration, disableGenlets: Boolean = false)
-            = ParameterHandler(disableGenlets).invoke(parameter, parentMethod)
+        fun invoke(parameter: IntermediateParameter, parentMethod: MethodDeclaration)
+            = ParameterHandler().invoke(parameter, parentMethod)
     }
 
     /**

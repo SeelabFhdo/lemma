@@ -73,7 +73,7 @@ internal class OperationHandler
 
         /*
          * Handle asynchronous input parameters. If the method does not have additional synchronous input parameters, it
-         * will keep a single asynchronous input parameter. In case the methods has more than one asynchronous input
+         * will keep a single asynchronous input parameter. In case the method has more than one asynchronous input
          * parameter, it will be replaced by a composite POJO that holds fields, getters, and setters for all
          * asynchronous input parameters.
          *
