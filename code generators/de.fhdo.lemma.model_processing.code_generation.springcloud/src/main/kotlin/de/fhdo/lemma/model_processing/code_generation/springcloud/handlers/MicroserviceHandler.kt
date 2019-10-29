@@ -102,6 +102,7 @@ internal class MicroserviceHandler
         /* Add dependencies and annotations for API comments if necessary */
         if (intermediateService.hasApiComments) {
             serviceClass.addDependency("io.springfox:springfox-swagger2:2.9.2")
+            serviceClass.addDependency("io.springfox:springfox-swagger-ui:2.9.2")
             serviceClass.addImport("springfox.documentation.swagger2.annotations.EnableSwagger2",
                 ImportTargetElementType.ANNOTATION, SerializationCharacteristic.DONT_RELOCATE)
             serviceClass.addAnnotation("EnableSwagger2", SerializationCharacteristic.DONT_RELOCATE)
