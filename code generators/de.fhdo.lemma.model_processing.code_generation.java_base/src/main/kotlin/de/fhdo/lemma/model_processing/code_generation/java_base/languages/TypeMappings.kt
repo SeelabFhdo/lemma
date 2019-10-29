@@ -1,5 +1,6 @@
 package de.fhdo.lemma.model_processing.code_generation.java_base.languages
 
+import com.github.javaparser.ast.DataKey
 import com.github.javaparser.ast.Node
 import com.github.javaparser.ast.nodeTypes.NodeWithType
 import de.fhdo.lemma.data.DateUtils
@@ -459,7 +460,7 @@ internal fun <P: Node> NodeWithType<*, *>.setJavaTypeFrom(type: IntermediateType
     addImportToTargetNode: P.(String) -> Unit) : TypeMappingDescription? {
     val typeMapping = type.getTypeMapping()
     if (typeMapping == null) {
-        setType("${type.name}_ExpectedFromGenlet")
+        (this as Node).setTypeExpectedFromGenlet(type.name)
         return null
     }
 
@@ -477,6 +478,48 @@ internal fun <P: Node> NodeWithType<*, *>.setJavaTypeFrom(type: IntermediateType
 
     return typeMapping
 }
+
+/**
+ * Determine that the [expectedTypeName] of this [NodeWithType] is to be set by a Genlet.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+private fun  Node.setTypeExpectedFromGenlet(expectedTypeName: String) {
+    (this as NodeWithType<*, *>).setType("${expectedTypeName}_ExpectedFromGenlet")
+    setExpectedGenletTypeInformation(expectedTypeName)
+}
+
+/**
+ * Data key for types expected from a Genlet.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+private object TypeExpectedFromGenletDataKey : DataKey<String>()
+
+/**
+ * Set information about the type expected from a Genlet for this [Node].
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+private fun Node.setExpectedGenletTypeInformation(expectedTypeName: String) {
+    if (!containsData(TypeExpectedFromGenletDataKey))
+        setData(TypeExpectedFromGenletDataKey, expectedTypeName)
+}
+
+/**
+ * Returns true if the type of this [Node] is expected to be set by a Genlet.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+fun NodeWithType<*, *>.isTypeExpectedFromGenlet() = (this as Node).containsData(TypeExpectedFromGenletDataKey)
+
+/**
+ * Returns the name of the type to be expected by
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+fun NodeWithType<*, *>.getTypeExpectedFromGenlet()
+    = if (isTypeExpectedFromGenlet()) (this as Node).getData(TypeExpectedFromGenletDataKey) else null
 
 /**
  * Get the basic type of this [IntermediateType]. For all type kinds and origins except lists defined in a data model

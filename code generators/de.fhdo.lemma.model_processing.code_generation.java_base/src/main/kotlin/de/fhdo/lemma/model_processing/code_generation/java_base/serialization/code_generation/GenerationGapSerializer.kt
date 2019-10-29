@@ -382,10 +382,11 @@ internal class GenerationGapSerializerBase : KoinComponent {
             if (it.isPrivate) {
                 it.removeModifier(Modifier.Keyword.PRIVATE)
                 it.addModifier(Modifier.Keyword.PROTECTED)
-            } else if (it.isRelocatableInGenInterface)
+            } else if (it.isRelocatableInGenInterface && it.isOverridable)
                 // The methods of the *Gen interface being implemented by this class are equivalent to its already
                 // existing public, non-static, methods created by the visiting handlers. Thus, we just add the
-                // @Override annotation to them here.
+                // @Override annotation to them here if it was not already added by code generation handlers (checked by
+                // isOverridable()).
                 it.addMarkerAnnotation("Override")
 
             // Collect bodies that need to be merged or delegated upon relocation in the *CustomImpl class

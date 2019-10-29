@@ -19,11 +19,17 @@ private val genletTypeMappings = primitiveTypeMappings {
                     withDependency "org.springframework.security:spring-security-core:5.1.6.RELEASE"
         )
         (
-            "GrantedAuthorities" mapsTo "List<GrantedAuthority>"
-                    withImport "org.springframework.security.core.GrantedAuthority" andImport "java.util.List"
+            "GrantedAuthorities" mapsTo "Collection<? extends GrantedAuthority>"
+                    withImport "org.springframework.security.core.GrantedAuthority" andImport "java.util.Collection"
                     withDependency "org.springframework.security:spring-security-core:5.1.6.RELEASE"
         )
             "HttpServletRequest" withImport "javax.servlet.http.HttpServletRequest"
+
+        (
+            "UserDetails" mapsTo "UserDetails"
+                    withImport "org.springframework.security.core.userdetails.UserDetails"
+                    withDependency "org.springframework.security:spring-security-core:5.1.6.RELEASE"
+        )
     }
 }
 
@@ -38,3 +44,18 @@ internal fun IntermediateType.getGenletTypeMapping() : TypeMappingDescription?
             genletTypeMappings[this] ?: getTypeMapping()
         else
             getTypeMapping()
+
+/**
+ * Check if there exists a Genlet-specific mapping for the given [type].
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+internal fun existsTechnologySpecificMappingForType(type: String)
+    = genletTypeMappings.getTechnologySpecificMapping(type) != null
+
+/**
+ * Get Genlet-specific mapping for the given [type] if it exists.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+internal fun getTechnologySpecificMappingForType(type: String) = genletTypeMappings.getTechnologySpecificMapping(type)
