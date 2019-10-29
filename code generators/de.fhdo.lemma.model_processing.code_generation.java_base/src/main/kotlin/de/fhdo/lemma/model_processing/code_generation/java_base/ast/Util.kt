@@ -900,7 +900,7 @@ internal fun FieldDeclaration.setInitializationValue(value: String) = variables[
  */
 fun FieldDeclaration.addImport(import: String, targetElementType: ImportTargetElementType) {
     addImportsInfo(import, targetElementType)
-    findParentNode<ClassOrInterfaceDeclaration>()!!.addImport(import, targetElementType)
+    findParentNode<ClassOrInterfaceDeclaration>()?.addImport(import, targetElementType)
 }
 
 /**
@@ -911,7 +911,7 @@ fun FieldDeclaration.addImport(import: String, targetElementType: ImportTargetEl
 fun MethodDeclaration.addImport(import: String, targetElementType: ImportTargetElementType,
     vararg characteristics: SerializationCharacteristic)  {
     addImportsInfo(import, targetElementType, *characteristics)
-    findParentNode<ClassOrInterfaceDeclaration>()!!.addImport(import, targetElementType, *characteristics)
+    findParentNode<ClassOrInterfaceDeclaration>()?.addImport(import, targetElementType, *characteristics)
 }
 
 /**
@@ -922,7 +922,7 @@ fun MethodDeclaration.addImport(import: String, targetElementType: ImportTargetE
  */
 fun MethodDeclaration.removeImport(import: String, targetElementType: ImportTargetElementType)  {
     removeImportsInfo(import, targetElementType)
-    findParentNode<ClassOrInterfaceDeclaration>()!!.removeImport(import, targetElementType)
+    findParentNode<ClassOrInterfaceDeclaration>()?.removeImport(import, targetElementType)
 }
 
 /**
