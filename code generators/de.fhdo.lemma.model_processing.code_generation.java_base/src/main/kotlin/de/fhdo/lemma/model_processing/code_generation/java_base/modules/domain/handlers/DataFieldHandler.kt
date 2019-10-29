@@ -5,6 +5,7 @@ import com.github.javaparser.ast.body.FieldDeclaration
 import com.github.javaparser.ast.body.MethodDeclaration
 import de.fhdo.lemma.data.intermediate.IntermediateComplexType
 import de.fhdo.lemma.data.intermediate.IntermediateDataField
+import de.fhdo.lemma.data.intermediate.IntermediateType
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.ImportTargetElementType
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addGetter
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addGetterForInheritedAttribute
@@ -77,11 +78,11 @@ internal class DataFieldHandler :
         val attribute = addPrivateAttribute(field.name, "TODO")
         attribute.setInitializationValueIfNeeded(field)
         attribute.isFinal = field.isImmutable && field.initializationValue != null
-        val typeMapping = attribute.determineAndGetTypeMapping(field)
+        val (typeMapping, intermediateType) = attribute.determineAndGetTypeMapping(field)
 
         if (typeMapping != null) {
-            addGetterFromIfNeeded(field, attribute, typeMapping)
-            addSetterFromIfNeeded(field, attribute, typeMapping)
+            addGetterFromIfNeeded(field, attribute, typeMapping, intermediateType)
+            addSetterFromIfNeeded(field, attribute, typeMapping, intermediateType)
         }
 
         return attribute
@@ -90,7 +91,8 @@ internal class DataFieldHandler :
     /**
      * Helper to determine the [TypeMappingDescription] for this attribute based on the given intermediate [field]
      */
-    private fun FieldDeclaration.determineAndGetTypeMapping(field: IntermediateDataField) : TypeMappingDescription? {
+    private fun FieldDeclaration.determineAndGetTypeMapping(field: IntermediateDataField)
+        : Pair<TypeMappingDescription?, IntermediateType> {
         /*
          * Handle multi-value aspects, such as Array or Collection. When the intermediate field exhibits one of those
          * aspects, it's basic type for the multi-value specification will be determined. In all cases except an
@@ -115,7 +117,7 @@ internal class DataFieldHandler :
         }
 
         if (!mappedForMultiValueAspect || typeMapping == null)
-            return typeMapping
+            return typeMapping to intermediateType
 
         /* Adapt the basic type of the attribute to multi-value aspects */
         val mappedTypeName = if (field.hasAspect("java.Array"))
@@ -128,7 +130,7 @@ internal class DataFieldHandler :
 
         variables[0].setType(mappedTypeName)
         typeMapping.mappedTypeName = mappedTypeName
-        return typeMapping
+        return typeMapping to intermediateType
     }
 
     /**
@@ -147,12 +149,12 @@ internal class DataFieldHandler :
      * Helper to add a getter for the [field] to this [ClassOrInterfaceDeclaration]
      */
     private fun ClassOrInterfaceDeclaration.addGetterFromIfNeeded(field: IntermediateDataField,
-        generatedAttribute: FieldDeclaration, typeMapping: TypeMappingDescription) {
+        generatedAttribute: FieldDeclaration, typeMapping: TypeMappingDescription, type: IntermediateType) {
         if (field.isHidden)
             return
 
         val (backingAttributeName, getterMethod) = addGetter(generatedAttribute)
-        getterMethod.addTypeMappingInformation(typeMapping, field)
+        getterMethod.addTypeMappingInformation(typeMapping, type)
 
         // If the field must never be empty, add a null-check to the method if possible
         if (field.hasFeature("NEVER_EMPTY") && field.type.isNullable) {
@@ -171,12 +173,12 @@ internal class DataFieldHandler :
      * Helper to add [typeMapping] information to this [MethodDeclaration]
      */
     private fun MethodDeclaration.addTypeMappingInformation(typeMapping: TypeMappingDescription,
-        field: IntermediateDataField) {
+        intermediateType : IntermediateType) {
         typeMapping.getImports().forEach { addImport(it, ImportTargetElementType.METHOD) }
 
         if (typeMapping.isComplexTypeMapping) {
             val currentDomainPackage: String by DomainState
-            val typeClassname = (field.type as IntermediateComplexType).fullyQualifiedClassname
+            val typeClassname = (intermediateType as IntermediateComplexType).fullyQualifiedClassname
             val complexTypeFullyQualifiedName = "$currentDomainPackage.$typeClassname"
             addImport(complexTypeFullyQualifiedName, ImportTargetElementType.METHOD)
         }
@@ -186,12 +188,12 @@ internal class DataFieldHandler :
      * Helper to add a setter for the [field] to this [ClassOrInterfaceDeclaration]
      */
     private fun ClassOrInterfaceDeclaration.addSetterFromIfNeeded(field: IntermediateDataField,
-        generatedAttribute: FieldDeclaration, typeMapping: TypeMappingDescription) {
+        generatedAttribute: FieldDeclaration, typeMapping: TypeMappingDescription, intermediateType: IntermediateType) {
         if (field.isImmutable || field.isHidden)
             return
 
         val (backingAttributeName, setterMethod) = addSetter(generatedAttribute)
-        setterMethod.addTypeMappingInformation(typeMapping, field)
+        setterMethod.addTypeMappingInformation(typeMapping, intermediateType)
 
         // If the field must never be empty, add a null-check to the method if possible
         if (field.hasFeature("NEVER_EMPTY") && field.type.isNullable) {
