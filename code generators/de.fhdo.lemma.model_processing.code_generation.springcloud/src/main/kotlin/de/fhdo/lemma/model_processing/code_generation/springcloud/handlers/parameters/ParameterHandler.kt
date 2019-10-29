@@ -4,7 +4,9 @@ import com.github.javaparser.ast.body.MethodDeclaration
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.ImportTargetElementType
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.SerializationCharacteristic
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addAndGetAnnotation
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addDependencies
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addImport
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addThrownException
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.getParameter
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletCodeGenerationHandlerI
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletCodeGenerationHandlerResult
@@ -12,6 +14,7 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.CodeGen
 import de.fhdo.lemma.model_processing.code_generation.java_base.languages.getTypeExpectedFromGenlet
 import de.fhdo.lemma.model_processing.code_generation.springcloud.addTypeInformationTo
 import de.fhdo.lemma.model_processing.code_generation.springcloud.languages.existsTechnologySpecificMappingForType
+import de.fhdo.lemma.model_processing.code_generation.springcloud.languages.getTechnologySpecificMappingForType
 import de.fhdo.lemma.service.intermediate.IntermediateParameter
 
 /**
@@ -29,9 +32,19 @@ internal class ParameterHandler : GenletCodeGenerationHandlerI<IntermediateParam
      */
     override fun execute(parameter: IntermediateParameter, method: MethodDeclaration, context: Nothing?)
         : GenletCodeGenerationHandlerResult<MethodDeclaration>? {
-        val generatedParameter = method.getParameter(parameter.name)!!
+        /* Handle Exception type if the parameter communicates a fault */
+        if (parameter.isCommunicatesFault) {
+            val (exception, _, imports, dependencies) = getTechnologySpecificMappingForType(parameter.type.name)
+                ?: return GenletCodeGenerationHandlerResult(method)
+
+            method.addDependencies(dependencies)
+            imports.forEach { method.addImport(it, ImportTargetElementType.METHOD) }
+            method.addThrownException(exception)
+            return GenletCodeGenerationHandlerResult(method)
+        }
 
         /* Do Genlet-specific type mapping if necessary */
+        val generatedParameter = method.getParameter(parameter.name)!!
         val typeExpectedFromGenlet = generatedParameter.getTypeExpectedFromGenlet()
         if (typeExpectedFromGenlet != null && existsTechnologySpecificMappingForType(typeExpectedFromGenlet)) {
             val (mappedType, _) = parameter.type.addTypeInformationTo(method) {

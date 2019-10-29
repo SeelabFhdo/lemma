@@ -23,6 +23,7 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addSetter
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.newJavaClassOrInterface
 import de.fhdo.lemma.model_processing.code_generation.java_base.languages.DATA_DSL_LANGUAGE_DESCRIPTION
 import de.fhdo.lemma.model_processing.code_generation.java_base.languages.SERVICE_DSL_LANGUAGE_DESCRIPTION
+import de.fhdo.lemma.model_processing.code_generation.java_base.languages.getTypeMapping
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.domain.DomainContext.State as DomainState
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.services.ServicesContext.State as ServicesState
 import de.fhdo.lemma.model_processing.languages.registerLanguage
@@ -574,12 +575,17 @@ fun IntermediateOperation.getResultParameters(communicationType: CommunicationTy
     = parameters.filter { it.communicationType == communicationType && it.isResultParameter }
 
 /**
- * Get fault parameters of this [IntermediateOperation] having the specified [communicationType].
+ * Get fault parameters of this [IntermediateOperation] having the specified [communicationType] and for which an
+ * Exception class is generated or not.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-internal fun IntermediateOperation.getFaultParameters(communicationType: CommunicationType)
-    = parameters.filter { it.communicationType == communicationType && it.isCommunicatesFault }
+internal fun IntermediateOperation.getFaultParameters(communicationType: CommunicationType,
+    withCustomExceptionClass: Boolean = true) = parameters.filter {
+        it.communicationType == communicationType &&
+        it.isCommunicatesFault &&
+        it.generateCustomExceptionClassFor() == withCustomExceptionClass
+    }
 
 /**
  * Load the original [EObject] of this [IntermediateOperation] from the specified [originalModelFilePath]. The result
@@ -667,6 +673,14 @@ internal fun IntermediateOperation.buildRequiredInputParameterGuardName(communic
  */
 fun IntermediateParameter.buildExceptionClassName()
     = "${name.capitalize()}Exception"
+
+/**
+ * Determine if for this fault parameter a custom Exception class is to be generated.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+internal fun IntermediateParameter.generateCustomExceptionClassFor()
+    = isCommunicatesFault && type.getTypeMapping() != null
 
 /**
  * Determine the fully-qualified name of the Exception class in case this parameter is a fault parameter.

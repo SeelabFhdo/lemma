@@ -12,6 +12,7 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.ast.setBody
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.setSuperclass
 import de.fhdo.lemma.model_processing.code_generation.java_base.buildExceptionClassName
 import de.fhdo.lemma.model_processing.code_generation.java_base.buildOperationPackageName
+import de.fhdo.lemma.model_processing.code_generation.java_base.generateCustomExceptionClassFor
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.CodeGenerationHandler
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.VisitingCodeGenerationHandlerI
 import de.fhdo.lemma.model_processing.utils.packageToPath
@@ -38,6 +39,18 @@ class FaultParameterHandler
     override fun execute(parameter: IntermediateParameter, cx: Nothing?) : Pair<ClassOrInterfaceDeclaration, String?>? {
         // Currently we only support synchronous fault parameters
         if (!parameter.isCommunicatesFault || parameter.communicationType == CommunicationType.ASYNCHRONOUS)
+            return null
+
+        /*
+         * If the parameter's type is not a type known to the Java base generator, we delegate its handling to Genlets.
+         * This mechanism enables the treatment of technology-specific Exception classes, i.e., fault parameters may be
+         * typed by technology-specific Exception classes, and Genlets add imports and throws declarations for them to
+         * the parameter's target method. Thus, we do not generate a custom Exception class in this case. A drawback of
+         * this approach, however, is that those Exception classes cannot exhibit custom code. In the future, this could
+         * be supported leveraging a dedicated aspect that results in a custom Exception class being generated, which
+         * inherits from the Exception class with which the fault parameter is typed.
+         */
+        if (!parameter.generateCustomExceptionClassFor())
             return null
 
         /* Each fault parameter is mapped to an Exception class with the parameter as its attribute */

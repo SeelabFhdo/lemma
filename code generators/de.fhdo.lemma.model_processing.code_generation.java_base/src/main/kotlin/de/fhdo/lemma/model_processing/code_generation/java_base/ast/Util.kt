@@ -930,7 +930,7 @@ fun MethodDeclaration.removeImport(import: String, targetElementType: ImportTarg
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-internal fun MethodDeclaration.addThrownException(exceptionClassName: String)
+fun MethodDeclaration.addThrownException(exceptionClassName: String)
     = addThrownException(StaticJavaParser.parseClassOrInterfaceType(exceptionClassName))
 
 /**

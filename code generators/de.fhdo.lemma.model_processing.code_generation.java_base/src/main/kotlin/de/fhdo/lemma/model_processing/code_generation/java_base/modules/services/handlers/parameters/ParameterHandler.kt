@@ -36,6 +36,13 @@ internal class ParameterHandler
      */
     override fun execute(parameter: IntermediateParameter, parentMethod: MethodDeclaration?)
         : Pair<MethodDeclaration, String?>? {
+        // Delegate fault parameter handling to Genlets. Note that usually fault parameters are covered by the
+        // FaultParameterHandler. However, when no custom Exception class may be generated for the fault parameters,
+        // they need to be treated by Genlets (cf. FaultParameterHandler.execute() and
+        // OperationHandler.handleSynchronousFaultParameters() for more details).
+        if (parameter.isCommunicatesFault)
+            return parentMethod!! to null
+
         val generatedParameter = Parameter()
         generatedParameter.setName(parameter.name)
 

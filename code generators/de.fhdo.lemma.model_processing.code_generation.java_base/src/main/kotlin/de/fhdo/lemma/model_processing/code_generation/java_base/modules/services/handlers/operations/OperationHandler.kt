@@ -173,11 +173,17 @@ internal class OperationHandler
     /**
      * Helper to handle synchronous fault parameters
      */
-    private fun handleSynchronousFaultParameters(operation: IntermediateOperation, generatedMethod: MethodDeclaration)
-        = operation.getFaultParameters(CommunicationType.SYNCHRONOUS).forEach {
+    private fun handleSynchronousFaultParameters(operation: IntermediateOperation, generatedMethod: MethodDeclaration) {
+        operation.getFaultParameters(CommunicationType.SYNCHRONOUS).forEach {
             generatedMethod.addImport(it.buildFullyQualifiedExceptionClassName(), ImportTargetElementType.METHOD)
             generatedMethod.addThrownException(it.buildExceptionClassName())
         }
+
+        // Fault parameters for which no custom Exception class is generated are to be treated by Genlets
+        operation.getFaultParameters(CommunicationType.SYNCHRONOUS, withCustomExceptionClass = false).forEach {
+            ParameterHandler.invoke(it, generatedMethod)
+        }
+    }
 
     /**
      * Helper to handle non-fault result parameters
