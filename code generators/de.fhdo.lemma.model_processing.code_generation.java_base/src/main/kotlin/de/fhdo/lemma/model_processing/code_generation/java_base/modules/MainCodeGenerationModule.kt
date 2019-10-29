@@ -115,8 +115,13 @@ internal class MainCodeGenerationModule : AbstractCodeGenerationModule(), KoinCo
             MainState.setCurrentMicroservice(it)
             DomainCodeGenerationSubModule.invoke()
             ServicesCodeGenerationSubModule.invoke()
+        }
 
-            serializeDependencies(it)
+        /* Serialize dependencies and property files. They concern all generated microservices. */
+        if (intermediateServiceModel.microservices.isNotEmpty()) {
+            // Currently, we use the first microservice in the model to determine the artifact identifier for the
+            // dependency serialization
+            serializeDependencies(intermediateServiceModel.microservices.first())
 
             serializeOpenedPropertyFiles()
             closeOpenedPropertyFiles()
@@ -161,9 +166,9 @@ internal class MainCodeGenerationModule : AbstractCodeGenerationModule(), KoinCo
             currentMicroserviceTargetFolderPath,
             "pom.xml"
         )
-        MainState.addGeneratedFileContent(generatedContent, targetFilePath)
 
         MainState.clearCollectedDependencies()
+        MainState.addGeneratedFileContent(generatedContent, targetFilePath)
     }
 
     /**
