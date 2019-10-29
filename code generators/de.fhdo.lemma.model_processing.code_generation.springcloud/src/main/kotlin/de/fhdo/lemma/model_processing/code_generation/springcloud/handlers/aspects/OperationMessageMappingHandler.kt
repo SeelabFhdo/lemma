@@ -6,6 +6,7 @@ import com.github.javaparser.ast.body.MethodDeclaration
 import de.fhdo.lemma.data.intermediate.IntermediateImportedAspect
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.ImportTargetElementType
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.SerializationCharacteristic
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addAnnotation
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addAndGetAnnotation
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addImport
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.findParentNode
@@ -45,7 +46,7 @@ internal class OperationMessageMappingHandler : AspectHandlerI {
         /* Add aspect-dependent annotation with value to the generated method */
         val annotation = generatedMethod.addAndGetAnnotation(aspect.name,
             SerializationCharacteristic.REMOVE_ON_RELOCATION)
-        annotation.addPair("value", aspect.getPropertyValue("value")!!)
+        annotation.addPair("value", "\"${aspect.getPropertyValue("value")!!}\"")
 
         /* Add the Controller annotation to the class, if it is not present already */
         val parentClass = generatedMethod.findParentNode<ClassOrInterfaceDeclaration>()!!
@@ -54,7 +55,7 @@ internal class OperationMessageMappingHandler : AspectHandlerI {
 
         parentClass.addImport("org.springframework.stereotype.Controller", ImportTargetElementType.ANNOTATION,
             SerializationCharacteristic.DONT_RELOCATE)
-        parentClass.addAnnotation("Controller")
+        parentClass.addAnnotation("Controller", SerializationCharacteristic.DONT_RELOCATE)
 
         return generatedMethod
     }
