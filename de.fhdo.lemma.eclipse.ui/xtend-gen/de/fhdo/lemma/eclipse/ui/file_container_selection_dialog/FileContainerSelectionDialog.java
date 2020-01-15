@@ -45,7 +45,6 @@ import org.eclipse.xtend.lib.annotations.AccessorType;
 import org.eclipse.xtend.lib.annotations.Accessors;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
-import org.eclipse.xtext.xbase.lib.Conversions;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.Pure;
 
@@ -497,7 +496,7 @@ public class FileContainerSelectionDialog extends TitleAreaDialog {
    */
   private void selectInitialResource(final IResource resource) {
     this.initialSelection = resource;
-    final ArrayList<Object> itemsToExpand = CollectionLiterals.<Object>newArrayList();
+    final ArrayList<IContainer> itemsToExpand = CollectionLiterals.<IContainer>newArrayList();
     IContainer parent = resource.getParent();
     while ((parent != null)) {
       {
@@ -505,7 +504,7 @@ public class FileContainerSelectionDialog extends TitleAreaDialog {
         parent = parent.getParent();
       }
     }
-    this.containerSelectionTree.setExpandedElements(((Object[])Conversions.unwrapArray(itemsToExpand, Object.class)));
+    this.containerSelectionTree.setExpandedElements(itemsToExpand.toArray());
     IResource _xifexpression = null;
     boolean _exists = resource.exists();
     if (_exists) {

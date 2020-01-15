@@ -404,7 +404,7 @@ class FileContainerSelectionDialog extends TitleAreaDialog {
             itemsToExpand.add(0, parent)
             parent = parent.parent
         }
-        containerSelectionTree.setExpandedElements(itemsToExpand)
+        containerSelectionTree.setExpandedElements(itemsToExpand.toArray)
 
         // Select the actual resource, which must be an existing node in the tree. In case the
         // resource does not physically exist and is hence not a node in the tree, select its
