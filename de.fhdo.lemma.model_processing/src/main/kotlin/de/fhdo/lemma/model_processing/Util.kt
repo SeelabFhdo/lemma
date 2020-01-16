@@ -1,6 +1,7 @@
 package de.fhdo.lemma.model_processing
 
 import de.fhdo.lemma.model_processing.annotations.findAnnotatedMethods
+import de.fhdo.lemma.utils.LemmaUtils
 import io.github.classgraph.ClassInfo
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.resource.Resource
@@ -71,11 +72,18 @@ fun String.asXmiResource() : Resource {
     val resourceSet = ResourceSetImpl()
     val extensionFactoryMap = Resource.Factory.Registry.INSTANCE.extensionToFactoryMap
     extensionFactoryMap["xmi"] = XMIResourceFactoryImpl()
-    val resource = resourceSet.createResource(URI.createURI(this)) as Resource
+    val resource = resourceSet.createResource(this.toFileUri())
     resource.load(null)
 
     return resource
 }
+
+/**
+ * Convert a [String] to a [URI].
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+private fun String.toFileUri() = URI.createURI(LemmaUtils.convertToFileUri(this))
 
 private const val ERROR_COLOR = "red"
 private const val WARNING_COLOR = "yellow"
@@ -261,7 +269,7 @@ fun loadXtextResource(languageSetup: ISetup, filepath: String, inputStream: Inpu
     val injector = languageSetup.createInjectorAndDoEMFRegistration()
     val resourceSet = injector.getInstance(XtextResourceSet::class.java)
     resourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, java.lang.Boolean.TRUE)
-    val resource = resourceSet.createResource(URI.createURI(filepath))
+    val resource = resourceSet.createResource(filepath.toFileUri())
     resource.load(inputStream, resourceSet.loadOptions)
     return resource as XtextResource
 }
