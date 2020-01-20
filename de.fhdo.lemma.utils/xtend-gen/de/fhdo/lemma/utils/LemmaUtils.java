@@ -274,7 +274,14 @@ public final class LemmaUtils {
     final String scheme = LemmaUtils.getUriScheme(uri);
     int _length = scheme.length();
     int _plus = (_length + 1);
-    return uri.substring(_plus);
+    final String uriWithoutScheme = uri.substring(_plus);
+    String _xifexpression = null;
+    if ((LemmaUtils.isWindowsOs() && uriWithoutScheme.startsWith("//"))) {
+      _xifexpression = uriWithoutScheme.substring(2);
+    } else {
+      _xifexpression = uriWithoutScheme;
+    }
+    return _xifexpression;
   }
   
   /**

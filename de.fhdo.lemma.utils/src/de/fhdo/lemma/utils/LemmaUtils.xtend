@@ -232,7 +232,11 @@ final class LemmaUtils {
             return uri
 
         val scheme = getUriScheme(uri)
-        return uri.substring(scheme.length + 1)
+        val uriWithoutScheme = uri.substring(scheme.length + 1)
+        return if (isWindowsOs && uriWithoutScheme.startsWith("//"))
+               uriWithoutScheme.substring(2)
+           else
+               uriWithoutScheme
     }
 
     /**
