@@ -48,7 +48,7 @@ class DataDslValidator extends AbstractDataDslValidator {
 
     /**
      * Check import aliases for uniqueness. Normally, this should be done by
-     * DataDslNamesAreUniqueValidationHelper, but it does not react to
+     * DataDslNamesAreUniqueValidationHelper, but it does not react to.
      */
     @Check
     def checkImportAlias(DataModel dataModel) {

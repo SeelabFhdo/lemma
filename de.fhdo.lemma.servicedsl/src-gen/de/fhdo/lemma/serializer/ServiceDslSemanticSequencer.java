@@ -26,6 +26,7 @@ import de.fhdo.lemma.data.PrimitiveInteger;
 import de.fhdo.lemma.data.PrimitiveLong;
 import de.fhdo.lemma.data.PrimitiveShort;
 import de.fhdo.lemma.data.PrimitiveString;
+import de.fhdo.lemma.data.PrimitiveUnspecified;
 import de.fhdo.lemma.data.PrimitiveValue;
 import de.fhdo.lemma.data.Version;
 import de.fhdo.lemma.service.ApiOperationComment;
@@ -155,6 +156,9 @@ public class ServiceDslSemanticSequencer extends TechnologyDslSemanticSequencer 
 				return; 
 			case DataPackage.PRIMITIVE_STRING:
 				sequence_PrimitiveType(context, (PrimitiveString) semanticObject); 
+				return; 
+			case DataPackage.PRIMITIVE_UNSPECIFIED:
+				sequence_PrimitiveType(context, (PrimitiveUnspecified) semanticObject); 
 				return; 
 			case DataPackage.PRIMITIVE_VALUE:
 				sequence_PrimitiveValue(context, (PrimitiveValue) semanticObject); 

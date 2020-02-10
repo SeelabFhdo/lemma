@@ -146,7 +146,8 @@ PrimitiveType returns PrimitiveType:
     {PrimitiveInteger} 'int' |
     {PrimitiveLong} 'long' |
     {PrimitiveShort} 'short' |
-    {PrimitiveString} 'string'
+    {PrimitiveString} 'string' |
+    {PrimitiveUnspecified} 'unspecified'
 ;
 
 QualifiedName:

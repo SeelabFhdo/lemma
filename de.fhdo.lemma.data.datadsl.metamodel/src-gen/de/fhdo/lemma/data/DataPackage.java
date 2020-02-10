@@ -1193,6 +1193,79 @@ public interface DataPackage extends EPackage {
     int PRIMITIVE_STRING_OPERATION_COUNT = PRIMITIVE_TYPE_OPERATION_COUNT + 0;
 
     /**
+     * The meta object id for the '{@link de.fhdo.lemma.data.impl.PrimitiveUnspecifiedImpl <em>Primitive Unspecified</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.fhdo.lemma.data.impl.PrimitiveUnspecifiedImpl
+     * @see de.fhdo.lemma.data.impl.DataPackageImpl#getPrimitiveUnspecified()
+     * @generated
+     */
+    int PRIMITIVE_UNSPECIFIED = 16;
+
+    /**
+     * The feature id for the '<em><b>Type Name</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PRIMITIVE_UNSPECIFIED__TYPE_NAME = PRIMITIVE_TYPE__TYPE_NAME;
+
+    /**
+     * The feature id for the '<em><b>Type Size</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PRIMITIVE_UNSPECIFIED__TYPE_SIZE = PRIMITIVE_TYPE__TYPE_SIZE;
+
+    /**
+     * The number of structural features of the '<em>Primitive Unspecified</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PRIMITIVE_UNSPECIFIED_FEATURE_COUNT = PRIMITIVE_TYPE_FEATURE_COUNT + 0;
+
+    /**
+     * The operation id for the '<em>Size Compare</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PRIMITIVE_UNSPECIFIED___SIZE_COMPARE__PRIMITIVETYPE = PRIMITIVE_TYPE___SIZE_COMPARE__PRIMITIVETYPE;
+
+    /**
+     * The operation id for the '<em>Is Compatible With</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PRIMITIVE_UNSPECIFIED___IS_COMPATIBLE_WITH__PRIMITIVETYPE = PRIMITIVE_TYPE___IS_COMPATIBLE_WITH__PRIMITIVETYPE;
+
+    /**
+     * The operation id for the '<em>Get Builtin Primitive Types</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PRIMITIVE_UNSPECIFIED___GET_BUILTIN_PRIMITIVE_TYPES = PRIMITIVE_TYPE___GET_BUILTIN_PRIMITIVE_TYPES;
+
+    /**
+     * The number of operations of the '<em>Primitive Unspecified</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PRIMITIVE_UNSPECIFIED_OPERATION_COUNT = PRIMITIVE_TYPE_OPERATION_COUNT + 0;
+
+    /**
      * The meta object id for the '{@link de.fhdo.lemma.data.impl.ComplexTypeImpl <em>Complex Type</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1200,7 +1273,7 @@ public interface DataPackage extends EPackage {
      * @see de.fhdo.lemma.data.impl.DataPackageImpl#getComplexType()
      * @generated
      */
-    int COMPLEX_TYPE = 16;
+    int COMPLEX_TYPE = 17;
 
     /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1336,7 +1409,7 @@ public interface DataPackage extends EPackage {
      * @see de.fhdo.lemma.data.impl.DataPackageImpl#getImportedComplexType()
      * @generated
      */
-    int IMPORTED_COMPLEX_TYPE = 17;
+    int IMPORTED_COMPLEX_TYPE = 18;
 
     /**
      * The feature id for the '<em><b>Import</b></em>' reference.
@@ -1409,7 +1482,7 @@ public interface DataPackage extends EPackage {
      * @see de.fhdo.lemma.data.impl.DataPackageImpl#getDataStructure()
      * @generated
      */
-    int DATA_STRUCTURE = 18;
+    int DATA_STRUCTURE = 19;
 
     /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1635,7 +1708,7 @@ public interface DataPackage extends EPackage {
      * @see de.fhdo.lemma.data.impl.DataPackageImpl#getDataOperation()
      * @generated
      */
-    int DATA_OPERATION = 19;
+    int DATA_OPERATION = 20;
 
     /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1807,7 +1880,7 @@ public interface DataPackage extends EPackage {
      * @see de.fhdo.lemma.data.impl.DataPackageImpl#getDataOperationParameter()
      * @generated
      */
-    int DATA_OPERATION_PARAMETER = 20;
+    int DATA_OPERATION_PARAMETER = 21;
 
     /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1907,7 +1980,7 @@ public interface DataPackage extends EPackage {
      * @see de.fhdo.lemma.data.impl.DataPackageImpl#getListType()
      * @generated
      */
-    int LIST_TYPE = 21;
+    int LIST_TYPE = 22;
 
     /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -2070,7 +2143,7 @@ public interface DataPackage extends EPackage {
      * @see de.fhdo.lemma.data.impl.DataPackageImpl#getDataField()
      * @generated
      */
-    int DATA_FIELD = 22;
+    int DATA_FIELD = 23;
 
     /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -2233,7 +2306,7 @@ public interface DataPackage extends EPackage {
      * @see de.fhdo.lemma.data.impl.DataPackageImpl#getEnumeration()
      * @generated
      */
-    int ENUMERATION = 23;
+    int ENUMERATION = 24;
 
     /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -2378,7 +2451,7 @@ public interface DataPackage extends EPackage {
      * @see de.fhdo.lemma.data.impl.DataPackageImpl#getEnumerationField()
      * @generated
      */
-    int ENUMERATION_FIELD = 24;
+    int ENUMERATION_FIELD = 25;
 
     /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -2451,7 +2524,7 @@ public interface DataPackage extends EPackage {
      * @see de.fhdo.lemma.data.impl.DataPackageImpl#getPrimitiveValue()
      * @generated
      */
-    int PRIMITIVE_VALUE = 25;
+    int PRIMITIVE_VALUE = 26;
 
     /**
      * The feature id for the '<em><b>String Value</b></em>' attribute.
@@ -2659,7 +2732,7 @@ public interface DataPackage extends EPackage {
      * @see de.fhdo.lemma.data.impl.DataPackageImpl#getPrimitiveTypeConstants()
      * @generated
      */
-    int PRIMITIVE_TYPE_CONSTANTS = 26;
+    int PRIMITIVE_TYPE_CONSTANTS = 27;
 
     /**
      * The meta object id for the '{@link de.fhdo.lemma.data.DataStructureFeature <em>Structure Feature</em>}' enum.
@@ -2669,7 +2742,7 @@ public interface DataPackage extends EPackage {
      * @see de.fhdo.lemma.data.impl.DataPackageImpl#getDataStructureFeature()
      * @generated
      */
-    int DATA_STRUCTURE_FEATURE = 27;
+    int DATA_STRUCTURE_FEATURE = 28;
 
     /**
      * The meta object id for the '{@link de.fhdo.lemma.data.DataOperationFeature <em>Operation Feature</em>}' enum.
@@ -2679,7 +2752,7 @@ public interface DataPackage extends EPackage {
      * @see de.fhdo.lemma.data.impl.DataPackageImpl#getDataOperationFeature()
      * @generated
      */
-    int DATA_OPERATION_FEATURE = 28;
+    int DATA_OPERATION_FEATURE = 29;
 
     /**
      * The meta object id for the '{@link de.fhdo.lemma.data.DataFieldFeature <em>Field Feature</em>}' enum.
@@ -2689,7 +2762,7 @@ public interface DataPackage extends EPackage {
      * @see de.fhdo.lemma.data.impl.DataPackageImpl#getDataFieldFeature()
      * @generated
      */
-    int DATA_FIELD_FEATURE = 29;
+    int DATA_FIELD_FEATURE = 30;
 
     /**
      * The meta object id for the '<em>Type Name Size Map</em>' data type.
@@ -2699,7 +2772,7 @@ public interface DataPackage extends EPackage {
      * @see de.fhdo.lemma.data.impl.DataPackageImpl#getTypeNameSizeMap()
      * @generated
      */
-    int TYPE_NAME_SIZE_MAP = 30;
+    int TYPE_NAME_SIZE_MAP = 31;
 
 
     /**
@@ -3139,6 +3212,16 @@ public interface DataPackage extends EPackage {
      * @generated
      */
     EClass getPrimitiveString();
+
+    /**
+     * Returns the meta object for class '{@link de.fhdo.lemma.data.PrimitiveUnspecified <em>Primitive Unspecified</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Primitive Unspecified</em>'.
+     * @see de.fhdo.lemma.data.PrimitiveUnspecified
+     * @generated
+     */
+    EClass getPrimitiveUnspecified();
 
     /**
      * Returns the meta object for class '{@link de.fhdo.lemma.data.ComplexType <em>Complex Type</em>}'.
@@ -4683,6 +4766,16 @@ public interface DataPackage extends EPackage {
          * @generated
          */
         EClass PRIMITIVE_STRING = eINSTANCE.getPrimitiveString();
+
+        /**
+         * The meta object literal for the '{@link de.fhdo.lemma.data.impl.PrimitiveUnspecifiedImpl <em>Primitive Unspecified</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.fhdo.lemma.data.impl.PrimitiveUnspecifiedImpl
+         * @see de.fhdo.lemma.data.impl.DataPackageImpl#getPrimitiveUnspecified()
+         * @generated
+         */
+        EClass PRIMITIVE_UNSPECIFIED = eINSTANCE.getPrimitiveUnspecified();
 
         /**
          * The meta object literal for the '{@link de.fhdo.lemma.data.impl.ComplexTypeImpl <em>Complex Type</em>}' class.

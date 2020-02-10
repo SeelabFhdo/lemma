@@ -41,6 +41,7 @@ import de.fhdo.lemma.service.TechnologyReference
 import de.fhdo.lemma.utils.LemmaUtils
 import de.fhdo.lemma.service.ApiOperationComment
 import de.fhdo.lemma.service.ApiParameterComment
+import de.fhdo.lemma.data.PrimitiveUnspecified
 
 /**
  * This class contains custom validation rules for service models.
@@ -569,6 +570,15 @@ class ServiceDslValidator extends AbstractServiceDslValidator {
                     '''the «containerName»''', protocolsOfType.get(1),
                 ServicePackage::Literals.PROTOCOL_SPECIFICATION__COMMUNICATION_TYPE)
         }
+    }
+
+    /**
+     * The unspecified primitive type is forbidden for parameters
+     */
+    @Check
+    def checkParameterType(Parameter parameter) {
+        if (parameter.effectiveType instanceof PrimitiveUnspecified)
+            error("Invalid type", parameter, ServicePackage::Literals.PARAMETER__PRIMITIVE_TYPE)
     }
 
     /**

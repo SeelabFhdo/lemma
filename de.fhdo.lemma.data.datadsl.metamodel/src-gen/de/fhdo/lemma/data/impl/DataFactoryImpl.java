@@ -73,6 +73,7 @@ public class DataFactoryImpl extends EFactoryImpl implements DataFactory {
             case DataPackage.PRIMITIVE_LONG: return createPrimitiveLong();
             case DataPackage.PRIMITIVE_SHORT: return createPrimitiveShort();
             case DataPackage.PRIMITIVE_STRING: return createPrimitiveString();
+            case DataPackage.PRIMITIVE_UNSPECIFIED: return createPrimitiveUnspecified();
             case DataPackage.IMPORTED_COMPLEX_TYPE: return createImportedComplexType();
             case DataPackage.DATA_STRUCTURE: return createDataStructure();
             case DataPackage.DATA_OPERATION: return createDataOperation();
@@ -285,6 +286,17 @@ public class DataFactoryImpl extends EFactoryImpl implements DataFactory {
     public PrimitiveString createPrimitiveString() {
         PrimitiveStringImpl primitiveString = new PrimitiveStringImpl();
         return primitiveString;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public PrimitiveUnspecified createPrimitiveUnspecified() {
+        PrimitiveUnspecifiedImpl primitiveUnspecified = new PrimitiveUnspecifiedImpl();
+        return primitiveUnspecified;
     }
 
     /**

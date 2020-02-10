@@ -15,6 +15,7 @@ import de.fhdo.lemma.data.PrimitiveShort;
 import de.fhdo.lemma.data.PrimitiveString;
 import de.fhdo.lemma.data.PrimitiveType;
 import de.fhdo.lemma.data.PrimitiveTypeConstants;
+import de.fhdo.lemma.data.PrimitiveUnspecified;
 import de.fhdo.lemma.data.PrimitiveValue;
 
 import java.lang.reflect.InvocationTargetException;
@@ -331,6 +332,12 @@ public class PrimitiveValueImpl extends MinimalEObjectImpl.Container implements 
             if (primitiveType instanceof PrimitiveString) {
                 _matched=true;
                 _switchResult = this.asString();
+            }
+        }
+        if (!_matched) {
+            if (primitiveType instanceof PrimitiveUnspecified) {
+                _matched=true;
+                _switchResult = null;
             }
         }
         return _switchResult;

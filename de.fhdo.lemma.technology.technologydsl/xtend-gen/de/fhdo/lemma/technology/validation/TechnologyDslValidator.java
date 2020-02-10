@@ -8,6 +8,7 @@ import com.google.common.base.Objects;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import de.fhdo.lemma.data.PrimitiveType;
+import de.fhdo.lemma.data.PrimitiveUnspecified;
 import de.fhdo.lemma.data.PrimitiveValue;
 import de.fhdo.lemma.technology.AspectFeature;
 import de.fhdo.lemma.technology.CompatibilityDirection;
@@ -513,6 +514,18 @@ public class TechnologyDslValidator extends AbstractTechnologyDslValidator {
     };
     mappingTypes.forEach(_function);
     return canonicalCheckMap;
+  }
+  
+  /**
+   * The unspecified primitive type is forbidden for technology-specific properties
+   */
+  @Check
+  public void checkPropertyType(final TechnologySpecificProperty property) {
+    PrimitiveType _type = property.getType();
+    if ((_type instanceof PrimitiveUnspecified)) {
+      this.error("Invalid type", property, 
+        TechnologyPackage.Literals.TECHNOLOGY_SPECIFIC_PROPERTY__TYPE);
+    }
   }
   
   /**

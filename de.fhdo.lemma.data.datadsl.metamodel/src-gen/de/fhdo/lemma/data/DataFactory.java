@@ -148,6 +148,15 @@ public interface DataFactory extends EFactory {
     PrimitiveString createPrimitiveString();
 
     /**
+     * Returns a new object of class '<em>Primitive Unspecified</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Primitive Unspecified</em>'.
+     * @generated
+     */
+    PrimitiveUnspecified createPrimitiveUnspecified();
+
+    /**
      * Returns a new object of class '<em>Imported Complex Type</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

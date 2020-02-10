@@ -11,6 +11,7 @@ import com.google.inject.Inject;
 import de.fhdo.lemma.ServiceDslQualifiedNameProvider;
 import de.fhdo.lemma.data.DataModel;
 import de.fhdo.lemma.data.PrimitiveType;
+import de.fhdo.lemma.data.PrimitiveUnspecified;
 import de.fhdo.lemma.data.PrimitiveValue;
 import de.fhdo.lemma.data.Type;
 import de.fhdo.lemma.service.ApiOperationComment;
@@ -804,6 +805,17 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
             ServicePackage.Literals.PROTOCOL_SPECIFICATION__COMMUNICATION_TYPE);
         }
       }
+    }
+  }
+  
+  /**
+   * The unspecified primitive type is forbidden for parameters
+   */
+  @Check
+  public void checkParameterType(final Parameter parameter) {
+    Type _effectiveType = parameter.getEffectiveType();
+    if ((_effectiveType instanceof PrimitiveUnspecified)) {
+      this.error("Invalid type", parameter, ServicePackage.Literals.PARAMETER__PRIMITIVE_TYPE);
     }
   }
   

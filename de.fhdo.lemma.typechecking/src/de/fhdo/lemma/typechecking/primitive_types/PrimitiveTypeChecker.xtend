@@ -4,6 +4,7 @@ import de.fhdo.lemma.data.PrimitiveType
 import de.fhdo.lemma.typechecking.TypeCheckerI
 import de.fhdo.lemma.technology.TechnologySpecificPrimitiveType
 import de.fhdo.lemma.typechecking.TypecheckingUtils
+import de.fhdo.lemma.data.PrimitiveUnspecified
 
 /**
  * Simple TypeChecker implementation for PrimitiveTypes and TechnologySpecificPrimitiveTypes that
@@ -34,10 +35,13 @@ class PrimitiveTypeChecker implements TypeCheckerI<PrimitiveType> {
     private dispatch def checkCompatibility(TechnologySpecificPrimitiveType basicType,
         PrimitiveType typeToCheck) {
         // The technology-specific type is compatible with the primitive type to check if one of the
-        // former's basic built-in primitive types is compatible with the primitive type to check
-        return basicType.basicBuiltinPrimitiveTypes.exists[
-            isCompatibleWith(typeToCheck)
-        ]
+        // former's basic built-in primitive types is compatible with the primitive type to check.
+        // The unspecified primitive type is a special case. It is only compatible to a
+        // technology-specific type when the latter is based on the unspecified primitive type.
+        return if (!(typeToCheck instanceof PrimitiveUnspecified))
+                basicType.basicBuiltinPrimitiveTypes.exists[isCompatibleWith(typeToCheck)]
+            else
+                basicType.basicBuiltinPrimitiveTypes.exists[it instanceof PrimitiveUnspecified]
     }
 
     /**
@@ -47,10 +51,13 @@ class PrimitiveTypeChecker implements TypeCheckerI<PrimitiveType> {
     private dispatch def checkCompatibility(PrimitiveType basicType,
         TechnologySpecificPrimitiveType typeToCheck) {
         // The primitive type is compatible with the technology-specific type to check if it is
-        // compatible with one of the latter's basic built-in primitive types
-        return typeToCheck.basicBuiltinPrimitiveTypes.exists[
-            basicType.isCompatibleWith(it)
-        ]
+        // compatible with one of the latter's basic built-in primitive types. The unspecified
+        // primitive type is a special case. It is only compatible to a technology-specific type
+        // when the latter is based on the unspecified primitive type.
+        return if (!(basicType instanceof PrimitiveUnspecified))
+                typeToCheck.basicBuiltinPrimitiveTypes.exists[basicType.isCompatibleWith(it)]
+            else
+                typeToCheck.basicBuiltinPrimitiveTypes.exists[it instanceof PrimitiveUnspecified]
     }
 
     /**

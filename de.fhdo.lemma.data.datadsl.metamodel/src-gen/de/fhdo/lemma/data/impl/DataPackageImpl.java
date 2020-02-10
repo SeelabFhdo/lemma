@@ -31,6 +31,7 @@ import de.fhdo.lemma.data.PrimitiveShort;
 import de.fhdo.lemma.data.PrimitiveString;
 import de.fhdo.lemma.data.PrimitiveType;
 import de.fhdo.lemma.data.PrimitiveTypeConstants;
+import de.fhdo.lemma.data.PrimitiveUnspecified;
 import de.fhdo.lemma.data.PrimitiveValue;
 import de.fhdo.lemma.data.Type;
 import de.fhdo.lemma.data.Version;
@@ -167,6 +168,13 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * @generated
      */
     private EClass primitiveStringEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass primitiveUnspecifiedEClass = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -755,6 +763,16 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
     @Override
     public EClass getPrimitiveString() {
         return primitiveStringEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EClass getPrimitiveUnspecified() {
+        return primitiveUnspecifiedEClass;
     }
 
     /**
@@ -1944,6 +1962,8 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 
         primitiveStringEClass = createEClass(PRIMITIVE_STRING);
 
+        primitiveUnspecifiedEClass = createEClass(PRIMITIVE_UNSPECIFIED);
+
         complexTypeEClass = createEClass(COMPLEX_TYPE);
         createEAttribute(complexTypeEClass, COMPLEX_TYPE__NAME);
         createEReference(complexTypeEClass, COMPLEX_TYPE__DATA_MODEL);
@@ -2111,6 +2131,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
         primitiveLongEClass.getESuperTypes().add(this.getPrimitiveType());
         primitiveShortEClass.getESuperTypes().add(this.getPrimitiveType());
         primitiveStringEClass.getESuperTypes().add(this.getPrimitiveType());
+        primitiveUnspecifiedEClass.getESuperTypes().add(this.getPrimitiveType());
         complexTypeEClass.getESuperTypes().add(this.getType());
         dataStructureEClass.getESuperTypes().add(this.getComplexType());
         listTypeEClass.getESuperTypes().add(this.getComplexType());
@@ -2189,6 +2210,8 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
         initEClass(primitiveShortEClass, PrimitiveShort.class, "PrimitiveShort", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
         initEClass(primitiveStringEClass, PrimitiveString.class, "PrimitiveString", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+        initEClass(primitiveUnspecifiedEClass, PrimitiveUnspecified.class, "PrimitiveUnspecified", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
         initEClass(complexTypeEClass, ComplexType.class, "ComplexType", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getComplexType_Name(), theEcorePackage.getEString(), "name", null, 0, 1, ComplexType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2377,6 +2400,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
         addEEnumLiteral(primitiveTypeConstantsEEnum, PrimitiveTypeConstants.LONG);
         addEEnumLiteral(primitiveTypeConstantsEEnum, PrimitiveTypeConstants.SHORT);
         addEEnumLiteral(primitiveTypeConstantsEEnum, PrimitiveTypeConstants.STRING);
+        addEEnumLiteral(primitiveTypeConstantsEEnum, PrimitiveTypeConstants.UNSPECIFIED);
 
         initEEnum(dataStructureFeatureEEnum, DataStructureFeature.class, "DataStructureFeature");
         addEEnumLiteral(dataStructureFeatureEEnum, DataStructureFeature.AGGREGATE);

@@ -355,11 +355,16 @@ depending on whether the context is defined directly under the
 <span id="link-built-in-type-system"></span><h2>3.4&nbsp;&nbsp;&nbsp;Built-in Type System<a class="headerlink" href="#built-in-type-system" title="Permalink to this headline">¶</a></h2>
 <p>This subsection describes concepts that are part of the built-in type system of
 the Domain Data Model. Basically, it is aligned to Java and contains all
-built-in Java primitive types as well as native <code class="docutils literal notranslate"><span class="pre">String</span></code> and <code class="docutils literal notranslate"><span class="pre">Date</span></code> types.</p>
-<p>The type conversions observe Java’s <em>widening primitive conversions</em>
-<a class="footnote-reference" href="#java-type-conversions" id="id16">[8]</a> for primitively typed
-<a class="reference internal" href="#link-intermediatedatafield"><span class="std std-ref">fields</span></a>. Two
-<a class="reference internal" href="#link-intermediatedatastructure"><span class="std std-ref">data structures</span></a> are compatible, if
+built-in Java primitive types as well as native <code class="docutils literal notranslate"><span class="pre">Date</span></code>, <code class="docutils literal notranslate"><span class="pre">String</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">unspecified</span></code> types.</p>
+<p>Besides the <code class="docutils literal notranslate"><span class="pre">unspecified</span></code> type, the type conversions observe Java’s <em>widening</em>
+<em>primitive conversions</em> <a class="footnote-reference" href="#java-type-conversions" id="id16">[8]</a> for primitively typed
+<a class="reference internal" href="#link-intermediatedatafield"><span class="std std-ref">fields</span></a>. The <code class="docutils literal notranslate"><span class="pre">unspecified</span></code> type, however,
+is not compatible with any other type. More precisely, two distinct fields with
+the <code class="docutils literal notranslate"><span class="pre">unspecified</span></code> type are not considered to be compatible. That is, the
+<code class="docutils literal notranslate"><span class="pre">unspecified</span></code> type communicates the intended current absence of a type, e.g.,
+to specify that a typing decision has not been taken, yet.</p>
+<p>Two <a class="reference internal" href="#link-intermediatedatastructure"><span class="std std-ref">data structures</span></a> are compatible, if
 their fields are compatible, independent of their type ordering. Two distinct
 <a class="reference internal" href="#link-intermediateenumeration"><span class="std std-ref">enumerations</span></a> are compatible, if the
 value-receiving enumeration comprises all initialization values of the
@@ -423,11 +428,13 @@ in a Domain Data Model.</p>
 <span id="_CPPv2N22IntermediateTypeOrigin10TECHNOLOGYE"></span><em class="property">enumerator </em><code class="descname">TECHNOLOGY</code><a class="headerlink" href="#_CPPv3N22IntermediateTypeOrigin10TECHNOLOGYE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Type is technology-specific. Technology-specific types may be used to
 map built-in primitive types to technology-specific types, e.g.,
-<code class="docutils literal notranslate"><span class="pre">float</span></code> to <code class="docutils literal notranslate"><span class="pre">float32</span></code> in the Go programming language <a class="footnote-reference" href="#golang" id="id17">[9]</a>.
-Moreover, they may be used to declare technology-specific structure or
-list types. Code generators need to be able to interpret
-technology-specific types that were defined in a Technology Model (cf.
-<a class="reference internal" href="#tab-model-types"><span class="std std-numref">Table 1</span></a>).</p>
+<code class="docutils literal notranslate"><span class="pre">float</span></code> to <code class="docutils literal notranslate"><span class="pre">float32</span></code> in the Go programming language <a class="footnote-reference" href="#golang" id="id17">[9]</a>. They
+are particularly useful to even allow for mapping the built-in
+<code class="docutils literal notranslate"><span class="pre">unspecified</span></code> primitive type to a corresponding programming language
+type like <code class="docutils literal notranslate"><span class="pre">Object</span></code> in Java. Moreover, they may be used to declare
+technology-specific structure or list types. Code generators need to be
+able to interpret technology-specific types that were defined in a
+Technology Model (cf. <a class="reference internal" href="#tab-model-types"><span class="std std-numref">Table 1</span></a>).</p>
 </dd></dl>
 
 <div class="admonition hint">
@@ -503,8 +510,8 @@ type’s instance.</p>
 the following sizes:</p>
 <table border="1" class="docutils">
 <colgroup>
-<col width="33%" />
-<col width="67%" />
+<col width="22%" />
+<col width="78%" />
 </colgroup>
 <tbody valign="top">
 <tr class="row-odd"><td><strong>Type</strong></td>
@@ -539,6 +546,9 @@ the following sizes:</p>
 </tr>
 <tr class="row-odd"><td>string</td>
 <td>null (object type)</td>
+</tr>
+<tr class="row-even"><td>unspecified</td>
+<td>null (no precise type given by intent)</td>
 </tr>
 </tbody>
 </table>
@@ -1054,6 +1064,11 @@ to all <a class="reference internal" href="#link-intermediateprimitivetype"><spa
 <p class="first admonition-title">Note</p>
 <p class="last">Only data fields defined in <a class="reference internal" href="#link-intermediatedatastructure"><span class="std std-ref">data structures</span></a> can be initialized.</p>
 </div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">A data field with the built-in <code class="docutils literal notranslate"><span class="pre">unspecified</span></code> primitive type cannot
+exhibit an initialization value.</p>
+</div>
 </dd></dl>
 
 <dl class="attribute">
@@ -1380,6 +1395,10 @@ the property. This can be one of the values:</p>
 <li>“short”</li>
 <li>“string”</li>
 </ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">A property cannot be of the built-in primitive type <code class="docutils literal notranslate"><span class="pre">unspecified</span></code>.</p>
+</div>
 </dd></dl>
 
 <dl class="attribute">

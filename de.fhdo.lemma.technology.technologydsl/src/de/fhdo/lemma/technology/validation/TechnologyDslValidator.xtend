@@ -28,6 +28,7 @@ import de.fhdo.lemma.technology.PropertyFeature
 import de.fhdo.lemma.technology.OperationAspectPointcutSelector
 import de.fhdo.lemma.technology.OperationAspect
 import de.fhdo.lemma.utils.LemmaUtils
+import de.fhdo.lemma.data.PrimitiveUnspecified
 
 /**
  * This class contains custom validation rules.
@@ -528,6 +529,16 @@ class TechnologyDslValidator extends AbstractTechnologyDslValidator {
         ]]
 
         return canonicalCheckMap
+    }
+
+    /**
+     * The unspecified primitive type is forbidden for technology-specific properties
+     */
+    @Check
+    def checkPropertyType(TechnologySpecificProperty property) {
+        if (property.type instanceof PrimitiveUnspecified)
+            error("Invalid type", property,
+                TechnologyPackage::Literals.TECHNOLOGY_SPECIFIC_PROPERTY__TYPE)
     }
 
     /**
