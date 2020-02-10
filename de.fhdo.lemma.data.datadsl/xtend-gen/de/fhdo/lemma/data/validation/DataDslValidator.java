@@ -923,7 +923,7 @@ public class DataDslValidator extends AbstractDataDslValidator {
    * Check "identifier" feature constraints
    */
   @Check
-  public void checkIdenitfierFeatureConstraints(final DataOperation dataOperation) {
+  public void checkIdentifierFeatureConstraints(final DataOperation dataOperation) {
     final int featureIndex = dataOperation.getFeatures().indexOf(DataOperationFeature.IDENTIFIER);
     if ((featureIndex == (-1))) {
       return;

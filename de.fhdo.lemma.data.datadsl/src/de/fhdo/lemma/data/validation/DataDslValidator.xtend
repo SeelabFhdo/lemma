@@ -768,7 +768,7 @@ class DataDslValidator extends AbstractDataDslValidator {
      * Check "identifier" feature constraints
      */
     @Check
-    def checkIdenitfierFeatureConstraints(DataOperation dataOperation) {
+    def checkIdentifierFeatureConstraints(DataOperation dataOperation) {
         val featureIndex = dataOperation.features.indexOf(DataOperationFeature.IDENTIFIER)
         if (featureIndex === -1) {
             return
