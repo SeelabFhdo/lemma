@@ -8872,6 +8872,20 @@ rulePrimitiveType returns [EObject current=null]
 				newLeafNode(otherlv_19, grammarAccess.getPrimitiveTypeAccess().getStringKeyword_9_1());
 			}
 		)
+		    |
+		(
+			(
+				{
+					$current = forceCreateModelElement(
+						grammarAccess.getPrimitiveTypeAccess().getPrimitiveUnspecifiedAction_10_0(),
+						$current);
+				}
+			)
+			otherlv_21='unspecified'
+			{
+				newLeafNode(otherlv_21, grammarAccess.getPrimitiveTypeAccess().getUnspecifiedKeyword_10_1());
+			}
+		)
 	)
 ;
 

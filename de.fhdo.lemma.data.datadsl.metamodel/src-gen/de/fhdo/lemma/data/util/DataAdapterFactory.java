@@ -132,6 +132,10 @@ public class DataAdapterFactory extends AdapterFactoryImpl {
                 return createPrimitiveStringAdapter();
             }
             @Override
+            public Adapter casePrimitiveUnspecified(PrimitiveUnspecified object) {
+                return createPrimitiveUnspecifiedAdapter();
+            }
+            @Override
             public Adapter caseComplexType(ComplexType object) {
                 return createComplexTypeAdapter();
             }
@@ -412,6 +416,20 @@ public class DataAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createPrimitiveStringAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.fhdo.lemma.data.PrimitiveUnspecified <em>Primitive Unspecified</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.fhdo.lemma.data.PrimitiveUnspecified
+     * @generated
+     */
+    public Adapter createPrimitiveUnspecifiedAdapter() {
         return null;
     }
 

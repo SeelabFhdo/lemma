@@ -191,6 +191,7 @@ enum PrimitiveTypeConstants {
     LONG as "long" = 64
     SHORT as "short" = 16
     STRING as "string" = -1
+    UNSPECIFIED as "unspecified" = -1
 }
 
 /*
@@ -213,6 +214,7 @@ abstract class PrimitiveType extends Type {
             PrimitiveLong: PrimitiveTypeConstants.LONG.literal
             PrimitiveShort: PrimitiveTypeConstants.SHORT.literal
             PrimitiveString: PrimitiveTypeConstants.STRING.literal
+            PrimitiveUnspecified: PrimitiveTypeConstants.UNSPECIFIED.literal
             default: null
         }
     }
@@ -227,7 +229,7 @@ abstract class PrimitiveType extends Type {
             PrimitiveCharacter: PrimitiveTypeConstants.CHARACTER.value
             // Date is a built-in (but still "object-based") primitive type. Its size is therefore
             // not determinable and hence set to null. Null will be treated as representing an
-            // "inifinite" size, e.g., sizeCompare(PrimitiveDate) on a PrimitiveLong instance will
+            // "infinite" size, e.g., sizeCompare(PrimitiveDate) on a PrimitiveLong instance will
             // return -1 stating that a Long is smaller than a Date object, that probably consists
             // of a variety of primitively-typed data fields
             PrimitiveDate: null
@@ -236,6 +238,8 @@ abstract class PrimitiveType extends Type {
             PrimitiveInteger: PrimitiveTypeConstants.INTEGER.value
             PrimitiveLong: PrimitiveTypeConstants.LONG.value
             PrimitiveShort: PrimitiveTypeConstants.SHORT.value
+            // Unspecified primitives do no have a size
+            PrimitiveUnspecified: null
             // String is a built-in (but still "object-based") primitive type. See the description
             // of Date for details.
             PrimitiveString: null
@@ -279,6 +283,11 @@ abstract class PrimitiveType extends Type {
      * Check if type is compatible with another built-in primitive type
      */
     op boolean isCompatibleWith(PrimitiveType typeToCheck) {
+        // Unspecified types cannot be checked for type compatibility and are thus always
+        // incompatible to any other type instances
+        if (this instanceof PrimitiveUnspecified || typeToCheck instanceof PrimitiveUnspecified)
+            return false
+
         // Same types are compatible
         if (typeToCheck !== null && typeToCheck.typeName == this.typeName)
             return true
@@ -356,6 +365,7 @@ abstract class PrimitiveType extends Type {
         primitiveTypes.add(PrimitiveLong)
         primitiveTypes.add(PrimitiveShort)
         primitiveTypes.add(PrimitiveString)
+        primitiveTypes.add(PrimitiveUnspecified)
         return primitiveTypes.asEList
     }
 }
@@ -373,6 +383,7 @@ class PrimitiveInteger extends PrimitiveType {}
 class PrimitiveLong extends PrimitiveType {}
 class PrimitiveShort extends PrimitiveType {}
 class PrimitiveString extends PrimitiveType {}
+class PrimitiveUnspecified extends PrimitiveType {}
 
 /**
  * Super-concept of complex types, i.e., lists and structures
@@ -1248,6 +1259,7 @@ class PrimitiveValue {
             PrimitiveLong: asLong
             PrimitiveShort: asShort
             PrimitiveString: asString
+            PrimitiveUnspecified: null
         }
     }
 

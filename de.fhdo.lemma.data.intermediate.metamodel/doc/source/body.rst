@@ -297,12 +297,18 @@ Built-in Type System
 
 This subsection describes concepts that are part of the built-in type system of
 the Domain Data Model. Basically, it is aligned to Java and contains all 
-built-in Java primitive types as well as native ``String`` and ``Date`` types.
+built-in Java primitive types as well as native ``Date``, ``String``, and
+``unspecified`` types.
 
-The type conversions observe Java's *widening primitive conversions* 
-[#java-type-conversions]_ for primitively typed 
-:ref:`fields <link__IntermediateDataField>`. Two 
-:ref:`data structures <link__IntermediateDataStructure>` are compatible, if
+Besides the ``unspecified`` type, the type conversions observe Java's *widening*
+*primitive conversions* [#java-type-conversions]_ for primitively typed 
+:ref:`fields <link__IntermediateDataField>`. The ``unspecified`` type, however,
+is not compatible with any other type. More precisely, two distinct fields with
+the ``unspecified`` type are not considered to be compatible. That is, the 
+``unspecified`` type communicates the intended current absence of a type, e.g.,
+to specify that a typing decision has not been taken, yet.
+
+Two :ref:`data structures <link__IntermediateDataStructure>` are compatible, if
 their fields are compatible, independent of their type ordering. Two distinct
 :ref:`enumerations <link__IntermediateEnumeration>` are compatible, if the 
 value-receiving enumeration comprises all initialization values of the
@@ -356,11 +362,13 @@ value-providing enumeration.
 
         Type is technology-specific. Technology-specific types may be used to
         map built-in primitive types to technology-specific types, e.g., 
-        ``float`` to ``float32`` in the Go programming language [#golang]_.
-        Moreover, they may be used to declare technology-specific structure or
-        list types. Code generators need to be able to interpret 
-        technology-specific types that were defined in a Technology Model (cf.
-        :numref:`tab__model_types`).
+        ``float`` to ``float32`` in the Go programming language [#golang]_. They
+        are particularly useful to even allow for mapping the built-in 
+        ``unspecified`` primitive type to a corresponding programming language
+        type like ``Object`` in Java. Moreover, they may be used to declare
+        technology-specific structure or list types. Code generators need to be
+        able to interpret technology-specific types that were defined in a
+        Technology Model (cf. :numref:`tab__model_types`).
 
     .. HINT::
 
@@ -411,20 +419,21 @@ value-providing enumeration.
         Size of the primitive type in bits. The built-in primitive types have
         the following sizes:
 
-        =========   ==================
-        **Type**    **Size (in bits)**
-        ---------   ------------------
-        boolean     1
-        byte        8
-        char        16
-        date        null (object type)
-        double      64
-        float       32
-        int         32
-        long        64
-        short       16
-        string      null (object type)
-        =========   ==================
+        ===========     ======================================
+        **Type**        **Size (in bits)**
+        -----------     --------------------------------------
+        boolean         1
+        byte            8
+        char            16
+        date            null (object type)
+        double          64
+        float           32
+        int             32
+        long            64
+        short           16
+        string          null (object type)
+        unspecified     null (no precise type given by intent)
+        ===========     ======================================
 
     .. py:attribute:: IntermediateDataField initializedDataField
 
@@ -856,6 +865,11 @@ Custom, domain-specific Types
 
             Only data fields defined in :ref:`data structures
             <link__IntermediateDataStructure>` can be initialized.
+
+        .. NOTE::
+
+            A data field with the built-in ``unspecified`` primitive type cannot
+            exhibit an initialization value.
     
     .. py:attribute:: IntermediatePrimitiveType[*]
         initializationValueCompatibleTypes
@@ -1125,6 +1139,10 @@ and other modeling concepts such as :java:type:`microservices
         - \"long\"
         - \"short\"
         - \"string\"
+
+        .. NOTE::
+
+            A property cannot be of the built-in primitive type ``unspecified``.
 
     .. py:attribute:: String defaultValue
 

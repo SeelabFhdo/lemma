@@ -26,6 +26,7 @@ import de.fhdo.lemma.data.PrimitiveInteger;
 import de.fhdo.lemma.data.PrimitiveLong;
 import de.fhdo.lemma.data.PrimitiveShort;
 import de.fhdo.lemma.data.PrimitiveString;
+import de.fhdo.lemma.data.PrimitiveUnspecified;
 import de.fhdo.lemma.data.PrimitiveValue;
 import de.fhdo.lemma.data.Version;
 import de.fhdo.lemma.data.services.DataDslGrammarAccess;
@@ -116,6 +117,9 @@ public class DataDslSemanticSequencer extends AbstractDelegatingSemanticSequence
 				return; 
 			case DataPackage.PRIMITIVE_STRING:
 				sequence_PrimitiveType(context, (PrimitiveString) semanticObject); 
+				return; 
+			case DataPackage.PRIMITIVE_UNSPECIFIED:
+				sequence_PrimitiveType(context, (PrimitiveUnspecified) semanticObject); 
 				return; 
 			case DataPackage.PRIMITIVE_VALUE:
 				sequence_PrimitiveValue(context, (PrimitiveValue) semanticObject); 
@@ -238,7 +242,7 @@ public class DataDslSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *         name=ID 
 	 *         (features+=DataStructureFeature features+=DataStructureFeature*)? 
 	 *         super=[DataStructure|QualifiedName]? 
-	 *         ((dataFields+=DataField | operations+=DataOperation) operations+=DataOperation? (dataFields+=DataField? operations+=DataOperation?)*)?
+	 *         ((dataFields+=DataField | operations+=DataOperation) dataFields+=DataField? (operations+=DataOperation? dataFields+=DataField?)*)?
 	 *     )
 	 */
 	protected void sequence_DataStructure(ISerializationContext context, DataStructure semanticObject) {
@@ -421,6 +425,18 @@ public class DataDslSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *     {PrimitiveString}
 	 */
 	protected void sequence_PrimitiveType(ISerializationContext context, PrimitiveString semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     PrimitiveType returns PrimitiveUnspecified
+	 *
+	 * Constraint:
+	 *     {PrimitiveUnspecified}
+	 */
+	protected void sequence_PrimitiveType(ISerializationContext context, PrimitiveUnspecified semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

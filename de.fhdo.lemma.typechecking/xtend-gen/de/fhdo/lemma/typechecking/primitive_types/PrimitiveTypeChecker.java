@@ -1,6 +1,7 @@
 package de.fhdo.lemma.typechecking.primitive_types;
 
 import de.fhdo.lemma.data.PrimitiveType;
+import de.fhdo.lemma.data.PrimitiveUnspecified;
 import de.fhdo.lemma.technology.TechnologySpecificPrimitiveType;
 import de.fhdo.lemma.typechecking.TypeCheckerI;
 import de.fhdo.lemma.typechecking.TypecheckingUtils;
@@ -37,10 +38,19 @@ public class PrimitiveTypeChecker implements TypeCheckerI<PrimitiveType> {
    * TechnologySpecificPrimitiveType instance
    */
   private boolean _checkCompatibility(final TechnologySpecificPrimitiveType basicType, final PrimitiveType typeToCheck) {
-    final Function1<PrimitiveType, Boolean> _function = (PrimitiveType it) -> {
-      return Boolean.valueOf(it.isCompatibleWith(typeToCheck));
-    };
-    return IterableExtensions.<PrimitiveType>exists(basicType.getBasicBuiltinPrimitiveTypes(), _function);
+    boolean _xifexpression = false;
+    if ((!(typeToCheck instanceof PrimitiveUnspecified))) {
+      final Function1<PrimitiveType, Boolean> _function = (PrimitiveType it) -> {
+        return Boolean.valueOf(it.isCompatibleWith(typeToCheck));
+      };
+      _xifexpression = IterableExtensions.<PrimitiveType>exists(basicType.getBasicBuiltinPrimitiveTypes(), _function);
+    } else {
+      final Function1<PrimitiveType, Boolean> _function_1 = (PrimitiveType it) -> {
+        return Boolean.valueOf((it instanceof PrimitiveUnspecified));
+      };
+      _xifexpression = IterableExtensions.<PrimitiveType>exists(basicType.getBasicBuiltinPrimitiveTypes(), _function_1);
+    }
+    return _xifexpression;
   }
   
   /**
@@ -48,10 +58,19 @@ public class PrimitiveTypeChecker implements TypeCheckerI<PrimitiveType> {
    * PrimitiveType instance
    */
   private boolean _checkCompatibility(final PrimitiveType basicType, final TechnologySpecificPrimitiveType typeToCheck) {
-    final Function1<PrimitiveType, Boolean> _function = (PrimitiveType it) -> {
-      return Boolean.valueOf(basicType.isCompatibleWith(it));
-    };
-    return IterableExtensions.<PrimitiveType>exists(typeToCheck.getBasicBuiltinPrimitiveTypes(), _function);
+    boolean _xifexpression = false;
+    if ((!(basicType instanceof PrimitiveUnspecified))) {
+      final Function1<PrimitiveType, Boolean> _function = (PrimitiveType it) -> {
+        return Boolean.valueOf(basicType.isCompatibleWith(it));
+      };
+      _xifexpression = IterableExtensions.<PrimitiveType>exists(typeToCheck.getBasicBuiltinPrimitiveTypes(), _function);
+    } else {
+      final Function1<PrimitiveType, Boolean> _function_1 = (PrimitiveType it) -> {
+        return Boolean.valueOf((it instanceof PrimitiveUnspecified));
+      };
+      _xifexpression = IterableExtensions.<PrimitiveType>exists(typeToCheck.getBasicBuiltinPrimitiveTypes(), _function_1);
+    }
+    return _xifexpression;
   }
   
   /**

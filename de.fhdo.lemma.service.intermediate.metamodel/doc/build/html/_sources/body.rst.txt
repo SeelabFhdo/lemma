@@ -708,6 +708,11 @@ Microservices
 
         :ref:`Type <data_model:link__IntermediateType>` of the parameter.
 
+        .. NOTE::
+
+            A parameter cannot be typed with the built-in primitive type
+            ``unspecified``.
+
     .. _link__IntermediateParameter_initializedByOperation:
 
     .. py:attribute:: OperationReference initializedByOperation

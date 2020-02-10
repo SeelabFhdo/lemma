@@ -3191,7 +3191,7 @@ public class ServiceDslGrammarAccess extends AbstractGrammarElementFinder {
 	//PrimitiveType:
 	//	{PrimitiveBoolean} 'boolean' | {PrimitiveByte} 'byte' | {PrimitiveCharacter} 'char' | {PrimitiveDate} 'date' |
 	//	{PrimitiveDouble} 'double' | {PrimitiveFloat} 'float' | {PrimitiveInteger} 'int' | {PrimitiveLong} 'long' |
-	//	{PrimitiveShort} 'short' | {PrimitiveString} 'string';
+	//	{PrimitiveShort} 'short' | {PrimitiveString} 'string' | {PrimitiveUnspecified} 'unspecified';
 	public DataDslGrammarAccess.PrimitiveTypeElements getPrimitiveTypeAccess() {
 		return gaDataDsl.getPrimitiveTypeAccess();
 	}

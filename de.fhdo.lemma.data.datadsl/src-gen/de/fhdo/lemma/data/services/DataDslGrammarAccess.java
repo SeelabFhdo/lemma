@@ -1017,16 +1017,19 @@ public class DataDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup_9 = (Group)cAlternatives.eContents().get(9);
 		private final Action cPrimitiveStringAction_9_0 = (Action)cGroup_9.eContents().get(0);
 		private final Keyword cStringKeyword_9_1 = (Keyword)cGroup_9.eContents().get(1);
+		private final Group cGroup_10 = (Group)cAlternatives.eContents().get(10);
+		private final Action cPrimitiveUnspecifiedAction_10_0 = (Action)cGroup_10.eContents().get(0);
+		private final Keyword cUnspecifiedKeyword_10_1 = (Keyword)cGroup_10.eContents().get(1);
 		
 		//PrimitiveType:
 		//	{PrimitiveBoolean} 'boolean' | {PrimitiveByte} 'byte' | {PrimitiveCharacter} 'char' | {PrimitiveDate} 'date' |
 		//	{PrimitiveDouble} 'double' | {PrimitiveFloat} 'float' | {PrimitiveInteger} 'int' | {PrimitiveLong} 'long' |
-		//	{PrimitiveShort} 'short' | {PrimitiveString} 'string';
+		//	{PrimitiveShort} 'short' | {PrimitiveString} 'string' | {PrimitiveUnspecified} 'unspecified';
 		@Override public ParserRule getRule() { return rule; }
 		
 		//{PrimitiveBoolean} 'boolean' | {PrimitiveByte} 'byte' | {PrimitiveCharacter} 'char' | {PrimitiveDate} 'date' |
 		//{PrimitiveDouble} 'double' | {PrimitiveFloat} 'float' | {PrimitiveInteger} 'int' | {PrimitiveLong} 'long' |
-		//{PrimitiveShort} 'short' | {PrimitiveString} 'string'
+		//{PrimitiveShort} 'short' | {PrimitiveString} 'string' | {PrimitiveUnspecified} 'unspecified'
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
 		//{PrimitiveBoolean} 'boolean'
@@ -1118,6 +1121,15 @@ public class DataDslGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//'string'
 		public Keyword getStringKeyword_9_1() { return cStringKeyword_9_1; }
+		
+		//{PrimitiveUnspecified} 'unspecified'
+		public Group getGroup_10() { return cGroup_10; }
+		
+		//{PrimitiveUnspecified}
+		public Action getPrimitiveUnspecifiedAction_10_0() { return cPrimitiveUnspecifiedAction_10_0; }
+		
+		//'unspecified'
+		public Keyword getUnspecifiedKeyword_10_1() { return cUnspecifiedKeyword_10_1; }
 	}
 	public class QualifiedNameElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.fhdo.lemma.data.DataDsl.QualifiedName");
@@ -1634,7 +1646,7 @@ public class DataDslGrammarAccess extends AbstractGrammarElementFinder {
 	//PrimitiveType:
 	//	{PrimitiveBoolean} 'boolean' | {PrimitiveByte} 'byte' | {PrimitiveCharacter} 'char' | {PrimitiveDate} 'date' |
 	//	{PrimitiveDouble} 'double' | {PrimitiveFloat} 'float' | {PrimitiveInteger} 'int' | {PrimitiveLong} 'long' |
-	//	{PrimitiveShort} 'short' | {PrimitiveString} 'string';
+	//	{PrimitiveShort} 'short' | {PrimitiveString} 'string' | {PrimitiveUnspecified} 'unspecified';
 	public PrimitiveTypeElements getPrimitiveTypeAccess() {
 		return pPrimitiveType;
 	}

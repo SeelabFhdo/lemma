@@ -119,7 +119,17 @@ public enum PrimitiveTypeConstants implements Enumerator {
      * @generated
      * @ordered
      */
-    STRING(-1, "STRING", "string");
+    STRING(-1, "STRING", "string"),
+
+    /**
+     * The '<em><b>UNSPECIFIED</b></em>' literal object.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #UNSPECIFIED_VALUE
+     * @generated
+     * @ordered
+     */
+    UNSPECIFIED(-1, "UNSPECIFIED", "unspecified");
 
     /**
      * The '<em><b>BOOLEAN</b></em>' literal value.
@@ -272,6 +282,21 @@ public enum PrimitiveTypeConstants implements Enumerator {
     public static final int STRING_VALUE = -1;
 
     /**
+     * The '<em><b>UNSPECIFIED</b></em>' literal value.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of '<em><b>UNSPECIFIED</b></em>' literal object isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @see #UNSPECIFIED
+     * @model literal="unspecified"
+     * @generated
+     * @ordered
+     */
+    public static final int UNSPECIFIED_VALUE = -1;
+
+    /**
      * An array of all the '<em><b>Primitive Type Constants</b></em>' enumerators.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -289,6 +314,7 @@ public enum PrimitiveTypeConstants implements Enumerator {
             LONG,
             SHORT,
             STRING,
+            UNSPECIFIED,
         };
 
     /**

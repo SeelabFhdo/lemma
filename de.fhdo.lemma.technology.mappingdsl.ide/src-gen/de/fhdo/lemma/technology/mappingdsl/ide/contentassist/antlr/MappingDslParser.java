@@ -269,6 +269,7 @@ public class MappingDslParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getPrimitiveTypeAccess().getGroup_7(), "rule__PrimitiveType__Group_7__0");
 			builder.put(grammarAccess.getPrimitiveTypeAccess().getGroup_8(), "rule__PrimitiveType__Group_8__0");
 			builder.put(grammarAccess.getPrimitiveTypeAccess().getGroup_9(), "rule__PrimitiveType__Group_9__0");
+			builder.put(grammarAccess.getPrimitiveTypeAccess().getGroup_10(), "rule__PrimitiveType__Group_10__0");
 			builder.put(grammarAccess.getQualifiedNameAccess().getGroup(), "rule__QualifiedName__Group__0");
 			builder.put(grammarAccess.getQualifiedNameAccess().getGroup_1(), "rule__QualifiedName__Group_1__0");
 			builder.put(grammarAccess.getTechnologyMappingAccess().getImportsAssignment_0(), "rule__TechnologyMapping__ImportsAssignment_0");

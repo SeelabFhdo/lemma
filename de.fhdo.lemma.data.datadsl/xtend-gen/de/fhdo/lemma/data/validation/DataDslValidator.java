@@ -53,7 +53,7 @@ import org.eclipse.xtext.xbase.lib.ListExtensions;
 public class DataDslValidator extends AbstractDataDslValidator {
   /**
    * Check import aliases for uniqueness. Normally, this should be done by
-   * DataDslNamesAreUniqueValidationHelper, but it does not react to
+   * DataDslNamesAreUniqueValidationHelper, but it does not react to.
    */
   @Check
   public void checkImportAlias(final DataModel dataModel) {

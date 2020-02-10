@@ -1,7 +1,7 @@
 '('=46
 ')'=47
 ','=41
-'.'=60
+'.'=61
 '::'=49
 '<'=39
 '='=44
@@ -26,9 +26,9 @@
 'float'=55
 'from'=32
 'function'=48
-'hide'=61
+'hide'=62
 'identifier'=24
-'immutable'=62
+'immutable'=63
 'import'=30
 'infrastructureService'=19
 'int'=56
@@ -36,7 +36,7 @@
 'long'=57
 'neverEmpty'=25
 'part'=26
-'procedure'=63
+'procedure'=64
 'repository'=20
 'service'=21
 'short'=58
@@ -44,6 +44,7 @@
 'specification'=22
 'string'=59
 'structure'=38
+'unspecified'=60
 'validator'=29
 'valueObject'=23
 'version'=34
@@ -109,3 +110,4 @@ T__60=60
 T__61=61
 T__62=62
 T__63=63
+T__64=64

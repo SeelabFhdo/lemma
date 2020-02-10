@@ -17,6 +17,7 @@ import de.fhdo.lemma.data.PrimitiveShort;
 import de.fhdo.lemma.data.PrimitiveString;
 import de.fhdo.lemma.data.PrimitiveType;
 import de.fhdo.lemma.data.PrimitiveTypeConstants;
+import de.fhdo.lemma.data.PrimitiveUnspecified;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -151,6 +152,12 @@ public abstract class PrimitiveTypeImpl extends TypeImpl implements PrimitiveTyp
             }
         }
         if (!_matched) {
+            if (this instanceof PrimitiveUnspecified) {
+                _matched=true;
+                _switchResult = PrimitiveTypeConstants.UNSPECIFIED.getLiteral();
+            }
+        }
+        if (!_matched) {
             _switchResult = null;
         }
         return _switchResult;
@@ -215,6 +222,12 @@ public abstract class PrimitiveTypeImpl extends TypeImpl implements PrimitiveTyp
             if (this instanceof PrimitiveShort) {
                 _matched=true;
                 _switchResult = Integer.valueOf(PrimitiveTypeConstants.SHORT.getValue());
+            }
+        }
+        if (!_matched) {
+            if (this instanceof PrimitiveUnspecified) {
+                _matched=true;
+                _switchResult = null;
             }
         }
         if (!_matched) {
@@ -284,6 +297,9 @@ public abstract class PrimitiveTypeImpl extends TypeImpl implements PrimitiveTyp
      */
     @Override
     public boolean isCompatibleWith(final PrimitiveType typeToCheck) {
+        if (((this instanceof PrimitiveUnspecified) || (typeToCheck instanceof PrimitiveUnspecified))) {
+            return false;
+        }
         if (((typeToCheck != null) && Objects.equal(typeToCheck.getTypeName(), this.getTypeName()))) {
             return true;
         }
@@ -440,6 +456,7 @@ public abstract class PrimitiveTypeImpl extends TypeImpl implements PrimitiveTyp
         primitiveTypes.add(PrimitiveLong.class);
         primitiveTypes.add(PrimitiveShort.class);
         primitiveTypes.add(PrimitiveString.class);
+        primitiveTypes.add(PrimitiveUnspecified.class);
         return ECollections.<Class<?>>asEList(primitiveTypes);
     }
 
