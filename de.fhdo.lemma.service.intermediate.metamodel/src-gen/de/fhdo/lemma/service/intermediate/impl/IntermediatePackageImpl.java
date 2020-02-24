@@ -450,7 +450,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * @generated
      */
     @Override
-    public EAttribute getIntermediateInterface_QualifiedName() {
+    public EAttribute getIntermediateInterface_Version() {
         return (EAttribute)intermediateInterfaceEClass.getEStructuralFeatures().get(1);
     }
 
@@ -460,7 +460,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * @generated
      */
     @Override
-    public EAttribute getIntermediateInterface_Visibility() {
+    public EAttribute getIntermediateInterface_QualifiedName() {
         return (EAttribute)intermediateInterfaceEClass.getEStructuralFeatures().get(2);
     }
 
@@ -470,7 +470,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * @generated
      */
     @Override
-    public EAttribute getIntermediateInterface_NotImplemented() {
+    public EAttribute getIntermediateInterface_Visibility() {
         return (EAttribute)intermediateInterfaceEClass.getEStructuralFeatures().get(3);
     }
 
@@ -480,7 +480,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * @generated
      */
     @Override
-    public EAttribute getIntermediateInterface_HasImplementedOperations() {
+    public EAttribute getIntermediateInterface_NotImplemented() {
         return (EAttribute)intermediateInterfaceEClass.getEStructuralFeatures().get(4);
     }
 
@@ -490,8 +490,8 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * @generated
      */
     @Override
-    public EReference getIntermediateInterface_Endpoints() {
-        return (EReference)intermediateInterfaceEClass.getEStructuralFeatures().get(5);
+    public EAttribute getIntermediateInterface_HasImplementedOperations() {
+        return (EAttribute)intermediateInterfaceEClass.getEStructuralFeatures().get(5);
     }
 
     /**
@@ -500,7 +500,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * @generated
      */
     @Override
-    public EReference getIntermediateInterface_Protocols() {
+    public EReference getIntermediateInterface_Endpoints() {
         return (EReference)intermediateInterfaceEClass.getEStructuralFeatures().get(6);
     }
 
@@ -510,7 +510,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * @generated
      */
     @Override
-    public EReference getIntermediateInterface_Operations() {
+    public EReference getIntermediateInterface_Protocols() {
         return (EReference)intermediateInterfaceEClass.getEStructuralFeatures().get(7);
     }
 
@@ -520,7 +520,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * @generated
      */
     @Override
-    public EReference getIntermediateInterface_ReferredOperations() {
+    public EReference getIntermediateInterface_Operations() {
         return (EReference)intermediateInterfaceEClass.getEStructuralFeatures().get(8);
     }
 
@@ -530,7 +530,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * @generated
      */
     @Override
-    public EReference getIntermediateInterface_Aspects() {
+    public EReference getIntermediateInterface_ReferredOperations() {
         return (EReference)intermediateInterfaceEClass.getEStructuralFeatures().get(9);
     }
 
@@ -540,8 +540,18 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * @generated
      */
     @Override
-    public EReference getIntermediateInterface_Microservice() {
+    public EReference getIntermediateInterface_Aspects() {
         return (EReference)intermediateInterfaceEClass.getEStructuralFeatures().get(10);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getIntermediateInterface_Microservice() {
+        return (EReference)intermediateInterfaceEClass.getEStructuralFeatures().get(11);
     }
 
     /**
@@ -1100,7 +1110,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * @generated
      */
     @Override
-    public EAttribute getInterfaceReference_QualifiedName() {
+    public EAttribute getInterfaceReference_Version() {
         return (EAttribute)interfaceReferenceEClass.getEStructuralFeatures().get(1);
     }
 
@@ -1110,7 +1120,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * @generated
      */
     @Override
-    public EAttribute getInterfaceReference_Imported() {
+    public EAttribute getInterfaceReference_QualifiedName() {
         return (EAttribute)interfaceReferenceEClass.getEStructuralFeatures().get(2);
     }
 
@@ -1120,8 +1130,8 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * @generated
      */
     @Override
-    public EReference getInterfaceReference_Import() {
-        return (EReference)interfaceReferenceEClass.getEStructuralFeatures().get(3);
+    public EAttribute getInterfaceReference_Imported() {
+        return (EAttribute)interfaceReferenceEClass.getEStructuralFeatures().get(3);
     }
 
     /**
@@ -1130,7 +1140,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * @generated
      */
     @Override
-    public EReference getInterfaceReference_LocalInterface() {
+    public EReference getInterfaceReference_Import() {
         return (EReference)interfaceReferenceEClass.getEStructuralFeatures().get(4);
     }
 
@@ -1140,8 +1150,18 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * @generated
      */
     @Override
-    public EReference getInterfaceReference_RequiringMicroservice() {
+    public EReference getInterfaceReference_LocalInterface() {
         return (EReference)interfaceReferenceEClass.getEStructuralFeatures().get(5);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getInterfaceReference_RequiringMicroservice() {
+        return (EReference)interfaceReferenceEClass.getEStructuralFeatures().get(6);
     }
 
     /**
@@ -1458,6 +1478,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
 
         intermediateInterfaceEClass = createEClass(INTERMEDIATE_INTERFACE);
         createEAttribute(intermediateInterfaceEClass, INTERMEDIATE_INTERFACE__NAME);
+        createEAttribute(intermediateInterfaceEClass, INTERMEDIATE_INTERFACE__VERSION);
         createEAttribute(intermediateInterfaceEClass, INTERMEDIATE_INTERFACE__QUALIFIED_NAME);
         createEAttribute(intermediateInterfaceEClass, INTERMEDIATE_INTERFACE__VISIBILITY);
         createEAttribute(intermediateInterfaceEClass, INTERMEDIATE_INTERFACE__NOT_IMPLEMENTED);
@@ -1531,6 +1552,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
 
         interfaceReferenceEClass = createEClass(INTERFACE_REFERENCE);
         createEAttribute(interfaceReferenceEClass, INTERFACE_REFERENCE__NAME);
+        createEAttribute(interfaceReferenceEClass, INTERFACE_REFERENCE__VERSION);
         createEAttribute(interfaceReferenceEClass, INTERFACE_REFERENCE__QUALIFIED_NAME);
         createEAttribute(interfaceReferenceEClass, INTERFACE_REFERENCE__IMPORTED);
         createEReference(interfaceReferenceEClass, INTERFACE_REFERENCE__IMPORT);
@@ -1629,6 +1651,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
 
         initEClass(intermediateInterfaceEClass, IntermediateInterface.class, "IntermediateInterface", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getIntermediateInterface_Name(), theEcorePackage.getEString(), "name", null, 0, 1, IntermediateInterface.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getIntermediateInterface_Version(), theEcorePackage.getEString(), "version", null, 0, 1, IntermediateInterface.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getIntermediateInterface_QualifiedName(), theEcorePackage.getEString(), "qualifiedName", null, 0, 1, IntermediateInterface.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getIntermediateInterface_Visibility(), theServicePackage.getVisibility(), "visibility", null, 0, 1, IntermediateInterface.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getIntermediateInterface_NotImplemented(), theEcorePackage.getEBoolean(), "notImplemented", null, 0, 1, IntermediateInterface.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1702,6 +1725,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
 
         initEClass(interfaceReferenceEClass, InterfaceReference.class, "InterfaceReference", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getInterfaceReference_Name(), theEcorePackage.getEString(), "name", null, 0, 1, InterfaceReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getInterfaceReference_Version(), theEcorePackage.getEString(), "version", null, 0, 1, InterfaceReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getInterfaceReference_QualifiedName(), theEcorePackage.getEString(), "qualifiedName", null, 0, 1, InterfaceReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getInterfaceReference_Imported(), theEcorePackage.getEBoolean(), "imported", "false", 0, 1, InterfaceReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getInterfaceReference_Import(), theIntermediatePackage_1.getIntermediateImport(), null, "import", null, 0, 1, InterfaceReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

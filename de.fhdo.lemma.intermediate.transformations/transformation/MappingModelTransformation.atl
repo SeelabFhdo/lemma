@@ -485,6 +485,7 @@ rule Interface(sourceInterface : Service!Interface, interfaceMapping : Mapping!I
     to
         t : Service!Interface(
             name <- sourceInterface.name,
+            version <- sourceInterface.version,
             notImplemented <- sourceInterface.notImplemented,
             visibility <- sourceInterface.visibility,
             microservice <- container

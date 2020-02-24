@@ -1608,7 +1608,8 @@ public class OperationDslGrammarAccess extends AbstractGrammarElementFinder {
 	//Interface:
 	//	(protocols+=ProtocolSpecification protocols+=ProtocolSpecification?)? ('@' 'endpoints' '(' endpoints+=Endpoint+ ')')?
 	//	aspects+=ImportedServiceAspect*
-	//	notImplemented?='noimpl'? visibility=Visibility? 'interface' name=ID '{'
+	//	notImplemented?='noimpl'? visibility=Visibility? 'interface' name=ID ('version' version=ID)?
+	//	'{'
 	//	referredOperations+=ReferredOperation*
 	//	operations+=Operation*
 	//	'}';

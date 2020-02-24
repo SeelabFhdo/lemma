@@ -315,6 +315,7 @@ rule IntermediateInterface {
     to
         t : Intermediate!IntermediateInterface(
             name <- i.name,
+            version <- i.version,
             qualifiedName <- i.buildQualifiedName('.'),
             visibility <- i.effectiveVisibility,
             notImplemented <- i.notImplemented,
@@ -829,6 +830,7 @@ rule InterfaceReference {
     to
         t : Intermediate!InterfaceReference(
             name <- i.interface.name,
+            version <- i.interface.version,
             qualifiedName <- i.interface.buildQualifiedName('.'),
             -- PossiblyImportedInterface instances are currently only used for specifying required
             -- Interfaces on Microservices

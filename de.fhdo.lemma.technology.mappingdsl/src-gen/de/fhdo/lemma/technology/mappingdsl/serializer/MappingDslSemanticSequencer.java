@@ -495,7 +495,7 @@ public class MappingDslSemanticSequencer extends ServiceDslSemanticSequencer {
 	 *
 	 * Constraint:
 	 *     (
-	 *         interface=[Interface|ID] 
+	 *         interface=[Interface|QualifiedName] 
 	 *         protocols+=TechnologySpecificProtocolSpecification* 
 	 *         endpoints+=TechnologySpecificEndpoint* 
 	 *         aspects+=TechnologySpecificImportedServiceAspect*

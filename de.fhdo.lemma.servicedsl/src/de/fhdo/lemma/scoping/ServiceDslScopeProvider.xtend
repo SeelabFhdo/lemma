@@ -339,7 +339,10 @@ class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
             // Prevent NullPointerException when DSL code contains syntax errors
             .filter[it.name !== null]
             .map[
-                val operationName = QualifiedName.create(it.interface.name, it.name)
+                val operationName = if (it.interface.version !== null)
+                        QualifiedName.create(it.interface.version, it.interface.name, it.name)
+                    else
+                        QualifiedName.create(it.interface.name, it.name)
                 EObjectDescription.create(operationName, it)
             ]
 

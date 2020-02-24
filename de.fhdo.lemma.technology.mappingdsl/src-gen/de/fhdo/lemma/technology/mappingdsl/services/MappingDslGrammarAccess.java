@@ -362,7 +362,7 @@ public class MappingDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cInterfaceKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Assignment cInterfaceAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final CrossReference cInterfaceInterfaceCrossReference_1_0 = (CrossReference)cInterfaceAssignment_1.eContents().get(0);
-		private final RuleCall cInterfaceInterfaceIDTerminalRuleCall_1_0_1 = (RuleCall)cInterfaceInterfaceCrossReference_1_0.eContents().get(1);
+		private final RuleCall cInterfaceInterfaceQualifiedNameParserRuleCall_1_0_1 = (RuleCall)cInterfaceInterfaceCrossReference_1_0.eContents().get(1);
 		private final Keyword cLeftCurlyBracketKeyword_2 = (Keyword)cGroup.eContents().get(2);
 		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
 		private final Keyword cProtocolsKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
@@ -385,7 +385,7 @@ public class MappingDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightCurlyBracketKeyword_6 = (Keyword)cGroup.eContents().get(6);
 		
 		//InterfaceMapping:
-		//	'interface' interface=[service::Interface] '{' ('protocols' '{'
+		//	'interface' interface=[service::Interface|QualifiedName] '{' ('protocols' '{'
 		//	protocols+=TechnologySpecificProtocolSpecification+
 		//	'}')? ('endpoints' '{'
 		//	endpoints+=TechnologySpecificEndpoint+
@@ -395,22 +395,22 @@ public class MappingDslGrammarAccess extends AbstractGrammarElementFinder {
 		//	'}';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'interface' interface=[service::Interface] '{' ('protocols' '{' protocols+=TechnologySpecificProtocolSpecification+
-		//'}')? ('endpoints' '{' endpoints+=TechnologySpecificEndpoint+ '}')? ('aspects' '{'
-		//aspects+=TechnologySpecificImportedServiceAspect+ '}')? '}'
+		//'interface' interface=[service::Interface|QualifiedName] '{' ('protocols' '{'
+		//protocols+=TechnologySpecificProtocolSpecification+ '}')? ('endpoints' '{' endpoints+=TechnologySpecificEndpoint+ '}')?
+		//('aspects' '{' aspects+=TechnologySpecificImportedServiceAspect+ '}')? '}'
 		public Group getGroup() { return cGroup; }
 		
 		//'interface'
 		public Keyword getInterfaceKeyword_0() { return cInterfaceKeyword_0; }
 		
-		//interface=[service::Interface]
+		//interface=[service::Interface|QualifiedName]
 		public Assignment getInterfaceAssignment_1() { return cInterfaceAssignment_1; }
 		
-		//[service::Interface]
+		//[service::Interface|QualifiedName]
 		public CrossReference getInterfaceInterfaceCrossReference_1_0() { return cInterfaceInterfaceCrossReference_1_0; }
 		
-		//ID
-		public RuleCall getInterfaceInterfaceIDTerminalRuleCall_1_0_1() { return cInterfaceInterfaceIDTerminalRuleCall_1_0_1; }
+		//QualifiedName
+		public RuleCall getInterfaceInterfaceQualifiedNameParserRuleCall_1_0_1() { return cInterfaceInterfaceQualifiedNameParserRuleCall_1_0_1; }
 		
 		//'{'
 		public Keyword getLeftCurlyBracketKeyword_2() { return cLeftCurlyBracketKeyword_2; }
@@ -2041,7 +2041,7 @@ public class MappingDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//InterfaceMapping:
-	//	'interface' interface=[service::Interface] '{' ('protocols' '{'
+	//	'interface' interface=[service::Interface|QualifiedName] '{' ('protocols' '{'
 	//	protocols+=TechnologySpecificProtocolSpecification+
 	//	'}')? ('endpoints' '{'
 	//	endpoints+=TechnologySpecificEndpoint+
@@ -2373,7 +2373,8 @@ public class MappingDslGrammarAccess extends AbstractGrammarElementFinder {
 	//Interface:
 	//	(protocols+=ProtocolSpecification protocols+=ProtocolSpecification?)? ('@' 'endpoints' '(' endpoints+=Endpoint+ ')')?
 	//	aspects+=ImportedServiceAspect*
-	//	notImplemented?='noimpl'? visibility=Visibility? 'interface' name=ID '{'
+	//	notImplemented?='noimpl'? visibility=Visibility? 'interface' name=ID ('version' version=ID)?
+	//	'{'
 	//	referredOperations+=ReferredOperation*
 	//	operations+=Operation*
 	//	'}';

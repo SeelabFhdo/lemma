@@ -1115,13 +1115,22 @@ public interface ServicePackage extends EPackage {
     int INTERFACE__NAME = 0;
 
     /**
+     * The feature id for the '<em><b>Version</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERFACE__VERSION = 1;
+
+    /**
      * The feature id for the '<em><b>Not Implemented</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int INTERFACE__NOT_IMPLEMENTED = 1;
+    int INTERFACE__NOT_IMPLEMENTED = 2;
 
     /**
      * The feature id for the '<em><b>Visibility</b></em>' attribute.
@@ -1130,7 +1139,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERFACE__VISIBILITY = 2;
+    int INTERFACE__VISIBILITY = 3;
 
     /**
      * The feature id for the '<em><b>Endpoints</b></em>' containment reference list.
@@ -1139,7 +1148,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERFACE__ENDPOINTS = 3;
+    int INTERFACE__ENDPOINTS = 4;
 
     /**
      * The feature id for the '<em><b>Protocols</b></em>' containment reference list.
@@ -1148,7 +1157,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERFACE__PROTOCOLS = 4;
+    int INTERFACE__PROTOCOLS = 5;
 
     /**
      * The feature id for the '<em><b>Operations</b></em>' containment reference list.
@@ -1157,7 +1166,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERFACE__OPERATIONS = 5;
+    int INTERFACE__OPERATIONS = 6;
 
     /**
      * The feature id for the '<em><b>Referred Operations</b></em>' containment reference list.
@@ -1166,7 +1175,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERFACE__REFERRED_OPERATIONS = 6;
+    int INTERFACE__REFERRED_OPERATIONS = 7;
 
     /**
      * The feature id for the '<em><b>Aspects</b></em>' containment reference list.
@@ -1175,7 +1184,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERFACE__ASPECTS = 7;
+    int INTERFACE__ASPECTS = 8;
 
     /**
      * The feature id for the '<em><b>Microservice</b></em>' container reference.
@@ -1184,7 +1193,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERFACE__MICROSERVICE = 8;
+    int INTERFACE__MICROSERVICE = 9;
 
     /**
      * The feature id for the '<em><b>Effective Visibility</b></em>' attribute.
@@ -1193,7 +1202,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERFACE__EFFECTIVE_VISIBILITY = 9;
+    int INTERFACE__EFFECTIVE_VISIBILITY = 10;
 
     /**
      * The feature id for the '<em><b>Effectively Implemented</b></em>' attribute.
@@ -1202,7 +1211,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERFACE__EFFECTIVELY_IMPLEMENTED = 10;
+    int INTERFACE__EFFECTIVELY_IMPLEMENTED = 11;
 
     /**
      * The feature id for the '<em><b>Effectively Internal</b></em>' attribute.
@@ -1211,7 +1220,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERFACE__EFFECTIVELY_INTERNAL = 11;
+    int INTERFACE__EFFECTIVELY_INTERNAL = 12;
 
     /**
      * The number of structural features of the '<em>Interface</em>' class.
@@ -1220,7 +1229,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERFACE_FEATURE_COUNT = 12;
+    int INTERFACE_FEATURE_COUNT = 13;
 
     /**
      * The operation id for the '<em>Teffective Protocol Specifications</em>' operation.
@@ -3572,6 +3581,17 @@ public interface ServicePackage extends EPackage {
     EAttribute getInterface_Name();
 
     /**
+     * Returns the meta object for the attribute '{@link de.fhdo.lemma.service.Interface#getVersion <em>Version</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Version</em>'.
+     * @see de.fhdo.lemma.service.Interface#getVersion()
+     * @see #getInterface()
+     * @generated
+     */
+    EAttribute getInterface_Version();
+
+    /**
      * Returns the meta object for the attribute '{@link de.fhdo.lemma.service.Interface#isNotImplemented <em>Not Implemented</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -5762,6 +5782,14 @@ public interface ServicePackage extends EPackage {
          * @generated
          */
         EAttribute INTERFACE__NAME = eINSTANCE.getInterface_Name();
+
+        /**
+         * The meta object literal for the '<em><b>Version</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute INTERFACE__VERSION = eINSTANCE.getInterface_Version();
 
         /**
          * The meta object literal for the '<em><b>Not Implemented</b></em>' attribute feature.

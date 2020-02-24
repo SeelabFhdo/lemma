@@ -412,6 +412,7 @@ public class ServiceDslSemanticSequencer extends TechnologyDslSemanticSequencer 
 	 *         notImplemented?='noimpl'? 
 	 *         visibility=Visibility? 
 	 *         name=ID 
+	 *         version=ID? 
 	 *         referredOperations+=ReferredOperation* 
 	 *         operations+=Operation*
 	 *     )

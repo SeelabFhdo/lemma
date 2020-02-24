@@ -126,6 +126,7 @@ public class OperationDslParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getInterfaceAccess().getGroup(), "rule__Interface__Group__0");
 			builder.put(grammarAccess.getInterfaceAccess().getGroup_0(), "rule__Interface__Group_0__0");
 			builder.put(grammarAccess.getInterfaceAccess().getGroup_1(), "rule__Interface__Group_1__0");
+			builder.put(grammarAccess.getInterfaceAccess().getGroup_7(), "rule__Interface__Group_7__0");
 			builder.put(grammarAccess.getApiOperationCommentAccess().getGroup(), "rule__ApiOperationComment__Group__0");
 			builder.put(grammarAccess.getApiParameterCommentAccess().getGroup(), "rule__ApiParameterComment__Group__0");
 			builder.put(grammarAccess.getOperationAccess().getGroup(), "rule__Operation__Group__0");
@@ -334,8 +335,9 @@ public class OperationDslParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getInterfaceAccess().getNotImplementedAssignment_3(), "rule__Interface__NotImplementedAssignment_3");
 			builder.put(grammarAccess.getInterfaceAccess().getVisibilityAssignment_4(), "rule__Interface__VisibilityAssignment_4");
 			builder.put(grammarAccess.getInterfaceAccess().getNameAssignment_6(), "rule__Interface__NameAssignment_6");
-			builder.put(grammarAccess.getInterfaceAccess().getReferredOperationsAssignment_8(), "rule__Interface__ReferredOperationsAssignment_8");
-			builder.put(grammarAccess.getInterfaceAccess().getOperationsAssignment_9(), "rule__Interface__OperationsAssignment_9");
+			builder.put(grammarAccess.getInterfaceAccess().getVersionAssignment_7_1(), "rule__Interface__VersionAssignment_7_1");
+			builder.put(grammarAccess.getInterfaceAccess().getReferredOperationsAssignment_9(), "rule__Interface__ReferredOperationsAssignment_9");
+			builder.put(grammarAccess.getInterfaceAccess().getOperationsAssignment_10(), "rule__Interface__OperationsAssignment_10");
 			builder.put(grammarAccess.getApiOperationCommentAccess().getCommentAssignment_1(), "rule__ApiOperationComment__CommentAssignment_1");
 			builder.put(grammarAccess.getApiOperationCommentAccess().getParameterCommentsAssignment_2(), "rule__ApiOperationComment__ParameterCommentsAssignment_2");
 			builder.put(grammarAccess.getApiParameterCommentAccess().getRequiredAssignment_0_1(), "rule__ApiParameterComment__RequiredAssignment_0_1");

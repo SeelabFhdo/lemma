@@ -371,7 +371,15 @@ public class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
     final Function1<Operation, IEObjectDescription> _function_2 = (Operation it) -> {
       IEObjectDescription _xblockexpression = null;
       {
-        final QualifiedName operationName = QualifiedName.create(it.getInterface().getName(), it.getName());
+        QualifiedName _xifexpression = null;
+        String _version = it.getInterface().getVersion();
+        boolean _tripleNotEquals = (_version != null);
+        if (_tripleNotEquals) {
+          _xifexpression = QualifiedName.create(it.getInterface().getVersion(), it.getInterface().getName(), it.getName());
+        } else {
+          _xifexpression = QualifiedName.create(it.getInterface().getName(), it.getName());
+        }
+        final QualifiedName operationName = _xifexpression;
         _xblockexpression = EObjectDescription.create(operationName, it);
       }
       return _xblockexpression;

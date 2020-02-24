@@ -541,7 +541,16 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     private def getScopeForInterfaces(InterfaceMapping mapping) {
         val microserviceMapping = mapping.microserviceMapping
         val microservice = microserviceMapping.microservice.microservice
-        return Scopes::scopeFor(microservice.interfaces)
+        return Scopes::scopeFor(
+            microservice.interfaces,
+            [
+                if (version !== null)
+                    QualifiedName.create(version, name)
+                else
+                    QualifiedName.create(name)
+            ],
+            IScope.NULLSCOPE
+        )
     }
 
     /**
@@ -554,8 +563,16 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
             return IScope.NULLSCOPE
 
         val operations = microservice.interfaces.map[operations].flatten
-        return Scopes::scopeFor(operations, [QualifiedName.create(interface.name, name)],
-            IScope.NULLSCOPE)
+        return Scopes::scopeFor(
+            operations,
+            [
+                if (interface.version !== null)
+                    QualifiedName.create(interface.version, interface.name, name)
+                else
+                    QualifiedName.create(interface.name, name)
+            ],
+            IScope.NULLSCOPE
+        )
     }
 
     /**
@@ -711,8 +728,16 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
         val microserviceMapping = mapping.microserviceMapping
         val microservice = microserviceMapping.microservice.microservice
         val operations = microservice.interfaces.map[referredOperations].flatten
-        return Scopes::scopeFor(operations, [QualifiedName.create(interface.name, operation.name)],
-            IScope.NULLSCOPE)
+        return Scopes::scopeFor(
+            operations,
+            [
+                if (interface.version !== null)
+                    QualifiedName.create(interface.version, interface.name, operation.name)
+                else
+                    QualifiedName.create(interface.name, operation.name)
+            ],
+            IScope.NULLSCOPE
+        )
     }
 
     /**

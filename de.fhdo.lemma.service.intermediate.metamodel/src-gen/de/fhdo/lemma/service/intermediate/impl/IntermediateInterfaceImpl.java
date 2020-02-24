@@ -41,6 +41,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * </p>
  * <ul>
  *   <li>{@link de.fhdo.lemma.service.intermediate.impl.IntermediateInterfaceImpl#getName <em>Name</em>}</li>
+ *   <li>{@link de.fhdo.lemma.service.intermediate.impl.IntermediateInterfaceImpl#getVersion <em>Version</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.intermediate.impl.IntermediateInterfaceImpl#getQualifiedName <em>Qualified Name</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.intermediate.impl.IntermediateInterfaceImpl#getVisibility <em>Visibility</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.intermediate.impl.IntermediateInterfaceImpl#isNotImplemented <em>Not Implemented</em>}</li>
@@ -75,6 +76,26 @@ public class IntermediateInterfaceImpl extends MinimalEObjectImpl.Container impl
      * @ordered
      */
     protected String name = NAME_EDEFAULT;
+
+    /**
+     * The default value of the '{@link #getVersion() <em>Version</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getVersion()
+     * @generated
+     * @ordered
+     */
+    protected static final String VERSION_EDEFAULT = null;
+
+    /**
+     * The cached value of the '{@link #getVersion() <em>Version</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getVersion()
+     * @generated
+     * @ordered
+     */
+    protected String version = VERSION_EDEFAULT;
 
     /**
      * The default value of the '{@link #getQualifiedName() <em>Qualified Name</em>}' attribute.
@@ -246,6 +267,29 @@ public class IntermediateInterfaceImpl extends MinimalEObjectImpl.Container impl
         name = newName;
         if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, IntermediatePackage.INTERMEDIATE_INTERFACE__NAME, oldName, name));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public String getVersion() {
+        return version;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void setVersion(String newVersion) {
+        String oldVersion = version;
+        version = newVersion;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, IntermediatePackage.INTERMEDIATE_INTERFACE__VERSION, oldVersion, version));
     }
 
     /**
@@ -529,6 +573,8 @@ public class IntermediateInterfaceImpl extends MinimalEObjectImpl.Container impl
         switch (featureID) {
             case IntermediatePackage.INTERMEDIATE_INTERFACE__NAME:
                 return getName();
+            case IntermediatePackage.INTERMEDIATE_INTERFACE__VERSION:
+                return getVersion();
             case IntermediatePackage.INTERMEDIATE_INTERFACE__QUALIFIED_NAME:
                 return getQualifiedName();
             case IntermediatePackage.INTERMEDIATE_INTERFACE__VISIBILITY:
@@ -565,6 +611,9 @@ public class IntermediateInterfaceImpl extends MinimalEObjectImpl.Container impl
         switch (featureID) {
             case IntermediatePackage.INTERMEDIATE_INTERFACE__NAME:
                 setName((String)newValue);
+                return;
+            case IntermediatePackage.INTERMEDIATE_INTERFACE__VERSION:
+                setVersion((String)newValue);
                 return;
             case IntermediatePackage.INTERMEDIATE_INTERFACE__QUALIFIED_NAME:
                 setQualifiedName((String)newValue);
@@ -616,6 +665,9 @@ public class IntermediateInterfaceImpl extends MinimalEObjectImpl.Container impl
             case IntermediatePackage.INTERMEDIATE_INTERFACE__NAME:
                 setName(NAME_EDEFAULT);
                 return;
+            case IntermediatePackage.INTERMEDIATE_INTERFACE__VERSION:
+                setVersion(VERSION_EDEFAULT);
+                return;
             case IntermediatePackage.INTERMEDIATE_INTERFACE__QUALIFIED_NAME:
                 setQualifiedName(QUALIFIED_NAME_EDEFAULT);
                 return;
@@ -660,6 +712,8 @@ public class IntermediateInterfaceImpl extends MinimalEObjectImpl.Container impl
         switch (featureID) {
             case IntermediatePackage.INTERMEDIATE_INTERFACE__NAME:
                 return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+            case IntermediatePackage.INTERMEDIATE_INTERFACE__VERSION:
+                return VERSION_EDEFAULT == null ? version != null : !VERSION_EDEFAULT.equals(version);
             case IntermediatePackage.INTERMEDIATE_INTERFACE__QUALIFIED_NAME:
                 return QUALIFIED_NAME_EDEFAULT == null ? qualifiedName != null : !QUALIFIED_NAME_EDEFAULT.equals(qualifiedName);
             case IntermediatePackage.INTERMEDIATE_INTERFACE__VISIBILITY:
@@ -696,6 +750,8 @@ public class IntermediateInterfaceImpl extends MinimalEObjectImpl.Container impl
         StringBuilder result = new StringBuilder(super.toString());
         result.append(" (name: ");
         result.append(name);
+        result.append(", version: ");
+        result.append(version);
         result.append(", qualifiedName: ");
         result.append(qualifiedName);
         result.append(", visibility: ");

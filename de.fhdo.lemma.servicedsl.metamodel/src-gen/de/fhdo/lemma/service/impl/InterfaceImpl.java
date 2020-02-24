@@ -59,6 +59,7 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
  * </p>
  * <ul>
  *   <li>{@link de.fhdo.lemma.service.impl.InterfaceImpl#getName <em>Name</em>}</li>
+ *   <li>{@link de.fhdo.lemma.service.impl.InterfaceImpl#getVersion <em>Version</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.impl.InterfaceImpl#isNotImplemented <em>Not Implemented</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.impl.InterfaceImpl#getVisibility <em>Visibility</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.impl.InterfaceImpl#getEndpoints <em>Endpoints</em>}</li>
@@ -94,6 +95,26 @@ public class InterfaceImpl extends MinimalEObjectImpl.Container implements Inter
      * @ordered
      */
     protected String name = NAME_EDEFAULT;
+
+    /**
+     * The default value of the '{@link #getVersion() <em>Version</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getVersion()
+     * @generated
+     * @ordered
+     */
+    protected static final String VERSION_EDEFAULT = null;
+
+    /**
+     * The cached value of the '{@link #getVersion() <em>Version</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getVersion()
+     * @generated
+     * @ordered
+     */
+    protected String version = VERSION_EDEFAULT;
 
     /**
      * The default value of the '{@link #isNotImplemented() <em>Not Implemented</em>}' attribute.
@@ -255,6 +276,29 @@ public class InterfaceImpl extends MinimalEObjectImpl.Container implements Inter
         name = newName;
         if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, ServicePackage.INTERFACE__NAME, oldName, name));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public String getVersion() {
+        return version;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void setVersion(String newVersion) {
+        String oldVersion = version;
+        version = newVersion;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ServicePackage.INTERFACE__VERSION, oldVersion, version));
     }
 
     /**
@@ -564,6 +608,11 @@ public class InterfaceImpl extends MinimalEObjectImpl.Container implements Inter
                 return ECollections.<String>asEList(CollectionLiterals.<String>newArrayList());
             }
             final EList<String> nameParts = this.getMicroservice().getQualifiedNameParts();
+            String _version = this.getVersion();
+            boolean _tripleNotEquals = (_version != null);
+            if (_tripleNotEquals) {
+                nameParts.add(this.getVersion());
+            }
             CollectionExtensions.<String>addAll(nameParts, this.getName());
             _xblockexpression = ECollections.<String>asEList(nameParts);
         }
@@ -667,6 +716,8 @@ public class InterfaceImpl extends MinimalEObjectImpl.Container implements Inter
         switch (featureID) {
             case ServicePackage.INTERFACE__NAME:
                 return getName();
+            case ServicePackage.INTERFACE__VERSION:
+                return getVersion();
             case ServicePackage.INTERFACE__NOT_IMPLEMENTED:
                 return isNotImplemented();
             case ServicePackage.INTERFACE__VISIBILITY:
@@ -705,6 +756,9 @@ public class InterfaceImpl extends MinimalEObjectImpl.Container implements Inter
         switch (featureID) {
             case ServicePackage.INTERFACE__NAME:
                 setName((String)newValue);
+                return;
+            case ServicePackage.INTERFACE__VERSION:
+                setVersion((String)newValue);
                 return;
             case ServicePackage.INTERFACE__NOT_IMPLEMENTED:
                 setNotImplemented((Boolean)newValue);
@@ -750,6 +804,9 @@ public class InterfaceImpl extends MinimalEObjectImpl.Container implements Inter
             case ServicePackage.INTERFACE__NAME:
                 setName(NAME_EDEFAULT);
                 return;
+            case ServicePackage.INTERFACE__VERSION:
+                setVersion(VERSION_EDEFAULT);
+                return;
             case ServicePackage.INTERFACE__NOT_IMPLEMENTED:
                 setNotImplemented(NOT_IMPLEMENTED_EDEFAULT);
                 return;
@@ -788,6 +845,8 @@ public class InterfaceImpl extends MinimalEObjectImpl.Container implements Inter
         switch (featureID) {
             case ServicePackage.INTERFACE__NAME:
                 return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+            case ServicePackage.INTERFACE__VERSION:
+                return VERSION_EDEFAULT == null ? version != null : !VERSION_EDEFAULT.equals(version);
             case ServicePackage.INTERFACE__NOT_IMPLEMENTED:
                 return notImplemented != NOT_IMPLEMENTED_EDEFAULT;
             case ServicePackage.INTERFACE__VISIBILITY:
@@ -844,6 +903,8 @@ public class InterfaceImpl extends MinimalEObjectImpl.Container implements Inter
         StringBuilder result = new StringBuilder(super.toString());
         result.append(" (name: ");
         result.append(name);
+        result.append(", version: ");
+        result.append(version);
         result.append(", notImplemented: ");
         result.append(notImplemented);
         result.append(", visibility: ");

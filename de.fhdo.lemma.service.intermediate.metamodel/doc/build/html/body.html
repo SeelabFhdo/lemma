@@ -396,13 +396,19 @@ the same architecture and also to external consumers.</p>
 <dd><p>Name of the interface.</p>
 </dd></dl>
 
+<span class="target" id="link-intermediateinterface-version"></span><dl class="attribute">
+<dt>
+<code class="descname">String version</code></dt>
+<dd><p>Optional version of the interface.</p>
+</dd></dl>
+
 <span class="target" id="link-intermediateinterface-qualifiedname"></span><dl class="attribute">
 <dt>
 <code class="descname">String[1] qualifiedName</code></dt>
 <dd><p>Qualified name of the interface. This is the interface’s name prefixed
-by its microservice’s
+by its version and its microservice’s
 <a class="reference internal" href="#link-intermediatemicroservice-qualifiedname"><span class="std std-ref">qualified name</span></a>.
-Both name fragments are separated by dots.</p>
+All name fragments are separated by dots.</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -1287,6 +1293,13 @@ this microservice.</p>
 <dt>
 <code class="descname">String[1] name</code></dt>
 <dd><p><a class="reference internal" href="#link-intermediateinterface-name"><span class="std std-ref">Name</span></a> of the referenced
+interface.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">String version</code></dt>
+<dd><p><a class="reference internal" href="#link-intermediateinterface-version"><span class="std std-ref">Version</span></a> of the referenced
 interface.</p>
 </dd></dl>
 
