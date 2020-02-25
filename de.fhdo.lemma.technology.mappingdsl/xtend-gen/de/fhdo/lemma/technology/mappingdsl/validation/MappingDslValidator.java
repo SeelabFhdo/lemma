@@ -1021,7 +1021,7 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
             _builder_1.append(" ");
             _builder_1.append(containerName);
             String _plus_2 = (_builder.toString() + _builder_1);
-            this.error(_plus_2, endpoint, 
+            this.warning(_plus_2, endpoint, 
               MappingPackage.Literals.TECHNOLOGY_SPECIFIC_ENDPOINT__ADDRESSES, (i).intValue());
           } else {
             mappedAddressesToEndpoints.put(addressPrefixedByProtocol, endpoint);

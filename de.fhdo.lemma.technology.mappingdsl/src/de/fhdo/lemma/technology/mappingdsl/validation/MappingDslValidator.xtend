@@ -761,7 +761,7 @@ class MappingDslValidator extends AbstractMappingDslValidator {
 
                     if (mappedAddressesToEndpoints.containsKey(addressPrefixedByProtocol)) {
                         val containerName = getContainerName.apply(endpoint)
-                        error('''Address «address» is already specified for protocol ''' +
+                        warning('''Address «address» is already specified for protocol ''' +
                             '''«protocolName» on «containerTypeName» «containerName»''', endpoint,
                             MappingPackage::Literals.TECHNOLOGY_SPECIFIC_ENDPOINT__ADDRESSES, i)
                     } else
