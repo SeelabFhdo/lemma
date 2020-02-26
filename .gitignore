@@ -28,3 +28,4 @@ code generators/de.fhdo.lemma.model_processing.code_generation.java_base/linecnt
 code generators/TODO*
 .~lock*
 *.iml
+*.hprof
