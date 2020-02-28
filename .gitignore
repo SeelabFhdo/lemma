@@ -10,8 +10,6 @@ target/
 releases/
 de.fhdo.ddmm.acceleo/
 de.fhdo.lemma.acceleo/
-de.fhdo.lemma.live_validation/
-de.fhdo.lemma.ocl/
 .gradle/
 HOWTO Lemma Release.md
 *.java._trace
@@ -21,8 +19,7 @@ out/
 build/
 .gradle/
 .idea/
-de.fhdo.lemma.live_validation/set_java_home.sh
-de.fhdo.lemma.model_processing/set_java_home.sh
+set_java_home.sh
 HOWTO Lemma Release.md
 code generators/de.fhdo.lemma.model_processing.code_generation.java_base/linecnt_helper.py
 code generators/TODO*
