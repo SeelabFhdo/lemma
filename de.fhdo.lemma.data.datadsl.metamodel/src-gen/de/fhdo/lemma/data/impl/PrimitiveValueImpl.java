@@ -3,6 +3,7 @@
 package de.fhdo.lemma.data.impl;
 
 import de.fhdo.lemma.data.DataPackage;
+import de.fhdo.lemma.data.DateUtils;
 import de.fhdo.lemma.data.PrimitiveBoolean;
 import de.fhdo.lemma.data.PrimitiveByte;
 import de.fhdo.lemma.data.PrimitiveCharacter;
@@ -21,9 +22,6 @@ import de.fhdo.lemma.data.PrimitiveValue;
 import java.lang.reflect.InvocationTargetException;
 
 import java.math.BigDecimal;
-
-import java.text.DateFormat;
-import java.text.ParseException;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -445,23 +443,16 @@ public class PrimitiveValueImpl extends MinimalEObjectImpl.Container implements 
      */
     @Override
     public Date asDate() {
-        String _stringValue = this.getStringValue();
-        boolean _tripleEquals = (_stringValue == null);
-        if (_tripleEquals) {
-            return null;
-        }
-        try {
-            final DateFormat dateFormatter = DateFormat.getDateInstance(DateFormat.SHORT);
-            return dateFormatter.parse(this.getStringValue());
-        }
-        catch (final Throwable _t) {
-            if (_t instanceof ParseException) {
+        Date _xblockexpression = null;
+        {
+            String _stringValue = this.getStringValue();
+            boolean _tripleEquals = (_stringValue == null);
+            if (_tripleEquals) {
                 return null;
             }
-            else {
-                throw Exceptions.sneakyThrow(_t);
-            }
+            _xblockexpression = DateUtils.parseDate(this.getStringValue());
         }
+        return _xblockexpression;
     }
 
     /**

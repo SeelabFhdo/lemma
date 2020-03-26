@@ -1,8 +1,7 @@
 package de.fhdo.lemma.data
 
+import de.fhdo.lemma.data.DateUtils
 import java.math.BigDecimal
-import java.text.DateFormat
-import java.text.ParseException
 import java.util.Map
 
 /**
@@ -1325,12 +1324,7 @@ class PrimitiveValue {
         if (stringValue === null)
             return null
 
-        try {
-            val dateFormatter = DateFormat.getDateInstance(DateFormat.SHORT)
-            return dateFormatter.parse(stringValue)
-        } catch (ParseException ex) {
-            return null
-        }
+        DateUtils.parseDate(stringValue)
     }
 
     /**
