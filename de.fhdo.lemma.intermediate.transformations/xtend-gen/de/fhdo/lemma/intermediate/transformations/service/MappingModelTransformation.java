@@ -245,15 +245,29 @@ public class MappingModelTransformation extends AbstractAtlInputOutputIntermedia
           String _importTypeNameForDatatypes = it.getImportTypeNameForDatatypes();
           return Boolean.valueOf(Objects.equal(_importTypeName, _importTypeNameForDatatypes));
         };
-        final Consumer<IntermediateImport> _function_1 = (IntermediateImport it) -> {
-          AbstractIntermediateModelTransformationStrategy.OutputModel _get = refinedDataModels.get(it.getImportUri());
+        final Consumer<IntermediateImport> _function_1 = (IntermediateImport dataModelImport) -> {
+          final String importUri = dataModelImport.getImportUri();
+          AbstractIntermediateModelTransformationStrategy.OutputModel _get = refinedDataModels.get(importUri);
           String _outputPath = null;
           if (_get!=null) {
             _outputPath=_get.getOutputPath();
           }
-          final String refinedDataModelUri = _outputPath;
+          String refinedDataModelUri = _outputPath;
+          if ((refinedDataModelUri == null)) {
+            final Function1<AbstractIntermediateModelTransformationStrategy.OutputModel, Boolean> _function_2 = (AbstractIntermediateModelTransformationStrategy.OutputModel it) -> {
+              EObject _get_1 = it.getResource().getContents().get(0);
+              String _sourceModelUri = ((IntermediateDataModel) _get_1).getSourceModelUri();
+              return Boolean.valueOf(Objects.equal(_sourceModelUri, importUri));
+            };
+            AbstractIntermediateModelTransformationStrategy.OutputModel _findFirst = IterableExtensions.<AbstractIntermediateModelTransformationStrategy.OutputModel>findFirst(refinedDataModels.values(), _function_2);
+            String _outputPath_1 = null;
+            if (_findFirst!=null) {
+              _outputPath_1=_findFirst.getOutputPath();
+            }
+            refinedDataModelUri = _outputPath_1;
+          }
           if ((refinedDataModelUri != null)) {
-            it.setImportUri(refinedDataModelUri);
+            dataModelImport.setImportUri(refinedDataModelUri);
           }
         };
         IterableExtensions.<IntermediateImport>filter(imports, _function).forEach(_function_1);
@@ -515,6 +529,58 @@ public class MappingModelTransformation extends AbstractAtlInputOutputIntermedia
       import_.setImportURI(LemmaUtils.convertToFileUri((workspacePath + targetPath)));
     };
     targetPaths.forEach(_function);
+    final Function1<Import, Boolean> _function_1 = (Import it) -> {
+      return Boolean.valueOf(((!LemmaUtils.isFileUri(it.getImportURI())) && 
+        Objects.equal(it.getImportType(), ImportType.DATATYPES)));
+    };
+    final Consumer<Import> _function_2 = (Import targetImport) -> {
+      final Function1<MappedComplexType, Boolean> _function_3 = (MappedComplexType it) -> {
+        String _name = it.getType().getImport().getName();
+        String _name_1 = targetImport.getName();
+        return Boolean.valueOf(Objects.equal(_name, _name_1));
+      };
+      final MappedComplexType mappedComplexTypeWithTargetImport = IterableExtensions.<MappedComplexType>findFirst(serviceModelRoot.getMappedComplexTypes(), _function_3);
+      if ((mappedComplexTypeWithTargetImport != null)) {
+        targetImport.setImportURI(mappedComplexTypeWithTargetImport.getT_sourceModelUri());
+      }
+      boolean _isFileUri = LemmaUtils.isFileUri(targetImport.getImportURI());
+      boolean _not = (!_isFileUri);
+      if (_not) {
+        targetImport.setImportURI(this.findSourceModelUriOfDataModel(serviceModelRoot, targetImport));
+      }
+    };
+    IterableExtensions.<Import>filter(serviceModelRoot.getImports(), _function_1).forEach(_function_2);
+  }
+  
+  /**
+   * Find URI of a data model via the import relationships service model --> intermediate service
+   * model --> intermediate data model.
+   */
+  private String findSourceModelUriOfDataModel(final ServiceModel serviceModel, final Import targetImport) {
+    final String intermediateServiceModelAlias = targetImport.getT_relatedImportAlias();
+    if (((intermediateServiceModelAlias == null) || intermediateServiceModelAlias.isEmpty())) {
+      return targetImport.getImportURI();
+    }
+    final Function1<Import, Boolean> _function = (Import it) -> {
+      String _name = it.getName();
+      return Boolean.valueOf(Objects.equal(_name, intermediateServiceModelAlias));
+    };
+    final Import intermediateServiceModelImport = IterableExtensions.<Import>findFirst(serviceModel.getImports(), _function);
+    final IntermediateServiceModel intermediateServiceModel = LemmaUtils.<IntermediateServiceModel>getImportedModelRoot(
+      intermediateServiceModelImport.eResource(), 
+      intermediateServiceModelImport.getImportURI(), 
+      IntermediateServiceModel.class);
+    final Function1<IntermediateImport, Boolean> _function_1 = (IntermediateImport it) -> {
+      String _name = it.getName();
+      String _name_1 = targetImport.getName();
+      return Boolean.valueOf(Objects.equal(_name, _name_1));
+    };
+    final IntermediateImport intermediateDataModelImport = IterableExtensions.<IntermediateImport>findFirst(intermediateServiceModel.getImports(), _function_1);
+    final IntermediateDataModel intermediateDataModel = LemmaUtils.<IntermediateDataModel>getImportedModelRoot(
+      intermediateDataModelImport.eResource(), 
+      intermediateDataModelImport.getImportUri(), 
+      IntermediateDataModel.class);
+    return intermediateDataModel.getSourceModelUri();
   }
   
   /**

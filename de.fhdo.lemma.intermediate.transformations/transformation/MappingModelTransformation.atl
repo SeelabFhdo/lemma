@@ -290,18 +290,19 @@ rule MappedImport {
     from
         m : Mapping!Import
     do {
-        thisModule.Import(m);
+        thisModule.Import(m, OclUndefined);
     }
 }
 
 --- Generic called rule to create service Imports
-rule Import(sourceImport : Mapping!Import) {
+rule Import(sourceImport : Mapping!Import, relatedImportAlias : String) {
     to
         t : Service!Import(
             name <- sourceImport.name,
             importURI <- sourceImport.importURI,
             importType <- sourceImport.importType,
-            serviceModel <- thisModule.ServiceModel()
+            serviceModel <- thisModule.ServiceModel(),
+            t_relatedImportAlias <- relatedImportAlias
         )
     do {
         thisModule.ServiceModel().imports <- thisModule.ServiceModel().imports->append(t);
@@ -463,7 +464,7 @@ rule TechnologyReference(sourceReference : Service!TechnologyReference) {
         )
     do {
         if (thisModule.getCreatedImport(sourceReference.technology).oclIsUndefined())
-            thisModule.Import(sourceReference.technology);
+            thisModule.Import(sourceReference.technology, OclUndefined);
 
         r.technology <- thisModule.getCreatedImport(sourceReference.technology);
         r;
@@ -1031,7 +1032,7 @@ rule ImportedType(sourceImport : Service!Import, sourceType : Service!Type) {
         )
     do {
         if (t.import.oclIsUndefined())
-            t.import <- thisModule.Import(sourceImport);
+            t.import <- thisModule.Import(sourceImport, OclUndefined);
 
         t;
     }
@@ -1126,7 +1127,7 @@ rule PossiblyImportedMicroservice(source : Service!PossiblyImportedMicroservice,
             -- requires this imported service is in another service model than the source mapping
             -- model. This happens within "dependency chains" of requiring microservices.
             if (t.import.oclIsUndefined())
-                t.import <- thisModule.Import(source.import);
+                t.import <- thisModule.Import(source.import, OclUndefined);
             t.microservice <- source.microservice;
         }
 
@@ -1173,7 +1174,7 @@ rule PossiblyImportedInterface(source : Service!PossiblyImportedInterface,
             -- requires this imported interface is in another service model than the source mapping
             -- model. This happens within "dependency chains" of requiring microservices.
             if (t.import.oclIsUndefined())
-                t.import <- thisModule.Import(source.import);
+                t.import <- thisModule.Import(source.import, OclUndefined);
             t.interface <- source.interface;
         }
 
@@ -1224,7 +1225,7 @@ rule PossiblyImportedOperation(source : Service!PossiblyImportedOperation,
             -- requires this imported operation is in another service model than the source mapping
             -- model. This happens within "dependency chains" of requiring microservices.
             if (t.import.oclIsUndefined())
-                t.import <- thisModule.Import(source.import);
+                t.import <- thisModule.Import(source.import, OclUndefined);
             t.operation <- source.operation;
         }
 

@@ -197,6 +197,70 @@ class MappingModelTransformation
             val import = serviceModelRoot.imports.findFirst[name == importName]
             import.importURI = LemmaUtils.convertToFileUri(workspacePath + targetPath)
         ]
+
+        // Adapt paths of those domain imports that were not adapted yet. This may happen, if the
+        // service model is transformed together with a mapping model that maps the service model.
+        serviceModelRoot.imports.filter[
+            !LemmaUtils.isFileUri(importURI) &&
+            importType == ImportType.DATATYPES
+        ].forEach[targetImport |
+            // For performance reasons, we first try to retrieve the import URI from corresponding
+            // MappedComplexType instances, because their source model URIs are set prior to the
+            // transformation (see setSourceModelUris() above).
+            val mappedComplexTypeWithTargetImport = serviceModelRoot.mappedComplexTypes.findFirst[
+                type.import.name == targetImport.name
+            ]
+            if (mappedComplexTypeWithTargetImport !== null)
+                targetImport.importURI = mappedComplexTypeWithTargetImport.t_sourceModelUri
+
+            // In case no complex type from the imported domain model got mapped (which normally
+            // should not be the case, but is totally fine from the point of view of the Technology
+            // Mapping Language), we try to find the URI of the original domain model from the
+            // import relationships: service model --> intermediate service model --> intermediate
+            // data model. The intermediate data model's field "sourceModelUri" then points to the
+            // original domain model.
+            if (!LemmaUtils.isFileUri(targetImport.importURI))
+                targetImport.importURI = findSourceModelUriOfDataModel(serviceModelRoot,
+                    targetImport)
+        ]
+    }
+
+    /**
+     * Find URI of a data model via the import relationships service model --> intermediate service
+     * model --> intermediate data model.
+     */
+    private def findSourceModelUriOfDataModel(ServiceModel serviceModel, Import targetImport) {
+        val intermediateServiceModelAlias = targetImport.t_relatedImportAlias
+        if (intermediateServiceModelAlias === null || intermediateServiceModelAlias.empty)
+            return targetImport.importURI
+
+        /* Get intermediate service model from the import alias in the service model */
+        val intermediateServiceModelImport = serviceModel.imports.findFirst[
+            name == intermediateServiceModelAlias
+        ]
+
+        val intermediateServiceModel = LemmaUtils.getImportedModelRoot(
+            intermediateServiceModelImport.eResource,
+            intermediateServiceModelImport.importURI,
+            IntermediateServiceModel
+        )
+
+        /*
+         * Get intermediate data model from intermediate service model based on the target import's
+         * alias
+         */
+        val intermediateDataModelImport = intermediateServiceModel.imports.findFirst[
+            name == targetImport.name
+        ]
+
+        val intermediateDataModel = LemmaUtils.getImportedModelRoot(
+            intermediateDataModelImport.eResource,
+            intermediateDataModelImport.importUri,
+            IntermediateDataModel
+        )
+
+        /* Return the URI of the original data model from the intermediate data model */
+        return intermediateDataModel.sourceModelUri
     }
 
     /**
@@ -396,10 +460,25 @@ class MappingModelTransformation
             val modelRoot = intermediateModel.resource.contents.get(0)
             val imports = getImportsFromModelRoot.apply(modelRoot)
 
-            imports.filter[importTypeName == importTypeNameForDatatypes].forEach[
-                val refinedDataModelUri = refinedDataModels.get(importUri)?.outputPath
+            imports.filter[importTypeName == importTypeNameForDatatypes].forEach[dataModelImport |
+                val importUri = dataModelImport.importUri
+                var refinedDataModelUri = refinedDataModels.get(importUri)?.outputPath
+
+                // If the map of refined data models does not contain the current import URI
+                // directly, which may happen if a service model gets transformed together with a
+                // mapping model that maps it, we try to find the path to the refined data model by
+                // checking the source model URIs of the refined models directly. They always point
+                // to the original modeling file like the current import URI does when service and
+                // mapping model get transformed together (cf. the path correction code in
+                // populateOutputModelWithImportTargetPaths() above).
+                if (refinedDataModelUri === null)
+                    refinedDataModelUri = refinedDataModels.values.findFirst[
+                        (resource.contents.get(0) as IntermediateDataModel).sourceModelUri ==
+                            importUri
+                    ]?.outputPath
+
                 if (refinedDataModelUri !== null)
-                    importUri = refinedDataModelUri
+                    dataModelImport.importUri = refinedDataModelUri
             ]
 
             intermediateModel.resource.save(emptyMap())
@@ -424,7 +503,8 @@ class MappingModelTransformation
             val outputModelPaths = <TransformationModelDescription, String>newHashMap(
                 // The "IN" model in the refinement transformation is effectively an inout model
                 IntermediateDataModelRefinement.IN_MODEL_DESCRIPTION ->
-                    buildOutputPathForRefiningTransformation(results, serviceModel, intermediateDataModel)
+                    buildOutputPathForRefiningTransformation(results, serviceModel,
+                        intermediateDataModel)
             )
 
             val refiningTransformation = new IntermediateDataModelRefinement()

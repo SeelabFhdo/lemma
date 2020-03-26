@@ -18,6 +18,7 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
+ *   <li>{@link de.fhdo.lemma.service.Import#getT_relatedImportAlias <em>Trelated Import Alias</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.Import#getName <em>Name</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.Import#getImportURI <em>Import URI</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.Import#getImportType <em>Import Type</em>}</li>
@@ -30,7 +31,7 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface Import extends EObject {
     /**
-     * Returns the value of the '<em><b>Name</b></em>' attribute.
+     * Returns the value of the '<em><b>Trelated Import Alias</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
@@ -46,6 +47,32 @@ public interface Import extends EObject {
      *     (C4) Import alias must be unique.
      *          Ensured by: DSL validator.
      * <!-- end-model-doc -->
+     * @return the value of the '<em>Trelated Import Alias</em>' attribute.
+     * @see #setT_relatedImportAlias(String)
+     * @see de.fhdo.lemma.service.ServicePackage#getImport_T_relatedImportAlias()
+     * @model unique="false"
+     * @generated
+     */
+    String getT_relatedImportAlias();
+
+    /**
+     * Sets the value of the '{@link de.fhdo.lemma.service.Import#getT_relatedImportAlias <em>Trelated Import Alias</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Trelated Import Alias</em>' attribute.
+     * @see #getT_relatedImportAlias()
+     * @generated
+     */
+    void setT_relatedImportAlias(String value);
+
+    /**
+     * Returns the value of the '<em><b>Name</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Name</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
      * @return the value of the '<em>Name</em>' attribute.
      * @see #setName(String)
      * @see de.fhdo.lemma.service.ServicePackage#getImport_Name()
