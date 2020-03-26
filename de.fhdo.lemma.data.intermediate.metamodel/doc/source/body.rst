@@ -468,6 +468,11 @@ Custom, domain-specific Types
         its :ref:`context <link__IntermediateContext>` if any. The qualifying
         fragments are separated by dots.
 
+    .. py:attribute:: IntermediateImportedAspect[*] aspects
+
+        The :java:type:`aspects <IntermediateImportedAspect>` that were assigned
+        to the complex type.
+
     .. py:attribute:: IntermediateDataModel dataModel
 
         Link to the containing :py:class:`IntermediateDataModel` instance.
