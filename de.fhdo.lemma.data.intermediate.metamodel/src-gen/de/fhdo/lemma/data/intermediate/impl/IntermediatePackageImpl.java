@@ -1288,7 +1288,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * @generated
      */
     @Override
-    public EAttribute getIntermediateImportedAspect_FeatureNames() {
+    public EAttribute getIntermediateImportedAspect_QualifiedName() {
         return (EAttribute)intermediateImportedAspectEClass.getEStructuralFeatures().get(1);
     }
 
@@ -1298,8 +1298,8 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * @generated
      */
     @Override
-    public EReference getIntermediateImportedAspect_Import() {
-        return (EReference)intermediateImportedAspectEClass.getEStructuralFeatures().get(2);
+    public EAttribute getIntermediateImportedAspect_FeatureNames() {
+        return (EAttribute)intermediateImportedAspectEClass.getEStructuralFeatures().get(2);
     }
 
     /**
@@ -1308,7 +1308,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * @generated
      */
     @Override
-    public EReference getIntermediateImportedAspect_Properties() {
+    public EReference getIntermediateImportedAspect_Import() {
         return (EReference)intermediateImportedAspectEClass.getEStructuralFeatures().get(3);
     }
 
@@ -1318,7 +1318,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * @generated
      */
     @Override
-    public EReference getIntermediateImportedAspect_PropertyValues() {
+    public EReference getIntermediateImportedAspect_Properties() {
         return (EReference)intermediateImportedAspectEClass.getEStructuralFeatures().get(4);
     }
 
@@ -1328,7 +1328,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * @generated
      */
     @Override
-    public EReference getIntermediateImportedAspect_ComplexType() {
+    public EReference getIntermediateImportedAspect_PropertyValues() {
         return (EReference)intermediateImportedAspectEClass.getEStructuralFeatures().get(5);
     }
 
@@ -1338,7 +1338,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * @generated
      */
     @Override
-    public EReference getIntermediateImportedAspect_Operation() {
+    public EReference getIntermediateImportedAspect_ComplexType() {
         return (EReference)intermediateImportedAspectEClass.getEStructuralFeatures().get(6);
     }
 
@@ -1348,7 +1348,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * @generated
      */
     @Override
-    public EReference getIntermediateImportedAspect_ReturnType() {
+    public EReference getIntermediateImportedAspect_Operation() {
         return (EReference)intermediateImportedAspectEClass.getEStructuralFeatures().get(7);
     }
 
@@ -1358,7 +1358,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * @generated
      */
     @Override
-    public EReference getIntermediateImportedAspect_Parameter() {
+    public EReference getIntermediateImportedAspect_ReturnType() {
         return (EReference)intermediateImportedAspectEClass.getEStructuralFeatures().get(8);
     }
 
@@ -1368,8 +1368,18 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * @generated
      */
     @Override
-    public EReference getIntermediateImportedAspect_DataField() {
+    public EReference getIntermediateImportedAspect_Parameter() {
         return (EReference)intermediateImportedAspectEClass.getEStructuralFeatures().get(9);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getIntermediateImportedAspect_DataField() {
+        return (EReference)intermediateImportedAspectEClass.getEStructuralFeatures().get(10);
     }
 
     /**
@@ -1640,6 +1650,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
 
         intermediateImportedAspectEClass = createEClass(INTERMEDIATE_IMPORTED_ASPECT);
         createEAttribute(intermediateImportedAspectEClass, INTERMEDIATE_IMPORTED_ASPECT__NAME);
+        createEAttribute(intermediateImportedAspectEClass, INTERMEDIATE_IMPORTED_ASPECT__QUALIFIED_NAME);
         createEAttribute(intermediateImportedAspectEClass, INTERMEDIATE_IMPORTED_ASPECT__FEATURE_NAMES);
         createEReference(intermediateImportedAspectEClass, INTERMEDIATE_IMPORTED_ASPECT__IMPORT);
         createEReference(intermediateImportedAspectEClass, INTERMEDIATE_IMPORTED_ASPECT__PROPERTIES);
@@ -1827,6 +1838,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
 
         initEClass(intermediateImportedAspectEClass, IntermediateImportedAspect.class, "IntermediateImportedAspect", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getIntermediateImportedAspect_Name(), theEcorePackage.getEString(), "name", null, 0, 1, IntermediateImportedAspect.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getIntermediateImportedAspect_QualifiedName(), theEcorePackage.getEString(), "qualifiedName", null, 0, 1, IntermediateImportedAspect.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getIntermediateImportedAspect_FeatureNames(), theEcorePackage.getEString(), "featureNames", null, 0, -1, IntermediateImportedAspect.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getIntermediateImportedAspect_Import(), this.getIntermediateImport(), null, "import", null, 0, 1, IntermediateImportedAspect.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getIntermediateImportedAspect_Properties(), this.getIntermediateAspectProperty(), this.getIntermediateAspectProperty_Aspect(), "properties", null, 0, -1, IntermediateImportedAspect.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

@@ -21,6 +21,7 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  * <ul>
  *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateImportedAspect#getName <em>Name</em>}</li>
+ *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateImportedAspect#getQualifiedName <em>Qualified Name</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateImportedAspect#getFeatureNames <em>Feature Names</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateImportedAspect#getImport <em>Import</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateImportedAspect#getProperties <em>Properties</em>}</li>
@@ -62,6 +63,32 @@ public interface IntermediateImportedAspect extends EObject {
      * @generated
      */
     void setName(String value);
+
+    /**
+     * Returns the value of the '<em><b>Qualified Name</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Qualified Name</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Qualified Name</em>' attribute.
+     * @see #setQualifiedName(String)
+     * @see de.fhdo.lemma.data.intermediate.IntermediatePackage#getIntermediateImportedAspect_QualifiedName()
+     * @model unique="false"
+     * @generated
+     */
+    String getQualifiedName();
+
+    /**
+     * Sets the value of the '{@link de.fhdo.lemma.data.intermediate.IntermediateImportedAspect#getQualifiedName <em>Qualified Name</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Qualified Name</em>' attribute.
+     * @see #getQualifiedName()
+     * @generated
+     */
+    void setQualifiedName(String value);
 
     /**
      * Returns the value of the '<em><b>Feature Names</b></em>' attribute list.

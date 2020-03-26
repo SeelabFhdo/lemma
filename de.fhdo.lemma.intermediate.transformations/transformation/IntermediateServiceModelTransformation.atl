@@ -906,6 +906,7 @@ rule IntermediateImportedAspect {
     to
         i : Intermediate!IntermediateImportedAspect(
             name <- a.importedAspect.name,
+            qualifiedName <- a.importedAspect.buildQualifiedName('.', true, false),
             import <- thisModule.getCreatedImport(a.import)
         )
     do {

@@ -473,12 +473,13 @@ m1=1..*</panel_attributes>
       <x>20</x>
       <y>210</y>
       <w>200</w>
-      <h>80</h>
+      <h>100</h>
     </coordinates>
     <panel_attributes>*Intermediate*
 *ImportedAspect*
 --
 name : String
+qualifiedName : String
 featureNames : String[*]</panel_attributes>
     <additional_attributes/>
   </element>
@@ -518,13 +519,13 @@ featureNames : String[*]</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>110</x>
-      <y>280</y>
+      <y>300</y>
       <w>40</w>
-      <h>100</h>
+      <h>80</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;&gt;&gt;
 m1=*</panel_attributes>
-    <additional_attributes>10.0;80.0;10.0;10.0</additional_attributes>
+    <additional_attributes>10.0;60.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
@@ -541,13 +542,13 @@ m1=*</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>20</x>
-      <y>280</y>
+      <y>300</y>
       <w>40</w>
-      <h>200</h>
+      <h>180</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;&gt;&gt;
 m1=*</panel_attributes>
-    <additional_attributes>10.0;180.0;10.0;10.0</additional_attributes>
+    <additional_attributes>10.0;160.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
@@ -637,13 +638,13 @@ r2=  originalType</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>200</x>
-      <y>280</y>
+      <y>300</y>
       <w>100</w>
-      <h>180</h>
+      <h>160</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;&gt;&gt;
 m1=*</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;160.0;80.0;160.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;140.0;80.0;140.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>

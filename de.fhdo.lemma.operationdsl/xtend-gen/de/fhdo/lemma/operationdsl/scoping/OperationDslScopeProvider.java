@@ -255,7 +255,7 @@ public class OperationDslScopeProvider extends AbstractOperationDslScopeProvider
       return IterableExtensions.<OperationAspect>toList(it.getOperationAspects());
     };
     final Function<OperationAspect, List<String>> _function_1 = (OperationAspect it) -> {
-      return it.getQualifiedNameParts();
+      return it.getQualifiedNameParts(false, true);
     };
     final Predicate<OperationAspect> _function_2 = (OperationAspect it) -> {
       return (it.getJoinPoints().contains(joinPoint) && 

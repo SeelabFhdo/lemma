@@ -1167,16 +1167,6 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * @generated
      */
     @Override
-    public EOperation getTechnologyAspect__GetQualifiedNameParts() {
-        return technologyAspectEClass.getEOperations().get(0);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
     public EClass getServiceAspect() {
         return serviceAspectEClass;
     }
@@ -1207,7 +1197,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * @generated
      */
     @Override
-    public EOperation getServiceAspect__IsValidSelectorForJoinPoint__JoinPointType_ServiceAspectPointcutSelector() {
+    public EOperation getServiceAspect__GetQualifiedNameParts__boolean_boolean() {
         return serviceAspectEClass.getEOperations().get(0);
     }
 
@@ -1217,7 +1207,7 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * @generated
      */
     @Override
-    public EOperation getServiceAspect__IsValidSelectorForJoinPoint__JoinPointType_ExchangePattern_CommunicationType_Protocol_DataFormat() {
+    public EOperation getServiceAspect__BuildQualifiedName__String_boolean_boolean() {
         return serviceAspectEClass.getEOperations().get(1);
     }
 
@@ -1227,8 +1217,28 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * @generated
      */
     @Override
-    public EOperation getServiceAspect__HasMatchingSelector__ExchangePattern_CommunicationType_Protocol_DataFormat() {
+    public EOperation getServiceAspect__IsValidSelectorForJoinPoint__JoinPointType_ServiceAspectPointcutSelector() {
         return serviceAspectEClass.getEOperations().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EOperation getServiceAspect__IsValidSelectorForJoinPoint__JoinPointType_ExchangePattern_CommunicationType_Protocol_DataFormat() {
+        return serviceAspectEClass.getEOperations().get(3);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EOperation getServiceAspect__HasMatchingSelector__ExchangePattern_CommunicationType_Protocol_DataFormat() {
+        return serviceAspectEClass.getEOperations().get(4);
     }
 
     /**
@@ -1477,8 +1487,28 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
      * @generated
      */
     @Override
-    public EOperation getOperationAspect__HasMatchingSelector__EObject() {
+    public EOperation getOperationAspect__GetQualifiedNameParts__boolean_boolean() {
         return operationAspectEClass.getEOperations().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EOperation getOperationAspect__BuildQualifiedName__String_boolean_boolean() {
+        return operationAspectEClass.getEOperations().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EOperation getOperationAspect__HasMatchingSelector__EObject() {
+        return operationAspectEClass.getEOperations().get(2);
     }
 
     /**
@@ -1828,11 +1858,12 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
         createEAttribute(technologyAspectEClass, TECHNOLOGY_ASPECT__JOIN_POINTS);
         createEReference(technologyAspectEClass, TECHNOLOGY_ASPECT__PROPERTIES);
         createEAttribute(technologyAspectEClass, TECHNOLOGY_ASPECT__IS_SINGLE_VALUED);
-        createEOperation(technologyAspectEClass, TECHNOLOGY_ASPECT___GET_QUALIFIED_NAME_PARTS);
 
         serviceAspectEClass = createEClass(SERVICE_ASPECT);
         createEReference(serviceAspectEClass, SERVICE_ASPECT__POINTCUT_SELECTORS);
         createEReference(serviceAspectEClass, SERVICE_ASPECT__TECHNOLOGY);
+        createEOperation(serviceAspectEClass, SERVICE_ASPECT___GET_QUALIFIED_NAME_PARTS__BOOLEAN_BOOLEAN);
+        createEOperation(serviceAspectEClass, SERVICE_ASPECT___BUILD_QUALIFIED_NAME__STRING_BOOLEAN_BOOLEAN);
         createEOperation(serviceAspectEClass, SERVICE_ASPECT___IS_VALID_SELECTOR_FOR_JOIN_POINT__JOINPOINTTYPE_SERVICEASPECTPOINTCUTSELECTOR);
         createEOperation(serviceAspectEClass, SERVICE_ASPECT___IS_VALID_SELECTOR_FOR_JOIN_POINT__JOINPOINTTYPE_EXCHANGEPATTERN_COMMUNICATIONTYPE_PROTOCOL_DATAFORMAT);
         createEOperation(serviceAspectEClass, SERVICE_ASPECT___HAS_MATCHING_SELECTOR__EXCHANGEPATTERN_COMMUNICATIONTYPE_PROTOCOL_DATAFORMAT);
@@ -1863,6 +1894,8 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
         operationAspectEClass = createEClass(OPERATION_ASPECT);
         createEReference(operationAspectEClass, OPERATION_ASPECT__POINTCUT_SELECTORS);
         createEReference(operationAspectEClass, OPERATION_ASPECT__TECHNOLOGY);
+        createEOperation(operationAspectEClass, OPERATION_ASPECT___GET_QUALIFIED_NAME_PARTS__BOOLEAN_BOOLEAN);
+        createEOperation(operationAspectEClass, OPERATION_ASPECT___BUILD_QUALIFIED_NAME__STRING_BOOLEAN_BOOLEAN);
         createEOperation(operationAspectEClass, OPERATION_ASPECT___HAS_MATCHING_SELECTOR__EOBJECT);
 
         operationAspectPointcutEClass = createEClass(OPERATION_ASPECT_POINTCUT);
@@ -2046,11 +2079,18 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
         initEReference(getTechnologyAspect_Properties(), this.getTechnologySpecificProperty(), this.getTechnologySpecificProperty_TechnologyAspect(), "properties", null, 0, -1, TechnologyAspect.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getTechnologyAspect_IsSingleValued(), theEcorePackage.getEBoolean(), "isSingleValued", null, 0, 1, TechnologyAspect.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 
-        initEOperation(getTechnologyAspect__GetQualifiedNameParts(), theEcorePackage.getEString(), "getQualifiedNameParts", 0, -1, !IS_UNIQUE, IS_ORDERED);
-
         initEClass(serviceAspectEClass, ServiceAspect.class, "ServiceAspect", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getServiceAspect_PointcutSelectors(), this.getServiceAspectPointcutSelector(), this.getServiceAspectPointcutSelector_ServiceAspect(), "pointcutSelectors", null, 0, -1, ServiceAspect.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getServiceAspect_Technology(), this.getTechnology(), this.getTechnology_ServiceAspects(), "technology", null, 0, 1, ServiceAspect.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        op = initEOperation(getServiceAspect__GetQualifiedNameParts__boolean_boolean(), theEcorePackage.getEString(), "getQualifiedNameParts", 0, -1, !IS_UNIQUE, IS_ORDERED);
+        addEParameter(op, theEcorePackage.getEBoolean(), "withTechnologyName", 0, 1, !IS_UNIQUE, IS_ORDERED);
+        addEParameter(op, theEcorePackage.getEBoolean(), "withNamespace", 0, 1, !IS_UNIQUE, IS_ORDERED);
+
+        op = initEOperation(getServiceAspect__BuildQualifiedName__String_boolean_boolean(), theEcorePackage.getEString(), "buildQualifiedName", 0, 1, !IS_UNIQUE, IS_ORDERED);
+        addEParameter(op, theEcorePackage.getEString(), "separator", 0, 1, !IS_UNIQUE, IS_ORDERED);
+        addEParameter(op, theEcorePackage.getEBoolean(), "withTechnologyName", 0, 1, !IS_UNIQUE, IS_ORDERED);
+        addEParameter(op, theEcorePackage.getEBoolean(), "withNamespace", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
         op = initEOperation(getServiceAspect__IsValidSelectorForJoinPoint__JoinPointType_ServiceAspectPointcutSelector(), theEcorePackage.getEBoolean(), "isValidSelectorForJoinPoint", 0, 1, !IS_UNIQUE, IS_ORDERED);
         addEParameter(op, this.getJoinPointType(), "joinPoint", 0, 1, !IS_UNIQUE, IS_ORDERED);
@@ -2098,6 +2138,15 @@ public class TechnologyPackageImpl extends EPackageImpl implements TechnologyPac
         initEClass(operationAspectEClass, OperationAspect.class, "OperationAspect", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getOperationAspect_PointcutSelectors(), this.getOperationAspectPointcutSelector(), this.getOperationAspectPointcutSelector_OperationAspect(), "pointcutSelectors", null, 0, -1, OperationAspect.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getOperationAspect_Technology(), this.getTechnology(), this.getTechnology_OperationAspects(), "technology", null, 0, 1, OperationAspect.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        op = initEOperation(getOperationAspect__GetQualifiedNameParts__boolean_boolean(), theEcorePackage.getEString(), "getQualifiedNameParts", 0, -1, !IS_UNIQUE, IS_ORDERED);
+        addEParameter(op, theEcorePackage.getEBoolean(), "withTechnologyName", 0, 1, !IS_UNIQUE, IS_ORDERED);
+        addEParameter(op, theEcorePackage.getEBoolean(), "withNamespace", 0, 1, !IS_UNIQUE, IS_ORDERED);
+
+        op = initEOperation(getOperationAspect__BuildQualifiedName__String_boolean_boolean(), theEcorePackage.getEString(), "buildQualifiedName", 0, 1, !IS_UNIQUE, IS_ORDERED);
+        addEParameter(op, theEcorePackage.getEString(), "separator", 0, 1, !IS_UNIQUE, IS_ORDERED);
+        addEParameter(op, theEcorePackage.getEBoolean(), "withTechnologyName", 0, 1, !IS_UNIQUE, IS_ORDERED);
+        addEParameter(op, theEcorePackage.getEBoolean(), "withNamespace", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
         op = initEOperation(getOperationAspect__HasMatchingSelector__EObject(), theEcorePackage.getEBoolean(), "hasMatchingSelector", 0, 1, !IS_UNIQUE, IS_ORDERED);
         addEParameter(op, theEcorePackage.getEObject(), "forTechnology", 0, 1, !IS_UNIQUE, IS_ORDERED);

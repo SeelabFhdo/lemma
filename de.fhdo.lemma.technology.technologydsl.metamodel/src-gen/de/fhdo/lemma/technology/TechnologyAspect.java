@@ -133,16 +133,4 @@ public interface TechnologyAspect extends EObject {
      */
     boolean isIsSingleValued();
 
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * *
-     * Get parts of the technology aspect for creating a qualified name
-     * <!-- end-model-doc -->
-     * @model kind="operation" unique="false"
-     * @generated
-     */
-    EList<String> getQualifiedNameParts();
-
 } // TechnologyAspect

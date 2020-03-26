@@ -924,8 +924,11 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
             .filter[joinPoints.contains(joinPoint)].toList
         val scopeAspects = filterAspectsForMatching(joinPoint, declaredAspectsForJoinPoint,
             forExchangePattern, forCommunicationType, forProtocolsAndDataFormats)
-        return Scopes::scopeFor(scopeAspects, [QualifiedName.create(it.qualifiedNameParts)],
-            IScope.NULLSCOPE)
+        return Scopes::scopeFor(
+            scopeAspects,
+            [QualifiedName.create(it.getQualifiedNameParts(false, true))],
+            IScope.NULLSCOPE
+        )
     }
 
     /**
