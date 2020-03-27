@@ -304,13 +304,22 @@ public interface IntermediatePackage extends EPackage {
     int INTERMEDIATE_INTERFACE__NAME = 0;
 
     /**
+     * The feature id for the '<em><b>Version</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_INTERFACE__VERSION = 1;
+
+    /**
      * The feature id for the '<em><b>Qualified Name</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_INTERFACE__QUALIFIED_NAME = 1;
+    int INTERMEDIATE_INTERFACE__QUALIFIED_NAME = 2;
 
     /**
      * The feature id for the '<em><b>Visibility</b></em>' attribute.
@@ -319,7 +328,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_INTERFACE__VISIBILITY = 2;
+    int INTERMEDIATE_INTERFACE__VISIBILITY = 3;
 
     /**
      * The feature id for the '<em><b>Not Implemented</b></em>' attribute.
@@ -328,7 +337,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_INTERFACE__NOT_IMPLEMENTED = 3;
+    int INTERMEDIATE_INTERFACE__NOT_IMPLEMENTED = 4;
 
     /**
      * The feature id for the '<em><b>Has Implemented Operations</b></em>' attribute.
@@ -337,7 +346,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_INTERFACE__HAS_IMPLEMENTED_OPERATIONS = 4;
+    int INTERMEDIATE_INTERFACE__HAS_IMPLEMENTED_OPERATIONS = 5;
 
     /**
      * The feature id for the '<em><b>Endpoints</b></em>' containment reference list.
@@ -346,7 +355,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_INTERFACE__ENDPOINTS = 5;
+    int INTERMEDIATE_INTERFACE__ENDPOINTS = 6;
 
     /**
      * The feature id for the '<em><b>Protocols</b></em>' containment reference list.
@@ -355,7 +364,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_INTERFACE__PROTOCOLS = 6;
+    int INTERMEDIATE_INTERFACE__PROTOCOLS = 7;
 
     /**
      * The feature id for the '<em><b>Operations</b></em>' containment reference list.
@@ -364,7 +373,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_INTERFACE__OPERATIONS = 7;
+    int INTERMEDIATE_INTERFACE__OPERATIONS = 8;
 
     /**
      * The feature id for the '<em><b>Referred Operations</b></em>' containment reference list.
@@ -373,7 +382,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_INTERFACE__REFERRED_OPERATIONS = 8;
+    int INTERMEDIATE_INTERFACE__REFERRED_OPERATIONS = 9;
 
     /**
      * The feature id for the '<em><b>Aspects</b></em>' containment reference list.
@@ -382,7 +391,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_INTERFACE__ASPECTS = 9;
+    int INTERMEDIATE_INTERFACE__ASPECTS = 10;
 
     /**
      * The feature id for the '<em><b>Microservice</b></em>' container reference.
@@ -391,7 +400,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_INTERFACE__MICROSERVICE = 10;
+    int INTERMEDIATE_INTERFACE__MICROSERVICE = 11;
 
     /**
      * The number of structural features of the '<em>Interface</em>' class.
@@ -400,7 +409,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_INTERFACE_FEATURE_COUNT = 11;
+    int INTERMEDIATE_INTERFACE_FEATURE_COUNT = 12;
 
     /**
      * The number of operations of the '<em>Interface</em>' class.
@@ -1041,13 +1050,22 @@ public interface IntermediatePackage extends EPackage {
     int INTERFACE_REFERENCE__NAME = 0;
 
     /**
+     * The feature id for the '<em><b>Version</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERFACE_REFERENCE__VERSION = 1;
+
+    /**
      * The feature id for the '<em><b>Qualified Name</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int INTERFACE_REFERENCE__QUALIFIED_NAME = 1;
+    int INTERFACE_REFERENCE__QUALIFIED_NAME = 2;
 
     /**
      * The feature id for the '<em><b>Imported</b></em>' attribute.
@@ -1056,7 +1074,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERFACE_REFERENCE__IMPORTED = 2;
+    int INTERFACE_REFERENCE__IMPORTED = 3;
 
     /**
      * The feature id for the '<em><b>Import</b></em>' reference.
@@ -1065,7 +1083,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERFACE_REFERENCE__IMPORT = 3;
+    int INTERFACE_REFERENCE__IMPORT = 4;
 
     /**
      * The feature id for the '<em><b>Local Interface</b></em>' reference.
@@ -1074,7 +1092,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERFACE_REFERENCE__LOCAL_INTERFACE = 4;
+    int INTERFACE_REFERENCE__LOCAL_INTERFACE = 5;
 
     /**
      * The feature id for the '<em><b>Requiring Microservice</b></em>' container reference.
@@ -1083,7 +1101,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERFACE_REFERENCE__REQUIRING_MICROSERVICE = 5;
+    int INTERFACE_REFERENCE__REQUIRING_MICROSERVICE = 6;
 
     /**
      * The number of structural features of the '<em>Interface Reference</em>' class.
@@ -1092,7 +1110,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERFACE_REFERENCE_FEATURE_COUNT = 6;
+    int INTERFACE_REFERENCE_FEATURE_COUNT = 7;
 
     /**
      * The number of operations of the '<em>Interface Reference</em>' class.
@@ -1663,6 +1681,17 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      */
     EAttribute getIntermediateInterface_Name();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.fhdo.lemma.service.intermediate.IntermediateInterface#getVersion <em>Version</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Version</em>'.
+     * @see de.fhdo.lemma.service.intermediate.IntermediateInterface#getVersion()
+     * @see #getIntermediateInterface()
+     * @generated
+     */
+    EAttribute getIntermediateInterface_Version();
 
     /**
      * Returns the meta object for the attribute '{@link de.fhdo.lemma.service.intermediate.IntermediateInterface#getQualifiedName <em>Qualified Name</em>}'.
@@ -2372,6 +2401,17 @@ public interface IntermediatePackage extends EPackage {
     EAttribute getInterfaceReference_Name();
 
     /**
+     * Returns the meta object for the attribute '{@link de.fhdo.lemma.service.intermediate.InterfaceReference#getVersion <em>Version</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Version</em>'.
+     * @see de.fhdo.lemma.service.intermediate.InterfaceReference#getVersion()
+     * @see #getInterfaceReference()
+     * @generated
+     */
+    EAttribute getInterfaceReference_Version();
+
+    /**
      * Returns the meta object for the attribute '{@link de.fhdo.lemma.service.intermediate.InterfaceReference#getQualifiedName <em>Qualified Name</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2922,6 +2962,14 @@ public interface IntermediatePackage extends EPackage {
         EAttribute INTERMEDIATE_INTERFACE__NAME = eINSTANCE.getIntermediateInterface_Name();
 
         /**
+         * The meta object literal for the '<em><b>Version</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute INTERMEDIATE_INTERFACE__VERSION = eINSTANCE.getIntermediateInterface_Version();
+
+        /**
          * The meta object literal for the '<em><b>Qualified Name</b></em>' attribute feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -3456,6 +3504,14 @@ public interface IntermediatePackage extends EPackage {
          * @generated
          */
         EAttribute INTERFACE_REFERENCE__NAME = eINSTANCE.getInterfaceReference_Name();
+
+        /**
+         * The meta object literal for the '<em><b>Version</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute INTERFACE_REFERENCE__VERSION = eINSTANCE.getInterfaceReference_Version();
 
         /**
          * The meta object literal for the '<em><b>Qualified Name</b></em>' attribute feature.

@@ -1045,16 +1045,40 @@ ruleInterface returns [EObject current=null]
 				}
 			)
 		)
-		otherlv_12='{'
+		(
+			otherlv_12='version'
+			{
+				newLeafNode(otherlv_12, grammarAccess.getInterfaceAccess().getVersionKeyword_7_0());
+			}
+			(
+				(
+					lv_version_13_0=RULE_ID
+					{
+						newLeafNode(lv_version_13_0, grammarAccess.getInterfaceAccess().getVersionIDTerminalRuleCall_7_1_0());
+					}
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getInterfaceRule());
+						}
+						setWithLastConsumed(
+							$current,
+							"version",
+							lv_version_13_0,
+							"org.eclipse.xtext.common.Terminals.ID");
+					}
+				)
+			)
+		)?
+		otherlv_14='{'
 		{
-			newLeafNode(otherlv_12, grammarAccess.getInterfaceAccess().getLeftCurlyBracketKeyword_7());
+			newLeafNode(otherlv_14, grammarAccess.getInterfaceAccess().getLeftCurlyBracketKeyword_8());
 		}
 		(
 			(
 				{
-					newCompositeNode(grammarAccess.getInterfaceAccess().getReferredOperationsReferredOperationParserRuleCall_8_0());
+					newCompositeNode(grammarAccess.getInterfaceAccess().getReferredOperationsReferredOperationParserRuleCall_9_0());
 				}
-				lv_referredOperations_13_0=ruleReferredOperation
+				lv_referredOperations_15_0=ruleReferredOperation
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getInterfaceRule());
@@ -1062,7 +1086,7 @@ ruleInterface returns [EObject current=null]
 					add(
 						$current,
 						"referredOperations",
-						lv_referredOperations_13_0,
+						lv_referredOperations_15_0,
 						"de.fhdo.lemma.ServiceDsl.ReferredOperation");
 					afterParserOrEnumRuleCall();
 				}
@@ -1071,9 +1095,9 @@ ruleInterface returns [EObject current=null]
 		(
 			(
 				{
-					newCompositeNode(grammarAccess.getInterfaceAccess().getOperationsOperationParserRuleCall_9_0());
+					newCompositeNode(grammarAccess.getInterfaceAccess().getOperationsOperationParserRuleCall_10_0());
 				}
-				lv_operations_14_0=ruleOperation
+				lv_operations_16_0=ruleOperation
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getInterfaceRule());
@@ -1081,15 +1105,15 @@ ruleInterface returns [EObject current=null]
 					add(
 						$current,
 						"operations",
-						lv_operations_14_0,
+						lv_operations_16_0,
 						"de.fhdo.lemma.ServiceDsl.Operation");
 					afterParserOrEnumRuleCall();
 				}
 			)
 		)*
-		otherlv_15='}'
+		otherlv_17='}'
 		{
-			newLeafNode(otherlv_15, grammarAccess.getInterfaceAccess().getRightCurlyBracketKeyword_10());
+			newLeafNode(otherlv_17, grammarAccess.getInterfaceAccess().getRightCurlyBracketKeyword_11());
 		}
 	)
 ;

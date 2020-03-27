@@ -618,25 +618,30 @@ public class ServiceDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cInterfaceKeyword_5 = (Keyword)cGroup.eContents().get(5);
 		private final Assignment cNameAssignment_6 = (Assignment)cGroup.eContents().get(6);
 		private final RuleCall cNameIDTerminalRuleCall_6_0 = (RuleCall)cNameAssignment_6.eContents().get(0);
-		private final Keyword cLeftCurlyBracketKeyword_7 = (Keyword)cGroup.eContents().get(7);
-		private final Assignment cReferredOperationsAssignment_8 = (Assignment)cGroup.eContents().get(8);
-		private final RuleCall cReferredOperationsReferredOperationParserRuleCall_8_0 = (RuleCall)cReferredOperationsAssignment_8.eContents().get(0);
-		private final Assignment cOperationsAssignment_9 = (Assignment)cGroup.eContents().get(9);
-		private final RuleCall cOperationsOperationParserRuleCall_9_0 = (RuleCall)cOperationsAssignment_9.eContents().get(0);
-		private final Keyword cRightCurlyBracketKeyword_10 = (Keyword)cGroup.eContents().get(10);
+		private final Group cGroup_7 = (Group)cGroup.eContents().get(7);
+		private final Keyword cVersionKeyword_7_0 = (Keyword)cGroup_7.eContents().get(0);
+		private final Assignment cVersionAssignment_7_1 = (Assignment)cGroup_7.eContents().get(1);
+		private final RuleCall cVersionIDTerminalRuleCall_7_1_0 = (RuleCall)cVersionAssignment_7_1.eContents().get(0);
+		private final Keyword cLeftCurlyBracketKeyword_8 = (Keyword)cGroup.eContents().get(8);
+		private final Assignment cReferredOperationsAssignment_9 = (Assignment)cGroup.eContents().get(9);
+		private final RuleCall cReferredOperationsReferredOperationParserRuleCall_9_0 = (RuleCall)cReferredOperationsAssignment_9.eContents().get(0);
+		private final Assignment cOperationsAssignment_10 = (Assignment)cGroup.eContents().get(10);
+		private final RuleCall cOperationsOperationParserRuleCall_10_0 = (RuleCall)cOperationsAssignment_10.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_11 = (Keyword)cGroup.eContents().get(11);
 		
 		//Interface:
 		//	(protocols+=ProtocolSpecification protocols+=ProtocolSpecification?)? ('@' 'endpoints' '(' endpoints+=Endpoint+ ')')?
 		//	aspects+=ImportedServiceAspect*
-		//	notImplemented?='noimpl'? visibility=Visibility? 'interface' name=ID '{'
+		//	notImplemented?='noimpl'? visibility=Visibility? 'interface' name=ID ('version' version=ID)?
+		//	'{'
 		//	referredOperations+=ReferredOperation*
 		//	operations+=Operation*
 		//	'}';
 		@Override public ParserRule getRule() { return rule; }
 		
 		//(protocols+=ProtocolSpecification protocols+=ProtocolSpecification?)? ('@' 'endpoints' '(' endpoints+=Endpoint+ ')')?
-		//aspects+=ImportedServiceAspect* notImplemented?='noimpl'? visibility=Visibility? 'interface' name=ID '{'
-		//referredOperations+=ReferredOperation* operations+=Operation* '}'
+		//aspects+=ImportedServiceAspect* notImplemented?='noimpl'? visibility=Visibility? 'interface' name=ID ('version'
+		//version=ID)? '{' referredOperations+=ReferredOperation* operations+=Operation* '}'
 		public Group getGroup() { return cGroup; }
 		
 		//(protocols+=ProtocolSpecification protocols+=ProtocolSpecification?)?
@@ -702,23 +707,35 @@ public class ServiceDslGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getNameIDTerminalRuleCall_6_0() { return cNameIDTerminalRuleCall_6_0; }
 		
+		//('version' version=ID)?
+		public Group getGroup_7() { return cGroup_7; }
+		
+		//'version'
+		public Keyword getVersionKeyword_7_0() { return cVersionKeyword_7_0; }
+		
+		//version=ID
+		public Assignment getVersionAssignment_7_1() { return cVersionAssignment_7_1; }
+		
+		//ID
+		public RuleCall getVersionIDTerminalRuleCall_7_1_0() { return cVersionIDTerminalRuleCall_7_1_0; }
+		
 		//'{'
-		public Keyword getLeftCurlyBracketKeyword_7() { return cLeftCurlyBracketKeyword_7; }
+		public Keyword getLeftCurlyBracketKeyword_8() { return cLeftCurlyBracketKeyword_8; }
 		
 		//referredOperations+=ReferredOperation*
-		public Assignment getReferredOperationsAssignment_8() { return cReferredOperationsAssignment_8; }
+		public Assignment getReferredOperationsAssignment_9() { return cReferredOperationsAssignment_9; }
 		
 		//ReferredOperation
-		public RuleCall getReferredOperationsReferredOperationParserRuleCall_8_0() { return cReferredOperationsReferredOperationParserRuleCall_8_0; }
+		public RuleCall getReferredOperationsReferredOperationParserRuleCall_9_0() { return cReferredOperationsReferredOperationParserRuleCall_9_0; }
 		
 		//operations+=Operation*
-		public Assignment getOperationsAssignment_9() { return cOperationsAssignment_9; }
+		public Assignment getOperationsAssignment_10() { return cOperationsAssignment_10; }
 		
 		//Operation
-		public RuleCall getOperationsOperationParserRuleCall_9_0() { return cOperationsOperationParserRuleCall_9_0; }
+		public RuleCall getOperationsOperationParserRuleCall_10_0() { return cOperationsOperationParserRuleCall_10_0; }
 		
 		//'}'
-		public Keyword getRightCurlyBracketKeyword_10() { return cRightCurlyBracketKeyword_10; }
+		public Keyword getRightCurlyBracketKeyword_11() { return cRightCurlyBracketKeyword_11; }
 	}
 	public class ApiOperationCommentElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.fhdo.lemma.ServiceDsl.ApiOperationComment");
@@ -2436,7 +2453,8 @@ public class ServiceDslGrammarAccess extends AbstractGrammarElementFinder {
 	//Interface:
 	//	(protocols+=ProtocolSpecification protocols+=ProtocolSpecification?)? ('@' 'endpoints' '(' endpoints+=Endpoint+ ')')?
 	//	aspects+=ImportedServiceAspect*
-	//	notImplemented?='noimpl'? visibility=Visibility? 'interface' name=ID '{'
+	//	notImplemented?='noimpl'? visibility=Visibility? 'interface' name=ID ('version' version=ID)?
+	//	'{'
 	//	referredOperations+=ReferredOperation*
 	//	operations+=Operation*
 	//	'}';

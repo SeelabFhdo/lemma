@@ -717,7 +717,20 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
   private IScope getScopeForInterfaces(final InterfaceMapping mapping) {
     final MicroserviceMapping microserviceMapping = mapping.getMicroserviceMapping();
     final Microservice microservice = microserviceMapping.getMicroservice().getMicroservice();
-    return Scopes.scopeFor(microservice.getInterfaces());
+    final Function<Interface, QualifiedName> _function = (Interface it) -> {
+      QualifiedName _xifexpression = null;
+      String _version = it.getVersion();
+      boolean _tripleNotEquals = (_version != null);
+      if (_tripleNotEquals) {
+        _xifexpression = QualifiedName.create(it.getVersion(), it.getName());
+      } else {
+        _xifexpression = QualifiedName.create(it.getName());
+      }
+      return _xifexpression;
+    };
+    return Scopes.<Interface>scopeFor(
+      microservice.getInterfaces(), _function, 
+      IScope.NULLSCOPE);
   }
   
   /**
@@ -734,7 +747,15 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     };
     final Iterable<Operation> operations = Iterables.<Operation>concat(ListExtensions.<Interface, EList<Operation>>map(microservice.getInterfaces(), _function));
     final Function<Operation, QualifiedName> _function_1 = (Operation it) -> {
-      return QualifiedName.create(it.getInterface().getName(), it.getName());
+      QualifiedName _xifexpression = null;
+      String _version = it.getInterface().getVersion();
+      boolean _tripleNotEquals = (_version != null);
+      if (_tripleNotEquals) {
+        _xifexpression = QualifiedName.create(it.getInterface().getVersion(), it.getInterface().getName(), it.getName());
+      } else {
+        _xifexpression = QualifiedName.create(it.getInterface().getName(), it.getName());
+      }
+      return _xifexpression;
     };
     return Scopes.<Operation>scopeFor(operations, _function_1, 
       IScope.NULLSCOPE);
@@ -1016,7 +1037,15 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     };
     final Iterable<ReferredOperation> operations = Iterables.<ReferredOperation>concat(ListExtensions.<Interface, EList<ReferredOperation>>map(microservice.getInterfaces(), _function));
     final Function<ReferredOperation, QualifiedName> _function_1 = (ReferredOperation it) -> {
-      return QualifiedName.create(it.getInterface().getName(), it.getOperation().getName());
+      QualifiedName _xifexpression = null;
+      String _version = it.getInterface().getVersion();
+      boolean _tripleNotEquals = (_version != null);
+      if (_tripleNotEquals) {
+        _xifexpression = QualifiedName.create(it.getInterface().getVersion(), it.getInterface().getName(), it.getOperation().getName());
+      } else {
+        _xifexpression = QualifiedName.create(it.getInterface().getName(), it.getOperation().getName());
+      }
+      return _xifexpression;
     };
     return Scopes.<ReferredOperation>scopeFor(operations, _function_1, 
       IScope.NULLSCOPE);

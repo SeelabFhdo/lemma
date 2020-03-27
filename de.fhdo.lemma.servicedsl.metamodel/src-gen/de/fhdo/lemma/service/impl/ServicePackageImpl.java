@@ -1311,7 +1311,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     @Override
-    public EAttribute getInterface_NotImplemented() {
+    public EAttribute getInterface_Version() {
         return (EAttribute)interfaceEClass.getEStructuralFeatures().get(1);
     }
 
@@ -1321,7 +1321,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     @Override
-    public EAttribute getInterface_Visibility() {
+    public EAttribute getInterface_NotImplemented() {
         return (EAttribute)interfaceEClass.getEStructuralFeatures().get(2);
     }
 
@@ -1331,8 +1331,8 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     @Override
-    public EReference getInterface_Endpoints() {
-        return (EReference)interfaceEClass.getEStructuralFeatures().get(3);
+    public EAttribute getInterface_Visibility() {
+        return (EAttribute)interfaceEClass.getEStructuralFeatures().get(3);
     }
 
     /**
@@ -1341,7 +1341,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     @Override
-    public EReference getInterface_Protocols() {
+    public EReference getInterface_Endpoints() {
         return (EReference)interfaceEClass.getEStructuralFeatures().get(4);
     }
 
@@ -1351,7 +1351,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     @Override
-    public EReference getInterface_Operations() {
+    public EReference getInterface_Protocols() {
         return (EReference)interfaceEClass.getEStructuralFeatures().get(5);
     }
 
@@ -1361,7 +1361,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     @Override
-    public EReference getInterface_ReferredOperations() {
+    public EReference getInterface_Operations() {
         return (EReference)interfaceEClass.getEStructuralFeatures().get(6);
     }
 
@@ -1371,7 +1371,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     @Override
-    public EReference getInterface_Aspects() {
+    public EReference getInterface_ReferredOperations() {
         return (EReference)interfaceEClass.getEStructuralFeatures().get(7);
     }
 
@@ -1381,7 +1381,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     @Override
-    public EReference getInterface_Microservice() {
+    public EReference getInterface_Aspects() {
         return (EReference)interfaceEClass.getEStructuralFeatures().get(8);
     }
 
@@ -1391,8 +1391,8 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     @Override
-    public EAttribute getInterface_EffectiveVisibility() {
-        return (EAttribute)interfaceEClass.getEStructuralFeatures().get(9);
+    public EReference getInterface_Microservice() {
+        return (EReference)interfaceEClass.getEStructuralFeatures().get(9);
     }
 
     /**
@@ -1401,7 +1401,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     @Override
-    public EAttribute getInterface_EffectivelyImplemented() {
+    public EAttribute getInterface_EffectiveVisibility() {
         return (EAttribute)interfaceEClass.getEStructuralFeatures().get(10);
     }
 
@@ -1411,8 +1411,18 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     @Override
-    public EAttribute getInterface_EffectivelyInternal() {
+    public EAttribute getInterface_EffectivelyImplemented() {
         return (EAttribute)interfaceEClass.getEStructuralFeatures().get(11);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EAttribute getInterface_EffectivelyInternal() {
+        return (EAttribute)interfaceEClass.getEStructuralFeatures().get(12);
     }
 
     /**
@@ -2711,6 +2721,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
 
         interfaceEClass = createEClass(INTERFACE);
         createEAttribute(interfaceEClass, INTERFACE__NAME);
+        createEAttribute(interfaceEClass, INTERFACE__VERSION);
         createEAttribute(interfaceEClass, INTERFACE__NOT_IMPLEMENTED);
         createEAttribute(interfaceEClass, INTERFACE__VISIBILITY);
         createEReference(interfaceEClass, INTERFACE__ENDPOINTS);
@@ -3039,6 +3050,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
 
         initEClass(interfaceEClass, Interface.class, "Interface", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getInterface_Name(), theEcorePackage.getEString(), "name", null, 0, 1, Interface.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getInterface_Version(), theEcorePackage.getEString(), "version", null, 0, 1, Interface.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getInterface_NotImplemented(), theEcorePackage.getEBoolean(), "notImplemented", "false", 0, 1, Interface.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getInterface_Visibility(), this.getVisibility(), "visibility", "NONE", 0, 1, Interface.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getInterface_Endpoints(), this.getEndpoint(), this.getEndpoint_Interface(), "endpoints", null, 0, -1, Interface.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

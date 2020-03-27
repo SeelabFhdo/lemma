@@ -21,6 +21,7 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  * <ul>
  *   <li>{@link de.fhdo.lemma.service.intermediate.InterfaceReference#getName <em>Name</em>}</li>
+ *   <li>{@link de.fhdo.lemma.service.intermediate.InterfaceReference#getVersion <em>Version</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.intermediate.InterfaceReference#getQualifiedName <em>Qualified Name</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.intermediate.InterfaceReference#isImported <em>Imported</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.intermediate.InterfaceReference#getImport <em>Import</em>}</li>
@@ -58,6 +59,32 @@ public interface InterfaceReference extends EObject {
      * @generated
      */
     void setName(String value);
+
+    /**
+     * Returns the value of the '<em><b>Version</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Version</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Version</em>' attribute.
+     * @see #setVersion(String)
+     * @see de.fhdo.lemma.service.intermediate.IntermediatePackage#getInterfaceReference_Version()
+     * @model unique="false"
+     * @generated
+     */
+    String getVersion();
+
+    /**
+     * Sets the value of the '{@link de.fhdo.lemma.service.intermediate.InterfaceReference#getVersion <em>Version</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Version</em>' attribute.
+     * @see #getVersion()
+     * @generated
+     */
+    void setVersion(String value);
 
     /**
      * Returns the value of the '<em><b>Qualified Name</b></em>' attribute.

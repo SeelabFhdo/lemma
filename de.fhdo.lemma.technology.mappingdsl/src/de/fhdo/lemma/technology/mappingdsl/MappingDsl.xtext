@@ -58,7 +58,7 @@ MicroserviceMapping returns MicroserviceMapping:
 ;
 
 InterfaceMapping returns InterfaceMapping:
-    'interface' interface=[service::Interface] '{'
+    'interface' interface=[service::Interface|QualifiedName] '{'
         ('protocols' '{'
             protocols+=TechnologySpecificProtocolSpecification+
         '}')?

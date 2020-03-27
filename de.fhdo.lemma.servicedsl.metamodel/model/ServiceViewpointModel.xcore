@@ -766,7 +766,7 @@ class Interface {
      */
 
     String name
-    //String version
+    String version
     boolean notImplemented = "false"
     Visibility visibility = "NONE"
 
@@ -811,6 +811,9 @@ class Interface {
             return newArrayList.asEList
 
         val nameParts = microservice.qualifiedNameParts
+        if (version !== null)
+            nameParts.add(version)
+
         nameParts.addAll(name)
         nameParts.asEList
     }

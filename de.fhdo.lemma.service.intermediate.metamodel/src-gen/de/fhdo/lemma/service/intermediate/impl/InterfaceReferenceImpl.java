@@ -29,6 +29,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  * </p>
  * <ul>
  *   <li>{@link de.fhdo.lemma.service.intermediate.impl.InterfaceReferenceImpl#getName <em>Name</em>}</li>
+ *   <li>{@link de.fhdo.lemma.service.intermediate.impl.InterfaceReferenceImpl#getVersion <em>Version</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.intermediate.impl.InterfaceReferenceImpl#getQualifiedName <em>Qualified Name</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.intermediate.impl.InterfaceReferenceImpl#isImported <em>Imported</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.intermediate.impl.InterfaceReferenceImpl#getImport <em>Import</em>}</li>
@@ -58,6 +59,26 @@ public class InterfaceReferenceImpl extends MinimalEObjectImpl.Container impleme
      * @ordered
      */
     protected String name = NAME_EDEFAULT;
+
+    /**
+     * The default value of the '{@link #getVersion() <em>Version</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getVersion()
+     * @generated
+     * @ordered
+     */
+    protected static final String VERSION_EDEFAULT = null;
+
+    /**
+     * The cached value of the '{@link #getVersion() <em>Version</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getVersion()
+     * @generated
+     * @ordered
+     */
+    protected String version = VERSION_EDEFAULT;
 
     /**
      * The default value of the '{@link #getQualifiedName() <em>Qualified Name</em>}' attribute.
@@ -159,6 +180,29 @@ public class InterfaceReferenceImpl extends MinimalEObjectImpl.Container impleme
         name = newName;
         if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, IntermediatePackage.INTERFACE_REFERENCE__NAME, oldName, name));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public String getVersion() {
+        return version;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void setVersion(String newVersion) {
+        String oldVersion = version;
+        version = newVersion;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, IntermediatePackage.INTERFACE_REFERENCE__VERSION, oldVersion, version));
     }
 
     /**
@@ -394,6 +438,8 @@ public class InterfaceReferenceImpl extends MinimalEObjectImpl.Container impleme
         switch (featureID) {
             case IntermediatePackage.INTERFACE_REFERENCE__NAME:
                 return getName();
+            case IntermediatePackage.INTERFACE_REFERENCE__VERSION:
+                return getVersion();
             case IntermediatePackage.INTERFACE_REFERENCE__QUALIFIED_NAME:
                 return getQualifiedName();
             case IntermediatePackage.INTERFACE_REFERENCE__IMPORTED:
@@ -421,6 +467,9 @@ public class InterfaceReferenceImpl extends MinimalEObjectImpl.Container impleme
         switch (featureID) {
             case IntermediatePackage.INTERFACE_REFERENCE__NAME:
                 setName((String)newValue);
+                return;
+            case IntermediatePackage.INTERFACE_REFERENCE__VERSION:
+                setVersion((String)newValue);
                 return;
             case IntermediatePackage.INTERFACE_REFERENCE__QUALIFIED_NAME:
                 setQualifiedName((String)newValue);
@@ -452,6 +501,9 @@ public class InterfaceReferenceImpl extends MinimalEObjectImpl.Container impleme
             case IntermediatePackage.INTERFACE_REFERENCE__NAME:
                 setName(NAME_EDEFAULT);
                 return;
+            case IntermediatePackage.INTERFACE_REFERENCE__VERSION:
+                setVersion(VERSION_EDEFAULT);
+                return;
             case IntermediatePackage.INTERFACE_REFERENCE__QUALIFIED_NAME:
                 setQualifiedName(QUALIFIED_NAME_EDEFAULT);
                 return;
@@ -481,6 +533,8 @@ public class InterfaceReferenceImpl extends MinimalEObjectImpl.Container impleme
         switch (featureID) {
             case IntermediatePackage.INTERFACE_REFERENCE__NAME:
                 return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+            case IntermediatePackage.INTERFACE_REFERENCE__VERSION:
+                return VERSION_EDEFAULT == null ? version != null : !VERSION_EDEFAULT.equals(version);
             case IntermediatePackage.INTERFACE_REFERENCE__QUALIFIED_NAME:
                 return QUALIFIED_NAME_EDEFAULT == null ? qualifiedName != null : !QUALIFIED_NAME_EDEFAULT.equals(qualifiedName);
             case IntermediatePackage.INTERFACE_REFERENCE__IMPORTED:
@@ -507,6 +561,8 @@ public class InterfaceReferenceImpl extends MinimalEObjectImpl.Container impleme
         StringBuilder result = new StringBuilder(super.toString());
         result.append(" (name: ");
         result.append(name);
+        result.append(", version: ");
+        result.append(version);
         result.append(", qualifiedName: ");
         result.append(qualifiedName);
         result.append(", imported: ");

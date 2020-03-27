@@ -318,15 +318,16 @@ group=1</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>410</x>
-      <y>300</y>
+      <y>290</y>
       <w>170</w>
-      <h>100</h>
+      <h>110</h>
     </coordinates>
     <panel_attributes>*Interface*
 *Reference*
 bg=green
 --
 name : String
+version : String
 qualifiedName : String
 imported : Boolean
 group=1</panel_attributes>
@@ -338,12 +339,13 @@ group=1</panel_attributes>
       <x>130</x>
       <y>590</y>
       <w>280</w>
-      <h>110</h>
+      <h>130</h>
     </coordinates>
     <panel_attributes>*IntermediateInterface*
 bg=#CCCCCC
 --
 name : String
+version : String
 qualifiedName : String
 visibility : Visibility
 notImplemented : Boolean
@@ -400,12 +402,12 @@ group=1</panel_attributes>
       <x>490</x>
       <y>240</y>
       <w>40</w>
-      <h>80</h>
+      <h>70</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;&gt;&gt;
-m1=*
+m1= *
 group=1</panel_attributes>
-    <additional_attributes>10.0;60.0;10.0;10.0</additional_attributes>
+    <additional_attributes>10.0;50.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
@@ -547,7 +549,7 @@ m1=1..*</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>130</x>
-      <y>760</y>
+      <y>780</y>
       <w>280</w>
       <h>100</h>
     </coordinates>
@@ -564,7 +566,7 @@ notImplemented : Boolean</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>260</x>
-      <y>690</y>
+      <y>710</y>
       <w>40</w>
       <h>90</h>
     </coordinates>
@@ -576,7 +578,7 @@ m1=*</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>510</x>
-      <y>720</y>
+      <y>740</y>
       <w>190</w>
       <h>30</h>
     </coordinates>
@@ -588,7 +590,7 @@ bg=yellow</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>510</x>
-      <y>760</y>
+      <y>780</y>
       <w>280</w>
       <h>30</h>
     </coordinates>
@@ -600,7 +602,7 @@ bg=yellow</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>510</x>
-      <y>800</y>
+      <y>820</y>
       <w>290</w>
       <h>30</h>
     </coordinates>
@@ -611,7 +613,7 @@ bg=yellow</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>320</x>
-      <y>720</y>
+      <y>740</y>
       <w>210</w>
       <h>60</h>
     </coordinates>
@@ -623,7 +625,7 @@ m1=*</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>400</x>
-      <y>760</y>
+      <y>780</y>
       <w>130</w>
       <h>40</h>
     </coordinates>
@@ -635,7 +637,7 @@ m1=0..2</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>400</x>
-      <y>800</y>
+      <y>820</y>
       <w>130</w>
       <h>40</h>
     </coordinates>
@@ -664,7 +666,7 @@ group=1</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>130</x>
-      <y>920</y>
+      <y>940</y>
       <w>310</w>
       <h>130</h>
     </coordinates>
@@ -683,7 +685,7 @@ optional : Boolean</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>520</x>
-      <y>920</y>
+      <y>940</y>
       <w>210</w>
       <h>30</h>
     </coordinates>
@@ -694,7 +696,7 @@ optional : Boolean</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>430</x>
-      <y>920</y>
+      <y>940</y>
       <w>110</w>
       <h>30</h>
     </coordinates>
@@ -705,7 +707,7 @@ optional : Boolean</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>560</x>
-      <y>960</y>
+      <y>980</y>
       <w>170</w>
       <h>30</h>
     </coordinates>
@@ -717,7 +719,7 @@ bg=yellow</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>430</x>
-      <y>960</y>
+      <y>980</y>
       <w>150</w>
       <h>40</h>
     </coordinates>
@@ -729,7 +731,7 @@ m1=0..1</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>520</x>
-      <y>1000</y>
+      <y>1020</y>
       <w>290</w>
       <h>30</h>
     </coordinates>
@@ -740,7 +742,7 @@ m1=0..1</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>430</x>
-      <y>1000</y>
+      <y>1020</y>
       <w>110</w>
       <h>40</h>
     </coordinates>
@@ -752,7 +754,7 @@ m1=*</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>260</x>
-      <y>850</y>
+      <y>870</y>
       <w>40</w>
       <h>90</h>
     </coordinates>
@@ -764,7 +766,7 @@ m1=*</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>180</x>
-      <y>1100</y>
+      <y>1120</y>
       <w>170</w>
       <h>60</h>
     </coordinates>
@@ -779,7 +781,7 @@ qualifiedName : String</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>260</x>
-      <y>1040</y>
+      <y>1060</y>
       <w>40</w>
       <h>80</h>
     </coordinates>
@@ -791,7 +793,7 @@ m1=*</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>440</x>
-      <y>1100</y>
+      <y>1120</y>
       <w>290</w>
       <h>30</h>
     </coordinates>
@@ -802,7 +804,7 @@ m1=*</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>340</x>
-      <y>1100</y>
+      <y>1120</y>
       <w>120</w>
       <h>40</h>
     </coordinates>
@@ -814,7 +816,7 @@ m1=1..*</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>30</x>
-      <y>1200</y>
+      <y>1220</y>
       <w>310</w>
       <h>100</h>
     </coordinates>
@@ -832,17 +834,17 @@ qualifiedNameInReferringInterface : String</panel_attributes>
       <x>30</x>
       <y>660</y>
       <w>120</w>
-      <h>560</h>
+      <h>580</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;&gt;&gt;
 m1=*</panel_attributes>
-    <additional_attributes>10.0;540.0;10.0;10.0;100.0;10.0</additional_attributes>
+    <additional_attributes>10.0;560.0;10.0;10.0;100.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>60</x>
-      <y>760</y>
+      <y>780</y>
       <w>90</w>
       <h>460</h>
     </coordinates>
@@ -853,7 +855,7 @@ m1=*</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>440</x>
-      <y>1200</y>
+      <y>1220</y>
       <w>190</w>
       <h>30</h>
     </coordinates>
@@ -865,7 +867,7 @@ bg=yellow</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>440</x>
-      <y>1240</y>
+      <y>1260</y>
       <w>280</w>
       <h>30</h>
     </coordinates>
@@ -877,7 +879,7 @@ bg=yellow</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>440</x>
-      <y>1280</y>
+      <y>1300</y>
       <w>290</w>
       <h>30</h>
     </coordinates>
@@ -888,7 +890,7 @@ bg=yellow</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>330</x>
-      <y>1200</y>
+      <y>1220</y>
       <w>130</w>
       <h>40</h>
     </coordinates>
@@ -900,7 +902,7 @@ m1=*</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>330</x>
-      <y>1240</y>
+      <y>1260</y>
       <w>130</w>
       <h>40</h>
     </coordinates>
@@ -912,7 +914,7 @@ m1=0..2</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>330</x>
-      <y>1280</y>
+      <y>1300</y>
       <w>130</w>
       <h>40</h>
     </coordinates>
@@ -924,7 +926,7 @@ m1=*</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>510</x>
-      <y>840</y>
+      <y>860</y>
       <w>290</w>
       <h>50</h>
     </coordinates>
@@ -938,7 +940,7 @@ comment : String</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>400</x>
-      <y>840</y>
+      <y>860</y>
       <w>130</w>
       <h>40</h>
     </coordinates>
@@ -950,7 +952,7 @@ m1=0..1</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>870</x>
-      <y>830</y>
+      <y>850</y>
       <w>180</w>
       <h>80</h>
     </coordinates>
@@ -966,7 +968,7 @@ required : Boolean</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>790</x>
-      <y>840</y>
+      <y>860</y>
       <w>100</w>
       <h>40</h>
     </coordinates>
@@ -978,7 +980,7 @@ m1=*</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>370</x>
-      <y>890</y>
+      <y>910</y>
       <w>520</w>
       <h>50</h>
     </coordinates>

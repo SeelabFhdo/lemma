@@ -58,6 +58,7 @@ class IntermediateMicroservice {
  */
 class IntermediateInterface {
     String name
+    String version
     String qualifiedName
     Visibility visibility
     boolean notImplemented
@@ -183,6 +184,7 @@ class MicroserviceReference {
  */
 class InterfaceReference {
     String name
+    String version
     String qualifiedName
     boolean imported = "false"
 

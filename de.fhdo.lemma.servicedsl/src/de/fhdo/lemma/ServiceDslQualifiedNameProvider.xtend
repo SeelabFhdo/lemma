@@ -3,6 +3,7 @@ package de.fhdo.lemma
 import org.eclipse.xtext.naming.DefaultDeclarativeQualifiedNameProvider
 import de.fhdo.lemma.service.Microservice
 import org.eclipse.xtext.naming.QualifiedName
+import de.fhdo.lemma.service.Interface
 
 /**
  * Custom qualified name provider.
@@ -15,5 +16,12 @@ class ServiceDslQualifiedNameProvider extends DefaultDeclarativeQualifiedNamePro
      */
     def qualifiedName(Microservice microservice) {
         return QualifiedName.create(microservice.qualifiedNameParts)
+    }
+
+    /**
+     * Consider possible version as prefix of an interface's name
+     */
+    def qualifiedName(Interface iface) {
+        return QualifiedName.create(iface.qualifiedNameParts)
     }
 }

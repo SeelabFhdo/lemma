@@ -334,14 +334,20 @@ Microservices
 
         Name of the interface.
 
+    .. _link__IntermediateInterface_version:
+
+    .. py:attribute:: String version
+
+        Optional version of the interface.
+
     .. _link__IntermediateInterface_qualifiedName:
 
     .. py:attribute:: String[1] qualifiedName
 
         Qualified name of the interface. This is the interface's name prefixed 
-        by its microservice's 
+        by its version and its microservice's 
         :ref:`qualified name <link__IntermediateMicroservice_qualifiedName>`.
-        Both name fragments are separated by dots.
+        All name fragments are separated by dots.
 
     .. py:attribute:: Visibility[1] visibility
 
@@ -1086,6 +1092,11 @@ imported :java:type:`microservices <IntermediateMicroservice>`,
     .. py:attribute:: String[1] name
 
         :ref:`Name <link__IntermediateInterface_name>` of the referenced
+        interface.
+
+    .. py:attribute:: String version
+
+        :ref:`Version <link__IntermediateInterface_version>` of the referenced
         interface.
 
     .. _link__InterfaceReference_qualifiedName:
