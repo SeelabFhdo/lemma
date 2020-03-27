@@ -32,6 +32,7 @@ import de.fhdo.lemma.utils.LemmaUtils;
 import java.io.File;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -290,8 +291,17 @@ public class MappingModelTransformation extends AbstractAtlInputOutputIntermedia
       Pair<TransformationModelDescription, String> _mappedTo_2 = Pair.<TransformationModelDescription, String>of(IntermediateDataModelRefinement.IN_MODEL_DESCRIPTION, _buildOutputPathForRefiningTransformation);
       final HashMap<TransformationModelDescription, String> outputModelPaths = CollectionLiterals.<TransformationModelDescription, String>newHashMap(_mappedTo_2);
       final IntermediateDataModelRefinement refiningTransformation = new IntermediateDataModelRefinement();
-      return refiningTransformation.doTransformationFromResources(inputModelResources, outputModelPaths, 
+      final AbstractIntermediateModelTransformationStrategy.TransformationResult refiningResult = refiningTransformation.doTransformationFromResources(inputModelResources, outputModelPaths, 
         null, warningCallback).get(IntermediateDataModelRefinement.IN_MODEL_DESCRIPTION);
+      final Iterator<EObject> iter = refiningResult.getOutputModel().getResource().getContents().iterator();
+      while (iter.hasNext()) {
+        EObject _next = iter.next();
+        boolean _not = (!(_next instanceof IntermediateDataModel));
+        if (_not) {
+          iter.remove();
+        }
+      }
+      return refiningResult;
     }
     
     /**
