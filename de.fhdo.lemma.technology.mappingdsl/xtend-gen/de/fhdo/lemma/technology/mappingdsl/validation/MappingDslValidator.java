@@ -1603,11 +1603,6 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
       (!importedAspect.getAspect().isIsSingleValued()))) {
       return;
     }
-    boolean _isIsSingleValued = importedAspect.getAspect().isIsSingleValued();
-    boolean _not = (!_isIsSingleValued);
-    if (_not) {
-      return;
-    }
     final ArrayList<TechnologySpecificImportedServiceAspect> allAspectsOfContainer = CollectionLiterals.<TechnologySpecificImportedServiceAspect>newArrayList(importedAspect);
     allAspectsOfContainer.addAll(
       EcoreUtil2.<TechnologySpecificImportedServiceAspect>getSiblingsOfType(importedAspect, TechnologySpecificImportedServiceAspect.class));

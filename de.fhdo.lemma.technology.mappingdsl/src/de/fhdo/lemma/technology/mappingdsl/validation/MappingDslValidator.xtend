@@ -1240,10 +1240,6 @@ class MappingDslValidator extends AbstractMappingDslValidator {
             return
         }
 
-        if (!importedAspect.aspect.isSingleValued) {
-            return
-        }
-
         val allAspectsOfContainer = newArrayList(importedAspect)
         allAspectsOfContainer.addAll(
             EcoreUtil2.getSiblingsOfType(importedAspect, TechnologySpecificImportedServiceAspect)
