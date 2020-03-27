@@ -195,7 +195,8 @@ class MappingModelTransformation
         val workspacePath = ResourcesPlugin.workspace.root.location.toString
         targetPaths.forEach[importName, targetPath |
             val import = serviceModelRoot.imports.findFirst[name == importName]
-            import.importURI = LemmaUtils.convertToFileUri(workspacePath + targetPath)
+            if (import !== null)
+                import.importURI = LemmaUtils.convertToFileUri(workspacePath + targetPath)
         ]
 
         // Adapt paths of those domain imports that were not adapted yet. This may happen, if the

@@ -536,7 +536,9 @@ public class MappingModelTransformation extends AbstractAtlInputOutputIntermedia
         return Boolean.valueOf(Objects.equal(_name, importName));
       };
       final Import import_ = IterableExtensions.<Import>findFirst(serviceModelRoot.getImports(), _function_1);
-      import_.setImportURI(LemmaUtils.convertToFileUri((workspacePath + targetPath)));
+      if ((import_ != null)) {
+        import_.setImportURI(LemmaUtils.convertToFileUri((workspacePath + targetPath)));
+      }
     };
     targetPaths.forEach(_function);
     final Function1<Import, Boolean> _function_1 = (Import it) -> {
