@@ -773,7 +773,7 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
    * Warn about non-unique microservice endpoints' addresses per protocol/data format combination
    */
   @Check
-  public void warnkUniqueEndpointAddresses(final TechnologyMapping model) {
+  public void warnUniqueEndpointAddresses(final TechnologyMapping model) {
     final Function1<Import, Boolean> _function = (Import it) -> {
       ImportType _importType = it.getImportType();
       return Boolean.valueOf((_importType == ImportType.MICROSERVICES));

@@ -611,7 +611,7 @@ class MappingDslValidator extends AbstractMappingDslValidator {
      * Warn about non-unique microservice endpoints' addresses per protocol/data format combination
      */
     @Check
-    def warnkUniqueEndpointAddresses(TechnologyMapping model) {
+    def warnUniqueEndpointAddresses(TechnologyMapping model) {
         val allImportedServiceModels = model.imports
             .filter[importType === ImportType.MICROSERVICES]
             .map[
