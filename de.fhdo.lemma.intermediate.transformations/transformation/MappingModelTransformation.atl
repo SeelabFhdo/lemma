@@ -318,8 +318,7 @@ rule MappedComplexType {
     do {
         thisModule.CreateMappedComplexType(
             m.technologyReferences,
-            m.type.dataModelImport,
-            m.type.type,
+            m.type,
             m.fieldMappings,
             m.operationMappings,
             m.aspects,
@@ -329,15 +328,23 @@ rule MappedComplexType {
 }
 
 --- Generic called rule to create a MappedComplexType instance
-rule CreateMappedComplexType(technologyReferences : Sequence(Service!TechnologyReference),
-    typeImport : Service!Import, type : Service!ComplexType,
+rule CreateMappedComplexType(
+    technologyReferences : Sequence(Service!TechnologyReference),
+    complexTypeToMap : Mapping!ImportedComplexTypeToMap,
     fieldMappings : Sequence(Mapping!TechnologySpecificFieldMapping),
     operationMappings : Sequence(Mapping!DataOperationMapping),
-    aspects : Sequence(Mapping!TechnologySpecificImportedServiceAspect), sourceModelUri : String) {
+    aspects : Sequence(Mapping!TechnologySpecificImportedServiceAspect),
+    sourceModelUri : String
+) {
+    using {
+        serviceImport : Service!Import = complexTypeToMap.serviceModelImport;
+        typeImport : Service!Import = complexTypeToMap.dataModelImport;
+        type : Service!ComplexType = complexTypeToMap.type;
+    }
     to
         t : Service!MappedComplexType(
             serviceModel <- thisModule.ServiceModel(),
-            type <- thisModule.ImportedType(typeImport, type),
+            type <- thisModule.ImportedType(typeImport, type, serviceImport.name),
             t_sourceModelUri <- sourceModelUri
         )
     do {
@@ -641,8 +648,11 @@ rule Parameter(sourceParameter : Service!Parameter, parameterMapping : Mapping!P
             if (parameterMapping.oclIsTypeOf(Mapping!PrimitiveParameterMapping)) {
                 if (not parameterMapping.technology.oclIsUndefined() and
                     not parameterMapping.primitiveType.oclIsUndefined())
-                    t.importedType <- thisModule.ImportedType(parameterMapping.technology,
-                        parameterMapping.primitiveType);
+                    t.importedType <- thisModule.ImportedType(
+                        parameterMapping.technology,
+                        parameterMapping.primitiveType,
+                        OclUndefined
+                    );
 
             -- Parameter is mapped to technology-specific complex type
             } else if (parameterMapping.oclIsTypeOf(Mapping!ComplexParameterMapping)) {
@@ -651,8 +661,11 @@ rule Parameter(sourceParameter : Service!Parameter, parameterMapping : Mapping!P
                 -- parameter's data structure type
                 if (not parameterMapping.technology.oclIsUndefined() and
                     not parameterMapping.technologySpecificComplexType.oclIsUndefined())
-                    t.importedType <- thisModule.ImportedType(parameterMapping.technology,
-                        parameterMapping.technologySpecificComplexType);
+                    t.importedType <- thisModule.ImportedType(
+                        parameterMapping.technology,
+                        parameterMapping.technologySpecificComplexType,
+                        OclUndefined
+                    );
 
                 for (fieldMapping in parameterMapping.fieldMappings) {
                     t.mappedFields <- t.mappedFields->append(
@@ -678,7 +691,7 @@ rule Parameter(sourceParameter : Service!Parameter, parameterMapping : Mapping!P
             -- Parameter has a type being imported from a data or technology model
             if (not sourceParameter.importedType.oclIsUndefined())
                 t.importedType <- thisModule.ImportedType(sourceParameter.importedType.import,
-                    sourceParameter.importedType.type);
+                    sourceParameter.importedType.type, OclUndefined);
 
             -- Parameter has a built-in primitive type
             else if (not sourceParameter.primitiveType.oclIsUndefined())
@@ -723,8 +736,11 @@ rule MappedDataOperationReturnType(returnTypeMapping : Mapping!DataOperationRetu
     do {
         if (not returnTypeMapping.technology.oclIsUndefined() and
             not returnTypeMapping.type.oclIsUndefined())
-            t.mappedType <- thisModule.ImportedType(returnTypeMapping.technology,
-                returnTypeMapping.type);
+            t.mappedType <- thisModule.ImportedType(
+                returnTypeMapping.technology,
+                returnTypeMapping.type,
+                OclUndefined
+            );
 
         t;
     }
@@ -743,8 +759,11 @@ rule MappedDataOperationParameter(parameterMapping : Mapping!DataOperationParame
     do {
         if (not parameterMapping.technology.oclIsUndefined() and
             not parameterMapping.type.oclIsUndefined())
-            t.mappedType <- thisModule.ImportedType(parameterMapping.technology,
-                parameterMapping.type);
+            t.mappedType <- thisModule.ImportedType(
+                parameterMapping.technology,
+                parameterMapping.type,
+                OclUndefined
+            );
 
         t;
     }
@@ -777,7 +796,8 @@ rule MappedFieldWithAspects(fieldMapping : Mapping!TechnologySpecificFieldMappin
             t.dataField <- fieldMapping.dataField;
             if (not fieldMapping.technology.oclIsUndefined() and
                 not fieldMapping.type.oclIsUndefined())
-                t.mappedType <- thisModule.ImportedType(fieldMapping.technology, fieldMapping.type);
+                t.mappedType <- thisModule.ImportedType(fieldMapping.technology, fieldMapping.type,
+                    OclUndefined);
         } else if (not fieldMapping.enumerationField.oclIsUndefined())
             t.enumerationField <- fieldMapping.enumerationField;
 
@@ -1024,7 +1044,8 @@ rule PrimitiveValue(sourceValue : Service!PrimitiveValue) {
 }
 
 --- Generic called rule to create an ImportedType instance
-rule ImportedType(sourceImport : Service!Import, sourceType : Service!Type) {
+rule ImportedType(sourceImport : Service!Import, sourceType : Service!Type,
+    relatedImportAlias : String) {
     to
         t : Service!ImportedType(
             import <- thisModule.getCreatedImport(sourceImport),
@@ -1032,7 +1053,7 @@ rule ImportedType(sourceImport : Service!Import, sourceType : Service!Type) {
         )
     do {
         if (t.import.oclIsUndefined())
-            t.import <- thisModule.Import(sourceImport, OclUndefined);
+            t.import <- thisModule.Import(sourceImport, relatedImportAlias);
 
         t;
     }
