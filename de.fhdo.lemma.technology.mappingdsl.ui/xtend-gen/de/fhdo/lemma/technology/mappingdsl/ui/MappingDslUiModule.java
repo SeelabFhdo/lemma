@@ -13,10 +13,26 @@ import org.eclipse.xtext.ui.editor.syntaxcoloring.IHighlightingConfiguration;
 
 /**
  * Use this class to register components to be used within the Eclipse IDE.
+ * 
+ * @author <a href="mailto:florian.rademacher@fh-dortmund.de>Florian Rademacher</a>
  */
 @FinalFieldsConstructor
 @SuppressWarnings("all")
 public class MappingDslUiModule extends AbstractMappingDslUiModule {
+  /**
+   * def Class<? extends XtextEditor> bindXtextEditor() {
+   * LiveValidationCapableXtextEditor
+   * }
+   * 
+   * def Class<? extends XtextDocumentProvider> bindXtextDocumentProvider() {
+   * LiveValidationXtextDocumentProvider
+   * }
+   * 
+   * @SingletonBinding(eager=true)
+   * def ServerConnection bindServerConnection() {
+   * return ServerConnection.instance
+   * }
+   */
   public Class<? extends IHighlightingConfiguration> bindIHighlightingConfiguration() {
     return HighlightingConfiguration.class;
   }

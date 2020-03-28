@@ -7,7 +7,7 @@ This repository contains the modeling languages, model transformations, and rela
 Please follow these steps if you want to try out LEMMA on the basis of the case study example described in [3]:
 1. The easiest way to try out LEMMA is to download one of the prepackaged [releases](https://github.com/SeelabFhdo/lemma/releases) for your OS. Then clone the repository to your harddrive, run the ``eclipse`` executable, and go to step 11.  
 
-   If you are interested in LEMMA's implementation, either download one of the prepackaged [releases](https://github.com/SeelabFhdo/lemma/releases) for your OS and go to step 4. Otherwise, if you instead want to setup your own Eclipse environment for both studying LEMMA's implementation and trying it out, download the [Eclipse IDE for Java and DSL Developers](https://www.eclipse.org/downloads/packages/release/2019-06/r/eclipse-ide-java-and-dsl-developers) first. Then continue with step 2.
+   If you are interested in LEMMA's implementation, either download one of the prepackaged [releases](https://github.com/SeelabFhdo/lemma/releases) for your OS and go to step 4. Otherwise, if you instead want to setup your own Eclipse environment for both studying LEMMA's implementation and trying it out, download the [Eclipse IDE for Java and DSL Developers](https://www.eclipse.org/downloads/packages/release/2020-03/r/eclipse-ide-java-and-dsl-developers) first. Then continue with step 2.
 2. Run the downloaded Eclipse package by starting the ``eclipse`` executable.
 3. Install the [ATL Transformation Language](https://marketplace.eclipse.org/content/atl) from the Eclipse Marketplace in the downloaded Eclipse package.
 4. Clone the repository to your harddrive.
@@ -24,8 +24,8 @@ Please follow these steps if you want to try out LEMMA on the basis of the case 
 The example models are now available in the Project Explorer of the Eclipse runtime environment under the project "Example". The folders "domain", "microservices", "operation", and "technology" contain the complete models of the case study as described in [3]. Further example models may be found in the repository folders ``Example-2`` and ``Example-3``. Simply execute step 11 repeatedly in order to import them into your running Eclipse instance with the LEMMA plugins.
 
 ## References
-[1] F. Rademacher, J. Sorgalla, S. Sachweh, and A. Zündorf, "A model-driven workflow for distributed microservice development," in Proceedings of the 34th Symposium On Applied Computing (SAC). ACM, 2019.
+[1] F. Rademacher, J. Sorgalla, S. Sachweh, and A. Zündorf, "A model-driven workflow for distributed microservice development," in Proceedings of the 34th Symposium On Applied Computing (SAC). ACM, 2019, pp. 1260-1262.
 
-[2] F. Rademacher, J. Sorgalla, S. Sachweh, and A. Zündorf, "Viewpoint-specific model-driven microservice development with interlinked modeling languages,” in Proceedings of the 13th International Conference on Service-Oriented System Engineering (SOSE). IEEE, 2019.
+[2] F. Rademacher, J. Sorgalla, P. Wizenty, S. Sachweh, and A. Zündorf, "Graphical and textual model-driven microservice development," in Microservices: Science and Engineering. Springer, 2019, pp. 147-179.
 
-[3] F. Rademacher, S. Sachweh, and A. Zündorf, "Aspect-oriented Modeling of Technology Heterogeneity in Microservice Architecture," in Proceedings of the 3rd International Conference on Software Architecture (ICSA; previously WICSA). IEEE, 2019.
+[3] F. Rademacher, S. Sachweh, and A. Zündorf, "Aspect-oriented Modeling of Technology Heterogeneity in Microservice Architecture," in Proceedings of the 3rd International Conference on Software Architecture (ICSA; previously WICSA). IEEE, 2019, pp. 21-30.

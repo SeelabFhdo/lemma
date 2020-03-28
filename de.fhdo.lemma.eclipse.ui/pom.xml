@@ -13,14 +13,6 @@
     <artifactId>de.fhdo.lemma.eclipse.ui</artifactId>
     <packaging>eclipse-plugin</packaging>
 
-    <repositories>
-        <repository>
-            <id>eclipse</id>
-            <layout>p2</layout>
-            <url>http://download.eclipse.org/releases/2018-12/</url>
-        </repository>
-    </repositories>
-
     <build>
         <pluginManagement>
             <plugins>

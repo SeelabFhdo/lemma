@@ -21,6 +21,20 @@ import org.eclipse.xtext.ui.editor.syntaxcoloring.IHighlightingConfiguration;
 @FinalFieldsConstructor
 @SuppressWarnings("all")
 public class ServiceDslUiModule extends AbstractServiceDslUiModule {
+  /**
+   * def Class<? extends XtextEditor> bindXtextEditor() {
+   * LiveValidationCapableXtextEditor
+   * }
+   * 
+   * def Class<? extends XtextDocumentProvider> bindXtextDocumentProvider() {
+   * LiveValidationXtextDocumentProvider
+   * }
+   * 
+   * @SingletonBinding(eager=true)
+   * def ServerConnection bindServerConnection() {
+   * return ServerConnection.instance
+   * }
+   */
   public Class<? extends IHighlightingConfiguration> bindIHighlightingConfiguration() {
     return HighlightingConfiguration.class;
   }
