@@ -126,9 +126,9 @@ final class LemmaUtils {
 
         val joinedPath = segments.join(File.separator)
         return if (isFileUri(joinedPath) && windowsOs)
-                joinedPath.replaceAll(File.separator, "/")
+                joinedPath.replace(File.separator, "/")
             else if (windowsOs)
-                joinedPath.replaceAll("/", File.separator)
+                joinedPath.replace("/", File.separator)
             else
                 joinedPath
     }

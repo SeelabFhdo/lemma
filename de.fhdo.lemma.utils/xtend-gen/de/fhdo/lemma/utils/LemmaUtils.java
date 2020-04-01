@@ -154,12 +154,12 @@ public final class LemmaUtils {
     final String joinedPath = IterableExtensions.join(((Iterable<?>)Conversions.doWrapArray(segments)), File.separator);
     String _xifexpression = null;
     if ((LemmaUtils.isFileUri(joinedPath) && LemmaUtils.isWindowsOs())) {
-      _xifexpression = joinedPath.replaceAll(File.separator, "/");
+      _xifexpression = joinedPath.replace(File.separator, "/");
     } else {
       String _xifexpression_1 = null;
       boolean _isWindowsOs = LemmaUtils.isWindowsOs();
       if (_isWindowsOs) {
-        _xifexpression_1 = joinedPath.replaceAll("/", File.separator);
+        _xifexpression_1 = joinedPath.replace("/", File.separator);
       } else {
         _xifexpression_1 = joinedPath;
       }
