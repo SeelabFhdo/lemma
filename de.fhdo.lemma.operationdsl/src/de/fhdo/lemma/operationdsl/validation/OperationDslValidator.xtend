@@ -346,6 +346,9 @@ class OperationDslValidator extends AbstractOperationDslValidator {
                     ]
             ]
 
+        if (mandatoryNonDefaultProperties.empty)
+            return
+
         // If there are mandatory properties without an assigned default value, check if there are
         // also deployed services that do not have a specification. If those exist, this is a safe
         // indicator that not all mandatory properties have a value assigned, as non-default
@@ -353,7 +356,7 @@ class OperationDslValidator extends AbstractOperationDslValidator {
         // the described case).
         val hasMissingSpecifications = operationNode.deploymentSpecifications.size <
             operationNode.deployedServices.size
-        if (!mandatoryNonDefaultProperties.empty && hasMissingSpecifications) {
+        if (hasMissingSpecifications) {
             val firstMissingPropertyName = mandatoryNonDefaultProperties.get(0).name
             error('''All deployed services must specify a value for mandatory property '''+
                     '''«firstMissingPropertyName»''', operationNode,
@@ -372,6 +375,14 @@ class OperationDslValidator extends AbstractOperationDslValidator {
                 }
             ]
         ]
+
+        // If we're on an infrastructure node that does not deploy services, check that all
+        // mandatory properties received default values
+        if (operationNode instanceof InfrastructureNode && operationNode.deployedServices.empty) {
+            val firstMissingPropertyName = mandatoryNonDefaultProperties.get(0).name
+            error('''Mandatory property «firstMissingPropertyName» must receive a value''',
+                operationNode, OperationPackage::Literals.OPERATION_NODE__NAME)
+        }
     }
 
     /**

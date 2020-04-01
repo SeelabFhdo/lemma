@@ -486,10 +486,14 @@ public class OperationDslValidator extends AbstractOperationDslValidator {
       })))));
     };
     final Iterable<TechnologySpecificProperty> mandatoryNonDefaultProperties = IterableExtensions.<TechnologySpecificProperty>filter(operationTechnology.getServiceProperties(), _function);
+    boolean _isEmpty = IterableExtensions.isEmpty(mandatoryNonDefaultProperties);
+    if (_isEmpty) {
+      return;
+    }
     int _size = operationNode.getDeploymentSpecifications().size();
     int _size_1 = operationNode.getDeployedServices().size();
     final boolean hasMissingSpecifications = (_size < _size_1);
-    if (((!IterableExtensions.isEmpty(mandatoryNonDefaultProperties)) && hasMissingSpecifications)) {
+    if (hasMissingSpecifications) {
       final String firstMissingPropertyName = ((TechnologySpecificProperty[])Conversions.unwrapArray(mandatoryNonDefaultProperties, TechnologySpecificProperty.class))[0].getName();
       StringConcatenation _builder = new StringConcatenation();
       _builder.append("All deployed services must specify a value for mandatory property ");
@@ -524,6 +528,14 @@ public class OperationDslValidator extends AbstractOperationDslValidator {
       operationNode.getDeploymentSpecifications().forEach(_function_2);
     };
     mandatoryNonDefaultProperties.forEach(_function_1);
+    if (((operationNode instanceof InfrastructureNode) && operationNode.getDeployedServices().isEmpty())) {
+      final String firstMissingPropertyName_1 = ((TechnologySpecificProperty[])Conversions.unwrapArray(mandatoryNonDefaultProperties, TechnologySpecificProperty.class))[0].getName();
+      StringConcatenation _builder_2 = new StringConcatenation();
+      _builder_2.append("Mandatory property ");
+      _builder_2.append(firstMissingPropertyName_1);
+      _builder_2.append(" must receive a value");
+      this.error(_builder_2.toString(), operationNode, OperationPackage.Literals.OPERATION_NODE__NAME);
+    }
   }
   
   /**
