@@ -223,14 +223,14 @@ class TechnologyDslValidator extends AbstractTechnologyDslValidator {
          * e.g., PrimitiveBoolean (which is a concept from the metamodel and an Ecore interface),
          * its implementing class PrimitiveBooleanImpl will be used.
          */
-        val specificDefaultPrimitivesBasics = technology.primitiveTypes
+        val usedDefaultPrimitivesBasics = technology.primitiveTypes
             .filter[^default]
             .map[basicBuiltinPrimitiveTypes]
             .flatten
             .map[class.interfaces.get(0)]
             .toList
 
-        if (specificDefaultPrimitivesBasics.empty) {
+        if (usedDefaultPrimitivesBasics.empty) {
             error("Technology must define at least one default primitive type for each built-in " +
                 "primitive type", technology, TechnologyPackage::Literals.TECHNOLOGY__NAME)
             return
@@ -241,22 +241,18 @@ class TechnologyDslValidator extends AbstractTechnologyDslValidator {
          * to retrieve the list from the metamodel, we need an instance of a PrimitiveType to be
          * able to call getBuiltinPrimitiveTypes() as Xcore does not allow static methods.
          */
-        if (technology.primitiveTypes.empty ||
-            technology.primitiveTypes.get(0).basicBuiltinPrimitiveTypes.empty) {
-            return
-        }
-
-        val primitiveTypeInstance = technology
-            .primitiveTypes.get(0)
-            .basicBuiltinPrimitiveTypes.get(0)
-        val builtinPrimitives = primitiveTypeInstance.builtinPrimitiveTypes
+        val builtinPrimitiveTypes = technology.primitiveTypes
+            .findFirst[^default]
+            .basicBuiltinPrimitiveTypes
+            .get(0)
+            .builtinPrimitiveTypes
 
         /*
          * Throw error if list of default, technology-specific primitive types' basic built-in
          * primitive types does not exhibit all built-in primitive types. That is, there are not
          * defaults defined for each built-in primitive type.
          */
-        if (!specificDefaultPrimitivesBasics.containsAll(builtinPrimitives))
+        if (!usedDefaultPrimitivesBasics.containsAll(builtinPrimitiveTypes))
             error("Technology must define at least one default primitive type for each built-in " +
                   "primitive type", technology, TechnologyPackage::Literals.TECHNOLOGY__NAME)
     }

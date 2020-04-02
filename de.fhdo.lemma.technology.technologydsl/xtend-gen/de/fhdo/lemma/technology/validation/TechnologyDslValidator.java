@@ -261,20 +261,18 @@ public class TechnologyDslValidator extends AbstractTechnologyDslValidator {
     final Function1<PrimitiveType, Class<?>> _function_2 = (PrimitiveType it) -> {
       return it.getClass().getInterfaces()[0];
     };
-    final List<Class<?>> specificDefaultPrimitivesBasics = IterableExtensions.<Class<?>>toList(IterableExtensions.<PrimitiveType, Class<?>>map(Iterables.<PrimitiveType>concat(IterableExtensions.<TechnologySpecificPrimitiveType, EList<PrimitiveType>>map(IterableExtensions.<TechnologySpecificPrimitiveType>filter(technology.getPrimitiveTypes(), _function), _function_1)), _function_2));
-    boolean _isEmpty = specificDefaultPrimitivesBasics.isEmpty();
+    final List<Class<?>> usedDefaultPrimitivesBasics = IterableExtensions.<Class<?>>toList(IterableExtensions.<PrimitiveType, Class<?>>map(Iterables.<PrimitiveType>concat(IterableExtensions.<TechnologySpecificPrimitiveType, EList<PrimitiveType>>map(IterableExtensions.<TechnologySpecificPrimitiveType>filter(technology.getPrimitiveTypes(), _function), _function_1)), _function_2));
+    boolean _isEmpty = usedDefaultPrimitivesBasics.isEmpty();
     if (_isEmpty) {
       this.error(("Technology must define at least one default primitive type for each built-in " + 
         "primitive type"), technology, TechnologyPackage.Literals.TECHNOLOGY__NAME);
       return;
     }
-    if ((technology.getPrimitiveTypes().isEmpty() || 
-      technology.getPrimitiveTypes().get(0).getBasicBuiltinPrimitiveTypes().isEmpty())) {
-      return;
-    }
-    final PrimitiveType primitiveTypeInstance = technology.getPrimitiveTypes().get(0).getBasicBuiltinPrimitiveTypes().get(0);
-    final EList<Class<?>> builtinPrimitives = primitiveTypeInstance.getBuiltinPrimitiveTypes();
-    boolean _containsAll = specificDefaultPrimitivesBasics.containsAll(builtinPrimitives);
+    final Function1<TechnologySpecificPrimitiveType, Boolean> _function_3 = (TechnologySpecificPrimitiveType it) -> {
+      return Boolean.valueOf(it.isDefault());
+    };
+    final EList<Class<?>> builtinPrimitiveTypes = IterableExtensions.<TechnologySpecificPrimitiveType>findFirst(technology.getPrimitiveTypes(), _function_3).getBasicBuiltinPrimitiveTypes().get(0).getBuiltinPrimitiveTypes();
+    boolean _containsAll = usedDefaultPrimitivesBasics.containsAll(builtinPrimitiveTypes);
     boolean _not = (!_containsAll);
     if (_not) {
       this.error(("Technology must define at least one default primitive type for each built-in " + 
