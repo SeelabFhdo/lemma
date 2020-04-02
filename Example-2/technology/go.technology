@@ -25,6 +25,8 @@ technology Go {
 		primitive type bool based on boolean default;
 		primitive type ^date based on date default;
 
+		primitive type none based on unspecified default;
+
 		primitive type complex64;
 		primitive type complex128;
 	}

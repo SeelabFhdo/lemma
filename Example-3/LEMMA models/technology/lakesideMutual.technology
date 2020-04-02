@@ -10,6 +10,7 @@ technology lakesideMutual {
 		primitive type Long based on long default;
 		primitive type Short based on short default;
 		primitive type String based on string default;
+		primitive type Unspecified based on unspecified default;
 
 		list type Page;
 	}

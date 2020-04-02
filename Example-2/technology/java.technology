@@ -10,6 +10,7 @@ technology java {
 		primitive type Long based on long default;
 		primitive type Short based on short default;
 		primitive type String based on string default;
+		primitive type Object based on unspecified default;
 	}
 
 	deployment technologies {
