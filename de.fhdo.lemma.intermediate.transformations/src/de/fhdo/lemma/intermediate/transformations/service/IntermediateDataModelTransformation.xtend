@@ -7,7 +7,6 @@ import de.fhdo.lemma.data.intermediate.IntermediateDataModel
 import de.fhdo.lemma.intermediate.transformations.TransformationModelDescription
 import java.util.Map
 import org.eclipse.emf.ecore.EObject
-import org.eclipse.core.resources.ResourcesPlugin
 import de.fhdo.lemma.intermediate.transformations.TransformationModelType
 import de.fhdo.lemma.intermediate.transformations.AbstractAtlInputOutputIntermediateModelTransformationStrategy
 import de.fhdo.lemma.utils.LemmaUtils
@@ -91,10 +90,9 @@ class IntermediateDataModelTransformation
         Map<String, String> targetPaths
     ) {
         val intermediateModelRoot = modelRoot as IntermediateDataModel
-        val workspacePath = ResourcesPlugin.workspace.root.location.toString
         targetPaths.forEach[importName, targetPath |
             val import = intermediateModelRoot.imports.findFirst[name == importName]
-            import.importUri = LemmaUtils.convertToFileUri(workspacePath + targetPath)
+            import.importUri = LemmaUtils.convertProjectPathToAbsoluteFileUri(targetPath)
         ]
     }
 }

@@ -176,11 +176,11 @@ class SpecifyPathsDialog extends TitleAreaDialog {
         }
 
         // Distribute the children paths across the selected model files. This means that all
-        // occurrences of a child will, i.e., each instance of a child in the "children" list of
-        // a selected ModelFile, will receive the target transformation path that was specified by
-        // the user. This step is necessary, because the dialogs in which transformation target
-        // paths may be specified by the user only list one entry for a child. The same "child
-        // file", however, may be imported more than once, i.e., by different model files.
+        // occurrences of a child, i.e., each instance of a child in the "children" list of a
+        // selected ModelFile, will receive the target transformation path that was specified by the
+        // user. This step is necessary, because the dialogs in which transformation target paths
+        // may be specified by the user only list one entry for a child. The same "child file",
+        // however, may be imported more than once, i.e., by different model files.
         distributeSpecifiedPaths(selectedModelFiles, childrenPaths)
 
         super.okPressed

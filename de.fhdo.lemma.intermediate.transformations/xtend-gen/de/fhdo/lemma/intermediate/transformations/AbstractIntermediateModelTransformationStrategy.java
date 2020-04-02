@@ -332,13 +332,13 @@ public abstract class AbstractIntermediateModelTransformationStrategy<TIM_TYPE e
       if (((fileExtension == null) || fileExtension.isEmpty())) {
         StringConcatenation _builder = new StringConcatenation();
         _builder.append("File ");
-        String _absolutePath = this.absolutePath(file);
+        String _absolutePath = LemmaUtils.getAbsolutePath(file);
         _builder.append(_absolutePath);
-        _builder.append(" does not have a ");
+        _builder.append(" does not have a file extension. ");
         String _plus = (_builder.toString() + 
-          "file extension. It can thus not be loaded as a model Resource. Model ");
+          "It can thus not be loaded as a model Resource. Model transformation not ");
         String _plus_1 = (_plus + 
-          "transformation not possible.");
+          "possible.");
         throw new IllegalArgumentException(_plus_1);
       }
       Resource _xifexpression = null;
@@ -451,7 +451,7 @@ public abstract class AbstractIntermediateModelTransformationStrategy<TIM_TYPE e
   private Map<TransformationModelDescription, AbstractIntermediateModelTransformationStrategy.TransformationResult> doTransformation(final Map<TransformationModelDescription, IFile> inputModelFiles, final Map<TransformationModelDescription, Resource> inputModelResources, final Map<TransformationModelDescription, String> outputModelPaths, final Map<String, Map<String, String>> targetPathsOfImports, final Predicate<IntermediateTransformationException> warningCallback) {
     this.beforeTransformationChecks(inputModelFiles, outputModelPaths);
     final Function1<IFile, String> _function = (IFile it) -> {
-      return this.absolutePath(it);
+      return LemmaUtils.getAbsolutePath(it);
     };
     this.beforeTransformationHook(MapExtensions.<TransformationModelDescription, IFile, String>mapValues(inputModelFiles, _function));
     final Map<TransformationModelDescription, Resource> preparedInputModels = this.prepareInputModels(inputModelResources);
@@ -540,7 +540,7 @@ public abstract class AbstractIntermediateModelTransformationStrategy<TIM_TYPE e
         final AbstractInputModelValidator modelValidator = this.getInputModelValidator(description);
         boolean _xifexpression = false;
         if ((modelValidator != null)) {
-          _xifexpression = modelValidator.validateInputModel(this.absolutePath(file), modelRoot, warningCallback);
+          _xifexpression = modelValidator.validateInputModel(LemmaUtils.getAbsolutePath(file), modelRoot, warningCallback);
         } else {
           _xifexpression = true;
         }
@@ -659,7 +659,7 @@ public abstract class AbstractIntermediateModelTransformationStrategy<TIM_TYPE e
    */
   private AbstractIntermediateModelTransformationStrategy.TransformationResult createTransformationResult(final Map<TransformationModelDescription, IFile> inputModels, final String outputPath, final TransformationModelDescription outputModelDescription, final Resource outputResource) {
     final Function1<Map.Entry<TransformationModelDescription, IFile>, AbstractIntermediateModelTransformationStrategy.InputModel> _function = (Map.Entry<TransformationModelDescription, IFile> it) -> {
-      String _absolutePath = this.absolutePath(it.getValue());
+      String _absolutePath = LemmaUtils.getAbsolutePath(it.getValue());
       String _namespaceUri = this.modelTypes.get(it.getKey()).getNamespaceUri();
       IFile _value = it.getValue();
       return new AbstractIntermediateModelTransformationStrategy.InputModel(_absolutePath, _namespaceUri, _value);
@@ -668,12 +668,5 @@ public abstract class AbstractIntermediateModelTransformationStrategy<TIM_TYPE e
     String _namespaceUri = this.modelTypes.get(outputModelDescription).getNamespaceUri();
     final AbstractIntermediateModelTransformationStrategy.OutputModel outputModel = new AbstractIntermediateModelTransformationStrategy.OutputModel(outputPath, _namespaceUri, outputResource);
     return new AbstractIntermediateModelTransformationStrategy.TransformationResult(resultInputModels, outputModel);
-  }
-  
-  /**
-   * Helper to retrieve the absolute path of an IFile
-   */
-  private String absolutePath(final IFile file) {
-    return file.getRawLocation().makeAbsolute().toString();
   }
 }

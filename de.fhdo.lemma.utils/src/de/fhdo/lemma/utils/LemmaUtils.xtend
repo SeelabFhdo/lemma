@@ -22,6 +22,7 @@ import org.eclipse.core.resources.ResourcesPlugin
 import org.eclipse.core.runtime.Path
 import org.eclipse.core.resources.IFile
 import java.util.Properties
+import org.eclipse.core.resources.IProject
 
 /**
  * This class collects _static_ utility methods to be used across DSLs' implementations.
@@ -106,7 +107,7 @@ final class LemmaUtils {
      * Remove extension from filename and return filename without extension. The extension starts at
      * the last occurrence of a dot (".") in the filename.
      */
-    static def removeExtension(String filename) {
+    def static removeExtension(String filename) {
         if (filename === null)
             return null
 
@@ -139,13 +140,20 @@ final class LemmaUtils {
     def static convertToAbsolutePath(String relativeFilePath, String absoluteBaseFilePath) {
         // Don't convert if the given relative file path isn't relative at all
         val relativeFilePathWithoutScheme = removeFileUri(relativeFilePath)
-        if (new File(relativeFilePathWithoutScheme).absolute)
+        if (relativeFilePathWithoutScheme.representsAbsolutePath)
             return relativeFilePathWithoutScheme
 
         val absoluteBaseFile = new File(absoluteBaseFilePath)
         val absoluteBaseFolder = new File(absoluteBaseFile.getParent())
         val absoluteFile = new File(absoluteBaseFolder, relativeFilePathWithoutScheme)
         return absoluteFile.getCanonicalPath()
+    }
+
+    /**
+     * Check if a path is absolute
+     */
+    def static representsAbsolutePath(String path) {
+        return Paths.get(path).absolute
     }
 
     /**
@@ -282,7 +290,7 @@ final class LemmaUtils {
         return if (isFileUri(relativeFilePath))
             relativeFilePath
         else
-            convertToAbsoluteFileUri(relativeFilePath, file.rawLocation.makeAbsolute.toString)
+            convertToAbsoluteFileUri(relativeFilePath, file.absolutePath)
     }
 
     /**
@@ -299,20 +307,71 @@ final class LemmaUtils {
     }
 
     /**
-     * Convert a path to a file URI located in the current workspace
+     * Convert a path, which points to a file in a workspace's project, to an absolute file URI.
+     * Besides the containing project, neither the file nor any of its parent paths need to exist.
+     * Furthermore, the project may not even exist in the same folder as the workspace root. This
+     * may happen, e.g., when a project is imported without being copied to the workspace. The
+     * method will return the absolute path of the project as a URI and simply append all following
+     * (possibly non-existing) segments. This behavior is expected by callers like
+     * IntermediateDataModelTransformation.populateOutputModelWithImportTargetPaths(), where an
+     * import path might not exist as a physical file in the workspace. This is, for instance, the
+     * case when a model gets transformed prior to the models it imports.
      */
-    static def convertToWorkspaceFileUri(String path) {
-        val workspacePath = ResourcesPlugin.workspace.root.location.toString
+    def static convertProjectPathToAbsoluteFileUri(String path) {
+        if (path.representsAbsolutePath)
+            convertToFileUri(path)
 
-        var workspaceFileUri = if (!path.startsWith(workspacePath))
-                workspacePath + path
-            else
-                path
+        // Find the project segment in the given path
+        val segments = new ArrayDeque(path.removePrefix("/", true).split("/"))
+        var absolutePath = ""
+        var absoluteProjectPathFound = false
+        var nonMemberDetected = false
+        while (!segments.empty && !absoluteProjectPathFound && !nonMemberDetected) {
+            val currentSegment = segments.pop
+            absolutePath += "/" + currentSegment
+            val workspaceMember = ResourcesPlugin.workspace.root.findMember(absolutePath)
+            if (workspaceMember === null)
+                nonMemberDetected = true
+            else if (workspaceMember instanceof IProject) {
+                absoluteProjectPathFound = true
+                // rawLocation() returns null if it wants us to call location() instead
+                absolutePath = (workspaceMember.rawLocation ?: workspaceMember.location).toString
+            }
+        }
 
-        if (!isFileUri(workspaceFileUri))
-            workspaceFileUri = convertToFileUri(workspaceFileUri)
+        if (!absoluteProjectPathFound)
+            throw new IllegalArgumentException('''Project-relative path "«path»" could not be ''' +
+                "converted to absolute path. Is this really a path relative to a project in the " +
+                "current workspace?")
 
-        return workspaceFileUri
+        // Join remaining segments, i.e., sub-folders and file of the found project
+        if (!segments.empty)
+            absolutePath += "/" + segments.join("/")
+        return convertToFileUri(absolutePath)
+    }
+
+    /**
+     * Remove prefix from String. If allOccurrences is set to true, remove all occurrences of a
+     * prefix from String.
+     */
+    def static removePrefix(String s, String prefix, boolean allOccurrences) {
+        if (!s.startsWith(prefix))
+            return s
+
+        var noPrefixes = s.substring(prefix.length())
+        if (!allOccurrences)
+            return noPrefixes
+
+        while (noPrefixes.startsWith(prefix))
+            noPrefixes = s.substring(prefix.length())
+        return noPrefixes
+    }
+
+    /**
+     * Retrieve the absolute path of an IFile
+     */
+    def static getAbsolutePath(IFile file) {
+        return file.rawLocation.makeAbsolute.toString
     }
 
     /**

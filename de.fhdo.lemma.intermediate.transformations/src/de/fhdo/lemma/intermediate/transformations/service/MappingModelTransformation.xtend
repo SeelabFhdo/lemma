@@ -11,7 +11,6 @@ import de.fhdo.lemma.service.Import
 import java.util.List
 import org.eclipse.xtext.EcoreUtil2
 import de.fhdo.lemma.technology.mapping.ComplexTypeMapping
-import org.eclipse.core.resources.ResourcesPlugin
 import de.fhdo.lemma.data.intermediate.IntermediatePackage
 import org.eclipse.emf.ecore.resource.Resource
 import com.google.common.base.Predicate
@@ -192,11 +191,10 @@ class MappingModelTransformation
         Map<String, String> targetPaths
     ) {
         val serviceModelRoot = modelRoot as ServiceModel
-        val workspacePath = ResourcesPlugin.workspace.root.location.toString
         targetPaths.forEach[importName, targetPath |
             val import = serviceModelRoot.imports.findFirst[name == importName]
             if (import !== null)
-                import.importURI = LemmaUtils.convertToFileUri(workspacePath + targetPath)
+                import.importURI = LemmaUtils.convertProjectPathToAbsoluteFileUri(targetPath)
         ]
 
         // Adapt paths of those domain imports that were not adapted yet. This may happen, if the
@@ -271,8 +269,8 @@ class MappingModelTransformation
     override registerTransformationsFinishedListener() {
         return [
             results, warningCallback |
-            MappingModelRefinementExecutor.executeRefinements(inputMappingModel, results,
-                warningCallback)
+            MappingModelRefinementExecutor.executeRefinements(inputMappingModel,
+                absoluteInputModelPath, results, warningCallback)
         ]
     }
 
@@ -297,6 +295,7 @@ class MappingModelTransformation
          */
         private static def Void executeRefinements(
             TechnologyMapping inputMappingModel,
+            String absoluteInputModelPath,
             List<TransformationResult> results,
             Predicate<IntermediateTransformationException> warningCallback
         ) {
@@ -309,24 +308,27 @@ class MappingModelTransformation
              * intermediate data model refinements from which non-refined intermediate data models.
              */
             val refinedModelsPerServiceModel = <OutputModel, Map<String, OutputModel>>newHashMap
-            results.intermediateDataModelsPerServiceModelFor(inputMappingModel).forEach[
-                serviceModel, intermediateDataModels |
-                linkTechnologyModels(serviceModel, inputMappingModel)
+            results
+                .intermediateDataModelsPerServiceModelFor(inputMappingModel, absoluteInputModelPath)
+                    .forEach[
+                        serviceModel, intermediateDataModels |
+                        linkTechnologyModels(serviceModel, inputMappingModel)
 
-                val refinedModels = intermediateDataModels.toMap(
-                    [outputPath],
-                    [runRefininingTransformation(results, serviceModel, it, warningCallback)]
-                )
-
-                refinedModels.filter[path, model | model !== null].forEach[
-                    originalModelPath, refinedModel |
-                    refinedModelsPerServiceModel
-                        .putIfAbsent(
-                            serviceModel,
-                            newHashMap(originalModelPath -> refinedModel.outputModel)
+                        val refinedModels = intermediateDataModels.toMap(
+                            [outputPath],
+                            [runRefininingTransformation(results, serviceModel, it,
+                                warningCallback)]
                         )
-                        ?.put(originalModelPath, refinedModel.outputModel)
-                ]
+
+                        refinedModels.filter[path, model | model !== null].forEach[
+                            originalModelPath, refinedModel |
+                            refinedModelsPerServiceModel
+                                .putIfAbsent(
+                                    serviceModel,
+                                    newHashMap(originalModelPath -> refinedModel.outputModel)
+                                )
+                                ?.put(originalModelPath, refinedModel.outputModel)
+                        ]
             ]
 
             /*
@@ -388,11 +390,10 @@ class MappingModelTransformation
         private static def Map<OutputModel, Set<OutputModel>>
         intermediateDataModelsPerServiceModelFor(
             List<TransformationResult> results,
-            TechnologyMapping inputMappingModel
+            TechnologyMapping inputMappingModel,
+            String absoluteInputModelPath
         ) {
-            val inputMappingModelUri = inputMappingModel.eResource.URI.toString
-            val inputMappingModelPath = LemmaUtils.convertToWorkspaceFileUri(inputMappingModelUri)
-
+            val inputMappingModelPath = LemmaUtils.convertToFileUri(absoluteInputModelPath)
             val serviceModelsCreatedFromMappingModel = results
                 .filter[inputModels.exists[
                     namespaceUri == MappingPackage.eNS_URI &&

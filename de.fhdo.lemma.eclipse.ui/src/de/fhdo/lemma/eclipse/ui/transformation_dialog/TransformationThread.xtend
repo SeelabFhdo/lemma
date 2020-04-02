@@ -289,8 +289,14 @@ class TransformationThread extends Thread {
     ) {
         /* Convert input and output model paths to file URIs */
         results.forEach[
-            inputModels.forEach[inputPath = LemmaUtils.convertToWorkspaceFileUri(inputPath)]
-            outputModel.outputPath = LemmaUtils.convertToWorkspaceFileUri(outputModel.outputPath)
+            inputModels.forEach[
+                // Input models' paths are always absolute already. Thus, add "file" scheme only.
+                inputPath = LemmaUtils.convertToFileUri(inputPath)
+            ]
+            // Output models' paths are always relative to their project in the workspace. Thus,
+            // convert them to absolute paths and add "file" scheme.
+            outputModel.outputPath
+                = LemmaUtils.convertProjectPathToAbsoluteFileUri(outputModel.outputPath)
         ]
 
         /* Execute listeners */

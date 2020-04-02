@@ -39,7 +39,6 @@ import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
-import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -91,7 +90,7 @@ public class MappingModelTransformation extends AbstractAtlInputOutputIntermedia
     /**
      * Execute the refinements
      */
-    private static Void executeRefinements(final TechnologyMapping inputMappingModel, final List<AbstractIntermediateModelTransformationStrategy.TransformationResult> results, final Predicate<IntermediateTransformationException> warningCallback) {
+    private static Void executeRefinements(final TechnologyMapping inputMappingModel, final String absoluteInputModelPath, final List<AbstractIntermediateModelTransformationStrategy.TransformationResult> results, final Predicate<IntermediateTransformationException> warningCallback) {
       final HashMap<AbstractIntermediateModelTransformationStrategy.OutputModel, Map<String, AbstractIntermediateModelTransformationStrategy.OutputModel>> refinedModelsPerServiceModel = CollectionLiterals.<AbstractIntermediateModelTransformationStrategy.OutputModel, Map<String, AbstractIntermediateModelTransformationStrategy.OutputModel>>newHashMap();
       final BiConsumer<AbstractIntermediateModelTransformationStrategy.OutputModel, Set<AbstractIntermediateModelTransformationStrategy.OutputModel>> _function = (AbstractIntermediateModelTransformationStrategy.OutputModel serviceModel, Set<AbstractIntermediateModelTransformationStrategy.OutputModel> intermediateDataModels) -> {
         MappingModelTransformation.MappingModelRefinementExecutor.linkTechnologyModels(serviceModel, inputMappingModel);
@@ -116,7 +115,7 @@ public class MappingModelTransformation extends AbstractAtlInputOutputIntermedia
         };
         MapExtensions.<String, AbstractIntermediateModelTransformationStrategy.TransformationResult>filter(refinedModels, _function_3).forEach(_function_4);
       };
-      MappingModelTransformation.MappingModelRefinementExecutor.intermediateDataModelsPerServiceModelFor(results, inputMappingModel).forEach(_function);
+      MappingModelTransformation.MappingModelRefinementExecutor.intermediateDataModelsPerServiceModelFor(results, inputMappingModel, absoluteInputModelPath).forEach(_function);
       final BiConsumer<AbstractIntermediateModelTransformationStrategy.OutputModel, Map<String, AbstractIntermediateModelTransformationStrategy.OutputModel>> _function_1 = (AbstractIntermediateModelTransformationStrategy.OutputModel serviceModel, Map<String, AbstractIntermediateModelTransformationStrategy.OutputModel> refinedDataModels) -> {
         final AbstractIntermediateModelTransformationStrategy.OutputModel intermediateServiceModel = MappingModelTransformation.MappingModelRefinementExecutor.findIntermediateServiceModel(results, serviceModel);
         final Function<EObject, List<IntermediateImport>> _function_2 = (EObject it) -> {
@@ -167,9 +166,8 @@ public class MappingModelTransformation extends AbstractAtlInputOutputIntermedia
      * comprise complex type mappings expressed in mapping models, while the intermediate
      * service model does not.
      */
-    private static Map<AbstractIntermediateModelTransformationStrategy.OutputModel, Set<AbstractIntermediateModelTransformationStrategy.OutputModel>> intermediateDataModelsPerServiceModelFor(final List<AbstractIntermediateModelTransformationStrategy.TransformationResult> results, final TechnologyMapping inputMappingModel) {
-      final String inputMappingModelUri = inputMappingModel.eResource().getURI().toString();
-      final String inputMappingModelPath = LemmaUtils.convertToWorkspaceFileUri(inputMappingModelUri);
+    private static Map<AbstractIntermediateModelTransformationStrategy.OutputModel, Set<AbstractIntermediateModelTransformationStrategy.OutputModel>> intermediateDataModelsPerServiceModelFor(final List<AbstractIntermediateModelTransformationStrategy.TransformationResult> results, final TechnologyMapping inputMappingModel, final String absoluteInputModelPath) {
+      final String inputMappingModelPath = LemmaUtils.convertToFileUri(absoluteInputModelPath);
       final Function1<AbstractIntermediateModelTransformationStrategy.TransformationResult, Boolean> _function = (AbstractIntermediateModelTransformationStrategy.TransformationResult it) -> {
         final Function1<AbstractIntermediateModelTransformationStrategy.InputModel, Boolean> _function_1 = (AbstractIntermediateModelTransformationStrategy.InputModel it_1) -> {
           return Boolean.valueOf((Objects.equal(it_1.getNamespaceUri(), MappingPackage.eNS_URI) && 
@@ -529,7 +527,6 @@ public class MappingModelTransformation extends AbstractAtlInputOutputIntermedia
   @Override
   public void populateOutputModelWithImportTargetPaths(final TransformationModelDescription modelDescription, final EObject modelRoot, final Map<String, String> targetPaths) {
     final ServiceModel serviceModelRoot = ((ServiceModel) modelRoot);
-    final String workspacePath = ResourcesPlugin.getWorkspace().getRoot().getLocation().toString();
     final BiConsumer<String, String> _function = (String importName, String targetPath) -> {
       final Function1<Import, Boolean> _function_1 = (Import it) -> {
         String _name = it.getName();
@@ -537,7 +534,7 @@ public class MappingModelTransformation extends AbstractAtlInputOutputIntermedia
       };
       final Import import_ = IterableExtensions.<Import>findFirst(serviceModelRoot.getImports(), _function_1);
       if ((import_ != null)) {
-        import_.setImportURI(LemmaUtils.convertToFileUri((workspacePath + targetPath)));
+        import_.setImportURI(LemmaUtils.convertProjectPathToAbsoluteFileUri(targetPath));
       }
     };
     targetPaths.forEach(_function);
@@ -602,7 +599,8 @@ public class MappingModelTransformation extends AbstractAtlInputOutputIntermedia
   @Override
   public BiFunction<List<AbstractIntermediateModelTransformationStrategy.TransformationResult>, Predicate<IntermediateTransformationException>, Void> registerTransformationsFinishedListener() {
     final BiFunction<List<AbstractIntermediateModelTransformationStrategy.TransformationResult>, Predicate<IntermediateTransformationException>, Void> _function = (List<AbstractIntermediateModelTransformationStrategy.TransformationResult> results, Predicate<IntermediateTransformationException> warningCallback) -> {
-      return MappingModelTransformation.MappingModelRefinementExecutor.executeRefinements(this.inputMappingModel, results, warningCallback);
+      return MappingModelTransformation.MappingModelRefinementExecutor.executeRefinements(this.inputMappingModel, 
+        this.absoluteInputModelPath, results, warningCallback);
     };
     return _function;
   }

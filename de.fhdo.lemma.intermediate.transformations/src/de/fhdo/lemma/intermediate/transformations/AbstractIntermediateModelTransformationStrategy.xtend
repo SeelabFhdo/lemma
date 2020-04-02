@@ -202,9 +202,9 @@ abstract class AbstractIntermediateModelTransformationStrategy<TIM_TYPE, TOM_TYP
             val fileExtension = file.fileExtension?.toLowerCase
             if (fileExtension === null || fileExtension.isEmpty)
                 throw new IllegalArgumentException(
-                    '''File «file.absolutePath» does not have a ''' +
-                        "file extension. It can thus not be loaded as a model Resource. Model " +
-                        "transformation not possible.")
+                    '''File «LemmaUtils.getAbsolutePath(file)» does not have a file extension. ''' +
+                        "It can thus not be loaded as a model Resource. Model transformation not " +
+                        "possible.")
 
             val modelResource = if ("xmi".equals(fileExtension))
                     loadModelResourceFromXmiFile(file)
@@ -316,7 +316,7 @@ abstract class AbstractIntermediateModelTransformationStrategy<TIM_TYPE, TOM_TYP
     ) {
         beforeTransformationChecks(inputModelFiles, outputModelPaths)
 
-        beforeTransformationHook(inputModelFiles.mapValues[absolutePath])
+        beforeTransformationHook(inputModelFiles.mapValues[LemmaUtils.getAbsolutePath(it)])
 
         val preparedInputModels = prepareInputModels(inputModelResources)
 
@@ -416,7 +416,8 @@ abstract class AbstractIntermediateModelTransformationStrategy<TIM_TYPE, TOM_TYP
             val modelValidator = getInputModelValidator(description)
 
             continueTransformation = if (modelValidator !== null)
-                modelValidator.validateInputModel(file.absolutePath, modelRoot, warningCallback)
+                modelValidator.validateInputModel(LemmaUtils.getAbsolutePath(file), modelRoot,
+                    warningCallback)
             else
                 true
         }
@@ -551,7 +552,8 @@ abstract class AbstractIntermediateModelTransformationStrategy<TIM_TYPE, TOM_TYP
         Resource outputResource
     ) {
         val resultInputModels = inputModels.entrySet.map [
-            new InputModel(value.absolutePath, modelTypes.get(key).namespaceUri, value)
+            new InputModel(LemmaUtils.getAbsolutePath(value), modelTypes.get(key).namespaceUri,
+                value)
         ].toList
 
         val outputModel = new OutputModel(
@@ -561,13 +563,6 @@ abstract class AbstractIntermediateModelTransformationStrategy<TIM_TYPE, TOM_TYP
         )
 
         return new TransformationResult(resultInputModels, outputModel)
-    }
-
-    /**
-     * Helper to retrieve the absolute path of an IFile
-     */
-    private def absolutePath(IFile file) {
-        return file.rawLocation.makeAbsolute.toString
     }
 
     /**

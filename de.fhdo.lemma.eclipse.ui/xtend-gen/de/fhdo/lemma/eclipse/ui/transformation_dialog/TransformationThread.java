@@ -282,11 +282,11 @@ public class TransformationThread extends Thread {
     {
       final Consumer<AbstractIntermediateModelTransformationStrategy.TransformationResult> _function = (AbstractIntermediateModelTransformationStrategy.TransformationResult it) -> {
         final Consumer<AbstractIntermediateModelTransformationStrategy.InputModel> _function_1 = (AbstractIntermediateModelTransformationStrategy.InputModel it_1) -> {
-          it_1.setInputPath(LemmaUtils.convertToWorkspaceFileUri(it_1.getInputPath()));
+          it_1.setInputPath(LemmaUtils.convertToFileUri(it_1.getInputPath()));
         };
         it.getInputModels().forEach(_function_1);
         AbstractIntermediateModelTransformationStrategy.OutputModel _outputModel = it.getOutputModel();
-        _outputModel.setOutputPath(LemmaUtils.convertToWorkspaceFileUri(it.getOutputModel().getOutputPath()));
+        _outputModel.setOutputPath(LemmaUtils.convertProjectPathToAbsoluteFileUri(it.getOutputModel().getOutputPath()));
       };
       results.forEach(_function);
       boolean _xtrycatchfinallyexpression = false;

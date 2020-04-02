@@ -10,13 +10,16 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Properties;
 import java.util.function.Consumer;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
@@ -174,8 +177,8 @@ public final class LemmaUtils {
   public static String convertToAbsolutePath(final String relativeFilePath, final String absoluteBaseFilePath) {
     try {
       final String relativeFilePathWithoutScheme = LemmaUtils.removeFileUri(relativeFilePath);
-      boolean _isAbsolute = new File(relativeFilePathWithoutScheme).isAbsolute();
-      if (_isAbsolute) {
+      boolean _representsAbsolutePath = LemmaUtils.representsAbsolutePath(relativeFilePathWithoutScheme);
+      if (_representsAbsolutePath) {
         return relativeFilePathWithoutScheme;
       }
       final File absoluteBaseFile = new File(absoluteBaseFilePath);
@@ -186,6 +189,13 @@ public final class LemmaUtils {
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }
+  }
+  
+  /**
+   * Check if a path is absolute
+   */
+  public static boolean representsAbsolutePath(final String path) {
+    return Paths.get(path).isAbsolute();
   }
   
   /**
@@ -356,7 +366,7 @@ public final class LemmaUtils {
     if (_isFileUri) {
       _xifexpression = relativeFilePath;
     } else {
-      _xifexpression = LemmaUtils.convertToAbsoluteFileUri(relativeFilePath, file.getRawLocation().makeAbsolute().toString());
+      _xifexpression = LemmaUtils.convertToAbsoluteFileUri(relativeFilePath, LemmaUtils.getAbsolutePath(file));
     }
     return _xifexpression;
   }
@@ -384,25 +394,97 @@ public final class LemmaUtils {
   }
   
   /**
-   * Convert a path to a file URI located in the current workspace
+   * Convert a path, which points to a file in a workspace's project, to an absolute file URI.
+   * Besides the containing project, neither the file nor any of its parent paths need to exist.
+   * Furthermore, the project may not even exist in the same folder as the workspace root. This
+   * may happen, e.g., when a project is imported without being copied to the workspace. The
+   * method will return the absolute path of the project as a URI and simply append all following
+   * (possibly non-existing) segments. This behavior is expected by callers like
+   * IntermediateDataModelTransformation.populateOutputModelWithImportTargetPaths(), where an
+   * import path might not exist as a physical file in the workspace. This is, for instance, the
+   * case when a model gets transformed prior to the models it imports.
    */
-  public static String convertToWorkspaceFileUri(final String path) {
-    final String workspacePath = ResourcesPlugin.getWorkspace().getRoot().getLocation().toString();
-    String _xifexpression = null;
-    boolean _startsWith = path.startsWith(workspacePath);
+  public static String convertProjectPathToAbsoluteFileUri(final String path) {
+    boolean _representsAbsolutePath = LemmaUtils.representsAbsolutePath(path);
+    if (_representsAbsolutePath) {
+      LemmaUtils.convertToFileUri(path);
+    }
+    String[] _split = LemmaUtils.removePrefix(path, "/", true).split("/");
+    final ArrayDeque<String> segments = new ArrayDeque<String>((Collection<? extends String>)Conversions.doWrapArray(_split));
+    String absolutePath = "";
+    boolean absoluteProjectPathFound = false;
+    boolean nonMemberDetected = false;
+    while ((((!segments.isEmpty()) && (!absoluteProjectPathFound)) && (!nonMemberDetected))) {
+      {
+        final String currentSegment = segments.pop();
+        String _absolutePath = absolutePath;
+        absolutePath = (_absolutePath + ("/" + currentSegment));
+        final IResource workspaceMember = ResourcesPlugin.getWorkspace().getRoot().findMember(absolutePath);
+        if ((workspaceMember == null)) {
+          nonMemberDetected = true;
+        } else {
+          if ((workspaceMember instanceof IProject)) {
+            absoluteProjectPathFound = true;
+            IPath _elvis = null;
+            IPath _rawLocation = ((IProject)workspaceMember).getRawLocation();
+            if (_rawLocation != null) {
+              _elvis = _rawLocation;
+            } else {
+              IPath _location = ((IProject)workspaceMember).getLocation();
+              _elvis = _location;
+            }
+            absolutePath = _elvis.toString();
+          }
+        }
+      }
+    }
+    if ((!absoluteProjectPathFound)) {
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("Project-relative path \"");
+      _builder.append(path);
+      _builder.append("\" could not be ");
+      String _plus = (_builder.toString() + 
+        "converted to absolute path. Is this really a path relative to a project in the ");
+      String _plus_1 = (_plus + 
+        "current workspace?");
+      throw new IllegalArgumentException(_plus_1);
+    }
+    boolean _isEmpty = segments.isEmpty();
+    boolean _not = (!_isEmpty);
+    if (_not) {
+      String _absolutePath = absolutePath;
+      String _join = IterableExtensions.join(segments, "/");
+      String _plus_2 = ("/" + _join);
+      absolutePath = (_absolutePath + _plus_2);
+    }
+    return LemmaUtils.convertToFileUri(absolutePath);
+  }
+  
+  /**
+   * Remove prefix from String. If allOccurrences is set to true, remove all occurrences of a
+   * prefix from String.
+   */
+  public static String removePrefix(final String s, final String prefix, final boolean allOccurrences) {
+    boolean _startsWith = s.startsWith(prefix);
     boolean _not = (!_startsWith);
     if (_not) {
-      _xifexpression = (workspacePath + path);
-    } else {
-      _xifexpression = path;
+      return s;
     }
-    String workspaceFileUri = _xifexpression;
-    boolean _isFileUri = LemmaUtils.isFileUri(workspaceFileUri);
-    boolean _not_1 = (!_isFileUri);
-    if (_not_1) {
-      workspaceFileUri = LemmaUtils.convertToFileUri(workspaceFileUri);
+    String noPrefixes = s.substring(prefix.length());
+    if ((!allOccurrences)) {
+      return noPrefixes;
     }
-    return workspaceFileUri;
+    while (noPrefixes.startsWith(prefix)) {
+      noPrefixes = s.substring(prefix.length());
+    }
+    return noPrefixes;
+  }
+  
+  /**
+   * Retrieve the absolute path of an IFile
+   */
+  public static String getAbsolutePath(final IFile file) {
+    return file.getRawLocation().makeAbsolute().toString();
   }
   
   /**

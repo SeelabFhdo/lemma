@@ -13,7 +13,6 @@ import de.fhdo.lemma.technology.Technology
 import de.fhdo.lemma.technology.Protocol
 import de.fhdo.lemma.service.Import
 import de.fhdo.lemma.technology.CommunicationType
-import org.eclipse.core.resources.ResourcesPlugin
 import de.fhdo.lemma.intermediate.transformations.TransformationModelType
 import de.fhdo.lemma.intermediate.transformations.AbstractAtlInputOutputIntermediateModelTransformationStrategy
 import de.fhdo.lemma.utils.LemmaUtils
@@ -129,10 +128,9 @@ class IntermediateServiceModelTransformation
         Map<String, String> targetPaths
     ) {
         val serviceModelRoot = modelRoot as IntermediateServiceModel
-        val workspacePath = ResourcesPlugin.workspace.root.location.toString
         targetPaths.forEach[importName, targetPath |
             val import = serviceModelRoot.imports.findFirst[name == importName]
-            import.importUri = LemmaUtils.convertToFileUri(workspacePath + targetPath)
+            import.importUri = LemmaUtils.convertProjectPathToAbsoluteFileUri(targetPath)
         ]
     }
 }
