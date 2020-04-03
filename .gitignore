@@ -17,7 +17,8 @@ HOWTO Lemma Release.md
 *.ods
 de.fhdo.ddmm.ocl/
 out/
-build/
+de.fhdo.lemma*/build/
+code generators/de.fhdo.lemma*/build/
 .idea/
 set_java_home.sh
 code generators/de.fhdo.lemma.model_processing.code_generation.java_base/linecnt_helper.py
