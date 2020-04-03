@@ -4,16 +4,24 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>1   Introduction &#8212; Intermediate Data Model Format Specification 1.0 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="_static/language_data.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="prev" title="Intermediate Data Model Format Specification" href="index.html" />
@@ -23,7 +31,8 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
-  </head><body>
+  </head>
+  <body>
   
 
     <div class="document">
@@ -120,15 +129,15 @@ attributes, and associations, respectively.</p>
 the metamodel depicted in <a class="reference internal" href="#fig-metamodel"><span class="std std-numref">Fig. 1</span></a>.</p>
 <div class="admonition hint">
 <p class="first admonition-title">Hint</p>
-<p>Attributes that may contain more than one value but exhibit a <code class="docutils literal notranslate"><span class="pre">*</span></code>
+<p>Attributes that may contain more than one value but exhibit a <code class="docutils literal"><span class="pre">*</span></code>
 multiplicity, i.e., they may contain an arbitrary number of values or even
-none at all (<code class="docutils literal notranslate"><span class="pre">*</span></code> is shorthand UML notation for <code class="docutils literal notranslate"><span class="pre">0..*</span></code>), are never null.</p>
+none at all (<code class="docutils literal"><span class="pre">*</span></code> is shorthand UML notation for <code class="docutils literal"><span class="pre">0..*</span></code>), are never null.</p>
 <p>In case no multiplicity is stated after the object type of an attribute, the
-attribute may be null. For example, an attribute defined as <code class="docutils literal notranslate"><span class="pre">String</span> <span class="pre">name</span></code>
-implicitly has a multiplicity <code class="docutils literal notranslate"><span class="pre">0..1</span></code> and in the zero-case the String may
+attribute may be null. For example, an attribute defined as <code class="docutils literal"><span class="pre">String</span> <span class="pre">name</span></code>
+implicitly has a multiplicity <code class="docutils literal"><span class="pre">0..1</span></code> and in the zero-case the String may
 be null.</p>
 <p class="last">However, in case the attribute’s type is a built-in primitive Java type,
-e.g. <code class="docutils literal notranslate"><span class="pre">int</span></code>, the attribute will never be null but exhibits the type’s
+e.g. <code class="docutils literal"><span class="pre">int</span></code>, the attribute will never be null but exhibits the type’s
 default value in case it did not receive an explicit value.</p>
 </div>
 <div class="section" id="model-root">
@@ -149,23 +158,23 @@ model was derived.</p>
 <code class="descname">IntermediateImport[*] imports</code></dt>
 <dd><p>References to Intermediate Data Model instances that were
 imported into the source Domain Data Model
-(cf. <code class="xref py py-class docutils literal notranslate"><span class="pre">IntermediateImport</span></code>).</p>
+(cf. <code class="xref py py-class docutils literal"><span class="pre">IntermediateImport</span></code>).</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt>
 <code class="descname">IntermediateVersion[*] versions</code></dt>
 <dd><p>Versions being defined in the source Domain Data Model (cf.
-<code class="xref py py-class docutils literal notranslate"><span class="pre">IntermediateVersion</span></code>).</p>
+<code class="xref py py-class docutils literal"><span class="pre">IntermediateVersion</span></code>).</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt>
 <code class="descname">IntermediateContext[*] contexts</code></dt>
 <dd><p>Contexts being defined in the source Domain Data Model (cf.
-<code class="xref py py-class docutils literal notranslate"><span class="pre">IntermediateContext</span></code>). If a Domain Data Model has
-<code class="docutils literal notranslate"><span class="pre">versions</span></code>, it may not have <code class="docutils literal notranslate"><span class="pre">contexts</span></code> under the model root. They
-are, instead, encapsulated within the <code class="docutils literal notranslate"><span class="pre">versions</span></code> attribute.</p>
+<code class="xref py py-class docutils literal"><span class="pre">IntermediateContext</span></code>). If a Domain Data Model has
+<code class="docutils literal"><span class="pre">versions</span></code>, it may not have <code class="docutils literal"><span class="pre">contexts</span></code> under the model root. They
+are, instead, encapsulated within the <code class="docutils literal"><span class="pre">versions</span></code> attribute.</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -175,15 +184,15 @@ are, instead, encapsulated within the <code class="docutils literal notranslate"
 <a class="reference internal" href="#link-intermediatelisttype"><span class="std std-ref">IntermediateListType</span></a>, and
 <a class="reference internal" href="#link-intermediateenumeration"><span class="std std-ref">IntermediateEnumeration</span></a>
 instances being defined in the source Domain Data Model. If a Domain
-Data Model has <code class="docutils literal notranslate"><span class="pre">versions</span></code> or <code class="docutils literal notranslate"><span class="pre">contexts</span></code>, it may not have
-<code class="docutils literal notranslate"><span class="pre">complexTypes</span></code> under the model root. They are, instead, encapsulated
-within the <code class="docutils literal notranslate"><span class="pre">versions</span></code> or <code class="docutils literal notranslate"><span class="pre">contexts</span></code> attributes.</p>
+Data Model has <code class="docutils literal"><span class="pre">versions</span></code> or <code class="docutils literal"><span class="pre">contexts</span></code>, it may not have
+<code class="docutils literal"><span class="pre">complexTypes</span></code> under the model root. They are, instead, encapsulated
+within the <code class="docutils literal"><span class="pre">versions</span></code> or <code class="docutils literal"><span class="pre">contexts</span></code> attributes.</p>
 </dd></dl>
 
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">At least one of the attributes <code class="docutils literal notranslate"><span class="pre">versions</span></code>, <code class="docutils literal notranslate"><span class="pre">contexts</span></code>, and
-<code class="docutils literal notranslate"><span class="pre">compexTypes</span></code> will have values, because empty Domain Data Models are
+<p class="last">At least one of the attributes <code class="docutils literal"><span class="pre">versions</span></code>, <code class="docutils literal"><span class="pre">contexts</span></code>, and
+<code class="docutils literal"><span class="pre">compexTypes</span></code> will have values, because empty Domain Data Models are
 not allowed.</p>
 </div>
 </dd></dl>
@@ -229,7 +238,7 @@ of this attribute is always “DATATYPES”.</p>
 <dl class="attribute">
 <dt>
 <code class="descname">IntermediateDataModel[1] dataModel</code></dt>
-<dd><p>Link to the containing <code class="xref py py-class docutils literal notranslate"><span class="pre">IntermediateDataModel</span></code> instance.</p>
+<dd><p>Link to the containing <code class="xref py py-class docutils literal"><span class="pre">IntermediateDataModel</span></code> instance.</p>
 </dd></dl>
 
 <dl class="method">
@@ -274,14 +283,14 @@ different versions.</p>
 
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">Either the <code class="docutils literal notranslate"><span class="pre">complexTypes</span></code> or the <code class="docutils literal notranslate"><span class="pre">contexts</span></code> attribute will contain
-values, but neither both of the same <code class="xref py py-class docutils literal notranslate"><span class="pre">IntermediateVersion</span></code>
+<p class="last">Either the <code class="docutils literal"><span class="pre">complexTypes</span></code> or the <code class="docutils literal"><span class="pre">contexts</span></code> attribute will contain
+values, but neither both of the same <code class="xref py py-class docutils literal"><span class="pre">IntermediateVersion</span></code>
 instance.</p>
 </div>
 <dl class="attribute">
 <dt>
 <code class="descname">IntermediateDataModel[1] dataModel</code></dt>
-<dd><p>Link to the containing <code class="xref py py-class docutils literal notranslate"><span class="pre">IntermediateDataModel</span></code> instance.</p>
+<dd><p>Link to the containing <code class="xref py py-class docutils literal"><span class="pre">IntermediateDataModel</span></code> instance.</p>
 </dd></dl>
 
 </dd></dl>
@@ -300,7 +309,7 @@ in semantic domains that may correspond to Bounded Contexts
 <dt>
 <code class="descname">String[1] name</code></dt>
 <dd><p>Name of the context. Is unique within the
-<code class="xref py py-class docutils literal notranslate"><span class="pre">IntermediateDataModel</span></code> or <code class="xref py py-class docutils literal notranslate"><span class="pre">IntermediateVersion</span></code>
+<code class="xref py py-class docutils literal"><span class="pre">IntermediateDataModel</span></code> or <code class="xref py py-class docutils literal"><span class="pre">IntermediateVersion</span></code>
 instance that contains the context.</p>
 </dd></dl>
 
@@ -317,8 +326,8 @@ qualifiedName equals the context’s
 
 <div class="admonition hint">
 <p class="first admonition-title">Hint</p>
-<p class="last">The <code class="xref py py-class docutils literal notranslate"><span class="pre">IntermedateVersion</span></code> class does not comprise a
-<code class="docutils literal notranslate"><span class="pre">qualifiedName</span></code> attribute, because versions may not be contained
+<p class="last">The <code class="xref py py-class docutils literal"><span class="pre">IntermedateVersion</span></code> class does not comprise a
+<code class="docutils literal"><span class="pre">qualifiedName</span></code> attribute, because versions may not be contained
 within an instance of another model concept’s class except for the
 nameless <a class="reference internal" href="#link-intermediatedatamodel"><span class="std std-ref">model root</span></a>.</p>
 </div>
@@ -332,18 +341,18 @@ within the context.</p>
 <dl class="attribute">
 <dt>
 <code class="descname">IntermediateDataModel dataModel</code></dt>
-<dd><p>Link to the containing <code class="xref py py-class docutils literal notranslate"><span class="pre">IntermediateDataModel</span></code> instance.</p>
+<dd><p>Link to the containing <code class="xref py py-class docutils literal"><span class="pre">IntermediateDataModel</span></code> instance.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt>
 <code class="descname">IntermediateVersion version</code></dt>
-<dd><p>Link to the containing <code class="xref py py-class docutils literal notranslate"><span class="pre">IntermediateVersion</span></code> instance.</p>
+<dd><p>Link to the containing <code class="xref py py-class docutils literal"><span class="pre">IntermediateVersion</span></code> instance.</p>
 </dd></dl>
 
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">Only one of the attributes <code class="docutils literal notranslate"><span class="pre">dataModel</span></code> or <code class="docutils literal notranslate"><span class="pre">version</span></code> has a value,
+<p class="last">Only one of the attributes <code class="docutils literal"><span class="pre">dataModel</span></code> or <code class="docutils literal"><span class="pre">version</span></code> has a value,
 depending on whether the context is defined directly under the
 <a class="reference internal" href="#link-intermediatedatamodel"><span class="std std-ref">model root</span></a> or within a
 <a class="reference internal" href="#link-intermediateversion"><span class="std std-ref">version</span></a>.</p>
@@ -355,14 +364,14 @@ depending on whether the context is defined directly under the
 <span id="link-built-in-type-system"></span><h2>3.4&nbsp;&nbsp;&nbsp;Built-in Type System<a class="headerlink" href="#built-in-type-system" title="Permalink to this headline">¶</a></h2>
 <p>This subsection describes concepts that are part of the built-in type system of
 the Domain Data Model. Basically, it is aligned to Java and contains all
-built-in Java primitive types as well as native <code class="docutils literal notranslate"><span class="pre">Date</span></code>, <code class="docutils literal notranslate"><span class="pre">String</span></code>, and
-<code class="docutils literal notranslate"><span class="pre">unspecified</span></code> types.</p>
-<p>Besides the <code class="docutils literal notranslate"><span class="pre">unspecified</span></code> type, the type conversions observe Java’s <em>widening</em>
+built-in Java primitive types as well as native <code class="docutils literal"><span class="pre">Date</span></code>, <code class="docutils literal"><span class="pre">String</span></code>, and
+<code class="docutils literal"><span class="pre">unspecified</span></code> types.</p>
+<p>Besides the <code class="docutils literal"><span class="pre">unspecified</span></code> type, the type conversions observe Java’s <em>widening</em>
 <em>primitive conversions</em> <a class="footnote-reference" href="#java-type-conversions" id="id16">[8]</a> for primitively typed
-<a class="reference internal" href="#link-intermediatedatafield"><span class="std std-ref">fields</span></a>. The <code class="docutils literal notranslate"><span class="pre">unspecified</span></code> type, however,
+<a class="reference internal" href="#link-intermediatedatafield"><span class="std std-ref">fields</span></a>. The <code class="docutils literal"><span class="pre">unspecified</span></code> type, however,
 is not compatible with any other type. More precisely, two distinct fields with
-the <code class="docutils literal notranslate"><span class="pre">unspecified</span></code> type are not considered to be compatible. That is, the
-<code class="docutils literal notranslate"><span class="pre">unspecified</span></code> type communicates the intended current absence of a type, e.g.,
+the <code class="docutils literal"><span class="pre">unspecified</span></code> type are not considered to be compatible. That is, the
+<code class="docutils literal"><span class="pre">unspecified</span></code> type communicates the intended current absence of a type, e.g.,
 to specify that a typing decision has not been taken, yet.</p>
 <p>Two <a class="reference internal" href="#link-intermediatedatastructure"><span class="std std-ref">data structures</span></a> are compatible, if
 their fields are compatible, independent of their type ordering. Two distinct
@@ -370,34 +379,34 @@ their fields are compatible, independent of their type ordering. Two distinct
 value-receiving enumeration comprises all initialization values of the
 value-providing enumeration.</p>
 <span class="target" id="link-intermediatetypekind"></span><dl class="enum">
-<dt id="_CPPv320IntermediateTypeKind">
-<span id="_CPPv220IntermediateTypeKind"></span><em class="property">enum </em><code class="descname">IntermediateTypeKind</code><a class="headerlink" href="#_CPPv320IntermediateTypeKind" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Enumeration to specify the kind of an <code class="xref py py-class docutils literal notranslate"><span class="pre">IntermediateType</span></code> instance
+<dt id="_CPPv220IntermediateTypeKind">
+<em class="property">enum </em><code class="descclassname"></code><code class="descname">IntermediateTypeKind</code><a class="headerlink" href="#_CPPv220IntermediateTypeKind" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Enumeration to specify the kind of an <code class="xref py py-class docutils literal"><span class="pre">IntermediateType</span></code> instance
 being referenced in some place.</p>
 <dl class="enumerator">
-<dt id="_CPPv3N20IntermediateTypeKind11ENUMERATIONE">
-<span id="_CPPv2N20IntermediateTypeKind11ENUMERATIONE"></span><em class="property">enumerator </em><code class="descname">ENUMERATION</code><a class="headerlink" href="#_CPPv3N20IntermediateTypeKind11ENUMERATIONE" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv2N20IntermediateTypeKind11ENUMERATIONE">
+<em class="property">enumerator </em><code class="descclassname"></code><code class="descname">ENUMERATION</code><a class="headerlink" href="#_CPPv2N20IntermediateTypeKind11ENUMERATIONE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Referenced type is an
 <a class="reference internal" href="#link-intermediateenumeration"><span class="std std-ref">IntermediateEnumeration</span></a>.</p>
 </dd></dl>
 
 <dl class="enumerator">
-<dt id="_CPPv3N20IntermediateTypeKind4LISTE">
-<span id="_CPPv2N20IntermediateTypeKind4LISTE"></span><em class="property">enumerator </em><code class="descname">LIST</code><a class="headerlink" href="#_CPPv3N20IntermediateTypeKind4LISTE" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv2N20IntermediateTypeKind4LISTE">
+<em class="property">enumerator </em><code class="descclassname"></code><code class="descname">LIST</code><a class="headerlink" href="#_CPPv2N20IntermediateTypeKind4LISTE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Referenced type is an
 <a class="reference internal" href="#link-intermediatelisttype"><span class="std std-ref">IntermediateListType</span></a>.</p>
 </dd></dl>
 
 <dl class="enumerator">
-<dt id="_CPPv3N20IntermediateTypeKind9PRIMITIVEE">
-<span id="_CPPv2N20IntermediateTypeKind9PRIMITIVEE"></span><em class="property">enumerator </em><code class="descname">PRIMITIVE</code><a class="headerlink" href="#_CPPv3N20IntermediateTypeKind9PRIMITIVEE" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv2N20IntermediateTypeKind9PRIMITIVEE">
+<em class="property">enumerator </em><code class="descclassname"></code><code class="descname">PRIMITIVE</code><a class="headerlink" href="#_CPPv2N20IntermediateTypeKind9PRIMITIVEE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Referenced type is an
 <a class="reference internal" href="#link-intermediateprimitivetype"><span class="std std-ref">IntermediatePrimitiveType</span></a>.</p>
 </dd></dl>
 
 <dl class="enumerator">
-<dt id="_CPPv3N20IntermediateTypeKind9STRUCTUREE">
-<span id="_CPPv2N20IntermediateTypeKind9STRUCTUREE"></span><em class="property">enumerator </em><code class="descname">STRUCTURE</code><a class="headerlink" href="#_CPPv3N20IntermediateTypeKind9STRUCTUREE" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv2N20IntermediateTypeKind9STRUCTUREE">
+<em class="property">enumerator </em><code class="descclassname"></code><code class="descname">STRUCTURE</code><a class="headerlink" href="#_CPPv2N20IntermediateTypeKind9STRUCTUREE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Referenced type is an
 <a class="reference internal" href="#link-intermediatedatastructure"><span class="std std-ref">IntermediateDataStructure</span></a>.</p>
 </dd></dl>
@@ -405,33 +414,33 @@ being referenced in some place.</p>
 </dd></dl>
 
 <span class="target" id="link-intermediatetypeorigin"></span><dl class="enum">
-<dt id="_CPPv322IntermediateTypeOrigin">
-<span id="_CPPv222IntermediateTypeOrigin"></span><em class="property">enum </em><code class="descname">IntermediateTypeOrigin</code><a class="headerlink" href="#_CPPv322IntermediateTypeOrigin" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Enumeration to specify the origin of an <code class="xref py py-class docutils literal notranslate"><span class="pre">IntermediateType</span></code>
+<dt id="_CPPv222IntermediateTypeOrigin">
+<em class="property">enum </em><code class="descclassname"></code><code class="descname">IntermediateTypeOrigin</code><a class="headerlink" href="#_CPPv222IntermediateTypeOrigin" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Enumeration to specify the origin of an <code class="xref py py-class docutils literal"><span class="pre">IntermediateType</span></code>
 instance being referenced in some place.</p>
 <dl class="enumerator">
-<dt id="_CPPv3N22IntermediateTypeOrigin10DATA_MODELE">
-<span id="_CPPv2N22IntermediateTypeOrigin10DATA_MODELE"></span><em class="property">enumerator </em><code class="descname">DATA_MODEL</code><a class="headerlink" href="#_CPPv3N22IntermediateTypeOrigin10DATA_MODELE" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv2N22IntermediateTypeOrigin10DATA_MODELE">
+<em class="property">enumerator </em><code class="descclassname"></code><code class="descname">DATA_MODEL</code><a class="headerlink" href="#_CPPv2N22IntermediateTypeOrigin10DATA_MODELE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Type is an
 <a class="reference internal" href="#link-intermediatecomplextype"><span class="std std-ref">IntermediateComplexType</span></a> defined
 in a Domain Data Model.</p>
 </dd></dl>
 
 <dl class="enumerator">
-<dt id="_CPPv3N22IntermediateTypeOrigin7BUILTINE">
-<span id="_CPPv2N22IntermediateTypeOrigin7BUILTINE"></span><em class="property">enumerator </em><code class="descname">BUILTIN</code><a class="headerlink" href="#_CPPv3N22IntermediateTypeOrigin7BUILTINE" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv2N22IntermediateTypeOrigin7BUILTINE">
+<em class="property">enumerator </em><code class="descclassname"></code><code class="descname">BUILTIN</code><a class="headerlink" href="#_CPPv2N22IntermediateTypeOrigin7BUILTINE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Type is a built-in type.</p>
 </dd></dl>
 
 <dl class="enumerator">
-<dt id="_CPPv3N22IntermediateTypeOrigin10TECHNOLOGYE">
-<span id="_CPPv2N22IntermediateTypeOrigin10TECHNOLOGYE"></span><em class="property">enumerator </em><code class="descname">TECHNOLOGY</code><a class="headerlink" href="#_CPPv3N22IntermediateTypeOrigin10TECHNOLOGYE" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv2N22IntermediateTypeOrigin10TECHNOLOGYE">
+<em class="property">enumerator </em><code class="descclassname"></code><code class="descname">TECHNOLOGY</code><a class="headerlink" href="#_CPPv2N22IntermediateTypeOrigin10TECHNOLOGYE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Type is technology-specific. Technology-specific types may be used to
 map built-in primitive types to technology-specific types, e.g.,
-<code class="docutils literal notranslate"><span class="pre">float</span></code> to <code class="docutils literal notranslate"><span class="pre">float32</span></code> in the Go programming language <a class="footnote-reference" href="#golang" id="id17">[9]</a>. They
+<code class="docutils literal"><span class="pre">float</span></code> to <code class="docutils literal"><span class="pre">float32</span></code> in the Go programming language <a class="footnote-reference" href="#golang" id="id17">[9]</a>. They
 are particularly useful to even allow for mapping the built-in
-<code class="docutils literal notranslate"><span class="pre">unspecified</span></code> primitive type to a corresponding programming language
-type like <code class="docutils literal notranslate"><span class="pre">Object</span></code> in Java. Moreover, they may be used to declare
+<code class="docutils literal"><span class="pre">unspecified</span></code> primitive type to a corresponding programming language
+type like <code class="docutils literal"><span class="pre">Object</span></code> in Java. Moreover, they may be used to declare
 technology-specific structure or list types. Code generators need to be
 able to interpret technology-specific types that were defined in a
 Technology Model (cf. <a class="reference internal" href="#tab-model-types"><span class="std std-numref">Table 1</span></a>).</p>
@@ -440,7 +449,7 @@ Technology Model (cf. <a class="reference internal" href="#tab-model-types"><spa
 <div class="admonition hint">
 <p class="first admonition-title">Hint</p>
 <p>Currently, the following combinations of
-<a class="reference internal" href="#_CPPv320IntermediateTypeKind" title="IntermediateTypeKind"><code class="xref cpp cpp-enum docutils literal notranslate"><span class="pre">IntermediateTypeKind</span></code></a> and <a class="reference internal" href="#_CPPv322IntermediateTypeOrigin" title="IntermediateTypeOrigin"><code class="xref cpp cpp-enum docutils literal notranslate"><span class="pre">IntermediateTypeOrigin</span></code></a>
+<a class="reference internal" href="#_CPPv220IntermediateTypeKind" title="IntermediateTypeKind"><code class="xref cpp cpp-enum docutils literal"><span class="pre">IntermediateTypeKind</span></code></a> and <a class="reference internal" href="#_CPPv222IntermediateTypeOrigin" title="IntermediateTypeOrigin"><code class="xref cpp cpp-enum docutils literal"><span class="pre">IntermediateTypeOrigin</span></code></a>
 values are possible:</p>
 <table border="1" class="last docutils">
 <colgroup>
@@ -594,31 +603,31 @@ fragments are separated by dots.</p>
 <dl class="attribute">
 <dt>
 <code class="descname">IntermediateImportedAspect[*] aspects</code></dt>
-<dd><p>The <a class="reference internal" href="#IntermediateImportedAspect" title="IntermediateImportedAspect"><code class="xref java java-type docutils literal notranslate"><span class="pre">aspects</span></code></a> that were assigned
+<dd><p>The <a class="reference internal" href="#IntermediateImportedAspect" title="IntermediateImportedAspect"><code class="xref java java-type docutils literal"><span class="pre">aspects</span></code></a> that were assigned
 to the complex type.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt>
 <code class="descname">IntermediateDataModel dataModel</code></dt>
-<dd><p>Link to the containing <code class="xref py py-class docutils literal notranslate"><span class="pre">IntermediateDataModel</span></code> instance.</p>
+<dd><p>Link to the containing <code class="xref py py-class docutils literal"><span class="pre">IntermediateDataModel</span></code> instance.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt>
 <code class="descname">IntermediateVersion version</code></dt>
-<dd><p>Link to the containing <code class="xref py py-class docutils literal notranslate"><span class="pre">IntermediateVersion</span></code> instance.</p>
+<dd><p>Link to the containing <code class="xref py py-class docutils literal"><span class="pre">IntermediateVersion</span></code> instance.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt>
 <code class="descname">IntermediateContext context</code></dt>
-<dd><p>Link to the containing <code class="xref py py-class docutils literal notranslate"><span class="pre">IntermediateContext</span></code> instance.</p>
+<dd><p>Link to the containing <code class="xref py py-class docutils literal"><span class="pre">IntermediateContext</span></code> instance.</p>
 </dd></dl>
 
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">Only one of the attributes <code class="docutils literal notranslate"><span class="pre">dataModel</span></code>, <code class="docutils literal notranslate"><span class="pre">version</span></code>, or <code class="docutils literal notranslate"><span class="pre">context</span></code>
+<p class="last">Only one of the attributes <code class="docutils literal"><span class="pre">dataModel</span></code>, <code class="docutils literal"><span class="pre">version</span></code>, or <code class="docutils literal"><span class="pre">context</span></code>
 has a value, depending on whether the type is defined directly under the
 <a class="reference internal" href="#link-intermediatedatamodel"><span class="std std-ref">model root</span></a>, or within a
 <a class="reference internal" href="#link-intermediateversion"><span class="std std-ref">version</span></a> or
@@ -785,7 +794,7 @@ fragments are separated by dots.</p>
 <dt>
 <code class="descname">boolean hidden</code></dt>
 <dd><p>Flag to indicate whether the operation is hidden or not. Semantically,
-this flag corresponds to Java’s <code class="docutils literal notranslate"><span class="pre">private</span></code> accessibility specifier.
+this flag corresponds to Java’s <code class="docutils literal"><span class="pre">private</span></code> accessibility specifier.
 However, its functionality differs in that an inherited operation may be
 set to hidden. That is, operations’ visibility may be overridden. A
 hidden operation is not visible in any of the following levels of the
@@ -860,7 +869,7 @@ operation.</p>
 <dl class="attribute">
 <dt>
 <code class="descname">IntermediateImportedAspect[*] aspects</code></dt>
-<dd><p>The <a class="reference internal" href="#IntermediateImportedAspect" title="IntermediateImportedAspect"><code class="xref java java-type docutils literal notranslate"><span class="pre">aspects</span></code></a> that were assigned
+<dd><p>The <a class="reference internal" href="#IntermediateImportedAspect" title="IntermediateImportedAspect"><code class="xref java java-type docutils literal"><span class="pre">aspects</span></code></a> that were assigned
 to the operation within a Mapping Model.</p>
 </dd></dl>
 
@@ -877,8 +886,8 @@ to the operation within a Mapping Model.</p>
 <dd><p>The return type.</p>
 <div class="admonition hint">
 <p class="first admonition-title">Hint</p>
-<p class="last">The <code class="docutils literal notranslate"><span class="pre">type</span></code> attribute always holds a unique instance of
-<code class="xref py py-class docutils literal notranslate"><span class="pre">IntermediateType</span></code>, i.e., instances of the same types are
+<p class="last">The <code class="docutils literal"><span class="pre">type</span></code> attribute always holds a unique instance of
+<code class="xref py py-class docutils literal"><span class="pre">IntermediateType</span></code>, i.e., instances of the same types are
 not reused.</p>
 </div>
 <div class="admonition hint">
@@ -900,7 +909,7 @@ Mapping Model.</p>
 return type got mapped and the
 <a class="reference internal" href="#link-intermediatedataoperationreturntype-type"><span class="std std-ref">type</span></a>
 attribute holds an
-<a class="reference internal" href="#IntermediateImportedTechnologySpecificType" title="IntermediateImportedTechnologySpecificType"><code class="xref java java-type docutils literal notranslate"><span class="pre">IntermediateImportedTechnologySpecificType</span></code></a> instance that points
+<a class="reference internal" href="#IntermediateImportedTechnologySpecificType" title="IntermediateImportedTechnologySpecificType"><code class="xref java java-type docutils literal"><span class="pre">IntermediateImportedTechnologySpecificType</span></code></a> instance that points
 to the technology-specific type to which the return type was mapped.</p>
 </div>
 </dd></dl>
@@ -908,7 +917,7 @@ to the technology-specific type to which the return type was mapped.</p>
 <dl class="attribute">
 <dt>
 <code class="descname">IntermediateImportedAspect[*] aspects</code></dt>
-<dd><p>The <a class="reference internal" href="#IntermediateImportedAspect" title="IntermediateImportedAspect"><code class="xref java java-type docutils literal notranslate"><span class="pre">aspects</span></code></a> that were assigned
+<dd><p>The <a class="reference internal" href="#IntermediateImportedAspect" title="IntermediateImportedAspect"><code class="xref java java-type docutils literal"><span class="pre">aspects</span></code></a> that were assigned
 to the return type within a Mapping Model.</p>
 </dd></dl>
 
@@ -940,8 +949,8 @@ are separated by dots.</p>
 <dd><p>The type of the parameter.</p>
 <div class="admonition hint">
 <p class="first admonition-title">Hint</p>
-<p class="last">The <code class="docutils literal notranslate"><span class="pre">type</span></code> attribute always holds a unique instance of
-<code class="xref py py-class docutils literal notranslate"><span class="pre">IntermediateType</span></code>, i.e., instances of the same types are
+<p class="last">The <code class="docutils literal"><span class="pre">type</span></code> attribute always holds a unique instance of
+<code class="xref py py-class docutils literal"><span class="pre">IntermediateType</span></code>, i.e., instances of the same types are
 not reused.</p>
 </div>
 <div class="admonition hint">
@@ -963,7 +972,7 @@ Mapping Model.</p>
 parameter, the parameter got mapped and the
 <a class="reference internal" href="#link-intermediatedataoperationparameter-type"><span class="std std-ref">type</span></a>
 attribute holds an
-<a class="reference internal" href="#IntermediateImportedTechnologySpecificType" title="IntermediateImportedTechnologySpecificType"><code class="xref java java-type docutils literal notranslate"><span class="pre">IntermediateImportedTechnologySpecificType</span></code></a> instance that points
+<a class="reference internal" href="#IntermediateImportedTechnologySpecificType" title="IntermediateImportedTechnologySpecificType"><code class="xref java java-type docutils literal"><span class="pre">IntermediateImportedTechnologySpecificType</span></code></a> instance that points
 to the technology-specific type to which the parameter was mapped.</p>
 </div>
 </dd></dl>
@@ -971,7 +980,7 @@ to the technology-specific type to which the parameter was mapped.</p>
 <dl class="attribute">
 <dt>
 <code class="descname">IntermediateImportedAspect[*] aspects</code></dt>
-<dd><p>The <a class="reference internal" href="#IntermediateImportedAspect" title="IntermediateImportedAspect"><code class="xref java java-type docutils literal notranslate"><span class="pre">aspects</span></code></a> that were assigned
+<dd><p>The <a class="reference internal" href="#IntermediateImportedAspect" title="IntermediateImportedAspect"><code class="xref java java-type docutils literal"><span class="pre">aspects</span></code></a> that were assigned
 to the parameter within a Mapping Model.</p>
 </dd></dl>
 
@@ -1001,7 +1010,7 @@ fragments are separated by dots.</p>
 <dt>
 <code class="descname">boolean hidden</code></dt>
 <dd><p>Flag to indicate whether the field is hidden or not. Semantically, this
-flag corresponds to Java’s <code class="docutils literal notranslate"><span class="pre">private</span></code> accessibility specifier. However,
+flag corresponds to Java’s <code class="docutils literal"><span class="pre">private</span></code> accessibility specifier. However,
 its functionality differs in that an inherited field may be set to
 hidden. That is, fields’ visibility may be overridden. A hidden field is
 not visible in any of the following levels of the inheritance hierarchy.</p>
@@ -1066,14 +1075,14 @@ violated.</p>
 <dd><p>If the field has an initialization value, it is encoded in this String
 attribute. It is guaranteed that the initialization value is compatible
 to all <a class="reference internal" href="#link-intermediateprimitivetype"><span class="std std-ref">primitive types</span></a> in the
-<code class="docutils literal notranslate"><span class="pre">initializationValueCompatibleTypes</span></code> list.</p>
+<code class="docutils literal"><span class="pre">initializationValueCompatibleTypes</span></code> list.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">Only data fields defined in <a class="reference internal" href="#link-intermediatedatastructure"><span class="std std-ref">data structures</span></a> can be initialized.</p>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">A data field with the built-in <code class="docutils literal notranslate"><span class="pre">unspecified</span></code> primitive type cannot
+<p class="last">A data field with the built-in <code class="docutils literal"><span class="pre">unspecified</span></code> primitive type cannot
 exhibit an initialization value.</p>
 </div>
 </dd></dl>
@@ -1099,8 +1108,8 @@ the list.</p>
 <dd><p>The type of the data field.</p>
 <div class="admonition hint">
 <p class="first admonition-title">Hint</p>
-<p class="last">The <code class="docutils literal notranslate"><span class="pre">type</span></code> attribute always holds a unique instance of
-<code class="xref py py-class docutils literal notranslate"><span class="pre">IntermediateType</span></code>, i.e., instances of the same types are
+<p class="last">The <code class="docutils literal"><span class="pre">type</span></code> attribute always holds a unique instance of
+<code class="xref py py-class docutils literal"><span class="pre">IntermediateType</span></code>, i.e., instances of the same types are
 not reused for data field typing.</p>
 </div>
 <div class="admonition hint">
@@ -1121,7 +1130,7 @@ Mapping Model.</p>
 <a class="reference internal" href="#link-intermediatedatafield-type"><span class="std std-ref">type</span></a> of the data field,
 the field got mapped and the
 <a class="reference internal" href="#link-intermediatedatafield-type"><span class="std std-ref">type</span></a> attribute holds an
-<a class="reference internal" href="#IntermediateImportedTechnologySpecificType" title="IntermediateImportedTechnologySpecificType"><code class="xref java java-type docutils literal notranslate"><span class="pre">IntermediateImportedTechnologySpecificType</span></code></a> instance that points
+<a class="reference internal" href="#IntermediateImportedTechnologySpecificType" title="IntermediateImportedTechnologySpecificType"><code class="xref java java-type docutils literal"><span class="pre">IntermediateImportedTechnologySpecificType</span></code></a> instance that points
 to the technology-specific type to which the field was mapped.</p>
 </div>
 </dd></dl>
@@ -1129,7 +1138,7 @@ to the technology-specific type to which the field was mapped.</p>
 <dl class="attribute">
 <dt>
 <code class="descname">IntermediateImportedAspect[*] aspects</code></dt>
-<dd><p>The <a class="reference internal" href="#IntermediateImportedAspect" title="IntermediateImportedAspect"><code class="xref java java-type docutils literal notranslate"><span class="pre">aspects</span></code></a> that were assigned
+<dd><p>The <a class="reference internal" href="#IntermediateImportedAspect" title="IntermediateImportedAspect"><code class="xref java java-type docutils literal"><span class="pre">aspects</span></code></a> that were assigned
 to the field within a Mapping Model.</p>
 </dd></dl>
 
@@ -1163,8 +1172,8 @@ values.</p>
 
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">Exactly one of the flags <code class="docutils literal notranslate"><span class="pre">primitiveList</span></code> and <code class="docutils literal notranslate"><span class="pre">structuredList</span></code> is
-always <code class="docutils literal notranslate"><span class="pre">true</span></code>.</p>
+<p class="last">Exactly one of the flags <code class="docutils literal"><span class="pre">primitiveList</span></code> and <code class="docutils literal"><span class="pre">structuredList</span></code> is
+always <code class="docutils literal"><span class="pre">true</span></code>.</p>
 </div>
 <dl class="attribute">
 <dt>
@@ -1225,7 +1234,7 @@ fragments are separated by dots.</p>
 <dd><p>If the field has an initialization value, it is encoded in this String
 attribute. It is guaranteed that the initialization value is compatible
 to all <a class="reference internal" href="#link-intermediateprimitivetype"><span class="std std-ref">primitive types</span></a> in the
-<code class="docutils literal notranslate"><span class="pre">initializationValueCompatibleTypes</span></code> list.</p>
+<code class="docutils literal"><span class="pre">initializationValueCompatibleTypes</span></code> list.</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -1256,7 +1265,7 @@ this field is defined.</p>
 <div class="section" id="technologies">
 <h2>3.6&nbsp;&nbsp;&nbsp;Technologies<a class="headerlink" href="#technologies" title="Permalink to this headline">¶</a></h2>
 <p>In the following, concepts for assigning technologies to, e.g., complex types
-and other modeling concepts such as <a class="reference external" href="../../../../de.fhdo.lemma.service.intermediate.metamodel/doc/build/html/body.html#IntermediateMicroservice" title="(in Intermediate Service Model Format Specification v1.0)"><code class="xref java java-type docutils literal notranslate"><span class="pre">microservices</span></code></a> are described.</p>
+and other modeling concepts such as <a class="reference external" href="../../../../de.fhdo.lemma.service.intermediate.metamodel/doc/build/html/body.html#IntermediateMicroservice" title="(in Intermediate Service Model Format Specification v1.0)"><code class="xref java java-type docutils literal"><span class="pre">microservices</span></code></a> are described.</p>
 <dl class="type">
 <dt id="IntermediateImportedTechnologySpecificType">
  class <code class="descname">IntermediateImportedTechnologySpecificType</code> extends <a class="reference internal" href="#IntermediateType" title="IntermediateType">IntermediateType</a><a class="headerlink" href="#IntermediateImportedTechnologySpecificType" title="Permalink to this definition">¶</a></dt>
@@ -1272,7 +1281,7 @@ Technology Model, and the name of the type.</p>
 <dl class="attribute">
 <dt>
 <code class="descname">IntermediateImport[1] import</code></dt>
-<dd><p>The <a class="reference internal" href="#IntermediateImport" title="IntermediateImport"><code class="xref java java-type docutils literal notranslate"><span class="pre">IntermediateImport</span></code></a> instance that
+<dd><p>The <a class="reference internal" href="#IntermediateImport" title="IntermediateImport"><code class="xref java java-type docutils literal"><span class="pre">IntermediateImport</span></code></a> instance that
 points to the Technology Model from which the type was imported.</p>
 </dd></dl>
 
@@ -1283,11 +1292,11 @@ points to the Technology Model from which the type was imported.</p>
  class <code class="descname">IntermediateImportedAspect</code><a class="headerlink" href="#IntermediateImportedAspect" title="Permalink to this definition">¶</a></dt>
 <dd><p>Aspects enable to semantically reify modeled
 <a class="reference internal" href="#link-intermediatecomplextype"><span class="std std-ref">complex types</span></a>,
-<code class="xref java java-type docutils literal notranslate"><span class="pre">data</span> <span class="pre">and</span> <span class="pre">enumeration</span> <span class="pre">fields</span></code>
-<a class="reference external" href="../../../../de.fhdo.lemma.service.intermediate.metamodel/doc/build/html/body.html#IntermediateMicroservice" title="(in Intermediate Service Model Format Specification v1.0)"><code class="xref java java-type docutils literal notranslate"><span class="pre">microservices</span></code></a>,
-<a class="reference external" href="../../../../de.fhdo.lemma.service.intermediate.metamodel/doc/build/html/body.html#IntermediateInterface" title="(in Intermediate Service Model Format Specification v1.0)"><code class="xref java java-type docutils literal notranslate"><span class="pre">interfaces</span></code></a>,
-<a class="reference external" href="../../../../de.fhdo.lemma.service.intermediate.metamodel/doc/build/html/body.html#IntermediateOperation" title="(in Intermediate Service Model Format Specification v1.0)"><code class="xref java java-type docutils literal notranslate"><span class="pre">operations</span></code></a>, and
-<a class="reference external" href="../../../../de.fhdo.lemma.service.intermediate.metamodel/doc/build/html/body.html#IntermediateParameter" title="(in Intermediate Service Model Format Specification v1.0)"><code class="xref java java-type docutils literal notranslate"><span class="pre">parameters</span></code></a>, in the sense of
+<code class="xref java java-type docutils literal"><span class="pre">data</span> <span class="pre">and</span> <span class="pre">enumeration</span> <span class="pre">fields</span></code>
+<a class="reference external" href="../../../../de.fhdo.lemma.service.intermediate.metamodel/doc/build/html/body.html#IntermediateMicroservice" title="(in Intermediate Service Model Format Specification v1.0)"><code class="xref java java-type docutils literal"><span class="pre">microservices</span></code></a>,
+<a class="reference external" href="../../../../de.fhdo.lemma.service.intermediate.metamodel/doc/build/html/body.html#IntermediateInterface" title="(in Intermediate Service Model Format Specification v1.0)"><code class="xref java java-type docutils literal"><span class="pre">interfaces</span></code></a>,
+<a class="reference external" href="../../../../de.fhdo.lemma.service.intermediate.metamodel/doc/build/html/body.html#IntermediateOperation" title="(in Intermediate Service Model Format Specification v1.0)"><code class="xref java java-type docutils literal"><span class="pre">operations</span></code></a>, and
+<a class="reference external" href="../../../../de.fhdo.lemma.service.intermediate.metamodel/doc/build/html/body.html#IntermediateParameter" title="(in Intermediate Service Model Format Specification v1.0)"><code class="xref java java-type docutils literal"><span class="pre">parameters</span></code></a>, in the sense of
 Aspect-oriented Programming (AOP) <a class="reference internal" href="#kiczales1997" id="id23">[KLM+97]</a>.</p>
 <p>Aspects are defined within Technology Models. An aspect definition might be
 accompanied with properties and constrained to the concepts to which they
@@ -1334,21 +1343,21 @@ target element.</td>
 <dl class="attribute">
 <dt>
 <code class="descname">IntermediateImport[1] import</code></dt>
-<dd><p><a class="reference internal" href="#IntermediateImport" title="IntermediateImport"><code class="xref java java-type docutils literal notranslate"><span class="pre">Import</span></code></a> of the Technology Model which
+<dd><p><a class="reference internal" href="#IntermediateImport" title="IntermediateImport"><code class="xref java java-type docutils literal"><span class="pre">Import</span></code></a> of the Technology Model which
 defines the aspect.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt>
 <code class="descname">IntermediateAspectProperty[*] properties</code></dt>
-<dd><p>All <a class="reference internal" href="#IntermediateAspectProperty" title="IntermediateAspectProperty"><code class="xref java java-type docutils literal notranslate"><span class="pre">properties</span></code></a> of the aspect
+<dd><p>All <a class="reference internal" href="#IntermediateAspectProperty" title="IntermediateAspectProperty"><code class="xref java java-type docutils literal"><span class="pre">properties</span></code></a> of the aspect
 as defined in its Technology Model.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt>
 <code class="descname">IntermediateAspectPropertyValue[*] propertyValues</code></dt>
-<dd><p><a class="reference internal" href="#IntermediateAspectPropertyValue" title="IntermediateAspectPropertyValue"><code class="xref java java-type docutils literal notranslate"><span class="pre">Values</span></code></a> for aspect
+<dd><p><a class="reference internal" href="#IntermediateAspectPropertyValue" title="IntermediateAspectPropertyValue"><code class="xref java java-type docutils literal"><span class="pre">Values</span></code></a> for aspect
 properties specified in the source Service Model.</p>
 </dd></dl>
 
@@ -1385,7 +1394,7 @@ aspect was assigned.</p>
 <dl class="type">
 <dt id="IntermediateAspectProperty">
  class <code class="descname">IntermediateAspectProperty</code><a class="headerlink" href="#IntermediateAspectProperty" title="Permalink to this definition">¶</a></dt>
-<dd><p>Specification of an <a class="reference internal" href="#IntermediateImportedAspect" title="IntermediateImportedAspect"><code class="xref java java-type docutils literal notranslate"><span class="pre">aspect's</span></code></a>
+<dd><p>Specification of an <a class="reference internal" href="#IntermediateImportedAspect" title="IntermediateImportedAspect"><code class="xref java java-type docutils literal"><span class="pre">aspect's</span></code></a>
 property.</p>
 <dl class="attribute">
 <dt>
@@ -1412,7 +1421,7 @@ the property. This can be one of the values:</p>
 </ul>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">A property cannot be of the built-in primitive type <code class="docutils literal notranslate"><span class="pre">unspecified</span></code>.</p>
+<p class="last">A property cannot be of the built-in primitive type <code class="docutils literal"><span class="pre">unspecified</span></code>.</p>
 </div>
 </dd></dl>
 
@@ -1444,11 +1453,11 @@ property. The following values are possible:</p>
 value. It is guaranteed by the languages’ validators
 that all mandatory values of a property receive a
 value when the respective
-<a class="reference internal" href="#IntermediateImportedAspect" title="IntermediateImportedAspect"><code class="xref java java-type docutils literal notranslate"><span class="pre">IntermediateImportedAspect</span></code></a> is used.</td>
+<a class="reference internal" href="#IntermediateImportedAspect" title="IntermediateImportedAspect"><code class="xref java java-type docutils literal"><span class="pre">IntermediateImportedAspect</span></code></a> is used.</td>
 </tr>
 <tr class="row-odd"><td>SINGE_VALUED</td>
 <td>Flag to indicate that a property may only receive a
-value once. Note that for <a class="reference internal" href="#IntermediateImportedAspect" title="IntermediateImportedAspect"><code class="xref java java-type docutils literal notranslate"><span class="pre">aspects</span></code></a> the languages’
+value once. Note that for <a class="reference internal" href="#IntermediateImportedAspect" title="IntermediateImportedAspect"><code class="xref java java-type docutils literal"><span class="pre">aspects</span></code></a> the languages’
 validators guarantee that properties receive values
 only once. However, it is not guaranteed that aspect
 properties exhibit this feature.</td>
@@ -1460,7 +1469,7 @@ properties exhibit this feature.</td>
 <dl class="attribute">
 <dt>
 <code class="descname">IntermediateImportedAspect aspect</code></dt>
-<dd><p>The <a class="reference internal" href="#IntermediateImportedAspect" title="IntermediateImportedAspect"><code class="xref java java-type docutils literal notranslate"><span class="pre">aspect</span></code></a> to which the
+<dd><p>The <a class="reference internal" href="#IntermediateImportedAspect" title="IntermediateImportedAspect"><code class="xref java java-type docutils literal"><span class="pre">aspect</span></code></a> to which the
 property belongs.</p>
 </dd></dl>
 
@@ -1469,7 +1478,7 @@ property belongs.</p>
 <dl class="type">
 <dt id="IntermediateAspectPropertyValue">
  class <code class="descname">IntermediateAspectPropertyValue</code><a class="headerlink" href="#IntermediateAspectPropertyValue" title="Permalink to this definition">¶</a></dt>
-<dd><p>Value of an <a class="reference internal" href="#IntermediateAspectProperty" title="IntermediateAspectProperty"><code class="xref java java-type docutils literal notranslate"><span class="pre">IntermediateAspectProperty</span></code></a>.</p>
+<dd><p>Value of an <a class="reference internal" href="#IntermediateAspectProperty" title="IntermediateAspectProperty"><code class="xref java java-type docutils literal"><span class="pre">IntermediateAspectProperty</span></code></a>.</p>
 <dl class="attribute">
 <dt>
 <code class="descname">String[1] value</code></dt>
@@ -1479,14 +1488,14 @@ property belongs.</p>
 <dl class="attribute">
 <dt>
 <code class="descname">IntermediateAspectProperty[1] property</code></dt>
-<dd><p>The <a class="reference internal" href="#IntermediateAspectProperty" title="IntermediateAspectProperty"><code class="xref java java-type docutils literal notranslate"><span class="pre">property</span></code></a> for which the
+<dd><p>The <a class="reference internal" href="#IntermediateAspectProperty" title="IntermediateAspectProperty"><code class="xref java java-type docutils literal"><span class="pre">property</span></code></a> for which the
 value was set.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt>
 <code class="descname">IntermediateImportedAspect aspect</code></dt>
-<dd><p>The <a class="reference internal" href="#IntermediateImportedAspect" title="IntermediateImportedAspect"><code class="xref java java-type docutils literal notranslate"><span class="pre">aspect</span></code></a> to which the
+<dd><p>The <a class="reference internal" href="#IntermediateImportedAspect" title="IntermediateImportedAspect"><code class="xref java java-type docutils literal"><span class="pre">aspect</span></code></a> to which the
 property value belongs.</p>
 </dd></dl>
 
@@ -1621,14 +1630,12 @@ Please refer to <a class="reference internal" href="#combemale2017" id="id24">[C
 </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
-    <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -1639,7 +1646,7 @@ Please refer to <a class="reference internal" href="#combemale2017" id="id24">[C
       &copy;2018, Florian Rademacher.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.3</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.7</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
