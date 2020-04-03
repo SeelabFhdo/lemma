@@ -1,7 +1,6 @@
 package de.fhdo.lemma.eclipse.ui
 
 import java.util.Map
-import org.eclipse.core.resources.IProject
 import java.util.List
 import org.eclipse.core.resources.IFile
 import de.fhdo.lemma.intermediate.transformations.AbstractIntermediateModelTransformationStrategy
@@ -49,12 +48,6 @@ abstract class AbstractUiModelTransformationStrategy {
      * the extensions are treated as source files for the model transformations.
      */
     abstract def List<String> getModelFileTypeExtensions()
-
-    /**
-     * Find project-specific model files, i.e., files in the workspace that exhibit one of the model
-     * type's file extensions.
-     */
-    abstract def Map<IProject, List<IFile>> findProjectSpecificModelFiles()
 
     /**
      * Get descriptions of all relevant model file types including icon, description string, and

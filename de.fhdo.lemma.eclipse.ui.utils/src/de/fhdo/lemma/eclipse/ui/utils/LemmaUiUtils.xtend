@@ -26,6 +26,9 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
 import org.eclipse.swt.widgets.Shell
 import org.eclipse.ui.IEditorPart
 import java.io.File
+import org.eclipse.ui.handlers.HandlerUtil
+import org.eclipse.core.commands.ExecutionEvent
+import org.eclipse.jface.viewers.IStructuredSelection
 
 /**
  * Utility class for the LEMMA UI plugin.
@@ -57,10 +60,9 @@ final class LemmaUiUtils {
         val resultFiles = <IProject, List<IFile>> newHashMap
         val projects = ResourcesPlugin.workspace.root.projects
         projects.forEach[
-            if (it.open) {
-                val resultFilesForProject = findFilesInProject(extensions)
+            val resultFilesForProject = findFilesInProject(extensions)
+            if (!resultFilesForProject.empty)
                 resultFiles.put(it, resultFilesForProject)
-            }
         ]
         return resultFiles
     }
@@ -72,6 +74,9 @@ final class LemmaUiUtils {
     static def findFilesInProject(IProject project, String... extensions) {
         if (project === null)
             return null
+
+        if (!project.open)
+            return emptyList
 
         val foldersAndFiles = project.members.filter[it instanceof IFolder || it instanceof IFile]
         val resourcesTodo = new ArrayDeque<IResource>(foldersAndFiles.toList)
@@ -266,5 +271,17 @@ final class LemmaUiUtils {
             val editor = it.getEditor(false)
             editor !== null && editor.getAdapter(editorType) !== null
         ].map[it.getEditor(false).getAdapter(editorType) as T]
+    }
+
+    /**
+     * Get selected IResources from ExecutionEvent
+     */
+    static def getSelectedResources(ExecutionEvent event) {
+        val window = HandlerUtil.getActiveWorkbenchWindowChecked(event)
+        val selection = window.selectionService.selection
+        return if (selection instanceof IStructuredSelection)
+                selection.toList.map[it as IResource]
+            else
+                emptyList
     }
 }

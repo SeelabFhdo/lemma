@@ -11,6 +11,11 @@
             name="Generate Intermediate Models"
             categoryId="de.fhdo.lemma.eclipse.ui.category.lemmaCommands"
             id="de.fhdo.lemma.eclipse.ui.commands.generateIntermediateModels">
+            <commandParameter
+                  id="de.fhdo.lemma.eclipse.ui.commands.parameters.selectedModelsOnly"
+                  name="Generate intermediate models from resources selected in Project Explorer?"
+                  optional="true">
+            </commandParameter>
       </command>
       <command
             name="About"
@@ -76,6 +81,40 @@
                   id="de.fhdo.lemma.eclipse.ui.toolbars.generateIntermediateModels">
             </command>
          </toolbar>
+      </menuContribution>
+      <menuContribution
+            locationURI="popup:org.eclipse.ui.navigator.ProjectExplorer#PopupMenu?after=additions">
+        <command
+              commandId="de.fhdo.lemma.eclipse.ui.commands.generateIntermediateModels"
+              mnemonic="M"
+              id="de.fhdo.lemma.eclipse.ui.menus.transformToLemmaModels"
+              icon="icons/generateIntermediateModels.gif"
+              label="Generate Intermediate Models...">
+              <visibleWhen>
+                <with variable="activeMenuSelection">
+                    <iterate
+                        ifEmpty="false">
+                        <or>
+                            <instanceof value="org.eclipse.core.resources.IProject"/>
+                            <instanceof value="org.eclipse.core.resources.IFolder"/>
+                            <adapt type="org.eclipse.core.resources.IResource">
+                                <or>
+                                    <test property="org.eclipse.core.resources.name"
+                                        value="*.data" />
+                                    <test property="org.eclipse.core.resources.name"
+                                        value="*.mapping" />
+                                    <test property="org.eclipse.core.resources.name"
+                                        value="*.services" />
+                                </or>
+                            </adapt>
+                        </or>
+                    </iterate>
+                </with>
+              </visibleWhen>
+              <parameter
+                    name="de.fhdo.lemma.eclipse.ui.commands.parameters.selectedModelsOnly"
+                    value="true"/>
+        </command>
       </menuContribution>
    </extension>
 </plugin>

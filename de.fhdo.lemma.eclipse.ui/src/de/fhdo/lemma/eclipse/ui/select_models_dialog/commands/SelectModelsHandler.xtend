@@ -13,7 +13,6 @@ import org.eclipse.jface.window.Window
 import de.fhdo.lemma.eclipse.ui.ModelFile
 import de.fhdo.lemma.eclipse.ui.select_models_dialog.SelectModelsDialog
 import de.fhdo.lemma.eclipse.ui.AbstractUiModelTransformationStrategy
-import de.fhdo.lemma.eclipse.ui.utils.LemmaUiUtils
 
 /**
  * Handler for selecting models for intermediate model transformation.
@@ -24,33 +23,33 @@ class SelectModelsHandler extends AbstractHandler {
     val SHELL = PlatformUI.workbench.activeWorkbenchWindow.shell
 
     AbstractUiModelTransformationStrategy transformationStrategy
+    Map<IProject, List<IFile>> inputModelFiles
 
     /**
      * Constructor
      */
-    new(AbstractUiModelTransformationStrategy transformationStrategy) {
+    new(AbstractUiModelTransformationStrategy transformationStrategy,
+        Map<IProject, List<IFile>> inputModelFiles) {
         if (transformationStrategy === null)
             throw new IllegalArgumentException("Transformation strategy must not be null")
 
         this.transformationStrategy = transformationStrategy
+        this.inputModelFiles = inputModelFiles
     }
 
     /**
      * Execute handler
      */
     override execute(ExecutionEvent event) throws ExecutionException {
-        /* Find project-specific model files */
-        val projectSpecificModelFiles = findProjectSpecificModelFiles()
-        if (projectSpecificModelFiles === null || projectSpecificModelFiles.empty) {
+        if (inputModelFiles === null || inputModelFiles.empty) {
             val modelTypePrefix = transformationStrategy.modelTypePrefix
             MessageDialog.openInformation(SHELL, '''No «modelTypePrefix» models found''',
-                '''No «modelTypePrefix» model files found in the wokspace. Transformation not ''' +
-                '''possible''')
+                '''No «modelTypePrefix» model files found. Transformation not possible.''')
             return null
         }
 
         /* Create dialog */
-        val modelFiles = convertToModelFiles(projectSpecificModelFiles)
+        val modelFiles = convertToModelFiles(inputModelFiles)
         val dialog = new SelectModelsDialog(SHELL, transformationStrategy, modelFiles)
         dialog.create()
 
@@ -65,35 +64,6 @@ class SelectModelsHandler extends AbstractHandler {
             dialog.selectedModelFiles
         else
             null
-    }
-
-    /**
-     * Find model files according to strategy
-     */
-    private def findProjectSpecificModelFiles() {
-        val modelTypePrefix = transformationStrategy.modelTypePrefix
-        val modelTypeFileExtensions = transformationStrategy.modelFileTypeExtensions
-
-        if (modelTypeFileExtensions === null || modelTypeFileExtensions.empty) {
-            MessageDialog.openError(SHELL, '''No «modelTypePrefix» models found''', '''No ''' +
-                '''«modelTypePrefix» model files could be found, because there were no editors ''' +
-                '''associated with the respective file types. Do you have the editor plugins ''' +
-                '''for creating «modelTypePrefix» models installed?''')
-
-            return null
-        }
-
-        val modelFiles = transformationStrategy.findProjectSpecificModelFiles
-        if (modelFiles === null || modelFiles.empty) {
-            val extensionEnumeration = LemmaUiUtils.createEnumerationText(modelTypeFileExtensions)
-            MessageDialog.openError(SHELL, '''No «modelTypePrefix» models found''', '''No ''' +
-                '''«modelTypePrefix» model files with extensions «extensionEnumeration» could ''' +
-                ''' be found in the workspace's projects.''')
-
-            return null
-        }
-
-        return modelFiles
     }
 
     /**

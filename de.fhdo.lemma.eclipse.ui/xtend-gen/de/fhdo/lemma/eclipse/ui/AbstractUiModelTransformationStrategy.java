@@ -8,7 +8,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IProject;
 import org.eclipse.xtext.xbase.lib.Pair;
 
 /**
@@ -53,12 +52,6 @@ public abstract class AbstractUiModelTransformationStrategy {
    * the extensions are treated as source files for the model transformations.
    */
   public abstract List<String> getModelFileTypeExtensions();
-  
-  /**
-   * Find project-specific model files, i.e., files in the workspace that exhibit one of the model
-   * type's file extensions.
-   */
-  public abstract Map<IProject, List<IFile>> findProjectSpecificModelFiles();
   
   /**
    * Get descriptions of all relevant model file types including icon, description string, and

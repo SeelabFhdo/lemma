@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.function.Consumer;
+import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
@@ -23,6 +24,8 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.XMIResource;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.ResourceManager;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
@@ -33,6 +36,7 @@ import org.eclipse.ui.IFileEditorMapping;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.EcoreUtil2;
 import org.eclipse.xtext.resource.IResourceServiceProvider;
@@ -93,9 +97,10 @@ public final class LemmaUiUtils {
     final HashMap<IProject, List<IFile>> resultFiles = CollectionLiterals.<IProject, List<IFile>>newHashMap();
     final IProject[] projects = ResourcesPlugin.getWorkspace().getRoot().getProjects();
     final Consumer<IProject> _function = (IProject it) -> {
-      boolean _isOpen = it.isOpen();
-      if (_isOpen) {
-        final ArrayList<IFile> resultFilesForProject = LemmaUiUtils.findFilesInProject(it, extensions);
+      final List<IFile> resultFilesForProject = LemmaUiUtils.findFilesInProject(it, extensions);
+      boolean _isEmpty = resultFilesForProject.isEmpty();
+      boolean _not = (!_isEmpty);
+      if (_not) {
         resultFiles.put(it, resultFilesForProject);
       }
     };
@@ -107,10 +112,15 @@ public final class LemmaUiUtils {
    * Find files in project with the given extensions. If no extensions are specified, all files
    * will be retrieved.
    */
-  public static ArrayList<IFile> findFilesInProject(final IProject project, final String... extensions) {
+  public static List<IFile> findFilesInProject(final IProject project, final String... extensions) {
     try {
       if ((project == null)) {
         return null;
+      }
+      boolean _isOpen = project.isOpen();
+      boolean _not = (!_isOpen);
+      if (_not) {
+        return CollectionLiterals.<IFile>emptyList();
       }
       final Function1<IResource, Boolean> _function = (IResource it) -> {
         return Boolean.valueOf(((it instanceof IFolder) || (it instanceof IFile)));
@@ -380,5 +390,27 @@ public final class LemmaUiUtils {
       return ((T) _adapter);
     };
     return IterableExtensions.<IEditorReference, T>map(IterableExtensions.<IEditorReference>filter(allOpenEditorReferences, _function_2), _function_3);
+  }
+  
+  /**
+   * Get selected IResources from ExecutionEvent
+   */
+  public static List<IResource> getSelectedResources(final ExecutionEvent event) {
+    try {
+      final IWorkbenchWindow window = HandlerUtil.getActiveWorkbenchWindowChecked(event);
+      final ISelection selection = window.getSelectionService().getSelection();
+      List<IResource> _xifexpression = null;
+      if ((selection instanceof IStructuredSelection)) {
+        final Function1<Object, IResource> _function = (Object it) -> {
+          return ((IResource) it);
+        };
+        _xifexpression = ListExtensions.<Object, IResource>map(((IStructuredSelection)selection).toList(), _function);
+      } else {
+        _xifexpression = CollectionLiterals.<IResource>emptyList();
+      }
+      return _xifexpression;
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
   }
 }

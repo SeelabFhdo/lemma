@@ -27,7 +27,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.BiConsumer;
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.resource.JFaceResources;
@@ -38,9 +37,7 @@ import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Conversions;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
-import org.eclipse.xtext.xbase.lib.Functions.Function2;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
-import org.eclipse.xtext.xbase.lib.MapExtensions;
 import org.eclipse.xtext.xbase.lib.Pair;
 import org.eclipse.xtext.xbase.lib.StringExtensions;
 
@@ -165,18 +162,6 @@ public class ServiceModelTransformationStrategy extends AbstractUiModelTransform
     modelTypeFileExtensions.addAll(ServiceModelTransformationStrategy.SERVICE_MODEL_FILE_EXTENSIONS);
     modelTypeFileExtensions.addAll(ServiceModelTransformationStrategy.MAPPING_MODEL_FILE_EXTENSIONS);
     return modelTypeFileExtensions;
-  }
-  
-  /**
-   * Find project-specific model files
-   */
-  @Override
-  public Map<IProject, List<IFile>> findProjectSpecificModelFiles() {
-    final Function2<IProject, List<IFile>, Boolean> _function = (IProject project, List<IFile> files) -> {
-      boolean _isEmpty = files.isEmpty();
-      return Boolean.valueOf((!_isEmpty));
-    };
-    return MapExtensions.<IProject, List<IFile>>filter(LemmaUiUtils.findFilesInWorkspaceProjects(((String[])Conversions.unwrapArray(this.getModelFileTypeExtensions(), String.class))), _function);
   }
   
   /**

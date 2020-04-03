@@ -137,14 +137,6 @@ class ServiceModelTransformationStrategy extends AbstractUiModelTransformationSt
     }
 
     /**
-     * Find project-specific model files
-     */
-    override findProjectSpecificModelFiles() {
-        return LemmaUiUtils.findFilesInWorkspaceProjects(getModelFileTypeExtensions())
-            .filter[project, files | !files.empty]
-    }
-
-    /**
      * Get descriptions of all relevant model file types
      */
     override getModelFileTypeDescriptions() {

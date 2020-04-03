@@ -4,7 +4,6 @@ import de.fhdo.lemma.eclipse.ui.AbstractUiModelTransformationStrategy;
 import de.fhdo.lemma.eclipse.ui.ModelFile;
 import de.fhdo.lemma.eclipse.ui.ModelFileTypeDescription;
 import de.fhdo.lemma.eclipse.ui.select_models_dialog.SelectModelsDialog;
-import de.fhdo.lemma.eclipse.ui.utils.LemmaUiUtils;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -34,14 +33,17 @@ public class SelectModelsHandler extends AbstractHandler {
   
   private AbstractUiModelTransformationStrategy transformationStrategy;
   
+  private Map<IProject, List<IFile>> inputModelFiles;
+  
   /**
    * Constructor
    */
-  public SelectModelsHandler(final AbstractUiModelTransformationStrategy transformationStrategy) {
+  public SelectModelsHandler(final AbstractUiModelTransformationStrategy transformationStrategy, final Map<IProject, List<IFile>> inputModelFiles) {
     if ((transformationStrategy == null)) {
       throw new IllegalArgumentException("Transformation strategy must not be null");
     }
     this.transformationStrategy = transformationStrategy;
+    this.inputModelFiles = inputModelFiles;
   }
   
   /**
@@ -49,8 +51,7 @@ public class SelectModelsHandler extends AbstractHandler {
    */
   @Override
   public Object execute(final ExecutionEvent event) throws ExecutionException {
-    final Map<IProject, List<IFile>> projectSpecificModelFiles = this.findProjectSpecificModelFiles();
-    if (((projectSpecificModelFiles == null) || projectSpecificModelFiles.isEmpty())) {
+    if (((this.inputModelFiles == null) || this.inputModelFiles.isEmpty())) {
       final String modelTypePrefix = this.transformationStrategy.getModelTypePrefix();
       StringConcatenation _builder = new StringConcatenation();
       _builder.append("No ");
@@ -59,14 +60,11 @@ public class SelectModelsHandler extends AbstractHandler {
       StringConcatenation _builder_1 = new StringConcatenation();
       _builder_1.append("No ");
       _builder_1.append(modelTypePrefix);
-      _builder_1.append(" model files found in the wokspace. Transformation not ");
-      StringConcatenation _builder_2 = new StringConcatenation();
-      _builder_2.append("possible");
-      String _plus = (_builder_1.toString() + _builder_2);
-      MessageDialog.openInformation(this.SHELL, _builder.toString(), _plus);
+      _builder_1.append(" model files found. Transformation not possible.");
+      MessageDialog.openInformation(this.SHELL, _builder.toString(), _builder_1.toString());
       return null;
     }
-    final HashMap<IProject, List<ModelFile>> modelFiles = this.convertToModelFiles(projectSpecificModelFiles);
+    final HashMap<IProject, List<ModelFile>> modelFiles = this.convertToModelFiles(this.inputModelFiles);
     final SelectModelsDialog dialog = new SelectModelsDialog(this.SHELL, this.transformationStrategy, modelFiles);
     dialog.create();
     final int dialogResult = dialog.open();
@@ -80,59 +78,6 @@ public class SelectModelsHandler extends AbstractHandler {
       _xifexpression = null;
     }
     return _xifexpression;
-  }
-  
-  /**
-   * Find model files according to strategy
-   */
-  private Map<IProject, List<IFile>> findProjectSpecificModelFiles() {
-    final String modelTypePrefix = this.transformationStrategy.getModelTypePrefix();
-    final List<String> modelTypeFileExtensions = this.transformationStrategy.getModelFileTypeExtensions();
-    if (((modelTypeFileExtensions == null) || modelTypeFileExtensions.isEmpty())) {
-      StringConcatenation _builder = new StringConcatenation();
-      _builder.append("No ");
-      _builder.append(modelTypePrefix);
-      _builder.append(" models found");
-      StringConcatenation _builder_1 = new StringConcatenation();
-      _builder_1.append("No ");
-      StringConcatenation _builder_2 = new StringConcatenation();
-      _builder_2.append(modelTypePrefix);
-      _builder_2.append(" model files could be found, because there were no editors ");
-      String _plus = (_builder_1.toString() + _builder_2);
-      StringConcatenation _builder_3 = new StringConcatenation();
-      _builder_3.append("associated with the respective file types. Do you have the editor plugins ");
-      String _plus_1 = (_plus + _builder_3);
-      StringConcatenation _builder_4 = new StringConcatenation();
-      _builder_4.append("for creating ");
-      _builder_4.append(modelTypePrefix);
-      _builder_4.append(" models installed?");
-      String _plus_2 = (_plus_1 + _builder_4);
-      MessageDialog.openError(this.SHELL, _builder.toString(), _plus_2);
-      return null;
-    }
-    final Map<IProject, List<IFile>> modelFiles = this.transformationStrategy.findProjectSpecificModelFiles();
-    if (((modelFiles == null) || modelFiles.isEmpty())) {
-      final Object extensionEnumeration = LemmaUiUtils.createEnumerationText(modelTypeFileExtensions);
-      StringConcatenation _builder_5 = new StringConcatenation();
-      _builder_5.append("No ");
-      _builder_5.append(modelTypePrefix);
-      _builder_5.append(" models found");
-      StringConcatenation _builder_6 = new StringConcatenation();
-      _builder_6.append("No ");
-      StringConcatenation _builder_7 = new StringConcatenation();
-      _builder_7.append(modelTypePrefix);
-      _builder_7.append(" model files with extensions ");
-      _builder_7.append(extensionEnumeration);
-      _builder_7.append(" could ");
-      String _plus_3 = (_builder_6.toString() + _builder_7);
-      StringConcatenation _builder_8 = new StringConcatenation();
-      _builder_8.append(" ");
-      _builder_8.append("be found in the workspace\'s projects.");
-      String _plus_4 = (_plus_3 + _builder_8);
-      MessageDialog.openError(this.SHELL, _builder_5.toString(), _plus_4);
-      return null;
-    }
-    return modelFiles;
   }
   
   /**
