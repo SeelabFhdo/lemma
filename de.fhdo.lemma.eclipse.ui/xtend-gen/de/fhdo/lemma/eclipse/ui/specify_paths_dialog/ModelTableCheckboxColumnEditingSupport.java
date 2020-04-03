@@ -50,7 +50,15 @@ public class ModelTableCheckboxColumnEditingSupport extends EditingSupport {
    */
   @Override
   protected Object getValue(final Object element) {
-    return Boolean.valueOf(((ModelFile) element).isSelectedForTransformation());
+    final ModelFile modelFile = ((ModelFile) element);
+    boolean _xifexpression = false;
+    Boolean _hasErrors = modelFile.hasErrors();
+    if ((_hasErrors).booleanValue()) {
+      _xifexpression = false;
+    } else {
+      _xifexpression = modelFile.isSelectedForTransformation();
+    }
+    return Boolean.valueOf(_xifexpression);
   }
   
   /**
@@ -59,6 +67,11 @@ public class ModelTableCheckboxColumnEditingSupport extends EditingSupport {
   @Override
   protected void setValue(final Object element, final Object value) {
     final ModelFile modelFile = ((ModelFile) element);
+    Boolean _hasErrors = modelFile.hasErrors();
+    if ((_hasErrors).booleanValue()) {
+      modelFile.setSelectedForTransformation(false);
+      return;
+    }
     final boolean oldValue = modelFile.isSelectedForTransformation();
     final Boolean newValue = ((Boolean) value);
     if ((Boolean.valueOf(oldValue) == newValue)) {

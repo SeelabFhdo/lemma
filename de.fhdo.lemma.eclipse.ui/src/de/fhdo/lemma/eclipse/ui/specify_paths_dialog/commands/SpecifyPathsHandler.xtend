@@ -148,8 +148,8 @@ class SpecifyPathsHandler extends AbstractHandler {
      * Prepare model file for the table of model files
      */
     private def prepareModelFile(ModelFile modelFile) {
-        // Select model files for transformation by default
-        modelFile.selectedForTransformation = true
+        // Select model files for transformation if they do not contain errors
+        modelFile.selectedForTransformation = !modelFile.hasErrors
 
         // Default transformation target path
         modelFile.transformationTargetPath =

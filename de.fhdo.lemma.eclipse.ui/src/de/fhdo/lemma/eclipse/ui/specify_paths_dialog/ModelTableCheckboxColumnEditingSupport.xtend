@@ -43,7 +43,11 @@ class ModelTableCheckboxColumnEditingSupport extends EditingSupport {
      * Get checkbox value
      */
     override protected getValue(Object element) {
-        return (element as ModelFile).selectedForTransformation
+        val modelFile = element as ModelFile
+        return if (modelFile.hasErrors)
+                false
+           else
+                modelFile.selectedForTransformation
     }
 
     /**
@@ -51,6 +55,10 @@ class ModelTableCheckboxColumnEditingSupport extends EditingSupport {
      */
     override protected setValue(Object element, Object value) {
         val modelFile = element as ModelFile
+        if (modelFile.hasErrors) {
+            modelFile.selectedForTransformation = false
+            return
+        }
 
         val oldValue = modelFile.selectedForTransformation
         val newValue = value as Boolean

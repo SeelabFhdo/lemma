@@ -147,7 +147,9 @@ public class SpecifyPathsHandler extends AbstractHandler {
    * Prepare model file for the table of model files
    */
   private ModelFile prepareModelFile(final ModelFile modelFile) {
-    modelFile.setSelectedForTransformation(true);
+    Boolean _hasErrors = modelFile.hasErrors();
+    boolean _not = (!(_hasErrors).booleanValue());
+    modelFile.setSelectedForTransformation(_not);
     modelFile.setTransformationTargetPath(
       this.strategy.getDefaultTransformationTargetPath(modelFile.getFile()));
     return modelFile;

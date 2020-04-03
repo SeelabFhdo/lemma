@@ -39,12 +39,10 @@ class ModelTreeContentProvider implements ITreeContentProvider {
         if (!hasChildren(parentElement))
             return newArrayOfSize(0)
 
-        val children = switch (parentElement) {
+        return switch (parentElement) {
             IProject: inputModelFilesWithProjects.get(parentElement)
             ModelFile: parentElement.children.sort
         }
-
-        return children.filter[!hasErrors].toList.toArray
     }
 
     /**

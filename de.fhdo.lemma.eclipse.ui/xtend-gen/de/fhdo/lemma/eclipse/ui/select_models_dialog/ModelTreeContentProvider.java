@@ -12,7 +12,6 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.xtext.xbase.lib.Conversions;
-import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 
 /**
@@ -63,12 +62,7 @@ public class ModelTreeContentProvider implements ITreeContentProvider {
         _switchResult = IterableExtensions.<ModelFile>sort(((ModelFile)parentElement).getChildren());
       }
     }
-    final List<ModelFile> children = _switchResult;
-    final Function1<ModelFile, Boolean> _function = (ModelFile it) -> {
-      Boolean _hasErrors = it.hasErrors();
-      return Boolean.valueOf((!(_hasErrors).booleanValue()));
-    };
-    return IterableExtensions.<ModelFile>toList(IterableExtensions.<ModelFile>filter(children, _function)).toArray();
+    return ((Object[])Conversions.unwrapArray(_switchResult, Object.class));
   }
   
   /**
