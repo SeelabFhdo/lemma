@@ -57,6 +57,19 @@
                   icon="icons/generateIntermediateModels.gif"
                   id="de.fhdo.lemma.eclipse.ui.lemmaMenu.generateIntermediateModels"
                   label="Generate Intermediate Models...">
+                  <parameter
+                        name="de.fhdo.lemma.eclipse.ui.commands.parameters.selectedModelsOnly"
+                        value="true"/>
+            </command>
+            <command
+                  commandId="de.fhdo.lemma.eclipse.ui.commands.generateIntermediateModels"
+                  mnemonic="W"
+                  icon="icons/generateForWorkspace.png"
+                  id="de.fhdo.lemma.eclipse.ui.lemmaMenu.generateIntermediateModelsForWorkspace"
+                  label="Generate Intermediate Models for Workspace...">
+                  <parameter
+                        name="de.fhdo.lemma.eclipse.ui.commands.parameters.selectedModelsOnly"
+                        value="false"/>
             </command>
             <separator
                   name="aboutSeparator"
@@ -79,6 +92,9 @@
                   icon="icons/generateIntermediateModels.gif"
                   tooltip="Generate Intermediate Models"
                   id="de.fhdo.lemma.eclipse.ui.toolbars.generateIntermediateModels">
+                  <parameter
+                        name="de.fhdo.lemma.eclipse.ui.commands.parameters.selectedModelsOnly"
+                        value="true"/>
             </command>
          </toolbar>
       </menuContribution>
