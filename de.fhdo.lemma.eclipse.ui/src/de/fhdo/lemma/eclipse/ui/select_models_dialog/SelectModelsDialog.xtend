@@ -27,6 +27,7 @@ import de.fhdo.lemma.eclipse.ui.ModelFileTypeDescription
 import org.eclipse.jface.dialogs.MessageDialog
 import de.fhdo.lemma.eclipse.ui.AbstractUiModelTransformationStrategy
 import org.eclipse.jface.viewers.ColumnLabelProvider
+import org.eclipse.jface.dialogs.IDialogConstants
 
 /**
  * Generic dialog to select models for subsequent intermediate model transformations.
@@ -36,6 +37,7 @@ import org.eclipse.jface.viewers.ColumnLabelProvider
 class SelectModelsDialog extends TitleAreaDialog {
     static val MIN_DIALOG_WIDTH = 500
     static val MIN_DIALOG_HEIGHT = 250
+    static val int CONTINUE_WITH_ALL = 2
 
     AbstractUiModelTransformationStrategy strategy
     Map<IProject, List<ModelFile>> inputModelFiles
@@ -65,10 +67,26 @@ class SelectModelsDialog extends TitleAreaDialog {
      * OK button was pressed
      */
     override okPressed() {
-        selectedModelFiles = filterSelectedModelFiles()
-        if (selectedModelFiles.empty)
+        selectedModelFiles = getSelectedModelFilesFromTree()
+        if (selectedModelFiles.empty) {
             MessageDialog.openError(shell, "No model files selected", "No model files were " +
                 "selected. Transformation aborted.")
+            return
+        }
+
+        filterSelectedModelFilesForErrorsAndContinue()
+    }
+
+    /**
+     * Helper to filer selected model files for errors and leave the dialog for the next step if
+     * there is at least one selected model without errors
+     */
+    private def filterSelectedModelFilesForErrorsAndContinue() {
+        selectedModelFiles = selectedModelFiles.filter[!hasErrors].toList
+        if (selectedModelFiles.empty)
+            MessageDialog.openError(shell, "All selected models contain errors", "All selected " +
+                "model files contain errors. Transformation is only possible on correct models. " +
+                "Transformation aborted.")
         else
             super.okPressed
     }
@@ -76,7 +94,7 @@ class SelectModelsDialog extends TitleAreaDialog {
     /**
      * Helper method to get selected files from tree viewer
      */
-    private def filterSelectedModelFiles() {
+    private def getSelectedModelFilesFromTree() {
         val iter = treeViewer.structuredSelection.iterator
         return iter.filter[it instanceof ModelFile]
             .map[it as ModelFile]
@@ -113,6 +131,34 @@ class SelectModelsDialog extends TitleAreaDialog {
             createLegend(container, modelFileTypeDescriptions.values.toList)
 
         return area
+    }
+
+    /**
+     * Create buttons for the button bar
+     */
+    override createButtonsForButtonBar(Composite parent) {
+        createButton(parent, IDialogConstants.OK_ID, "Continue with selected models", true)
+        createButton(parent, CONTINUE_WITH_ALL, "Select all models and continue", false)
+        createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CANCEL_LABEL, false)
+    }
+
+    /**
+     * Catch button press
+     */
+    override buttonPressed(int buttonId) {
+        switch (buttonId) {
+            case IDialogConstants.OK_ID: okPressed
+            case CONTINUE_WITH_ALL: continueWithAllPressed
+            case IDialogConstants.CANCEL_ID: cancelPressed
+        }
+    }
+
+    /**
+     * "Continue with all" was pressed
+     */
+    private def continueWithAllPressed() {
+        selectedModelFiles = inputModelFiles.values.flatten.toList
+        filterSelectedModelFilesForErrorsAndContinue()
     }
 
     /**

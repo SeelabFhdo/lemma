@@ -1,5 +1,6 @@
 package de.fhdo.lemma.eclipse.ui.select_models_dialog;
 
+import com.google.common.collect.Iterables;
 import de.fhdo.lemma.eclipse.ui.AbstractUiModelTransformationStrategy;
 import de.fhdo.lemma.eclipse.ui.ModelFile;
 import de.fhdo.lemma.eclipse.ui.ModelFileTypeDescription;
@@ -11,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
@@ -52,6 +54,8 @@ public class SelectModelsDialog extends TitleAreaDialog {
   
   private static final int MIN_DIALOG_HEIGHT = 250;
   
+  private static final int CONTINUE_WITH_ALL = 2;
+  
   private AbstractUiModelTransformationStrategy strategy;
   
   private Map<IProject, List<ModelFile>> inputModelFiles;
@@ -81,11 +85,31 @@ public class SelectModelsDialog extends TitleAreaDialog {
    */
   @Override
   public void okPressed() {
-    this.selectedModelFiles = this.filterSelectedModelFiles();
+    this.selectedModelFiles = this.getSelectedModelFilesFromTree();
     boolean _isEmpty = this.selectedModelFiles.isEmpty();
     if (_isEmpty) {
       MessageDialog.openError(this.getShell(), "No model files selected", ("No model files were " + 
         "selected. Transformation aborted."));
+      return;
+    }
+    this.filterSelectedModelFilesForErrorsAndContinue();
+  }
+  
+  /**
+   * Helper to filer selected model files for errors and leave the dialog for the next step if
+   * there is at least one selected model without errors
+   */
+  private void filterSelectedModelFilesForErrorsAndContinue() {
+    final Function1<ModelFile, Boolean> _function = (ModelFile it) -> {
+      Boolean _hasErrors = it.hasErrors();
+      return Boolean.valueOf((!(_hasErrors).booleanValue()));
+    };
+    this.selectedModelFiles = IterableExtensions.<ModelFile>toList(IterableExtensions.<ModelFile>filter(this.selectedModelFiles, _function));
+    boolean _isEmpty = this.selectedModelFiles.isEmpty();
+    if (_isEmpty) {
+      MessageDialog.openError(this.getShell(), "All selected models contain errors", (("All selected " + 
+        "model files contain errors. Transformation is only possible on correct models. ") + 
+        "Transformation aborted."));
     } else {
       super.okPressed();
     }
@@ -94,7 +118,7 @@ public class SelectModelsDialog extends TitleAreaDialog {
   /**
    * Helper method to get selected files from tree viewer
    */
-  private List<ModelFile> filterSelectedModelFiles() {
+  private List<ModelFile> getSelectedModelFilesFromTree() {
     final Iterator iter = this.treeViewer.getStructuredSelection().iterator();
     final Function1<Object, Boolean> _function = (Object it) -> {
       return Boolean.valueOf((it instanceof ModelFile));
@@ -149,6 +173,42 @@ public class SelectModelsDialog extends TitleAreaDialog {
       this.createLegend(container, IterableExtensions.<ModelFileTypeDescription>toList(modelFileTypeDescriptions.values()));
     }
     return area;
+  }
+  
+  /**
+   * Create buttons for the button bar
+   */
+  @Override
+  public void createButtonsForButtonBar(final Composite parent) {
+    this.createButton(parent, IDialogConstants.OK_ID, "Continue with selected models", true);
+    this.createButton(parent, SelectModelsDialog.CONTINUE_WITH_ALL, "Select all models and continue", false);
+    this.createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CANCEL_LABEL, false);
+  }
+  
+  /**
+   * Catch button press
+   */
+  @Override
+  public void buttonPressed(final int buttonId) {
+    switch (buttonId) {
+      case IDialogConstants.OK_ID:
+        this.okPressed();
+        break;
+      case SelectModelsDialog.CONTINUE_WITH_ALL:
+        this.continueWithAllPressed();
+        break;
+      case IDialogConstants.CANCEL_ID:
+        this.cancelPressed();
+        break;
+    }
+  }
+  
+  /**
+   * "Continue with all" was pressed
+   */
+  private void continueWithAllPressed() {
+    this.selectedModelFiles = IterableExtensions.<ModelFile>toList(Iterables.<ModelFile>concat(this.inputModelFiles.values()));
+    this.filterSelectedModelFilesForErrorsAndContinue();
   }
   
   /**
