@@ -1,6 +1,33 @@
 # Changelog
 All notable changes to [LEMMA](https://github.com/SeelabFhdo/lemma/) will be documented in this file.
 
+## [0.7.0] - 2020-04-04
+### Added
+- Data DSL: Add primitive type `unspecified` for modeling the intended absence of an explicit type information on data fields.
+- Intermediate Model Transformations: Add missing metamodel element descriptions to documentation.
+- Intermediate Model Transformations: Add `qualifiedName` to `IntermediateImportedAspect`.
+- Intermediate Model Transformations: Support transformations within Eclipse projects whose files are not physically located within the current workspace's root.
+- Model Processing: Add model processing and Java/Spring code generation frameworks.
+- Service DSL: Enable modeling of versions on interfaces.
+- UI: Add action to context menu of Project Explorer to enable generation of intermediate models from selected resources only.
+- UI: Add convenience "Select all models and continue" button to model selection dialog.
+### Changed
+- Data DSL: Change supported `date` formats to ISO date, time, and datetime.
+- Intermediate Model Transformations: Fix handling of Windows file separators.
+- Intermediate Model Transformations: Fix transformation when service and corresponding mapping model are transformed together.
+- Intermediate Model Transformations: Always assign `originalType` in intermediate data models according to the documentation.
+- Mapping DSL: Turn error on duplicate endpoints into a warning and thus introduce consistency with Service and Operation DSL.
+- Operation DSL: Fix checking of mandatory property values on infrastructure nodes that do not deploy services.
+- Releng: Fix build scripts (kudos to [Philip Wizenty](github.com/pwizenty)).
+- Releng: Rename `build/languages.sh` to `build/lemma.sh`.
+- Technology DSL: Fix checking of technology-specific primitive type mappings when first technology-specific type mapping is not a default mapping.
+- UI: Display erroneous models in model selection dialog again. They will be filtered and not displayed in the transformation target path specification dialog.
+- UI: Change transformation target path specification dialog to prevent the selection of erroneous models imported by correct models.
+- UI: The "Generate Intermediate Models..." menu entries now use resources selected in the Project Explorer to determine the model files to be transformed to intermediate models. In case no resources were selected, all models from the workspace are considered potential model files for the transformation (same behavior as before).
+- Several minor technical bugfixes.
+### Removed
+- Remove Xtext-generated `.java._trace` and `.xtendbin` files from tree.
+
 ## [0.6.0] - 2019-08-28
 ### Added
 - Data DSL: Enable modeling of operations (functions and procedures) within data structures.
