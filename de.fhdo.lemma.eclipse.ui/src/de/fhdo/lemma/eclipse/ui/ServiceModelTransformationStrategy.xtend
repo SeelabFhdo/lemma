@@ -179,7 +179,9 @@ class ServiceModelTransformationStrategy extends AbstractUiModelTransformationSt
      */
     override getModelSelectionDialogMessage() {
         return '''Determine «modelTypePrefix» models for intermediate model transformation by ''' +
-            '''selecting the files in the project tree and clicking OK.'''
+            '''selecting the files in the project tree and clicking the "Continue with ''' +
+            '''selected models" button. Alternatively, you may click on "Select all models and ''' +
+            '''continue" to use all models for intermediate model transformation.'''
     }
 
     /**

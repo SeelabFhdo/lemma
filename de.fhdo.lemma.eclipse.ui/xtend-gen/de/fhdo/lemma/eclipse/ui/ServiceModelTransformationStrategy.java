@@ -229,8 +229,14 @@ public class ServiceModelTransformationStrategy extends AbstractUiModelTransform
     _builder.append(_modelTypePrefix);
     _builder.append(" models for intermediate model transformation by ");
     StringConcatenation _builder_1 = new StringConcatenation();
-    _builder_1.append("selecting the files in the project tree and clicking OK.");
-    return (_builder.toString() + _builder_1);
+    _builder_1.append("selecting the files in the project tree and clicking the \"Continue with ");
+    String _plus = (_builder.toString() + _builder_1);
+    StringConcatenation _builder_2 = new StringConcatenation();
+    _builder_2.append("selected models\" button. Alternatively, you may click on \"Select all models and ");
+    String _plus_1 = (_plus + _builder_2);
+    StringConcatenation _builder_3 = new StringConcatenation();
+    _builder_3.append("continue\" to use all models for intermediate model transformation.");
+    return (_plus_1 + _builder_3);
   }
   
   /**
