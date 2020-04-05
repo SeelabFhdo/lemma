@@ -4861,9 +4861,16 @@ rule__MicroserviceMapping__Group_4__2__Impl
 	}
 :
 (
-	{ before(grammarAccess.getMicroserviceMappingAccess().getEndpointsAssignment_4_2()); }
-	(rule__MicroserviceMapping__EndpointsAssignment_4_2)*
-	{ after(grammarAccess.getMicroserviceMappingAccess().getEndpointsAssignment_4_2()); }
+	(
+		{ before(grammarAccess.getMicroserviceMappingAccess().getEndpointsAssignment_4_2()); }
+		(rule__MicroserviceMapping__EndpointsAssignment_4_2)
+		{ after(grammarAccess.getMicroserviceMappingAccess().getEndpointsAssignment_4_2()); }
+	)
+	(
+		{ before(grammarAccess.getMicroserviceMappingAccess().getEndpointsAssignment_4_2()); }
+		(rule__MicroserviceMapping__EndpointsAssignment_4_2)*
+		{ after(grammarAccess.getMicroserviceMappingAccess().getEndpointsAssignment_4_2()); }
+	)
 )
 ;
 finally {

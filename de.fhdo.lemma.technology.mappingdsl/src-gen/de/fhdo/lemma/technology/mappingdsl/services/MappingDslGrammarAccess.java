@@ -250,7 +250,7 @@ public class MappingDslGrammarAccess extends AbstractGrammarElementFinder {
 		//	microservice=ImportedMicroservice '{' ('protocols' '{'
 		//	protocols+=TechnologySpecificProtocolSpecification+
 		//	'}')? ('endpoints' '{'
-		//	endpoints+=TechnologySpecificEndpoint*
+		//	endpoints+=TechnologySpecificEndpoint+
 		//	'}')? ('aspects' '{'
 		//	aspects+=TechnologySpecificImportedServiceAspect+
 		//	'}')?
@@ -261,7 +261,7 @@ public class MappingDslGrammarAccess extends AbstractGrammarElementFinder {
 		@Override public ParserRule getRule() { return rule; }
 		
 		//technologyReferences+=TechnologyReference* microservice=ImportedMicroservice '{' ('protocols' '{'
-		//protocols+=TechnologySpecificProtocolSpecification+ '}')? ('endpoints' '{' endpoints+=TechnologySpecificEndpoint* '}')?
+		//protocols+=TechnologySpecificProtocolSpecification+ '}')? ('endpoints' '{' endpoints+=TechnologySpecificEndpoint+ '}')?
 		//('aspects' '{' aspects+=TechnologySpecificImportedServiceAspect+ '}')? interfaceMappings+=InterfaceMapping*
 		//referredOperationMappings+=ReferredOperationMapping* operationMappings+=OperationMapping* '}'
 		public Group getGroup() { return cGroup; }
@@ -299,7 +299,7 @@ public class MappingDslGrammarAccess extends AbstractGrammarElementFinder {
 		//'}'
 		public Keyword getRightCurlyBracketKeyword_3_3() { return cRightCurlyBracketKeyword_3_3; }
 		
-		//('endpoints' '{' endpoints+=TechnologySpecificEndpoint* '}')?
+		//('endpoints' '{' endpoints+=TechnologySpecificEndpoint+ '}')?
 		public Group getGroup_4() { return cGroup_4; }
 		
 		//'endpoints'
@@ -308,7 +308,7 @@ public class MappingDslGrammarAccess extends AbstractGrammarElementFinder {
 		//'{'
 		public Keyword getLeftCurlyBracketKeyword_4_1() { return cLeftCurlyBracketKeyword_4_1; }
 		
-		//endpoints+=TechnologySpecificEndpoint*
+		//endpoints+=TechnologySpecificEndpoint+
 		public Assignment getEndpointsAssignment_4_2() { return cEndpointsAssignment_4_2; }
 		
 		//TechnologySpecificEndpoint
@@ -2024,7 +2024,7 @@ public class MappingDslGrammarAccess extends AbstractGrammarElementFinder {
 	//	microservice=ImportedMicroservice '{' ('protocols' '{'
 	//	protocols+=TechnologySpecificProtocolSpecification+
 	//	'}')? ('endpoints' '{'
-	//	endpoints+=TechnologySpecificEndpoint*
+	//	endpoints+=TechnologySpecificEndpoint+
 	//	'}')? ('aspects' '{'
 	//	aspects+=TechnologySpecificImportedServiceAspect+
 	//	'}')?

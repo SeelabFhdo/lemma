@@ -464,7 +464,7 @@ ruleMicroserviceMapping returns [EObject current=null]
 						afterParserOrEnumRuleCall();
 					}
 				)
-			)*
+			)+
 			otherlv_10='}'
 			{
 				newLeafNode(otherlv_10, grammarAccess.getMicroserviceMappingAccess().getRightCurlyBracketKeyword_4_3());

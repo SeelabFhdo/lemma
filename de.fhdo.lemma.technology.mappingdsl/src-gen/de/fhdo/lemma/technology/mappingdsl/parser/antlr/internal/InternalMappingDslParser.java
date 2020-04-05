@@ -982,7 +982,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleMicroserviceMapping"
-    // InternalMappingDsl.g:357:1: ruleMicroserviceMapping returns [EObject current=null] : ( ( (lv_technologyReferences_0_0= ruleTechnologyReference ) )* ( (lv_microservice_1_0= ruleImportedMicroservice ) ) otherlv_2= '{' (otherlv_3= 'protocols' otherlv_4= '{' ( (lv_protocols_5_0= ruleTechnologySpecificProtocolSpecification ) )+ otherlv_6= '}' )? (otherlv_7= 'endpoints' otherlv_8= '{' ( (lv_endpoints_9_0= ruleTechnologySpecificEndpoint ) )* otherlv_10= '}' )? (otherlv_11= 'aspects' otherlv_12= '{' ( (lv_aspects_13_0= ruleTechnologySpecificImportedServiceAspect ) )+ otherlv_14= '}' )? ( (lv_interfaceMappings_15_0= ruleInterfaceMapping ) )* ( (lv_referredOperationMappings_16_0= ruleReferredOperationMapping ) )* ( (lv_operationMappings_17_0= ruleOperationMapping ) )* otherlv_18= '}' ) ;
+    // InternalMappingDsl.g:357:1: ruleMicroserviceMapping returns [EObject current=null] : ( ( (lv_technologyReferences_0_0= ruleTechnologyReference ) )* ( (lv_microservice_1_0= ruleImportedMicroservice ) ) otherlv_2= '{' (otherlv_3= 'protocols' otherlv_4= '{' ( (lv_protocols_5_0= ruleTechnologySpecificProtocolSpecification ) )+ otherlv_6= '}' )? (otherlv_7= 'endpoints' otherlv_8= '{' ( (lv_endpoints_9_0= ruleTechnologySpecificEndpoint ) )+ otherlv_10= '}' )? (otherlv_11= 'aspects' otherlv_12= '{' ( (lv_aspects_13_0= ruleTechnologySpecificImportedServiceAspect ) )+ otherlv_14= '}' )? ( (lv_interfaceMappings_15_0= ruleInterfaceMapping ) )* ( (lv_referredOperationMappings_16_0= ruleReferredOperationMapping ) )* ( (lv_operationMappings_17_0= ruleOperationMapping ) )* otherlv_18= '}' ) ;
     public final EObject ruleMicroserviceMapping() throws RecognitionException {
         EObject current = null;
 
@@ -1018,11 +1018,11 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalMappingDsl.g:363:2: ( ( ( (lv_technologyReferences_0_0= ruleTechnologyReference ) )* ( (lv_microservice_1_0= ruleImportedMicroservice ) ) otherlv_2= '{' (otherlv_3= 'protocols' otherlv_4= '{' ( (lv_protocols_5_0= ruleTechnologySpecificProtocolSpecification ) )+ otherlv_6= '}' )? (otherlv_7= 'endpoints' otherlv_8= '{' ( (lv_endpoints_9_0= ruleTechnologySpecificEndpoint ) )* otherlv_10= '}' )? (otherlv_11= 'aspects' otherlv_12= '{' ( (lv_aspects_13_0= ruleTechnologySpecificImportedServiceAspect ) )+ otherlv_14= '}' )? ( (lv_interfaceMappings_15_0= ruleInterfaceMapping ) )* ( (lv_referredOperationMappings_16_0= ruleReferredOperationMapping ) )* ( (lv_operationMappings_17_0= ruleOperationMapping ) )* otherlv_18= '}' ) )
-            // InternalMappingDsl.g:364:2: ( ( (lv_technologyReferences_0_0= ruleTechnologyReference ) )* ( (lv_microservice_1_0= ruleImportedMicroservice ) ) otherlv_2= '{' (otherlv_3= 'protocols' otherlv_4= '{' ( (lv_protocols_5_0= ruleTechnologySpecificProtocolSpecification ) )+ otherlv_6= '}' )? (otherlv_7= 'endpoints' otherlv_8= '{' ( (lv_endpoints_9_0= ruleTechnologySpecificEndpoint ) )* otherlv_10= '}' )? (otherlv_11= 'aspects' otherlv_12= '{' ( (lv_aspects_13_0= ruleTechnologySpecificImportedServiceAspect ) )+ otherlv_14= '}' )? ( (lv_interfaceMappings_15_0= ruleInterfaceMapping ) )* ( (lv_referredOperationMappings_16_0= ruleReferredOperationMapping ) )* ( (lv_operationMappings_17_0= ruleOperationMapping ) )* otherlv_18= '}' )
+            // InternalMappingDsl.g:363:2: ( ( ( (lv_technologyReferences_0_0= ruleTechnologyReference ) )* ( (lv_microservice_1_0= ruleImportedMicroservice ) ) otherlv_2= '{' (otherlv_3= 'protocols' otherlv_4= '{' ( (lv_protocols_5_0= ruleTechnologySpecificProtocolSpecification ) )+ otherlv_6= '}' )? (otherlv_7= 'endpoints' otherlv_8= '{' ( (lv_endpoints_9_0= ruleTechnologySpecificEndpoint ) )+ otherlv_10= '}' )? (otherlv_11= 'aspects' otherlv_12= '{' ( (lv_aspects_13_0= ruleTechnologySpecificImportedServiceAspect ) )+ otherlv_14= '}' )? ( (lv_interfaceMappings_15_0= ruleInterfaceMapping ) )* ( (lv_referredOperationMappings_16_0= ruleReferredOperationMapping ) )* ( (lv_operationMappings_17_0= ruleOperationMapping ) )* otherlv_18= '}' ) )
+            // InternalMappingDsl.g:364:2: ( ( (lv_technologyReferences_0_0= ruleTechnologyReference ) )* ( (lv_microservice_1_0= ruleImportedMicroservice ) ) otherlv_2= '{' (otherlv_3= 'protocols' otherlv_4= '{' ( (lv_protocols_5_0= ruleTechnologySpecificProtocolSpecification ) )+ otherlv_6= '}' )? (otherlv_7= 'endpoints' otherlv_8= '{' ( (lv_endpoints_9_0= ruleTechnologySpecificEndpoint ) )+ otherlv_10= '}' )? (otherlv_11= 'aspects' otherlv_12= '{' ( (lv_aspects_13_0= ruleTechnologySpecificImportedServiceAspect ) )+ otherlv_14= '}' )? ( (lv_interfaceMappings_15_0= ruleInterfaceMapping ) )* ( (lv_referredOperationMappings_16_0= ruleReferredOperationMapping ) )* ( (lv_operationMappings_17_0= ruleOperationMapping ) )* otherlv_18= '}' )
             {
-            // InternalMappingDsl.g:364:2: ( ( (lv_technologyReferences_0_0= ruleTechnologyReference ) )* ( (lv_microservice_1_0= ruleImportedMicroservice ) ) otherlv_2= '{' (otherlv_3= 'protocols' otherlv_4= '{' ( (lv_protocols_5_0= ruleTechnologySpecificProtocolSpecification ) )+ otherlv_6= '}' )? (otherlv_7= 'endpoints' otherlv_8= '{' ( (lv_endpoints_9_0= ruleTechnologySpecificEndpoint ) )* otherlv_10= '}' )? (otherlv_11= 'aspects' otherlv_12= '{' ( (lv_aspects_13_0= ruleTechnologySpecificImportedServiceAspect ) )+ otherlv_14= '}' )? ( (lv_interfaceMappings_15_0= ruleInterfaceMapping ) )* ( (lv_referredOperationMappings_16_0= ruleReferredOperationMapping ) )* ( (lv_operationMappings_17_0= ruleOperationMapping ) )* otherlv_18= '}' )
-            // InternalMappingDsl.g:365:3: ( (lv_technologyReferences_0_0= ruleTechnologyReference ) )* ( (lv_microservice_1_0= ruleImportedMicroservice ) ) otherlv_2= '{' (otherlv_3= 'protocols' otherlv_4= '{' ( (lv_protocols_5_0= ruleTechnologySpecificProtocolSpecification ) )+ otherlv_6= '}' )? (otherlv_7= 'endpoints' otherlv_8= '{' ( (lv_endpoints_9_0= ruleTechnologySpecificEndpoint ) )* otherlv_10= '}' )? (otherlv_11= 'aspects' otherlv_12= '{' ( (lv_aspects_13_0= ruleTechnologySpecificImportedServiceAspect ) )+ otherlv_14= '}' )? ( (lv_interfaceMappings_15_0= ruleInterfaceMapping ) )* ( (lv_referredOperationMappings_16_0= ruleReferredOperationMapping ) )* ( (lv_operationMappings_17_0= ruleOperationMapping ) )* otherlv_18= '}'
+            // InternalMappingDsl.g:364:2: ( ( (lv_technologyReferences_0_0= ruleTechnologyReference ) )* ( (lv_microservice_1_0= ruleImportedMicroservice ) ) otherlv_2= '{' (otherlv_3= 'protocols' otherlv_4= '{' ( (lv_protocols_5_0= ruleTechnologySpecificProtocolSpecification ) )+ otherlv_6= '}' )? (otherlv_7= 'endpoints' otherlv_8= '{' ( (lv_endpoints_9_0= ruleTechnologySpecificEndpoint ) )+ otherlv_10= '}' )? (otherlv_11= 'aspects' otherlv_12= '{' ( (lv_aspects_13_0= ruleTechnologySpecificImportedServiceAspect ) )+ otherlv_14= '}' )? ( (lv_interfaceMappings_15_0= ruleInterfaceMapping ) )* ( (lv_referredOperationMappings_16_0= ruleReferredOperationMapping ) )* ( (lv_operationMappings_17_0= ruleOperationMapping ) )* otherlv_18= '}' )
+            // InternalMappingDsl.g:365:3: ( (lv_technologyReferences_0_0= ruleTechnologyReference ) )* ( (lv_microservice_1_0= ruleImportedMicroservice ) ) otherlv_2= '{' (otherlv_3= 'protocols' otherlv_4= '{' ( (lv_protocols_5_0= ruleTechnologySpecificProtocolSpecification ) )+ otherlv_6= '}' )? (otherlv_7= 'endpoints' otherlv_8= '{' ( (lv_endpoints_9_0= ruleTechnologySpecificEndpoint ) )+ otherlv_10= '}' )? (otherlv_11= 'aspects' otherlv_12= '{' ( (lv_aspects_13_0= ruleTechnologySpecificImportedServiceAspect ) )+ otherlv_14= '}' )? ( (lv_interfaceMappings_15_0= ruleInterfaceMapping ) )* ( (lv_referredOperationMappings_16_0= ruleReferredOperationMapping ) )* ( (lv_operationMappings_17_0= ruleOperationMapping ) )* otherlv_18= '}'
             {
             // InternalMappingDsl.g:365:3: ( (lv_technologyReferences_0_0= ruleTechnologyReference ) )*
             loop9:
@@ -1191,7 +1191,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalMappingDsl.g:440:3: (otherlv_7= 'endpoints' otherlv_8= '{' ( (lv_endpoints_9_0= ruleTechnologySpecificEndpoint ) )* otherlv_10= '}' )?
+            // InternalMappingDsl.g:440:3: (otherlv_7= 'endpoints' otherlv_8= '{' ( (lv_endpoints_9_0= ruleTechnologySpecificEndpoint ) )+ otherlv_10= '}' )?
             int alt13=2;
             int LA13_0 = input.LA(1);
 
@@ -1200,17 +1200,18 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             }
             switch (alt13) {
                 case 1 :
-                    // InternalMappingDsl.g:441:4: otherlv_7= 'endpoints' otherlv_8= '{' ( (lv_endpoints_9_0= ruleTechnologySpecificEndpoint ) )* otherlv_10= '}'
+                    // InternalMappingDsl.g:441:4: otherlv_7= 'endpoints' otherlv_8= '{' ( (lv_endpoints_9_0= ruleTechnologySpecificEndpoint ) )+ otherlv_10= '}'
                     {
                     otherlv_7=(Token)match(input,19,FOLLOW_8); 
 
                     				newLeafNode(otherlv_7, grammarAccess.getMicroserviceMappingAccess().getEndpointsKeyword_4_0());
                     			
-                    otherlv_8=(Token)match(input,14,FOLLOW_10); 
+                    otherlv_8=(Token)match(input,14,FOLLOW_7); 
 
                     				newLeafNode(otherlv_8, grammarAccess.getMicroserviceMappingAccess().getLeftCurlyBracketKeyword_4_1());
                     			
-                    // InternalMappingDsl.g:449:4: ( (lv_endpoints_9_0= ruleTechnologySpecificEndpoint ) )*
+                    // InternalMappingDsl.g:449:4: ( (lv_endpoints_9_0= ruleTechnologySpecificEndpoint ) )+
+                    int cnt12=0;
                     loop12:
                     do {
                         int alt12=2;
@@ -1255,8 +1256,12 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     	    break;
 
                     	default :
-                    	    break loop12;
+                    	    if ( cnt12 >= 1 ) break loop12;
+                                EarlyExitException eee =
+                                    new EarlyExitException(12, input);
+                                throw eee;
                         }
+                        cnt12++;
                     } while (true);
 
                     otherlv_10=(Token)match(input,16,FOLLOW_19); 
@@ -19847,11 +19852,11 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             else if ( (LA181_0==RULE_ID) ) {
                 int LA181_2 = input.LA(2);
 
-                if ( (LA181_2==17) ) {
-                    alt181=3;
-                }
-                else if ( (LA181_2==RULE_ID||LA181_2==29) ) {
+                if ( (LA181_2==RULE_ID||LA181_2==29) ) {
                     alt181=2;
+                }
+                else if ( (LA181_2==17) ) {
+                    alt181=3;
                 }
             }
             switch (alt181) {
@@ -20725,11 +20730,11 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     else if ( (LA188_0==RULE_ID) ) {
                         int LA188_2 = input.LA(2);
 
-                        if ( (LA188_2==17) ) {
-                            alt188=3;
-                        }
-                        else if ( (LA188_2==RULE_ID||LA188_2==29) ) {
+                        if ( (LA188_2==RULE_ID||LA188_2==29) ) {
                             alt188=2;
+                        }
+                        else if ( (LA188_2==17) ) {
+                            alt188=3;
                         }
                     }
                     switch (alt188) {
@@ -23968,94 +23973,94 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
         }
     }
     static final String dfa_8s = "\123\uffff";
-    static final String dfa_9s = "\1\4\1\uffff\1\4\1\uffff\3\42\1\21\3\4\2\21\6\4\1\35\1\31\1\4\3\43\1\42\6\4\1\5\1\4\2\5\1\35\1\43\1\4\2\31\1\21\1\32\3\41\3\43\2\42\1\4\1\5\2\4\1\41\1\4\1\31\1\32\1\4\1\42\1\21\2\4\2\5\1\4\2\31\3\43\3\41\1\35\1\41\3\4\1\35\1\43\1\4";
-    static final String dfa_10s = "\1\u0084\1\uffff\1\114\1\uffff\3\42\1\21\3\4\2\21\1\u0084\3\4\1\7\1\4\1\43\1\41\1\u0084\3\43\1\60\2\4\1\u0084\3\4\1\5\1\u0084\2\7\2\43\1\114\2\41\1\21\1\41\6\43\2\42\1\4\1\5\1\43\1\4\1\43\1\4\2\41\1\u0084\1\60\1\21\2\4\2\7\1\4\2\41\10\43\2\4\1\u0084\2\43\1\23";
+    static final String dfa_9s = "\1\4\1\uffff\1\4\1\uffff\1\21\3\42\4\4\2\21\6\4\3\43\1\42\1\35\1\31\1\4\2\5\6\4\1\5\3\43\3\41\1\35\1\43\1\4\2\31\1\21\1\32\1\41\1\4\2\42\1\4\1\5\1\4\1\42\1\4\1\31\1\32\1\4\2\5\1\21\2\4\3\43\3\41\1\4\2\31\1\41\1\35\3\4\1\35\1\43\1\4";
+    static final String dfa_10s = "\1\u0084\1\uffff\1\114\1\uffff\1\21\3\42\3\4\1\u0084\2\21\1\4\1\7\3\4\1\u0084\3\43\1\60\1\43\1\41\1\u0084\2\7\2\4\1\u0084\3\4\1\5\10\43\1\114\2\41\1\21\1\41\1\43\1\4\2\42\1\4\1\5\1\43\1\60\1\4\2\41\1\u0084\2\7\1\21\2\4\6\43\1\4\2\41\2\43\2\4\1\u0084\2\43\1\23";
     static final String dfa_11s = "\1\uffff\1\2\1\uffff\1\1\117\uffff";
     static final String dfa_12s = "\123\uffff}>";
     static final String[] dfa_13s = {
             "\1\1\13\uffff\1\1\26\uffff\1\2\11\uffff\2\1\2\uffff\1\3\114\uffff\3\1",
             "",
-            "\1\7\16\uffff\1\6\67\uffff\1\4\1\5",
+            "\1\4\16\uffff\1\7\67\uffff\1\5\1\6",
             "",
             "\1\10",
-            "\1\10",
+            "\1\11",
             "\1\11",
             "\1\12",
             "\1\13",
             "\1\14",
             "\1\15",
-            "\1\16",
-            "\1\17",
-            "\1\1\30\uffff\1\20\4\uffff\1\21\4\uffff\1\22\11\uffff\1\1\3\uffff\1\3\114\uffff\3\1",
+            "\1\1\30\uffff\1\16\4\uffff\1\17\4\uffff\1\20\11\uffff\1\1\3\uffff\1\3\114\uffff\3\1",
+            "\1\21",
+            "\1\22",
             "\1\23",
-            "\1\24",
-            "\1\25",
-            "\1\31\1\30\1\27\1\26",
-            "\1\7",
-            "\1\32\2\uffff\1\33\2\uffff\1\34",
-            "\1\40\3\uffff\1\35\2\uffff\1\36\1\37",
-            "\1\1\30\uffff\1\20\4\uffff\1\21\4\uffff\1\22\11\uffff\1\1\3\uffff\1\3\114\uffff\3\1",
-            "\1\41",
-            "\1\41",
-            "\1\41",
-            "\1\43\15\uffff\1\42",
-            "\1\44",
-            "\1\45",
-            "\1\1\42\uffff\1\46\11\uffff\1\1\3\uffff\1\3\114\uffff\3\1",
-            "\1\47",
-            "\1\50",
-            "\1\51",
+            "\1\27\1\26\1\25\1\24",
+            "\1\4",
+            "\1\30",
+            "\1\31",
+            "\1\1\30\uffff\1\16\4\uffff\1\17\4\uffff\1\20\11\uffff\1\1\3\uffff\1\3\114\uffff\3\1",
+            "\1\32",
+            "\1\32",
+            "\1\32",
+            "\1\33\15\uffff\1\34",
+            "\1\35\2\uffff\1\36\2\uffff\1\37",
+            "\1\43\3\uffff\1\40\2\uffff\1\41\1\42",
+            "\1\1\42\uffff\1\20\11\uffff\1\1\3\uffff\1\3\114\uffff\3\1",
+            "\1\46\1\45\1\44",
+            "\1\51\1\50\1\47",
             "\1\52",
-            "\1\1\42\uffff\1\22\11\uffff\1\1\3\uffff\1\3\114\uffff\3\1",
-            "\1\55\1\54\1\53",
-            "\1\60\1\57\1\56",
-            "\1\32\2\uffff\1\33\2\uffff\1\34",
-            "\1\34",
-            "\1\7\16\uffff\1\6\67\uffff\1\61\1\62",
-            "\1\40\3\uffff\1\35\2\uffff\1\36\1\37",
-            "\1\40\7\uffff\1\37",
-            "\1\63",
-            "\1\65\6\uffff\1\64",
-            "\1\66\1\uffff\1\41",
-            "\1\66\1\uffff\1\41",
-            "\1\66\1\uffff\1\41",
-            "\1\67",
-            "\1\67",
-            "\1\67",
-            "\1\70",
+            "\1\53",
+            "\1\1\42\uffff\1\54\11\uffff\1\1\3\uffff\1\3\114\uffff\3\1",
+            "\1\55",
+            "\1\56",
+            "\1\57",
+            "\1\60",
+            "\1\61",
+            "\1\61",
+            "\1\61",
+            "\1\62\1\uffff\1\32",
+            "\1\62\1\uffff\1\32",
+            "\1\62\1\uffff\1\32",
+            "\1\35\2\uffff\1\36\2\uffff\1\37",
+            "\1\37",
+            "\1\4\16\uffff\1\7\67\uffff\1\63\1\64",
+            "\1\43\3\uffff\1\40\2\uffff\1\41\1\42",
+            "\1\43\7\uffff\1\42",
+            "\1\65",
+            "\1\67\6\uffff\1\66",
+            "\1\62\1\uffff\1\32",
             "\1\70",
             "\1\71",
+            "\1\71",
             "\1\72",
-            "\1\14\36\uffff\1\73",
-            "\1\74",
-            "\1\66\1\uffff\1\41",
-            "\1\75",
-            "\1\40\3\uffff\1\76\2\uffff\1\77\1\37",
-            "\1\65\6\uffff\1\64",
-            "\1\1\42\uffff\1\22\11\uffff\1\1\3\uffff\1\3\114\uffff\3\1",
-            "\1\100\15\uffff\1\101",
-            "\1\102",
-            "\1\103",
-            "\1\104",
+            "\1\73",
+            "\1\15\36\uffff\1\74",
+            "\1\75\15\uffff\1\76",
+            "\1\77",
+            "\1\43\3\uffff\1\100\2\uffff\1\101\1\42",
+            "\1\67\6\uffff\1\66",
+            "\1\1\42\uffff\1\20\11\uffff\1\1\3\uffff\1\3\114\uffff\3\1",
+            "\1\104\1\103\1\102",
             "\1\107\1\106\1\105",
-            "\1\112\1\111\1\110",
+            "\1\110",
+            "\1\111",
+            "\1\112",
             "\1\113",
-            "\1\40\3\uffff\1\76\2\uffff\1\77\1\37",
-            "\1\40\7\uffff\1\37",
+            "\1\113",
+            "\1\113",
+            "\1\62\1\uffff\1\32",
+            "\1\62\1\uffff\1\32",
+            "\1\62\1\uffff\1\32",
             "\1\114",
-            "\1\114",
-            "\1\114",
-            "\1\66\1\uffff\1\41",
-            "\1\66\1\uffff\1\41",
-            "\1\66\1\uffff\1\41",
+            "\1\43\3\uffff\1\100\2\uffff\1\101\1\42",
+            "\1\43\7\uffff\1\42",
+            "\1\62\1\uffff\1\32",
             "\1\115\2\uffff\1\116\2\uffff\1\117",
-            "\1\66\1\uffff\1\41",
             "\1\120",
             "\1\121",
             "\1\1\42\uffff\1\122\11\uffff\1\1\3\uffff\1\3\114\uffff\3\1",
             "\1\115\2\uffff\1\116\2\uffff\1\117",
             "\1\117",
-            "\1\7\16\uffff\1\6"
+            "\1\4\16\uffff\1\7"
     };
 
     static final short[] dfa_8 = DFA.unpackEncodedString(dfa_8s);
