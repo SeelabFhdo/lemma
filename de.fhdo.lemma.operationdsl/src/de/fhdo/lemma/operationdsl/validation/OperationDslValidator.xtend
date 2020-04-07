@@ -386,25 +386,25 @@ class OperationDslValidator extends AbstractOperationDslValidator {
     }
 
     /**
-     * Check that each service has a basic endpoint assigned for each protocol/format combination
-     * from each assigned technology
+     * Warn in case not each service deployed to a container has a basic endpoint assigned for each
+     * protocol/format combination from each assigned technology of the container
      */
     @Check
-    def checkServicesForBasicEndpoints(Container container) {
+    def warnServicesForBasicEndpoints(Container container) {
         if (container.technologies === null || container.technologies.empty) {
             return
         }
 
         container.technologies.forEach[
-            checkServicesForBasicEndpoints(container,  it)
+            warnServicesForBasicEndpoints(container,  it)
         ]
     }
 
     /**
-     * Helper to warn if a service of a given container does not have a basic endpoint assigned for
-     * each protocol/format combination in the given technology
+     * Helper to warn if a service deployed to a given container does not have a basic endpoint
+     * for each protocol/format combination in the given technology of the container
      */
-    private def checkServicesForBasicEndpoints(Container container, Import technologyImport) {
+    private def warnServicesForBasicEndpoints(Container container, Import technologyImport) {
         val technologyModel = LemmaUtils.getImportedModelContents(technologyImport.eResource,
             technologyImport.importURI)
         if (technologyModel === null || technologyModel.empty) {
@@ -537,7 +537,7 @@ class OperationDslValidator extends AbstractOperationDslValidator {
      * Warn, if required microservices are not deployed in the same model
      */
     @Check
-    def checkRequiredMicroservicesAreDeployed(OperationModel operationModel) {
+    def warnRequiredMicroservicesAreNotDeployed(OperationModel operationModel) {
         /* Collect all Microservice instances that the model specifies for container deployment */
         val allDeployedServices = <Microservice> newHashSet
         allDeployedServices.addAll(operationModel.containers

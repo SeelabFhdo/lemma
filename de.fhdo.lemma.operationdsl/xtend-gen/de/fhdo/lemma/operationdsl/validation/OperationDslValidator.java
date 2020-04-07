@@ -539,25 +539,25 @@ public class OperationDslValidator extends AbstractOperationDslValidator {
   }
   
   /**
-   * Check that each service has a basic endpoint assigned for each protocol/format combination
-   * from each assigned technology
+   * Warn in case not each service deployed to a container has a basic endpoint assigned for each
+   * protocol/format combination from each assigned technology of the container
    */
   @Check
-  public void checkServicesForBasicEndpoints(final Container container) {
+  public void warnServicesForBasicEndpoints(final Container container) {
     if (((container.getTechnologies() == null) || container.getTechnologies().isEmpty())) {
       return;
     }
     final Consumer<Import> _function = (Import it) -> {
-      this.checkServicesForBasicEndpoints(container, it);
+      this.warnServicesForBasicEndpoints(container, it);
     };
     container.getTechnologies().forEach(_function);
   }
   
   /**
-   * Helper to warn if a service of a given container does not have a basic endpoint assigned for
-   * each protocol/format combination in the given technology
+   * Helper to warn if a service deployed to a given container does not have a basic endpoint
+   * for each protocol/format combination in the given technology of the container
    */
-  private void checkServicesForBasicEndpoints(final Container container, final Import technologyImport) {
+  private void warnServicesForBasicEndpoints(final Container container, final Import technologyImport) {
     final EList<EObject> technologyModel = LemmaUtils.getImportedModelContents(technologyImport.eResource(), 
       technologyImport.getImportURI());
     if (((technologyModel == null) || technologyModel.isEmpty())) {
@@ -743,7 +743,7 @@ public class OperationDslValidator extends AbstractOperationDslValidator {
    * Warn, if required microservices are not deployed in the same model
    */
   @Check
-  public void checkRequiredMicroservicesAreDeployed(final OperationModel operationModel) {
+  public void warnRequiredMicroservicesAreNotDeployed(final OperationModel operationModel) {
     final HashSet<Microservice> allDeployedServices = CollectionLiterals.<Microservice>newHashSet();
     final Function1<Container, EList<ImportedMicroservice>> _function = (Container it) -> {
       return it.getDeployedServices();
