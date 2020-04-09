@@ -388,7 +388,7 @@ class TechnologyDslValidator extends AbstractTechnologyDslValidator {
      * types with basic built-in types, overrides built-in type conversion rules
      */
     @Check
-    def checkCompatibilityEntryOverridesBuiltinCoompatibilityRules(CompatibilityMatrixEntry entry) {
+    def checkCompatibilityEntryOverridesBuiltinCompatibilityRules(CompatibilityMatrixEntry entry) {
         /* Only accept technology-specific primitive types with basic built-in primitives */
         if (!(entry.mappingType instanceof TechnologySpecificPrimitiveType)) {
             return
@@ -773,6 +773,9 @@ class TechnologyDslValidator extends AbstractTechnologyDslValidator {
                 TechnologyPackage::Literals.SERVICE_ASPECT_POINTCUT__SELECTOR)
     }
 
+    /**
+     * Warn for pointcut selectors that do not apply to all join points of a service aspect
+     */
     @Check
     def warnNotApplicableAtAllJoinPoints(ServiceAspectPointcutSelector selector) {
         val aspect = selector.serviceAspect

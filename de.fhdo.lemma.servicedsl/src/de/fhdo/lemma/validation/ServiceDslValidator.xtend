@@ -353,7 +353,7 @@ class ServiceDslValidator extends AbstractServiceDslValidator {
                 case CommunicationType.SYNCHRONOUS: "synchronous"
             }
             error('''Ambiguous default protocol for «typeString» communication. The ''' +
-                '''microservice needs to explicitly specifiy a protocol for «typeString» ''' +
+                '''microservice needs to explicitly specify a protocol for «typeString» ''' +
                 '''communication.''', microservice, ServicePackage::Literals.MICROSERVICE__NAME)
         }
     }

@@ -426,7 +426,7 @@ public class TechnologyDslValidator extends AbstractTechnologyDslValidator {
    * types with basic built-in types, overrides built-in type conversion rules
    */
   @Check
-  public void checkCompatibilityEntryOverridesBuiltinCoompatibilityRules(final CompatibilityMatrixEntry entry) {
+  public void checkCompatibilityEntryOverridesBuiltinCompatibilityRules(final CompatibilityMatrixEntry entry) {
     PossiblyImportedTechnologySpecificType _mappingType = entry.getMappingType();
     boolean _not = (!(_mappingType instanceof TechnologySpecificPrimitiveType));
     if (_not) {
@@ -867,6 +867,9 @@ public class TechnologyDslValidator extends AbstractTechnologyDslValidator {
     }
   }
   
+  /**
+   * Warn for pointcut selectors that do not apply to all join points of a service aspect
+   */
   @Check
   public void warnNotApplicableAtAllJoinPoints(final ServiceAspectPointcutSelector selector) {
     final ServiceAspect aspect = selector.getServiceAspect();
