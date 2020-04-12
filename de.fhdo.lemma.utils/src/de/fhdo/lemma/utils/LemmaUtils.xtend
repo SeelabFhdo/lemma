@@ -389,13 +389,13 @@ final class LemmaUtils {
             projectResource = EcoreUtil2.getResource(context, uriWithFileScheme)
         }
 
-        if (projectResource !== null)
-            return true
-
+        var importFilePath = getFileForResource(projectResource)?.absolutePath
         // URI does not point to a project resource, so maybe its an absolute path in the
         // filesystem
-        val importFilePath = Paths.get(importUri)
-        return Files.exists(importFilePath)
+        if (importFilePath === null)
+            importFilePath = importUri
+
+        return Files.exists(Paths.get(importFilePath))
     }
 
     /**

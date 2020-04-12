@@ -500,11 +500,16 @@ public final class LemmaUtils {
       final String uriWithFileScheme = LemmaUtils.convertToFileUri(importUri);
       projectResource = EcoreUtil2.getResource(context, uriWithFileScheme);
     }
-    if ((projectResource != null)) {
-      return true;
+    IFile _fileForResource = LemmaUtils.getFileForResource(projectResource);
+    String _absolutePath = null;
+    if (_fileForResource!=null) {
+      _absolutePath=LemmaUtils.getAbsolutePath(_fileForResource);
     }
-    final java.nio.file.Path importFilePath = Paths.get(importUri);
-    return Files.exists(importFilePath);
+    String importFilePath = _absolutePath;
+    if ((importFilePath == null)) {
+      importFilePath = importUri;
+    }
+    return Files.exists(Paths.get(importFilePath));
   }
   
   /**
