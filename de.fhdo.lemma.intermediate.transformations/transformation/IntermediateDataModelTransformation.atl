@@ -637,6 +637,8 @@ rule IntermediateComplexType(sourceType : Data!ComplexType) {
             t.kind <- #LIST;
         } else if (sourceType.oclIsTypeOf(Data!DataStructure)) {
             t.kind <- #STRUCTURE;
+        } else if (sourceType.oclIsTypeOf(Data!Enumeration)) {
+            t.kind <- #ENUMERATION;
         }
 
         t;
@@ -677,6 +679,8 @@ rule IntermediateImportedComplexType(sourceType : Data!ImportedComplexType) {
             t.kind <- #LIST;
         } else if (importedType.oclIsTypeOf(Data!DataStructure)) {
             t.kind <- #STRUCTURE;
+        } else if (sourceType.oclIsTypeOf(Data!Enumeration)) {
+            t.kind <- #ENUMERATION;
         }
 
         t;
