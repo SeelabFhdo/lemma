@@ -1334,7 +1334,8 @@ class PrimitiveValue {
         if (numericValue === null)
             return null
 
-        if (!isInClosedSet(new BigDecimal(Double.MIN_VALUE), new BigDecimal(Double.MAX_VALUE)))
+        // -Double.MAX_VALUE is the smallest possible number a Double can hold based on IEEE 754
+        if (!isInClosedSet(new BigDecimal(-Double.MAX_VALUE), new BigDecimal(Double.MAX_VALUE)))
             return null
 
         val doubleValue = numericValue.doubleValue
@@ -1351,7 +1352,8 @@ class PrimitiveValue {
         if (numericValue === null)
             return null
 
-        if (!isInClosedSet(new BigDecimal(Float.MIN_VALUE), new BigDecimal(Float.MAX_VALUE)))
+        // -Float.MAX_VALUE is the smallest possible number a Float can hold based on IEEE 754
+        if (!isInClosedSet(new BigDecimal(-Float.MAX_VALUE), new BigDecimal(Float.MAX_VALUE)))
             return null
 
         val floatValue = numericValue.floatValue

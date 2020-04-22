@@ -467,7 +467,7 @@ public class PrimitiveValueImpl extends MinimalEObjectImpl.Container implements 
         if (_tripleEquals) {
             return null;
         }
-        BigDecimal _bigDecimal = new BigDecimal(Double.MIN_VALUE);
+        BigDecimal _bigDecimal = new BigDecimal((-Double.MAX_VALUE));
         BigDecimal _bigDecimal_1 = new BigDecimal(Double.MAX_VALUE);
         boolean _isInClosedSet = this.isInClosedSet(_bigDecimal, _bigDecimal_1);
         boolean _not = (!_isInClosedSet);
@@ -493,7 +493,7 @@ public class PrimitiveValueImpl extends MinimalEObjectImpl.Container implements 
         if (_tripleEquals) {
             return null;
         }
-        BigDecimal _bigDecimal = new BigDecimal(Float.MIN_VALUE);
+        BigDecimal _bigDecimal = new BigDecimal((-Float.MAX_VALUE));
         BigDecimal _bigDecimal_1 = new BigDecimal(Float.MAX_VALUE);
         boolean _isInClosedSet = this.isInClosedSet(_bigDecimal, _bigDecimal_1);
         boolean _not = (!_isInClosedSet);
