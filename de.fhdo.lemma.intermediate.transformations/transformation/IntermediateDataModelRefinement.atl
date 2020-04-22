@@ -467,14 +467,16 @@ rule IntermediateImport(sourceImport : Service!Import) {
 
 --- Helper to get the name of an import type without preceding hash sign ('#')
 helper def : getImportTypeName(import : Service!Import) : String =
-    let rawImportTypeName : String =
-        import.importType.toString()
-    in
-        if (rawImportTypeName.startsWith('#')) then
-            rawImportTypeName.substring(2, rawImportTypeName.size())
-        else
-            rawImportTypeName
-        endif
+    import.importType.toString().removePrefix('#')
+;
+
+--- Helper to remove a prefix from a String
+helper context String def : removePrefix(prefix : String) : String =
+    if (self.startsWith(prefix)) then
+        self.substring(prefix.size() + 1, self.size())
+    else
+        self
+    endif
 ;
 
 --- Refine an IntermediateComplexType for which a technology-specific type mapping exists
@@ -516,7 +518,7 @@ rule IntermediateImportedAspect(sourceAspect : Service!ImportedServiceAspect, co
     do {
         -- Aspect features
         for (feature in importedAspect.features) {
-            i.featureNames <- i.featureNames.append(feature.toString());
+            i.featureNames <- i.featureNames.append(feature.toString().removePrefix('#'));
         }
 
         -- Establish reference to container. Note that this cannot be done in the to-clause via
@@ -563,7 +565,7 @@ rule IntermediateAspectProperty(sourceProperty : Service!TechnologySpecificPrope
         i.refSetValue('aspect', aspect);
 
         for (feature in sourceProperty.features) {
-            i.featureNames <- i.featureNames.append(feature.toString());
+            i.featureNames <- i.featureNames.append(feature.toString().removePrefix('#'));
         }
 
         if (not sourceProperty.defaultValue.oclIsUndefined())
