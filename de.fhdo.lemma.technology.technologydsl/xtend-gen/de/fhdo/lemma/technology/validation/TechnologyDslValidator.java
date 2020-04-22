@@ -128,7 +128,7 @@ public class TechnologyDslValidator extends AbstractTechnologyDslValidator {
   @Check
   public void checkSelfImport(final TechnologyImport import_) {
     final Technology thisModelRoot = EcoreUtil2.<Technology>getContainerOfType(import_, Technology.class);
-    final EList<EObject> importedModelRoots = LemmaUtils.getImportedModelContents(import_.eResource(), 
+    final List<EObject> importedModelRoots = LemmaUtils.getImportedModelContents(import_.eResource(), 
       import_.getImportURI());
     boolean _contains = importedModelRoots.contains(thisModelRoot);
     if (_contains) {

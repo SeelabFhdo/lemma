@@ -1307,7 +1307,7 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
       }
     }
     final JoinPointType joinPoint = _switchResult;
-    final EList<EObject> resourceContents = LemmaUtils.getImportedModelContents(aspect.getTechnology().eResource(), 
+    final List<EObject> resourceContents = LemmaUtils.getImportedModelContents(aspect.getTechnology().eResource(), 
       aspect.getTechnology().getImportURI());
     if (((resourceContents == null) || resourceContents.isEmpty())) {
       return IScope.NULLSCOPE;

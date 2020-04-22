@@ -15,7 +15,6 @@ import org.eclipse.xtext.resource.IEObjectDescription
 import org.eclipse.xtext.naming.QualifiedName
 import org.eclipse.xtext.resource.EObjectDescription
 import org.eclipse.xtext.scoping.impl.MapBasedScope
-import org.eclipse.emf.common.util.EList
 import org.eclipse.xtext.scoping.Scopes
 import java.io.File
 import org.eclipse.core.resources.ResourcesPlugin
@@ -67,21 +66,14 @@ final class LemmaUtils {
         if (context === null || importUri === null || importUri.empty)
             return null
 
-        var EList<EObject> importedContents = null
         var importResource = EcoreUtil2.getResource(context, importUri)
+        var importedContents = importResource?.contents ?: emptyList
 
-        // Might happen if the resource could not be found, e.g., when the "file" scheme is
-        // missing
-        if (importResource !== null)
-            importedContents = importResource.contents
-
-        // Try again to get imported model contents with "file" scheme
-        else if (importResource === null || importedContents.empty) {
+        // The imported contents may be empty, e.g., when the "file" scheme is missing. Try again
+        // with "file" scheme.
+        if (importedContents.empty) {
             importResource = EcoreUtil2.getResource(context, convertToFileUri(importUri))
-            if (importResource === null)  // still no chance to retrieve contents
-                return null
-
-            importedContents = importResource.contents
+            importedContents = importResource?.contents
         }
 
         return importedContents

@@ -558,7 +558,7 @@ public class OperationDslValidator extends AbstractOperationDslValidator {
    * for each protocol/format combination in the given technology of the container
    */
   private void warnServicesForBasicEndpoints(final Container container, final Import technologyImport) {
-    final EList<EObject> technologyModel = LemmaUtils.getImportedModelContents(technologyImport.eResource(), 
+    final List<EObject> technologyModel = LemmaUtils.getImportedModelContents(technologyImport.eResource(), 
       technologyImport.getImportURI());
     if (((technologyModel == null) || technologyModel.isEmpty())) {
       return;

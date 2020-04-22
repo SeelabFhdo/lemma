@@ -162,7 +162,7 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
     final Iterable<Import> importedServiceModels = LemmaUtils.<Import>getImportsOfModelTypes(thisModel.getImports(), _function, 
       ServiceModel.class);
     final Consumer<Import> _function_1 = (Import it) -> {
-      final EList<EObject> importedRoot = LemmaUtils.getImportedModelContents(it.eResource(), it.getImportURI());
+      final List<EObject> importedRoot = LemmaUtils.getImportedModelContents(it.eResource(), it.getImportURI());
       if (((!importedRoot.isEmpty()) && Objects.equal(importedRoot.get(0), thisModel))) {
         this.error("Model may not import itself", it, 
           ServicePackage.Literals.IMPORT__IMPORT_URI);

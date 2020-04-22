@@ -423,7 +423,7 @@ public class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
    * Build scope for imported types of operation parameters
    */
   private IScope getScopeForImportedType(final ImportedType importedType) {
-    final EList<EObject> resourceContents = LemmaUtils.getImportedModelContents(importedType.eResource(), 
+    final List<EObject> resourceContents = LemmaUtils.getImportedModelContents(importedType.eResource(), 
       importedType.getImport().getImportURI());
     if (((resourceContents == null) || resourceContents.isEmpty())) {
       return IScope.NULLSCOPE;
@@ -622,7 +622,7 @@ public class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
       }
     }
     final JoinPointType joinPoint = _switchResult;
-    final EList<EObject> resourceContents = LemmaUtils.getImportedModelContents(importedAspect.eResource(), 
+    final List<EObject> resourceContents = LemmaUtils.getImportedModelContents(importedAspect.eResource(), 
       importedAspect.getImport().getImportURI());
     if (((resourceContents == null) || resourceContents.isEmpty())) {
       return IScope.NULLSCOPE;
@@ -949,7 +949,7 @@ public class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
    * Build scope for imported protocols
    */
   private IScope getScopeForImportedProtocol(final ImportedProtocolAndDataFormat importedProtocol) {
-    final EList<EObject> resourceContents = LemmaUtils.getImportedModelContents(importedProtocol.eResource(), 
+    final List<EObject> resourceContents = LemmaUtils.getImportedModelContents(importedProtocol.eResource(), 
       importedProtocol.getImport().getImportURI());
     if (((resourceContents == null) || resourceContents.isEmpty())) {
       return IScope.NULLSCOPE;
@@ -982,7 +982,7 @@ public class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
    * Build scope for data formats of imported protocols
    */
   private IScope getScopeForDataFormat(final ImportedProtocolAndDataFormat importedProtocol) {
-    final EList<EObject> resourceContents = LemmaUtils.getImportedModelContents(importedProtocol.eResource(), 
+    final List<EObject> resourceContents = LemmaUtils.getImportedModelContents(importedProtocol.eResource(), 
       importedProtocol.getImport().getImportURI());
     if (((resourceContents == null) || resourceContents.isEmpty())) {
       return IScope.NULLSCOPE;
@@ -1104,7 +1104,7 @@ public class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
       return it.getTechnology();
     };
     final Consumer<Import> _function_1 = (Import it) -> {
-      final EList<EObject> resourceContents = LemmaUtils.getImportedModelContents(it.eResource(), it.getImportURI());
+      final List<EObject> resourceContents = LemmaUtils.getImportedModelContents(it.eResource(), it.getImportURI());
       if (((resourceContents != null) && (!resourceContents.isEmpty()))) {
         EObject _get = resourceContents.get(0);
         final Technology technologyModel = ((Technology) _get);

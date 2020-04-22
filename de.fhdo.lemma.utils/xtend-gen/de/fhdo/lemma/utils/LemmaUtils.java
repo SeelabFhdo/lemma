@@ -92,22 +92,31 @@ public final class LemmaUtils {
    * Get direct contents, i.e., EObjects that are direct children on the first level, of a
    * resource represented by an import URI that points to a file
    */
-  public static EList<EObject> getImportedModelContents(final Resource context, final String importUri) {
+  public static List<EObject> getImportedModelContents(final Resource context, final String importUri) {
     if ((((context == null) || (importUri == null)) || importUri.isEmpty())) {
       return null;
     }
-    EList<EObject> importedContents = null;
     Resource importResource = EcoreUtil2.getResource(context, importUri);
-    if ((importResource != null)) {
-      importedContents = importResource.getContents();
+    List<EObject> _elvis = null;
+    EList<EObject> _contents = null;
+    if (importResource!=null) {
+      _contents=importResource.getContents();
+    }
+    if (_contents != null) {
+      _elvis = _contents;
     } else {
-      if (((importResource == null) || importedContents.isEmpty())) {
-        importResource = EcoreUtil2.getResource(context, LemmaUtils.convertToFileUri(importUri));
-        if ((importResource == null)) {
-          return null;
-        }
-        importedContents = importResource.getContents();
+      List<EObject> _emptyList = CollectionLiterals.<EObject>emptyList();
+      _elvis = _emptyList;
+    }
+    List<EObject> importedContents = _elvis;
+    boolean _isEmpty = importedContents.isEmpty();
+    if (_isEmpty) {
+      importResource = EcoreUtil2.getResource(context, LemmaUtils.convertToFileUri(importUri));
+      EList<EObject> _contents_1 = null;
+      if (importResource!=null) {
+        _contents_1=importResource.getContents();
       }
+      importedContents = _contents_1;
     }
     return importedContents;
   }
@@ -116,7 +125,7 @@ public final class LemmaUtils {
    * Get root of an imported model
    */
   public static <T extends EObject> T getImportedModelRoot(final Resource context, final String importUri, final Class<T> rootType) {
-    final EList<EObject> modelContents = LemmaUtils.getImportedModelContents(context, importUri);
+    final List<EObject> modelContents = LemmaUtils.getImportedModelContents(context, importUri);
     if (((modelContents == null) || modelContents.isEmpty())) {
       return null;
     }
@@ -561,7 +570,7 @@ public final class LemmaUtils {
         if ((toCheckUri == resourceUri)) {
           return true;
         }
-        final EList<EObject> toCheckContents = LemmaUtils.getImportedModelContents(resourceToCheck, toCheckUri);
+        final List<EObject> toCheckContents = LemmaUtils.getImportedModelContents(resourceToCheck, toCheckUri);
         if (((toCheckContents != null) && (!toCheckContents.isEmpty()))) {
           try {
             EObject _get = toCheckContents.get(0);
@@ -592,7 +601,7 @@ public final class LemmaUtils {
       if (((importUri == null) || importUri.isEmpty())) {
         return Boolean.valueOf(false);
       }
-      final EList<EObject> importedModelContents = LemmaUtils.getImportedModelContents(it.eResource(), importUri);
+      final List<EObject> importedModelContents = LemmaUtils.getImportedModelContents(it.eResource(), importUri);
       if (((importedModelContents == null) || importedModelContents.isEmpty())) {
         return Boolean.valueOf(false);
       }
@@ -691,7 +700,7 @@ public final class LemmaUtils {
     } else {
       ROOT_CONCEPT _xblockexpression = null;
       {
-        final EList<EObject> importedModelContents = LemmaUtils.getImportedModelContents(container.eResource(), importUri);
+        final List<EObject> importedModelContents = LemmaUtils.getImportedModelContents(container.eResource(), importUri);
         ROOT_CONCEPT _xifexpression_1 = null;
         if (((importedModelContents != null) && (!importedModelContents.isEmpty()))) {
           ROOT_CONCEPT _xtrycatchfinallyexpression = null;
@@ -837,7 +846,7 @@ public final class LemmaUtils {
    * Check that an imported resource is of a given type
    */
   public static <T extends EObject> boolean isImportOfType(final Resource context, final String importUri, final Class<T> expectedRootType) {
-    final EList<EObject> modelContents = LemmaUtils.getImportedModelContents(context, importUri);
+    final List<EObject> modelContents = LemmaUtils.getImportedModelContents(context, importUri);
     if (((modelContents == null) || modelContents.isEmpty())) {
       return false;
     }
