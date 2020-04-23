@@ -38,7 +38,7 @@ class FaultParameterHandler
      */
     override fun execute(parameter: IntermediateParameter, cx: Nothing?) : Pair<ClassOrInterfaceDeclaration, String?>? {
         // Currently we only support synchronous fault parameters
-        if (!parameter.isCommunicatesFault || parameter.communicationType == CommunicationType.ASYNCHRONOUS)
+        if (!parameter.isCommunicatesFault || parameter.communicationType == CommunicationType.ASYNCHRONOUS.name)
             return null
 
         /*

@@ -4,8 +4,6 @@ package de.fhdo.lemma.service.intermediate;
 
 import de.fhdo.lemma.data.intermediate.IntermediateImportedAspect;
 
-import de.fhdo.lemma.service.Visibility;
-
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EObject;
@@ -95,7 +93,6 @@ public interface IntermediateOperation extends EObject {
 
     /**
      * Returns the value of the '<em><b>Visibility</b></em>' attribute.
-     * The literals are from the enumeration {@link de.fhdo.lemma.service.Visibility}.
      * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Visibility</em>' attribute isn't clear,
@@ -103,24 +100,22 @@ public interface IntermediateOperation extends EObject {
      * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Visibility</em>' attribute.
-     * @see de.fhdo.lemma.service.Visibility
-     * @see #setVisibility(Visibility)
+     * @see #setVisibility(String)
      * @see de.fhdo.lemma.service.intermediate.IntermediatePackage#getIntermediateOperation_Visibility()
      * @model unique="false"
      * @generated
      */
-    Visibility getVisibility();
+    String getVisibility();
 
     /**
      * Sets the value of the '{@link de.fhdo.lemma.service.intermediate.IntermediateOperation#getVisibility <em>Visibility</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @param value the new value of the '<em>Visibility</em>' attribute.
-     * @see de.fhdo.lemma.service.Visibility
      * @see #getVisibility()
      * @generated
      */
-    void setVisibility(Visibility value);
+    void setVisibility(String value);
 
     /**
      * Returns the value of the '<em><b>Not Implemented</b></em>' attribute.

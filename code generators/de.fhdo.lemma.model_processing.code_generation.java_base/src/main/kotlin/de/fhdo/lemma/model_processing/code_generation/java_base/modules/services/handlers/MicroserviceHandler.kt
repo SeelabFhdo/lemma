@@ -54,7 +54,7 @@ internal class MicroserviceHandler
             "LemmaMicroservice",
             SerializationCharacteristic.DONT_RELOCATE
         )
-        serviceAnnotation.addPair("type", "LemmaMicroserviceType.${microservice.type.name}")
+        serviceAnnotation.addPair("type", "LemmaMicroserviceType.${microservice.type}")
 
         return generatedClass to microservice.javaFileName
     }

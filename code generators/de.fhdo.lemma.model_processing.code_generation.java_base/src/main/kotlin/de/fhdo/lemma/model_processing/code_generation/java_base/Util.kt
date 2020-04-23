@@ -509,7 +509,7 @@ internal fun IntermediateInterface.loadOriginalEObject(originalModelFilePath: St
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 fun IntermediateOperation.hasInputParameters(communicationType: CommunicationType)
-    = parameters.any { it.communicationType == communicationType && it.isInputParameter }
+    = parameters.any { it.communicationType == communicationType.name && it.isInputParameter }
 
 /**
  * Determine if this [IntermediateParameter] is an input parameter, i.e., it has the exchange pattern IN or INOUT and is
@@ -518,7 +518,8 @@ fun IntermediateOperation.hasInputParameters(communicationType: CommunicationTyp
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 private val IntermediateParameter.isInputParameter
-    get() = !isCommunicatesFault && (exchangePattern == ExchangePattern.INOUT || exchangePattern == ExchangePattern.IN)
+    get() = !isCommunicatesFault &&
+            (exchangePattern == ExchangePattern.INOUT.name || exchangePattern == ExchangePattern.IN.name)
 
 /**
  * Get all input parameters of this [IntermediateOperation] for the specified [communicationType]. In case no
@@ -528,8 +529,8 @@ private val IntermediateParameter.isInputParameter
  */
 fun IntermediateOperation.getInputParameters(communicationType: CommunicationType? = null)
     = parameters.filter {
-    (communicationType == null || it.communicationType == communicationType) && it.isInputParameter
-}
+        (communicationType == null || it.communicationType == communicationType.name) && it.isInputParameter
+    }
 
 /**
  * Determine if this [IntermediateOperation] has required input parameters of the specified [communicationType]. In case
@@ -555,7 +556,7 @@ internal fun IntermediateOperation.getRequiredInputParameters(communicationType:
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 fun IntermediateOperation.hasResultParameters(communicationType: CommunicationType)
-    = parameters.any { it.communicationType == communicationType && it.isResultParameter }
+    = parameters.any { it.communicationType == communicationType.name && it.isResultParameter }
 
 /**
  * Determine if this [IntermediateParameter] is a result parameter, i.e., it has the exchange pattern IN or INOUT and is
@@ -564,7 +565,8 @@ fun IntermediateOperation.hasResultParameters(communicationType: CommunicationTy
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 private val IntermediateParameter.isResultParameter
-    get() = !isCommunicatesFault && (exchangePattern == ExchangePattern.INOUT || exchangePattern == ExchangePattern.OUT)
+    get() = !isCommunicatesFault &&
+            (exchangePattern == ExchangePattern.INOUT.name || exchangePattern == ExchangePattern.OUT.name)
 
 /**
  * Get result parameters of this [IntermediateOperation] having the specified [communicationType].
@@ -572,7 +574,7 @@ private val IntermediateParameter.isResultParameter
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 fun IntermediateOperation.getResultParameters(communicationType: CommunicationType)
-    = parameters.filter { it.communicationType == communicationType && it.isResultParameter }
+    = parameters.filter { it.communicationType == communicationType.name && it.isResultParameter }
 
 /**
  * Get fault parameters of this [IntermediateOperation] having the specified [communicationType] and for which an
@@ -582,7 +584,7 @@ fun IntermediateOperation.getResultParameters(communicationType: CommunicationTy
  */
 internal fun IntermediateOperation.getFaultParameters(communicationType: CommunicationType,
     withCustomExceptionClass: Boolean = true) = parameters.filter {
-        it.communicationType == communicationType &&
+        it.communicationType == communicationType.name &&
         it.isCommunicatesFault &&
         it.generateCustomExceptionClassFor() == withCustomExceptionClass
     }
@@ -608,7 +610,7 @@ private fun IntermediateOperation.loadOriginalEObject(originalModelFilePath: Str
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 internal fun IntermediateOperation.hasCompositeResult(communicationType: CommunicationType)
-    = parameters.count { it.communicationType == communicationType && it.isResultParameter } > 1
+    = parameters.count { it.communicationType == communicationType.name && it.isResultParameter } > 1
 
 /**
  * Constant to be used when a generated element refers to synchronous parameters and/or behavior.

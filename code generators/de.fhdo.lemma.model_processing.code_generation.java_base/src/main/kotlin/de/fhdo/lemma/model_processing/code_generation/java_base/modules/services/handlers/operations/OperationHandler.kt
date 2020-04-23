@@ -107,10 +107,10 @@ internal class OperationHandler
      * Helper to set the visibility of the generated [MethodDeclaration] depending on the IntermediateOperation's
      * [visibility]
      */
-    private fun MethodDeclaration.setVisibility(visibility: Visibility)
+    private fun MethodDeclaration.setVisibility(visibility: String)
         = when(visibility) {
-            Visibility.NONE, Visibility.PUBLIC -> isPublic = true
-            Visibility.ARCHITECTURE -> isProtected = true
+            Visibility.NONE.name, Visibility.PUBLIC.name -> isPublic = true
+            Visibility.ARCHITECTURE.name -> isProtected = true
             else -> isPrivate = true
         }
 

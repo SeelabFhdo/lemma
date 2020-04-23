@@ -19,16 +19,6 @@
             <artifactId>de.fhdo.lemma.data.intermediate.metamodel</artifactId>
             <version>${intermediate-data-metamodel-version}</version>
         </dependency>
-        <dependency>
-            <groupId>de.fhdo.lemma.data.datadsl</groupId>
-            <artifactId>de.fhdo.lemma.data.datadsl.metamodel</artifactId>
-            <version>${data-viewpoint-metamodel-version}</version>
-        </dependency>
-        <dependency>
-            <groupId>de.fhdo.lemma.technology.technologydsl</groupId>
-            <artifactId>de.fhdo.lemma.technology.technologydsl.metamodel</artifactId>
-            <version>${technology-definition-metamodel-version}</version>
-        </dependency>
     </dependencies>
 
     <build>

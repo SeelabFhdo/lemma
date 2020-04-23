@@ -5,8 +5,6 @@ package de.fhdo.lemma.service.intermediate.impl;
 import de.fhdo.lemma.service.intermediate.IntermediatePackage;
 import de.fhdo.lemma.service.intermediate.IntermediateProtocolSpecification;
 
-import de.fhdo.lemma.technology.CommunicationType;
-
 import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.ecore.EClass;
@@ -38,7 +36,7 @@ public class IntermediateProtocolSpecificationImpl extends MinimalEObjectImpl.Co
      * @generated
      * @ordered
      */
-    protected static final CommunicationType COMMUNICATION_TYPE_EDEFAULT = CommunicationType.SYNCHRONOUS;
+    protected static final String COMMUNICATION_TYPE_EDEFAULT = null;
 
     /**
      * The cached value of the '{@link #getCommunicationType() <em>Communication Type</em>}' attribute.
@@ -48,7 +46,7 @@ public class IntermediateProtocolSpecificationImpl extends MinimalEObjectImpl.Co
      * @generated
      * @ordered
      */
-    protected CommunicationType communicationType = COMMUNICATION_TYPE_EDEFAULT;
+    protected String communicationType = COMMUNICATION_TYPE_EDEFAULT;
 
     /**
      * The default value of the '{@link #getProtocol() <em>Protocol</em>}' attribute.
@@ -115,7 +113,7 @@ public class IntermediateProtocolSpecificationImpl extends MinimalEObjectImpl.Co
      * @generated
      */
     @Override
-    public CommunicationType getCommunicationType() {
+    public String getCommunicationType() {
         return communicationType;
     }
 
@@ -125,9 +123,9 @@ public class IntermediateProtocolSpecificationImpl extends MinimalEObjectImpl.Co
      * @generated
      */
     @Override
-    public void setCommunicationType(CommunicationType newCommunicationType) {
-        CommunicationType oldCommunicationType = communicationType;
-        communicationType = newCommunicationType == null ? COMMUNICATION_TYPE_EDEFAULT : newCommunicationType;
+    public void setCommunicationType(String newCommunicationType) {
+        String oldCommunicationType = communicationType;
+        communicationType = newCommunicationType;
         if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, IntermediatePackage.INTERMEDIATE_PROTOCOL_SPECIFICATION__COMMUNICATION_TYPE, oldCommunicationType, communicationType));
     }
@@ -205,7 +203,7 @@ public class IntermediateProtocolSpecificationImpl extends MinimalEObjectImpl.Co
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
             case IntermediatePackage.INTERMEDIATE_PROTOCOL_SPECIFICATION__COMMUNICATION_TYPE:
-                setCommunicationType((CommunicationType)newValue);
+                setCommunicationType((String)newValue);
                 return;
             case IntermediatePackage.INTERMEDIATE_PROTOCOL_SPECIFICATION__PROTOCOL:
                 setProtocol((String)newValue);
@@ -247,7 +245,7 @@ public class IntermediateProtocolSpecificationImpl extends MinimalEObjectImpl.Co
     public boolean eIsSet(int featureID) {
         switch (featureID) {
             case IntermediatePackage.INTERMEDIATE_PROTOCOL_SPECIFICATION__COMMUNICATION_TYPE:
-                return communicationType != COMMUNICATION_TYPE_EDEFAULT;
+                return COMMUNICATION_TYPE_EDEFAULT == null ? communicationType != null : !COMMUNICATION_TYPE_EDEFAULT.equals(communicationType);
             case IntermediatePackage.INTERMEDIATE_PROTOCOL_SPECIFICATION__PROTOCOL:
                 return PROTOCOL_EDEFAULT == null ? protocol != null : !PROTOCOL_EDEFAULT.equals(protocol);
             case IntermediatePackage.INTERMEDIATE_PROTOCOL_SPECIFICATION__DATA_FORMAT:

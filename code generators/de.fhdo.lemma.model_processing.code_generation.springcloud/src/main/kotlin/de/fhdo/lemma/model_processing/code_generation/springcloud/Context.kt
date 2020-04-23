@@ -52,7 +52,7 @@ internal object Context {
              * retrieve its corresponding AsynchronousOperationInfo instance
              */
             val protocol = operation.protocols
-                .find { it.communicationType == CommunicationType.ASYNCHRONOUS }!!
+                .find { it.communicationType == CommunicationType.ASYNCHRONOUS.name }!!
                 .protocol
             if (protocol !in asynchronousOperations)
                 asynchronousOperations[protocol] = mutableSetOf()

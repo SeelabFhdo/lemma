@@ -210,14 +210,67 @@ its version, if any. Both name fragments are separated by dots.</p>
 
 <dl class="attribute">
 <dt>
-<code class="descname">MicroserviceType[1] type</code></dt>
-<dd><p><a class="reference internal" href="#_CPPv216MicroserviceType" title="MicroserviceType"><code class="xref cpp cpp-enum docutils literal"><span class="pre">Type</span></code></a> of the microservice.</p>
+<code class="descname">String[1] type</code></dt>
+<dd><p>Type of the microservice. The following values are possible:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="32%" />
+<col width="68%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>Type</strong></td>
+<td><strong>Description</strong></td>
+</tr>
+<tr class="row-even"><td>FUNCTIONAL</td>
+<td>A functional microservice realizes the business
+functions of the microservice-based software
+system.</td>
+</tr>
+<tr class="row-odd"><td>INFRASTRUCTURE</td>
+<td>Infrastructure microservices provide the
+architecture with capabilities that are not
+related to business but technical functions.
+Examples of such functions comprise database
+lookups or integration of legacy systems.</td>
+</tr>
+<tr class="row-even"><td>UTILITY</td>
+<td>Teams may realize utility microservices to
+implement reusable, business-related helper
+functions, e.g., for currency conversion.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt>
-<code class="descname">Visibility[1] visibility</code></dt>
-<dd><p><a class="reference internal" href="#_CPPv210Visibility" title="Visibility"><code class="xref cpp cpp-enum docutils literal"><span class="pre">Visibility</span></code></a> of the microservice.</p>
+<code class="descname">String[1] visibility</code></dt>
+<dd><p>Visibility of the microservice. The following values are possible:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="32%" />
+<col width="68%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>Visibility</strong></td>
+<td><strong>Description</strong></td>
+</tr>
+<tr class="row-even"><td>INTERNAL</td>
+<td>Service must only be visible to the services of
+the same team.</td>
+</tr>
+<tr class="row-odd"><td>ARCHITECTURE</td>
+<td>Service must only be visible to the services of
+the same architecture, but not to external
+consumers.</td>
+</tr>
+<tr class="row-even"><td>PUBLIC</td>
+<td>Service must be visible to all services of the
+same architecture and also to external
+consumers.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
@@ -277,13 +330,12 @@ from the microservice’s name.</p>
 <code class="descname">IntermediateProtocolSpecification[0..2] protocols</code></dt>
 <dd><p><a class="reference internal" href="#IntermediateProtocolSpecification" title="IntermediateProtocolSpecification"><code class="xref java java-type docutils literal"><span class="pre">Protocol</span> <span class="pre">specifications</span></code></a>
 assigned to the microservice. There might be exactly one protocol
-specification per <a class="reference internal" href="#_CPPv217CommunicationType" title="CommunicationType"><code class="xref cpp cpp-enum docutils literal"><span class="pre">communication</span> <span class="pre">type</span></code></a>.</p>
+specification per communication type.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">In case the microservice had no protocols assigned in the source
-Service Model, the default protocols of the missing
-<a class="reference internal" href="#_CPPv217CommunicationType" title="CommunicationType"><code class="xref cpp cpp-enum docutils literal"><span class="pre">communication</span> <span class="pre">types</span></code></a> are taken from
-the assigned
+Service Model, the default protocols of the missing communication
+types are taken from the assigned
 <a class="reference internal" href="#link-intermediatemicroservice-technologies"><span class="std std-ref">technologies</span></a>.
 That is, the attribute is only empty if the microservice had no
 protocol-defining technology assigned.</p>
@@ -329,71 +381,6 @@ microservices.</p>
 
 </dd></dl>
 
-<dl class="enum">
-<dt id="_CPPv216MicroserviceType">
-<em class="property">enum </em><code class="descclassname"></code><code class="descname">MicroserviceType</code><a class="headerlink" href="#_CPPv216MicroserviceType" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Possible types of an <a class="reference internal" href="#IntermediateMicroservice" title="IntermediateMicroservice"><code class="xref java java-type docutils literal"><span class="pre">IntermediateMicroservice</span></code></a>.</p>
-<dl class="enumerator">
-<dt id="_CPPv2N16MicroserviceType10FUNCTIONALE">
-<em class="property">enumerator </em><code class="descclassname"></code><code class="descname">FUNCTIONAL</code><a class="headerlink" href="#_CPPv2N16MicroserviceType10FUNCTIONALE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>A functional microservice realizes the business functions of the
-microservice-based software system.</p>
-</dd></dl>
-
-<dl class="enumerator">
-<dt id="_CPPv2N16MicroserviceType14INFRASTRUCTUREE">
-<em class="property">enumerator </em><code class="descclassname"></code><code class="descname">INFRASTRUCTURE</code><a class="headerlink" href="#_CPPv2N16MicroserviceType14INFRASTRUCTUREE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Infrastructure microservices provide the architecture with capabilities
-that are not related to business but technical functions. Examples of
-such functions comprise database lookups or integration of legacy
-systems.</p>
-</dd></dl>
-
-<dl class="enumerator">
-<dt id="_CPPv2N16MicroserviceType7UTILITYE">
-<em class="property">enumerator </em><code class="descclassname"></code><code class="descname">UTILITY</code><a class="headerlink" href="#_CPPv2N16MicroserviceType7UTILITYE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Teams may realize utility microservices to implement reusable,
-business-related helper functions, e.g., for currency conversion.</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="enum">
-<dt id="_CPPv210Visibility">
-<em class="property">enum </em><code class="descclassname"></code><code class="descname">Visibility</code><a class="headerlink" href="#_CPPv210Visibility" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Possible visibilitiy qualifiers of an
-<a class="reference internal" href="#IntermediateMicroservice" title="IntermediateMicroservice"><code class="xref java java-type docutils literal"><span class="pre">IntermediateMicroservice</span></code></a>, <a class="reference internal" href="#IntermediateInterface" title="IntermediateInterface"><code class="xref java java-type docutils literal"><span class="pre">IntermediateInterface</span></code></a>,
-and <a class="reference internal" href="#IntermediateOperation" title="IntermediateOperation"><code class="xref java java-type docutils literal"><span class="pre">IntermediateOperation</span></code></a>.</p>
-<dl class="enumerator">
-<dt id="_CPPv2N10Visibility8INTERNALE">
-<em class="property">enumerator </em><code class="descclassname"></code><code class="descname">INTERNAL</code><a class="headerlink" href="#_CPPv2N10Visibility8INTERNALE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Internal services/interfaces/operations must only be visible to the
-services of the same team.</p>
-</dd></dl>
-
-<dl class="enumerator">
-<dt id="_CPPv2N10Visibility8IN_MODELE">
-<em class="property">enumerator </em><code class="descclassname"></code><code class="descname">IN_MODEL</code><a class="headerlink" href="#_CPPv2N10Visibility8IN_MODELE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Qualifies an interface/operation to be visible only within the current
-service model file and its services.</p>
-</dd></dl>
-
-<dl class="enumerator">
-<dt id="_CPPv2N10Visibility12ARCHITECTUREE">
-<em class="property">enumerator </em><code class="descclassname"></code><code class="descname">ARCHITECTURE</code><a class="headerlink" href="#_CPPv2N10Visibility12ARCHITECTUREE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Architecture services/interfaces/operations must only be visible to the
-services of the same architecture, but not to external consumers.</p>
-</dd></dl>
-
-<dl class="enumerator">
-<dt id="_CPPv2N10Visibility6PUBLICE">
-<em class="property">enumerator </em><code class="descclassname"></code><code class="descname">PUBLIC</code><a class="headerlink" href="#_CPPv2N10Visibility6PUBLICE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Public services/interfaces/operations must be visible to all services of
-the same architecture and also to external consumers.</p>
-</dd></dl>
-
-</dd></dl>
-
 <dl class="type">
 <dt id="IntermediateInterface">
  class <code class="descname">IntermediateInterface</code><a class="headerlink" href="#IntermediateInterface" title="Permalink to this definition">¶</a></dt>
@@ -422,8 +409,37 @@ All name fragments are separated by dots.</p>
 
 <dl class="attribute">
 <dt>
-<code class="descname">Visibility[1] visibility</code></dt>
-<dd><p><a class="reference internal" href="#_CPPv210Visibility" title="Visibility"><code class="xref cpp cpp-enum docutils literal"><span class="pre">Visibility</span></code></a> of the interface.</p>
+<code class="descname">String[1] visibility</code></dt>
+<dd><p>Visibility of the interface. The following values are possible:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="32%" />
+<col width="68%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>Visibility</strong></td>
+<td><strong>Description</strong></td>
+</tr>
+<tr class="row-even"><td>INTERNAL</td>
+<td>Interface must only be visible to the services
+of the same team.</td>
+</tr>
+<tr class="row-odd"><td>IN_MODEL</td>
+<td>Interface must only be visible to the services
+within the same service model file.</td>
+</tr>
+<tr class="row-even"><td>ARCHITECTURE</td>
+<td>Interface must only be visible to the services
+of the same architecture, but not to external
+consumers.</td>
+</tr>
+<tr class="row-odd"><td>PUBLIC</td>
+<td>Interface must be visible to all services of
+the same architecture and also to external
+consumers.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <span class="target" id="link-intermediateinterface-notimplemented"></span><dl class="attribute">
@@ -484,7 +500,7 @@ from the interface’s name.</p>
 <code class="descname">IntermediateProtocolSpecification[0..2] protocols</code></dt>
 <dd><p><a class="reference internal" href="#IntermediateProtocolSpecification" title="IntermediateProtocolSpecification"><code class="xref java java-type docutils literal"><span class="pre">Protocol</span> <span class="pre">specifications</span></code></a>
 assigned to the interface. There might be exactly one protocol
-specification per <a class="reference internal" href="#_CPPv217CommunicationType" title="CommunicationType"><code class="xref cpp cpp-enum docutils literal"><span class="pre">communication</span> <span class="pre">type</span></code></a>.</p>
+specification per communication type.</p>
 <div class="admonition hint">
 <p class="first admonition-title">Hint</p>
 <p>If no protocol specifications were explicitly assigned to the
@@ -550,8 +566,37 @@ Both name fragments are separated by dots.</p>
 
 <dl class="attribute">
 <dt>
-<code class="descname">Visibility[1] visibility</code></dt>
-<dd><p><a class="reference internal" href="#_CPPv210Visibility" title="Visibility"><code class="xref cpp cpp-enum docutils literal"><span class="pre">Visibility</span></code></a> of the operation.</p>
+<code class="descname">String[1] visibility</code></dt>
+<dd><p>Visibility of the operation. The following values are possible:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="32%" />
+<col width="68%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>Visibility</strong></td>
+<td><strong>Description</strong></td>
+</tr>
+<tr class="row-even"><td>INTERNAL</td>
+<td>Operation must only be visible to the services
+of the same team.</td>
+</tr>
+<tr class="row-odd"><td>IN_MODEL</td>
+<td>Operation must only be visible to the services
+within the same service model file.</td>
+</tr>
+<tr class="row-even"><td>ARCHITECTURE</td>
+<td>Operation must only be visible to the services
+of the same architecture, but not to external
+consumers.</td>
+</tr>
+<tr class="row-odd"><td>PUBLIC</td>
+<td>Operation must be visible to all services of
+the same architecture and also to external
+consumers.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <span class="target" id="link-intermediateoperation-notimplemented"></span><dl class="attribute">
@@ -588,7 +633,7 @@ from the operation’s name.</p>
 <code class="descname">IntermediateProtocolSpecification[0..2] protocols</code></dt>
 <dd><p><a class="reference internal" href="#IntermediateProtocolSpecification" title="IntermediateProtocolSpecification"><code class="xref java java-type docutils literal"><span class="pre">Protocol</span> <span class="pre">specifications</span></code></a>
 assigned to the operation. There might be exactly one protocol
-specification per <a class="reference internal" href="#_CPPv217CommunicationType" title="CommunicationType"><code class="xref cpp cpp-enum docutils literal"><span class="pre">communication</span> <span class="pre">type</span></code></a>.</p>
+specification per communication type.</p>
 <div class="admonition hint">
 <p class="first admonition-title">Hint</p>
 <p>If no protocol specifications were explicitly assigned to the
@@ -606,11 +651,9 @@ defaults, e.g., from the operation’s name.</p>
 <dd><p><a class="reference internal" href="#IntermediateParameter" title="IntermediateParameter"><code class="xref java java-type docutils literal"><span class="pre">Parameters</span></code></a> of the operation.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">There might be more than one
-<a class="reference internal" href="#_CPPv215ExchangePattern" title="ExchangePattern"><code class="xref cpp cpp-enum docutils literal"><span class="pre">outgoing</span> <span class="pre">parameter</span></code></a> and it is up to
-code generators on how to proceed with this. For example, all
-outgoing parameters could be condensed within a uniforming data
-structure.</p>
+<p class="last">There might be more than one outgoing parameter and it is up to code
+generators on how to proceed with this. For example, all outgoing
+parameters could be condensed within a uniforming data structure.</p>
 </div>
 </dd></dl>
 
@@ -730,14 +773,51 @@ Both name fragments are separated by dots.</p>
 
 <span class="target" id="link-intermediateparameter-exchangepattern"></span><dl class="attribute">
 <dt>
-<code class="descname">ExchangePattern[1] exchangePattern</code></dt>
-<dd><p><a class="reference internal" href="#_CPPv215ExchangePattern" title="ExchangePattern"><code class="xref cpp cpp-enum docutils literal"><span class="pre">ExchangePattern</span></code></a> of the parameter.</p>
+<code class="descname">String[1] exchangePattern</code></dt>
+<dd><p>Exchange pattern of the parameter. The following values are possible:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="32%" />
+<col width="68%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>Pattern</strong></td>
+<td><strong>Description</strong></td>
+</tr>
+<tr class="row-even"><td>IN</td>
+<td>Incoming information exchange.</td>
+</tr>
+<tr class="row-odd"><td>OUT</td>
+<td>Outgoing information exchange.</td>
+</tr>
+<tr class="row-even"><td>INOUT</td>
+<td>Incoming and outgoing information exchange.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <span class="target" id="link-intermediateparameter-communicationtype"></span><dl class="attribute">
 <dt>
-<code class="descname">CommunicationType[1] communicationType</code></dt>
-<dd><p><a class="reference internal" href="#_CPPv217CommunicationType" title="CommunicationType"><code class="xref cpp cpp-enum docutils literal"><span class="pre">CommunicationType</span></code></a> of the parameter.</p>
+<code class="descname">String[1] communicationType</code></dt>
+<dd><p>Communication type of the parameter. The following values are possible:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="32%" />
+<col width="68%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>Type</strong></td>
+<td><strong>Description</strong></td>
+</tr>
+<tr class="row-even"><td>ASYNCHRONOUS</td>
+<td>Asynchronous communication.</td>
+</tr>
+<tr class="row-odd"><td>SYNCHRONOUS</td>
+<td>Synchronous communication.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
@@ -758,9 +838,8 @@ that the parameter communicates a fault.</p>
 <dd><p>Flag to indicate that the parameter is optional.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p>The combination of the <a class="reference internal" href="#link-intermediateparameter-exchangepattern"><span class="std std-ref">exchangePattern</span></a>,
-<a class="reference internal" href="#link-intermediateparameter-communicationtype"><span class="std std-ref">communicationType</span></a>, and <code class="docutils literal"><span class="pre">optional</span></code>
-attributes determine a parameter’s “timing behavior”:</p>
+<p>The combination of the exchange pattern, communication type, and
+<code class="docutils literal"><span class="pre">optional</span></code> attributes determine a parameter’s “timing behavior”:</p>
 <table border="1" class="last docutils">
 <colgroup>
 <col width="19%" />
@@ -1020,7 +1099,7 @@ from the referred operation’s name.</p>
 <code class="descname">IntermediateProtocolSpecification[0..2] protocols</code></dt>
 <dd><p><a class="reference internal" href="#IntermediateProtocolSpecification" title="IntermediateProtocolSpecification"><code class="xref java java-type docutils literal"><span class="pre">Protocol</span> <span class="pre">specifications</span></code></a>
 assigned to the referred operation. There might be exactly one protocol
-specification per <a class="reference internal" href="#_CPPv217CommunicationType" title="CommunicationType"><code class="xref cpp cpp-enum docutils literal"><span class="pre">communication</span> <span class="pre">type</span></code></a>.</p>
+specification per communication type.</p>
 <div class="admonition hint">
 <p class="first admonition-title">Hint</p>
 <p>If no protocol specifications were explicitly assigned to the
@@ -1052,48 +1131,6 @@ operation.</p>
 <h2>3.3&nbsp;&nbsp;&nbsp;Communication<a class="headerlink" href="#communication" title="Permalink to this headline">¶</a></h2>
 <p>This subsection describes concepts related to specifying the communication
 between microservices.</p>
-<dl class="enum">
-<dt id="_CPPv217CommunicationType">
-<em class="property">enum </em><code class="descclassname"></code><code class="descname">CommunicationType</code><a class="headerlink" href="#_CPPv217CommunicationType" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>The values of this enum represent certain communication types.</p>
-<dl class="enumerator">
-<dt id="_CPPv2N17CommunicationType12ASYNCHRONOUSE">
-<em class="property">enumerator </em><code class="descclassname"></code><code class="descname">ASYNCHRONOUS</code><a class="headerlink" href="#_CPPv2N17CommunicationType12ASYNCHRONOUSE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Asynchronous communication.</p>
-</dd></dl>
-
-<dl class="enumerator">
-<dt id="_CPPv2N17CommunicationType11SYNCHRONOUSE">
-<em class="property">enumerator </em><code class="descclassname"></code><code class="descname">SYNCHRONOUS</code><a class="headerlink" href="#_CPPv2N17CommunicationType11SYNCHRONOUSE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Synchronous communication.</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="enum">
-<dt id="_CPPv215ExchangePattern">
-<em class="property">enum </em><code class="descclassname"></code><code class="descname">ExchangePattern</code><a class="headerlink" href="#_CPPv215ExchangePattern" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>The values of this enum represent certain exchange patterns.</p>
-<dl class="enumerator">
-<dt id="_CPPv2N15ExchangePattern2INE">
-<em class="property">enumerator </em><code class="descclassname"></code><code class="descname">IN</code><a class="headerlink" href="#_CPPv2N15ExchangePattern2INE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Incoming information exchange.</p>
-</dd></dl>
-
-<dl class="enumerator">
-<dt id="_CPPv2N15ExchangePattern3OUTE">
-<em class="property">enumerator </em><code class="descclassname"></code><code class="descname">OUT</code><a class="headerlink" href="#_CPPv2N15ExchangePattern3OUTE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Outgoing information exchange.</p>
-</dd></dl>
-
-<dl class="enumerator">
-<dt id="_CPPv2N15ExchangePattern5INOUTE">
-<em class="property">enumerator </em><code class="descclassname"></code><code class="descname">INOUT</code><a class="headerlink" href="#_CPPv2N15ExchangePattern5INOUTE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Incoming and outgoing information exchange.</p>
-</dd></dl>
-
-</dd></dl>
-
 <dl class="type">
 <dt id="IntermediateEndpoint">
  class <code class="descname">IntermediateEndpoint</code><a class="headerlink" href="#IntermediateEndpoint" title="Permalink to this definition">¶</a></dt>
@@ -1101,10 +1138,28 @@ between microservices.</p>
 for HTTP and a format like JSON.</p>
 <dl class="attribute">
 <dt>
-<code class="descname">CommunicationType[1] communicationType</code></dt>
-<dd><p>The <a class="reference internal" href="#_CPPv217CommunicationType" title="CommunicationType"><code class="xref cpp cpp-enum docutils literal"><span class="pre">communication</span> <span class="pre">type</span></code></a> assigned to the
-endpoint. It corresponds to the communication type of the endpoint’s
+<code class="descname">String[1] communicationType</code></dt>
+<dd><p>The communication type of the endpoint. It corresponds to the
+communication type of the endpoint’s
 <a class="reference internal" href="#link-intermediateendpoint-protocol"><span class="std std-ref">protocol</span></a>.</p>
+<p>The following values are possible:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="32%" />
+<col width="68%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>Type</strong></td>
+<td><strong>Description</strong></td>
+</tr>
+<tr class="row-even"><td>ASYNCHRONOUS</td>
+<td>Asynchronous communication.</td>
+</tr>
+<tr class="row-odd"><td>SYNCHRONOUS</td>
+<td>Synchronous communication.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <span class="target" id="link-intermediateendpoint-protocol"></span><dl class="attribute">
@@ -1197,8 +1252,26 @@ assigned.</p>
 <dd><p>A protocol and data format specification.</p>
 <dl class="attribute">
 <dt>
-<code class="descname">CommunicationType[1] communicationType</code></dt>
-<dd><p><a class="reference internal" href="#_CPPv217CommunicationType" title="CommunicationType"><code class="xref cpp cpp-enum docutils literal"><span class="pre">CommunicationType</span></code></a> of the specification.</p>
+<code class="descname">String[1] communicationType</code></dt>
+<dd><p>Communication type of the specification. The following values are
+possible:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="32%" />
+<col width="68%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>Type</strong></td>
+<td><strong>Description</strong></td>
+</tr>
+<tr class="row-even"><td>ASYNCHRONOUS</td>
+<td>Asynchronous communication.</td>
+</tr>
+<tr class="row-odd"><td>SYNCHRONOUS</td>
+<td>Synchronous communication.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">

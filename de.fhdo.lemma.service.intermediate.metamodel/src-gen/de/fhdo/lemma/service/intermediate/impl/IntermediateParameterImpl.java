@@ -11,9 +11,6 @@ import de.fhdo.lemma.service.intermediate.IntermediatePackage;
 import de.fhdo.lemma.service.intermediate.IntermediateParameter;
 import de.fhdo.lemma.service.intermediate.OperationReference;
 
-import de.fhdo.lemma.technology.CommunicationType;
-import de.fhdo.lemma.technology.ExchangePattern;
-
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -104,7 +101,7 @@ public class IntermediateParameterImpl extends MinimalEObjectImpl.Container impl
      * @generated
      * @ordered
      */
-    protected static final ExchangePattern EXCHANGE_PATTERN_EDEFAULT = ExchangePattern.IN;
+    protected static final String EXCHANGE_PATTERN_EDEFAULT = null;
 
     /**
      * The cached value of the '{@link #getExchangePattern() <em>Exchange Pattern</em>}' attribute.
@@ -114,7 +111,7 @@ public class IntermediateParameterImpl extends MinimalEObjectImpl.Container impl
      * @generated
      * @ordered
      */
-    protected ExchangePattern exchangePattern = EXCHANGE_PATTERN_EDEFAULT;
+    protected String exchangePattern = EXCHANGE_PATTERN_EDEFAULT;
 
     /**
      * The default value of the '{@link #getCommunicationType() <em>Communication Type</em>}' attribute.
@@ -124,7 +121,7 @@ public class IntermediateParameterImpl extends MinimalEObjectImpl.Container impl
      * @generated
      * @ordered
      */
-    protected static final CommunicationType COMMUNICATION_TYPE_EDEFAULT = CommunicationType.SYNCHRONOUS;
+    protected static final String COMMUNICATION_TYPE_EDEFAULT = null;
 
     /**
      * The cached value of the '{@link #getCommunicationType() <em>Communication Type</em>}' attribute.
@@ -134,7 +131,7 @@ public class IntermediateParameterImpl extends MinimalEObjectImpl.Container impl
      * @generated
      * @ordered
      */
-    protected CommunicationType communicationType = COMMUNICATION_TYPE_EDEFAULT;
+    protected String communicationType = COMMUNICATION_TYPE_EDEFAULT;
 
     /**
      * The default value of the '{@link #isCommunicatesFault() <em>Communicates Fault</em>}' attribute.
@@ -287,7 +284,7 @@ public class IntermediateParameterImpl extends MinimalEObjectImpl.Container impl
      * @generated
      */
     @Override
-    public ExchangePattern getExchangePattern() {
+    public String getExchangePattern() {
         return exchangePattern;
     }
 
@@ -297,9 +294,9 @@ public class IntermediateParameterImpl extends MinimalEObjectImpl.Container impl
      * @generated
      */
     @Override
-    public void setExchangePattern(ExchangePattern newExchangePattern) {
-        ExchangePattern oldExchangePattern = exchangePattern;
-        exchangePattern = newExchangePattern == null ? EXCHANGE_PATTERN_EDEFAULT : newExchangePattern;
+    public void setExchangePattern(String newExchangePattern) {
+        String oldExchangePattern = exchangePattern;
+        exchangePattern = newExchangePattern;
         if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, IntermediatePackage.INTERMEDIATE_PARAMETER__EXCHANGE_PATTERN, oldExchangePattern, exchangePattern));
     }
@@ -310,7 +307,7 @@ public class IntermediateParameterImpl extends MinimalEObjectImpl.Container impl
      * @generated
      */
     @Override
-    public CommunicationType getCommunicationType() {
+    public String getCommunicationType() {
         return communicationType;
     }
 
@@ -320,9 +317,9 @@ public class IntermediateParameterImpl extends MinimalEObjectImpl.Container impl
      * @generated
      */
     @Override
-    public void setCommunicationType(CommunicationType newCommunicationType) {
-        CommunicationType oldCommunicationType = communicationType;
-        communicationType = newCommunicationType == null ? COMMUNICATION_TYPE_EDEFAULT : newCommunicationType;
+    public void setCommunicationType(String newCommunicationType) {
+        String oldCommunicationType = communicationType;
+        communicationType = newCommunicationType;
         if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, IntermediatePackage.INTERMEDIATE_PARAMETER__COMMUNICATION_TYPE, oldCommunicationType, communicationType));
     }
@@ -652,10 +649,10 @@ public class IntermediateParameterImpl extends MinimalEObjectImpl.Container impl
                 setQualifiedName((String)newValue);
                 return;
             case IntermediatePackage.INTERMEDIATE_PARAMETER__EXCHANGE_PATTERN:
-                setExchangePattern((ExchangePattern)newValue);
+                setExchangePattern((String)newValue);
                 return;
             case IntermediatePackage.INTERMEDIATE_PARAMETER__COMMUNICATION_TYPE:
-                setCommunicationType((CommunicationType)newValue);
+                setCommunicationType((String)newValue);
                 return;
             case IntermediatePackage.INTERMEDIATE_PARAMETER__COMMUNICATES_FAULT:
                 setCommunicatesFault((Boolean)newValue);
@@ -742,9 +739,9 @@ public class IntermediateParameterImpl extends MinimalEObjectImpl.Container impl
             case IntermediatePackage.INTERMEDIATE_PARAMETER__QUALIFIED_NAME:
                 return QUALIFIED_NAME_EDEFAULT == null ? qualifiedName != null : !QUALIFIED_NAME_EDEFAULT.equals(qualifiedName);
             case IntermediatePackage.INTERMEDIATE_PARAMETER__EXCHANGE_PATTERN:
-                return exchangePattern != EXCHANGE_PATTERN_EDEFAULT;
+                return EXCHANGE_PATTERN_EDEFAULT == null ? exchangePattern != null : !EXCHANGE_PATTERN_EDEFAULT.equals(exchangePattern);
             case IntermediatePackage.INTERMEDIATE_PARAMETER__COMMUNICATION_TYPE:
-                return communicationType != COMMUNICATION_TYPE_EDEFAULT;
+                return COMMUNICATION_TYPE_EDEFAULT == null ? communicationType != null : !COMMUNICATION_TYPE_EDEFAULT.equals(communicationType);
             case IntermediatePackage.INTERMEDIATE_PARAMETER__COMMUNICATES_FAULT:
                 return communicatesFault != COMMUNICATES_FAULT_EDEFAULT;
             case IntermediatePackage.INTERMEDIATE_PARAMETER__OPTIONAL:

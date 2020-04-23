@@ -164,13 +164,46 @@ Microservices
         Qualified name of the service. This is the service's name prefixed by
         its version, if any. Both name fragments are separated by dots.
 
-    .. py:attribute:: MicroserviceType[1] type
+    .. py:attribute:: String[1] type
 
-        :cpp:enum:`Type <MicroserviceType>` of the microservice.
+        Type of the microservice. The following values are possible:
 
-    .. py:attribute:: Visibility[1] visibility
+        ======================   ===============================================
+        **Type**                 **Description**
+        ----------------------   -----------------------------------------------
+              FUNCTIONAL         A functional microservice realizes the business
+                                 functions of the microservice-based software
+                                 system.
+        ----------------------   -----------------------------------------------
+            INFRASTRUCTURE       Infrastructure microservices provide the 
+                                 architecture with capabilities that are not
+                                 related to business but technical functions. 
+                                 Examples of such functions comprise database
+                                 lookups or integration of legacy systems.
+        ----------------------   -----------------------------------------------
+               UTILITY           Teams may realize utility microservices to 
+                                 implement reusable, business-related helper
+                                 functions, e.g., for currency conversion.        
+        ======================   ===============================================
 
-        :cpp:enum:`Visibility` of the microservice.
+    .. py:attribute:: String[1] visibility
+
+        Visibility of the microservice. The following values are possible:
+
+        ======================   ===============================================
+        **Visibility**           **Description**
+        ----------------------   -----------------------------------------------
+               INTERNAL          Service must only be visible to the services of
+                                 the same team.
+        ----------------------   -----------------------------------------------
+             ARCHITECTURE        Service must only be visible to the services of
+                                 the same architecture, but not to external
+                                 consumers.
+        ----------------------   -----------------------------------------------
+                PUBLIC           Service must be visible to all services of the
+                                 same architecture and also to external
+                                 consumers.
+        ======================   ===============================================
 
     .. py:attribute:: boolean effectivelyImplemented
 
@@ -231,14 +264,13 @@ Microservices
 
         :java:type:`Protocol specifications <IntermediateProtocolSpecification>`
         assigned to the microservice. There might be exactly one protocol
-        specification per :cpp:enum:`communication type <CommunicationType>`. 
+        specification per communication type. 
 
         .. NOTE::
 
             In case the microservice had no protocols assigned in the source
-            Service Model, the default protocols of the missing
-            :cpp:enum:`communication types <CommunicationType>` are taken from
-            the assigned 
+            Service Model, the default protocols of the missing communication
+            types are taken from the assigned
             :ref:`technologies <link__IntermediateMicroservice_technologies>`.
             That is, the attribute is only empty if the microservice had no
             protocol-defining technology assigned.
@@ -276,53 +308,6 @@ Microservices
 
         Link to the containing :java:type:`IntermediateServiceModel` instance.
 
-.. cpp:enum:: MicroserviceType
-
-    Possible types of an :java:type:`IntermediateMicroservice`.
-
-    .. cpp:enumerator:: FUNCTIONAL
-
-        A functional microservice realizes the business functions of the
-        microservice-based software system.
-
-    .. cpp:enumerator:: INFRASTRUCTURE
-
-        Infrastructure microservices provide the architecture with capabilities
-        that are not related to business but technical functions. Examples of
-        such functions comprise database lookups or integration of legacy
-        systems.
-
-    .. cpp:enumerator:: UTILITY
-
-        Teams may realize utility microservices to implement reusable, 
-        business-related helper functions, e.g., for currency conversion.
-        
-.. cpp:enum:: Visibility
-
-    Possible visibilitiy qualifiers of an 
-    :java:type:`IntermediateMicroservice`, :java:type:`IntermediateInterface`,
-    and :java:type:`IntermediateOperation`.
-
-    .. cpp:enumerator:: INTERNAL
-
-        Internal services/interfaces/operations must only be visible to the 
-        services of the same team.
-
-    .. cpp:enumerator:: IN_MODEL
-
-        Qualifies an interface/operation to be visible only within the current
-        service model file and its services.
-
-    .. cpp:enumerator:: ARCHITECTURE
-
-        Architecture services/interfaces/operations must only be visible to the 
-        services of the same architecture, but not to external consumers.
-
-    .. cpp:enumerator:: PUBLIC
-
-        Public services/interfaces/operations must be visible to all services of
-        the same architecture and also to external consumers.
-
 .. java:type:: class IntermediateInterface
 
     This class represents an interface of an 
@@ -349,9 +334,27 @@ Microservices
         :ref:`qualified name <link__IntermediateMicroservice_qualifiedName>`.
         All name fragments are separated by dots.
 
-    .. py:attribute:: Visibility[1] visibility
+    .. py:attribute:: String[1] visibility
 
-        :cpp:enum:`Visibility` of the interface.
+        Visibility of the interface. The following values are possible:
+
+        ======================   ===============================================
+        **Visibility**           **Description**
+        ----------------------   -----------------------------------------------
+               INTERNAL          Interface must only be visible to the services
+                                 of the same team.
+        ----------------------   -----------------------------------------------
+               IN_MODEL          Interface must only be visible to the services
+                                 within the same service model file.
+        ----------------------   -----------------------------------------------
+             ARCHITECTURE        Interface must only be visible to the services
+                                 of the same architecture, but not to external
+                                 consumers.
+        ----------------------   -----------------------------------------------
+                PUBLIC           Interface must be visible to all services of
+                                 the same architecture and also to external
+                                 consumers.
+        ======================   ===============================================
 
     .. _link__IntermediateInterface_notImplemented:
 
@@ -416,7 +419,7 @@ Microservices
 
         :java:type:`Protocol specifications <IntermediateProtocolSpecification>`
         assigned to the interface. There might be exactly one protocol
-        specification per :cpp:enum:`communication type <CommunicationType>`.
+        specification per communication type.
 
         .. HINT::
 
@@ -470,9 +473,27 @@ Microservices
         :ref:`qualified name <link__IntermediateInterface_qualifiedName>`.
         Both name fragments are separated by dots.
 
-    .. py:attribute:: Visibility[1] visibility
+    .. py:attribute:: String[1] visibility
 
-        :cpp:enum:`Visibility` of the operation.
+        Visibility of the operation. The following values are possible:
+
+        ======================   ===============================================
+        **Visibility**           **Description**
+        ----------------------   -----------------------------------------------
+               INTERNAL          Operation must only be visible to the services
+                                 of the same team.
+        ----------------------   -----------------------------------------------
+               IN_MODEL          Operation must only be visible to the services
+                                 within the same service model file.
+        ----------------------   -----------------------------------------------
+             ARCHITECTURE        Operation must only be visible to the services
+                                 of the same architecture, but not to external
+                                 consumers.
+        ----------------------   -----------------------------------------------
+                PUBLIC           Operation must be visible to all services of
+                                 the same architecture and also to external
+                                 consumers.
+        ======================   ===============================================
 
     .. _link__IntermediateOperation_notImplemented:
 
@@ -512,7 +533,7 @@ Microservices
 
         :java:type:`Protocol specifications <IntermediateProtocolSpecification>`
         assigned to the operation. There might be exactly one protocol
-        specification per :cpp:enum:`communication type <CommunicationType>`.
+        specification per communication type.
 
         .. HINT::
 
@@ -530,11 +551,9 @@ Microservices
 
         .. NOTE::
 
-            There might be more than one 
-            :cpp:enum:`outgoing parameter <ExchangePattern>` and it is up to
-            code generators on how to proceed with this. For example, all 
-            outgoing parameters could be condensed within a uniforming data
-            structure.
+            There might be more than one outgoing parameter and it is up to code
+            generators on how to proceed with this. For example, all outgoing
+            parameters could be condensed within a uniforming data structure.
 
     .. py:attribute:: IntermediateApiOperationComment[0..1] apiOperationComment
 
@@ -624,15 +643,33 @@ Microservices
 
     .. _link__IntermediateParameter_exchangePattern:
 
-    .. py:attribute:: ExchangePattern[1] exchangePattern
+    .. py:attribute:: String[1] exchangePattern
 
-        :cpp:enum:`ExchangePattern` of the parameter.
+        Exchange pattern of the parameter. The following values are possible:
+
+        ======================   ===============================================
+        **Pattern**              **Description**
+        ----------------------   -----------------------------------------------
+                  IN             Incoming information exchange.
+        ----------------------   -----------------------------------------------
+                  OUT            Outgoing information exchange.
+        ----------------------   -----------------------------------------------
+                 INOUT           Incoming and outgoing information exchange.
+        ======================   ===============================================
 
     .. _link__IntermediateParameter_communicationType:
 
-    .. py:attribute:: CommunicationType[1] communicationType
+    .. py:attribute:: String[1] communicationType
 
-        :cpp:enum:`CommunicationType` of the parameter.
+        Communication type of the parameter. The following values are possible:
+
+        ======================   ===============================================
+        **Type**                 **Description**
+        ----------------------   -----------------------------------------------
+              ASYNCHRONOUS       Asynchronous communication.
+        ----------------------   -----------------------------------------------
+              SYNCHRONOUS        Synchronous communication.
+        ======================   ===============================================
 
     .. py:attribute:: boolean communicatesFault
 
@@ -652,11 +689,8 @@ Microservices
 
         .. NOTE::
 
-            The combination of the :ref:`exchangePattern 
-            <link__IntermediateParameter_exchangePattern>`, 
-            :ref:`communicationType 
-            <link__IntermediateParameter_communicationType>`, and ``optional``
-            attributes determine a parameter's \"timing behavior\":
+            The combination of the exchange pattern, communication type, and
+            ``optional`` attributes determine a parameter's \"timing behavior\":
 
             +------------+-----------------+---------+-------------------------+
             |**Exchange**|**Communication**|**Opt?** |**Operation Behavior**   |
@@ -864,7 +898,7 @@ Microservices
 
         :java:type:`Protocol specifications <IntermediateProtocolSpecification>`
         assigned to the referred operation. There might be exactly one protocol
-        specification per :cpp:enum:`communication type <CommunicationType>`.
+        specification per communication type.
 
         .. HINT::
 
@@ -891,44 +925,26 @@ Communication
 This subsection describes concepts related to specifying the communication
 between microservices.
 
-.. cpp:enum:: CommunicationType
-
-    The values of this enum represent certain communication types.
-
-    .. cpp:enumerator:: ASYNCHRONOUS
-       
-        Asynchronous communication.
-
-    .. cpp:enumerator:: SYNCHRONOUS
-       
-        Synchronous communication.
-
-.. cpp:enum:: ExchangePattern
-
-    The values of this enum represent certain exchange patterns.
-
-    .. cpp:enumerator:: IN
-
-        Incoming information exchange.
-
-    .. cpp:enumerator:: OUT
-
-        Outgoing information exchange.
-
-    .. cpp:enumerator:: INOUT
-
-        Incoming and outgoing information exchange.
-
 .. java:type:: class IntermediateEndpoint
 
     A protocol- and format-specific endpoint, e.g., `\"http://www.example.org\"`
     for HTTP and a format like JSON.
 
-    .. py:attribute:: CommunicationType[1] communicationType
+    .. py:attribute:: String[1] communicationType
 
-        The :cpp:enum:`communication type <CommunicationType>` assigned to the 
-        endpoint. It corresponds to the communication type of the endpoint's
+        The communication type of the endpoint. It corresponds to the
+        communication type of the endpoint's
         :ref:`protocol <link__IntermediateEndpoint_protocol>`.
+
+        The following values are possible:
+
+        ======================   ===============================================
+        **Type**                 **Description**
+        ----------------------   -----------------------------------------------
+              ASYNCHRONOUS       Asynchronous communication.
+        ----------------------   -----------------------------------------------
+              SYNCHRONOUS        Synchronous communication.
+        ======================   ===============================================
 
     .. _link__IntermediateEndpoint_protocol:
 
@@ -1005,9 +1021,18 @@ between microservices.
 
     A protocol and data format specification.
 
-    .. py:attribute:: CommunicationType[1] communicationType
+    .. py:attribute:: String[1] communicationType
 
-        :cpp:enum:`CommunicationType` of the specification.
+        Communication type of the specification. The following values are
+        possible:
+
+        ======================   ===============================================
+        **Type**                 **Description**
+        ----------------------   -----------------------------------------------
+              ASYNCHRONOUS       Asynchronous communication.
+        ----------------------   -----------------------------------------------
+              SYNCHRONOUS        Synchronous communication.
+        ======================   ===============================================
 
     .. py:attribute:: String[1] protocol
 

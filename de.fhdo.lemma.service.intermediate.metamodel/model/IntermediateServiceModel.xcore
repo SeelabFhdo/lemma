@@ -4,10 +4,6 @@ package de.fhdo.lemma.service.intermediate
 import de.fhdo.lemma.data.intermediate.IntermediateImport
 import de.fhdo.lemma.data.intermediate.IntermediateType
 import de.fhdo.lemma.data.intermediate.IntermediateImportedAspect
-import de.fhdo.lemma.service.MicroserviceType
-import de.fhdo.lemma.service.Visibility
-import de.fhdo.lemma.technology.CommunicationType
-import de.fhdo.lemma.technology.ExchangePattern
 
 /**
  * Metamodel of intermediate service models.
@@ -35,8 +31,8 @@ class IntermediateMicroservice {
     String name
     String version
     String qualifiedName
-    MicroserviceType ^type
-    Visibility visibility
+    String ^type
+    String visibility
     // Flag to indicate if the microservice has at least one operation that is not flagged as being
     // not implemented (either directly or transitively via its encapsulating interface)
     boolean effectivelyImplemented
@@ -60,7 +56,7 @@ class IntermediateInterface {
     String name
     String version
     String qualifiedName
-    Visibility visibility
+    String visibility
     boolean notImplemented
     boolean hasImplementedOperations
 
@@ -79,7 +75,7 @@ class IntermediateInterface {
 class IntermediateOperation {
     String name
     String qualifiedName
-    Visibility visibility
+    String visibility
     boolean notImplemented
 
     contains IntermediateApiOperationComment[0..1] apiOperationComment opposite operation
@@ -137,8 +133,8 @@ class IntermediateReferredOperation {
 class IntermediateParameter {
     String name
     String qualifiedName
-    ExchangePattern exchangePattern
-    CommunicationType communicationType
+    String exchangePattern
+    String communicationType
     boolean communicatesFault
     boolean optional
 
@@ -228,7 +224,7 @@ class IntermediateTechnology {
  * Endpoint
  */
 class IntermediateEndpoint {
-    CommunicationType communicationType
+    String communicationType
     String protocol
     String dataFormat
     String[*] addresses
@@ -244,7 +240,7 @@ class IntermediateEndpoint {
  * Protocol specification
  */
 class IntermediateProtocolSpecification {
-    CommunicationType communicationType
+    String communicationType
     String protocol
     String dataFormat
 }

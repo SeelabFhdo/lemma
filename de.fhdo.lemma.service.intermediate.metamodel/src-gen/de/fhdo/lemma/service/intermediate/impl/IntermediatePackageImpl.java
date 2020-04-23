@@ -2,10 +2,6 @@
  */
 package de.fhdo.lemma.service.intermediate.impl;
 
-import de.fhdo.lemma.data.DataPackage;
-
-import de.fhdo.lemma.service.ServicePackage;
-
 import de.fhdo.lemma.service.intermediate.DataFieldAspects;
 import de.fhdo.lemma.service.intermediate.InterfaceReference;
 import de.fhdo.lemma.service.intermediate.IntermediateApiOperationComment;
@@ -23,8 +19,6 @@ import de.fhdo.lemma.service.intermediate.IntermediateServiceModel;
 import de.fhdo.lemma.service.intermediate.IntermediateTechnology;
 import de.fhdo.lemma.service.intermediate.MicroserviceReference;
 import de.fhdo.lemma.service.intermediate.OperationReference;
-
-import de.fhdo.lemma.technology.TechnologyPackage;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -196,9 +190,6 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
         // Initialize simple dependencies
         EcorePackage.eINSTANCE.eClass();
         de.fhdo.lemma.data.intermediate.IntermediatePackage.eINSTANCE.eClass();
-        ServicePackage.eINSTANCE.eClass();
-        TechnologyPackage.eINSTANCE.eClass();
-        DataPackage.eINSTANCE.eClass();
 
         // Create package meta-data objects
         theIntermediatePackage.createPackageContents();
@@ -1616,8 +1607,6 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
         // Obtain other dependent packages
         EcorePackage theEcorePackage = (EcorePackage)EPackage.Registry.INSTANCE.getEPackage(EcorePackage.eNS_URI);
         de.fhdo.lemma.data.intermediate.IntermediatePackage theIntermediatePackage_1 = (de.fhdo.lemma.data.intermediate.IntermediatePackage)EPackage.Registry.INSTANCE.getEPackage(de.fhdo.lemma.data.intermediate.IntermediatePackage.eNS_URI);
-        ServicePackage theServicePackage = (ServicePackage)EPackage.Registry.INSTANCE.getEPackage(ServicePackage.eNS_URI);
-        TechnologyPackage theTechnologyPackage = (TechnologyPackage)EPackage.Registry.INSTANCE.getEPackage(TechnologyPackage.eNS_URI);
 
         // Create type parameters
 
@@ -1636,8 +1625,8 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
         initEAttribute(getIntermediateMicroservice_Name(), theEcorePackage.getEString(), "name", null, 0, 1, IntermediateMicroservice.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getIntermediateMicroservice_Version(), theEcorePackage.getEString(), "version", null, 0, 1, IntermediateMicroservice.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getIntermediateMicroservice_QualifiedName(), theEcorePackage.getEString(), "qualifiedName", null, 0, 1, IntermediateMicroservice.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getIntermediateMicroservice_Type(), theServicePackage.getMicroserviceType(), "type", null, 0, 1, IntermediateMicroservice.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getIntermediateMicroservice_Visibility(), theServicePackage.getVisibility(), "visibility", null, 0, 1, IntermediateMicroservice.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getIntermediateMicroservice_Type(), theEcorePackage.getEString(), "type", null, 0, 1, IntermediateMicroservice.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getIntermediateMicroservice_Visibility(), theEcorePackage.getEString(), "visibility", null, 0, 1, IntermediateMicroservice.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getIntermediateMicroservice_EffectivelyImplemented(), theEcorePackage.getEBoolean(), "effectivelyImplemented", null, 0, 1, IntermediateMicroservice.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getIntermediateMicroservice_Technologies(), this.getIntermediateTechnology(), this.getIntermediateTechnology_Microservice(), "technologies", null, 0, -1, IntermediateMicroservice.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getIntermediateMicroservice_Endpoints(), this.getIntermediateEndpoint(), this.getIntermediateEndpoint_Microservice(), "endpoints", null, 0, -1, IntermediateMicroservice.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1653,7 +1642,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
         initEAttribute(getIntermediateInterface_Name(), theEcorePackage.getEString(), "name", null, 0, 1, IntermediateInterface.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getIntermediateInterface_Version(), theEcorePackage.getEString(), "version", null, 0, 1, IntermediateInterface.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getIntermediateInterface_QualifiedName(), theEcorePackage.getEString(), "qualifiedName", null, 0, 1, IntermediateInterface.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getIntermediateInterface_Visibility(), theServicePackage.getVisibility(), "visibility", null, 0, 1, IntermediateInterface.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getIntermediateInterface_Visibility(), theEcorePackage.getEString(), "visibility", null, 0, 1, IntermediateInterface.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getIntermediateInterface_NotImplemented(), theEcorePackage.getEBoolean(), "notImplemented", null, 0, 1, IntermediateInterface.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getIntermediateInterface_HasImplementedOperations(), theEcorePackage.getEBoolean(), "hasImplementedOperations", null, 0, 1, IntermediateInterface.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getIntermediateInterface_Endpoints(), this.getIntermediateEndpoint(), this.getIntermediateEndpoint_Interface(), "endpoints", null, 0, -1, IntermediateInterface.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1666,7 +1655,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
         initEClass(intermediateOperationEClass, IntermediateOperation.class, "IntermediateOperation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getIntermediateOperation_Name(), theEcorePackage.getEString(), "name", null, 0, 1, IntermediateOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getIntermediateOperation_QualifiedName(), theEcorePackage.getEString(), "qualifiedName", null, 0, 1, IntermediateOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getIntermediateOperation_Visibility(), theServicePackage.getVisibility(), "visibility", null, 0, 1, IntermediateOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getIntermediateOperation_Visibility(), theEcorePackage.getEString(), "visibility", null, 0, 1, IntermediateOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getIntermediateOperation_NotImplemented(), theEcorePackage.getEBoolean(), "notImplemented", null, 0, 1, IntermediateOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getIntermediateOperation_ApiOperationComment(), this.getIntermediateApiOperationComment(), this.getIntermediateApiOperationComment_Operation(), "apiOperationComment", null, 0, 1, IntermediateOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getIntermediateOperation_Endpoints(), this.getIntermediateEndpoint(), this.getIntermediateEndpoint_Operation(), "endpoints", null, 0, -1, IntermediateOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1698,8 +1687,8 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
         initEClass(intermediateParameterEClass, IntermediateParameter.class, "IntermediateParameter", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getIntermediateParameter_Name(), theEcorePackage.getEString(), "name", null, 0, 1, IntermediateParameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getIntermediateParameter_QualifiedName(), theEcorePackage.getEString(), "qualifiedName", null, 0, 1, IntermediateParameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getIntermediateParameter_ExchangePattern(), theTechnologyPackage.getExchangePattern(), "exchangePattern", null, 0, 1, IntermediateParameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getIntermediateParameter_CommunicationType(), theTechnologyPackage.getCommunicationType(), "communicationType", null, 0, 1, IntermediateParameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getIntermediateParameter_ExchangePattern(), theEcorePackage.getEString(), "exchangePattern", null, 0, 1, IntermediateParameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getIntermediateParameter_CommunicationType(), theEcorePackage.getEString(), "communicationType", null, 0, 1, IntermediateParameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getIntermediateParameter_CommunicatesFault(), theEcorePackage.getEBoolean(), "communicatesFault", null, 0, 1, IntermediateParameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getIntermediateParameter_Optional(), theEcorePackage.getEBoolean(), "optional", null, 0, 1, IntermediateParameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getIntermediateParameter_Type(), theIntermediatePackage_1.getIntermediateType(), null, "type", null, 0, 1, IntermediateParameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1747,7 +1736,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
         initEReference(getIntermediateTechnology_Microservice(), this.getIntermediateMicroservice(), this.getIntermediateMicroservice_Technologies(), "microservice", null, 0, 1, IntermediateTechnology.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(intermediateEndpointEClass, IntermediateEndpoint.class, "IntermediateEndpoint", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getIntermediateEndpoint_CommunicationType(), theTechnologyPackage.getCommunicationType(), "communicationType", null, 0, 1, IntermediateEndpoint.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getIntermediateEndpoint_CommunicationType(), theEcorePackage.getEString(), "communicationType", null, 0, 1, IntermediateEndpoint.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getIntermediateEndpoint_Protocol(), theEcorePackage.getEString(), "protocol", null, 0, 1, IntermediateEndpoint.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getIntermediateEndpoint_DataFormat(), theEcorePackage.getEString(), "dataFormat", null, 0, 1, IntermediateEndpoint.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getIntermediateEndpoint_Addresses(), theEcorePackage.getEString(), "addresses", null, 0, -1, IntermediateEndpoint.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1758,7 +1747,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
         initEReference(getIntermediateEndpoint_ReferredOperation(), this.getIntermediateReferredOperation(), this.getIntermediateReferredOperation_Endpoints(), "referredOperation", null, 0, 1, IntermediateEndpoint.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(intermediateProtocolSpecificationEClass, IntermediateProtocolSpecification.class, "IntermediateProtocolSpecification", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getIntermediateProtocolSpecification_CommunicationType(), theTechnologyPackage.getCommunicationType(), "communicationType", null, 0, 1, IntermediateProtocolSpecification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getIntermediateProtocolSpecification_CommunicationType(), theEcorePackage.getEString(), "communicationType", null, 0, 1, IntermediateProtocolSpecification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getIntermediateProtocolSpecification_Protocol(), theEcorePackage.getEString(), "protocol", null, 0, 1, IntermediateProtocolSpecification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getIntermediateProtocolSpecification_DataFormat(), theEcorePackage.getEString(), "dataFormat", null, 0, 1, IntermediateProtocolSpecification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 

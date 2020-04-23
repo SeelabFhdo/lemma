@@ -4,9 +4,6 @@ package de.fhdo.lemma.service.intermediate.impl;
 
 import de.fhdo.lemma.data.intermediate.IntermediateImportedAspect;
 
-import de.fhdo.lemma.service.MicroserviceType;
-import de.fhdo.lemma.service.Visibility;
-
 import de.fhdo.lemma.service.intermediate.InterfaceReference;
 import de.fhdo.lemma.service.intermediate.IntermediateEndpoint;
 import de.fhdo.lemma.service.intermediate.IntermediateInterface;
@@ -153,7 +150,7 @@ public class IntermediateMicroserviceImpl extends MinimalEObjectImpl.Container i
      * @generated
      * @ordered
      */
-    protected static final MicroserviceType TYPE_EDEFAULT = MicroserviceType.FUNCTIONAL;
+    protected static final String TYPE_EDEFAULT = null;
 
     /**
      * The cached value of the '{@link #getType() <em>Type</em>}' attribute.
@@ -163,7 +160,7 @@ public class IntermediateMicroserviceImpl extends MinimalEObjectImpl.Container i
      * @generated
      * @ordered
      */
-    protected MicroserviceType type = TYPE_EDEFAULT;
+    protected String type = TYPE_EDEFAULT;
 
     /**
      * The default value of the '{@link #getVisibility() <em>Visibility</em>}' attribute.
@@ -173,7 +170,7 @@ public class IntermediateMicroserviceImpl extends MinimalEObjectImpl.Container i
      * @generated
      * @ordered
      */
-    protected static final Visibility VISIBILITY_EDEFAULT = Visibility.NONE;
+    protected static final String VISIBILITY_EDEFAULT = null;
 
     /**
      * The cached value of the '{@link #getVisibility() <em>Visibility</em>}' attribute.
@@ -183,7 +180,7 @@ public class IntermediateMicroserviceImpl extends MinimalEObjectImpl.Container i
      * @generated
      * @ordered
      */
-    protected Visibility visibility = VISIBILITY_EDEFAULT;
+    protected String visibility = VISIBILITY_EDEFAULT;
 
     /**
      * The default value of the '{@link #isEffectivelyImplemented() <em>Effectively Implemented</em>}' attribute.
@@ -402,7 +399,7 @@ public class IntermediateMicroserviceImpl extends MinimalEObjectImpl.Container i
      * @generated
      */
     @Override
-    public MicroserviceType getType() {
+    public String getType() {
         return type;
     }
 
@@ -412,9 +409,9 @@ public class IntermediateMicroserviceImpl extends MinimalEObjectImpl.Container i
      * @generated
      */
     @Override
-    public void setType(MicroserviceType newType) {
-        MicroserviceType oldType = type;
-        type = newType == null ? TYPE_EDEFAULT : newType;
+    public void setType(String newType) {
+        String oldType = type;
+        type = newType;
         if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, IntermediatePackage.INTERMEDIATE_MICROSERVICE__TYPE, oldType, type));
     }
@@ -425,7 +422,7 @@ public class IntermediateMicroserviceImpl extends MinimalEObjectImpl.Container i
      * @generated
      */
     @Override
-    public Visibility getVisibility() {
+    public String getVisibility() {
         return visibility;
     }
 
@@ -435,9 +432,9 @@ public class IntermediateMicroserviceImpl extends MinimalEObjectImpl.Container i
      * @generated
      */
     @Override
-    public void setVisibility(Visibility newVisibility) {
-        Visibility oldVisibility = visibility;
-        visibility = newVisibility == null ? VISIBILITY_EDEFAULT : newVisibility;
+    public void setVisibility(String newVisibility) {
+        String oldVisibility = visibility;
+        visibility = newVisibility;
         if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, IntermediatePackage.INTERMEDIATE_MICROSERVICE__VISIBILITY, oldVisibility, visibility));
     }
@@ -762,10 +759,10 @@ public class IntermediateMicroserviceImpl extends MinimalEObjectImpl.Container i
                 setQualifiedName((String)newValue);
                 return;
             case IntermediatePackage.INTERMEDIATE_MICROSERVICE__TYPE:
-                setType((MicroserviceType)newValue);
+                setType((String)newValue);
                 return;
             case IntermediatePackage.INTERMEDIATE_MICROSERVICE__VISIBILITY:
-                setVisibility((Visibility)newValue);
+                setVisibility((String)newValue);
                 return;
             case IntermediatePackage.INTERMEDIATE_MICROSERVICE__EFFECTIVELY_IMPLEMENTED:
                 setEffectivelyImplemented((Boolean)newValue);
@@ -886,9 +883,9 @@ public class IntermediateMicroserviceImpl extends MinimalEObjectImpl.Container i
             case IntermediatePackage.INTERMEDIATE_MICROSERVICE__QUALIFIED_NAME:
                 return QUALIFIED_NAME_EDEFAULT == null ? qualifiedName != null : !QUALIFIED_NAME_EDEFAULT.equals(qualifiedName);
             case IntermediatePackage.INTERMEDIATE_MICROSERVICE__TYPE:
-                return type != TYPE_EDEFAULT;
+                return TYPE_EDEFAULT == null ? type != null : !TYPE_EDEFAULT.equals(type);
             case IntermediatePackage.INTERMEDIATE_MICROSERVICE__VISIBILITY:
-                return visibility != VISIBILITY_EDEFAULT;
+                return VISIBILITY_EDEFAULT == null ? visibility != null : !VISIBILITY_EDEFAULT.equals(visibility);
             case IntermediatePackage.INTERMEDIATE_MICROSERVICE__EFFECTIVELY_IMPLEMENTED:
                 return effectivelyImplemented != EFFECTIVELY_IMPLEMENTED_EDEFAULT;
             case IntermediatePackage.INTERMEDIATE_MICROSERVICE__TECHNOLOGIES:

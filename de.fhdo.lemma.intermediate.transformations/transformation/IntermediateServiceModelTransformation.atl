@@ -259,8 +259,8 @@ rule IntermediateMicroservice {
             name <- m.name,
             version <- m.version,
             qualifiedName <- m.buildQualifiedName('.'),
-            type <- m.type,
-            visibility <- m.effectiveVisibility,
+            type <- m.type.toString(),
+            visibility <- m.effectiveVisibility.toString(),
             effectivelyImplemented <- m.effectivelyImplemented,
             -- Assign model root to target instance
             serviceModel <- thisModule.IntermediateServiceModel()
@@ -317,7 +317,7 @@ rule IntermediateInterface {
             name <- i.name,
             version <- i.version,
             qualifiedName <- i.buildQualifiedName('.'),
-            visibility <- i.effectiveVisibility,
+            visibility <- i.effectiveVisibility.toString(),
             notImplemented <- i.notImplemented,
             microservice <- thisModule.getCreatedMicroservice(i.microservice)
         )
@@ -346,7 +346,7 @@ rule IntermediateOperation {
         i : Intermediate!IntermediateOperation(
             name <- o.name,
             qualifiedName <- o.buildQualifiedName('.'),
-            visibility <- o.effectiveVisibility,
+            visibility <- o.effectiveVisibility.toString(),
             notImplemented <- o.notImplemented,
             interface <- thisModule.getCreatedInterface(o.interface)
         )
@@ -427,8 +427,8 @@ rule IntermediateParameter {
         i : Intermediate!IntermediateParameter(
             name <- p.name,
             qualifiedName <- p.buildQualifiedName('.'),
-            exchangePattern <- p.exchangePattern,
-            communicationType <- p.communicationType,
+            exchangePattern <- p.exchangePattern.toString(),
+            communicationType <- p.communicationType.toString(),
             communicatesFault <- p.communicatesFault,
             optional <- p.optional
         )
@@ -643,7 +643,7 @@ rule IntermediateProtocolSpecification(protocol : Service!Protocol,
     dataFormat : Service!DataFormat) {
     to
         s : Intermediate!IntermediateProtocolSpecification(
-            communicationType <- protocol.communicationType,
+            communicationType <- protocol.communicationType.toString(),
             protocol <- protocol.name,
             dataFormat <- dataFormat.formatName
         )
@@ -673,7 +673,7 @@ rule IntermediateEndpoint {
             )
     to
         i : Intermediate!IntermediateEndpoint(
-            communicationType <- p.importedProtocol.communicationType,
+            communicationType <- p.importedProtocol.communicationType.toString(),
             protocol <- p.importedProtocol.name,
             addresses <- p.endpoint.addresses
         )
@@ -733,7 +733,7 @@ rule DefaultIntermediateEndpoint(protocol : Service!Protocol,
     dataFormat : Service!DataFormat, import : Service!Import, target : OclAny) {
     to
         e : Intermediate!IntermediateEndpoint(
-            communicationType <- protocol.communicationType,
+            communicationType <- protocol.communicationType.toString(),
             protocol <- protocol.name,
             dataFormat <- dataFormat.formatName
         )
@@ -771,7 +771,7 @@ rule CopyIntermediateEndpoint(baseEndpoint : Intermediate!IntermediateEndpoint,
     dataFormat : Service!DataFormat) {
     to
         e : Intermediate!IntermediateEndpoint(
-            communicationType <- baseEndpoint.communicationType,
+            communicationType <- baseEndpoint.communicationType.toString(),
             protocol <- baseEndpoint.protocol,
             dataFormat <- dataFormat.formatName,
             addresses <- baseEndpoint.addresses

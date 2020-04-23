@@ -2,8 +2,6 @@
  */
 package de.fhdo.lemma.service.intermediate;
 
-import de.fhdo.lemma.technology.CommunicationType;
-
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -32,7 +30,6 @@ import org.eclipse.emf.ecore.EObject;
 public interface IntermediateProtocolSpecification extends EObject {
     /**
      * Returns the value of the '<em><b>Communication Type</b></em>' attribute.
-     * The literals are from the enumeration {@link de.fhdo.lemma.technology.CommunicationType}.
      * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Communication Type</em>' attribute isn't clear,
@@ -40,24 +37,22 @@ public interface IntermediateProtocolSpecification extends EObject {
      * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Communication Type</em>' attribute.
-     * @see de.fhdo.lemma.technology.CommunicationType
-     * @see #setCommunicationType(CommunicationType)
+     * @see #setCommunicationType(String)
      * @see de.fhdo.lemma.service.intermediate.IntermediatePackage#getIntermediateProtocolSpecification_CommunicationType()
      * @model unique="false"
      * @generated
      */
-    CommunicationType getCommunicationType();
+    String getCommunicationType();
 
     /**
      * Sets the value of the '{@link de.fhdo.lemma.service.intermediate.IntermediateProtocolSpecification#getCommunicationType <em>Communication Type</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @param value the new value of the '<em>Communication Type</em>' attribute.
-     * @see de.fhdo.lemma.technology.CommunicationType
      * @see #getCommunicationType()
      * @generated
      */
-    void setCommunicationType(CommunicationType value);
+    void setCommunicationType(String value);
 
     /**
      * Returns the value of the '<em><b>Protocol</b></em>' attribute.
