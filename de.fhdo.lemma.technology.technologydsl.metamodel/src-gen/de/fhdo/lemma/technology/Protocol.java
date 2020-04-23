@@ -67,10 +67,6 @@ public interface Protocol extends EObject {
      * Returns the value of the '<em><b>Communication Type</b></em>' attribute.
      * The literals are from the enumeration {@link de.fhdo.lemma.technology.CommunicationType}.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Communication Type</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Communication Type</em>' attribute.
      * @see de.fhdo.lemma.technology.CommunicationType
@@ -96,10 +92,6 @@ public interface Protocol extends EObject {
      * Returns the value of the '<em><b>Default</b></em>' attribute.
      * The default value is <code>"false"</code>.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Default</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Default</em>' attribute.
      * @see #setDefault(boolean)
@@ -122,10 +114,6 @@ public interface Protocol extends EObject {
     /**
      * Returns the value of the '<em><b>Default Format</b></em>' reference.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Default Format</em>' reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Default Format</em>' reference.
      * @see #setDefaultFormat(DataFormat)
@@ -150,10 +138,6 @@ public interface Protocol extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.technology.DataFormat}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.technology.DataFormat#getProtocol <em>Protocol</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Data Formats</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Data Formats</em>' containment reference list.
      * @see de.fhdo.lemma.technology.TechnologyPackage#getProtocol_DataFormats()
@@ -167,10 +151,6 @@ public interface Protocol extends EObject {
      * Returns the value of the '<em><b>Technology</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.technology.Technology#getProtocols <em>Protocols</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Technology</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Technology</em>' container reference.
      * @see #setTechnology(Technology)

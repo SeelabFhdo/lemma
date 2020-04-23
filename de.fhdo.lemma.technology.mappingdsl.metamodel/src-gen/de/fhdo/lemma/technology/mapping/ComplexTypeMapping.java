@@ -42,10 +42,6 @@ public interface ComplexTypeMapping extends EObject {
     /**
      * Returns the value of the '<em><b>Tsource Model Uri</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Tsource Model Uri</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Tsource Model Uri</em>' attribute.
      * @see #setT_sourceModelUri(String)
@@ -69,10 +65,6 @@ public interface ComplexTypeMapping extends EObject {
      * Returns the value of the '<em><b>Technology References</b></em>' containment reference list.
      * The list contents are of type {@link de.fhdo.lemma.service.TechnologyReference}.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Technology References</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Technology References</em>' containment reference list.
      * @see de.fhdo.lemma.technology.mapping.MappingPackage#getComplexTypeMapping_TechnologyReferences()
@@ -85,10 +77,6 @@ public interface ComplexTypeMapping extends EObject {
      * Returns the value of the '<em><b>Type</b></em>' containment reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.technology.mapping.ImportedComplexTypeToMap#getTypeMapping <em>Type Mapping</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Type</em>' containment reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Type</em>' containment reference.
      * @see #setType(ImportedComplexTypeToMap)
@@ -114,10 +102,6 @@ public interface ComplexTypeMapping extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.technology.mapping.TechnologySpecificFieldMapping}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.technology.mapping.TechnologySpecificFieldMapping#getTypeMapping <em>Type Mapping</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Field Mappings</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Field Mappings</em>' containment reference list.
      * @see de.fhdo.lemma.technology.mapping.MappingPackage#getComplexTypeMapping_FieldMappings()
@@ -132,10 +116,6 @@ public interface ComplexTypeMapping extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.technology.mapping.DataOperationMapping}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.technology.mapping.DataOperationMapping#getTypeMapping <em>Type Mapping</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Operation Mappings</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Operation Mappings</em>' containment reference list.
      * @see de.fhdo.lemma.technology.mapping.MappingPackage#getComplexTypeMapping_OperationMappings()
@@ -150,10 +130,6 @@ public interface ComplexTypeMapping extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.technology.mapping.TechnologySpecificImportedServiceAspect}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.technology.mapping.TechnologySpecificImportedServiceAspect#getTypeMapping <em>Type Mapping</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Aspects</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Aspects</em>' containment reference list.
      * @see de.fhdo.lemma.technology.mapping.MappingPackage#getComplexTypeMapping_Aspects()
@@ -167,10 +143,6 @@ public interface ComplexTypeMapping extends EObject {
      * Returns the value of the '<em><b>Mapping Model</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.technology.mapping.TechnologyMapping#getTypeMappings <em>Type Mappings</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Mapping Model</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Mapping Model</em>' container reference.
      * @see #setMappingModel(TechnologyMapping)

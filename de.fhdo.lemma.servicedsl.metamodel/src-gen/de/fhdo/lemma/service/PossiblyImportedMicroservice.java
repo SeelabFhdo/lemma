@@ -31,10 +31,6 @@ public interface PossiblyImportedMicroservice extends EObject {
     /**
      * Returns the value of the '<em><b>Import</b></em>' reference.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Import</em>' reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Import</em>' reference.
      * @see #setImport(Import)
@@ -57,10 +53,6 @@ public interface PossiblyImportedMicroservice extends EObject {
     /**
      * Returns the value of the '<em><b>Microservice</b></em>' reference.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Microservice</em>' reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Microservice</em>' reference.
      * @see #setMicroservice(Microservice)
@@ -84,10 +76,6 @@ public interface PossiblyImportedMicroservice extends EObject {
      * Returns the value of the '<em><b>Requiring Microservice</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.Microservice#getRequiredMicroservices <em>Required Microservices</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Requiring Microservice</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Requiring Microservice</em>' container reference.
      * @see #setRequiringMicroservice(Microservice)

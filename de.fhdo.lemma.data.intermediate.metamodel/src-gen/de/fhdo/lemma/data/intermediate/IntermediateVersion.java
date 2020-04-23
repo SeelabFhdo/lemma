@@ -34,10 +34,6 @@ public interface IntermediateVersion extends EObject {
     /**
      * Returns the value of the '<em><b>Name</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Name</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Name</em>' attribute.
      * @see #setName(String)
@@ -62,10 +58,6 @@ public interface IntermediateVersion extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.data.intermediate.IntermediateComplexType}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.data.intermediate.IntermediateComplexType#getVersion <em>Version</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Complex Types</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Complex Types</em>' containment reference list.
      * @see de.fhdo.lemma.data.intermediate.IntermediatePackage#getIntermediateVersion_ComplexTypes()
@@ -80,10 +72,6 @@ public interface IntermediateVersion extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.data.intermediate.IntermediateContext}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.data.intermediate.IntermediateContext#getVersion <em>Version</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Contexts</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Contexts</em>' containment reference list.
      * @see de.fhdo.lemma.data.intermediate.IntermediatePackage#getIntermediateVersion_Contexts()
@@ -97,10 +85,6 @@ public interface IntermediateVersion extends EObject {
      * Returns the value of the '<em><b>Data Model</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.data.intermediate.IntermediateDataModel#getVersions <em>Versions</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Data Model</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Data Model</em>' container reference.
      * @see #setDataModel(IntermediateDataModel)

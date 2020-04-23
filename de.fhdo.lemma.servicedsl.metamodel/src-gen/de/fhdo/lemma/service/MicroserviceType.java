@@ -55,10 +55,6 @@ public enum MicroserviceType implements Enumerator {
     /**
      * The '<em><b>FUNCTIONAL</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>FUNCTIONAL</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @see #FUNCTIONAL
      * @model
@@ -70,10 +66,6 @@ public enum MicroserviceType implements Enumerator {
     /**
      * The '<em><b>UTILITY</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>UTILITY</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @see #UTILITY
      * @model
@@ -85,10 +77,6 @@ public enum MicroserviceType implements Enumerator {
     /**
      * The '<em><b>INFRASTRUCTURE</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>INFRASTRUCTURE</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @see #INFRASTRUCTURE
      * @model

@@ -42,10 +42,6 @@ public interface MappedField extends EObject {
     /**
      * Returns the value of the '<em><b>Data Field</b></em>' reference.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Data Field</em>' reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Data Field</em>' reference.
      * @see #setDataField(DataField)
@@ -68,10 +64,6 @@ public interface MappedField extends EObject {
     /**
      * Returns the value of the '<em><b>Enumeration Field</b></em>' reference.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Enumeration Field</em>' reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Enumeration Field</em>' reference.
      * @see #setEnumerationField(EnumerationField)
@@ -94,10 +86,6 @@ public interface MappedField extends EObject {
     /**
      * Returns the value of the '<em><b>Mapped Type</b></em>' containment reference.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Mapped Type</em>' containment reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Mapped Type</em>' containment reference.
      * @see #setMappedType(ImportedType)
@@ -122,10 +110,6 @@ public interface MappedField extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.service.ImportedServiceAspect}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.ImportedServiceAspect#getMappedField <em>Mapped Field</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Aspects</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Aspects</em>' containment reference list.
      * @see de.fhdo.lemma.service.ServicePackage#getMappedField_Aspects()
@@ -139,10 +123,6 @@ public interface MappedField extends EObject {
      * Returns the value of the '<em><b>Parameter</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.Parameter#getMappedFields <em>Mapped Fields</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Parameter</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Parameter</em>' container reference.
      * @see #setParameter(Parameter)
@@ -167,10 +147,6 @@ public interface MappedField extends EObject {
      * Returns the value of the '<em><b>Mapped Complex Type</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.MappedComplexType#getMappedFields <em>Mapped Fields</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Mapped Complex Type</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Mapped Complex Type</em>' container reference.
      * @see #setMappedComplexType(MappedComplexType)

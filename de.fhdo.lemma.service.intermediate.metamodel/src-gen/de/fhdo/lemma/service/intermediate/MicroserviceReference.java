@@ -37,10 +37,6 @@ public interface MicroserviceReference extends EObject {
     /**
      * Returns the value of the '<em><b>Name</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Name</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Name</em>' attribute.
      * @see #setName(String)
@@ -63,10 +59,6 @@ public interface MicroserviceReference extends EObject {
     /**
      * Returns the value of the '<em><b>Version</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Version</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Version</em>' attribute.
      * @see #setVersion(String)
@@ -89,10 +81,6 @@ public interface MicroserviceReference extends EObject {
     /**
      * Returns the value of the '<em><b>Qualified Name</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Qualified Name</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Qualified Name</em>' attribute.
      * @see #setQualifiedName(String)
@@ -116,10 +104,6 @@ public interface MicroserviceReference extends EObject {
      * Returns the value of the '<em><b>Imported</b></em>' attribute.
      * The default value is <code>"false"</code>.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Imported</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Imported</em>' attribute.
      * @see #setImported(boolean)
@@ -142,10 +126,6 @@ public interface MicroserviceReference extends EObject {
     /**
      * Returns the value of the '<em><b>Import</b></em>' reference.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Import</em>' reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Import</em>' reference.
      * @see #setImport(IntermediateImport)
@@ -168,10 +148,6 @@ public interface MicroserviceReference extends EObject {
     /**
      * Returns the value of the '<em><b>Local Microservice</b></em>' reference.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Local Microservice</em>' reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Local Microservice</em>' reference.
      * @see #setLocalMicroservice(IntermediateMicroservice)
@@ -195,10 +171,6 @@ public interface MicroserviceReference extends EObject {
      * Returns the value of the '<em><b>Requiring Microservice</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.intermediate.IntermediateMicroservice#getRequiredMicroservices <em>Required Microservices</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Requiring Microservice</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Requiring Microservice</em>' container reference.
      * @see #setRequiringMicroservice(IntermediateMicroservice)

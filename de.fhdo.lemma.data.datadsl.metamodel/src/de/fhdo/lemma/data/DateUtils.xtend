@@ -13,7 +13,7 @@ import java.time.ZoneId
  *
  * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
  */
-class DateUtils {
+class DateUtils { 
     /**
      * Parse a date string in the date formats supported by LEMMA
      */

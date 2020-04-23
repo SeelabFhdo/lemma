@@ -57,10 +57,6 @@ public interface Endpoint extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.service.ImportedProtocolAndDataFormat}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.ImportedProtocolAndDataFormat#getEndpoint <em>Endpoint</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Protocols</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Protocols</em>' containment reference list.
      * @see de.fhdo.lemma.service.ServicePackage#getEndpoint_Protocols()
@@ -74,10 +70,6 @@ public interface Endpoint extends EObject {
      * Returns the value of the '<em><b>Microservice</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.Microservice#getEndpoints <em>Endpoints</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Microservice</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Microservice</em>' container reference.
      * @see #setMicroservice(Microservice)
@@ -102,10 +94,6 @@ public interface Endpoint extends EObject {
      * Returns the value of the '<em><b>Interface</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.Interface#getEndpoints <em>Endpoints</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Interface</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Interface</em>' container reference.
      * @see #setInterface(Interface)
@@ -130,10 +118,6 @@ public interface Endpoint extends EObject {
      * Returns the value of the '<em><b>Operation</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.Operation#getEndpoints <em>Endpoints</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Operation</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Operation</em>' container reference.
      * @see #setOperation(Operation)
@@ -158,10 +142,6 @@ public interface Endpoint extends EObject {
      * Returns the value of the '<em><b>Referred Operation</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.ReferredOperation#getEndpoints <em>Endpoints</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Referred Operation</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Referred Operation</em>' container reference.
      * @see #setReferredOperation(ReferredOperation)

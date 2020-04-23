@@ -33,10 +33,6 @@ public interface IntermediateApiOperationComment extends EObject {
     /**
      * Returns the value of the '<em><b>Comment</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Comment</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Comment</em>' attribute.
      * @see #setComment(String)
@@ -61,10 +57,6 @@ public interface IntermediateApiOperationComment extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.service.intermediate.IntermediateApiParameterComment}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.intermediate.IntermediateApiParameterComment#getOperationComment <em>Operation Comment</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Parameter Comments</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Parameter Comments</em>' containment reference list.
      * @see de.fhdo.lemma.service.intermediate.IntermediatePackage#getIntermediateApiOperationComment_ParameterComments()
@@ -78,10 +70,6 @@ public interface IntermediateApiOperationComment extends EObject {
      * Returns the value of the '<em><b>Operation</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.intermediate.IntermediateOperation#getApiOperationComment <em>Api Operation Comment</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Operation</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Operation</em>' container reference.
      * @see #setOperation(IntermediateOperation)

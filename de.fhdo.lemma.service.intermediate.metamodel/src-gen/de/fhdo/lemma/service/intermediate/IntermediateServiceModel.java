@@ -36,10 +36,6 @@ public interface IntermediateServiceModel extends EObject {
     /**
      * Returns the value of the '<em><b>Source Model Uri</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Source Model Uri</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Source Model Uri</em>' attribute.
      * @see #setSourceModelUri(String)
@@ -63,10 +59,6 @@ public interface IntermediateServiceModel extends EObject {
      * Returns the value of the '<em><b>Imports</b></em>' containment reference list.
      * The list contents are of type {@link de.fhdo.lemma.data.intermediate.IntermediateImport}.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Imports</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Imports</em>' containment reference list.
      * @see de.fhdo.lemma.service.intermediate.IntermediatePackage#getIntermediateServiceModel_Imports()
@@ -80,10 +72,6 @@ public interface IntermediateServiceModel extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.service.intermediate.IntermediateMicroservice}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.intermediate.IntermediateMicroservice#getServiceModel <em>Service Model</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Microservices</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Microservices</em>' containment reference list.
      * @see de.fhdo.lemma.service.intermediate.IntermediatePackage#getIntermediateServiceModel_Microservices()

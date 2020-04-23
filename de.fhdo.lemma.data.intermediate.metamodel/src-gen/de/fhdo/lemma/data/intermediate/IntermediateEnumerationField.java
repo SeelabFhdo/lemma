@@ -35,10 +35,6 @@ public interface IntermediateEnumerationField extends EObject {
     /**
      * Returns the value of the '<em><b>Name</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Name</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Name</em>' attribute.
      * @see #setName(String)
@@ -61,10 +57,6 @@ public interface IntermediateEnumerationField extends EObject {
     /**
      * Returns the value of the '<em><b>Qualified Name</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Qualified Name</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Qualified Name</em>' attribute.
      * @see #setQualifiedName(String)
@@ -87,10 +79,6 @@ public interface IntermediateEnumerationField extends EObject {
     /**
      * Returns the value of the '<em><b>Initialization Value</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Initialization Value</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Initialization Value</em>' attribute.
      * @see #setInitializationValue(String)
@@ -115,10 +103,6 @@ public interface IntermediateEnumerationField extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.data.intermediate.IntermediatePrimitiveType}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.data.intermediate.IntermediatePrimitiveType#getInitializedEnumerationField <em>Initialized Enumeration Field</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Initialization Value Compatible Types</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Initialization Value Compatible Types</em>' containment reference list.
      * @see de.fhdo.lemma.data.intermediate.IntermediatePackage#getIntermediateEnumerationField_InitializationValueCompatibleTypes()
@@ -132,10 +116,6 @@ public interface IntermediateEnumerationField extends EObject {
      * Returns the value of the '<em><b>Enumeration</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.data.intermediate.IntermediateEnumeration#getFields <em>Fields</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Enumeration</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Enumeration</em>' container reference.
      * @see #setEnumeration(IntermediateEnumeration)

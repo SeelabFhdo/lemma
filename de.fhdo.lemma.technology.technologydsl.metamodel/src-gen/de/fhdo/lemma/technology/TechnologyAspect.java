@@ -69,10 +69,6 @@ public interface TechnologyAspect extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.technology.AspectFeature}.
      * The literals are from the enumeration {@link de.fhdo.lemma.technology.AspectFeature}.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Features</em>' attribute list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Features</em>' attribute list.
      * @see de.fhdo.lemma.technology.AspectFeature
@@ -87,10 +83,6 @@ public interface TechnologyAspect extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.technology.JoinPointType}.
      * The literals are from the enumeration {@link de.fhdo.lemma.technology.JoinPointType}.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Join Points</em>' attribute list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Join Points</em>' attribute list.
      * @see de.fhdo.lemma.technology.JoinPointType
@@ -105,10 +97,6 @@ public interface TechnologyAspect extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.technology.TechnologySpecificProperty}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.technology.TechnologySpecificProperty#getTechnologyAspect <em>Technology Aspect</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Properties</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Properties</em>' containment reference list.
      * @see de.fhdo.lemma.technology.TechnologyPackage#getTechnologyAspect_Properties()

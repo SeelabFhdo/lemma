@@ -61,10 +61,6 @@ public enum CompatibilityDirection implements Enumerator {
     /**
      * The '<em><b>MAPPING TO COMPATIBLE TYPES</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>MAPPING TO COMPATIBLE TYPES</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @see #MAPPING_TO_COMPATIBLE_TYPES
      * @model
@@ -76,10 +72,6 @@ public enum CompatibilityDirection implements Enumerator {
     /**
      * The '<em><b>COMPATIBLE TYPES TO MAPPING</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>COMPATIBLE TYPES TO MAPPING</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @see #COMPATIBLE_TYPES_TO_MAPPING
      * @model
@@ -91,10 +83,6 @@ public enum CompatibilityDirection implements Enumerator {
     /**
      * The '<em><b>BIDIRECTIONAL</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>BIDIRECTIONAL</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @see #BIDIRECTIONAL
      * @model

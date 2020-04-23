@@ -69,10 +69,6 @@ public interface DataModel extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.data.ComplexTypeImport}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.data.ComplexTypeImport#getDataModel <em>Data Model</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Complex Type Imports</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Complex Type Imports</em>' containment reference list.
      * @see de.fhdo.lemma.data.DataPackage#getDataModel_ComplexTypeImports()
@@ -87,10 +83,6 @@ public interface DataModel extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.data.Version}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.data.Version#getDataModel <em>Data Model</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Versions</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Versions</em>' containment reference list.
      * @see de.fhdo.lemma.data.DataPackage#getDataModel_Versions()
@@ -105,10 +97,6 @@ public interface DataModel extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.data.Context}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.data.Context#getDataModel <em>Data Model</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Contexts</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Contexts</em>' containment reference list.
      * @see de.fhdo.lemma.data.DataPackage#getDataModel_Contexts()
@@ -123,10 +111,6 @@ public interface DataModel extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.data.ComplexType}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.data.ComplexType#getDataModel <em>Data Model</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Complex Types</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Complex Types</em>' containment reference list.
      * @see de.fhdo.lemma.data.DataPackage#getDataModel_ComplexTypes()

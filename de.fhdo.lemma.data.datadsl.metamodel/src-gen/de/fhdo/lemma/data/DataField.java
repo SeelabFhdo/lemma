@@ -89,10 +89,6 @@ public interface DataField extends EObject {
     /**
      * Returns the value of the '<em><b>Hidden</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Hidden</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Hidden</em>' attribute.
      * @see #setHidden(boolean)
@@ -115,10 +111,6 @@ public interface DataField extends EObject {
     /**
      * Returns the value of the '<em><b>Immutable</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Immutable</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Immutable</em>' attribute.
      * @see #setImmutable(boolean)
@@ -141,10 +133,6 @@ public interface DataField extends EObject {
     /**
      * Returns the value of the '<em><b>Complex Type</b></em>' reference.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Complex Type</em>' reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Complex Type</em>' reference.
      * @see #setComplexType(ComplexType)
@@ -168,10 +156,6 @@ public interface DataField extends EObject {
      * Returns the value of the '<em><b>Imported Complex Type</b></em>' containment reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.data.ImportedComplexType#getDataField <em>Data Field</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Imported Complex Type</em>' containment reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Imported Complex Type</em>' containment reference.
      * @see #setImportedComplexType(ImportedComplexType)
@@ -195,10 +179,6 @@ public interface DataField extends EObject {
     /**
      * Returns the value of the '<em><b>Primitive Type</b></em>' containment reference.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Primitive Type</em>' containment reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Primitive Type</em>' containment reference.
      * @see #setPrimitiveType(PrimitiveType)
@@ -221,10 +201,6 @@ public interface DataField extends EObject {
     /**
      * Returns the value of the '<em><b>Initialization Value</b></em>' containment reference.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Initialization Value</em>' containment reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Initialization Value</em>' containment reference.
      * @see #setInitializationValue(PrimitiveValue)
@@ -249,10 +225,6 @@ public interface DataField extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.data.DataFieldFeature}.
      * The literals are from the enumeration {@link de.fhdo.lemma.data.DataFieldFeature}.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Features</em>' attribute list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Features</em>' attribute list.
      * @see de.fhdo.lemma.data.DataFieldFeature
@@ -266,10 +238,6 @@ public interface DataField extends EObject {
      * Returns the value of the '<em><b>Data Structure</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.data.DataStructure#getDataFields <em>Data Fields</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Data Structure</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Data Structure</em>' container reference.
      * @see #setDataStructure(DataStructure)
@@ -294,10 +262,6 @@ public interface DataField extends EObject {
      * Returns the value of the '<em><b>List Type</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.data.ListType#getDataFields <em>Data Fields</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>List Type</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>List Type</em>' container reference.
      * @see #setListType(ListType)

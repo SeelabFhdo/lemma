@@ -58,10 +58,6 @@ public interface TechnologySpecificEndpoint extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.technology.mapping.TechnologySpecificProtocol}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.technology.mapping.TechnologySpecificProtocol#getEndpoint <em>Endpoint</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Technology Specific Protocols</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Technology Specific Protocols</em>' containment reference list.
      * @see de.fhdo.lemma.technology.mapping.MappingPackage#getTechnologySpecificEndpoint_TechnologySpecificProtocols()
@@ -75,10 +71,6 @@ public interface TechnologySpecificEndpoint extends EObject {
      * Returns the value of the '<em><b>Microservice Mapping</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.technology.mapping.MicroserviceMapping#getEndpoints <em>Endpoints</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Microservice Mapping</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Microservice Mapping</em>' container reference.
      * @see #setMicroserviceMapping(MicroserviceMapping)
@@ -103,10 +95,6 @@ public interface TechnologySpecificEndpoint extends EObject {
      * Returns the value of the '<em><b>Interface Mapping</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.technology.mapping.InterfaceMapping#getEndpoints <em>Endpoints</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Interface Mapping</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Interface Mapping</em>' container reference.
      * @see #setInterfaceMapping(InterfaceMapping)
@@ -131,10 +119,6 @@ public interface TechnologySpecificEndpoint extends EObject {
      * Returns the value of the '<em><b>Operation Mapping</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.technology.mapping.OperationMapping#getEndpoints <em>Endpoints</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Operation Mapping</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Operation Mapping</em>' container reference.
      * @see #setOperationMapping(OperationMapping)
@@ -159,10 +143,6 @@ public interface TechnologySpecificEndpoint extends EObject {
      * Returns the value of the '<em><b>Referred Operation Mapping</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.technology.mapping.ReferredOperationMapping#getEndpoints <em>Endpoints</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Referred Operation Mapping</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Referred Operation Mapping</em>' container reference.
      * @see #setReferredOperationMapping(ReferredOperationMapping)

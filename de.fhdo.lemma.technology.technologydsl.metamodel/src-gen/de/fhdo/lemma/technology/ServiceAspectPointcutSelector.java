@@ -57,10 +57,6 @@ public interface ServiceAspectPointcutSelector extends EObject {
      * Returns the value of the '<em><b>Service Aspect</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.technology.ServiceAspect#getPointcutSelectors <em>Pointcut Selectors</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Service Aspect</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Service Aspect</em>' container reference.
      * @see #setServiceAspect(ServiceAspect)

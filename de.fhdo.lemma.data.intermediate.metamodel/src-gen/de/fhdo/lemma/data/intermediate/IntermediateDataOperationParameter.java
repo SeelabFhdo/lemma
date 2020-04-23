@@ -36,10 +36,6 @@ public interface IntermediateDataOperationParameter extends EObject {
     /**
      * Returns the value of the '<em><b>Name</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Name</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Name</em>' attribute.
      * @see #setName(String)
@@ -62,10 +58,6 @@ public interface IntermediateDataOperationParameter extends EObject {
     /**
      * Returns the value of the '<em><b>Qualified Name</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Qualified Name</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Qualified Name</em>' attribute.
      * @see #setQualifiedName(String)
@@ -89,10 +81,6 @@ public interface IntermediateDataOperationParameter extends EObject {
      * Returns the value of the '<em><b>Type</b></em>' containment reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.data.intermediate.IntermediateType#getParameter <em>Parameter</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Type</em>' containment reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Type</em>' containment reference.
      * @see #setType(IntermediateType)
@@ -116,10 +104,6 @@ public interface IntermediateDataOperationParameter extends EObject {
     /**
      * Returns the value of the '<em><b>Original Type</b></em>' containment reference.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Original Type</em>' containment reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Original Type</em>' containment reference.
      * @see #setOriginalType(IntermediateType)
@@ -144,10 +128,6 @@ public interface IntermediateDataOperationParameter extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.data.intermediate.IntermediateImportedAspect}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.data.intermediate.IntermediateImportedAspect#getParameter <em>Parameter</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Aspects</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Aspects</em>' containment reference list.
      * @see de.fhdo.lemma.data.intermediate.IntermediatePackage#getIntermediateDataOperationParameter_Aspects()
@@ -161,10 +141,6 @@ public interface IntermediateDataOperationParameter extends EObject {
      * Returns the value of the '<em><b>Operation</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.data.intermediate.IntermediateDataOperation#getParameters <em>Parameters</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Operation</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Operation</em>' container reference.
      * @see #setOperation(IntermediateDataOperation)

@@ -1,8 +1,8 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.3.41"
-    id("com.diffplug.gradle.p2.asmaven") version "3.17.6"
+    kotlin("jvm") version "1.3.72"
+    id("com.diffplug.p2.asmaven") version "3.22.0"
     maven
 }
 
@@ -18,8 +18,8 @@ buildscript {
     val extractedEclipseDependenciesDir = project.file("$buildDir/extractedEclipseDependencies")
     extra.set("extractedEclipseDependenciesDir", extractedEclipseDependenciesDir)
 
-    extra.set("eclipseVersion", "4.10.0")
-    extra.set("eclipseOclVersion", "6.6.0")
+    extra.set("eclipseVersion", "4.15.0")
+    extra.set("eclipseOclVersion", "6.9.0")
 }
 
 /**
@@ -28,19 +28,19 @@ buildscript {
  * Eclipse Foundation. Later in the build, the downloaded JARs can be used as "normal" dependencies as if they
  * originated from Maven Central.
  */
-    apply(plugin = "com.diffplug.gradle.p2.asmaven")
+apply(plugin = "com.diffplug.p2.asmaven")
 p2AsMaven {
     val eclipseVersion: String by rootProject.extra
     val eclipseOclVersion: String by rootProject.extra
 
-    group("eclipse-deps", {
+    group("eclipse-deps") {
         repo("https://download.eclipse.org/modeling/mdt/ocl/updates/releases/$eclipseOclVersion/")
         iu("org.eclipse.ocl.ecore")
 
         repoEclipse(eclipseVersion)
         iu("org.eclipse.emf.common")
         iu("org.eclipse.emf.ecore")
-    })
+    }
 }
 
 /**
@@ -49,7 +49,7 @@ p2AsMaven {
 val eclipseDependency by configurations.creating
 
 dependencies {
-    implementation(kotlin("stdlib-jdk8"))
+    implementation(kotlin("stdlib"))
     eclipseDependency("eclipse-deps:org.eclipse.emf.common:+")
     eclipseDependency("eclipse-deps:org.eclipse.emf.ecore:+")
     eclipseDependency("eclipse-deps:org.eclipse.emf.ecore.xmi:+")
@@ -66,7 +66,7 @@ dependencies {
 }
 
 tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = "1.8"
+    kotlinOptions.jvmTarget = "11"
 
     // On every compile, extract downloaded Eclipse JARs into a sub-directory of the build directory
     dependsOn("extractEclipseDependencies")

@@ -86,10 +86,6 @@ public interface ImportedServiceAspect extends EObject {
     /**
      * Returns the value of the '<em><b>Imported Aspect</b></em>' reference.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Imported Aspect</em>' reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Imported Aspect</em>' reference.
      * @see #setImportedAspect(ServiceAspect)
@@ -112,10 +108,6 @@ public interface ImportedServiceAspect extends EObject {
     /**
      * Returns the value of the '<em><b>Single Property Value</b></em>' containment reference.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Single Property Value</em>' containment reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Single Property Value</em>' containment reference.
      * @see #setSinglePropertyValue(PrimitiveValue)
@@ -139,10 +131,6 @@ public interface ImportedServiceAspect extends EObject {
      * Returns the value of the '<em><b>Values</b></em>' containment reference list.
      * The list contents are of type {@link de.fhdo.lemma.technology.TechnologySpecificPropertyValueAssignment}.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Values</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Values</em>' containment reference list.
      * @see de.fhdo.lemma.service.ServicePackage#getImportedServiceAspect_Values()
@@ -155,10 +143,6 @@ public interface ImportedServiceAspect extends EObject {
      * Returns the value of the '<em><b>Microservice</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.Microservice#getAspects <em>Aspects</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Microservice</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Microservice</em>' container reference.
      * @see #setMicroservice(Microservice)
@@ -183,10 +167,6 @@ public interface ImportedServiceAspect extends EObject {
      * Returns the value of the '<em><b>Interface</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.Interface#getAspects <em>Aspects</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Interface</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Interface</em>' container reference.
      * @see #setInterface(Interface)
@@ -211,10 +191,6 @@ public interface ImportedServiceAspect extends EObject {
      * Returns the value of the '<em><b>Operation</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.Operation#getAspects <em>Aspects</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Operation</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Operation</em>' container reference.
      * @see #setOperation(Operation)
@@ -239,10 +215,6 @@ public interface ImportedServiceAspect extends EObject {
      * Returns the value of the '<em><b>Referred Operation</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.ReferredOperation#getAspects <em>Aspects</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Referred Operation</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Referred Operation</em>' container reference.
      * @see #setReferredOperation(ReferredOperation)
@@ -267,10 +239,6 @@ public interface ImportedServiceAspect extends EObject {
      * Returns the value of the '<em><b>Parameter</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.Parameter#getAspects <em>Aspects</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Parameter</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Parameter</em>' container reference.
      * @see #setParameter(Parameter)
@@ -295,10 +263,6 @@ public interface ImportedServiceAspect extends EObject {
      * Returns the value of the '<em><b>Mapped Complex Type</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.MappedComplexType#getAspects <em>Aspects</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Mapped Complex Type</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Mapped Complex Type</em>' container reference.
      * @see #setMappedComplexType(MappedComplexType)
@@ -323,10 +287,6 @@ public interface ImportedServiceAspect extends EObject {
      * Returns the value of the '<em><b>Mapped Field</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.MappedField#getAspects <em>Aspects</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Mapped Field</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Mapped Field</em>' container reference.
      * @see #setMappedField(MappedField)
@@ -351,10 +311,6 @@ public interface ImportedServiceAspect extends EObject {
      * Returns the value of the '<em><b>Mapped Data Operation</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.MappedDataOperation#getAspects <em>Aspects</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Mapped Data Operation</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Mapped Data Operation</em>' container reference.
      * @see #setMappedDataOperation(MappedDataOperation)
@@ -379,10 +335,6 @@ public interface ImportedServiceAspect extends EObject {
      * Returns the value of the '<em><b>Mapped Data Operation Return Type</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.MappedDataOperationReturnType#getAspects <em>Aspects</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Mapped Data Operation Return Type</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Mapped Data Operation Return Type</em>' container reference.
      * @see #setMappedDataOperationReturnType(MappedDataOperationReturnType)
@@ -407,10 +359,6 @@ public interface ImportedServiceAspect extends EObject {
      * Returns the value of the '<em><b>Mapped Data Operation Parameter</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.MappedDataOperationParameter#getAspects <em>Aspects</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Mapped Data Operation Parameter</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Mapped Data Operation Parameter</em>' container reference.
      * @see #setMappedDataOperationParameter(MappedDataOperationParameter)

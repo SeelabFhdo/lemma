@@ -36,10 +36,6 @@ public interface IntermediateDataModel extends EObject {
     /**
      * Returns the value of the '<em><b>Source Model Uri</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Source Model Uri</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Source Model Uri</em>' attribute.
      * @see #setSourceModelUri(String)
@@ -64,10 +60,6 @@ public interface IntermediateDataModel extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.data.intermediate.IntermediateImport}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.data.intermediate.IntermediateImport#getDataModel <em>Data Model</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Imports</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Imports</em>' containment reference list.
      * @see de.fhdo.lemma.data.intermediate.IntermediatePackage#getIntermediateDataModel_Imports()
@@ -82,10 +74,6 @@ public interface IntermediateDataModel extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.data.intermediate.IntermediateVersion}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.data.intermediate.IntermediateVersion#getDataModel <em>Data Model</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Versions</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Versions</em>' containment reference list.
      * @see de.fhdo.lemma.data.intermediate.IntermediatePackage#getIntermediateDataModel_Versions()
@@ -100,10 +88,6 @@ public interface IntermediateDataModel extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.data.intermediate.IntermediateContext}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.data.intermediate.IntermediateContext#getDataModel <em>Data Model</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Contexts</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Contexts</em>' containment reference list.
      * @see de.fhdo.lemma.data.intermediate.IntermediatePackage#getIntermediateDataModel_Contexts()
@@ -118,10 +102,6 @@ public interface IntermediateDataModel extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.data.intermediate.IntermediateComplexType}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.data.intermediate.IntermediateComplexType#getDataModel <em>Data Model</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Complex Types</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Complex Types</em>' containment reference list.
      * @see de.fhdo.lemma.data.intermediate.IntermediatePackage#getIntermediateDataModel_ComplexTypes()

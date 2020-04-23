@@ -7,6 +7,7 @@ import org.eclipse.xtext.xbase.lib.Functions.Function0;
 public class TypesNotCompatibleException extends Exception {
   public TypesNotCompatibleException(final String targetTypeName, final String sourceTypeName) {
     super(new Function0<String>() {
+      @Override
       public String apply() {
         StringConcatenation _builder = new StringConcatenation();
         _builder.append("Types ");

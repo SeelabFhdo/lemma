@@ -34,10 +34,6 @@ public interface MappedDataOperationReturnType extends EObject {
     /**
      * Returns the value of the '<em><b>Mapped Type</b></em>' containment reference.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Mapped Type</em>' containment reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Mapped Type</em>' containment reference.
      * @see #setMappedType(ImportedType)
@@ -62,10 +58,6 @@ public interface MappedDataOperationReturnType extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.service.ImportedServiceAspect}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.ImportedServiceAspect#getMappedDataOperationReturnType <em>Mapped Data Operation Return Type</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Aspects</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Aspects</em>' containment reference list.
      * @see de.fhdo.lemma.service.ServicePackage#getMappedDataOperationReturnType_Aspects()
@@ -79,10 +71,6 @@ public interface MappedDataOperationReturnType extends EObject {
      * Returns the value of the '<em><b>Mapped Operation</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.MappedDataOperation#getMappedReturnType <em>Mapped Return Type</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Mapped Operation</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Mapped Operation</em>' container reference.
      * @see #setMappedOperation(MappedDataOperation)

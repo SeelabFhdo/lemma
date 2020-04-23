@@ -41,10 +41,6 @@ public interface IntermediateImportedAspect extends EObject {
     /**
      * Returns the value of the '<em><b>Name</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Name</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Name</em>' attribute.
      * @see #setName(String)
@@ -67,10 +63,6 @@ public interface IntermediateImportedAspect extends EObject {
     /**
      * Returns the value of the '<em><b>Qualified Name</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Qualified Name</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Qualified Name</em>' attribute.
      * @see #setQualifiedName(String)
@@ -94,10 +86,6 @@ public interface IntermediateImportedAspect extends EObject {
      * Returns the value of the '<em><b>Feature Names</b></em>' attribute list.
      * The list contents are of type {@link java.lang.String}.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Feature Names</em>' attribute list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Feature Names</em>' attribute list.
      * @see de.fhdo.lemma.data.intermediate.IntermediatePackage#getIntermediateImportedAspect_FeatureNames()
@@ -109,10 +97,6 @@ public interface IntermediateImportedAspect extends EObject {
     /**
      * Returns the value of the '<em><b>Import</b></em>' reference.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Import</em>' reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Import</em>' reference.
      * @see #setImport(IntermediateImport)
@@ -137,10 +121,6 @@ public interface IntermediateImportedAspect extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.data.intermediate.IntermediateAspectProperty}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.data.intermediate.IntermediateAspectProperty#getAspect <em>Aspect</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Properties</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Properties</em>' containment reference list.
      * @see de.fhdo.lemma.data.intermediate.IntermediatePackage#getIntermediateImportedAspect_Properties()
@@ -155,10 +135,6 @@ public interface IntermediateImportedAspect extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.data.intermediate.IntermediateAspectPropertyValue}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.data.intermediate.IntermediateAspectPropertyValue#getAspect <em>Aspect</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Property Values</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Property Values</em>' containment reference list.
      * @see de.fhdo.lemma.data.intermediate.IntermediatePackage#getIntermediateImportedAspect_PropertyValues()
@@ -172,10 +148,6 @@ public interface IntermediateImportedAspect extends EObject {
      * Returns the value of the '<em><b>Complex Type</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.data.intermediate.IntermediateComplexType#getAspects <em>Aspects</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Complex Type</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Complex Type</em>' container reference.
      * @see #setComplexType(IntermediateComplexType)
@@ -200,10 +172,6 @@ public interface IntermediateImportedAspect extends EObject {
      * Returns the value of the '<em><b>Operation</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.data.intermediate.IntermediateDataOperation#getAspects <em>Aspects</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Operation</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Operation</em>' container reference.
      * @see #setOperation(IntermediateDataOperation)
@@ -228,10 +196,6 @@ public interface IntermediateImportedAspect extends EObject {
      * Returns the value of the '<em><b>Return Type</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.data.intermediate.IntermediateDataOperationReturnType#getAspects <em>Aspects</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Return Type</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Return Type</em>' container reference.
      * @see #setReturnType(IntermediateDataOperationReturnType)
@@ -256,10 +220,6 @@ public interface IntermediateImportedAspect extends EObject {
      * Returns the value of the '<em><b>Parameter</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.data.intermediate.IntermediateDataOperationParameter#getAspects <em>Aspects</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Parameter</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Parameter</em>' container reference.
      * @see #setParameter(IntermediateDataOperationParameter)
@@ -284,10 +244,6 @@ public interface IntermediateImportedAspect extends EObject {
      * Returns the value of the '<em><b>Data Field</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.data.intermediate.IntermediateDataField#getAspects <em>Aspects</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Data Field</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Data Field</em>' container reference.
      * @see #setDataField(IntermediateDataField)

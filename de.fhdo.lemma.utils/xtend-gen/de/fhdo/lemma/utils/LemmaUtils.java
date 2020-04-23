@@ -33,6 +33,7 @@ import org.eclipse.xtext.resource.IEObjectDescription;
 import org.eclipse.xtext.scoping.IScope;
 import org.eclipse.xtext.scoping.Scopes;
 import org.eclipse.xtext.scoping.impl.MapBasedScope;
+import org.eclipse.xtext.xbase.lib.ArrayExtensions;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Conversions;
 import org.eclipse.xtext.xbase.lib.Exceptions;
@@ -854,6 +855,6 @@ public final class LemmaUtils {
     if ((rootElement == null)) {
       return false;
     }
-    return ((List<Class<?>>)Conversions.doWrapArray(rootElement.getClass().getInterfaces())).contains(expectedRootType);
+    return ArrayExtensions.contains(rootElement.getClass().getInterfaces(), expectedRootType);
   }
 }

@@ -36,10 +36,6 @@ public interface DataFieldAspects extends EObject {
     /**
      * Returns the value of the '<em><b>Name</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Name</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Name</em>' attribute.
      * @see #setName(String)
@@ -62,10 +58,6 @@ public interface DataFieldAspects extends EObject {
     /**
      * Returns the value of the '<em><b>Qualified Name</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Qualified Name</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Qualified Name</em>' attribute.
      * @see #setQualifiedName(String)
@@ -89,10 +81,6 @@ public interface DataFieldAspects extends EObject {
      * Returns the value of the '<em><b>Aspects</b></em>' containment reference list.
      * The list contents are of type {@link de.fhdo.lemma.data.intermediate.IntermediateImportedAspect}.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Aspects</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Aspects</em>' containment reference list.
      * @see de.fhdo.lemma.service.intermediate.IntermediatePackage#getDataFieldAspects_Aspects()
@@ -105,10 +93,6 @@ public interface DataFieldAspects extends EObject {
      * Returns the value of the '<em><b>Parameter</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.intermediate.IntermediateParameter#getFieldAspects <em>Field Aspects</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Parameter</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Parameter</em>' container reference.
      * @see #setParameter(IntermediateParameter)

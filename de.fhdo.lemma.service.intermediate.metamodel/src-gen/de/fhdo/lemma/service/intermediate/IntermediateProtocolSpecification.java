@@ -31,10 +31,6 @@ public interface IntermediateProtocolSpecification extends EObject {
     /**
      * Returns the value of the '<em><b>Communication Type</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Communication Type</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Communication Type</em>' attribute.
      * @see #setCommunicationType(String)
@@ -57,10 +53,6 @@ public interface IntermediateProtocolSpecification extends EObject {
     /**
      * Returns the value of the '<em><b>Protocol</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Protocol</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Protocol</em>' attribute.
      * @see #setProtocol(String)
@@ -83,10 +75,6 @@ public interface IntermediateProtocolSpecification extends EObject {
     /**
      * Returns the value of the '<em><b>Data Format</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Data Format</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Data Format</em>' attribute.
      * @see #setDataFormat(String)

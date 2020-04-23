@@ -65,10 +65,6 @@ public interface TechnologyReference extends EObject {
     /**
      * Returns the value of the '<em><b>Technology</b></em>' reference.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Technology</em>' reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Technology</em>' reference.
      * @see #setTechnology(Import)
@@ -92,10 +88,6 @@ public interface TechnologyReference extends EObject {
      * Returns the value of the '<em><b>Microservice</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.Microservice#getTechnologyReferences <em>Technology References</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Microservice</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Microservice</em>' container reference.
      * @see #setMicroservice(Microservice)
@@ -120,10 +112,6 @@ public interface TechnologyReference extends EObject {
      * Returns the value of the '<em><b>Mapped Complex Type</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.MappedComplexType#getTechnologyReferences <em>Technology References</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Mapped Complex Type</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Mapped Complex Type</em>' container reference.
      * @see #setMappedComplexType(MappedComplexType)

@@ -117,10 +117,6 @@ public interface Microservice extends EObject {
     /**
      * Returns the value of the '<em><b>Version</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Version</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Version</em>' attribute.
      * @see #setVersion(String)
@@ -144,10 +140,6 @@ public interface Microservice extends EObject {
      * Returns the value of the '<em><b>Type</b></em>' attribute.
      * The literals are from the enumeration {@link de.fhdo.lemma.service.MicroserviceType}.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Type</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Type</em>' attribute.
      * @see de.fhdo.lemma.service.MicroserviceType
@@ -174,10 +166,6 @@ public interface Microservice extends EObject {
      * The default value is <code>"NONE"</code>.
      * The literals are from the enumeration {@link de.fhdo.lemma.service.Visibility}.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Visibility</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Visibility</em>' attribute.
      * @see de.fhdo.lemma.service.Visibility
@@ -202,10 +190,6 @@ public interface Microservice extends EObject {
     /**
      * Returns the value of the '<em><b>Tdefault Protocols</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Tdefault Protocols</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Tdefault Protocols</em>' attribute.
      * @see #setT_defaultProtocols(Map)
@@ -228,10 +212,6 @@ public interface Microservice extends EObject {
     /**
      * Returns the value of the '<em><b>Tsource Model Uri</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Tsource Model Uri</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Tsource Model Uri</em>' attribute.
      * @see #setT_sourceModelUri(String)
@@ -256,10 +236,6 @@ public interface Microservice extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.service.TechnologyReference}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.TechnologyReference#getMicroservice <em>Microservice</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Technology References</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Technology References</em>' containment reference list.
      * @see de.fhdo.lemma.service.ServicePackage#getMicroservice_TechnologyReferences()
@@ -272,10 +248,6 @@ public interface Microservice extends EObject {
     /**
      * Returns the value of the '<em><b>Ttype Definition Technology Import</b></em>' reference.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Ttype Definition Technology Import</em>' reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Ttype Definition Technology Import</em>' reference.
      * @see #setT_typeDefinitionTechnologyImport(Import)
@@ -298,10 +270,6 @@ public interface Microservice extends EObject {
     /**
      * Returns the value of the '<em><b>Ttype Definition Technology</b></em>' reference.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Ttype Definition Technology</em>' reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Ttype Definition Technology</em>' reference.
      * @see #setT_typeDefinitionTechnology(Technology)
@@ -326,10 +294,6 @@ public interface Microservice extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.service.Endpoint}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.Endpoint#getMicroservice <em>Microservice</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Endpoints</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Endpoints</em>' containment reference list.
      * @see de.fhdo.lemma.service.ServicePackage#getMicroservice_Endpoints()
@@ -344,10 +308,6 @@ public interface Microservice extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.service.PossiblyImportedMicroservice}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.PossiblyImportedMicroservice#getRequiringMicroservice <em>Requiring Microservice</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Required Microservices</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Required Microservices</em>' containment reference list.
      * @see de.fhdo.lemma.service.ServicePackage#getMicroservice_RequiredMicroservices()
@@ -362,10 +322,6 @@ public interface Microservice extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.service.PossiblyImportedInterface}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.PossiblyImportedInterface#getRequiringMicroservice <em>Requiring Microservice</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Required Interfaces</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Required Interfaces</em>' containment reference list.
      * @see de.fhdo.lemma.service.ServicePackage#getMicroservice_RequiredInterfaces()
@@ -380,10 +336,6 @@ public interface Microservice extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.service.PossiblyImportedOperation}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.PossiblyImportedOperation#getRequiringMicroservice <em>Requiring Microservice</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Required Operations</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Required Operations</em>' containment reference list.
      * @see de.fhdo.lemma.service.ServicePackage#getMicroservice_RequiredOperations()
@@ -397,10 +349,6 @@ public interface Microservice extends EObject {
      * Returns the value of the '<em><b>Protocols</b></em>' containment reference list.
      * The list contents are of type {@link de.fhdo.lemma.service.ProtocolSpecification}.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Protocols</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Protocols</em>' containment reference list.
      * @see de.fhdo.lemma.service.ServicePackage#getMicroservice_Protocols()
@@ -414,10 +362,6 @@ public interface Microservice extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.service.Interface}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.Interface#getMicroservice <em>Microservice</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Interfaces</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Interfaces</em>' containment reference list.
      * @see de.fhdo.lemma.service.ServicePackage#getMicroservice_Interfaces()
@@ -432,10 +376,6 @@ public interface Microservice extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.service.ImportedServiceAspect}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.ImportedServiceAspect#getMicroservice <em>Microservice</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Aspects</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Aspects</em>' containment reference list.
      * @see de.fhdo.lemma.service.ServicePackage#getMicroservice_Aspects()
@@ -449,10 +389,6 @@ public interface Microservice extends EObject {
      * Returns the value of the '<em><b>Service Model</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.ServiceModel#getMicroservices <em>Microservices</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Service Model</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Service Model</em>' container reference.
      * @see #setServiceModel(ServiceModel)

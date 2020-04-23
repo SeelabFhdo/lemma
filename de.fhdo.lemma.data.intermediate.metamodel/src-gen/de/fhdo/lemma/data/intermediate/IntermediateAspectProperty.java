@@ -35,10 +35,6 @@ public interface IntermediateAspectProperty extends EObject {
     /**
      * Returns the value of the '<em><b>Name</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Name</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Name</em>' attribute.
      * @see #setName(String)
@@ -61,10 +57,6 @@ public interface IntermediateAspectProperty extends EObject {
     /**
      * Returns the value of the '<em><b>Type</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Type</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Type</em>' attribute.
      * @see #setType(String)
@@ -87,10 +79,6 @@ public interface IntermediateAspectProperty extends EObject {
     /**
      * Returns the value of the '<em><b>Default Value</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Default Value</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Default Value</em>' attribute.
      * @see #setDefaultValue(String)
@@ -114,10 +102,6 @@ public interface IntermediateAspectProperty extends EObject {
      * Returns the value of the '<em><b>Feature Names</b></em>' attribute list.
      * The list contents are of type {@link java.lang.String}.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Feature Names</em>' attribute list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Feature Names</em>' attribute list.
      * @see de.fhdo.lemma.data.intermediate.IntermediatePackage#getIntermediateAspectProperty_FeatureNames()
@@ -130,10 +114,6 @@ public interface IntermediateAspectProperty extends EObject {
      * Returns the value of the '<em><b>Aspect</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.data.intermediate.IntermediateImportedAspect#getProperties <em>Properties</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Aspect</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Aspect</em>' container reference.
      * @see #setAspect(IntermediateImportedAspect)

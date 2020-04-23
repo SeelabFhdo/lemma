@@ -494,7 +494,7 @@ public class OperationDslValidator extends AbstractOperationDslValidator {
     int _size_1 = operationNode.getDeployedServices().size();
     final boolean hasMissingSpecifications = (_size < _size_1);
     if (hasMissingSpecifications) {
-      final String firstMissingPropertyName = ((TechnologySpecificProperty[])Conversions.unwrapArray(mandatoryNonDefaultProperties, TechnologySpecificProperty.class))[0].getName();
+      final String firstMissingPropertyName = (((TechnologySpecificProperty[])Conversions.unwrapArray(mandatoryNonDefaultProperties, TechnologySpecificProperty.class))[0]).getName();
       StringConcatenation _builder = new StringConcatenation();
       _builder.append("All deployed services must specify a value for mandatory property ");
       StringConcatenation _builder_1 = new StringConcatenation();
@@ -529,7 +529,7 @@ public class OperationDslValidator extends AbstractOperationDslValidator {
     };
     mandatoryNonDefaultProperties.forEach(_function_1);
     if (((operationNode instanceof InfrastructureNode) && operationNode.getDeployedServices().isEmpty())) {
-      final String firstMissingPropertyName_1 = ((TechnologySpecificProperty[])Conversions.unwrapArray(mandatoryNonDefaultProperties, TechnologySpecificProperty.class))[0].getName();
+      final String firstMissingPropertyName_1 = (((TechnologySpecificProperty[])Conversions.unwrapArray(mandatoryNonDefaultProperties, TechnologySpecificProperty.class))[0]).getName();
       StringConcatenation _builder_2 = new StringConcatenation();
       _builder_2.append("Mandatory property ");
       _builder_2.append(firstMissingPropertyName_1);

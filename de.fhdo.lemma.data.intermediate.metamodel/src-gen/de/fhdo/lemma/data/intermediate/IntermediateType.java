@@ -41,10 +41,6 @@ public interface IntermediateType extends EObject {
     /**
      * Returns the value of the '<em><b>Name</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Name</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Name</em>' attribute.
      * @see #setName(String)
@@ -68,10 +64,6 @@ public interface IntermediateType extends EObject {
      * Returns the value of the '<em><b>Origin</b></em>' attribute.
      * The literals are from the enumeration {@link de.fhdo.lemma.data.intermediate.IntermediateTypeOrigin}.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Origin</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Origin</em>' attribute.
      * @see de.fhdo.lemma.data.intermediate.IntermediateTypeOrigin
@@ -97,10 +89,6 @@ public interface IntermediateType extends EObject {
      * Returns the value of the '<em><b>Kind</b></em>' attribute.
      * The literals are from the enumeration {@link de.fhdo.lemma.data.intermediate.IntermediateTypeKind}.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Kind</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Kind</em>' attribute.
      * @see de.fhdo.lemma.data.intermediate.IntermediateTypeKind
@@ -126,10 +114,6 @@ public interface IntermediateType extends EObject {
      * Returns the value of the '<em><b>Return Type</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.data.intermediate.IntermediateDataOperationReturnType#getType <em>Type</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Return Type</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Return Type</em>' container reference.
      * @see #setReturnType(IntermediateDataOperationReturnType)
@@ -154,10 +138,6 @@ public interface IntermediateType extends EObject {
      * Returns the value of the '<em><b>Parameter</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.data.intermediate.IntermediateDataOperationParameter#getType <em>Type</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Parameter</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Parameter</em>' container reference.
      * @see #setParameter(IntermediateDataOperationParameter)
@@ -182,10 +162,6 @@ public interface IntermediateType extends EObject {
      * Returns the value of the '<em><b>Data Field</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.data.intermediate.IntermediateDataField#getType <em>Type</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Data Field</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Data Field</em>' container reference.
      * @see #setDataField(IntermediateDataField)

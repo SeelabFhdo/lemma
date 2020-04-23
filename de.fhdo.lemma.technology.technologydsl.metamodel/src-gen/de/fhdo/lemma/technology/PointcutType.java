@@ -75,10 +75,6 @@ public enum PointcutType implements Enumerator {
     /**
      * The '<em><b>EXCHANGE PATTERN</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>EXCHANGE PATTERN</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @see #EXCHANGE_PATTERN
      * @model
@@ -90,10 +86,6 @@ public enum PointcutType implements Enumerator {
     /**
      * The '<em><b>COMMUNICATION TYPE</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>COMMUNICATION TYPE</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @see #COMMUNICATION_TYPE
      * @model
@@ -105,10 +97,6 @@ public enum PointcutType implements Enumerator {
     /**
      * The '<em><b>PROTOCOL</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>PROTOCOL</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @see #PROTOCOL
      * @model
@@ -120,10 +108,6 @@ public enum PointcutType implements Enumerator {
     /**
      * The '<em><b>DATA FORMAT</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>DATA FORMAT</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @see #DATA_FORMAT
      * @model
@@ -135,10 +119,6 @@ public enum PointcutType implements Enumerator {
     /**
      * The '<em><b>TECHNOLOGY</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>TECHNOLOGY</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @see #TECHNOLOGY
      * @model

@@ -66,10 +66,6 @@ public interface ImportedProtocolAndDataFormat extends EObject {
     /**
      * Returns the value of the '<em><b>Imported Protocol</b></em>' reference.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Imported Protocol</em>' reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Imported Protocol</em>' reference.
      * @see #setImportedProtocol(Protocol)
@@ -92,10 +88,6 @@ public interface ImportedProtocolAndDataFormat extends EObject {
     /**
      * Returns the value of the '<em><b>Data Format</b></em>' reference.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Data Format</em>' reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Data Format</em>' reference.
      * @see #setDataFormat(DataFormat)
@@ -119,10 +111,6 @@ public interface ImportedProtocolAndDataFormat extends EObject {
      * Returns the value of the '<em><b>Specification</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.ProtocolSpecification#getProtocol <em>Protocol</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Specification</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Specification</em>' container reference.
      * @see #setSpecification(ProtocolSpecification)
@@ -147,10 +135,6 @@ public interface ImportedProtocolAndDataFormat extends EObject {
      * Returns the value of the '<em><b>Endpoint</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.Endpoint#getProtocols <em>Protocols</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Endpoint</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Endpoint</em>' container reference.
      * @see #setEndpoint(Endpoint)

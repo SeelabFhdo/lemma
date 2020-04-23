@@ -65,10 +65,6 @@ public enum DataOperationFeature implements Enumerator {
     /**
      * The '<em><b>CLOSURE</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>CLOSURE</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @see #CLOSURE
      * @model
@@ -80,10 +76,6 @@ public enum DataOperationFeature implements Enumerator {
     /**
      * The '<em><b>IDENTIFIER</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>IDENTIFIER</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @see #IDENTIFIER
      * @model
@@ -95,10 +87,6 @@ public enum DataOperationFeature implements Enumerator {
     /**
      * The '<em><b>SIDE EFFECT FREE</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>SIDE EFFECT FREE</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @see #SIDE_EFFECT_FREE
      * @model
@@ -110,10 +98,6 @@ public enum DataOperationFeature implements Enumerator {
     /**
      * The '<em><b>VALIDATOR</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>VALIDATOR</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @see #VALIDATOR
      * @model

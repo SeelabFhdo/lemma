@@ -29,10 +29,6 @@ public interface IntermediateImportedTechnologySpecificType extends Intermediate
     /**
      * Returns the value of the '<em><b>Qualified Name</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Qualified Name</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Qualified Name</em>' attribute.
      * @see #setQualifiedName(String)
@@ -55,10 +51,6 @@ public interface IntermediateImportedTechnologySpecificType extends Intermediate
     /**
      * Returns the value of the '<em><b>Import</b></em>' reference.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Import</em>' reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Import</em>' reference.
      * @see #setImport(IntermediateImport)

@@ -71,10 +71,6 @@ public interface TechnologySpecificPrimitiveType extends PrimitiveType {
      * Returns the value of the '<em><b>Default</b></em>' attribute.
      * The default value is <code>"false"</code>.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Default</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Default</em>' attribute.
      * @see #setDefault(boolean)
@@ -98,10 +94,6 @@ public interface TechnologySpecificPrimitiveType extends PrimitiveType {
      * Returns the value of the '<em><b>Technology</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.technology.Technology#getPrimitiveTypes <em>Primitive Types</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Technology</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Technology</em>' container reference.
      * @see #setTechnology(Technology)
@@ -126,10 +118,6 @@ public interface TechnologySpecificPrimitiveType extends PrimitiveType {
      * Returns the value of the '<em><b>Basic Builtin Primitive Types</b></em>' containment reference list.
      * The list contents are of type {@link de.fhdo.lemma.data.PrimitiveType}.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Basic Builtin Primitive Types</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Basic Builtin Primitive Types</em>' containment reference list.
      * @see de.fhdo.lemma.technology.TechnologyPackage#getTechnologySpecificPrimitiveType_BasicBuiltinPrimitiveTypes()

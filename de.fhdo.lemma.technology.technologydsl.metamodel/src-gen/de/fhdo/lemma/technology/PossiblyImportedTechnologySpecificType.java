@@ -34,10 +34,6 @@ public interface PossiblyImportedTechnologySpecificType extends EObject {
     /**
      * Returns the value of the '<em><b>Import</b></em>' reference.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Import</em>' reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Import</em>' reference.
      * @see #setImport(TechnologyImport)
@@ -60,10 +56,6 @@ public interface PossiblyImportedTechnologySpecificType extends EObject {
     /**
      * Returns the value of the '<em><b>Type</b></em>' reference.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Type</em>' reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Type</em>' reference.
      * @see #setType(Type)
@@ -87,10 +79,6 @@ public interface PossiblyImportedTechnologySpecificType extends EObject {
      * Returns the value of the '<em><b>Mapping Entry</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.technology.CompatibilityMatrixEntry#getMappingType <em>Mapping Type</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Mapping Entry</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Mapping Entry</em>' container reference.
      * @see #setMappingEntry(CompatibilityMatrixEntry)
@@ -115,10 +103,6 @@ public interface PossiblyImportedTechnologySpecificType extends EObject {
      * Returns the value of the '<em><b>Compatible Entry</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.technology.CompatibilityMatrixEntry#getCompatibleTypes <em>Compatible Types</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Compatible Entry</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Compatible Entry</em>' container reference.
      * @see #setCompatibleEntry(CompatibilityMatrixEntry)

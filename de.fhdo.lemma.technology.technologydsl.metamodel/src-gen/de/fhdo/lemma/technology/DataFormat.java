@@ -59,10 +59,6 @@ public interface DataFormat extends EObject {
      * Returns the value of the '<em><b>Protocol</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.technology.Protocol#getDataFormats <em>Data Formats</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Protocol</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Protocol</em>' container reference.
      * @see #setProtocol(Protocol)

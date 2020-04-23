@@ -38,10 +38,6 @@ public interface OperationAspectPointcut extends EObject {
     /**
      * Returns the value of the '<em><b>For Technology</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>For Technology</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>For Technology</em>' attribute.
      * @see #setForTechnology(boolean)
@@ -64,10 +60,6 @@ public interface OperationAspectPointcut extends EObject {
     /**
      * Returns the value of the '<em><b>Technology</b></em>' reference.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Technology</em>' reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Technology</em>' reference.
      * @see #setTechnology(EObject)
@@ -91,10 +83,6 @@ public interface OperationAspectPointcut extends EObject {
      * Returns the value of the '<em><b>Selector</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.technology.OperationAspectPointcutSelector#getPointcuts <em>Pointcuts</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Selector</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Selector</em>' container reference.
      * @see #setSelector(OperationAspectPointcutSelector)

@@ -74,10 +74,6 @@ public interface TechnologySpecificProperty extends EObject {
     /**
      * Returns the value of the '<em><b>Type</b></em>' containment reference.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Type</em>' containment reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Type</em>' containment reference.
      * @see #setType(PrimitiveType)
@@ -100,10 +96,6 @@ public interface TechnologySpecificProperty extends EObject {
     /**
      * Returns the value of the '<em><b>Default Value</b></em>' containment reference.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Default Value</em>' containment reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Default Value</em>' containment reference.
      * @see #setDefaultValue(PrimitiveValue)
@@ -128,10 +120,6 @@ public interface TechnologySpecificProperty extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.technology.PropertyFeature}.
      * The literals are from the enumeration {@link de.fhdo.lemma.technology.PropertyFeature}.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Features</em>' attribute list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Features</em>' attribute list.
      * @see de.fhdo.lemma.technology.PropertyFeature
@@ -145,10 +133,6 @@ public interface TechnologySpecificProperty extends EObject {
      * Returns the value of the '<em><b>Operation Technology</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.technology.OperationTechnology#getServiceProperties <em>Service Properties</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Operation Technology</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Operation Technology</em>' container reference.
      * @see #setOperationTechnology(OperationTechnology)
@@ -173,10 +157,6 @@ public interface TechnologySpecificProperty extends EObject {
      * Returns the value of the '<em><b>Technology Aspect</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.technology.TechnologyAspect#getProperties <em>Properties</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Technology Aspect</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Technology Aspect</em>' container reference.
      * @see #setTechnologyAspect(TechnologyAspect)

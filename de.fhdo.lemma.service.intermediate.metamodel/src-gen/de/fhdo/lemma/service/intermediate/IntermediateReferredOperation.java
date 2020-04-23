@@ -39,10 +39,6 @@ public interface IntermediateReferredOperation extends EObject {
     /**
      * Returns the value of the '<em><b>Name In Referring Interface</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Name In Referring Interface</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Name In Referring Interface</em>' attribute.
      * @see #setNameInReferringInterface(String)
@@ -65,10 +61,6 @@ public interface IntermediateReferredOperation extends EObject {
     /**
      * Returns the value of the '<em><b>Qualified Name In Referring Interface</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Qualified Name In Referring Interface</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Qualified Name In Referring Interface</em>' attribute.
      * @see #setQualifiedNameInReferringInterface(String)
@@ -91,10 +83,6 @@ public interface IntermediateReferredOperation extends EObject {
     /**
      * Returns the value of the '<em><b>Operation</b></em>' reference.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Operation</em>' reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Operation</em>' reference.
      * @see #setOperation(IntermediateOperation)
@@ -119,10 +107,6 @@ public interface IntermediateReferredOperation extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.service.intermediate.IntermediateEndpoint}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.intermediate.IntermediateEndpoint#getReferredOperation <em>Referred Operation</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Endpoints</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Endpoints</em>' containment reference list.
      * @see de.fhdo.lemma.service.intermediate.IntermediatePackage#getIntermediateReferredOperation_Endpoints()
@@ -136,10 +120,6 @@ public interface IntermediateReferredOperation extends EObject {
      * Returns the value of the '<em><b>Protocols</b></em>' containment reference list.
      * The list contents are of type {@link de.fhdo.lemma.service.intermediate.IntermediateProtocolSpecification}.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Protocols</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Protocols</em>' containment reference list.
      * @see de.fhdo.lemma.service.intermediate.IntermediatePackage#getIntermediateReferredOperation_Protocols()
@@ -152,10 +132,6 @@ public interface IntermediateReferredOperation extends EObject {
      * Returns the value of the '<em><b>Aspects</b></em>' containment reference list.
      * The list contents are of type {@link de.fhdo.lemma.data.intermediate.IntermediateImportedAspect}.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Aspects</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Aspects</em>' containment reference list.
      * @see de.fhdo.lemma.service.intermediate.IntermediatePackage#getIntermediateReferredOperation_Aspects()
@@ -168,10 +144,6 @@ public interface IntermediateReferredOperation extends EObject {
      * Returns the value of the '<em><b>Referring Interface</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.intermediate.IntermediateInterface#getReferredOperations <em>Referred Operations</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Referring Interface</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Referring Interface</em>' container reference.
      * @see #setReferringInterface(IntermediateInterface)

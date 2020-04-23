@@ -55,10 +55,6 @@ public enum ImportType implements Enumerator {
     /**
      * The '<em><b>DATATYPES</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>DATATYPES</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @see #DATATYPES
      * @model
@@ -70,10 +66,6 @@ public enum ImportType implements Enumerator {
     /**
      * The '<em><b>TECHNOLOGY</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>TECHNOLOGY</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @see #TECHNOLOGY
      * @model
@@ -85,10 +77,6 @@ public enum ImportType implements Enumerator {
     /**
      * The '<em><b>MICROSERVICES</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>MICROSERVICES</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @see #MICROSERVICES
      * @model

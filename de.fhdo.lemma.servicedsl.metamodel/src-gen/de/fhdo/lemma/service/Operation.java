@@ -77,10 +77,6 @@ public interface Operation extends EObject {
      * Returns the value of the '<em><b>Not Implemented</b></em>' attribute.
      * The default value is <code>"false"</code>.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Not Implemented</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Not Implemented</em>' attribute.
      * @see #setNotImplemented(boolean)
@@ -105,10 +101,6 @@ public interface Operation extends EObject {
      * The default value is <code>"NONE"</code>.
      * The literals are from the enumeration {@link de.fhdo.lemma.service.Visibility}.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Visibility</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Visibility</em>' attribute.
      * @see de.fhdo.lemma.service.Visibility
@@ -134,10 +126,6 @@ public interface Operation extends EObject {
      * Returns the value of the '<em><b>Api Operation Comment</b></em>' containment reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.ApiOperationComment#getOperation <em>Operation</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Api Operation Comment</em>' containment reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Api Operation Comment</em>' containment reference.
      * @see #setApiOperationComment(ApiOperationComment)
@@ -163,10 +151,6 @@ public interface Operation extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.service.Endpoint}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.Endpoint#getOperation <em>Operation</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Endpoints</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Endpoints</em>' containment reference list.
      * @see de.fhdo.lemma.service.ServicePackage#getOperation_Endpoints()
@@ -180,10 +164,6 @@ public interface Operation extends EObject {
      * Returns the value of the '<em><b>Protocols</b></em>' containment reference list.
      * The list contents are of type {@link de.fhdo.lemma.service.ProtocolSpecification}.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Protocols</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Protocols</em>' containment reference list.
      * @see de.fhdo.lemma.service.ServicePackage#getOperation_Protocols()
@@ -197,10 +177,6 @@ public interface Operation extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.service.Parameter}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.Parameter#getOperation <em>Operation</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Parameters</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Parameters</em>' containment reference list.
      * @see de.fhdo.lemma.service.ServicePackage#getOperation_Parameters()
@@ -215,10 +191,6 @@ public interface Operation extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.service.ImportedServiceAspect}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.ImportedServiceAspect#getOperation <em>Operation</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Aspects</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Aspects</em>' containment reference list.
      * @see de.fhdo.lemma.service.ServicePackage#getOperation_Aspects()
@@ -232,10 +204,6 @@ public interface Operation extends EObject {
      * Returns the value of the '<em><b>Interface</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.Interface#getOperations <em>Operations</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Interface</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Interface</em>' container reference.
      * @see #setInterface(Interface)

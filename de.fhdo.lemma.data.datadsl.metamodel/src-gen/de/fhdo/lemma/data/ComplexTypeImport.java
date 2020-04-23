@@ -66,10 +66,6 @@ public interface ComplexTypeImport extends EObject {
     /**
      * Returns the value of the '<em><b>Import URI</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Import URI</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Import URI</em>' attribute.
      * @see #setImportURI(String)
@@ -93,10 +89,6 @@ public interface ComplexTypeImport extends EObject {
      * Returns the value of the '<em><b>Data Model</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.data.DataModel#getComplexTypeImports <em>Complex Type Imports</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Data Model</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Data Model</em>' container reference.
      * @see #setDataModel(DataModel)

@@ -79,7 +79,7 @@ internal object LiveValidationCommandLine {
 
         CommandLine(this)
             .setOverwrittenOptionsAllowed(true)
-            .parse(*args)
+            .parseArgs(*args)
 
         alreadyParsed = true
     }

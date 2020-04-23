@@ -68,10 +68,6 @@ public interface ProtocolAndDataFormat extends EObject {
     /**
      * Returns the value of the '<em><b>Protocol</b></em>' reference.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Protocol</em>' reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Protocol</em>' reference.
      * @see #setProtocol(Protocol)
@@ -94,10 +90,6 @@ public interface ProtocolAndDataFormat extends EObject {
     /**
      * Returns the value of the '<em><b>Data Format</b></em>' reference.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Data Format</em>' reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Data Format</em>' reference.
      * @see #setDataFormat(DataFormat)
@@ -121,10 +113,6 @@ public interface ProtocolAndDataFormat extends EObject {
      * Returns the value of the '<em><b>Endpoint</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.operation.BasicEndpoint#getProtocols <em>Protocols</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Endpoint</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Endpoint</em>' container reference.
      * @see #setEndpoint(BasicEndpoint)

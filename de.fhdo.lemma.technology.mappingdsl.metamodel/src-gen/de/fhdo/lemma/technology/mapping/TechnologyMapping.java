@@ -60,10 +60,6 @@ public interface TechnologyMapping extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.technology.mapping.ComplexTypeMapping}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.technology.mapping.ComplexTypeMapping#getMappingModel <em>Mapping Model</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Type Mappings</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Type Mappings</em>' containment reference list.
      * @see de.fhdo.lemma.technology.mapping.MappingPackage#getTechnologyMapping_TypeMappings()
@@ -78,10 +74,6 @@ public interface TechnologyMapping extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.technology.mapping.MicroserviceMapping}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.technology.mapping.MicroserviceMapping#getMappingModel <em>Mapping Model</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Service Mappings</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Service Mappings</em>' containment reference list.
      * @see de.fhdo.lemma.technology.mapping.MappingPackage#getTechnologyMapping_ServiceMappings()

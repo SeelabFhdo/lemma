@@ -75,10 +75,6 @@ public interface ReferredOperationMapping extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.technology.mapping.TechnologySpecificEndpoint}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.technology.mapping.TechnologySpecificEndpoint#getReferredOperationMapping <em>Referred Operation Mapping</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Endpoints</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Endpoints</em>' containment reference list.
      * @see de.fhdo.lemma.technology.mapping.MappingPackage#getReferredOperationMapping_Endpoints()
@@ -92,10 +88,6 @@ public interface ReferredOperationMapping extends EObject {
      * Returns the value of the '<em><b>Protocols</b></em>' containment reference list.
      * The list contents are of type {@link de.fhdo.lemma.technology.mapping.TechnologySpecificProtocolSpecification}.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Protocols</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Protocols</em>' containment reference list.
      * @see de.fhdo.lemma.technology.mapping.MappingPackage#getReferredOperationMapping_Protocols()
@@ -109,10 +101,6 @@ public interface ReferredOperationMapping extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.technology.mapping.TechnologySpecificImportedServiceAspect}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.technology.mapping.TechnologySpecificImportedServiceAspect#getReferredOperationMapping <em>Referred Operation Mapping</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Aspects</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Aspects</em>' containment reference list.
      * @see de.fhdo.lemma.technology.mapping.MappingPackage#getReferredOperationMapping_Aspects()
@@ -126,10 +114,6 @@ public interface ReferredOperationMapping extends EObject {
      * Returns the value of the '<em><b>Microservice Mapping</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.technology.mapping.MicroserviceMapping#getReferredOperationMappings <em>Referred Operation Mappings</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Microservice Mapping</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Microservice Mapping</em>' container reference.
      * @see #setMicroserviceMapping(MicroserviceMapping)

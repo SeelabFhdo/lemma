@@ -85,10 +85,6 @@ public interface Technology extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.technology.TechnologyImport}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.technology.TechnologyImport#getTechnology <em>Technology</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Imports</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Imports</em>' containment reference list.
      * @see de.fhdo.lemma.technology.TechnologyPackage#getTechnology_Imports()
@@ -103,10 +99,6 @@ public interface Technology extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.technology.TechnologySpecificPrimitiveType}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.technology.TechnologySpecificPrimitiveType#getTechnology <em>Technology</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Primitive Types</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Primitive Types</em>' containment reference list.
      * @see de.fhdo.lemma.technology.TechnologyPackage#getTechnology_PrimitiveTypes()
@@ -121,10 +113,6 @@ public interface Technology extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.technology.TechnologySpecificListType}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.technology.TechnologySpecificListType#getTechnology <em>Technology</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>List Types</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>List Types</em>' containment reference list.
      * @see de.fhdo.lemma.technology.TechnologyPackage#getTechnology_ListTypes()
@@ -139,10 +127,6 @@ public interface Technology extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.technology.TechnologySpecificDataStructure}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.technology.TechnologySpecificDataStructure#getTechnology <em>Technology</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Data Structures</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Data Structures</em>' containment reference list.
      * @see de.fhdo.lemma.technology.TechnologyPackage#getTechnology_DataStructures()
@@ -157,10 +141,6 @@ public interface Technology extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.technology.CompatibilityMatrixEntry}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.technology.CompatibilityMatrixEntry#getTechnology <em>Technology</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Compatibility Entries</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Compatibility Entries</em>' containment reference list.
      * @see de.fhdo.lemma.technology.TechnologyPackage#getTechnology_CompatibilityEntries()
@@ -175,10 +155,6 @@ public interface Technology extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.technology.Protocol}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.technology.Protocol#getTechnology <em>Technology</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Protocols</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Protocols</em>' containment reference list.
      * @see de.fhdo.lemma.technology.TechnologyPackage#getTechnology_Protocols()
@@ -193,10 +169,6 @@ public interface Technology extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.technology.ServiceAspect}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.technology.ServiceAspect#getTechnology <em>Technology</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Service Aspects</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Service Aspects</em>' containment reference list.
      * @see de.fhdo.lemma.technology.TechnologyPackage#getTechnology_ServiceAspects()
@@ -211,10 +183,6 @@ public interface Technology extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.technology.DeploymentTechnology}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.technology.DeploymentTechnology#getTechnology <em>Technology</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Deployment Technologies</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Deployment Technologies</em>' containment reference list.
      * @see de.fhdo.lemma.technology.TechnologyPackage#getTechnology_DeploymentTechnologies()
@@ -229,10 +197,6 @@ public interface Technology extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.technology.InfrastructureTechnology}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.technology.InfrastructureTechnology#getTechnology <em>Technology</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Infrastructure Technologies</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Infrastructure Technologies</em>' containment reference list.
      * @see de.fhdo.lemma.technology.TechnologyPackage#getTechnology_InfrastructureTechnologies()
@@ -247,10 +211,6 @@ public interface Technology extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.technology.OperationAspect}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.technology.OperationAspect#getTechnology <em>Technology</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Operation Aspects</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Operation Aspects</em>' containment reference list.
      * @see de.fhdo.lemma.technology.TechnologyPackage#getTechnology_OperationAspects()

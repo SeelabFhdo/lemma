@@ -62,10 +62,6 @@ public interface DataOperationParameter extends EObject {
     /**
      * Returns the value of the '<em><b>Complex Type</b></em>' reference.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Complex Type</em>' reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Complex Type</em>' reference.
      * @see #setComplexType(ComplexType)
@@ -89,10 +85,6 @@ public interface DataOperationParameter extends EObject {
      * Returns the value of the '<em><b>Imported Complex Type</b></em>' containment reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.data.ImportedComplexType#getParameter <em>Parameter</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Imported Complex Type</em>' containment reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Imported Complex Type</em>' containment reference.
      * @see #setImportedComplexType(ImportedComplexType)
@@ -116,10 +108,6 @@ public interface DataOperationParameter extends EObject {
     /**
      * Returns the value of the '<em><b>Primitive Type</b></em>' containment reference.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Primitive Type</em>' containment reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Primitive Type</em>' containment reference.
      * @see #setPrimitiveType(PrimitiveType)
@@ -143,10 +131,6 @@ public interface DataOperationParameter extends EObject {
      * Returns the value of the '<em><b>Operation</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.data.DataOperation#getParameters <em>Parameters</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Operation</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Operation</em>' container reference.
      * @see #setOperation(DataOperation)

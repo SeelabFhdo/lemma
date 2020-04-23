@@ -125,10 +125,6 @@ public enum JoinPointType implements Enumerator {
     /**
      * The '<em><b>DATA OPERATIONS</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>DATA OPERATIONS</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @see #DATA_OPERATIONS
      * @model
@@ -140,10 +136,6 @@ public enum JoinPointType implements Enumerator {
     /**
      * The '<em><b>DATA OPERATION PARAMETERS</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>DATA OPERATION PARAMETERS</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @see #DATA_OPERATION_PARAMETERS
      * @model
@@ -155,10 +147,6 @@ public enum JoinPointType implements Enumerator {
     /**
      * The '<em><b>MICROSERVICES</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>MICROSERVICES</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @see #MICROSERVICES
      * @model
@@ -170,10 +158,6 @@ public enum JoinPointType implements Enumerator {
     /**
      * The '<em><b>INTERFACES</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>INTERFACES</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @see #INTERFACES
      * @model
@@ -185,10 +169,6 @@ public enum JoinPointType implements Enumerator {
     /**
      * The '<em><b>OPERATIONS</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>OPERATIONS</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @see #OPERATIONS
      * @model
@@ -200,10 +180,6 @@ public enum JoinPointType implements Enumerator {
     /**
      * The '<em><b>PARAMETERS</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>PARAMETERS</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @see #PARAMETERS
      * @model
@@ -215,10 +191,6 @@ public enum JoinPointType implements Enumerator {
     /**
      * The '<em><b>COMPLEX TYPES</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>COMPLEX TYPES</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @see #COMPLEX_TYPES
      * @model
@@ -230,10 +202,6 @@ public enum JoinPointType implements Enumerator {
     /**
      * The '<em><b>DATA FIELDS</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>DATA FIELDS</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @see #DATA_FIELDS
      * @model
@@ -245,10 +213,6 @@ public enum JoinPointType implements Enumerator {
     /**
      * The '<em><b>CONTAINERS</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>CONTAINERS</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @see #CONTAINERS
      * @model
@@ -260,10 +224,6 @@ public enum JoinPointType implements Enumerator {
     /**
      * The '<em><b>INFRASTRUCTURE NODES</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>INFRASTRUCTURE NODES</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @see #INFRASTRUCTURE_NODES
      * @model

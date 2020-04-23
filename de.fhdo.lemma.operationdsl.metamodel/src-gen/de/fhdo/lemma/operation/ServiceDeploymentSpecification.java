@@ -69,10 +69,6 @@ public interface ServiceDeploymentSpecification extends EObject {
     /**
      * Returns the value of the '<em><b>Service</b></em>' reference.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Service</em>' reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Service</em>' reference.
      * @see #setService(ImportedMicroservice)
@@ -96,10 +92,6 @@ public interface ServiceDeploymentSpecification extends EObject {
      * Returns the value of the '<em><b>Service Property Values</b></em>' containment reference list.
      * The list contents are of type {@link de.fhdo.lemma.technology.TechnologySpecificPropertyValueAssignment}.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Service Property Values</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Service Property Values</em>' containment reference list.
      * @see de.fhdo.lemma.operation.OperationPackage#getServiceDeploymentSpecification_ServicePropertyValues()
@@ -113,10 +105,6 @@ public interface ServiceDeploymentSpecification extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.operation.BasicEndpoint}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.operation.BasicEndpoint#getDeploymentSpecification <em>Deployment Specification</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Basic Endpoints</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Basic Endpoints</em>' containment reference list.
      * @see de.fhdo.lemma.operation.OperationPackage#getServiceDeploymentSpecification_BasicEndpoints()
@@ -130,10 +118,6 @@ public interface ServiceDeploymentSpecification extends EObject {
      * Returns the value of the '<em><b>Operation Node</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.operation.OperationNode#getDeploymentSpecifications <em>Deployment Specifications</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Operation Node</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Operation Node</em>' container reference.
      * @see #setOperationNode(OperationNode)

@@ -92,10 +92,6 @@ public interface OperationNode extends EObject {
      * Returns the value of the '<em><b>Technologies</b></em>' reference list.
      * The list contents are of type {@link de.fhdo.lemma.service.Import}.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Technologies</em>' reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Technologies</em>' reference list.
      * @see de.fhdo.lemma.operation.OperationPackage#getOperationNode_Technologies()
@@ -107,10 +103,6 @@ public interface OperationNode extends EObject {
     /**
      * Returns the value of the '<em><b>Operation Environment</b></em>' reference.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Operation Environment</em>' reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Operation Environment</em>' reference.
      * @see #setOperationEnvironment(OperationEnvironment)
@@ -135,10 +127,6 @@ public interface OperationNode extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.operation.ImportedMicroservice}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.operation.ImportedMicroservice#getOperationNode <em>Operation Node</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Deployed Services</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Deployed Services</em>' containment reference list.
      * @see de.fhdo.lemma.operation.OperationPackage#getOperationNode_DeployedServices()
@@ -152,10 +140,6 @@ public interface OperationNode extends EObject {
      * Returns the value of the '<em><b>Default Service Property Values</b></em>' containment reference list.
      * The list contents are of type {@link de.fhdo.lemma.technology.TechnologySpecificPropertyValueAssignment}.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Default Service Property Values</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Default Service Property Values</em>' containment reference list.
      * @see de.fhdo.lemma.operation.OperationPackage#getOperationNode_DefaultServicePropertyValues()
@@ -169,10 +153,6 @@ public interface OperationNode extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.operation.ServiceDeploymentSpecification}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.operation.ServiceDeploymentSpecification#getOperationNode <em>Operation Node</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Deployment Specifications</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Deployment Specifications</em>' containment reference list.
      * @see de.fhdo.lemma.operation.OperationPackage#getOperationNode_DeploymentSpecifications()
@@ -187,10 +167,6 @@ public interface OperationNode extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.operation.ImportedOperationAspect}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.operation.ImportedOperationAspect#getOperationNode <em>Operation Node</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Aspects</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Aspects</em>' containment reference list.
      * @see de.fhdo.lemma.operation.OperationPackage#getOperationNode_Aspects()

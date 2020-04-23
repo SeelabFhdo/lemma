@@ -36,10 +36,6 @@ public interface PossiblyImportedOperation extends EObject {
     /**
      * Returns the value of the '<em><b>Import</b></em>' reference.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Import</em>' reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Import</em>' reference.
      * @see #setImport(Import)
@@ -62,10 +58,6 @@ public interface PossiblyImportedOperation extends EObject {
     /**
      * Returns the value of the '<em><b>Operation</b></em>' reference.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Operation</em>' reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Operation</em>' reference.
      * @see #setOperation(Operation)
@@ -89,10 +81,6 @@ public interface PossiblyImportedOperation extends EObject {
      * Returns the value of the '<em><b>Requiring Microservice</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.Microservice#getRequiredOperations <em>Required Operations</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Requiring Microservice</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Requiring Microservice</em>' container reference.
      * @see #setRequiringMicroservice(Microservice)
@@ -117,10 +105,6 @@ public interface PossiblyImportedOperation extends EObject {
      * Returns the value of the '<em><b>Initialized Parameter</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.Parameter#getInitializedByOperation <em>Initialized By Operation</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Initialized Parameter</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Initialized Parameter</em>' container reference.
      * @see #setInitializedParameter(Parameter)

@@ -39,10 +39,6 @@ public interface IntermediateDataOperation extends EObject {
     /**
      * Returns the value of the '<em><b>Name</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Name</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Name</em>' attribute.
      * @see #setName(String)
@@ -65,10 +61,6 @@ public interface IntermediateDataOperation extends EObject {
     /**
      * Returns the value of the '<em><b>Qualified Name</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Qualified Name</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Qualified Name</em>' attribute.
      * @see #setQualifiedName(String)
@@ -91,10 +83,6 @@ public interface IntermediateDataOperation extends EObject {
     /**
      * Returns the value of the '<em><b>Hidden</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Hidden</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Hidden</em>' attribute.
      * @see #setHidden(boolean)
@@ -117,10 +105,6 @@ public interface IntermediateDataOperation extends EObject {
     /**
      * Returns the value of the '<em><b>Inherited</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Inherited</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Inherited</em>' attribute.
      * @see #setInherited(boolean)
@@ -144,10 +128,6 @@ public interface IntermediateDataOperation extends EObject {
      * Returns the value of the '<em><b>Feature Names</b></em>' attribute list.
      * The list contents are of type {@link java.lang.String}.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Feature Names</em>' attribute list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Feature Names</em>' attribute list.
      * @see de.fhdo.lemma.data.intermediate.IntermediatePackage#getIntermediateDataOperation_FeatureNames()
@@ -160,10 +140,6 @@ public interface IntermediateDataOperation extends EObject {
      * Returns the value of the '<em><b>Return Type</b></em>' containment reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.data.intermediate.IntermediateDataOperationReturnType#getOperation <em>Operation</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Return Type</em>' containment reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Return Type</em>' containment reference.
      * @see #setReturnType(IntermediateDataOperationReturnType)
@@ -189,10 +165,6 @@ public interface IntermediateDataOperation extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.data.intermediate.IntermediateDataOperationParameter}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.data.intermediate.IntermediateDataOperationParameter#getOperation <em>Operation</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Parameters</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Parameters</em>' containment reference list.
      * @see de.fhdo.lemma.data.intermediate.IntermediatePackage#getIntermediateDataOperation_Parameters()
@@ -207,10 +179,6 @@ public interface IntermediateDataOperation extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.data.intermediate.IntermediateImportedAspect}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.data.intermediate.IntermediateImportedAspect#getOperation <em>Operation</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Aspects</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Aspects</em>' containment reference list.
      * @see de.fhdo.lemma.data.intermediate.IntermediatePackage#getIntermediateDataOperation_Aspects()
@@ -224,10 +192,6 @@ public interface IntermediateDataOperation extends EObject {
      * Returns the value of the '<em><b>Data Structure</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.data.intermediate.IntermediateDataStructure#getOperations <em>Operations</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Data Structure</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Data Structure</em>' container reference.
      * @see #setDataStructure(IntermediateDataStructure)

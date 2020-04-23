@@ -57,10 +57,6 @@ public interface OperationModel extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.operation.Container}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.operation.Container#getOperationModel <em>Operation Model</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Containers</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Containers</em>' containment reference list.
      * @see de.fhdo.lemma.operation.OperationPackage#getOperationModel_Containers()
@@ -75,10 +71,6 @@ public interface OperationModel extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.operation.InfrastructureNode}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.operation.InfrastructureNode#getOperationModel <em>Operation Model</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Infrastructure Nodes</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Infrastructure Nodes</em>' containment reference list.
      * @see de.fhdo.lemma.operation.OperationPackage#getOperationModel_InfrastructureNodes()

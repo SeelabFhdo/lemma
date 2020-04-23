@@ -78,10 +78,6 @@ public interface DataOperation extends EObject {
     /**
      * Returns the value of the '<em><b>Hidden</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Hidden</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Hidden</em>' attribute.
      * @see #setHidden(boolean)
@@ -104,10 +100,6 @@ public interface DataOperation extends EObject {
     /**
      * Returns the value of the '<em><b>Has No Return Type</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Has No Return Type</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Has No Return Type</em>' attribute.
      * @see #setHasNoReturnType(boolean)
@@ -132,10 +124,6 @@ public interface DataOperation extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.data.DataOperationFeature}.
      * The literals are from the enumeration {@link de.fhdo.lemma.data.DataOperationFeature}.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Features</em>' attribute list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Features</em>' attribute list.
      * @see de.fhdo.lemma.data.DataOperationFeature
@@ -148,10 +136,6 @@ public interface DataOperation extends EObject {
     /**
      * Returns the value of the '<em><b>Complex Return Type</b></em>' reference.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Complex Return Type</em>' reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Complex Return Type</em>' reference.
      * @see #setComplexReturnType(ComplexType)
@@ -175,10 +159,6 @@ public interface DataOperation extends EObject {
      * Returns the value of the '<em><b>Imported Complex Return Type</b></em>' containment reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.data.ImportedComplexType#getOperation <em>Operation</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Imported Complex Return Type</em>' containment reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Imported Complex Return Type</em>' containment reference.
      * @see #setImportedComplexReturnType(ImportedComplexType)
@@ -202,10 +182,6 @@ public interface DataOperation extends EObject {
     /**
      * Returns the value of the '<em><b>Primitive Return Type</b></em>' containment reference.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Primitive Return Type</em>' containment reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Primitive Return Type</em>' containment reference.
      * @see #setPrimitiveReturnType(PrimitiveType)
@@ -230,10 +206,6 @@ public interface DataOperation extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.data.DataOperationParameter}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.data.DataOperationParameter#getOperation <em>Operation</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Parameters</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Parameters</em>' containment reference list.
      * @see de.fhdo.lemma.data.DataPackage#getDataOperation_Parameters()
@@ -247,10 +219,6 @@ public interface DataOperation extends EObject {
      * Returns the value of the '<em><b>Data Structure</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.data.DataStructure#getOperations <em>Operations</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Data Structure</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Data Structure</em>' container reference.
      * @see #setDataStructure(DataStructure)

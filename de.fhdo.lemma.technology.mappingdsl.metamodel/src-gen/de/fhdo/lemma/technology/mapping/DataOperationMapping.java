@@ -68,10 +68,6 @@ public interface DataOperationMapping extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.technology.mapping.TechnologySpecificImportedServiceAspect}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.technology.mapping.TechnologySpecificImportedServiceAspect#getDataOperationMapping <em>Data Operation Mapping</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Aspects</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Aspects</em>' containment reference list.
      * @see de.fhdo.lemma.technology.mapping.MappingPackage#getDataOperationMapping_Aspects()
@@ -85,10 +81,6 @@ public interface DataOperationMapping extends EObject {
      * Returns the value of the '<em><b>Return Type Mapping</b></em>' containment reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.technology.mapping.DataOperationReturnTypeMapping#getOperationMapping <em>Operation Mapping</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Return Type Mapping</em>' containment reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Return Type Mapping</em>' containment reference.
      * @see #setReturnTypeMapping(DataOperationReturnTypeMapping)
@@ -114,10 +106,6 @@ public interface DataOperationMapping extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.technology.mapping.DataOperationParameterMapping}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.technology.mapping.DataOperationParameterMapping#getOperationMapping <em>Operation Mapping</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Parameter Mappings</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Parameter Mappings</em>' containment reference list.
      * @see de.fhdo.lemma.technology.mapping.MappingPackage#getDataOperationMapping_ParameterMappings()
@@ -131,10 +119,6 @@ public interface DataOperationMapping extends EObject {
      * Returns the value of the '<em><b>Type Mapping</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.technology.mapping.ComplexTypeMapping#getOperationMappings <em>Operation Mappings</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Type Mapping</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Type Mapping</em>' container reference.
      * @see #setTypeMapping(ComplexTypeMapping)

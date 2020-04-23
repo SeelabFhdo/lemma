@@ -35,10 +35,6 @@ public interface DeploymentTechnologyReference extends EObject {
     /**
      * Returns the value of the '<em><b>Import</b></em>' reference.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Import</em>' reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Import</em>' reference.
      * @see #setImport(Import)
@@ -61,10 +57,6 @@ public interface DeploymentTechnologyReference extends EObject {
     /**
      * Returns the value of the '<em><b>Deployment Technology</b></em>' reference.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Deployment Technology</em>' reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Deployment Technology</em>' reference.
      * @see #setDeploymentTechnology(DeploymentTechnology)
@@ -88,10 +80,6 @@ public interface DeploymentTechnologyReference extends EObject {
      * Returns the value of the '<em><b>Container</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.operation.Container#getDeploymentTechnology <em>Deployment Technology</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Container</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Container</em>' container reference.
      * @see #setContainer(Container)

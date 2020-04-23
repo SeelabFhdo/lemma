@@ -1,12 +1,11 @@
 import groovy.lang.GroovyObject
 import org.apache.tools.ant.filters.ReplaceTokens
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.standardout.gradle.plugin.platform.PlatformPluginExtension
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 plugins {
-    kotlin("jvm") version "1.3.41"
+    kotlin("jvm") version "1.3.72"
     maven
 
     /*
@@ -29,11 +28,11 @@ repositories {
 }
 
 buildscript {
-    extra.set("groovyVersion", "2.5.6")
+    extra.set("groovyVersion", "3.0.3")
     extra.set("log4jVersion", "2.11.2")
-    extra.set("loggingVersion", "1.6.24")
-    extra.set("lsp4jVersion", "0.7.2")
-    extra.set("picocliVersion", "3.9.3")
+    extra.set("loggingVersion", "1.7.9")
+    extra.set("lsp4jVersion", "0.9.0")
+    extra.set("picocliVersion", "4.2.0")
 }
 
 dependencies {
@@ -43,7 +42,7 @@ dependencies {
     val lsp4jVersion: String by rootProject.extra
     val picocliVersion: String by rootProject.extra
 
-    implementation(kotlin("stdlib-jdk8"))
+    implementation(kotlin("stdlib"))
     implementation(kotlin("reflect"))
 
     implementation("org.apache.logging.log4j:log4j-api:$log4jVersion")
@@ -61,27 +60,36 @@ dependencies {
  */
 platform {
     val lsp4jVersion: String by rootProject.extra
+    val log4jVersion: String by rootProject.extra
+    val loggingVersion: String by rootProject.extra
+    val picocliVersion: String by rootProject.extra
     val versionQualifier = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"))
 
-    // Modifiy certain characteristics of the generated Live Validation Eclipse bundle
+    // Modify certain characteristics of the generated Live Validation Eclipse bundle
     val thisJarBnd = delegateClosureOf<GroovyObject> {
         withGroovyBuilder {
             "bnd" {
                 "setVersion"("$version-$versionQualifier")
-                "setSymbolicName"("$group")
-                "optionalImport"("kotlin.*", "mu", "org.apache.logging.*", "picocli")
+                "setSymbolicName"(rootProject.name)
+                "optionalImport"("kotlin.*", "mu", "org.apache.logging.*", "picocli", "groovy.lang.*")
+                "instruction"("Require-Capability", "osgi.ee; filter=\"(&(osgi.ee=JavaSE)(version=11))\"")
             }
         }
     }
     bundle(file("build/libs/de.fhdo.lemma.live_validation-$version.jar"), thisJarBnd)
 
     // Add further mandatory bundles
-    bundle("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.3.21")
+    bundle("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.3.72")
     bundle("org.eclipse.lsp4j:org.eclipse.lsp4j:$lsp4jVersion")
     bundle("org.eclipse.lsp4j:org.eclipse.lsp4j.jsonrpc:$lsp4jVersion")
+    bundle("org.apache.logging.log4j:log4j-api:$log4jVersion")
+    bundle("org.apache.logging.log4j:log4j-core:$log4jVersion")
+    bundle("org.apache.logging.log4j:log4j-slf4j-impl:$log4jVersion")
+    bundle("info.picocli:picocli:$picocliVersion")
+    bundle("io.github.microutils:kotlin-logging:$loggingVersion")
 
     // Specify features and updatesite properties
-    featureId = "$group"
+    featureId = rootProject.name
     featureName = "Eclipse plugin of LEMMA's Live Validation Framework"
     featureVersion = version as String
     featureProvider = "University of Applied Sciences and Arts Dortmund"
@@ -95,8 +103,13 @@ platform {
     })
 }
 
-tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = "11"
+tasks {
+    compileKotlin {
+        kotlinOptions.jvmTarget = "11"
+    }
+    compileTestKotlin {
+        kotlinOptions.jvmTarget = "11"
+    }
 }
 
 /**

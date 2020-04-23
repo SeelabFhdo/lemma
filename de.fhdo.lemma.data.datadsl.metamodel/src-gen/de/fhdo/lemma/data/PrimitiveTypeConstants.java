@@ -134,10 +134,6 @@ public enum PrimitiveTypeConstants implements Enumerator {
     /**
      * The '<em><b>BOOLEAN</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>BOOLEAN</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @see #BOOLEAN
      * @model literal="boolean"
@@ -149,10 +145,6 @@ public enum PrimitiveTypeConstants implements Enumerator {
     /**
      * The '<em><b>BYTE</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>BYTE</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @see #BYTE
      * @model literal="byte"
@@ -164,10 +156,6 @@ public enum PrimitiveTypeConstants implements Enumerator {
     /**
      * The '<em><b>CHARACTER</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>CHARACTER</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @see #CHARACTER
      * @model literal="char"
@@ -179,10 +167,6 @@ public enum PrimitiveTypeConstants implements Enumerator {
     /**
      * The '<em><b>DATE</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>DATE</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @see #DATE
      * @model literal="date"
@@ -194,10 +178,6 @@ public enum PrimitiveTypeConstants implements Enumerator {
     /**
      * The '<em><b>DOUBLE</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>DOUBLE</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @see #DOUBLE
      * @model literal="double"
@@ -209,10 +189,6 @@ public enum PrimitiveTypeConstants implements Enumerator {
     /**
      * The '<em><b>FLOAT</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>FLOAT</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @see #FLOAT
      * @model literal="float"
@@ -224,10 +200,6 @@ public enum PrimitiveTypeConstants implements Enumerator {
     /**
      * The '<em><b>INTEGER</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>INTEGER</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @see #INTEGER
      * @model literal="int"
@@ -239,10 +211,6 @@ public enum PrimitiveTypeConstants implements Enumerator {
     /**
      * The '<em><b>LONG</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>LONG</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @see #LONG
      * @model literal="long"
@@ -254,10 +222,6 @@ public enum PrimitiveTypeConstants implements Enumerator {
     /**
      * The '<em><b>SHORT</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>SHORT</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @see #SHORT
      * @model literal="short"
@@ -269,10 +233,6 @@ public enum PrimitiveTypeConstants implements Enumerator {
     /**
      * The '<em><b>STRING</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>STRING</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @see #STRING
      * @model literal="string"
@@ -284,10 +244,6 @@ public enum PrimitiveTypeConstants implements Enumerator {
     /**
      * The '<em><b>UNSPECIFIED</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>UNSPECIFIED</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @see #UNSPECIFIED
      * @model literal="unspecified"

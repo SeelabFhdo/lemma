@@ -44,10 +44,6 @@ public interface IntermediateInterface extends EObject {
     /**
      * Returns the value of the '<em><b>Name</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Name</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Name</em>' attribute.
      * @see #setName(String)
@@ -70,10 +66,6 @@ public interface IntermediateInterface extends EObject {
     /**
      * Returns the value of the '<em><b>Version</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Version</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Version</em>' attribute.
      * @see #setVersion(String)
@@ -96,10 +88,6 @@ public interface IntermediateInterface extends EObject {
     /**
      * Returns the value of the '<em><b>Qualified Name</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Qualified Name</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Qualified Name</em>' attribute.
      * @see #setQualifiedName(String)
@@ -122,10 +110,6 @@ public interface IntermediateInterface extends EObject {
     /**
      * Returns the value of the '<em><b>Visibility</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Visibility</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Visibility</em>' attribute.
      * @see #setVisibility(String)
@@ -148,10 +132,6 @@ public interface IntermediateInterface extends EObject {
     /**
      * Returns the value of the '<em><b>Not Implemented</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Not Implemented</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Not Implemented</em>' attribute.
      * @see #setNotImplemented(boolean)
@@ -174,10 +154,6 @@ public interface IntermediateInterface extends EObject {
     /**
      * Returns the value of the '<em><b>Has Implemented Operations</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Has Implemented Operations</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Has Implemented Operations</em>' attribute.
      * @see #setHasImplementedOperations(boolean)
@@ -202,10 +178,6 @@ public interface IntermediateInterface extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.service.intermediate.IntermediateEndpoint}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.intermediate.IntermediateEndpoint#getInterface <em>Interface</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Endpoints</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Endpoints</em>' containment reference list.
      * @see de.fhdo.lemma.service.intermediate.IntermediatePackage#getIntermediateInterface_Endpoints()
@@ -219,10 +191,6 @@ public interface IntermediateInterface extends EObject {
      * Returns the value of the '<em><b>Protocols</b></em>' containment reference list.
      * The list contents are of type {@link de.fhdo.lemma.service.intermediate.IntermediateProtocolSpecification}.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Protocols</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Protocols</em>' containment reference list.
      * @see de.fhdo.lemma.service.intermediate.IntermediatePackage#getIntermediateInterface_Protocols()
@@ -236,10 +204,6 @@ public interface IntermediateInterface extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.service.intermediate.IntermediateOperation}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.intermediate.IntermediateOperation#getInterface <em>Interface</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Operations</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Operations</em>' containment reference list.
      * @see de.fhdo.lemma.service.intermediate.IntermediatePackage#getIntermediateInterface_Operations()
@@ -254,10 +218,6 @@ public interface IntermediateInterface extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.service.intermediate.IntermediateReferredOperation}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.intermediate.IntermediateReferredOperation#getReferringInterface <em>Referring Interface</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Referred Operations</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Referred Operations</em>' containment reference list.
      * @see de.fhdo.lemma.service.intermediate.IntermediatePackage#getIntermediateInterface_ReferredOperations()
@@ -271,10 +231,6 @@ public interface IntermediateInterface extends EObject {
      * Returns the value of the '<em><b>Aspects</b></em>' containment reference list.
      * The list contents are of type {@link de.fhdo.lemma.data.intermediate.IntermediateImportedAspect}.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Aspects</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Aspects</em>' containment reference list.
      * @see de.fhdo.lemma.service.intermediate.IntermediatePackage#getIntermediateInterface_Aspects()
@@ -287,10 +243,6 @@ public interface IntermediateInterface extends EObject {
      * Returns the value of the '<em><b>Microservice</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.intermediate.IntermediateMicroservice#getInterfaces <em>Interfaces</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Microservice</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Microservice</em>' container reference.
      * @see #setMicroservice(IntermediateMicroservice)

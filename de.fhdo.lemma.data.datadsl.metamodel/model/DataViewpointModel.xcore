@@ -10,7 +10,7 @@ import java.util.Map
  *
  * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
  */
-class DataModel {
+class DataModel { 
     /**
      * Implicit Constraints:
      *     (C1) Only one (or none) of the lists versions, contexts or complexTypes may be filled

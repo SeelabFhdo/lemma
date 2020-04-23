@@ -88,10 +88,6 @@ public interface TechnologySpecificImportedServiceAspect extends EObject {
     /**
      * Returns the value of the '<em><b>Aspect</b></em>' reference.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Aspect</em>' reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Aspect</em>' reference.
      * @see #setAspect(ServiceAspect)
@@ -114,10 +110,6 @@ public interface TechnologySpecificImportedServiceAspect extends EObject {
     /**
      * Returns the value of the '<em><b>Single Property Value</b></em>' containment reference.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Single Property Value</em>' containment reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Single Property Value</em>' containment reference.
      * @see #setSinglePropertyValue(PrimitiveValue)
@@ -141,10 +133,6 @@ public interface TechnologySpecificImportedServiceAspect extends EObject {
      * Returns the value of the '<em><b>Values</b></em>' containment reference list.
      * The list contents are of type {@link de.fhdo.lemma.technology.TechnologySpecificPropertyValueAssignment}.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Values</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Values</em>' containment reference list.
      * @see de.fhdo.lemma.technology.mapping.MappingPackage#getTechnologySpecificImportedServiceAspect_Values()
@@ -157,10 +145,6 @@ public interface TechnologySpecificImportedServiceAspect extends EObject {
      * Returns the value of the '<em><b>Type Mapping</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.technology.mapping.ComplexTypeMapping#getAspects <em>Aspects</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Type Mapping</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Type Mapping</em>' container reference.
      * @see #setTypeMapping(ComplexTypeMapping)
@@ -185,10 +169,6 @@ public interface TechnologySpecificImportedServiceAspect extends EObject {
      * Returns the value of the '<em><b>Microservice Mapping</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.technology.mapping.MicroserviceMapping#getAspects <em>Aspects</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Microservice Mapping</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Microservice Mapping</em>' container reference.
      * @see #setMicroserviceMapping(MicroserviceMapping)
@@ -213,10 +193,6 @@ public interface TechnologySpecificImportedServiceAspect extends EObject {
      * Returns the value of the '<em><b>Interface Mapping</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.technology.mapping.InterfaceMapping#getAspects <em>Aspects</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Interface Mapping</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Interface Mapping</em>' container reference.
      * @see #setInterfaceMapping(InterfaceMapping)
@@ -241,10 +217,6 @@ public interface TechnologySpecificImportedServiceAspect extends EObject {
      * Returns the value of the '<em><b>Operation Mapping</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.technology.mapping.OperationMapping#getAspects <em>Aspects</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Operation Mapping</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Operation Mapping</em>' container reference.
      * @see #setOperationMapping(OperationMapping)
@@ -269,10 +241,6 @@ public interface TechnologySpecificImportedServiceAspect extends EObject {
      * Returns the value of the '<em><b>Referred Operation Mapping</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.technology.mapping.ReferredOperationMapping#getAspects <em>Aspects</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Referred Operation Mapping</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Referred Operation Mapping</em>' container reference.
      * @see #setReferredOperationMapping(ReferredOperationMapping)
@@ -297,10 +265,6 @@ public interface TechnologySpecificImportedServiceAspect extends EObject {
      * Returns the value of the '<em><b>Parameter Mapping</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.technology.mapping.ParameterMapping#getAspects <em>Aspects</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Parameter Mapping</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Parameter Mapping</em>' container reference.
      * @see #setParameterMapping(ParameterMapping)
@@ -325,10 +289,6 @@ public interface TechnologySpecificImportedServiceAspect extends EObject {
      * Returns the value of the '<em><b>Field Mapping</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.technology.mapping.TechnologySpecificFieldMapping#getAspects <em>Aspects</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Field Mapping</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Field Mapping</em>' container reference.
      * @see #setFieldMapping(TechnologySpecificFieldMapping)
@@ -353,10 +313,6 @@ public interface TechnologySpecificImportedServiceAspect extends EObject {
      * Returns the value of the '<em><b>Data Operation Mapping</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.technology.mapping.DataOperationMapping#getAspects <em>Aspects</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Data Operation Mapping</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Data Operation Mapping</em>' container reference.
      * @see #setDataOperationMapping(DataOperationMapping)
@@ -381,10 +337,6 @@ public interface TechnologySpecificImportedServiceAspect extends EObject {
      * Returns the value of the '<em><b>Data Operation Return Type Mapping</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.technology.mapping.DataOperationReturnTypeMapping#getAspects <em>Aspects</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Data Operation Return Type Mapping</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Data Operation Return Type Mapping</em>' container reference.
      * @see #setDataOperationReturnTypeMapping(DataOperationReturnTypeMapping)
@@ -409,10 +361,6 @@ public interface TechnologySpecificImportedServiceAspect extends EObject {
      * Returns the value of the '<em><b>Data Operation Parameter Mapping</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.technology.mapping.DataOperationParameterMapping#getAspects <em>Aspects</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Data Operation Parameter Mapping</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Data Operation Parameter Mapping</em>' container reference.
      * @see #setDataOperationParameterMapping(DataOperationParameterMapping)

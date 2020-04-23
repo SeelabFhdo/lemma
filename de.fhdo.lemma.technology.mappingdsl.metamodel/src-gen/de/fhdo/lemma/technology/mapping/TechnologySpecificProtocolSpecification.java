@@ -64,10 +64,6 @@ public interface TechnologySpecificProtocolSpecification extends EObject {
      * Returns the value of the '<em><b>Technology Specific Protocol</b></em>' containment reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.technology.mapping.TechnologySpecificProtocol#getProtocolSpecification <em>Protocol Specification</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Technology Specific Protocol</em>' containment reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Technology Specific Protocol</em>' containment reference.
      * @see #setTechnologySpecificProtocol(TechnologySpecificProtocol)

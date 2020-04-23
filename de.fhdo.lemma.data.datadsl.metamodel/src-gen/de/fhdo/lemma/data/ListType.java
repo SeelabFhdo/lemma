@@ -60,10 +60,6 @@ public interface ListType extends ComplexType {
      * The list contents are of type {@link de.fhdo.lemma.data.DataField}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.data.DataField#getListType <em>List Type</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Data Fields</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Data Fields</em>' containment reference list.
      * @see de.fhdo.lemma.data.DataPackage#getListType_DataFields()

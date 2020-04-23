@@ -82,10 +82,6 @@ public interface CompatibilityMatrixEntry extends EObject {
      * Returns the value of the '<em><b>Mapping Type</b></em>' containment reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.technology.PossiblyImportedTechnologySpecificType#getMappingEntry <em>Mapping Entry</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Mapping Type</em>' containment reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Mapping Type</em>' containment reference.
      * @see #setMappingType(PossiblyImportedTechnologySpecificType)
@@ -111,10 +107,6 @@ public interface CompatibilityMatrixEntry extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.technology.PossiblyImportedTechnologySpecificType}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.technology.PossiblyImportedTechnologySpecificType#getCompatibleEntry <em>Compatible Entry</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Compatible Types</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Compatible Types</em>' containment reference list.
      * @see de.fhdo.lemma.technology.TechnologyPackage#getCompatibilityMatrixEntry_CompatibleTypes()
@@ -128,10 +120,6 @@ public interface CompatibilityMatrixEntry extends EObject {
      * Returns the value of the '<em><b>Technology</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.technology.Technology#getCompatibilityEntries <em>Compatibility Entries</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Technology</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Technology</em>' container reference.
      * @see #setTechnology(Technology)

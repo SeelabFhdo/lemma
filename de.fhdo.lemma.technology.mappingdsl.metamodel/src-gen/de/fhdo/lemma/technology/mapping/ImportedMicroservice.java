@@ -34,10 +34,6 @@ public interface ImportedMicroservice extends EObject {
     /**
      * Returns the value of the '<em><b>Import</b></em>' reference.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Import</em>' reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Import</em>' reference.
      * @see #setImport(Import)
@@ -60,10 +56,6 @@ public interface ImportedMicroservice extends EObject {
     /**
      * Returns the value of the '<em><b>Microservice</b></em>' reference.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Microservice</em>' reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Microservice</em>' reference.
      * @see #setMicroservice(Microservice)
@@ -87,10 +79,6 @@ public interface ImportedMicroservice extends EObject {
      * Returns the value of the '<em><b>Microservice Mapping</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.technology.mapping.MicroserviceMapping#getMicroservice <em>Microservice</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Microservice Mapping</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Microservice Mapping</em>' container reference.
      * @see #setMicroserviceMapping(MicroserviceMapping)

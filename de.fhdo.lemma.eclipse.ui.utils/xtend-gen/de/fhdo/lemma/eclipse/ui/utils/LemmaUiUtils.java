@@ -46,6 +46,7 @@ import org.eclipse.xtext.util.CancelIndicator;
 import org.eclipse.xtext.validation.CheckMode;
 import org.eclipse.xtext.validation.IResourceValidator;
 import org.eclipse.xtext.validation.Issue;
+import org.eclipse.xtext.xbase.lib.ArrayExtensions;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Conversions;
 import org.eclipse.xtext.xbase.lib.Exceptions;
@@ -79,7 +80,7 @@ public final class LemmaUiUtils {
         return it_1.getId();
       };
       final Function1<String, Boolean> _function_2 = (String it_1) -> {
-        return Boolean.valueOf(((List<String>)Conversions.doWrapArray(forEditorIds)).contains(it_1));
+        return Boolean.valueOf(ArrayExtensions.contains(forEditorIds, it_1));
       };
       return Boolean.valueOf(IterableExtensions.<String>exists(ListExtensions.<IEditorDescriptor, String>map(((List<IEditorDescriptor>)Conversions.doWrapArray(it.getEditors())), _function_1), _function_2));
     };

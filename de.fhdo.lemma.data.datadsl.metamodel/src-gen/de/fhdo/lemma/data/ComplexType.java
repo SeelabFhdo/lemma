@@ -65,10 +65,6 @@ public interface ComplexType extends Type {
      * Returns the value of the '<em><b>Data Model</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.data.DataModel#getComplexTypes <em>Complex Types</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Data Model</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Data Model</em>' container reference.
      * @see #setDataModel(DataModel)
@@ -93,10 +89,6 @@ public interface ComplexType extends Type {
      * Returns the value of the '<em><b>Version</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.data.Version#getComplexTypes <em>Complex Types</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Version</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Version</em>' container reference.
      * @see #setVersion(Version)
@@ -121,10 +113,6 @@ public interface ComplexType extends Type {
      * Returns the value of the '<em><b>Context</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.data.Context#getComplexTypes <em>Complex Types</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Context</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Context</em>' container reference.
      * @see #setContext(Context)

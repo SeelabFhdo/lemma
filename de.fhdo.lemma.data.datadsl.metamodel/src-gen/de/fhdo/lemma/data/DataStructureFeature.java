@@ -136,10 +136,6 @@ public enum DataStructureFeature implements Enumerator {
     /**
      * The '<em><b>AGGREGATE</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>AGGREGATE</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @see #AGGREGATE
      * @model
@@ -151,10 +147,6 @@ public enum DataStructureFeature implements Enumerator {
     /**
      * The '<em><b>APPLICATION SERVICE</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>APPLICATION SERVICE</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @see #APPLICATION_SERVICE
      * @model
@@ -166,10 +158,6 @@ public enum DataStructureFeature implements Enumerator {
     /**
      * The '<em><b>DOMAIN EVENT</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>DOMAIN EVENT</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @see #DOMAIN_EVENT
      * @model
@@ -181,10 +169,6 @@ public enum DataStructureFeature implements Enumerator {
     /**
      * The '<em><b>DOMAIN SERVICE</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>DOMAIN SERVICE</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @see #DOMAIN_SERVICE
      * @model
@@ -196,10 +180,6 @@ public enum DataStructureFeature implements Enumerator {
     /**
      * The '<em><b>ENTITY</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>ENTITY</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @see #ENTITY
      * @model
@@ -211,10 +191,6 @@ public enum DataStructureFeature implements Enumerator {
     /**
      * The '<em><b>FACTORY</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>FACTORY</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @see #FACTORY
      * @model
@@ -226,10 +202,6 @@ public enum DataStructureFeature implements Enumerator {
     /**
      * The '<em><b>INFRASTRUCTURE SERVICE</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>INFRASTRUCTURE SERVICE</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @see #INFRASTRUCTURE_SERVICE
      * @model
@@ -241,10 +213,6 @@ public enum DataStructureFeature implements Enumerator {
     /**
      * The '<em><b>REPOSITORY</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>REPOSITORY</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @see #REPOSITORY
      * @model
@@ -256,10 +224,6 @@ public enum DataStructureFeature implements Enumerator {
     /**
      * The '<em><b>SERVICE</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>SERVICE</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @see #SERVICE
      * @model
@@ -271,10 +235,6 @@ public enum DataStructureFeature implements Enumerator {
     /**
      * The '<em><b>SPECIFICATION</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>SPECIFICATION</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @see #SPECIFICATION
      * @model
@@ -286,10 +246,6 @@ public enum DataStructureFeature implements Enumerator {
     /**
      * The '<em><b>VALUE OBJECT</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>VALUE OBJECT</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @see #VALUE_OBJECT
      * @model

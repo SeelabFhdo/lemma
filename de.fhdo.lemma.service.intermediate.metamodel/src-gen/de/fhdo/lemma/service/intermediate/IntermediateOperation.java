@@ -42,10 +42,6 @@ public interface IntermediateOperation extends EObject {
     /**
      * Returns the value of the '<em><b>Name</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Name</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Name</em>' attribute.
      * @see #setName(String)
@@ -68,10 +64,6 @@ public interface IntermediateOperation extends EObject {
     /**
      * Returns the value of the '<em><b>Qualified Name</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Qualified Name</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Qualified Name</em>' attribute.
      * @see #setQualifiedName(String)
@@ -94,10 +86,6 @@ public interface IntermediateOperation extends EObject {
     /**
      * Returns the value of the '<em><b>Visibility</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Visibility</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Visibility</em>' attribute.
      * @see #setVisibility(String)
@@ -120,10 +108,6 @@ public interface IntermediateOperation extends EObject {
     /**
      * Returns the value of the '<em><b>Not Implemented</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Not Implemented</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Not Implemented</em>' attribute.
      * @see #setNotImplemented(boolean)
@@ -147,10 +131,6 @@ public interface IntermediateOperation extends EObject {
      * Returns the value of the '<em><b>Api Operation Comment</b></em>' containment reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.intermediate.IntermediateApiOperationComment#getOperation <em>Operation</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Api Operation Comment</em>' containment reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Api Operation Comment</em>' containment reference.
      * @see #setApiOperationComment(IntermediateApiOperationComment)
@@ -176,10 +156,6 @@ public interface IntermediateOperation extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.service.intermediate.IntermediateEndpoint}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.intermediate.IntermediateEndpoint#getOperation <em>Operation</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Endpoints</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Endpoints</em>' containment reference list.
      * @see de.fhdo.lemma.service.intermediate.IntermediatePackage#getIntermediateOperation_Endpoints()
@@ -193,10 +169,6 @@ public interface IntermediateOperation extends EObject {
      * Returns the value of the '<em><b>Protocols</b></em>' containment reference list.
      * The list contents are of type {@link de.fhdo.lemma.service.intermediate.IntermediateProtocolSpecification}.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Protocols</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Protocols</em>' containment reference list.
      * @see de.fhdo.lemma.service.intermediate.IntermediatePackage#getIntermediateOperation_Protocols()
@@ -209,10 +181,6 @@ public interface IntermediateOperation extends EObject {
      * Returns the value of the '<em><b>Aspects</b></em>' containment reference list.
      * The list contents are of type {@link de.fhdo.lemma.data.intermediate.IntermediateImportedAspect}.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Aspects</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Aspects</em>' containment reference list.
      * @see de.fhdo.lemma.service.intermediate.IntermediatePackage#getIntermediateOperation_Aspects()
@@ -226,10 +194,6 @@ public interface IntermediateOperation extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.service.intermediate.IntermediateParameter}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.intermediate.IntermediateParameter#getOperation <em>Operation</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Parameters</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Parameters</em>' containment reference list.
      * @see de.fhdo.lemma.service.intermediate.IntermediatePackage#getIntermediateOperation_Parameters()
@@ -243,10 +207,6 @@ public interface IntermediateOperation extends EObject {
      * Returns the value of the '<em><b>Interface</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.intermediate.IntermediateInterface#getOperations <em>Operations</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Interface</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Interface</em>' container reference.
      * @see #setInterface(IntermediateInterface)

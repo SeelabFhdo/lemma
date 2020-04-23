@@ -36,10 +36,6 @@ public interface ImportedComplexTypeToMap extends EObject {
     /**
      * Returns the value of the '<em><b>Service Model Import</b></em>' reference.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Service Model Import</em>' reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Service Model Import</em>' reference.
      * @see #setServiceModelImport(Import)
@@ -62,10 +58,6 @@ public interface ImportedComplexTypeToMap extends EObject {
     /**
      * Returns the value of the '<em><b>Data Model Import</b></em>' reference.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Data Model Import</em>' reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Data Model Import</em>' reference.
      * @see #setDataModelImport(Import)
@@ -88,10 +80,6 @@ public interface ImportedComplexTypeToMap extends EObject {
     /**
      * Returns the value of the '<em><b>Type</b></em>' reference.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Type</em>' reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Type</em>' reference.
      * @see #setType(ComplexType)
@@ -115,10 +103,6 @@ public interface ImportedComplexTypeToMap extends EObject {
      * Returns the value of the '<em><b>Type Mapping</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.technology.mapping.ComplexTypeMapping#getType <em>Type</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Type Mapping</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Type Mapping</em>' container reference.
      * @see #setTypeMapping(ComplexTypeMapping)

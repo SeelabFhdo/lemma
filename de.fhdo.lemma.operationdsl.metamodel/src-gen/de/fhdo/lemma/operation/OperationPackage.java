@@ -22,7 +22,6 @@ import org.eclipse.emf.ecore.EReference;
  * <!-- end-user-doc -->
  * @see de.fhdo.lemma.operation.OperationFactory
  * @model kind="package"
- *        annotation="http://www.eclipse.org/emf/2002/GenModel basePackage='de.fhdo.lemma'"
  * @generated
  */
 public interface OperationPackage extends EPackage {

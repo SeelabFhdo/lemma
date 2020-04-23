@@ -81,10 +81,6 @@ public interface Parameter extends EObject {
      * The default value is <code>"IN"</code>.
      * The literals are from the enumeration {@link de.fhdo.lemma.technology.ExchangePattern}.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Exchange Pattern</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Exchange Pattern</em>' attribute.
      * @see de.fhdo.lemma.technology.ExchangePattern
@@ -110,10 +106,6 @@ public interface Parameter extends EObject {
      * Returns the value of the '<em><b>Communication Type</b></em>' attribute.
      * The literals are from the enumeration {@link de.fhdo.lemma.technology.CommunicationType}.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Communication Type</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Communication Type</em>' attribute.
      * @see de.fhdo.lemma.technology.CommunicationType
@@ -139,10 +131,6 @@ public interface Parameter extends EObject {
      * Returns the value of the '<em><b>Communicates Fault</b></em>' attribute.
      * The default value is <code>"false"</code>.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Communicates Fault</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Communicates Fault</em>' attribute.
      * @see #setCommunicatesFault(boolean)
@@ -166,10 +154,6 @@ public interface Parameter extends EObject {
      * Returns the value of the '<em><b>Optional</b></em>' attribute.
      * The default value is <code>"false"</code>.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Optional</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Optional</em>' attribute.
      * @see #setOptional(boolean)
@@ -193,10 +177,6 @@ public interface Parameter extends EObject {
      * Returns the value of the '<em><b>Initialized By Operation</b></em>' containment reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.PossiblyImportedOperation#getInitializedParameter <em>Initialized Parameter</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Initialized By Operation</em>' containment reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Initialized By Operation</em>' containment reference.
      * @see #setInitializedByOperation(PossiblyImportedOperation)
@@ -220,10 +200,6 @@ public interface Parameter extends EObject {
     /**
      * Returns the value of the '<em><b>Imported Type</b></em>' containment reference.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Imported Type</em>' containment reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Imported Type</em>' containment reference.
      * @see #setImportedType(ImportedType)
@@ -246,10 +222,6 @@ public interface Parameter extends EObject {
     /**
      * Returns the value of the '<em><b>Primitive Type</b></em>' containment reference.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Primitive Type</em>' containment reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Primitive Type</em>' containment reference.
      * @see #setPrimitiveType(PrimitiveType)
@@ -274,10 +246,6 @@ public interface Parameter extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.service.ImportedServiceAspect}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.ImportedServiceAspect#getParameter <em>Parameter</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Aspects</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Aspects</em>' containment reference list.
      * @see de.fhdo.lemma.service.ServicePackage#getParameter_Aspects()
@@ -292,10 +260,6 @@ public interface Parameter extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.service.MappedField}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.MappedField#getParameter <em>Parameter</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Mapped Fields</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Mapped Fields</em>' containment reference list.
      * @see de.fhdo.lemma.service.ServicePackage#getParameter_MappedFields()
@@ -309,10 +273,6 @@ public interface Parameter extends EObject {
      * Returns the value of the '<em><b>Operation</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.Operation#getParameters <em>Parameters</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Operation</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Operation</em>' container reference.
      * @see #setOperation(Operation)

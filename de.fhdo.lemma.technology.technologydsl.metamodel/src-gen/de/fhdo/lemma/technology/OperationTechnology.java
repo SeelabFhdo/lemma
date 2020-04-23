@@ -33,10 +33,6 @@ public interface OperationTechnology extends EObject {
     /**
      * Returns the value of the '<em><b>Name</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Name</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Name</em>' attribute.
      * @see #setName(String)
@@ -61,10 +57,6 @@ public interface OperationTechnology extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.technology.OperationEnvironment}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.technology.OperationEnvironment#getOperationTechnology <em>Operation Technology</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Operation Environments</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Operation Environments</em>' containment reference list.
      * @see de.fhdo.lemma.technology.TechnologyPackage#getOperationTechnology_OperationEnvironments()
@@ -79,10 +71,6 @@ public interface OperationTechnology extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.technology.TechnologySpecificProperty}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.technology.TechnologySpecificProperty#getOperationTechnology <em>Operation Technology</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Service Properties</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Service Properties</em>' containment reference list.
      * @see de.fhdo.lemma.technology.TechnologyPackage#getOperationTechnology_ServiceProperties()

@@ -53,10 +53,6 @@ public interface DataStructure extends ComplexType {
     /**
      * Returns the value of the '<em><b>Super</b></em>' reference.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Super</em>' reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Super</em>' reference.
      * @see #setSuper(DataStructure)
@@ -81,10 +77,6 @@ public interface DataStructure extends ComplexType {
      * The list contents are of type {@link de.fhdo.lemma.data.DataField}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.data.DataField#getDataStructure <em>Data Structure</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Data Fields</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Data Fields</em>' containment reference list.
      * @see de.fhdo.lemma.data.DataPackage#getDataStructure_DataFields()
@@ -99,10 +91,6 @@ public interface DataStructure extends ComplexType {
      * The list contents are of type {@link de.fhdo.lemma.data.DataOperation}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.data.DataOperation#getDataStructure <em>Data Structure</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Operations</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Operations</em>' containment reference list.
      * @see de.fhdo.lemma.data.DataPackage#getDataStructure_Operations()

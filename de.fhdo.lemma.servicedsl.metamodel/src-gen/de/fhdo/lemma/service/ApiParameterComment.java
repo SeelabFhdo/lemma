@@ -32,10 +32,6 @@ public interface ApiParameterComment extends EObject {
     /**
      * Returns the value of the '<em><b>Comment</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Comment</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Comment</em>' attribute.
      * @see #setComment(String)
@@ -58,10 +54,6 @@ public interface ApiParameterComment extends EObject {
     /**
      * Returns the value of the '<em><b>Required</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Required</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Required</em>' attribute.
      * @see #setRequired(boolean)
@@ -84,10 +76,6 @@ public interface ApiParameterComment extends EObject {
     /**
      * Returns the value of the '<em><b>Parameter</b></em>' reference.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Parameter</em>' reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Parameter</em>' reference.
      * @see #setParameter(Parameter)
@@ -111,10 +99,6 @@ public interface ApiParameterComment extends EObject {
      * Returns the value of the '<em><b>Operation Comment</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.ApiOperationComment#getParameterComments <em>Parameter Comments</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Operation Comment</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Operation Comment</em>' container reference.
      * @see #setOperationComment(ApiOperationComment)

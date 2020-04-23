@@ -29,6 +29,7 @@ import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.xtend.lib.annotations.Accessors;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.resource.IResourceServiceProvider;
+import org.eclipse.xtext.xbase.lib.ArrayExtensions;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Conversions;
 import org.eclipse.xtext.xbase.lib.Exceptions;
@@ -404,7 +405,7 @@ public abstract class AbstractIntermediateModelTransformationStrategy<TIM_TYPE e
    */
   private <T extends Object> Map<TransformationModelDescription, T> mapValuesToModelTypeDescriptions(final List<T> values, final String valueTypeName, final TransformationModelDirection... filterDirections) {
     final Function1<TransformationModelDescription, Boolean> _function = (TransformationModelDescription it) -> {
-      return Boolean.valueOf(((List<TransformationModelDirection>)Conversions.doWrapArray(filterDirections)).contains(it.getDirection()));
+      return Boolean.valueOf(ArrayExtensions.contains(filterDirections, it.getDirection()));
     };
     final Iterable<TransformationModelDescription> registeredDescriptions = IterableExtensions.<TransformationModelDescription>filter(this.modelTypes.keySet(), _function);
     int _size = values.size();

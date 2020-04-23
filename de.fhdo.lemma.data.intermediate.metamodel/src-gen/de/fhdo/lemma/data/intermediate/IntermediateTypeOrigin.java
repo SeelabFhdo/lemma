@@ -65,10 +65,6 @@ public enum IntermediateTypeOrigin implements Enumerator {
     /**
      * The '<em><b>DUMMY FOR XMI SERIALIZER BUG</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>DUMMY FOR XMI SERIALIZER BUG</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @see #DUMMY_FOR_XMI_SERIALIZER_BUG
      * @model
@@ -80,10 +76,6 @@ public enum IntermediateTypeOrigin implements Enumerator {
     /**
      * The '<em><b>DATA MODEL</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>DATA MODEL</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @see #DATA_MODEL
      * @model
@@ -95,10 +87,6 @@ public enum IntermediateTypeOrigin implements Enumerator {
     /**
      * The '<em><b>BUILTIN</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>BUILTIN</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @see #BUILTIN
      * @model
@@ -110,10 +98,6 @@ public enum IntermediateTypeOrigin implements Enumerator {
     /**
      * The '<em><b>TECHNOLOGY</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>TECHNOLOGY</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @see #TECHNOLOGY
      * @model

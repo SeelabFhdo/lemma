@@ -67,10 +67,6 @@ public interface Version extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.data.ComplexType}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.data.ComplexType#getVersion <em>Version</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Complex Types</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Complex Types</em>' containment reference list.
      * @see de.fhdo.lemma.data.DataPackage#getVersion_ComplexTypes()
@@ -85,10 +81,6 @@ public interface Version extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.data.Context}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.data.Context#getVersion <em>Version</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Contexts</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Contexts</em>' containment reference list.
      * @see de.fhdo.lemma.data.DataPackage#getVersion_Contexts()
@@ -102,10 +94,6 @@ public interface Version extends EObject {
      * Returns the value of the '<em><b>Data Model</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.data.DataModel#getVersions <em>Versions</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Data Model</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Data Model</em>' container reference.
      * @see #setDataModel(DataModel)

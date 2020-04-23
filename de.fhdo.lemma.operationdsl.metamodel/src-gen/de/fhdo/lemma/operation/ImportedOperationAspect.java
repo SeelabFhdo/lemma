@@ -77,10 +77,6 @@ public interface ImportedOperationAspect extends EObject {
     /**
      * Returns the value of the '<em><b>Aspect</b></em>' reference.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Aspect</em>' reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Aspect</em>' reference.
      * @see #setAspect(OperationAspect)
@@ -103,10 +99,6 @@ public interface ImportedOperationAspect extends EObject {
     /**
      * Returns the value of the '<em><b>Single Property Value</b></em>' containment reference.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Single Property Value</em>' containment reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Single Property Value</em>' containment reference.
      * @see #setSinglePropertyValue(PrimitiveValue)
@@ -130,10 +122,6 @@ public interface ImportedOperationAspect extends EObject {
      * Returns the value of the '<em><b>Values</b></em>' containment reference list.
      * The list contents are of type {@link de.fhdo.lemma.technology.TechnologySpecificPropertyValueAssignment}.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Values</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Values</em>' containment reference list.
      * @see de.fhdo.lemma.operation.OperationPackage#getImportedOperationAspect_Values()
@@ -146,10 +134,6 @@ public interface ImportedOperationAspect extends EObject {
      * Returns the value of the '<em><b>Operation Node</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.operation.OperationNode#getAspects <em>Aspects</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Operation Node</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Operation Node</em>' container reference.
      * @see #setOperationNode(OperationNode)

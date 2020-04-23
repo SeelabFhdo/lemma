@@ -55,10 +55,6 @@ public enum ExchangePattern implements Enumerator {
     /**
      * The '<em><b>IN</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>IN</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @see #IN
      * @model
@@ -70,10 +66,6 @@ public enum ExchangePattern implements Enumerator {
     /**
      * The '<em><b>OUT</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>OUT</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @see #OUT
      * @model
@@ -85,10 +77,6 @@ public enum ExchangePattern implements Enumerator {
     /**
      * The '<em><b>INOUT</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>INOUT</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @see #INOUT
      * @model

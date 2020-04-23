@@ -11,8 +11,8 @@ Require-Bundle: de.fhdo.lemma.technology.mappingdsl,
  org.eclipse.xtext.ui,
  org.eclipse.xtext.ui.shared,
  org.eclipse.xtext.ui.codetemplates.ui,
- org.eclipse.ui.editors;bundle-version="3.5.0",
- org.eclipse.ui.ide;bundle-version="3.5.0",
+ org.eclipse.ui.editors;bundle-version="3.13.0",
+ org.eclipse.ui.ide;bundle-version="3.13.0",
  de.fhdo.lemma.data.datadsl;bundle-version="0.0.1",
  de.fhdo.lemma.data.datadsl.ide;bundle-version="0.0.1",
  de.fhdo.lemma.data.datadsl.ui;bundle-version="0.0.1",
@@ -25,8 +25,8 @@ Require-Bundle: de.fhdo.lemma.technology.mappingdsl,
  org.eclipse.ui,
  org.eclipse.compare,
  org.eclipse.xtext.builder,
- org.eclipse.xtend.lib;bundle-version="2.16.0";resolution:=optional,
- org.eclipse.xtext.xbase.lib;bundle-version="2.16.0"
+ org.eclipse.xtend.lib;bundle-version="2.21.0";resolution:=optional,
+ org.eclipse.xtext.xbase.lib;bundle-version="2.21.0"
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: de.fhdo.lemma.technology.mappingdsl.ui.contentassist,

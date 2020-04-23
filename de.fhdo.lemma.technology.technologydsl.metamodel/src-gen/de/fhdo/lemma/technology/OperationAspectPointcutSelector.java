@@ -57,10 +57,6 @@ public interface OperationAspectPointcutSelector extends EObject {
      * Returns the value of the '<em><b>Operation Aspect</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.technology.OperationAspect#getPointcutSelectors <em>Pointcut Selectors</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Operation Aspect</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Operation Aspect</em>' container reference.
      * @see #setOperationAspect(OperationAspect)

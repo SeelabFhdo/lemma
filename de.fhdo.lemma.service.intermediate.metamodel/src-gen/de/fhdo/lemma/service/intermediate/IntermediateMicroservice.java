@@ -48,10 +48,6 @@ public interface IntermediateMicroservice extends EObject {
     /**
      * Returns the value of the '<em><b>Source Model Uri</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Source Model Uri</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Source Model Uri</em>' attribute.
      * @see #setSourceModelUri(String)
@@ -74,10 +70,6 @@ public interface IntermediateMicroservice extends EObject {
     /**
      * Returns the value of the '<em><b>Name</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Name</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Name</em>' attribute.
      * @see #setName(String)
@@ -100,10 +92,6 @@ public interface IntermediateMicroservice extends EObject {
     /**
      * Returns the value of the '<em><b>Version</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Version</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Version</em>' attribute.
      * @see #setVersion(String)
@@ -126,10 +114,6 @@ public interface IntermediateMicroservice extends EObject {
     /**
      * Returns the value of the '<em><b>Qualified Name</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Qualified Name</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Qualified Name</em>' attribute.
      * @see #setQualifiedName(String)
@@ -152,10 +136,6 @@ public interface IntermediateMicroservice extends EObject {
     /**
      * Returns the value of the '<em><b>Type</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Type</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Type</em>' attribute.
      * @see #setType(String)
@@ -178,10 +158,6 @@ public interface IntermediateMicroservice extends EObject {
     /**
      * Returns the value of the '<em><b>Visibility</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Visibility</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Visibility</em>' attribute.
      * @see #setVisibility(String)
@@ -204,10 +180,6 @@ public interface IntermediateMicroservice extends EObject {
     /**
      * Returns the value of the '<em><b>Effectively Implemented</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Effectively Implemented</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Effectively Implemented</em>' attribute.
      * @see #setEffectivelyImplemented(boolean)
@@ -232,10 +204,6 @@ public interface IntermediateMicroservice extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.service.intermediate.IntermediateTechnology}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.intermediate.IntermediateTechnology#getMicroservice <em>Microservice</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Technologies</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Technologies</em>' containment reference list.
      * @see de.fhdo.lemma.service.intermediate.IntermediatePackage#getIntermediateMicroservice_Technologies()
@@ -250,10 +218,6 @@ public interface IntermediateMicroservice extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.service.intermediate.IntermediateEndpoint}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.intermediate.IntermediateEndpoint#getMicroservice <em>Microservice</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Endpoints</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Endpoints</em>' containment reference list.
      * @see de.fhdo.lemma.service.intermediate.IntermediatePackage#getIntermediateMicroservice_Endpoints()
@@ -267,10 +231,6 @@ public interface IntermediateMicroservice extends EObject {
      * Returns the value of the '<em><b>Protocols</b></em>' containment reference list.
      * The list contents are of type {@link de.fhdo.lemma.service.intermediate.IntermediateProtocolSpecification}.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Protocols</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Protocols</em>' containment reference list.
      * @see de.fhdo.lemma.service.intermediate.IntermediatePackage#getIntermediateMicroservice_Protocols()
@@ -284,10 +244,6 @@ public interface IntermediateMicroservice extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.service.intermediate.MicroserviceReference}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.intermediate.MicroserviceReference#getRequiringMicroservice <em>Requiring Microservice</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Required Microservices</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Required Microservices</em>' containment reference list.
      * @see de.fhdo.lemma.service.intermediate.IntermediatePackage#getIntermediateMicroservice_RequiredMicroservices()
@@ -302,10 +258,6 @@ public interface IntermediateMicroservice extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.service.intermediate.InterfaceReference}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.intermediate.InterfaceReference#getRequiringMicroservice <em>Requiring Microservice</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Required Interfaces</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Required Interfaces</em>' containment reference list.
      * @see de.fhdo.lemma.service.intermediate.IntermediatePackage#getIntermediateMicroservice_RequiredInterfaces()
@@ -320,10 +272,6 @@ public interface IntermediateMicroservice extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.service.intermediate.OperationReference}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.intermediate.OperationReference#getRequiringMicroservice <em>Requiring Microservice</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Required Operations</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Required Operations</em>' containment reference list.
      * @see de.fhdo.lemma.service.intermediate.IntermediatePackage#getIntermediateMicroservice_RequiredOperations()
@@ -338,10 +286,6 @@ public interface IntermediateMicroservice extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.service.intermediate.IntermediateInterface}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.intermediate.IntermediateInterface#getMicroservice <em>Microservice</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Interfaces</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Interfaces</em>' containment reference list.
      * @see de.fhdo.lemma.service.intermediate.IntermediatePackage#getIntermediateMicroservice_Interfaces()
@@ -355,10 +299,6 @@ public interface IntermediateMicroservice extends EObject {
      * Returns the value of the '<em><b>Aspects</b></em>' containment reference list.
      * The list contents are of type {@link de.fhdo.lemma.data.intermediate.IntermediateImportedAspect}.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Aspects</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Aspects</em>' containment reference list.
      * @see de.fhdo.lemma.service.intermediate.IntermediatePackage#getIntermediateMicroservice_Aspects()
@@ -371,10 +311,6 @@ public interface IntermediateMicroservice extends EObject {
      * Returns the value of the '<em><b>Service Model</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.intermediate.IntermediateServiceModel#getMicroservices <em>Microservices</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Service Model</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Service Model</em>' container reference.
      * @see #setServiceModel(IntermediateServiceModel)

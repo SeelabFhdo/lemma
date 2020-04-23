@@ -66,10 +66,6 @@ public interface InfrastructureNode extends OperationNode {
      * Returns the value of the '<em><b>Depends On Nodes</b></em>' reference list.
      * The list contents are of type {@link de.fhdo.lemma.operation.OperationNode}.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Depends On Nodes</em>' reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Depends On Nodes</em>' reference list.
      * @see de.fhdo.lemma.operation.OperationPackage#getInfrastructureNode_DependsOnNodes()
@@ -82,10 +78,6 @@ public interface InfrastructureNode extends OperationNode {
      * Returns the value of the '<em><b>Infrastructure Technology</b></em>' containment reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.operation.InfrastructureTechnologyReference#getInfrastructureNode <em>Infrastructure Node</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Infrastructure Technology</em>' containment reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Infrastructure Technology</em>' containment reference.
      * @see #setInfrastructureTechnology(InfrastructureTechnologyReference)
@@ -111,10 +103,6 @@ public interface InfrastructureNode extends OperationNode {
      * The list contents are of type {@link de.fhdo.lemma.operation.BasicEndpoint}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.operation.BasicEndpoint#getInfrastructureNode <em>Infrastructure Node</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Endpoints</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Endpoints</em>' containment reference list.
      * @see de.fhdo.lemma.operation.OperationPackage#getInfrastructureNode_Endpoints()
@@ -128,10 +116,6 @@ public interface InfrastructureNode extends OperationNode {
      * Returns the value of the '<em><b>Operation Model</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.operation.OperationModel#getInfrastructureNodes <em>Infrastructure Nodes</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Operation Model</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Operation Model</em>' container reference.
      * @see #setOperationModel(OperationModel)

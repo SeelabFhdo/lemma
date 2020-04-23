@@ -617,7 +617,7 @@ public class MappingModelTransformation extends AbstractAtlInputOutputIntermedia
     Iterable<AbstractIntermediateModelTransformationStrategy.TransformationResult> _filter = IterableExtensions.<AbstractIntermediateModelTransformationStrategy.TransformationResult>filter(results, _function);
     AbstractIntermediateModelTransformationStrategy.TransformationResult _get = null;
     if (((AbstractIntermediateModelTransformationStrategy.TransformationResult[])Conversions.unwrapArray(_filter, AbstractIntermediateModelTransformationStrategy.TransformationResult.class))!=null) {
-      _get=((AbstractIntermediateModelTransformationStrategy.TransformationResult[])Conversions.unwrapArray(_filter, AbstractIntermediateModelTransformationStrategy.TransformationResult.class))[0];
+      _get=(((AbstractIntermediateModelTransformationStrategy.TransformationResult[])Conversions.unwrapArray(_filter, AbstractIntermediateModelTransformationStrategy.TransformationResult.class))[0]);
     }
     List<AbstractIntermediateModelTransformationStrategy.InputModel> _inputModels = null;
     if (_get!=null) {

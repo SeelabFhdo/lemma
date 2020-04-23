@@ -44,10 +44,6 @@ public interface IntermediateParameter extends EObject {
     /**
      * Returns the value of the '<em><b>Name</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Name</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Name</em>' attribute.
      * @see #setName(String)
@@ -70,10 +66,6 @@ public interface IntermediateParameter extends EObject {
     /**
      * Returns the value of the '<em><b>Qualified Name</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Qualified Name</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Qualified Name</em>' attribute.
      * @see #setQualifiedName(String)
@@ -96,10 +88,6 @@ public interface IntermediateParameter extends EObject {
     /**
      * Returns the value of the '<em><b>Exchange Pattern</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Exchange Pattern</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Exchange Pattern</em>' attribute.
      * @see #setExchangePattern(String)
@@ -122,10 +110,6 @@ public interface IntermediateParameter extends EObject {
     /**
      * Returns the value of the '<em><b>Communication Type</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Communication Type</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Communication Type</em>' attribute.
      * @see #setCommunicationType(String)
@@ -148,10 +132,6 @@ public interface IntermediateParameter extends EObject {
     /**
      * Returns the value of the '<em><b>Communicates Fault</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Communicates Fault</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Communicates Fault</em>' attribute.
      * @see #setCommunicatesFault(boolean)
@@ -174,10 +154,6 @@ public interface IntermediateParameter extends EObject {
     /**
      * Returns the value of the '<em><b>Optional</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Optional</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Optional</em>' attribute.
      * @see #setOptional(boolean)
@@ -200,10 +176,6 @@ public interface IntermediateParameter extends EObject {
     /**
      * Returns the value of the '<em><b>Type</b></em>' containment reference.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Type</em>' containment reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Type</em>' containment reference.
      * @see #setType(IntermediateType)
@@ -227,10 +199,6 @@ public interface IntermediateParameter extends EObject {
      * Returns the value of the '<em><b>Initialized By Operation</b></em>' containment reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.intermediate.OperationReference#getInitializedParameter <em>Initialized Parameter</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Initialized By Operation</em>' containment reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Initialized By Operation</em>' containment reference.
      * @see #setInitializedByOperation(OperationReference)
@@ -255,10 +223,6 @@ public interface IntermediateParameter extends EObject {
      * Returns the value of the '<em><b>Aspects</b></em>' containment reference list.
      * The list contents are of type {@link de.fhdo.lemma.data.intermediate.IntermediateImportedAspect}.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Aspects</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Aspects</em>' containment reference list.
      * @see de.fhdo.lemma.service.intermediate.IntermediatePackage#getIntermediateParameter_Aspects()
@@ -272,10 +236,6 @@ public interface IntermediateParameter extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.service.intermediate.DataFieldAspects}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.intermediate.DataFieldAspects#getParameter <em>Parameter</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Field Aspects</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Field Aspects</em>' containment reference list.
      * @see de.fhdo.lemma.service.intermediate.IntermediatePackage#getIntermediateParameter_FieldAspects()
@@ -289,10 +249,6 @@ public interface IntermediateParameter extends EObject {
      * Returns the value of the '<em><b>Operation</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.intermediate.IntermediateOperation#getParameters <em>Parameters</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Operation</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Operation</em>' container reference.
      * @see #setOperation(IntermediateOperation)

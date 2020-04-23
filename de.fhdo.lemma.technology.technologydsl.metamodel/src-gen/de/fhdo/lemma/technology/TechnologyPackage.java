@@ -26,7 +26,6 @@ import org.eclipse.emf.ecore.EReference;
  * <!-- end-user-doc -->
  * @see de.fhdo.lemma.technology.TechnologyFactory
  * @model kind="package"
- *        annotation="http://www.eclipse.org/emf/2002/GenModel basePackage='de.fhdo.lemma'"
  * @generated
  */
 public interface TechnologyPackage extends EPackage {

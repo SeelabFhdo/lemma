@@ -75,10 +75,6 @@ public enum IntermediateTypeKind implements Enumerator {
     /**
      * The '<em><b>DUMMY FOR XMI SERIALIZER BUG</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>DUMMY FOR XMI SERIALIZER BUG</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @see #DUMMY_FOR_XMI_SERIALIZER_BUG
      * @model
@@ -90,10 +86,6 @@ public enum IntermediateTypeKind implements Enumerator {
     /**
      * The '<em><b>ENUMERATION</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>ENUMERATION</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @see #ENUMERATION
      * @model
@@ -105,10 +97,6 @@ public enum IntermediateTypeKind implements Enumerator {
     /**
      * The '<em><b>LIST</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>LIST</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @see #LIST
      * @model
@@ -120,10 +108,6 @@ public enum IntermediateTypeKind implements Enumerator {
     /**
      * The '<em><b>PRIMITIVE</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>PRIMITIVE</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @see #PRIMITIVE
      * @model
@@ -135,10 +119,6 @@ public enum IntermediateTypeKind implements Enumerator {
     /**
      * The '<em><b>STRUCTURE</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>STRUCTURE</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @see #STRUCTURE
      * @model

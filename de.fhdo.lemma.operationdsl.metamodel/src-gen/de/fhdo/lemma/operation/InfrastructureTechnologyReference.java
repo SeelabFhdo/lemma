@@ -35,10 +35,6 @@ public interface InfrastructureTechnologyReference extends EObject {
     /**
      * Returns the value of the '<em><b>Import</b></em>' reference.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Import</em>' reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Import</em>' reference.
      * @see #setImport(Import)
@@ -61,10 +57,6 @@ public interface InfrastructureTechnologyReference extends EObject {
     /**
      * Returns the value of the '<em><b>Infrastructure Technology</b></em>' reference.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Infrastructure Technology</em>' reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Infrastructure Technology</em>' reference.
      * @see #setInfrastructureTechnology(InfrastructureTechnology)
@@ -88,10 +80,6 @@ public interface InfrastructureTechnologyReference extends EObject {
      * Returns the value of the '<em><b>Infrastructure Node</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.operation.InfrastructureNode#getInfrastructureTechnology <em>Infrastructure Technology</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Infrastructure Node</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Infrastructure Node</em>' container reference.
      * @see #setInfrastructureNode(InfrastructureNode)

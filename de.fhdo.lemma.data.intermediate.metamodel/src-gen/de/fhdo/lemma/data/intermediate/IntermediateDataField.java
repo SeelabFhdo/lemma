@@ -43,10 +43,6 @@ public interface IntermediateDataField extends EObject {
     /**
      * Returns the value of the '<em><b>Name</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Name</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Name</em>' attribute.
      * @see #setName(String)
@@ -69,10 +65,6 @@ public interface IntermediateDataField extends EObject {
     /**
      * Returns the value of the '<em><b>Qualified Name</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Qualified Name</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Qualified Name</em>' attribute.
      * @see #setQualifiedName(String)
@@ -95,10 +87,6 @@ public interface IntermediateDataField extends EObject {
     /**
      * Returns the value of the '<em><b>Hidden</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Hidden</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Hidden</em>' attribute.
      * @see #setHidden(boolean)
@@ -121,10 +109,6 @@ public interface IntermediateDataField extends EObject {
     /**
      * Returns the value of the '<em><b>Immutable</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Immutable</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Immutable</em>' attribute.
      * @see #setImmutable(boolean)
@@ -147,10 +131,6 @@ public interface IntermediateDataField extends EObject {
     /**
      * Returns the value of the '<em><b>Inherited</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Inherited</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Inherited</em>' attribute.
      * @see #setInherited(boolean)
@@ -174,10 +154,6 @@ public interface IntermediateDataField extends EObject {
      * Returns the value of the '<em><b>Feature Names</b></em>' attribute list.
      * The list contents are of type {@link java.lang.String}.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Feature Names</em>' attribute list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Feature Names</em>' attribute list.
      * @see de.fhdo.lemma.data.intermediate.IntermediatePackage#getIntermediateDataField_FeatureNames()
@@ -189,10 +165,6 @@ public interface IntermediateDataField extends EObject {
     /**
      * Returns the value of the '<em><b>Initialization Value</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Initialization Value</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Initialization Value</em>' attribute.
      * @see #setInitializationValue(String)
@@ -217,10 +189,6 @@ public interface IntermediateDataField extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.data.intermediate.IntermediatePrimitiveType}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.data.intermediate.IntermediatePrimitiveType#getInitializedDataField <em>Initialized Data Field</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Initialization Value Compatible Types</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Initialization Value Compatible Types</em>' containment reference list.
      * @see de.fhdo.lemma.data.intermediate.IntermediatePackage#getIntermediateDataField_InitializationValueCompatibleTypes()
@@ -234,10 +202,6 @@ public interface IntermediateDataField extends EObject {
      * Returns the value of the '<em><b>Type</b></em>' containment reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.data.intermediate.IntermediateType#getDataField <em>Data Field</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Type</em>' containment reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Type</em>' containment reference.
      * @see #setType(IntermediateType)
@@ -261,10 +225,6 @@ public interface IntermediateDataField extends EObject {
     /**
      * Returns the value of the '<em><b>Original Type</b></em>' containment reference.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Original Type</em>' containment reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Original Type</em>' containment reference.
      * @see #setOriginalType(IntermediateType)
@@ -289,10 +249,6 @@ public interface IntermediateDataField extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.data.intermediate.IntermediateImportedAspect}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.data.intermediate.IntermediateImportedAspect#getDataField <em>Data Field</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Aspects</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Aspects</em>' containment reference list.
      * @see de.fhdo.lemma.data.intermediate.IntermediatePackage#getIntermediateDataField_Aspects()
@@ -306,10 +262,6 @@ public interface IntermediateDataField extends EObject {
      * Returns the value of the '<em><b>Data Structure</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.data.intermediate.IntermediateDataStructure#getDataFields <em>Data Fields</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Data Structure</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Data Structure</em>' container reference.
      * @see #setDataStructure(IntermediateDataStructure)
@@ -334,10 +286,6 @@ public interface IntermediateDataField extends EObject {
      * Returns the value of the '<em><b>List Type</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.data.intermediate.IntermediateListType#getDataFields <em>Data Fields</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>List Type</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>List Type</em>' container reference.
      * @see #setListType(IntermediateListType)

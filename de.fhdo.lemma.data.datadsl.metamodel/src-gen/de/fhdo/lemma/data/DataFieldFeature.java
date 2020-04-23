@@ -55,10 +55,6 @@ public enum DataFieldFeature implements Enumerator {
     /**
      * The '<em><b>IDENTIFIER</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>IDENTIFIER</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @see #IDENTIFIER
      * @model
@@ -70,10 +66,6 @@ public enum DataFieldFeature implements Enumerator {
     /**
      * The '<em><b>NEVER EMPTY</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>NEVER EMPTY</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @see #NEVER_EMPTY
      * @model
@@ -85,10 +77,6 @@ public enum DataFieldFeature implements Enumerator {
     /**
      * The '<em><b>PART</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>PART</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @see #PART
      * @model

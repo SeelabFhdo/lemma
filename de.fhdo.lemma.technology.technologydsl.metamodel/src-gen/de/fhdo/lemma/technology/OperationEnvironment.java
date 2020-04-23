@@ -63,10 +63,6 @@ public interface OperationEnvironment extends EObject {
      * Returns the value of the '<em><b>Default</b></em>' attribute.
      * The default value is <code>"false"</code>.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Default</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Default</em>' attribute.
      * @see #setDefault(boolean)
@@ -90,10 +86,6 @@ public interface OperationEnvironment extends EObject {
      * Returns the value of the '<em><b>Operation Technology</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.technology.OperationTechnology#getOperationEnvironments <em>Operation Environments</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Operation Technology</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Operation Technology</em>' container reference.
      * @see #setOperationTechnology(OperationTechnology)

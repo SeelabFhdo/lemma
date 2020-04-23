@@ -35,10 +35,6 @@ public interface ServiceModel extends EObject {
     /**
      * Returns the value of the '<em><b>Tmodel Uri</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Tmodel Uri</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Tmodel Uri</em>' attribute.
      * @see #setT_modelUri(String)
@@ -63,10 +59,6 @@ public interface ServiceModel extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.service.Import}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.Import#getServiceModel <em>Service Model</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Imports</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Imports</em>' containment reference list.
      * @see de.fhdo.lemma.service.ServicePackage#getServiceModel_Imports()
@@ -81,10 +73,6 @@ public interface ServiceModel extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.service.MappedComplexType}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.MappedComplexType#getServiceModel <em>Service Model</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Mapped Complex Types</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Mapped Complex Types</em>' containment reference list.
      * @see de.fhdo.lemma.service.ServicePackage#getServiceModel_MappedComplexTypes()
@@ -99,10 +87,6 @@ public interface ServiceModel extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.service.Microservice}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.Microservice#getServiceModel <em>Service Model</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Microservices</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Microservices</em>' containment reference list.
      * @see de.fhdo.lemma.service.ServicePackage#getServiceModel_Microservices()

@@ -45,10 +45,6 @@ public enum PropertyFeature implements Enumerator {
     /**
      * The '<em><b>MANDATORY</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>MANDATORY</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @see #MANDATORY
      * @model
@@ -60,10 +56,6 @@ public enum PropertyFeature implements Enumerator {
     /**
      * The '<em><b>SINGLE VALUED</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>SINGLE VALUED</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @see #SINGLE_VALUED
      * @model

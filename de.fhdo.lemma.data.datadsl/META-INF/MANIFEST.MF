@@ -8,14 +8,14 @@ Bundle-ActivationPolicy: lazy
 Require-Bundle: de.fhdo.lemma.data.datadsl.metamodel,
  org.eclipse.xtext,
  org.eclipse.xtext.xbase,
- org.eclipse.equinox.common;bundle-version="3.5.0",
- org.eclipse.xtext.xbase.lib;bundle-version="2.16.0",
+ org.eclipse.equinox.common;bundle-version="3.11.0",
+ org.eclipse.xtext.xbase.lib;bundle-version="2.21.0",
  org.antlr.runtime;bundle-version="[3.2.0,3.2.1)",
  org.eclipse.xtext.util,
- org.eclipse.xtend.lib;bundle-version="2.16.0",
+ org.eclipse.xtend.lib;bundle-version="2.21.0",
  de.fhdo.lemma.utils;bundle-version="0.0.1"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Export-Package: de.fhdo.lemma.data,
+Export-Package: de.fhdo.lemma.data, 
  de.fhdo.lemma.data.formatting2,
  de.fhdo.lemma.data.generator,
  de.fhdo.lemma.data.parser.antlr,

@@ -77,10 +77,6 @@ public interface ServiceAspectPointcut extends EObject {
     /**
      * Returns the value of the '<em><b>For Communication Type</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>For Communication Type</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>For Communication Type</em>' attribute.
      * @see #setForCommunicationType(boolean)
@@ -103,10 +99,6 @@ public interface ServiceAspectPointcut extends EObject {
     /**
      * Returns the value of the '<em><b>For Protocol</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>For Protocol</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>For Protocol</em>' attribute.
      * @see #setForProtocol(boolean)
@@ -129,10 +121,6 @@ public interface ServiceAspectPointcut extends EObject {
     /**
      * Returns the value of the '<em><b>For Data Format</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>For Data Format</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>For Data Format</em>' attribute.
      * @see #setForDataFormat(boolean)
@@ -156,10 +144,6 @@ public interface ServiceAspectPointcut extends EObject {
      * Returns the value of the '<em><b>Exchange Pattern</b></em>' attribute.
      * The literals are from the enumeration {@link de.fhdo.lemma.technology.ExchangePattern}.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Exchange Pattern</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Exchange Pattern</em>' attribute.
      * @see de.fhdo.lemma.technology.ExchangePattern
@@ -185,10 +169,6 @@ public interface ServiceAspectPointcut extends EObject {
      * Returns the value of the '<em><b>Communication Type</b></em>' attribute.
      * The literals are from the enumeration {@link de.fhdo.lemma.technology.CommunicationType}.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Communication Type</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Communication Type</em>' attribute.
      * @see de.fhdo.lemma.technology.CommunicationType
@@ -213,10 +193,6 @@ public interface ServiceAspectPointcut extends EObject {
     /**
      * Returns the value of the '<em><b>Protocol</b></em>' reference.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Protocol</em>' reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Protocol</em>' reference.
      * @see #setProtocol(Protocol)
@@ -239,10 +215,6 @@ public interface ServiceAspectPointcut extends EObject {
     /**
      * Returns the value of the '<em><b>Data Format</b></em>' reference.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Data Format</em>' reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Data Format</em>' reference.
      * @see #setDataFormat(DataFormat)
@@ -266,10 +238,6 @@ public interface ServiceAspectPointcut extends EObject {
      * Returns the value of the '<em><b>Selector</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.technology.ServiceAspectPointcutSelector#getPointcuts <em>Pointcuts</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Selector</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Selector</em>' container reference.
      * @see #setSelector(ServiceAspectPointcutSelector)

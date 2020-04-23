@@ -24,7 +24,6 @@ import org.eclipse.emf.ecore.EReference;
  * <!-- end-user-doc -->
  * @see de.fhdo.lemma.data.DataFactory
  * @model kind="package"
- *        annotation="http://www.eclipse.org/emf/2002/GenModel basePackage='de.fhdo.lemma'"
  * @generated
  */
 public interface DataPackage extends EPackage {

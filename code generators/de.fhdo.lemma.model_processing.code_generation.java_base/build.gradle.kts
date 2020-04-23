@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.3.41"
+    kotlin("jvm") version "1.3.72"
     maven
 }
 
@@ -23,7 +23,7 @@ buildscript {
     extra.set("javaParserVersion", "3.14.10")
     extra.set("koinVersion", "2.0.1")
     extra.set("liveValidationVersion", "0.0.2-SNAPSHOT")
-    extra.set("lsp4jVersion", "0.6.0")
+    extra.set("lsp4jVersion", "0.9.0")
     extra.set("modelProcessingVersion", "0.0.1-SNAPSHOT")
     extra.set("modelProcessingUtilsVersion", "0.0.1-SNAPSHOT")
     extra.set("picocliVersion", "3.9.3")

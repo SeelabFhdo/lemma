@@ -147,9 +147,9 @@ public class TransformationThread extends Thread {
     if ((!exceptionOccurred)) {
       _xifexpression = Pair.<List<BiFunction<List<AbstractIntermediateModelTransformationStrategy.TransformationResult>, Predicate<IntermediateTransformationException>, Void>>, List<AbstractIntermediateModelTransformationStrategy.TransformationResult>>of(transformationsFinishedListeners, results);
     } else {
-      List<BiFunction<List<AbstractIntermediateModelTransformationStrategy.TransformationResult>, Predicate<IntermediateTransformationException>, Void>> _emptyList_4 = CollectionLiterals.<BiFunction<List<AbstractIntermediateModelTransformationStrategy.TransformationResult>, Predicate<IntermediateTransformationException>, Void>>emptyList();
-      List<AbstractIntermediateModelTransformationStrategy.TransformationResult> _emptyList_5 = CollectionLiterals.<AbstractIntermediateModelTransformationStrategy.TransformationResult>emptyList();
-      _xifexpression = Pair.<List<BiFunction<List<AbstractIntermediateModelTransformationStrategy.TransformationResult>, Predicate<IntermediateTransformationException>, Void>>, List<AbstractIntermediateModelTransformationStrategy.TransformationResult>>of(_emptyList_4, _emptyList_5);
+      List<BiFunction<List<AbstractIntermediateModelTransformationStrategy.TransformationResult>, Predicate<IntermediateTransformationException>, Void>> _emptyList = CollectionLiterals.<BiFunction<List<AbstractIntermediateModelTransformationStrategy.TransformationResult>, Predicate<IntermediateTransformationException>, Void>>emptyList();
+      List<AbstractIntermediateModelTransformationStrategy.TransformationResult> _emptyList_1 = CollectionLiterals.<AbstractIntermediateModelTransformationStrategy.TransformationResult>emptyList();
+      _xifexpression = Pair.<List<BiFunction<List<AbstractIntermediateModelTransformationStrategy.TransformationResult>, Predicate<IntermediateTransformationException>, Void>>, List<AbstractIntermediateModelTransformationStrategy.TransformationResult>>of(_emptyList, _emptyList_1);
     }
     return _xifexpression;
   }

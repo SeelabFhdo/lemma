@@ -23,7 +23,6 @@ import org.eclipse.emf.ecore.EReference;
  * <!-- end-user-doc -->
  * @see de.fhdo.lemma.technology.mapping.MappingFactory
  * @model kind="package"
- *        annotation="http://www.eclipse.org/emf/2002/GenModel basePackage='de.fhdo.lemma.technology'"
  * @generated
  */
 public interface MappingPackage extends EPackage {

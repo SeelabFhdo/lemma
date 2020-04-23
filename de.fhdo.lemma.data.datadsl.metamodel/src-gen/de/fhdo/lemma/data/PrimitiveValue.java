@@ -40,10 +40,6 @@ public interface PrimitiveValue extends EObject {
     /**
      * Returns the value of the '<em><b>String Value</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>String Value</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>String Value</em>' attribute.
      * @see #setStringValue(String)
@@ -66,10 +62,6 @@ public interface PrimitiveValue extends EObject {
     /**
      * Returns the value of the '<em><b>Boolean Value</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Boolean Value</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Boolean Value</em>' attribute.
      * @see #setBooleanValue(Boolean)
@@ -92,10 +84,6 @@ public interface PrimitiveValue extends EObject {
     /**
      * Returns the value of the '<em><b>Numeric Value</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Numeric Value</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Numeric Value</em>' attribute.
      * @see #setNumericValue(BigDecimal)

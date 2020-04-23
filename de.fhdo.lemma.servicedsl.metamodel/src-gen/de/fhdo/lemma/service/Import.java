@@ -68,10 +68,6 @@ public interface Import extends EObject {
     /**
      * Returns the value of the '<em><b>Name</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Name</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Name</em>' attribute.
      * @see #setName(String)
@@ -94,10 +90,6 @@ public interface Import extends EObject {
     /**
      * Returns the value of the '<em><b>Import URI</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Import URI</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Import URI</em>' attribute.
      * @see #setImportURI(String)
@@ -121,10 +113,6 @@ public interface Import extends EObject {
      * Returns the value of the '<em><b>Import Type</b></em>' attribute.
      * The literals are from the enumeration {@link de.fhdo.lemma.service.ImportType}.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Import Type</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Import Type</em>' attribute.
      * @see de.fhdo.lemma.service.ImportType
@@ -150,10 +138,6 @@ public interface Import extends EObject {
      * Returns the value of the '<em><b>Service Model</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.ServiceModel#getImports <em>Imports</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Service Model</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Service Model</em>' container reference.
      * @see #setServiceModel(ServiceModel)

@@ -71,10 +71,6 @@ public interface TechnologySpecificFieldMapping extends EObject {
     /**
      * Returns the value of the '<em><b>Type</b></em>' reference.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Type</em>' reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Type</em>' reference.
      * @see #setType(Type)
@@ -97,10 +93,6 @@ public interface TechnologySpecificFieldMapping extends EObject {
     /**
      * Returns the value of the '<em><b>Enumeration Field</b></em>' reference.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Enumeration Field</em>' reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Enumeration Field</em>' reference.
      * @see #setEnumerationField(EnumerationField)
@@ -123,10 +115,6 @@ public interface TechnologySpecificFieldMapping extends EObject {
     /**
      * Returns the value of the '<em><b>Data Field</b></em>' reference.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Data Field</em>' reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Data Field</em>' reference.
      * @see #setDataField(DataField)
@@ -151,10 +139,6 @@ public interface TechnologySpecificFieldMapping extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.technology.mapping.TechnologySpecificImportedServiceAspect}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.technology.mapping.TechnologySpecificImportedServiceAspect#getFieldMapping <em>Field Mapping</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Aspects</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Aspects</em>' containment reference list.
      * @see de.fhdo.lemma.technology.mapping.MappingPackage#getTechnologySpecificFieldMapping_Aspects()
@@ -168,10 +152,6 @@ public interface TechnologySpecificFieldMapping extends EObject {
      * Returns the value of the '<em><b>Type Mapping</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.technology.mapping.ComplexTypeMapping#getFieldMappings <em>Field Mappings</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Type Mapping</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Type Mapping</em>' container reference.
      * @see #setTypeMapping(ComplexTypeMapping)
@@ -196,10 +176,6 @@ public interface TechnologySpecificFieldMapping extends EObject {
      * Returns the value of the '<em><b>Parameter Mapping</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.technology.mapping.ComplexParameterMapping#getFieldMappings <em>Field Mappings</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Parameter Mapping</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Parameter Mapping</em>' container reference.
      * @see #setParameterMapping(ComplexParameterMapping)

@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.3.41"
+    kotlin("jvm") version "1.3.72"
     maven
 }
 
@@ -17,14 +17,14 @@ buildscript {
     extra.set("classgraphVersion", "4.6.32")
     extra.set("coroutinesVersion", "1.1.1")
     extra.set("lemmaUtilsVersion", "0.0.1-SNAPSHOT")
-    extra.set("equinoxVersion", "3.10.0")
+    extra.set("equinoxVersion", "3.11.0")
     extra.set("jansiVersion", "1.17.1")
-    extra.set("jdtCoreVersion", "3.13.102")
+    extra.set("jdtCoreVersion", "3.21.0")
     extra.set("liveValidationVersion", "0.0.2-SNAPSHOT")
-    extra.set("lsp4jVersion", "0.6.0")
+    extra.set("lsp4jVersion", "0.9.0")
     extra.set("oclVersion", "0.0.1-SNAPSHOT")
     extra.set("picocliVersion", "3.9.3")
-    extra.set("xtextVersion", "2.16.0")
+    extra.set("xtextVersion", "2.21.0")
 }
 
 dependencies {
@@ -40,7 +40,7 @@ dependencies {
     val picocliVersion: String by rootProject.extra
     val xtextVersion: String by rootProject.extra
 
-    implementation(kotlin("stdlib-jdk8"))
+    implementation(kotlin("stdlib"))
     implementation(kotlin("reflect"))
     implementation("de.fhdo.lemma.live_validation:de.fhdo.lemma.live_validation:$liveValidationVersion")
     implementation("de.fhdo.lemma.ocl:de.fhdo.lemma.ocl:$oclVersion:all-dependencies-no-kotlin")
@@ -60,7 +60,7 @@ dependencies {
 }
 
 tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = "9"
+    kotlinOptions.jvmTarget = "11"
 }
 
 /**

@@ -78,10 +78,6 @@ public interface Interface extends EObject {
     /**
      * Returns the value of the '<em><b>Version</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Version</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Version</em>' attribute.
      * @see #setVersion(String)
@@ -105,10 +101,6 @@ public interface Interface extends EObject {
      * Returns the value of the '<em><b>Not Implemented</b></em>' attribute.
      * The default value is <code>"false"</code>.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Not Implemented</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Not Implemented</em>' attribute.
      * @see #setNotImplemented(boolean)
@@ -133,10 +125,6 @@ public interface Interface extends EObject {
      * The default value is <code>"NONE"</code>.
      * The literals are from the enumeration {@link de.fhdo.lemma.service.Visibility}.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Visibility</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Visibility</em>' attribute.
      * @see de.fhdo.lemma.service.Visibility
@@ -163,10 +151,6 @@ public interface Interface extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.service.Endpoint}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.Endpoint#getInterface <em>Interface</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Endpoints</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Endpoints</em>' containment reference list.
      * @see de.fhdo.lemma.service.ServicePackage#getInterface_Endpoints()
@@ -180,10 +164,6 @@ public interface Interface extends EObject {
      * Returns the value of the '<em><b>Protocols</b></em>' containment reference list.
      * The list contents are of type {@link de.fhdo.lemma.service.ProtocolSpecification}.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Protocols</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Protocols</em>' containment reference list.
      * @see de.fhdo.lemma.service.ServicePackage#getInterface_Protocols()
@@ -197,10 +177,6 @@ public interface Interface extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.service.Operation}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.Operation#getInterface <em>Interface</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Operations</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Operations</em>' containment reference list.
      * @see de.fhdo.lemma.service.ServicePackage#getInterface_Operations()
@@ -215,10 +191,6 @@ public interface Interface extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.service.ReferredOperation}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.ReferredOperation#getInterface <em>Interface</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Referred Operations</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Referred Operations</em>' containment reference list.
      * @see de.fhdo.lemma.service.ServicePackage#getInterface_ReferredOperations()
@@ -233,10 +205,6 @@ public interface Interface extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.service.ImportedServiceAspect}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.ImportedServiceAspect#getInterface <em>Interface</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Aspects</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Aspects</em>' containment reference list.
      * @see de.fhdo.lemma.service.ServicePackage#getInterface_Aspects()
@@ -250,10 +218,6 @@ public interface Interface extends EObject {
      * Returns the value of the '<em><b>Microservice</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.Microservice#getInterfaces <em>Interfaces</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Microservice</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Microservice</em>' container reference.
      * @see #setMicroservice(Microservice)

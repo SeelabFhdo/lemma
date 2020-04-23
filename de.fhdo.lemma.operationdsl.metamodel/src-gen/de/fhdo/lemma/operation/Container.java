@@ -73,10 +73,6 @@ public interface Container extends OperationNode {
      * The list contents are of type {@link de.fhdo.lemma.operation.BasicEndpoint}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.operation.BasicEndpoint#getContainer <em>Container</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Default Basic Endpoints</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Default Basic Endpoints</em>' containment reference list.
      * @see de.fhdo.lemma.operation.OperationPackage#getContainer_DefaultBasicEndpoints()
@@ -90,10 +86,6 @@ public interface Container extends OperationNode {
      * Returns the value of the '<em><b>Operation Model</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.operation.OperationModel#getContainers <em>Containers</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Operation Model</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Operation Model</em>' container reference.
      * @see #setOperationModel(OperationModel)

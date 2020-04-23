@@ -42,10 +42,6 @@ public interface MappedComplexType extends EObject {
     /**
      * Returns the value of the '<em><b>Tsource Model Uri</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Tsource Model Uri</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Tsource Model Uri</em>' attribute.
      * @see #setT_sourceModelUri(String)
@@ -68,10 +64,6 @@ public interface MappedComplexType extends EObject {
     /**
      * Returns the value of the '<em><b>Ttype Definition Technology Import</b></em>' reference.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Ttype Definition Technology Import</em>' reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Ttype Definition Technology Import</em>' reference.
      * @see #setT_typeDefinitionTechnologyImport(Import)
@@ -94,10 +86,6 @@ public interface MappedComplexType extends EObject {
     /**
      * Returns the value of the '<em><b>Ttype Definition Technology</b></em>' reference.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Ttype Definition Technology</em>' reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Ttype Definition Technology</em>' reference.
      * @see #setT_typeDefinitionTechnology(Technology)
@@ -122,10 +110,6 @@ public interface MappedComplexType extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.service.TechnologyReference}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.TechnologyReference#getMappedComplexType <em>Mapped Complex Type</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Technology References</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Technology References</em>' containment reference list.
      * @see de.fhdo.lemma.service.ServicePackage#getMappedComplexType_TechnologyReferences()
@@ -138,10 +122,6 @@ public interface MappedComplexType extends EObject {
     /**
      * Returns the value of the '<em><b>Type</b></em>' containment reference.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Type</em>' containment reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Type</em>' containment reference.
      * @see #setType(ImportedType)
@@ -166,10 +146,6 @@ public interface MappedComplexType extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.service.MappedField}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.MappedField#getMappedComplexType <em>Mapped Complex Type</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Mapped Fields</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Mapped Fields</em>' containment reference list.
      * @see de.fhdo.lemma.service.ServicePackage#getMappedComplexType_MappedFields()
@@ -184,10 +160,6 @@ public interface MappedComplexType extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.service.MappedDataOperation}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.MappedDataOperation#getMappedComplexType <em>Mapped Complex Type</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Mapped Operations</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Mapped Operations</em>' containment reference list.
      * @see de.fhdo.lemma.service.ServicePackage#getMappedComplexType_MappedOperations()
@@ -202,10 +174,6 @@ public interface MappedComplexType extends EObject {
      * The list contents are of type {@link de.fhdo.lemma.service.ImportedServiceAspect}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.ImportedServiceAspect#getMappedComplexType <em>Mapped Complex Type</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Aspects</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Aspects</em>' containment reference list.
      * @see de.fhdo.lemma.service.ServicePackage#getMappedComplexType_Aspects()
@@ -219,10 +187,6 @@ public interface MappedComplexType extends EObject {
      * Returns the value of the '<em><b>Service Model</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.ServiceModel#getMappedComplexTypes <em>Mapped Complex Types</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Service Model</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Service Model</em>' container reference.
      * @see #setServiceModel(ServiceModel)

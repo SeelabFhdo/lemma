@@ -33,10 +33,6 @@ public interface IntermediateDataStructure extends IntermediateComplexType {
      * Returns the value of the '<em><b>Feature Names</b></em>' attribute list.
      * The list contents are of type {@link java.lang.String}.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Feature Names</em>' attribute list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Feature Names</em>' attribute list.
      * @see de.fhdo.lemma.data.intermediate.IntermediatePackage#getIntermediateDataStructure_FeatureNames()
@@ -48,10 +44,6 @@ public interface IntermediateDataStructure extends IntermediateComplexType {
     /**
      * Returns the value of the '<em><b>Super</b></em>' reference.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Super</em>' reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Super</em>' reference.
      * @see #setSuper(IntermediateDataStructure)
@@ -76,10 +68,6 @@ public interface IntermediateDataStructure extends IntermediateComplexType {
      * The list contents are of type {@link de.fhdo.lemma.data.intermediate.IntermediateDataOperation}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.data.intermediate.IntermediateDataOperation#getDataStructure <em>Data Structure</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Operations</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Operations</em>' containment reference list.
      * @see de.fhdo.lemma.data.intermediate.IntermediatePackage#getIntermediateDataStructure_Operations()
@@ -94,10 +82,6 @@ public interface IntermediateDataStructure extends IntermediateComplexType {
      * The list contents are of type {@link de.fhdo.lemma.data.intermediate.IntermediateDataField}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.data.intermediate.IntermediateDataField#getDataStructure <em>Data Structure</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Data Fields</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Data Fields</em>' containment reference list.
      * @see de.fhdo.lemma.data.intermediate.IntermediatePackage#getIntermediateDataStructure_DataFields()

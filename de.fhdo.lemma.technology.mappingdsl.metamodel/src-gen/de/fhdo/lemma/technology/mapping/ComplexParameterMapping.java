@@ -63,10 +63,6 @@ public interface ComplexParameterMapping extends ParameterMapping {
     /**
      * Returns the value of the '<em><b>Technology Specific Complex Type</b></em>' reference.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Technology Specific Complex Type</em>' reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Technology Specific Complex Type</em>' reference.
      * @see #setTechnologySpecificComplexType(ComplexType)
@@ -91,10 +87,6 @@ public interface ComplexParameterMapping extends ParameterMapping {
      * The list contents are of type {@link de.fhdo.lemma.technology.mapping.TechnologySpecificFieldMapping}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.technology.mapping.TechnologySpecificFieldMapping#getParameterMapping <em>Parameter Mapping</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Field Mappings</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Field Mappings</em>' containment reference list.
      * @see de.fhdo.lemma.technology.mapping.MappingPackage#getComplexParameterMapping_FieldMappings()

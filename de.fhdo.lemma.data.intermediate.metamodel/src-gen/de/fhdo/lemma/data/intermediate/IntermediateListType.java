@@ -32,10 +32,6 @@ public interface IntermediateListType extends IntermediateComplexType {
     /**
      * Returns the value of the '<em><b>Primitive List</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Primitive List</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Primitive List</em>' attribute.
      * @see #setPrimitiveList(boolean)
@@ -58,10 +54,6 @@ public interface IntermediateListType extends IntermediateComplexType {
     /**
      * Returns the value of the '<em><b>Structured List</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Structured List</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Structured List</em>' attribute.
      * @see #setStructuredList(boolean)
@@ -84,10 +76,6 @@ public interface IntermediateListType extends IntermediateComplexType {
     /**
      * Returns the value of the '<em><b>Primitive Type</b></em>' containment reference.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Primitive Type</em>' containment reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Primitive Type</em>' containment reference.
      * @see #setPrimitiveType(IntermediatePrimitiveType)
@@ -112,10 +100,6 @@ public interface IntermediateListType extends IntermediateComplexType {
      * The list contents are of type {@link de.fhdo.lemma.data.intermediate.IntermediateDataField}.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.data.intermediate.IntermediateDataField#getListType <em>List Type</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Data Fields</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Data Fields</em>' containment reference list.
      * @see de.fhdo.lemma.data.intermediate.IntermediatePackage#getIntermediateListType_DataFields()

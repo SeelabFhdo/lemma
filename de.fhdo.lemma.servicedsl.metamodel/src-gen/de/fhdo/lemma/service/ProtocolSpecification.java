@@ -40,10 +40,6 @@ public interface ProtocolSpecification extends EObject {
      * Returns the value of the '<em><b>Communication Type</b></em>' attribute.
      * The literals are from the enumeration {@link de.fhdo.lemma.technology.CommunicationType}.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Communication Type</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Communication Type</em>' attribute.
      * @see de.fhdo.lemma.technology.CommunicationType
@@ -69,10 +65,6 @@ public interface ProtocolSpecification extends EObject {
      * Returns the value of the '<em><b>Protocol</b></em>' containment reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.ImportedProtocolAndDataFormat#getSpecification <em>Specification</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Protocol</em>' containment reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Protocol</em>' containment reference.
      * @see #setProtocol(ImportedProtocolAndDataFormat)

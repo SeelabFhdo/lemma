@@ -31,10 +31,6 @@ public interface IntermediateAspectPropertyValue extends EObject {
     /**
      * Returns the value of the '<em><b>Value</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Value</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Value</em>' attribute.
      * @see #setValue(String)
@@ -57,10 +53,6 @@ public interface IntermediateAspectPropertyValue extends EObject {
     /**
      * Returns the value of the '<em><b>Property</b></em>' reference.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Property</em>' reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Property</em>' reference.
      * @see #setProperty(IntermediateAspectProperty)
@@ -84,10 +76,6 @@ public interface IntermediateAspectPropertyValue extends EObject {
      * Returns the value of the '<em><b>Aspect</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.data.intermediate.IntermediateImportedAspect#getPropertyValues <em>Property Values</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Aspect</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Aspect</em>' container reference.
      * @see #setAspect(IntermediateImportedAspect)

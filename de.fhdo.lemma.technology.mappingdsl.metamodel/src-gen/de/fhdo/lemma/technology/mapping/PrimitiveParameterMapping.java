@@ -32,10 +32,6 @@ public interface PrimitiveParameterMapping extends ParameterMapping {
     /**
      * Returns the value of the '<em><b>Technology</b></em>' reference.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Technology</em>' reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Technology</em>' reference.
      * @see #setTechnology(Import)
@@ -58,10 +54,6 @@ public interface PrimitiveParameterMapping extends ParameterMapping {
     /**
      * Returns the value of the '<em><b>Primitive Type</b></em>' reference.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Primitive Type</em>' reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Primitive Type</em>' reference.
      * @see #setPrimitiveType(TechnologySpecificPrimitiveType)

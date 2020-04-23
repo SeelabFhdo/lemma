@@ -39,10 +39,6 @@ public interface IntermediateEndpoint extends EObject {
     /**
      * Returns the value of the '<em><b>Communication Type</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Communication Type</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Communication Type</em>' attribute.
      * @see #setCommunicationType(String)
@@ -65,10 +61,6 @@ public interface IntermediateEndpoint extends EObject {
     /**
      * Returns the value of the '<em><b>Protocol</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Protocol</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Protocol</em>' attribute.
      * @see #setProtocol(String)
@@ -91,10 +83,6 @@ public interface IntermediateEndpoint extends EObject {
     /**
      * Returns the value of the '<em><b>Data Format</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Data Format</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Data Format</em>' attribute.
      * @see #setDataFormat(String)
@@ -118,10 +106,6 @@ public interface IntermediateEndpoint extends EObject {
      * Returns the value of the '<em><b>Addresses</b></em>' attribute list.
      * The list contents are of type {@link java.lang.String}.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Addresses</em>' attribute list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Addresses</em>' attribute list.
      * @see de.fhdo.lemma.service.intermediate.IntermediatePackage#getIntermediateEndpoint_Addresses()
@@ -133,10 +117,6 @@ public interface IntermediateEndpoint extends EObject {
     /**
      * Returns the value of the '<em><b>Technology</b></em>' reference.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Technology</em>' reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Technology</em>' reference.
      * @see #setTechnology(IntermediateTechnology)
@@ -160,10 +140,6 @@ public interface IntermediateEndpoint extends EObject {
      * Returns the value of the '<em><b>Microservice</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.intermediate.IntermediateMicroservice#getEndpoints <em>Endpoints</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Microservice</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Microservice</em>' container reference.
      * @see #setMicroservice(IntermediateMicroservice)
@@ -188,10 +164,6 @@ public interface IntermediateEndpoint extends EObject {
      * Returns the value of the '<em><b>Interface</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.intermediate.IntermediateInterface#getEndpoints <em>Endpoints</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Interface</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Interface</em>' container reference.
      * @see #setInterface(IntermediateInterface)
@@ -216,10 +188,6 @@ public interface IntermediateEndpoint extends EObject {
      * Returns the value of the '<em><b>Operation</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.intermediate.IntermediateOperation#getEndpoints <em>Endpoints</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Operation</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Operation</em>' container reference.
      * @see #setOperation(IntermediateOperation)
@@ -244,10 +212,6 @@ public interface IntermediateEndpoint extends EObject {
      * Returns the value of the '<em><b>Referred Operation</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.intermediate.IntermediateReferredOperation#getEndpoints <em>Endpoints</em>}'.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Referred Operation</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Referred Operation</em>' container reference.
      * @see #setReferredOperation(IntermediateReferredOperation)
