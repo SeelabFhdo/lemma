@@ -16,6 +16,7 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -399,16 +400,24 @@ public final class LemmaUiUtils {
     try {
       final IWorkbenchWindow window = HandlerUtil.getActiveWorkbenchWindowChecked(event);
       final ISelection selection = window.getSelectionService().getSelection();
-      List<IResource> _xifexpression = null;
-      if ((selection instanceof IStructuredSelection)) {
-        final Function1<Object, IResource> _function = (Object it) -> {
-          return ((IResource) it);
-        };
-        _xifexpression = ListExtensions.<Object, IResource>map(((IStructuredSelection)selection).toList(), _function);
-      } else {
-        _xifexpression = CollectionLiterals.<IResource>emptyList();
+      if ((!(selection instanceof IStructuredSelection))) {
+        return CollectionLiterals.<IResource>emptyList();
       }
-      return _xifexpression;
+      final ArrayList<IResource> selectedResources = CollectionLiterals.<IResource>newArrayList();
+      List _list = ((IStructuredSelection) selection).toList();
+      for (final Object element : _list) {
+        if ((element instanceof IResource)) {
+          selectedResources.add(((IResource)element));
+        } else {
+          if ((element instanceof IAdaptable)) {
+            final IResource resource = ((IAdaptable)element).<IResource>getAdapter(IResource.class);
+            if ((resource != null)) {
+              selectedResources.add(resource);
+            }
+          }
+        }
+      }
+      return selectedResources;
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }

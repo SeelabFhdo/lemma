@@ -29,6 +29,7 @@ import java.io.File
 import org.eclipse.ui.handlers.HandlerUtil
 import org.eclipse.core.commands.ExecutionEvent
 import org.eclipse.jface.viewers.IStructuredSelection
+import org.eclipse.core.runtime.IAdaptable
 
 /**
  * Utility class for the LEMMA UI plugin.
@@ -279,9 +280,19 @@ final class LemmaUiUtils {
     static def getSelectedResources(ExecutionEvent event) {
         val window = HandlerUtil.getActiveWorkbenchWindowChecked(event)
         val selection = window.selectionService.selection
-        return if (selection instanceof IStructuredSelection)
-                selection.toList.map[it as IResource]
-            else
-                emptyList
+        if (!(selection instanceof IStructuredSelection))
+            return emptyList
+
+        val selectedResources = <IResource>newArrayList
+        for (element : (selection as IStructuredSelection).toList) {
+            if (element instanceof IResource)
+                selectedResources.add(element)
+            else if (element instanceof IAdaptable) {
+                val resource = element.getAdapter(IResource)
+                if (resource !== null)
+                    selectedResources.add(resource)
+            }
+        }
+        return selectedResources
     }
 }
