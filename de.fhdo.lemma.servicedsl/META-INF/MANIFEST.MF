@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: de.fhdo.lemma.servicedsl
 Bundle-Vendor: University of Applied Sciences and Arts Dortmund
-Bundle-Version: 0.0.1.qualifier
+Bundle-Version: 0.7.0.qualifier
 Bundle-SymbolicName: de.fhdo.lemma.servicedsl;singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: de.fhdo.lemma.servicedsl.metamodel,
@@ -13,10 +13,10 @@ Require-Bundle: de.fhdo.lemma.servicedsl.metamodel,
  org.antlr.runtime;bundle-version="[3.2.0,3.2.1)",
  org.eclipse.xtext.util,
  org.eclipse.xtend.lib;bundle-version="2.21.0",
- de.fhdo.lemma.data.datadsl;bundle-version="0.0.1",
- de.fhdo.lemma.utils;bundle-version="0.0.1",
- de.fhdo.lemma.technology.technologydsl;bundle-version="0.0.1",
- de.fhdo.lemma.typechecking;bundle-version="0.0.1"
+ de.fhdo.lemma.data.datadsl,
+ de.fhdo.lemma.utils,
+ de.fhdo.lemma.technology.technologydsl,
+ de.fhdo.lemma.typechecking
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: de.fhdo.lemma.generator,
  de.fhdo.lemma.formatting2,

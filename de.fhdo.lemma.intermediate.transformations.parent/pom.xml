@@ -5,7 +5,7 @@
 
     <groupId>de.fhdo.lemma.intermediate</groupId>
     <artifactId>parent</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.7.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <modules>
@@ -20,14 +20,14 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <build-helper-maven-plugin-version>3.1.0</build-helper-maven-plugin-version>
-        <data-viewpoint-metamodel-version>0.0.1-SNAPSHOT</data-viewpoint-metamodel-version>
+        <data-viewpoint-metamodel-version>${project.version}</data-viewpoint-metamodel-version>
         <eclipse-version>2020-03</eclipse-version>
-        <intermediate-data-metamodel-version>0.0.1-SNAPSHOT</intermediate-data-metamodel-version>
-        <intermediate-service-metamodel-version>0.0.1-SNAPSHOT</intermediate-service-metamodel-version>
+        <intermediate-data-metamodel-version>${project.version}</intermediate-data-metamodel-version>
+        <intermediate-service-metamodel-version>${project.version}</intermediate-service-metamodel-version>
         <maven-clean-plugin-version>3.1.0</maven-clean-plugin-version>
         <maven-compiler-plugin-version>3.8.1</maven-compiler-plugin-version>
-        <service-viewpoint-metamodel-version>0.0.1-SNAPSHOT</service-viewpoint-metamodel-version>
-        <technology-definition-metamodel-version>0.0.1-SNAPSHOT</technology-definition-metamodel-version>
+        <service-viewpoint-metamodel-version>${project.version}</service-viewpoint-metamodel-version>
+        <technology-definition-metamodel-version>${project.version}</technology-definition-metamodel-version>
         <tycho-version>1.7.0</tycho-version>
         <xtext-version>2.21.0</xtext-version>
     </properties>
@@ -97,6 +97,11 @@
                 <artifactId>tycho-maven-plugin</artifactId>
                 <version>${tycho-version}</version>
                 <extensions>true</extensions>
+            </plugin>
+            <plugin>
+                <groupId>org.eclipse.tycho</groupId>
+                <artifactId>tycho-versions-plugin</artifactId>
+                <version>${tycho-version}</version>
             </plugin>
         </plugins>
     </build>

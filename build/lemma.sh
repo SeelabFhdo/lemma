@@ -12,10 +12,24 @@ modules=(
 
     # Languages
     de.fhdo.lemma.data.datadsl.parent
+    de.fhdo.lemma.data.datadsl.ui
+    de.fhdo.lemma.data.datadsl.ui.tests
+
     de.fhdo.lemma.technology.technologydsl.parent
+    de.fhdo.lemma.technology.technologydsl.ui
+    de.fhdo.lemma.technology.technologydsl.ui.tests
+
     de.fhdo.lemma.servicedsl.parent
+    de.fhdo.lemma.servicedsl.ui
+    de.fhdo.lemma.servicedsl.ui.tests
+
     de.fhdo.lemma.technology.mappingdsl.parent
+    de.fhdo.lemma.technology.mappingdsl.ui
+    de.fhdo.lemma.technology.mappingdsl.ui.tests
+
     de.fhdo.lemma.operationdsl.parent
+    de.fhdo.lemma.operationdsl.ui
+    de.fhdo.lemma.operationdsl.ui.tests
 
     # Transformations
     de.fhdo.lemma.intermediate.transformations.parent

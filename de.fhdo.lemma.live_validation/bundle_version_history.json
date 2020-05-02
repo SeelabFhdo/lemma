@@ -2,160 +2,76 @@
     "bundle": {
         "com.google.errorprone.error_prone_annotations": {
             "2.2.0": {
-                "i20200423221105": "MjAyMDA0MjMyMjExMDA",
-                "i20200423233241": "MjAyMDA0MjMyMzMyMjk",
-                "i20200424012827": "MjAyMDA0MjQwMTI4MjI",
-                "i20200424072923": "MjAyMDA0MjQwNzI5MTk",
-                "i20200424074514": "MjAyMDA0MjQwNzQ1MTA",
-                "i20200424080817": "MjAyMDA0MjQwODA4MTQ",
-                "i20200424093743": "MjAyMDA0MjQwOTM3MzA",
-                "i20200427160410": "MjAyMDA0MjcxNjAzNTg",
-                "i20200427224857": "MjAyMDA0MjcyMjQ4NDc"
+                "i20200502131205": "MjAyMDA1MDIxMzExNTk",
+                "i20200502161400": "MjAyMDA1MDIxNjEzNTU"
             }
         },
         "com.google.guava.listenablefuture": {
             "9999.0.0.empty-to-avoid-conflict-with-guava": {
-                "i20200423221105": "MjAyMDA0MjMyMjExMDA",
-                "i20200423233241": "MjAyMDA0MjMyMzMyMjk",
-                "i20200424012827": "MjAyMDA0MjQwMTI4MjI",
-                "i20200424072923": "MjAyMDA0MjQwNzI5MTk",
-                "i20200424074514": "MjAyMDA0MjQwNzQ1MTA",
-                "i20200424080817": "MjAyMDA0MjQwODA4MTQ",
-                "i20200424093743": "MjAyMDA0MjQwOTM3MzA",
-                "i20200427160410": "MjAyMDA0MjcxNjAzNTg",
-                "i20200427224857": "MjAyMDA0MjcyMjQ4NDc"
+                "i20200502131205": "MjAyMDA1MDIxMzExNTk",
+                "i20200502161400": "MjAyMDA1MDIxNjEzNTU"
             }
         },
         "com.google.j2objc.annotations": {
             "1.1.0": {
-                "i20200423221105": "MjAyMDA0MjMyMjExMDA",
-                "i20200423233241": "MjAyMDA0MjMyMzMyMjk",
-                "i20200424012827": "MjAyMDA0MjQwMTI4MjI",
-                "i20200424072923": "MjAyMDA0MjQwNzI5MTk",
-                "i20200424074514": "MjAyMDA0MjQwNzQ1MTA",
-                "i20200424080817": "MjAyMDA0MjQwODA4MTQ",
-                "i20200424093743": "MjAyMDA0MjQwOTM3MzA",
-                "i20200427160410": "MjAyMDA0MjcxNjAzNTg",
-                "i20200427224858": "MjAyMDA0MjcyMjQ4NDc"
+                "i20200502131205": "MjAyMDA1MDIxMzExNTk",
+                "i20200502161400": "MjAyMDA1MDIxNjEzNTU"
             }
         },
         "io.github.microutils.kotlin-logging": {
             "1.7.9": {
-                "i20200423221105": "MjAyMDA0MjMyMjExMDA",
-                "i20200423233241": "MjAyMDA0MjMyMzMyMjk",
-                "i20200424012827": "MjAyMDA0MjQwMTI4MjI",
-                "i20200424072923": "MjAyMDA0MjQwNzI5MTk",
-                "i20200424074514": "MjAyMDA0MjQwNzQ1MTA",
-                "i20200424080817": "MjAyMDA0MjQwODA4MTQ",
-                "i20200424093743": "MjAyMDA0MjQwOTM3MzA",
-                "i20200427160410": "MjAyMDA0MjcxNjAzNTg",
-                "i20200427224858": "MjAyMDA0MjcyMjQ4NDc"
+                "i20200502131205": "MjAyMDA1MDIxMzExNTk",
+                "i20200502161400": "MjAyMDA1MDIxNjEzNTU"
             }
         },
         "org.checkerframework.checker-qual": {
             "2.5.2": {
-                "i20200423221105": "MjAyMDA0MjMyMjExMDA",
-                "i20200423233241": "MjAyMDA0MjMyMzMyMjk",
-                "i20200424012827": "MjAyMDA0MjQwMTI4MjI",
-                "i20200424072923": "MjAyMDA0MjQwNzI5MTk",
-                "i20200424074514": "MjAyMDA0MjQwNzQ1MTA",
-                "i20200424080817": "MjAyMDA0MjQwODA4MTQ",
-                "i20200424093743": "MjAyMDA0MjQwOTM3MzA",
-                "i20200427160410": "MjAyMDA0MjcxNjAzNTg",
-                "i20200427224858": "MjAyMDA0MjcyMjQ4NDc"
+                "i20200502131205": "MjAyMDA1MDIxMzExNTk",
+                "i20200502161400": "MjAyMDA1MDIxNjEzNTU"
             }
         },
         "org.codehaus.mojo.animal-sniffer-annotations": {
             "1.17.0": {
-                "i20200423221105": "MjAyMDA0MjMyMjExMDA",
-                "i20200423233241": "MjAyMDA0MjMyMzMyMjk",
-                "i20200424012827": "MjAyMDA0MjQwMTI4MjI",
-                "i20200424072923": "MjAyMDA0MjQwNzI5MTk",
-                "i20200424074514": "MjAyMDA0MjQwNzQ1MTA",
-                "i20200424080817": "MjAyMDA0MjQwODA4MTQ",
-                "i20200424093743": "MjAyMDA0MjQwOTM3MzA",
-                "i20200427160410": "MjAyMDA0MjcxNjAzNTg",
-                "i20200427224857": "MjAyMDA0MjcyMjQ4NDc"
+                "i20200502131205": "MjAyMDA1MDIxMzExNTk",
+                "i20200502161400": "MjAyMDA1MDIxNjEzNTU"
             }
         },
         "org.jetbrains.annotations": {
             "13.0.0": {
-                "i20200423221105": "MjAyMDA0MjMyMjExMDA",
-                "i20200423233241": "MjAyMDA0MjMyMzMyMjk",
-                "i20200424012827": "MjAyMDA0MjQwMTI4MjI",
-                "i20200424072923": "MjAyMDA0MjQwNzI5MTk",
-                "i20200424074514": "MjAyMDA0MjQwNzQ1MTA",
-                "i20200424080817": "MjAyMDA0MjQwODA4MTQ",
-                "i20200424093743": "MjAyMDA0MjQwOTM3MzA",
-                "i20200427160410": "MjAyMDA0MjcxNjAzNTg",
-                "i20200427224858": "MjAyMDA0MjcyMjQ4NDc"
+                "i20200502131206": "MjAyMDA1MDIxMzExNTk",
+                "i20200502161400": "MjAyMDA1MDIxNjEzNTU"
             }
         },
         "org.jetbrains.kotlin.stdlib": {
             "1.3.72": {
-                "i20200423221105": "MjAyMDA0MjMyMjExMDA",
-                "i20200423233241": "MjAyMDA0MjMyMzMyMjk",
-                "i20200424012827": "MjAyMDA0MjQwMTI4MjI",
-                "i20200424072923": "MjAyMDA0MjQwNzI5MTk",
-                "i20200424074514": "MjAyMDA0MjQwNzQ1MTA",
-                "i20200424080817": "MjAyMDA0MjQwODA4MTQ",
-                "i20200424093743": "MjAyMDA0MjQwOTM3MzA",
-                "i20200427160410": "MjAyMDA0MjcxNjAzNTg",
-                "i20200427224858": "MjAyMDA0MjcyMjQ4NDc"
+                "i20200502131206": "MjAyMDA1MDIxMzExNTk",
+                "i20200502161400": "MjAyMDA1MDIxNjEzNTU"
             }
         },
         "org.jetbrains.kotlin.stdlib-common": {
             "1.3.72": {
-                "i20200423221105": "MjAyMDA0MjMyMjExMDA",
-                "i20200423233241": "MjAyMDA0MjMyMzMyMjk",
-                "i20200424012827": "MjAyMDA0MjQwMTI4MjI",
-                "i20200424072923": "MjAyMDA0MjQwNzI5MTk",
-                "i20200424074514": "MjAyMDA0MjQwNzQ1MTA",
-                "i20200424080817": "MjAyMDA0MjQwODA4MTQ",
-                "i20200424093743": "MjAyMDA0MjQwOTM3MzA",
-                "i20200427160410": "MjAyMDA0MjcxNjAzNTg",
-                "i20200427224857": "MjAyMDA0MjcyMjQ4NDc"
+                "i20200502131205": "MjAyMDA1MDIxMzExNTk",
+                "i20200502161400": "MjAyMDA1MDIxNjEzNTU"
             }
         },
         "org.jetbrains.kotlin.stdlib-jdk7": {
             "1.3.72": {
-                "i20200423221105": "MjAyMDA0MjMyMjExMDA",
-                "i20200423233241": "MjAyMDA0MjMyMzMyMjk",
-                "i20200424012827": "MjAyMDA0MjQwMTI4MjI",
-                "i20200424072923": "MjAyMDA0MjQwNzI5MTk",
-                "i20200424074514": "MjAyMDA0MjQwNzQ1MTA",
-                "i20200424080817": "MjAyMDA0MjQwODA4MTQ",
-                "i20200424093743": "MjAyMDA0MjQwOTM3MzA",
-                "i20200427160410": "MjAyMDA0MjcxNjAzNTg",
-                "i20200427224857": "MjAyMDA0MjcyMjQ4NDc"
+                "i20200502131205": "MjAyMDA1MDIxMzExNTk",
+                "i20200502161400": "MjAyMDA1MDIxNjEzNTU"
             }
         },
         "org.jetbrains.kotlin.stdlib-jdk8": {
             "1.3.72": {
-                "i20200423221105": "MjAyMDA0MjMyMjExMDA",
-                "i20200423233241": "MjAyMDA0MjMyMzMyMjk",
-                "i20200424012827": "MjAyMDA0MjQwMTI4MjI",
-                "i20200424072923": "MjAyMDA0MjQwNzI5MTk",
-                "i20200424074514": "MjAyMDA0MjQwNzQ1MTA",
-                "i20200424080817": "MjAyMDA0MjQwODA4MTQ",
-                "i20200424093743": "MjAyMDA0MjQwOTM3MzA",
-                "i20200427160410": "MjAyMDA0MjcxNjAzNTg",
-                "i20200427224858": "MjAyMDA0MjcyMjQ4NDc"
+                "i20200502131206": "MjAyMDA1MDIxMzExNTk",
+                "i20200502161400": "MjAyMDA1MDIxNjEzNTU"
             }
         }
     },
     "feature": {
         "de.fhdo.lemma.live_validation": {
-            "0.0.2.SNAPSHOT": {
-                "i20200423221107": "MjAyMDA0MjMyMjExMDA",
-                "i20200423233244": "MjAyMDA0MjMyMzMyMjk",
-                "i20200424012830": "MjAyMDA0MjQwMTI4MjI",
-                "i20200424072925": "MjAyMDA0MjQwNzI5MTk",
-                "i20200424074517": "MjAyMDA0MjQwNzQ1MTA",
-                "i20200424080819": "MjAyMDA0MjQwODA4MTQ",
-                "i20200424093745": "MjAyMDA0MjQwOTM3MzA",
-                "i20200427160413": "MjAyMDA0MjcxNjAzNTg",
-                "i20200427224900": "MjAyMDA0MjcyMjQ4NDc"
+            "0.7.0.SNAPSHOT": {
+                "i20200502131208": "MjAyMDA1MDIxMzExNTk",
+                "i20200502161403": "MjAyMDA1MDIxNjEzNTU"
             }
         }
     }

@@ -52,6 +52,11 @@ interface Genlet {
     fun nameOfDependencyFragmentProviderPackage() = nameOfCodeGenerationHandlerPackage()
 
     /**
+     * Callback to pass Genlet-specific class loader to Genlet.
+     */
+    fun setClassLoader(classLoader: ClassLoader) {}
+
+    /**
      * Send an event to this Genlet. This function is not meant to be overridden by Genlets. To react to an event,
      * Genlets should implement [onEvent] instead.
      */
@@ -410,6 +415,7 @@ internal fun loadGenlets(genletFilePathsAndClassnames: Map<String, String?>) : M
             val genletClassLoader = classLoaders[filePath]!!
             val genletClass = Class.forName(genletClassname, true, genletClassLoader).asSubclass(Genlet::class.java)
             val genletInstance = genletClass.getConstructor().newInstance()
+            genletInstance.setClassLoader(genletClassLoader)
             genletInstance to genletClassLoader
         } catch (ex: Exception) {
             throw PhaseException("Genlet class $genletClassname from $filePath could not be loaded: ${ex.message}")

@@ -6,16 +6,30 @@ set modules=de.fhdo.lemma.eclipse.ui.utils
 set modules=%modules%;de.fhdo.lemma.data.datadsl.metamodel
 set modules=%modules%;de.fhdo.lemma.utils
 
-REM REM Type Checker
+REM Type Checker
 set modules=%modules%;de.fhdo.lemma.technology.technologydsl.metamodel
 set modules=%modules%;de.fhdo.lemma.typechecking
 
-REM REM Languages
+REM Languages
 set modules=%modules%;de.fhdo.lemma.data.datadsl.parent
+set modules=%modules%;de.fhdo.lemma.data.datadsl.ui
+set modules=%modules%;de.fhdo.lemma.data.datadsl.ui.tests
+
 set modules=%modules%;de.fhdo.lemma.technology.technologydsl.parent
+set modules=%modules%;de.fhdo.lemma.technology.technologydsl.ui
+set modules=%modules%;de.fhdo.lemma.technology.technologydsl.ui.tests
+
 set modules=%modules%;de.fhdo.lemma.servicedsl.parent
+set modules=%modules%;de.fhdo.lemma.servicedsl.ui
+set modules=%modules%;de.fhdo.lemma.servicedsl.ui.tests
+
 set modules=%modules%;de.fhdo.lemma.technology.mappingdsl.parent
+set modules=%modules%;de.fhdo.lemma.technology.mappingdsl.ui
+set modules=%modules%;de.fhdo.lemma.technology.mappingdsl.ui.tests
+
 set modules=%modules%;de.fhdo.lemma.operationdsl.parent
+set modules=%modules%;de.fhdo.lemma.operationdsl.ui
+set modules=%modules%;de.fhdo.lemma.operationdsl.ui.tests
 
 REM Transformations
 set modules=%modules%;de.fhdo.lemma.intermediate.transformations.parent

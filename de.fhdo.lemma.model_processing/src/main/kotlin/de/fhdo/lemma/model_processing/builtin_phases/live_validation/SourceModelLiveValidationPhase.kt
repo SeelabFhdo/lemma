@@ -74,7 +74,7 @@ private fun findXtextSourceModelValidators(implementationPackage: String)
     for (validatorInfo in xtextSourceModelValidators) {
         val annotationParameters = validatorInfo.annotationInfo[SourceModelValidator::class]!!.parameterValues
         @Suppress("UNCHECKED_CAST")
-        val supportedFileExtensions = annotationParameters["supportedFileExtensions"] as Array<String>
+        val supportedFileExtensions = annotationParameters["supportedFileExtensions"].value as Array<String>
         supportedFileExtensions.forEach {
             if (!validatorsForExtensions.containsKey(it))
                 validatorsForExtensions[it] = mutableListOf(validatorInfo)

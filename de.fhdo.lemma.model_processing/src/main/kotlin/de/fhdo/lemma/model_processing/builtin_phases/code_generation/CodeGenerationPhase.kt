@@ -203,7 +203,7 @@ private fun findAndInitCodeGenerationModules(processorPackage: String,
 
         // Check name and duplicates
         val annotationInfo = classInfo.annotationInfo[CodeGenerationModule::class]!!
-        val moduleName = annotationInfo.parameterValues["name"] as String
+        val moduleName = annotationInfo.parameterValues["name"].value as String
         if (moduleName.isEmpty())
             throw PhaseException("Name of code generation module implemented in class \"${classInfo.simpleName}\" " +
                 "must not be empty")
@@ -212,7 +212,7 @@ private fun findAndInitCodeGenerationModules(processorPackage: String,
             throw PhaseException("Duplicate module detected: \"$moduleName\"")
 
         // Create and initialize module instance
-        val dependsOnModule = annotationInfo.parameterValues["dependsOn"] as String
+        val dependsOnModule = annotationInfo.parameterValues["dependsOn"].value as String
         val moduleInstance = initCodeGenerationModuleInstance(classInfo, moduleName, dependsOnModule,
              codeGenerationProperties)
         loadedModules += moduleName to moduleInstance

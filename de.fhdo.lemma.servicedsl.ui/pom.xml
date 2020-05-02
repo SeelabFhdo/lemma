@@ -7,11 +7,12 @@
         <relativePath>../de.fhdo.lemma.servicedsl.parent/pom.xml</relativePath>
         <groupId>de.fhdo.lemma.servicedsl</groupId>
         <artifactId>parent</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>0.7.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>de.fhdo.lemma.servicedsl.ui</artifactId>
     <packaging>eclipse-plugin</packaging>
+    <version>0.7.0-SNAPSHOT</version>
 
     <build>
         <plugins>
@@ -28,6 +29,27 @@
             <plugin>
                 <groupId>org.eclipse.xtend</groupId>
                 <artifactId>xtend-maven-plugin</artifactId>
+            </plugin>
+            <!--
+                The plugin currently does not participate in the build process controlled by the
+                parent POM. So, we need to be able to set the version in the MANIFEST.MF separately.
+                The plugin needs to be run prior to updating the version of the parent, because
+                otherwise it won't be able to find the parent POM.
+            -->
+            <plugin>
+                <groupId>org.eclipse.tycho</groupId>
+                <artifactId>tycho-versions-plugin</artifactId>
+                <version>${tycho-version}</version>
+            </plugin>
+            <!--
+                The tycho-versions-plugin won't, however, update the version of the parent POM being
+                referred in this POM. Therefore, we need the versions-maven-plugin. It needs to be
+                run after the tycho-versions-plugin.
+            -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>versions-maven-plugin</artifactId>
+                <version>${versions-maven-plugin-version}</version>
             </plugin>
         </plugins>
     </build>

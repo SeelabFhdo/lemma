@@ -6,7 +6,6 @@ plugins {
 }
 
 group = "de.fhdo.lemma.model_processing.code_generation.lakeside_mutual"
-version = "0.0.1-SNAPSHOT"
 
 repositories {
     mavenCentral()
@@ -14,29 +13,25 @@ repositories {
 }
 
 buildscript {
-    extra.set("intermediateDataModelVersion", "0.0.1-SNAPSHOT")
-    extra.set("javaBaseGeneratorVersion", "0.0.1-SNAPSHOT")
+    extra.set("javaBaseGeneratorVersion", version)
     extra.set("javaParserVersion", "3.14.10")
-    extra.set("modelProcessingVersion", "0.0.1-SNAPSHOT")
-    extra.set("modelProcessingUtilsVersion", "0.0.1-SNAPSHOT")
+    extra.set("lemmaEclipsePluginsVersion", version)
+    extra.set("modelProcessingVersion", version)
 }
 
 dependencies {
-    val intermediateDataModelVersion: String by rootProject.extra
     val javaBaseGeneratorVersion: String by rootProject.extra
     val javaParserVersion: String by rootProject.extra
+    val lemmaEclipsePluginsVersion: String by rootProject.extra
     val modelProcessingVersion: String by rootProject.extra
-    val modelProcessingUtilsVersion: String by rootProject.extra
 
     implementation(kotlin("stdlib"))
     implementation("com.github.javaparser:javaparser-core:$javaParserVersion")
-    implementation("de.fhdo.lemma.intermediate:de.fhdo.lemma.data.intermediate.metamodel:" +
-        "$intermediateDataModelVersion")
+    implementation("de.fhdo.lemma.intermediate:de.fhdo.lemma.data.intermediate.metamodel:$lemmaEclipsePluginsVersion")
     implementation("de.fhdo.lemma.model_processing.code_generation.java_base:" +
         "de.fhdo.lemma.model_processing.code_generation.java_base:$javaBaseGeneratorVersion")
     implementation("de.fhdo.lemma.model_processing:de.fhdo.lemma.model_processing:$modelProcessingVersion")
-    implementation("de.fhdo.lemma.model_processing.utils:de.fhdo.lemma.model_processing.utils:" +
-        "$modelProcessingUtilsVersion")
+    implementation("de.fhdo.lemma.model_processing.utils:de.fhdo.lemma.model_processing.utils:$modelProcessingVersion")
 }
 
 tasks.withType<KotlinCompile> {

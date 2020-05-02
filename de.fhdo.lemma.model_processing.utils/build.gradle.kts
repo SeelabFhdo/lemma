@@ -6,7 +6,6 @@ plugins {
 }
 
 group = "de.fhdo.lemma.model_processing.utils"
-version = "0.0.1-SNAPSHOT"
 
 repositories {
     mavenCentral()
@@ -14,24 +13,19 @@ repositories {
 }
 
 buildscript {
-    extra.set("intermediateDataModelVersion", "0.0.1-SNAPSHOT")
-    extra.set("intermediateServiceModelVersion", "0.0.1-SNAPSHOT")
-    extra.set("lemmaUtilsVersion", "0.0.1-SNAPSHOT")
-    extra.set("modelProcessingVersion", "0.0.1-SNAPSHOT")
+    extra.set("lemmaEclipsePluginsVersion", version)
+    extra.set("modelProcessingVersion", version)
 }
 
 dependencies {
-    val intermediateDataModelVersion: String by rootProject.extra
-    val intermediateServiceModelVersion: String by rootProject.extra
-    val lemmaUtilsVersion: String by rootProject.extra
+    val lemmaEclipsePluginsVersion: String by rootProject.extra
     val modelProcessingVersion: String by rootProject.extra
 
     implementation(kotlin("stdlib"))
-    implementation("de.fhdo.lemma:de.fhdo.lemma.utils:$lemmaUtilsVersion")
-    implementation("de.fhdo.lemma.intermediate:de.fhdo.lemma.data.intermediate.metamodel:" +
-        "$intermediateDataModelVersion")
+    implementation("de.fhdo.lemma:de.fhdo.lemma.utils:$lemmaEclipsePluginsVersion")
+    implementation("de.fhdo.lemma.intermediate:de.fhdo.lemma.data.intermediate.metamodel:$lemmaEclipsePluginsVersion")
     implementation("de.fhdo.lemma.intermediate:de.fhdo.lemma.service.intermediate.metamodel:" +
-        "$intermediateServiceModelVersion")
+        lemmaEclipsePluginsVersion)
     implementation("de.fhdo.lemma.model_processing:de.fhdo.lemma.model_processing:$modelProcessingVersion")
 }
 

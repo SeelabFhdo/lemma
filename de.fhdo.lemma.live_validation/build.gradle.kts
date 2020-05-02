@@ -18,8 +18,6 @@ plugins {
 }
 
 group = "de.fhdo.lemma.live_validation"
-// Initially set to 0.0.2, because 0.0.1 was somehow broken in the development machine's local Maven archive
-version = "0.0.2-SNAPSHOT"
 val MAIN_CLASS_NAME = "de.fhdo.lemma.live_validation.server.ServerRunnerKt"
 
 repositories {

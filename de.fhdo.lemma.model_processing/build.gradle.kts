@@ -6,7 +6,6 @@ plugins {
 }
 
 group = "de.fhdo.lemma.model_processing"
-version = "0.0.1-SNAPSHOT"
 
 repositories {
     mavenCentral()
@@ -14,15 +13,14 @@ repositories {
 }
 
 buildscript {
-    extra.set("classgraphVersion", "4.6.32")
+    extra.set("classgraphVersion", "4.8.35")
     extra.set("coroutinesVersion", "1.1.1")
-    extra.set("lemmaUtilsVersion", "0.0.1-SNAPSHOT")
     extra.set("equinoxVersion", "3.11.0")
     extra.set("jansiVersion", "1.17.1")
     extra.set("jdtCoreVersion", "3.21.0")
-    extra.set("liveValidationVersion", "0.0.2-SNAPSHOT")
+    extra.set("lemmaEclipsePluginsVersion", version)
     extra.set("lsp4jVersion", "0.9.0")
-    extra.set("oclVersion", "0.0.1-SNAPSHOT")
+    extra.set("oclVersion", version)
     extra.set("picocliVersion", "3.9.3")
     extra.set("xtextVersion", "2.21.0")
 }
@@ -30,11 +28,10 @@ buildscript {
 dependencies {
     val classgraphVersion: String by rootProject.extra
     val coroutinesVersion: String by rootProject.extra
-    val lemmaUtilsVersion: String by rootProject.extra
     val equinoxVersion: String by rootProject.extra
     val jansiVersion: String by rootProject.extra
     val jdtCoreVersion:String by rootProject.extra
-    val liveValidationVersion: String by rootProject.extra
+    val lemmaEclipsePluginsVersion: String by rootProject.extra
     val lsp4jVersion: String by rootProject.extra
     val oclVersion: String by rootProject.extra
     val picocliVersion: String by rootProject.extra
@@ -42,9 +39,9 @@ dependencies {
 
     implementation(kotlin("stdlib"))
     implementation(kotlin("reflect"))
-    implementation("de.fhdo.lemma.live_validation:de.fhdo.lemma.live_validation:$liveValidationVersion")
+    implementation("de.fhdo.lemma.live_validation:de.fhdo.lemma.live_validation:$lemmaEclipsePluginsVersion")
     implementation("de.fhdo.lemma.ocl:de.fhdo.lemma.ocl:$oclVersion:all-dependencies-no-kotlin")
-    implementation("de.fhdo.lemma:de.fhdo.lemma.utils:$lemmaUtilsVersion")
+    implementation("de.fhdo.lemma:de.fhdo.lemma.utils:$lemmaEclipsePluginsVersion")
     implementation("org.eclipse.lsp4j:org.eclipse.lsp4j:$lsp4jVersion")
     implementation("org.eclipse.lsp4j:org.eclipse.lsp4j.jsonrpc:$lsp4jVersion")
     implementation("org.fusesource.jansi:jansi:$jansiVersion")

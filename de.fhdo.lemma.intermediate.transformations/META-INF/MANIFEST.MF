@@ -4,7 +4,7 @@ Bundle-Name: de.fhdo.lemma.intermediate.transformations
 Bundle-Vendor: University of Applied Sciences and Arts Dortmund
 Bundle-SymbolicName: de.fhdo.lemma.intermediate.transformations;singleton:=true
 Automatic-Module-Name: IntermediateModelTransformations
-Bundle-Version: 0.0.1.qualifier
+Bundle-Version: 0.7.0.qualifier
 Bundle-ClassPath: .
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
@@ -15,19 +15,19 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.xtext.xbase.lib,
  org.eclipse.emf.ecore.xcore.lib,
  de.fhdo.lemma.service.intermediate.metamodel;visibility:=reexport,
- de.fhdo.lemma.servicedsl.metamodel;bundle-version="0.0.1";visibility:=reexport,
+ de.fhdo.lemma.servicedsl.metamodel;visibility:=reexport,
  de.fhdo.lemma.data.datadsl.metamodel;visibility:=reexport,
  de.fhdo.lemma.technology.technologydsl.metamodel;visibility:=reexport,
- de.fhdo.lemma.servicedsl;bundle-version="0.0.1",
+ de.fhdo.lemma.servicedsl,
  org.eclipse.xtext;bundle-version="2.21.0",
  org.eclipse.xtend.lib;bundle-version="2.21.0",
  org.eclipse.m2m.atl.core.emf;bundle-version="4.2.0",
  org.eclipse.m2m.atl.engine.emfvm.launch;bundle-version="4.2.0",
- de.fhdo.lemma.technology.mappingdsl.metamodel;bundle-version="0.0.1",
+ de.fhdo.lemma.technology.mappingdsl.metamodel,
  org.eclipse.core.resources;bundle-version="3.13.0",
- de.fhdo.lemma.utils;bundle-version="0.0.1",
- de.fhdo.lemma.data.intermediate.metamodel;bundle-version="0.0.1";visibility:=reexport,
- de.fhdo.lemma.service.intermediate.metamodel;bundle-version="0.0.1",
+ de.fhdo.lemma.utils,
+ de.fhdo.lemma.data.intermediate.metamodel;visibility:=reexport,
+ de.fhdo.lemma.service.intermediate.metamodel,
  org.eclipse.m2m.atl.emftvm;bundle-version="4.2.0"
 Bundle-ActivationPolicy: lazy
 Import-Package: org.slf4j;version="1.7.2"

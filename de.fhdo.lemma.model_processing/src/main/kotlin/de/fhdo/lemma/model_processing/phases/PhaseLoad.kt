@@ -43,7 +43,7 @@ internal fun loadProcessingPhases(modelProcessingPackage: String, processorImple
         // Find the loaded phase's successors
         phasesToLoad.addAll(
             phasesAfterInitialPhase.filter {
-                val after = it.annotationInfo[ModelProcessingPhase::class]!!.parameterValues!!.get("after")
+                val after = it.annotationInfo[ModelProcessingPhase::class]!!.parameterValues!!.get("after").value
                     as AnnotationClassRef
                 phaseToLoad.name == after.name
             }
@@ -151,5 +151,5 @@ private fun <T: Any> findPhaseAnnotationParameter(phaseClassInfo: ClassInfo, par
             ?.parameterValues?.get(parameterName)
 
     @Suppress("UNCHECKED_CAST")
-    return parameterValue as T
+    return parameterValue?.value as? T
 }

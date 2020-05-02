@@ -6,7 +6,6 @@ plugins {
 }
 
 group = "de.fhdo.lemma.model_processing.code_generation.java_base"
-version = "0.0.1-SNAPSHOT"
 
 repositories {
     mavenCentral()
@@ -15,53 +14,41 @@ repositories {
 }
 
 buildscript {
-    extra.set("classgraphVersion", "4.6.32")
-    extra.set("dataDslVersion", "0.0.1-SNAPSHOT")
-    extra.set("intermediateDataModelVersion", "0.0.1-SNAPSHOT")
-    extra.set("intermediateServiceModelVersion", "0.0.1-SNAPSHOT")
+    extra.set("classgraphVersion", "4.8.35")
     extra.set("jansiVersion", "1.17.1")
     extra.set("javaParserVersion", "3.14.10")
     extra.set("koinVersion", "2.0.1")
-    extra.set("liveValidationVersion", "0.0.2-SNAPSHOT")
+    extra.set("lemmaEclipsePluginsVersion", version)
     extra.set("lsp4jVersion", "0.9.0")
-    extra.set("modelProcessingVersion", "0.0.1-SNAPSHOT")
-    extra.set("modelProcessingUtilsVersion", "0.0.1-SNAPSHOT")
+    extra.set("modelProcessingVersion", version)
     extra.set("picocliVersion", "3.9.3")
-    extra.set("serviceDslVersion", "0.0.1-SNAPSHOT")
     extra.set("xmlBuilderVersion", "1.5.2")
 }
 
 dependencies {
     val classgraphVersion: String by rootProject.extra
-    val dataDslVersion: String by rootProject.extra
-    val intermediateDataModelVersion: String by rootProject.extra
-    val intermediateServiceModelVersion: String by rootProject.extra
     val javaParserVersion: String by rootProject.extra
     val jansiVersion: String by rootProject.extra
     val koinVersion: String by rootProject.extra
-    val liveValidationVersion: String by rootProject.extra
+    val lemmaEclipsePluginsVersion: String by rootProject.extra
     val lsp4jVersion: String by rootProject.extra
     val modelProcessingVersion: String by rootProject.extra
-    val modelProcessingUtilsVersion: String by rootProject.extra
     val picocliVersion: String by rootProject.extra
-    val serviceDslVersion: String by rootProject.extra
     val xmlBuilderVersion: String by rootProject.extra
 
     implementation(kotlin("stdlib"))
     implementation(kotlin("reflect"))
     implementation("com.github.javaparser:javaparser-core:$javaParserVersion")
-    implementation("de.fhdo.lemma.data.datadsl:de.fhdo.lemma.data.datadsl:$dataDslVersion")
-    implementation("de.fhdo.lemma.data.datadsl:de.fhdo.lemma.data.datadsl.metamodel:$dataDslVersion")
-    implementation("de.fhdo.lemma.intermediate:de.fhdo.lemma.data.intermediate.metamodel:" +
-        intermediateDataModelVersion)
+    implementation("de.fhdo.lemma.data.datadsl:de.fhdo.lemma.data.datadsl:$lemmaEclipsePluginsVersion")
+    implementation("de.fhdo.lemma.data.datadsl:de.fhdo.lemma.data.datadsl.metamodel:$lemmaEclipsePluginsVersion")
+    implementation("de.fhdo.lemma.intermediate:de.fhdo.lemma.data.intermediate.metamodel:$lemmaEclipsePluginsVersion")
     implementation("de.fhdo.lemma.intermediate:de.fhdo.lemma.service.intermediate.metamodel:" +
-        intermediateServiceModelVersion)
-    implementation("de.fhdo.lemma.live_validation:de.fhdo.lemma.live_validation:$liveValidationVersion")
+        lemmaEclipsePluginsVersion)
+    implementation("de.fhdo.lemma.live_validation:de.fhdo.lemma.live_validation:$lemmaEclipsePluginsVersion")
 
     implementation("de.fhdo.lemma.model_processing:de.fhdo.lemma.model_processing:$modelProcessingVersion")
-    implementation("de.fhdo.lemma.model_processing.utils:de.fhdo.lemma.model_processing.utils:" +
-        modelProcessingUtilsVersion)
-    implementation("de.fhdo.lemma.servicedsl:de.fhdo.lemma.servicedsl:$serviceDslVersion")
+    implementation("de.fhdo.lemma.model_processing.utils:de.fhdo.lemma.model_processing.utils:$modelProcessingVersion")
+    implementation("de.fhdo.lemma.servicedsl:de.fhdo.lemma.servicedsl:$lemmaEclipsePluginsVersion")
     implementation("info.picocli:picocli:$picocliVersion")
     implementation("io.github.classgraph:classgraph:$classgraphVersion")
     implementation("org.eclipse.lsp4j:org.eclipse.lsp4j:$lsp4jVersion")

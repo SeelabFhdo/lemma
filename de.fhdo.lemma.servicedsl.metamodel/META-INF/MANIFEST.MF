@@ -4,7 +4,7 @@ Bundle-Name: %pluginName
 Bundle-Vendor: %providerName
 Bundle-SymbolicName: de.fhdo.lemma.servicedsl.metamodel;singleton:=true
 Automatic-Module-Name: de.fhdo.lemma.servicedsl.metamodel
-Bundle-Version: 0.0.1.qualifier
+Bundle-Version: 0.7.0.qualifier
 Bundle-ClassPath: .
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
@@ -16,7 +16,7 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.xtext.xbase.lib,
  org.eclipse.emf.ecore.xcore.lib,
  de.fhdo.lemma.data.datadsl.metamodel;visibility:=reexport,
- de.fhdo.lemma.data.datadsl.tests;bundle-version="0.0.1",
- de.fhdo.lemma.technology.technologydsl.metamodel;bundle-version="0.0.1";visibility:=reexport,
- de.fhdo.lemma.utils;bundle-version="0.0.1"
+ de.fhdo.lemma.data.datadsl.tests,
+ de.fhdo.lemma.technology.technologydsl.metamodel;visibility:=reexport,
+ de.fhdo.lemma.utils
 Bundle-ActivationPolicy: lazy

@@ -6,7 +6,7 @@
 
     <groupId>de.fhdo.lemma.msa</groupId>
     <artifactId>de.fhdo.lemma.msa</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.7.0-SNAPSHOT</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -15,6 +15,7 @@
         <maven.compiler.plugin.version>3.8.0</maven.compiler.plugin.version>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
+        <versions.maven.plugin.version>2.7</versions.maven.plugin.version>
     </properties>
 
     <build>
@@ -23,6 +24,11 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven.compiler.plugin.version}</version>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>versions-maven-plugin</artifactId>
+                <version>${versions.maven.plugin.version}</version>
             </plugin>
         </plugins>
     </build>

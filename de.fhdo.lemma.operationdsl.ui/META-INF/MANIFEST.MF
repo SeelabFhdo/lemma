@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: de.fhdo.lemma.operationdsl.ui
 Bundle-Vendor: University of Applied Sciences and Arts Dortmund
-Bundle-Version: 0.0.1.qualifier
+Bundle-Version: 0.7.0.qualifier
 Bundle-SymbolicName: de.fhdo.lemma.operationdsl.ui;singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: de.fhdo.lemma.operationdsl,
@@ -18,15 +18,15 @@ Require-Bundle: de.fhdo.lemma.operationdsl,
  org.eclipse.xtext.builder,
  org.eclipse.xtend.lib;bundle-version="2.21.0";resolution:=optional,
  org.eclipse.xtext.xbase.lib;bundle-version="2.21.0",
- de.fhdo.lemma.data.datadsl;bundle-version="0.0.1",
- de.fhdo.lemma.data.datadsl.ide;bundle-version="0.0.1",
- de.fhdo.lemma.data.datadsl.ui;bundle-version="0.0.1",
- de.fhdo.lemma.servicedsl;bundle-version="0.0.1",
- de.fhdo.lemma.servicedsl.ide;bundle-version="0.0.1",
- de.fhdo.lemma.servicedsl.ui;bundle-version="0.0.1",
- de.fhdo.lemma.technology.technologydsl;bundle-version="0.0.1",
- de.fhdo.lemma.technology.technologydsl.ide;bundle-version="0.0.1",
- de.fhdo.lemma.technology.technologydsl.ui;bundle-version="0.0.1"
+ de.fhdo.lemma.data.datadsl,
+ de.fhdo.lemma.data.datadsl.ide,
+ de.fhdo.lemma.data.datadsl.ui,
+ de.fhdo.lemma.servicedsl,
+ de.fhdo.lemma.servicedsl.ide,
+ de.fhdo.lemma.servicedsl.ui,
+ de.fhdo.lemma.technology.technologydsl,
+ de.fhdo.lemma.technology.technologydsl.ide,
+ de.fhdo.lemma.technology.technologydsl.ui
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: de.fhdo.lemma.operationdsl.ui.quickfix,

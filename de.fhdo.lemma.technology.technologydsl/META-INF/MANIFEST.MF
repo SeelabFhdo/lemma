@@ -2,20 +2,20 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: de.fhdo.lemma.technology.technologydsl
 Bundle-Vendor: University of Applied Sciences and Arts Dortmun
-Bundle-Version: 0.0.1.qualifier
+Bundle-Version: 0.7.0.qualifier
 Bundle-SymbolicName: de.fhdo.lemma.technology.technologydsl;singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: de.fhdo.lemma.technology.technologydsl.metamodel,
  org.eclipse.xtext,
  org.eclipse.xtext.xbase,
  org.eclipse.equinox.common;bundle-version="3.11.0",
- de.fhdo.lemma.data.datadsl;bundle-version="0.0.1",
+ de.fhdo.lemma.data.datadsl,
  org.eclipse.xtext.xbase.lib;bundle-version="2.21.0",
  org.antlr.runtime;bundle-version="[3.2.0,3.2.1)",
  org.eclipse.xtext.util,
  org.eclipse.xtend.lib;bundle-version="2.21.0",
- de.fhdo.lemma.typechecking;bundle-version="0.0.1",
- de.fhdo.lemma.utils;bundle-version="0.0.1"
+ de.fhdo.lemma.typechecking,
+ de.fhdo.lemma.utils
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: de.fhdo.lemma.technology.parser.antlr,
  de.fhdo.lemma.technology.formatting2,

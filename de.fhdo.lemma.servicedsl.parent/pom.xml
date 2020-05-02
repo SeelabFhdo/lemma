@@ -5,7 +5,7 @@
 
     <groupId>de.fhdo.lemma.servicedsl</groupId>
     <artifactId>parent</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.7.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <modules>
@@ -28,7 +28,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <build-helper-maven-plugin-version>3.1.0</build-helper-maven-plugin-version>
-        <lemma-utils-version>0.0.1-SNAPSHOT</lemma-utils-version>
+        <lemma-utils-version>${project.version}</lemma-utils-version>
         <eclipse-version>2020-03</eclipse-version>
         <ecore-xcore-version>1.3.1</ecore-xcore-version>
         <ecore-xtext-version>1.4.0</ecore-xtext-version>
@@ -42,10 +42,11 @@
         <maven-assembly-plugin-version>3.2.0</maven-assembly-plugin-version>
         <maven-clean-plugin-version>3.1.0</maven-clean-plugin-version>
         <maven-compiler-plugin-version>3.8.1</maven-compiler-plugin-version>
-        <metamodel-version>0.0.1-SNAPSHOT</metamodel-version>
+        <metamodel-version>${project.version}</metamodel-version>
         <org-eclipse-emf-mwe2-launch-version>2.11.2</org-eclipse-emf-mwe2-launch-version>
-        <technologydsl-version>0.0.1-SNAPSHOT</technologydsl-version>
+        <technologydsl-version>${project.version}</technologydsl-version>
         <tycho-version>1.7.0</tycho-version>
+        <versions-maven-plugin-version>2.7</versions-maven-plugin-version>
         <xtext-version>2.21.0</xtext-version>
     </properties>
 
@@ -114,6 +115,16 @@
                 <artifactId>tycho-maven-plugin</artifactId>
                 <version>${tycho-version}</version>
                 <extensions>true</extensions>
+            </plugin>
+            <plugin>
+                <groupId>org.eclipse.tycho</groupId>
+                <artifactId>tycho-versions-plugin</artifactId>
+                <version>${tycho-version}</version>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>versions-maven-plugin</artifactId>
+                <version>${versions-maven-plugin-version}</version>
             </plugin>
         </plugins>
     </build>

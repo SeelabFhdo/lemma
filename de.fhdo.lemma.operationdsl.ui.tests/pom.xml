@@ -7,7 +7,7 @@
         <relativePath>../de.fhdo.lemma.operationdsl.parent/pom.xml</relativePath>
         <groupId>de.fhdo.lemma.operationdsl</groupId>
         <artifactId>parent</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>0.7.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>de.fhdo.lemma.operationdsl.ui.tests</artifactId>
@@ -38,6 +38,11 @@
                     <useUIThread>false</useUIThread>
                     <failIfNoTests>false</failIfNoTests>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>versions-maven-plugin</artifactId>
+                <version>${versions-maven-plugin-version}</version>
             </plugin>
         </plugins>
     </build>

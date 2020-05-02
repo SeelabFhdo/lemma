@@ -13,6 +13,7 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.Visitin
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.services.ServicesContext.State as ServicesState
 import de.fhdo.lemma.model_processing.code_generation.java_base.javaFileName
 import de.fhdo.lemma.service.intermediate.IntermediateMicroservice
+import java.util.Properties
 
 /**
  * Code generation handler for IntermediateMicroservice instances.
@@ -43,7 +44,7 @@ internal class MicroserviceHandler
          * The class is marked with the LemmaMicroservice annotation in order to determine the type of the microservice,
          * i.e., functional, infrastructure, or utility, as specified in the service model
          */
-        generatedClass.addDependency("de.fhdo.lemma.msa:de.fhdo.lemma.msa:0.0.1-SNAPSHOT")
+        generatedClass.addDependency("de.fhdo.lemma.msa:de.fhdo.lemma.msa:${getLemmaMsaVersion()}")
 
         generatedClass.addImport("de.fhdo.lemma.msa.services.LemmaMicroservice", ImportTargetElementType.ANNOTATION,
             SerializationCharacteristic.DONT_RELOCATE)
@@ -58,4 +59,14 @@ internal class MicroserviceHandler
 
         return generatedClass to microservice.javaFileName
     }
+
+    /**
+     * Helper to get the version of the de.fhdo.lemma.msa:de.fhdo.lemma.msa dependency from the Java Base Generator's
+     * configuration file
+     */
+    private fun getLemmaMsaVersion() =
+        this::class.java.classLoader.getResourceAsStream("java.base.generator.properties")
+            ?.use { Properties().apply { load(it) } }
+            ?.getProperty("lemma.msa.version")
+            ?: "0.0.1-SNAPSHOT"
 }

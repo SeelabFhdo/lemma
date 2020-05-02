@@ -104,8 +104,8 @@ internal class SourceModelValidationPhase : AbstractModelProcessingPhase() {
         // Execute the found source model validators depending on the validation mode they support
         val validationResults = mutableListOf<ValidationResult>()
         validators.forEach {
-            val validationMode = it.annotationInfo[SourceModelValidator::class]!!.parameterValues["validationMode"]
-                    as AnnotationEnumValue
+            val validationMode = it.annotationInfo[SourceModelValidator::class]!!
+                .parameterValues["validationMode"].value as AnnotationEnumValue
             validationResults.addAll(
                 when (validationMode.valueName) {
                     SourceModelValidationMode.XTEXT.name -> executeXtextValidator(it, sourceModelFile)
@@ -129,7 +129,7 @@ internal class SourceModelValidationPhase : AbstractModelProcessingPhase() {
             .filter {
                 val annotationParameters = it.annotationInfo[SourceModelValidator::class]!!.parameterValues
                 @Suppress("UNCHECKED_CAST")
-                val supportedFileExtensions = annotationParameters["supportedFileExtensions"] as Array<String>
+                val supportedFileExtensions = annotationParameters["supportedFileExtensions"].value as Array<String>
                 supportedFileExtensions.contains(fileExtension.toLowerCase())
             }
 }

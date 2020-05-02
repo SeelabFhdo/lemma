@@ -2,21 +2,21 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: de.fhdo.lemma.operationdsl
 Bundle-Vendor: University of Applied Sciences and Arts Dortmund
-Bundle-Version: 0.0.1.qualifier
+Bundle-Version: 0.7.0.qualifier
 Bundle-SymbolicName: de.fhdo.lemma.operationdsl;singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: de.fhdo.lemma.operationdsl.metamodel,
  org.eclipse.xtext,
  org.eclipse.xtext.xbase,
  org.eclipse.equinox.common;bundle-version="3.11.0",
- de.fhdo.lemma.servicedsl;bundle-version="0.0.1",
- de.fhdo.lemma.data.datadsl;bundle-version="0.0.1",
- de.fhdo.lemma.technology.technologydsl;bundle-version="0.0.1",
+ de.fhdo.lemma.servicedsl,
+ de.fhdo.lemma.data.datadsl,
+ de.fhdo.lemma.technology.technologydsl,
  org.eclipse.xtext.xbase.lib;bundle-version="2.21.0",
  org.antlr.runtime;bundle-version="[3.2.0,3.2.1)",
  org.eclipse.xtext.util,
  org.eclipse.xtend.lib;bundle-version="2.21.0",
- de.fhdo.lemma.utils;bundle-version="0.0.1"
+ de.fhdo.lemma.utils
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: de.fhdo.lemma.operationdsl.serializer,
  de.fhdo.lemma.operationdsl,
