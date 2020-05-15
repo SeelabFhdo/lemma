@@ -30,46 +30,46 @@ internal class InterfaceHandler
     /**
      * Execution logic of the handler
      */
-    override fun execute(iface: IntermediateInterface, ifaceClass: ClassOrInterfaceDeclaration, context: Nothing?)
+    override fun execute(eObject: IntermediateInterface, node: ClassOrInterfaceDeclaration, context: Nothing?)
         : GenletCodeGenerationHandlerResult<ClassOrInterfaceDeclaration>? {
         /*
          * Intermediate interfaces are mapped to Java classes by the base generator. These become Spring Components now.
          */
-        ifaceClass.addImport("org.springframework.stereotype.Component", ImportTargetElementType.ANNOTATION,
+        node.addImport("org.springframework.stereotype.Component", ImportTargetElementType.ANNOTATION,
             SerializationCharacteristic.DONT_RELOCATE)
-        ifaceClass.addAnnotation("Component", SerializationCharacteristic.DONT_RELOCATE)
+        node.addAnnotation("Component", SerializationCharacteristic.DONT_RELOCATE)
 
         /* Handle REST mappings */
-        if (!iface.usesProtocol("rest"))
-            return GenletCodeGenerationHandlerResult(ifaceClass)
+        if (!eObject.usesProtocol("rest"))
+            return GenletCodeGenerationHandlerResult(node)
 
         // Turn the interface into a REST controller
-        ifaceClass.addImport(
+        node.addImport(
             "org.springframework.web.bind.annotation.RestController",
             ImportTargetElementType.ANNOTATION,
             SerializationCharacteristic.DONT_RELOCATE
         )
-        ifaceClass.addDependency("org.springframework.boot:spring-boot-starter-web")
-        ifaceClass.addAnnotation("RestController", SerializationCharacteristic.DONT_RELOCATE)
+        node.addDependency("org.springframework.boot:spring-boot-starter-web")
+        node.addAnnotation("RestController", SerializationCharacteristic.DONT_RELOCATE)
 
         // Don't' generate constructors for the interface, because the creation of instances is handled by Spring's DI
         // mechanism
-        ifaceClass.addSerializationCharacteristic(SerializationCharacteristic.NO_CONSTRUCTORS)
+        node.addSerializationCharacteristic(SerializationCharacteristic.NO_CONSTRUCTORS)
 
         // In case the interface defines a separated REST endpoint, the class will be annotated with RequestMapping in
         // order to determine its endpoint addresses
-        val restEndpoint = iface.getEndpoint("rest") ?: return GenletCodeGenerationHandlerResult(ifaceClass)
-        ifaceClass.addImport(
+        val restEndpoint = eObject.getEndpoint("rest") ?: return GenletCodeGenerationHandlerResult(node)
+        node.addImport(
             "org.springframework.web.bind.annotation.RequestMapping",
             ImportTargetElementType.ANNOTATION, SerializationCharacteristic.REMOVE_ON_RELOCATION
         )
-        val requestMappingAnnotation = ifaceClass.addAndGetAnnotation(
+        val requestMappingAnnotation = node.addAndGetAnnotation(
             "RequestMapping",
             SerializationCharacteristic.REMOVE_ON_RELOCATION
         )
         requestMappingAnnotation.addPair("value", restEndpoint.addressesToAnnotationMultiValue())
 
-        return GenletCodeGenerationHandlerResult(ifaceClass)
+        return GenletCodeGenerationHandlerResult(node)
     }
 
     /**

@@ -30,24 +30,24 @@ internal class ParameterHandler : GenletCodeGenerationHandlerI<IntermediateParam
     /**
      * Execution logic of the handler
      */
-    override fun execute(parameter: IntermediateParameter, method: MethodDeclaration, context: Nothing?)
+    override fun execute(eObject: IntermediateParameter, node: MethodDeclaration, context: Nothing?)
         : GenletCodeGenerationHandlerResult<MethodDeclaration>? {
         /* Handle Exception type if the parameter communicates a fault */
-        if (parameter.isCommunicatesFault) {
-            val (exception, _, imports, dependencies) = getTechnologySpecificMappingForType(parameter.type.name)
-                ?: return GenletCodeGenerationHandlerResult(method)
+        if (eObject.isCommunicatesFault) {
+            val (exception, _, imports, dependencies) = getTechnologySpecificMappingForType(eObject.type.name)
+                ?: return GenletCodeGenerationHandlerResult(node)
 
-            method.addDependencies(dependencies)
-            imports.forEach { method.addImport(it, ImportTargetElementType.METHOD) }
-            method.addThrownException(exception)
-            return GenletCodeGenerationHandlerResult(method)
+            node.addDependencies(dependencies)
+            imports.forEach { node.addImport(it, ImportTargetElementType.METHOD) }
+            node.addThrownException(exception)
+            return GenletCodeGenerationHandlerResult(node)
         }
 
         /* Do Genlet-specific type mapping if necessary */
-        val generatedParameter = method.getParameter(parameter.name)!!
+        val generatedParameter = node.getParameter(eObject.name)!!
         val typeExpectedFromGenlet = generatedParameter.getTypeExpectedFromGenlet()
         if (typeExpectedFromGenlet != null && existsTechnologySpecificMappingForType(typeExpectedFromGenlet)) {
-            val (mappedType, _) = parameter.type.addTypeInformationTo(method) {
+            val (mappedType, _) = eObject.type.addTypeInformationTo(node) {
                 addImport(it, ImportTargetElementType.METHOD)
             }!!
 
@@ -55,11 +55,11 @@ internal class ParameterHandler : GenletCodeGenerationHandlerI<IntermediateParam
         }
 
         /* Handle API comments of the parameter if any */
-        val apiComment = parameter.operation.apiOperationComment ?: return GenletCodeGenerationHandlerResult(method)
-        val parameterComment = apiComment.parameterComments.find { it.parameter.name == parameter.name } ?: return null
+        val apiComment = eObject.operation.apiOperationComment ?: return GenletCodeGenerationHandlerResult(node)
+        val parameterComment = apiComment.parameterComments.find { it.parameter.name == eObject.name } ?: return null
 
         // Add imports and annotations related to API comments to parameter
-        method.addImport("io.swagger.annotations.ApiParam", ImportTargetElementType.ANNOTATION,
+        node.addImport("io.swagger.annotations.ApiParam", ImportTargetElementType.ANNOTATION,
             SerializationCharacteristic.REMOVE_ON_RELOCATION)
         val annotation = generatedParameter.addAndGetAnnotation("ApiParam",
             SerializationCharacteristic.REMOVE_ON_RELOCATION)
@@ -67,6 +67,6 @@ internal class ParameterHandler : GenletCodeGenerationHandlerI<IntermediateParam
         if (parameterComment.isRequired)
             annotation.addPair("required", "true")
 
-        return GenletCodeGenerationHandlerResult(method)
+        return GenletCodeGenerationHandlerResult(node)
     }
 }

@@ -81,47 +81,47 @@ internal class MicroserviceHandler
     /**
      * Execution logic of the handler
      */
-    override fun execute(intermediateService: IntermediateMicroservice, serviceClass: ClassOrInterfaceDeclaration,
-        context: Nothing?) : GenletCodeGenerationHandlerResult<ClassOrInterfaceDeclaration>? {
-        State.initialize(intermediateService)
+    override fun execute(eObject: IntermediateMicroservice, node: ClassOrInterfaceDeclaration, context: Nothing?)
+        : GenletCodeGenerationHandlerResult<ClassOrInterfaceDeclaration>? {
+        State.initialize(eObject)
 
         /* Each modeled microservice becomes a SpringBoot application */
-        serviceClass.addSerializationCharacteristic(SerializationCharacteristic.NO_CONSTRUCTORS)
-        serviceClass.addImport("org.springframework.boot.SpringApplication", ImportTargetElementType.METHOD_BODY,
+        node.addSerializationCharacteristic(SerializationCharacteristic.NO_CONSTRUCTORS)
+        node.addImport("org.springframework.boot.SpringApplication", ImportTargetElementType.METHOD_BODY,
             SerializationCharacteristic.DONT_RELOCATE)
-        serviceClass.addImport("org.springframework.boot.autoconfigure.SpringBootApplication",
+        node.addImport("org.springframework.boot.autoconfigure.SpringBootApplication",
             ImportTargetElementType.ANNOTATION, SerializationCharacteristic.DONT_RELOCATE)
 
         // Add main method to invoke the SpringBoot application
-        serviceClass.addAnnotation("SpringBootApplication", SerializationCharacteristic.DONT_RELOCATE)
-        val mainMethod = serviceClass.addMethod("main", Modifier.Keyword.PUBLIC, Modifier.Keyword.STATIC)
+        node.addAnnotation("SpringBootApplication", SerializationCharacteristic.DONT_RELOCATE)
+        val mainMethod = node.addMethod("main", Modifier.Keyword.PUBLIC, Modifier.Keyword.STATIC)
         mainMethod.addParameter("String[]", "args")
-        mainMethod.setBody("SpringApplication.run(${serviceClass.nameAsString}.class, args)")
+        mainMethod.setBody("SpringApplication.run(${node.nameAsString}.class, args)")
         mainMethod.addSerializationCharacteristic(SerializationCharacteristic.DONT_RELOCATE)
 
         /* Add dependencies and annotations for API comments if necessary */
-        if (intermediateService.hasApiComments) {
-            serviceClass.addDependency("io.springfox:springfox-swagger2:2.9.2")
-            serviceClass.addDependency("io.springfox:springfox-swagger-ui:2.9.2")
-            serviceClass.addImport("springfox.documentation.swagger2.annotations.EnableSwagger2",
+        if (eObject.hasApiComments) {
+            node.addDependency("io.springfox:springfox-swagger2:2.9.2")
+            node.addDependency("io.springfox:springfox-swagger-ui:2.9.2")
+            node.addImport("springfox.documentation.swagger2.annotations.EnableSwagger2",
                 ImportTargetElementType.ANNOTATION, SerializationCharacteristic.DONT_RELOCATE)
-            serviceClass.addAnnotation("EnableSwagger2", SerializationCharacteristic.DONT_RELOCATE)
+            node.addAnnotation("EnableSwagger2", SerializationCharacteristic.DONT_RELOCATE)
         }
 
         /* Handle aspects */
         // Do this here to prevent custom properties overriding built-in ones (see below)
-        handleCustomPropertyAspect(intermediateService)
+        handleCustomPropertyAspect(eObject)
 
-        handleApplicationNameAspect(intermediateService)
-        handleJacksonConfigurationAspect(intermediateService)
-        handleDatasourceConfigurationAspect(intermediateService, serviceClass)
-        handleHibernateConfigurationAspect(intermediateService)
-        handleJpaShowSqlAspect(intermediateService)
+        handleApplicationNameAspect(eObject)
+        handleJacksonConfigurationAspect(eObject)
+        handleDatasourceConfigurationAspect(eObject, node)
+        handleHibernateConfigurationAspect(eObject)
+        handleJpaShowSqlAspect(eObject)
 
         /* Configure service for asynchronous interaction */
-        intermediateService.configureForAsynchronousInteraction(serviceClass)
+        eObject.configureForAsynchronousInteraction(node)
 
-        return GenletCodeGenerationHandlerResult(serviceClass, generatedApplicationPropertiesFile())
+        return GenletCodeGenerationHandlerResult(node, generatedApplicationPropertiesFile())
     }
 
     /**

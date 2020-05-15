@@ -31,30 +31,30 @@ internal class OperationHandler : GenletCodeGenerationHandlerI<IntermediateOpera
     /**
      * Execution logic of the handler
      */
-    override fun execute(operation: IntermediateOperation, method: MethodDeclaration, context: Nothing?)
+    override fun execute(eObject: IntermediateOperation, node: MethodDeclaration, context: Nothing?)
         : GenletCodeGenerationHandlerResult<MethodDeclaration>? {
         /* Add imports and annotations related to API comments */
-        if (operation.apiOperationComment != null) {
-            method.addImport(
+        if (eObject.apiOperationComment != null) {
+            node.addImport(
                 "io.swagger.annotations.ApiOperation", ImportTargetElementType.ANNOTATION,
                 SerializationCharacteristic.REMOVE_ON_RELOCATION
             )
-            val apiOperationAnnotation = method.addAndGetAnnotation(
+            val apiOperationAnnotation = node.addAndGetAnnotation(
                 "ApiOperation",
                 SerializationCharacteristic.REMOVE_ON_RELOCATION
             )
-            apiOperationAnnotation.addPair("value", "\"${operation.apiOperationComment.comment}\"")
+            apiOperationAnnotation.addPair("value", "\"${eObject.apiOperationComment.comment}\"")
         }
 
         /* In case any of the operation's parameters exhibits the java.ResponseEntity aspect, the return type of the
          * generated method will be adapted to be ResponseEntity with the current return type as type argument. This,
          * however, is only possible when the return type is a ClassOrInterfaceType.
          */
-        if (operation.parameters.any { it.hasAspect("java.ResponseEntity") } && method.type is ClassOrInterfaceType) {
-            val currentReturnType = (method.type as ClassOrInterfaceType).nameAsString
+        if (eObject.parameters.any { it.hasAspect("java.ResponseEntity") } && node.type is ClassOrInterfaceType) {
+            val currentReturnType = (node.type as ClassOrInterfaceType).nameAsString
             if (currentReturnType != "ResponseEntity") {
-                method.addImport("org.springframework.http.ResponseEntity", ImportTargetElementType.METHOD)
-                method.setType("ResponseEntity<$currentReturnType>")
+                node.addImport("org.springframework.http.ResponseEntity", ImportTargetElementType.METHOD)
+                node.setType("ResponseEntity<$currentReturnType>")
             }
         }
 
@@ -62,15 +62,15 @@ internal class OperationHandler : GenletCodeGenerationHandlerI<IntermediateOpera
          * Gather asynchronous input parameters in the Genlet's state to later handle them after generation of the
          * current microservice has been finished (cf. MicroserviceHandler)
          */
-        if (operation.hasInputParameters(CommunicationType.ASYNCHRONOUS)) {
+        if (eObject.hasInputParameters(CommunicationType.ASYNCHRONOUS)) {
             // Asynchronous input parameters will be condensed into a single composite class by the Java base
             // generator
-            val asynchronousParameter = operation.getInputParameters(CommunicationType.ASYNCHRONOUS)[0].type
+            val asynchronousParameter = eObject.getInputParameters(CommunicationType.ASYNCHRONOUS)[0].type
             val compositeClass = (asynchronousParameter as? IntermediateComplexType)?.fullyQualifiedClassname
             if (compositeClass != null)
-                State.addOrUpdateAsynchronousOperationInfo(operation, method, compositeClass)
+                State.addOrUpdateAsynchronousOperationInfo(eObject, node, compositeClass)
         }
 
-        return GenletCodeGenerationHandlerResult(method)
+        return GenletCodeGenerationHandlerResult(node)
     }
 }

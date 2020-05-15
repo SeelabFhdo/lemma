@@ -27,17 +27,17 @@ internal class ReferredOperationHandler
     /**
      * Execution logic of the handler
      */
-    override fun execute(referredOperation: IntermediateReferredOperation, method: MethodDeclaration, context: Nothing?)
+    override fun execute(eObject: IntermediateReferredOperation, node: MethodDeclaration, context: Nothing?)
         : GenletCodeGenerationHandlerResult<MethodDeclaration>? {
         /*
          * The interface that defines the operation to which shall be referred will be Autowired into the referring
          * class, if this is not the case already
          */
-        val definingInterface = referredOperation.operation.`interface`.classname
-        val generatedParentClass = method.parentNode.get() as ClassOrInterfaceDeclaration
+        val definingInterface = eObject.operation.`interface`.classname
+        val generatedParentClass = node.parentNode.get() as ClassOrInterfaceDeclaration
         val injectionAttribute = definingInterface.decapitalize()
         if (generatedParentClass.attributes.any { it.nameAsString == injectionAttribute })
-            return GenletCodeGenerationHandlerResult(method)
+            return GenletCodeGenerationHandlerResult(node)
 
         /* Add Autowired attribute to the class */
         val delegationAttribute = generatedParentClass.addPrivateAttribute(injectionAttribute, definingInterface)
@@ -51,12 +51,12 @@ internal class ReferredOperationHandler
          * The body of the method will be replaced with a delegating call to the original operation leveraging the
          * Autowired interface
          */
-        val parametersString = method.parameters.joinToString { it.nameAsString }
-        var delegatingBody = "$injectionAttribute.${referredOperation.operation.name}($parametersString)"
-        if (!method.type.isVoidType)
+        val parametersString = node.parameters.joinToString { it.nameAsString }
+        var delegatingBody = "$injectionAttribute.${eObject.operation.name}($parametersString)"
+        if (!node.type.isVoidType)
             delegatingBody = "return $delegatingBody"
-        method.setBody(delegatingBody)
+        node.setBody(delegatingBody)
 
-        return GenletCodeGenerationHandlerResult(method)
+        return GenletCodeGenerationHandlerResult(node)
     }
 }

@@ -23,16 +23,16 @@ internal class CompositeParametersHandler
     /**
      * Execution logic of the handler
      */
-    override fun execute(operation: IntermediateOperation, compositeClass: ClassOrInterfaceDeclaration, ctx: Nothing?)
+    override fun execute(eObject: IntermediateOperation, node: ClassOrInterfaceDeclaration, context: Nothing?)
         : GenletCodeGenerationHandlerResult<ClassOrInterfaceDeclaration>? {
         /* Gather asynchronous composite input and result classes in Genlet state */
-        val compositeClassName = compositeClass.fullyQualifiedName.get()
-        if (compositeClass.isAsynchronousCompositeInputClassFor(operation))
-            State.addOrUpdateAsynchronousOperationInfo(operation, compositeInputClass = compositeClassName)
-        else if (compositeClass.isAsynchronousCompositeResultClassFor(operation))
-            State.addOrUpdateAsynchronousOperationInfo(operation, compositeResultClass = compositeClassName)
+        val compositeClassName = node.fullyQualifiedName.get()
+        if (node.isAsynchronousCompositeInputClassFor(eObject))
+            State.addOrUpdateAsynchronousOperationInfo(eObject, compositeInputClass = compositeClassName)
+        else if (node.isAsynchronousCompositeResultClassFor(eObject))
+            State.addOrUpdateAsynchronousOperationInfo(eObject, compositeResultClass = compositeClassName)
 
-        return GenletCodeGenerationHandlerResult(compositeClass)
+        return GenletCodeGenerationHandlerResult(node)
     }
 
     /**

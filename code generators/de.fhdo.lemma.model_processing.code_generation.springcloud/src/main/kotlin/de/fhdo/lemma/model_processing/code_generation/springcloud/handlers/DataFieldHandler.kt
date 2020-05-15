@@ -26,20 +26,20 @@ internal class DataFieldHandler
     /**
      * Execution logic of the handler
      */
-    override fun execute(field: IntermediateDataField, generatedField: FieldDeclaration, context: Nothing?)
+    override fun execute(eObject: IntermediateDataField, node: FieldDeclaration, context: Nothing?)
         : GenletCodeGenerationHandlerResult<FieldDeclaration>? {
-        if (generatedField.variables.isEmpty() || !generatedField.variables[0].isTypeExpectedFromGenlet())
-            return GenletCodeGenerationHandlerResult(generatedField)
+        if (node.variables.isEmpty() || !node.variables[0].isTypeExpectedFromGenlet())
+            return GenletCodeGenerationHandlerResult(node)
 
-        val attribute = generatedField.variables[0]
+        val attribute = node.variables[0]
         val expectedType = attribute.getTypeExpectedFromGenlet()!!
         if (!existsTechnologySpecificMappingForType(expectedType))
-            return GenletCodeGenerationHandlerResult(generatedField)
+            return GenletCodeGenerationHandlerResult(node)
 
-        val (mappedType, _) = field.type.addTypeInformationTo(generatedField) {
+        val (mappedType, _) = eObject.type.addTypeInformationTo(node) {
             addImport(it, ImportTargetElementType.ATTRIBUTE_TYPE)
         }!!
         attribute.setType(mappedType)
-        return GenletCodeGenerationHandlerResult(generatedField)
+        return GenletCodeGenerationHandlerResult(node)
     }
 }

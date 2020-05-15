@@ -26,19 +26,19 @@ internal class DataStructureHandler
     /**
      * Execution logic of the handler
      */
-    override fun execute(operation: IntermediateDataOperation, generatedMethod: MethodDeclaration,
-        context: Nothing?) : GenletCodeGenerationHandlerResult<MethodDeclaration>? {
-        if (!generatedMethod.isTypeExpectedFromGenlet())
-            return GenletCodeGenerationHandlerResult(generatedMethod)
+    override fun execute(eObject: IntermediateDataOperation, node: MethodDeclaration, context: Nothing?)
+        : GenletCodeGenerationHandlerResult<MethodDeclaration>? {
+        if (!node.isTypeExpectedFromGenlet())
+            return GenletCodeGenerationHandlerResult(node)
 
-        val expectedType = generatedMethod.getTypeExpectedFromGenlet()!!
+        val expectedType = node.getTypeExpectedFromGenlet()!!
         if (!existsTechnologySpecificMappingForType(expectedType))
-            return GenletCodeGenerationHandlerResult(generatedMethod)
+            return GenletCodeGenerationHandlerResult(node)
 
-        val (mappedType, _) = operation.returnType.type.addTypeInformationTo(generatedMethod) {
+        val (mappedType, _) = eObject.returnType.type.addTypeInformationTo(node) {
             addImport(it, ImportTargetElementType.METHOD)
         }!!
-        generatedMethod.setType(mappedType)
-        return GenletCodeGenerationHandlerResult(generatedMethod)
+        node.setType(mappedType)
+        return GenletCodeGenerationHandlerResult(node)
     }
 }

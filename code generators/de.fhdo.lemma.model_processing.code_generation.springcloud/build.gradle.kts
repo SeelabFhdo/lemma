@@ -31,6 +31,7 @@ dependencies {
     val xmlBuilderVersion: String by rootProject.extra
 
     implementation(kotlin("stdlib"))
+    implementation(kotlin("reflect"))
     implementation("com.github.javaparser:javaparser-core:$javaParserVersion")
     implementation("de.fhdo.lemma.data.datadsl:de.fhdo.lemma.data.datadsl.metamodel:$lemmaEclipsePluginsVersion")
     implementation("de.fhdo.lemma.intermediate:de.fhdo.lemma.data.intermediate.metamodel:$lemmaEclipsePluginsVersion")
