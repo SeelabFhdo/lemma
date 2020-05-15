@@ -66,7 +66,7 @@ private fun findXtextSourceModelValidators(implementationPackage: String)
                 return@filter false
 
             val annotationParameters = it.annotationInfo[SourceModelValidator::class]!!.parameterValues
-            val validationMode = annotationParameters["validationMode"] as AnnotationEnumValue
+            val validationMode = annotationParameters["validationMode"].value as AnnotationEnumValue
             return@filter validationMode.valueName == SourceModelValidationMode.XTEXT.name
         }
 
