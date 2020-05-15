@@ -25,16 +25,16 @@ internal class IntermediateDataOperationHandler
 
     override fun getAspects(eObject: IntermediateDataOperation) = eObject.aspects!!
 
-    override fun execute(operation: IntermediateDataOperation, method: MethodDeclaration, context: Nothing?)
+    override fun execute(eObject: IntermediateDataOperation, node: MethodDeclaration, context: Nothing?)
         : GenletCodeGenerationHandlerResult<MethodDeclaration>? {
-        val returnType = operation.returnType?.type ?: return GenletCodeGenerationHandlerResult(method)
+        val returnType = eObject.returnType?.type ?: return GenletCodeGenerationHandlerResult(node)
         if (returnType.name != "Page")
-            return GenletCodeGenerationHandlerResult(method)
+            return GenletCodeGenerationHandlerResult(node)
 
-        val originalReturnType = if (operation.returnType.originalType is IntermediateComplexType)
-                (operation.returnType.originalType as IntermediateComplexType).resolve()
+        val originalReturnType = if (eObject.returnType.originalType is IntermediateComplexType)
+                (eObject.returnType.originalType as IntermediateComplexType).resolve()
             else
-                operation.returnType.originalType
+                eObject.returnType.originalType
 
         val fieldTypeName = if (originalReturnType is IntermediateListType) {
             when {
@@ -46,11 +46,10 @@ internal class IntermediateDataOperationHandler
                     if (isComplexTypeMapping) {
                         val currentDomainPackage: String by state()
                         val fullyQualifiedClassname = (type as IntermediateComplexType).fullyQualifiedClassname
-                        method.addImport("$currentDomainPackage.$fullyQualifiedClassname",
-                            ImportTargetElementType.METHOD)
+                        node.addImport("$currentDomainPackage.$fullyQualifiedClassname", ImportTargetElementType.METHOD)
                     }
-                    imports.forEach { method.addImport(it, ImportTargetElementType.METHOD) }
-                    method.addDependencies(dependencies)
+                    imports.forEach { node.addImport(it, ImportTargetElementType.METHOD) }
+                    node.addDependencies(dependencies)
                     typeName
                 }
                 else -> null
@@ -59,16 +58,16 @@ internal class IntermediateDataOperationHandler
             null
 
         if (fieldTypeName != null)
-            method.setType("Page<$fieldTypeName>")
+            node.setType("Page<$fieldTypeName>")
         else
-            method.setType("Page")
+            node.setType("Page")
 
         val currentMicroservicePackage: String by state()
         val pageClassPackage = "$currentMicroservicePackage.application"
         val (pageClassFullyQualifiedName, pageClassContent) = generatePageClassContent(pageClassPackage)
-        method.addImport(pageClassFullyQualifiedName, ImportTargetElementType.METHOD)
+        node.addImport(pageClassFullyQualifiedName, ImportTargetElementType.METHOD)
 
-        val result = GenletCodeGenerationHandlerResult(method)
+        val result = GenletCodeGenerationHandlerResult(node)
         result.generatedFileContents.add(GenletGeneratedFileContent(
             GenletPathSpecifier.CURRENT_MICROSERVICE_JAVA_ROOT_PATH,
             "application${File.separator}Page.java",
