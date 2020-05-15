@@ -13,7 +13,7 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.Visitin
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.CodeGenerationHandler
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.domain.handlers.data_operations.DataOperationHandler
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.domain.DomainContext.State as DomainState
-import de.fhdo.lemma.model_processing.code_generation.java_base.packageName
+import de.fhdo.lemma.model_processing.code_generation.java_base.eObjectPackageName
 
 /**
  * Code generation handler for IntermediateDataStructure instances.
@@ -34,7 +34,8 @@ internal class DataStructureHandler
         : Pair<ClassOrInterfaceDeclaration, String?>? {
         /* Each data structure becomes a new Java class in the current domain package with an empty constructor */
         val currentDomainPackage: String by DomainState
-        val generatedClass = newJavaClassOrInterface("$currentDomainPackage.${eObject.packageName}", eObject.classname)
+        val generatedClass = newJavaClassOrInterface("$currentDomainPackage.${eObject.eObjectPackageName}",
+            eObject.classname)
         generatedClass.addConstructor(Modifier.Keyword.PUBLIC)
 
         /* Set superclass, if any */

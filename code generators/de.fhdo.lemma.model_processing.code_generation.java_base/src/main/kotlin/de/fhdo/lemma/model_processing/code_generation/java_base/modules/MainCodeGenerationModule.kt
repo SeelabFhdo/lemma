@@ -9,7 +9,7 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.languages.INTERM
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.MainContext.State as MainState
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.domain.DomainCodeGenerationSubModule
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.services.ServicesCodeGenerationSubModule
-import de.fhdo.lemma.model_processing.code_generation.java_base.packageName
+import de.fhdo.lemma.model_processing.code_generation.java_base.eObjectPackageName
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.LineCountInfo
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.code_generation.CodeGenerationSerializerI
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.code_generation.findCodeGenerationSerializers
@@ -177,7 +177,7 @@ internal class MainCodeGenerationModule : AbstractCodeGenerationModule(), KoinCo
      * the [DependencyDescription.PART_SEP].
      */
     private fun IntermediateMicroservice.artifactIdentifier() : String {
-        var identifier = "$packageName${DependencyDescription.PART_SEP}$simpleName"
+        var identifier = "$eObjectPackageName${DependencyDescription.PART_SEP}$simpleName"
         if (version != null)
             identifier += "${DependencyDescription.PART_SEP}$version"
         return identifier

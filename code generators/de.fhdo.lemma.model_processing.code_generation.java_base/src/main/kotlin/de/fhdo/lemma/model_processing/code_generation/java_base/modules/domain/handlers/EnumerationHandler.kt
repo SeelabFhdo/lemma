@@ -13,7 +13,7 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.CodeGen
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.VisitingCodeGenerationHandlerI
 import de.fhdo.lemma.model_processing.code_generation.java_base.languages.createTypeSpecificValueString
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.domain.DomainContext.State as DomainState
-import de.fhdo.lemma.model_processing.code_generation.java_base.packageName
+import de.fhdo.lemma.model_processing.code_generation.java_base.eObjectPackageName
 
 /**
  * Code generation handler for IntermediateEnumeration instances.
@@ -37,7 +37,7 @@ internal class EnumerationHandler
     override fun execute(eObject: IntermediateEnumeration, context: Nothing?) : Pair<EnumDeclaration, String?>? {
         /* Each IntermediateEnumeration becomes a Java Enumeration */
         val currentDomainPackage: String by DomainState
-        val packageName = "$currentDomainPackage.${eObject.packageName}"
+        val packageName = "$currentDomainPackage.${eObject.eObjectPackageName}"
         val generatedEnum = newEnum(packageName, eObject.name)
 
         /* Handle IntermediateEnumerationField instances, which become Java Enumeration constants */

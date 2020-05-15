@@ -24,7 +24,6 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.ast.newJavaClass
 import de.fhdo.lemma.model_processing.code_generation.java_base.languages.DATA_DSL_LANGUAGE_DESCRIPTION
 import de.fhdo.lemma.model_processing.code_generation.java_base.languages.SERVICE_DSL_LANGUAGE_DESCRIPTION
 import de.fhdo.lemma.model_processing.code_generation.java_base.languages.getTypeMapping
-import de.fhdo.lemma.model_processing.code_generation.java_base.modules.domain.DomainContext.State as DomainState
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.services.ServicesContext.State as ServicesState
 import de.fhdo.lemma.model_processing.languages.registerLanguage
 import de.fhdo.lemma.model_processing.loadXtextResource
@@ -117,7 +116,7 @@ val EObject.qualifiedName : String
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-internal val EObject.packageName
+internal val EObject.eObjectPackageName
     get() = when(this) {
         is IntermediateComplexType -> qualifiedName.substringBeforeLast(".")
         is IntermediateMicroservice -> qualifiedName.substringBeforeLast(".")
@@ -161,8 +160,8 @@ internal fun EObject.buildOperationPackageName(targetInterfaceName: String = "",
  */
 val EObject.fullyQualifiedClassname
     get() = when(this) {
-        is IntermediateComplexType -> "$packageName.$classname"
-        is IntermediateMicroservice -> "$packageName.$classname"
+        is IntermediateComplexType -> "$eObjectPackageName.$classname"
+        is IntermediateMicroservice -> "$eObjectPackageName.$classname"
         else -> throw IllegalArgumentException("EObject of type ${this.mainInterface.name} does not have a " +
             "fully-qualified classname")
     }

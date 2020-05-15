@@ -16,7 +16,7 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.findDepe
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.loadGenlets
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.buildAspectHandlerQualifiedName
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.findAspectHandlers
-import de.fhdo.lemma.model_processing.code_generation.java_base.packageName
+import de.fhdo.lemma.model_processing.code_generation.java_base.eObjectPackageName
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.LineCountInfo
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.code_generation.CodeGenerationSerializerI
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.configuration.AbstractSerializationConfiguration
@@ -93,7 +93,7 @@ internal object MainContext {
          */
         fun setCurrentMicroservice(microservice : IntermediateMicroservice) {
             currentMicroservice = microservice
-            currentMicroservicePackage = microservice.packageName
+            currentMicroservicePackage = microservice.eObjectPackageName
         }
 
         /**

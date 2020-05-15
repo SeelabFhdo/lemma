@@ -15,7 +15,7 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.fullyQualifiedCl
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.CodeGenerationHandler
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.VisitingCodeGenerationHandlerI
 import de.fhdo.lemma.model_processing.code_generation.java_base.languages.getObjectWrapperMapping
-import de.fhdo.lemma.model_processing.code_generation.java_base.packageName
+import de.fhdo.lemma.model_processing.code_generation.java_base.eObjectPackageName
 import de.fhdo.lemma.model_processing.phases.PhaseException
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.domain.DomainContext.State as DomainState
 
@@ -50,7 +50,7 @@ internal class ListTypeHandler
         : Pair<ClassOrInterfaceDeclaration, String?>? {
         /* Each IntermediateListType becomes a Java class that inherits from a class of the Java Collection Framework */
         val currentDomainPackage: String by DomainState
-        val packageName = "$currentDomainPackage.${eObject.packageName}"
+        val packageName = "$currentDomainPackage.${eObject.eObjectPackageName}"
         val generatedClass = newJavaClassOrInterface(packageName, eObject.classname)
 
         /* Determine the Collection type from which the list type's class inherits */
