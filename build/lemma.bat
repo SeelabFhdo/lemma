@@ -99,10 +99,13 @@ exit /B %ERRORLEVEL%
     call :colorEcho 5 ------------------------------------------------------------------------
     echo.
 
-    REM Builds can be customized with a separate "build.sh" script in the modules' root folders.
+    REM Builds can be customized with a separate "build.bat" script in the modules' root folders.
     REM Otherwise, Maven's "clean" and "install" tasks will be used by default to build modules.
     if exist "%MODULE%\build.bat" (
-        cd %MODULE% & call build.bat & cd %BUILD_ROOT%
+        cd %MODULE% & call build.bat
+		set buildBatchErrorLevel=!ERRORLEVEL!
+		cd %BUILD_ROOT%
+		set ERRORLEVEL=!buildBatchErrorLevel!
     ) else (
         call mvn -f "%MODULE%\pom.xml" clean install
     )
