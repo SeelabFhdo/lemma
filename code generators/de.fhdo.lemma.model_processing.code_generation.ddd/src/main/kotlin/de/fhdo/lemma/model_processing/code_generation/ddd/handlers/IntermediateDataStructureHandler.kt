@@ -17,17 +17,17 @@ internal class IntermediateDataStructureHandler
     override fun handlesEObjectsOfInstance() = IntermediateDataStructure::class.java
     override fun generatesNodesOfInstance() = ClassOrInterfaceDeclaration::class.java
 
-    override fun execute(dataStructure: IntermediateDataStructure, generatedClass: ClassOrInterfaceDeclaration,
-        context: Nothing?) : GenletCodeGenerationHandlerResult<ClassOrInterfaceDeclaration>? {
-        val dddElements = generatedClass.getDddElementsForFeatures(dataStructure.featureNames.toSet())
+    override fun execute(eObject: IntermediateDataStructure, node: ClassOrInterfaceDeclaration, context: Nothing?)
+        : GenletCodeGenerationHandlerResult<ClassOrInterfaceDeclaration>? {
+        val dddElements = node.getDddElementsForFeatures(eObject.featureNames.toSet())
 
         if (dddElements.interfaces.isNotEmpty())
-            generatedClass.addDependency("de.fhdo.lemma.ddd:de.fhdo.lemma.ddd:${DDD_VERSION}")
+            node.addDependency("de.fhdo.lemma.ddd:de.fhdo.lemma.ddd:${DDD_VERSION}")
 
         dddElements.interfaces.forEach { (iface, ifaceImport) ->
-            generatedClass.addImport(ifaceImport, ImportTargetElementType.IMPLEMENTED_INTERFACE)
-            generatedClass.addImplementedType(iface)
+            node.addImport(ifaceImport, ImportTargetElementType.IMPLEMENTED_INTERFACE)
+            node.addImplementedType(iface)
         }
-        return GenletCodeGenerationHandlerResult(generatedClass)
+        return GenletCodeGenerationHandlerResult(node)
     }
 }

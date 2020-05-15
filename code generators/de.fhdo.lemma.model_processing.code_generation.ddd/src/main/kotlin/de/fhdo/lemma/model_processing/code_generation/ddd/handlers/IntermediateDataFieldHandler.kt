@@ -17,17 +17,17 @@ internal class IntermediateDataFieldHandler
     override fun handlesEObjectsOfInstance() = IntermediateDataField::class.java
     override fun generatesNodesOfInstance() = FieldDeclaration::class.java
 
-    override fun execute(dataField: IntermediateDataField, generatedField: FieldDeclaration, context: Nothing?)
+    override fun execute(eObject: IntermediateDataField, node: FieldDeclaration, context: Nothing?)
         : GenletCodeGenerationHandlerResult<FieldDeclaration>? {
-        val dddElements = generatedField.getDddElementsForFeatures(dataField.featureNames.toSet())
+        val dddElements = node.getDddElementsForFeatures(eObject.featureNames.toSet())
 
         if (dddElements.annotations.isNotEmpty())
-            generatedField.addDependency("de.fhdo.lemma.ddd:de.fhdo.lemma.ddd:${DDD_VERSION}")
+            node.addDependency("de.fhdo.lemma.ddd:de.fhdo.lemma.ddd:${DDD_VERSION}")
 
         dddElements.annotations.forEach { (annotation, annotationImport) ->
-            generatedField.addImport(annotationImport, ImportTargetElementType.ANNOTATION)
-            generatedField.addAnnotation(annotation)
+            node.addImport(annotationImport, ImportTargetElementType.ANNOTATION)
+            node.addAnnotation(annotation)
         }
-        return GenletCodeGenerationHandlerResult(generatedField)
+        return GenletCodeGenerationHandlerResult(node)
     }
 }

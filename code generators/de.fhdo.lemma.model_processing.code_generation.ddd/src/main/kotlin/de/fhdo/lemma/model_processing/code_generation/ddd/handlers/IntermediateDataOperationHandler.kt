@@ -17,17 +17,17 @@ internal class IntermediateDataOperationHandler
     override fun handlesEObjectsOfInstance() = IntermediateDataOperation::class.java
     override fun generatesNodesOfInstance() = MethodDeclaration::class.java
 
-    override fun execute(dataOperation: IntermediateDataOperation, generatedMethod: MethodDeclaration,
-        context: Nothing?) : GenletCodeGenerationHandlerResult<MethodDeclaration>? {
-        val dddElements = generatedMethod.getDddElementsForFeatures(dataOperation.featureNames.toSet())
+    override fun execute(eObject: IntermediateDataOperation, node: MethodDeclaration, context: Nothing?)
+        : GenletCodeGenerationHandlerResult<MethodDeclaration>? {
+        val dddElements = node.getDddElementsForFeatures(eObject.featureNames.toSet())
 
         if (dddElements.annotations.isNotEmpty())
-            generatedMethod.addDependency("de.fhdo.lemma.ddd:de.fhdo.lemma.ddd:${DDD_VERSION}")
+            node.addDependency("de.fhdo.lemma.ddd:de.fhdo.lemma.ddd:${DDD_VERSION}")
 
         dddElements.annotations.forEach { (annotation, annotationImport) ->
-            generatedMethod.addImport(annotationImport, ImportTargetElementType.ANNOTATION)
-            generatedMethod.addAnnotation(annotation)
+            node.addImport(annotationImport, ImportTargetElementType.ANNOTATION)
+            node.addAnnotation(annotation)
         }
-        return GenletCodeGenerationHandlerResult(generatedMethod)
+        return GenletCodeGenerationHandlerResult(node)
     }
 }
