@@ -41,7 +41,7 @@ internal class ReferredOperationHandler
     /**
      * Execution logic of the handler
      */
-    override fun execute(referredOperation: IntermediateReferredOperation, parentClass: ClassOrInterfaceDeclaration?)
+    override fun execute(eObject: IntermediateReferredOperation, context: ClassOrInterfaceDeclaration?)
         : Pair<MethodDeclaration, String?>? {
         /*
          * Referred operations become methods that delegate to another method. For the generation of those methods, we
@@ -54,10 +54,10 @@ internal class ReferredOperationHandler
          *      (4) Adjust the method-related imports of the generated method to point to the package of the method to
          *          which the generated one will delegate.
          */
-        val fakeOperation = referredOperation.deriveIntermediateOperation()
-        val (generatedMethod, _) = OperationHandler.invoke(fakeOperation, parentClass!!)!!
-        referredOperation.restoreEcoreReferencesFrom(fakeOperation)
-        generatedMethod.adjustImportsToPackageOf(referredOperation.operation, referredOperation.referringInterface.name)
+        val fakeOperation = eObject.deriveIntermediateOperation()
+        val (generatedMethod, _) = OperationHandler.invoke(fakeOperation, context!!)!!
+        eObject.restoreEcoreReferencesFrom(fakeOperation)
+        generatedMethod.adjustImportsToPackageOf(eObject.operation, eObject.referringInterface.name)
 
         /*
          * A referred operation is not meant to be overridden with custom code, as it always just delegates to another
@@ -70,7 +70,7 @@ internal class ReferredOperationHandler
          * the modeled interface (cf. InterfaceHandler) and call the referred, generated method.
          */
         val currentInterfacesGenerationPackage: String by ServicesState
-        val delegateInterfaceClassname = referredOperation.operation.`interface`.classname
+        val delegateInterfaceClassname = eObject.operation.`interface`.classname
 
         // Import the interface class
         generatedMethod.addImport(
@@ -81,7 +81,7 @@ internal class ReferredOperationHandler
 
         // Call the delegate method on a fresh interface class instance
         val parametersString = generatedMethod.parameters.joinToString { it.nameAsString }
-        var delegatingBody = "new $delegateInterfaceClassname().${referredOperation.operation.name}($parametersString)"
+        var delegatingBody = "new $delegateInterfaceClassname().${eObject.operation.name}($parametersString)"
         if (!generatedMethod.type.isVoidType)
             delegatingBody = "return $delegatingBody"
         generatedMethod.setBody(delegatingBody)

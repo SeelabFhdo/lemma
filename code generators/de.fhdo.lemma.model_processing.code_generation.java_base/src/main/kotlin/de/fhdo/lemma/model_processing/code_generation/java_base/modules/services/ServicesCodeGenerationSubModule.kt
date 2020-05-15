@@ -78,11 +78,11 @@ internal class ServicesCodeGenerationSubModule : KoinComponent {
             )
 
             generatedFileContents.forEach { (targetFilePath, generationResult) ->
-                val (generatedContent, generatedNode) = generationResult
+                val (generatedContent, generatedNodeFromResult) = generationResult
                 MainState.addGeneratedFileContent(generatedContent, targetFilePath)
 
-                if (generatedNode != null)
-                    generatedNodesWithTargetFiles[targetFilePath] = generatedNode
+                if (generatedNodeFromResult != null)
+                    generatedNodesWithTargetFiles[targetFilePath] = generatedNodeFromResult
             }
         }
 

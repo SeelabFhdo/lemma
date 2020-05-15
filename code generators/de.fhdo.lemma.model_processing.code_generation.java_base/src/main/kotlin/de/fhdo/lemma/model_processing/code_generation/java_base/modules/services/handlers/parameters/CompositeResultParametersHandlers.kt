@@ -38,14 +38,14 @@ internal open class CompositeResultParametersHandlerBase(private val communicati
     /**
      * Execution logic of the handler
      */
-    override fun execute(operation: IntermediateOperation, context: Nothing?)
+    override fun execute(eObject: IntermediateOperation, context: Nothing?)
         : Pair<ClassOrInterfaceDeclaration, String?>? {
         /*
          * If an operation has more than one result parameter, a composite result POJO will be generated. For
          * synchronous parameters this happens only, if the operation has more than one synchronous result parameter.
          * For asynchronous parameters, this happens as they exist.
          */
-        val resultParameters = operation.getResultParameters(communicationType)
+        val resultParameters = eObject.getResultParameters(communicationType)
         val generateCompositeClass = when(communicationType) {
             CommunicationType.SYNCHRONOUS -> resultParameters.size > 1
             CommunicationType.ASYNCHRONOUS -> resultParameters.isNotEmpty()

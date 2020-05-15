@@ -19,7 +19,7 @@ internal class DataOperationHandler :
     CallableCodeGenerationHandlerI<IntermediateDataOperation, MethodDeclaration, ClassOrInterfaceDeclaration> {
     override fun handlesEObjectsOfInstance() = IntermediateDataOperation::class.java
     override fun generatesNodesOfInstance() = MethodDeclaration::class.java
-    override fun getAspects(operation: IntermediateDataOperation) = operation.aspects!!
+    override fun getAspects(eObject: IntermediateDataOperation) = eObject.aspects!!
 
     companion object {
         /**
@@ -32,24 +32,24 @@ internal class DataOperationHandler :
     /**
      * Execution logic of the handler
      */
-    override fun execute(operation: IntermediateDataOperation, parentClass: ClassOrInterfaceDeclaration?)
+    override fun execute(eObject: IntermediateDataOperation, context: ClassOrInterfaceDeclaration?)
         : Pair<MethodDeclaration, String?>? {
         /* Each service operation becomes a method of the given parent class */
-        val method = parentClass!!.addMethod(operation.name)
-        method.isStatic = operation.hasAspect("java.static")
+        val method = context!!.addMethod(eObject.name)
+        method.isStatic = eObject.hasAspect("java.static")
 
-        if (!operation.isInherited) {
-            method.addModifier(if (operation.isHidden) Modifier.Keyword.PRIVATE else Modifier.Keyword.PUBLIC)
-            method.setReturnTypeFrom(operation)
+        if (!eObject.isInherited) {
+            method.addModifier(if (eObject.isHidden) Modifier.Keyword.PRIVATE else Modifier.Keyword.PUBLIC)
+            method.setReturnTypeFrom(eObject)
         // If the method is inherited and has subsequently been hidden, we adapt its body to throw an Exception, because
         // Java does not allow to constrain the visibility of an inherited element as LEMMA does
-        } else if (operation.isHidden) {
+        } else if (eObject.isHidden) {
             method.addAnnotation("Override")
             method.setBody("""throw new UnsupportedOperationException("The method is not visible on this type")""")
         }
 
         /* Handle parameters */
-        operation.parameters.forEach { DataOperationParameterHandler.invoke(it, method) }
+        eObject.parameters.forEach { DataOperationParameterHandler.invoke(it, method) }
 
         return method to null
     }

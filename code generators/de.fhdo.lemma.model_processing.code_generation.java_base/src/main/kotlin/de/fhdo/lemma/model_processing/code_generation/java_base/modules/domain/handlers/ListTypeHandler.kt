@@ -29,7 +29,7 @@ internal class ListTypeHandler
     : VisitingCodeGenerationHandlerI<IntermediateListType, ClassOrInterfaceDeclaration, Nothing> {
     override fun handlesEObjectsOfInstance() = IntermediateListType::class.java
     override fun generatesNodesOfInstance() = ClassOrInterfaceDeclaration::class.java
-    override fun getAspects(list: IntermediateListType) = list.aspects!!
+    override fun getAspects(eObject: IntermediateListType) = eObject.aspects!!
 
     companion object {
         private const val DEFAULT_JAVA_COLLECTION_ASPECT = "java.List"
@@ -46,25 +46,26 @@ internal class ListTypeHandler
     /**
      * Execution logic of the handler
      */
-    override fun execute(list: IntermediateListType, context: Nothing?) : Pair<ClassOrInterfaceDeclaration, String?>? {
+    override fun execute(eObject: IntermediateListType, context: Nothing?)
+        : Pair<ClassOrInterfaceDeclaration, String?>? {
         /* Each IntermediateListType becomes a Java class that inherits from a class of the Java Collection Framework */
         val currentDomainPackage: String by DomainState
-        val packageName = "$currentDomainPackage.${list.packageName}"
-        val generatedClass = newJavaClassOrInterface(packageName, list.classname)
+        val packageName = "$currentDomainPackage.${eObject.packageName}"
+        val generatedClass = newJavaClassOrInterface(packageName, eObject.classname)
 
         /* Determine the Collection type from which the list type's class inherits */
-        val collectionType = list.determineJavaCollectionType()
+        val collectionType = eObject.determineJavaCollectionType()
 
         // The type arguments of the Collection type depend on whether this list type is a structured list or not. For
         // structured lists, we add nested item classes to the generated Java class. For non-structured, i.e.,
         // primitively typed lists, the type argument is the object wrapper class of the primitive type
-        val typeArguments = if (list.isStructuredList)
-                generatedClass.addNestedItemClasses(list, collectionType.typeArgumentCount)
+        val typeArguments = if (eObject.isStructuredList)
+                generatedClass.addNestedItemClasses(eObject, collectionType.typeArgumentCount)
             else
-                listOf(list.primitiveType.getObjectWrapperMapping().mappedTypeName)
+                listOf(eObject.primitiveType.getObjectWrapperMapping().mappedTypeName)
 
         generatedClass.setCollectionTypeSuperclass(collectionType, typeArguments)
-        return generatedClass to list.fullyQualifiedClasspath()
+        return generatedClass to eObject.fullyQualifiedClasspath()
     }
 
     /**

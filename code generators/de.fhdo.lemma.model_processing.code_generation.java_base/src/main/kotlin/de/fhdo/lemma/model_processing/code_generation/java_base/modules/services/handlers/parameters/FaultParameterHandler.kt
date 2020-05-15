@@ -31,14 +31,15 @@ class FaultParameterHandler
     : VisitingCodeGenerationHandlerI<IntermediateParameter, ClassOrInterfaceDeclaration, Nothing> {
     override fun handlesEObjectsOfInstance() = IntermediateParameter::class.java
     override fun generatesNodesOfInstance() = ClassOrInterfaceDeclaration::class.java
-    override fun getAspects(parameter: IntermediateParameter) = parameter.aspects!!
+    override fun getAspects(eObject: IntermediateParameter) = eObject.aspects!!
 
     /**
      * Execution logic of the handler
      */
-    override fun execute(parameter: IntermediateParameter, cx: Nothing?) : Pair<ClassOrInterfaceDeclaration, String?>? {
+    override fun execute(eObject: IntermediateParameter, context: Nothing?)
+        : Pair<ClassOrInterfaceDeclaration, String?>? {
         // Currently we only support synchronous fault parameters
-        if (!parameter.isCommunicatesFault || parameter.communicationType == CommunicationType.ASYNCHRONOUS.name)
+        if (!eObject.isCommunicatesFault || eObject.communicationType == CommunicationType.ASYNCHRONOUS.name)
             return null
 
         /*
@@ -50,25 +51,25 @@ class FaultParameterHandler
          * be supported leveraging a dedicated aspect that results in a custom Exception class being generated, which
          * inherits from the Exception class with which the fault parameter is typed.
          */
-        if (!parameter.generateCustomExceptionClassFor())
+        if (!eObject.generateCustomExceptionClassFor())
             return null
 
         /* Each fault parameter is mapped to an Exception class with the parameter as its attribute */
-        val exceptionClassName = parameter.buildExceptionClassName()
-        val generatedClass = newJavaClassOrInterface(parameter.buildOperationPackageName(), exceptionClassName)
+        val exceptionClassName = eObject.buildExceptionClassName()
+        val generatedClass = newJavaClassOrInterface(eObject.buildOperationPackageName(), exceptionClassName)
         generatedClass.setSuperclass("RuntimeException", isExternalSuperclass = true)
 
         // Add parameter attribute to Exception class
-        val parameterAttribute = generatedClass.addAttribute(parameter.name, parameter.type, generatedClass,
+        val parameterAttribute = generatedClass.addAttribute(eObject.name, eObject.type, generatedClass,
             Modifier.Keyword.PROTECTED) { generatedClass.addImport(it, ImportTargetElementType.METHOD) }
         val parameterAttributeType = parameterAttribute.variables[0].typeAsString
 
         // Add error message attribute to Exception class
-        val errorMessageAttribute = if (parameter.name == "errorMessage") "errorMessage2" else "errorMessage"
+        val errorMessageAttribute = if (eObject.name == "errorMessage") "errorMessage2" else "errorMessage"
         generatedClass.addAttribute(errorMessageAttribute, "String", Modifier.Keyword.PROTECTED)
 
         /* If the parameter is optional, a parameterless constructor is added to the class */
-        if (parameter.isOptional) {
+        if (eObject.isOptional) {
             val parameterlessConstructor = generatedClass.addConstructor(Modifier.Keyword.PUBLIC)
             parameterlessConstructor.setBody("super();")
 
@@ -86,18 +87,15 @@ class FaultParameterHandler
 
         /* Add constructor for the parameter attribute */
         val parameterConstructor = generatedClass.addConstructor(Modifier.Keyword.PUBLIC)
-        parameterConstructor.addParameter(parameterAttributeType, parameter.name)
-        parameterConstructor.setBody(
-            "super();",
-            "this.${parameter.name} = ${parameter.name};"
-        )
+        parameterConstructor.addParameter(parameterAttributeType, eObject.name)
+        parameterConstructor.setBody("super();", "this.${eObject.name} = ${eObject.name};")
 
         /* Add constructor for initializing all attributes, i.e., the parameter and the error message attribute */
         generatedClass.addAllAttributesConstructor()!!.insertStatement("super($errorMessageAttribute);")
 
         /* Build target path for Exception class and return it together with the class */
         val interfaceSubFolderName: String by ServicesState
-        val operationSubFolder = parameter.buildOperationPackageName(subPackageOnly = true).packageToPath()
+        val operationSubFolder = eObject.buildOperationPackageName(subPackageOnly = true).packageToPath()
         val exceptionClassFolderPath = "$interfaceSubFolderName${File.separator}$operationSubFolder"
         return generatedClass to "$exceptionClassFolderPath${File.separator}$exceptionClassName.java"
     }

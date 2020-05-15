@@ -44,16 +44,16 @@ internal class RequiredInputParametersHandler(private val communicationType: Com
     /**
      * Execution logic of the handler
      */
-    override fun execute(operation: IntermediateOperation, parentClass: ClassOrInterfaceDeclaration?)
+    override fun execute(eObject: IntermediateOperation, context: ClassOrInterfaceDeclaration?)
         : Pair<MethodDeclaration, String?>? {
         /*
          * In case the operation is not implemented or does not have required input parameters of the given
          * communication type, no guard methods for checking required parameters will be generated and called
          */
-        if (operation.isNotImplemented)
+        if (eObject.isNotImplemented)
             return null
 
-        val requiredParameters = operation.getRequiredInputParameters(communicationType)
+        val requiredParameters = eObject.getRequiredInputParameters(communicationType)
         if (requiredParameters.isEmpty())
             return null
 
@@ -63,12 +63,12 @@ internal class RequiredInputParametersHandler(private val communicationType: Com
          * their value. In case one of them is null, an exception is thrown.
          */
         val guardMethod = MethodDeclaration()
-        parentClass!!.addMember(guardMethod)
+        context!!.addMember(guardMethod)
 
         // Generate the guard's signature, including its parameters
         guardMethod.isPrivate = true
         guardMethod.setType("void")
-        guardMethod.setName(operation.buildRequiredInputParameterGuardName(communicationType))
+        guardMethod.setName(eObject.buildRequiredInputParameterGuardName(communicationType))
         val nullableRequiredParameters = mutableListOf<IntermediateParameter>()
         requiredParameters.forEach {
             guardMethod.addGuardParameterFor(it)
@@ -91,7 +91,7 @@ internal class RequiredInputParametersHandler(private val communicationType: Com
                 """.trimMargin()
             ) }
         else
-            methodBody.addStatement("// NOOP: Operation ${operation.name} has no nullable parameters")
+            methodBody.addStatement("// NOOP: Operation ${eObject.name} has no nullable parameters")
 
         guardMethod.setBody(methodBody)
         return guardMethod to null

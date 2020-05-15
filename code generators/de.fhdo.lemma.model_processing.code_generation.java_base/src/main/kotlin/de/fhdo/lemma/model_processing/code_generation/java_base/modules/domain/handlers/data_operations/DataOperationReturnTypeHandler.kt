@@ -19,7 +19,7 @@ internal class DataOperationReturnTypeHandler
     : CallableCodeGenerationHandlerI<IntermediateDataOperationReturnType, MethodDeclaration, MethodDeclaration> {
     override fun handlesEObjectsOfInstance() = IntermediateDataOperationReturnType::class.java
     override fun generatesNodesOfInstance() = MethodDeclaration::class.java
-    override fun getAspects(returnType: IntermediateDataOperationReturnType) = returnType.aspects!!
+    override fun getAspects(eObject: IntermediateDataOperationReturnType) = eObject.aspects!!
 
     companion object {
         /**
@@ -32,16 +32,16 @@ internal class DataOperationReturnTypeHandler
     /**
      * Execution logic of the handler
      */
-    override fun execute(returnType: IntermediateDataOperationReturnType, method: MethodDeclaration?)
+    override fun execute(eObject: IntermediateDataOperationReturnType, context: MethodDeclaration?)
         : Pair<MethodDeclaration, String?>? {
-        method!!.setJavaTypeFrom(returnType.type, method) { method.addImport(it, ImportTargetElementType.METHOD) }
+        context!!.setJavaTypeFrom(eObject.type, context) { context.addImport(it, ImportTargetElementType.METHOD) }
 
         // Add Optional return type
-        if (returnType.hasAspect("java.Optional") && !method.type.isVoidType) {
-            method.addImport("java.util.Optional", ImportTargetElementType.METHOD)
-            method.setType("Optional<${method.typeAsString}>")
+        if (eObject.hasAspect("java.Optional") && !context.type.isVoidType) {
+            context.addImport("java.util.Optional", ImportTargetElementType.METHOD)
+            context.setType("Optional<${context.typeAsString}>")
         }
 
-        return method to null
+        return context to null
     }
 }

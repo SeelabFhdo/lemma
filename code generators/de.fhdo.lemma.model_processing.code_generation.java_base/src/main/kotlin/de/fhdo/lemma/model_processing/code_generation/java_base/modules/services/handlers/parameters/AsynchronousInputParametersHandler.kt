@@ -24,14 +24,14 @@ internal class AsynchronousInputParametersHandler()
     /**
      * Execution logic of the handler
      */
-    override fun execute(operation: IntermediateOperation, ctx: Any?) : Pair<ClassOrInterfaceDeclaration, String?>? {
+    override fun execute(eObject: IntermediateOperation, context: Any?) : Pair<ClassOrInterfaceDeclaration, String?>? {
         // Do nothing when operation has no asynchronous input parameters at all
-        if (!operation.hasInputParameters(CommunicationType.ASYNCHRONOUS))
+        if (!eObject.hasInputParameters(CommunicationType.ASYNCHRONOUS))
             return null
 
         // Also do nothing when operation has only a single asynchronous and no synchronous input parameter
-        val asynchronousInputParameters = operation.getInputParameters(CommunicationType.ASYNCHRONOUS)
-        if (asynchronousInputParameters.size == 1 && !operation.hasInputParameters(CommunicationType.SYNCHRONOUS))
+        val asynchronousInputParameters = eObject.getInputParameters(CommunicationType.ASYNCHRONOUS)
+        if (asynchronousInputParameters.size == 1 && !eObject.hasInputParameters(CommunicationType.SYNCHRONOUS))
             return null
 
         // If the operation has more than one asynchronous input parameter or a synchronous parameter, create a

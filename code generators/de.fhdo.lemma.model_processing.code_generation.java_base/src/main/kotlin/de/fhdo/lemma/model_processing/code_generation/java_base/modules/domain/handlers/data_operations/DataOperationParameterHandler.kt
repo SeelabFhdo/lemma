@@ -19,7 +19,7 @@ internal class DataOperationParameterHandler
     : CallableCodeGenerationHandlerI<IntermediateDataOperationParameter, MethodDeclaration, MethodDeclaration> {
     override fun handlesEObjectsOfInstance() = IntermediateDataOperationParameter::class.java
     override fun generatesNodesOfInstance() = MethodDeclaration::class.java
-    override fun getAspects(parameter: IntermediateDataOperationParameter) = parameter.aspects!!
+    override fun getAspects(eObject: IntermediateDataOperationParameter) = eObject.aspects!!
 
     companion object {
         /**
@@ -32,15 +32,15 @@ internal class DataOperationParameterHandler
     /**
      * Execution logic of the handler
      */
-    override fun execute(parameter: IntermediateDataOperationParameter, method: MethodDeclaration?)
+    override fun execute(eObject: IntermediateDataOperationParameter, context: MethodDeclaration?)
         : Pair<MethodDeclaration, String?>? {
         val generatedParameter = Parameter()
-        generatedParameter.setName(parameter.name)
-        generatedParameter.setJavaTypeFrom(parameter.type, method!!) {
-            method.addImport(it, ImportTargetElementType.METHOD)
+        generatedParameter.setName(eObject.name)
+        generatedParameter.setJavaTypeFrom(eObject.type, context!!) {
+            context.addImport(it, ImportTargetElementType.METHOD)
         }
-        method.addParameter(generatedParameter)
+        context.addParameter(generatedParameter)
 
-        return method to null
+        return context to null
     }
 }

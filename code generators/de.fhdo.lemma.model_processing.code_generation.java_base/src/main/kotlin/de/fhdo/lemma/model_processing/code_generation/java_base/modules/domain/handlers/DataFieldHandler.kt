@@ -39,7 +39,7 @@ internal class DataFieldHandler :
     CallableCodeGenerationHandlerI<IntermediateDataField, FieldDeclaration, ClassOrInterfaceDeclaration> {
     override fun handlesEObjectsOfInstance() = IntermediateDataField::class.java
     override fun generatesNodesOfInstance() = FieldDeclaration::class.java
-    override fun getAspects(field: IntermediateDataField) = field.aspects!!
+    override fun getAspects(eObject: IntermediateDataField) = eObject.aspects!!
 
     companion object {
         /**
@@ -52,7 +52,7 @@ internal class DataFieldHandler :
     /**
      * Execution logic of the handler
      */
-    override fun execute(field: IntermediateDataField, parentClass: ClassOrInterfaceDeclaration?)
+    override fun execute(eObject: IntermediateDataField, context: ClassOrInterfaceDeclaration?)
         : Pair<FieldDeclaration, String?>? {
         /*
          * If the field is not an inherited field, add a normal Java attribute and corresponding accessors to the given
@@ -60,10 +60,10 @@ internal class DataFieldHandler :
          * throws an Exception when being called. That is, because LEMMA allows for subsequently constraining the
          * visibility of inherited fields, while Java does not.
          */
-        return if (!field.isInherited)
-                parentClass!!.addAttributeAndAccessorsFrom(field) to null
-            else if (field.isHidden) {
-                parentClass!!.addNotImplementedGetterFrom(field)
+        return if (!eObject.isInherited)
+                context!!.addAttributeAndAccessorsFrom(eObject) to null
+            else if (eObject.isHidden) {
+                context!!.addNotImplementedGetterFrom(eObject)
                 null
             } else
                 null

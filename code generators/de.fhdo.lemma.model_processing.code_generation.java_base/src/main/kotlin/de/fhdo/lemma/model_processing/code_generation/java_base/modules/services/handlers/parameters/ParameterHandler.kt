@@ -21,7 +21,7 @@ internal class ParameterHandler
     : CallableCodeGenerationHandlerI<IntermediateParameter, MethodDeclaration, MethodDeclaration> {
     override fun handlesEObjectsOfInstance() = IntermediateParameter::class.java
     override fun generatesNodesOfInstance() = MethodDeclaration::class.java
-    override fun getAspects(parameter: IntermediateParameter) = parameter.aspects!!
+    override fun getAspects(eObject: IntermediateParameter) = eObject.aspects!!
 
     companion object {
         /**
@@ -34,32 +34,32 @@ internal class ParameterHandler
     /**
      * Execution logic of the handler
      */
-    override fun execute(parameter: IntermediateParameter, parentMethod: MethodDeclaration?)
+    override fun execute(eObject: IntermediateParameter, context: MethodDeclaration?)
         : Pair<MethodDeclaration, String?>? {
         // Delegate fault parameter handling to Genlets. Note that usually fault parameters are covered by the
         // FaultParameterHandler. However, when no custom Exception class may be generated for the fault parameters,
         // they need to be treated by Genlets (cf. FaultParameterHandler.execute() and
         // OperationHandler.handleSynchronousFaultParameters() for more details).
-        if (parameter.isCommunicatesFault)
-            return parentMethod!! to null
+        if (eObject.isCommunicatesFault)
+            return context!! to null
 
         val generatedParameter = Parameter()
-        generatedParameter.setName(parameter.name)
+        generatedParameter.setName(eObject.name)
 
-        val parameterType = if (parameter.hasAspect("java.Set")) {
-            parentMethod!!.addImport("java.util.Set", ImportTargetElementType.METHOD)
-            parameter.type.getBasicType() ?: parameter.type
+        val parameterType = if (eObject.hasAspect("java.Set")) {
+            context!!.addImport("java.util.Set", ImportTargetElementType.METHOD)
+            eObject.type.getBasicType() ?: eObject.type
         } else
-            parameter.type
+            eObject.type
 
-        generatedParameter.setJavaTypeFrom(parameterType, parentMethod!!) {
-            parentMethod.addImport(it, ImportTargetElementType.METHOD)
+        generatedParameter.setJavaTypeFrom(parameterType, context!!) {
+            context.addImport(it, ImportTargetElementType.METHOD)
         }
 
-        if (parameter.hasAspect("java.Set"))
+        if (eObject.hasAspect("java.Set"))
             generatedParameter.setType("Set<${generatedParameter.typeAsString}>")
 
-        parentMethod.addParameter(generatedParameter)
-        return parentMethod to null
+        context.addParameter(generatedParameter)
+        return context to null
     }
 }

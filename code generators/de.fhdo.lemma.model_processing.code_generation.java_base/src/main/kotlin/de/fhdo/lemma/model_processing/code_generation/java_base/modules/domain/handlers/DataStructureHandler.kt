@@ -25,35 +25,32 @@ internal class DataStructureHandler
     : VisitingCodeGenerationHandlerI<IntermediateDataStructure, ClassOrInterfaceDeclaration, Nothing> {
     override fun handlesEObjectsOfInstance() = IntermediateDataStructure::class.java
     override fun generatesNodesOfInstance() = ClassOrInterfaceDeclaration::class.java
-    override fun getAspects(structure: IntermediateDataStructure) = structure.aspects!!
+    override fun getAspects(eObject: IntermediateDataStructure) = eObject.aspects!!
 
     /**
      * Execution logic of the handler
      */
-    override fun execute(structure: IntermediateDataStructure, context: Nothing?)
+    override fun execute(eObject: IntermediateDataStructure, context: Nothing?)
         : Pair<ClassOrInterfaceDeclaration, String?>? {
         /* Each data structure becomes a new Java class in the current domain package with an empty constructor */
         val currentDomainPackage: String by DomainState
-        val generatedClass = newJavaClassOrInterface(
-            "$currentDomainPackage.${structure.packageName}",
-            structure.classname
-        )
+        val generatedClass = newJavaClassOrInterface("$currentDomainPackage.${eObject.packageName}", eObject.classname)
         generatedClass.addConstructor(Modifier.Keyword.PUBLIC)
 
         /* Set superclass, if any */
-        if (structure.`super` != null) {
-            val fullyQualifiedClassname = structure.`super`.fullyQualifiedClassname
+        if (eObject.`super` != null) {
+            val fullyQualifiedClassname = eObject.`super`.fullyQualifiedClassname
             generatedClass.setSuperclass("$currentDomainPackage.$fullyQualifiedClassname")
         }
 
         /* Handle data fields */
-        structure.dataFields.forEach { DataFieldHandler.invoke(it, generatedClass) }
+        eObject.dataFields.forEach { DataFieldHandler.invoke(it, generatedClass) }
         // Add constructor for initializing all data fields
         generatedClass.addAllAttributesConstructor()
 
         /* Handle data operations */
-        structure.operations.forEach { DataOperationHandler.invoke(it, generatedClass) }
+        eObject.operations.forEach { DataOperationHandler.invoke(it, generatedClass) }
 
-        return generatedClass to structure.fullyQualifiedClasspath()
+        return generatedClass to eObject.fullyQualifiedClasspath()
     }
 }

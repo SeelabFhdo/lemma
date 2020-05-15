@@ -32,7 +32,7 @@ internal class InterfaceHandler
     : VisitingCodeGenerationHandlerI<IntermediateInterface, ClassOrInterfaceDeclaration, Nothing> {
     override fun handlesEObjectsOfInstance() = IntermediateInterface::class.java
     override fun generatesNodesOfInstance() = ClassOrInterfaceDeclaration::class.java
-    override fun getAspects(intermediateInterface: IntermediateInterface) = intermediateInterface.aspects!!
+    override fun getAspects(eObject: IntermediateInterface) = eObject.aspects!!
 
     private val currentInterfacesGenerationPackage: String by ServicesState
     private val interfaceSubFolderName: String by ServicesState
@@ -40,22 +40,19 @@ internal class InterfaceHandler
     /**
      * Execution logic of the handler
      */
-    override fun execute(intermediateInterface: IntermediateInterface, context : Nothing?)
+    override fun execute(eObject: IntermediateInterface, context : Nothing?)
         : Pair<ClassOrInterfaceDeclaration, String?>? {
         /*
          * Each IntermediateInterface will be mapped to its own Java class in the current interfaces' generation
          * package
          */
-        val generatedInterfaceClass = newJavaClassOrInterface(
-            currentInterfacesGenerationPackage,
-            intermediateInterface.classname
-        )
+        val generatedInterfaceClass = newJavaClassOrInterface(currentInterfacesGenerationPackage, eObject.classname)
 
         /*
          * Each IntermediateOperation instance comprised by the interface will be transformed into a method of the
          * generated interface class
          */
-        for (operation in intermediateInterface.operations) {
+        for (operation in eObject.operations) {
             operation.toMethod(generatedInterfaceClass)
 
             // Handle required synchronous input parameters of the operation
@@ -70,10 +67,9 @@ internal class InterfaceHandler
          * class. However, no guard methods for checking its required input parameters are generated, as referred
          * operations only directly delegate to the logic of other operations.
          */
-        intermediateInterface.referredOperations.forEach { it.toMethod(generatedInterfaceClass) }
+        eObject.referredOperations.forEach { it.toMethod(generatedInterfaceClass) }
 
-        return generatedInterfaceClass to "$interfaceSubFolderName${File.separator}" +
-            intermediateInterface.javaFileName
+        return generatedInterfaceClass to "$interfaceSubFolderName${File.separator}${eObject.javaFileName}"
     }
 
     /**

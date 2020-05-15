@@ -25,7 +25,7 @@ internal class EnumerationHandler
     : VisitingCodeGenerationHandlerI<IntermediateEnumeration, EnumDeclaration, Nothing> {
     override fun handlesEObjectsOfInstance() = IntermediateEnumeration::class.java
     override fun generatesNodesOfInstance() = EnumDeclaration::class.java
-    override fun getAspects(enumeration: IntermediateEnumeration) = enumeration.aspects!!
+    override fun getAspects(eObject: IntermediateEnumeration) = eObject.aspects!!
 
     companion object {
         private const val VALUE_ATTRIBUTE_NAME = "value";
@@ -34,15 +34,15 @@ internal class EnumerationHandler
     /**
      * Execution logic of the handler
      */
-    override fun execute(enumeration: IntermediateEnumeration, context: Nothing?) : Pair<EnumDeclaration, String?>? {
+    override fun execute(eObject: IntermediateEnumeration, context: Nothing?) : Pair<EnumDeclaration, String?>? {
         /* Each IntermediateEnumeration becomes a Java Enumeration */
         val currentDomainPackage: String by DomainState
-        val packageName = "$currentDomainPackage.${enumeration.packageName}"
-        val generatedEnum = newEnum(packageName, enumeration.name)
+        val packageName = "$currentDomainPackage.${eObject.packageName}"
+        val generatedEnum = newEnum(packageName, eObject.name)
 
         /* Handle IntermediateEnumerationField instances, which become Java Enumeration constants */
         var hasInitializationValue = false
-        for (field in enumeration.fields) {
+        for (field in eObject.fields) {
             val enumConstant = generatedEnum.addEnumConstant(field.name)
             if (field.initializationValue == null)
                 continue
@@ -70,7 +70,7 @@ internal class EnumerationHandler
             generatedEnum.addTypedValueGetter(VALUE_ATTRIBUTE_NAME)
         }
 
-        return generatedEnum to enumeration.fullyQualifiedClasspath()
+        return generatedEnum to eObject.fullyQualifiedClasspath()
     }
 
     /**

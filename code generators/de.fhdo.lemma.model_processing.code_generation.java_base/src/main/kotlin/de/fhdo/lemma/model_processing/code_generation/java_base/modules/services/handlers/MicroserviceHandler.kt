@@ -25,20 +25,20 @@ internal class MicroserviceHandler
     : VisitingCodeGenerationHandlerI<IntermediateMicroservice, ClassOrInterfaceDeclaration, Nothing> {
     override fun handlesEObjectsOfInstance() = IntermediateMicroservice::class.java
     override fun generatesNodesOfInstance() = ClassOrInterfaceDeclaration::class.java
-    override fun getAspects(microservice: IntermediateMicroservice) = microservice.aspects!!
+    override fun getAspects(eObject: IntermediateMicroservice) = eObject.aspects!!
 
     private val currentMicroserviceGenerationPackage: String by ServicesState
 
     /**
      * Execution logic of the handler
      */
-    override fun execute(microservice: IntermediateMicroservice, context: Nothing?)
+    override fun execute(eObject: IntermediateMicroservice, context: Nothing?)
         : Pair<ClassOrInterfaceDeclaration, String?>? {
         /*
          * Each IntermediateMicroservice will be mapped to its own Java class in the current microservice generation
          * package
          */
-        val generatedClass = newJavaClassOrInterface(currentMicroserviceGenerationPackage, microservice.classname)
+        val generatedClass = newJavaClassOrInterface(currentMicroserviceGenerationPackage, eObject.classname)
 
         /*
          * The class is marked with the LemmaMicroservice annotation in order to determine the type of the microservice,
@@ -55,9 +55,9 @@ internal class MicroserviceHandler
             "LemmaMicroservice",
             SerializationCharacteristic.DONT_RELOCATE
         )
-        serviceAnnotation.addPair("type", "LemmaMicroserviceType.${microservice.type}")
+        serviceAnnotation.addPair("type", "LemmaMicroserviceType.${eObject.type}")
 
-        return generatedClass to microservice.javaFileName
+        return generatedClass to eObject.javaFileName
     }
 
     /**

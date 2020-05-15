@@ -588,13 +588,13 @@ internal class GenerationGapSerializerBase : KoinComponent {
     private fun delegateBodyIfSpecified(method: MethodDeclaration, genImplAdaptationResult: GenImplAdaptationResult) {
         val bodyToDelegate = genImplAdaptationResult.methodBodiesToDelegate[method.nameAsString] ?: return
         method.insertBody(bodyToDelegate, adaptStatementBeforeInsertion = {
-            if (it !is ExpressionStmt || !it.expression.isMethodCallExpr)
-                it
+            if (it is ExpressionStmt && it.expression.isMethodCallExpr) {
+                var delegatingMethodCall = it.expression.toString()
+                if (!delegatingMethodCall.startsWith("super."))
+                    delegatingMethodCall = "super.$delegatingMethodCall"
+                it.setExpression(delegatingMethodCall)
+            }
 
-            var delegatingMethodCall = (it as ExpressionStmt).expression.toString()
-            if (!delegatingMethodCall.startsWith("super."))
-                delegatingMethodCall = "super.$delegatingMethodCall"
-            it.setExpression(delegatingMethodCall)
             it
         })
     }

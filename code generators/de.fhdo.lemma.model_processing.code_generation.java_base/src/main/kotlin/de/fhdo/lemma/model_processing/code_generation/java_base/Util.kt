@@ -712,7 +712,6 @@ internal fun List<IntermediateParameter>.toCompositeClass(communicationType: Com
     val generatedClass = newJavaClassOrInterface(packageName, classname)
 
     // Generate fields, getters, and setters for each IntermediateParameter instance in this list
-    val currentDomainPackage: String by DomainState
     val interfaceSubFolderName: String by ServicesState
     forEach { parameter ->
         // Add attribute
