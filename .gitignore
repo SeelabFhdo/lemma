@@ -28,3 +28,4 @@ code generators/de.fhdo.lemma.model_processing.code_generation.java_base/linecnt
 *.hprof
 de.fhdo.lemma.eclipse.ui.editor
 Example*/intermediate/
+howto-lemma-release.md/
