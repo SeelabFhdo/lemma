@@ -1,0 +1,17 @@
+de.fhdo.lemma.eclipse.ui.utils
+de.fhdo.lemma.data.datadsl.metamodel
+de.fhdo.lemma.utils
+de.fhdo.lemma.technology.technologydsl.metamodel
+de.fhdo.lemma.typechecking
+de.fhdo.lemma.data.datadsl.parent
+de.fhdo.lemma.data.datadsl.ui
+de.fhdo.lemma.technology.technologydsl.parent
+de.fhdo.lemma.technology.technologydsl.ui
+de.fhdo.lemma.servicedsl.parent
+de.fhdo.lemma.servicedsl.ui
+de.fhdo.lemma.technology.mappingdsl.parent
+de.fhdo.lemma.technology.mappingdsl.ui
+de.fhdo.lemma.operationdsl.parent
+de.fhdo.lemma.operationdsl.ui
+de.fhdo.lemma.intermediate.transformations.parent
+de.fhdo.lemma.eclipse.ui.parent

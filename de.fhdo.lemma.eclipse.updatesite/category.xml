@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature url="features/de.fhdo.lemma.eclipse.updatesite.feature_0.0.0.jar" id="de.fhdo.lemma.eclipse.updatesite.feature" version="0.0.0">
+      <category name="de.fhdo.lemma"/>
+   </feature>
+   <category-def name="de.fhdo.lemma" label="LEMMA - Microservice Architecture Modeling"/>
+</site>

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-modules=(    
+modules=(
     # Utils
     de.fhdo.lemma.eclipse.ui.utils
     de.fhdo.lemma.data.datadsl.metamodel
@@ -50,7 +50,7 @@ modules=(
     # Code Generators
     code\ generators/de.fhdo.lemma.ddd
     code\ generators/de.fhdo.lemma.msa
-    code\ generators/de.fhdo.lemma.model_processing.code_generation.java_base    
+    code\ generators/de.fhdo.lemma.model_processing.code_generation.java_base
     code\ generators/de.fhdo.lemma.model_processing.code_generation.ddd
     code\ generators/de.fhdo.lemma.model_processing.code_generation.springcloud
 )
@@ -61,7 +61,7 @@ do_build() {
     echo "Building module $MODULE ($2/$3)"
     echo -e "------------------------------------------------------------------------\033[0m"
 
-    # Builds can be customized with a separate "build.sh" script in the modules' root folders. 
+    # Builds can be customized with a separate "build.sh" script in the modules' root folders.
     # Otherwise, Maven's "clean" and "install" tasks will be used by default to build modules.
     if [ -f "$MODULE"/build.sh ]
     then
@@ -86,13 +86,34 @@ notify_error() {
     fi
 }
 
+include_module() {
+    for m in "${modulesToInclude[@]}"; do
+        if [[ "$m" == "$1" ]]
+        then
+            return
+        fi
+    done
+    return 1    # Value greater zero communicates failure
+}
+
+if ! [ -z "$1" ] && ! [ -f $1 ]
+then
+    echo "Module inclusion file \"$1\" does not exist. Exiting."
+    exit 4
+elif ! [ -z "$1" ]
+then
+    modulesToInclude=( $(cat $1) )
+else
+    modulesToInclude=("${modules[@]}")
+fi
+
 cd ..
 
 BUILD_ROOT=$(pwd)
-MODULE_COUNT=${#modules[@]}
+MODULE_COUNT=${#modulesToInclude[@]}
 CURRENT_MODULE_INDEX=1
 
-for module in "${modules[@]}"; do
+for module in "${modulesToInclude[@]}"; do
     do_build "$module" $CURRENT_MODULE_INDEX $MODULE_COUNT
     CURRENT_MODULE_INDEX=$((CURRENT_MODULE_INDEX+1))
 done
