@@ -697,10 +697,10 @@ public class DataDslValidator extends AbstractDataDslValidator {
       return;
     }
     Type _effectiveType = dataField.getEffectiveType();
-    boolean _not = (!(_effectiveType instanceof DataStructure));
+    boolean _not = (!(_effectiveType instanceof ComplexType));
     if (_not) {
       StringConcatenation _builder_1 = new StringConcatenation();
-      _builder_1.append("Only fields with structural type may exhibit the \"part\" feature");
+      _builder_1.append("Only fields with a complex type may exhibit the \"part\" feature");
       this.error(_builder_1.toString(), dataField, 
         DataPackage.Literals.DATA_FIELD__FEATURES, featureIndex);
       return;
@@ -712,16 +712,19 @@ public class DataDslValidator extends AbstractDataDslValidator {
         DataPackage.Literals.DATA_FIELD__FEATURES, featureIndex);
     }
     Type _effectiveType_1 = dataField.getEffectiveType();
-    final DataStructure fieldType = ((DataStructure) _effectiveType_1);
-    if (((!fieldType.hasFeature(DataStructureFeature.ENTITY)) && 
-      (!fieldType.hasFeature(DataStructureFeature.VALUE_OBJECT)))) {
-      this.warning("Parts should be entities or value objects", dataField, 
-        DataPackage.Literals.DATA_FIELD__FEATURES, featureIndex);
+    final ComplexType effectiveFieldType = ((ComplexType) _effectiveType_1);
+    if ((effectiveFieldType instanceof DataStructure)) {
+      final DataStructure fieldType = ((DataStructure) effectiveFieldType);
+      if (((!fieldType.hasFeature(DataStructureFeature.ENTITY)) && 
+        (!fieldType.hasFeature(DataStructureFeature.VALUE_OBJECT)))) {
+        this.warning("Parts of structural type should be entities or value objects", dataField, 
+          DataPackage.Literals.DATA_FIELD__FEATURES, featureIndex);
+      }
     }
     ImportedComplexType _importedComplexType = dataField.getImportedComplexType();
     final boolean fieldTypeIsImported = (_importedComplexType != null);
     if ((fieldTypeIsImported || 
-      (!Objects.equal(fieldType.getClosestNamespace(), dataField.getDataStructure().getClosestNamespace())))) {
+      (!Objects.equal(effectiveFieldType.getClosestNamespace(), dataField.getDataStructure().getClosestNamespace())))) {
       this.warning("Parts should be defined in the same namespace as the aggregate", dataField, 
         DataPackage.Literals.DATA_FIELD__FEATURES, featureIndex);
     }

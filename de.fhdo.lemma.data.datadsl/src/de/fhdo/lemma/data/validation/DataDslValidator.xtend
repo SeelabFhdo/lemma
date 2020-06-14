@@ -28,6 +28,7 @@ import de.fhdo.lemma.data.Type
 import de.fhdo.lemma.data.ListType
 import de.fhdo.lemma.data.Enumeration
 import de.fhdo.lemma.data.PrimitiveTypeConstants
+import de.fhdo.lemma.data.ComplexType
 
 /**
  * This class contains validation rules for the Data DSL.
@@ -570,8 +571,8 @@ class DataDslValidator extends AbstractDataDslValidator {
             return
         }
 
-        if (!(dataField.effectiveType instanceof DataStructure)) {
-            error('''Only fields with structural type may exhibit the "part" feature''', dataField,
+        if (!(dataField.effectiveType instanceof ComplexType)) {
+            error('''Only fields with a complex type may exhibit the "part" feature''', dataField,
                 DataPackage::Literals.DATA_FIELD__FEATURES, featureIndex)
 
             return
@@ -582,17 +583,20 @@ class DataDslValidator extends AbstractDataDslValidator {
             warning("Parts should only be defined in aggregates", dataField,
                 DataPackage::Literals.DATA_FIELD__FEATURES, featureIndex)
 
-        // Only entities and value objects should be parts
-        val fieldType = dataField.effectiveType as DataStructure
-        if (!fieldType.hasFeature(DataStructureFeature.ENTITY) &&
-            !fieldType.hasFeature(DataStructureFeature.VALUE_OBJECT))
-            warning("Parts should be entities or value objects", dataField,
-                DataPackage::Literals.DATA_FIELD__FEATURES, featureIndex)
+        // If the part data field's type is structural, it should be an entity or value object
+        val effectiveFieldType = dataField.effectiveType as ComplexType
+        if (effectiveFieldType instanceof DataStructure) {
+            val fieldType = effectiveFieldType as DataStructure
+            if (!fieldType.hasFeature(DataStructureFeature.ENTITY) &&
+                !fieldType.hasFeature(DataStructureFeature.VALUE_OBJECT))
+                warning("Parts of structural type should be entities or value objects", dataField,
+                    DataPackage::Literals.DATA_FIELD__FEATURES, featureIndex)
+        }
 
         // Part should be in same namespace as aggregate
         val fieldTypeIsImported = dataField.importedComplexType !== null
         if (fieldTypeIsImported ||
-            fieldType.closestNamespace != dataField.dataStructure.closestNamespace)
+            effectiveFieldType.closestNamespace != dataField.dataStructure.closestNamespace)
             warning("Parts should be defined in the same namespace as the aggregate", dataField,
                 DataPackage::Literals.DATA_FIELD__FEATURES, featureIndex)
     }
