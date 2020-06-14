@@ -93,13 +93,16 @@ internal class MainCodeGenerationModule : AbstractCodeGenerationModule(), KoinCo
          * service technology specifications can be separated from technology specifications of domain models, if
          * desired.
          */
-        val intermediateServiceModelResource =
-            CommandLine.alternativeIntermediateServiceModelFile?.asXmiResource()
-            ?: intermediateModelResource
+        val (intermediateServiceModelFilePath, intermediateServiceModelResource) =
+            if (CommandLine.alternativeIntermediateServiceModelFile != null)
+                CommandLine.alternativeIntermediateServiceModelFile!! to
+                    CommandLine.alternativeIntermediateServiceModelFile!!.asXmiResource()
+            else
+                intermediateModelFile to intermediateModelResource
 
         /* Initialize the main state hold by the main context */
         MainState.initialize(
-            intermediateModelFile,
+            intermediateServiceModelFilePath,
             intermediateServiceModelResource,
             intermediateModelResource,
             targetFolder,
@@ -111,7 +114,14 @@ internal class MainCodeGenerationModule : AbstractCodeGenerationModule(), KoinCo
          * themselves
          */
         val intermediateServiceModel: IntermediateServiceModel by MainState
-        intermediateServiceModel.microservices.filter { it.hasTechnology("java") }.forEach {
+        val javaMicroservices = intermediateServiceModel.microservices.filter{ it.hasTechnology("java") }
+        if (javaMicroservices.isEmpty()) {
+            val intermediateServiceModelFilePath: String by MainState
+            throw PhaseException("No Java microservices found in intermediate service model " +
+                "\"$intermediateServiceModelFilePath\"")
+        }
+
+        javaMicroservices.forEach {
             MainState.setCurrentMicroservice(it)
             DomainCodeGenerationSubModule.invoke()
             ServicesCodeGenerationSubModule.invoke()
