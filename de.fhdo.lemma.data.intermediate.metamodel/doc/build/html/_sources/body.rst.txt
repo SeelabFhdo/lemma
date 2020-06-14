@@ -559,10 +559,10 @@ Custom, domain-specific Types
         .. NOTE::
 
             DDD-related features should follow the constraints described in
-            :cite:`Rademacher2018`. The Data Modeling Language currently issues 
-            a warning in case they are violated. Code generators are free to
-            also check the constraints and deny code generation in case they are
-            violated.
+            :cite:`Rademacher2018`. The Domain Data Modeling Language currently
+            issues a warning in case they are violated. Code generators are free
+            to also check the constraints and deny code generation in case they
+            are violated.
 
     .. py:attribute:: IntermediateDataStructure super
 
