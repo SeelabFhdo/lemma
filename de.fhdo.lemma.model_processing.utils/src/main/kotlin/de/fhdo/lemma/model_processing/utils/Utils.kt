@@ -298,9 +298,10 @@ private fun commentDescriptionForFile(filePath: String)
 }
 
 /**
- * Check if the technology with the given [technologyName] was assigned to this [IntermediateMicroservice].
+ * Check if the technology with the given [technologyName] was assigned to this [IntermediateMicroservice]. By default,
+ * the check is case-insensitive. This behavior can be altered by means of the [ignoreCase] parameter.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-fun IntermediateMicroservice.hasTechnology(technologyName: String)
-    = technologies.any { it.name == technologyName }
+fun IntermediateMicroservice.hasTechnology(technologyName: String, ignoreCase: Boolean = true)
+    = technologies.any { it.name.equals(technologyName, ignoreCase = ignoreCase) }
