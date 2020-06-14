@@ -47,6 +47,10 @@ internal object DomainContext {
         fun setCurrentIntermediateDomainModelUri(uri: String) {
             currentIntermediateDomainModelUri = uri
             currentIntermediateDomainModelFilePath = uri.removeFileUri()
+
+            // Invalidate current domain model cache, so that the new model at the URI gets loaded when a caller
+            // retrieves the currentIntermediateDomainModel property
+            currentIntermediateDomainModel = null
         }
 
         /**
