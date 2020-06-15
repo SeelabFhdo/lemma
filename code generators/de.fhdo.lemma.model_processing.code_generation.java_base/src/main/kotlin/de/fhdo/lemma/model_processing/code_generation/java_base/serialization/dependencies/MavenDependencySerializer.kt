@@ -98,6 +98,7 @@ private class MavenDependencySerializerBase : KoinComponent {
     private val JAVA_VERSION = "12"
     private val DEFAULT_VERSION = "0.0.1-SNAPSHOT"
     private val VERSION_PATTERN = Pattern.compile(".*v(?<version>((\\p{Alnum}+_)+\\p{Alnum}+)|\\p{Alnum}+)")
+    private val VALID_MAVEN_VERSION_PATTERN = Pattern.compile("\\p{Alnum}+(\\.\\p{Alnum}+){0,2}(-\\p{Alnum}+)*")
 
     /**
      * Build internal dependency model, i.e., the XML tree for the resulting pom.xml file
@@ -168,6 +169,9 @@ private class MavenDependencySerializerBase : KoinComponent {
      * "0.0.1-SNAPSHOT".
      */
     private fun String.toMavenVersion() : String {
+        if (this.matches(VALID_MAVEN_VERSION_PATTERN.toRegex()))
+            return this
+
         var versionId = ""
         val matcher = VERSION_PATTERN.matcher(this)
         if (matcher.matches()) {
