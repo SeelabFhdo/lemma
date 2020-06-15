@@ -95,6 +95,7 @@ internal class CountingMavenDependencySerializer(override val dependencyType: De
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 private class MavenDependencySerializerBase : KoinComponent {
+    private val JAVA_VERSION = "12"
     private val DEFAULT_VERSION = "0.0.1-SNAPSHOT"
     private val VERSION_PATTERN = Pattern.compile(".*v(?<version>((\\p{Alnum}+_)+\\p{Alnum}+)|\\p{Alnum}+)")
 
@@ -190,7 +191,9 @@ private class MavenDependencySerializerBase : KoinComponent {
         node("properties") {
             "project.build.sourceEncoding" { -"UTF-8" }
             "project.reporting.outputEncoding" { -"UTF-8" }
-            "java.version" { -"12" }
+            "java.version" { -JAVA_VERSION }
+            "maven.compiler.source" { -JAVA_VERSION }
+            "maven.compiler.target" { -JAVA_VERSION }
         }
 
     /**
