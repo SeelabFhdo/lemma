@@ -57,8 +57,8 @@ abstract class AbstractModelProcessor(private val processorImplementationPackage
 
         /* Execute phases with phase-specific parameters (if any) */
         with(phaseParameters) {
-            // Invoke only those phases that were explicitly specified on the commandline
             when {
+                // Invoke only those phases that were explicitly specified on the commandline
                 BasicCommandLine.invokeOnlySpecifiedPhases -> {
                     val specifiedPhases = (loadedPhases + loadedExplicitlyInvokedPhases)
                         .filter { it.id in phaseParameters.keys }.toSet()
@@ -66,7 +66,7 @@ abstract class AbstractModelProcessor(private val processorImplementationPackage
                 }
 
                 // In case an explicitly invoked phase was stated on the commandline, only invoke those phases that need
-                // to be explicitly specified
+                // to be explicitly invoked
                 keys.containsAny(explicitlyInvokedPhaseIds) -> executePhases(loadedExplicitlyInvokedPhases, this)
 
                 // Invoke all phases that do not need to be invoked explicitly

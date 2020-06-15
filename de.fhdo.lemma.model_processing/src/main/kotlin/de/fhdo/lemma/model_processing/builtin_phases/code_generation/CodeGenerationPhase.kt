@@ -2,6 +2,7 @@ package de.fhdo.lemma.model_processing.builtin_phases.code_generation
 
 import de.fhdo.lemma.model_processing.annotations.CodeGenerationModule
 import de.fhdo.lemma.model_processing.annotations.CodeGenerationPropertyProvider
+import de.fhdo.lemma.model_processing.annotations.ExplicitlyInvokedCodeGenerationModule
 import de.fhdo.lemma.model_processing.annotations.ModelProcessingPhase
 import de.fhdo.lemma.model_processing.annotations.RequiresBasicCommandLineOptions
 import de.fhdo.lemma.model_processing.annotations.findAnnotatedClasses
@@ -13,6 +14,7 @@ import de.fhdo.lemma.model_processing.builtin_phases.intermediate_model_validati
 import de.fhdo.lemma.model_processing.command_line.BasicCommandLine
 import de.fhdo.lemma.model_processing.command_line.BasicOption
 import de.fhdo.lemma.model_processing.command_line.parseCommandLine
+import de.fhdo.lemma.model_processing.containsAny
 import de.fhdo.lemma.model_processing.extendsImplementsOrException
 import de.fhdo.lemma.model_processing.isChildPathOf
 import de.fhdo.lemma.model_processing.languages.registerLanguages
@@ -28,6 +30,7 @@ import java.nio.charset.Charset
 import java.util.ArrayDeque
 import java.util.Deque
 import java.util.LinkedList
+import kotlin.reflect.KClass
 
 /**
  * Implementation of the model processor's code generation phase.
@@ -63,13 +66,20 @@ internal class CodeGenerationPhase : AbstractModelProcessingPhase() {
 
         /* Find and initialize code generation modules */
         val (modules, dependencyRelationships) = findAndInitCodeGenerationModules(processorImplementationPackage,
-            codeGenerationProperties)
-        if (modules.isEmpty())
+            CodeGenerationModule::class, codeGenerationProperties)
+        val (explicitlyInvokedModules, _) = findAndInitCodeGenerationModules(processorImplementationPackage,
+            ExplicitlyInvokedCodeGenerationModule::class, codeGenerationProperties)
+
+        // Prepare loaded module information that assigns a Boolean value to each module, stating whether the module is
+        // to be explicitly invoked or not
+        val loadedModuleInfo = modules.keys.associateBy({it}, {false}).toMutableMap()
+        loadedModuleInfo.putAll(explicitlyInvokedModules.keys.associateBy({it}, {true}))
+
+        if (loadedModuleInfo.isEmpty())
             throw PhaseException("No code generation modules were found on the classpath")
-        val loadedModuleNames = modules.keys.toList()
 
         /* Parse commandline */
-        val (phaseArguments, modulesArguments) = parseCommandLine(args, loadedModuleNames)
+        val (phaseArguments, modulesArguments) = parseCommandLine(args, loadedModuleInfo.keys.toList())
         try {
             PhaseCommandLine(phaseArguments)
         } catch (ex: Exception) {
@@ -88,15 +98,30 @@ internal class CodeGenerationPhase : AbstractModelProcessingPhase() {
 
         // Only print names of generation modules if requested by user
         if (PhaseCommandLine.printModules) {
-            loadedModuleNames.forEach { println(it) }
+            println("Loaded code generation modules:")
+            loadedModuleInfo.toSortedMap().forEach { (name, explicitlyInvoked) ->
+                if (explicitlyInvoked)
+                    println("$name (to be explicitly invoked)")
+                else
+                    println(name)
+            }
             return
         }
 
         /* Calculate module execution plan that considers possible module dependencies */
-        val modulesToExecute = if (PhaseCommandLine.invokeOnlySpecifiedModules)
-                modules.filter { it.key in modulesArguments.keys }
-            else
-                modules
+        val modulesToExecute = when {
+            // Invoke only those modules that were explicitly specified on the commandline
+            PhaseCommandLine.invokeOnlySpecifiedModules -> {
+                (modules + explicitlyInvokedModules).filter { it.key in modulesArguments.keys }
+            }
+
+            // In case an explicitly invoked module was stated on the commandline, only invoke those modules that need
+            // to be explicitly invoked (this behavior is consistent with that of [AbstractModelProcessor])
+            modulesArguments.keys.containsAny(explicitlyInvokedModules.keys) -> explicitlyInvokedModules
+
+            // Invoke all modules that do not need to be invoked explicitly
+            else -> modules
+        }
 
         if (modulesToExecute.isEmpty())
             throw PhaseException("No modules found to execute. Probably the " +
@@ -182,27 +207,26 @@ private fun findCodeGenerationPropertyProvider(processorPackage : String) : Code
 }
 
 /**
- * Helper to find and initialize [CodeGenerationModule] implementers on the classpath.
+ * Helper to find and initialize [AbstractCodeGenerationModule] implementers on the classpath.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-private fun findAndInitCodeGenerationModules(processorPackage: String,
+private fun findAndInitCodeGenerationModules(processorPackage: String, annotationClass: KClass<out Annotation>,
     codeGenerationProperties: Map<String, String>)
     : Pair<Map<String, AbstractCodeGenerationModule>, Map<String, List<String>>> {
     val loadedModules = mutableMapOf<String, AbstractCodeGenerationModule>()
     val dependencyRelationships = mutableMapOf<String, List<String>>()
 
-    val annotatedClasses = findAnnotatedClasses(processorPackage, CodeGenerationModule::class)
+    val annotatedClasses = findAnnotatedClasses(processorPackage, annotationClass)
     for (classInfo in annotatedClasses) {
-        // Code generation modules must be annotated with [CodeGenerationModule] and extend
-        // [AbstractCodeGenerationModule]
+        /* Code generation modules must extend AbstractCodeGenerationModule */
         classInfo.extendsImplementsOrException(
             "Code generation module",
             expectedSuperclass = AbstractCodeGenerationModule::class
         )
 
-        // Check name and duplicates
-        val annotationInfo = classInfo.annotationInfo[CodeGenerationModule::class]!!
+        /* Check name and duplicates */
+        val annotationInfo = classInfo.annotationInfo[annotationClass]!!
         val moduleName = annotationInfo.parameterValues["name"].value as String
         if (moduleName.isEmpty())
             throw PhaseException("Name of code generation module implemented in class \"${classInfo.simpleName}\" " +
@@ -211,14 +235,17 @@ private fun findAndInitCodeGenerationModules(processorPackage: String,
         if (loadedModules.containsKey(moduleName))
             throw PhaseException("Duplicate module detected: \"$moduleName\"")
 
-        // Create and initialize module instance
-        val dependsOnModule = annotationInfo.parameterValues["dependsOn"].value as String
+        /* Create and initialize module instance */
+        // dependsOn annotation parameter does not exist for modules to be invoked explicitly
+        val dependsOnModule = annotationInfo.parameterValues["dependsOn"]?.value as? String ?: ""
         val moduleInstance = initCodeGenerationModuleInstance(classInfo, moduleName, dependsOnModule,
              codeGenerationProperties)
         loadedModules += moduleName to moduleInstance
 
-        // Add module to the map of dependency relationships, which assigns the list of dependent modules (values) to
-        // those modules they depend on (key)
+        /*
+         * Add module to the map of dependency relationships, which assigns the list of dependent modules (values) to
+         * those modules they depend on (key)
+         */
         if (dependsOnModule.isNotEmpty())
             (dependencyRelationships
                 .putIfAbsent(dependsOnModule, mutableListOf(moduleName))
