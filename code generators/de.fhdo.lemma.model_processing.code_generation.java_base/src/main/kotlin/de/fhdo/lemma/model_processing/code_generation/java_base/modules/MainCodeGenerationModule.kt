@@ -115,11 +115,9 @@ internal class MainCodeGenerationModule : AbstractCodeGenerationModule(), KoinCo
          */
         val intermediateServiceModel: IntermediateServiceModel by MainState
         val javaMicroservices = intermediateServiceModel.microservices.filter{ it.hasTechnology("java") }
-        if (javaMicroservices.isEmpty()) {
-            val intermediateServiceModelFilePath: String by MainState
+        if (javaMicroservices.isEmpty())
             throw PhaseException("No Java microservices found in intermediate service model " +
                 "\"$intermediateServiceModelFilePath\"")
-        }
 
         javaMicroservices.forEach {
             MainState.setCurrentMicroservice(it)
