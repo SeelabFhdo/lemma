@@ -46,11 +46,14 @@ internal class OperationHandler : GenletCodeGenerationHandlerI<IntermediateOpera
             apiOperationAnnotation.addPair("value", "\"${eObject.apiOperationComment.comment}\"")
         }
 
-        /* In case any of the operation's parameters exhibits the java.ResponseEntity aspect, the return type of the
+        /* In case any of the operation's parameters exhibits the ResponseEntity aspect, the return type of the
          * generated method will be adapted to be ResponseEntity with the current return type as type argument. This,
          * however, is only possible when the return type is a ClassOrInterfaceType.
          */
-        if (eObject.parameters.any { it.hasAspect("java.ResponseEntity") } && node.type is ClassOrInterfaceType) {
+        val hasResponseEntityParameter = eObject.parameters.any {
+            it.hasAspect("java.ResponseEntity", "Spring.ResponseEntity")
+        }
+        if (hasResponseEntityParameter && node.type is ClassOrInterfaceType) {
             val currentReturnType = (node.type as ClassOrInterfaceType).nameAsString
             if (currentReturnType != "ResponseEntity") {
                 node.addImport("org.springframework.http.ResponseEntity", ImportTargetElementType.METHOD)

@@ -12,13 +12,13 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.combina
 import org.eclipse.emf.ecore.EObject
 
 /**
- * Handler for the java.Valid aspect.
+ * Handler for the Valid aspect.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 @AspectHandler
 internal class ValidHandler : AspectHandlerI {
-    override fun handlesAspects() = setOf("java.Valid")
+    override fun handlesAspects() = setOf("java.Valid", "Spring.Valid")
     override fun handlesEObjectNodeCombinations() = combinations {
         IntermediateDataField::class.java with FieldDeclaration::class.java
     }

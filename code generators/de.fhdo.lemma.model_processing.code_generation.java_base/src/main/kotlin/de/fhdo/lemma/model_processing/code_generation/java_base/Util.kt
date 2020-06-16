@@ -245,31 +245,31 @@ internal fun EObject.getAllAspects()
     }
 
 /**
- * Check if an [EObject] has a certain aspect with the given [fullyQualifiedAspectName] assigned. Throws an
+ * Check if an [EObject] has one of the aspects with the given [fullyQualifiedAspectNames] assigned. Throws an
  * [IllegalArgumentException] if the [EObject] does not support having aspects.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-fun EObject.hasAspect(fullyQualifiedAspectName: String)
-    = getAllAspects().any { it.qualifiedName == fullyQualifiedAspectName }
+fun EObject.hasAspect(vararg fullyQualifiedAspectNames: String)
+    = getAllAspects().any { it.qualifiedName in fullyQualifiedAspectNames }
 
 /**
- * Get the [IntermediateImportedAspect] of this [EObject] with the given [fullyQualifiedAspectName] assigned. Throws an
- * [IllegalArgumentException] if the [EObject] does not support having aspects.
+ * Get the [IntermediateImportedAspect] instances of this [EObject] with one of the given [fullyQualifiedAspectNames]
+ * assigned. Throws an [IllegalArgumentException] if the [EObject] does not support having aspects.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-fun EObject.getAspect(fullyQualifiedAspectName: String)
-    = getAllAspects().find { it.qualifiedName == fullyQualifiedAspectName }
+fun EObject.getAspect(vararg fullyQualifiedAspectNames: String)
+    = getAllAspects().find { it.qualifiedName in fullyQualifiedAspectNames }
 
 /**
- * Iterate over all [IntermediateImportedAspect] instances of this [EObject] with the given [fullyQualifiedAspectName].
+ * Iterate over all [IntermediateImportedAspect] instances of this [EObject] with the given [fullyQualifiedAspectNames].
  * Throws an [IllegalArgumentException] if the [EObject] does not support having aspects.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-fun EObject.forEachAspect(fullyQualifiedAspectName: String, action: (IntermediateImportedAspect) -> Unit)
-    = getAllAspects().forEach { if (it.qualifiedName == fullyQualifiedAspectName) action(it) }
+fun EObject.forEachAspect(vararg fullyQualifiedAspectNames: String, action: (IntermediateImportedAspect) -> Unit)
+    = getAllAspects().forEach { if (it.qualifiedName in fullyQualifiedAspectNames) action(it) }
 
 /**
  * Get the value of the property [propertyName] of the aspect [fullyQualifiedAspectName] being specified for this

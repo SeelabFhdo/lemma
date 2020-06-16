@@ -19,13 +19,20 @@ import de.fhdo.lemma.service.intermediate.IntermediateOperation
 import org.eclipse.emf.ecore.EObject
 
 /**
- * Handler for the java.MessageMapping and java.SendTo aspects.
+ * Handler for the MessageMapping and SendTo aspects.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 @AspectHandler
 internal class OperationMessageMappingHandler : AspectHandlerI {
-    override fun handlesAspects() = setOf("java.MessageMapping", "java.SendTo")
+    override fun handlesAspects() = setOf(
+        "java.MessageMapping",
+        "java.SendTo",
+
+        "Spring.MessageMapping",
+        "Spring.SendTo"
+    )
+
     override fun handlesEObjectNodeCombinations() = combinations {
         IntermediateOperation::class.java with MethodDeclaration::class.java
     }

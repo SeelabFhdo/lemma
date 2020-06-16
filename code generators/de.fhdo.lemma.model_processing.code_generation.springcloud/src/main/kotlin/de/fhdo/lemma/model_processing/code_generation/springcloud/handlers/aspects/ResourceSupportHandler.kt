@@ -14,13 +14,13 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.combina
 import org.eclipse.emf.ecore.EObject
 
 /**
- * Handler for the java.ResourceSupport aspect.
+ * Handler for the ResourceSupport aspect.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 @AspectHandler
 internal class ResourceSupportHandler : AspectHandlerI {
-    override fun handlesAspects() = setOf("java.ResourceSupport")
+    override fun handlesAspects() = setOf("java.ResourceSupport", "Spring.ResourceSupport")
     override fun handlesEObjectNodeCombinations() = combinations {
         IntermediateDataStructure::class.java with ClassOrInterfaceDeclaration::class.java
     }

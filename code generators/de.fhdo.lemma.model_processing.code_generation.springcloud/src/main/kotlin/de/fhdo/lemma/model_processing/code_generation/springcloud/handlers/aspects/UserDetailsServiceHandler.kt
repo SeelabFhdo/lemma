@@ -14,13 +14,13 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.combina
 import org.eclipse.emf.ecore.EObject
 
 /**
- * Handler for the java.UserDetailsService aspect.
+ * Handler for the UserDetailsService aspect.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 @AspectHandler
 internal class UserDetailsServiceHandler : AspectHandlerI {
-    override fun handlesAspects() = setOf("java.UserDetailsService")
+    override fun handlesAspects() = setOf("java.UserDetailsService", "Spring.UserDetailsService")
     override fun handlesEObjectNodeCombinations() = combinations {
         IntermediateDataStructure::class.java with ClassOrInterfaceDeclaration::class.java
     }

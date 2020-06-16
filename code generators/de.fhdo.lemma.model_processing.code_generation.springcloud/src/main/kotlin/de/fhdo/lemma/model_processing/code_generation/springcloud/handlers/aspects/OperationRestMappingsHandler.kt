@@ -25,13 +25,21 @@ import org.eclipse.emf.ecore.EObject
  */
 @AspectHandler
 internal class OperationRestMappingsHandler : AspectHandlerI {
-    override fun handlesAspects() = setOf(
-        "java.GetMapping",
-        "java.PostMapping",
-        "java.PutMapping",
-        "java.DeleteMapping",
-        "java.PatchMapping"
+    private val aspectToAnnotationMapping = mapOf(
+        "java.GetMapping" to "GetMapping",
+        "java.PutMapping" to "PutMapping",
+        "java.PostMapping" to "PostMapping",
+        "java.DeleteMapping" to "DeleteMapping",
+        "java.PatchMapping" to "PatchMapping",
+
+        "Spring.Get" to "GetMapping",
+        "Spring.Put" to "PutMapping",
+        "Spring.Post" to "PostMapping",
+        "Spring.Delete" to "DeleteMapping",
+        "Spring.Patch" to "PatchMapping"
     )
+
+    override fun handlesAspects() = aspectToAnnotationMapping.keys
 
     override fun handlesEObjectNodeCombinations() = combinations {
         IntermediateOperation::class.java with MethodDeclaration::class.java
@@ -41,19 +49,21 @@ internal class OperationRestMappingsHandler : AspectHandlerI {
      * Execution logic of the handler
      */
     override fun execute(eObject: EObject, node: Node, aspect: IntermediateImportedAspect) : Node {
+        val annotation = aspectToAnnotationMapping[aspect.qualifiedName]!!
+
         /*
          * Add aspect-dependent import to the generated method. In case of a relocation, this import sticks to the
          * method as the aspect-dependent annotation does.
          */
         val generatedMethod = node as MethodDeclaration
-        val importClassname = "org.springframework.web.bind.annotation.${aspect.name}"
+        val importClassname = "org.springframework.web.bind.annotation.${annotation}"
         generatedMethod.addImport(importClassname, ImportTargetElementType.ANNOTATION,
             SerializationCharacteristic.REMOVE_ON_RELOCATION)
 
         /* Add REST mapping annotation to the operation, if it is not present already */
         val operation = eObject as IntermediateOperation
-        val existingAnnotation = generatedMethod.getAnnotation<NormalAnnotationExpr>(aspect.name)
-        val targetAnnotation = existingAnnotation ?: generatedMethod.addAndGetAnnotation(aspect.name,
+        val existingAnnotation = generatedMethod.getAnnotation<NormalAnnotationExpr>(annotation)
+        val targetAnnotation = existingAnnotation ?: generatedMethod.addAndGetAnnotation(annotation,
             SerializationCharacteristic.REMOVE_ON_RELOCATION)
 
         /* Add missing endpoint addresses */

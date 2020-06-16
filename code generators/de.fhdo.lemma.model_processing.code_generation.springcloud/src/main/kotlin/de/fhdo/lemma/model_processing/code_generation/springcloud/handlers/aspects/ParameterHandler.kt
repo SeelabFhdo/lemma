@@ -26,11 +26,16 @@ import java.lang.IllegalArgumentException
 internal class ParameterHandler : AspectHandlerI {
     private val aspectNodeTypeCombinations = mapOf<String, List<Class<out Node>>>(
         "java.ResponseStatus" to listOf(ClassOrInterfaceDeclaration::class.java),
-
         "java.PathVariable" to listOf(MethodDeclaration::class.java),
         "java.RequestBody" to listOf(MethodDeclaration::class.java),
         "java.RequestParam" to listOf(MethodDeclaration::class.java),
-        "java.Valid" to listOf(MethodDeclaration::class.java)
+        "java.Valid" to listOf(MethodDeclaration::class.java),
+
+        "Spring.ResponseStatus" to listOf(ClassOrInterfaceDeclaration::class.java),
+        "Spring.PathVariable" to listOf(MethodDeclaration::class.java),
+        "Spring.RequestBody" to listOf(MethodDeclaration::class.java),
+        "Spring.RequestParam" to listOf(MethodDeclaration::class.java),
+        "Spring.Valid" to listOf(MethodDeclaration::class.java)
     )
 
     override fun handlesAspects() = aspectNodeTypeCombinations.keys
@@ -59,7 +64,7 @@ internal class ParameterHandler : AspectHandlerI {
      * Execution logic for when the generated Node is a [ClassOrInterfaceDeclaration].
      */
     private fun execute(generatedClass: ClassOrInterfaceDeclaration, aspect: IntermediateImportedAspect) : Node {
-        /* The aspect must be java.ResponseStatus according to handlesEObjectNodeCombinations() */
+        /* The aspect must be ResponseStatus according to handlesEObjectNodeCombinations() */
         generatedClass.addImport("org.springframework.http.HttpStatus", ImportTargetElementType.ANNOTATION)
         generatedClass.addImport("org.springframework.web.bind.annotation.ResponseStatus",
             ImportTargetElementType.ANNOTATION)
@@ -110,7 +115,7 @@ internal class ParameterHandler : AspectHandlerI {
     }
 
     /**
-     * Helper to add property values to this [NormalAnnotationExpr] from the java.RequestParam [requestParamAspect]
+     * Helper to add property values to this [NormalAnnotationExpr] from the RequestParam [requestParamAspect]
      */
     private fun NormalAnnotationExpr.addRequestParamInformation(parameter: IntermediateParameter,
         requestParamAspect: IntermediateImportedAspect) {

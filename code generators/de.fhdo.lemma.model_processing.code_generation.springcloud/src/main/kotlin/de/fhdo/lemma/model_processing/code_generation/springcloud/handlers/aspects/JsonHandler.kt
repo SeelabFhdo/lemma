@@ -24,7 +24,12 @@ internal class JsonHandler : AspectHandlerI {
         "java.JsonFormat",
         "java.JsonIgnore",
         "java.JsonProperty",
-        "java.JsonUnwrapped"
+        "java.JsonUnwrapped",
+
+        "Spring.JsonFormat",
+        "Spring.JsonIgnore",
+        "Spring.JsonProperty",
+        "Spring.JsonUnwrapped"
     )
 
     override fun handlesEObjectNodeCombinations() = combinations {

@@ -13,13 +13,13 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.combina
 import org.eclipse.emf.ecore.EObject
 
 /**
- * Handler for the java.ResponseEntity aspect.
+ * Handler for the ResponseEntity aspect.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 @AspectHandler
 internal class ResponseEntityHandler : AspectHandlerI {
-    override fun handlesAspects() = setOf("java.ResponseEntity")
+    override fun handlesAspects() = setOf("java.ResponseEntity", "Spring.ResponseEntity")
     override fun handlesEObjectNodeCombinations() = combinations {
         IntermediateDataOperationReturnType::class.java with MethodDeclaration::class.java
     }
