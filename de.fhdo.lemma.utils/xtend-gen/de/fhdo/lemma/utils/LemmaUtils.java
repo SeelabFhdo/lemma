@@ -510,14 +510,35 @@ public final class LemmaUtils {
       final String uriWithFileScheme = LemmaUtils.convertToFileUri(importUri);
       projectResource = EcoreUtil2.getResource(context, uriWithFileScheme);
     }
-    IFile _fileForResource = LemmaUtils.getFileForResource(projectResource);
-    String _absolutePath = null;
-    if (_fileForResource!=null) {
-      _absolutePath=LemmaUtils.getAbsolutePath(_fileForResource);
+    String _xtrycatchfinallyexpression = null;
+    try {
+      IFile _fileForResource = LemmaUtils.getFileForResource(projectResource);
+      String _absolutePath = null;
+      if (_fileForResource!=null) {
+        _absolutePath=LemmaUtils.getAbsolutePath(_fileForResource);
+      }
+      _xtrycatchfinallyexpression = _absolutePath;
+    } catch (final Throwable _t) {
+      if (_t instanceof Exception) {
+        _xtrycatchfinallyexpression = null;
+      } else {
+        throw Exceptions.sneakyThrow(_t);
+      }
     }
-    String importFilePath = _absolutePath;
+    String importFilePath = _xtrycatchfinallyexpression;
     if ((importFilePath == null)) {
-      importFilePath = importUri;
+      String _xtrycatchfinallyexpression_1 = null;
+      try {
+        java.net.URI _uRI = new java.net.URI(importUri);
+        _xtrycatchfinallyexpression_1 = new File(_uRI).getPath();
+      } catch (final Throwable _t) {
+        if (_t instanceof Exception) {
+          _xtrycatchfinallyexpression_1 = LemmaUtils.removeFileUri(importUri);
+        } else {
+          throw Exceptions.sneakyThrow(_t);
+        }
+      }
+      importFilePath = _xtrycatchfinallyexpression_1;
     }
     return Files.exists(Paths.get(importFilePath));
   }

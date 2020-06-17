@@ -381,11 +381,32 @@ final class LemmaUtils {
             projectResource = EcoreUtil2.getResource(context, uriWithFileScheme)
         }
 
-        var importFilePath = getFileForResource(projectResource)?.absolutePath
+        var importFilePath = try {
+            getFileForResource(projectResource)?.absolutePath
+        } catch (Exception ex) {
+            // Since importFileExists() is called from language validators only, this exception will
+            // occur when the validators are executed headless, i.e., outside Eclipse. Headless
+            // validator execution happens, e.g., in standalone model processors. The reason for the
+            // exception to occur is the unavailability of ResourcesPlugin (which is used by
+            // getFileForResource()) in headless validator execution. The concrete Exception
+            // instance is an IllegalStateException and the message will probably be "Workspace is
+            // closed."
+            null
+        }
+
         // URI does not point to a project resource, so maybe its an absolute path in the
         // filesystem
-        if (importFilePath === null)
-            importFilePath = importUri
+        if (importFilePath === null) {
+            importFilePath = try {
+                new File(new java.net.URI(importUri)).path
+            } catch (Exception ex) {
+                // A conversion to a file path may not be possible via java.net.URI, if the import
+                // URI does not point an absolute path. The same exception occurs, if the URI has an
+                // "inconstistent" format like "file:///foo bar/baz", where the space between "foo"
+                // and "bar" is not encoded by "%20".
+                removeFileUri(importUri)
+            }
+        }
 
         return Files.exists(Paths.get(importFilePath))
     }
