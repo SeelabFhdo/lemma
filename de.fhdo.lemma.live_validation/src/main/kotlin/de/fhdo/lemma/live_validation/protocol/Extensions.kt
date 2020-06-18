@@ -31,6 +31,7 @@ interface LiveValidationServer : LanguageServer {
     companion object {
         const val DEFAULT_HOSTNAME = "localhost"
         const val DEFAULT_PORT = 44203
+        const val DEFAULT_TIMEOUT_THRESHOLDS_IN_MILLISECONDS = 500L
     }
 
     /**

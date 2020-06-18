@@ -26,6 +26,7 @@ repositories {
 }
 
 buildscript {
+    extra.set("commonsLangVersion", "3.10")
     extra.set("groovyVersion", "3.0.3")
     extra.set("log4jVersion", "2.11.2")
     extra.set("loggingVersion", "1.7.9")
@@ -34,6 +35,7 @@ buildscript {
 }
 
 dependencies {
+    val commonsLangVersion: String by rootProject.extra
     val groovyVersion: String by rootProject.extra
     val log4jVersion: String by rootProject.extra
     val loggingVersion: String by rootProject.extra
@@ -43,6 +45,7 @@ dependencies {
     implementation(kotlin("stdlib"))
     implementation(kotlin("reflect"))
 
+    implementation("org.apache.commons:commons-lang3:$commonsLangVersion")
     implementation("org.apache.logging.log4j:log4j-api:$log4jVersion")
     implementation("org.apache.logging.log4j:log4j-core:$log4jVersion")
     implementation("org.apache.logging.log4j:log4j-slf4j-impl:$log4jVersion")

@@ -1,5 +1,6 @@
 package de.fhdo.lemma.live_validation.server
 
+import de.fhdo.lemma.live_validation.LiveValidationCommandLine
 import de.fhdo.lemma.live_validation.True
 import de.fhdo.lemma.live_validation.asFile
 import de.fhdo.lemma.live_validation.common.IssueDiagnostic
@@ -10,6 +11,7 @@ import de.fhdo.lemma.live_validation.protocol.identifier
 import de.fhdo.lemma.live_validation.protocol.logPrefix
 import de.fhdo.lemma.live_validation.protocol.publishIssues
 import mu.KotlinLogging
+import org.apache.commons.lang3.exception.ExceptionUtils
 import org.eclipse.lsp4j.DidChangeTextDocumentParams
 import org.eclipse.lsp4j.InitializeError
 import org.eclipse.lsp4j.InitializeParams
@@ -29,6 +31,7 @@ import java.util.concurrent.CompletableFuture
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.Future
 import java.util.concurrent.TimeUnit
+import java.util.concurrent.TimeoutException
 import java.util.concurrent.atomic.AtomicBoolean
 import java.util.concurrent.atomic.AtomicInteger
 
@@ -374,12 +377,24 @@ private fun runValidators(documentUri: String, sourceCode: String) : List<IssueD
             "${validationResultFutures.size}" }
         try {
             // Retrieve the validation results blocking, but grant each validator only a limited amount of time to
-            // respond the results
-            validationResults.addAll(future.orTimeout(500, TimeUnit.MILLISECONDS).get())
+            // respond its results
+            validationResults.addAll(
+                future.orTimeout(
+                    LiveValidationCommandLine.timeoutThreshold,
+                    TimeUnit.MILLISECONDS
+                ).get()
+            )
             FAILED_VALIDATION_CLIENTS.remove(client)
             LOGGER.debug { "${client.logPrefix()} Received validation result $resultCounter" }
         } catch(ex: Exception) {
-            LOGGER.error { "${client.logPrefix()} Exception while waiting for result $resultCounter" }
+            when (ex.cause) {
+                is TimeoutException ->
+                    LOGGER.error { "${client.logPrefix()} Timeout exception while waiting for result $resultCounter" }
+                else ->
+                    LOGGER.error { "${client.logPrefix()} Exception while waiting for result $resultCounter: \n" +
+                        ExceptionUtils.getStackTrace(ex) }
+            }
+
             validationFailed(client)
         }
     }

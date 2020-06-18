@@ -70,6 +70,16 @@ internal object LiveValidationCommandLine {
     )
     var trace = false
 
+    /*
+     * Validation client timeout threshold (--timeout_threshold)
+     */
+    @CommandLine.Option(
+        names = ["--timeout_threshold"],
+        paramLabel = "TIMEOUT_THRESHOLD",
+        description = ["the threshold in milliseconds until which validation clients must send a response"]
+    )
+    var timeoutThreshold = LiveValidationServer.DEFAULT_TIMEOUT_THRESHOLDS_IN_MILLISECONDS
+
     /**
      * Parse the commandline by invoking this object
      */
