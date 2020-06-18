@@ -7,6 +7,7 @@ import de.fhdo.lemma.data.intermediate.IntermediateImportedAspect
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.ImportTargetElementType
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addDependency
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addImport
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.hasAnnotation
 import de.fhdo.lemma.model_processing.code_generation.java_base.getPropertyValue
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.AspectHandler
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.AspectHandlerI
@@ -35,8 +36,10 @@ internal class TableHandler : AspectHandlerI {
         generatedClass.addDependency("org.springframework.boot:spring-boot-starter-data-jpa")
 
         /* Each Table automatically becomes an Entity, too */
-        generatedClass.addAnnotation("Entity")
-        generatedClass.addImport("javax.persistence.Entity", ImportTargetElementType.ANNOTATION)
+        if (!generatedClass.hasAnnotation("Entity")) {
+            generatedClass.addAnnotation("Entity")
+            generatedClass.addImport("javax.persistence.Entity", ImportTargetElementType.ANNOTATION)
+        }
 
         /* Add the Table annotation together with its "name" value if specified for the aspect */
         val tableAnnotation = generatedClass.addAndGetAnnotation("Table")

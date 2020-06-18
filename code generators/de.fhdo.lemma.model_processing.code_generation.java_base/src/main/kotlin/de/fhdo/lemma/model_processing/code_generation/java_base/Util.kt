@@ -369,6 +369,13 @@ internal fun IntermediateComplexType.fullyQualifiedClasspath(withExtension: Bool
       """.trimToSingleLine()
 
 /**
+ * Check if an [IntermediateDataStructure] exhibits a certain feature.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+fun IntermediateDataStructure.hasFeature(feature: String) = featureNames.contains(feature)
+
+/**
  * Check if an [IntermediateDataField] exhibits a certain feature.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
