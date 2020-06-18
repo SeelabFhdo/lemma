@@ -16,13 +16,13 @@ import de.fhdo.lemma.model_processing.code_generation.springcloud.addValue
 import org.eclipse.emf.ecore.EObject
 
 /**
- * Handler for the java.AttributeOverrideColumn aspect.
+ * Handler for the java.AttributeOverrideColumn and java.AttributeOverride aspects.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 @AspectHandler
 internal class AttributeOverrideColumnHandler : AspectHandlerI {
-    override fun handlesAspects() = setOf("java.AttributeOverrideColumn")
+    override fun handlesAspects() = setOf("java.AttributeOverrideColumn", "java.AttributeOverride")
     override fun handlesEObjectNodeCombinations() = combinations {
         IntermediateDataField::class.java with FieldDeclaration::class.java
     }
