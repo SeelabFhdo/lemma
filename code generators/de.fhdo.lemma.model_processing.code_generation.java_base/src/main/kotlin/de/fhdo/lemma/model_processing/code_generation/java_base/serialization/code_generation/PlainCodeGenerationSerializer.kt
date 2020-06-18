@@ -3,10 +3,12 @@ package de.fhdo.lemma.model_processing.code_generation.java_base.serialization.c
 import com.github.javaparser.ast.CompilationUnit
 import com.github.javaparser.ast.Node
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration
+import com.github.javaparser.ast.body.EnumDeclaration
 import com.github.javaparser.printer.PrettyPrinter
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.appendStatement
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.asClassDeclaration
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.hasReturnStatement
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.serialize
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.MainContext.State as MainState
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.configuration.AbstractSerializationConfiguration
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.countLines
@@ -86,6 +88,7 @@ private class CodeGenerationSerializerBase : KoinComponent {
             val generatedCode = when(node) {
                 is CompilationUnit -> node.serialize()
                 is ClassOrInterfaceDeclaration -> (node.parentNode.get() as CompilationUnit).serialize()
+                is EnumDeclaration -> node.serialize(serializationConfiguration)
                 else -> throw PhaseException("Serialization of nodes of type ${node::class.java.name} is not supported")
             }
 
