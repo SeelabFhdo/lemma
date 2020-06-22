@@ -48,7 +48,6 @@ import de.fhdo.lemma.typechecking.TypeChecker;
 import de.fhdo.lemma.typechecking.TypesNotCompatibleException;
 import de.fhdo.lemma.utils.LemmaUtils;
 import de.fhdo.lemma.validation.AbstractServiceDslValidator;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -1188,15 +1187,17 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
     if (_not) {
       return;
     }
-    final ArrayList<ImportedServiceAspect> allAspectsOfContainer = CollectionLiterals.<ImportedServiceAspect>newArrayList(aspect);
-    allAspectsOfContainer.addAll(EcoreUtil2.<ImportedServiceAspect>getSiblingsOfType(aspect, ImportedServiceAspect.class));
-    final Function<ImportedServiceAspect, String> _function = (ImportedServiceAspect it) -> {
-      return it.getImportedAspect().getName();
+    final Function1<ImportedServiceAspect, Boolean> _function = (ImportedServiceAspect it) -> {
+      return Boolean.valueOf(((!Objects.equal(it, aspect)) && 
+        Objects.equal(it.getImportedAspect().getName(), aspect.getImportedAspect().getName())));
     };
-    final Integer duplicateIndex = LemmaUtils.<ImportedServiceAspect, String>getDuplicateIndex(allAspectsOfContainer, _function);
-    if (((duplicateIndex).intValue() > (-1))) {
-      final ImportedServiceAspect duplicateAspect = allAspectsOfContainer.get((duplicateIndex).intValue());
-      this.error("Aspect was already specified", duplicateAspect, 
+    final Iterable<ImportedServiceAspect> eponymousAspectsOfContainer = IterableExtensions.<ImportedServiceAspect>filter(EcoreUtil2.<ImportedServiceAspect>getSiblingsOfType(aspect, 
+      ImportedServiceAspect.class), _function);
+    boolean _isEmpty = IterableExtensions.isEmpty(eponymousAspectsOfContainer);
+    boolean _not_1 = (!_isEmpty);
+    if (_not_1) {
+      final ImportedServiceAspect duplicateAspect = ((ImportedServiceAspect[])Conversions.unwrapArray(eponymousAspectsOfContainer, ImportedServiceAspect.class))[0];
+      this.error("Aspect may be specified at most once", duplicateAspect, 
         ServicePackage.Literals.IMPORTED_SERVICE_ASPECT__IMPORTED_ASPECT);
     }
   }

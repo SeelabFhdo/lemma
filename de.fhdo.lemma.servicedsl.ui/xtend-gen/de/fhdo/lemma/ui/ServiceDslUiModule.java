@@ -47,7 +47,7 @@ public class ServiceDslUiModule extends AbstractServiceDslUiModule {
     return ServiceDslAutoEditStrategyProvider.class;
   }
   
-  public ServiceDslUiModule(final AbstractUIPlugin arg0) {
-    super(arg0);
+  public ServiceDslUiModule(final AbstractUIPlugin plugin) {
+    super(plugin);
   }
 }

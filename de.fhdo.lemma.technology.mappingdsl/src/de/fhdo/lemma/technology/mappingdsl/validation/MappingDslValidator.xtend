@@ -1240,17 +1240,25 @@ class MappingDslValidator extends AbstractMappingDslValidator {
             return
         }
 
-        val allAspectsOfContainer = newArrayList(importedAspect)
-        allAspectsOfContainer.addAll(
-            EcoreUtil2.getSiblingsOfType(importedAspect, TechnologySpecificImportedServiceAspect)
-        )
-        val duplicateIndex = LemmaUtils.getDuplicateIndex(allAspectsOfContainer,
-            [QualifiedName.create(importedAspect.technology.name, aspect.name).toString],
-            [aspect.name !== null])
-        if (duplicateIndex > -1) {
-            val duplicateAspect = allAspectsOfContainer.get(duplicateIndex)
-            error("Aspect was already specified", duplicateAspect, MappingPackage
-                .Literals::TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__ASPECT)
+        val qualifiedAspectName = QualifiedName.create(importedAspect.technology.name,
+            importedAspect.aspect.name).toString
+
+        val eponymousAspectsOfContainer = EcoreUtil2.getSiblingsOfType(importedAspect,
+            TechnologySpecificImportedServiceAspect).filter[
+                if (it.aspect.name !== null && it !== importedAspect) {
+                    val otherQualifiedAspectName = QualifiedName.create(
+                        importedAspect.technology.name,
+                        it.aspect.name
+                    ).toString
+                    qualifiedAspectName == otherQualifiedAspectName
+                } else
+                    false
+            ]
+
+        if (!eponymousAspectsOfContainer.empty) {
+            val duplicateAspect = eponymousAspectsOfContainer.get(0)
+            error("Aspect may be specified at most once", duplicateAspect,
+                MappingPackage.Literals::TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__ASPECT)
         }
     }
 

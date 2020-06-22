@@ -630,14 +630,15 @@ class OperationDslValidator extends AbstractOperationDslValidator {
             return
         }
 
-        val allAspectsOfContainer = newArrayList(importedAspect)
-        allAspectsOfContainer.addAll(
-            EcoreUtil2.getSiblingsOfType(importedAspect, ImportedOperationAspect)
-        )
-        val duplicateIndex = LemmaUtils.getDuplicateIndex(allAspectsOfContainer, [aspect.name])
-        if (duplicateIndex > -1) {
-            val duplicateAspect = allAspectsOfContainer.get(duplicateIndex)
-            error("Aspect was already specified", duplicateAspect,
+        val eponymousAspectsOfContainer = EcoreUtil2.getSiblingsOfType(importedAspect,
+            ImportedOperationAspect).filter[
+                it != aspect &&
+                it.aspect.name == importedAspect.aspect.name
+            ]
+
+        if (!eponymousAspectsOfContainer.empty) {
+            val duplicateAspect = eponymousAspectsOfContainer.get(0)
+            error("Aspect may be specified at most once", duplicateAspect,
                 OperationPackage.Literals::IMPORTED_OPERATION_ASPECT__ASPECT)
         }
     }

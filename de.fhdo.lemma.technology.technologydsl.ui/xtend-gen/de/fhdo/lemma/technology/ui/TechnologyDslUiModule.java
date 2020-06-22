@@ -41,7 +41,7 @@ public class TechnologyDslUiModule extends AbstractTechnologyDslUiModule {
     return HighlightingCalculator.class;
   }
   
-  public TechnologyDslUiModule(final AbstractUIPlugin arg0) {
-    super(arg0);
+  public TechnologyDslUiModule(final AbstractUIPlugin plugin) {
+    super(plugin);
   }
 }

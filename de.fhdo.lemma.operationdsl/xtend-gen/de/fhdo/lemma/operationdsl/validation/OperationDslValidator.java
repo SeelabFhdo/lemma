@@ -29,7 +29,6 @@ import de.fhdo.lemma.technology.TechnologyPackage;
 import de.fhdo.lemma.technology.TechnologySpecificProperty;
 import de.fhdo.lemma.technology.TechnologySpecificPropertyValueAssignment;
 import de.fhdo.lemma.utils.LemmaUtils;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -851,16 +850,17 @@ public class OperationDslValidator extends AbstractOperationDslValidator {
     if (_not) {
       return;
     }
-    final ArrayList<ImportedOperationAspect> allAspectsOfContainer = CollectionLiterals.<ImportedOperationAspect>newArrayList(importedAspect);
-    allAspectsOfContainer.addAll(
-      EcoreUtil2.<ImportedOperationAspect>getSiblingsOfType(importedAspect, ImportedOperationAspect.class));
-    final Function<ImportedOperationAspect, String> _function = (ImportedOperationAspect it) -> {
-      return it.getAspect().getName();
+    final Function1<ImportedOperationAspect, Boolean> _function = (ImportedOperationAspect it) -> {
+      return Boolean.valueOf(((!Objects.equal(it, it.getAspect())) && 
+        Objects.equal(it.getAspect().getName(), importedAspect.getAspect().getName())));
     };
-    final Integer duplicateIndex = LemmaUtils.<ImportedOperationAspect, String>getDuplicateIndex(allAspectsOfContainer, _function);
-    if (((duplicateIndex).intValue() > (-1))) {
-      final ImportedOperationAspect duplicateAspect = allAspectsOfContainer.get((duplicateIndex).intValue());
-      this.error("Aspect was already specified", duplicateAspect, 
+    final Iterable<ImportedOperationAspect> eponymousAspectsOfContainer = IterableExtensions.<ImportedOperationAspect>filter(EcoreUtil2.<ImportedOperationAspect>getSiblingsOfType(importedAspect, 
+      ImportedOperationAspect.class), _function);
+    boolean _isEmpty = IterableExtensions.isEmpty(eponymousAspectsOfContainer);
+    boolean _not_1 = (!_isEmpty);
+    if (_not_1) {
+      final ImportedOperationAspect duplicateAspect = ((ImportedOperationAspect[])Conversions.unwrapArray(eponymousAspectsOfContainer, ImportedOperationAspect.class))[0];
+      this.error("Aspect may be specified at most once", duplicateAspect, 
         OperationPackage.Literals.IMPORTED_OPERATION_ASPECT__ASPECT);
     }
   }

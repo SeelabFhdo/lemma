@@ -859,13 +859,15 @@ class ServiceDslValidator extends AbstractServiceDslValidator {
             return
         }
 
-        val allAspectsOfContainer = newArrayList(aspect)
-        allAspectsOfContainer.addAll(EcoreUtil2.getSiblingsOfType(aspect, ImportedServiceAspect))
-        val duplicateIndex = LemmaUtils.getDuplicateIndex(allAspectsOfContainer,
-            [importedAspect.name])
-        if (duplicateIndex > -1) {
-            val duplicateAspect = allAspectsOfContainer.get(duplicateIndex)
-            error("Aspect was already specified", duplicateAspect,
+        val eponymousAspectsOfContainer = EcoreUtil2.getSiblingsOfType(aspect,
+            ImportedServiceAspect).filter[
+                it != aspect &&
+                it.importedAspect.name == aspect.importedAspect.name
+            ]
+
+        if (!eponymousAspectsOfContainer.empty) {
+            val duplicateAspect = eponymousAspectsOfContainer.get(0)
+            error("Aspect may be specified at most once", duplicateAspect,
                 ServicePackage.Literals::IMPORTED_SERVICE_ASPECT__IMPORTED_ASPECT)
         }
     }

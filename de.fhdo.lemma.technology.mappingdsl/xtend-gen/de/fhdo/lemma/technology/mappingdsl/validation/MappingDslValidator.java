@@ -1603,20 +1603,32 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
       (!importedAspect.getAspect().isIsSingleValued()))) {
       return;
     }
-    final ArrayList<TechnologySpecificImportedServiceAspect> allAspectsOfContainer = CollectionLiterals.<TechnologySpecificImportedServiceAspect>newArrayList(importedAspect);
-    allAspectsOfContainer.addAll(
-      EcoreUtil2.<TechnologySpecificImportedServiceAspect>getSiblingsOfType(importedAspect, TechnologySpecificImportedServiceAspect.class));
-    final Function<TechnologySpecificImportedServiceAspect, String> _function = (TechnologySpecificImportedServiceAspect it) -> {
-      return QualifiedName.create(importedAspect.getTechnology().getName(), it.getAspect().getName()).toString();
+    final String qualifiedAspectName = QualifiedName.create(importedAspect.getTechnology().getName(), 
+      importedAspect.getAspect().getName()).toString();
+    final Function1<TechnologySpecificImportedServiceAspect, Boolean> _function = (TechnologySpecificImportedServiceAspect it) -> {
+      boolean _xifexpression = false;
+      if (((it.getAspect().getName() != null) && (it != importedAspect))) {
+        boolean _xblockexpression = false;
+        {
+          final String otherQualifiedAspectName = QualifiedName.create(
+            importedAspect.getTechnology().getName(), 
+            it.getAspect().getName()).toString();
+          _xblockexpression = Objects.equal(qualifiedAspectName, otherQualifiedAspectName);
+        }
+        _xifexpression = _xblockexpression;
+      } else {
+        _xifexpression = false;
+      }
+      return Boolean.valueOf(_xifexpression);
     };
-    final Predicate<TechnologySpecificImportedServiceAspect> _function_1 = (TechnologySpecificImportedServiceAspect it) -> {
-      String _name = it.getAspect().getName();
-      return (_name != null);
-    };
-    final Integer duplicateIndex = LemmaUtils.<TechnologySpecificImportedServiceAspect, String>getDuplicateIndex(allAspectsOfContainer, _function, _function_1);
-    if (((duplicateIndex).intValue() > (-1))) {
-      final TechnologySpecificImportedServiceAspect duplicateAspect = allAspectsOfContainer.get((duplicateIndex).intValue());
-      this.error("Aspect was already specified", duplicateAspect, MappingPackage.Literals.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__ASPECT);
+    final Iterable<TechnologySpecificImportedServiceAspect> eponymousAspectsOfContainer = IterableExtensions.<TechnologySpecificImportedServiceAspect>filter(EcoreUtil2.<TechnologySpecificImportedServiceAspect>getSiblingsOfType(importedAspect, 
+      TechnologySpecificImportedServiceAspect.class), _function);
+    boolean _isEmpty = IterableExtensions.isEmpty(eponymousAspectsOfContainer);
+    boolean _not = (!_isEmpty);
+    if (_not) {
+      final TechnologySpecificImportedServiceAspect duplicateAspect = ((TechnologySpecificImportedServiceAspect[])Conversions.unwrapArray(eponymousAspectsOfContainer, TechnologySpecificImportedServiceAspect.class))[0];
+      this.error("Aspect may be specified at most once", duplicateAspect, 
+        MappingPackage.Literals.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__ASPECT);
     }
   }
   
