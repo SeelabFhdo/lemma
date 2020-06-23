@@ -1,0 +1,56 @@
+# Modules for LEMMA JAR builds under Linux and via the LEMMA Build Docker image.
+# Note that there are specialized Docker images for the Eclipse Updatesite build
+# and the deployment of all LEMMA components, including the Updatesite.
+
+# Utils
+de.fhdo.lemma.eclipse.ui.utils
+de.fhdo.lemma.data.datadsl.metamodel
+de.fhdo.lemma.utils
+
+# Type Checker
+de.fhdo.lemma.technology.technologydsl.metamodel
+de.fhdo.lemma.typechecking
+
+# Languages
+de.fhdo.lemma.data.datadsl.parent
+de.fhdo.lemma.data.datadsl.ui
+de.fhdo.lemma.data.datadsl.ui.tests
+
+de.fhdo.lemma.technology.technologydsl.parent
+de.fhdo.lemma.technology.technologydsl.ui
+de.fhdo.lemma.technology.technologydsl.ui.tests
+
+de.fhdo.lemma.servicedsl.parent
+de.fhdo.lemma.servicedsl.ui
+de.fhdo.lemma.servicedsl.ui.tests
+
+de.fhdo.lemma.technology.mappingdsl.parent
+de.fhdo.lemma.technology.mappingdsl.ui
+de.fhdo.lemma.technology.mappingdsl.ui.tests
+
+de.fhdo.lemma.operationdsl.parent
+de.fhdo.lemma.operationdsl.ui
+de.fhdo.lemma.operationdsl.ui.tests
+
+# Transformations
+de.fhdo.lemma.intermediate.transformations.parent
+
+# Live Validation Framework
+de.fhdo.lemma.live_validation
+
+# UI Components
+de.fhdo.lemma.eclipse.ui.parent
+
+# OCL
+de.fhdo.lemma.ocl
+
+# Model Processing Framework
+de.fhdo.lemma.model_processing
+de.fhdo.lemma.model_processing.utils
+
+# Code Generators
+code generators/de.fhdo.lemma.ddd
+code generators/de.fhdo.lemma.msa
+code generators/de.fhdo.lemma.model_processing.code_generation.java_base
+code generators/de.fhdo.lemma.model_processing.code_generation.ddd
+code generators/de.fhdo.lemma.model_processing.code_generation.springcloud

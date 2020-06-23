@@ -1,68 +1,34 @@
 #!/usr/bin/env bash
 
-modules=(
-    # Utils
-    de.fhdo.lemma.eclipse.ui.utils
-    de.fhdo.lemma.data.datadsl.metamodel
-    de.fhdo.lemma.utils
+# This script controls LEMMA Jar builds under Linux and via the LEMMA Build
+# Docker image. The script can be configured by means of an optional commandline
+# argument that needs to point to a file with LEMMA build modules. If no
+# argument is passed to the script, it will try to read the build modules from
+# the "lemma-build-modules.txt" file located in the same folder as the script.
 
-    # Type Checker
-    de.fhdo.lemma.technology.technologydsl.metamodel
-    de.fhdo.lemma.typechecking
+# Extract build modules from the passed module file. Lines starting with "#" and
+# empty lines are ignored. All other lines are interpreted as LEMMA build
+# modules.
+extract_modules_from_file() {
+    while read line || [ -n "$line" ];
+    do
+        if [[ -n "${line/[ ]*\n/}" ]] && ! [[ "$line" =~ ^[\s]*\#.* ]];
+        then
+            modulesToInclude+=("$line")
+        fi
+    done < $1
+}
 
-    # Languages
-    de.fhdo.lemma.data.datadsl.parent
-    de.fhdo.lemma.data.datadsl.ui
-    de.fhdo.lemma.data.datadsl.ui.tests
-
-    de.fhdo.lemma.technology.technologydsl.parent
-    de.fhdo.lemma.technology.technologydsl.ui
-    de.fhdo.lemma.technology.technologydsl.ui.tests
-
-    de.fhdo.lemma.servicedsl.parent
-    de.fhdo.lemma.servicedsl.ui
-    de.fhdo.lemma.servicedsl.ui.tests
-
-    de.fhdo.lemma.technology.mappingdsl.parent
-    de.fhdo.lemma.technology.mappingdsl.ui
-    de.fhdo.lemma.technology.mappingdsl.ui.tests
-
-    de.fhdo.lemma.operationdsl.parent
-    de.fhdo.lemma.operationdsl.ui
-    de.fhdo.lemma.operationdsl.ui.tests
-
-    # Transformations
-    de.fhdo.lemma.intermediate.transformations.parent
-
-    # Live Validation Framework
-    de.fhdo.lemma.live_validation
-
-    # UI Components
-    de.fhdo.lemma.eclipse.ui.parent
-
-    # OCL
-    de.fhdo.lemma.ocl
-
-    # Model Processing Framework
-    de.fhdo.lemma.model_processing
-    de.fhdo.lemma.model_processing.utils
-
-    # Code Generators
-    code\ generators/de.fhdo.lemma.ddd
-    code\ generators/de.fhdo.lemma.msa
-    code\ generators/de.fhdo.lemma.model_processing.code_generation.java_base
-    code\ generators/de.fhdo.lemma.model_processing.code_generation.ddd
-    code\ generators/de.fhdo.lemma.model_processing.code_generation.springcloud
-)
-
+# Build a single module
 do_build() {
     MODULE=$1
     echo -e "\033[1;35m------------------------------------------------------------------------"
     echo "Building module $MODULE ($2/$3)"
     echo -e "------------------------------------------------------------------------\033[0m"
 
-    # Builds can be customized with a separate "build.sh" script in the modules' root folders.
-    # Otherwise, Maven's "clean" and "install" tasks will be used by default to build modules.
+    # Builds can be customized with a separate "build.sh" script in the modules'
+    # root folders. Otherwise, Maven's "clean" and "install" tasks will be used
+    # by default to build modules.
     if [ -f "$MODULE"/build.sh ]
     then
         buildCommand="cd '$MODULE' && bash build.sh && cd '$BUILD_ROOT'"
@@ -70,48 +36,51 @@ do_build() {
         buildCommand="mvn -f '$MODULE'/pom.xml clean install"
     fi
 
-    eval $buildCommand || { echo -e "\033[0;31mBuild of $MODULE ($2/$3) unsuccessful\033[0m"; notify_error "LEMMA Build Process Error: Build of $MODULE ($2/$3) unsuccessful!"; exit 1; }
+    eval $buildCommand || { echo -e \
+        "\033[0;31mBuild of $MODULE ($2/$3) unsuccessful\033[0m"; \
+        notify_error "LEMMA Build Process Error: Build of $MODULE ($2/$3) unsuccessful!"; \
+        exit 1; \
+    }
     notify "LEMMA Build Process: $MODULE ($2/$3) successfully built"
 }
 
+# Send a notify message with notify-send if available
 notify() {
     if hash notify-send 2>/dev/null; then
         notify-send "$1"
     fi
 }
 
+# Send a notify error message with notify-send if available
 notify_error() {
     if hash notify-send 2>/dev/null; then
         notify-send -u critical "$1"
     fi
 }
 
-include_module() {
-    for m in "${modulesToInclude[@]}"; do
-        if [[ "$m" == "$1" ]]
-        then
-            return
-        fi
-    done
-    return 1    # Value greater zero communicates failure
-}
+### MAIN SCRIPT
 
+# Determine build module file
 if ! [ -z "$1" ] && ! [ -f $1 ]
 then
     echo "Module inclusion file \"$1\" does not exist. Exiting."
-    exit 4
+    exit 1
 elif ! [ -z "$1" ]
 then
-    modulesToInclude=( $(cat $1) )
+    moduleInclusionFile=$1
 else
-    modulesToInclude=("${modules[@]}")
+    moduleInclusionFile=lemma-build-modules.txt
 fi
 
-cd ..
-
-BUILD_ROOT=$(pwd)
+# Extract build modules from file
+modulesToInclude=()
+extract_modules_from_file $moduleInclusionFile
 MODULE_COUNT=${#modulesToInclude[@]}
 CURRENT_MODULE_INDEX=1
+
+# Run the actual builds
+cd ..
+BUILD_ROOT=$(pwd)
 
 for module in "${modulesToInclude[@]}"; do
     do_build "$module" $CURRENT_MODULE_INDEX $MODULE_COUNT

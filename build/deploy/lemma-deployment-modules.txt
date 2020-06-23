@@ -1,0 +1,71 @@
+# Modules for LEMMA JAR deployments under Linux and via the LEMMA Build Docker
+# image
+
+# Utils
+de.fhdo.lemma.eclipse.ui.utils
+de.fhdo.lemma.data.datadsl.metamodel
+de.fhdo.lemma.utils
+
+# Type Checker
+de.fhdo.lemma.technology.technologydsl.metamodel
+de.fhdo.lemma.typechecking
+
+# Languages
+de.fhdo.lemma.data.datadsl
+de.fhdo.lemma.data.datadsl.tests
+de.fhdo.lemma.data.datadsl.ui
+de.fhdo.lemma.data.datadsl.ui.tests
+de.fhdo.lemma.data.datadsl.ide
+
+de.fhdo.lemma.technology.technologydsl
+de.fhdo.lemma.technology.technologydsl.tests
+de.fhdo.lemma.technology.technologydsl.ui
+de.fhdo.lemma.technology.technologydsl.ui.tests
+de.fhdo.lemma.technology.technologydsl.ide
+
+de.fhdo.lemma.servicedsl.metamodel
+de.fhdo.lemma.servicedsl
+de.fhdo.lemma.servicedsl.tests
+de.fhdo.lemma.servicedsl.ui
+de.fhdo.lemma.servicedsl.ui.tests
+de.fhdo.lemma.servicedsl.ide
+
+de.fhdo.lemma.technology.mappingdsl.metamodel
+de.fhdo.lemma.technology.mappingdsl
+de.fhdo.lemma.technology.mappingdsl.tests
+de.fhdo.lemma.technology.mappingdsl.ui
+de.fhdo.lemma.technology.mappingdsl.ui.tests
+de.fhdo.lemma.technology.mappingdsl.ide
+
+de.fhdo.lemma.operationdsl.metamodel
+de.fhdo.lemma.operationdsl
+de.fhdo.lemma.operationdsl.tests
+de.fhdo.lemma.operationdsl.ui
+de.fhdo.lemma.operationdsl.ui.tests
+de.fhdo.lemma.operationdsl.ide
+
+# Transformations
+de.fhdo.lemma.intermediate.transformations
+
+# Live Validation Framework
+de.fhdo.lemma.live_validation
+
+# UI Components
+de.fhdo.lemma.eclipse.ui
+
+# OCL
+de.fhdo.lemma.ocl
+
+# Updatesite
+de.fhdo.lemma.eclipse.updatesite
+
+# Model Processing Framework
+de.fhdo.lemma.model_processing
+de.fhdo.lemma.model_processing.utils
+
+# Code Generators
+code generators/de.fhdo.lemma.ddd
+code generators/de.fhdo.lemma.msa
+code generators/de.fhdo.lemma.model_processing.code_generation.java_base
+code generators/de.fhdo.lemma.model_processing.code_generation.ddd
+code generators/de.fhdo.lemma.model_processing.code_generation.springcloud

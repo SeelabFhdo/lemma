@@ -1,3 +1,7 @@
+# The following modules are bundled into LEMMA's Eclipse Updatesite. This file
+# can be used to configure LEMMA Updatesite builds under Linux and via the LEMMA
+# Updatesite Build Docker image.
+
 de.fhdo.lemma.eclipse.ui.utils
 de.fhdo.lemma.data.datadsl.metamodel
 de.fhdo.lemma.utils
