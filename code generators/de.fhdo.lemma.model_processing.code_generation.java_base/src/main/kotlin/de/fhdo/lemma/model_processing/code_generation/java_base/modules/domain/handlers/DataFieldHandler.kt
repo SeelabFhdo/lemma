@@ -134,7 +134,7 @@ internal class DataFieldHandler :
     }
 
     /**
-     * Helper set the initialization value of this [FieldDeclaration] from the given [field]
+     * Helper to set the initialization value of this [FieldDeclaration] from the given [field]
      */
     private fun FieldDeclaration.setInitializationValueIfNeeded(field: IntermediateDataField) {
         if (field.initializationValue == null)

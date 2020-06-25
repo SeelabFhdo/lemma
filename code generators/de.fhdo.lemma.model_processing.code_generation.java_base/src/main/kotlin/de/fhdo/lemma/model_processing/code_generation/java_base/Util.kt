@@ -720,14 +720,24 @@ internal fun List<IntermediateParameter>.toCompositeClass(communicationType: Com
     // Generate fields, getters, and setters for each IntermediateParameter instance in this list
     val interfaceSubFolderName: String by ServicesState
     forEach { parameter ->
-        // Add attribute
+        /* Add attribute */
+        val attributeTypeImports = mutableListOf<String>()
         val parameterAttribute = generatedClass.addPrivateAttribute(parameter.name, parameter.type, generatedClass) {
-            generatedClass.addImport(it, ImportTargetElementType.METHOD)
+            // Collect imports for getter and setter (see below)
+            attributeTypeImports.add(it)
+            generatedClass.addImport(it, ImportTargetElementType.ATTRIBUTE_TYPE)
         }
 
-        // Add getter and setter
-        generatedClass.addSetter(parameterAttribute)
-        generatedClass.addGetter(parameterAttribute)
+        /* Add getter and setter */
+        val (_, getter) = generatedClass.addGetter(parameterAttribute)
+        val (_, setter) = generatedClass.addSetter(parameterAttribute)
+
+        // Add imports to getter and setter. The imports need to be directly associated with the getter and setter, so
+        // that they will, e.g., get copied into interfaces by code generation serializers.
+        attributeTypeImports.forEach {
+            getter.addImport(it, ImportTargetElementType.METHOD)
+            setter.addImport(it, ImportTargetElementType.METHOD)
+        }
     }
 
     val operationSubFolder = operation.buildOperationPackageName(subPackageOnly = true).packageToPath()
