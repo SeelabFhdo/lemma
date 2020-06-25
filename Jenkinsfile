@@ -165,6 +165,7 @@ pipeline {
                             deployImage = docker.build(DEPLOY_IMAGE,
                                 "--build-arg MAVEN_SETTINGS_XML=\"\$(cat ./lemma/build/docker/settings.xml)\" \
                                 --build-arg GRADLE_PROPERTIES=\"\$(cat ./lemma/build/docker/gradle.properties)\" \
+                                --build-arg JENKINS_UID=\"\$(id -u jenkins)\" \
                                 ./lemma/build/deploy/docker"
                             )
 
@@ -186,7 +187,7 @@ pipeline {
                     agent {
                         docker {
                             image DEPLOY_IMAGE
-                            args "-u 0:0 -v ${env.WORKSPACE}:/root\
+                            args "-v ${env.WORKSPACE}:/root\
                             -e DEPLOY_MAVEN_USER=$DEPLOY_MAVEN_REPOSITORY_CREDENTIALS_USR\
                             -e DEPLOY_MAVEN_PASSWORD=$DEPLOY_MAVEN_REPOSITORY_CREDENTIALS_PSW\
                             -e DEPLOY_MAVEN_ID_SNAPSHOTS=$DEPLOY_MAVEN_SNAPSHOTS_ID\

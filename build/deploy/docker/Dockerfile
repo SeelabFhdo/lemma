@@ -2,6 +2,15 @@ FROM maven:3.6.3-openjdk-11-slim
 COPY --from=python:3.6.9 / /
 RUN apt-get update && apt-get install -y sshpass
 
+# Enable specification of User ID on Jenkins system. That is, because Jenkins
+# always invokes the container with the "jenkins" user and ssh requires the user
+# with the Jenkins User ID to exist in passwd. We therefore add the "jenkins"
+# user with the Jenkins User ID to the container, if possible.
+ARG JENKINS_UID
+RUN if [ "x$JENKINS_UID" != "x" ]; \
+    then adduser jenkins --uid=$JENKINS_UID; \
+fi
+
 # Add settings.xml to point to Maven repository (cf. "../../docker/Dockerfile").
 # To enable reuse of the settings.xml in "../../docker/", we expect the file's
 # contents to be provided as a Docker build-arg
@@ -12,6 +21,7 @@ RUN if [ "x$MAVEN_SETTINGS_XML" = "x" ]; \
 fi
 
 RUN echo "$MAVEN_SETTINGS_XML" > /usr/share/maven/conf/settings.xml
+RUN chmod 777 /usr/share/maven/conf/settings.xml
 
 # Add Python script to adapt Maven's settings.xml to contain user and password
 # for artifact deployment
