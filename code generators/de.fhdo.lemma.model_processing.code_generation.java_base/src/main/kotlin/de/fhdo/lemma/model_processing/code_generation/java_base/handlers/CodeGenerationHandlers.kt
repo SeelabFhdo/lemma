@@ -4,8 +4,12 @@ import com.github.javaparser.ast.Node
 import de.fhdo.lemma.data.intermediate.IntermediateImportedAspect
 import de.fhdo.lemma.model_processing.code_generation.java_base.findAndMapAnnotatedClassesWithInterface
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.Genlet
+import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletEvent
+import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletEventObject
+import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletEventType
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.storeGeneratedFileContentsOfGenlet
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.MainContext
+import de.fhdo.lemma.service.intermediate.IntermediateOperation
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.MainContext.State as MainState
 import org.eclipse.emf.ecore.EObject
 
@@ -55,6 +59,7 @@ interface CodeGenerationHandlerI<T: EObject, N: Node, C: Any> {
      * automatically.
      */
     fun invoke(eObject: T, context: C? = null) : Pair<N, String?>? {
+        executePreActions(eObject)
         val result = execute(eObject, context) ?: return null
         val (generatedNode, generatedFilePath) = result
         val adaptedNode = executeSubActions(eObject, generatedNode)
@@ -76,8 +81,19 @@ interface CodeGenerationHandlerI<T: EObject, N: Node, C: Any> {
     fun execute(eObject: T, context: C? = null) : Pair<N, String?>?
 
     /**
+     * Execute actions prior to the invocation of a code generation handler
+     */
+    private fun executePreActions(eObject: T) {
+        // Send event to Genlets that the next intermediate EObject is about to get processed
+        MainContext.sendEventToGenlets(GenletEvent(
+            GenletEventType.INTERMEDIATE_EOBJECT_PROCESSING_STARTS,
+            GenletEventObject.INTERMEDIATE_EOBJECT to eObject
+        ))
+    }
+
+    /**
      * Execute subsequent actions like local aspect handlers, Genlet-specific code generation and aspect handlers, on a
-     * a generated AST [Node] in order to adapt it
+     * generated AST [Node] in order to adapt it
      */
     @Suppress("UNCHECKED_CAST")
     private fun executeSubActions(eObject: T, node: N) : N {

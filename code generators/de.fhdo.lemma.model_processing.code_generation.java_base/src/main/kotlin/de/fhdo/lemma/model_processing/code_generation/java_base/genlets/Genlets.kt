@@ -123,6 +123,8 @@ class GenletEvent(val type: GenletEventType) {
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 enum class GenletEventType {
+    INTERMEDIATE_EOBJECT_PROCESSING_STARTS,
+
     // Generation of current microservice was finished
     MICROSERVICE_GENERATION_FINISHED
 }
@@ -133,6 +135,8 @@ enum class GenletEventType {
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 enum class GenletEventObject {
+    INTERMEDIATE_EOBJECT,
+
     // Generated microservice class in the form of a ClassOrInterfaceDeclaration instance
     GENERATED_MICROSERVICE_CLASS
 }
