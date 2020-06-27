@@ -456,7 +456,7 @@ val IntermediateType.isNullable
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-internal fun <P: Node> NodeWithType<*, *>.setJavaTypeFrom(type: IntermediateType, importsTargetNode: P,
+fun <P: Node> NodeWithType<*, *>.setJavaTypeFrom(type: IntermediateType, importsTargetNode: P,
     addImportToTargetNode: P.(String) -> Unit) : TypeMappingDescription? {
     val typeMapping = type.getTypeMapping()
     if (typeMapping == null) {
