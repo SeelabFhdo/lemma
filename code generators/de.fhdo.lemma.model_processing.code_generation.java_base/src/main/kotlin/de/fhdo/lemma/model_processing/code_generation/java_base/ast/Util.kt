@@ -1,5 +1,6 @@
 package de.fhdo.lemma.model_processing.code_generation.java_base.ast
 
+import com.github.javaparser.ParseProblemException
 import com.github.javaparser.StaticJavaParser
 import com.github.javaparser.ast.CompilationUnit
 import com.github.javaparser.ast.DataKey
@@ -1107,7 +1108,12 @@ internal fun MethodDeclaration.insertStatement(code: String, index: Int = 0) {
 
     val currentBody = body.orElse(null)
     val statements = currentBody!!.statements
-    val newStatement = StaticJavaParser.parseStatement(code)
+    val newStatement = try {
+            StaticJavaParser.parseStatement(code)
+        } catch (ex: ParseProblemException) {
+            throw IllegalArgumentException("Error while trying to parse Java statement $code", ex)
+        }
+
     if (index <= statements.size)
         statements.add(index, newStatement)
     else
