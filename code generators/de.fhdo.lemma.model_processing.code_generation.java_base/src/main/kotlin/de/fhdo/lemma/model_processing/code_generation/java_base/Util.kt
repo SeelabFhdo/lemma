@@ -24,6 +24,7 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.ast.newJavaClass
 import de.fhdo.lemma.model_processing.code_generation.java_base.languages.DATA_DSL_LANGUAGE_DESCRIPTION
 import de.fhdo.lemma.model_processing.code_generation.java_base.languages.SERVICE_DSL_LANGUAGE_DESCRIPTION
 import de.fhdo.lemma.model_processing.code_generation.java_base.languages.getTypeMapping
+import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.property_files.PropertyFile
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.services.ServicesContext.State as ServicesState
 import de.fhdo.lemma.model_processing.languages.registerLanguage
 import de.fhdo.lemma.model_processing.loadXtextResource
@@ -762,8 +763,21 @@ private fun IntermediateParameter.loadOriginalEObject(originalModelFilePath: Str
 }
 
 /**
+ * Helper to add the value of a property of this [IntermediateImportedAspect] named [aspectPropertyName] to the given
+ * [propertyFile] file as a property named [targetPropertyName]. Returns null, if [getPropertyValue] returns null.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+fun IntermediateImportedAspect.toProperty(aspectPropertyName: String, propertyFile: PropertyFile,
+    targetPropertyName: String) : String? {
+    val propertyValue = getPropertyValue(aspectPropertyName) ?: return null
+    propertyFile[targetPropertyName] = propertyValue
+    return propertyValue
+}
+
+/**
  * Get the value of the property with the given name from an [IntermediateImportedAspect]. Returns the default value (if
- * any) in case the property does not have a value.
+ * any) in case the property does not have a value. Returns null, the property could not be found for the aspect.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */

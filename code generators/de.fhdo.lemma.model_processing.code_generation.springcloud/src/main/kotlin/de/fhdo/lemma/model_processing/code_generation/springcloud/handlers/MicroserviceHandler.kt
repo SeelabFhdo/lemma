@@ -21,11 +21,11 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.getPropertyValue
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.CodeGenerationHandler
 import de.fhdo.lemma.model_processing.code_generation.java_base.hasApiComments
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.property_files.PropertyFile
+import de.fhdo.lemma.model_processing.code_generation.java_base.toProperty
 import de.fhdo.lemma.model_processing.code_generation.java_base.usesProtocol
 import de.fhdo.lemma.model_processing.code_generation.springcloud.spring.amqp.addClassMappingBeanMethod
 import de.fhdo.lemma.model_processing.code_generation.springcloud.spring.amqp.configureForAsynchronousInteraction
 import de.fhdo.lemma.model_processing.code_generation.springcloud.spring.amqp.generateMessageDistributor
-import de.fhdo.lemma.model_processing.code_generation.springcloud.toApplicationProperty
 import de.fhdo.lemma.model_processing.code_generation.springcloud.Context.State as State
 import de.fhdo.lemma.service.intermediate.IntermediateMicroservice
 
@@ -134,12 +134,13 @@ internal class MicroserviceHandler
         }
 
     /**
-     * Convenience function that calls [toApplicationProperty] and sets [addedNewProperties] to true, if the new
-     * property could be added
+     * Convenience function that calls [toProperty] and sets [addedNewProperties] to true, if the new property could be
+     * added
      */
     private fun IntermediateImportedAspect.newApplicationProperty(aspectPropertyName: String,
         targetPropertyName: String) : String? {
-        val newPropertyValue = toApplicationProperty(aspectPropertyName, targetPropertyName)
+        val currentApplicationPropertiesFile: PropertyFile by State
+        val newPropertyValue = toProperty(aspectPropertyName, currentApplicationPropertiesFile, targetPropertyName)
         if (newPropertyValue != null)
             addedNewProperties = true
         return newPropertyValue

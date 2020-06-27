@@ -153,17 +153,3 @@ internal fun ClassOrInterfaceDeclaration.addPrivateConstant(name: String, type: 
     newConstant.addSerializationCharacteristic(SerializationCharacteristic.DONT_RELOCATE)
     return newConstant
 }
-
-/**
- * Helper to add the value of a property of this [IntermediateImportedAspect] named [aspectPropertyName] to the current
- * application properties file as a property named [targetPropertyName].
- *
- * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
- */
-internal fun IntermediateImportedAspect.toApplicationProperty(aspectPropertyName: String, targetPropertyName: String)
-    : String? {
-    val propertyValue = getPropertyValue(aspectPropertyName) ?: return null
-    val currentApplicationPropertiesFile: PropertyFile by State
-    currentApplicationPropertiesFile[targetPropertyName] = propertyValue
-    return propertyValue
-}
