@@ -248,6 +248,15 @@ internal fun EObject.getAllAspects()
     }
 
 /**
+ * Get all [IntermediateImportedAspect] instances of this [EObject] with one of the given [fullyQualifiedAspectNames]
+ * assigned. Throws an [IllegalArgumentException] if the [EObject] does not support having aspects.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+fun EObject.getAllAspects(vararg fullyQualifiedAspectNames: String)
+    = getAllAspects().filter { it.qualifiedName in fullyQualifiedAspectNames }
+
+/**
  * Check if an [EObject] has one of the aspects with the given [fullyQualifiedAspectNames] assigned. Throws an
  * [IllegalArgumentException] if the [EObject] does not support having aspects.
  *
