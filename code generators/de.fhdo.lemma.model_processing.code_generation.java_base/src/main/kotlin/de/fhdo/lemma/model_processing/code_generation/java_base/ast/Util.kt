@@ -1068,14 +1068,7 @@ internal fun MethodDeclaration.insertBody(otherBody: BlockStmt,
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-fun MethodDeclaration.addStatements(body: String) {
-    val bodyLines = body.lines()
-    for (i in bodyLines.indices) {
-        val line = bodyLines[i]
-        if (line.isNotEmpty())
-            insertStatement(line, i)
-    }
-}
+fun MethodDeclaration.addStatements(body: String) = body.lines().forEach { appendStatement(it) }
 
 /**
  * Append an implementation statement to a Java method's implementation body.
@@ -1083,7 +1076,7 @@ fun MethodDeclaration.addStatements(body: String) {
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 internal fun MethodDeclaration.appendStatement(statement: String)
-    = this.insertStatement(statement, body.orElse(null)?.statements?.count() ?: 0)
+    = insertStatement(statement, body.orElse(null)?.statements?.count() ?: 0)
 
 /**
  * Insert an implementation statement at a specified [index] in a Java method's implementation body. The statement is
