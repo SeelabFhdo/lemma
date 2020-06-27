@@ -241,6 +241,8 @@ internal fun EObject.getAllAspects()
         is IntermediateDataOperationReturnType -> aspects
         is IntermediateDataStructure -> aspects
         is IntermediateMicroservice -> aspects
+        is IntermediateInterface -> aspects
+        is IntermediateOperation -> aspects
         is IntermediateParameter -> aspects
         else -> throw IllegalArgumentException("EObject of type ${this.mainInterface.name} does not have aspects")
     }
