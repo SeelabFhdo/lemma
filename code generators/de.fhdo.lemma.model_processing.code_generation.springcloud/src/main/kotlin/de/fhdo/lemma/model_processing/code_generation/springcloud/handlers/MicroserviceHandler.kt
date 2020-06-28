@@ -5,6 +5,7 @@ import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration
 import de.fhdo.lemma.data.intermediate.IntermediateImportedAspect
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.ImportTargetElementType
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.SerializationCharacteristic
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addAndGetAnnotation
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addAnnotation
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addDependency
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addImport
@@ -93,7 +94,10 @@ internal class MicroserviceHandler
             ImportTargetElementType.ANNOTATION, SerializationCharacteristic.DONT_RELOCATE)
 
         // Add main method to invoke the SpringBoot application
-        node.addAnnotation("SpringBootApplication", SerializationCharacteristic.DONT_RELOCATE)
+        val currentMicroservicePackage: String by state()
+        node.addAndGetAnnotation("SpringBootApplication", SerializationCharacteristic.DONT_RELOCATE)
+            .addPair("scanBasePackages", "\"$currentMicroservicePackage\"")
+
         val mainMethod = node.addMethod("main", Modifier.Keyword.PUBLIC, Modifier.Keyword.STATIC)
         mainMethod.addParameter("String[]", "args")
         mainMethod.setBody("SpringApplication.run(${node.nameAsString}.class, args)")
