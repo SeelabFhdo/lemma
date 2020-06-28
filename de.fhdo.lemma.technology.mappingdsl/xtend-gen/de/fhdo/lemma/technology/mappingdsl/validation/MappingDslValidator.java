@@ -781,10 +781,21 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
     final Function1<Import, ServiceModel> _function_1 = (Import it) -> {
       ServiceModel _xblockexpression = null;
       {
-        final IFile serviceModelFile = LemmaUtils.getFileForResource(it.eResource());
-        final String modelFileUri = LemmaUtils.convertToAbsoluteFileUri(
-          it.getImportURI(), 
-          serviceModelFile.getRawLocation().makeAbsolute().toString());
+        final boolean isAbsoluteFileUri = (LemmaUtils.isFileUri(it.getImportURI()) && 
+          LemmaUtils.representsAbsolutePath(LemmaUtils.removeFileUri(it.getImportURI())));
+        String _xifexpression = null;
+        if (isAbsoluteFileUri) {
+          _xifexpression = it.getImportURI();
+        } else {
+          String _xblockexpression_1 = null;
+          {
+            final IFile serviceModelFile = LemmaUtils.getFileForResource(it.eResource());
+            _xblockexpression_1 = LemmaUtils.convertToAbsoluteFileUri(it.getImportURI(), 
+              LemmaUtils.getAbsolutePath(serviceModelFile));
+          }
+          _xifexpression = _xblockexpression_1;
+        }
+        final String modelFileUri = _xifexpression;
         _xblockexpression = LemmaUtils.<ServiceModel>getImportedModelRoot(it.eResource(), modelFileUri, ServiceModel.class);
       }
       return _xblockexpression;
@@ -1056,7 +1067,6 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
             final String containerName = getContainerName.apply(nonMappedEndpoint);
             boolean _notEquals = (!Objects.equal(mappedContainerName, containerName));
             if (_notEquals) {
-              final String serviceModelUri = LemmaUtils.getFileForResource(nonMappedEndpoint.eResource()).getRawLocation().makeAbsolute().toString();
               StringConcatenation _builder = new StringConcatenation();
               _builder.append("Address ");
               _builder.append(address);
@@ -1069,10 +1079,8 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
               _builder_1.append(containerName);
               _builder_1.append(" in ");
               String _plus_2 = (_builder.toString() + _builder_1);
-              StringConcatenation _builder_2 = new StringConcatenation();
-              _builder_2.append("service model ");
-              _builder_2.append(serviceModelUri);
-              String _plus_3 = (_plus_2 + _builder_2);
+              String _plus_3 = (_plus_2 + 
+                "another service model");
               this.warning(_plus_3, duplicateMappedEndpoint, 
                 MappingPackage.Literals.TECHNOLOGY_SPECIFIC_ENDPOINT__ADDRESSES, mappedAddressIndex);
             }
@@ -1258,7 +1266,8 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
    */
   @Check
   public void checkDifferingParameterTechnologies(final MicroserviceMapping mapping) {
-    if (((mapping.getTechnologyReferences().isEmpty() || (mapping.getMicroservice() == null)) || 
+    if (((mapping.getTechnologyReferences().isEmpty() || 
+      (mapping.getMicroservice() == null)) || 
       (mapping.getMicroservice().getMicroservice() == null))) {
       return;
     }
@@ -1267,23 +1276,20 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
     if (_isEmpty) {
       return;
     }
-    final Import mappedServiceTypeTechnologyImport = mappedService.getTypeDefinitionTechnologyImport();
-    if ((mappedServiceTypeTechnologyImport == null)) {
+    final Technology mappedTypeTechnology = mappedService.getTypeDefinitionTechnology();
+    if ((mappedTypeTechnology == null)) {
       return;
     }
-    final String mappedServiceModelPath = LemmaUtils.getFileForResource(mappedServiceTypeTechnologyImport.getServiceModel().eResource()).getRawLocation().makeAbsolute().toString();
-    final String mappedTypeTechnologyPath = LemmaUtils.convertToAbsoluteFileUri(
-      mappedServiceTypeTechnologyImport.getImportURI(), mappedServiceModelPath);
-    final Import mappingTypeTechnologyImport = mapping.getTypeDefinitionTechnologyImport();
-    if ((mappingTypeTechnologyImport == null)) {
+    final Technology mappingTypeTechnology = mapping.getTypeDefinitionTechnology();
+    if ((mappedTypeTechnology == null)) {
       return;
-    }
-    final String mappingServiceModelPath = LemmaUtils.getFileForResource(mapping.eResource()).getRawLocation().makeAbsolute().toString();
-    final String mappingTypeTechnologyPath = LemmaUtils.convertToAbsoluteFileUri(
-      mappingTypeTechnologyImport.getImportURI(), mappingServiceModelPath);
-    boolean _equals = Objects.equal(mappedTypeTechnologyPath, mappingTypeTechnologyPath);
-    if (_equals) {
-      return;
+    } else {
+      String _name = mappedTypeTechnology.getName();
+      String _name_1 = mappingTypeTechnology.getName();
+      boolean _equals = Objects.equal(_name, _name_1);
+      if (_equals) {
+        return;
+      }
     }
     final EList<Operation> mappedServiceOperations = mappedService.getContainedOperations();
     final Function1<ReferredOperation, Operation> _function = (ReferredOperation it) -> {
@@ -1300,32 +1306,24 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
     if (_exists) {
       StringConcatenation _builder = new StringConcatenation();
       _builder.append("Type definition technology \"");
-      String _name = mappedService.getTypeDefinitionTechnology().getName();
-      _builder.append(_name);
-      _builder.append("\"");
+      String _name_2 = mappedTypeTechnology.getName();
+      _builder.append(_name_2);
+      _builder.append("\" in the service ");
       StringConcatenation _builder_1 = new StringConcatenation();
-      _builder_1.append(" ");
-      _builder_1.append("in the service model differs from type definition technology ");
+      _builder_1.append("model differs from type definition technology \"");
+      String _name_3 = mappingTypeTechnology.getName();
+      _builder_1.append(_name_3);
+      _builder_1.append("\"");
       String _plus = (_builder.toString() + _builder_1);
-      StringConcatenation _builder_2 = new StringConcatenation();
-      _builder_2.append("\"");
-      String _name_1 = mapping.getTypeDefinitionTechnology().getName();
-      _builder_2.append(_name_1);
-      _builder_2.append("\" used for the mapping. Moreover, ");
-      String _plus_1 = (_plus + _builder_2);
-      StringConcatenation _builder_3 = new StringConcatenation();
-      _builder_3.append("the mapped microservice refers to technology-specific types in the ");
-      String _plus_2 = (_plus_1 + _builder_3);
-      StringConcatenation _builder_4 = new StringConcatenation();
-      _builder_4.append("parameters of its operations. Subsequent transformations of the ");
-      String _plus_3 = (_plus_2 + _builder_4);
-      StringConcatenation _builder_5 = new StringConcatenation();
-      _builder_5.append("microservice will not be possible. Please remove the technology-dependence ");
-      String _plus_4 = (_plus_3 + _builder_5);
-      StringConcatenation _builder_6 = new StringConcatenation();
-      _builder_6.append("of the service in its service model.");
-      String _plus_5 = (_plus_4 + _builder_6);
-      this.error(_plus_5, mapping, 
+      String _plus_1 = (_plus + 
+        "used for the mapping. Moreover, the mapped microservice refers to ");
+      String _plus_2 = (_plus_1 + 
+        "technology-specific types in the parameters of its operations. Subsequent ");
+      String _plus_3 = (_plus_2 + 
+        "transformations of the microservice will not be possible. Please remove the ");
+      String _plus_4 = (_plus_3 + 
+        "technology-dependence of the service in its service model.");
+      this.error(_plus_4, mapping, 
         MappingPackage.Literals.MICROSERVICE_MAPPING__MICROSERVICE);
     }
   }

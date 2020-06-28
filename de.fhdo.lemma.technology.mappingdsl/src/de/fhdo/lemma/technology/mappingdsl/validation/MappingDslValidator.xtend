@@ -615,11 +615,15 @@ class MappingDslValidator extends AbstractMappingDslValidator {
         val allImportedServiceModels = model.imports
             .filter[importType === ImportType.MICROSERVICES]
             .map[
-                    val serviceModelFile = LemmaUtils.getFileForResource(eResource)
-                    val modelFileUri = LemmaUtils.convertToAbsoluteFileUri(
-                        importURI,
-                        serviceModelFile.rawLocation.makeAbsolute.toString
-                    )
+                val isAbsoluteFileUri = LemmaUtils.isFileUri(importURI) &&
+                    LemmaUtils.representsAbsolutePath(LemmaUtils.removeFileUri(importURI))
+                val modelFileUri = if (isAbsoluteFileUri)
+                        importURI
+                    else {
+                        val serviceModelFile = LemmaUtils.getFileForResource(eResource)
+                        LemmaUtils.convertToAbsoluteFileUri(importURI,
+                            LemmaUtils.getAbsolutePath(serviceModelFile))
+                    }
                     LemmaUtils.getImportedModelRoot(eResource, modelFileUri, ServiceModel)
                 ]
         val allMappedMicroservices = model.serviceMappings.map[microservice.microservice].toList
@@ -793,16 +797,12 @@ class MappingDslValidator extends AbstractMappingDslValidator {
 
                         // A mapped endpoint address may overwrite the endpoint address of the
                         // original container
-                        if (mappedContainerName != containerName) {
-                            val serviceModelUri = LemmaUtils
-                                .getFileForResource(nonMappedEndpoint.eResource)
-                                .rawLocation.makeAbsolute.toString
+                        if (mappedContainerName != containerName)
                             warning('''Address «address» is already specified for protocol ''' +
                                 '''«protocolName» on «containerTypeName» «containerName» in ''' +
-                                '''service model «serviceModelUri»''', duplicateMappedEndpoint,
+                                "another service model", duplicateMappedEndpoint,
                                 MappingPackage::Literals.TECHNOLOGY_SPECIFIC_ENDPOINT__ADDRESSES,
                                 mappedAddressIndex)
-                        }
                     }
                 ]
             }
@@ -958,52 +958,35 @@ class MappingDslValidator extends AbstractMappingDslValidator {
      * Check for differing technology assignments to parameters
      */
     @Check
-    def checkDifferingParameterTechnologies(MicroserviceMapping mapping) {
-        if (mapping.technologyReferences.empty || mapping.microservice === null ||
-            mapping.microservice.microservice === null) {
+    def void checkDifferingParameterTechnologies(MicroserviceMapping mapping) {
+        if (mapping.technologyReferences.empty ||
+            mapping.microservice === null ||
+            mapping.microservice.microservice === null)
             return
-        }
 
         val mappedService = mapping.microservice.microservice
-        if (mappedService.technologyReferences.empty) {
+        if (mappedService.technologyReferences.empty)
             return
-        }
 
-        val mappedServiceTypeTechnologyImport = mappedService.typeDefinitionTechnologyImport
-        if (mappedServiceTypeTechnologyImport === null) {
+        val mappedTypeTechnology = mappedService.typeDefinitionTechnology
+        if (mappedTypeTechnology === null)
             return
-        }
-        val mappedServiceModelPath = LemmaUtils
-            .getFileForResource(mappedServiceTypeTechnologyImport.serviceModel.eResource)
-            .rawLocation.makeAbsolute.toString
-        val mappedTypeTechnologyPath = LemmaUtils.convertToAbsoluteFileUri(
-            mappedServiceTypeTechnologyImport.importURI, mappedServiceModelPath
-        )
 
-        val mappingTypeTechnologyImport = mapping.typeDefinitionTechnologyImport
-        if (mappingTypeTechnologyImport === null) {
+        val mappingTypeTechnology = mapping.typeDefinitionTechnology
+        if (mappedTypeTechnology === null)
             return
-        }
-        val mappingServiceModelPath = LemmaUtils.getFileForResource(mapping.eResource)
-            .rawLocation.makeAbsolute.toString
-        val mappingTypeTechnologyPath = LemmaUtils.convertToAbsoluteFileUri(
-            mappingTypeTechnologyImport.importURI, mappingServiceModelPath
-        )
-
-        if (mappedTypeTechnologyPath == mappingTypeTechnologyPath) {
+        else if (mappedTypeTechnology.name == mappingTypeTechnology.name)
             return
-        }
 
         val mappedServiceOperations = mappedService.containedOperations
         mappedServiceOperations.addAll(mappedService.containedReferredOperations.map[operation])
         if (mappedServiceOperations.exists[parameters.exists[isTechnologySpecificEffectiveType]])
-            error('''Type definition technology "«mappedService.typeDefinitionTechnology.name»"''' +
-                ''' in the service model differs from type definition technology ''' +
-                '''"«mapping.typeDefinitionTechnology.name»" used for the mapping. Moreover, ''' +
-                '''the mapped microservice refers to technology-specific types in the ''' +
-                '''parameters of its operations. Subsequent transformations of the ''' +
-                '''microservice will not be possible. Please remove the technology-dependence ''' +
-                '''of the service in its service model.''', mapping,
+            error('''Type definition technology "«mappedTypeTechnology.name»" in the service ''' +
+                '''model differs from type definition technology "«mappingTypeTechnology.name»"''' +
+                "used for the mapping. Moreover, the mapped microservice refers to " +
+                "technology-specific types in the parameters of its operations. Subsequent " +
+                "transformations of the microservice will not be possible. Please remove the " +
+                "technology-dependence of the service in its service model.", mapping,
                 MappingPackage::Literals.MICROSERVICE_MAPPING__MICROSERVICE)
     }
 
