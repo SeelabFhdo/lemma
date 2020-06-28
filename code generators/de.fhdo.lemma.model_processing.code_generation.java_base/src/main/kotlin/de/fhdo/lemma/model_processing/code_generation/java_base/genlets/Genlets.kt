@@ -421,15 +421,36 @@ object GenletStateAccess {
 internal fun loadGenlets(genletFilePathsAndClassnames: Map<String, String?>) : Map<Genlet, URLClassLoader> {
     val classLoaders = createGenletClassLoaders(genletFilePathsAndClassnames.keys)
     return genletFilePathsAndClassnames.map { (filePath, explicitlySpecifiedClassname) ->
-        val genletClassname = explicitlySpecifiedClassname ?: filePath.inferDefaultGenletClassname()
+        val genletClassLoader = classLoaders[filePath]!!
+        val genletClassnames = explicitlySpecifiedClassname?.let { listOf(it) }
+            ?: filePath.inferDefaultGenletClassnames()
+
+        // Search Genlet class in JAR archive via Genlet's class loader and based on explicit or default Genlet class
+        // name(s)
+        var genletClass: Class<out Genlet>? = null
+        for (classname in genletClassnames) {
+            genletClass = try {
+                Class.forName(classname, true, genletClassLoader).asSubclass(Genlet::class.java)
+            } catch (ex : ClassNotFoundException) {
+                null
+            }
+
+            if (genletClass != null)
+                break
+        }
+
+        if (genletClass == null)
+            throw PhaseException("""No Genlet classes found in file "$filePath" (search names: """ +
+                "${genletClassnames.joinToString()}).")
+
+        // Load Genlet class instance
         try {
-            val genletClassLoader = classLoaders[filePath]!!
-            val genletClass = Class.forName(genletClassname, true, genletClassLoader).asSubclass(Genlet::class.java)
             val genletInstance = genletClass.getConstructor().newInstance()
             genletInstance.setClassLoader(genletClassLoader)
             genletInstance to genletClassLoader
         } catch (ex: Exception) {
-            throw PhaseException("Genlet class $genletClassname from $filePath could not be loaded: ${ex.message}")
+            throw PhaseException("Genlet class ${genletClass.simpleName} from $filePath could not be loaded: " +
+                ex.message)
         }
     }.toMap()
 }
@@ -447,18 +468,15 @@ private fun createGenletClassLoaders(genletFilePaths: Iterable<String>) : Map<St
         }.toMap()
 
 /**
- * Helper to infer the default fully-qualified name of a Genlet class from the file path to its JAR archive. The default
- * name is built by assuming that the filename of the Genlet's JAR archive is fully-qualified, e.g.,
+ * Helper to infer the default fully-qualified names of a Genlet class from the file path to its JAR archive. The
+ * default names are built by assuming that the filename of the Genlet's JAR archive is fully-qualified, e.g.,
  * "org.example.mygenlet.jar" or "org.example.mygenlet-0.0.1-SNAPSHOT.jar" (i.e., what is typically created by a
- * build tool like Maven or Gradle). From such a filename, the classpath is extracted and extended by the capitalized
- * name of the last namespace part plus the "Generator" suffix. The result is expected to point to a class in a fully-
- * qualified manner. That is, "org.example.mygenlet.jar" and "org.example.mygenlet-0.0.1-SNAPSHOT.jar" would both result
- * in the fully-qualified classname org.example.mygenlet.MygenletGenerator, where the Genlet is expected to reside in
- * the JAR archive.
+ * build tool like Maven or Gradle). From such a filename, several "heuristics" are employed to derive allowed default
+ * Genlet classnames.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-private fun String.inferDefaultGenletClassname() : String {
+private fun String.inferDefaultGenletClassnames() : Set<String> {
     val inferredClasspathFromFilePath = listOf(
             // Pattern with version, e.g., org.example.my_genlet-0.0.1-SNAPSHOT.jar
             Pattern.compile("(?<classpath>.*?)\\-.*\\.jar"),
@@ -469,12 +487,47 @@ private fun String.inferDefaultGenletClassname() : String {
         .find { it.matches() }
         ?.group("classpath") ?: ""
 
-    val classname = inferredClasspathFromFilePath.substringAfterLast(".").capitalize() + "Generator"
+    val genletClassnames = listOfNotNull(
+        inferredClasspathFromFilePath.plainGenletClassname(),
+        inferredClasspathFromFilePath.underscoreAwareGenletClassname()
+    )
 
     return if (inferredClasspathFromFilePath.isNotEmpty())
-            "$inferredClasspathFromFilePath.$classname"
+            genletClassnames.map { "$inferredClasspathFromFilePath.$it" }.toSet()
         else
-            classname
+            genletClassnames.toSet()
+}
+
+/**
+ * "Plain Genlet classname" heuristic for default Genlet classnames. From this [String] representing a Genlet classpath
+ * the last classpath part is extracted, capitalized, and extended by the [GENLET_CLASSNAME_SUFFIX]. That is, for the
+ * classpath "org.example.mygenlet", the heuristic would yield the Genlet classname "MygenletGenerator".
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+private fun String.plainGenletClassname() = substringAfterLast(".").capitalize() + GENLET_CLASSNAME_SUFFIX
+
+/**
+ * Suffix for Genlet classnames.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+private const val GENLET_CLASSNAME_SUFFIX = "Generator"
+
+/**
+ * "Underscore-aware Genlet classname" heuristic for default Genlet classnames. From this [String] representing a Genlet
+ * classpath the last classpath part is extracted and split at underscore occurrences. The resulting "underscore parts"
+ * are capitalized, joined together, and extended by the [GENLET_CLASSNAME_SUFFIX]. That is, for the classpath
+ * "org.example.my_genlet", the heuristic would yield the Genlet classname "MyGenletGenerator".
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+private fun String.underscoreAwareGenletClassname() : String? {
+    val lastClasspathPart = substringAfterLast(".")
+    return if ("_" in lastClasspathPart)
+            lastClasspathPart.split("_").joinToString("") { it.capitalize() } + GENLET_CLASSNAME_SUFFIX
+        else
+            null
 }
 
 /**
