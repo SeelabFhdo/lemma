@@ -123,6 +123,10 @@ class GenletEvent(val type: GenletEventType) {
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 enum class GenletEventType {
+    // Genlet was loaded
+    GENLET_LOADED,
+
+    // Processing of intermediate EObject starts
     INTERMEDIATE_EOBJECT_PROCESSING_STARTS,
 
     // Generation of current microservice was finished

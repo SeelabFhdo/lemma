@@ -17,6 +17,7 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.loadGenl
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.buildAspectHandlerQualifiedName
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.findAspectHandlers
 import de.fhdo.lemma.model_processing.code_generation.java_base.eObjectPackageName
+import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletEventType
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.LineCountInfo
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.code_generation.CodeGenerationSerializerI
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.configuration.AbstractSerializationConfiguration
@@ -115,6 +116,7 @@ internal object MainContext {
                 aspectHandlers[this] = findAspectHandlers(classLoader)
                 dependencyFragmentProviders[this] = findDependencyFragmentProviders(classLoader, dependencySerializer)
             } }
+            sendEventToGenlets(GenletEvent(GenletEventType.GENLET_LOADED))
         }
 
         /**
