@@ -10,6 +10,9 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.modules.MainCont
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.domain.DomainCodeGenerationSubModule
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.services.ServicesCodeGenerationSubModule
 import de.fhdo.lemma.model_processing.code_generation.java_base.eObjectPackageName
+import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletEvent
+import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletEventType
+import de.fhdo.lemma.model_processing.code_generation.java_base.modules.MainContext.sendEventToGenlets
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.LineCountInfo
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.code_generation.CodeGenerationSerializerI
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.code_generation.findCodeGenerationSerializers
@@ -124,6 +127,9 @@ internal class MainCodeGenerationModule : AbstractCodeGenerationModule(), KoinCo
             DomainCodeGenerationSubModule.invoke()
             ServicesCodeGenerationSubModule.invoke()
         }
+
+        /* Send code generation finished event to Genlets */
+        sendEventToGenlets(GenletEvent(GenletEventType.OVERALL_GENERATION_FINISHED))
 
         /* Serialize dependencies and property files. They concern all generated microservices. */
         if (intermediateServiceModel.microservices.isNotEmpty()) {

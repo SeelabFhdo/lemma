@@ -130,7 +130,10 @@ enum class GenletEventType {
     INTERMEDIATE_EOBJECT_PROCESSING_STARTS,
 
     // Generation of current microservice was finished
-    MICROSERVICE_GENERATION_FINISHED
+    MICROSERVICE_GENERATION_FINISHED,
+
+    // Overall code generation has finished
+    OVERALL_GENERATION_FINISHED
 }
 
 /**
