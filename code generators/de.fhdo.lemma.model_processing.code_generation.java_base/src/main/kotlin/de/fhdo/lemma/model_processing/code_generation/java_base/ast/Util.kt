@@ -798,7 +798,7 @@ private object GeneratedPropertyAccessorTypeDataKey : DataKey<GeneratedPropertyA
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-internal fun ClassOrInterfaceDeclaration.addGetter(attribute: FieldDeclaration) : Pair<String, MethodDeclaration> {
+fun ClassOrInterfaceDeclaration.addGetter(attribute: FieldDeclaration) : Pair<String, MethodDeclaration> {
     val getter = attribute.createGetter()
     getter.setParentNode(this)
     getter.setData(GeneratedPropertyAccessorTypeDataKey, GeneratedPropertyAccessorType.GETTER)
@@ -808,13 +808,13 @@ internal fun ClassOrInterfaceDeclaration.addGetter(attribute: FieldDeclaration) 
 }
 
 /**
- * Add a setter to the Java class/interface represented by a [ClassOrInterfaceDeclaration] instance. The created getter
+ * Add a setter to the Java class/interface represented by a [ClassOrInterfaceDeclaration] instance. The created setter
  * is an AST node of type [MethodDeclaration]. It will be returned to the caller, together with the name of its backing
  * attribute.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-internal fun ClassOrInterfaceDeclaration.addSetter(attribute: FieldDeclaration) : Pair<String, MethodDeclaration> {
+fun ClassOrInterfaceDeclaration.addSetter(attribute: FieldDeclaration) : Pair<String, MethodDeclaration> {
     val setter = attribute.createSetter()
     setter.setParentNode(this)
     setter.setData(GeneratedPropertyAccessorTypeDataKey, GeneratedPropertyAccessorType.SETTER)
