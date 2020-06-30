@@ -1,5 +1,6 @@
 package de.fhdo.lemma.model_processing.code_generation.java_base.serialization.code_generation
 
+import com.github.javaparser.ast.CompilationUnit
 import com.github.javaparser.ast.DataKey
 import com.github.javaparser.ast.Modifier
 import com.github.javaparser.ast.Node
@@ -27,6 +28,7 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.ast.diffCallable
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.getAllImportsWithSerializationCharacteristics
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.asClassOrInterfaceDeclaration
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.emptyBody
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.findParentNode
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.getEponymousJavaClassOrInterface
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.getSuperclass
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.getFilePath
@@ -734,6 +736,18 @@ internal class GenerationGapSerializerBase : KoinComponent {
 
         val missingMethods = diffCallables(customImplClass.methods, existingClass.methods)
         missingMethods.forEach { existingClass.members.add(it) }
+
+        // Merge possibly missing imports related to callables (import target element type METHOD)
+        val existingCompilationUnit = existingClass.findParentNode<CompilationUnit>() ?: return existingClass
+        val existingImports = existingCompilationUnit.imports.map { it.nameAsString }
+        val customImplCallableImports = customImplClass.getImportsInfo()
+            .filter {
+                it.targetElementType == ImportTargetElementType.METHOD ||
+                it.targetElementType == ImportTargetElementType.METHOD_BODY
+            }
+            .map { it.import }
+        val missingImports = customImplCallableImports.minus(existingImports)
+        missingImports.forEach { existingCompilationUnit.addImport(it) }
 
         return existingClass
     }
