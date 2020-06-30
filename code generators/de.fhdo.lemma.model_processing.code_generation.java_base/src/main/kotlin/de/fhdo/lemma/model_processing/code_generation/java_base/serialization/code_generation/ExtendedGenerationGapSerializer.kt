@@ -6,7 +6,7 @@ import de.fhdo.lemma.model_processing.asFile
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.ImportTargetElementType
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addImport
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.appendStatement
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.asClassDeclaration
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.asClassOrInterfaceDeclaration
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.emptyBody
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.getEponymousJavaClassOrInterface
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.getPackageName
@@ -113,7 +113,7 @@ internal class CountingExtendedGenerationGapSerializer : CodeGenerationSerialize
  * [CodeGenerationSerializerI] implementation for the Extended Generation Gap Pattern (cf.
  * [Greifenberg et al.](https://link.springer.com/chapter/10.1007/978-3-319-27869-8_7)). It partially relies on
  * functionality provided by the [GenerationGapSerializerBase] and does the following with the passed [Node]:
- *      - If the node is not a Java class (e.g., an enumeration): Plain serialization.
+ *      - If the node is not a Java class (e.g., an enumeration or interface): Plain serialization.
  *
  *      - If the node is a Java class and its corresponding Java file does not exist, yet (suppose that the original
  *        Java class is called "x_" and shall reside in a file "x_.java"):
@@ -151,10 +151,10 @@ private class ExtendedGenerationGapSerializerBase : KoinComponent {
      */
     internal fun serialize(node: Node, targetFolderPath: String, targetFilePath: String)
         : Map<String, Pair<String, Node?>> {
-        val originalClass = node.asClassDeclaration()
+        val originalClass = node.asClassOrInterfaceDeclaration()
 
-        /* If the node does not comprise a class (e.g., its an enum) do the plain serialization */
-        if (originalClass == null) {
+        /* If the node does not comprise a class (e.g., its an enum or interface) do the plain serialization */
+        if (originalClass == null || originalClass.isInterface) {
             val generatedCodeToNode = node.serialize(serializationConfiguration) to node
             return mapOf("$targetFolderPath${File.separator}$targetFilePath" to generatedCodeToNode)
         }

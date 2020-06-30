@@ -423,7 +423,7 @@ inline fun <reified T: Node> Node.findParentNode() : T? {
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-internal fun Node.asClassDeclaration() : ClassOrInterfaceDeclaration?
+internal fun Node.asClassOrInterfaceDeclaration() : ClassOrInterfaceDeclaration?
     = when(this) {
         is CompilationUnit -> findFirst(ClassOrInterfaceDeclaration::class.java) { !it.isInterface }.orElse(null)
         is ClassOrInterfaceDeclaration -> this

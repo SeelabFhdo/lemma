@@ -6,7 +6,7 @@ import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration
 import com.github.javaparser.ast.body.EnumDeclaration
 import com.github.javaparser.printer.PrettyPrinter
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.appendStatement
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.asClassDeclaration
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.asClassOrInterfaceDeclaration
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.hasReturnStatement
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.serialize
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.MainContext.State as MainState
@@ -81,7 +81,7 @@ private class CodeGenerationSerializerBase : KoinComponent {
      * Do the actual serialization
      */
     fun serialize(node: Node, targetFolderPath: String, targetFilePath: String) : Pair<String, Pair<String, Node?>> {
-        val originalClass = node.asClassDeclaration()
+        val originalClass = node.asClassOrInterfaceDeclaration()
 
         /* If the node does not comprise a class (e.g., it's an enum) do the plain serialization */
         if (originalClass == null) {
