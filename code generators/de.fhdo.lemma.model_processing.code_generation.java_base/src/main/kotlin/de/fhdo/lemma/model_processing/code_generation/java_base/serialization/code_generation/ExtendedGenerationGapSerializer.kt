@@ -11,6 +11,7 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.ast.emptyBody
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.getEponymousJavaClassOrInterface
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.getPackageName
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.hasReturnStatement
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.hasThrowStatement
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.isOverridable
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.serialize
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.setBody
@@ -225,7 +226,10 @@ private class ExtendedGenerationGapSerializerBase : KoinComponent {
                     """throw new UnsupportedOperationException("Not implemented")""",
                     withBlockComment = " $comment "
                 )
-            } else if (!originalMethod.type.isVoidType && !originalMethod.hasReturnStatement)
+            } else if (
+                !originalMethod.type.isVoidType &&
+                !originalMethod.hasReturnStatement &&
+                !originalMethod.hasThrowStatement)
                 originalMethod.appendStatement("""throw new UnsupportedOperationException("Not implemented yet");""")
         }
 

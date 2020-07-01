@@ -1153,7 +1153,28 @@ internal val MethodDeclaration.isOverridable
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 internal val MethodDeclaration.hasReturnStatement
-    get() = body.orElse(null)?.statements?.any { it.toString().trim().startsWith("return") } ?: false
+    get() = naiveHasStatementCheck("return")
+
+/**
+ * Naive implementation of a statement checker for method bodies. It splits the given [MethodDeclaration] body's
+ * statements into several lines and checks if at least one line starts with [statementPrefix].
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+private fun MethodDeclaration.naiveHasStatementCheck(statementPrefix: String)
+    = body.orElse(null)?.statements
+        ?.map { it.toString().split("\n") }
+        ?.flatten()
+        ?.any { it.trim().startsWith(statementPrefix) }
+        ?: false
+
+/**
+ * Check if this [MethodDeclaration] has a throw statement.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+internal val MethodDeclaration.hasThrowStatement
+    get() = naiveHasStatementCheck("throw")
 
 /**
  * Copy this [MethodDeclaration] to a new [MethodDeclaration] instance.
