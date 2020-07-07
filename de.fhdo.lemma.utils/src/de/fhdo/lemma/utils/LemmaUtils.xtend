@@ -355,7 +355,7 @@ final class LemmaUtils {
             return noPrefixes
 
         while (noPrefixes.startsWith(prefix))
-            noPrefixes = s.substring(prefix.length())
+            noPrefixes = noPrefixes.substring(prefix.length())
         return noPrefixes
     }
 
