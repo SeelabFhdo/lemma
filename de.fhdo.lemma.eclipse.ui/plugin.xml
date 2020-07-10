@@ -99,7 +99,7 @@
          </toolbar>
       </menuContribution>
       <menuContribution
-            locationURI="popup:org.eclipse.ui.navigator.ProjectExplorer#PopupMenu?after=additions">
+            locationURI="popup:org.eclipse.ui.popup.any?after=additions">
         <command
               commandId="de.fhdo.lemma.eclipse.ui.commands.generateIntermediateModels"
               mnemonic="M"
@@ -113,6 +113,7 @@
                         <or>
                             <instanceof value="org.eclipse.core.resources.IProject"/>
                             <instanceof value="org.eclipse.core.resources.IFolder"/>
+                            <instanceof value="org.eclipse.jdt.core.IJavaProject"/>
                             <adapt type="org.eclipse.core.resources.IResource">
                                 <or>
                                     <test property="org.eclipse.core.resources.name"
