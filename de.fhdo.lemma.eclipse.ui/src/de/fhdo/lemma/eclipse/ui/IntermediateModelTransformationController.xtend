@@ -152,6 +152,9 @@ class IntermediateModelTransformationController extends AbstractHandler {
      * Dispatcher: Find model files from IFile
      */
     private def dispatch findModelFiles(IFile file) {
-        return file.project -> newArrayList(file)
+        return file.project -> if (modelFileTypeExtensions.contains(file.fileExtension))
+                newArrayList(file)
+            else
+                emptyList
     }
 }

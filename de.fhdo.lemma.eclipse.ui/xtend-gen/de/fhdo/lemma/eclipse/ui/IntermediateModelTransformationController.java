@@ -8,7 +8,6 @@ import de.fhdo.lemma.eclipse.ui.select_models_dialog.commands.SelectModelsHandle
 import de.fhdo.lemma.eclipse.ui.specify_paths_dialog.commands.SpecifyPathsHandler;
 import de.fhdo.lemma.eclipse.ui.transformation_dialog.commands.TransformationDialogHandler;
 import de.fhdo.lemma.eclipse.ui.utils.LemmaUiUtils;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -126,7 +125,7 @@ public class IntermediateModelTransformationController extends AbstractHandler {
     }
     final HashMap<IProject, List<IFile>> inputModelFiles = CollectionLiterals.<IProject, List<IFile>>newHashMap();
     final Consumer<IResource> _function = (IResource it) -> {
-      final Pair<IProject, ? extends List<IFile>> projectAndFiles = this.findModelFiles(it);
+      final Pair<IProject, List<IFile>> projectAndFiles = this.findModelFiles(it);
       final IProject project = projectAndFiles.getKey();
       final List<IFile> files = projectAndFiles.getValue();
       if ((((project != null) && (files != null)) && (!files.isEmpty()))) {
@@ -173,7 +172,7 @@ public class IntermediateModelTransformationController extends AbstractHandler {
   /**
    * Dispatcher: Find model files from IProject
    */
-  private Pair<IProject, ? extends List<IFile>> _findModelFiles(final IProject project) {
+  private Pair<IProject, List<IFile>> _findModelFiles(final IProject project) {
     List<IFile> _findFilesInProject = LemmaUiUtils.findFilesInProject(project, ((String[])Conversions.unwrapArray(this.modelFileTypeExtensions, String.class)));
     return Pair.<IProject, List<IFile>>of(project, _findFilesInProject);
   }
@@ -181,7 +180,7 @@ public class IntermediateModelTransformationController extends AbstractHandler {
   /**
    * Dispatcher: Find model files from IFolder
    */
-  private Pair<IProject, ? extends List<IFile>> _findModelFiles(final IFolder folder) {
+  private Pair<IProject, List<IFile>> _findModelFiles(final IFolder folder) {
     final List<IFile> projectFiles = LemmaUiUtils.findFilesInProject(folder.getProject(), ((String[])Conversions.unwrapArray(this.modelFileTypeExtensions, String.class)));
     IProject _project = folder.getProject();
     final Function1<IFile, Boolean> _function = (IFile it) -> {
@@ -194,13 +193,19 @@ public class IntermediateModelTransformationController extends AbstractHandler {
   /**
    * Dispatcher: Find model files from IFile
    */
-  private Pair<IProject, ? extends List<IFile>> _findModelFiles(final IFile file) {
+  private Pair<IProject, List<IFile>> _findModelFiles(final IFile file) {
     IProject _project = file.getProject();
-    ArrayList<IFile> _newArrayList = CollectionLiterals.<IFile>newArrayList(file);
-    return Pair.<IProject, ArrayList<IFile>>of(_project, _newArrayList);
+    List<IFile> _xifexpression = null;
+    boolean _contains = this.modelFileTypeExtensions.contains(file.getFileExtension());
+    if (_contains) {
+      _xifexpression = CollectionLiterals.<IFile>newArrayList(file);
+    } else {
+      _xifexpression = CollectionLiterals.<IFile>emptyList();
+    }
+    return Pair.<IProject, List<IFile>>of(_project, _xifexpression);
   }
   
-  private Pair<IProject, ? extends List<IFile>> findModelFiles(final IResource file) {
+  private Pair<IProject, List<IFile>> findModelFiles(final IResource file) {
     if (file instanceof IFile) {
       return _findModelFiles((IFile)file);
     } else if (file instanceof IFolder) {
