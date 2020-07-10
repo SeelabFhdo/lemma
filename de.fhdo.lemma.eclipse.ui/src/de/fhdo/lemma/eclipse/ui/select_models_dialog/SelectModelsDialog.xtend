@@ -125,10 +125,10 @@ class SelectModelsDialog extends TitleAreaDialog {
         container.setLayout(layout)
         createModelTree(container)
 
-        // Create legend if more than one file type is supported by the dialog
+        // Create key if more than one file type is supported by the dialog
         val modelFileTypeDescriptions = strategy.modelFileTypeDescriptions
         if (modelFileTypeDescriptions !== null && modelFileTypeDescriptions.size > 1)
-            createLegend(container, modelFileTypeDescriptions.values.toList)
+            createKey(container, modelFileTypeDescriptions.values.toList)
 
         return area
     }
@@ -246,28 +246,28 @@ class SelectModelsDialog extends TitleAreaDialog {
     }
 
     /**
-     * Create legend for tree viewer icons
+     * Create key for tree viewer icons
      */
-    private def createLegend(Composite parent,
+    private def createKey(Composite parent,
         List<ModelFileTypeDescription> modelFileTypeDescriptions) {
-        /* Create legend group */
-        val legend = new Group(parent, SWT.SHADOW_ETCHED_IN)
-        legend.setText("Icon Legend")
-        legend.setLayout(new GridLayout(1, false))
+        /* Create key group */
+        val key = new Group(parent, SWT.SHADOW_ETCHED_IN)
+        key.setText("Key")
+        key.setLayout(new GridLayout(1, false))
 
-        // Set legend group layout data
-        val legendGridData = new GridData()
-        legendGridData.grabExcessHorizontalSpace = true
-        legendGridData.horizontalAlignment = GridData.FILL
-        legend.setLayoutData(legendGridData)
+        // Set key group layout data
+        val keyGridData = new GridData()
+        keyGridData.grabExcessHorizontalSpace = true
+        keyGridData.horizontalAlignment = GridData.FILL
+        key.setLayoutData(keyGridData)
 
-        /* Create legend entries for model file types */
+        /* Create key entries for model file types */
         modelFileTypeDescriptions.forEach[
-            val legendEntry = new Composite(legend, SWT.NONE)
-            legendEntry.setLayout(new RowLayout(SWT.HORIZONTAL))
-            val imageLabel = new Label(legendEntry, SWT.NONE)
+            val keyEntry = new Composite(key, SWT.NONE)
+            keyEntry.setLayout(new RowLayout(SWT.HORIZONTAL))
+            val imageLabel = new Label(keyEntry, SWT.NONE)
             imageLabel.setImage(icon)
-            val textLabel = new Label(legendEntry, SWT.NONE)
+            val textLabel = new Label(keyEntry, SWT.NONE)
             textLabel.setText("-" + description)
         ]
     }

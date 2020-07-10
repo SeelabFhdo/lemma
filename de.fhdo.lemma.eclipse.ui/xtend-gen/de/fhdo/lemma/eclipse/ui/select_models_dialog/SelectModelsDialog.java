@@ -170,7 +170,7 @@ public class SelectModelsDialog extends TitleAreaDialog {
     this.createModelTree(container);
     final LinkedHashMap<String, ModelFileTypeDescription> modelFileTypeDescriptions = this.strategy.getModelFileTypeDescriptions();
     if (((modelFileTypeDescriptions != null) && (modelFileTypeDescriptions.size() > 1))) {
-      this.createLegend(container, IterableExtensions.<ModelFileTypeDescription>toList(modelFileTypeDescriptions.values()));
+      this.createKey(container, IterableExtensions.<ModelFileTypeDescription>toList(modelFileTypeDescriptions.values()));
     }
     return area;
   }
@@ -298,24 +298,24 @@ public class SelectModelsDialog extends TitleAreaDialog {
   }
   
   /**
-   * Create legend for tree viewer icons
+   * Create key for tree viewer icons
    */
-  private void createLegend(final Composite parent, final List<ModelFileTypeDescription> modelFileTypeDescriptions) {
-    final Group legend = new Group(parent, SWT.SHADOW_ETCHED_IN);
-    legend.setText("Icon Legend");
+  private void createKey(final Composite parent, final List<ModelFileTypeDescription> modelFileTypeDescriptions) {
+    final Group key = new Group(parent, SWT.SHADOW_ETCHED_IN);
+    key.setText("Key");
     GridLayout _gridLayout = new GridLayout(1, false);
-    legend.setLayout(_gridLayout);
-    final GridData legendGridData = new GridData();
-    legendGridData.grabExcessHorizontalSpace = true;
-    legendGridData.horizontalAlignment = GridData.FILL;
-    legend.setLayoutData(legendGridData);
+    key.setLayout(_gridLayout);
+    final GridData keyGridData = new GridData();
+    keyGridData.grabExcessHorizontalSpace = true;
+    keyGridData.horizontalAlignment = GridData.FILL;
+    key.setLayoutData(keyGridData);
     final Consumer<ModelFileTypeDescription> _function = (ModelFileTypeDescription it) -> {
-      final Composite legendEntry = new Composite(legend, SWT.NONE);
+      final Composite keyEntry = new Composite(key, SWT.NONE);
       RowLayout _rowLayout = new RowLayout(SWT.HORIZONTAL);
-      legendEntry.setLayout(_rowLayout);
-      final Label imageLabel = new Label(legendEntry, SWT.NONE);
+      keyEntry.setLayout(_rowLayout);
+      final Label imageLabel = new Label(keyEntry, SWT.NONE);
       imageLabel.setImage(it.getIcon());
-      final Label textLabel = new Label(legendEntry, SWT.NONE);
+      final Label textLabel = new Label(keyEntry, SWT.NONE);
       String _description = it.getDescription();
       String _plus = ("-" + _description);
       textLabel.setText(_plus);
