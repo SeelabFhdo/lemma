@@ -1,5 +1,6 @@
 package de.fhdo.lemma.model_processing.code_generation.ddd.handlers
 
+import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration
 import com.github.javaparser.ast.body.FieldDeclaration
 import de.fhdo.lemma.data.intermediate.IntermediateDataField
 import de.fhdo.lemma.model_processing.code_generation.ddd.DDD_VERSION
@@ -13,11 +14,11 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.CodeGen
 
 @CodeGenerationHandler
 internal class IntermediateDataFieldHandler
-    : GenletCodeGenerationHandlerI<IntermediateDataField, FieldDeclaration, Nothing> {
+    : GenletCodeGenerationHandlerI<IntermediateDataField, FieldDeclaration, ClassOrInterfaceDeclaration> {
     override fun handlesEObjectsOfInstance() = IntermediateDataField::class.java
     override fun generatesNodesOfInstance() = FieldDeclaration::class.java
 
-    override fun execute(eObject: IntermediateDataField, node: FieldDeclaration, context: Nothing?)
+    override fun execute(eObject: IntermediateDataField, node: FieldDeclaration, context: ClassOrInterfaceDeclaration?)
         : GenletCodeGenerationHandlerResult<FieldDeclaration>? {
         val dddElements = node.getDddElementsForFeatures(eObject.featureNames.toSet())
 

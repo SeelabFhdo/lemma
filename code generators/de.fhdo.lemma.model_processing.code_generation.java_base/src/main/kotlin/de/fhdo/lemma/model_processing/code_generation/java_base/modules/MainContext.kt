@@ -265,14 +265,14 @@ internal object MainContext {
     /**
      * Helper to invoke a [Genlet]-specific code generation handler on a given [EObject] and [Node] instance
      */
-    internal fun invokeGenletCodeGenerationHandler(eObject: EObject, node: Node,
+    internal fun invokeGenletCodeGenerationHandler(eObject: EObject, node: Node, context: Any?,
         handlerClass: Class<GenletCodeGenerationHandlerI<EObject, Node, Any>>)
         : GenletCodeGenerationHandlerResult<Node> {
         val handlerInstance = handlerClass.getConstructor().newInstance()
         if (!handlerInstance.generatesNodesOfInstance().isAssignableFrom(node::class.java))
             return GenletCodeGenerationHandlerResult(node)
 
-        return handlerInstance.invoke(eObject, node = node) ?: GenletCodeGenerationHandlerResult(node)
+        return handlerInstance.invoke(eObject, node, context) ?: GenletCodeGenerationHandlerResult(node)
     }
 
     /**

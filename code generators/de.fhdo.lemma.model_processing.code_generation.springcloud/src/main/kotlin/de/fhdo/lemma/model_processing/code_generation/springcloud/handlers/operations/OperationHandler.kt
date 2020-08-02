@@ -1,5 +1,6 @@
 package de.fhdo.lemma.model_processing.code_generation.springcloud.handlers.operations
 
+import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration
 import com.github.javaparser.ast.body.MethodDeclaration
 import com.github.javaparser.ast.type.ClassOrInterfaceType
 import de.fhdo.lemma.data.intermediate.IntermediateComplexType
@@ -24,14 +25,15 @@ import de.fhdo.lemma.technology.CommunicationType
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 @CodeGenerationHandler
-internal class OperationHandler : GenletCodeGenerationHandlerI<IntermediateOperation, MethodDeclaration, Nothing> {
+internal class OperationHandler
+    : GenletCodeGenerationHandlerI<IntermediateOperation, MethodDeclaration, ClassOrInterfaceDeclaration> {
     override fun handlesEObjectsOfInstance() = IntermediateOperation::class.java
     override fun generatesNodesOfInstance() = MethodDeclaration::class.java
 
     /**
      * Execution logic of the handler
      */
-    override fun execute(eObject: IntermediateOperation, node: MethodDeclaration, context: Nothing?)
+    override fun execute(eObject: IntermediateOperation, node: MethodDeclaration, context: ClassOrInterfaceDeclaration?)
         : GenletCodeGenerationHandlerResult<MethodDeclaration>? {
         /* Add imports and annotations related to API comments */
         if (eObject.apiOperationComment != null) {

@@ -23,14 +23,15 @@ import de.fhdo.lemma.service.intermediate.IntermediateParameter
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 @CodeGenerationHandler
-internal class ParameterHandler : GenletCodeGenerationHandlerI<IntermediateParameter, MethodDeclaration, Nothing> {
+internal class ParameterHandler
+    : GenletCodeGenerationHandlerI<IntermediateParameter, MethodDeclaration, MethodDeclaration> {
     override fun handlesEObjectsOfInstance() = IntermediateParameter::class.java
     override fun generatesNodesOfInstance() = MethodDeclaration::class.java
 
     /**
      * Execution logic of the handler
      */
-    override fun execute(eObject: IntermediateParameter, node: MethodDeclaration, context: Nothing?)
+    override fun execute(eObject: IntermediateParameter, node: MethodDeclaration, context: MethodDeclaration?)
         : GenletCodeGenerationHandlerResult<MethodDeclaration>? {
         /* Handle Exception type if the parameter communicates a fault */
         if (eObject.isCommunicatesFault) {

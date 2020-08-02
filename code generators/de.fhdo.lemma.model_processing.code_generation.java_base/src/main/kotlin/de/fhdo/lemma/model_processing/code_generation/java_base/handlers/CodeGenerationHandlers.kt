@@ -62,7 +62,7 @@ interface CodeGenerationHandlerI<T: EObject, N: Node, C: Any> {
         executePreActions(eObject)
         val result = execute(eObject, context) ?: return null
         val (generatedNode, generatedFilePath) = result
-        val adaptedNode = executeSubActions(eObject, generatedNode)
+        val adaptedNode = executeSubActions(eObject, generatedNode, context)
         return adaptedNode to generatedFilePath
     }
 
@@ -96,7 +96,7 @@ interface CodeGenerationHandlerI<T: EObject, N: Node, C: Any> {
      * generated AST [Node] in order to adapt it
      */
     @Suppress("UNCHECKED_CAST")
-    private fun executeSubActions(eObject: T, node: N) : N {
+    private fun executeSubActions(eObject: T, node: N, context: C?) : N {
         /* Execute local aspect handlers */
         val aspects = getAspects(eObject)
         var adaptedNode = MainContext.invokeLocalAspectHandlers(eObject, node, aspects)
@@ -108,7 +108,8 @@ interface CodeGenerationHandlerI<T: EObject, N: Node, C: Any> {
         val genlets: Set<Genlet> by MainState
         genlets.forEach { genlet ->
             MainContext.getGenletCodeGenerationHandlers(eObject, genlet).forEach {
-                val (reifiedNode, generatedFiles) = MainContext.invokeGenletCodeGenerationHandler(eObject, node, it)
+                val (reifiedNode, generatedFiles) = MainContext.invokeGenletCodeGenerationHandler(eObject, node,
+                    context, it)
                 adaptedNode = reifiedNode
                 storeGeneratedFileContentsOfGenlet(generatedFiles)
             }

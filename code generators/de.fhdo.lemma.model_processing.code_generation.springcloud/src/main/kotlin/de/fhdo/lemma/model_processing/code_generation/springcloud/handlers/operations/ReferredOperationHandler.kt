@@ -20,15 +20,15 @@ import de.fhdo.lemma.service.intermediate.IntermediateReferredOperation
  */
 @CodeGenerationHandler
 internal class ReferredOperationHandler
-    : GenletCodeGenerationHandlerI<IntermediateReferredOperation, MethodDeclaration, Nothing> {
+    : GenletCodeGenerationHandlerI<IntermediateReferredOperation, MethodDeclaration, ClassOrInterfaceDeclaration> {
     override fun handlesEObjectsOfInstance() = IntermediateReferredOperation::class.java
     override fun generatesNodesOfInstance() = MethodDeclaration::class.java
 
     /**
      * Execution logic of the handler
      */
-    override fun execute(eObject: IntermediateReferredOperation, node: MethodDeclaration, context: Nothing?)
-        : GenletCodeGenerationHandlerResult<MethodDeclaration>? {
+    override fun execute(eObject: IntermediateReferredOperation, node: MethodDeclaration,
+        context: ClassOrInterfaceDeclaration?) : GenletCodeGenerationHandlerResult<MethodDeclaration>? {
         /*
          * The interface that defines the operation to which shall be referred will be Autowired into the referring
          * class, if this is not the case already
