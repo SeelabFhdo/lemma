@@ -53,6 +53,7 @@ set modules=%modules%;"code generators\de.fhdo.lemma.msa"
 set modules=%modules%;"code generators\de.fhdo.lemma.model_processing.code_generation.java_base"
 set modules=%modules%;"code generators\de.fhdo.lemma.model_processing.code_generation.ddd"
 set modules=%modules%;"code generators\de.fhdo.lemma.model_processing.code_generation.springcloud"
+set modules=%modules%;"code generators\de.fhdo.lemma.model_processing.code_generation.springcloud.domain_events"
 
 REM Initialize colors for colorEcho
 for /F "tokens=1,2 delims=#" %%a in ('"prompt #$H#$E# & echo on & for %%b in (1) do     rem"') do (

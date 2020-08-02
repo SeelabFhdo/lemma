@@ -5,12 +5,21 @@ import de.fhdo.lemma.model_processing.asFile
 import de.fhdo.lemma.model_processing.asXmiResource as asXmiResourceSimple
 import de.fhdo.lemma.utils.LemmaUtils
 import de.fhdo.lemma.service.ImportType
+import de.fhdo.lemma.service.ImportedServiceAspect
+import de.fhdo.lemma.service.Interface
+import de.fhdo.lemma.service.Microservice
+import de.fhdo.lemma.service.Operation
+import de.fhdo.lemma.service.Parameter
+import de.fhdo.lemma.service.TechnologyReference
 import de.fhdo.lemma.service.intermediate.IntermediateMicroservice
+import de.fhdo.lemma.technology.CommunicationType
+import de.fhdo.lemma.technology.ExchangePattern
 import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.resource.Resource
 import java.io.File
 import java.util.LinkedList
+import java.util.regex.Pattern
 
 /**
  * Check if a string represents a numeric value.
@@ -305,3 +314,179 @@ private fun commentDescriptionForFile(filePath: String)
  */
 fun IntermediateMicroservice.hasTechnology(technologyName: String, ignoreCase: Boolean = true)
     = technologies.any { it.name.equals(technologyName, ignoreCase = ignoreCase) }
+
+/**
+ * Find alias of a technology model expressed in the Technology Modeling Language from a [TechnologyReference] list.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+fun List<TechnologyReference>.findAliasForTechnology(technologyName: String)
+    = find {
+        val technologyModelFilepath = it.technology.importURI.removePrefix("file://")
+        val absoluteTechnologyModelFilepath = if (LemmaUtils.representsAbsolutePath(technologyModelFilepath))
+                technologyModelFilepath
+            else {
+                val referencingModelFilepath = it.eResource().uri.toString().removePrefix("file://")
+                LemmaUtils.convertToAbsolutePath(technologyModelFilepath, referencingModelFilepath)
+            }
+
+        val parsedTechnologyName = if (!TechnologyModelCache.wasParsed(absoluteTechnologyModelFilepath)) {
+            val parsedTechnologyName = absoluteTechnologyModelFilepath.asFile().naiveTechnologyNameExtraction()!!
+            TechnologyModelCache.add(absoluteTechnologyModelFilepath, parsedTechnologyName)
+        } else
+            TechnologyModelCache.technologyName(absoluteTechnologyModelFilepath)
+        parsedTechnologyName == technologyName
+    }?.technology?.name
+
+/**
+ * The [findAliasForTechnology] function involves expensive scanning of technology model files. We therefore cache the
+ * parsed technology models and the names of their technologies.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+private object TechnologyModelCache {
+    private val parsedModels = mutableMapOf<String, String>()
+
+    /**
+     * Check if the technology model at [modelFilepath] has already been parsed
+     */
+    fun wasParsed(modelFilepath: String) = parsedModels.containsKey(modelFilepath)
+
+    /**
+     * Add new [technologyName] for technology model at [modelFilepath]
+     */
+    fun add(modelFilepath: String, technologyName: String) : String {
+        parsedModels[modelFilepath] = technologyName
+        return technologyName
+    }
+
+    /**
+     * Get the [technologyName] of the technology model at [modelFilepath]
+     */
+    fun technologyName(modelFilepath: String) = parsedModels[modelFilepath]
+}
+
+/**
+ * Naive extraction of a technology's name from its defining technology model. The extraction is naive, because it does
+ * not parse the technology model (for performance reasons), but tries to extract the name of the technology based on
+ * regular expressions. Note that the extraction approach relies on the keyword "technology" and the technology name to
+ * appear on the same line in the scanned [File].
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+private fun File.naiveTechnologyNameExtraction() : String? {
+    useLines { lines -> lines.forEach {
+        val line = it.trim()
+        val matcher = TECHNOLOGY_DEFINITION_PATTERN.matcher(line)
+        if (matcher.matches())
+            return matcher.group("id")
+        // Try to recognize file contents that may occur prior to the definition of a technology
+        else if (line.isNotEmpty() &&       // Empty lines
+            !line.startsWith("import") &&   // Imports of other technology models
+            !line.startsWith("//") &&       // Line comments
+            !line.startsWith("/*") &&       // Multi-line comment start, ...
+            !line.startsWith("*") &&        // content, ...
+            !line.startsWith("*/"))         // and end
+            return null
+    } }
+    return null
+}
+
+/**
+ * Regular expression corresponding to Xtext's terminal rule for IDs.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+private const val XTEXT_ID_PATTERN = "(?<id>\\^?(\\p{Alpha}|_)(\\p{Alnum}|_)*)"
+
+/**
+ * Regular expression for the introduction of a technology model definition.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+private val TECHNOLOGY_DEFINITION_PATTERN = Pattern.compile("technology\\s+$XTEXT_ID_PATTERN.*")
+
+/**
+ * Check if this [EObject] has an [ImportedServiceAspect] instance with the given [name] from the technology with
+ * the given [alias].
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+fun EObject.hasServiceAspect(alias: String, name: String)
+    = serviceAspects().any { it.import.name == alias && it.importedAspect.name == name }
+
+/**
+ * Helper to retrieve [ImportedServiceAspect] instances from this [EObject], if it supports having aspects. Throws
+ * [IllegalStateException] otherwise.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+private fun EObject.serviceAspects()
+    = when(this) {
+        is Microservice -> aspects
+        is Interface -> aspects
+        is Operation -> aspects
+        else -> throw IllegalStateException("EObject of type ${javaClass.simpleName} does not have service aspects")
+    }
+
+/**
+ * Get the [ImportedServiceAspect] instance with the given technology [alias] and [name] from this [EObject].
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+fun EObject.getServiceAspect(alias: String, name: String)
+    = serviceAspects().find { it.import.name == alias && it.importedAspect.name == name }
+
+/**
+ * Check for non-fault input parameters of the given [communicationType] of this [Operation] contained in a service
+ * model.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+fun Operation.hasInputParameters(communicationType: CommunicationType) = countInputParameters(communicationType) > 0
+
+/**
+ * Count the non-fault input parameters for the given [communicationType] of this [Operation] contained in a service
+ * model.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+fun Operation.countInputParameters(communicationType: CommunicationType)
+    = parameters.count { it.isInputParameter(communicationType) }
+
+/**
+ * Check if this [Parameter] is a non-fault input parameter of the given [communicationType].
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+fun Parameter.isInputParameter(communicationType: CommunicationType)
+    = communicationType == communicationType &&
+        !isCommunicatesFault &&
+        (exchangePattern == ExchangePattern.INOUT || exchangePattern == ExchangePattern.IN)
+
+/**
+ * Check for non-fault result parameters of the given [communicationType] of this [Operation] contained in a service
+ * model.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+fun Operation.hasResultParameters(communicationType: CommunicationType) = countResultParameters(communicationType) > 0
+
+/**
+ * Count the non-fault result parameters for the given [communicationType] of this [Operation] contained in a service
+ * model.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+fun Operation.countResultParameters(communicationType: CommunicationType)
+    = parameters.count { it.isResultParameter(communicationType) }
+
+/**
+ * Check if this [Parameter] is a non-fault result parameter of the given [communicationType].
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+fun Parameter.isResultParameter(communicationType: CommunicationType)
+    = communicationType == communicationType &&
+        !isCommunicatesFault &&
+        (exchangePattern == ExchangePattern.INOUT || exchangePattern == ExchangePattern.OUT)

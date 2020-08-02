@@ -540,7 +540,7 @@ internal fun newEnum(packageName: String, enumName: String) : EnumDeclaration {
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-internal fun CompilationUnit.getPackageName() = packageDeclaration.get().name.asString()
+fun CompilationUnit.getPackageName() = packageDeclaration.get().name.asString()
 
 /**
  * Get the name of a [ClassOrInterfaceDeclaration] instance's package declaration. This assumes that the instance is
