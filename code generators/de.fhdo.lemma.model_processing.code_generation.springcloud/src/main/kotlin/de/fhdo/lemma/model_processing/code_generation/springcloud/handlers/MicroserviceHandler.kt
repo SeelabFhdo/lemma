@@ -21,6 +21,7 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.getAspect
 import de.fhdo.lemma.model_processing.code_generation.java_base.getPropertyValue
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.CodeGenerationHandler
 import de.fhdo.lemma.model_processing.code_generation.java_base.hasApiComments
+import de.fhdo.lemma.model_processing.code_generation.java_base.hasAspect
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.property_files.PropertyFile
 import de.fhdo.lemma.model_processing.code_generation.java_base.toProperty
 import de.fhdo.lemma.model_processing.code_generation.java_base.usesProtocol
@@ -117,6 +118,7 @@ internal class MicroserviceHandler
         // Do this here to prevent custom properties overriding built-in ones (see below)
         handleCustomPropertyAspect(eObject)
 
+        handleSpringApplicationAspect(eObject)
         handleApplicationNameAspect(eObject)
         handleJacksonConfigurationAspect(eObject)
         handleDatasourceConfigurationAspect(eObject, node)
@@ -152,11 +154,24 @@ internal class MicroserviceHandler
     }
 
     /**
+     * Handle Spring Application aspect
+     */
+    private fun handleSpringApplicationAspect(intermediateService: IntermediateMicroservice) {
+        val aspect = intermediateService.getAspect("Spring.Application") ?: return
+        aspect.newApplicationProperty("name", "spring.application.name")
+        aspect.newApplicationProperty("port", "server.port")
+    }
+
+    /**
      * Handle ApplicationName aspect
      */
-    private fun handleApplicationNameAspect(intermediateService: IntermediateMicroservice)
-        = intermediateService.getAspect("java.ApplicationName", "Spring.ApplicationName")
+    private fun handleApplicationNameAspect(intermediateService: IntermediateMicroservice) {
+        if (intermediateService.hasAspect("Spring.Application"))
+            return
+
+        intermediateService.getAspect("java.ApplicationName", "Spring.ApplicationName")
             ?.newApplicationProperty("value", "spring.application.name")
+    }
 
     /**
      * Handle JacksonConfiguration aspect
