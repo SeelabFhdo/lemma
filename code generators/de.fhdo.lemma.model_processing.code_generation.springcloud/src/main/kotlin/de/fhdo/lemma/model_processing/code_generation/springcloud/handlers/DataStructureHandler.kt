@@ -3,6 +3,7 @@ package de.fhdo.lemma.model_processing.code_generation.springcloud.handlers
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration
 import de.fhdo.lemma.data.intermediate.IntermediateDataStructure
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.ImportTargetElementType
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addDependency
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addImport
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletCodeGenerationHandlerI
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletCodeGenerationHandlerResult
@@ -29,6 +30,7 @@ internal class DataStructureHandler
         val annotation = when {
             eObject.hasFeature("ENTITY") -> {
                 node.addImport("javax.persistence.Entity", ImportTargetElementType.ANNOTATION)
+                node.addDependency("org.springframework.boot:spring-boot-starter-data-jpa")
                 "Entity"
             }
 
