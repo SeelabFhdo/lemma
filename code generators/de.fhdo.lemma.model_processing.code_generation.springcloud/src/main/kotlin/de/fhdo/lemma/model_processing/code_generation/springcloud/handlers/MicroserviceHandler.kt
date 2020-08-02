@@ -92,6 +92,7 @@ internal class MicroserviceHandler
             SerializationCharacteristic.DONT_RELOCATE)
         node.addImport("org.springframework.boot.autoconfigure.SpringBootApplication",
             ImportTargetElementType.ANNOTATION, SerializationCharacteristic.DONT_RELOCATE)
+        node.addDependency("org.springframework.boot:spring-boot-starter-web")
 
         // Add main method to invoke the SpringBoot application
         val currentMicroservicePackage: String by state()

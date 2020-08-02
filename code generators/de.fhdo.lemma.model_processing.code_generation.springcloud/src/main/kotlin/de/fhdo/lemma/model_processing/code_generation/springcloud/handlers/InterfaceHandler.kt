@@ -49,7 +49,6 @@ internal class InterfaceHandler
             ImportTargetElementType.ANNOTATION,
             SerializationCharacteristic.DONT_RELOCATE
         )
-        node.addDependency("org.springframework.boot:spring-boot-starter-web")
         node.addAnnotation("RestController", SerializationCharacteristic.DONT_RELOCATE)
 
         // Don't' generate constructors for the interface, because the creation of instances is handled by Spring's DI
