@@ -7,8 +7,8 @@ import com.github.javaparser.ast.body.FieldDeclaration
 import com.github.javaparser.ast.body.MethodDeclaration
 import com.github.javaparser.ast.expr.NameExpr
 import com.github.javaparser.ast.expr.NormalAnnotationExpr
+import com.github.javaparser.ast.type.Type
 import de.fhdo.lemma.data.intermediate.IntermediateComplexType
-import de.fhdo.lemma.data.intermediate.IntermediateImportedAspect
 import de.fhdo.lemma.data.intermediate.IntermediateType
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.ImportTargetElementType
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.SerializationCharacteristic
@@ -21,10 +21,8 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addStatement
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.getValueAsString
 import de.fhdo.lemma.model_processing.code_generation.java_base.fullyQualifiedClassname
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletStateAccess
-import de.fhdo.lemma.model_processing.code_generation.java_base.getPropertyValue
 import de.fhdo.lemma.model_processing.code_generation.java_base.languages.TypeMappingDescription
-import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.property_files.PropertyFile
-import de.fhdo.lemma.model_processing.code_generation.springcloud.Context.State as State
+import de.fhdo.lemma.model_processing.code_generation.java_base.languages.setJavaTypeFrom
 import de.fhdo.lemma.model_processing.code_generation.springcloud.languages.getGenletTypeMapping
 
 /**
@@ -49,6 +47,18 @@ internal fun <P: Node> IntermediateType.addTypeInformationTo(targetNode: P,
     }
 
     return typeMapping
+}
+
+/**
+ * Helper to get the Java type from this [IntermediateType] and invoke the given [addImportToTargetNode] callback to
+ * directly add related imports to a generated node.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+internal fun IntermediateType.javaType(addImportToTargetNode: (String) -> Unit) : Type {
+    val fakeMethod = MethodDeclaration()
+    fakeMethod.setJavaTypeFrom(this, fakeMethod) { addImportToTargetNode(it) }
+    return fakeMethod.type
 }
 
 /**
