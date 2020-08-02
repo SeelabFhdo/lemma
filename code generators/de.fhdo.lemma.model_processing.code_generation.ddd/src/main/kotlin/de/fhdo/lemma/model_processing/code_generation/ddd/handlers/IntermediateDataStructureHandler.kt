@@ -26,7 +26,10 @@ internal class IntermediateDataStructureHandler
 
         dddElements.interfaces.forEach { (iface, ifaceImport) ->
             node.addImport(ifaceImport, ImportTargetElementType.IMPLEMENTED_INTERFACE)
-            node.addImplementedType(iface)
+            if (!node.isInterface)
+                node.addImplementedType(iface)
+            else
+                node.addExtendedType(iface)
         }
         return GenletCodeGenerationHandlerResult(node)
     }
