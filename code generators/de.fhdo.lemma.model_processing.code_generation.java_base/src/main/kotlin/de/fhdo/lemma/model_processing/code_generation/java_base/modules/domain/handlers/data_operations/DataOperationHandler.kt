@@ -8,6 +8,7 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.ast.setBody
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.CallableCodeGenerationHandlerI
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.CodeGenerationHandler
 import de.fhdo.lemma.model_processing.code_generation.java_base.hasAspect
+import de.fhdo.lemma.model_processing.code_generation.java_base.hasFeature
 
 /**
  * Called code generation handler for IntermediateDataOperation instances.
@@ -36,7 +37,7 @@ internal class DataOperationHandler :
         : Pair<MethodDeclaration, String?>? {
         /* Each service operation becomes a method of the given parent class */
         val method = context!!.addMethod(eObject.name)
-        method.isStatic = eObject.hasAspect("java.static")
+        method.isStatic = eObject.hasAspect("java.static") || eObject.dataStructure.hasFeature("FACTORY")
 
         if (!eObject.isInherited) {
             method.addModifier(if (eObject.isHidden) Modifier.Keyword.PRIVATE else Modifier.Keyword.PUBLIC)
