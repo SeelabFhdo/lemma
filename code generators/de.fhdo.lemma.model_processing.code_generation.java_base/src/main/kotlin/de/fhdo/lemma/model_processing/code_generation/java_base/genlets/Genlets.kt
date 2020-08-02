@@ -57,6 +57,11 @@ interface Genlet {
     fun setClassLoader(classLoader: ClassLoader) {}
 
     /**
+     * Retrieve Genlet-specific heap.
+     */
+    fun heap() = GenletHeapManager.getOrAddHeap(this)
+
+    /**
      * Send an event to this Genlet. This function is not meant to be overridden by Genlets. To react to an event,
      * Genlets should implement [onEvent] instead.
      */
@@ -89,8 +94,29 @@ interface Genlet {
 }
 
 /**
+ * Singleton to manage Genlet heaps. A Genlet heap is a [MutableMap], which allows a Genlet for storing and
+ * retrieving arbitrary values at any point in its runtime.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+private object GenletHeapManager {
+    val heaps = mutableMapOf<Genlet, MutableMap<String, Any?>>()
+
+    /**
+     * Get heap for the given Genlet or create and return a new heap
+     */
+    fun getOrAddHeap(genlet: Genlet) : MutableMap<String, Any?> {
+        if (genlet !in heaps)
+            heaps[genlet] = mutableMapOf()
+        return heaps[genlet]!!
+    }
+}
+
+/**
  * This class clusters information about a Genlet event. More specifically, it assigns a [GenletEventType] to a set of
  * [GenletEventObject] instances and object-specific values.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 class GenletEvent(val type: GenletEventType) {
     private val eventInfo = mutableMapOf<GenletEventObject, Any>()
