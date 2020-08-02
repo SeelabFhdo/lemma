@@ -1,5 +1,6 @@
 package de.fhdo.lemma.model_processing.code_generation.java_base.genlets
 
+import com.github.javaparser.ast.DataKey
 import com.github.javaparser.ast.Node
 import de.fhdo.lemma.model_processing.asFile
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.serialize
@@ -583,3 +584,76 @@ internal fun Genlet.findCodeGenerationHandlers(classLoader: ClassLoader)
 internal fun Genlet.findDependencyFragmentProviders(classLoader: ClassLoader,
     dependencySerializer: DependencySerializerI<*, *>)
     = findDependencyFragmentProviders(nameOfDependencyFragmentProviderPackage(), dependencySerializer, classLoader)
+
+/**
+ * Data key for Genlet-related node information.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+private object GenletNodeInfoDataKey : DataKey<MutableMap<String, Any?>>()
+
+/**
+ * Set Genlet-related information [value] for [key] at this [Node]. The information is bound to the [Node] only and can
+ * thus be shared across different Genlets.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+fun Node.setGenletNodeInfo(key: String, value: Any?) {
+    val nodeInfo = if (containsData(GenletNodeInfoDataKey))
+            getData(GenletNodeInfoDataKey)
+        else
+            mutableMapOf()
+
+    nodeInfo[key] = value
+    setData(GenletNodeInfoDataKey, nodeInfo)
+}
+
+/**
+ * Get Genlet-related information for [key] from this [Node].
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+fun Node.getGenletNodeInfo(key: String) : Any? = getData(GenletNodeInfoDataKey)[key]
+
+/**
+ * Get Genlet-related information for [key] from this [Node] or return [elseValue], if the [key] for the
+ * Genlet-related information does not exist.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+fun Node.getGenletNodeInfoOrElse(key: String, elseValue: Any?)
+    = if (hasGenletNodeInfo(key))
+            getGenletNodeInfo(key)
+        else
+            elseValue
+
+/**
+ * Check if [key] for Genlet-related information exists for this [Node].
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+fun Node.hasGenletNodeInfo(key: String)
+    = if (containsData(GenletNodeInfoDataKey))
+    key in getData(GenletNodeInfoDataKey)
+else
+    false
+
+/**
+ * Convenience method for [getGenletNodeInfoOrElse], which returns null if the [key] for the Genlet-related information
+ * does not exist.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+fun Node.getGenletNodeInfoOrElseNull(key: String) = getGenletNodeInfoOrElse(key, null)
+
+/**
+ * Remove Genlet-related information for [key] from this [Node]. Returns true, if the key existed and false otherwise.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+fun Node.removeGenletNodeInfo(key: String)
+    = if (hasGenletNodeInfo(key)) {
+            getData(GenletNodeInfoDataKey).remove(key)
+            true
+        } else
+            false
