@@ -278,6 +278,7 @@ private class MavenDependencySerializerBase : KoinComponent {
      */
     private fun Node.mergeWithModel(otherModel: Node) {
         mergeParentFromModel(otherModel)
+        mergeRepositoriesFromOtherModel(otherModel)
         mergePropertiesFromModel(otherModel)
         mergeDependenciesFromModel(otherModel)
         mergePluginsFromModel(otherModel)
@@ -297,6 +298,21 @@ private class MavenDependencySerializerBase : KoinComponent {
             missingSubNodes.forEach { thisParentNode merge it }
         } else
             this merge otherParentNode
+    }
+
+    /**
+     * Helper to merge the "repositories" XML element of the [otherModel] into this [Node]
+     */
+    private fun Node.mergeRepositoriesFromOtherModel(otherModel: Node) {
+        val otherRepositoriesNode = otherModel.childNodes.find { it.nodeName == "repositories" } ?: return
+        val thisRepositoriesNode = childNodes.find { it.nodeName == "repositories" }
+        if (thisRepositoriesNode != null) {
+            // If the "repositories" XML element already exists, merge missing sub-nodes into it
+            val thisSubNodes = thisRepositoriesNode.childNodes.map { it.nodeName }
+            val missingSubNodes = otherRepositoriesNode.childNodes.filter { it.nodeName !in thisSubNodes }
+            missingSubNodes.forEach { thisRepositoriesNode merge it }
+        } else
+            this merge otherRepositoriesNode
     }
 
     /**
