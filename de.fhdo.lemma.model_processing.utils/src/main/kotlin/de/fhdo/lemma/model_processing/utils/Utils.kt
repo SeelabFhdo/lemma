@@ -460,7 +460,7 @@ fun Operation.countInputParameters(communicationType: CommunicationType)
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 fun Parameter.isInputParameter(communicationType: CommunicationType)
-    = communicationType == communicationType &&
+    = this.communicationType == communicationType &&
         !isCommunicatesFault &&
         (exchangePattern == ExchangePattern.INOUT || exchangePattern == ExchangePattern.IN)
 
@@ -487,6 +487,6 @@ fun Operation.countResultParameters(communicationType: CommunicationType)
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 fun Parameter.isResultParameter(communicationType: CommunicationType)
-    = communicationType == communicationType &&
+    = this.communicationType == communicationType &&
         !isCommunicatesFault &&
         (exchangePattern == ExchangePattern.INOUT || exchangePattern == ExchangePattern.OUT)
