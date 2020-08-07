@@ -55,3 +55,4 @@ code generators/de.fhdo.lemma.model_processing.code_generation.java_base
 code generators/de.fhdo.lemma.model_processing.code_generation.ddd
 code generators/de.fhdo.lemma.model_processing.code_generation.springcloud
 code generators/de.fhdo.lemma.model_processing.code_generation.springcloud.domain_events
+code generators/de.fhdo.lemma.model_processing.code_generation.springcloud.cqrs

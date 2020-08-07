@@ -438,6 +438,17 @@ fun EObject.getServiceAspect(alias: String, name: String)
     = serviceAspects().find { it.import.name == alias && it.importedAspect.name == name }
 
 /**
+ * Get the String representation of the value of the property [name] from an [ImportedServiceAspect] instance.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+fun ImportedServiceAspect.getPropertyValue(name: String)
+    = if (singlePropertyValue != null)
+        singlePropertyValue.valueAsString()
+    else
+        values.find { it.property.name == name }?.value?.valueAsString()
+
+/**
  * Check for non-fault input parameters of the given [communicationType] of this [Operation] contained in a service
  * model.
  *
