@@ -37,6 +37,7 @@ de.fhdo.lemma.technology.mappingdsl.tests
 de.fhdo.lemma.technology.mappingdsl.ui
 de.fhdo.lemma.technology.mappingdsl.ui.tests
 de.fhdo.lemma.technology.mappingdsl.ide
+de.fhdo.lemma.technology.mappingdsl.extractor
 
 de.fhdo.lemma.operationdsl.metamodel
 de.fhdo.lemma.operationdsl

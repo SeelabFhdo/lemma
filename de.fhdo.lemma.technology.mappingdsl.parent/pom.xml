@@ -12,6 +12,7 @@
         <module>../de.fhdo.lemma.technology.mappingdsl.metamodel</module>
         <module>../de.fhdo.lemma.technology.mappingdsl</module>
         <module>../de.fhdo.lemma.technology.mappingdsl.ide</module>
+        <module>../de.fhdo.lemma.technology.mappingdsl.extractor</module>
         <!--
             Exclude unnecessary UI from build, which also prevents transitive dependencies to
             other UI projects.
