@@ -12,6 +12,7 @@
         <module>../de.fhdo.lemma.data.datadsl.metamodel</module>
         <module>../de.fhdo.lemma.data.datadsl</module>
         <module>../de.fhdo.lemma.data.datadsl.ide</module>
+        <module>../de.fhdo.lemma.data.datadsl.extractor</module>
         <!--
             Exclude unnecessary UI from build, which also prevents transitive dependencies to
             other UI projects.

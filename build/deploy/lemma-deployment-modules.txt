@@ -16,6 +16,7 @@ de.fhdo.lemma.data.datadsl.tests
 de.fhdo.lemma.data.datadsl.ui
 de.fhdo.lemma.data.datadsl.ui.tests
 de.fhdo.lemma.data.datadsl.ide
+de.fhdo.lemma.data.datadsl.extractor
 
 de.fhdo.lemma.technology.technologydsl
 de.fhdo.lemma.technology.technologydsl.tests
