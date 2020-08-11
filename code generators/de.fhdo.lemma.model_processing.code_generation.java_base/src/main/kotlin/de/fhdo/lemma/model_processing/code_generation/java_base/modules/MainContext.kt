@@ -90,6 +90,20 @@ internal object MainContext {
         }
 
         /**
+         * Initialize the state of the context with the current microservice package instead of intermediate service
+         * model information
+         */
+        fun initialize(currentMicroservicePackage: String, targetFolderPath: String,
+            lineCountInfoFilePath: String? = null) {
+            this.currentMicroservicePackage = currentMicroservicePackage
+            this.targetFolderPath = targetFolderPath.trimEnd(File.separatorChar)
+            this.lineCountInfoFilePath = lineCountInfoFilePath
+
+            findLocalAspectHandlers()
+            loadGenlets()
+        }
+
+        /**
          * Set the state's current microservice
          */
         fun setCurrentMicroservice(microservice : IntermediateMicroservice) {
