@@ -273,3 +273,18 @@ fun loadXtextResource(languageSetup: ISetup, filepath: String, inputStream: Inpu
     resource.load(inputStream, resourceSet.loadOptions)
     return resource as XtextResource
 }
+
+/**
+ * Get absolute base path of this [Resource]. The absolute base path of a resource corresponds to its URI without the
+ * scheme.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+fun Resource.absoluteBasePath()
+        = this.uri.let {
+    val scheme = it.scheme()?.toString() ?: ""
+    it.toString()
+        .removePrefix(scheme)
+        // Remove possibly remaining colon prefix, e.g., for a URI in the form "file:/myFolder/example.file"
+        .removePrefix(":")
+}

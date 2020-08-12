@@ -1,5 +1,6 @@
 package de.fhdo.lemma.model_processing.languages
 
+import de.fhdo.lemma.model_processing.absoluteBasePath
 import de.fhdo.lemma.model_processing.getMethod
 import de.fhdo.lemma.utils.LemmaUtils
 import org.eclipse.emf.ecore.resource.Resource
@@ -25,17 +26,9 @@ fun <T: Any> List<T>.convertToAbsoluteFileUrisInPlace(resource: Resource) {
             "\"String getImportURI()\" and \"setImportURI(String)\" methods")
 
     /*
-     * Determine the base path on whose basis absolute file://-URIs for relative import URIs shall be determined. It
-     * corresponds to the URI of the passed resource with its scheme removed.
+     * Determine the base path on whose basis absolute file://-URIs for relative import URIs shall be determined
      */
-    val absoluteBasePathWithoutScheme = resource.uri.let {
-        val scheme = it.scheme()?.toString() ?: ""
-        it.toString()
-            .removePrefix(scheme)
-            // Remove possibly remaining colon prefix, e.g., for a URI in the form "file:/myFolder/example.file"
-            .removePrefix(":")
-
-    }
+    val absoluteBasePathWithoutScheme = resource.absoluteBasePath()
 
     /* Convert relative import URIs to absolute file://-URIs */
     forEach {

@@ -1,12 +1,14 @@
 package de.fhdo.lemma.model_processing.code_generation.java_base.modules.domain
 
 import de.fhdo.lemma.data.intermediate.IntermediateDataModel
+import de.fhdo.lemma.model_processing.absoluteBasePath
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.code_generation.CodeGenerationSerializerI
 import de.fhdo.lemma.model_processing.utils.filterByType
 import de.fhdo.lemma.model_processing.utils.loadModelRoot
 import de.fhdo.lemma.model_processing.utils.removeFileUri
 import de.fhdo.lemma.service.ImportType
 import de.fhdo.lemma.service.intermediate.IntermediateServiceModel
+import de.fhdo.lemma.utils.LemmaUtils
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.domain.DomainContext.State as DomainState
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.MainContext.State as MainState
 import org.eclipse.emf.ecore.EObject
@@ -46,17 +48,26 @@ internal class DomainCodeGenerationSubModule : KoinComponent {
 
     /**
      * Helper to get all URIs of domain models being imported by the given service model and, transitively, of all
-     * domain models being imported by previously resolved domain models
+     * domain models being imported by previously resolved domain models. Relative URIs will be converted to absolute
+     * URIs based on their importing resource's path. Consequently, all returned URIs are absolute.
      */
     private fun resolveImportedDomainModelUrisTransitively(startModel: IntermediateServiceModel) : Set<String> {
         val resolvedModelUris = mutableSetOf<String>()
-        val urisTodo = ArrayDeque(startModel.imports.filterByType(ImportType.DATATYPES).map { it.importUri })
+        val urisTodo = ArrayDeque<Pair<String, String>>()
+        val startModelAbsolutePath = startModel.eResource().absoluteBasePath()
+        startModel.imports.filterByType(ImportType.DATATYPES).forEach {
+            urisTodo.push(it.importUri to startModelAbsolutePath)
+        }
 
         while (urisTodo.isNotEmpty()) {
-            val currentUri = urisTodo.pop()
-            resolvedModelUris.add(currentUri)
-            val modelRoot = loadModelRoot<IntermediateDataModel>(currentUri.removeFileUri())
-            modelRoot.imports.filterByType(ImportType.DATATYPES).forEach { urisTodo.push(it.importUri) }
+            val (currentUri, importingModelAbsolutePath) = urisTodo.pop()
+            val absoluteUri = LemmaUtils.convertToAbsoluteFileUri(currentUri, importingModelAbsolutePath)
+            resolvedModelUris.add(absoluteUri)
+
+            val modelRoot = loadModelRoot<IntermediateDataModel>(absoluteUri.removeFileUri())
+            modelRoot.imports.filterByType(ImportType.DATATYPES).forEach {
+                urisTodo.push(it.importUri to importingModelAbsolutePath)
+            }
         }
 
         return resolvedModelUris
