@@ -8,6 +8,7 @@ import com.github.javaparser.printer.PrettyPrinter
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.appendStatement
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.asClassOrInterfaceDeclaration
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.hasReturnStatement
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.hasThrowStatement
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.serialize
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.MainContext.State as MainState
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.configuration.AbstractSerializationConfiguration
@@ -98,7 +99,9 @@ private class CodeGenerationSerializerBase : KoinComponent {
 
         /* Otherwise, perform a plain serialization, but fix compilation errors */
         originalClass.methods.forEach {
-            if (!it.type.isVoidType && !it.hasReturnStatement)
+            if (!it.type.isVoidType &&
+                !it.hasReturnStatement &&
+                !it.hasThrowStatement)
                 it.appendStatement("""throw new UnsupportedOperationException("Not implemented yet");""")
         }
 
