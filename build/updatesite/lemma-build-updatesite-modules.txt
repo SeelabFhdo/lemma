@@ -18,4 +18,5 @@ de.fhdo.lemma.technology.mappingdsl.ui
 de.fhdo.lemma.operationdsl.parent
 de.fhdo.lemma.operationdsl.ui
 de.fhdo.lemma.intermediate.transformations.parent
+de.fhdo.lemma.data.avro.parent
 de.fhdo.lemma.eclipse.ui.parent

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="4.15"?>
+<plugin>
+    <extension
+         point="org.eclipse.ui.commands">
+      <category
+            id="de.fhdo.lemma.data.avro.commands.category"
+            name="Avro2LEMMA">
+      </category>
+      <command
+            categoryId="de.fhdo.lemma.data.avro.commands.category"
+            id="de.fhdo.lemma.data.avro.commands.transformToAvro"
+            name="Transform to Avro Schema Declarations">
+      </command>
+      <command
+            categoryId="de.fhdo.lemma.data.avro.commands.category"
+            id="de.fhdo.lemma.data.avro.commands.transformToLemma"
+            name="Transform to LEMMA Models">
+      </command>
+    </extension>
+    <extension
+         point="org.eclipse.ui.handlers">
+         <handler
+            class="de.fhdo.lemma.data.avro.ui.to_avro.TransformToAvroHandler"
+            commandId="de.fhdo.lemma.data.avro.commands.transformToAvro">
+         </handler>
+         <handler
+            class="de.fhdo.lemma.data.avro.ui.to_lemma.TransformToLemmaHandler"
+            commandId="de.fhdo.lemma.data.avro.commands.transformToLemma">
+         </handler>
+    </extension>
+    <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="popup:org.eclipse.ui.popup.any?after=additions">
+        <command
+              commandId="de.fhdo.lemma.data.avro.commands.transformToAvro"
+              icon="icons/transformToAvro.gif"
+              id="de.fhdo.lemma.data.avro.menus.transformToAvro"
+              mnemonic="A">
+              <visibleWhen>
+                <with variable="activeMenuSelection">
+                    <iterate
+                        ifEmpty="false">
+                        <adapt
+                            type="org.eclipse.core.resources.IResource">
+                                <test property="org.eclipse.core.resources.name" value="*.xmi" />
+                        </adapt>
+                    </iterate>
+                </with>
+              </visibleWhen>
+        </command>
+        <command
+              commandId="de.fhdo.lemma.data.avro.commands.transformToLemma"
+              icon="icons/transformToLemma.gif"
+              id="de.fhdo.lemma.data.avro.menus.transformToLemma"
+              mnemonic="L">
+              <visibleWhen>
+                <with variable="activeMenuSelection">
+                    <iterate
+                        ifEmpty="false">
+                        <adapt
+                            type="org.eclipse.core.resources.IResource">
+                                <or>
+                                    <test property="org.eclipse.core.resources.name"
+                                        value="*.avsc" />
+                                    <test property="org.eclipse.core.resources.name"
+                                        value="*.avpr" />
+                                </or>
+                        </adapt>
+                    </iterate>
+                </with>
+              </visibleWhen>
+        </command>
+      </menuContribution>
+   </extension>
+</plugin>

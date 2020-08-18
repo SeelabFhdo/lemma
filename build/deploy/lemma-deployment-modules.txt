@@ -48,6 +48,7 @@ de.fhdo.lemma.operationdsl.ide
 
 # Transformations
 de.fhdo.lemma.intermediate.transformations
+de.fhdo.lemma.data.avro.parent
 
 # Live Validation Framework
 de.fhdo.lemma.live_validation
