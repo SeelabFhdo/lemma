@@ -916,6 +916,21 @@ fun MethodDeclaration.addImport(import: String, targetElementType: ImportTargetE
 }
 
 /**
+ * Get all imports of this [MethodDeclaration] with the given [targetElementTypes]. By default, all imports that target
+ * the method's signature and body are returned.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+fun MethodDeclaration.getImports(
+    targetElementTypes: Set<ImportTargetElementType>
+        = setOf(ImportTargetElementType.METHOD, ImportTargetElementType.METHOD_BODY)
+)
+    = getImportsInfo().getAllImportInfo()
+        .filter { it.targetElementType in targetElementTypes }
+        .map { it.import }
+        .toSet()
+
+/**
  * Remove the given [import] for the given [targetElementType] from this [MethodDeclaration] and also its defining
  * [ClassOrInterfaceDeclaration].
  *
@@ -1075,7 +1090,7 @@ fun MethodDeclaration.addStatements(body: String) = body.lines().forEach { appen
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-internal fun MethodDeclaration.appendStatement(statement: String)
+fun MethodDeclaration.appendStatement(statement: String)
     = insertStatement(statement, body.orElse(null)?.statements?.count() ?: 0)
 
 /**

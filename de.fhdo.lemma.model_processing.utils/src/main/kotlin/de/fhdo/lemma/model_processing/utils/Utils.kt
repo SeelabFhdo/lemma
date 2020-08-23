@@ -14,6 +14,9 @@ import de.fhdo.lemma.service.TechnologyReference
 import de.fhdo.lemma.service.intermediate.IntermediateMicroservice
 import de.fhdo.lemma.technology.CommunicationType
 import de.fhdo.lemma.technology.ExchangePattern
+import de.fhdo.lemma.technology.mapping.ComplexTypeMapping
+import de.fhdo.lemma.technology.mapping.TechnologySpecificFieldMapping
+import de.fhdo.lemma.technology.mapping.TechnologySpecificImportedServiceAspect
 import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.resource.Resource
@@ -407,8 +410,19 @@ private const val XTEXT_ID_PATTERN = "(?<id>\\^?(\\p{Alpha}|_)(\\p{Alnum}|_)*)"
 private val TECHNOLOGY_DEFINITION_PATTERN = Pattern.compile("technology\\s+$XTEXT_ID_PATTERN.*")
 
 /**
+ * Get all endpoint addresses of a [Microservice] contained in a service model for the given technology [alias] and
+ * [protocol].
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+fun Microservice.getEndpointAddresses(alias: String, protocol: String)
+    = endpoints.find { e -> e.protocols.any { it.import.name == alias && it.importedProtocol.name == protocol } }
+    ?.addresses?.map { it.trim() }
+    ?: emptyList()
+
+/**
  * Check if this [EObject] has an [ImportedServiceAspect] instance with the given [name] from the technology with
- * the given [alias].
+ * the given [alias]. Targets service model elements.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
@@ -416,8 +430,17 @@ fun EObject.hasServiceAspect(alias: String, name: String)
     = serviceAspects().any { it.import.name == alias && it.importedAspect.name == name }
 
 /**
+ * Check if this [EObject] has a [TechnologySpecificImportedServiceAspect] instance with the given [name] from the
+ * technology with the given [alias]. Targets mapping model elements.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+fun EObject.hasMappingAspect(alias: String, name: String)
+    = mappingAspects().any { it.technology.name == alias && it.aspect.name == name }
+
+/**
  * Helper to retrieve [ImportedServiceAspect] instances from this [EObject], if it supports having aspects. Throws
- * [IllegalStateException] otherwise.
+ * [IllegalStateException] otherwise. Targets service model elements.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
@@ -430,7 +453,22 @@ private fun EObject.serviceAspects()
     }
 
 /**
- * Get the [ImportedServiceAspect] instance with the given technology [alias] and [name] from this [EObject].
+ * Helper to retrieve [TechnologySpecificImportedServiceAspect] instances from this [EObject], if it supports having
+ * aspects. Throws [IllegalStateException] otherwise. Targets mapping model elements.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+private fun EObject.mappingAspects()
+    = when(this) {
+        is ComplexTypeMapping -> aspects
+        is TechnologySpecificFieldMapping -> aspects
+        else -> throw IllegalStateException("EObject of type ${javaClass.simpleName} does not have aspects in a " +
+            "technology mapping context")
+    }
+
+/**
+ * Get the [ImportedServiceAspect] instance with the given technology [alias] and [name] from this [EObject]. Targets
+ * service model elements.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
@@ -438,11 +476,50 @@ fun EObject.getServiceAspect(alias: String, name: String)
     = serviceAspects().find { it.import.name == alias && it.importedAspect.name == name }
 
 /**
+ * Get the [TechnologySpecificImportedServiceAspect] instance with the given technology [alias] and [name] from this
+ * [EObject]. Targets mapping model elements.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+fun EObject.getMappingAspect(alias: String, name: String)
+    = mappingAspects().find { it.technology.name == alias && it.aspect.name == name }
+
+/**
+ * Get all [ImportedServiceAspect] instances with the given technology [alias] and [name] from this [EObject]. Targets
+ * service model elements.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+fun EObject.getAllServiceAspects(alias: String, name: String)
+    = serviceAspects().filter { it.import.name == alias && it.importedAspect.name == name }
+
+/**
+ * Get all [TechnologySpecificImportedServiceAspect] instances with the given technology [alias] and [name] from this
+ * [EObject]. Targets mapping model elements.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+fun EObject.getAllMappingAspects(alias: String, name: String)
+    = mappingAspects().filter { it.technology.name == alias && it.aspect.name == name }
+
+/**
  * Get the String representation of the value of the property [name] from an [ImportedServiceAspect] instance.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 fun ImportedServiceAspect.getPropertyValue(name: String)
+    = if (singlePropertyValue != null)
+        singlePropertyValue.valueAsString()
+    else
+        values.find { it.property.name == name }?.value?.valueAsString()
+
+/**
+ * Get the String representation of the value of the property [name] from a [TechnologySpecificImportedServiceAspect]
+ * instance.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+fun TechnologySpecificImportedServiceAspect.getPropertyValue(name: String)
     = if (singlePropertyValue != null)
         singlePropertyValue.valueAsString()
     else

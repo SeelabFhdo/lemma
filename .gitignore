@@ -30,3 +30,4 @@ de.fhdo.lemma.eclipse.ui.editor
 Example*/intermediate/
 howto-lemma-release.md/
 lemma-cd-documentation/
+code generators/de.fhdo.lemma.model_processing.code_generation.springcloud.kafka_backup/
