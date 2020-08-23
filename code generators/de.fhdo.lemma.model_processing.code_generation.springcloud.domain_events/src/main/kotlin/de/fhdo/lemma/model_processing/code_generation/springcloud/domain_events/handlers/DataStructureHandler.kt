@@ -31,22 +31,19 @@ internal class DataStructureHandler
     override fun execute(eObject: IntermediateDataStructure, node: ClassOrInterfaceDeclaration,
         context: Nothing?) : GenletCodeGenerationHandlerResult<ClassOrInterfaceDeclaration>? {
         /*
-         * Add an event group interface to the node generated for the data structure, in case the
-         * EventGroup aspect is present
+         * Add an event group interface to the node generated for the data structure, in case the EventGroup aspect is
+         * present
          */
-        val eventGroup = eObject.getAspectPropertyValue("DomainEvents.EventGroup", "name")
-            ?: return null
+        val eventGroup = eObject.getAspectPropertyValue("DomainEvents.EventGroup", "name") ?: return null
 
         // Add event group interface to node
         val currentDomainPackage: String by state()
         val groupInterface = EventGroups.addOrGetGroupInterface(eventGroup, currentDomainPackage)
         node.addImplementedType(groupInterface.nameAsString)
-        node.addImport(groupInterface.fullyQualifiedName.get(),
-            ImportTargetElementType.IMPLEMENTED_INTERFACE)
+        node.addImport(groupInterface.fullyQualifiedName.get(), ImportTargetElementType.IMPLEMENTED_INTERFACE)
 
-        // Add type of the group interface and its package name as Genlet-related information to the
-        // group interface. These information can be used by subsequent Genlets to unambiguously
-        // identify event group interfaces.
+        // Add type of the group interface and its package name as Genlet-related information to the group interface.
+        // These information can be used by subsequent Genlets to unambiguously identify event group interfaces.
         val groupInterfaceType = node.implementedTypes.last()
         groupInterfaceType.setGenletNodeInfo("DomainEventGroupInterface", eventGroup)
         groupInterfaceType.setGenletNodeInfo("DomainEventGroupInterfacePackageName",
