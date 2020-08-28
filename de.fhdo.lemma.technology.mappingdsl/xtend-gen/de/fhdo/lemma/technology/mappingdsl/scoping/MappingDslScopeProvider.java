@@ -265,11 +265,7 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     if (!_matched) {
       if (Objects.equal(reference, MappingPackage.Literals.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__ENUMERATION_FIELD)) {
         _matched=true;
-        ImportedComplexTypeToMap _type = mapping.getType();
-        if ((_type instanceof Enumeration)) {
-          ImportedComplexTypeToMap _type_1 = mapping.getType();
-          return Scopes.scopeFor(((Enumeration) _type_1).getFields());
-        }
+        return this.getScopeForEnumerationFields(mapping);
       }
     }
     return null;
@@ -635,11 +631,7 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     if (!_matched) {
       if (Objects.equal(reference, MappingPackage.Literals.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__ENUMERATION_FIELD)) {
         _matched=true;
-        Type _type = mapping.getType();
-        if ((_type instanceof Enumeration)) {
-          Type _type_1 = mapping.getType();
-          return Scopes.scopeFor(((Enumeration) _type_1).getFields());
-        }
+        return this.getScopeForEnumerationFields(mapping.eContainer());
       }
     }
     if (!_matched) {
@@ -987,7 +979,7 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
       }
       _xifexpression = _xifexpression_2;
     }
-    ComplexType complexType = _xifexpression;
+    final ComplexType complexType = _xifexpression;
     IScope _xifexpression_3 = null;
     if ((complexType == null)) {
       _xifexpression_3 = IScope.NULLSCOPE;
@@ -1009,6 +1001,32 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
       _xifexpression_3 = _xifexpression_4;
     }
     return _xifexpression_3;
+  }
+  
+  /**
+   * Build scope for enumeration fields in complex type mappings
+   */
+  private IScope getScopeForEnumerationFields(final EObject mapping) {
+    Enumeration _xifexpression = null;
+    if ((mapping instanceof ComplexParameterMapping)) {
+      Enumeration _xifexpression_1 = null;
+      ImportedType _importedType = ((ComplexParameterMapping)mapping).getParameter().getImportedType();
+      boolean _tripleNotEquals = (_importedType != null);
+      if (_tripleNotEquals) {
+        Type _type = ((ComplexParameterMapping)mapping).getParameter().getImportedType().getType();
+        _xifexpression_1 = ((Enumeration) _type);
+      }
+      _xifexpression = _xifexpression_1;
+    } else {
+      Enumeration _xifexpression_2 = null;
+      if ((mapping instanceof ComplexTypeMapping)) {
+        ComplexType _type_1 = ((ComplexTypeMapping)mapping).getType().getType();
+        _xifexpression_2 = ((Enumeration) _type_1);
+      }
+      _xifexpression = _xifexpression_2;
+    }
+    final Enumeration enumeration = _xifexpression;
+    return Scopes.scopeFor(enumeration.getFields());
   }
   
   /**

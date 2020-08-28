@@ -174,8 +174,7 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
 
             /* Enumeration fields */
             case MappingPackage::Literals.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__ENUMERATION_FIELD:
-                if (mapping.type instanceof Enumeration)
-                    return Scopes::scopeFor((mapping.type as Enumeration).fields)
+                return mapping.getScopeForEnumerationFields()
         }
 
         return null
@@ -489,8 +488,7 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
 
             /* Enumeration fields */
             case MappingPackage::Literals.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__ENUMERATION_FIELD:
-                if (mapping.type instanceof Enumeration)
-                    return Scopes::scopeFor((mapping.type as Enumeration).fields)
+                return mapping.eContainer.getScopeForEnumerationFields()
 
             /* Data type technologies */
             case MappingPackage::Literals.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__TECHNOLOGY,
@@ -693,7 +691,7 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
      * Build scope for data fields in complex type and parameter mappings
      */
     private def getScopeForDataFields(EObject mapping) {
-        var ComplexType complexType = if (mapping instanceof ComplexParameterMapping) {
+        val ComplexType complexType = if (mapping instanceof ComplexParameterMapping) {
             if (mapping.parameter.importedType !== null)
                 mapping.parameter.importedType.type as ComplexType
         } else if (mapping instanceof ComplexTypeMapping)
@@ -707,6 +705,19 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
                 Scopes::scopeFor((complexType as ListType).dataFields)
             else
                 IScope.NULLSCOPE
+    }
+
+    /**
+     * Build scope for enumeration fields in complex type mappings
+     */
+    private def getScopeForEnumerationFields(EObject mapping) {
+        val Enumeration enumeration = if (mapping instanceof ComplexParameterMapping) {
+            if (mapping.parameter.importedType !== null)
+                mapping.parameter.importedType.type as Enumeration
+        } else if (mapping instanceof ComplexTypeMapping)
+            mapping.type.type as Enumeration
+
+        return Scopes::scopeFor(enumeration.fields)
     }
 
     /**
