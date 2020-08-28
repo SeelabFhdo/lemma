@@ -67,7 +67,7 @@ is generally the case for Ecore metamodels and derived model instances.
 Format Specification
 ====================
 This document describes the metamodel and thus the structure of XMI files of
-Intermediate Service Models, i.e., instances of Domain Data Models that were 
+Intermediate Service Models, i.e., instances of Service Models that were
 exported from Eclipse (cf. :ref:`Introduction` and :ref:`ModelProcessing`). It 
 may be used as reference, when implementing custom model processors for 
 microservice-related Service Models.
@@ -112,7 +112,7 @@ Model Root
     .. py:attribute:: String[1] sourceModelUri
 
         `\"file\"` URI pointing to the source Service Model file from which 
-        this model was derived. Not that this might be an empty string, if the
+        this model was derived. Note that this might be an empty string, if the
         :java:type:`IntermediateMicroservice` instances were derived from 
         different Service Models. Model processors should then rely on the
         :ref:`eponymous attribute 

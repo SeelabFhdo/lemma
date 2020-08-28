@@ -113,7 +113,7 @@ is generally the case for Ecore metamodels and derived model instances.</p>
 <div class="section" id="format-specification">
 <h1>3&nbsp;&nbsp;&nbsp;Format Specification<a class="headerlink" href="#format-specification" title="Permalink to this headline">¶</a></h1>
 <p>This document describes the metamodel and thus the structure of XMI files of
-Intermediate Service Models, i.e., instances of Domain Data Models that were
+Intermediate Service Models, i.e., instances of Service Models that were
 exported from Eclipse (cf. <a class="reference internal" href="#introduction"><span class="std std-ref">1&nbsp;&nbsp;&nbsp;Introduction</span></a> and <a class="reference internal" href="#modelprocessing"><span class="std std-ref">2&nbsp;&nbsp;&nbsp;Model Processing</span></a>). It
 may be used as reference, when implementing custom model processors for
 microservice-related Service Models.</p>
@@ -150,7 +150,7 @@ default value in case it did not receive an explicit value.</p>
 <dt>
 <code class="descname">String[1] sourceModelUri</code></dt>
 <dd><p><cite>“file”</cite> URI pointing to the source Service Model file from which
-this model was derived. Not that this might be an empty string, if the
+this model was derived. Note that this might be an empty string, if the
 <a class="reference internal" href="#IntermediateMicroservice" title="IntermediateMicroservice"><code class="xref java java-type docutils literal"><span class="pre">IntermediateMicroservice</span></code></a> instances were derived from
 different Service Models. Model processors should then rely on the
 <a class="reference internal" href="#link-intermediatemicroservice-sourcemodeluri"><span class="std std-ref">eponymous attribute</span></a> in the
