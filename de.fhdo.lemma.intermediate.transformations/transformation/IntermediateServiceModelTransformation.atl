@@ -443,17 +443,43 @@ rule IntermediateParameter {
             i.initializedByOperation.initializedParameter <- i;
         }
 
+        -- Set original type for parameter (original type got overwritten in mapping model)
+        if (not p.originalPrimitiveType.oclIsUndefined())
+            i.originalType <- thisModule.BuiltinPrimitiveIntermediateType(p.originalPrimitiveType);
+        else if (not p.originalImportedType.oclIsUndefined())
+            if (p.originalImportedType.type.oclIsKindOf(Service!ComplexType))
+                i.originalType <- thisModule.DataModelIntermediateType(p.originalImportedType);
+
         -- Create intermediate type for parameter
-        if (thisModule.hasDefaultPrimitiveTechnologySpecificType(p))
+        if (thisModule.hasDefaultPrimitiveTechnologySpecificType(p)) {
             i.type <- thisModule.TechnologySpecificPrimitiveIntermediateType(p);
-        else if (thisModule.hasTechnologySpecificType(p))
+
+            -- Original type was not overwritten in mapping model, so set it here
+            if (i.originalType.oclIsUndefined())
+                i.originalType <- thisModule.BuiltinPrimitiveIntermediateType(p.primitiveType);
+        } else if (thisModule.hasTechnologySpecificType(p)) {
             i.type <- thisModule.TechnologySpecificIntermediateType(p.importedType,
                 p.operation.interface.microservice.t_typeDefinitionTechnology.name);
-        else if (not p.primitiveType.oclIsUndefined())
-            i.type <- thisModule.BuiltinPrimitiveIntermediateType(p);
-        else if (not p.importedType.oclIsUndefined())
-            if (p.importedType.type.oclIsKindOf(Service!ComplexType))
-                i.type <- thisModule.DataModelIntermediateType(p);
+
+            -- Original type is equal to type (no mapping and type was explicitly set to
+            -- technology-specific one by modeler)
+            if (i.originalType.oclIsUndefined())
+                i.originalType <- thisModule.TechnologySpecificIntermediateType(p.importedType,
+                    p.operation.interface.microservice.t_typeDefinitionTechnology.name);
+        } else if (not p.primitiveType.oclIsUndefined()) {
+            i.type <- thisModule.BuiltinPrimitiveIntermediateType(p.primitiveType);
+
+            -- Original type is equal to type (no mapping and type is built-in primitive)
+            if (i.originalType.oclIsUndefined())
+                i.originalType <- thisModule.BuiltinPrimitiveIntermediateType(p.primitiveType);
+        } else if (not p.importedType.oclIsUndefined())
+            if (p.importedType.type.oclIsKindOf(Service!ComplexType)) {
+                i.type <- thisModule.DataModelIntermediateType(p.importedType);
+
+                -- Original type is equal to type (no mapping and imported type from data model)
+                if (i.originalType.oclIsUndefined())
+                    i.originalType <- thisModule.DataModelIntermediateType(p.importedType);
+            }
 
         -- Link parameter to operation
         i.operation <- thisModule.getCreatedOperation(p.operation);
@@ -579,12 +605,12 @@ helper def : findDefaultTechnologySpecificPrimitiveType(primitiveType : Service!
     )
 ;
 
---- Create an intermediate type for a parameter type that is a built-in primitive
-rule BuiltinPrimitiveIntermediateType(p : Service!Parameter) {
+--- Create an intermediate type for a built-in primitive
+rule BuiltinPrimitiveIntermediateType(primitiveType : Service!PrimitiveType) {
     to
         i : Intermediate!IntermediatePrimitiveType(
-            name <- p.primitiveType.typeName,
-            size <- p.primitiveType.typeSize,
+            name <- primitiveType.typeName,
+            size <- primitiveType.typeSize,
             origin <- #BUILTIN,
             kind <- #PRIMITIVE
         )
@@ -593,16 +619,15 @@ rule BuiltinPrimitiveIntermediateType(p : Service!Parameter) {
     }
 }
 
---- Called rule to create an intermediate type for parameters with complex types being imported from
---- a data model
-rule DataModelIntermediateType(p : Service!Parameter) {
+--- Called rule to create an intermediate type for complex types being imported from a data model
+rule DataModelIntermediateType(importedType : Service!ImportedType) {
     to
         i : Intermediate!IntermediateImportedComplexType(
-            name <- p.importedType.type.name,
-            qualifiedName <- p.importedType.type.buildQualifiedName('.'),
+            name <- importedType.type.name,
+            qualifiedName <- importedType.type.buildQualifiedName('.'),
             origin <- #DATA_MODEL,
-            kind <- thisModule.getTypeKind(p.importedType.type),
-            import <- thisModule.getCreatedImport(p.importedType.import)
+            kind <- thisModule.getTypeKind(importedType.type),
+            import <- thisModule.getCreatedImport(importedType.import)
         )
     do {
         i;

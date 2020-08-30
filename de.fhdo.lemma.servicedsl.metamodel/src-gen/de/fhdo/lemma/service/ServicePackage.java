@@ -1758,13 +1758,31 @@ public interface ServicePackage extends EPackage {
     int PARAMETER__MAPPED_FIELDS = 9;
 
     /**
+     * The feature id for the '<em><b>Original Imported Type</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PARAMETER__ORIGINAL_IMPORTED_TYPE = 10;
+
+    /**
+     * The feature id for the '<em><b>Original Primitive Type</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PARAMETER__ORIGINAL_PRIMITIVE_TYPE = 11;
+
+    /**
      * The feature id for the '<em><b>Operation</b></em>' container reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int PARAMETER__OPERATION = 10;
+    int PARAMETER__OPERATION = 12;
 
     /**
      * The number of structural features of the '<em>Parameter</em>' class.
@@ -1773,7 +1791,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int PARAMETER_FEATURE_COUNT = 11;
+    int PARAMETER_FEATURE_COUNT = 13;
 
     /**
      * The operation id for the '<em>Get Qualified Name Parts</em>' operation.
@@ -4237,6 +4255,28 @@ public interface ServicePackage extends EPackage {
     EReference getParameter_MappedFields();
 
     /**
+     * Returns the meta object for the containment reference '{@link de.fhdo.lemma.service.Parameter#getOriginalImportedType <em>Original Imported Type</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference '<em>Original Imported Type</em>'.
+     * @see de.fhdo.lemma.service.Parameter#getOriginalImportedType()
+     * @see #getParameter()
+     * @generated
+     */
+    EReference getParameter_OriginalImportedType();
+
+    /**
+     * Returns the meta object for the containment reference '{@link de.fhdo.lemma.service.Parameter#getOriginalPrimitiveType <em>Original Primitive Type</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference '<em>Original Primitive Type</em>'.
+     * @see de.fhdo.lemma.service.Parameter#getOriginalPrimitiveType()
+     * @see #getParameter()
+     * @generated
+     */
+    EReference getParameter_OriginalPrimitiveType();
+
+    /**
      * Returns the meta object for the container reference '{@link de.fhdo.lemma.service.Parameter#getOperation <em>Operation</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -6279,6 +6319,22 @@ public interface ServicePackage extends EPackage {
          * @generated
          */
         EReference PARAMETER__MAPPED_FIELDS = eINSTANCE.getParameter_MappedFields();
+
+        /**
+         * The meta object literal for the '<em><b>Original Imported Type</b></em>' containment reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference PARAMETER__ORIGINAL_IMPORTED_TYPE = eINSTANCE.getParameter_OriginalImportedType();
+
+        /**
+         * The meta object literal for the '<em><b>Original Primitive Type</b></em>' containment reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference PARAMETER__ORIGINAL_PRIMITIVE_TYPE = eINSTANCE.getParameter_OriginalPrimitiveType();
 
         /**
          * The meta object literal for the '<em><b>Operation</b></em>' container reference feature.

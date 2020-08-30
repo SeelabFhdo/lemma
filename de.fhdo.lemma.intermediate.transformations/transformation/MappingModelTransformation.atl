@@ -644,6 +644,13 @@ rule Parameter(sourceParameter : Service!Parameter, parameterMapping : Mapping!P
         if (not sourceParameter.initializedByOperation.oclIsUndefined())
             thisModule.AddInitializedParametersTodo(t, sourceParameter.initializedByOperation);
 
+        -- Keep original parameter type
+        if (not sourceParameter.primitiveType.oclIsUndefined())
+            t.originalPrimitiveType <- thisModule.PrimitiveType(sourceParameter.primitiveType);
+        else if (not sourceParameter.importedType.oclIsUndefined())
+            t.originalImportedType <- thisModule.ImportedType(sourceParameter.importedType.import,
+                sourceParameter.importedType.type, OclUndefined);
+
         if (not parameterMapping.oclIsUndefined()) {
             -- Parameter is mapped to technology-specific primitive type
             if (parameterMapping.oclIsTypeOf(Mapping!PrimitiveParameterMapping)) {
@@ -1026,6 +1033,132 @@ rule TechnologySpecificPropertyValueAssignment(
             property <- sourceAssignment.property,
             value <- thisModule.PrimitiveValue(sourceAssignment.value)
         )
+    do {
+        t;
+    }
+}
+
+--- Generic helper to create a PrimitiveType instance from a source PrimitiveType (copy)
+helper def : PrimitiveType(sourceType : Service!PrimitiveType) : Service!PrimitiveType =
+    if sourceType.oclIsTypeOf(Service!PrimitiveBoolean) then
+        thisModule.PrimitiveBoolean()
+    else if sourceType.oclIsTypeOf(Service!PrimitiveByte) then
+        thisModule.PrimitiveByte()
+    else if sourceType.oclIsTypeOf(Service!PrimitiveCharacter) then
+        thisModule.PrimitiveCharacter()
+    else if sourceType.oclIsTypeOf(Service!PrimitiveDate) then
+        thisModule.PrimitiveDate()
+    else if sourceType.oclIsTypeOf(Service!PrimitiveDouble) then
+        thisModule.PrimitiveDouble()
+    else if sourceType.oclIsTypeOf(Service!PrimitiveFloat) then
+        thisModule.PrimitiveFloat()
+    else if sourceType.oclIsTypeOf(Service!PrimitiveInteger) then
+        thisModule.PrimitiveInteger()
+    else if sourceType.oclIsTypeOf(Service!PrimitiveLong) then
+        thisModule.PrimitiveLong()
+    else if sourceType.oclIsTypeOf(Service!PrimitiveShort) then
+        thisModule.PrimitiveShort()
+    else if sourceType.oclIsTypeOf(Service!PrimitiveString) then
+        thisModule.PrimitiveString()
+    else
+        OclUndefined
+    endif
+    endif
+    endif
+    endif
+    endif
+    endif
+    endif
+    endif
+    endif
+    endif
+;
+
+--- Generic called rule to create a PrimitiveBoolean
+rule PrimitiveBoolean() {
+    to
+        t : Service!PrimitiveBoolean
+    do {
+        t;
+    }
+}
+
+--- Generic called rule to create a PrimitiveByte
+rule PrimitiveByte() {
+    to
+        t : Service!PrimitiveByte
+    do {
+        t;
+    }
+}
+
+--- Generic called rule to create a PrimitiveCharacter
+rule PrimitiveCharacter() {
+    to
+        t : Service!PrimitiveCharacter
+    do {
+        t;
+    }
+}
+
+--- Generic called rule to create a PrimitiveDate
+rule PrimitiveDate() {
+    to
+        t : Service!PrimitiveDate
+    do {
+        t;
+    }
+}
+
+--- Generic called rule to create a PrimitiveDouble
+rule PrimitiveDouble() {
+    to
+        t : Service!PrimitiveDouble
+    do {
+        t;
+    }
+}
+
+--- Generic called rule to create a PrimitiveFloat
+rule PrimitiveFloat() {
+    to
+        t : Service!PrimitiveFloat
+    do {
+        t;
+    }
+}
+
+--- Generic called rule to create a PrimitiveInteger
+rule PrimitiveInteger() {
+    to
+        t : Service!PrimitiveInteger
+    do {
+        t;
+    }
+}
+
+--- Generic called rule to create a PrimitiveInteger
+rule PrimitiveLong() {
+    to
+        t : Service!PrimitiveLong
+    do {
+        t;
+    }
+}
+
+--- Generic called rule to create a PrimitiveShort
+rule PrimitiveShort() {
+    to
+        t : Service!PrimitiveShort
+    do {
+        t;
+    }
+}
+
+--- Generic called rule to create a PrimitiveString
+rule PrimitiveString() {
+    to
+        t : Service!PrimitiveString
     do {
         t;
     }

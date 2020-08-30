@@ -1921,8 +1921,28 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     @Override
-    public EReference getParameter_Operation() {
+    public EReference getParameter_OriginalImportedType() {
         return (EReference)parameterEClass.getEStructuralFeatures().get(10);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getParameter_OriginalPrimitiveType() {
+        return (EReference)parameterEClass.getEStructuralFeatures().get(11);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getParameter_Operation() {
+        return (EReference)parameterEClass.getEStructuralFeatures().get(12);
     }
 
     /**
@@ -2787,6 +2807,8 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
         createEReference(parameterEClass, PARAMETER__PRIMITIVE_TYPE);
         createEReference(parameterEClass, PARAMETER__ASPECTS);
         createEReference(parameterEClass, PARAMETER__MAPPED_FIELDS);
+        createEReference(parameterEClass, PARAMETER__ORIGINAL_IMPORTED_TYPE);
+        createEReference(parameterEClass, PARAMETER__ORIGINAL_PRIMITIVE_TYPE);
         createEReference(parameterEClass, PARAMETER__OPERATION);
         createEOperation(parameterEClass, PARAMETER___GET_QUALIFIED_NAME_PARTS);
         createEOperation(parameterEClass, PARAMETER___BUILD_QUALIFIED_NAME__STRING);
@@ -3128,6 +3150,8 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
         initEReference(getParameter_PrimitiveType(), theDataPackage.getPrimitiveType(), null, "primitiveType", null, 0, 1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getParameter_Aspects(), this.getImportedServiceAspect(), this.getImportedServiceAspect_Parameter(), "aspects", null, 0, -1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getParameter_MappedFields(), this.getMappedField(), this.getMappedField_Parameter(), "mappedFields", null, 0, -1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getParameter_OriginalImportedType(), this.getImportedType(), null, "originalImportedType", null, 0, 1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getParameter_OriginalPrimitiveType(), theDataPackage.getPrimitiveType(), null, "originalPrimitiveType", null, 0, 1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getParameter_Operation(), this.getOperation(), this.getOperation_Parameters(), "operation", null, 0, 1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEOperation(getParameter__GetQualifiedNameParts(), theEcorePackage.getEString(), "getQualifiedNameParts", 0, -1, !IS_UNIQUE, IS_ORDERED);

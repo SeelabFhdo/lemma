@@ -69,6 +69,8 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
  *   <li>{@link de.fhdo.lemma.service.impl.ParameterImpl#getPrimitiveType <em>Primitive Type</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.impl.ParameterImpl#getAspects <em>Aspects</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.impl.ParameterImpl#getMappedFields <em>Mapped Fields</em>}</li>
+ *   <li>{@link de.fhdo.lemma.service.impl.ParameterImpl#getOriginalImportedType <em>Original Imported Type</em>}</li>
+ *   <li>{@link de.fhdo.lemma.service.impl.ParameterImpl#getOriginalPrimitiveType <em>Original Primitive Type</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.impl.ParameterImpl#getOperation <em>Operation</em>}</li>
  * </ul>
  *
@@ -224,6 +226,26 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
      * @ordered
      */
     protected EList<MappedField> mappedFields;
+
+    /**
+     * The cached value of the '{@link #getOriginalImportedType() <em>Original Imported Type</em>}' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getOriginalImportedType()
+     * @generated
+     * @ordered
+     */
+    protected ImportedType originalImportedType;
+
+    /**
+     * The cached value of the '{@link #getOriginalPrimitiveType() <em>Original Primitive Type</em>}' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getOriginalPrimitiveType()
+     * @generated
+     * @ordered
+     */
+    protected PrimitiveType originalPrimitiveType;
 
     /**
      * <!-- begin-user-doc -->
@@ -526,6 +548,96 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
      * @generated
      */
     @Override
+    public ImportedType getOriginalImportedType() {
+        return originalImportedType;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public NotificationChain basicSetOriginalImportedType(ImportedType newOriginalImportedType, NotificationChain msgs) {
+        ImportedType oldOriginalImportedType = originalImportedType;
+        originalImportedType = newOriginalImportedType;
+        if (eNotificationRequired()) {
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ServicePackage.PARAMETER__ORIGINAL_IMPORTED_TYPE, oldOriginalImportedType, newOriginalImportedType);
+            if (msgs == null) msgs = notification; else msgs.add(notification);
+        }
+        return msgs;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void setOriginalImportedType(ImportedType newOriginalImportedType) {
+        if (newOriginalImportedType != originalImportedType) {
+            NotificationChain msgs = null;
+            if (originalImportedType != null)
+                msgs = ((InternalEObject)originalImportedType).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ServicePackage.PARAMETER__ORIGINAL_IMPORTED_TYPE, null, msgs);
+            if (newOriginalImportedType != null)
+                msgs = ((InternalEObject)newOriginalImportedType).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ServicePackage.PARAMETER__ORIGINAL_IMPORTED_TYPE, null, msgs);
+            msgs = basicSetOriginalImportedType(newOriginalImportedType, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ServicePackage.PARAMETER__ORIGINAL_IMPORTED_TYPE, newOriginalImportedType, newOriginalImportedType));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public PrimitiveType getOriginalPrimitiveType() {
+        return originalPrimitiveType;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public NotificationChain basicSetOriginalPrimitiveType(PrimitiveType newOriginalPrimitiveType, NotificationChain msgs) {
+        PrimitiveType oldOriginalPrimitiveType = originalPrimitiveType;
+        originalPrimitiveType = newOriginalPrimitiveType;
+        if (eNotificationRequired()) {
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ServicePackage.PARAMETER__ORIGINAL_PRIMITIVE_TYPE, oldOriginalPrimitiveType, newOriginalPrimitiveType);
+            if (msgs == null) msgs = notification; else msgs.add(notification);
+        }
+        return msgs;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void setOriginalPrimitiveType(PrimitiveType newOriginalPrimitiveType) {
+        if (newOriginalPrimitiveType != originalPrimitiveType) {
+            NotificationChain msgs = null;
+            if (originalPrimitiveType != null)
+                msgs = ((InternalEObject)originalPrimitiveType).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ServicePackage.PARAMETER__ORIGINAL_PRIMITIVE_TYPE, null, msgs);
+            if (newOriginalPrimitiveType != null)
+                msgs = ((InternalEObject)newOriginalPrimitiveType).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ServicePackage.PARAMETER__ORIGINAL_PRIMITIVE_TYPE, null, msgs);
+            msgs = basicSetOriginalPrimitiveType(newOriginalPrimitiveType, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ServicePackage.PARAMETER__ORIGINAL_PRIMITIVE_TYPE, newOriginalPrimitiveType, newOriginalPrimitiveType));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public Operation getOperation() {
         if (eContainerFeatureID() != ServicePackage.PARAMETER__OPERATION) return null;
         return (Operation)eContainer();
@@ -777,6 +889,10 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
                 return ((InternalEList<?>)getAspects()).basicRemove(otherEnd, msgs);
             case ServicePackage.PARAMETER__MAPPED_FIELDS:
                 return ((InternalEList<?>)getMappedFields()).basicRemove(otherEnd, msgs);
+            case ServicePackage.PARAMETER__ORIGINAL_IMPORTED_TYPE:
+                return basicSetOriginalImportedType(null, msgs);
+            case ServicePackage.PARAMETER__ORIGINAL_PRIMITIVE_TYPE:
+                return basicSetOriginalPrimitiveType(null, msgs);
             case ServicePackage.PARAMETER__OPERATION:
                 return basicSetOperation(null, msgs);
         }
@@ -825,6 +941,10 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
                 return getAspects();
             case ServicePackage.PARAMETER__MAPPED_FIELDS:
                 return getMappedFields();
+            case ServicePackage.PARAMETER__ORIGINAL_IMPORTED_TYPE:
+                return getOriginalImportedType();
+            case ServicePackage.PARAMETER__ORIGINAL_PRIMITIVE_TYPE:
+                return getOriginalPrimitiveType();
             case ServicePackage.PARAMETER__OPERATION:
                 if (resolve) return getOperation();
                 return basicGetOperation();
@@ -873,6 +993,12 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
                 getMappedFields().clear();
                 getMappedFields().addAll((Collection<? extends MappedField>)newValue);
                 return;
+            case ServicePackage.PARAMETER__ORIGINAL_IMPORTED_TYPE:
+                setOriginalImportedType((ImportedType)newValue);
+                return;
+            case ServicePackage.PARAMETER__ORIGINAL_PRIMITIVE_TYPE:
+                setOriginalPrimitiveType((PrimitiveType)newValue);
+                return;
             case ServicePackage.PARAMETER__OPERATION:
                 setOperation((Operation)newValue);
                 return;
@@ -918,6 +1044,12 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
             case ServicePackage.PARAMETER__MAPPED_FIELDS:
                 getMappedFields().clear();
                 return;
+            case ServicePackage.PARAMETER__ORIGINAL_IMPORTED_TYPE:
+                setOriginalImportedType((ImportedType)null);
+                return;
+            case ServicePackage.PARAMETER__ORIGINAL_PRIMITIVE_TYPE:
+                setOriginalPrimitiveType((PrimitiveType)null);
+                return;
             case ServicePackage.PARAMETER__OPERATION:
                 setOperation((Operation)null);
                 return;
@@ -953,6 +1085,10 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
                 return aspects != null && !aspects.isEmpty();
             case ServicePackage.PARAMETER__MAPPED_FIELDS:
                 return mappedFields != null && !mappedFields.isEmpty();
+            case ServicePackage.PARAMETER__ORIGINAL_IMPORTED_TYPE:
+                return originalImportedType != null;
+            case ServicePackage.PARAMETER__ORIGINAL_PRIMITIVE_TYPE:
+                return originalPrimitiveType != null;
             case ServicePackage.PARAMETER__OPERATION:
                 return basicGetOperation() != null;
         }

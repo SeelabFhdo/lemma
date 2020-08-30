@@ -208,7 +208,7 @@ this microservice originates.</p>
 its version, if any. Both name fragments are separated by dots.</p>
 </dd></dl>
 
-<dl class="attribute">
+<span class="target" id="link-intermediatemicroservice-type"></span><dl class="attribute">
 <dt>
 <code class="descname">String[1] type</code></dt>
 <dd><p>Type of the microservice. The following values are possible:</p>
@@ -242,7 +242,7 @@ functions, e.g., for currency conversion.</td>
 </table>
 </dd></dl>
 
-<dl class="attribute">
+<span class="target" id="link-intermediatemicroservice-visibility"></span><dl class="attribute">
 <dt>
 <code class="descname">String[1] visibility</code></dt>
 <dd><p>Visibility of the microservice. The following values are possible:</p>
@@ -273,7 +273,7 @@ consumers.</td>
 </table>
 </dd></dl>
 
-<dl class="attribute">
+<span class="target" id="link-intermediatemicroservice-effectivelyimplemented"></span><dl class="attribute">
 <dt>
 <code class="descname">boolean effectivelyImplemented</code></dt>
 <dd><p>Flag to indicate if the microservice has at least one
@@ -942,6 +942,28 @@ communication type and
 <p class="first admonition-title">Note</p>
 <p class="last">A parameter cannot be typed with the built-in primitive type
 <code class="docutils literal"><span class="pre">unspecified</span></code>.</p>
+</div>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">Code generators must use this type as the parameter’s return type
+and not <a class="reference internal" href="#link-intermediateparameter-originaltype"><span class="std std-ref">originalType</span></a>.</p>
+</div>
+</dd></dl>
+
+<span class="target" id="link-intermediateparameter-originaltype"></span><dl class="attribute">
+<dt>
+<code class="descname">IntermediateType[1] originalType</code></dt>
+<dd><p>The original return type of the parameter in case it got mapped within a
+Mapping Model or a technology-agnostic base type exists.</p>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">This attribute always holds a value. In case it differs from the
+<a class="reference internal" href="#link-intermediateparameter-type"><span class="std std-ref">type</span></a>, the type got mapped
+either explicitly via a Mapping Model or implicitly, because a
+technology-specific type exists with the original type being its
+base type. For instance, the built-in primitive type <code class="docutils literal"><span class="pre">string</span></code>
+always gets mapped to its technology-specific counterpart, if it
+can be identified from a technology model on the service.</p>
 </div>
 </dd></dl>
 

@@ -821,13 +821,22 @@ public interface IntermediatePackage extends EPackage {
     int INTERMEDIATE_PARAMETER__TYPE = 6;
 
     /**
+     * The feature id for the '<em><b>Original Type</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_PARAMETER__ORIGINAL_TYPE = 7;
+
+    /**
      * The feature id for the '<em><b>Initialized By Operation</b></em>' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_PARAMETER__INITIALIZED_BY_OPERATION = 7;
+    int INTERMEDIATE_PARAMETER__INITIALIZED_BY_OPERATION = 8;
 
     /**
      * The feature id for the '<em><b>Aspects</b></em>' containment reference list.
@@ -836,7 +845,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_PARAMETER__ASPECTS = 8;
+    int INTERMEDIATE_PARAMETER__ASPECTS = 9;
 
     /**
      * The feature id for the '<em><b>Field Aspects</b></em>' containment reference list.
@@ -845,7 +854,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_PARAMETER__FIELD_ASPECTS = 9;
+    int INTERMEDIATE_PARAMETER__FIELD_ASPECTS = 10;
 
     /**
      * The feature id for the '<em><b>Operation</b></em>' container reference.
@@ -854,7 +863,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_PARAMETER__OPERATION = 10;
+    int INTERMEDIATE_PARAMETER__OPERATION = 11;
 
     /**
      * The number of structural features of the '<em>Parameter</em>' class.
@@ -863,7 +872,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_PARAMETER_FEATURE_COUNT = 11;
+    int INTERMEDIATE_PARAMETER_FEATURE_COUNT = 12;
 
     /**
      * The number of operations of the '<em>Parameter</em>' class.
@@ -2194,6 +2203,17 @@ public interface IntermediatePackage extends EPackage {
     EReference getIntermediateParameter_Type();
 
     /**
+     * Returns the meta object for the containment reference '{@link de.fhdo.lemma.service.intermediate.IntermediateParameter#getOriginalType <em>Original Type</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference '<em>Original Type</em>'.
+     * @see de.fhdo.lemma.service.intermediate.IntermediateParameter#getOriginalType()
+     * @see #getIntermediateParameter()
+     * @generated
+     */
+    EReference getIntermediateParameter_OriginalType();
+
+    /**
      * Returns the meta object for the containment reference '{@link de.fhdo.lemma.service.intermediate.IntermediateParameter#getInitializedByOperation <em>Initialized By Operation</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -3345,6 +3365,14 @@ public interface IntermediatePackage extends EPackage {
          * @generated
          */
         EReference INTERMEDIATE_PARAMETER__TYPE = eINSTANCE.getIntermediateParameter_Type();
+
+        /**
+         * The meta object literal for the '<em><b>Original Type</b></em>' containment reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference INTERMEDIATE_PARAMETER__ORIGINAL_TYPE = eINSTANCE.getIntermediateParameter_OriginalType();
 
         /**
          * The meta object literal for the '<em><b>Initialized By Operation</b></em>' containment reference feature.

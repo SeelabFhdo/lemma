@@ -1183,6 +1183,11 @@ class Parameter {
     // with (to) technology-specific information (type)
     contains MappedField[] mappedFields opposite parameter
 
+    // These properties carry the original type of the parameter, in case it got overwritten within
+    // a mapping model
+    contains ImportedType[0..1] originalImportedType
+    contains PrimitiveType[0..1] originalPrimitiveType
+
     container Operation operation opposite parameters
 
     /**

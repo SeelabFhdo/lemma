@@ -44,6 +44,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.fhdo.lemma.service.intermediate.impl.IntermediateParameterImpl#isCommunicatesFault <em>Communicates Fault</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.intermediate.impl.IntermediateParameterImpl#isOptional <em>Optional</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.intermediate.impl.IntermediateParameterImpl#getType <em>Type</em>}</li>
+ *   <li>{@link de.fhdo.lemma.service.intermediate.impl.IntermediateParameterImpl#getOriginalType <em>Original Type</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.intermediate.impl.IntermediateParameterImpl#getInitializedByOperation <em>Initialized By Operation</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.intermediate.impl.IntermediateParameterImpl#getAspects <em>Aspects</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.intermediate.impl.IntermediateParameterImpl#getFieldAspects <em>Field Aspects</em>}</li>
@@ -182,6 +183,16 @@ public class IntermediateParameterImpl extends MinimalEObjectImpl.Container impl
      * @ordered
      */
     protected IntermediateType type;
+
+    /**
+     * The cached value of the '{@link #getOriginalType() <em>Original Type</em>}' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getOriginalType()
+     * @generated
+     * @ordered
+     */
+    protected IntermediateType originalType;
 
     /**
      * The cached value of the '{@link #getInitializedByOperation() <em>Initialized By Operation</em>}' containment reference.
@@ -421,6 +432,51 @@ public class IntermediateParameterImpl extends MinimalEObjectImpl.Container impl
      * @generated
      */
     @Override
+    public IntermediateType getOriginalType() {
+        return originalType;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public NotificationChain basicSetOriginalType(IntermediateType newOriginalType, NotificationChain msgs) {
+        IntermediateType oldOriginalType = originalType;
+        originalType = newOriginalType;
+        if (eNotificationRequired()) {
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, IntermediatePackage.INTERMEDIATE_PARAMETER__ORIGINAL_TYPE, oldOriginalType, newOriginalType);
+            if (msgs == null) msgs = notification; else msgs.add(notification);
+        }
+        return msgs;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void setOriginalType(IntermediateType newOriginalType) {
+        if (newOriginalType != originalType) {
+            NotificationChain msgs = null;
+            if (originalType != null)
+                msgs = ((InternalEObject)originalType).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - IntermediatePackage.INTERMEDIATE_PARAMETER__ORIGINAL_TYPE, null, msgs);
+            if (newOriginalType != null)
+                msgs = ((InternalEObject)newOriginalType).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - IntermediatePackage.INTERMEDIATE_PARAMETER__ORIGINAL_TYPE, null, msgs);
+            msgs = basicSetOriginalType(newOriginalType, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, IntermediatePackage.INTERMEDIATE_PARAMETER__ORIGINAL_TYPE, newOriginalType, newOriginalType));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public OperationReference getInitializedByOperation() {
         return initializedByOperation;
     }
@@ -572,6 +628,8 @@ public class IntermediateParameterImpl extends MinimalEObjectImpl.Container impl
         switch (featureID) {
             case IntermediatePackage.INTERMEDIATE_PARAMETER__TYPE:
                 return basicSetType(null, msgs);
+            case IntermediatePackage.INTERMEDIATE_PARAMETER__ORIGINAL_TYPE:
+                return basicSetOriginalType(null, msgs);
             case IntermediatePackage.INTERMEDIATE_PARAMETER__INITIALIZED_BY_OPERATION:
                 return basicSetInitializedByOperation(null, msgs);
             case IntermediatePackage.INTERMEDIATE_PARAMETER__ASPECTS:
@@ -620,6 +678,8 @@ public class IntermediateParameterImpl extends MinimalEObjectImpl.Container impl
                 return isOptional();
             case IntermediatePackage.INTERMEDIATE_PARAMETER__TYPE:
                 return getType();
+            case IntermediatePackage.INTERMEDIATE_PARAMETER__ORIGINAL_TYPE:
+                return getOriginalType();
             case IntermediatePackage.INTERMEDIATE_PARAMETER__INITIALIZED_BY_OPERATION:
                 return getInitializedByOperation();
             case IntermediatePackage.INTERMEDIATE_PARAMETER__ASPECTS:
@@ -662,6 +722,9 @@ public class IntermediateParameterImpl extends MinimalEObjectImpl.Container impl
                 return;
             case IntermediatePackage.INTERMEDIATE_PARAMETER__TYPE:
                 setType((IntermediateType)newValue);
+                return;
+            case IntermediatePackage.INTERMEDIATE_PARAMETER__ORIGINAL_TYPE:
+                setOriginalType((IntermediateType)newValue);
                 return;
             case IntermediatePackage.INTERMEDIATE_PARAMETER__INITIALIZED_BY_OPERATION:
                 setInitializedByOperation((OperationReference)newValue);
@@ -710,6 +773,9 @@ public class IntermediateParameterImpl extends MinimalEObjectImpl.Container impl
             case IntermediatePackage.INTERMEDIATE_PARAMETER__TYPE:
                 setType((IntermediateType)null);
                 return;
+            case IntermediatePackage.INTERMEDIATE_PARAMETER__ORIGINAL_TYPE:
+                setOriginalType((IntermediateType)null);
+                return;
             case IntermediatePackage.INTERMEDIATE_PARAMETER__INITIALIZED_BY_OPERATION:
                 setInitializedByOperation((OperationReference)null);
                 return;
@@ -748,6 +814,8 @@ public class IntermediateParameterImpl extends MinimalEObjectImpl.Container impl
                 return optional != OPTIONAL_EDEFAULT;
             case IntermediatePackage.INTERMEDIATE_PARAMETER__TYPE:
                 return type != null;
+            case IntermediatePackage.INTERMEDIATE_PARAMETER__ORIGINAL_TYPE:
+                return originalType != null;
             case IntermediatePackage.INTERMEDIATE_PARAMETER__INITIALIZED_BY_OPERATION:
                 return initializedByOperation != null;
             case IntermediatePackage.INTERMEDIATE_PARAMETER__ASPECTS:

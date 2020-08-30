@@ -31,6 +31,8 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.fhdo.lemma.service.Parameter#getPrimitiveType <em>Primitive Type</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.Parameter#getAspects <em>Aspects</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.Parameter#getMappedFields <em>Mapped Fields</em>}</li>
+ *   <li>{@link de.fhdo.lemma.service.Parameter#getOriginalImportedType <em>Original Imported Type</em>}</li>
+ *   <li>{@link de.fhdo.lemma.service.Parameter#getOriginalPrimitiveType <em>Original Primitive Type</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.Parameter#getOperation <em>Operation</em>}</li>
  * </ul>
  *
@@ -268,6 +270,50 @@ public interface Parameter extends EObject {
      * @generated
      */
     EList<MappedField> getMappedFields();
+
+    /**
+     * Returns the value of the '<em><b>Original Imported Type</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Original Imported Type</em>' containment reference.
+     * @see #setOriginalImportedType(ImportedType)
+     * @see de.fhdo.lemma.service.ServicePackage#getParameter_OriginalImportedType()
+     * @model containment="true"
+     * @generated
+     */
+    ImportedType getOriginalImportedType();
+
+    /**
+     * Sets the value of the '{@link de.fhdo.lemma.service.Parameter#getOriginalImportedType <em>Original Imported Type</em>}' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Original Imported Type</em>' containment reference.
+     * @see #getOriginalImportedType()
+     * @generated
+     */
+    void setOriginalImportedType(ImportedType value);
+
+    /**
+     * Returns the value of the '<em><b>Original Primitive Type</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Original Primitive Type</em>' containment reference.
+     * @see #setOriginalPrimitiveType(PrimitiveType)
+     * @see de.fhdo.lemma.service.ServicePackage#getParameter_OriginalPrimitiveType()
+     * @model containment="true"
+     * @generated
+     */
+    PrimitiveType getOriginalPrimitiveType();
+
+    /**
+     * Sets the value of the '{@link de.fhdo.lemma.service.Parameter#getOriginalPrimitiveType <em>Original Primitive Type</em>}' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Original Primitive Type</em>' containment reference.
+     * @see #getOriginalPrimitiveType()
+     * @generated
+     */
+    void setOriginalPrimitiveType(PrimitiveType value);
 
     /**
      * Returns the value of the '<em><b>Operation</b></em>' container reference.

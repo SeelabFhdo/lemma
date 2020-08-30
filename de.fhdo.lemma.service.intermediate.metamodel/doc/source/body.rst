@@ -164,6 +164,8 @@ Microservices
         Qualified name of the service. This is the service's name prefixed by
         its version, if any. Both name fragments are separated by dots.
 
+    .. _link__IntermediateMicroservice_type:
+
     .. py:attribute:: String[1] type
 
         Type of the microservice. The following values are possible:
@@ -186,6 +188,8 @@ Microservices
                                  functions, e.g., for currency conversion.        
         ======================   ===============================================
 
+    .. _link__IntermediateMicroservice_visibility:
+
     .. py:attribute:: String[1] visibility
 
         Visibility of the microservice. The following values are possible:
@@ -204,6 +208,8 @@ Microservices
                                  same architecture and also to external
                                  consumers.
         ======================   ===============================================
+
+    .. _link__IntermediateMicroservice_effectivelyImplemented:
 
     .. py:attribute:: boolean effectivelyImplemented
 
@@ -752,6 +758,29 @@ Microservices
 
             A parameter cannot be typed with the built-in primitive type
             ``unspecified``.
+
+        .. HINT::
+
+            Code generators must use this type as the parameter's return type
+            and not :ref:`originalType
+            <link__IntermediateParameter_originalType>`.
+
+    .. _link__IntermediateParameter_originalType:
+
+    .. py:attribute:: IntermediateType[1] originalType
+
+        The original return type of the parameter in case it got mapped within a 
+        Mapping Model or a technology-agnostic base type exists.
+
+        .. HINT::
+
+            This attribute always holds a value. In case it differs from the
+            :ref:`type <link__IntermediateParameter_type>`, the type got mapped
+            either explicitly via a Mapping Model or implicitly, because a
+            technology-specific type exists with the original type being its
+            base type. For instance, the built-in primitive type ``string``
+            always gets mapped to its technology-specific counterpart, if it
+            can be identified from a technology model on the service.
 
     .. _link__IntermediateParameter_initializedByOperation:
 

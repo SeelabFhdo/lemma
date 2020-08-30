@@ -30,6 +30,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.fhdo.lemma.service.intermediate.IntermediateParameter#isCommunicatesFault <em>Communicates Fault</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.intermediate.IntermediateParameter#isOptional <em>Optional</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.intermediate.IntermediateParameter#getType <em>Type</em>}</li>
+ *   <li>{@link de.fhdo.lemma.service.intermediate.IntermediateParameter#getOriginalType <em>Original Type</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.intermediate.IntermediateParameter#getInitializedByOperation <em>Initialized By Operation</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.intermediate.IntermediateParameter#getAspects <em>Aspects</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.intermediate.IntermediateParameter#getFieldAspects <em>Field Aspects</em>}</li>
@@ -194,6 +195,28 @@ public interface IntermediateParameter extends EObject {
      * @generated
      */
     void setType(IntermediateType value);
+
+    /**
+     * Returns the value of the '<em><b>Original Type</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Original Type</em>' containment reference.
+     * @see #setOriginalType(IntermediateType)
+     * @see de.fhdo.lemma.service.intermediate.IntermediatePackage#getIntermediateParameter_OriginalType()
+     * @model containment="true"
+     * @generated
+     */
+    IntermediateType getOriginalType();
+
+    /**
+     * Sets the value of the '{@link de.fhdo.lemma.service.intermediate.IntermediateParameter#getOriginalType <em>Original Type</em>}' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Original Type</em>' containment reference.
+     * @see #getOriginalType()
+     * @generated
+     */
+    void setOriginalType(IntermediateType value);
 
     /**
      * Returns the value of the '<em><b>Initialized By Operation</b></em>' containment reference.

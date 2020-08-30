@@ -139,6 +139,7 @@ class IntermediateParameter {
     boolean optional
 
     contains IntermediateType ^type
+    contains IntermediateType originalType
     contains OperationReference[0..1] initializedByOperation  opposite initializedParameter
     contains IntermediateImportedAspect[] aspects
     contains DataFieldAspects[] fieldAspects opposite parameter
