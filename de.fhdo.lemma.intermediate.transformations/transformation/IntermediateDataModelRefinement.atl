@@ -382,8 +382,6 @@ rule IntermediateImportedTechnologySpecificType(container : OclAny, containerFea
             kind <- thisModule.getTechnologySpecificTypeKind(mappedType.type)
         )
     do {
-        i.refSetValue(containerFeatureName, container);
-
         if (thisModule.getCreatedImport(mappedType.import).oclIsUndefined())
             thisModule.IntermediateImport(mappedType.import);
         i.import <- thisModule.getCreatedImport(mappedType.import);
