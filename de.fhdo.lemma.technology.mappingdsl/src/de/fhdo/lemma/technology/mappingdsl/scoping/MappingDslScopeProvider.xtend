@@ -711,13 +711,15 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
      * Build scope for enumeration fields in complex type mappings
      */
     private def getScopeForEnumerationFields(EObject mapping) {
-        val Enumeration enumeration = if (mapping instanceof ComplexParameterMapping) {
-            if (mapping.parameter.importedType !== null)
-                mapping.parameter.importedType.type as Enumeration
-        } else if (mapping instanceof ComplexTypeMapping)
-            mapping.type.type as Enumeration
+        val mappedType = if (mapping instanceof ComplexParameterMapping)
+                mapping.parameter.importedType.type
+            else if (mapping instanceof ComplexTypeMapping)
+                mapping.type.type
 
-        return Scopes::scopeFor(enumeration.fields)
+        return if (mappedType instanceof Enumeration)
+                Scopes::scopeFor((mappedType as Enumeration).fields)
+            else
+                IScope.NULLSCOPE
     }
 
     /**

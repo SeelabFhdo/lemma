@@ -1007,26 +1007,24 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
    * Build scope for enumeration fields in complex type mappings
    */
   private IScope getScopeForEnumerationFields(final EObject mapping) {
-    Enumeration _xifexpression = null;
+    Type _xifexpression = null;
     if ((mapping instanceof ComplexParameterMapping)) {
-      Enumeration _xifexpression_1 = null;
-      ImportedType _importedType = ((ComplexParameterMapping)mapping).getParameter().getImportedType();
-      boolean _tripleNotEquals = (_importedType != null);
-      if (_tripleNotEquals) {
-        Type _type = ((ComplexParameterMapping)mapping).getParameter().getImportedType().getType();
-        _xifexpression_1 = ((Enumeration) _type);
+      _xifexpression = ((ComplexParameterMapping)mapping).getParameter().getImportedType().getType();
+    } else {
+      ComplexType _xifexpression_1 = null;
+      if ((mapping instanceof ComplexTypeMapping)) {
+        _xifexpression_1 = ((ComplexTypeMapping)mapping).getType().getType();
       }
       _xifexpression = _xifexpression_1;
-    } else {
-      Enumeration _xifexpression_2 = null;
-      if ((mapping instanceof ComplexTypeMapping)) {
-        ComplexType _type_1 = ((ComplexTypeMapping)mapping).getType().getType();
-        _xifexpression_2 = ((Enumeration) _type_1);
-      }
-      _xifexpression = _xifexpression_2;
     }
-    final Enumeration enumeration = _xifexpression;
-    return Scopes.scopeFor(enumeration.getFields());
+    final Type mappedType = _xifexpression;
+    IScope _xifexpression_2 = null;
+    if ((mappedType instanceof Enumeration)) {
+      _xifexpression_2 = Scopes.scopeFor(((Enumeration) mappedType).getFields());
+    } else {
+      _xifexpression_2 = IScope.NULLSCOPE;
+    }
+    return _xifexpression_2;
   }
   
   /**
