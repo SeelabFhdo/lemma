@@ -250,8 +250,8 @@ rule RefineIntermediateDataOperationReturnType {
         -- Determine type
         if (not typeDefinitionTechnology.oclIsUndefined()) {
             if (not mappedType.oclIsUndefined())
-                t.type <- thisModule.IntermediateImportedTechnologySpecificType(t, 'returnType',
-                    mappedType, typeDefinitionTechnology);
+                t.type <- thisModule.IntermediateImportedTechnologySpecificType(t, mappedType,
+                    typeDefinitionTechnology);
             else if (thisModule.hasDefaultPrimitiveTechnologySpecificType(s.originalType,
                 typeDefinitionTechnology))
                 t.type <- thisModule.TechnologySpecificPrimitiveIntermediateType(s.originalType,
@@ -304,8 +304,8 @@ rule RefineIntermediateDataOperationParameter {
         -- Determine type
         if (not typeDefinitionTechnology.oclIsUndefined()) {
             if (not mappedType.oclIsUndefined())
-                t.type <- thisModule.IntermediateImportedTechnologySpecificType(t,
-                    'parameter', mappedType, typeDefinitionTechnology);
+                t.type <- thisModule.IntermediateImportedTechnologySpecificType(t, mappedType,
+                    typeDefinitionTechnology);
             else if (thisModule.hasDefaultPrimitiveTechnologySpecificType(s.originalType,
                 typeDefinitionTechnology))
                 t.type <- thisModule.TechnologySpecificPrimitiveIntermediateType(s.originalType,
@@ -357,8 +357,8 @@ rule RefineIntermediateDataField {
         -- Determine field type
         if (not typeDefinitionTechnology.oclIsUndefined()) {
             if (not mappedType.oclIsUndefined())
-                t.type <- thisModule.IntermediateImportedTechnologySpecificType(t, 'dataField',
-                    mappedType, typeDefinitionTechnology);
+                t.type <- thisModule.IntermediateImportedTechnologySpecificType(t, mappedType,
+                    typeDefinitionTechnology);
             else if (thisModule.hasDefaultPrimitiveTechnologySpecificType(s.originalType,
                 typeDefinitionTechnology))
                 t.type <- thisModule.TechnologySpecificPrimitiveIntermediateType(s.originalType,
@@ -370,8 +370,11 @@ rule RefineIntermediateDataField {
 }
 
 --- Called rule to create an IntermediateImportedTechnologySpecificType
-rule IntermediateImportedTechnologySpecificType(container : OclAny, containerFeatureName : String,
-    mappedType : Service!ImportedType, typeDefinitionTechnology : Service!Technology) {
+rule IntermediateImportedTechnologySpecificType(
+    container : OclAny,
+    mappedType : Service!ImportedType,
+    typeDefinitionTechnology : Service!Technology
+) {
     to
         i : Intermediate!IntermediateImportedTechnologySpecificType (
             name <- mappedType.type.name,
