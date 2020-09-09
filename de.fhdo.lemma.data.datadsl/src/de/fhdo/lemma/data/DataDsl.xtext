@@ -32,7 +32,7 @@ ComplexType returns ComplexType:
     DataStructure | ListType | Enumeration
 ;
 
-enum DataStructureFeature returns DataStructureFeature:
+enum ComplexTypeFeature returns ComplexTypeFeature:
     AGGREGATE = 'aggregate' |
     APPLICATION_SERVICE = 'applicationService' |
     DOMAIN_EVENT = 'domainEvent' |
@@ -48,7 +48,7 @@ enum DataStructureFeature returns DataStructureFeature:
 
 DataStructure returns DataStructure:
     'structure' name=ID
-    ('<' features+=DataStructureFeature (',' features+=DataStructureFeature)* '>')?
+    ('<' features+=ComplexTypeFeature (',' features+=ComplexTypeFeature)* '>')?
     ('extends' super=[DataStructure|QualifiedName])? '{'
         (
             (dataFields+=DataField | operations+=DataOperation)
@@ -87,7 +87,8 @@ DataField returns DataField:
 ;
 
 Enumeration returns Enumeration:
-    'enum' name=ID '{'
+    'enum' name=ID
+    ('<' features+=ComplexTypeFeature (',' features+=ComplexTypeFeature)* '>')? '{'
         fields+=EnumerationField (',' fields+=EnumerationField)*
     '}'
 ;

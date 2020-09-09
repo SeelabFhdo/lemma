@@ -521,7 +521,8 @@ rule IntermediateEnumeration {
             qualifiedName <- s.buildQualifiedName('.'),
             origin <- #DATA_MODEL,
             kind <- #ENUMERATION,
-            fields <- Sequence{}
+            fields <- Sequence{},
+            featureNames <- s.features->collect(f | f.toString())
         )
     do {
         if (not s.dataModel.oclIsUndefined()) {

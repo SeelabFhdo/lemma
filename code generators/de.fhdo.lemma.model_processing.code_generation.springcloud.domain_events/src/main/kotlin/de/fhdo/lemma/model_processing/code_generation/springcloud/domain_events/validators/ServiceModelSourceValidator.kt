@@ -1,7 +1,7 @@
 package de.fhdo.lemma.model_processing.code_generation.springcloud.domain_events.validators
 
+import de.fhdo.lemma.data.ComplexTypeFeature
 import de.fhdo.lemma.data.DataStructure
-import de.fhdo.lemma.data.DataStructureFeature
 import de.fhdo.lemma.model_processing.annotations.Before
 import de.fhdo.lemma.model_processing.annotations.SourceModelValidator
 import de.fhdo.lemma.model_processing.builtin_phases.source_model_validation.AbstractXtextSourceModelValidator
@@ -76,7 +76,7 @@ internal class ServiceModelSourceValidator : AbstractXtextSourceModelValidator()
             return
         val nonDomainEventParameters = operation.parameters.filterNot {
             val dataStructureType = it.effectiveType as? DataStructure
-            dataStructureType?.hasFeature(DataStructureFeature.DOMAIN_EVENT) ?: false
+            dataStructureType?.hasFeature(ComplexTypeFeature.DOMAIN_EVENT) ?: false
         }
         nonDomainEventParameters.forEach {
             error("All parameters of group-events-only consumers must be domain events", it,

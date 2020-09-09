@@ -43,7 +43,7 @@ public class DataDslParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getDataOperationParameterAccess().getAlternatives_0(), "rule__DataOperationParameter__Alternatives_0");
 			builder.put(grammarAccess.getPrimitiveValueAccess().getAlternatives(), "rule__PrimitiveValue__Alternatives");
 			builder.put(grammarAccess.getPrimitiveTypeAccess().getAlternatives(), "rule__PrimitiveType__Alternatives");
-			builder.put(grammarAccess.getDataStructureFeatureAccess().getAlternatives(), "rule__DataStructureFeature__Alternatives");
+			builder.put(grammarAccess.getComplexTypeFeatureAccess().getAlternatives(), "rule__ComplexTypeFeature__Alternatives");
 			builder.put(grammarAccess.getDataFieldFeatureAccess().getAlternatives(), "rule__DataFieldFeature__Alternatives");
 			builder.put(grammarAccess.getDataOperationFeatureAccess().getAlternatives(), "rule__DataOperationFeature__Alternatives");
 			builder.put(grammarAccess.getDataModelAccess().getGroup(), "rule__DataModel__Group__0");
@@ -64,7 +64,9 @@ public class DataDslParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getDataFieldAccess().getGroup_5(), "rule__DataField__Group_5__0");
 			builder.put(grammarAccess.getDataFieldAccess().getGroup_5_2(), "rule__DataField__Group_5_2__0");
 			builder.put(grammarAccess.getEnumerationAccess().getGroup(), "rule__Enumeration__Group__0");
-			builder.put(grammarAccess.getEnumerationAccess().getGroup_4(), "rule__Enumeration__Group_4__0");
+			builder.put(grammarAccess.getEnumerationAccess().getGroup_2(), "rule__Enumeration__Group_2__0");
+			builder.put(grammarAccess.getEnumerationAccess().getGroup_2_2(), "rule__Enumeration__Group_2_2__0");
+			builder.put(grammarAccess.getEnumerationAccess().getGroup_5(), "rule__Enumeration__Group_5__0");
 			builder.put(grammarAccess.getEnumerationFieldAccess().getGroup(), "rule__EnumerationField__Group__0");
 			builder.put(grammarAccess.getEnumerationFieldAccess().getGroup_1(), "rule__EnumerationField__Group_1__0");
 			builder.put(grammarAccess.getDataOperationAccess().getGroup(), "rule__DataOperation__Group__0");
@@ -122,8 +124,10 @@ public class DataDslParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getDataFieldAccess().getFeaturesAssignment_5_1(), "rule__DataField__FeaturesAssignment_5_1");
 			builder.put(grammarAccess.getDataFieldAccess().getFeaturesAssignment_5_2_1(), "rule__DataField__FeaturesAssignment_5_2_1");
 			builder.put(grammarAccess.getEnumerationAccess().getNameAssignment_1(), "rule__Enumeration__NameAssignment_1");
-			builder.put(grammarAccess.getEnumerationAccess().getFieldsAssignment_3(), "rule__Enumeration__FieldsAssignment_3");
-			builder.put(grammarAccess.getEnumerationAccess().getFieldsAssignment_4_1(), "rule__Enumeration__FieldsAssignment_4_1");
+			builder.put(grammarAccess.getEnumerationAccess().getFeaturesAssignment_2_1(), "rule__Enumeration__FeaturesAssignment_2_1");
+			builder.put(grammarAccess.getEnumerationAccess().getFeaturesAssignment_2_2_1(), "rule__Enumeration__FeaturesAssignment_2_2_1");
+			builder.put(grammarAccess.getEnumerationAccess().getFieldsAssignment_4(), "rule__Enumeration__FieldsAssignment_4");
+			builder.put(grammarAccess.getEnumerationAccess().getFieldsAssignment_5_1(), "rule__Enumeration__FieldsAssignment_5_1");
 			builder.put(grammarAccess.getEnumerationFieldAccess().getNameAssignment_0(), "rule__EnumerationField__NameAssignment_0");
 			builder.put(grammarAccess.getEnumerationFieldAccess().getInitializationValueAssignment_1_1(), "rule__EnumerationField__InitializationValueAssignment_1_1");
 			builder.put(grammarAccess.getDataOperationAccess().getHiddenAssignment_0(), "rule__DataOperation__HiddenAssignment_0");

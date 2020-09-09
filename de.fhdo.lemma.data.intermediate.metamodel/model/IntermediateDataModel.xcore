@@ -253,6 +253,7 @@ class IntermediateDataField {
  * Enumeration
  */
 class IntermediateEnumeration extends IntermediateComplexType {
+    String[] featureNames
     contains IntermediateEnumerationField[1..*] fields opposite enumeration
 }
 

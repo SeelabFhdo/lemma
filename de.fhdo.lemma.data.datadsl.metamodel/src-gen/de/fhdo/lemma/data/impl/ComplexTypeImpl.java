@@ -3,6 +3,7 @@
 package de.fhdo.lemma.data.impl;
 
 import de.fhdo.lemma.data.ComplexType;
+import de.fhdo.lemma.data.ComplexTypeFeature;
 import de.fhdo.lemma.data.Context;
 import de.fhdo.lemma.data.DataField;
 import de.fhdo.lemma.data.DataModel;
@@ -17,6 +18,7 @@ import de.fhdo.lemma.data.Version;
 import java.lang.reflect.InvocationTargetException;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -30,6 +32,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
+import org.eclipse.emf.ecore.util.EDataTypeEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
@@ -47,6 +50,7 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
  * </p>
  * <ul>
  *   <li>{@link de.fhdo.lemma.data.impl.ComplexTypeImpl#getName <em>Name</em>}</li>
+ *   <li>{@link de.fhdo.lemma.data.impl.ComplexTypeImpl#getFeatures <em>Features</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.impl.ComplexTypeImpl#getDataModel <em>Data Model</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.impl.ComplexTypeImpl#getVersion <em>Version</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.impl.ComplexTypeImpl#getContext <em>Context</em>}</li>
@@ -78,6 +82,16 @@ public abstract class ComplexTypeImpl extends TypeImpl implements ComplexType {
      * @ordered
      */
     protected String name = NAME_EDEFAULT;
+
+    /**
+     * The cached value of the '{@link #getFeatures() <em>Features</em>}' attribute list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getFeatures()
+     * @generated
+     * @ordered
+     */
+    protected EList<ComplexTypeFeature> features;
 
     /**
      * The default value of the '{@link #isIsStructure() <em>Is Structure</em>}' attribute.
@@ -159,6 +173,19 @@ public abstract class ComplexTypeImpl extends TypeImpl implements ComplexType {
         name = newName;
         if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.COMPLEX_TYPE__NAME, oldName, name));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EList<ComplexTypeFeature> getFeatures() {
+        if (features == null) {
+            features = new EDataTypeEList<ComplexTypeFeature>(ComplexTypeFeature.class, this, DataPackage.COMPLEX_TYPE__FEATURES);
+        }
+        return features;
     }
 
     /**
@@ -530,6 +557,26 @@ public abstract class ComplexTypeImpl extends TypeImpl implements ComplexType {
      * @generated
      */
     @Override
+    public EList<ComplexTypeFeature> getAllDomainFeatures() {
+        return ECollections.<ComplexTypeFeature>toEList(java.util.Collections.<ComplexTypeFeature>unmodifiableList(org.eclipse.xtext.xbase.lib.CollectionLiterals.<ComplexTypeFeature>newArrayList(ComplexTypeFeature.AGGREGATE, ComplexTypeFeature.APPLICATION_SERVICE, ComplexTypeFeature.DOMAIN_EVENT, ComplexTypeFeature.DOMAIN_SERVICE, ComplexTypeFeature.ENTITY, ComplexTypeFeature.FACTORY, ComplexTypeFeature.INFRASTRUCTURE_SERVICE, ComplexTypeFeature.REPOSITORY, ComplexTypeFeature.SERVICE, ComplexTypeFeature.SPECIFICATION, ComplexTypeFeature.VALUE_OBJECT)));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public boolean hasFeature(final ComplexTypeFeature feature) {
+        return this.getFeatures().contains(feature);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
             case DataPackage.COMPLEX_TYPE__DATA_MODEL:
@@ -594,6 +641,8 @@ public abstract class ComplexTypeImpl extends TypeImpl implements ComplexType {
         switch (featureID) {
             case DataPackage.COMPLEX_TYPE__NAME:
                 return getName();
+            case DataPackage.COMPLEX_TYPE__FEATURES:
+                return getFeatures();
             case DataPackage.COMPLEX_TYPE__DATA_MODEL:
                 if (resolve) return getDataModel();
                 return basicGetDataModel();
@@ -620,11 +669,16 @@ public abstract class ComplexTypeImpl extends TypeImpl implements ComplexType {
      * <!-- end-user-doc -->
      * @generated
      */
+    @SuppressWarnings("unchecked")
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
             case DataPackage.COMPLEX_TYPE__NAME:
                 setName((String)newValue);
+                return;
+            case DataPackage.COMPLEX_TYPE__FEATURES:
+                getFeatures().clear();
+                getFeatures().addAll((Collection<? extends ComplexTypeFeature>)newValue);
                 return;
             case DataPackage.COMPLEX_TYPE__DATA_MODEL:
                 setDataModel((DataModel)newValue);
@@ -650,6 +704,9 @@ public abstract class ComplexTypeImpl extends TypeImpl implements ComplexType {
             case DataPackage.COMPLEX_TYPE__NAME:
                 setName(NAME_EDEFAULT);
                 return;
+            case DataPackage.COMPLEX_TYPE__FEATURES:
+                getFeatures().clear();
+                return;
             case DataPackage.COMPLEX_TYPE__DATA_MODEL:
                 setDataModel((DataModel)null);
                 return;
@@ -673,6 +730,8 @@ public abstract class ComplexTypeImpl extends TypeImpl implements ComplexType {
         switch (featureID) {
             case DataPackage.COMPLEX_TYPE__NAME:
                 return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+            case DataPackage.COMPLEX_TYPE__FEATURES:
+                return features != null && !features.isEmpty();
             case DataPackage.COMPLEX_TYPE__DATA_MODEL:
                 return basicGetDataModel() != null;
             case DataPackage.COMPLEX_TYPE__VERSION:
@@ -708,6 +767,10 @@ public abstract class ComplexTypeImpl extends TypeImpl implements ComplexType {
                 return getClosestNamespace();
             case DataPackage.COMPLEX_TYPE___COMPARE_FIELD_COUNTS__ELIST_ELIST:
                 return compareFieldCounts((EList<DataField>)arguments.get(0), (EList<DataField>)arguments.get(1));
+            case DataPackage.COMPLEX_TYPE___GET_ALL_DOMAIN_FEATURES:
+                return getAllDomainFeatures();
+            case DataPackage.COMPLEX_TYPE___HAS_FEATURE__COMPLEXTYPEFEATURE:
+                return hasFeature((ComplexTypeFeature)arguments.get(0));
         }
         return super.eInvoke(operationID, arguments);
     }
@@ -724,6 +787,8 @@ public abstract class ComplexTypeImpl extends TypeImpl implements ComplexType {
         StringBuilder result = new StringBuilder(super.toString());
         result.append(" (name: ");
         result.append(name);
+        result.append(", features: ");
+        result.append(features);
         result.append(')');
         return result.toString();
     }

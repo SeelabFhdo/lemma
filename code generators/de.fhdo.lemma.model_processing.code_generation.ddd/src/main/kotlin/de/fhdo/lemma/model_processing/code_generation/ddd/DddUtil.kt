@@ -36,6 +36,17 @@ private fun determineTaggingInterface(feature: String) : Pair<String, String>? {
     return interfaceName to "de.fhdo.lemma.ddd.structure.$interfaceName"
 }
 
+internal fun EnumDeclaration.getDddElementsForFeatures(features: Set<String>) : DddTaggingElements {
+    val taggingInterfaces = mutableMapOf<String, String>()
+    features.forEach {
+        val taggingInterface = determineTaggingInterface(it)
+        if (taggingInterface != null)
+            taggingInterfaces[taggingInterface.first] = taggingInterface.second
+    }
+
+    return DddTaggingElements(taggingInterfaces)
+}
+
 internal fun FieldDeclaration.getDddElementsForFeatures(features: Set<String>) : DddTaggingElements {
     val annotations = mutableMapOf<String, String>()
     features.forEach {

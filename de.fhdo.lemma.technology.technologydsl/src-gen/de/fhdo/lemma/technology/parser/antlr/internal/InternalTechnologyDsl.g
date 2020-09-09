@@ -2615,9 +2615,9 @@ ruleDataStructure returns [EObject current=null]
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getDataStructureAccess().getFeaturesDataStructureFeatureEnumRuleCall_2_1_0());
+						newCompositeNode(grammarAccess.getDataStructureAccess().getFeaturesComplexTypeFeatureEnumRuleCall_2_1_0());
 					}
-					lv_features_3_0=ruleDataStructureFeature
+					lv_features_3_0=ruleComplexTypeFeature
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getDataStructureRule());
@@ -2626,7 +2626,7 @@ ruleDataStructure returns [EObject current=null]
 							$current,
 							"features",
 							lv_features_3_0,
-							"de.fhdo.lemma.data.DataDsl.DataStructureFeature");
+							"de.fhdo.lemma.data.DataDsl.ComplexTypeFeature");
 						afterParserOrEnumRuleCall();
 					}
 				)
@@ -2639,9 +2639,9 @@ ruleDataStructure returns [EObject current=null]
 				(
 					(
 						{
-							newCompositeNode(grammarAccess.getDataStructureAccess().getFeaturesDataStructureFeatureEnumRuleCall_2_2_1_0());
+							newCompositeNode(grammarAccess.getDataStructureAccess().getFeaturesComplexTypeFeatureEnumRuleCall_2_2_1_0());
 						}
-						lv_features_5_0=ruleDataStructureFeature
+						lv_features_5_0=ruleComplexTypeFeature
 						{
 							if ($current==null) {
 								$current = createModelElementForParent(grammarAccess.getDataStructureRule());
@@ -2650,7 +2650,7 @@ ruleDataStructure returns [EObject current=null]
 								$current,
 								"features",
 								lv_features_5_0,
-								"de.fhdo.lemma.data.DataDsl.DataStructureFeature");
+								"de.fhdo.lemma.data.DataDsl.ComplexTypeFeature");
 							afterParserOrEnumRuleCall();
 						}
 					)
@@ -3171,16 +3171,70 @@ ruleEnumeration returns [EObject current=null]
 				}
 			)
 		)
-		otherlv_2='{'
+		(
+			otherlv_2='<'
+			{
+				newLeafNode(otherlv_2, grammarAccess.getEnumerationAccess().getLessThanSignKeyword_2_0());
+			}
+			(
+				(
+					{
+						newCompositeNode(grammarAccess.getEnumerationAccess().getFeaturesComplexTypeFeatureEnumRuleCall_2_1_0());
+					}
+					lv_features_3_0=ruleComplexTypeFeature
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getEnumerationRule());
+						}
+						add(
+							$current,
+							"features",
+							lv_features_3_0,
+							"de.fhdo.lemma.data.DataDsl.ComplexTypeFeature");
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)
+			(
+				otherlv_4=','
+				{
+					newLeafNode(otherlv_4, grammarAccess.getEnumerationAccess().getCommaKeyword_2_2_0());
+				}
+				(
+					(
+						{
+							newCompositeNode(grammarAccess.getEnumerationAccess().getFeaturesComplexTypeFeatureEnumRuleCall_2_2_1_0());
+						}
+						lv_features_5_0=ruleComplexTypeFeature
+						{
+							if ($current==null) {
+								$current = createModelElementForParent(grammarAccess.getEnumerationRule());
+							}
+							add(
+								$current,
+								"features",
+								lv_features_5_0,
+								"de.fhdo.lemma.data.DataDsl.ComplexTypeFeature");
+							afterParserOrEnumRuleCall();
+						}
+					)
+				)
+			)*
+			otherlv_6='>'
+			{
+				newLeafNode(otherlv_6, grammarAccess.getEnumerationAccess().getGreaterThanSignKeyword_2_3());
+			}
+		)?
+		otherlv_7='{'
 		{
-			newLeafNode(otherlv_2, grammarAccess.getEnumerationAccess().getLeftCurlyBracketKeyword_2());
+			newLeafNode(otherlv_7, grammarAccess.getEnumerationAccess().getLeftCurlyBracketKeyword_3());
 		}
 		(
 			(
 				{
-					newCompositeNode(grammarAccess.getEnumerationAccess().getFieldsEnumerationFieldParserRuleCall_3_0());
+					newCompositeNode(grammarAccess.getEnumerationAccess().getFieldsEnumerationFieldParserRuleCall_4_0());
 				}
-				lv_fields_3_0=ruleEnumerationField
+				lv_fields_8_0=ruleEnumerationField
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getEnumerationRule());
@@ -3188,23 +3242,23 @@ ruleEnumeration returns [EObject current=null]
 					add(
 						$current,
 						"fields",
-						lv_fields_3_0,
+						lv_fields_8_0,
 						"de.fhdo.lemma.data.DataDsl.EnumerationField");
 					afterParserOrEnumRuleCall();
 				}
 			)
 		)
 		(
-			otherlv_4=','
+			otherlv_9=','
 			{
-				newLeafNode(otherlv_4, grammarAccess.getEnumerationAccess().getCommaKeyword_4_0());
+				newLeafNode(otherlv_9, grammarAccess.getEnumerationAccess().getCommaKeyword_5_0());
 			}
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getEnumerationAccess().getFieldsEnumerationFieldParserRuleCall_4_1_0());
+						newCompositeNode(grammarAccess.getEnumerationAccess().getFieldsEnumerationFieldParserRuleCall_5_1_0());
 					}
-					lv_fields_5_0=ruleEnumerationField
+					lv_fields_10_0=ruleEnumerationField
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getEnumerationRule());
@@ -3212,16 +3266,16 @@ ruleEnumeration returns [EObject current=null]
 						add(
 							$current,
 							"fields",
-							lv_fields_5_0,
+							lv_fields_10_0,
 							"de.fhdo.lemma.data.DataDsl.EnumerationField");
 						afterParserOrEnumRuleCall();
 					}
 				)
 			)
 		)*
-		otherlv_6='}'
+		otherlv_11='}'
 		{
-			newLeafNode(otherlv_6, grammarAccess.getEnumerationAccess().getRightCurlyBracketKeyword_5());
+			newLeafNode(otherlv_11, grammarAccess.getEnumerationAccess().getRightCurlyBracketKeyword_6());
 		}
 	)
 ;
@@ -4209,8 +4263,8 @@ ruleOperationJoinPointType returns [Enumerator current=null]
 	)
 ;
 
-// Rule DataStructureFeature
-ruleDataStructureFeature returns [Enumerator current=null]
+// Rule ComplexTypeFeature
+ruleComplexTypeFeature returns [Enumerator current=null]
 @init {
 	enterRule();
 }
@@ -4221,88 +4275,88 @@ ruleDataStructureFeature returns [Enumerator current=null]
 		(
 			enumLiteral_0='aggregate'
 			{
-				$current = grammarAccess.getDataStructureFeatureAccess().getAGGREGATEEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
-				newLeafNode(enumLiteral_0, grammarAccess.getDataStructureFeatureAccess().getAGGREGATEEnumLiteralDeclaration_0());
+				$current = grammarAccess.getComplexTypeFeatureAccess().getAGGREGATEEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
+				newLeafNode(enumLiteral_0, grammarAccess.getComplexTypeFeatureAccess().getAGGREGATEEnumLiteralDeclaration_0());
 			}
 		)
 		    |
 		(
 			enumLiteral_1='applicationService'
 			{
-				$current = grammarAccess.getDataStructureFeatureAccess().getAPPLICATION_SERVICEEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
-				newLeafNode(enumLiteral_1, grammarAccess.getDataStructureFeatureAccess().getAPPLICATION_SERVICEEnumLiteralDeclaration_1());
+				$current = grammarAccess.getComplexTypeFeatureAccess().getAPPLICATION_SERVICEEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
+				newLeafNode(enumLiteral_1, grammarAccess.getComplexTypeFeatureAccess().getAPPLICATION_SERVICEEnumLiteralDeclaration_1());
 			}
 		)
 		    |
 		(
 			enumLiteral_2='domainEvent'
 			{
-				$current = grammarAccess.getDataStructureFeatureAccess().getDOMAIN_EVENTEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
-				newLeafNode(enumLiteral_2, grammarAccess.getDataStructureFeatureAccess().getDOMAIN_EVENTEnumLiteralDeclaration_2());
+				$current = grammarAccess.getComplexTypeFeatureAccess().getDOMAIN_EVENTEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
+				newLeafNode(enumLiteral_2, grammarAccess.getComplexTypeFeatureAccess().getDOMAIN_EVENTEnumLiteralDeclaration_2());
 			}
 		)
 		    |
 		(
 			enumLiteral_3='domainService'
 			{
-				$current = grammarAccess.getDataStructureFeatureAccess().getDOMAIN_SERVICEEnumLiteralDeclaration_3().getEnumLiteral().getInstance();
-				newLeafNode(enumLiteral_3, grammarAccess.getDataStructureFeatureAccess().getDOMAIN_SERVICEEnumLiteralDeclaration_3());
+				$current = grammarAccess.getComplexTypeFeatureAccess().getDOMAIN_SERVICEEnumLiteralDeclaration_3().getEnumLiteral().getInstance();
+				newLeafNode(enumLiteral_3, grammarAccess.getComplexTypeFeatureAccess().getDOMAIN_SERVICEEnumLiteralDeclaration_3());
 			}
 		)
 		    |
 		(
 			enumLiteral_4='entity'
 			{
-				$current = grammarAccess.getDataStructureFeatureAccess().getENTITYEnumLiteralDeclaration_4().getEnumLiteral().getInstance();
-				newLeafNode(enumLiteral_4, grammarAccess.getDataStructureFeatureAccess().getENTITYEnumLiteralDeclaration_4());
+				$current = grammarAccess.getComplexTypeFeatureAccess().getENTITYEnumLiteralDeclaration_4().getEnumLiteral().getInstance();
+				newLeafNode(enumLiteral_4, grammarAccess.getComplexTypeFeatureAccess().getENTITYEnumLiteralDeclaration_4());
 			}
 		)
 		    |
 		(
 			enumLiteral_5='factory'
 			{
-				$current = grammarAccess.getDataStructureFeatureAccess().getFACTORYEnumLiteralDeclaration_5().getEnumLiteral().getInstance();
-				newLeafNode(enumLiteral_5, grammarAccess.getDataStructureFeatureAccess().getFACTORYEnumLiteralDeclaration_5());
+				$current = grammarAccess.getComplexTypeFeatureAccess().getFACTORYEnumLiteralDeclaration_5().getEnumLiteral().getInstance();
+				newLeafNode(enumLiteral_5, grammarAccess.getComplexTypeFeatureAccess().getFACTORYEnumLiteralDeclaration_5());
 			}
 		)
 		    |
 		(
 			enumLiteral_6='infrastructureService'
 			{
-				$current = grammarAccess.getDataStructureFeatureAccess().getINFRASTRUCTURE_SERVICEEnumLiteralDeclaration_6().getEnumLiteral().getInstance();
-				newLeafNode(enumLiteral_6, grammarAccess.getDataStructureFeatureAccess().getINFRASTRUCTURE_SERVICEEnumLiteralDeclaration_6());
+				$current = grammarAccess.getComplexTypeFeatureAccess().getINFRASTRUCTURE_SERVICEEnumLiteralDeclaration_6().getEnumLiteral().getInstance();
+				newLeafNode(enumLiteral_6, grammarAccess.getComplexTypeFeatureAccess().getINFRASTRUCTURE_SERVICEEnumLiteralDeclaration_6());
 			}
 		)
 		    |
 		(
 			enumLiteral_7='repository'
 			{
-				$current = grammarAccess.getDataStructureFeatureAccess().getREPOSITORYEnumLiteralDeclaration_7().getEnumLiteral().getInstance();
-				newLeafNode(enumLiteral_7, grammarAccess.getDataStructureFeatureAccess().getREPOSITORYEnumLiteralDeclaration_7());
+				$current = grammarAccess.getComplexTypeFeatureAccess().getREPOSITORYEnumLiteralDeclaration_7().getEnumLiteral().getInstance();
+				newLeafNode(enumLiteral_7, grammarAccess.getComplexTypeFeatureAccess().getREPOSITORYEnumLiteralDeclaration_7());
 			}
 		)
 		    |
 		(
 			enumLiteral_8='service'
 			{
-				$current = grammarAccess.getDataStructureFeatureAccess().getSERVICEEnumLiteralDeclaration_8().getEnumLiteral().getInstance();
-				newLeafNode(enumLiteral_8, grammarAccess.getDataStructureFeatureAccess().getSERVICEEnumLiteralDeclaration_8());
+				$current = grammarAccess.getComplexTypeFeatureAccess().getSERVICEEnumLiteralDeclaration_8().getEnumLiteral().getInstance();
+				newLeafNode(enumLiteral_8, grammarAccess.getComplexTypeFeatureAccess().getSERVICEEnumLiteralDeclaration_8());
 			}
 		)
 		    |
 		(
 			enumLiteral_9='specification'
 			{
-				$current = grammarAccess.getDataStructureFeatureAccess().getSPECIFICATIONEnumLiteralDeclaration_9().getEnumLiteral().getInstance();
-				newLeafNode(enumLiteral_9, grammarAccess.getDataStructureFeatureAccess().getSPECIFICATIONEnumLiteralDeclaration_9());
+				$current = grammarAccess.getComplexTypeFeatureAccess().getSPECIFICATIONEnumLiteralDeclaration_9().getEnumLiteral().getInstance();
+				newLeafNode(enumLiteral_9, grammarAccess.getComplexTypeFeatureAccess().getSPECIFICATIONEnumLiteralDeclaration_9());
 			}
 		)
 		    |
 		(
 			enumLiteral_10='valueObject'
 			{
-				$current = grammarAccess.getDataStructureFeatureAccess().getVALUE_OBJECTEnumLiteralDeclaration_10().getEnumLiteral().getInstance();
-				newLeafNode(enumLiteral_10, grammarAccess.getDataStructureFeatureAccess().getVALUE_OBJECTEnumLiteralDeclaration_10());
+				$current = grammarAccess.getComplexTypeFeatureAccess().getVALUE_OBJECTEnumLiteralDeclaration_10().getEnumLiteral().getInstance();
+				newLeafNode(enumLiteral_10, grammarAccess.getComplexTypeFeatureAccess().getVALUE_OBJECTEnumLiteralDeclaration_10());
 			}
 		)
 	)

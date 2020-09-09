@@ -98,8 +98,8 @@ public class DataFactoryImpl extends EFactoryImpl implements DataFactory {
         switch (eDataType.getClassifierID()) {
             case DataPackage.PRIMITIVE_TYPE_CONSTANTS:
                 return createPrimitiveTypeConstantsFromString(eDataType, initialValue);
-            case DataPackage.DATA_STRUCTURE_FEATURE:
-                return createDataStructureFeatureFromString(eDataType, initialValue);
+            case DataPackage.COMPLEX_TYPE_FEATURE:
+                return createComplexTypeFeatureFromString(eDataType, initialValue);
             case DataPackage.DATA_OPERATION_FEATURE:
                 return createDataOperationFeatureFromString(eDataType, initialValue);
             case DataPackage.DATA_FIELD_FEATURE:
@@ -121,8 +121,8 @@ public class DataFactoryImpl extends EFactoryImpl implements DataFactory {
         switch (eDataType.getClassifierID()) {
             case DataPackage.PRIMITIVE_TYPE_CONSTANTS:
                 return convertPrimitiveTypeConstantsToString(eDataType, instanceValue);
-            case DataPackage.DATA_STRUCTURE_FEATURE:
-                return convertDataStructureFeatureToString(eDataType, instanceValue);
+            case DataPackage.COMPLEX_TYPE_FEATURE:
+                return convertComplexTypeFeatureToString(eDataType, instanceValue);
             case DataPackage.DATA_OPERATION_FEATURE:
                 return convertDataOperationFeatureToString(eDataType, instanceValue);
             case DataPackage.DATA_FIELD_FEATURE:
@@ -423,8 +423,8 @@ public class DataFactoryImpl extends EFactoryImpl implements DataFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    public DataStructureFeature createDataStructureFeatureFromString(EDataType eDataType, String initialValue) {
-        DataStructureFeature result = DataStructureFeature.get(initialValue);
+    public ComplexTypeFeature createComplexTypeFeatureFromString(EDataType eDataType, String initialValue) {
+        ComplexTypeFeature result = ComplexTypeFeature.get(initialValue);
         if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
         return result;
     }
@@ -434,7 +434,7 @@ public class DataFactoryImpl extends EFactoryImpl implements DataFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    public String convertDataStructureFeatureToString(EDataType eDataType, Object instanceValue) {
+    public String convertComplexTypeFeatureToString(EDataType eDataType, Object instanceValue) {
         return instanceValue == null ? null : instanceValue.toString();
     }
 

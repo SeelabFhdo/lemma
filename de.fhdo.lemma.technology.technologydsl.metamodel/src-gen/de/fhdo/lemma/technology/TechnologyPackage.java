@@ -527,6 +527,15 @@ public interface TechnologyPackage extends EPackage {
     int TECHNOLOGY_SPECIFIC_LIST_TYPE__NAME = DataPackage.COMPLEX_TYPE__NAME;
 
     /**
+     * The feature id for the '<em><b>Features</b></em>' attribute list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TECHNOLOGY_SPECIFIC_LIST_TYPE__FEATURES = DataPackage.COMPLEX_TYPE__FEATURES;
+
+    /**
      * The feature id for the '<em><b>Data Model</b></em>' container reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -626,6 +635,24 @@ public interface TechnologyPackage extends EPackage {
     int TECHNOLOGY_SPECIFIC_LIST_TYPE___COMPARE_FIELD_COUNTS__ELIST_ELIST = DataPackage.COMPLEX_TYPE___COMPARE_FIELD_COUNTS__ELIST_ELIST;
 
     /**
+     * The operation id for the '<em>Get All Domain Features</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TECHNOLOGY_SPECIFIC_LIST_TYPE___GET_ALL_DOMAIN_FEATURES = DataPackage.COMPLEX_TYPE___GET_ALL_DOMAIN_FEATURES;
+
+    /**
+     * The operation id for the '<em>Has Feature</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TECHNOLOGY_SPECIFIC_LIST_TYPE___HAS_FEATURE__COMPLEXTYPEFEATURE = DataPackage.COMPLEX_TYPE___HAS_FEATURE__COMPLEXTYPEFEATURE;
+
+    /**
      * The operation id for the '<em>Get Qualified Name Parts</em>' operation.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -670,6 +697,15 @@ public interface TechnologyPackage extends EPackage {
      * @ordered
      */
     int TECHNOLOGY_SPECIFIC_DATA_STRUCTURE__NAME = DataPackage.COMPLEX_TYPE__NAME;
+
+    /**
+     * The feature id for the '<em><b>Features</b></em>' attribute list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TECHNOLOGY_SPECIFIC_DATA_STRUCTURE__FEATURES = DataPackage.COMPLEX_TYPE__FEATURES;
 
     /**
      * The feature id for the '<em><b>Data Model</b></em>' container reference.
@@ -769,6 +805,24 @@ public interface TechnologyPackage extends EPackage {
      * @ordered
      */
     int TECHNOLOGY_SPECIFIC_DATA_STRUCTURE___COMPARE_FIELD_COUNTS__ELIST_ELIST = DataPackage.COMPLEX_TYPE___COMPARE_FIELD_COUNTS__ELIST_ELIST;
+
+    /**
+     * The operation id for the '<em>Get All Domain Features</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TECHNOLOGY_SPECIFIC_DATA_STRUCTURE___GET_ALL_DOMAIN_FEATURES = DataPackage.COMPLEX_TYPE___GET_ALL_DOMAIN_FEATURES;
+
+    /**
+     * The operation id for the '<em>Has Feature</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TECHNOLOGY_SPECIFIC_DATA_STRUCTURE___HAS_FEATURE__COMPLEXTYPEFEATURE = DataPackage.COMPLEX_TYPE___HAS_FEATURE__COMPLEXTYPEFEATURE;
 
     /**
      * The operation id for the '<em>Get Qualified Name Parts</em>' operation.

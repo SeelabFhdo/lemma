@@ -18,7 +18,6 @@ import org.eclipse.emf.common.util.EList;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link de.fhdo.lemma.data.DataStructure#getFeatures <em>Features</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.DataStructure#getSuper <em>Super</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.DataStructure#getDataFields <em>Data Fields</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.DataStructure#getOperations <em>Operations</em>}</li>
@@ -30,9 +29,7 @@ import org.eclipse.emf.common.util.EList;
  */
 public interface DataStructure extends ComplexType {
     /**
-     * Returns the value of the '<em><b>Features</b></em>' attribute list.
-     * The list contents are of type {@link de.fhdo.lemma.data.DataStructureFeature}.
-     * The literals are from the enumeration {@link de.fhdo.lemma.data.DataStructureFeature}.
+     * Returns the value of the '<em><b>Super</b></em>' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
@@ -42,18 +39,6 @@ public interface DataStructure extends ComplexType {
      *          not occur twice.
      *          Ensured by: DSL validator.
      * <!-- end-model-doc -->
-     * @return the value of the '<em>Features</em>' attribute list.
-     * @see de.fhdo.lemma.data.DataStructureFeature
-     * @see de.fhdo.lemma.data.DataPackage#getDataStructure_Features()
-     * @model unique="false"
-     * @generated
-     */
-    EList<DataStructureFeature> getFeatures();
-
-    /**
-     * Returns the value of the '<em><b>Super</b></em>' reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
      * @return the value of the '<em>Super</em>' reference.
      * @see #setSuper(DataStructure)
      * @see de.fhdo.lemma.data.DataPackage#getDataStructure_Super()
@@ -150,29 +135,5 @@ public interface DataStructure extends ComplexType {
      * @generated
      */
     int compareFieldCounts(DataStructure structureToCompare);
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * *
-     * Check if the structure has a specific feature assigned
-     * <!-- end-model-doc -->
-     * @model unique="false" featureUnique="false"
-     * @generated
-     */
-    boolean hasFeature(DataStructureFeature feature);
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * *
-     * Get list of domain-driven-design-related features
-     * <!-- end-model-doc -->
-     * @model kind="operation" unique="false"
-     * @generated
-     */
-    EList<DataStructureFeature> getAllDomainFeatures();
 
 } // DataStructure

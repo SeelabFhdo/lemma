@@ -1,9 +1,9 @@
 package de.fhdo.lemma.data.ui.highlighting;
 
+import de.fhdo.lemma.data.ComplexType;
 import de.fhdo.lemma.data.DataField;
 import de.fhdo.lemma.data.DataOperation;
 import de.fhdo.lemma.data.DataPackage;
-import de.fhdo.lemma.data.DataStructure;
 import de.fhdo.lemma.data.EnumerationField;
 import de.fhdo.lemma.data.PrimitiveValue;
 import de.fhdo.lemma.data.ui.highlighting.HighlightingConfiguration;
@@ -111,10 +111,10 @@ public class HighlightingCalculator implements ISemanticHighlightingCalculator {
   private List<INode> getNodesWithFeatures(final EObject eObject) {
     List<INode> _switchResult = null;
     boolean _matched = false;
-    if (eObject instanceof DataStructure) {
+    if (eObject instanceof ComplexType) {
       _matched=true;
       _switchResult = NodeModelUtils.findNodesForFeature(eObject, 
-        DataPackage.Literals.DATA_STRUCTURE__FEATURES);
+        DataPackage.Literals.COMPLEX_TYPE__FEATURES);
     }
     if (!_matched) {
       if (eObject instanceof DataField) {

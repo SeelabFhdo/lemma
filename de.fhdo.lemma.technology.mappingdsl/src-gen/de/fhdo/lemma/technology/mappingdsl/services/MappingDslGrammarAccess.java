@@ -2964,7 +2964,7 @@ public class MappingDslGrammarAccess extends AbstractGrammarElementFinder {
 		return getComplexTypeAccess().getRule();
 	}
 	
-	//enum DataStructureFeature:
+	//enum ComplexTypeFeature:
 	//	AGGREGATE='aggregate' |
 	//	APPLICATION_SERVICE='applicationService' |
 	//	DOMAIN_EVENT='domainEvent' |
@@ -2976,16 +2976,16 @@ public class MappingDslGrammarAccess extends AbstractGrammarElementFinder {
 	//	SERVICE='service' |
 	//	SPECIFICATION='specification' |
 	//	VALUE_OBJECT='valueObject';
-	public DataDslGrammarAccess.DataStructureFeatureElements getDataStructureFeatureAccess() {
-		return gaDataDsl.getDataStructureFeatureAccess();
+	public DataDslGrammarAccess.ComplexTypeFeatureElements getComplexTypeFeatureAccess() {
+		return gaDataDsl.getComplexTypeFeatureAccess();
 	}
 	
-	public EnumRule getDataStructureFeatureRule() {
-		return getDataStructureFeatureAccess().getRule();
+	public EnumRule getComplexTypeFeatureRule() {
+		return getComplexTypeFeatureAccess().getRule();
 	}
 	
 	//DataStructure:
-	//	'structure' name=ID ('<' features+=DataStructureFeature (',' features+=DataStructureFeature)* '>')? ('extends'
+	//	'structure' name=ID ('<' features+=ComplexTypeFeature (',' features+=ComplexTypeFeature)* '>')? ('extends'
 	//	super=[DataStructure|QualifiedName])? '{' ((dataFields+=DataField | operations+=DataOperation) (','
 	//	(dataFields+=DataField | operations+=DataOperation))*)?
 	//	'}';
@@ -3040,7 +3040,7 @@ public class MappingDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//Enumeration:
-	//	'enum' name=ID '{'
+	//	'enum' name=ID ('<' features+=ComplexTypeFeature (',' features+=ComplexTypeFeature)* '>')? '{'
 	//	fields+=EnumerationField (',' fields+=EnumerationField)*
 	//	'}';
 	public DataDslGrammarAccess.EnumerationElements getEnumerationAccess() {

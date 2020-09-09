@@ -12,6 +12,7 @@ import de.fhdo.lemma.data.intermediate.IntermediateDataModel
 import de.fhdo.lemma.data.intermediate.IntermediateDataOperation
 import de.fhdo.lemma.data.intermediate.IntermediateDataOperationReturnType
 import de.fhdo.lemma.data.intermediate.IntermediateDataStructure
+import de.fhdo.lemma.data.intermediate.IntermediateEnumeration
 import de.fhdo.lemma.data.intermediate.IntermediateImportedAspect
 import de.fhdo.lemma.data.intermediate.IntermediateImportedComplexType
 import de.fhdo.lemma.model_processing.asFile
@@ -381,11 +382,16 @@ internal fun IntermediateComplexType.fullyQualifiedClasspath(withExtension: Bool
       """.trimToSingleLine()
 
 /**
- * Check if an [IntermediateDataStructure] exhibits a certain feature.
+ * Check if an [IntermediateComplexType] exhibits a certain feature.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-fun IntermediateDataStructure.hasFeature(feature: String) = featureNames.contains(feature)
+fun IntermediateComplexType.hasFeature(feature: String) =
+    when(this) {
+        is IntermediateDataStructure -> featureNames.contains(feature)
+        is IntermediateEnumeration -> featureNames.contains(feature)
+        else -> false
+    }
 
 /**
  * Check if an [IntermediateDataField] exhibits a certain feature.

@@ -195,7 +195,7 @@ m1=*</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>750</x>
-      <y>510</y>
+      <y>520</y>
       <w>120</w>
       <h>60</h>
     </coordinates>
@@ -347,7 +347,7 @@ r2=type</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>720</x>
-      <y>410</y>
+      <y>450</y>
       <w>190</w>
       <h>60</h>
     </coordinates>
@@ -363,22 +363,22 @@ structuredList : Boolean</panel_attributes>
       <x>610</x>
       <y>330</y>
       <w>180</w>
-      <h>100</h>
+      <h>140</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;60.0;160.0;60.0;160.0;80.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;60.0;160.0;60.0;160.0;120.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>860</x>
-      <y>460</y>
+      <y>500</y>
       <w>70</w>
-      <h>90</h>
+      <h>70</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;&gt;&gt;
 m1=0..1</panel_attributes>
-    <additional_attributes>10.0;60.0;20.0;60.0;20.0;10.0</additional_attributes>
+    <additional_attributes>10.0;40.0;30.0;40.0;30.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
@@ -396,13 +396,13 @@ m1=*</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>460</x>
-      <y>460</y>
-      <w>300</w>
-      <h>70</h>
+      <y>490</y>
+      <w>280</w>
+      <h>40</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;&gt;&gt;
 m1=*</panel_attributes>
-    <additional_attributes>10.0;40.0;280.0;40.0;280.0;10.0</additional_attributes>
+    <additional_attributes>10.0;10.0;260.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
@@ -410,10 +410,13 @@ m1=*</panel_attributes>
       <x>790</x>
       <y>360</y>
       <w>120</w>
-      <h>40</h>
+      <h>80</h>
     </coordinates>
     <panel_attributes>*Intermediate*
-*Enumeration*</panel_attributes>
+*Enumeration*
+--
+featureNames
+  : String[*]</panel_attributes>
     <additional_attributes/>
   </element>
   <element>

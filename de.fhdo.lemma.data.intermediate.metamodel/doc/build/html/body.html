@@ -51,8 +51,8 @@ to facilitate the development of <em>microservice-based software systems</em>
 <a class="reference internal" href="#combemale2017" id="id3">[CFJezequel+17]</a>.</p>
 <p>In this context, a microservice architecture consists of several different types
 of models, listed in <a class="reference internal" href="#tab-model-types"><span class="std std-numref">Table 1</span></a>.</p>
-<span id="tab-model-types"></span><table border="1" class="docutils" id="id25">
-<caption><span class="caption-number">Table 1 </span><span class="caption-text">Model types</span><a class="headerlink" href="#id25" title="Permalink to this table">¶</a></caption>
+<span id="tab-model-types"></span><table border="1" class="docutils" id="id27">
+<caption><span class="caption-number">Table 1 </span><span class="caption-text">Model types</span><a class="headerlink" href="#id27" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col width="23%" />
 <col width="77%" />
@@ -121,7 +121,7 @@ microservice-related Domain Data Models.</p>
 Data Models in an object-oriented way in the form of a UML class diagram. The
 modeling concepts, their properties, and relationships are depicted as classes,
 attributes, and associations, respectively.</p>
-<div class="figure" id="id26">
+<div class="figure" id="id28">
 <span id="fig-metamodel"></span><a class="reference external image-reference" href="_images/metamodel.png"><img alt="_images/metamodel.png" src="_images/metamodel.png" /></a>
 <p class="caption"><span class="caption-number">Fig. 1 </span><span class="caption-text">Metamodel of Intermediate Data Models</span></p>
 </div>
@@ -1201,6 +1201,40 @@ instances that prescribe the structure of the list’s values.</p>
 <dt id="IntermediateEnumeration">
  class <code class="descname">IntermediateEnumeration</code> extends <a class="reference internal" href="#IntermediateComplexType" title="IntermediateComplexType">IntermediateComplexType</a><a class="headerlink" href="#IntermediateEnumeration" title="Permalink to this definition">¶</a></dt>
 <dd><p>A domain-specific enumeration.</p>
+<span class="target" id="link-intermediateenumeration-featurenames"></span><dl class="attribute">
+<dt>
+<code class="descname">String[*] featureNames</code></dt>
+<dd><p>This attribute contains the names of all features specified for the
+enumeration. The following values are possible:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="32%" />
+<col width="68%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>Feature Name</strong></td>
+<td><strong>Description</strong></td>
+</tr>
+<tr class="row-even"><td>DOMAIN_EVENT</td>
+<td>Enumeration is a Domain Event
+<a class="footnote-reference" href="#enterprise-patterns-event-message" id="id23">[10]</a>.</td>
+</tr>
+<tr class="row-odd"><td>VALUE_OBJECT</td>
+<td>Enumeration is a Value Object in the sense of
+DDD.</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">DDD-related features should follow the constraints described in
+<a class="reference internal" href="#rademacher2018" id="id24">[RSZundorf18]</a>. The Domain Data Modeling Language currently
+issues a warning in case they are violated. Code generators are free
+to also check the constraints and deny code generation in case they
+are violated.</p>
+</div>
+</dd></dl>
+
 <dl class="attribute">
 <dt>
 <code class="descname">IntermediateEnumerationField[1..*] fields</code></dt>
@@ -1297,7 +1331,7 @@ points to the Technology Model from which the type was imported.</p>
 <a class="reference external" href="../../../../de.fhdo.lemma.service.intermediate.metamodel/doc/build/html/body.html#IntermediateInterface" title="(in Intermediate Service Model Format Specification v1.0)"><code class="xref java java-type docutils literal"><span class="pre">interfaces</span></code></a>,
 <a class="reference external" href="../../../../de.fhdo.lemma.service.intermediate.metamodel/doc/build/html/body.html#IntermediateOperation" title="(in Intermediate Service Model Format Specification v1.0)"><code class="xref java java-type docutils literal"><span class="pre">operations</span></code></a>, and
 <a class="reference external" href="../../../../de.fhdo.lemma.service.intermediate.metamodel/doc/build/html/body.html#IntermediateParameter" title="(in Intermediate Service Model Format Specification v1.0)"><code class="xref java java-type docutils literal"><span class="pre">parameters</span></code></a>, in the sense of
-Aspect-oriented Programming (AOP) <a class="reference internal" href="#kiczales1997" id="id23">[KLM+97]</a>.</p>
+Aspect-oriented Programming (AOP) <a class="reference internal" href="#kiczales1997" id="id25">[KLM+97]</a>.</p>
 <p>Aspects are defined within Technology Models. An aspect definition might be
 accompanied with properties and constrained to the concepts to which they
 apply. With this mechanism it is possible to create, e.g., aspects for the
@@ -1530,7 +1564,7 @@ property value belongs.</p>
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
 <tr><td class="label"><a class="fn-backref" href="#id11">[5]</a></td><td>Actually, the models are <em>transformed</em> into the XMI format.
-Please refer to <a class="reference internal" href="#combemale2017" id="id24">[CFJezequel+17]</a> to learn more about <em>model</em>
+Please refer to <a class="reference internal" href="#combemale2017" id="id26">[CFJezequel+17]</a> to learn more about <em>model</em>
 <em>transformation</em>.</td></tr>
 </tbody>
 </table>
@@ -1561,7 +1595,7 @@ Please refer to <a class="reference internal" href="#combemale2017" id="id24">[C
 <table class="docutils footnote" frame="void" id="enterprise-patterns-event-message" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id19">[10]</a></td><td><a class="reference external" href="https://www.enterpriseintegrationpatterns.com/patterns/messaging/EventMessage.html">https://www.enterpriseintegrationpatterns.com/patterns/messaging/EventMessage.html</a></td></tr>
+<tr><td class="label">[10]</td><td><em>(<a class="fn-backref" href="#id19">1</a>, <a class="fn-backref" href="#id23">2</a>)</em> <a class="reference external" href="https://www.enterpriseintegrationpatterns.com/patterns/messaging/EventMessage.html">https://www.enterpriseintegrationpatterns.com/patterns/messaging/EventMessage.html</a></td></tr>
 </tbody>
 </table>
 </div>
@@ -1578,7 +1612,7 @@ Please refer to <a class="reference internal" href="#combemale2017" id="id24">[C
 <p id="bibtex-bibliography-body-0"><table class="docutils citation" frame="void" id="combemale2017" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label">[CFJezequel+17]</td><td><em>(<a class="fn-backref" href="#id3">1</a>, <a class="fn-backref" href="#id10">2</a>, <a class="fn-backref" href="#id13">3</a>, <a class="fn-backref" href="#id24">4</a>)</em> Benoit Combemale, Robert&nbsp;B. France, Jean-Marc Jézéquel, Bernhard Rumpe, Jim Steel, and Didier Vojtisek. <em>Engineering Modeling Languages</em>. CRC Press, 2017.</td></tr>
+<tr><td class="label">[CFJezequel+17]</td><td><em>(<a class="fn-backref" href="#id3">1</a>, <a class="fn-backref" href="#id10">2</a>, <a class="fn-backref" href="#id13">3</a>, <a class="fn-backref" href="#id26">4</a>)</em> Benoit Combemale, Robert&nbsp;B. France, Jean-Marc Jézéquel, Bernhard Rumpe, Jim Steel, and Didier Vojtisek. <em>Engineering Modeling Languages</em>. CRC Press, 2017.</td></tr>
 </tbody>
 </table>
 <table class="docutils citation" frame="void" id="evans2004" rules="none">
@@ -1590,7 +1624,7 @@ Please refer to <a class="reference internal" href="#combemale2017" id="id24">[C
 <table class="docutils citation" frame="void" id="kiczales1997" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label">[KLM+97]</td><td><em>(<a class="fn-backref" href="#id4">1</a>, <a class="fn-backref" href="#id23">2</a>)</em> Gregor Kiczales, John Lamping, Anurag Mendhekar, Chris Maeda, Cristina Lopes, Jean-Marc Loingtier, and John Irwin. Aspect-oriented programming. In <em>Object-Oriented Programming</em>, 220–242. Springer, 1997.</td></tr>
+<tr><td class="label">[KLM+97]</td><td><em>(<a class="fn-backref" href="#id4">1</a>, <a class="fn-backref" href="#id25">2</a>)</em> Gregor Kiczales, John Lamping, Anurag Mendhekar, Chris Maeda, Cristina Lopes, Jean-Marc Loingtier, and John Irwin. Aspect-oriented programming. In <em>Object-Oriented Programming</em>, 220–242. Springer, 1997.</td></tr>
 </tbody>
 </table>
 <table class="docutils citation" frame="void" id="newman2015" rules="none">
@@ -1602,7 +1636,7 @@ Please refer to <a class="reference internal" href="#combemale2017" id="id24">[C
 <table class="docutils citation" frame="void" id="rademacher2018" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label">[RSZundorf18]</td><td><em>(<a class="fn-backref" href="#id20">1</a>, <a class="fn-backref" href="#id21">2</a>, <a class="fn-backref" href="#id22">3</a>)</em> Florian Rademacher, Sabine Sachweh, and Albert Zündorf. Towards a uml profile for domain-driven design of microservice architectures. In Antonio Cerone and Marco Roveri, editors, <em>Software Engineering and Formal Methods</em>, 230–245. Springer, 2018.</td></tr>
+<tr><td class="label">[RSZundorf18]</td><td><em>(<a class="fn-backref" href="#id20">1</a>, <a class="fn-backref" href="#id21">2</a>, <a class="fn-backref" href="#id22">3</a>, <a class="fn-backref" href="#id24">4</a>)</em> Florian Rademacher, Sabine Sachweh, and Albert Zündorf. Towards a uml profile for domain-driven design of microservice architectures. In Antonio Cerone and Marco Roveri, editors, <em>Software Engineering and Formal Methods</em>, 230–245. Springer, 2018.</td></tr>
 </tbody>
 </table>
 <table class="docutils citation" frame="void" id="steinberg2011" rules="none">

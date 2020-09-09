@@ -1740,13 +1740,22 @@ public interface IntermediatePackage extends EPackage {
     int INTERMEDIATE_ENUMERATION__CONTEXT = INTERMEDIATE_COMPLEX_TYPE__CONTEXT;
 
     /**
+     * The feature id for the '<em><b>Feature Names</b></em>' attribute list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_ENUMERATION__FEATURE_NAMES = INTERMEDIATE_COMPLEX_TYPE_FEATURE_COUNT + 0;
+
+    /**
      * The feature id for the '<em><b>Fields</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_ENUMERATION__FIELDS = INTERMEDIATE_COMPLEX_TYPE_FEATURE_COUNT + 0;
+    int INTERMEDIATE_ENUMERATION__FIELDS = INTERMEDIATE_COMPLEX_TYPE_FEATURE_COUNT + 1;
 
     /**
      * The number of structural features of the '<em>Enumeration</em>' class.
@@ -1755,7 +1764,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_ENUMERATION_FEATURE_COUNT = INTERMEDIATE_COMPLEX_TYPE_FEATURE_COUNT + 1;
+    int INTERMEDIATE_ENUMERATION_FEATURE_COUNT = INTERMEDIATE_COMPLEX_TYPE_FEATURE_COUNT + 2;
 
     /**
      * The number of operations of the '<em>Enumeration</em>' class.
@@ -3122,6 +3131,17 @@ public interface IntermediatePackage extends EPackage {
     EClass getIntermediateEnumeration();
 
     /**
+     * Returns the meta object for the attribute list '{@link de.fhdo.lemma.data.intermediate.IntermediateEnumeration#getFeatureNames <em>Feature Names</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute list '<em>Feature Names</em>'.
+     * @see de.fhdo.lemma.data.intermediate.IntermediateEnumeration#getFeatureNames()
+     * @see #getIntermediateEnumeration()
+     * @generated
+     */
+    EAttribute getIntermediateEnumeration_FeatureNames();
+
+    /**
      * Returns the meta object for the containment reference list '{@link de.fhdo.lemma.data.intermediate.IntermediateEnumeration#getFields <em>Fields</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -4254,6 +4274,14 @@ public interface IntermediatePackage extends EPackage {
          * @generated
          */
         EClass INTERMEDIATE_ENUMERATION = eINSTANCE.getIntermediateEnumeration();
+
+        /**
+         * The meta object literal for the '<em><b>Feature Names</b></em>' attribute list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute INTERMEDIATE_ENUMERATION__FEATURE_NAMES = eINSTANCE.getIntermediateEnumeration_FeatureNames();
 
         /**
          * The meta object literal for the '<em><b>Fields</b></em>' containment reference list feature.

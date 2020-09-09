@@ -240,9 +240,9 @@ public class DataDslSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 * Constraint:
 	 *     (
 	 *         name=ID 
-	 *         (features+=DataStructureFeature features+=DataStructureFeature*)? 
+	 *         (features+=ComplexTypeFeature features+=ComplexTypeFeature*)? 
 	 *         super=[DataStructure|QualifiedName]? 
-	 *         ((dataFields+=DataField | operations+=DataOperation) dataFields+=DataField? (operations+=DataOperation? dataFields+=DataField?)*)?
+	 *         ((dataFields+=DataField | operations+=DataOperation) operations+=DataOperation? (dataFields+=DataField? operations+=DataOperation?)*)?
 	 *     )
 	 */
 	protected void sequence_DataStructure(ISerializationContext context, DataStructure semanticObject) {
@@ -268,7 +268,7 @@ public class DataDslSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *     Enumeration returns Enumeration
 	 *
 	 * Constraint:
-	 *     (name=ID fields+=EnumerationField fields+=EnumerationField*)
+	 *     (name=ID (features+=ComplexTypeFeature features+=ComplexTypeFeature*)? fields+=EnumerationField fields+=EnumerationField*)
 	 */
 	protected void sequence_Enumeration(ISerializationContext context, Enumeration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

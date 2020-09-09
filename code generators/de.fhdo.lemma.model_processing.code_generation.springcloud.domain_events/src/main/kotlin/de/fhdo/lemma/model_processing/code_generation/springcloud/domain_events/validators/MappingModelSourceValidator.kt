@@ -1,7 +1,7 @@
 package de.fhdo.lemma.model_processing.code_generation.springcloud.domain_events.validators
 
+import de.fhdo.lemma.data.ComplexTypeFeature
 import de.fhdo.lemma.data.DataStructure
-import de.fhdo.lemma.data.DataStructureFeature
 import de.fhdo.lemma.model_processing.annotations.Before
 import de.fhdo.lemma.model_processing.annotations.SourceModelValidator
 import de.fhdo.lemma.model_processing.builtin_phases.source_model_validation.AbstractXtextSourceModelValidator
@@ -48,7 +48,7 @@ internal class MappingModelSourceValidator : AbstractXtextSourceModelValidator()
             return
 
         // The EventGroup aspect may only be applied to domain concepts with the domainEvent feature
-        if (!dataStructure.hasFeature(DataStructureFeature.DOMAIN_EVENT))
+        if (!dataStructure.hasFeature(ComplexTypeFeature.DOMAIN_EVENT))
             error("EventGroup aspect is only applicable to domain events",
                 MappingPackage.Literals.COMPLEX_TYPE_MAPPING__ASPECTS)
     }

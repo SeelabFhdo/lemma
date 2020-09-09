@@ -242,11 +242,11 @@ public class DataDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
 		private final Keyword cLessThanSignKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
 		private final Assignment cFeaturesAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
-		private final RuleCall cFeaturesDataStructureFeatureEnumRuleCall_2_1_0 = (RuleCall)cFeaturesAssignment_2_1.eContents().get(0);
+		private final RuleCall cFeaturesComplexTypeFeatureEnumRuleCall_2_1_0 = (RuleCall)cFeaturesAssignment_2_1.eContents().get(0);
 		private final Group cGroup_2_2 = (Group)cGroup_2.eContents().get(2);
 		private final Keyword cCommaKeyword_2_2_0 = (Keyword)cGroup_2_2.eContents().get(0);
 		private final Assignment cFeaturesAssignment_2_2_1 = (Assignment)cGroup_2_2.eContents().get(1);
-		private final RuleCall cFeaturesDataStructureFeatureEnumRuleCall_2_2_1_0 = (RuleCall)cFeaturesAssignment_2_2_1.eContents().get(0);
+		private final RuleCall cFeaturesComplexTypeFeatureEnumRuleCall_2_2_1_0 = (RuleCall)cFeaturesAssignment_2_2_1.eContents().get(0);
 		private final Keyword cGreaterThanSignKeyword_2_3 = (Keyword)cGroup_2.eContents().get(3);
 		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
 		private final Keyword cExtendsKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
@@ -270,13 +270,13 @@ public class DataDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightCurlyBracketKeyword_6 = (Keyword)cGroup.eContents().get(6);
 		
 		//DataStructure:
-		//	'structure' name=ID ('<' features+=DataStructureFeature (',' features+=DataStructureFeature)* '>')? ('extends'
+		//	'structure' name=ID ('<' features+=ComplexTypeFeature (',' features+=ComplexTypeFeature)* '>')? ('extends'
 		//	super=[DataStructure|QualifiedName])? '{' ((dataFields+=DataField | operations+=DataOperation) (','
 		//	(dataFields+=DataField | operations+=DataOperation))*)?
 		//	'}';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'structure' name=ID ('<' features+=DataStructureFeature (',' features+=DataStructureFeature)* '>')? ('extends'
+		//'structure' name=ID ('<' features+=ComplexTypeFeature (',' features+=ComplexTypeFeature)* '>')? ('extends'
 		//super=[DataStructure|QualifiedName])? '{' ((dataFields+=DataField | operations+=DataOperation) (','
 		//(dataFields+=DataField | operations+=DataOperation))*)? '}'
 		public Group getGroup() { return cGroup; }
@@ -290,29 +290,29 @@ public class DataDslGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getNameIDTerminalRuleCall_1_0() { return cNameIDTerminalRuleCall_1_0; }
 		
-		//('<' features+=DataStructureFeature (',' features+=DataStructureFeature)* '>')?
+		//('<' features+=ComplexTypeFeature (',' features+=ComplexTypeFeature)* '>')?
 		public Group getGroup_2() { return cGroup_2; }
 		
 		//'<'
 		public Keyword getLessThanSignKeyword_2_0() { return cLessThanSignKeyword_2_0; }
 		
-		//features+=DataStructureFeature
+		//features+=ComplexTypeFeature
 		public Assignment getFeaturesAssignment_2_1() { return cFeaturesAssignment_2_1; }
 		
-		//DataStructureFeature
-		public RuleCall getFeaturesDataStructureFeatureEnumRuleCall_2_1_0() { return cFeaturesDataStructureFeatureEnumRuleCall_2_1_0; }
+		//ComplexTypeFeature
+		public RuleCall getFeaturesComplexTypeFeatureEnumRuleCall_2_1_0() { return cFeaturesComplexTypeFeatureEnumRuleCall_2_1_0; }
 		
-		//(',' features+=DataStructureFeature)*
+		//(',' features+=ComplexTypeFeature)*
 		public Group getGroup_2_2() { return cGroup_2_2; }
 		
 		//','
 		public Keyword getCommaKeyword_2_2_0() { return cCommaKeyword_2_2_0; }
 		
-		//features+=DataStructureFeature
+		//features+=ComplexTypeFeature
 		public Assignment getFeaturesAssignment_2_2_1() { return cFeaturesAssignment_2_2_1; }
 		
-		//DataStructureFeature
-		public RuleCall getFeaturesDataStructureFeatureEnumRuleCall_2_2_1_0() { return cFeaturesDataStructureFeatureEnumRuleCall_2_2_1_0; }
+		//ComplexTypeFeature
+		public RuleCall getFeaturesComplexTypeFeatureEnumRuleCall_2_2_1_0() { return cFeaturesComplexTypeFeatureEnumRuleCall_2_2_1_0; }
 		
 		//'>'
 		public Keyword getGreaterThanSignKeyword_2_3() { return cGreaterThanSignKeyword_2_3; }
@@ -606,22 +606,32 @@ public class DataDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cEnumKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cNameIDTerminalRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
-		private final Keyword cLeftCurlyBracketKeyword_2 = (Keyword)cGroup.eContents().get(2);
-		private final Assignment cFieldsAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final RuleCall cFieldsEnumerationFieldParserRuleCall_3_0 = (RuleCall)cFieldsAssignment_3.eContents().get(0);
-		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
-		private final Keyword cCommaKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
-		private final Assignment cFieldsAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
-		private final RuleCall cFieldsEnumerationFieldParserRuleCall_4_1_0 = (RuleCall)cFieldsAssignment_4_1.eContents().get(0);
-		private final Keyword cRightCurlyBracketKeyword_5 = (Keyword)cGroup.eContents().get(5);
+		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
+		private final Keyword cLessThanSignKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Assignment cFeaturesAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
+		private final RuleCall cFeaturesComplexTypeFeatureEnumRuleCall_2_1_0 = (RuleCall)cFeaturesAssignment_2_1.eContents().get(0);
+		private final Group cGroup_2_2 = (Group)cGroup_2.eContents().get(2);
+		private final Keyword cCommaKeyword_2_2_0 = (Keyword)cGroup_2_2.eContents().get(0);
+		private final Assignment cFeaturesAssignment_2_2_1 = (Assignment)cGroup_2_2.eContents().get(1);
+		private final RuleCall cFeaturesComplexTypeFeatureEnumRuleCall_2_2_1_0 = (RuleCall)cFeaturesAssignment_2_2_1.eContents().get(0);
+		private final Keyword cGreaterThanSignKeyword_2_3 = (Keyword)cGroup_2.eContents().get(3);
+		private final Keyword cLeftCurlyBracketKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		private final Assignment cFieldsAssignment_4 = (Assignment)cGroup.eContents().get(4);
+		private final RuleCall cFieldsEnumerationFieldParserRuleCall_4_0 = (RuleCall)cFieldsAssignment_4.eContents().get(0);
+		private final Group cGroup_5 = (Group)cGroup.eContents().get(5);
+		private final Keyword cCommaKeyword_5_0 = (Keyword)cGroup_5.eContents().get(0);
+		private final Assignment cFieldsAssignment_5_1 = (Assignment)cGroup_5.eContents().get(1);
+		private final RuleCall cFieldsEnumerationFieldParserRuleCall_5_1_0 = (RuleCall)cFieldsAssignment_5_1.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_6 = (Keyword)cGroup.eContents().get(6);
 		
 		//Enumeration:
-		//	'enum' name=ID '{'
+		//	'enum' name=ID ('<' features+=ComplexTypeFeature (',' features+=ComplexTypeFeature)* '>')? '{'
 		//	fields+=EnumerationField (',' fields+=EnumerationField)*
 		//	'}';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'enum' name=ID '{' fields+=EnumerationField (',' fields+=EnumerationField)* '}'
+		//'enum' name=ID ('<' features+=ComplexTypeFeature (',' features+=ComplexTypeFeature)* '>')? '{' fields+=EnumerationField
+		//(',' fields+=EnumerationField)* '}'
 		public Group getGroup() { return cGroup; }
 		
 		//'enum'
@@ -633,29 +643,56 @@ public class DataDslGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getNameIDTerminalRuleCall_1_0() { return cNameIDTerminalRuleCall_1_0; }
 		
-		//'{'
-		public Keyword getLeftCurlyBracketKeyword_2() { return cLeftCurlyBracketKeyword_2; }
+		//('<' features+=ComplexTypeFeature (',' features+=ComplexTypeFeature)* '>')?
+		public Group getGroup_2() { return cGroup_2; }
 		
-		//fields+=EnumerationField
-		public Assignment getFieldsAssignment_3() { return cFieldsAssignment_3; }
+		//'<'
+		public Keyword getLessThanSignKeyword_2_0() { return cLessThanSignKeyword_2_0; }
 		
-		//EnumerationField
-		public RuleCall getFieldsEnumerationFieldParserRuleCall_3_0() { return cFieldsEnumerationFieldParserRuleCall_3_0; }
+		//features+=ComplexTypeFeature
+		public Assignment getFeaturesAssignment_2_1() { return cFeaturesAssignment_2_1; }
 		
-		//(',' fields+=EnumerationField)*
-		public Group getGroup_4() { return cGroup_4; }
+		//ComplexTypeFeature
+		public RuleCall getFeaturesComplexTypeFeatureEnumRuleCall_2_1_0() { return cFeaturesComplexTypeFeatureEnumRuleCall_2_1_0; }
+		
+		//(',' features+=ComplexTypeFeature)*
+		public Group getGroup_2_2() { return cGroup_2_2; }
 		
 		//','
-		public Keyword getCommaKeyword_4_0() { return cCommaKeyword_4_0; }
+		public Keyword getCommaKeyword_2_2_0() { return cCommaKeyword_2_2_0; }
+		
+		//features+=ComplexTypeFeature
+		public Assignment getFeaturesAssignment_2_2_1() { return cFeaturesAssignment_2_2_1; }
+		
+		//ComplexTypeFeature
+		public RuleCall getFeaturesComplexTypeFeatureEnumRuleCall_2_2_1_0() { return cFeaturesComplexTypeFeatureEnumRuleCall_2_2_1_0; }
+		
+		//'>'
+		public Keyword getGreaterThanSignKeyword_2_3() { return cGreaterThanSignKeyword_2_3; }
+		
+		//'{'
+		public Keyword getLeftCurlyBracketKeyword_3() { return cLeftCurlyBracketKeyword_3; }
 		
 		//fields+=EnumerationField
-		public Assignment getFieldsAssignment_4_1() { return cFieldsAssignment_4_1; }
+		public Assignment getFieldsAssignment_4() { return cFieldsAssignment_4; }
 		
 		//EnumerationField
-		public RuleCall getFieldsEnumerationFieldParserRuleCall_4_1_0() { return cFieldsEnumerationFieldParserRuleCall_4_1_0; }
+		public RuleCall getFieldsEnumerationFieldParserRuleCall_4_0() { return cFieldsEnumerationFieldParserRuleCall_4_0; }
+		
+		//(',' fields+=EnumerationField)*
+		public Group getGroup_5() { return cGroup_5; }
+		
+		//','
+		public Keyword getCommaKeyword_5_0() { return cCommaKeyword_5_0; }
+		
+		//fields+=EnumerationField
+		public Assignment getFieldsAssignment_5_1() { return cFieldsAssignment_5_1; }
+		
+		//EnumerationField
+		public RuleCall getFieldsEnumerationFieldParserRuleCall_5_1_0() { return cFieldsEnumerationFieldParserRuleCall_5_1_0; }
 		
 		//'}'
-		public Keyword getRightCurlyBracketKeyword_5() { return cRightCurlyBracketKeyword_5; }
+		public Keyword getRightCurlyBracketKeyword_6() { return cRightCurlyBracketKeyword_6; }
 	}
 	public class EnumerationFieldElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.fhdo.lemma.data.DataDsl.EnumerationField");
@@ -1159,8 +1196,8 @@ public class DataDslGrammarAccess extends AbstractGrammarElementFinder {
 		public RuleCall getIDTerminalRuleCall_1_1() { return cIDTerminalRuleCall_1_1; }
 	}
 	
-	public class DataStructureFeatureElements extends AbstractEnumRuleElementFinder {
-		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.fhdo.lemma.data.DataDsl.DataStructureFeature");
+	public class ComplexTypeFeatureElements extends AbstractEnumRuleElementFinder {
+		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.fhdo.lemma.data.DataDsl.ComplexTypeFeature");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final EnumLiteralDeclaration cAGGREGATEEnumLiteralDeclaration_0 = (EnumLiteralDeclaration)cAlternatives.eContents().get(0);
 		private final Keyword cAGGREGATEAggregateKeyword_0_0 = (Keyword)cAGGREGATEEnumLiteralDeclaration_0.eContents().get(0);
@@ -1185,7 +1222,7 @@ public class DataDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final EnumLiteralDeclaration cVALUE_OBJECTEnumLiteralDeclaration_10 = (EnumLiteralDeclaration)cAlternatives.eContents().get(10);
 		private final Keyword cVALUE_OBJECTValueObjectKeyword_10_0 = (Keyword)cVALUE_OBJECTEnumLiteralDeclaration_10.eContents().get(0);
 		
-		//enum DataStructureFeature:
+		//enum ComplexTypeFeature:
 		//	AGGREGATE='aggregate' |
 		//	APPLICATION_SERVICE='applicationService' |
 		//	DOMAIN_EVENT='domainEvent' |
@@ -1359,7 +1396,7 @@ public class DataDslGrammarAccess extends AbstractGrammarElementFinder {
 	private final VersionElements pVersion;
 	private final ContextElements pContext;
 	private final ComplexTypeElements pComplexType;
-	private final DataStructureFeatureElements eDataStructureFeature;
+	private final ComplexTypeFeatureElements eComplexTypeFeature;
 	private final DataStructureElements pDataStructure;
 	private final ListTypeElements pListType;
 	private final DataFieldFeatureElements eDataFieldFeature;
@@ -1390,7 +1427,7 @@ public class DataDslGrammarAccess extends AbstractGrammarElementFinder {
 		this.pVersion = new VersionElements();
 		this.pContext = new ContextElements();
 		this.pComplexType = new ComplexTypeElements();
-		this.eDataStructureFeature = new DataStructureFeatureElements();
+		this.eComplexTypeFeature = new ComplexTypeFeatureElements();
 		this.pDataStructure = new DataStructureElements();
 		this.pListType = new ListTypeElements();
 		this.eDataFieldFeature = new DataFieldFeatureElements();
@@ -1488,7 +1525,7 @@ public class DataDslGrammarAccess extends AbstractGrammarElementFinder {
 		return getComplexTypeAccess().getRule();
 	}
 	
-	//enum DataStructureFeature:
+	//enum ComplexTypeFeature:
 	//	AGGREGATE='aggregate' |
 	//	APPLICATION_SERVICE='applicationService' |
 	//	DOMAIN_EVENT='domainEvent' |
@@ -1500,16 +1537,16 @@ public class DataDslGrammarAccess extends AbstractGrammarElementFinder {
 	//	SERVICE='service' |
 	//	SPECIFICATION='specification' |
 	//	VALUE_OBJECT='valueObject';
-	public DataStructureFeatureElements getDataStructureFeatureAccess() {
-		return eDataStructureFeature;
+	public ComplexTypeFeatureElements getComplexTypeFeatureAccess() {
+		return eComplexTypeFeature;
 	}
 	
-	public EnumRule getDataStructureFeatureRule() {
-		return getDataStructureFeatureAccess().getRule();
+	public EnumRule getComplexTypeFeatureRule() {
+		return getComplexTypeFeatureAccess().getRule();
 	}
 	
 	//DataStructure:
-	//	'structure' name=ID ('<' features+=DataStructureFeature (',' features+=DataStructureFeature)* '>')? ('extends'
+	//	'structure' name=ID ('<' features+=ComplexTypeFeature (',' features+=ComplexTypeFeature)* '>')? ('extends'
 	//	super=[DataStructure|QualifiedName])? '{' ((dataFields+=DataField | operations+=DataOperation) (','
 	//	(dataFields+=DataField | operations+=DataOperation))*)?
 	//	'}';
@@ -1564,7 +1601,7 @@ public class DataDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//Enumeration:
-	//	'enum' name=ID '{'
+	//	'enum' name=ID ('<' features+=ComplexTypeFeature (',' features+=ComplexTypeFeature)* '>')? '{'
 	//	fields+=EnumerationField (',' fields+=EnumerationField)*
 	//	'}';
 	public EnumerationElements getEnumerationAccess() {

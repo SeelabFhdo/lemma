@@ -8,9 +8,9 @@ import org.eclipse.xtext.nodemodel.util.NodeModelUtils
 import de.fhdo.lemma.data.DataPackage
 import de.fhdo.lemma.data.EnumerationField
 import org.eclipse.emf.ecore.EObject
-import de.fhdo.lemma.data.DataStructure
 import de.fhdo.lemma.data.DataField
 import de.fhdo.lemma.data.DataOperation
+import de.fhdo.lemma.data.ComplexType
 
 /**
  * Provide custom syntax highlighting for certain elements.
@@ -83,8 +83,8 @@ class HighlightingCalculator implements ISemanticHighlightingCalculator {
      */
     private def getNodesWithFeatures(EObject eObject) {
         return switch (eObject) {
-            DataStructure: NodeModelUtils.findNodesForFeature(eObject,
-                DataPackage::Literals.DATA_STRUCTURE__FEATURES)
+            ComplexType: NodeModelUtils.findNodesForFeature(eObject,
+                DataPackage::Literals.COMPLEX_TYPE__FEATURES)
             DataField: NodeModelUtils.findNodesForFeature(eObject,
                 DataPackage::Literals.DATA_FIELD__FEATURES)
             DataOperation: NodeModelUtils.findNodesForFeature(eObject,

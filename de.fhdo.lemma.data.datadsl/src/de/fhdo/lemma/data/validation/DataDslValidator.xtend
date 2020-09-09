@@ -21,7 +21,6 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EStructuralFeature
 import de.fhdo.lemma.data.Context
 import de.fhdo.lemma.data.DataOperation
-import de.fhdo.lemma.data.DataStructureFeature
 import de.fhdo.lemma.data.DataOperationFeature
 import de.fhdo.lemma.data.PrimitiveType
 import de.fhdo.lemma.data.Type
@@ -29,6 +28,7 @@ import de.fhdo.lemma.data.ListType
 import de.fhdo.lemma.data.Enumeration
 import de.fhdo.lemma.data.PrimitiveTypeConstants
 import de.fhdo.lemma.data.ComplexType
+import de.fhdo.lemma.data.ComplexTypeFeature
 
 /**
  * This class contains validation rules for the Data DSL.
@@ -196,105 +196,120 @@ class DataDslValidator extends AbstractDataDslValidator {
     }
 
     /**
-     * Check data structure for unique features
+     * Check complex type for unique features
      */
     @Check
-    def checkUniqueFeatures(DataStructure dataStructure) {
-        val duplicateIndex = LemmaUtils.getDuplicateIndex(dataStructure.features, [it])
+    def checkUniqueFeatures(ComplexType complexType) {
+        val duplicateIndex = LemmaUtils.getDuplicateIndex(complexType.features, [it])
         if (duplicateIndex > -1)
-            error("Duplicate feature", dataStructure,
-                DataPackage::Literals.DATA_STRUCTURE__FEATURES, duplicateIndex)
+            error("Duplicate feature", complexType,
+                DataPackage::Literals.COMPLEX_TYPE__FEATURES, duplicateIndex)
     }
 
     /**
      * Check "aggregate" feature constraints
      */
     @Check
-    def checkAggregateFeatureConstraints(DataStructure dataStructure) {
-        val featureIndex = dataStructure.features.indexOf(DataStructureFeature.AGGREGATE)
+    def checkAggregateFeatureConstraints(ComplexType complexType) {
+        val featureIndex = complexType.features.indexOf(ComplexTypeFeature.AGGREGATE)
         if (featureIndex === -1) {
             return
         }
 
         // Only entities should be aggregates
-        if (!dataStructure.hasFeature(DataStructureFeature.ENTITY))
-            warning("Only entities should be aggregates", dataStructure,
-                DataPackage::Literals.DATA_STRUCTURE__FEATURES, featureIndex)
+        if (!complexType.hasFeature(ComplexTypeFeature.ENTITY))
+            warning("Only entities should be aggregates", complexType,
+                DataPackage::Literals.COMPLEX_TYPE__FEATURES, featureIndex)
 
         // The aggregate should contain at least one part
-        val effectiveDataFieldFeatures = dataStructure.effectiveFields.map[features].flatten
-        if (!effectiveDataFieldFeatures.exists[it == DataFieldFeature.PART])
-            warning("Aggregate should contain at least one part", dataStructure,
-                DataPackage::Literals.DATA_STRUCTURE__FEATURES, featureIndex)
+        val effectiveDataFieldFeatures = complexType.asStructure?.effectiveFields
+            ?.map[features]?.flatten
+        if (effectiveDataFieldFeatures !== null &&
+            !effectiveDataFieldFeatures.exists[it == DataFieldFeature.PART])
+            warning("Aggregate should contain at least one part", complexType,
+                DataPackage::Literals.COMPLEX_TYPE__FEATURES, featureIndex)
+    }
+
+    /**
+     * Retrieve a DataStructure instance from a ComplexType. Returns null, if the ComplexType is not
+     * a DataStructure.
+     */
+    private def asStructure(ComplexType complexType) {
+        return if (complexType.isIsStructure)
+                complexType as DataStructure
+            else
+                null
     }
 
     /**
      * Check "applicationService" feature constraints
      */
     @Check
-    def checkApplicationServiceFeatureConstraints(DataStructure dataStructure) {
-        checkServiceFeatureConstraints(dataStructure, DataStructureFeature.APPLICATION_SERVICE)
+    def checkApplicationServiceFeatureConstraints(ComplexType complexType) {
+        checkServiceFeatureConstraints(complexType, ComplexTypeFeature.APPLICATION_SERVICE)
     }
 
     /**
      * Generic helper to check constraints of a certain peculiarity of the "service" feature
      */
-    def checkServiceFeatureConstraints(DataStructure dataStructure,
-        DataStructureFeature serviceFeature) {
-        val featureIndex = dataStructure.features.indexOf(serviceFeature)
+    def checkServiceFeatureConstraints(ComplexType complexType,ComplexTypeFeature feature) {
+        val featureIndex = complexType.features.indexOf(feature)
         if (featureIndex === -1) {
             return
         }
 
-        // No other domain features should exist on the structure
-        if (dataStructure.hasAdditionalDomainFeatures(serviceFeature))
-            warning("A service should not exhibit other domain features", dataStructure,
-                DataPackage::Literals.DATA_STRUCTURE__FEATURES, featureIndex)
+        // No other domain features should exist on the type
+        if (complexType.hasAdditionalDomainFeatures(feature))
+            warning("A service should not exhibit other domain features", complexType,
+                DataPackage::Literals.COMPLEX_TYPE__FEATURES, featureIndex)
 
-        // Service should only comprise operations
+        val dataStructure = complexType.asStructure
+        if (dataStructure === null) {
+            return
+        }
+
+        // Data structure service should only comprise operations
         if (!dataStructure.effectiveFields.empty)
             warning("A service should only comprise operations", dataStructure,
-                DataPackage::Literals.DATA_STRUCTURE__FEATURES, featureIndex)
+                DataPackage::Literals.COMPLEX_TYPE__FEATURES, featureIndex)
 
-        // Service should comprise at least one operation
+        // Data structure service should comprise at least one operation
         if (dataStructure.effectiveOperations.empty)
             warning("A service should comprise at least one operation", dataStructure,
-                DataPackage::Literals.DATA_STRUCTURE__FEATURES, featureIndex)
+                DataPackage::Literals.COMPLEX_TYPE__FEATURES, featureIndex)
     }
 
     /**
-     * Helper to check if a data structure has also other domain-driven-design-related features than
+     * Helper to check if a complex type has also other domain-driven-design-related features than
      * a given one
      */
-    private def hasAdditionalDomainFeatures(DataStructure structure, DataStructureFeature feature) {
-        val domainFeaturesOnStructure = structure.features
-            .filter[structure.allDomainFeatures.contains(it)]
-        return domainFeaturesOnStructure.size > 1 ||
-            !domainFeaturesOnStructure.exists[it == feature]
+    private def hasAdditionalDomainFeatures(ComplexType type, ComplexTypeFeature feature) {
+        val domainFeaturesOnType = type.features.filter[type.allDomainFeatures.contains(it)]
+        return domainFeaturesOnType.size > 1 || !domainFeaturesOnType.exists[it == feature]
     }
 
     /**
      * Check "domainEvent" feature constraints
      */
     @Check
-    def checkDomainEventFeatureConstraints(DataStructure dataStructure) {
-        val featureIndex = dataStructure.features.indexOf(DataStructureFeature.DOMAIN_EVENT)
+    def checkDomainEventFeatureConstraints(ComplexType complexType) {
+        val featureIndex = complexType.features.indexOf(ComplexTypeFeature.DOMAIN_EVENT)
         if (featureIndex === -1) {
             return
         }
 
         // Only value objects should be domain events
-        if (!dataStructure.hasFeature(DataStructureFeature.VALUE_OBJECT))
-            warning("Only value objects should be domain events", dataStructure,
-                DataPackage::Literals.DATA_STRUCTURE__FEATURES, featureIndex)
+        if (!complexType.hasFeature(ComplexTypeFeature.VALUE_OBJECT))
+            warning("Only value objects should be domain events", complexType,
+                DataPackage::Literals.COMPLEX_TYPE__FEATURES, featureIndex)
     }
 
     /**
      * Check "domainService" feature constraints
      */
     @Check
-    def checkDomainServiceFeatureConstraints(DataStructure dataStructure) {
-        checkServiceFeatureConstraints(dataStructure, DataStructureFeature.DOMAIN_SERVICE)
+    def checkDomainServiceFeatureConstraints(ComplexType complexType) {
+        checkServiceFeatureConstraints(complexType, ComplexTypeFeature.DOMAIN_SERVICE)
     }
 
     /**
@@ -302,7 +317,7 @@ class DataDslValidator extends AbstractDataDslValidator {
      */
     @Check
     def checkEntityFeatureConstraints(DataStructure dataStructure) {
-        val featureIndex = dataStructure.features.indexOf(DataStructureFeature.ENTITY)
+        val featureIndex = dataStructure.features.indexOf(ComplexTypeFeature.ENTITY)
         if (featureIndex === -1) {
             return
         }
@@ -317,35 +332,39 @@ class DataDslValidator extends AbstractDataDslValidator {
 
         if (!hasIdentifierFields && !hasIdentifierOperations)
             warning("At least one non-inherited field or operation should be an identifier for " +
-                "the entity", dataStructure, DataPackage::Literals.DATA_STRUCTURE__FEATURES,
+                "the entity", dataStructure, DataPackage::Literals.COMPLEX_TYPE__FEATURES,
                 featureIndex)
         else if (hasIdentifierFields && hasIdentifierOperations)
             warning("Identifier fields and operations should not be mixed", dataStructure,
-                DataPackage::Literals.DATA_STRUCTURE__FEATURES, featureIndex)
+                DataPackage::Literals.COMPLEX_TYPE__FEATURES, featureIndex)
 
         // Only one operation should be an identifier
         if (identifierOperations.size > 1)
             warning("Only one operation should be an identifier for the entity", dataStructure,
-                DataPackage::Literals.DATA_STRUCTURE__FEATURES, featureIndex)
+                DataPackage::Literals.COMPLEX_TYPE__FEATURES, featureIndex)
     }
 
     /**
      * Check "factory" feature constraints
      */
     @Check
-    def checkFactoryFeatureConstraints(DataStructure dataStructure) {
-        val featureIndex = dataStructure.features.indexOf(DataStructureFeature.FACTORY)
+    def checkFactoryFeatureConstraints(ComplexType complexType) {
+        val featureIndex = complexType.features.indexOf(ComplexTypeFeature.FACTORY)
         if (featureIndex === -1) {
             return
         }
 
         // No other domain features should exist on the structure
-        if (dataStructure.hasAdditionalDomainFeatures(DataStructureFeature.FACTORY))
-            warning("A factory should not exhibit other domain features", dataStructure,
-                DataPackage::Literals.DATA_STRUCTURE__FEATURES, featureIndex)
+        if (complexType.hasAdditionalDomainFeatures(ComplexTypeFeature.FACTORY))
+            warning("A factory should not exhibit other domain features", complexType,
+                DataPackage::Literals.COMPLEX_TYPE__FEATURES, featureIndex)
 
         // Factory operations should return complex types being aggregates or value objects
-        val hasOperationsWithWrongReturnTypes = dataStructure.effectiveOperations.exists[
+        val effectiveOperations = complexType.asStructure?.effectiveOperations
+        if (effectiveOperations === null)
+            return
+
+        val hasOperationsWithWrongReturnTypes = effectiveOperations.exists[
             hasNoReturnType ||
             !(
                 primitiveOrComplexReturnType instanceof PrimitiveType ||
@@ -354,16 +373,16 @@ class DataDslValidator extends AbstractDataDslValidator {
             {
                 if (primitiveOrComplexReturnType instanceof DataStructure) {
                     val dataStructureReturnType = primitiveOrComplexReturnType as DataStructure
-                    !dataStructureReturnType.hasFeature(DataStructureFeature.AGGREGATE) &&
-                    !dataStructureReturnType.hasFeature(DataStructureFeature.VALUE_OBJECT)
+                    !dataStructureReturnType.hasFeature(ComplexTypeFeature.AGGREGATE) &&
+                    !dataStructureReturnType.hasFeature(ComplexTypeFeature.VALUE_OBJECT)
                 } else
                     false
             }
         ]
 
         if (hasOperationsWithWrongReturnTypes)
-            warning("Factory operations should return aggregates or value objects", dataStructure,
-                DataPackage::Literals.DATA_STRUCTURE__FEATURES, featureIndex)
+            warning("Factory operations should return aggregates or value objects", complexType,
+                DataPackage::Literals.COMPLEX_TYPE__FEATURES, featureIndex)
     }
 
     /**
@@ -371,46 +390,51 @@ class DataDslValidator extends AbstractDataDslValidator {
      */
     @Check
     def checkInfrastructureServiceFeatureConstraints(DataStructure dataStructure) {
-        checkServiceFeatureConstraints(dataStructure, DataStructureFeature.INFRASTRUCTURE_SERVICE)
+        checkServiceFeatureConstraints(dataStructure, ComplexTypeFeature.INFRASTRUCTURE_SERVICE)
     }
 
     /**
      * Check "repository" feature constraints
      */
     @Check
-    def checkRepositoryFeatureConstraints(DataStructure dataStructure) {
-        val featureIndex = dataStructure.features.indexOf(DataStructureFeature.REPOSITORY)
+    def checkRepositoryFeatureConstraints(ComplexType complexType) {
+        val featureIndex = complexType.features.indexOf(ComplexTypeFeature.REPOSITORY)
         if (featureIndex === -1) {
             return
         }
 
         // No other domain features should exist on the structure
-        if (dataStructure.hasAdditionalDomainFeatures(DataStructureFeature.REPOSITORY))
-            warning("A repository should not exhibit other domain features", dataStructure,
-                DataPackage::Literals.DATA_STRUCTURE__FEATURES, featureIndex)
+        if (complexType.hasAdditionalDomainFeatures(ComplexTypeFeature.REPOSITORY))
+            warning("A repository should not exhibit other domain features", complexType,
+                DataPackage::Literals.COMPLEX_TYPE__FEATURES, featureIndex)
 
         // Repository should comprise at least one operation
-        if (dataStructure.effectiveOperations.empty)
-            warning("A repository should comprise at least one operation", dataStructure,
-                DataPackage::Literals.DATA_STRUCTURE__FEATURES, featureIndex)
+        val effectiveOperations = complexType.asStructure?.effectiveOperations
+        if (effectiveOperations === null) {
+            return
+        }
+
+        if (effectiveOperations.empty)
+            warning("A repository should comprise at least one operation", complexType,
+                DataPackage::Literals.COMPLEX_TYPE__FEATURES, featureIndex)
 
         // Repository should only handle entities or value objects
-        val allDataOperationParameters = dataStructure.effectiveOperations.map[parameters].flatten
+        val allDataOperationParameters = effectiveOperations.map[parameters].flatten
         val handlesNotOnlyEntitiesOrValueObjects = allDataOperationParameters.exists[
             return switch(effectiveType) {
                 PrimitiveType: false
                 DataStructure: {
                     val parameterType = effectiveType as DataStructure
-                    !parameterType.hasFeature(DataStructureFeature.ENTITY) &&
-                    !parameterType.hasFeature(DataStructureFeature.VALUE_OBJECT)
+                    !parameterType.hasFeature(ComplexTypeFeature.ENTITY) &&
+                    !parameterType.hasFeature(ComplexTypeFeature.VALUE_OBJECT)
                 }
                 default: true
             }
         ]
         if (handlesNotOnlyEntitiesOrValueObjects)
             warning("Complex typed parameters of repository operations should be entities or " +
-                "value objects", dataStructure,
-                DataPackage::Literals.DATA_STRUCTURE__FEATURES, featureIndex)
+                "value objects", complexType, DataPackage::Literals.COMPLEX_TYPE__FEATURES,
+                featureIndex)
     }
 
     /**
@@ -418,56 +442,61 @@ class DataDslValidator extends AbstractDataDslValidator {
      */
     @Check
     def checkServiceFeatureConstraints(DataStructure dataStructure) {
-        checkServiceFeatureConstraints(dataStructure, DataStructureFeature.SERVICE)
+        checkServiceFeatureConstraints(dataStructure, ComplexTypeFeature.SERVICE)
     }
 
     /**
      * Check "specification" feature constraints
      */
     @Check
-    def checkSpecificationFeatureConstraints(DataStructure dataStructure) {
-        val featureIndex = dataStructure.features.indexOf(DataStructureFeature.SPECIFICATION)
+    def checkSpecificationFeatureConstraints(ComplexType complexType) {
+        val featureIndex = complexType.features.indexOf(ComplexTypeFeature.SPECIFICATION)
         if (featureIndex === -1) {
             return
         }
 
         // No other domain features should exist on the structure
-        if (dataStructure.hasAdditionalDomainFeatures(DataStructureFeature.SPECIFICATION))
-            warning("A specification should not exhibit other domain features", dataStructure,
-                DataPackage::Literals.DATA_STRUCTURE__FEATURES, featureIndex)
+        if (complexType.hasAdditionalDomainFeatures(ComplexTypeFeature.SPECIFICATION))
+            warning("A specification should not exhibit other domain features", complexType,
+                DataPackage::Literals.COMPLEX_TYPE__FEATURES, featureIndex)
 
         // A specification should comprise at least one validator operation
-        if (!dataStructure.effectiveOperations.exists[hasFeature(DataOperationFeature.VALIDATOR)])
+        val effectiveOperations = complexType.asStructure?.effectiveOperations
+        if (effectiveOperations === null) {
+            return
+        }
+
+        if (!effectiveOperations.exists[hasFeature(DataOperationFeature.VALIDATOR)])
             warning("A specification should comprise at least one validator operation",
-                dataStructure, DataPackage::Literals.DATA_STRUCTURE__FEATURES, featureIndex)
+                complexType, DataPackage::Literals.COMPLEX_TYPE__FEATURES, featureIndex)
     }
 
     /**
      * Check "valueObject" feature constraints
      */
     @Check
-    def checkValueObjectFeatureConstraints(DataStructure dataStructure) {
-        val featureIndex = dataStructure.features.indexOf(DataStructureFeature.VALUE_OBJECT)
+    def checkValueObjectFeatureConstraints(ComplexType complexType) {
+        val featureIndex = complexType.features.indexOf(ComplexTypeFeature.VALUE_OBJECT)
         if (featureIndex === -1) {
             return
         }
 
         // A value object may not exhibit several other features
         val forbiddenFeatures = #[
-            DataStructureFeature.AGGREGATE,
-            DataStructureFeature.APPLICATION_SERVICE,
-            DataStructureFeature.DOMAIN_SERVICE,
-            DataStructureFeature.ENTITY,
-            DataStructureFeature.INFRASTRUCTURE_SERVICE,
-            DataStructureFeature.REPOSITORY,
-            DataStructureFeature.SERVICE,
-            DataStructureFeature.SPECIFICATION
+            ComplexTypeFeature.AGGREGATE,
+            ComplexTypeFeature.APPLICATION_SERVICE,
+            ComplexTypeFeature.DOMAIN_SERVICE,
+            ComplexTypeFeature.ENTITY,
+            ComplexTypeFeature.INFRASTRUCTURE_SERVICE,
+            ComplexTypeFeature.REPOSITORY,
+            ComplexTypeFeature.SERVICE,
+            ComplexTypeFeature.SPECIFICATION
         ]
 
-        if (dataStructure.features.exists[forbiddenFeatures.contains(it)])
+        if (complexType.features.exists[forbiddenFeatures.contains(it)])
             warning("A value object should not be an aggregate, entity, repository, service, or " +
-                "specification", dataStructure,
-                DataPackage::Literals.DATA_STRUCTURE__FEATURES, featureIndex)
+                "specification", complexType, DataPackage::Literals.COMPLEX_TYPE__FEATURES,
+                featureIndex)
     }
 
     /**
@@ -579,7 +608,7 @@ class DataDslValidator extends AbstractDataDslValidator {
         }
 
         // Defining data structure should be aggregate
-        if (!dataField.dataStructure.hasFeature(DataStructureFeature.AGGREGATE))
+        if (!dataField.dataStructure.hasFeature(ComplexTypeFeature.AGGREGATE))
             warning("Parts should only be defined in aggregates", dataField,
                 DataPackage::Literals.DATA_FIELD__FEATURES, featureIndex)
 
@@ -587,8 +616,8 @@ class DataDslValidator extends AbstractDataDslValidator {
         val effectiveFieldType = dataField.effectiveType as ComplexType
         if (effectiveFieldType instanceof DataStructure) {
             val fieldType = effectiveFieldType as DataStructure
-            if (!fieldType.hasFeature(DataStructureFeature.ENTITY) &&
-                !fieldType.hasFeature(DataStructureFeature.VALUE_OBJECT))
+            if (!fieldType.hasFeature(ComplexTypeFeature.ENTITY) &&
+                !fieldType.hasFeature(ComplexTypeFeature.VALUE_OBJECT))
                 warning("Parts of structural type should be entities or value objects", dataField,
                     DataPackage::Literals.DATA_FIELD__FEATURES, featureIndex)
         }
@@ -754,7 +783,7 @@ class DataDslValidator extends AbstractDataDslValidator {
         }
 
         // Defining data structure should be a specification
-        if (!dataOperation.dataStructure.hasFeature(DataStructureFeature.SPECIFICATION))
+        if (!dataOperation.dataStructure.hasFeature(ComplexTypeFeature.SPECIFICATION))
             warning("A validator operation should be defined within a specification", dataOperation,
                 DataPackage::Literals.DATA_OPERATION__FEATURES, featureIndex)
 
@@ -828,5 +857,17 @@ class DataDslValidator extends AbstractDataDslValidator {
         if (version.contexts.empty && version.complexTypes.empty)
             error("A version must define at least one context or complex type", version,
                 DataPackage::Literals.VERSION__NAME)
+    }
+
+    /**
+     * Check allowed features on enumerations
+     */
+    @Check
+    def checkAllowedFeatures(Enumeration enumeration) {
+        val allowedFeatures = #[ComplexTypeFeature.DOMAIN_EVENT, ComplexTypeFeature.VALUE_OBJECT]
+        val hasUnallowedFeatures = enumeration.features.exists[!allowedFeatures.contains(it)]
+        if (hasUnallowedFeatures)
+            warning("An enumeration should only be a domain event or value object", enumeration,
+                DataPackage::Literals.COMPLEX_TYPE__FEATURES)
     }
 }

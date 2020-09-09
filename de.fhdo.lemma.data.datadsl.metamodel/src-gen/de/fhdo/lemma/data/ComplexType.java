@@ -19,6 +19,7 @@ import org.eclipse.emf.common.util.EList;
  * </p>
  * <ul>
  *   <li>{@link de.fhdo.lemma.data.ComplexType#getName <em>Name</em>}</li>
+ *   <li>{@link de.fhdo.lemma.data.ComplexType#getFeatures <em>Features</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.ComplexType#getDataModel <em>Data Model</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.ComplexType#getVersion <em>Version</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.ComplexType#getContext <em>Context</em>}</li>
@@ -60,6 +61,20 @@ public interface ComplexType extends Type {
      * @generated
      */
     void setName(String value);
+
+    /**
+     * Returns the value of the '<em><b>Features</b></em>' attribute list.
+     * The list contents are of type {@link de.fhdo.lemma.data.ComplexTypeFeature}.
+     * The literals are from the enumeration {@link de.fhdo.lemma.data.ComplexTypeFeature}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Features</em>' attribute list.
+     * @see de.fhdo.lemma.data.ComplexTypeFeature
+     * @see de.fhdo.lemma.data.DataPackage#getComplexType_Features()
+     * @model unique="false"
+     * @generated
+     */
+    EList<ComplexTypeFeature> getFeatures();
 
     /**
      * Returns the value of the '<em><b>Data Model</b></em>' container reference.
@@ -249,5 +264,29 @@ public interface ComplexType extends Type {
      * @generated
      */
     int compareFieldCounts(EList<DataField> fields, EList<DataField> fieldsToCompare);
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * *
+     * Get list of domain-driven-design-related features
+     * <!-- end-model-doc -->
+     * @model kind="operation" unique="false"
+     * @generated
+     */
+    EList<ComplexTypeFeature> getAllDomainFeatures();
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * *
+     * Check if the type has a specific feature assigned
+     * <!-- end-model-doc -->
+     * @model unique="false" featureUnique="false"
+     * @generated
+     */
+    boolean hasFeature(ComplexTypeFeature feature);
 
 } // ComplexType

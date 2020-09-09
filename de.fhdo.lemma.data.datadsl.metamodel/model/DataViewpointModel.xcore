@@ -10,7 +10,7 @@ import java.util.Map
  *
  * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
  */
-class DataModel { 
+class DataModel {
     /**
      * Implicit Constraints:
      *     (C1) Only one (or none) of the lists versions, contexts or complexTypes may be filled
@@ -395,6 +395,7 @@ abstract class ComplexType extends Type {
      */
 
     String name
+    ComplexTypeFeature[] features
 
     container DataModel dataModel opposite complexTypes
     container Version version opposite complexTypes
@@ -532,6 +533,50 @@ abstract class ComplexType extends Type {
 
         return -1
     }
+
+    /**
+     * Get list of domain-driven-design-related features
+     */
+    op ComplexTypeFeature[] getAllDomainFeatures() {
+        return #[
+            ComplexTypeFeature.AGGREGATE,
+            ComplexTypeFeature.APPLICATION_SERVICE,
+            ComplexTypeFeature.DOMAIN_EVENT,
+            ComplexTypeFeature.DOMAIN_SERVICE,
+            ComplexTypeFeature.ENTITY,
+            ComplexTypeFeature.FACTORY,
+            ComplexTypeFeature.INFRASTRUCTURE_SERVICE,
+            ComplexTypeFeature.REPOSITORY,
+            ComplexTypeFeature.SERVICE,
+            ComplexTypeFeature.SPECIFICATION,
+            ComplexTypeFeature.VALUE_OBJECT
+        ].toEList
+    }
+
+    /**
+     * Check if the type has a specific feature assigned
+     */
+    op boolean hasFeature(ComplexTypeFeature feature) {
+        return features.contains(feature)
+    }
+}
+
+/**
+ * Possible features for a complex type. Remember to adapt ComplexType.getAllDomainFeatures() if a
+ * new domain-driven-design-related feature is added.
+ */
+enum ComplexTypeFeature {
+    AGGREGATE,
+    APPLICATION_SERVICE,
+    DOMAIN_EVENT,
+    DOMAIN_SERVICE,
+    ENTITY,
+    FACTORY,
+    INFRASTRUCTURE_SERVICE,
+    REPOSITORY,
+    SERVICE,
+    SPECIFICATION,
+    VALUE_OBJECT
 }
 
 /**
@@ -546,24 +591,6 @@ class ImportedComplexType {
     container DataOperationParameter parameter opposite importedComplexType
 }
 
-/**
- * Possible features for a data structure. Remember to adapt DataStructure.getAllDomainFeatures() if
- * a new domain-driven-design-related feature is added.
- */
-enum DataStructureFeature {
-    AGGREGATE,
-    APPLICATION_SERVICE,
-    DOMAIN_EVENT,
-    DOMAIN_SERVICE,
-    ENTITY,
-    FACTORY,
-    INFRASTRUCTURE_SERVICE,
-    REPOSITORY,
-    SERVICE,
-    SPECIFICATION,
-    VALUE_OBJECT
-}
-
 /*
  * Concept for data structures, i.e., complex types probably consisting of named and typed fields,
  * but that may also be empty though
@@ -576,7 +603,6 @@ class DataStructure extends ComplexType {
      *          Ensured by: DSL validator.
      */
 
-    DataStructureFeature[] features
     refers DataStructure ^super
     contains DataField[] dataFields opposite dataStructure
     contains DataOperation[] operations opposite dataStructure
@@ -724,32 +750,6 @@ class DataStructure extends ComplexType {
             return 1
 
         return super.compareFieldCounts(effectiveFields, structureToCompare.effectiveFields)
-    }
-
-    /**
-     * Check if the structure has a specific feature assigned
-     */
-    op boolean hasFeature(DataStructureFeature feature) {
-        return features.contains(feature)
-    }
-
-    /**
-     * Get list of domain-driven-design-related features
-     */
-    op DataStructureFeature[] getAllDomainFeatures() {
-        return #[
-            DataStructureFeature.AGGREGATE,
-            DataStructureFeature.APPLICATION_SERVICE,
-            DataStructureFeature.DOMAIN_EVENT,
-            DataStructureFeature.DOMAIN_SERVICE,
-            DataStructureFeature.ENTITY,
-            DataStructureFeature.FACTORY,
-            DataStructureFeature.INFRASTRUCTURE_SERVICE,
-            DataStructureFeature.REPOSITORY,
-            DataStructureFeature.SERVICE,
-            DataStructureFeature.SPECIFICATION,
-            DataStructureFeature.VALUE_OBJECT
-        ].toEList
     }
 }
 

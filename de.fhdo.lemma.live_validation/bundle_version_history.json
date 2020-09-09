@@ -7,7 +7,10 @@
                 "i20200617101123": "MjAyMDA2MTcxMDExMTE",
                 "i20200617142322": "MjAyMDA2MTcxNDIzMDc",
                 "i20200617152511": "MjAyMDA2MTcxNTI1MDc",
-                "i20200618194949": "MjAyMDA2MTgxOTQ5NDQ"
+                "i20200618194949": "MjAyMDA2MTgxOTQ5NDQ",
+                "i20200909143444": "MjAyMDA5MDkxNDM0MzI",
+                "i20200909150329": "MjAyMDA5MDkxNTAzMjM",
+                "i20200909155636": "MjAyMDA5MDkxNTU2MjI"
             }
         },
         "com.google.guava.listenablefuture": {
@@ -17,7 +20,10 @@
                 "i20200617101123": "MjAyMDA2MTcxMDExMTE",
                 "i20200617142322": "MjAyMDA2MTcxNDIzMDc",
                 "i20200617152511": "MjAyMDA2MTcxNTI1MDc",
-                "i20200618194949": "MjAyMDA2MTgxOTQ5NDQ"
+                "i20200618194949": "MjAyMDA2MTgxOTQ5NDQ",
+                "i20200909143444": "MjAyMDA5MDkxNDM0MzI",
+                "i20200909150329": "MjAyMDA5MDkxNTAzMjM",
+                "i20200909155636": "MjAyMDA5MDkxNTU2MjI"
             }
         },
         "com.google.j2objc.annotations": {
@@ -27,7 +33,10 @@
                 "i20200617101123": "MjAyMDA2MTcxMDExMTE",
                 "i20200617142322": "MjAyMDA2MTcxNDIzMDc",
                 "i20200617152512": "MjAyMDA2MTcxNTI1MDc",
-                "i20200618194949": "MjAyMDA2MTgxOTQ5NDQ"
+                "i20200618194949": "MjAyMDA2MTgxOTQ5NDQ",
+                "i20200909143444": "MjAyMDA5MDkxNDM0MzI",
+                "i20200909150329": "MjAyMDA5MDkxNTAzMjM",
+                "i20200909155636": "MjAyMDA5MDkxNTU2MjI"
             }
         },
         "io.github.microutils.kotlin-logging": {
@@ -37,7 +46,10 @@
                 "i20200617101124": "MjAyMDA2MTcxMDExMTE",
                 "i20200617142322": "MjAyMDA2MTcxNDIzMDc",
                 "i20200617152512": "MjAyMDA2MTcxNTI1MDc",
-                "i20200618194949": "MjAyMDA2MTgxOTQ5NDQ"
+                "i20200618194949": "MjAyMDA2MTgxOTQ5NDQ",
+                "i20200909143444": "MjAyMDA5MDkxNDM0MzI",
+                "i20200909150329": "MjAyMDA5MDkxNTAzMjM",
+                "i20200909155636": "MjAyMDA5MDkxNTU2MjI"
             }
         },
         "org.checkerframework.checker-qual": {
@@ -47,7 +59,10 @@
                 "i20200617101124": "MjAyMDA2MTcxMDExMTE",
                 "i20200617142322": "MjAyMDA2MTcxNDIzMDc",
                 "i20200617152512": "MjAyMDA2MTcxNTI1MDc",
-                "i20200618194949": "MjAyMDA2MTgxOTQ5NDQ"
+                "i20200618194949": "MjAyMDA2MTgxOTQ5NDQ",
+                "i20200909143444": "MjAyMDA5MDkxNDM0MzI",
+                "i20200909150329": "MjAyMDA5MDkxNTAzMjM",
+                "i20200909155636": "MjAyMDA5MDkxNTU2MjI"
             }
         },
         "org.codehaus.mojo.animal-sniffer-annotations": {
@@ -57,7 +72,10 @@
                 "i20200617101123": "MjAyMDA2MTcxMDExMTE",
                 "i20200617142322": "MjAyMDA2MTcxNDIzMDc",
                 "i20200617152511": "MjAyMDA2MTcxNTI1MDc",
-                "i20200618194949": "MjAyMDA2MTgxOTQ5NDQ"
+                "i20200618194949": "MjAyMDA2MTgxOTQ5NDQ",
+                "i20200909143444": "MjAyMDA5MDkxNDM0MzI",
+                "i20200909150329": "MjAyMDA5MDkxNTAzMjM",
+                "i20200909155636": "MjAyMDA5MDkxNTU2MjI"
             }
         },
         "org.jetbrains.annotations": {
@@ -67,7 +85,10 @@
                 "i20200617101124": "MjAyMDA2MTcxMDExMTE",
                 "i20200617142322": "MjAyMDA2MTcxNDIzMDc",
                 "i20200617152512": "MjAyMDA2MTcxNTI1MDc",
-                "i20200618194949": "MjAyMDA2MTgxOTQ5NDQ"
+                "i20200618194949": "MjAyMDA2MTgxOTQ5NDQ",
+                "i20200909143445": "MjAyMDA5MDkxNDM0MzI",
+                "i20200909150329": "MjAyMDA5MDkxNTAzMjM",
+                "i20200909155636": "MjAyMDA5MDkxNTU2MjI"
             }
         },
         "org.jetbrains.kotlin.stdlib": {
@@ -77,7 +98,10 @@
                 "i20200617101124": "MjAyMDA2MTcxMDExMTE",
                 "i20200617142322": "MjAyMDA2MTcxNDIzMDc",
                 "i20200617152512": "MjAyMDA2MTcxNTI1MDc",
-                "i20200618194949": "MjAyMDA2MTgxOTQ5NDQ"
+                "i20200618194949": "MjAyMDA2MTgxOTQ5NDQ",
+                "i20200909143445": "MjAyMDA5MDkxNDM0MzI",
+                "i20200909150329": "MjAyMDA5MDkxNTAzMjM",
+                "i20200909155636": "MjAyMDA5MDkxNTU2MjI"
             }
         },
         "org.jetbrains.kotlin.stdlib-common": {
@@ -87,7 +111,10 @@
                 "i20200617101123": "MjAyMDA2MTcxMDExMTE",
                 "i20200617142322": "MjAyMDA2MTcxNDIzMDc",
                 "i20200617152512": "MjAyMDA2MTcxNTI1MDc",
-                "i20200618194949": "MjAyMDA2MTgxOTQ5NDQ"
+                "i20200618194949": "MjAyMDA2MTgxOTQ5NDQ",
+                "i20200909143444": "MjAyMDA5MDkxNDM0MzI",
+                "i20200909150329": "MjAyMDA5MDkxNTAzMjM",
+                "i20200909155636": "MjAyMDA5MDkxNTU2MjI"
             }
         },
         "org.jetbrains.kotlin.stdlib-jdk7": {
@@ -97,7 +124,10 @@
                 "i20200617101123": "MjAyMDA2MTcxMDExMTE",
                 "i20200617142322": "MjAyMDA2MTcxNDIzMDc",
                 "i20200617152511": "MjAyMDA2MTcxNTI1MDc",
-                "i20200618194949": "MjAyMDA2MTgxOTQ5NDQ"
+                "i20200618194949": "MjAyMDA2MTgxOTQ5NDQ",
+                "i20200909143444": "MjAyMDA5MDkxNDM0MzI",
+                "i20200909150329": "MjAyMDA5MDkxNTAzMjM",
+                "i20200909155636": "MjAyMDA5MDkxNTU2MjI"
             }
         },
         "org.jetbrains.kotlin.stdlib-jdk8": {
@@ -107,7 +137,10 @@
                 "i20200617101124": "MjAyMDA2MTcxMDExMTE",
                 "i20200617142322": "MjAyMDA2MTcxNDIzMDc",
                 "i20200617152512": "MjAyMDA2MTcxNTI1MDc",
-                "i20200618194949": "MjAyMDA2MTgxOTQ5NDQ"
+                "i20200618194949": "MjAyMDA2MTgxOTQ5NDQ",
+                "i20200909143445": "MjAyMDA5MDkxNDM0MzI",
+                "i20200909150329": "MjAyMDA5MDkxNTAzMjM",
+                "i20200909155636": "MjAyMDA5MDkxNTU2MjI"
             }
         }
     },
@@ -119,7 +152,10 @@
                 "i20200617101127": "MjAyMDA2MTcxMDExMTE",
                 "i20200617142327": "MjAyMDA2MTcxNDIzMDc",
                 "i20200617152514": "MjAyMDA2MTcxNTI1MDc",
-                "i20200618194952": "MjAyMDA2MTgxOTQ5NDQ"
+                "i20200618194952": "MjAyMDA2MTgxOTQ5NDQ",
+                "i20200909143449": "MjAyMDA5MDkxNDM0MzI",
+                "i20200909150331": "MjAyMDA5MDkxNTAzMjM",
+                "i20200909155639": "MjAyMDA5MDkxNTU2MjI"
             }
         }
     }

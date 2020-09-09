@@ -3,6 +3,7 @@
 package de.fhdo.lemma.data.impl;
 
 import de.fhdo.lemma.data.ComplexType;
+import de.fhdo.lemma.data.ComplexTypeFeature;
 import de.fhdo.lemma.data.ComplexTypeImport;
 import de.fhdo.lemma.data.Context;
 import de.fhdo.lemma.data.DataFactory;
@@ -14,7 +15,6 @@ import de.fhdo.lemma.data.DataOperationFeature;
 import de.fhdo.lemma.data.DataOperationParameter;
 import de.fhdo.lemma.data.DataPackage;
 import de.fhdo.lemma.data.DataStructure;
-import de.fhdo.lemma.data.DataStructureFeature;
 import de.fhdo.lemma.data.Enumeration;
 import de.fhdo.lemma.data.EnumerationField;
 import de.fhdo.lemma.data.ImportedComplexType;
@@ -258,7 +258,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    private EEnum dataStructureFeatureEEnum = null;
+    private EEnum complexTypeFeatureEEnum = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -801,8 +801,8 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * @generated
      */
     @Override
-    public EReference getComplexType_DataModel() {
-        return (EReference)complexTypeEClass.getEStructuralFeatures().get(1);
+    public EAttribute getComplexType_Features() {
+        return (EAttribute)complexTypeEClass.getEStructuralFeatures().get(1);
     }
 
     /**
@@ -811,7 +811,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * @generated
      */
     @Override
-    public EReference getComplexType_Version() {
+    public EReference getComplexType_DataModel() {
         return (EReference)complexTypeEClass.getEStructuralFeatures().get(2);
     }
 
@@ -821,7 +821,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * @generated
      */
     @Override
-    public EReference getComplexType_Context() {
+    public EReference getComplexType_Version() {
         return (EReference)complexTypeEClass.getEStructuralFeatures().get(3);
     }
 
@@ -831,8 +831,8 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * @generated
      */
     @Override
-    public EAttribute getComplexType_IsStructure() {
-        return (EAttribute)complexTypeEClass.getEStructuralFeatures().get(4);
+    public EReference getComplexType_Context() {
+        return (EReference)complexTypeEClass.getEStructuralFeatures().get(4);
     }
 
     /**
@@ -841,7 +841,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * @generated
      */
     @Override
-    public EAttribute getComplexType_IsPrimitiveList() {
+    public EAttribute getComplexType_IsStructure() {
         return (EAttribute)complexTypeEClass.getEStructuralFeatures().get(5);
     }
 
@@ -851,7 +851,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * @generated
      */
     @Override
-    public EAttribute getComplexType_IsStructuredList() {
+    public EAttribute getComplexType_IsPrimitiveList() {
         return (EAttribute)complexTypeEClass.getEStructuralFeatures().get(6);
     }
 
@@ -861,8 +861,18 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * @generated
      */
     @Override
-    public EAttribute getComplexType_IsEnumeration() {
+    public EAttribute getComplexType_IsStructuredList() {
         return (EAttribute)complexTypeEClass.getEStructuralFeatures().get(7);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EAttribute getComplexType_IsEnumeration() {
+        return (EAttribute)complexTypeEClass.getEStructuralFeatures().get(8);
     }
 
     /**
@@ -903,6 +913,26 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
     @Override
     public EOperation getComplexType__CompareFieldCounts__EList_EList() {
         return complexTypeEClass.getEOperations().get(3);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EOperation getComplexType__GetAllDomainFeatures() {
+        return complexTypeEClass.getEOperations().get(4);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EOperation getComplexType__HasFeature__ComplexTypeFeature() {
+        return complexTypeEClass.getEOperations().get(5);
     }
 
     /**
@@ -981,18 +1011,8 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * @generated
      */
     @Override
-    public EAttribute getDataStructure_Features() {
-        return (EAttribute)dataStructureEClass.getEStructuralFeatures().get(0);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
     public EReference getDataStructure_Super() {
-        return (EReference)dataStructureEClass.getEStructuralFeatures().get(1);
+        return (EReference)dataStructureEClass.getEStructuralFeatures().get(0);
     }
 
     /**
@@ -1002,7 +1022,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      */
     @Override
     public EReference getDataStructure_DataFields() {
-        return (EReference)dataStructureEClass.getEStructuralFeatures().get(2);
+        return (EReference)dataStructureEClass.getEStructuralFeatures().get(1);
     }
 
     /**
@@ -1012,7 +1032,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      */
     @Override
     public EReference getDataStructure_Operations() {
-        return (EReference)dataStructureEClass.getEStructuralFeatures().get(3);
+        return (EReference)dataStructureEClass.getEStructuralFeatures().get(2);
     }
 
     /**
@@ -1053,26 +1073,6 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
     @Override
     public EOperation getDataStructure__CompareFieldCounts__DataStructure() {
         return dataStructureEClass.getEOperations().get(3);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public EOperation getDataStructure__HasFeature__DataStructureFeature() {
-        return dataStructureEClass.getEOperations().get(4);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public EOperation getDataStructure__GetAllDomainFeatures() {
-        return dataStructureEClass.getEOperations().get(5);
     }
 
     /**
@@ -1841,8 +1841,8 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * @generated
      */
     @Override
-    public EEnum getDataStructureFeature() {
-        return dataStructureFeatureEEnum;
+    public EEnum getComplexTypeFeature() {
+        return complexTypeFeatureEEnum;
     }
 
     /**
@@ -1966,6 +1966,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 
         complexTypeEClass = createEClass(COMPLEX_TYPE);
         createEAttribute(complexTypeEClass, COMPLEX_TYPE__NAME);
+        createEAttribute(complexTypeEClass, COMPLEX_TYPE__FEATURES);
         createEReference(complexTypeEClass, COMPLEX_TYPE__DATA_MODEL);
         createEReference(complexTypeEClass, COMPLEX_TYPE__VERSION);
         createEReference(complexTypeEClass, COMPLEX_TYPE__CONTEXT);
@@ -1977,6 +1978,8 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
         createEOperation(complexTypeEClass, COMPLEX_TYPE___BUILD_QUALIFIED_NAME__STRING);
         createEOperation(complexTypeEClass, COMPLEX_TYPE___GET_CLOSEST_NAMESPACE);
         createEOperation(complexTypeEClass, COMPLEX_TYPE___COMPARE_FIELD_COUNTS__ELIST_ELIST);
+        createEOperation(complexTypeEClass, COMPLEX_TYPE___GET_ALL_DOMAIN_FEATURES);
+        createEOperation(complexTypeEClass, COMPLEX_TYPE___HAS_FEATURE__COMPLEXTYPEFEATURE);
 
         importedComplexTypeEClass = createEClass(IMPORTED_COMPLEX_TYPE);
         createEReference(importedComplexTypeEClass, IMPORTED_COMPLEX_TYPE__IMPORT);
@@ -1986,7 +1989,6 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
         createEReference(importedComplexTypeEClass, IMPORTED_COMPLEX_TYPE__PARAMETER);
 
         dataStructureEClass = createEClass(DATA_STRUCTURE);
-        createEAttribute(dataStructureEClass, DATA_STRUCTURE__FEATURES);
         createEReference(dataStructureEClass, DATA_STRUCTURE__SUPER);
         createEReference(dataStructureEClass, DATA_STRUCTURE__DATA_FIELDS);
         createEReference(dataStructureEClass, DATA_STRUCTURE__OPERATIONS);
@@ -1994,8 +1996,6 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
         createEOperation(dataStructureEClass, DATA_STRUCTURE___GET_EFFECTIVE_OPERATIONS);
         createEOperation(dataStructureEClass, DATA_STRUCTURE___IS_EXTENSION_OF__DATASTRUCTURE);
         createEOperation(dataStructureEClass, DATA_STRUCTURE___COMPARE_FIELD_COUNTS__DATASTRUCTURE);
-        createEOperation(dataStructureEClass, DATA_STRUCTURE___HAS_FEATURE__DATASTRUCTUREFEATURE);
-        createEOperation(dataStructureEClass, DATA_STRUCTURE___GET_ALL_DOMAIN_FEATURES);
 
         dataOperationEClass = createEClass(DATA_OPERATION);
         createEAttribute(dataOperationEClass, DATA_OPERATION__NAME);
@@ -2081,7 +2081,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 
         // Create enums
         primitiveTypeConstantsEEnum = createEEnum(PRIMITIVE_TYPE_CONSTANTS);
-        dataStructureFeatureEEnum = createEEnum(DATA_STRUCTURE_FEATURE);
+        complexTypeFeatureEEnum = createEEnum(COMPLEX_TYPE_FEATURE);
         dataOperationFeatureEEnum = createEEnum(DATA_OPERATION_FEATURE);
         dataFieldFeatureEEnum = createEEnum(DATA_FIELD_FEATURE);
 
@@ -2215,6 +2215,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 
         initEClass(complexTypeEClass, ComplexType.class, "ComplexType", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getComplexType_Name(), theEcorePackage.getEString(), "name", null, 0, 1, ComplexType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getComplexType_Features(), this.getComplexTypeFeature(), "features", null, 0, -1, ComplexType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getComplexType_DataModel(), this.getDataModel(), this.getDataModel_ComplexTypes(), "dataModel", null, 0, 1, ComplexType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getComplexType_Version(), this.getVersion(), this.getVersion_ComplexTypes(), "version", null, 0, 1, ComplexType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getComplexType_Context(), this.getContext(), this.getContext_ComplexTypes(), "context", null, 0, 1, ComplexType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2234,6 +2235,11 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
         addEParameter(op, this.getDataField(), "fields", 0, -1, !IS_UNIQUE, IS_ORDERED);
         addEParameter(op, this.getDataField(), "fieldsToCompare", 0, -1, !IS_UNIQUE, IS_ORDERED);
 
+        initEOperation(getComplexType__GetAllDomainFeatures(), this.getComplexTypeFeature(), "getAllDomainFeatures", 0, -1, !IS_UNIQUE, IS_ORDERED);
+
+        op = initEOperation(getComplexType__HasFeature__ComplexTypeFeature(), theEcorePackage.getEBoolean(), "hasFeature", 0, 1, !IS_UNIQUE, IS_ORDERED);
+        addEParameter(op, this.getComplexTypeFeature(), "feature", 0, 1, !IS_UNIQUE, IS_ORDERED);
+
         initEClass(importedComplexTypeEClass, ImportedComplexType.class, "ImportedComplexType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getImportedComplexType_Import(), this.getComplexTypeImport(), null, "import", null, 0, 1, ImportedComplexType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getImportedComplexType_ImportedType(), this.getType(), null, "importedType", null, 0, 1, ImportedComplexType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2242,7 +2248,6 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
         initEReference(getImportedComplexType_Parameter(), this.getDataOperationParameter(), this.getDataOperationParameter_ImportedComplexType(), "parameter", null, 0, 1, ImportedComplexType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(dataStructureEClass, DataStructure.class, "DataStructure", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getDataStructure_Features(), this.getDataStructureFeature(), "features", null, 0, -1, DataStructure.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getDataStructure_Super(), this.getDataStructure(), null, "super", null, 0, 1, DataStructure.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getDataStructure_DataFields(), this.getDataField(), this.getDataField_DataStructure(), "dataFields", null, 0, -1, DataStructure.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getDataStructure_Operations(), this.getDataOperation(), this.getDataOperation_DataStructure(), "operations", null, 0, -1, DataStructure.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2256,11 +2261,6 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 
         op = initEOperation(getDataStructure__CompareFieldCounts__DataStructure(), theEcorePackage.getEInt(), "compareFieldCounts", 0, 1, !IS_UNIQUE, IS_ORDERED);
         addEParameter(op, this.getDataStructure(), "structureToCompare", 0, 1, !IS_UNIQUE, IS_ORDERED);
-
-        op = initEOperation(getDataStructure__HasFeature__DataStructureFeature(), theEcorePackage.getEBoolean(), "hasFeature", 0, 1, !IS_UNIQUE, IS_ORDERED);
-        addEParameter(op, this.getDataStructureFeature(), "feature", 0, 1, !IS_UNIQUE, IS_ORDERED);
-
-        initEOperation(getDataStructure__GetAllDomainFeatures(), this.getDataStructureFeature(), "getAllDomainFeatures", 0, -1, !IS_UNIQUE, IS_ORDERED);
 
         initEClass(dataOperationEClass, DataOperation.class, "DataOperation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getDataOperation_Name(), theEcorePackage.getEString(), "name", null, 0, 1, DataOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2402,18 +2402,18 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
         addEEnumLiteral(primitiveTypeConstantsEEnum, PrimitiveTypeConstants.STRING);
         addEEnumLiteral(primitiveTypeConstantsEEnum, PrimitiveTypeConstants.UNSPECIFIED);
 
-        initEEnum(dataStructureFeatureEEnum, DataStructureFeature.class, "DataStructureFeature");
-        addEEnumLiteral(dataStructureFeatureEEnum, DataStructureFeature.AGGREGATE);
-        addEEnumLiteral(dataStructureFeatureEEnum, DataStructureFeature.APPLICATION_SERVICE);
-        addEEnumLiteral(dataStructureFeatureEEnum, DataStructureFeature.DOMAIN_EVENT);
-        addEEnumLiteral(dataStructureFeatureEEnum, DataStructureFeature.DOMAIN_SERVICE);
-        addEEnumLiteral(dataStructureFeatureEEnum, DataStructureFeature.ENTITY);
-        addEEnumLiteral(dataStructureFeatureEEnum, DataStructureFeature.FACTORY);
-        addEEnumLiteral(dataStructureFeatureEEnum, DataStructureFeature.INFRASTRUCTURE_SERVICE);
-        addEEnumLiteral(dataStructureFeatureEEnum, DataStructureFeature.REPOSITORY);
-        addEEnumLiteral(dataStructureFeatureEEnum, DataStructureFeature.SERVICE);
-        addEEnumLiteral(dataStructureFeatureEEnum, DataStructureFeature.SPECIFICATION);
-        addEEnumLiteral(dataStructureFeatureEEnum, DataStructureFeature.VALUE_OBJECT);
+        initEEnum(complexTypeFeatureEEnum, ComplexTypeFeature.class, "ComplexTypeFeature");
+        addEEnumLiteral(complexTypeFeatureEEnum, ComplexTypeFeature.AGGREGATE);
+        addEEnumLiteral(complexTypeFeatureEEnum, ComplexTypeFeature.APPLICATION_SERVICE);
+        addEEnumLiteral(complexTypeFeatureEEnum, ComplexTypeFeature.DOMAIN_EVENT);
+        addEEnumLiteral(complexTypeFeatureEEnum, ComplexTypeFeature.DOMAIN_SERVICE);
+        addEEnumLiteral(complexTypeFeatureEEnum, ComplexTypeFeature.ENTITY);
+        addEEnumLiteral(complexTypeFeatureEEnum, ComplexTypeFeature.FACTORY);
+        addEEnumLiteral(complexTypeFeatureEEnum, ComplexTypeFeature.INFRASTRUCTURE_SERVICE);
+        addEEnumLiteral(complexTypeFeatureEEnum, ComplexTypeFeature.REPOSITORY);
+        addEEnumLiteral(complexTypeFeatureEEnum, ComplexTypeFeature.SERVICE);
+        addEEnumLiteral(complexTypeFeatureEEnum, ComplexTypeFeature.SPECIFICATION);
+        addEEnumLiteral(complexTypeFeatureEEnum, ComplexTypeFeature.VALUE_OBJECT);
 
         initEEnum(dataOperationFeatureEEnum, DataOperationFeature.class, "DataOperationFeature");
         addEEnumLiteral(dataOperationFeatureEEnum, DataOperationFeature.CLOSURE);

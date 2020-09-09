@@ -1284,13 +1284,22 @@ public interface DataPackage extends EPackage {
     int COMPLEX_TYPE__NAME = TYPE_FEATURE_COUNT + 0;
 
     /**
+     * The feature id for the '<em><b>Features</b></em>' attribute list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int COMPLEX_TYPE__FEATURES = TYPE_FEATURE_COUNT + 1;
+
+    /**
      * The feature id for the '<em><b>Data Model</b></em>' container reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int COMPLEX_TYPE__DATA_MODEL = TYPE_FEATURE_COUNT + 1;
+    int COMPLEX_TYPE__DATA_MODEL = TYPE_FEATURE_COUNT + 2;
 
     /**
      * The feature id for the '<em><b>Version</b></em>' container reference.
@@ -1299,7 +1308,7 @@ public interface DataPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int COMPLEX_TYPE__VERSION = TYPE_FEATURE_COUNT + 2;
+    int COMPLEX_TYPE__VERSION = TYPE_FEATURE_COUNT + 3;
 
     /**
      * The feature id for the '<em><b>Context</b></em>' container reference.
@@ -1308,7 +1317,7 @@ public interface DataPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int COMPLEX_TYPE__CONTEXT = TYPE_FEATURE_COUNT + 3;
+    int COMPLEX_TYPE__CONTEXT = TYPE_FEATURE_COUNT + 4;
 
     /**
      * The feature id for the '<em><b>Is Structure</b></em>' attribute.
@@ -1317,7 +1326,7 @@ public interface DataPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int COMPLEX_TYPE__IS_STRUCTURE = TYPE_FEATURE_COUNT + 4;
+    int COMPLEX_TYPE__IS_STRUCTURE = TYPE_FEATURE_COUNT + 5;
 
     /**
      * The feature id for the '<em><b>Is Primitive List</b></em>' attribute.
@@ -1326,7 +1335,7 @@ public interface DataPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int COMPLEX_TYPE__IS_PRIMITIVE_LIST = TYPE_FEATURE_COUNT + 5;
+    int COMPLEX_TYPE__IS_PRIMITIVE_LIST = TYPE_FEATURE_COUNT + 6;
 
     /**
      * The feature id for the '<em><b>Is Structured List</b></em>' attribute.
@@ -1335,7 +1344,7 @@ public interface DataPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int COMPLEX_TYPE__IS_STRUCTURED_LIST = TYPE_FEATURE_COUNT + 6;
+    int COMPLEX_TYPE__IS_STRUCTURED_LIST = TYPE_FEATURE_COUNT + 7;
 
     /**
      * The feature id for the '<em><b>Is Enumeration</b></em>' attribute.
@@ -1344,7 +1353,7 @@ public interface DataPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int COMPLEX_TYPE__IS_ENUMERATION = TYPE_FEATURE_COUNT + 7;
+    int COMPLEX_TYPE__IS_ENUMERATION = TYPE_FEATURE_COUNT + 8;
 
     /**
      * The number of structural features of the '<em>Complex Type</em>' class.
@@ -1353,7 +1362,7 @@ public interface DataPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int COMPLEX_TYPE_FEATURE_COUNT = TYPE_FEATURE_COUNT + 8;
+    int COMPLEX_TYPE_FEATURE_COUNT = TYPE_FEATURE_COUNT + 9;
 
     /**
      * The operation id for the '<em>Get Qualified Name Parts</em>' operation.
@@ -1392,13 +1401,31 @@ public interface DataPackage extends EPackage {
     int COMPLEX_TYPE___COMPARE_FIELD_COUNTS__ELIST_ELIST = TYPE_OPERATION_COUNT + 3;
 
     /**
+     * The operation id for the '<em>Get All Domain Features</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int COMPLEX_TYPE___GET_ALL_DOMAIN_FEATURES = TYPE_OPERATION_COUNT + 4;
+
+    /**
+     * The operation id for the '<em>Has Feature</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int COMPLEX_TYPE___HAS_FEATURE__COMPLEXTYPEFEATURE = TYPE_OPERATION_COUNT + 5;
+
+    /**
      * The number of operations of the '<em>Complex Type</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int COMPLEX_TYPE_OPERATION_COUNT = TYPE_OPERATION_COUNT + 4;
+    int COMPLEX_TYPE_OPERATION_COUNT = TYPE_OPERATION_COUNT + 6;
 
     /**
      * The meta object id for the '{@link de.fhdo.lemma.data.impl.ImportedComplexTypeImpl <em>Imported Complex Type</em>}' class.
@@ -1493,6 +1520,15 @@ public interface DataPackage extends EPackage {
     int DATA_STRUCTURE__NAME = COMPLEX_TYPE__NAME;
 
     /**
+     * The feature id for the '<em><b>Features</b></em>' attribute list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATA_STRUCTURE__FEATURES = COMPLEX_TYPE__FEATURES;
+
+    /**
      * The feature id for the '<em><b>Data Model</b></em>' container reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1556,22 +1592,13 @@ public interface DataPackage extends EPackage {
     int DATA_STRUCTURE__IS_ENUMERATION = COMPLEX_TYPE__IS_ENUMERATION;
 
     /**
-     * The feature id for the '<em><b>Features</b></em>' attribute list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int DATA_STRUCTURE__FEATURES = COMPLEX_TYPE_FEATURE_COUNT + 0;
-
-    /**
      * The feature id for the '<em><b>Super</b></em>' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int DATA_STRUCTURE__SUPER = COMPLEX_TYPE_FEATURE_COUNT + 1;
+    int DATA_STRUCTURE__SUPER = COMPLEX_TYPE_FEATURE_COUNT + 0;
 
     /**
      * The feature id for the '<em><b>Data Fields</b></em>' containment reference list.
@@ -1580,7 +1607,7 @@ public interface DataPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int DATA_STRUCTURE__DATA_FIELDS = COMPLEX_TYPE_FEATURE_COUNT + 2;
+    int DATA_STRUCTURE__DATA_FIELDS = COMPLEX_TYPE_FEATURE_COUNT + 1;
 
     /**
      * The feature id for the '<em><b>Operations</b></em>' containment reference list.
@@ -1589,7 +1616,7 @@ public interface DataPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int DATA_STRUCTURE__OPERATIONS = COMPLEX_TYPE_FEATURE_COUNT + 3;
+    int DATA_STRUCTURE__OPERATIONS = COMPLEX_TYPE_FEATURE_COUNT + 2;
 
     /**
      * The number of structural features of the '<em>Structure</em>' class.
@@ -1598,7 +1625,7 @@ public interface DataPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int DATA_STRUCTURE_FEATURE_COUNT = COMPLEX_TYPE_FEATURE_COUNT + 4;
+    int DATA_STRUCTURE_FEATURE_COUNT = COMPLEX_TYPE_FEATURE_COUNT + 3;
 
     /**
      * The operation id for the '<em>Get Qualified Name Parts</em>' operation.
@@ -1637,6 +1664,24 @@ public interface DataPackage extends EPackage {
     int DATA_STRUCTURE___COMPARE_FIELD_COUNTS__ELIST_ELIST = COMPLEX_TYPE___COMPARE_FIELD_COUNTS__ELIST_ELIST;
 
     /**
+     * The operation id for the '<em>Get All Domain Features</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATA_STRUCTURE___GET_ALL_DOMAIN_FEATURES = COMPLEX_TYPE___GET_ALL_DOMAIN_FEATURES;
+
+    /**
+     * The operation id for the '<em>Has Feature</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATA_STRUCTURE___HAS_FEATURE__COMPLEXTYPEFEATURE = COMPLEX_TYPE___HAS_FEATURE__COMPLEXTYPEFEATURE;
+
+    /**
      * The operation id for the '<em>Get Effective Fields</em>' operation.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1673,31 +1718,13 @@ public interface DataPackage extends EPackage {
     int DATA_STRUCTURE___COMPARE_FIELD_COUNTS__DATASTRUCTURE = COMPLEX_TYPE_OPERATION_COUNT + 3;
 
     /**
-     * The operation id for the '<em>Has Feature</em>' operation.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int DATA_STRUCTURE___HAS_FEATURE__DATASTRUCTUREFEATURE = COMPLEX_TYPE_OPERATION_COUNT + 4;
-
-    /**
-     * The operation id for the '<em>Get All Domain Features</em>' operation.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int DATA_STRUCTURE___GET_ALL_DOMAIN_FEATURES = COMPLEX_TYPE_OPERATION_COUNT + 5;
-
-    /**
      * The number of operations of the '<em>Structure</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int DATA_STRUCTURE_OPERATION_COUNT = COMPLEX_TYPE_OPERATION_COUNT + 6;
+    int DATA_STRUCTURE_OPERATION_COUNT = COMPLEX_TYPE_OPERATION_COUNT + 4;
 
     /**
      * The meta object id for the '{@link de.fhdo.lemma.data.impl.DataOperationImpl <em>Operation</em>}' class.
@@ -1991,6 +2018,15 @@ public interface DataPackage extends EPackage {
     int LIST_TYPE__NAME = COMPLEX_TYPE__NAME;
 
     /**
+     * The feature id for the '<em><b>Features</b></em>' attribute list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LIST_TYPE__FEATURES = COMPLEX_TYPE__FEATURES;
+
+    /**
      * The feature id for the '<em><b>Data Model</b></em>' container reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2115,6 +2151,24 @@ public interface DataPackage extends EPackage {
      * @ordered
      */
     int LIST_TYPE___COMPARE_FIELD_COUNTS__ELIST_ELIST = COMPLEX_TYPE___COMPARE_FIELD_COUNTS__ELIST_ELIST;
+
+    /**
+     * The operation id for the '<em>Get All Domain Features</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LIST_TYPE___GET_ALL_DOMAIN_FEATURES = COMPLEX_TYPE___GET_ALL_DOMAIN_FEATURES;
+
+    /**
+     * The operation id for the '<em>Has Feature</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LIST_TYPE___HAS_FEATURE__COMPLEXTYPEFEATURE = COMPLEX_TYPE___HAS_FEATURE__COMPLEXTYPEFEATURE;
 
     /**
      * The operation id for the '<em>Compare Field Counts</em>' operation.
@@ -2317,6 +2371,15 @@ public interface DataPackage extends EPackage {
     int ENUMERATION__NAME = COMPLEX_TYPE__NAME;
 
     /**
+     * The feature id for the '<em><b>Features</b></em>' attribute list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ENUMERATION__FEATURES = COMPLEX_TYPE__FEATURES;
+
+    /**
      * The feature id for the '<em><b>Data Model</b></em>' container reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2432,6 +2495,24 @@ public interface DataPackage extends EPackage {
      * @ordered
      */
     int ENUMERATION___COMPARE_FIELD_COUNTS__ELIST_ELIST = COMPLEX_TYPE___COMPARE_FIELD_COUNTS__ELIST_ELIST;
+
+    /**
+     * The operation id for the '<em>Get All Domain Features</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ENUMERATION___GET_ALL_DOMAIN_FEATURES = COMPLEX_TYPE___GET_ALL_DOMAIN_FEATURES;
+
+    /**
+     * The operation id for the '<em>Has Feature</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ENUMERATION___HAS_FEATURE__COMPLEXTYPEFEATURE = COMPLEX_TYPE___HAS_FEATURE__COMPLEXTYPEFEATURE;
 
     /**
      * The number of operations of the '<em>Enumeration</em>' class.
@@ -2734,14 +2815,14 @@ public interface DataPackage extends EPackage {
     int PRIMITIVE_TYPE_CONSTANTS = 27;
 
     /**
-     * The meta object id for the '{@link de.fhdo.lemma.data.DataStructureFeature <em>Structure Feature</em>}' enum.
+     * The meta object id for the '{@link de.fhdo.lemma.data.ComplexTypeFeature <em>Complex Type Feature</em>}' enum.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.fhdo.lemma.data.DataStructureFeature
-     * @see de.fhdo.lemma.data.impl.DataPackageImpl#getDataStructureFeature()
+     * @see de.fhdo.lemma.data.ComplexTypeFeature
+     * @see de.fhdo.lemma.data.impl.DataPackageImpl#getComplexTypeFeature()
      * @generated
      */
-    int DATA_STRUCTURE_FEATURE = 28;
+    int COMPLEX_TYPE_FEATURE = 28;
 
     /**
      * The meta object id for the '{@link de.fhdo.lemma.data.DataOperationFeature <em>Operation Feature</em>}' enum.
@@ -3244,6 +3325,17 @@ public interface DataPackage extends EPackage {
     EAttribute getComplexType_Name();
 
     /**
+     * Returns the meta object for the attribute list '{@link de.fhdo.lemma.data.ComplexType#getFeatures <em>Features</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute list '<em>Features</em>'.
+     * @see de.fhdo.lemma.data.ComplexType#getFeatures()
+     * @see #getComplexType()
+     * @generated
+     */
+    EAttribute getComplexType_Features();
+
+    /**
      * Returns the meta object for the container reference '{@link de.fhdo.lemma.data.ComplexType#getDataModel <em>Data Model</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -3361,6 +3453,26 @@ public interface DataPackage extends EPackage {
     EOperation getComplexType__CompareFieldCounts__EList_EList();
 
     /**
+     * Returns the meta object for the '{@link de.fhdo.lemma.data.ComplexType#getAllDomainFeatures() <em>Get All Domain Features</em>}' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the '<em>Get All Domain Features</em>' operation.
+     * @see de.fhdo.lemma.data.ComplexType#getAllDomainFeatures()
+     * @generated
+     */
+    EOperation getComplexType__GetAllDomainFeatures();
+
+    /**
+     * Returns the meta object for the '{@link de.fhdo.lemma.data.ComplexType#hasFeature(de.fhdo.lemma.data.ComplexTypeFeature) <em>Has Feature</em>}' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the '<em>Has Feature</em>' operation.
+     * @see de.fhdo.lemma.data.ComplexType#hasFeature(de.fhdo.lemma.data.ComplexTypeFeature)
+     * @generated
+     */
+    EOperation getComplexType__HasFeature__ComplexTypeFeature();
+
+    /**
      * Returns the meta object for class '{@link de.fhdo.lemma.data.ImportedComplexType <em>Imported Complex Type</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -3436,17 +3548,6 @@ public interface DataPackage extends EPackage {
     EClass getDataStructure();
 
     /**
-     * Returns the meta object for the attribute list '{@link de.fhdo.lemma.data.DataStructure#getFeatures <em>Features</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute list '<em>Features</em>'.
-     * @see de.fhdo.lemma.data.DataStructure#getFeatures()
-     * @see #getDataStructure()
-     * @generated
-     */
-    EAttribute getDataStructure_Features();
-
-    /**
      * Returns the meta object for the reference '{@link de.fhdo.lemma.data.DataStructure#getSuper <em>Super</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -3518,26 +3619,6 @@ public interface DataPackage extends EPackage {
      * @generated
      */
     EOperation getDataStructure__CompareFieldCounts__DataStructure();
-
-    /**
-     * Returns the meta object for the '{@link de.fhdo.lemma.data.DataStructure#hasFeature(de.fhdo.lemma.data.DataStructureFeature) <em>Has Feature</em>}' operation.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the '<em>Has Feature</em>' operation.
-     * @see de.fhdo.lemma.data.DataStructure#hasFeature(de.fhdo.lemma.data.DataStructureFeature)
-     * @generated
-     */
-    EOperation getDataStructure__HasFeature__DataStructureFeature();
-
-    /**
-     * Returns the meta object for the '{@link de.fhdo.lemma.data.DataStructure#getAllDomainFeatures() <em>Get All Domain Features</em>}' operation.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the '<em>Get All Domain Features</em>' operation.
-     * @see de.fhdo.lemma.data.DataStructure#getAllDomainFeatures()
-     * @generated
-     */
-    EOperation getDataStructure__GetAllDomainFeatures();
 
     /**
      * Returns the meta object for class '{@link de.fhdo.lemma.data.DataOperation <em>Operation</em>}'.
@@ -4335,14 +4416,14 @@ public interface DataPackage extends EPackage {
     EEnum getPrimitiveTypeConstants();
 
     /**
-     * Returns the meta object for enum '{@link de.fhdo.lemma.data.DataStructureFeature <em>Structure Feature</em>}'.
+     * Returns the meta object for enum '{@link de.fhdo.lemma.data.ComplexTypeFeature <em>Complex Type Feature</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for enum '<em>Structure Feature</em>'.
-     * @see de.fhdo.lemma.data.DataStructureFeature
+     * @return the meta object for enum '<em>Complex Type Feature</em>'.
+     * @see de.fhdo.lemma.data.ComplexTypeFeature
      * @generated
      */
-    EEnum getDataStructureFeature();
+    EEnum getComplexTypeFeature();
 
     /**
      * Returns the meta object for enum '{@link de.fhdo.lemma.data.DataOperationFeature <em>Operation Feature</em>}'.
@@ -4795,6 +4876,14 @@ public interface DataPackage extends EPackage {
         EAttribute COMPLEX_TYPE__NAME = eINSTANCE.getComplexType_Name();
 
         /**
+         * The meta object literal for the '<em><b>Features</b></em>' attribute list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute COMPLEX_TYPE__FEATURES = eINSTANCE.getComplexType_Features();
+
+        /**
          * The meta object literal for the '<em><b>Data Model</b></em>' container reference feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -4883,6 +4972,22 @@ public interface DataPackage extends EPackage {
         EOperation COMPLEX_TYPE___COMPARE_FIELD_COUNTS__ELIST_ELIST = eINSTANCE.getComplexType__CompareFieldCounts__EList_EList();
 
         /**
+         * The meta object literal for the '<em><b>Get All Domain Features</b></em>' operation.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EOperation COMPLEX_TYPE___GET_ALL_DOMAIN_FEATURES = eINSTANCE.getComplexType__GetAllDomainFeatures();
+
+        /**
+         * The meta object literal for the '<em><b>Has Feature</b></em>' operation.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EOperation COMPLEX_TYPE___HAS_FEATURE__COMPLEXTYPEFEATURE = eINSTANCE.getComplexType__HasFeature__ComplexTypeFeature();
+
+        /**
          * The meta object literal for the '{@link de.fhdo.lemma.data.impl.ImportedComplexTypeImpl <em>Imported Complex Type</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -4943,14 +5048,6 @@ public interface DataPackage extends EPackage {
         EClass DATA_STRUCTURE = eINSTANCE.getDataStructure();
 
         /**
-         * The meta object literal for the '<em><b>Features</b></em>' attribute list feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute DATA_STRUCTURE__FEATURES = eINSTANCE.getDataStructure_Features();
-
-        /**
          * The meta object literal for the '<em><b>Super</b></em>' reference feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -5005,22 +5102,6 @@ public interface DataPackage extends EPackage {
          * @generated
          */
         EOperation DATA_STRUCTURE___COMPARE_FIELD_COUNTS__DATASTRUCTURE = eINSTANCE.getDataStructure__CompareFieldCounts__DataStructure();
-
-        /**
-         * The meta object literal for the '<em><b>Has Feature</b></em>' operation.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EOperation DATA_STRUCTURE___HAS_FEATURE__DATASTRUCTUREFEATURE = eINSTANCE.getDataStructure__HasFeature__DataStructureFeature();
-
-        /**
-         * The meta object literal for the '<em><b>Get All Domain Features</b></em>' operation.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EOperation DATA_STRUCTURE___GET_ALL_DOMAIN_FEATURES = eINSTANCE.getDataStructure__GetAllDomainFeatures();
 
         /**
          * The meta object literal for the '{@link de.fhdo.lemma.data.impl.DataOperationImpl <em>Operation</em>}' class.
@@ -5647,14 +5728,14 @@ public interface DataPackage extends EPackage {
         EEnum PRIMITIVE_TYPE_CONSTANTS = eINSTANCE.getPrimitiveTypeConstants();
 
         /**
-         * The meta object literal for the '{@link de.fhdo.lemma.data.DataStructureFeature <em>Structure Feature</em>}' enum.
+         * The meta object literal for the '{@link de.fhdo.lemma.data.ComplexTypeFeature <em>Complex Type Feature</em>}' enum.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see de.fhdo.lemma.data.DataStructureFeature
-         * @see de.fhdo.lemma.data.impl.DataPackageImpl#getDataStructureFeature()
+         * @see de.fhdo.lemma.data.ComplexTypeFeature
+         * @see de.fhdo.lemma.data.impl.DataPackageImpl#getComplexTypeFeature()
          * @generated
          */
-        EEnum DATA_STRUCTURE_FEATURE = eINSTANCE.getDataStructureFeature();
+        EEnum COMPLEX_TYPE_FEATURE = eINSTANCE.getComplexTypeFeature();
 
         /**
          * The meta object literal for the '{@link de.fhdo.lemma.data.DataOperationFeature <em>Operation Feature</em>}' enum.

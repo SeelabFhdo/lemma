@@ -7,6 +7,7 @@ import com.google.common.base.Function;
 import com.google.common.base.Objects;
 import com.google.common.collect.Iterables;
 import de.fhdo.lemma.data.ComplexType;
+import de.fhdo.lemma.data.ComplexTypeFeature;
 import de.fhdo.lemma.data.ComplexTypeImport;
 import de.fhdo.lemma.data.Context;
 import de.fhdo.lemma.data.DataField;
@@ -17,7 +18,6 @@ import de.fhdo.lemma.data.DataOperationFeature;
 import de.fhdo.lemma.data.DataOperationParameter;
 import de.fhdo.lemma.data.DataPackage;
 import de.fhdo.lemma.data.DataStructure;
-import de.fhdo.lemma.data.DataStructureFeature;
 import de.fhdo.lemma.data.Enumeration;
 import de.fhdo.lemma.data.ImportedComplexType;
 import de.fhdo.lemma.data.ListType;
@@ -260,17 +260,17 @@ public class DataDslValidator extends AbstractDataDslValidator {
   }
   
   /**
-   * Check data structure for unique features
+   * Check complex type for unique features
    */
   @Check
-  public void checkUniqueFeatures(final DataStructure dataStructure) {
-    final Function<DataStructureFeature, DataStructureFeature> _function = (DataStructureFeature it) -> {
+  public void checkUniqueFeatures(final ComplexType complexType) {
+    final Function<ComplexTypeFeature, ComplexTypeFeature> _function = (ComplexTypeFeature it) -> {
       return it;
     };
-    final Integer duplicateIndex = LemmaUtils.<DataStructureFeature, DataStructureFeature>getDuplicateIndex(dataStructure.getFeatures(), _function);
+    final Integer duplicateIndex = LemmaUtils.<ComplexTypeFeature, ComplexTypeFeature>getDuplicateIndex(complexType.getFeatures(), _function);
     if (((duplicateIndex).intValue() > (-1))) {
-      this.error("Duplicate feature", dataStructure, 
-        DataPackage.Literals.DATA_STRUCTURE__FEATURES, (duplicateIndex).intValue());
+      this.error("Duplicate feature", complexType, 
+        DataPackage.Literals.COMPLEX_TYPE__FEATURES, (duplicateIndex).intValue());
     }
   }
   
@@ -278,95 +278,124 @@ public class DataDslValidator extends AbstractDataDslValidator {
    * Check "aggregate" feature constraints
    */
   @Check
-  public void checkAggregateFeatureConstraints(final DataStructure dataStructure) {
-    final int featureIndex = dataStructure.getFeatures().indexOf(DataStructureFeature.AGGREGATE);
+  public void checkAggregateFeatureConstraints(final ComplexType complexType) {
+    final int featureIndex = complexType.getFeatures().indexOf(ComplexTypeFeature.AGGREGATE);
     if ((featureIndex == (-1))) {
       return;
     }
-    boolean _hasFeature = dataStructure.hasFeature(DataStructureFeature.ENTITY);
+    boolean _hasFeature = complexType.hasFeature(ComplexTypeFeature.ENTITY);
     boolean _not = (!_hasFeature);
     if (_not) {
-      this.warning("Only entities should be aggregates", dataStructure, 
-        DataPackage.Literals.DATA_STRUCTURE__FEATURES, featureIndex);
+      this.warning("Only entities should be aggregates", complexType, 
+        DataPackage.Literals.COMPLEX_TYPE__FEATURES, featureIndex);
     }
-    final Function1<DataField, EList<DataFieldFeature>> _function = (DataField it) -> {
-      return it.getFeatures();
-    };
-    final Iterable<DataFieldFeature> effectiveDataFieldFeatures = Iterables.<DataFieldFeature>concat(ListExtensions.<DataField, EList<DataFieldFeature>>map(dataStructure.getEffectiveFields(), _function));
-    final Function1<DataFieldFeature, Boolean> _function_1 = (DataFieldFeature it) -> {
-      return Boolean.valueOf(Objects.equal(it, DataFieldFeature.PART));
-    };
-    boolean _exists = IterableExtensions.<DataFieldFeature>exists(effectiveDataFieldFeatures, _function_1);
-    boolean _not_1 = (!_exists);
-    if (_not_1) {
-      this.warning("Aggregate should contain at least one part", dataStructure, 
-        DataPackage.Literals.DATA_STRUCTURE__FEATURES, featureIndex);
+    DataStructure _asStructure = this.asStructure(complexType);
+    EList<DataField> _effectiveFields = null;
+    if (_asStructure!=null) {
+      _effectiveFields=_asStructure.getEffectiveFields();
     }
+    List<EList<DataFieldFeature>> _map = null;
+    if (_effectiveFields!=null) {
+      final Function1<DataField, EList<DataFieldFeature>> _function = (DataField it) -> {
+        return it.getFeatures();
+      };
+      _map=ListExtensions.<DataField, EList<DataFieldFeature>>map(_effectiveFields, _function);
+    }
+    Iterable<DataFieldFeature> _flatten = null;
+    if (_map!=null) {
+      _flatten=Iterables.<DataFieldFeature>concat(_map);
+    }
+    final Iterable<DataFieldFeature> effectiveDataFieldFeatures = _flatten;
+    if (((effectiveDataFieldFeatures != null) && 
+      (!IterableExtensions.<DataFieldFeature>exists(effectiveDataFieldFeatures, ((Function1<DataFieldFeature, Boolean>) (DataFieldFeature it) -> {
+        return Boolean.valueOf(Objects.equal(it, DataFieldFeature.PART));
+      }))))) {
+      this.warning("Aggregate should contain at least one part", complexType, 
+        DataPackage.Literals.COMPLEX_TYPE__FEATURES, featureIndex);
+    }
+  }
+  
+  /**
+   * Retrieve a DataStructure instance from a ComplexType. Returns null, if the ComplexType is not
+   * a DataStructure.
+   */
+  private DataStructure asStructure(final ComplexType complexType) {
+    DataStructure _xifexpression = null;
+    boolean _isIsStructure = complexType.isIsStructure();
+    if (_isIsStructure) {
+      _xifexpression = ((DataStructure) complexType);
+    } else {
+      _xifexpression = null;
+    }
+    return _xifexpression;
   }
   
   /**
    * Check "applicationService" feature constraints
    */
   @Check
-  public void checkApplicationServiceFeatureConstraints(final DataStructure dataStructure) {
-    this.checkServiceFeatureConstraints(dataStructure, DataStructureFeature.APPLICATION_SERVICE);
+  public void checkApplicationServiceFeatureConstraints(final ComplexType complexType) {
+    this.checkServiceFeatureConstraints(complexType, ComplexTypeFeature.APPLICATION_SERVICE);
   }
   
   /**
    * Generic helper to check constraints of a certain peculiarity of the "service" feature
    */
-  public void checkServiceFeatureConstraints(final DataStructure dataStructure, final DataStructureFeature serviceFeature) {
-    final int featureIndex = dataStructure.getFeatures().indexOf(serviceFeature);
+  public void checkServiceFeatureConstraints(final ComplexType complexType, final ComplexTypeFeature feature) {
+    final int featureIndex = complexType.getFeatures().indexOf(feature);
     if ((featureIndex == (-1))) {
       return;
     }
-    boolean _hasAdditionalDomainFeatures = this.hasAdditionalDomainFeatures(dataStructure, serviceFeature);
+    boolean _hasAdditionalDomainFeatures = this.hasAdditionalDomainFeatures(complexType, feature);
     if (_hasAdditionalDomainFeatures) {
-      this.warning("A service should not exhibit other domain features", dataStructure, 
-        DataPackage.Literals.DATA_STRUCTURE__FEATURES, featureIndex);
+      this.warning("A service should not exhibit other domain features", complexType, 
+        DataPackage.Literals.COMPLEX_TYPE__FEATURES, featureIndex);
+    }
+    final DataStructure dataStructure = this.asStructure(complexType);
+    if ((dataStructure == null)) {
+      return;
     }
     boolean _isEmpty = dataStructure.getEffectiveFields().isEmpty();
     boolean _not = (!_isEmpty);
     if (_not) {
       this.warning("A service should only comprise operations", dataStructure, 
-        DataPackage.Literals.DATA_STRUCTURE__FEATURES, featureIndex);
+        DataPackage.Literals.COMPLEX_TYPE__FEATURES, featureIndex);
     }
     boolean _isEmpty_1 = dataStructure.getEffectiveOperations().isEmpty();
     if (_isEmpty_1) {
       this.warning("A service should comprise at least one operation", dataStructure, 
-        DataPackage.Literals.DATA_STRUCTURE__FEATURES, featureIndex);
+        DataPackage.Literals.COMPLEX_TYPE__FEATURES, featureIndex);
     }
   }
   
   /**
-   * Helper to check if a data structure has also other domain-driven-design-related features than
+   * Helper to check if a complex type has also other domain-driven-design-related features than
    * a given one
    */
-  private boolean hasAdditionalDomainFeatures(final DataStructure structure, final DataStructureFeature feature) {
-    final Function1<DataStructureFeature, Boolean> _function = (DataStructureFeature it) -> {
-      return Boolean.valueOf(structure.getAllDomainFeatures().contains(it));
+  private boolean hasAdditionalDomainFeatures(final ComplexType type, final ComplexTypeFeature feature) {
+    final Function1<ComplexTypeFeature, Boolean> _function = (ComplexTypeFeature it) -> {
+      return Boolean.valueOf(type.getAllDomainFeatures().contains(it));
     };
-    final Iterable<DataStructureFeature> domainFeaturesOnStructure = IterableExtensions.<DataStructureFeature>filter(structure.getFeatures(), _function);
-    return ((IterableExtensions.size(domainFeaturesOnStructure) > 1) || 
-      (!IterableExtensions.<DataStructureFeature>exists(domainFeaturesOnStructure, ((Function1<DataStructureFeature, Boolean>) (DataStructureFeature it) -> {
-        return Boolean.valueOf(Objects.equal(it, feature));
-      }))));
+    final Iterable<ComplexTypeFeature> domainFeaturesOnType = IterableExtensions.<ComplexTypeFeature>filter(type.getFeatures(), _function);
+    return ((IterableExtensions.size(domainFeaturesOnType) > 1) || (!IterableExtensions.<ComplexTypeFeature>exists(domainFeaturesOnType, ((Function1<ComplexTypeFeature, Boolean>) (ComplexTypeFeature it) -> {
+      return Boolean.valueOf(Objects.equal(it, feature));
+    }))));
   }
   
   /**
    * Check "domainEvent" feature constraints
    */
   @Check
-  public void checkDomainEventFeatureConstraints(final DataStructure dataStructure) {
-    final int featureIndex = dataStructure.getFeatures().indexOf(DataStructureFeature.DOMAIN_EVENT);
+  public void checkDomainEventFeatureConstraints(final ComplexType complexType) {
+    final int featureIndex = complexType.getFeatures().indexOf(ComplexTypeFeature.DOMAIN_EVENT);
     if ((featureIndex == (-1))) {
       return;
     }
-    boolean _hasFeature = dataStructure.hasFeature(DataStructureFeature.VALUE_OBJECT);
+    boolean _hasFeature = complexType.hasFeature(ComplexTypeFeature.VALUE_OBJECT);
     boolean _not = (!_hasFeature);
     if (_not) {
-      this.warning("Only value objects should be domain events", dataStructure, 
-        DataPackage.Literals.DATA_STRUCTURE__FEATURES, featureIndex);
+      this.warning("Only value objects should be domain events", complexType, 
+        DataPackage.Literals.COMPLEX_TYPE__FEATURES, featureIndex);
     }
   }
   
@@ -374,8 +403,8 @@ public class DataDslValidator extends AbstractDataDslValidator {
    * Check "domainService" feature constraints
    */
   @Check
-  public void checkDomainServiceFeatureConstraints(final DataStructure dataStructure) {
-    this.checkServiceFeatureConstraints(dataStructure, DataStructureFeature.DOMAIN_SERVICE);
+  public void checkDomainServiceFeatureConstraints(final ComplexType complexType) {
+    this.checkServiceFeatureConstraints(complexType, ComplexTypeFeature.DOMAIN_SERVICE);
   }
   
   /**
@@ -383,7 +412,7 @@ public class DataDslValidator extends AbstractDataDslValidator {
    */
   @Check
   public void checkEntityFeatureConstraints(final DataStructure dataStructure) {
-    final int featureIndex = dataStructure.getFeatures().indexOf(DataStructureFeature.ENTITY);
+    final int featureIndex = dataStructure.getFeatures().indexOf(ComplexTypeFeature.ENTITY);
     if ((featureIndex == (-1))) {
       return;
     }
@@ -406,18 +435,18 @@ public class DataDslValidator extends AbstractDataDslValidator {
     final boolean hasIdentifierOperations = (!_isEmpty);
     if (((!hasIdentifierFields) && (!hasIdentifierOperations))) {
       this.warning(("At least one non-inherited field or operation should be an identifier for " + 
-        "the entity"), dataStructure, DataPackage.Literals.DATA_STRUCTURE__FEATURES, featureIndex);
+        "the entity"), dataStructure, DataPackage.Literals.COMPLEX_TYPE__FEATURES, featureIndex);
     } else {
       if ((hasIdentifierFields && hasIdentifierOperations)) {
         this.warning("Identifier fields and operations should not be mixed", dataStructure, 
-          DataPackage.Literals.DATA_STRUCTURE__FEATURES, featureIndex);
+          DataPackage.Literals.COMPLEX_TYPE__FEATURES, featureIndex);
       }
     }
     int _size = IterableExtensions.size(identifierOperations);
     boolean _greaterThan = (_size > 1);
     if (_greaterThan) {
       this.warning("Only one operation should be an identifier for the entity", dataStructure, 
-        DataPackage.Literals.DATA_STRUCTURE__FEATURES, featureIndex);
+        DataPackage.Literals.COMPLEX_TYPE__FEATURES, featureIndex);
     }
   }
   
@@ -425,15 +454,24 @@ public class DataDslValidator extends AbstractDataDslValidator {
    * Check "factory" feature constraints
    */
   @Check
-  public void checkFactoryFeatureConstraints(final DataStructure dataStructure) {
-    final int featureIndex = dataStructure.getFeatures().indexOf(DataStructureFeature.FACTORY);
+  public void checkFactoryFeatureConstraints(final ComplexType complexType) {
+    final int featureIndex = complexType.getFeatures().indexOf(ComplexTypeFeature.FACTORY);
     if ((featureIndex == (-1))) {
       return;
     }
-    boolean _hasAdditionalDomainFeatures = this.hasAdditionalDomainFeatures(dataStructure, DataStructureFeature.FACTORY);
+    boolean _hasAdditionalDomainFeatures = this.hasAdditionalDomainFeatures(complexType, ComplexTypeFeature.FACTORY);
     if (_hasAdditionalDomainFeatures) {
-      this.warning("A factory should not exhibit other domain features", dataStructure, 
-        DataPackage.Literals.DATA_STRUCTURE__FEATURES, featureIndex);
+      this.warning("A factory should not exhibit other domain features", complexType, 
+        DataPackage.Literals.COMPLEX_TYPE__FEATURES, featureIndex);
+    }
+    DataStructure _asStructure = this.asStructure(complexType);
+    EList<DataOperation> _effectiveOperations = null;
+    if (_asStructure!=null) {
+      _effectiveOperations=_asStructure.getEffectiveOperations();
+    }
+    final EList<DataOperation> effectiveOperations = _effectiveOperations;
+    if ((effectiveOperations == null)) {
+      return;
     }
     final Function1<DataOperation, Boolean> _function = (DataOperation it) -> {
       boolean _or = false;
@@ -449,8 +487,8 @@ public class DataDslValidator extends AbstractDataDslValidator {
           {
             Type _primitiveOrComplexReturnType_1 = it.getPrimitiveOrComplexReturnType();
             final DataStructure dataStructureReturnType = ((DataStructure) _primitiveOrComplexReturnType_1);
-            _xblockexpression = ((!dataStructureReturnType.hasFeature(DataStructureFeature.AGGREGATE)) && 
-              (!dataStructureReturnType.hasFeature(DataStructureFeature.VALUE_OBJECT)));
+            _xblockexpression = ((!dataStructureReturnType.hasFeature(ComplexTypeFeature.AGGREGATE)) && 
+              (!dataStructureReturnType.hasFeature(ComplexTypeFeature.VALUE_OBJECT)));
           }
           _xifexpression = _xblockexpression;
         } else {
@@ -460,10 +498,10 @@ public class DataDslValidator extends AbstractDataDslValidator {
       }
       return Boolean.valueOf(_or);
     };
-    final boolean hasOperationsWithWrongReturnTypes = IterableExtensions.<DataOperation>exists(dataStructure.getEffectiveOperations(), _function);
+    final boolean hasOperationsWithWrongReturnTypes = IterableExtensions.<DataOperation>exists(effectiveOperations, _function);
     if (hasOperationsWithWrongReturnTypes) {
-      this.warning("Factory operations should return aggregates or value objects", dataStructure, 
-        DataPackage.Literals.DATA_STRUCTURE__FEATURES, featureIndex);
+      this.warning("Factory operations should return aggregates or value objects", complexType, 
+        DataPackage.Literals.COMPLEX_TYPE__FEATURES, featureIndex);
     }
   }
   
@@ -472,32 +510,41 @@ public class DataDslValidator extends AbstractDataDslValidator {
    */
   @Check
   public void checkInfrastructureServiceFeatureConstraints(final DataStructure dataStructure) {
-    this.checkServiceFeatureConstraints(dataStructure, DataStructureFeature.INFRASTRUCTURE_SERVICE);
+    this.checkServiceFeatureConstraints(dataStructure, ComplexTypeFeature.INFRASTRUCTURE_SERVICE);
   }
   
   /**
    * Check "repository" feature constraints
    */
   @Check
-  public void checkRepositoryFeatureConstraints(final DataStructure dataStructure) {
-    final int featureIndex = dataStructure.getFeatures().indexOf(DataStructureFeature.REPOSITORY);
+  public void checkRepositoryFeatureConstraints(final ComplexType complexType) {
+    final int featureIndex = complexType.getFeatures().indexOf(ComplexTypeFeature.REPOSITORY);
     if ((featureIndex == (-1))) {
       return;
     }
-    boolean _hasAdditionalDomainFeatures = this.hasAdditionalDomainFeatures(dataStructure, DataStructureFeature.REPOSITORY);
+    boolean _hasAdditionalDomainFeatures = this.hasAdditionalDomainFeatures(complexType, ComplexTypeFeature.REPOSITORY);
     if (_hasAdditionalDomainFeatures) {
-      this.warning("A repository should not exhibit other domain features", dataStructure, 
-        DataPackage.Literals.DATA_STRUCTURE__FEATURES, featureIndex);
+      this.warning("A repository should not exhibit other domain features", complexType, 
+        DataPackage.Literals.COMPLEX_TYPE__FEATURES, featureIndex);
     }
-    boolean _isEmpty = dataStructure.getEffectiveOperations().isEmpty();
+    DataStructure _asStructure = this.asStructure(complexType);
+    EList<DataOperation> _effectiveOperations = null;
+    if (_asStructure!=null) {
+      _effectiveOperations=_asStructure.getEffectiveOperations();
+    }
+    final EList<DataOperation> effectiveOperations = _effectiveOperations;
+    if ((effectiveOperations == null)) {
+      return;
+    }
+    boolean _isEmpty = effectiveOperations.isEmpty();
     if (_isEmpty) {
-      this.warning("A repository should comprise at least one operation", dataStructure, 
-        DataPackage.Literals.DATA_STRUCTURE__FEATURES, featureIndex);
+      this.warning("A repository should comprise at least one operation", complexType, 
+        DataPackage.Literals.COMPLEX_TYPE__FEATURES, featureIndex);
     }
     final Function1<DataOperation, EList<DataOperationParameter>> _function = (DataOperation it) -> {
       return it.getParameters();
     };
-    final Iterable<DataOperationParameter> allDataOperationParameters = Iterables.<DataOperationParameter>concat(ListExtensions.<DataOperation, EList<DataOperationParameter>>map(dataStructure.getEffectiveOperations(), _function));
+    final Iterable<DataOperationParameter> allDataOperationParameters = Iterables.<DataOperationParameter>concat(ListExtensions.<DataOperation, EList<DataOperationParameter>>map(effectiveOperations, _function));
     final Function1<DataOperationParameter, Boolean> _function_1 = (DataOperationParameter it) -> {
       boolean _switchResult = false;
       Type _effectiveType = it.getEffectiveType();
@@ -513,8 +560,8 @@ public class DataDslValidator extends AbstractDataDslValidator {
           {
             Type _effectiveType_1 = it.getEffectiveType();
             final DataStructure parameterType = ((DataStructure) _effectiveType_1);
-            _xblockexpression = ((!parameterType.hasFeature(DataStructureFeature.ENTITY)) && 
-              (!parameterType.hasFeature(DataStructureFeature.VALUE_OBJECT)));
+            _xblockexpression = ((!parameterType.hasFeature(ComplexTypeFeature.ENTITY)) && 
+              (!parameterType.hasFeature(ComplexTypeFeature.VALUE_OBJECT)));
           }
           _switchResult = _xblockexpression;
         }
@@ -527,8 +574,7 @@ public class DataDslValidator extends AbstractDataDslValidator {
     final boolean handlesNotOnlyEntitiesOrValueObjects = IterableExtensions.<DataOperationParameter>exists(allDataOperationParameters, _function_1);
     if (handlesNotOnlyEntitiesOrValueObjects) {
       this.warning(("Complex typed parameters of repository operations should be entities or " + 
-        "value objects"), dataStructure, 
-        DataPackage.Literals.DATA_STRUCTURE__FEATURES, featureIndex);
+        "value objects"), complexType, DataPackage.Literals.COMPLEX_TYPE__FEATURES, featureIndex);
     }
   }
   
@@ -537,30 +583,39 @@ public class DataDslValidator extends AbstractDataDslValidator {
    */
   @Check
   public void checkServiceFeatureConstraints(final DataStructure dataStructure) {
-    this.checkServiceFeatureConstraints(dataStructure, DataStructureFeature.SERVICE);
+    this.checkServiceFeatureConstraints(dataStructure, ComplexTypeFeature.SERVICE);
   }
   
   /**
    * Check "specification" feature constraints
    */
   @Check
-  public void checkSpecificationFeatureConstraints(final DataStructure dataStructure) {
-    final int featureIndex = dataStructure.getFeatures().indexOf(DataStructureFeature.SPECIFICATION);
+  public void checkSpecificationFeatureConstraints(final ComplexType complexType) {
+    final int featureIndex = complexType.getFeatures().indexOf(ComplexTypeFeature.SPECIFICATION);
     if ((featureIndex == (-1))) {
       return;
     }
-    boolean _hasAdditionalDomainFeatures = this.hasAdditionalDomainFeatures(dataStructure, DataStructureFeature.SPECIFICATION);
+    boolean _hasAdditionalDomainFeatures = this.hasAdditionalDomainFeatures(complexType, ComplexTypeFeature.SPECIFICATION);
     if (_hasAdditionalDomainFeatures) {
-      this.warning("A specification should not exhibit other domain features", dataStructure, 
-        DataPackage.Literals.DATA_STRUCTURE__FEATURES, featureIndex);
+      this.warning("A specification should not exhibit other domain features", complexType, 
+        DataPackage.Literals.COMPLEX_TYPE__FEATURES, featureIndex);
+    }
+    DataStructure _asStructure = this.asStructure(complexType);
+    EList<DataOperation> _effectiveOperations = null;
+    if (_asStructure!=null) {
+      _effectiveOperations=_asStructure.getEffectiveOperations();
+    }
+    final EList<DataOperation> effectiveOperations = _effectiveOperations;
+    if ((effectiveOperations == null)) {
+      return;
     }
     final Function1<DataOperation, Boolean> _function = (DataOperation it) -> {
       return Boolean.valueOf(it.hasFeature(DataOperationFeature.VALIDATOR));
     };
-    boolean _exists = IterableExtensions.<DataOperation>exists(dataStructure.getEffectiveOperations(), _function);
+    boolean _exists = IterableExtensions.<DataOperation>exists(effectiveOperations, _function);
     boolean _not = (!_exists);
     if (_not) {
-      this.warning("A specification should comprise at least one validator operation", dataStructure, DataPackage.Literals.DATA_STRUCTURE__FEATURES, featureIndex);
+      this.warning("A specification should comprise at least one validator operation", complexType, DataPackage.Literals.COMPLEX_TYPE__FEATURES, featureIndex);
     }
   }
   
@@ -568,20 +623,19 @@ public class DataDslValidator extends AbstractDataDslValidator {
    * Check "valueObject" feature constraints
    */
   @Check
-  public void checkValueObjectFeatureConstraints(final DataStructure dataStructure) {
-    final int featureIndex = dataStructure.getFeatures().indexOf(DataStructureFeature.VALUE_OBJECT);
+  public void checkValueObjectFeatureConstraints(final ComplexType complexType) {
+    final int featureIndex = complexType.getFeatures().indexOf(ComplexTypeFeature.VALUE_OBJECT);
     if ((featureIndex == (-1))) {
       return;
     }
-    final List<DataStructureFeature> forbiddenFeatures = Collections.<DataStructureFeature>unmodifiableList(CollectionLiterals.<DataStructureFeature>newArrayList(DataStructureFeature.AGGREGATE, DataStructureFeature.APPLICATION_SERVICE, DataStructureFeature.DOMAIN_SERVICE, DataStructureFeature.ENTITY, DataStructureFeature.INFRASTRUCTURE_SERVICE, DataStructureFeature.REPOSITORY, DataStructureFeature.SERVICE, DataStructureFeature.SPECIFICATION));
-    final Function1<DataStructureFeature, Boolean> _function = (DataStructureFeature it) -> {
+    final List<ComplexTypeFeature> forbiddenFeatures = Collections.<ComplexTypeFeature>unmodifiableList(CollectionLiterals.<ComplexTypeFeature>newArrayList(ComplexTypeFeature.AGGREGATE, ComplexTypeFeature.APPLICATION_SERVICE, ComplexTypeFeature.DOMAIN_SERVICE, ComplexTypeFeature.ENTITY, ComplexTypeFeature.INFRASTRUCTURE_SERVICE, ComplexTypeFeature.REPOSITORY, ComplexTypeFeature.SERVICE, ComplexTypeFeature.SPECIFICATION));
+    final Function1<ComplexTypeFeature, Boolean> _function = (ComplexTypeFeature it) -> {
       return Boolean.valueOf(forbiddenFeatures.contains(it));
     };
-    boolean _exists = IterableExtensions.<DataStructureFeature>exists(dataStructure.getFeatures(), _function);
+    boolean _exists = IterableExtensions.<ComplexTypeFeature>exists(complexType.getFeatures(), _function);
     if (_exists) {
       this.warning(("A value object should not be an aggregate, entity, repository, service, or " + 
-        "specification"), dataStructure, 
-        DataPackage.Literals.DATA_STRUCTURE__FEATURES, featureIndex);
+        "specification"), complexType, DataPackage.Literals.COMPLEX_TYPE__FEATURES, featureIndex);
     }
   }
   
@@ -705,7 +759,7 @@ public class DataDslValidator extends AbstractDataDslValidator {
         DataPackage.Literals.DATA_FIELD__FEATURES, featureIndex);
       return;
     }
-    boolean _hasFeature = dataField.getDataStructure().hasFeature(DataStructureFeature.AGGREGATE);
+    boolean _hasFeature = dataField.getDataStructure().hasFeature(ComplexTypeFeature.AGGREGATE);
     boolean _not_1 = (!_hasFeature);
     if (_not_1) {
       this.warning("Parts should only be defined in aggregates", dataField, 
@@ -715,8 +769,8 @@ public class DataDslValidator extends AbstractDataDslValidator {
     final ComplexType effectiveFieldType = ((ComplexType) _effectiveType_1);
     if ((effectiveFieldType instanceof DataStructure)) {
       final DataStructure fieldType = ((DataStructure) effectiveFieldType);
-      if (((!fieldType.hasFeature(DataStructureFeature.ENTITY)) && 
-        (!fieldType.hasFeature(DataStructureFeature.VALUE_OBJECT)))) {
+      if (((!fieldType.hasFeature(ComplexTypeFeature.ENTITY)) && 
+        (!fieldType.hasFeature(ComplexTypeFeature.VALUE_OBJECT)))) {
         this.warning("Parts of structural type should be entities or value objects", dataField, 
           DataPackage.Literals.DATA_FIELD__FEATURES, featureIndex);
       }
@@ -904,7 +958,7 @@ public class DataDslValidator extends AbstractDataDslValidator {
     if ((featureIndex == (-1))) {
       return;
     }
-    boolean _hasFeature = dataOperation.getDataStructure().hasFeature(DataStructureFeature.SPECIFICATION);
+    boolean _hasFeature = dataOperation.getDataStructure().hasFeature(ComplexTypeFeature.SPECIFICATION);
     boolean _not = (!_hasFeature);
     if (_not) {
       this.warning("A validator operation should be defined within a specification", dataOperation, 
@@ -993,6 +1047,23 @@ public class DataDslValidator extends AbstractDataDslValidator {
     if ((version.getContexts().isEmpty() && version.getComplexTypes().isEmpty())) {
       this.error("A version must define at least one context or complex type", version, 
         DataPackage.Literals.VERSION__NAME);
+    }
+  }
+  
+  /**
+   * Check allowed features on enumerations
+   */
+  @Check
+  public void checkAllowedFeatures(final Enumeration enumeration) {
+    final List<ComplexTypeFeature> allowedFeatures = Collections.<ComplexTypeFeature>unmodifiableList(CollectionLiterals.<ComplexTypeFeature>newArrayList(ComplexTypeFeature.DOMAIN_EVENT, ComplexTypeFeature.VALUE_OBJECT));
+    final Function1<ComplexTypeFeature, Boolean> _function = (ComplexTypeFeature it) -> {
+      boolean _contains = allowedFeatures.contains(it);
+      return Boolean.valueOf((!_contains));
+    };
+    final boolean hasUnallowedFeatures = IterableExtensions.<ComplexTypeFeature>exists(enumeration.getFeatures(), _function);
+    if (hasUnallowedFeatures) {
+      this.warning("An enumeration should only be a domain event or value object", enumeration, 
+        DataPackage.Literals.COMPLEX_TYPE__FEATURES);
     }
   }
 }

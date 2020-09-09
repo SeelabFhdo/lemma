@@ -15,6 +15,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
+import org.eclipse.emf.ecore.util.EDataTypeEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -26,12 +27,23 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link de.fhdo.lemma.data.intermediate.impl.IntermediateEnumerationImpl#getFeatureNames <em>Feature Names</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.impl.IntermediateEnumerationImpl#getFields <em>Fields</em>}</li>
  * </ul>
  *
  * @generated
  */
 public class IntermediateEnumerationImpl extends IntermediateComplexTypeImpl implements IntermediateEnumeration {
+    /**
+     * The cached value of the '{@link #getFeatureNames() <em>Feature Names</em>}' attribute list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getFeatureNames()
+     * @generated
+     * @ordered
+     */
+    protected EList<String> featureNames;
+
     /**
      * The cached value of the '{@link #getFields() <em>Fields</em>}' containment reference list.
      * <!-- begin-user-doc -->
@@ -59,6 +71,19 @@ public class IntermediateEnumerationImpl extends IntermediateComplexTypeImpl imp
     @Override
     protected EClass eStaticClass() {
         return IntermediatePackage.Literals.INTERMEDIATE_ENUMERATION;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EList<String> getFeatureNames() {
+        if (featureNames == null) {
+            featureNames = new EDataTypeEList<String>(String.class, this, IntermediatePackage.INTERMEDIATE_ENUMERATION__FEATURE_NAMES);
+        }
+        return featureNames;
     }
 
     /**
@@ -111,6 +136,8 @@ public class IntermediateEnumerationImpl extends IntermediateComplexTypeImpl imp
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
+            case IntermediatePackage.INTERMEDIATE_ENUMERATION__FEATURE_NAMES:
+                return getFeatureNames();
             case IntermediatePackage.INTERMEDIATE_ENUMERATION__FIELDS:
                 return getFields();
         }
@@ -126,6 +153,10 @@ public class IntermediateEnumerationImpl extends IntermediateComplexTypeImpl imp
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
+            case IntermediatePackage.INTERMEDIATE_ENUMERATION__FEATURE_NAMES:
+                getFeatureNames().clear();
+                getFeatureNames().addAll((Collection<? extends String>)newValue);
+                return;
             case IntermediatePackage.INTERMEDIATE_ENUMERATION__FIELDS:
                 getFields().clear();
                 getFields().addAll((Collection<? extends IntermediateEnumerationField>)newValue);
@@ -142,6 +173,9 @@ public class IntermediateEnumerationImpl extends IntermediateComplexTypeImpl imp
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
+            case IntermediatePackage.INTERMEDIATE_ENUMERATION__FEATURE_NAMES:
+                getFeatureNames().clear();
+                return;
             case IntermediatePackage.INTERMEDIATE_ENUMERATION__FIELDS:
                 getFields().clear();
                 return;
@@ -157,10 +191,28 @@ public class IntermediateEnumerationImpl extends IntermediateComplexTypeImpl imp
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
+            case IntermediatePackage.INTERMEDIATE_ENUMERATION__FEATURE_NAMES:
+                return featureNames != null && !featureNames.isEmpty();
             case IntermediatePackage.INTERMEDIATE_ENUMERATION__FIELDS:
                 return fields != null && !fields.isEmpty();
         }
         return super.eIsSet(featureID);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public String toString() {
+        if (eIsProxy()) return super.toString();
+
+        StringBuilder result = new StringBuilder(super.toString());
+        result.append(" (featureNames: ");
+        result.append(featureNames);
+        result.append(')');
+        return result.toString();
     }
 
 } //IntermediateEnumerationImpl
