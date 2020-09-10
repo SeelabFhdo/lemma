@@ -35,7 +35,14 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <build-helper-maven-plugin-version>3.1.0</build-helper-maven-plugin-version>
+        <data-extractor-version>${project.version}</data-extractor-version>
+        <data-metamodel-version>${project.version}</data-metamodel-version>
         <eclipse-version>2020-03</eclipse-version>
+        <intermediate-data-metamodel-version>${project.version}</intermediate-data-metamodel-version>
+        <lemma-utils-version>${project.version}</lemma-utils-version>
+        <lemma-ui-utils-version>${project.version}</lemma-ui-utils-version>
+        <mapping-extractor-version>${project.version}</mapping-extractor-version>
+        <mapping-metamodel-version>${project.version}</mapping-metamodel-version>
         <maven-clean-plugin-version>3.1.0</maven-clean-plugin-version>
         <maven-compiler-plugin-version>3.8.1</maven-compiler-plugin-version>
         <tycho-version>1.7.0</tycho-version>
