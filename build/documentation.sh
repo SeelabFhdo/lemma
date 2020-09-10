@@ -6,6 +6,7 @@
 modules=(
     de.fhdo.lemma.data.intermediate.metamodel
     de.fhdo.lemma.service.intermediate.metamodel
+    de.fhdo.lemma.operation.intermediate.metamodel
 )
 
 # Build a single documentation module
