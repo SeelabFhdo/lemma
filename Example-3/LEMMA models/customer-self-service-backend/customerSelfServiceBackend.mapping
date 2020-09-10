@@ -1,94 +1,638 @@
 import microservices from "customerSelfServiceBackend.services" as selfServiceBackendServices
-import technology from "../technology/java.technology" as java
+import technology from "../technology/spring.technology" as spring
+import technology from "../technology/map.technology" as map
+import technology from "../technology/hystrix.technology" as hystrix
 import technology from "../technology/lakesideMutual.technology" as lakesideMutual
+import technology from "../technology/eureka.technology" as eureka
 
-@technology(java)
-type selfServiceBackendServices::customerSelfServiceBackend::customer.Address {
-	aspects { java::_aspects.Table("addresses"); }
+@technology(spring)
+type selfServiceBackendServices::customerSelfServiceBackend::customerSelfService.Address {
+	aspects { spring::_aspects.Table("addresses"); }
+
+	id { aspects { spring::_aspects.GeneratedValue; } }
 }
 
-@technology(java)
-type selfServiceBackendServices::customerSelfServiceBackend::customer.CustomerId {
-	aspects { java::_aspects.Embeddable; }
+@technology(spring)
+type selfServiceBackendServices::customerSelfServiceBackend::customerSelfService.CustomerDto {
+	aspects { spring::_aspects.ResourceSupport; }
 
-	op random { aspects { java::_aspects.static; } }
+	customerProfile { aspects { spring::_aspects.JsonUnwrapped; } }
 }
 
-@technology(java)
-type selfServiceBackendServices::customerSelfServiceBackend::identityAccess.UserLogin {
-	aspects { java::_aspects.Table("user_logins"); }
+@technology(spring)
+type selfServiceBackendServices::customerSelfServiceBackend::customerSelfService.CustomersDto {
+	aspects { spring::_aspects.ResourceSupport; }
+}
+
+@technology(spring)
+type selfServiceBackendServices::customerSelfServiceBackend::customerSelfService.RequestStatus {
+	aspects {
+		spring::_aspects.EnumerationMethod(
+			"public boolean canTransitionTo(RequestStatus newStatus)"
+		);
+	}
+}
+
+@technology(map)
+type selfServiceBackendServices::customerSelfServiceBackend::customerSelfService.CitiesResponseDto {
+	aspects { map::_aspects.AtomicParameter; }
+}
+
+@technology(spring)
+type selfServiceBackendServices::customerSelfServiceBackend::customerSelfService.CustomerId {
+	op random { aspects { spring::_aspects.static; } }
+}
+
+@technology(spring)
+type selfServiceBackendServices::customerSelfServiceBackend::customerSelfService.UserLoginEntity {
+	aspects { spring::_aspects.Table("user_logins"); }
+
+	id { aspects { spring::_aspects.GeneratedValue; } }
 
 	customerId {
 		aspects {
-			java::_aspects.Embedded;
-			java::_aspects.AttributeOverrideColumn(name="id", column="customerId");
+			spring::_aspects.Embedded;
+			spring::_aspects.AttributeOverrideColumn(name="id", column="customerId");
 		}
 	}
 }
 
-@technology(java)
-type selfServiceBackendServices::customerSelfServiceBackend::identityAccess.UserSecurityDetails {
-	aspects { java::_aspects.UserDetails; }
+@technology(spring)
+type selfServiceBackendServices::customerSelfServiceBackend::customerSelfService.UserSecurityDetails {
+	aspects { spring::_aspects.UserDetails; }
 
-	accountNonExpired { aspects { java::_aspects.JsonIgnore; } }
-	accountNonLocked { aspects { java::_aspects.JsonIgnore; } }
-	authorities : java::_types.GrantedAuthorities;
-	credentialsNonExpired { aspects { java::_aspects.JsonIgnore; } }
-	enabled { aspects { java::_aspects.JsonIgnore; } }
-	password { aspects { java::_aspects.JsonIgnore; } }
+	accountNonExpired { aspects { spring::_aspects.JsonIgnore; } }
+	accountNonLocked { aspects { spring::_aspects.JsonIgnore; } }
+	authorities : spring::_types.GrantedAuthorities;
+	credentialsNonExpired { aspects { spring::_aspects.JsonIgnore; } }
+	enabled { aspects { spring::_aspects.JsonIgnore; } }
+	password { aspects { spring::_aspects.JsonIgnore; } }
 }
 
-@technology(java)
-type selfServiceBackendServices::customerSelfServiceBackend::identityAccess.UserDetailsServiceImpl {
-	op loadUserByUsername {
-		return type { aspects { java::_aspects.UserDetails; } }
-	}
-}
-
-@technology(java)
+@technology(spring)
 type selfServiceBackendServices::customerSelfServiceBackend
-	::domainInfrastructure.CustomerCoreService {
-	customerCoreBaseURL { aspects { java::_aspects.Value("${customercore.baseURL}"); } }
-	apiKeyHeader { aspects { java::_aspects.Value("${apikey.header}"); } }
-	apiKeyValue { aspects { java::_aspects.Value("${apikey.value}"); } }
+	::customerSelfService.UserDetailsServiceImpl {
+	userRepository { aspects { spring::_aspects.Autowired; } }
 
-	op changeAddress {
-		return type { aspects { java::_aspects.ResponseEntity; } }
-	}
-
-	op getCitiesForPostalCode {
-		return type { aspects { java::_aspects.ResponseEntity; } }
-	}
+	op loadUserByUsername { return type { aspects { spring::_aspects.UserDetails; } } }
 }
 
-@technology(java)
-type selfServiceBackendServices::customerSelfServiceBackend::customer_dtos.AddressDto {
-	op create { aspects { java::_aspects.static; } }
+@technology(spring)
+type selfServiceBackendServices::customerSelfServiceBackend::customerSelfService.AddressDto {
+	op fromDomainObject { aspects { spring::_aspects.static; } }
 }
 
-@technology(java)
-type selfServiceBackendServices::customerSelfServiceBackend::customer_dtos.CustomerProfileDto {
-	currentAddress { aspects { java::_aspects.JsonUnwrapped; } }
+@technology(spring)
+type selfServiceBackendServices::customerSelfServiceBackend
+	::customerSelfService.CustomerProfileDto {
+	currentAddress { aspects { spring::_aspects.JsonUnwrapped; } }
 }
 
-@technology(java, typedef=true)
+@technology(spring, typedef=true)
 @technology(lakesideMutual)
 type selfServiceBackendServices::customerSelfServiceBackend
-	::customer_dtos.CustomerProfileUpdateRequestDto {
-	birthday { aspects { java::_aspects.JsonFormat("yyyy-MM-dd"); } }
-	email { aspects { java::_aspects.Email; } }
+	::customerSelfService.CustomerProfileUpdateRequestDto {
+	birthday { aspects { spring::_aspects.JsonFormat("yyyy-MM-dd"); } }
+	email { aspects { spring::_aspects.Email; } }
 	phoneNumber { aspects { lakesideMutual::_aspects.PhoneNumber; } }
 }
 
-@technology(java, typedef=true)
+@technology(spring, typedef=true)
 @technology(lakesideMutual)
 type selfServiceBackendServices::customerSelfServiceBackend
-	::customer_dtos.CustomerRegistrationRequestDto {
-	birthday { aspects { java::_aspects.JsonFormat("yyyy-MM-dd"); } }
+	::customerSelfService.CustomerRegistrationRequestDto {
+	birthday {
+		aspects {
+			spring::_aspects.JsonFormat("yyyy-MM-dd");
+			spring::_aspects.Past;
+		}
+	}
 	phoneNumber { aspects { lakesideMutual::_aspects.PhoneNumber; } }
 }
 
-@technology(java)
-type selfServiceBackendServices::customerSelfServiceBackend::identityAccess_dtos.SignupRequestDto {
-	email { aspects { java::_aspects.Email; } }
+@technology(spring)
+type selfServiceBackendServices::customerSelfServiceBackend::customerSelfService.SignupRequestDto {
+	email { aspects { spring::_aspects.Email; } }
+}
+
+@technology(spring)
+type selfServiceBackendServices::customerSelfServiceBackend
+	::customerSelfService.CustomerInfoEntity {
+	aspects { spring::_aspects.Table("customerinfos"); }
+
+	id { aspects { spring::_aspects.GeneratedValue; } }
+
+	customerId {
+		aspects {
+			spring::_aspects.Embedded;
+			spring::_aspects.AttributeOverrideColumn(name="id", column="customerId");
+		}
+	}
+}
+
+@technology(spring)
+type selfServiceBackendServices::customerSelfServiceBackend
+	::customerSelfService.InsuranceOptionsEntity {
+	aspects { spring::_aspects.Table("insuranceoptions"); }
+
+	id { aspects { spring::_aspects.GeneratedValue; } }
+
+	insuranceType {
+		aspects {
+			spring::_aspects.Embedded;
+			spring::_aspects.AttributeOverrideColumn(name="id", column="customerId");
+		}
+	}
+
+	deductible {
+		aspects {
+			spring::_aspects.Embedded;
+			spring::_aspects.AttributeOverrideColumn(name="amount", column="deductibleAmount");
+			spring::_aspects.AttributeOverrideColumn(name="currency", column="deductibleCurrency");
+		}
+	}
+}
+
+@technology(spring)
+type selfServiceBackendServices::customerSelfServiceBackend
+	::customerSelfService.InsuranceQuoteEntity {
+	aspects { spring::_aspects.Table("insurancequotes"); }
+
+	id { aspects { spring::_aspects.GeneratedValue; } }
+
+	insurancePremium {
+		aspects {
+			spring::_aspects.Embedded;
+			spring::_aspects.AttributeOverrideColumn(name="amount",
+				column="insurancePremiumAmount");
+			spring::_aspects.AttributeOverrideColumn(name="currency",
+				column="insurancePremiumCurrency");
+		}
+	}
+
+	policyLimit {
+		aspects {
+			spring::_aspects.Embedded;
+			spring::_aspects.AttributeOverrideColumn(name="amount", column="policyLimitAmount");
+			spring::_aspects.AttributeOverrideColumn(name="currency", column="policyLimitCurrency");
+		}
+	}
+}
+
+@technology(spring)
+type selfServiceBackendServices::customerSelfServiceBackend
+	::customerSelfService.InsuranceQuoteRequestAggregateRoot {
+	aspects { spring::_aspects.Table("insurancequoterequests"); }
+
+	id { aspects { spring::_aspects.GeneratedValue; } }
+
+	statusHistory { aspects { spring::_aspects.OneToMany(fetch="EAGER"); } }
+
+	customerInfo { aspects { spring::_aspects.OneToMany; } }
+
+	insuranceOptions { aspects { spring::_aspects.OneToMany; } }
+
+	insuranceQuote { aspects { spring::_aspects.OneToMany; } }
+}
+
+@technology(spring)
+type selfServiceBackendServices::customerSelfServiceBackend::customerSelfService.MoneyAmount {
+	amount : spring::_types.BigDecimal;
+	currency : spring::_types.Currency;
+}
+
+@technology(spring)
+type selfServiceBackendServices::customerSelfServiceBackend
+	::customerSelfService.RequestStatusChange {
+	aspects { spring::_aspects.Table("requeststatuschanges"); }
+
+	id { aspects { spring::_aspects.GeneratedValue; } }
+
+	status { aspects { spring::_aspects.Enumerated("STRING"); } }
+}
+
+@technology(spring)
+@technology(hystrix)
+type selfServiceBackendServices::customerSelfServiceBackend
+	::customerSelfService.CustomerCoreRemoteProxy {
+	customerCoreBaseURL { aspects { spring::_aspects.Value("${customercore.baseURL}"); } }
+
+	op getCustomer { aspects { hystrix::_aspects.HystrixCommand("getDummyCustomer"); } }
+
+	op changeAddress { return type : spring::_types.ResponseEntity; }
+
+	op getCitiesForPostalCode { return type : spring::_types.ResponseEntity; }
+}
+
+@technology(spring)
+@technology(hystrix)
+type selfServiceBackendServices::customerSelfServiceBackend
+	::customerSelfService.PolicyManagementMessageProducer {
+	insuranceQuoteRequestEventQueue {
+		aspects { spring::_aspects.Value("${insuranceQuoteRequestEvent.queueName}"); }
+	}
+
+	customerDecisionEventQueue {
+		aspects { spring::_aspects.Value("${customerDecisionEvent.queueName}"); }
+	}
+}
+
+@technology(spring)
+type selfServiceBackendServices::customerSelfServiceBackend::customerSelfService.CustomerInfoDto {
+	contactAddress { aspects { spring::_aspects.Valid; } }
+
+	billingAddress { aspects { spring::_aspects.Valid; } }
+
+	op fromDomainObject { aspects { spring::_aspects.static; } }
+}
+
+@technology(spring)
+type selfServiceBackendServices::customerSelfServiceBackend
+	::customerSelfService.InsuranceOptionsDto {
+	startDate {
+		aspects {
+			spring::_aspects.JsonFormat("yyyy-MM-dd");
+			spring::_aspects.Valid;
+		}
+	}
+
+	deductible { aspects { spring::_aspects.Valid; } }
+
+	op fromDomainObject { aspects { spring::_aspects.static; } }
+}
+
+@technology(spring)
+type selfServiceBackendServices::customerSelfServiceBackend::customerSelfService.InsuranceQuoteDto {
+	expirationDate { aspects { spring::_aspects.Valid; } }
+
+	insurancePremium { aspects { spring::_aspects.Valid; } }
+
+	policyLimit { aspects { spring::_aspects.Valid; } }
+
+	op fromDomainObject { aspects { spring::_aspects.static; } }
+}
+
+@technology(spring)
+type selfServiceBackendServices::customerSelfServiceBackend
+	::customerSelfService.InsuranceQuoteRequestDto {
+	^date { aspects { spring::_aspects.Valid; } }
+
+	statusHistory { aspects { spring::_aspects.Valid; } }
+
+	customerInfo { aspects { spring::_aspects.Valid; } }
+
+	insuranceOptions { aspects { spring::_aspects.Valid; } }
+
+	insuranceQuote { aspects { spring::_aspects.Valid; } }
+
+	op fromDomainObject { aspects { spring::_aspects.static; } }
+}
+
+@technology(spring)
+type selfServiceBackendServices::customerSelfServiceBackend
+	::customerSelfService.InsuranceQuoteResponseDto {
+	expirationDate { aspects { spring::_aspects.Valid; } }
+
+	insurancePremium { aspects { spring::_aspects.Valid; } }
+
+	policyLimit { aspects { spring::_aspects.Valid; } }
+}
+
+@technology(spring)
+type selfServiceBackendServices::customerSelfServiceBackend::customerSelfService.MoneyAmountDto {
+	amount : spring::_types.BigDecimal {
+		aspects {
+			spring::_aspects.DecimalMax(value = "1000000000000", inclusive = false);
+			spring::_aspects.DecimalMin("0");
+		}
+	}
+
+	op fromDomainObject { aspects { spring::_aspects.static; } }
+}
+
+@technology(spring)
+type selfServiceBackendServices::customerSelfServiceBackend
+	::customerSelfService.RequestStatusChangeDto {
+	^date { aspects { spring::_aspects.Valid; } }
+
+	op fromDomainObject { aspects { spring::_aspects.static; } }
+}
+
+@technology(eureka)
+@technology(spring)
+@technology(map)
+selfServiceBackendServices::com.lakesidemutual.customerselfservice.CustomerSelfServiceBackend {
+	aspects {
+		spring::_aspects.CustomProperty(
+			name="insuranceQuoteRequestEvent.queueName",
+			value="insurance-quote-request-event-queue"
+		);
+		spring::_aspects.CustomProperty(
+			name="customerDecisionEvent.queueName",
+			value="customer-decision-event-queue"
+		);
+		spring::_aspects.CustomProperty(
+			name="insuranceQuoteResponseEvent.queueName",
+			value="insurance-quote-response-event-queue"
+		);
+		spring::_aspects.CustomProperty(
+			name="insuranceQuoteExpiredEvent.queueName",
+			value="insurance-quote-expired-event-queue"
+		);
+		spring::_aspects.CustomProperty(
+			name="policyCreatedEvent.queueName",
+			value="policy-created-event-queue"
+		);
+		spring::_aspects.ActiveMqConfiguration(
+			user = "queueuser",
+			password = "secret"
+		);
+		spring::_aspects.CustomProperty(
+			name="policymanagement.tcpBrokerBindAddress",
+			value="tcp://localhost:61616"
+		);
+
+		spring::_aspects.ApplicationName("customer-self-service-backend");
+		spring::_aspects.JacksonConfiguration(INDENT_OUTPUT=true,
+			defaultPropertyInclusion="NON_NULL");
+		spring::_aspects.DatasourceConfiguration(
+			url="jdbc:h2:file:./customerselfservice",
+			username="sa",
+			password="sa",
+			driverClassName="org.h2.Driver"
+		);
+		spring::_aspects.Port(8080);
+		spring::_aspects.HibernateConfiguration("create-drop");
+		spring::_aspects.CustomProperty(name="customercore.baseURL", value="http://customer-core");
+		spring::_aspects.Management(property="endpoints.web.exposure.include", value="*");
+		spring::_aspects.Management(property="info.git.mode", value="full");
+		spring::_aspects.AllowBeanDefinitionOverriding;
+		spring::_aspects.AdminClientUrl("http://localhost:9000");
+		eureka::_aspects.EurekaConfiguration(
+			clientDefaultZone = "http://localhost:8761/eureka",
+			preferIpAddress = true
+		);
+	}
+
+	interface authenticationController {
+		endpoints { spring::_protocols.rest: "/auth"; }
+	}
+
+	interface cityStaticDataHolder {
+		endpoints { spring::_protocols.rest: "/cities"; }
+
+		aspects { map::_aspects.StaticDataHolder; }
+	}
+
+	interface customerInformationHolder {
+		endpoints { spring::_protocols.rest: "/customers"; }
+
+		aspects {
+			map::_aspects.InformationHolderResource;
+			map::_aspects.MasterDataHolder;
+		}
+	}
+
+	interface userInformationHolder {
+		endpoints { spring::_protocols.rest: "/user"; }
+
+		aspects {
+			map::_aspects.InformationHolderResource;
+			map::_aspects.MasterDataHolder;
+		}
+	}
+
+	interface insuranceQuoteRequestInformationHolder {
+		endpoints { spring::_protocols.rest: "/insurance-quote-requests"; }
+
+		aspects {
+			map::_aspects.InformationHolderResource;
+			map::_aspects.MasterDataHolder;
+		}
+	}
+
+	operation authenticationController.authenticationRequest {
+		aspects { spring::_aspects.PostMapping; }
+
+		parameters {
+			complex authenticationRequest { aspects { spring::_aspects.RequestBody; } }
+			complex authenticationResponse : spring::_types.ResponseEntity;
+			primitive authenticationException : spring::_types.AuthenticationException;
+		}
+	}
+
+	operation authenticationController.signupUser {
+		endpoints { spring::_protocols.rest: "/signup"; }
+
+		aspects { spring::_aspects.PostMapping; }
+
+		parameters {
+			complex registration {
+				aspects { spring::_aspects.Valid; spring::_aspects.RequestBody; }
+			}
+			complex userResponse : spring::_types.ResponseEntity;
+			primitive userAlreadyExists { aspects { spring::_aspects.ResponseStatus("CONFLICT"); } }
+		}
+	}
+
+	operation cityStaticDataHolder.getCitiesForPostalCode {
+		endpoints { spring::_protocols.rest: "/{postalCode}"; }
+
+		aspects { spring::_aspects.GetMapping; }
+
+		parameters {
+			primitive postcalCode { aspects { spring::_aspects.PathVariable; } }
+			complex result : spring::_types.ResponseEntity;
+			primitive customerCoreNotAvailable {
+				aspects { spring::_aspects.ResponseStatus("BAD_GATEWAY"); }
+			}
+		}
+	}
+
+	operation customerInformationHolder.changeAddress {
+		endpoints { spring::_protocols.rest: "/{customerId}/address"; }
+
+		aspects {
+			spring::_aspects.PreAuthorize("isAuthenticated()");
+			spring::_aspects.PutMapping;
+		}
+
+		parameters {
+			complex customerId { aspects { spring::_aspects.PathVariable; } }
+			complex requestDto { aspects { spring::_aspects.RequestBody; spring::_aspects.Valid; } }
+			complex result : spring::_types.ResponseEntity;
+			primitive customerCoreNotAvailable {
+				aspects { spring::_aspects.ResponseStatus("BAD_GATEWAY"); }
+			}
+		}
+	}
+
+	operation customerInformationHolder.getCustomer {
+		endpoints { spring::_protocols.rest: "/{customerId}"; }
+
+		aspects {
+			spring::_aspects.GetMapping;
+			spring::_aspects.PreAuthorize("isAuthenticated()");
+		}
+
+		parameters {
+			complex customerId { aspects { spring::_aspects.PathVariable; } }
+			complex result : spring::_types.ResponseEntity;
+			primitive authentication : spring::_types.Authentication;
+			primitive customerNotFound { aspects { spring::_aspects.ResponseStatus("NOT_FOUND"); } }
+			primitive customerCoreNotAvailable {
+				aspects { spring::_aspects.ResponseStatus("BAD_GATEWAY"); }
+			}
+		}
+	}
+
+	operation customerInformationHolder.registerCustomer {
+		aspects {
+			spring::_aspects.PostMapping;
+			spring::_aspects.PreAuthorize("isAuthenticated()");
+		}
+
+		parameters {
+			complex requestDto { aspects { spring::_aspects.Valid; spring::_aspects.RequestBody; } }
+			complex result : spring::_types.ResponseEntity;
+			primitive authentication : spring::_types.Authentication;
+			primitive customerCoreNotAvailable {
+				aspects { spring::_aspects.ResponseStatus("BAD_GATEWAY"); }
+			}
+		}
+	}
+
+	operation customerInformationHolder.getInsuranceQuoteRequests {
+		endpoints { spring::_protocols.rest: "/{customerId}/insurance-quote-requests"; }
+
+		aspects {
+			spring::_aspects.GetMapping;
+			spring::_aspects.PreAuthorize("isAuthenticated()");
+		}
+
+		parameters {
+			complex customerId { aspects { spring::_aspects.PathVariable; } }
+			complex result : spring::_types.ResponseEntities;
+		}
+	}
+
+	operation userInformationHolder.getCurrentUser {
+		aspects {
+			spring::_aspects.GetMapping;
+			spring::_aspects.PreAuthorize("isAuthenticated()");
+		}
+
+		parameters {
+			primitive authentitaction : spring::_types.Authentication;
+			complex response : spring::_types.ResponseEntity;
+		}
+	}
+
+	operation insuranceQuoteExpiredMessageConsumer.receiveInsuranceQuoteExpiredEvent {
+		endpoints { spring::_protocols.amqp: "insurance-quote-expired-event-queue"; }
+
+		parameters { complex message : spring::_types.Message; }
+	}
+
+	operation insuranceQuoteRequestInformationHolder.getInsuranceQuoteRequests {
+		aspects { spring::_aspects.GetMapping; }
+
+		parameters { complex quoteRequestDtos : spring::_types.ResponseEntities; }
+	}
+
+	operation insuranceQuoteRequestInformationHolder.getInsuranceQuoteRequest {
+		endpoints { spring::_protocols.rest: "/{insuranceQuoteRequestId}"; }
+
+		aspects {
+			spring::_aspects.GetMapping;
+			spring::_aspects.PreAuthorize("isAuthenticated()");
+		}
+
+		parameters {
+			primitive authentication : spring::_types.Authentication;
+			primitive insuranceQuoteRequestId { aspects { spring::_aspects.PathVariable; } }
+			complex quoteRequestDto : spring::_types.ResponseEntity;
+			primitive insuranceQuoteRequestNotFound {
+				aspects {
+					spring::_aspects.ResponseStatus("NOT_FOUND");
+				}
+			}
+			primitive unauthorized : spring::_types.ResponseEntityErrorCode {
+				aspects {
+					spring::_aspects.ResponseStatus("UNAUTHORIZED");
+				}
+			}
+		}
+	}
+
+	operation insuranceQuoteRequestInformationHolder.createInsuranceQuoteRequest {
+		aspects {
+			spring::_aspects.PostMapping;
+			spring::_aspects.PreAuthorize("isAuthenticated()");
+		}
+
+		parameters {
+			primitive authentication : spring::_types.Authentication;
+			complex requestDto {
+				aspects {
+					spring::_aspects.RequestBody;
+					spring::_aspects.Valid;
+				}
+			}
+			complex quoteRequestDto : spring::_types.ResponseEntity;
+			primitive unauthorized : spring::_types.ResponseEntityErrorCode {
+				aspects {
+					spring::_aspects.ResponseStatus("UNAUTHORIZED");
+				}
+			}
+		}
+	}
+
+	operation insuranceQuoteRequestInformationHolder.respondToInsuranceQuote {
+		endpoints {
+			spring::_protocols.rest: "/{id}";
+		}
+
+		aspects {
+			spring::_aspects.PatchMapping;
+			spring::_aspects.PreAuthorize("isAuthenticated()");
+		}
+
+		parameters {
+			primitive id { aspects { spring::_aspects.PathVariable; } }
+
+			complex insuranceQuoteResponseDto {
+				aspects {
+					spring::_aspects.RequestBody;
+					spring::_aspects.Valid;
+				}
+			}
+
+			complex quoteRequestDto : spring::_types.ResponseEntity;
+
+			primitive insuranceQuoteRequestNotFound {
+				aspects {
+					spring::_aspects.ResponseStatus("NOT_FOUND");
+				}
+			}
+
+			primitive unauthorized : spring::_types.ResponseEntityErrorCode {
+				aspects {
+					spring::_aspects.ResponseStatus("UNAUTHORIZED");
+				}
+			}
+		}
+	}
+
+	operation insuranceQuoteResponseMessageConsumer.receiveInsuranceQuoteResponse {
+		endpoints { spring::_protocols.amqp: "insurance-quote-response-event-queue"; }
+
+		parameters { complex message : spring::_types.Message; }
+	}
+
+	operation policyCreatedMessageConsumer.receivePolicyCreatedEvent {
+		endpoints { spring::_protocols.amqp: "policy-created-event-queue"; }
+
+		parameters { complex message : spring::_types.Message; }
+	}
 }

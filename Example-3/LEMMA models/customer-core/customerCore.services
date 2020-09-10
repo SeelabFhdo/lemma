@@ -1,45 +1,18 @@
-// See Listing 7 on p. 20 of the technical report
-import datatypes from "customerCore.data" as customerCore
-import technology from "../technology/java.technology" as java
-import technology from "../technology/map.technology" as map
+import datatypes from "customerCore.data" as domain
 
-// See Listing 10 on p. 25 of the technical report
-@technology(java)
-@technology(map)
-@java::_aspects.ApplicationName("Customer Core")
-@java::_aspects.JacksonConfiguration(INDENT_OUTPUT=true, defaultPropertyInclusion="NON_NULL")
-@java::_aspects.DatasourceConfiguration(
-	url="jdbc:h2:file:./customercore",
-	username="sa",
-	password="sa",
-	driverClassName="org.h2.Driver"
-)
-@java::_aspects.HibernateConfiguration("create-drop")
-// See Listing 9 on pp. 23 to 24 of the technical report
 public functional microservice com.lakesidemutual.customercore.CustomerCore {
-	@endpoints(java::_protocols.rest: "/cities";)
-	@map::_aspects.StaticDataHolder
 	interface cityStaticDataHolder {
 		---
 		Get the cities for a particular postal code.
 
 		@required postalCode the postal code
 		---
-		@endpoints(java::_protocols.rest: "/{postalCode}";)
-		@java::_aspects.GetMapping
 		getCitiesForPostalCode(
-			@java::_aspects.PathVariable
 			sync postalCode : string,
-
-			@java::_aspects.ResponseEntity
-			sync out cities : customerCore::city_dtos.CitiesResponseDto
+			sync out cities : domain::customerCore.CitiesResponseDto
 		);
 	}
 
-	// See Listing 11 on p. 25 of the technical report
-	@endpoints(java::_protocols.rest: "/customers";)
-	@map::_aspects.InformationHolderResource
-	@map::_aspects.MasterDataHolder
 	interface customerInformationHolder {
 		---
 		Change a customer's address.
@@ -47,34 +20,22 @@ public functional microservice com.lakesidemutual.customercore.CustomerCore {
 		@required customerId the customer's unique id
 		@required requestDto the customer's new address
 		---
-		@endpoints(java::_protocols.rest: "/{customerId}/address";)
-		@java::_aspects.PutMapping
 		changeAddress(
-			@java::_aspects.PathVariable
-			sync customerId : customerCore::customer.CustomerId,
-
-			@java::_aspects.Valid
-			@java::_aspects.RequestBody
-			sync requestDto : customerCore::customer_dtos.AddressDto,
-
-			@java::_aspects.ResponseEntity
-			sync out responseDto : customerCore::customer_dtos.AddressDto,
-
-			@java::_aspects.ResponseStatus("NOT_FOUND")
+			sync customerId : domain::customerCore.CustomerId,
+			sync requestDto : domain::customerCore.AddressDto,
+			sync out responseDto : domain::customerCore.AddressDto,
 			sync out fault customerNotFound : string
 		);
 
 		internal getIncludedFields(
 			sync ^fields : string,
-
-			@java::_aspects.Set
-			sync out result : customerCore::city.FieldNames
+			sync out result : domain::customerCore.FieldNames
 		);
 
 		internal createCustomerResponseDto(
-			sync customer : customerCore::customer.CustomerAggregateRoot,
+			sync customer : domain::customerCore.CustomerAggregateRoot,
 			sync ^fields : string,
-			sync out customerResponseDto : customerCore::customer_dtos.CustomerResponseDto
+			sync out customerResponseDto : domain::customerCore.CustomerResponseDto
 		);
 
 		internal createPaginatedCustomerResponseDto(
@@ -83,8 +44,8 @@ public functional microservice com.lakesidemutual.customercore.CustomerCore {
 			sync offset : int,
 			sync size : int,
 			sync ^fields : string,
-			sync customerDtos : customerCore::customer_dtos.CustomerResponses,
-			sync out responseDto : customerCore::customer_dtos.PaginatedCustomerResponseDto
+			sync customerDtos : domain::customerCore.CustomerResponseDtos,
+			sync out responseDto : domain::customerCore.PaginatedCustomerResponseDto
 		);
 
 		---
@@ -93,20 +54,10 @@ public functional microservice com.lakesidemutual.customercore.CustomerCore {
 		@required ids a comma-separated list of customer ids
 		@param ^fields a comma-separated list of the fields that should be included in the response
 		---
-		// See Listing 12 on p. 26 of the technical report
-		@endpoints(java::_protocols.rest: "/{ids}";)
-		@java::_aspects.GetMapping
-		@map::_aspects.RequestBundle
-		@map::_aspects.WishList
 		getCustomer(
-			@java::_aspects.PathVariable
 			sync ids : string,
-
-			@java::_aspects.RequestParam(value="fields")
 			sync ^fields? : string,
-
-			@java::_aspects.ResponseEntity
-			sync out customersResponseDto : customerCore::customer_dtos.CustomerResponseDto
+			sync out customersResponseDto : domain::customerCore.CustomerResponseDto
 		);
 
 		---
@@ -115,21 +66,11 @@ public functional microservice com.lakesidemutual.customercore.CustomerCore {
 		@required customerId the customer's unique id
 		@required requestDto the customer's updated profile
 		---
-		@endpoints(java::_protocols.rest: "/{customerId}";)
-		@java::_aspects.PutMapping
 		updateCustomer(
-			@java::_aspects.PathVariable
-			sync customerId : customerCore::customer.CustomerId,
-
-			@java::_aspects.Valid
-			@java::_aspects.RequestBody
-			sync requestDto : customerCore::customer_dtos.CustomerProfileUpdateRequestDto,
-
-			@java::_aspects.ResponseEntity
-			sync out customersResponseDto : customerCore::customer_dtos.CustomerResponseDto,
-
-			@java::_aspects.ResponseStatus("NOT_FOUND")
-			sync out fault customerNotFound : string
+			sync customerId : domain::customerCore.CustomerId,
+			sync requestDto : domain::customerCore.CustomerProfileUpdateRequestDto,
+			sync out customersResponseDto : domain::customerCore.CustomerResponseDto,
+			sync out fault customerToUpdateNotFound : string
 		);
 
 		---
@@ -140,49 +81,76 @@ public functional microservice com.lakesidemutual.customercore.CustomerCore {
 		@param offset the offset of the page's first customer
 		@param ^fields a comma-separated list of the fields that should be included in the response
 		---
-		@java::_aspects.GetMapping
 		getCustomers(
-			@java::_aspects.RequestParam(value="filter")
 			sync filter? : string,
-
-			@java::_aspects.RequestParam(value="limit", defaultValue="10")
 			sync limit? : int,
-
-			@java::_aspects.RequestParam(value="offset", defaultValue="0")
 			sync offset? : int,
-
-			@java::_aspects.RequestParam(value="fields")
 			sync ^fields? : string,
-
-			@java::_aspects.ResponseEntity
-			sync out customersResponseDto : customerCore::customer_dtos.PaginatedCustomerResponseDto
+			sync out customersResponseDto : domain::customerCore.PaginatedCustomerResponseDto
 		);
 
 		---
 		Create a new customer.
 
-		@required reuestDto the customer's profile information
-		@param limit the maximum number of customers per page
-		@param offset the offset of the page's first customer
-		@param ^fields a comma-separated list of the fields that should be included in the response
+		@required requestDto the customer's profile information
 		---
-		@java::_aspects.PostMapping
 		createCustomer(
-			@java::_aspects.Valid
-			@java::_aspects.RequestBody
-			sync reuestDto : customerCore::customer_dtos.CustomerProfileUpdateRequestDto,
+			sync requestDto : domain::customerCore.CustomerProfileUpdateRequestDto,
+			sync out customersResponseDto : domain::customerCore.CustomerResponseDto
+		);
+	}
 
-			@java::_aspects.RequestParam(value="limit", defaultValue="10")
-			sync limit? : int,
+	interface customerInformationHolderSOAPAdapter {
+		changeAddress(
+			sync customerId : domain::customerCore.CustomerId,
+			sync requestDto : domain::customerCore.AddressDto,
+			sync out responseDto : domain::customerCore.AddressDto,
+			sync out fault customerNotFound : string
+		);
 
-			@java::_aspects.RequestParam(value="offset", defaultValue="0")
-			sync offset? : int,
+		internal getIncludedFields(
+			sync ^fields : string,
+			sync out result : domain::customerCore.FieldNames
+		);
 
-			@java::_aspects.RequestParam(value="fields")
-			sync ^fields? : string,
+		internal createCustomerResponseDto(
+			sync customer : domain::customerCore.CustomerAggregateRoot,
+			sync ^fields : string,
+			sync out customerResponseDto : domain::customerCore.CustomerResponseDto
+		);
 
-			@java::_aspects.ResponseEntity
-			sync out customersResponseDto : customerCore::customer_dtos.CustomerResponseDto
+		internal createPaginatedCustomerResponseDto(
+			sync filter : string,
+			sync limit : int,
+			sync offset : int,
+			sync size : int,
+			sync ^fields : string,
+			sync customerDtos : domain::customerCore.CustomerResponseDtos,
+			sync out responseDto : domain::customerCore.PaginatedCustomerResponseDto
+		);
+
+		getCustomer(
+			sync request : domain::customerCore.GetCustomerRequest
+		);
+
+		updateCustomer(
+			sync customerId : domain::customerCore.CustomerId,
+			sync requestDto : domain::customerCore.CustomerProfileUpdateRequestDto,
+			sync out responseDto : domain::customerCore.CustomerResponseDto,
+			sync out fault customerNotFound : string
+		);
+
+		getCustomers(
+			sync filter : string,
+			sync limit : int,
+			sync offset : int,
+			sync ^fields : string,
+			sync out responseDto : domain::customerCore.PaginatedCustomerResponseDto
+		);
+
+		createCustomer(
+			sync requestDto : domain::customerCore.CustomerProfileUpdateRequestDto,
+			sync out responseDto : domain::customerCore.CustomerResponseDto
 		);
 	}
 }

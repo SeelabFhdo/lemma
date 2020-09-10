@@ -1,62 +1,168 @@
-context customer {
-	structure AddressDto {
-		string streetAddress,
-		string postalCode,
-		string city
+context policyManagement {
+	structure Address<valueObject> {
+		hide long id<identifier>,
+		immutable string streetAddress,
+		immutable string postalCode,
+		immutable string city
 	}
 
-	list Addresses { AddressDto d }
+	structure CustomerDecisionEvent<valueObject, domainEvent> {
+		date ^date,
+		long ^insuranceQuoteRequestId,
+		boolean ^quoteAccepted
+	}
+
+	structure CustomerInfoEntity<entity> {
+		long id<identifier>,
+		immutable CustomerId customerId,
+		immutable string firstname,
+		immutable string lastname,
+		immutable Address contactAddress,
+		immutable Address billingAddress
+	}
+
+	structure InsuranceOptionsEntity<entity> {
+		long id<identifier>,
+		immutable date startDate,
+		immutable InsuranceType insuranceType,
+		immutable MoneyAmount deductible
+	}
+
+	structure InsuranceQuoteEntity<entity> {
+		long id<identifier>,
+		immutable date expirationDate,
+		immutable MoneyAmount insurancePremium,
+		immutable MoneyAmount policyLimit
+	}
+
+	structure InsuranceQuoteExpiredEvent<valueObject, domainEvent> {
+		date ^date,
+		long insuranceQuoteRequestId
+	}
+
+	structure InsuranceQuoteRequestAggregateRoot<aggregate, entity> {
+		immutable long id<identifier>,
+		immutable date ^date,
+		immutable RequestStatusChanges statusHistory<part>,
+		immutable CustomerInfoEntity customerInfo<part>,
+		immutable InsuranceOptionsEntity insuranceOptions<part>,
+		immutable InsuranceQuoteEntity insuranceQuote,
+		immutable string policyId,
+		function RequestStatus getStatus(),
+		hide procedure changeStatusTo(RequestStatus newStatus, date ^date),
+		procedure acceptRequest(InsuranceQuoteEntity insuranceQuote, date ^date),
+		procedure rejectRequest(date ^date),
+		procedure acceptQuote(date ^date),
+		procedure rejectQuote(date ^date),
+		procedure markQuoteAsExpired(date ^date),
+		procedure finalizeQuote(string policyId, date ^date),
+		function RequestStatusChange popStatus(),
+		function boolean checkQuoteExpirationDate(date ^date)
+	}
+
+	structure InsuranceQuoteRequestEvent<valueObject, domainEvent> {
+		date ^date,
+		InsuranceQuoteRequestDto insuranceQuoteRequestDto
+	}
+
+	structure InsuranceQuoteResponseEvent<valueObject, domainEvent> {
+		date ^date,
+		long insuranceQuoteRequestId,
+		boolean requestAccepted,
+		date expirationDate,
+		MoneyAmountDto insurancePremium,
+		MoneyAmountDto policyLimit
+	}
+
+	structure InsuranceType<valueObject> {
+		immutable string name
+	}
+
+	structure PolicyCreatedEvent<valueObject, domainEvent> {
+		date ^date,
+		long insuranceQuoteRequestId,
+		string policyId
+	}
+
+	enum RequestStatus<valueObject> {
+		REQUEST_SUBMITTED,
+		REQUEST_REJECTED,
+		QUOTE_RECEIVED,
+		QUOTE_ACCEPTED,
+		QUOTE_REJECTED,
+		QUOTE_EXPIRED,
+		POLICY_CREATED
+	}
+
+	structure RequestStatusChange<valueObject> {
+		long id,
+		immutable date ^date,
+		immutable RequestStatus status
+	}
+
+	list RequestStatusChanges { RequestStatusChange c }
+
+	structure AddressDto<valueObject> {
+		string streetAddress,
+		string postalCode,
+		string city,
+		function AddressDto fromDomainObject(Address address),
+		function Address toDomainObject
+	}
+
+	structure DeletePolicyEvent<valueObject, domainEvent> {
+		string kind,
+		string originator,
+		date ^date,
+		string policyId
+	}
+
+	list AddressDtos { AddressDto d }
 
 	structure CustomerId<valueObject> {
-		string id <identifier>
+		string id
 	}
 
 	list CustomerIds { CustomerId i }
-}
 
-context customer_dtos {
-	structure CustomerDto {
+	structure CustomerDto<valueObject> {
 		string customerId,
 		CustomerProfileDto customerProfile
 	}
 
-	list Customers { CustomerDto d }
-
-	structure CustomerIdDto {
+	structure CustomerIdDto<valueObject> {
 		string id
 	}
 
-	structure CustomerProfileDto {
+	structure CustomerProfileDto<valueObject> {
 		string firstname,
 		string lastname,
 		date birthday,
-		customer.AddressDto currentAddress,
+		AddressDto currentAddress,
 		string email,
 		string phoneNumber,
-		customer.Addresses moveHistory
+		AddressDtos moveHistory
 	}
 
-	structure CustomersDto {
-		Customers customers
+	structure CustomersDto<valueObject> {
+		CustomerDtos customers
 	}
 
-	structure PaginatedCustomerResponseDto {
+	structure PaginatedCustomerResponseDto<valueObject> {
 		string filter,
 		int limit,
 		int offset,
 		int size,
-		Customers customers
+		CustomerDtos customers
 	}
-}
 
-context policy {
 	structure InsuringAgreementEntity<entity> {
 		long id<identifier>,
 		immutable InsuringAgreementItems agreementItems
 	}
 
 	structure InsuringAgreementItem<valueObject> {
-		immutable long id,
+		long id<identifier>,
 		immutable string title,
 		immutable string description
 	}
@@ -64,23 +170,24 @@ context policy {
 	list InsuringAgreementItems { InsuringAgreementItem i }
 
 	structure MoneyAmount<valueObject> {
-		immutable float amount,
+		immutable double amount,
 		immutable string currency
 	}
 
 	structure PolicyAggregateRoot<entity, aggregate> {
 		immutable PolicyId id<identifier, part>,
-		immutable customer.CustomerId customerId<part>,
+		immutable CustomerId customerId<part>,
 		immutable string FIELD_CREATION_DATE = "creationDate",
 		immutable date creationDate,
-		immutable PolicyPeriod policyPeriod<part>,
-		immutable PolicyType policyType<part>,
-		immutable MoneyAmount policyLimit<part>,
-		immutable MoneyAmount insurancePremium<part>,
-		immutable InsuringAgreementEntity insuringAgreement
+		PolicyPeriod policyPeriod<part>,
+		PolicyType policyType<part>,
+		MoneyAmount deductible<part>,
+		MoneyAmount policyLimit<part>,
+		MoneyAmount insurancePremium<part>,
+		InsuringAgreementEntity insuringAgreement
 	}
 
-	list Policies { PolicyAggregateRoot p }
+	list PolicyAggregateRoots { PolicyAggregateRoot p }
 
 	structure PolicyId<valueObject> {
 		string id,
@@ -96,107 +203,182 @@ context policy {
 		immutable string name
 	}
 
-	structure PolicyEvent<valueObject, domainEvent> {
+	structure UpdatePolicyEvent<valueObject,domainEvent> {
+		string kind,
 		string originator,
 		date ^date,
-		customer_dtos.CustomerDto customer,
-		policy_dtos.PolicyDto policy
+		CustomerDto customer,
+		PolicyDto policy
 	}
-}
 
-context policy_dtos {
-	structure CreatePolicyRequestDto {
+	structure CustomerCoreRemoteProxy<infrastructureService> {
+		hide string customerCoreBaseURL,
+		function CustomerDto getCustomer(CustomerId customerId),
+		function PaginatedCustomerResponseDto getCustomers(string filter, int limit, int offset),
+		function CustomerDtos getCustomersById(CustomerIds customerId)
+	}
+
+	list CustomerDtos { CustomerDto d }
+
+	structure CustomerSelfServiceMessageProducer<infrastructureService> {
+		hide string quoteResponseQueue,
+		hide string quoteExpiredQueue,
+		hide string policyCreatedQueue,
+		procedure sendInsuranceQuoteResponseEvent(InsuranceQuoteResponseEvent event),
+		procedure sendInsuranceQuoteExpiredEvent(InsuranceQuoteExpiredEvent event),
+		procedure sendPolicyCreatedEvent(PolicyCreatedEvent event)
+	}
+
+	structure InsuranceQuoteRequestRepository<repository> {
+		InsuranceQuoteRequestAggregateRoot quoteRequest,
+		long id,
+		function InsuranceQuoteRequestAggregateRoots findByCustomerInfo_CustomerId(
+			CustomerId customerId
+		),
+		function InsuranceQuoteRequestAggregateRoots findAllByOrderByDateDesc
+	}
+
+	list InsuranceQuoteRequestAggregateRoots { InsuranceQuoteRequestAggregateRoot a }
+
+	structure CreatePolicyRequestDto<valueObject> {
 		immutable string customerId,
 		immutable string policyPeriod,
-		immutable string policyType <neverEmpty>,
+		immutable string policyType<neverEmpty>,
+		immutable MoneyAmountDto deductible,
 		immutable MoneyAmountDto policyLimit,
 		immutable MoneyAmountDto insurancePremium,
 		immutable InsuringAgreementDto insuringAgreement
 	}
 
-	structure InsuringAgreementDto {
-		immutable InsuringAgreementItems agreementItems
+	structure InsuringAgreementDto<valueObject> {
+		immutable InsuringAgreementItemDtos agreementItems<neverEmpty>,
+		function InsuringAgreementDto fromDomainObject(InsuringAgreementEntity insuringAgreement),
+		function InsuringAgreementEntity toDomainObject
 	}
 
-	structure InsuringAgreementItemDto {
-		immutable string title <neverEmpty>,
-		immutable string description <neverEmpty>
+	structure InsuringAgreementItemDto<valueObject> {
+		immutable string title<neverEmpty>,
+		immutable string description<neverEmpty>,
+		function InsuringAgreementItemDto fromDomainObject(InsuringAgreementItem item),
+		function InsuringAgreementItem toDomainObject
 	}
 
-	list InsuringAgreementItems { InsuringAgreementDto d }
+	list InsuringAgreementItemDtos { InsuringAgreementItemDto d }
 
-	structure MoneyAmountDto {
-		float amount <neverEmpty>,
-		string currency <neverEmpty>
+	structure MoneyAmountDto<valueObject> {
+		double amount<neverEmpty>,
+		string currency<neverEmpty>,
+		function MoneyAmountDto fromDomainObject(MoneyAmount moneyAmount),
+		function MoneyAmount toDomainObject
 	}
 
-	structure PolicyDto {
+	structure PolicyDto<valueObject> {
 		string policyId,
-		customer_dtos.CustomersDto customer,
+		unspecified customer,
 		date creationDate,
 		PolicyPeriodDto policyPeriod,
 		string policyType,
+		MoneyAmountDto deductible,
 		MoneyAmountDto policyLimit,
 		MoneyAmountDto insurancePremium,
 		InsuringAgreementDto insuringAgreement,
-		Strings expandable
+		Strings expandable,
+		function PolicyDto fromDomainObject(PolicyAggregateRoot policy)
 	}
 
 	list Strings { string }
 
-	list Policies { PolicyDto d }
-
-	structure PolicyPeriodDto {
-		date startDate <neverEmpty>,
-		date endDate <neverEmpty>
+	structure CustomerInfoDto<valueObject> {
+		string customerId,
+		string firstname,
+		string lastname,
+		AddressDto contactAddress,
+		AddressDto billingAddress,
+		function CustomerInfoDto fromDomainObject(CustomerInfoEntity customerInfo),
+		function CustomerInfoEntity toDomainObject
 	}
 
-	structure PaginatedPolicyResponseDto {
+	structure InsuranceOptionsDto<valueObject> {
+		date startDate,
+		string insuranceType,
+		MoneyAmountDto deductible,
+		function InsuranceOptionsDto fromDomainObject(InsuranceOptionsEntity insuranceOptions),
+		function InsuranceOptionsEntity toDomainObject
+	}
+
+	structure InsuranceQuoteDto<valueObject> {
+		date expirationDate<neverEmpty>,
+		MoneyAmountDto insurancePremium<neverEmpty>,
+		MoneyAmountDto policyLimit<neverEmpty>,
+		function InsuranceQuoteDto fromDomainObject(InsuranceQuoteEntity insuranceQuote)
+	}
+
+	structure InsuranceQuoteRequestDto<valueObject> {
+		long id,
+		date ^date,
+		RequestStatusChangeDtos statusHistory,
+		CustomerInfoDto customerInfo<neverEmpty>,
+		InsuranceOptionsDto insuranceOptions<neverEmpty>,
+		InsuranceQuoteDto insuranceQuote,
+		string policyId,
+		function InsuranceQuoteRequestDto fromDomainObject(
+			InsuranceQuoteRequestAggregateRoot insuranceQuoteRequest
+		)
+	}
+
+	list InsuranceQuoteRequestDtos { InsuranceQuoteRequestDto d }
+
+	structure InsuranceQuoteResponseDto<valueObject> {
+		string status<neverEmpty>,
+		date expirationDate,
+		MoneyAmountDto insurancePremium,
+		MoneyAmountDto policyLimit
+	}
+
+	structure RequestStatusChangeDto<valueObject> {
+		date ^date,
+		string status<neverEmpty>,
+		function RequestStatusChangeDto fromDomainObject(RequestStatusChange requestStatusChange)
+	}
+
+	list RequestStatusChangeDtos { RequestStatusChangeDto r }
+
+	list PolicyDtos { PolicyDto d }
+
+	structure PolicyPeriodDto<valueObject> {
+		date startDate<neverEmpty>,
+		date endDate<neverEmpty>,
+		function PolicyPeriodDto fromDomainObject(PolicyPeriod policyPeriod),
+		PolicyPeriod toDomainObject
+	}
+
+	structure PaginatedPolicyResponseDto<valueObject> {
 		immutable int limit,
 		immutable int offset,
 		immutable int size,
-		Policies policies
+		immutable PolicyDtos policies
 	}
-}
 
-context risk_dtos {
-	structure RiskFactorRequestDto {
+	structure RiskFactorRequestDto<valueObject> {
 		date birthday,
 		string postalCode
 	}
 
-	structure RiskFactorResponseDto {
+	structure RiskFactorResponseDto<valueObject> {
 		immutable int riskFactor
-	}
-}
-
-context domainInfrastructure {
-	structure CustomerCoreService<infrastructureService> {
-		string customerCoreBaseURL,
-		string apiKeyHeader,
-		string apikeyValue,
-		function customer_dtos.CustomerDto getCustomer(customer.CustomerId customerId),
-		function customer_dtos.PaginatedCustomerResponseDto getCustomers(string filter, int limit,
-			int offset),
-		function customer_dtos.Customers getCustomersById(customer.CustomerIds customerIds)
 	}
 
 	structure PolicyRepository<repository> {
-		hide policy.PolicyAggregateRoot policy,
-		hide policy.PolicyId policyId<identifier>,
-		function policy.PolicyId nextId,
-		function policy.Policies findAllByCustomerIdOrderByCreationDateDesc(
-			customer.CustomerId customerId
-		),
-		function policy.Policies findFirstByCustomerIdOrderByCreationDateDesc(
-			customer.CustomerId customerId
+		PolicyAggregateRoot policy,
+		PolicyId policyId,
+		function PolicyId nextId,
+		function PolicyAggregateRoots findAllByCustomerIdOrderByCreationDateDesc(
+			CustomerId customerId
 		)
 	}
 
-	structure RiskManagementService<infrastructureService> {
+	structure RiskManagementMessageProducer<infrastructureService> {
 		string queueName,
-		procedure notifyRiskManagement(string originator, date ^date,
-			customer_dtos.CustomerDto customer, policy_dtos.PolicyDto newPolicyDto),
-		hide procedure emitEvent(policy.PolicyEvent event)
+		procedure emitEvent(unspecified event)
 	}
 }

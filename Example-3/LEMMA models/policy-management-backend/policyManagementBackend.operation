@@ -1,21 +1,20 @@
 import microservices from "policyManagementBackend.services" as policyManagementBackendServices
 import technology from "../technology/docker.technology" as containerTechnology
-import technology from "../technology/java.technology" as protocolTechnology
-import technology from "../technology/activemq.technology" as activeMq
+import technology from "../technology/spring.technology" as protocolTechnology
 
 @technology(containerTechnology)
 @technology(protocolTechnology)
 container CustomerManagementContainer deployment technology containerTechnology::_deployment.Docker
 	deploys policyManagementBackendServices
 		::com.lakesidemutual.policymanagement.PolicyManagementBackend {
-	aspects {
-		containerTechnology::_aspects.Dockerfile(
-			'
+	policyManagementBackendServices::com.lakesidemutual.policymanagement.PolicyManagementBackend {
+		Dockerfile('
+			# syntax=docker/dockerfile:experimental
 			FROM maven:3.6.1-jdk-8-alpine AS build
 			ARG BASE=/usr/src/app
 			COPY pom.xml ${BASE}/
 			COPY src ${BASE}/src
-			RUN mvn -f ${BASE}/pom.xml install -DskipTests
+			RUN --mount=type=cache,target=/root/.m2 mvn -f ${BASE}/pom.xml install -DskipTests
 
 			FROM openjdk:8-jdk-alpine
 			COPY --from=build /usr/src/app/target/dependency/BOOT-INF/lib/* /app/lib/
@@ -23,49 +22,31 @@ container CustomerManagementContainer deployment technology containerTechnology:
 			COPY --from=build /usr/src/app/target/dependency/BOOT-INF/classes /app
 
 			EXPOSE 8090
+			EXPOSE 61613
+			EXPOSE 61616
 			ENTRYPOINT ["java","-cp","app:app/lib/*","com.lakesidemutual.policymanagement.PolicyManagementApplication"]
-			'
-		);
+			')
 
-		containerTechnology::_aspects.ComposePart(
-			'
+		ComposePart('
 			policy-management-backend:
 			    build: policy-management-backend
 			    image: lakesidemutual/policy-management-backend
 			    depends_on:
 			      - customer-core
 			    environment:
-			      - "CUSTOMERCORE_BASEURL=http://customer-core:8110"
-			      - "SPRING_BOOT_ADMIN_CLIENT_URL=http://spring-boot-admin:9000"
+			      - "EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka"
+			      - "SPRING_PROFILES_ACTIVE=eureka"
 			    ports:
 			      - "8090:8090"
 			      - "61613:61613"
+			      - "61616:61616"
 			    volumes:
 			      - "maven_repo:/root/.m2"
-			'
-		);
-	}
-
-	default values {
-		adminClientUrl = "http://localhost:9000"
-		endpointsWebExposureInclude = "*"
-		infoGitMode = "full"
+			')
 
 		apiKeyHeader = "Authorization"
 		apiKeyValidKey = "999ab497f8ec1052"
 
-		basic endpoints {
-			protocolTechnology::_protocols.rest: "http://localhost:8090";
-		}
-	}
-}
-
-@technology(activeMq)
-activeMqBroker is activeMq::_infrastructure.activeMQ
-	used by services policyManagementBackendServices
-		::com.lakesidemutual.policymanagement.PolicyManagementBackend {
-	default values {
-		user = "queueuser"
-		password = "secret"
+		basic endpoints { protocolTechnology::_protocols.rest: "http://localhost:8090"; }
 	}
 }

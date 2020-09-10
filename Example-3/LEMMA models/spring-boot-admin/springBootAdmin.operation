@@ -1,0 +1,52 @@
+import technology from "../technology/docker.technology" as containerTechnology
+import technology from "../technology/spring.technology" as springBootAdmin
+
+@technology(containerTechnology)
+@technology(springBootAdmin)
+SpringBootAdmin is springBootAdmin::_infrastructure.SpringBootAdmin {
+	aspects {
+		containerTechnology::_aspects.Dockerfile(
+			'
+			# syntax=docker/dockerfile:experimental
+			FROM maven:3.6.1-jdk-8-alpine AS build
+			ARG BASE=/usr/src/app
+			COPY pom.xml ${BASE}/
+			COPY src ${BASE}/src
+			RUN --mount=type=cache,target=/root/.m2 mvn -Dmaven.gitcommitid.skip=true -f ${BASE}/pom.xml install -DskipTests
+
+			FROM openjdk:8-jdk-alpine
+			COPY --from=build /usr/src/app/target/dependency/BOOT-INF/lib/* /app/lib/
+			COPY --from=build /usr/src/app/target/dependency/META-INF /app/META-INF
+			COPY --from=build /usr/src/app/target/dependency/BOOT-INF/classes /app
+
+			EXPOSE 9000
+			ENTRYPOINT ["java","-cp","app:app/lib/*","com.lakesidemutual.springbootadmin.SpringBootAdminApplication"]
+			'
+		);
+
+		containerTechnology::_aspects.ComposePart(
+			'
+			spring-boot-admin:
+			    build: spring-boot-admin
+			    image: lakesidemutual/spring-boot-admin
+			    depends_on:
+			      - eureka-server
+			    environment:
+			      - "EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka"
+			      - "SPRING_PROFILES_ACTIVE=eureka"
+			    ports:
+			      - "9000:9000"
+			    volumes:
+			      - "maven_repo:/root/.m2"
+			'
+		);
+	}
+
+	default values {
+		applicationName = "spring-boot-admin"
+		enableAutoConfiguration = true
+		eurekaClientServiceUrlDefaultZone = "http://localhost:8761/eureka"
+		eurekaInstancePreferIpAddress = true
+		port = 9000
+	}
+}

@@ -1,38 +1,26 @@
-// See Listing 13 on p. 27 of the technical report
 technology docker {
 	deployment technologies {
 		Docker {
 			operation environments = "maven:3.6.1-jdk-8-alpine" default;
 
 			service properties {
-				string adminClientUrl <singleval>;
-				string endpointsWebExposureInclude = "*" <singleval>;
-				string infoGitMode = "full" <singleval>;
-
 				string apiKeyHeader <singleval>;
 				string apiKeyValidKey;
 				string apiKeyValue <singleval>;
-
+				string ComposePart<singleval>;
+				string Dockerfile<mandatory, singleval>;
 				int rateLimitPerMinute;
-
-				string tokenHeader <singleval>;
-				string tokenSecret <singleval>;
-				int tokenExpiration <singleval>;
 			}
 		}
 	}
 
 	operation aspects {
-		aspect Dockerfile<singleval> for containers {
-			selector(technology = Docker);
-
-			string contents <mandatory>;
+		aspect ComposePart for infrastructure {
+			string content<mandatory>;
 		}
 
-		aspect ComposePart<singleval> for containers {
-			selector(technology = Docker);
-
-			string contents <mandatory>;
+		aspect Dockerfile for infrastructure {
+			string content<mandatory>;
 		}
 	}
 }

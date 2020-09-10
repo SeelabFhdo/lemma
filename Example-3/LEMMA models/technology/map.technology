@@ -1,17 +1,17 @@
 technology map {
 	service aspects {
-		aspect AtomicParameter for types;
-		aspect AtomicParameterList for types;
-		aspect Pagination for types;
-		aspect ParameterForest for types;
-		aspect ParameterTree for types;
+		aspect AtomicParameter<singleval> for types;
+		aspect AtomicParameterList<singleval> for types;
+		aspect Pagination<singleval> for operations, types;
+		aspect ParameterForest<singleval> for types;
+		aspect ParameterTree<singleval> for types;
 
-		aspect ComputationFunction for interfaces;
-		aspect InformationHolderResource for interfaces;
-		aspect MasterDataHolder <singleval> for interfaces;
-		aspect StaticDataHolder for interfaces;
+		aspect ComputationFunction<singleval> for interfaces;
+		aspect InformationHolderResource<singleval> for interfaces;
+		aspect MasterDataHolder<singleval> for interfaces;
+		aspect StaticDataHolder<singleval> for interfaces;
 
-		aspect RequestBundle for operations;
-		aspect WishList for operations;
+		aspect RequestBundle<singleval> for operations;
+		aspect WishList<singleval> for operations;
 	}
 }

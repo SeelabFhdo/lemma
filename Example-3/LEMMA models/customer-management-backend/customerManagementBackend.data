@@ -1,0 +1,99 @@
+context customerManagementBackend {
+	structure CustomerId<valueObject> {
+		string id
+	}
+
+	structure AddressDto<valueObject> {
+		string streetAddress,
+		string postalCode,
+		string city
+	}
+
+	list AddressDtos { AddressDto d }
+
+	structure CustomerDto<valueObject> {
+		string customerId,
+		CustomerProfileDto customerProfile
+	}
+
+	list CustomerDtos { CustomerDto d }
+
+	structure CustomerProfileDto<valueObject> {
+		string firstname,
+		string lastname,
+		date birthday,
+		AddressDto currentAddress,
+		string email,
+		string phoneNumber,
+		AddressDtos moveHistory
+	}
+
+	structure CustomersDto<valueObject> {
+		CustomerDtos customers
+	}
+
+	structure PaginatedCustomerResponseDto<valueObject> {
+		string filter,
+		int limit,
+		int offset,
+		int size,
+		CustomerDtos customers
+	}
+
+	structure MessageDto<valueObject> {
+		string id,
+		date ^date,
+		string customerId<neverEmpty>,
+		string username<neverEmpty>,
+		string content<neverEmpty>,
+		boolean sentByOperator
+	}
+
+	structure InteractionEntity<entity> {
+		string id<identifier>,
+		date ^date,
+		string content,
+		boolean sentByOperator
+	}
+
+	structure InteractionLogAggregateRoot<entity, aggregate> {
+		immutable string customerId<identifier>,
+		immutable string username,
+		string lastAcknowledgedInteractionId,
+		immutable InteractionEntities interactions<part>,
+
+		function int getNumberOfUnacknowledgedInteractions
+	}
+
+	list InteractionEntities { InteractionEntity i }
+
+	structure InteractionLogService<domainService> {
+		hide InteractionLogRepository interactionLogRepository,
+		function Notifications getNotifications
+	}
+
+	structure Notification<valueObject> {
+		immutable string customerId,
+		immutable string username,
+		immutable int count
+	}
+
+	list Notifications { Notification n }
+
+	structure InteractionAcknowledgementDto<valueObject> {
+		string lastAcknowledgedInteractionId<neverEmpty>
+	}
+
+	structure NotificationDto<valueObject> {
+		string customerId,
+		string username,
+		int count
+	}
+
+	list NotificationDtos { NotificationDto d }
+
+	structure InteractionLogRepository<repository> {
+		InteractionLogAggregateRoot interactionLogAggregate,
+		string customerId
+	}
+}

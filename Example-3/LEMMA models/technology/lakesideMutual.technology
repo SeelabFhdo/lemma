@@ -8,9 +8,9 @@ technology lakesideMutual {
 		primitive type Float based on float default;
 		primitive type Integer based on int default;
 		primitive type Long based on long default;
+		primitive type Object based on unspecified default;
 		primitive type Short based on short default;
 		primitive type String based on string default;
-		primitive type Unspecified based on unspecified default;
 
 		list type Page;
 	}

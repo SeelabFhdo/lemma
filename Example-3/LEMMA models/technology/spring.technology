@@ -1,0 +1,220 @@
+technology spring {
+	types {
+		primitive type Boolean based on boolean default;
+		primitive type Byte based on byte default;
+		primitive type Character based on char default;
+		primitive type Date based on date default;
+		primitive type Double based on double default;
+		primitive type Float based on float default;
+		primitive type Integer based on int default;
+		primitive type Long based on long default;
+		primitive type Object based on unspecified default;
+		primitive type Short based on short default;
+		primitive type String based on string default;
+		primitive type Authentication based on string;
+		primitive type AuthenticationException based on string;
+		primitive type BigDecimal based on double;
+		primitive type Currency based on string;
+		primitive type HttpServletRequest based on string;
+		primitive type ResponseEntityErrorCode based on string;
+		primitive type ResponseEntityNoContent based on string;
+		primitive type XMLGregorianCalendar based on date;
+
+		structure type Message;
+		structure type Optional;
+		structure type ResponseEntity;
+
+		list type Array;
+		list type Collection;
+		list type GrantedAuthorities;
+		list type Multimap;
+		list type ResponseEntities;
+		list type Set;
+
+		compatibility matrix {
+			Float -> BigDecimal;
+			String -> Currency;
+		}
+	}
+
+	protocols {
+		sync rest data formats json default with format json;
+		sync soap data formats xml default with format xml;
+		async amqp data formats json default with format json;
+	}
+
+	service aspects {
+		aspect ActiveMqConfiguration<singleval> for microservices {
+			string user<mandatory>;
+			string password<mandatory>;
+		}
+		aspect AdminClientUrl<singleval> for microservices {
+			string url<mandatory>;
+		}
+		aspect AllowBeanDefinitionOverriding<singleval> for microservices {
+			boolean value = true;
+		}
+		aspect ApplicationName<singleval> for microservices {
+			string value <mandatory>;
+		}
+		aspect AttributeOverrideColumn for fields {
+			string name <mandatory>;
+			string column <mandatory>;
+		}
+		aspect Autowired<singleval> for fields;
+
+		aspect CommonsRequestLoggingFilter<singleval> for microservices {
+			string value<mandatory>;
+		}
+		aspect Constant<singleval> for fields;
+		aspect CustomProperty for microservices {
+			string name <mandatory>;
+			string value <mandatory>;
+		}
+
+		aspect DatasourceConfiguration<singleval> for microservices {
+			string url;
+			string username;
+			string password;
+			string driverClassName;
+		}
+		aspect DecimalMax<singleval> for fields {
+			string value <mandatory>;
+			boolean inclusive = false;
+		}
+		aspect DecimalMin<singleval> for fields {
+			string value <mandatory>;
+		}
+		aspect DeleteMapping<singleval> for operations;
+
+		aspect Email<singleval> for fields;
+		aspect Embedded<singleval> for fields;
+		aspect Enumerated<singleval> for fields {
+			string enumType;
+		}
+		aspect EnumerationMethod for types {
+			string javaCode<mandatory>;
+		}
+
+		aspect FeignClient<singleval> for interfaces {
+			string name<mandatory>;
+			string url<mandatory>;
+			string configuration<mandatory>;
+		}
+		aspect Future for fields;
+
+		aspect GeneratedValue<singleval> for fields;
+		aspect GetMapping<singleval> for operations;
+
+		aspect HibernateConfiguration<singleval> for microservices {
+			string ddlAuto;
+		}
+
+		aspect JacksonConfiguration<singleval> for microservices {
+			boolean INDENT_OUTPUT;
+			string defaultPropertyInclusion;
+		}
+		aspect JsonFormat<singleval> for fields {
+			string pattern <mandatory>;
+		}
+		aspect JsonIgnore<singleval> for fields;
+		aspect JsonProperty<singleval> for fields {
+			string name;
+		}
+		aspect JsonUnwrapped<singleval> for fields;
+
+		aspect Management for microservices {
+			string property<mandatory>;
+			string value<mandatory>;
+		}
+		aspect MessageMapping<singleval> for operations {
+			string value <mandatory>;
+		}
+
+		aspect OneToMany<singleval> for fields {
+			string cascade = "ALL";
+			string fetch;
+		}
+		aspect OneToOne<singleval> for fields {
+			string cascade = "ALL";
+		}
+
+		aspect Past<singleval> for fields;
+		aspect PatchMapping<singleval> for operations;
+		aspect PathVariable<singleval> for parameters {
+			selector(exchange_pattern = in);
+		}
+		aspect PostMapping<singleval> for operations;
+		aspect Port<singleval> for microservices {
+			int portNumber<mandatory>;
+		}
+		aspect PreAuthorize<singleval> for operations {
+			string value<mandatory>;
+		}
+		aspect PutMapping<singleval> for operations;
+
+		aspect RequestBody<singleval> for parameters {
+			selector(exchange_pattern = in);
+		}
+		aspect RequestParam<singleval> for parameters {
+			selector(exchange_pattern = in);
+			string value;
+			string defaultValue = "";
+		}
+		aspect RequestPayload<singleval> for parameters;
+		aspect ResourceSupport<singleval> for types;
+		aspect ResponsePayload<singleval> for operations;
+		aspect ResponseStatus<singleval> for parameters {
+			selector(exchange_pattern = out);
+			string status <mandatory>;
+		}
+
+		aspect static<singleval> for domainOperations;
+		aspect SendTo<singleval> for operations {
+			string value <mandatory>;
+		}
+
+		aspect Table<singleval> for types {
+			string name;
+		}
+
+		aspect UserDetails<singleval> for types, domainParameters;
+
+		aspect Valid<singleval> for fields, parameters;
+		aspect Value<singleval> for fields {
+			string value <mandatory>;
+		}
+
+		aspect XmlAccessorType<singleval> for types {
+			string value = "FIELD";
+		}
+		aspect XmlElement<singleval> for fields {
+			boolean required = false;
+		}
+		aspect XmlEnum<singleval> for types;
+		aspect XmlEnumValue<singleval> for fields {
+			string value<mandatory>;
+		}
+		aspect XmlRootElement<singleval> for types {
+			string name;
+		}
+		aspect XmlType<singleval> for types {
+			string name = "";
+			string propOrder;
+		}
+	}
+
+	infrastructure technologies {
+		SpringBootAdmin {
+			operation environments = "spring-boot-admin" default;
+
+			service properties {
+				string applicationName<mandatory, singleval>;
+				int port<mandatory, singleval>;
+				boolean enableAutoConfiguration<mandatory, singleval>;
+				string eurekaClientServiceUrlDefaultZone<mandatory, singleval>;
+				boolean eurekaInstancePreferIpAddress<mandatory, singleval>;
+			}
+		}
+	}
+}

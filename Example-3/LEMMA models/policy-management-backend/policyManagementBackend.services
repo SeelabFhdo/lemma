@@ -1,33 +1,8 @@
 import datatypes from "policyManagementBackend.data" as policyManagementBackend
-import technology from "../technology/java.technology" as java
-import technology from "../technology/map.technology" as map
+import microservices from "../customer-core/customerCore.services" as customerCoreServices
 
-@technology(java)
-@technology(map)
-@java::_aspects.ApplicationName("Policy Management Backend")
-@java::_aspects.JacksonConfiguration(INDENT_OUTPUT=true, defaultPropertyInclusion="NON_NULL")
-@java::_aspects.DatasourceConfiguration(
-	url="jdbc:h2:file:./policymanagement",
-	username="sa",
-	password="sa",
-	driverClassName="org.h2.Driver"
-)
-@java::_aspects.HibernateConfiguration("create-drop")
-@java::_aspects.JpaShowSql
-@java::_aspects.CustomProperty(name="customercore.baseURL", value="http://localhost:8110")
-@java::_aspects.CustomProperty(
-	name="riskmanagement.stompBrokerBindAddress",
-	value="stomp://localhost:61613"
-)
-@java::_aspects.CustomProperty(
-	name="riskmanagement.tcpBrokerBindAddress",
-	value="tcp://localhost:61616"
-)
-@java::_aspects.CustomProperty(name="riskmanagement.queueName", value="newpolicies")
 functional microservice com.lakesidemutual.policymanagement.PolicyManagementBackend {
-	@endpoints(java::_protocols.rest: "/customers";)
-	@map::_aspects.InformationHolderResource
-	@map::_aspects.MasterDataHolder
+	required microservices { customerCoreServices::com.lakesidemutual.customercore.CustomerCore }
 	interface customerInformationHolder {
 		---
 		Get all customers
@@ -36,20 +11,13 @@ functional microservice com.lakesidemutual.policymanagement.PolicyManagementBack
 		@param limit the maximum number of customers per page
 		@param offset the offset of the page's first customer
 		---
-		@java::_aspects.GetMapping
 		getCustomers(
-			@java::_aspects.RequestParam(value="filter")
 			sync filter? : string,
-
-			@java::_aspects.RequestParam(value="limit", defaultValue="10")
 			sync limit? : int,
-
-			@java::_aspects.RequestParam(value="offset", defaultValue="0")
 			sync offset? : int,
-
-			@java::_aspects.ResponseEntity
 			sync out paginatedResponseOut
-				: policyManagementBackend::customer_dtos.PaginatedCustomerResponseDto
+				: policyManagementBackend::policyManagement.PaginatedCustomerResponseDto,
+			sync out customerCoreNotAvailable : string
 		);
 
 		internal createPaginatedCustomerResponseDto(
@@ -57,9 +25,13 @@ functional microservice com.lakesidemutual.policymanagement.PolicyManagementBack
 			sync limit : int,
 			sync offset : int,
 			sync size : int,
-			sync customerDtos : policyManagementBackend::customer_dtos.Customers,
+			sync customerDtos : policyManagementBackend::policyManagement.CustomerDtos,
 			sync out paginatedCustomerResponseDto
-				: policyManagementBackend::customer_dtos.PaginatedCustomerResponseDto
+				: policyManagementBackend::policyManagement.PaginatedCustomerResponseDto
+		);
+
+		internal addCustomerLinks(
+			sync customerDto : policyManagementBackend::policyManagement.CustomerDto
 		);
 
 		---
@@ -67,89 +39,129 @@ functional microservice com.lakesidemutual.policymanagement.PolicyManagementBack
 
 		@required customerIdDto the customer's unique id
 		---
-		@java::_aspects.GetMapping("/{customerIdDto}")
 		getCustomer(
-			@java::_aspects.PathVariable
-			sync customerIdDto : policyManagementBackend::customer_dtos.CustomerIdDto,
-
-			@java::_aspects.ResponseEntity
-			sync out customer : policyManagementBackend::customer_dtos.CustomerDto,
-
-			@java::_aspects.ResponseStatus("NOT_FOUND")
-			sync out fault customerNotFound : string
+			sync customerIdDto : policyManagementBackend::policyManagement.CustomerIdDto,
+			sync out customer : policyManagementBackend::policyManagement.CustomerDto,
+			sync out fault customerNotFound : string,
+			sync out customerCoreNotAvailable : string
 		);
 
 		---
-		Get a customer's policy history.
+		Get a customer's policies.
 
 		@required customerIdDto the customer's unique id
 		@param expand a comma-separated list of the fields that should be expanded in the response
 		---
-		@java::_aspects.GetMapping("/{customerIdDto}/policy-history")
-		getPolicyHistory(
-			@java::_aspects.PathVariable
-			sync customerIdDto : policyManagementBackend::customer_dtos.CustomerIdDto,
-
-			@java::_aspects.RequestParam(value="expand")
+		getPolicies(
+			sync customerIdDto : policyManagementBackend::policyManagement.CustomerIdDto,
 			sync expand? : string,
-
-			@java::_aspects.ResponseEntity
-			sync out policyDtos : policyManagementBackend::policy_dtos.Policies
-		);
-
-		---
-		Get a customer's active policy.
-
-		@required customerIdDto the customer's unique id
-		@param expand a comma-separated list of the fields that should be expanded in the response
-		---
-		@java::_aspects.GetMapping
-		getActivePolicy(
-			@java::_aspects.PathVariable
-			sync customerIdDto : policyManagementBackend::customer_dtos.CustomerIdDto,
-
-			@java::_aspects.RequestParam(value="expand")
-			sync expand? : string,
-
-			@java::_aspects.ResponseEntity
-			sync out policyDto : policyManagementBackend::policy_dtos.PolicyDto
+			sync out policyDtos : policyManagementBackend::policyManagement.PolicyDtos
 		);
 
 		internal createPolicyDto(
-			sync policy : policyManagementBackend::policy.PolicyAggregateRoot,
+			sync policy : policyManagementBackend::policyManagement.PolicyAggregateRoot,
 			sync expand : string,
-			sync out policyDto : policyManagementBackend::policy_dtos.PolicyDto
+			sync out policyDto : policyManagementBackend::policyManagement.PolicyDto,
+			sync out customerCoreNotAvailable : string
 		);
 	}
 
-	@endpoints(java::_protocols.rest: "/policies";)
-	@map::_aspects.InformationHolderResource
-	@map::_aspects.MasterDataHolder
+	interface insuranceQuoteRequestInformationHolder {
+		---
+		Get all Insurance Quote Requests.
+		---
+		getInsuranceQuoteRequests(
+			sync out quoteRequestDtos
+				: policyManagementBackend::policyManagement.InsuranceQuoteRequestDtos
+		);
+
+		---
+		Get a specific Insurance Quote Request.
+
+		@required id the insurance quote request's unique id
+		---
+		getInsuranceQuoteRequest(
+			sync id : long,
+			sync out insuranceQuoteRequestDto
+				: policyManagementBackend::policyManagement.InsuranceQuoteRequestDto,
+			sync out fault insuranceQuoteRequestNotFound : string
+		);
+
+		---
+		Updates the status of an existing Insurance Quote Request.
+
+		@required id the insurance quote request's unique id
+		@required insuranceQuoteResponseDto the response that contains a new insurance quote if the
+											request has been accepted
+		---
+		respondToInsuranceQuoteRequest(
+			sync id : long,
+			sync insuranceQuoteResponseDto
+				: policyManagementBackend::policyManagement.InsuranceQuoteResponseDto,
+			sync out result : policyManagementBackend::policyManagement.InsuranceQuoteRequestDto,
+			sync out fault insuranceQuoteRequestNotFound : string,
+			async out event : policyManagementBackend::policyManagement.InsuranceQuoteResponseEvent
+		);
+	}
+
+	interface insuranceQuoteRequestMessageConsumer {
+		receiveInsuranceQuoteRequest(
+			async message : policyManagementBackend::policyManagement.InsuranceQuoteRequestEvent
+		);
+	}
+
 	interface policyInformationHolder {
 		---
 		Create a new policy.
 
 		@required createPolicyDto the policy that is to be added
 		---
-		@java::_aspects.PostMapping
 		createPolicy(
-			@java::_aspects.Valid
-			@java::_aspects.RequestBody
-			sync createPolicyDto : policyManagementBackend::policy_dtos.CreatePolicyRequestDto,
+			sync createPolicyDto : policyManagementBackend::policyManagement.CreatePolicyRequestDto,
+			sync request : string,
+			sync out policyDto : policyManagementBackend::policyManagement.PolicyDto,
+			sync out fault unknownCustomer : string,
+			async out updatePolicyEvent
+				: policyManagementBackend::policyManagement.UpdatePolicyEvent,
+			sync out fault customerCoreNotAvailable : string
+		);
 
-			sync request : java::_types.HttpServletRequest,
+		---
+		Update an existing policy.
 
-			@java::_aspects.ResponseEntity
-			sync out policyDto : policyManagementBackend::policy_dtos.PolicyDto,
+		@required policyId the policy's unique id
+		@required createPolicyDto the updated policy
+		---
+		updatePolicy(
+			sync policyId : policyManagementBackend::policyManagement.PolicyId,
+			sync createPolicyDto : policyManagementBackend::policyManagement.CreatePolicyRequestDto,
+			sync request : string,
+			sync out policyDto : policyManagementBackend::policyManagement.PolicyDto,
+			sync out fault policyNotFound : string,
+			sync out fault unknownCustomer : string,
+			async out updatePolicyEvent
+				: policyManagementBackend::policyManagement.UpdatePolicyEvent,
+			sync out fault customerCoreNotAvailable : string
+		);
 
-			@java::_aspects.ResponseStatus("FAILED_DEPENDENCY")
-			sync out fault customerNotFound : string
+		---
+		Delete an existing policy.
+
+		@required policyId the policy's unique id
+		---
+		deletePolicy(
+			sync policyId : policyManagementBackend::policyManagement.PolicyId,
+			sync request : string,
+			sync out result : string,
+			async out deletePolicyEvent
+				: policyManagementBackend::policyManagement.DeletePolicyEvent
 		);
 
 		internal createPolicyDtos(
-			sync policies : policyManagementBackend::policy.Policies,
+			sync policies : policyManagementBackend::policyManagement.PolicyAggregateRoots,
 			sync expand : string,
-			sync result : policyManagementBackend::policy_dtos.Policies
+			sync result : policyManagementBackend::policyManagement.PolicyDtos,
+			sync out fault customerCoreNotAvailable : string
 		);
 
 		internal createPaginatedPolicyResponseDto(
@@ -157,9 +169,9 @@ functional microservice com.lakesidemutual.policymanagement.PolicyManagementBack
 			sync offset : int,
 			sync expand : string,
 			sync szie : int,
-			sync policyDtos : policyManagementBackend::policy_dtos.Policies,
+			sync policyDtos : policyManagementBackend::policyManagement.PolicyDtos,
 			sync out paginatedPolicyResponseDto
-				: policyManagementBackend::policy_dtos.PaginatedPolicyResponseDto
+				: policyManagementBackend::policyManagement.PaginatedPolicyResponseDto
 		);
 
 		---
@@ -169,20 +181,12 @@ functional microservice com.lakesidemutual.policymanagement.PolicyManagementBack
 		@param offset the offset of the page's first policy
 		@param expand a comma-separated list of the fields that should be expanded in the response
 		---
-		@java::_aspects.GetMapping
 		getPolicies(
-			@java::_aspects.RequestParam(value="limit", defaultValue="10")
 			sync limit? : int,
-
-			@java::_aspects.RequestParam(value="offset", defaultValue="0")
 			sync offset? : int,
-
-			@java::_aspects.RequestParam(value="expand")
 			sync expand? : string,
-
-			@java::_aspects.ResponseEntity
 			sync out paginatedPolicyResponse
-				: policyManagementBackend::policy_dtos.PaginatedPolicyResponseDto
+				: policyManagementBackend::policyManagement.PaginatedPolicyResponseDto
 		);
 
 		---
@@ -191,35 +195,26 @@ functional microservice com.lakesidemutual.policymanagement.PolicyManagementBack
 		@required policyId the policy's unique id
 		@param expand a comma-separated list of the fields that should be expanded in the response
 		---
-		@endpoints(java::_protocols.rest: "/{policyId}";)
-		@java::_aspects.GetMapping
 		getPolicy(
-			@java::_aspects.PathVariable
-			sync policyId : policyManagementBackend::policy.PolicyId,
-
-			@java::_aspects.RequestParam(value="expand")
+			sync policyId : policyManagementBackend::policyManagement.PolicyId,
 			sync expand? : string,
-
-			@java::_aspects.ResponseEntity
-			sync out response : policyManagementBackend::policy_dtos.PolicyDto
+			sync out response : policyManagementBackend::policyManagement.PolicyDto,
+			sync out fault policyNotFound : string
 		);
 	}
 
-	@endpoints(java::_protocols.rest: "/riskfactor";)
-	@map::_aspects.ComputationFunction
-	interface riskComputation {
+	interface riskComputationService {
 		---
 		Computes the risk factor for a given customer.
 
 		@required riskFactorRequest the request containing relevant customer attributes (e.g.,
 									postal code, birthday)
 		---
-		@endpoints(java::_protocols.rest: "/computer";)
-		@java::_aspects.PostMapping
 		computeRiskFactor(
-			@java::_aspects.Valid
-			@java::_aspects.RequestBody
-			sync riskFactorRequest : policyManagementBackend::risk_dtos.RiskFactorRequestDto
+			sync riskFactorRequest
+				: policyManagementBackend::policyManagement.RiskFactorRequestDto,
+			sync out riskFactorResponse
+				: policyManagementBackend::policyManagement.RiskFactorResponseDto
 		);
 
 		internal getAge(
@@ -227,7 +222,7 @@ functional microservice com.lakesidemutual.policymanagement.PolicyManagementBack
 			sync out age : int
 		);
 
-		internal doRiskFactorComputation(
+		internal computeRiskFactorInternal(
 			sync age : int,
 			sync postalCode : string,
 			sync out factor : int
@@ -241,6 +236,25 @@ functional microservice com.lakesidemutual.policymanagement.PolicyManagementBack
 		internal computeLocalityRiskFactor(
 			sync postalCodeStr : string,
 			sync out factor : int
+		);
+	}
+
+	interface customerDecisionMessageConsumer {
+		receiveCustomerDecision(
+			async message : policyManagementBackend::policyManagement.CustomerDecisionEvent,
+			async out insuranceQuoteExpiredEvent
+				: policyManagementBackend::policyManagement.InsuranceQuoteExpiredEvent,
+			async out policyCreatedEvent
+				: policyManagementBackend::policyManagement.PolicyCreatedEvent,
+			async out policyUpdatedEvent
+				: policyManagementBackend::policyManagement.UpdatePolicyEvent,
+			sync out customerCoreNotAvailable : string
+		);
+
+		internal createPolicyForInsuranceQuoteRequest(
+			sync insuranceQuoteRequest
+				: policyManagementBackend::policyManagement.CustomerDecisionEvent,
+			sync out policy: policyManagementBackend::policyManagement.PolicyAggregateRoot
 		);
 	}
 }

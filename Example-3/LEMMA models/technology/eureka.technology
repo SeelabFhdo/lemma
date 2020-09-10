@@ -1,0 +1,21 @@
+technology eureka {
+	service aspects {
+		aspect EurekaConfiguration<singleval> for microservices {
+			boolean clientEnabled = true;
+			string clientDefaultZone;
+			boolean preferIpAddress;
+		}
+	}
+
+	infrastructure technologies {
+		Eureka {
+			operation environments = "eureka" default;
+
+			service properties {
+				int port<mandatory, singleval>;
+				boolean clientRegisterWithEureka<mandatory, singleval>;
+				boolean clientFetchRegistry<mandatory, singleval>;
+			}
+		}
+	}
+}

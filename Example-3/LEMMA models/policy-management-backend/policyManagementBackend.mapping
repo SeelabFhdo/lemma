@@ -1,13 +1,13 @@
-import technology from "../technology/java.technology" as java
+import technology from "../technology/spring.technology" as spring
 import technology from "../technology/eadr.technology" as eadr
 import technology from "../technology/map.technology" as map
+import technology from "../technology/eureka.technology" as eureka
 import microservices from "policyManagementBackend.services" as policyManagementBackendServices
 
-@technology(java)
+@technology(spring)
 @technology(eadr)
-type policyManagementBackendServices::policyManagementBackend::customer.CustomerId {
+type policyManagementBackendServices::policyManagementBackend::policyManagement.CustomerId {
 	aspects {
-		java::_aspects.Embeddable;
 		eadr::_aspects.MADR(
 			value = 2,
 			title = "Separation between domain data model and infrastructure data model",
@@ -29,184 +29,698 @@ type policyManagementBackendServices::policyManagementBackend::customer.Customer
 	}
 }
 
-@technology(java)
-type policyManagementBackendServices::policyManagementBackend::policy.InsuringAgreementEntity {
-	aspects { java::_aspects.Table("insuringagreements"); }
+@technology(spring)
+type policyManagementBackendServices::policyManagementBackend::policyManagement.Address {
+	aspects { spring::_aspects.Table("addresses"); }
 
-	agreementItems { aspects { java::_aspects.OneToMany; } }
+	id { aspects { spring::_aspects.GeneratedValue; } }
 }
 
-@technology(java)
-type policyManagementBackendServices::policyManagementBackend::policy.InsuringAgreementItem {
-	aspects { java::_aspects.Table("insuranceagreementitems"); }
+@technology(spring)
+type policyManagementBackendServices::policyManagementBackend::policyManagement.AddressDto {
+	op fromDomainObject { aspects { spring::_aspects.static; } }
 }
 
-@technology(java)
-type policyManagementBackendServices::policyManagementBackend::policy.MoneyAmount {
-	aspects { java::_aspects.Embeddable; }
-
-	amount : java::_types.BigDecimal;
-	currency : java::_types.Currency;
+@technology(spring)
+type policyManagementBackendServices::policyManagementBackend::policyManagement.CustomerInfoDto {
+	op fromDomainObject { aspects { spring::_aspects.static; } }
 }
 
-@technology(java)
-@technology(eadr)
-type policyManagementBackendServices::policyManagementBackend::policy.PolicyAggregateRoot {
-	aspects {
-		java::_aspects.Table("insurancepolicies");
-		eadr::_aspects.MADR(
-			value = 2,
-			title = "Separation between domain data model and infrastructure data model",
-			contextAndProblem = "
-				JPA / Spring Data annotations usually belong into a separate data model in the
-				infrastructure layer
-			",
-			alternatives = "
-				Keep the JPA / Spring Data annotations in the domain data model,
-				Implement a separate data model with JPA / Spring Data annotations in the
-				infrastructure layer
-			",
-			chosenAlternative = "Keep the JPA / Spring Data annotations in the domain data model",
-			justification = "
-				The relatively small size of this application does not warrant the additional
-				complexity (yet).
-			"
-		);
-	}
+@technology(spring)
+type policyManagementBackendServices::policyManagementBackend::policyManagement.CustomerInfoEntity {
+	aspects { spring::_aspects.Table("customerinfos"); }
 
-	id { aspects { java::_aspects.EmbeddedId; } }
-	FIELD_CREATION_DATE { aspects { java::_aspects.Constant; } }
-	policyPeriod { aspects { java::_aspects.Embedded; } }
-	policyType { aspects { java::_aspects.Embedded; } }
-	insuringAgreement { aspects { java::_aspects.OneToOne; } }
+	id { aspects { spring::_aspects.GeneratedValue; } }
+
 	customerId {
 		aspects {
-			java::_aspects.Embedded;
-			java::_aspects.AttributeOverrideColumn(name="id", column="customerId");
+			spring::_aspects.Embedded;
+			spring::_aspects.AttributeOverrideColumn(name="id", column="customerId");
+		}
+	}
+}
+
+@technology(spring)
+type policyManagementBackendServices::policyManagementBackend
+	::policyManagement.InsuranceOptionsEntity {
+	aspects { spring::_aspects.Table("insuranceoptions"); }
+
+	id { aspects { spring::_aspects.GeneratedValue; } }
+
+	insuranceType {
+		aspects {
+			spring::_aspects.Embedded;
+			spring::_aspects.AttributeOverrideColumn(name="id", column="customerId");
+		}
+	}
+
+	deductible {
+		aspects {
+			spring::_aspects.Embedded;
+			spring::_aspects.AttributeOverrideColumn(name="amount", column="deductibleAmount");
+			spring::_aspects.AttributeOverrideColumn(name="currency", column="deductibleCurrency");
+		}
+	}
+}
+
+@technology(spring)
+type policyManagementBackendServices::policyManagementBackend
+	::policyManagement.InsuranceQuoteEntity {
+	aspects { spring::_aspects.Table("insurancequotes"); }
+
+	id { aspects { spring::_aspects.GeneratedValue; } }
+
+	insurancePremium {
+		aspects {
+			spring::_aspects.Embedded;
+			spring::_aspects.AttributeOverrideColumn(name="amount",
+				column="insurancePremiumAmount");
+			spring::_aspects.AttributeOverrideColumn(name="currency",
+				column="insurancePremiumCurrency");
+		}
+	}
+
+	policyLimit {
+		aspects {
+			spring::_aspects.Embedded;
+			spring::_aspects.AttributeOverrideColumn(name="amount", column="policyLimitAmount");
+			spring::_aspects.AttributeOverrideColumn(name="currency",
+				column="policyLimitCurrency" );
+		}
+	}
+}
+
+@technology(spring)
+type policyManagementBackendServices::policyManagementBackend
+	::policyManagement.InsuranceQuoteRequestAggregateRoot {
+	aspects { spring::_aspects.Table("insurancequoterequests"); }
+
+	statusHistory { aspects { spring::_aspects.OneToMany(fetch="EAGER"); } }
+
+	customerInfo { aspects { spring::_aspects.OneToMany; } }
+
+	insuranceOptions { aspects { spring::_aspects.OneToMany; } }
+
+	insuranceQuote { aspects { spring::_aspects.OneToMany; } }
+}
+
+@technology(spring)
+type policyManagementBackendServices::policyManagementBackend
+	::policyManagement.RequestStatusChange {
+	aspects { spring::_aspects.Table("requeststatuschanges"); }
+
+	id { aspects { spring::_aspects.GeneratedValue; } }
+
+	status { aspects { spring::_aspects.Enumerated("STRING"); } }
+}
+
+@technology(spring)
+type policyManagementBackendServices::policyManagementBackend
+	::policyManagement.InsuringAgreementEntity {
+	aspects { spring::_aspects.Table("insuringagreements"); }
+
+	id { aspects { spring::_aspects.GeneratedValue; } }
+
+	agreementItems { aspects { spring::_aspects.OneToMany; } }
+}
+
+@technology(spring)
+type policyManagementBackendServices::policyManagementBackend
+	::policyManagement.InsuringAgreementItem {
+	aspects { spring::_aspects.Table("insuranceagreementitems"); }
+
+	id { aspects { spring::_aspects.GeneratedValue; } }
+}
+
+@technology(spring)
+type policyManagementBackendServices::policyManagementBackend::policyManagement.MoneyAmount {
+	amount : spring::_types.BigDecimal;
+	currency : spring::_types.Currency;
+}
+
+@technology(spring)
+@technology(eadr)
+type policyManagementBackendServices::policyManagementBackend
+	::policyManagement.PolicyAggregateRoot {
+	aspects {
+		spring::_aspects.Table("insurancepolicies");
+		eadr::_aspects.MADR(
+			value = 2,
+			title = "Separation between domain data model and infrastructure data model",
+			contextAndProblem = "
+				JPA / Spring Data annotations usually belong into a separate data model in the
+				infrastructure layer
+			",
+			alternatives = "
+				Keep the JPA / Spring Data annotations in the domain data model,
+				Implement a separate data model with JPA / Spring Data annotations in the
+				infrastructure layer
+			",
+			chosenAlternative = "Keep the JPA / Spring Data annotations in the domain data model",
+			justification = "
+				The relatively small size of this application does not warrant the additional
+				complexity (yet).
+			"
+		);
+	}
+
+	FIELD_CREATION_DATE { aspects { spring::_aspects.Constant; } }
+	insuringAgreement { aspects { spring::_aspects.OneToOne; } }
+	customerId {
+		aspects {
+			spring::_aspects.AttributeOverrideColumn(name="id", column="customerId");
+		}
+	}
+	deductible {
+		aspects {
+			spring::_aspects.AttributeOverrideColumn(name="amount", column="deductibleAmount");
+			spring::_aspects.AttributeOverrideColumn(name="currency", column="deductibleCurrency");
 		}
 	}
 	policyLimit {
 		aspects {
-			java::_aspects.Embedded;
-			java::_aspects.AttributeOverrideColumn(name="amount", column="limitAmount");
-			java::_aspects.AttributeOverrideColumn(name="currency", column="limitCurrency");
+			spring::_aspects.AttributeOverrideColumn(name="amount", column="limitAmount");
+			spring::_aspects.AttributeOverrideColumn(name="currency", column="limitCurrency");
 		}
 	}
 	insurancePremium {
 		aspects {
-			java::_aspects.Embedded;
-			java::_aspects.AttributeOverrideColumn(name="amount", column="premiumAmount");
-			java::_aspects.AttributeOverrideColumn(name="currency", column="premiumCurrency");
+			spring::_aspects.AttributeOverrideColumn(name="amount", column="premiumAmount");
+			spring::_aspects.AttributeOverrideColumn(name="currency", column="premiumCurrency");
 		}
 	}
 }
 
-@technology(java)
-type policyManagementBackendServices::policyManagementBackend::policy.PolicyId {
-	aspects { java::_aspects.Embeddable; }
+@technology(spring)
+type policyManagementBackendServices::policyManagementBackend::policyManagement.PolicyId {
+	op random { aspects { spring::_aspects.static; } }
 }
 
-@technology(java)
-type policyManagementBackendServices::policyManagementBackend::policy.PolicyPeriod {
-	aspects { java::_aspects.Embeddable; }
-}
-
-@technology(java)
+@technology(spring)
 type policyManagementBackendServices::policyManagementBackend
-	::domainInfrastructure.CustomerCoreService {
-	customerCoreBaseURL { aspects { java::_aspects.Value("${customercore.baseURL}"); } }
-	apiKeyHeader { aspects { java::_aspects.Value("${apikey.header}"); } }
-	apikeyValue { aspects { java::_aspects.Value("${apikey.value}"); } }
+	::policyManagement.CustomerCoreRemoteProxy {
+	customerCoreBaseURL { aspects { spring::_aspects.Value("${customercore.baseURL}"); } }
 }
 
-@technology(java)
+@technology(spring)
 type policyManagementBackendServices::policyManagementBackend
-	::domainInfrastructure.PolicyRepository {
-	op findFirstByCustomerIdOrderByCreationDateDesc {
-		return type { aspects { java::_aspects.Optional; } }
+	::policyManagement.CustomerSelfServiceMessageProducer {
+	quoteResponseQueue {
+		aspects { spring::_aspects.Value("${insuranceQuoteResponseEvent.queueName}"); }
+	}
+
+	quoteExpiredQueue {
+		aspects { spring::_aspects.Value("${insuranceQuoteExpiredEvent.queueName}"); }
+	}
+
+	policyCreatedQueue { aspects { spring::_aspects.Value("${policyCreatedEvent.queueName}"); } }
+}
+
+@technology(spring)
+type policyManagementBackendServices::policyManagementBackend::policyManagement.RequestStatus {
+	aspects {
+		spring::_aspects.EnumerationMethod(
+			"public boolean canTransitionTo(RequestStatus newStatus)"
+		);
 	}
 }
 
-@technology(java)
+@technology(spring)
 type policyManagementBackendServices::policyManagementBackend
-	::domainInfrastructure.RiskManagementService {
-	queueName { aspects { java::_aspects.Value("${riskmanagement.queueName}"); } }
+	::policyManagement.RiskManagementMessageProducer {
+	queueName { aspects { spring::_aspects.Value("${riskmanagement.queueName}"); } }
 }
 
-@technology(java)
-type policyManagementBackendServices::policyManagementBackend::customer_dtos.CustomerDto {
-	aspects { java::_aspects.ResourceSupport; }
+@technology(spring)
+type policyManagementBackendServices::policyManagementBackend::policyManagement.CustomerDto {
+	aspects { spring::_aspects.ResourceSupport; }
 
-	customerProfile {
-		aspects { java::_aspects.JsonUnwrapped; }
-	}
+	customerProfile { aspects { spring::_aspects.JsonUnwrapped; } }
 }
 
-@technology(java)
-type policyManagementBackendServices::policyManagementBackend::customer_dtos.CustomerProfileDto {
-	currentAddress { aspects { java::_aspects.JsonUnwrapped; } }
+@technology(spring)
+type policyManagementBackendServices::policyManagementBackend::policyManagement.CustomerProfileDto {
+	currentAddress { aspects { spring::_aspects.JsonUnwrapped; } }
 }
 
-@technology(java)
-type policyManagementBackendServices::policyManagementBackend::customer_dtos.CustomersDto {
-	aspects { java::_aspects.ResourceSupport; }
+@technology(spring)
+type policyManagementBackendServices::policyManagementBackend::policyManagement.CustomersDto {
+	aspects { spring::_aspects.ResourceSupport; }
 }
 
-@technology(java)
-type policyManagementBackendServices::policyManagementBackend
-	::customer_dtos.PaginatedCustomerResponseDto {
-	aspects { java::_aspects.ResourceSupport; }
-}
-
-@technology(java)
-type policyManagementBackendServices::policyManagementBackend::policy_dtos.CreatePolicyRequestDto {
-	customerId { aspects { java::_aspects.Valid; } }
-	policyPeriod { aspects { java::_aspects.Valid; } }
-	policyType { aspects { java::_aspects.Valid; } }
-	policyLimit { aspects { java::_aspects.Valid; } }
-	insurancePremium { aspects { java::_aspects.Valid; } }
-	insuringAgreement { aspects { java::_aspects.Valid; } }
-}
-
-@technology(java)
-type policyManagementBackendServices::policyManagementBackend::policy_dtos.InsuringAgreementDto {
-	agreementItems { aspects { java::_aspects.NotNull; } }
-}
-
-@technology(java)
-type policyManagementBackendServices::policyManagementBackend
-	::policy_dtos.InsuringAgreementItemDto {
-	title { aspects { java::_aspects.Valid; } }
-	description { aspects { java::_aspects.Valid; } }
-}
-
-@technology(java)
-type policyManagementBackendServices::policyManagementBackend::policy_dtos.MoneyAmountDto {
-	amount : java::_types.BigDecimal {
-		aspects {
-			java::_aspects.DecimalMax(value="1000000000000");
-			java::_aspects.DecimalMin(value="0");
-		}
-	}
-}
-
-@technology(java)
+@technology(spring)
 @technology(map)
 type policyManagementBackendServices::policyManagementBackend
-	::policy_dtos.PaginatedPolicyResponseDto {
+	::policyManagement.PaginatedCustomerResponseDto {
 	aspects {
-		java::_aspects.ResourceSupport;
+		spring::_aspects.ResourceSupport;
 		map::_aspects.Pagination;
 	}
 }
 
-@technology(java)
-type policyManagementBackendServices::policyManagementBackend::policy_dtos.PolicyDto {
-	customer : java::_types.Object;
-	expandable {
+@technology(spring)
+type policyManagementBackendServices::policyManagementBackend
+	::policyManagement.InsuranceOptionsDto {
+	op fromDomainObject { aspects { spring::_aspects.static; } }
+}
+
+@technology(spring)
+type policyManagementBackendServices::policyManagementBackend
+	::policyManagement.InsuranceQuoteDto {
+	expirationDate { aspects { spring::_aspects.Valid; } }
+
+	insurancePremium { aspects { spring::_aspects.Valid; } }
+
+	policyLimit { aspects { spring::_aspects.Valid; } }
+
+	op fromDomainObject { aspects { spring::_aspects.static; } }
+}
+
+@technology(spring)
+type policyManagementBackendServices::policyManagementBackend
+	::policyManagement.InsuranceQuoteRequestDto {
+	^date { aspects { spring::_aspects.Valid; } }
+
+	statusHistory { aspects { spring::_aspects.Valid; } }
+
+	customerInfo { aspects { spring::_aspects.Valid; } }
+
+	insuranceOptions { aspects { spring::_aspects.Valid; } }
+
+	insuranceQuote { aspects { spring::_aspects.Valid; } }
+
+	op fromDomainObject { aspects { spring::_aspects.static; } }
+}
+
+@technology(spring)
+type policyManagementBackendServices::policyManagementBackend
+	::policyManagement.InsuranceQuoteResponseDto {
+	status { aspects { spring::_aspects.Valid; } }
+
+	expirationDate {
 		aspects {
-			java::_aspects.Array;
-			java::_aspects.JsonProperty("_expandable");
+			spring::_aspects.Future;
+			spring::_aspects.Valid;
 		}
+	}
+
+	insurancePremium { aspects { spring::_aspects.Valid; } }
+
+	policyLimit { aspects { spring::_aspects.Valid; } }
+}
+
+@technology(spring)
+type policyManagementBackendServices::policyManagementBackend
+	::policyManagement.RequestStatusChangeDto {
+	^date { aspects { spring::_aspects.Valid; } }
+
+	op fromDomainObject { aspects { spring::_aspects.static; } }
+}
+
+@technology(spring)
+type policyManagementBackendServices::policyManagementBackend
+	::policyManagement.CreatePolicyRequestDto {
+	customerId { aspects { spring::_aspects.Valid; } }
+	policyPeriod { aspects { spring::_aspects.Valid; } }
+	policyType { aspects { spring::_aspects.Valid; } }
+	deductible { aspects { spring::_aspects.Valid; } }
+	policyLimit { aspects { spring::_aspects.Valid; } }
+	insurancePremium { aspects { spring::_aspects.Valid; } }
+	insuringAgreement { aspects { spring::_aspects.Valid; } }
+}
+
+@technology(spring)
+type policyManagementBackendServices::policyManagementBackend
+	::policyManagement.InsuringAgreementDto {
+	agreementItems { aspects { spring::_aspects.Valid; } }
+
+	op fromDomainObject { aspects { spring::_aspects.static; } }
+}
+
+@technology(spring)
+type policyManagementBackendServices::policyManagementBackend
+	::policyManagement.InsuringAgreementItemDto {
+	title { aspects { spring::_aspects.Valid; } }
+	description { aspects { spring::_aspects.Valid; } }
+
+	op fromDomainObject { aspects { spring::_aspects.static; } }
+}
+
+@technology(spring)
+type policyManagementBackendServices::policyManagementBackend::policyManagement.MoneyAmountDto {
+	amount : spring::_types.BigDecimal {
+		aspects {
+			spring::_aspects.DecimalMax(value="1000000000000");
+			spring::_aspects.DecimalMin(value="0");
+		}
+	}
+
+	op fromDomainObject { aspects { spring::_aspects.static; } }
+}
+
+@technology(spring)
+@technology(map)
+type policyManagementBackendServices::policyManagementBackend
+	::policyManagement.PaginatedPolicyResponseDto {
+	aspects {
+		spring::_aspects.ResourceSupport;
+		map::_aspects.Pagination;
+	}
+}
+
+@technology(spring)
+type policyManagementBackendServices::policyManagementBackend::policyManagement.PolicyDto {
+	aspects { spring::_aspects.ResourceSupport; }
+
+	expandable : spring::_types.Array { aspects { spring::_aspects.JsonProperty("_expandable"); } }
+
+	op fromDomainObject { aspects { spring::_aspects.static; } }
+}
+
+@technology(spring)
+type policyManagementBackendServices::policyManagementBackend::policyManagement.PolicyPeriodDto {
+	op fromDomainObject { aspects { spring::_aspects.static; } }
+}
+
+@technology(eureka)
+@technology(spring)
+@technology(map)
+policyManagementBackendServices::com.lakesidemutual.policymanagement.PolicyManagementBackend {
+	aspects {
+		spring::_aspects.CustomProperty(
+			name="insuranceQuoteRequestEvent.queueName",
+			value="insurance-quote-request-event-queue"
+		);
+		spring::_aspects.CustomProperty(
+			name="customerDecisionEvent.queueName",
+			value="customer-decision-event-queue"
+		);
+		spring::_aspects.CustomProperty(
+			name="insuranceQuoteResponseEvent.queueName",
+			value="insurance-quote-response-event-queue"
+		);
+		spring::_aspects.CustomProperty(
+			name="insuranceQuoteExpiredEvent.queueName",
+			value="insurance-quote-expired-event-queue"
+		);
+		spring::_aspects.CustomProperty(
+			name="policyCreatedEvent.queueName",
+			value="policy-created-event-queue"
+		);
+		spring::_aspects.CustomProperty(
+			name="riskmanagement.queueName",
+			value="newpolicies"
+		);
+		spring::_aspects.ActiveMqConfiguration(
+			user = "queueuser",
+			password = "secret"
+		);
+		spring::_aspects.CustomProperty(
+			name="policymanagement.stompBrokerBindAddress",
+			value="stomp://0.0.0.0:61613"
+		);
+		spring::_aspects.CustomProperty(
+			name="policymanagement.tcpBrokerBindAddress",
+			value="tcp://0.0.0.0:61616"
+		);
+
+		spring::_aspects.ApplicationName("policy-management-backend");
+		spring::_aspects.JacksonConfiguration(INDENT_OUTPUT=true,
+			defaultPropertyInclusion="NON_NULL" );
+		spring::_aspects.DatasourceConfiguration(
+			url="jdbc:h2:file:./policymanagement",
+			username="sa",
+			password="sa",
+			driverClassName="org.h2.Driver"
+		);
+		spring::_aspects.HibernateConfiguration("create-drop");
+		spring::_aspects.Port(8090);
+		spring::_aspects.CustomProperty(name="customercore.baseURL", value="http://customer-core");
+		spring::_aspects.Management(property="endpoints.web.exposure.include", value="*");
+		spring::_aspects.Management(property="info.git.mode", value="full");
+		spring::_aspects.AdminClientUrl("http://localhost:9000");
+		eureka::_aspects.EurekaConfiguration(
+			clientDefaultZone = "http://localhost:8761/eureka",
+			preferIpAddress = true
+		);
+	}
+
+	interface customerInformationHolder {
+		endpoints { spring::_protocols.rest: "/customers"; }
+
+		aspects {
+			map::_aspects.InformationHolderResource;
+			map::_aspects.MasterDataHolder;
+		}
+	}
+
+	interface policyInformationHolder {
+		endpoints { spring::_protocols.rest: "/policies"; }
+
+		aspects {
+			map::_aspects.InformationHolderResource;
+			map::_aspects.MasterDataHolder;
+		}
+	}
+
+	interface riskComputationService {
+		endpoints { spring::_protocols.rest: "/riskfactor"; }
+
+		aspects { map::_aspects.ComputationFunction; }
+	}
+
+	interface insuranceQuoteRequestInformationHolder {
+		endpoints { spring::_protocols.rest: "/insurance-quote-requests"; }
+
+		aspects {
+			map::_aspects.InformationHolderResource;
+			map::_aspects.MasterDataHolder;
+		}
+	}
+
+	operation customerInformationHolder.getCustomers {
+		aspects { spring::_aspects.GetMapping; }
+
+		parameters {
+			primitive filter { aspects { spring::_aspects.RequestParam(value="filter"); } }
+			primitive limit {
+				aspects { spring::_aspects.RequestParam(value="limit", defaultValue="10"); }
+			}
+			primitive offset {
+				aspects { spring::_aspects.RequestParam(value="offset", defaultValue="0"); }
+			}
+			complex paginatedResponseOut : spring::_types.ResponseEntity;
+			primitive customerCoreNotAvailable {
+				aspects { spring::_aspects.ResponseStatus("BAD_GATEWAY"); }
+			}
+		}
+	}
+
+	operation customerInformationHolder.getCustomer {
+		endpoints { spring::_protocols.rest: "/{customerIdDto}"; }
+
+		aspects { spring::_aspects.GetMapping; }
+
+		parameters {
+			complex customerIdDto { aspects { spring::_aspects.PathVariable; } }
+			complex customer : spring::_types.ResponseEntity;
+			primitive customerNotFound { aspects { spring::_aspects.ResponseStatus("NOT_FOUND"); } }
+			primitive customerCoreNotAvailable {
+				aspects { spring::_aspects.ResponseStatus("BAD_GATEWAY"); }
+			}
+		}
+	}
+
+	operation customerInformationHolder.getPolicies {
+		endpoints { spring::_protocols.rest: "/{customerIdDto}/policies"; }
+
+		aspects { spring::_aspects.GetMapping; }
+
+		parameters {
+			complex customerIdDto { aspects { spring::_aspects.PathVariable; } }
+			primitive expand { aspects { spring::_aspects.RequestParam(value="expand"); } }
+			complex policyDtos : spring::_types.ResponseEntities;
+		}
+	}
+
+	operation customerInformationHolder.createPolicyDto {
+		parameters {
+			primitive customerCoreNotAvailable {
+				aspects { spring::_aspects.ResponseStatus("BAD_GATEWAY"); }
+			}
+		}
+	}
+
+	operation policyInformationHolder.createPolicy {
+		aspects { spring::_aspects.PostMapping; }
+
+		parameters {
+			complex createPolicyDto {
+				aspects {
+					spring::_aspects.Valid;
+					spring::_aspects.RequestBody;
+				}
+			}
+			primitive request : spring::_types.HttpServletRequest;
+			complex policyDto : spring::_types.ResponseEntity;
+			primitive unknownCustomer {
+				aspects { spring::_aspects.ResponseStatus("FAILED_DEPENDENCY"); }
+			}
+			primitive customerCoreNotAvailable {
+				aspects { spring::_aspects.ResponseStatus("BAD_GATEWAY"); }
+			}
+		}
+	}
+
+	operation policyInformationHolder.updatePolicy {
+		endpoints { spring::_protocols.rest: "/{policyId}"; }
+
+		aspects { spring::_aspects.PutMapping; }
+
+		parameters {
+			complex policyId { aspects { spring::_aspects.PathVariable; } }
+			complex createPolicyDto {
+				aspects {
+					spring::_aspects.RequestBody;
+					spring::_aspects.Valid;
+				}
+			}
+			primitive request : spring::_types.HttpServletRequest;
+			complex policyDto : spring::_types.ResponseEntity;
+			primitive policyNotFound { aspects { spring::_aspects.ResponseStatus("NOT_FOUND"); } }
+			primitive unknownCustomer {
+				aspects {
+					spring::_aspects.ResponseStatus("FAILED_DEPENDENCY");
+				}
+			}
+			primitive customerCoreNotAvailable {
+				aspects { spring::_aspects.ResponseStatus("BAD_GATEWAY"); }
+			}
+		}
+	}
+
+	operation policyInformationHolder.deletePolicy {
+		endpoints { spring::_protocols.rest: "/{policyId}"; }
+
+		aspects { spring::_aspects.DeleteMapping; }
+
+		parameters {
+			complex policyId { aspects { spring::_aspects.PathVariable; } }
+			primitive request : spring::_types.HttpServletRequest;
+			primitive result : spring::_types.ResponseEntityNoContent;
+		}
+	}
+
+	operation policyInformationHolder.createPolicyDtos {
+		parameters {
+			primitive customerCoreNotAvailable {
+				aspects { spring::_aspects.ResponseStatus("BAD_GATEWAY"); }
+			}
+		}
+	}
+
+	operation policyInformationHolder.getPolicies {
+		aspects { spring::_aspects.GetMapping; }
+
+		parameters {
+			primitive limit {
+				aspects { spring::_aspects.RequestParam(value="limit", defaultValue="10"); }
+			}
+			primitive offset {
+				aspects { spring::_aspects.RequestParam(value="offset", defaultValue="0"); }
+			}
+			primitive expand { aspects { spring::_aspects.RequestParam(value="expand"); } }
+			complex paginatedPolicyResponse  : spring::_types.ResponseEntity;
+		}
+	}
+
+	operation policyInformationHolder.getPolicy {
+		endpoints { spring::_protocols.rest: "/{policyId}"; }
+
+		aspects { spring::_aspects.GetMapping; }
+
+		parameters {
+			complex policyId { aspects { spring::_aspects.PathVariable; } }
+			primitive expand { aspects { spring::_aspects.RequestParam(value="expand"); } }
+			complex response  : spring::_types.ResponseEntity;
+			primitive policyNotFound { aspects { spring::_aspects.ResponseStatus("NOT_FOUND"); } }
+		}
+	}
+
+	operation riskComputationService.computeRiskFactor {
+		endpoints { spring::_protocols.rest: "/compute"; }
+
+		aspects { spring::_aspects.PostMapping; }
+
+		parameters {
+			complex riskFactorRequest {
+				aspects {
+					spring::_aspects.Valid;
+					spring::_aspects.RequestBody;
+				}
+			}
+			complex riskFactorResponse : spring::_types.ResponseEntity;
+		}
+	}
+
+	operation customerDecisionMessageConsumer.receiveCustomerDecision {
+		endpoints { spring::_protocols.amqp: "customer-decision-event-queue"; }
+
+		parameters {
+			complex message : spring::_types.Message;
+			primitive customerCoreNotAvailable {
+				aspects { spring::_aspects.ResponseStatus("BAD_GATEWAY"); }
+			}
+		}
+	}
+
+	operation insuranceQuoteRequestInformationHolder.getInsuranceQuoteRequests {
+		aspects { spring::_aspects.GetMapping; }
+
+		parameters { complex quoteRequestDtos : spring::_types.ResponseEntities; }
+	}
+
+	operation insuranceQuoteRequestInformationHolder.getInsuranceQuoteRequest {
+		endpoints { spring::_protocols.rest: "/{id}"; }
+
+		aspects { spring::_aspects.GetMapping; }
+
+		parameters {
+			primitive id { aspects { spring::_aspects.PathVariable; } }
+			complex insuranceQuoteRequestDto : spring::_types.ResponseEntity;
+			primitive insuranceQuoteRequestNotFound {
+				aspects {
+					spring::_aspects.ResponseStatus("NOT_FOUND");
+				}
+			}
+		}
+	}
+
+	operation insuranceQuoteRequestInformationHolder.respondToInsuranceQuoteRequest {
+		endpoints { spring::_protocols.rest: "/{id}"; }
+
+		aspects { spring::_aspects.PatchMapping; }
+
+		parameters {
+			primitive id { aspects { spring::_aspects.PathVariable; } }
+			complex insuranceQuoteResponseDto {
+				aspects {
+					spring::_aspects.RequestBody;
+					spring::_aspects.Valid;
+				}
+			}
+			complex result : spring::_types.ResponseEntity;
+			primitive insuranceQuoteRequestNotFound {
+				aspects {
+					spring::_aspects.ResponseStatus("NOT_FOUND");
+				}
+			}
+		}
+	}
+
+	operation insuranceQuoteRequestMessageConsumer.receiveInsuranceQuoteRequest {
+		endpoints { spring::_protocols.amqp: "insurance-quote-request-event-queue"; }
+
+		parameters { complex message : spring::_types.Message; }
 	}
 }

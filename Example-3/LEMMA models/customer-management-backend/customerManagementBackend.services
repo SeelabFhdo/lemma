@@ -1,0 +1,139 @@
+import datatypes from "customerManagementBackend.data" as customerManagementBackend
+import microservices from "../customer-core/customerCore.services" as customerCoreServices
+
+public functional microservice
+	com.lakesidemutual.customerManagementBackend.CustomerManagementBackend {
+	required microservices { customerCoreServices::com.lakesidemutual.customercore.CustomerCore }
+
+	interface customerCoreClient {
+		getCustomers(
+			sync filter? : string,
+			sync limit? : int,
+			sync offset? : int,
+			sync out customersResponseDto
+				: customerManagementBackend::customerManagementBackend.PaginatedCustomerResponseDto,
+			sync out fault customerCoreNotAvailable : string
+		);
+
+		getCustomer(
+			sync ids : string,
+			sync out customersDto
+				: customerManagementBackend::customerManagementBackend.CustomersDto,
+			sync out fault customerCoreNotAvailable : string
+		);
+
+		updateCustomer(
+			sync customerId : customerManagementBackend::customerManagementBackend.CustomerId,
+			sync requestDto
+				: customerManagementBackend::customerManagementBackend.CustomerProfileDto,
+			sync out customersResponseDto
+				: customerManagementBackend::customerManagementBackend.CustomerDto,
+			sync out fault customerCoreNotAvailable : string
+		);
+	}
+
+	interface customerInformationHolder {
+		---
+		Get all customers.
+
+		@param filter search terms to filter the customers by name
+		@param limit the maximum number of customers per page
+		@param offset the offset of the page's first customer
+		---
+		getCustomers(
+			sync filter? : string,
+			sync limit? : int,
+			sync offset? : int,
+			sync out customers
+				: customerManagementBackend::customerManagementBackend.PaginatedCustomerResponseDto,
+			sync out fault customerCoreNotAvailable : string
+		);
+
+		---
+		Get customer with a given customer id.
+
+		@required customerId the customer's unique id
+		---
+		getCustomer(
+			sync customerId : customerManagementBackend::customerManagementBackend.CustomerId,
+			sync out customer : customerManagementBackend::customerManagementBackend.CustomerDto,
+			sync out fault customerNotFound : string,
+			sync out fault customerCoreNotAvailable : string
+		);
+
+		---
+		Update the profile of the customer with the given customer id
+
+		@required customerId the customer's unique id
+		@required customerProfile the customer's updated profile
+		---
+		updateCustomer(
+			sync customerId : customerManagementBackend::customerManagementBackend.CustomerId,
+			sync customerProfile
+				: customerManagementBackend::customerManagementBackend.CustomerProfileDto,
+			sync out customer : customerManagementBackend::customerManagementBackend.CustomerDto,
+			sync out fault customerCoreNotAvailable : string
+		);
+	}
+
+	interface interactionLogInformationHolder {
+		---
+		Get the interaction log for a customer with a given customer id.
+
+		@required customerId the customer's unique id
+		---
+		getInteractionLog(
+			sync customerId : customerManagementBackend::customerManagementBackend.CustomerId,
+			sync out interactionLog
+				: customerManagementBackend::customerManagementBackend.InteractionLogAggregateRoot
+		);
+
+		---
+		Acknowledge all of a given customer's interactions up to the given interaction id.
+
+		@required customerId the customer's unique id
+		@required interactionAcknowledgementDto the id of the newest acknowledged interaction
+		---
+		acknowledgeInteractions(
+			sync customerId : customerManagementBackend::customerManagementBackend.CustomerId,
+			sync interactionAcknowledgementDto
+				: customerManagementBackend
+					::customerManagementBackend.InteractionAcknowledgementDto,
+			sync out interactionLog
+				: customerManagementBackend::customerManagementBackend.InteractionLogAggregateRoot,
+			sync out fault InteractionLogNotFound : string,
+			async out notifications
+				: customerManagementBackend::customerManagementBackend.Notifications
+		);
+
+		internal broadcastNotifications(
+			async out notifications
+				: customerManagementBackend::customerManagementBackend.NotificationDtos
+		);
+	}
+
+	interface notificationInformationHolder {
+		---
+		Get a list of all unacknowledged notifications.
+		---
+		getNotifications(
+			sync out notifications
+				: customerManagementBackend::customerManagementBackend.Notifications
+		);
+	}
+
+	interface customerMessageController {
+		processMessage(
+			async message : customerManagementBackend::customerManagementBackend.MessageDto,
+			async out broadcastMessage
+				: customerManagementBackend::customerManagementBackend.MessageDto,
+			async out notifications
+				: customerManagementBackend::customerManagementBackend.Notifications
+		);
+
+		internal broadcastNotifications(
+			async out notifications
+				: customerManagementBackend::customerManagementBackend.NotificationDtos
+		);
+	}
+}

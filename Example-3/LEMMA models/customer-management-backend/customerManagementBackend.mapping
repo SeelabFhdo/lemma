@@ -1,0 +1,265 @@
+import microservices from "customerManagementBackend.services" as managementServices
+import technology from "../technology/spring.technology" as spring
+import technology from "../technology/map.technology" as map
+import technology from "../technology/eureka.technology" as eureka
+
+@technology(spring)
+type managementServices::customerManagementBackend::customerManagementBackend.CustomerDto {
+	aspects { spring::_aspects.ResourceSupport; }
+
+	customerProfile { aspects { spring::_aspects.JsonUnwrapped; } }
+}
+
+@technology(spring)
+type managementServices::customerManagementBackend
+	::customerManagementBackend.CustomerProfileDto {
+	currentAddress { aspects { spring::_aspects.JsonUnwrapped; } }
+}
+
+@technology(spring)
+type managementServices::customerManagementBackend::customerManagementBackend.CustomersDto {
+	aspects { spring::_aspects.ResourceSupport; }
+}
+
+@technology(spring)
+@technology(map)
+type managementServices::customerManagementBackend
+	::customerManagementBackend.PaginatedCustomerResponseDto {
+	aspects {
+		spring::_aspects.ResourceSupport;
+		map::_aspects.Pagination;
+	}
+}
+
+@technology(spring)
+type managementServices::customerManagementBackend::customerManagementBackend.InteractionEntity {
+	aspects { spring::_aspects.Table("interactions"); }
+}
+
+@technology(spring)
+type managementServices::customerManagementBackend
+	::customerManagementBackend.InteractionLogAggregateRoot {
+	aspects { spring::_aspects.Table("interactionlogs"); }
+
+	interactions : spring::_types.Collection {
+		aspects {
+			spring::_aspects.OneToMany(fetch="EAGER");
+		}
+	}
+}
+
+@technology(spring)
+type managementServices::customerManagementBackend
+	::customerManagementBackend.InteractionLogService {
+	interactionLogRepository { aspects { spring::_aspects.Autowired; } }
+}
+
+@technology(eureka)
+@technology(spring)
+@technology(map)
+managementServices::com.lakesidemutual.customerManagementBackend.CustomerManagementBackend {
+	aspects {
+		eureka::_aspects.EurekaConfiguration(clientDefaultZone = "http://localhost:8761/eureka",
+			preferIpAddress = true);
+
+		spring::_aspects.Port(8100);
+
+		spring::_aspects.ApplicationName("customer-management-backend");
+
+		spring::_aspects.DatasourceConfiguration(
+			url="jdbc:h2:file:./customermanagement",
+			username="sa",
+			password="sa",
+			driverClassName="org.h2.Driver"
+		);
+
+		spring::_aspects.JacksonConfiguration(INDENT_OUTPUT=true,
+			defaultPropertyInclusion="NON_NULL");
+
+		spring::_aspects.CustomProperty(name = "customercore.baseURL",
+			value = "http://customer-core");
+
+
+		spring::_aspects.HibernateConfiguration("create-drop");
+
+		spring::_aspects.Management(property="endpoints.web.exposure.include", value="*");
+		spring::_aspects.Management(property="info.git.mode", value="full");
+
+
+		spring::_aspects.AdminClientUrl("http://localhost:9000");
+
+	}
+
+	interface customerCoreClient {
+		aspects {
+			spring::_aspects.FeignClient(
+				name="customercore",
+				url="${customercore.baseURL}",
+				configuration="CustomerCoreClientConfiguration.class"
+			);
+		}
+	}
+
+	interface customerInformationHolder {
+		endpoints { spring::_protocols.rest: "/customers"; }
+
+		aspects {
+			map::_aspects.InformationHolderResource;
+			map::_aspects.MasterDataHolder;
+		}
+	}
+
+	interface interactionLogInformationHolder {
+		endpoints { spring::_protocols.rest: "/interaction-logs"; }
+
+		aspects {
+			map::_aspects.InformationHolderResource;
+			map::_aspects.MasterDataHolder;
+		}
+	}
+
+	interface notificationInformationHolder {
+		endpoints { spring::_protocols.rest: "/notifications"; }
+
+		aspects {
+			map::_aspects.InformationHolderResource;
+			map::_aspects.MasterDataHolder;
+		}
+	}
+
+	operation customerCoreClient.getCustomers {
+		endpoints { spring::_protocols.rest: "/customers"; }
+
+		aspects { spring::_aspects.GetMapping; }
+
+		parameters {
+			primitive filter { aspects { spring::_aspects.RequestParam(value="filter"); } }
+			primitive limit { aspects { spring::_aspects.RequestParam(value="limit"); } }
+			primitive offset { aspects { spring::_aspects.RequestParam(value="offset"); } }
+			primitive customerCoreNotAvailable {
+				aspects { spring::_aspects.ResponseStatus("BAD_GATEWAY"); }
+			}
+		}
+	}
+
+	operation customerCoreClient.getCustomer {
+		endpoints { spring::_protocols.rest: "/customers/{ids}"; }
+
+		aspects { spring::_aspects.GetMapping; }
+
+		parameters {
+			primitive ids { aspects { spring::_aspects.PathVariable; } }
+			primitive customerCoreNotAvailable {
+				aspects { spring::_aspects.ResponseStatus("BAD_GATEWAY"); }
+			}
+		}
+	}
+
+	operation customerCoreClient.updateCustomer {
+		endpoints { spring::_protocols.rest: "/customers/{customerId}"; }
+
+		aspects { spring::_aspects.PutMapping; }
+
+		parameters {
+			complex customerId { aspects { spring::_aspects.PathVariable; } }
+			complex requestDto { aspects { spring::_aspects.RequestBody; } }
+			complex customersResponseDto : spring::_types.ResponseEntity;
+			primitive customerCoreNotAvailable {
+				aspects { spring::_aspects.ResponseStatus("BAD_GATEWAY"); }
+			}
+		}
+	}
+
+	operation customerInformationHolder.getCustomers {
+		aspects { spring::_aspects.GetMapping; }
+
+		parameters {
+			primitive filter { aspects { spring::_aspects.RequestParam(value="filter"); } }
+			primitive limit { aspects {
+				spring::_aspects.RequestParam(value="limit", defaultValue="10");
+			} }
+			primitive offset { aspects {
+				spring::_aspects.RequestParam(value="offset", defaultValue="0");
+			} }
+			complex customers : spring::_types.ResponseEntity;
+			primitive customerCoreNotAvailable {
+				aspects { spring::_aspects.ResponseStatus("BAD_GATEWAY"); }
+			}
+		}
+	}
+
+	operation customerInformationHolder.getCustomer {
+		endpoints { spring::_protocols.rest: "/{customerId}"; }
+
+		aspects { spring::_aspects.GetMapping; }
+
+		parameters {
+			complex customerId { aspects { spring::_aspects.PathVariable; } }
+			complex customer : spring::_types.ResponseEntity;
+			primitive customerNotFound { aspects { spring::_aspects.ResponseStatus("NOT_FOUND"); } }
+			primitive customerCoreNotAvailable {
+				aspects { spring::_aspects.ResponseStatus("BAD_GATEWAY"); }
+			}
+		}
+	}
+
+	operation customerInformationHolder.updateCustomer {
+		endpoints { spring::_protocols.rest: "/{customerId}"; }
+
+		aspects { spring::_aspects.PutMapping; }
+
+		parameters {
+			complex customerId { aspects { spring::_aspects.PathVariable; } }
+			complex customerProfile { aspects {
+				spring::_aspects.Valid;
+				spring::_aspects.RequestBody;
+			} }
+			complex customer : spring::_types.ResponseEntity;
+			primitive customerCoreNotAvailable {
+				aspects { spring::_aspects.ResponseStatus("BAD_GATEWAY"); }
+			}
+		}
+	}
+
+	operation interactionLogInformationHolder.getInteractionLog {
+		endpoints { spring::_protocols.rest: "/{customerId}"; }
+
+		aspects { spring::_aspects.GetMapping; }
+
+		parameters {
+			complex customerId { aspects { spring::_aspects.PathVariable; } }
+			complex interactionLog : spring::_types.ResponseEntity;
+		}
+	}
+
+	operation interactionLogInformationHolder.acknowledgeInteractions {
+		endpoints { spring::_protocols.rest: "/{customerId}"; }
+
+		aspects { spring::_aspects.PatchMapping; }
+
+		parameters {
+			complex customerId { aspects { spring::_aspects.PathVariable; } }
+			complex interactionAcknowledgementDto { aspects {
+				spring::_aspects.Valid;
+				spring::_aspects.RequestBody;
+			} }
+			complex interactionLog : spring::_types.ResponseEntity;
+			primitive InteractionLogNotFound { aspects {
+				spring::_aspects.ResponseStatus("NOT_FOUND");
+			} }
+		}
+	}
+
+	operation notificationInformationHolder.getNotifications {
+		aspects { spring::_aspects.GetMapping; }
+
+		parameters { complex notifications : spring::_types.ResponseEntities; }
+	}
+
+	operation customerMessageController.processMessage {
+		aspects {
+			spring::_aspects.MessageMapping("/chat/messages");
+			spring::_aspects.SendTo("/topic/messages");
+		}
+	}
+}

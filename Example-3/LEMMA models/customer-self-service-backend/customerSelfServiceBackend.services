@@ -1,38 +1,25 @@
 import datatypes from "customerSelfServiceBackend.data" as customerSelfServiceBackend
-import technology from "../technology/java.technology" as java
-import technology from "../technology/map.technology" as map
+import microservices from "../customer-core/customerCore.services" as customerCoreServices
+import microservices from "../policy-management-backend/policyManagementBackend.services"
+	as policyManagementBackendServices
 
-@technology(java)
-@technology(map)
-@java::_aspects.ApplicationName("Customer Self-Service Backend")
-@java::_aspects.JacksonConfiguration(INDENT_OUTPUT=true, defaultPropertyInclusion="NON_NULL")
-@java::_aspects.DatasourceConfiguration(
-	url="jdbc:h2:file:./customerselfservice",
-	username="sa",
-	password="sa",
-	driverClassName="org.h2.Driver"
-)
-@java::_aspects.HibernateConfiguration("create-drop")
-@java::_aspects.CustomProperty(name="customercore.baseURL", value="http://localhost:8110")
 functional microservice com.lakesidemutual.customerselfservice.CustomerSelfServiceBackend {
-	@endpoints(java::_protocols.rest: "/auth";)
+	required microservices {
+		customerCoreServices::com.lakesidemutual.customercore.CustomerCore,
+		policyManagementBackendServices::com.lakesidemutual.policymanagement.PolicyManagementBackend
+	}
 	interface authenticationController {
 		---
 		Authenticate a user based on a given email address and password.
 
 		@required authenticationRequest the email and password used to authenticate the user
 		---
-		@java::_aspects.PostMapping
 		authenticationRequest(
-			@java::_aspects.RequestBody
 			sync authenticationRequest
-				: customerSelfServiceBackend::identityAccess_dtos.AuthenticationRequestDto,
-
-			@java::_aspects.ResponseEntity
+				: customerSelfServiceBackend::customerSelfService.AuthenticationRequestDto,
 			sync out authenticationResponse
-				: customerSelfServiceBackend::identityAccess_dtos.AuthenticationResponseDto,
-
-			sync out fault authenticationException : java::_types.AuthenticationException
+				: customerSelfServiceBackend::customerSelfService.AuthenticationResponseDto,
+			sync out fault authenticationException : string
 		);
 
 		---
@@ -40,38 +27,26 @@ functional microservice com.lakesidemutual.customerselfservice.CustomerSelfServi
 
 		@required registration the email and password used to create a new user
 		---
-		@endpoints(java::_protocols.rest: "/signup";)
-		@java::_aspects.PostMapping("/signup")
 		signupUser(
-			@java::_aspects.Valid
-			@java::_aspects.RequestBody
-			sync registration : customerSelfServiceBackend::identityAccess_dtos.SignupRequestDto,
-
-			@java::_aspects.ResponseEntity
-			sync out userResponse : customerSelfServiceBackend::identityAccess_dtos.UserResponseDto,
-
+			sync registration : customerSelfServiceBackend::customerSelfService.SignupRequestDto,
+			sync out userResponse : customerSelfServiceBackend::customerSelfService.UserResponseDto,
 			sync out fault userAlreadyExists : string
 		);
 	}
 
-	@endpoints(java::_protocols.rest: "/cities";)
 	interface cityStaticDataHolder {
 		---
 		Get the cities for a particular postal code.
 
 		@required postcalCode the postal code
 		---
-		@java::_aspects.GetMapping("/{postalCode}")
 		getCitiesForPostalCode(
-			@java::_aspects.PathVariable
 			sync postcalCode : string,
-
-			@java::_aspects.ResponseEntity
-			sync out result : customerSelfServiceBackend::city_dtos.CitiesResponseDto
+			sync out result : customerSelfServiceBackend::customerSelfService.CitiesResponseDto,
+			sync out fault customerCoreNotAvailable : string
 		);
 	}
 
-	@endpoints(java::_protocols.rest: "/customers";)
 	interface customerInformationHolder {
 		---
 		Change a customer's address.
@@ -79,17 +54,11 @@ functional microservice com.lakesidemutual.customerselfservice.CustomerSelfServi
 		@required customerId the customer's unique id
 		@required requestDto the customer's new address
 		---
-		@java::_aspects.PutMapping("/{customerId}/address")
 		changeAddress(
-			@java::_aspects.PathVariable
-			sync customerId : customerSelfServiceBackend::customer.CustomerId,
-
-			@java::_aspects.RequestBody
-			@java::_aspects.Valid
-			sync requestDto : customerSelfServiceBackend::customer_dtos.AddressDto,
-
-			@java::_aspects.ResponseEntity
-			sync out result : customerSelfServiceBackend::customer_dtos.AddressDto
+			sync customerId : customerSelfServiceBackend::customerSelfService.CustomerId,
+			sync requestDto : customerSelfServiceBackend::customerSelfService.AddressDto,
+			sync out result : customerSelfServiceBackend::customerSelfService.AddressDto,
+			sync out fault customerCoreNotAvailable : string
 		);
 
 		---
@@ -97,17 +66,12 @@ functional microservice com.lakesidemutual.customerselfservice.CustomerSelfServi
 
 		@required customerId the customer's unique id
 		---
-		@endpoints(java::_protocols.rest: "/{customerId}";)
-		@java::_aspects.GetMapping("/{customerId}")
 		getCustomer(
-			@java::_aspects.PathVariable
-			sync customerId : customerSelfServiceBackend::customer.CustomerId,
-
-			@java::_aspects.ResponseEntity
-			sync out result : customerSelfServiceBackend::customer_dtos.CustomerDto,
-
-			@java::_aspects.ResponseStatus("NOT_FOUND")
-			sync out fault customerNotFound : string
+			sync authentication : string,
+			sync customerId : customerSelfServiceBackend::customerSelfService.CustomerId,
+			sync out result : customerSelfServiceBackend::customerSelfService.CustomerDto,
+			sync out fault customerNotFound : string,
+			sync out fault customerCoreNotAvailable : string
 		);
 
 		---
@@ -115,29 +79,117 @@ functional microservice com.lakesidemutual.customerselfservice.CustomerSelfServi
 
 		@required requestDto the customer's profile information
 		---
-		@java::_aspects.PostMapping
 		registerCustomer(
-			@java::_aspects.Valid
-			@java::_aspects.RequestBody
+			sync authentication : string,
 			sync requestDto
-				: customerSelfServiceBackend::customer_dtos.CustomerRegistrationRequestDto,
+				: customerSelfServiceBackend::customerSelfService.CustomerRegistrationRequestDto,
+			sync out result : customerSelfServiceBackend::customerSelfService.CustomerDto,
+			sync out fault customerCoreNotAvailable : string
+		);
 
-			@java::_aspects.ResponseEntity
-			sync out result : customerSelfServiceBackend::customer_dtos.CustomerDto
+		---
+		Get a customer's insurance quote requests.
+
+		@required customerId the customer's unique id
+		---
+		getInsuranceQuoteRequests(
+			sync customerId : customerSelfServiceBackend::customerSelfService.CustomerId,
+			sync out result
+				: customerSelfServiceBackend::customerSelfService.InsuranceQuoteRequestDtos
+		);
+
+		internal addHATEOASLinks(
+			sync customerDto : customerSelfServiceBackend::customerSelfService.CustomerDto
 		);
 	}
 
-	@endpoints(java::_protocols.rest: "/user";)
-	@map::_aspects.InformationHolderResource
-	@map::_aspects.MasterDataHolder
 	interface userInformationHolder {
 		---
 		Get the user details for the currently logged-in user.
 		---
-		@java::_aspects.GetMapping
 		getCurrentUser(
-			@java::_aspects.ResponseEntity
-			sync out response : customerSelfServiceBackend::identityAccess_dtos.UserResponseDto
+			sync authentitaction : string,
+			sync out response : customerSelfServiceBackend::customerSelfService.UserResponseDto
+		);
+	}
+
+	interface insuranceQuoteExpiredMessageConsumer {
+		receiveInsuranceQuoteExpiredEvent(
+			async message
+				: customerSelfServiceBackend::customerSelfService.InsuranceQuoteExpiredEvent
+		);
+	}
+
+	interface insuranceQuoteRequestInformationHolder {
+		---
+		Get all Insurance Quote Requests.
+		---
+		getInsuranceQuoteRequests(
+			sync out quoteRequestDtos
+				: customerSelfServiceBackend::customerSelfService.InsuranceQuoteRequestDtos
+		);
+
+		---
+		Get a specific Insurance Quote Request.
+
+		@required insuranceQuoteRequestId the insurance quote request's unique id
+		---
+		getInsuranceQuoteRequest(
+			sync authentication : string,
+			sync insuranceQuoteRequestId : long,
+			sync out quoteRequestDto
+				: customerSelfServiceBackend::customerSelfService.InsuranceQuoteRequestDto,
+			sync out fault insuranceQuoteRequestNotFound : string,
+			sync out fault unauthorized : string
+		);
+
+		---
+		Create a new Insurance Quote Request.
+
+		@required requestDto the insurance quote request
+		---
+		createInsuranceQuoteRequest(
+			sync authentication : string,
+			sync requestDto
+				: customerSelfServiceBackend::customerSelfService.InsuranceQuoteRequestDto,
+			sync out quoteRequestDto
+				: customerSelfServiceBackend::customerSelfService.InsuranceQuoteRequestDto,
+			async out insuranceQuoteRequestEvent
+				: customerSelfServiceBackend::customerSelfService.InsuranceQuoteRequestEvent,
+			sync out fault unauthorized : string
+		);
+
+		---
+		Updates the status of an existing Insurance Quote Request.
+
+		@required id the insurance quote request's unique id
+		@required insuranceQuoteResponseDto the response that contains the customer's decision
+											whether to accept or reject an insurance quote
+		---
+		respondToInsuranceQuote(
+			sync id : long,
+			sync insuranceQuoteResponseDto
+				: customerSelfServiceBackend::customerSelfService.InsuranceQuoteResponseDto,
+			sync out quoteRequestDto
+				: customerSelfServiceBackend::customerSelfService.InsuranceQuoteRequestDto,
+			sync out fault insuranceQuoteRequestNotFound : string,
+			async out customerDecisionEvent
+				: customerSelfServiceBackend::customerSelfService.CustomerDecisionEvent,
+			sync out fault unauthorized : string
+		);
+	}
+
+	interface insuranceQuoteResponseMessageConsumer {
+		receiveInsuranceQuoteResponse(
+			async message
+				: customerSelfServiceBackend::customerSelfService.InsuranceQuoteResponseEvent
+		);
+	}
+
+	interface policyCreatedMessageConsumer {
+		receivePolicyCreatedEvent(
+			async message
+				: customerSelfServiceBackend::customerSelfService.InsuranceQuoteResponseEvent
 		);
 	}
 }

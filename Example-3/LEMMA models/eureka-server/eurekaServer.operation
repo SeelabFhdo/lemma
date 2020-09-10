@@ -1,0 +1,57 @@
+import technology from "../technology/docker.technology" as containerTechnology
+import technology from "../technology/eureka.technology" as serviceDiscoveryTechnology
+
+@technology(containerTechnology)
+@technology(serviceDiscoveryTechnology)
+ServiceDiscovery is serviceDiscoveryTechnology::_infrastructure.Eureka {
+	aspects {
+		containerTechnology::_aspects.Dockerfile(
+			'
+			# syntax=docker/dockerfile:experimental
+			FROM maven:3.5.2-jdk-8 AS build
+			ARG BASE=/usr/src/app
+			COPY pom.xml ${BASE}/
+			COPY src ${BASE}/src
+			RUN --mount=type=cache,target=/root/.m2 mvn -Dmaven.gitcommitid.skip=true -f ${BASE}/pom.xml install
+
+			FROM openjdk:8-jdk-alpine
+			COPY --from=build /usr/src/app/target/dependency/BOOT-INF/lib/* /app/lib/
+			COPY --from=build /usr/src/app/target/dependency/META-INF /app/META-INF
+			COPY --from=build /usr/src/app/target/dependency/BOOT-INF/classes /app
+
+			EXPOSE 8761
+			ENTRYPOINT ["java","-cp","app:app/lib/*","com.lakesidemutual.eurekaserver.EurekaServerApplication"]
+			'
+		);
+
+		containerTechnology::_aspects.ComposePart(
+			'
+			eureka-server:
+			    build: eureka-server
+			    image: lakesidemutual/eureka-server
+			    ports:
+			      - "8761:8761"
+			    volumes:
+			      - "maven_repo:/root/.m2"
+			  customer-core:
+			    build: customer-core
+			    image: lakesidemutual/customer-core
+			    depends_on:
+			      - eureka-server
+			    environment:
+			      - "EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka"
+			      - "SPRING_PROFILES_ACTIVE=eureka"
+			    ports:
+			      - "8110:8110"
+			    volumes:
+			      - "maven_repo:/root/.m2"
+			'
+		);
+	}
+
+	default values {
+		port = 8761
+		clientRegisterWithEureka = false
+		clientFetchRegistry = false
+	}
+}

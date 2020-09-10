@@ -1,48 +1,56 @@
-context customer {
+context customerSelfService {
 	structure Address<valueObject> {
-		hide long id <identifier>,
+		hide long id<identifier>,
 		immutable string streetAddress,
 		immutable string postalCode,
 		immutable string city
 	}
 
 	structure CustomerId<valueObject> {
-		string id <identifier>,
+		string id<identifier>,
 		function CustomerId random()
 	}
-}
 
-context customer_dtos {
-	structure AddressDto {
+	structure AddressDto<valueObject> {
 		string streetAddress<neverEmpty>,
 		string postalCode<neverEmpty>,
 		string city<neverEmpty>,
-		function AddressDto create(customer.Address address)
+		function AddressDto fromDomainObject(Address address),
+		function Address toDomainObject
 	}
 
-	list Addresses { AddressDto d }
+	list AddressDtos { AddressDto d }
 
-	structure CustomerIdDto {
+	structure CustomerIdDto<valueObject> {
 		string id
 	}
 
-	structure CustomerDto {
-		Customers customers
+	structure CustomerDto<valueObject> {
+		string customerId,
+		CustomerProfileDto customerProfile
 	}
 
-	list Customers { CustomerDto d }
+	structure CustomersDto<valueObject> {
+		CustomerDtos customers
+	}
 
-	structure CustomerProfileDto {
+	list CustomerDtos { CustomerDto c }
+
+	structure CustomerProfileDto<valueObject> {
 		string firstname,
 		string lastname,
 		date birthday,
 		AddressDto currentAddress,
 		string email,
 		string phoneNumber,
-		Addresses moveHistory
+		AddressDtos moveHistory
 	}
 
-	structure CustomerProfileUpdateRequestDto {
+	structure PhoneNumberValidator<specification> {
+		function boolean isValid(string phoneNumberStr)<validator>
+	}
+
+	structure CustomerProfileUpdateRequestDto<valueObject> {
 		string firstname<neverEmpty>,
 		string lastname<neverEmpty>,
 		date birthday,
@@ -53,96 +61,271 @@ context customer_dtos {
 		string phoneNumber
 	}
 
-	structure CustomerRegistrationRequestDto {
+	structure CustomerRegistrationRequestDto<valueObject> {
 		string firstname<neverEmpty>,
 		string lastname<neverEmpty>,
-		date birthday,
+		date birthday<neverEmpty>,
 		string city<neverEmpty>,
 		string streetAddress<neverEmpty>,
 		string postalCode<neverEmpty>,
 		string phoneNumber
 	}
-}
 
-context identityAccess {
-	structure UserLogin<entity> {
-		long id <identifier>,
+	structure UserLoginEntity<entity> {
+		long id<identifier>,
 		string authorities,
 		string email,
 		string password,
-		customer.CustomerId customerId
+		CustomerId customerId
 	}
 
 	structure UserSecurityDetails {
 		boolean accountNonExpired = true,
 		boolean accountNonLocked = true,
-		AuthorityCollection authorities,
+		Authorities authorities,
 		boolean credentialsNonExpired = true,
 		string email,
-		boolean enabled,
+		boolean enabled = true,
 		long id,
 		string password
 	}
 
-	list AuthorityCollection { string authority }
+	list Authorities { string authority }
 
-	structure UserDetailsServiceImpl <domainService> {
-		hide domainInfrastructure.UserLoginRepository userRepository,
+	structure UserDetailsServiceImpl<domainService> {
+		hide UserLoginRepository userRepository,
 		function UserDetails loadUserByUsername(string email)
 	}
 
 	list UserDetails { string username }
-}
 
-context identityAccess_dtos {
-	structure AuthenticationRequestDto {
+	structure AuthenticationRequestDto<valueObject> {
 		string email,
 		string password
 	}
 
-	structure AuthenticationResponseDto {
+	structure AuthenticationResponseDto<valueObject> {
 		string email,
 		string token
 	}
 
-	structure SignupRequestDto {
+	structure SignupRequestDto<valueObject> {
 		string email<neverEmpty>,
 		string password<neverEmpty>
 	}
 
-	structure UserResponseDto {
+	structure UserResponseDto<valueObject> {
 		immutable string email,
 		immutable string customerId
 	}
-}
-
-context domainInfrastructure {
-	structure CustomerCoreService<infrastructureService> {
-		string customerCoreBaseURL,
-		string apiKeyHeader,
-		string apiKeyValue,
-		function customer_dtos.CustomerDto getCustomer(customer.CustomerId customerId),
-		function customer_dtos.AddressDto changeAddress(
-			customer.CustomerId customerId,
-			customer_dtos.AddressDto requestDto
-		),
-		function customer_dtos.CustomerDto createCustomer(
-			customer_dtos.CustomerProfileUpdateRequestDto requestDto
-		),
-		function city_dtos.CitiesResponseDto getCitiesForPostalCode(string postalCode)
-	}
 
 	structure UserLoginRepository<repository> {
-		immutable identityAccess.UserLogin login,
-		immutable long id,
-		function identityAccess.UserLogin findByEmail(string email)
+		UserLoginEntity login,
+		long id,
+		function UserLoginEntity findByEmail(string email)
 	}
-}
 
-context city_dtos {
-	structure CitiesResponseDto {
+	structure CitiesResponseDto<valueObject> {
 		Cities cities
 	}
 
 	list Cities { string }
+
+	structure CustomerDecisionEvent<valueObject, domainEvent> {
+		date ^date,
+		long insuranceQuoteRequestId,
+		boolean quoteAccepted
+	}
+
+	structure CustomerInfoEntity<entity> {
+		long id<identifier>,
+		immutable CustomerId customerId,
+		immutable string firstname,
+		immutable string lastname,
+		immutable Address contactAddress,
+		immutable Address billingAddress
+	}
+
+	structure InsuranceOptionsEntity<entity> {
+		long id<identifier>,
+		immutable date startDate,
+		immutable InsuranceType insuranceType,
+		immutable MoneyAmount deductible
+	}
+
+	structure InsuranceQuoteEntity<entity> {
+		long id<identifier>,
+		immutable date expirationDate,
+		immutable MoneyAmount insurancePremium,
+		immutable MoneyAmount policyLimit
+	}
+
+	structure InsuranceQuoteExpiredEvent<valueObject, domainEvent> {
+		date ^date,
+		long insuranceQuoteRequestId
+	}
+
+	structure InsuranceQuoteRequestAggregateRoot<aggregate, entity> {
+		immutable long id<identifier>,
+		immutable date ^date,
+		immutable RequestStatusChanges statusHistory<part>,
+		immutable CustomerInfoEntity customerInfo<part>,
+		immutable InsuranceOptionsEntity insuranceOptions<part>,
+		immutable InsuranceQuoteEntity insuranceQuote,
+		immutable string policyId,
+		function RequestStatus getStatus(),
+		hide procedure changeStatusTo(RequestStatus newStatus, date ^date),
+		procedure acceptRequest(InsuranceQuoteEntity insuranceQuote, date ^date),
+		procedure rejectRequest(date ^date),
+		procedure acceptQuote(date ^date),
+		procedure rejectQuote(date ^date),
+		procedure markQuoteAsExpired(date ^date),
+		procedure finalizeQuote(string policyId, date ^date)
+	}
+
+	structure InsuranceQuoteRequestEvent<valueObject, domainEvent> {
+		date ^date,
+		InsuranceQuoteRequestDto insuranceQuoteRequestDto
+	}
+
+	structure InsuranceQuoteResponseEvent<valueObject, domainEvent> {
+		date ^date,
+		long insuranceQuoteRequestId,
+		boolean requestAccepted,
+		date expirationDate,
+		MoneyAmountDto insurancePremium,
+		MoneyAmountDto policyLimit
+	}
+
+	structure InsuranceType<valueObject> {
+		immutable string name
+	}
+
+	structure MoneyAmount<valueObject> {
+		immutable double amount,
+		immutable string currency
+	}
+
+	structure PolicyCreatedEvent<valueObject, domainEvent> {
+		date ^date,
+		long insuranceQuoteRequestId,
+		string policyId
+	}
+
+	enum RequestStatus<valueObject> {
+		REQUEST_SUBMITTED,
+		REQUEST_REJECTED,
+		QUOTE_RECEIVED,
+		QUOTE_ACCEPTED,
+		QUOTE_REJECTED,
+		QUOTE_EXPIRED,
+		POLICY_CREATED
+	}
+
+	structure RequestStatusChange<valueObject> {
+		long id,
+		immutable date ^date,
+		immutable RequestStatus status
+	}
+
+	list RequestStatusChanges { RequestStatusChange c }
+
+	structure CustomerCoreRemoteProxy<infrastructureService> {
+		hide string customerCoreBaseURL,
+		immutable int successfulAttemptsCounter = 0,
+		immutable int unsuccessfulAttemptsCounter = 0,
+		immutable int fallBackMethodExecutionsCounter = 0,
+		function CustomerDto getCustomer(CustomerId customerId),
+		function CustomerDto getDummyCustomer(CustomerId customerId),
+		function AddressDto changeAddress(CustomerId customerId, AddressDto requestDto),
+		function CustomerDto createCustomer(CustomerProfileUpdateRequestDto requestDto),
+		function CitiesResponseDto getCitiesForPostalCode(string postalCode),
+		procedure resetCounters
+	}
+
+	structure InsuranceQuoteRequestRepository<repository> {
+		InsuranceQuoteRequestAggregateRoot quoteRequest,
+		long id,
+		function InsuranceQuoteRequestAggregateRoots findByCustomerInfo_CustomerIdOrderByDateDesc(
+			CustomerId customerId
+		),
+		function InsuranceQuoteRequestAggregateRoots findAllByOrderByDateDesc
+	}
+
+	list InsuranceQuoteRequestAggregateRoots { InsuranceQuoteRequestAggregateRoot r }
+
+	structure PolicyManagementMessageProducer<infrastructureService> {
+		hide string insuranceQuoteRequestEventQueue,
+		hide string customerDecisionEventQueue,
+		procedure sendInsuranceQuoteRequest(date ^date,
+			InsuranceQuoteRequestDto insuranceQuoteRequestDto),
+		procedure sendCustomerDecision(date ^date, long insuranceQuoteRequestId,
+			boolean quoteAccepted),
+		hide procedure emitInsuranceQuoteRequestEvent(
+			InsuranceQuoteRequestEvent insuranceQuoteRequestEvent
+		),
+		hide procedure emitCustomerDecisionEvent(CustomerDecisionEvent customerDecisionEvent)
+	}
+
+	structure CustomerInfoDto<valueObject> {
+		string customerId<neverEmpty>,
+		string firstname<neverEmpty>,
+		string lastname<neverEmpty>,
+		AddressDto contactAddress<neverEmpty>,
+		AddressDto billingAddress<neverEmpty>,
+		function CustomerInfoDto fromDomainObject(CustomerInfoEntity customerInfo),
+		function CustomerInfoEntity toDomainObject
+	}
+
+	structure InsuranceOptionsDto<valueObject> {
+		date startDate<neverEmpty>,
+		string insuranceType<neverEmpty>,
+		MoneyAmountDto deductible<neverEmpty>,
+		function InsuranceOptionsDto fromDomainObject(InsuranceOptionsEntity insuranceOptions),
+		function InsuranceOptionsEntity toDomainObject
+	}
+
+	structure InsuranceQuoteDto<valueObject> {
+		date expirationDate<neverEmpty>,
+		MoneyAmountDto insurancePremium<neverEmpty>,
+		MoneyAmountDto policyLimit<neverEmpty>,
+		function InsuranceQuoteDto fromDomainObject(InsuranceQuoteEntity insuranceQuote)
+	}
+
+	structure InsuranceQuoteRequestDto<valueObject> {
+		long id,
+		date ^date,
+		RequestStatusChangeDtos statusHistory,
+		CustomerInfoDto customerInfo<neverEmpty>,
+		InsuranceOptionsDto insuranceOptions<neverEmpty>,
+		InsuranceQuoteDto insuranceQuote,
+		string policyId,
+		function InsuranceQuoteRequestDto fromDomainObject(
+			InsuranceQuoteRequestAggregateRoot insuranceQuoteRequest
+		)
+	}
+
+	list InsuranceQuoteRequestDtos { InsuranceQuoteRequestDto r }
+
+	structure InsuranceQuoteResponseDto<valueObject> {
+		string status<neverEmpty>,
+		date expirationDate,
+		MoneyAmountDto insurancePremium,
+		MoneyAmountDto policyLimit
+	}
+
+	structure MoneyAmountDto<valueObject> {
+		double amount<neverEmpty>,
+		string currency<neverEmpty>,
+		function MoneyAmountDto fromDomainObject(MoneyAmount moneyAmount),
+		function MoneyAmount toDomainObject
+	}
+
+	structure RequestStatusChangeDto<valueObject> {
+		date ^date,
+		string status<neverEmpty>,
+		function RequestStatusChangeDto fromDomainObject(RequestStatusChange requestStatusChange)
+	}
+
+	list RequestStatusChangeDtos { RequestStatusChangeDto c }
 }
