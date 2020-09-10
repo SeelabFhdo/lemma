@@ -67,6 +67,13 @@
          unpack="false"/>
 
    <plugin
+         id="de.fhdo.lemma.data.datadsl.extractor"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
          id="de.fhdo.lemma.technology.technologydsl"
          download-size="0"
          install-size="0"
@@ -138,6 +145,13 @@
          unpack="false"/>
 
    <plugin
+         id="de.fhdo.lemma.technology.mappingdsl.extractor"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
          id="de.fhdo.lemma.operationdsl"
          download-size="0"
          install-size="0"
@@ -198,6 +212,13 @@
    <!-- Required by Eclipse UI -->
    <plugin
          id="de.fhdo.lemma.operationdsl.metamodel"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="de.fhdo.lemma.data.avro"
          download-size="0"
          install-size="0"
          version="0.0.0"

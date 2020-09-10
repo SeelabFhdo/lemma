@@ -2,6 +2,10 @@
 # can be used to configure LEMMA Updatesite builds under Linux and via the LEMMA
 # Updatesite Build Docker image.
 
+# Remember to also add new modules to the feature.xml configuration file in the
+# de.fhdo.lemma.eclipse.updatesite.feature module. Otherwise, the Eclipse
+# Updatesite will not comprise them and the modules will thus not be installed.
+
 de.fhdo.lemma.eclipse.ui.utils
 de.fhdo.lemma.data.datadsl.metamodel
 de.fhdo.lemma.utils
