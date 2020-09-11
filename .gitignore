@@ -31,3 +31,4 @@ Example*/intermediate/
 howto-lemma-release.md/
 lemma-cd-documentation/
 code generators/de.fhdo.lemma.model_processing.code_generation.springcloud.kafka_backup/
+de.fhdo.lemma.eclipse.updatesite/force-deploy.sh

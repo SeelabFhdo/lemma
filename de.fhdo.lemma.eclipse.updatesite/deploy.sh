@@ -37,6 +37,18 @@ function revision_has_release_tag() {
     return 1
 }
 
+# Check if release tag check shall be bypassed (BYPASS_RELEASE_TAG_CHECK
+# environment variable needs to be set to true)
+function bypass_release_tag_check() {
+    if [[ -v "BYPASS_RELEASE_TAG_CHECK" &&
+        $BYPASS_RELEASE_TAG_CHECK == "true" ]]
+    then
+        return 0
+    else
+        return 1
+    fi
+}
+
 ### MAIN SCRIPT
 
 # Check environment variables
@@ -52,8 +64,12 @@ if curl --output /dev/null --silent --head --fail "$DEPLOY_UPDATESITE_URL/lemma/
     if revision_has_release_tag; then
         echo "Revision has release tag. Deploying..."
         do_updatesite_deploy
+    elif bypass_release_tag_check; then
+        echo "Release tag check was bypassed. Deploying..."
+        do_updatesite_deploy
     else
-        echo "Revision has no release tag. Deployment not necessary."
+        echo "Revision has no release tag and release tag check was not" \
+            "bypassed. Deployment not necessary."
     fi
 else
     echo "Updatesite does not exist on server. Deploying..."
