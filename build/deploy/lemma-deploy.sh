@@ -12,7 +12,7 @@
 #   - DEPLOY_MAVEN_ID_RELEASES: The ID of the releases server (must match the ID
 #                               in the passed "settings.xml").
 #   - DEPLOY_MAVEN_URL_RELEASES: The URL of the releases server.
-# The script may alos receive a second, optional commandline argument that needs
+# The script may also receive a second, optional commandline argument that needs
 # to point to a file with LEMMA modules selected for deployment. If this
 # argument is not passed to the script, it will try to read the deployment
 # modules from the "lemma-deployment-modules.txt" file located in the same
