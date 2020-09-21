@@ -28,6 +28,11 @@
             </commandParameter>
       </command>
       <command
+            categoryId="de.fhdo.lemma.eclipse.ui.category.lemmaCommands"
+            id="de.fhdo.lemma.eclipse.ui.commands.extractLemmaModelsFromOpenApi"
+            name="Extract Lemma Models from OpenAPI">
+      </command>
+      <command
             name="About"
             categoryId="de.fhdo.lemma.eclipse.ui.category.lemmaCommands"
             id="de.fhdo.lemma.eclipse.ui.commands.about">
@@ -42,6 +47,10 @@
       <handler
             commandId="de.fhdo.lemma.eclipse.ui.commands.generateOperationIntermediateModels"
             class="de.fhdo.lemma.eclipse.ui.IntermediateOperationModelTransformationController">
+      </handler>
+      <handler
+            class="de.fhdo.lemma.eclipse.ui.ExtractLemmaModelsFromOpenApiController"
+            commandId="de.fhdo.lemma.eclipse.ui.commands.extractLemmaModelsFromOpenApi">
       </handler>
       <handler
             commandId="de.fhdo.lemma.eclipse.ui.commands.about"
@@ -101,6 +110,16 @@
                         value="false"/>
             </command>
             <separator
+                  name="extractionSeparator"
+                  visible="true">
+            </separator>
+            <command
+                  commandId="de.fhdo.lemma.eclipse.ui.commands.extractLemmaModelsFromOpenApi"
+                  icon="icons/extractLemmaModelsFromOpenApi.gif"
+                  id="de.fhdo.lemma.eclipse.ui.lemmaMenu.extractLemmaModelsFromOpenApi"
+                  label="Extract Lemma Models from OpenApi URL...">
+            </command>
+            <separator
                   name="aboutSeparator"
                   visible="true">
             </separator>
@@ -136,6 +155,15 @@
                   <parameter
                         name="de.fhdo.lemma.eclipse.ui.commands.parameters.selectedModelsOnly"
                         value="true"/>
+            </command>
+         </toolbar>
+         <toolbar
+               id="de.fhdo.lemma.eclipse.ui.lemmaToolbar">
+            <command
+                  commandId="de.fhdo.lemma.eclipse.ui.commands.extractLemmaModelsFromOpenApi"
+                  icon="icons/extractLemmaModelsFromOpenApi.gif"
+                  id="de.fhdo.lemma.eclipse.ui.toolbars.extractLemmaModelsFromOpenApi"
+                  tooltip="Extract Lemma Models from OpenAPI Spec">
             </command>
          </toolbar>
       </menuContribution>

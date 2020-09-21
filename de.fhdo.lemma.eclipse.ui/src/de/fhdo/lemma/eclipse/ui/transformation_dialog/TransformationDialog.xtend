@@ -23,19 +23,18 @@ import org.eclipse.swt.custom.StyleRange
 import org.eclipse.jface.dialogs.MessageDialog
 import java.io.StringWriter
 import java.io.PrintWriter
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
 import de.fhdo.lemma.intermediate.transformations.IntermediateTransformationException
 import de.fhdo.lemma.eclipse.ui.utils.LemmaUiUtils
 import java.util.LinkedList
 import java.util.Collections
 import java.util.Comparator
+import java.util.logging.Logger
 
 class TransformationDialog  extends TitleAreaDialog {
     static val MIN_DIALOG_WIDTH = 200
     static val MIN_DIALOG_HEIGHT = 120
     static val PROGRESS_TITLE_TEXT = "Performing intermediate model transformations"
-    static final Logger LOGGER = LoggerFactory.getLogger(TransformationDialog)
+    static val LOGGER = Logger.getLogger("TransformationDialog")
 
     LinkedList<ModelFile> filesToTransform
     boolean convertToRelativeUris
@@ -226,7 +225,7 @@ class TransformationDialog  extends TitleAreaDialog {
                 val printWriter = new PrintWriter(stringWriter)
                 exception.printStackTrace(printWriter)
                 val stackTraceString = stringWriter.toString
-                LOGGER.error(stackTraceString)
+                LOGGER.severe(stackTraceString)
 
                 "Unexpected transformation exception. Please consult the Eclipse log file for " +
                 "the detailed stack trace."

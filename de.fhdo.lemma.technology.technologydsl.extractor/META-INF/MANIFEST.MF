@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: de.fhdo.lemma.technology.technologydsl.extractor
+Bundle-SymbolicName: de.fhdo.lemma.technology.technologydsl.extractor
+Bundle-Version: 0.8.0.qualifier
+Automatic-Module-Name: de.fhdo.lemma.technology.technologydsl.extractor
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Require-Bundle: com.google.guava,
+ org.eclipse.xtext.xbase.lib,
+ org.eclipse.xtend.lib,
+ org.eclipse.xtend.lib.macro,
+ de.fhdo.lemma.technology.technologydsl.metamodel;bundle-version="0.8.0"
+Export-Package: de.fhdo.lemma.technology.technologydsl.extractor 

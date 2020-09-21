@@ -1,0 +1,134 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>de.fhdo.lemma.service.open_api</groupId>
+    <artifactId>parent</artifactId>
+    <version>0.8.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>../de.fhdo.lemma.service.open_api</module>
+    </modules>
+
+    <profiles>
+        <profile>
+            <id>eclipse-updatesite</id>
+            <activation>
+                <property>
+                    <name>env.LEMMA_UPDATESITE_BUILD</name>
+                    <value>true</value>
+                </property>
+            </activation>
+            <properties>
+                <maven.compiler.source>8</maven.compiler.source>
+                <maven.compiler.target>8</maven.compiler.target>
+                <skipTests>true</skipTests>
+            </properties>
+        </profile>
+    <profile>
+            <id>deployment</id>
+            <activation>
+                <property>
+                    <name>env.LEMMA_DEPLOYMENT</name>
+                    <value>true</value>
+                </property>
+            </activation>
+            <properties>
+                <skipTests>true</skipTests>
+            </properties>
+        </profile>
+    </profiles>
+
+    <properties>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <build-helper-maven-plugin-version>3.1.0</build-helper-maven-plugin-version>
+        <data-extractor-version>${project.version}</data-extractor-version>
+        <data-metamodel-version>${project.version}</data-metamodel-version>
+        <eclipse-version>2020-03</eclipse-version>
+        <intermediate-data-metamodel-version>${project.version}</intermediate-data-metamodel-version>
+        <lemma-utils-version>${project.version}</lemma-utils-version>
+        <lemma-ui-utils-version>${project.version}</lemma-ui-utils-version>
+        <mapping-extractor-version>${project.version}</mapping-extractor-version>
+        <mapping-metamodel-version>${project.version}</mapping-metamodel-version>
+        <maven-clean-plugin-version>3.1.0</maven-clean-plugin-version>
+        <maven-compiler-plugin-version>3.8.1</maven-compiler-plugin-version>
+        <service-metamodel-version>${project.version}</service-metamodel-version>
+        <service-extractor-version>${project.version}</service-extractor-version>
+        <technology-metamodel-version>${project.version}</technology-metamodel-version>
+        <technology-extractor-version>${project.version}</technology-extractor-version>
+        <tycho-version>1.7.0</tycho-version>
+    </properties>
+
+    <repositories>
+        <repository>
+            <id>eclipse</id>
+            <layout>p2</layout>
+            <url>http://download.eclipse.org/releases/${eclipse-version}/</url>
+        </repository>
+    </repositories>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.eclipse.xtend</groupId>
+                    <artifactId>xtend-maven-plugin</artifactId>
+                    <version>${xtext-version}</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>compile</goal>
+                                <goal>xtend-install-debug-info</goal>
+                                <goal>testCompile</goal>
+                                <goal>xtend-test-install-debug-info</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <outputDirectory>xtend-gen</outputDirectory>
+                    </configuration>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-clean-plugin</artifactId>
+                    <version>${maven-clean-plugin-version}</version>
+                    <executions>
+                        <execution>
+                            <id>gen-clean</id>
+                            <goals>
+                                <goal>clean</goal>
+                            </goals>
+                            <configuration>
+                                <filesets>
+                                    <fileset>
+                                        <directory>${basedir}/xtend-gen</directory>
+                                    </fileset>
+                                </filesets>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
+        <plugins>
+            <plugin>
+                <groupId>org.eclipse.tycho</groupId>
+                <artifactId>tycho-maven-plugin</artifactId>
+                <version>${tycho-version}</version>
+                <extensions>true</extensions>
+            </plugin>
+            <plugin>
+                <groupId>org.eclipse.tycho</groupId>
+                <artifactId>tycho-versions-plugin</artifactId>
+                <version>${tycho-version}</version>
+            </plugin>
+        </plugins>
+    </build>
+</project>

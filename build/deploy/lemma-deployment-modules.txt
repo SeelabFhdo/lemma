@@ -18,6 +18,7 @@ de.fhdo.lemma.operationdsl.parent
 # Transformations
 de.fhdo.lemma.intermediate.transformations.parent
 de.fhdo.lemma.data.avro.parent
+de.fhdo.lemma.service.open_api.parent
 
 # Live Validation Framework
 de.fhdo.lemma.live_validation
