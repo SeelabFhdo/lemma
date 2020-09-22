@@ -213,9 +213,8 @@ public class ServiceModelTransformationStrategy extends AbstractUiModelTransform
     String _firstUpper = StringExtensions.toFirstUpper(this.getModelTypePrefix());
     _builder.append(_firstUpper);
     _builder.append(" Models for Intermediate Model ");
-    StringConcatenation _builder_1 = new StringConcatenation();
-    _builder_1.append("Transformation");
-    return (_builder.toString() + _builder_1);
+    return (_builder.toString() + 
+      "Transformation");
   }
   
   /**
@@ -262,12 +261,10 @@ public class ServiceModelTransformationStrategy extends AbstractUiModelTransform
     String _modelTypePrefix = this.getModelTypePrefix();
     _builder.append(_modelTypePrefix);
     _builder.append(" models to ");
-    StringConcatenation _builder_1 = new StringConcatenation();
-    _builder_1.append("intermediate models in the table. Click OK to invoke the intermediate model ");
-    String _plus = (_builder.toString() + _builder_1);
-    StringConcatenation _builder_2 = new StringConcatenation();
-    _builder_2.append("transformations.");
-    return (_plus + _builder_2);
+    String _plus = (_builder.toString() + 
+      "intermediate models in the table. Click OK to invoke the intermediate model ");
+    return (_plus + 
+      "transformations.");
   }
   
   /**

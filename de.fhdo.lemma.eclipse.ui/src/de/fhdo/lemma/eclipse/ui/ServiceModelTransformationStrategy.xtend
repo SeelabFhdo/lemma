@@ -171,7 +171,7 @@ class ServiceModelTransformationStrategy extends AbstractUiModelTransformationSt
      */
     override getModelSelectionDialogTitle() {
         return '''Select «modelTypePrefix.toFirstUpper» Models for Intermediate Model ''' +
-            '''Transformation'''
+            "Transformation"
     }
 
     /**
@@ -196,8 +196,8 @@ class ServiceModelTransformationStrategy extends AbstractUiModelTransformationSt
      */
     override getSpecifyPathsDialogMessage() {
         return '''Specify target paths for the transformation of «modelTypePrefix» models to ''' +
-            '''intermediate models in the table. Click OK to invoke the intermediate model ''' +
-            '''transformations.'''
+            "intermediate models in the table. Click OK to invoke the intermediate model " +
+            "transformations."
     }
 
     /**

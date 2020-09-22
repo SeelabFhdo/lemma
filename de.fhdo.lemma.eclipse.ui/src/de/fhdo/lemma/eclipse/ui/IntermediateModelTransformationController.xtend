@@ -40,9 +40,9 @@ class IntermediateModelTransformationController extends AbstractHandler {
         }
 
         if (modelFileTypeExtensions === null || modelFileTypeExtensions.empty)
-            MessageDialog.openError(SHELL, '''No «modelTypePrefix» models found''', '''No ''' +
+            MessageDialog.openError(SHELL, '''No «modelTypePrefix» models found''', "No " +
                 '''«modelTypePrefix» model files could be found, because there were no editors ''' +
-                '''associated with the respective file types. Do you have the editor plugins ''' +
+                "associated with the respective file types. Do you have the editor plugins " +
                 '''for creating «modelTypePrefix» models installed?''')
 
         /* Select models */
@@ -86,7 +86,7 @@ class IntermediateModelTransformationController extends AbstractHandler {
             return allWorkspaceModelFiles()
 
         // Transformation was started by user from context menu of the Eclipse Project Explorer on
-        // selected folders, folders, and/or files. Find input model files from all selected
+        // selected projects, folders, and/or files. Find input model files from all selected
         // resources.
         val inputModelFiles = <IProject, List<IFile>>newHashMap
         selectedResources.forEach[

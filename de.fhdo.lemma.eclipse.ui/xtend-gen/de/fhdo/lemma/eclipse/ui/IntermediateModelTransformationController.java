@@ -72,19 +72,16 @@ public class IntermediateModelTransformationController extends AbstractHandler {
       _builder.append(this.modelTypePrefix);
       _builder.append(" models found");
       StringConcatenation _builder_1 = new StringConcatenation();
-      _builder_1.append("No ");
+      _builder_1.append(this.modelTypePrefix);
+      _builder_1.append(" model files could be found, because there were no editors ");
+      String _plus = ("No " + _builder_1);
+      String _plus_1 = (_plus + 
+        "associated with the respective file types. Do you have the editor plugins ");
       StringConcatenation _builder_2 = new StringConcatenation();
+      _builder_2.append("for creating ");
       _builder_2.append(this.modelTypePrefix);
-      _builder_2.append(" model files could be found, because there were no editors ");
-      String _plus = (_builder_1.toString() + _builder_2);
-      StringConcatenation _builder_3 = new StringConcatenation();
-      _builder_3.append("associated with the respective file types. Do you have the editor plugins ");
-      String _plus_1 = (_plus + _builder_3);
-      StringConcatenation _builder_4 = new StringConcatenation();
-      _builder_4.append("for creating ");
-      _builder_4.append(this.modelTypePrefix);
-      _builder_4.append(" models installed?");
-      String _plus_2 = (_plus_1 + _builder_4);
+      _builder_2.append(" models installed?");
+      String _plus_2 = (_plus_1 + _builder_2);
       MessageDialog.openError(this.SHELL, _builder.toString(), _plus_2);
     }
     Map<IProject, List<IFile>> _inputModelFiles = this.getInputModelFiles(event);
