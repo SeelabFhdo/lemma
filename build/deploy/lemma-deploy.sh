@@ -63,16 +63,8 @@ do_deploy() {
 
 # Deploy a single module via Maven
 do_maven_deploy() {
-    # Determine Maven "target" folder of the module
-    MODULE=$1
-    targetFolder="$MODULE/target"
-    if [ ! -d "$targetFolder" ]
-    then
-        echo -e "\033[0;31mTarget folder '$targetFolder' does not exist!\033[0m";
-        return 1
-    fi
-
     # Determine the module's "pom.xml" location
+    MODULE=$1
     pomFile="$MODULE/pom.xml"
     if [ ! -f "$pomFile" ]
     then
@@ -80,31 +72,30 @@ do_maven_deploy() {
         return 1
     fi
 
-    # Deploy all ".jar" files in the module's Maven "target" folder. Therefore,
-    # we distinguish between servers for Maven snapshot and release artifacts.
-    find "$targetFolder" -maxdepth 1 -type f -name "*.jar" -print0 |
-    while IFS= read -r -d '' file; do
-        if [ $(is_snapshot_file "$file") ]
-        then
-            repositoryId=$DEPLOY_MAVEN_ID_SNAPSHOTS
-            repositoryUrl=$DEPLOY_MAVEN_URL_SNAPSHOTS
-        else
-            repositoryId=$DEPLOY_MAVEN_ID_RELEASES
-            repositoryUrl=$DEPLOY_MAVEN_URL_RELEASES
-        fi
+    # Distinguish between servers for Maven snapshot and release artifacts based
+    # on the version identifier in the "pom.xml"
+    if [ $(is_snapshot "$pomFile") ]
+    then
+        repositoryId=$DEPLOY_MAVEN_ID_SNAPSHOTS
+        repositoryUrl=$DEPLOY_MAVEN_URL_SNAPSHOTS
+    else
+        repositoryId=$DEPLOY_MAVEN_ID_RELEASES
+        repositoryUrl=$DEPLOY_MAVEN_URL_RELEASES
+    fi
 
-        # Do the actual deployment to the selected server and based on the
-        # "settings.xml" file, whose path was passed to the script
-        mvn deploy:deploy-file -DrepositoryId=$repositoryId \
-            -Durl=$repositoryUrl -Dfile="$file" -DpomFile="$pomFile" \
-            -s $MAVEN_SETTINGS_FILEPATH
-    done
+    # Do the actual deployment to the selected server and based on the
+    # "settings.xml" file, whose path was passed to the script
+    mvn deploy -f "$pomFile" \
+        -DaltDeploymentRepository=$repositoryId::default::$repositoryUrl \
+        -s $MAVEN_SETTINGS_FILEPATH
 }
 
-# Check if a JAR represents a Maven snapshot
-is_snapshot_file() {
-    filename=$(basename "$1")
-    if [[ $filename == *"-SNAPSHOT"* ]]; then
+# Check if a "pom.xml" version represents a Maven snapshot
+is_snapshot() {
+    pomFile="$1"
+    version=$(mvn -q -f "$pomFile" -Dexec.executable=echo \
+        -Dexec.args='${project.version}' --non-recursive exec:exec)
+    if [[ $version == *"-SNAPSHOT"* ]]; then
         echo 0
     else
         echo 1
@@ -136,6 +127,10 @@ countdown_to_next_deployment() {
 }
 
 ### MAIN SCRIPT
+
+# Tell Maven to use the "deployment" profile defined in the LEMMA modules' POM
+# files. The profile skips tests, which are therefore not deployed either.
+export LEMMA_DEPLOYMENT="true"
 
 MAVEN_SETTINGS_FILEPATH=$1
 

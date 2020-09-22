@@ -29,6 +29,19 @@
                 <skipTests>true</skipTests>
             </properties>
         </profile>
+
+        <profile>
+            <id>deployment</id>
+            <activation>
+                <property>
+                    <name>env.LEMMA_DEPLOYMENT</name>
+                    <value>true</value>
+                </property>
+            </activation>
+            <properties>
+                <skipTests>true</skipTests>
+            </properties>
+        </profile>
     </profiles>
 
     <properties>
