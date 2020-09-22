@@ -33,6 +33,7 @@ set modules=%modules%;de.fhdo.lemma.operationdsl.ui.tests
 
 REM Transformations
 set modules=%modules%;de.fhdo.lemma.intermediate.transformations.parent
+set modules=%modules%;de.fhdo.lemma.data.avro.parent
 
 REM Live Validation Framework
 set modules=%modules%;de.fhdo.lemma.live_validation
