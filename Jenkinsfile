@@ -2,7 +2,8 @@ pipeline {
     agent none
 
     environment {
-        MAIL_RECIPIENTS = credentials("lemma-builds-mail-recipients")
+        MATTERMOST_CHANNEL = credentials("lemma-builds-mattermost-channel")
+        BASE_BRANCH_URL = "https://github.com/SeelabFhdo/lemma"
 
         DOCKER_NEXUS_REGISTRY_CREDENTIALS = "seelab-nexus-docker-registry"
         DOCKER_NEXUS_REGISTRY_URL = "http://repository.seelab.fh-dortmund.de:51900"
@@ -75,6 +76,31 @@ pipeline {
             post {
                 success {
                     cleanWs()
+                }
+
+                failure {
+                    dir("lemma") {
+                        script {
+                            def postMessageBranchUrl = "${env.BASE_BRANCH_URL}/tree/${env.BRANCH_NAME}"
+                            def postMessageBranch = env.BRANCH_NAME ? "\n\tBranch: <${postMessageBranchUrl}|${env.BRANCH_NAME}>" : ""
+                            def postMessageCommitAuthor = bat(script: "${WINDOWS_RUN_GIT_COMMAND} \"git --no-pager show -s --format='%an'\"", returnStdout: true).trim()
+                            def postMessageCommitMessage = bat(script: "${WINDOWS_RUN_GIT_COMMAND} \"git log --format=%B -n 1 ${GIT_COMMIT}\"", returnStdout: true).trim()
+                            def postMessageCommitUrl = "${env.BASE_BRANCH_URL}/commit/${env.GIT_COMMIT}"
+                            def postMessageCommitInfo = "(\"${postMessageCommitMessage}\") by *${postMessageCommitAuthor}*"
+                            def postMessageCommit = env.GIT_COMMIT ? "\n\tCommit: <${postMessageCommitUrl}|${env.GIT_COMMIT}> ${postMessageCommitInfo}" : ""
+                            def postMessageBody = "\n\tJob: ${env.JOB_NAME}" +
+                                "${postMessageBranch}" +
+                                "${postMessageCommit}" +
+                                "\n\tStatus: ${currentBuild.result}" +
+                                "\n\tBuild: <${env.BUILD_URL}|#${env.BUILD_NUMBER}>"
+
+                            mattermostSend (
+                                color: "danger",
+                                message: "LEMMA Build FAILURE: ${postMessageBody}",
+                                channel: MATTERMOST_CHANNEL
+                            )
+                        }
+                    }
                 }
             }
         }
@@ -215,20 +241,43 @@ pipeline {
             post {
                 success {
                     sh 'docker system prune -af --volumes'
-                    cleanWs()
                 }
-            }
-        }
-    }
 
-    post {
-        always {
-            script {
-                emailext(
-                    subject: '${DEFAULT_SUBJECT}',
-                    body: '${DEFAULT_CONTENT}',
-                    to: MAIL_RECIPIENTS
-                )
+                always {
+                    dir("lemma") {
+                        script {
+                            def postMessageBranchUrl = "${env.BASE_BRANCH_URL}/tree/${env.BRANCH_NAME}"
+                            def postMessageBranch = env.BRANCH_NAME ? "\n\tBranch: <${postMessageBranchUrl}|${env.BRANCH_NAME}>" : ""
+                            def postMessageCommitAuthor = sh(script: "git --no-pager show -s --format='%an'", returnStdout: true).trim()
+                            def postMessageCommitMessage = sh(script: "git log --format=%B -n 1 ${GIT_COMMIT}", returnStdout: true).trim()
+                            def postMessageCommitUrl = "${env.BASE_BRANCH_URL}/commit/${env.GIT_COMMIT}"
+                            def postMessageCommitInfo = "(\"${postMessageCommitMessage}\") by *${postMessageCommitAuthor}*"
+                            def postMessageCommit = env.GIT_COMMIT ? "\n\tCommit: <${postMessageCommitUrl}|${env.GIT_COMMIT}> ${postMessageCommitInfo}" : ""
+                            def postMessageBody = "\n\tJob: ${env.JOB_NAME}" +
+                                "${postMessageBranch}" +
+                                "${postMessageCommit}" +
+                                "\n\tStatus: ${currentBuild.result}" +
+                                "\n\tBuild: <${env.BUILD_URL}|#${env.BUILD_NUMBER}>"
+
+                            if(currentBuild.result != "FAILURE") {
+                                mattermostSend (
+                                    color: "good",
+                                    message: "LEMMA Build SUCCESS: ${postMessageBody}",
+                                    channel: MATTERMOST_CHANNEL
+                                )
+
+                                // Clean workspace upon success
+                                cleanWs()
+                            } else {
+                                mattermostSend (
+                                    color: "danger",
+                                    message: "LEMMA Build FAILURE: ${postMessageBody}",
+                                    channel: MATTERMOST_CHANNEL
+                                )
+                            }
+                        }
+                    }
+                }
             }
         }
     }
