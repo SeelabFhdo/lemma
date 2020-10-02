@@ -1,0 +1,215 @@
+@Ecore(nsURI="http://www.fhdo.de/lemma/operation/intermediate", nsPrefix="intermediate")
+package de.fhdo.lemma.operation.intermediate
+
+import de.fhdo.lemma.data.intermediate.IntermediateImport
+import de.fhdo.lemma.data.intermediate.IntermediateImportedAspect
+import de.fhdo.lemma.service.intermediate.MicroserviceReference
+import de.fhdo.lemma.service.intermediate.IntermediateEndpoint
+import de.fhdo.lemma.service.intermediate.IntermediateTechnology
+
+
+/**
+ * Metamodel of intermediate operation models.
+ *
+ * @author <a href="mailto:philip.wizenty@fh-dortmund.de">Philip Wizenty</a>
+ */
+
+class IntermediateOperationModel {
+    // "file" URI to the source model from which this intermediate model was derived
+    String sourceModelUri
+
+    contains IntermediateImport[1..*] imports
+    contains IntermediateContainer[] containers opposite operationModel
+    contains IntermediateInfrastructureNode[] infrastructureNodes opposite operationModel
+}
+
+/**
+ * An intermediate operation node is a node to which services may be deployed, e.g., a container or
+ * some infrastructure component like a configuration provider or database
+ */
+abstract class IntermediateOperationNode {
+    String name
+    boolean imported = 'false'
+
+    refers IntermediateImport[1..*] imports
+    refers IntermediateOperationEnvironment operationEnvironment
+
+    contains OperationMicroserviceReference[] deployedServices opposite node
+    contains IntermediateOperationEndpoint[1..*] endpoints opposite node
+    contains IntermediateServiceDeploymentSpecification[] specifications opposite operationNode
+    contains IntermediateTechnologySpecificPropertyValue[] defaultValues opposite operationNode
+    contains IntermediateImportedAspect[] aspects
+
+    op IntermediateTechnologySpecificPropertyValue[] getEffectiveConfigurationValues(
+        OperationMicroserviceReference deployedService) {
+
+        val IntermediateTechnologySpecificPropertyValue[] effectiveConfigurationValues =
+            defaultValues
+
+        val serviceSpecification = specifications
+            .findFirst[operationMicroserviceReference == deployedService]
+        if (serviceSpecification === null)
+            return effectiveConfigurationValues.toEList
+
+        val serviceConfigurationValues = serviceSpecification.propertyValues
+            .toMap([technologySpecificProperty.name], [value])
+
+        return effectiveConfigurationValues.map[
+            val propertyName = technologySpecificProperty.name
+            val serviceSpecificValue = serviceConfigurationValues
+                .get(propertyName)
+            if (serviceSpecificValue !== null)
+                it.value = serviceSpecificValue
+            it
+        ].toEList
+    }
+}
+
+/**
+ * A intermediate container is the central operation node. It enables service deployment
+ * and operation.
+ */
+class IntermediateContainer extends IntermediateOperationNode {
+    contains IntermediateDeploymentTechnologyReference technologyReference opposite ^container
+
+    container IntermediateOperationModel operationModel opposite containers
+}
+
+/**
+ * An intermediate infrastructure node is an operation node with supporting character,
+ * e.g., a configuration provider
+ */
+class IntermediateInfrastructureNode extends IntermediateOperationNode {
+    // Intermediate operation nodes which the intermediate infrastructure node depends on, e.g.,
+    // a service discovery or database
+    contains IntermediateOperationNode[] dependsOnNodes
+    // Intermediate operation nodes which are using functions of the intermediate infrastructure
+    // node, e.g., the provisioning of configuration parameters
+    contains IntermediateOperationNode[] usedByNodes
+    contains IntermediateInfrastructureTechnologyReference reference opposite infrastructureNode
+
+    container IntermediateOperationModel operationModel opposite infrastructureNodes
+}
+
+/**
+ * Represents the further specification of a service being deployed to an
+ * intermediate operation node
+ */
+class IntermediateServiceDeploymentSpecification {
+    refers OperationMicroserviceReference operationMicroserviceReference
+
+    contains IntermediateOperationEndpoint[] endpoints
+    contains IntermediateTechnologySpecificPropertyValue[] propertyValues opposite specification
+
+    container IntermediateOperationNode operationNode opposite specifications
+}
+
+/**
+ * Intermediate operation environment of an intermediate operation technology, e.g., an image
+ * of a deployment container
+ */
+class IntermediateOperationEnvironment {
+    String environmentName
+    boolean ^default="false"
+
+    container IntermediateOperationTechnology operationTechnology opposite environment
+}
+
+/**
+ * Abstract superclass of technologies specific to intermediate service operation
+ */
+abstract class IntermediateOperationTechnology {
+    String name
+
+    contains IntermediateOperationEnvironment environment opposite operationTechnology
+    contains IntermediateTechnologySpecificProperty[] properties opposite operationTechnology
+}
+
+/**
+ * Intermediate operation technology for service deployment
+ */
+class IntermediateDeploymentTechnology extends IntermediateOperationTechnology {
+    container IntermediateDeploymentTechnologyReference reference opposite technology
+}
+
+/**
+ * Intermediate operation technology for infrastructure deployment
+ */
+class IntermediateInfrastructureTechnology extends IntermediateOperationTechnology {
+    container IntermediateInfrastructureTechnologyReference reference opposite technology
+}
+
+/**
+ * Reference to a infrastructure technology
+ */
+class IntermediateInfrastructureTechnologyReference {
+    refers IntermediateImport ^import
+
+    contains IntermediateInfrastructureTechnology technology opposite reference
+
+    container IntermediateInfrastructureNode infrastructureNode opposite reference
+}
+
+/**
+ * Represents a reference to a intermediate technology
+ */
+class IntermediateDeploymentTechnologyReference {
+    refers IntermediateImport ^import
+
+    contains IntermediateDeploymentTechnology technology opposite reference
+
+    container IntermediateContainer  ^container opposite technologyReference
+}
+
+/**
+ * A property, e.g., of an intermediate operation technology that may be set per associated
+ * service or an aspect
+ */
+class IntermediateTechnologySpecificProperty {
+    String name
+    String ^type
+    String defaultValue
+    String[*] featureNames
+
+    container IntermediateOperationTechnology operationTechnology opposite properties
+}
+
+/**
+ * Value assignment to a intermediate technology specific property
+ */
+class IntermediateTechnologySpecificPropertyValue {
+    String value
+
+    refers IntermediateTechnologySpecificProperty technologySpecificProperty
+
+    container IntermediateServiceDeploymentSpecification specification opposite propertyValues
+    container IntermediateOperationNode operationNode opposite defaultValues
+}
+
+/**
+ * Reference to a operational microservice
+ */
+class OperationMicroserviceReference extends MicroserviceReference {
+    boolean effectivelyImplemented
+    String microserviceType
+    String visibility
+
+    container IntermediateOperationNode node opposite deployedServices
+
+}
+
+/**
+ * EndpointTechnology
+ */
+class IntermediateEndpointTechnology extends IntermediateTechnology {
+    container IntermediateOperationEndpoint endpoint opposite endpointTechnology
+}
+
+/**
+ * OperationEndpoint
+ */
+class IntermediateOperationEndpoint extends IntermediateEndpoint {
+    contains IntermediateEndpointTechnology endpointTechnology opposite endpoint
+
+    container IntermediateOperationNode node opposite endpoints
+}

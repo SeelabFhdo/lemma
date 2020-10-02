@@ -592,4 +592,67 @@ class OperationDslScopeProvider extends AbstractOperationDslScopeProvider {
         val validImports = LemmaUtils.getImportsOfModelTypes(allImports, [it.importURI], types)
         return Scopes::scopeFor(validImports)
     }
+
+    /**
+     * Build scope for possibly imported operation node and the given reference
+     */
+    private def getScope(PossiblyImportedOperationNode importedNode, EReference reference) {
+        switch (reference) {
+            case OperationPackage::Literals.POSSIBLY_IMPORTED_OPERATION_NODE__IMPORT:
+                return importedNode.getScopeForImportsOfType(OperationModel)
+            case OperationPackage::Literals.POSSIBLY_IMPORTED_OPERATION_NODE__NODE:
+                return importedNode.getScopeForPossiblyImportedOperationNode(importedNode.import)
+        }
+        return null
+    }
+
+    /**
+     * Convenience method for building a scope for a possibly imported microservice without an
+     * import specification
+     */
+    private def getScopeForPossiblyImportedOperationNode(EObject context) {
+        return getScopeForPossiblyImportedOperationNode(context, null)
+    }
+
+
+    /**
+     * Helper method to build a scope for possibly imported operation node, i.e., an operation node
+     * with or without import specifications. Operation nodes required by another operation node may
+     * possibly be imported.
+     */
+    private def getScopeForPossiblyImportedOperationNode(EObject context, Import ^import) {
+        if (!(
+            context instanceof InfrastructureNode ||
+            context instanceof Container ||
+            context instanceof PossiblyImportedOperationNode))
+            return IScope.NULLSCOPE
+
+        val operatioNode =
+            switch (context) {
+                InfrastructureNode: context as InfrastructureNode
+                Container: context as Container
+                PossiblyImportedOperationNode: EcoreUtil2.getContainerOfType(context,
+                    OperationNode)
+            }
+
+        val importUri = if (import !== null) import.importURI else null
+
+        val infrastructureNodeScope = LemmaUtils.getScopeForPossiblyImportedConcept(
+            operatioNode,
+            operatioNode.qualifiedNameParts,
+            OperationModel,
+            importUri,
+            [infrastructureNodes.toList],
+            [qualifiedNameParts])
+
+        val containerScope = LemmaUtils.getScopeForPossiblyImportedConcept(
+            operatioNode,
+            operatioNode.qualifiedNameParts,
+            OperationModel,
+            importUri,
+            [containers.toList],
+            [qualifiedNameParts])
+
+        return LemmaUtils.mergeScopes(infrastructureNodeScope, containerScope)
+    }
 }

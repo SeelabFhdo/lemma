@@ -19,7 +19,8 @@ Require-Bundle: org.eclipse.ui,
  de.fhdo.lemma.operationdsl,
  de.fhdo.lemma.utils,
  de.fhdo.lemma.technology.mappingdsl.metamodel,
- de.fhdo.lemma.eclipse.ui.utils
+ de.fhdo.lemma.eclipse.ui.utils,
+ de.fhdo.lemma.operationdsl.metamodel
 Automatic-Module-Name: de.fhdo.lemma.eclipse.ui
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Import-Package: org.slf4j;version="1.7.2"

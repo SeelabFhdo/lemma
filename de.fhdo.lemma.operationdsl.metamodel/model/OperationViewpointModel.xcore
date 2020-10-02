@@ -23,6 +23,7 @@ class OperationModel {
      *     (C1) Model must contain at least one container or infrastructure node.
      *          Ensured by: DSL validator.
      */
+    String t_modelUri
 
     contains Import[1..*] imports
     contains Container[] containers opposite operationModel
@@ -76,6 +77,17 @@ abstract class OperationNode {
     contains TechnologySpecificPropertyValueAssignment[] defaultServicePropertyValues
     contains ServiceDeploymentSpecification[] deploymentSpecifications opposite operationNode
     contains ImportedOperationAspect[] aspects opposite operationNode
+    contains PossiblyImportedOperationNode[] usedByNodes
+    contains PossiblyImportedOperationNode[] dependsOnNodes
+
+    op String[] getQualifiedNameParts() {
+        if (name === null || name.empty)
+            return newArrayList.asEList
+
+        val nameParts = newArrayList
+        nameParts.addAll(name)
+        nameParts.asEList
+    }
 }
 
 /**
@@ -247,4 +259,13 @@ class ImportedOperationAspect {
     contains TechnologySpecificPropertyValueAssignment[] values
 
     container OperationNode operationNode opposite aspects
+}
+
+
+/**
+ * A operation node possibly imported from another operation model
+ */
+class PossiblyImportedOperationNode {
+    refers Import[0..1] ^import
+    refers OperationNode node
 }

@@ -12,6 +12,7 @@
         <module>../de.fhdo.lemma.data.intermediate.metamodel</module>
         <module>../de.fhdo.lemma.service.intermediate.metamodel</module>
         <module>../de.fhdo.lemma.intermediate.transformations</module>
+        <module>../de.fhdo.lemma.operation.intermediate.metamodel</module>
     </modules>
 
     <profiles>

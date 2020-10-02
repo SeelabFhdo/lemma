@@ -1,13 +1,11 @@
 package de.fhdo.lemma.operationdsl.validation
 
-import org.eclipse.xtext.validation.Check
+
 import de.fhdo.lemma.operation.OperationModel
 import de.fhdo.lemma.operation.OperationPackage
 import de.fhdo.lemma.operation.Container
-import java.util.List
 import de.fhdo.lemma.operation.ServiceDeploymentSpecification
 import de.fhdo.lemma.operation.BasicEndpoint
-import org.eclipse.xtext.naming.QualifiedName
 import de.fhdo.lemma.technology.Protocol
 import de.fhdo.lemma.technology.Technology
 import de.fhdo.lemma.operation.OperationNode
@@ -17,12 +15,17 @@ import de.fhdo.lemma.operation.ImportedMicroservice
 import de.fhdo.lemma.service.ServicePackage
 import de.fhdo.lemma.technology.TechnologySpecificPropertyValueAssignment
 import de.fhdo.lemma.technology.TechnologyPackage
+import de.fhdo.lemma.service.ServiceModel
 import de.fhdo.lemma.operation.ImportedOperationAspect
-import org.eclipse.xtext.EcoreUtil2
 import de.fhdo.lemma.service.Import
-import java.util.Map
 import de.fhdo.lemma.technology.PropertyFeature
 import de.fhdo.lemma.utils.LemmaUtils
+import org.eclipse.xtext.EcoreUtil2
+import org.eclipse.emf.ecore.EObject
+import org.eclipse.xtext.validation.Check
+import org.eclipse.xtext.naming.QualifiedName
+import java.util.Map
+import java.util.List
 
 /**
  * This class contains validation rules for the Operation DSL.
@@ -69,6 +72,35 @@ class OperationDslValidator extends AbstractOperationDslValidator {
         val duplicate = operationModel.imports.get(duplicateIndex)
         error('''Duplicate import alias «duplicate.name»''', duplicate,
             ServicePackage::Literals.IMPORT__NAME)
+    }
+
+    /**
+     * Check that imported file defines a model that fits the given import type
+     */
+    @Check
+    override checkImportType(Import ^import) {
+        var Class<? extends EObject> expectedModelType
+        var String expectedModelTypeName
+        switch (import.importType) {
+            case MICROSERVICES: {
+                expectedModelType = ServiceModel
+                expectedModelTypeName = "service"
+            }
+            case TECHNOLOGY: {
+                expectedModelType = Technology
+                expectedModelTypeName = "technology"
+            }
+            case OPERATION_NODES: {
+                expectedModelType = OperationModel
+                expectedModelTypeName = "operation"
+            }
+            default:
+                return
+        }
+
+        if (!LemmaUtils.isImportOfType(import.eResource, import.importURI, expectedModelType))
+            error('''File does not contain an «expectedModelTypeName» model definition''', import,
+                ServicePackage::Literals.IMPORT__IMPORT_URI)
     }
 
     /**

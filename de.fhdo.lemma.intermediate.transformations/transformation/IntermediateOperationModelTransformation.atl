@@ -1,0 +1,624 @@
+-- @path Operation=/de.fhdo.lemma.operationdsl.metamodel/model/OperationViewpointModel.xcore
+-- @path Intermediate=/de.fhdo.lemma.operationdsl.intermediate.metamodel/model/IntermediateOperationModel.xcore
+
+-- Author: Philip Wizenty
+-- E-mail: philip.wizenty@fh-dortmund.de
+
+module IntermediateOperationModelTransformation;
+create OUT : Intermediate from IN : Operation;
+
+--- Rule to generate the root of the target intermediate Operation model
+rule IntermediateOperationModel {
+    from
+        s : Operation!OperationModel
+    to
+        t : Intermediate!IntermediateOperationModel(
+            sourceModelUri <- Operation!OperationModel.allInstances().first().t_modelUri
+        )
+    do {
+        -- Add imports to operation model
+        for (import in s.imports) {
+            t.imports <- thisModule.IntermediateImport(import);
+        }
+
+
+        -- Add containers to operation model
+        for (container in s.containers) {
+            t.containers <- thisModule.IntermediateContainer(container, t);
+        }
+
+        -- Note: The infrastructure nodes are added to the operation model in three seperate steps.
+        -- The Division in three steps is necessary to increase the usability and to assign
+        -- refernces between different infrastructure nodes.
+        -- The frist the creates the acutal intermediate infrastrucre nodes including all basic
+        -- attributes e.g. names or import types.
+        for (infrastructureNode in s.infrastructureNodes) {
+            t.infrastructureNodes <-
+                thisModule.IntermediateInfrastructureNodeAttributes(infrastructureNode, t);
+        }
+        -- The second steps assign all references to other existing concepts.
+        for (infrastructureNode in s.infrastructureNodes) {
+            thisModule.IntermediateInfrastructureNodeReferences(infrastructureNode);
+        }
+
+        -- The third steps assign all depedencies to other operation nodes.
+        for (infrastructureNode in s.infrastructureNodes) {
+            thisModule.IntermediateInfrastructureNodeDependencies(infrastructureNode);
+        }
+        t;
+    }
+}
+
+--- Transform a source Import to a target IntermediateImport
+rule IntermediateImport (import : Operation!Import) {
+    to
+        t : Intermediate!IntermediateImport(
+            name <- import.name,
+            importUri <- import.importURI,
+            -- Note that normally this would be a direct mapping between the source and the target
+            -- importType. However, the XMI serlializer seems to be bugged. See the comments in the
+            -- metamodel on why here the name of the import type is used instead.
+            importTypeName <- thisModule.getImportTypeName(import)
+        )
+    do {
+        t;
+    }
+}
+
+--- Helper to get the name of an import type without preceding hash sign ('#')
+helper def : getImportTypeName(import : Operation!Import) : String =
+    let
+        rawImportTypeName : String = import.importType.toString()
+    in
+    if (rawImportTypeName.startsWith('#')) then
+        rawImportTypeName.substring(2, rawImportTypeName.size())
+    else
+        rawImportTypeName
+    endif
+;
+
+--- Transform a source Container, to an IntermediateContainer
+rule IntermediateContainer(container : Operation!Container,
+    model : Intermediate!IntermediateOperationModel) {
+    to
+        t : Intermediate!IntermediateContainer(
+            name <- container.name,
+            technologyReference <- thisModule.IntermediateDeploymentTechnologyReference(
+                container.deploymentTechnology, container.operationEnvironment),
+            operationModel <- model
+
+            )
+    do {
+       thisModule.IntermediateContainerReferencesAssignment(t, container);
+       t;
+    }
+}
+--- Assign references to an existing intermediate container
+rule IntermediateContainerReferencesAssignment(container : Intermediate!IntermediateContainer,
+    sourceContainer : Operation!Container) {
+    do {
+        -- Assign a OperationEnvironment to the container
+        if (not container.technologyReference.technology.environment.oclIsUndefined()) {
+              container.operationEnvironment
+                  <- container.technologyReference.technology.environment;
+        }
+
+        -- Assign technology imports to the container
+        for (import in sourceContainer.technologies) {
+            container.imports <- Intermediate!IntermediateImport.allInstances()
+                ->any(i | i.name = import.name and i.importUri = import.importURI);
+        }
+
+        -- Assign the DeployedServices of the contaier
+        for (deployedService in sourceContainer.deployedServices) {
+           container.deployedServices <- thisModule.OperationMicroserviceReference(deployedService);
+        }
+
+        -- Assign a ServiceDeplymentSpecification to the container
+        for (deploymentSpecification in sourceContainer.deploymentSpecifications) {
+            container.specifications <- thisModule.IntermediateServiceDeploymentSpecification(
+                container, deploymentSpecification);
+        }
+
+        -- Assign DefaultBasicEndpoints to the container
+        for (defaultBasicEndpoint in sourceContainer.defaultBasicEndpoints) {
+            for (protocol in defaultBasicEndpoint.protocols) {
+                container.endpoints <- thisModule.IntermediateOperationEndpoint(
+                    defaultBasicEndpoint, protocol);
+            }
+        }
+
+        -- Assign the DefaultServicePropertyValues to the Container
+        for (defaultValue in sourceContainer.defaultServicePropertyValues) {
+            container.defaultValues <- thisModule.IntermediateTechnologySpecificPropertyValue(
+                OclUndefined, defaultValue);
+        }
+
+        -- Assign the operational Aspect to the container
+        for (aspect in sourceContainer.aspects) {
+            container.aspects <- thisModule.IntermediateImportedAspect(container, aspect);
+        }
+
+        -- Assign container and infrastructure nodes on which the InfrastructureNode depends on
+        for (node in sourceContainer.dependsOnNodes) {
+            if (node.node.oclIsKindOf(Operation!InfrastructureNode)){
+                container.dependsOnNodes <-
+                    thisModule.IntermediatePossiblyImportedInfrastructureNode(node);
+            }
+
+            if (node.node.oclIsKindOf(Operation!Container))
+                container.dependsOnNodes <- thisModule.IntermediatePossiblyImportedContainer(node);
+
+        }
+
+        -- Assign container and infrastructure nodes which the InfrastrucureNode uses
+        for (node in sourceContainer.usedByNodes) {
+            if (node.oclIsKindOf(Operation!InfrastructureNode)) {
+                container.usedByNodes <-
+                    thisModule.IntermediatePossiblyImportedInfrastructureNode(node);
+            }
+
+            if (node.node.oclIsKindOf(Operation!Container))
+                container.usedByNodes <- thisModule.IntermediatePossiblyImportedContainer(node);
+        }
+    }
+}
+
+--- Called rule to create an IntermediateDeploymentTechnologyReference instance
+rule IntermediateDeploymentTechnologyReference(
+    sourceTechnologyReference : Operation!DeploymentTechnologyReference,
+    sourceEnvironment : Operation!OperationEnvironment) {
+    to
+        t : Intermediate!IntermediateDeploymentTechnologyReference(
+                technology <- thisModule.IntermediateDeploymentTechnology(
+                    sourceTechnologyReference.deploymentTechnology, t)
+        )
+    do {
+        -- Link an OperationEnvironment to the DeploymentTechnologyReference if present
+        if(not sourceEnvironment.oclIsUndefined()) {
+            thisModule.IntermediateOperationEnvironment(sourceEnvironment, t.technology);
+        }
+        t.import <- Intermediate!IntermediateImport.allInstances()
+                ->any(i | i.name = sourceTechnologyReference.import.name
+                and i.importUri = sourceTechnologyReference.import.importURI);
+        t;
+    }
+}
+
+--- Called rule to create an IntermediateDeploymentTechnology instance
+rule IntermediateDeploymentTechnology(sourceDeploymentTechnology : Operation!DeploymentTechnology,
+    targetTechnologyReference : Intermediate!IntermediateDeploymentTechnologyReference) {
+    to
+        t : Intermediate!IntermediateDeploymentTechnology(
+            name <- sourceDeploymentTechnology.name,
+            reference <- targetTechnologyReference
+        )
+    do {
+        -- Assign a TechnologySpecificProperty to a DeploymentTechnology
+        for (technologySpecificProperty in sourceDeploymentTechnology.serviceProperties){
+            t.properties.append(thisModule.IntermediateTechnologySpecificProperty(
+                technologySpecificProperty, t));
+        }
+        t;
+    }
+}
+
+--- Called rule to create an IntermediateOperationEnvironment instance
+rule IntermediateOperationEnvironment(sourceEnvironment : Operation!OperationEnvironment,
+    technology : Intermediate!IntermediateDeploymentTechnology) {
+    to
+        t : Intermediate!IntermediateOperationEnvironment(
+            environmentName <- sourceEnvironment.environmentName,
+            operationTechnology <- technology,
+            default <- sourceEnvironment.default
+        )
+}
+
+rule IntermediateInfrastructureNodeAttributes(node : Operation!InfrastructureNode,
+    model : Intermediate!IntermediateOperationModel) {
+    to
+        t : Intermediate!IntermediateInfrastructureNode(
+            name <- node.name,
+            reference <- thisModule.IntermediateInfrastructureTechnologyReference(
+                node.infrastructureTechnology, node.operationEnvironment)
+        )
+    do {
+        if (not model.oclIsUndefined()) {
+            t.operationModel <- model;
+        }
+        for (technology in node.technologies) {
+            t.imports <- Intermediate!IntermediateImport.allInstances()
+                ->any(i | i.name = technology.name
+                and i.importUri = technology.importURI);
+        }
+        t;
+    }
+}
+
+--- Transform a source InfrastructureNode, to a target IntermediateInfrastructureNode
+rule IntermediateInfrastructureNodeReferences(s : Operation!InfrastructureNode) {
+    using {
+        t : Intermediate!IntermediateInfrastructureNode
+            = Intermediate!IntermediateInfrastructureNode.allInstances()->any(n |
+                n.name = s.name
+            );
+    }
+    do {
+        thisModule.IntermediateInfrastructureNodeReferencesAssignment(t, s);
+    }
+}
+
+rule IntermediateInfrastructureNodeReferencesAssignment(
+    node : Intermediate!IntermediateInfrastructureNode, s : Operation!InfrastructureNode) {
+     do {
+        -- Assign an OperationEvironment to the InfrastructureNode
+        if (not node.reference.technology.environment.oclIsUndefined()) {
+              node.operationEnvironment <- node.reference.technology.environment;
+        }
+
+        -- Assign technology imports to the InfrastructureNode
+        for (import in s.technologies) {
+            node.imports <- Intermediate!IntermediateImport.allInstances()
+                ->any(i | i.name = import.name and i.importUri = import.importURI);
+        }
+
+        -- Assign Endpoints to the InfrastructureNode, note that each protocol results in a seperate
+        --  endpoint
+        for (infrastructureEndpoint in s.endpoints) {
+            for (protocol in infrastructureEndpoint.protocols) {
+                node.endpoints <- thisModule.IntermediateOperationEndpoint(infrastructureEndpoint,
+                    protocol);
+            }
+        }
+
+        -- ServiceDeploymentSpecification is missing for infrastructural nodes. The DSL only allows
+        -- a specification for imported Microservices, not for infrastructure nodes.
+
+        -- Assign DefaultServicePropertyValues to the InfrastructureNode
+        -- The ServiceDeploymentSpecification is oclUndefined in this use of the called rule
+        -- but necessary to reuse it in the ServiceDeploymentSpecificatio called rule
+        for (defaultValue in s.defaultServicePropertyValues) {
+            node.defaultValues <- thisModule.IntermediateTechnologySpecificPropertyValue(
+                OclUndefined, defaultValue);
+        }
+
+        -- Assign OperationAspects to the InfrastructureNode
+        for (aspect in s.aspects) {
+            node.aspects <- thisModule.IntermediateImportedAspect(node, aspect);
+        }
+    }
+}
+--- Transform a source InfrastructureNode, to a target IntermediateInfrastructureNode
+rule IntermediateInfrastructureNodeDependencies(s : Operation!InfrastructureNode) {
+    using {
+        t : Intermediate!IntermediateInfrastructureNode
+            = Intermediate!IntermediateInfrastructureNode.allInstances()->any(n |
+                n.name = s.name
+            );
+    }
+    do {
+         -- Assign nodes on which the InfrastructureNode depens on
+        for (node in s.dependsOnNodes) {
+            if (node.node.oclIsKindOf(Operation!InfrastructureNode)) {
+                t.dependsOnNodes <- thisModule.IntermediatePossiblyImportedInfrastructureNode(node);
+            }
+
+            if (node.node.oclIsKindOf(Operation!Container)) {
+                t.dependsOnNodes <- thisModule.IntermediatePossiblyImportedContainer(node);
+            }
+
+        }
+
+        -- Assign nodes which the InfrastrucureNode uses
+        for (node in s.usedByNodes) {
+            if (node.oclIsKindOf(Operation!InfrastructureNode)) {
+                t.usedByNodes <- thisModule.IntermediatePossiblyImportedInfrastructureNode(node);
+            }
+
+            if (node.node.oclIsKindOf(Operation!Container)) {
+                t.usedByNodes <- thisModule.IntermediatePossiblyImportedContainer(node);
+            }
+        }
+
+        -- Assign services which which are used by the infrastructure node
+        for (deployedService in s.deployedServices) {
+            t.deployedServices <- thisModule.OperationMicroserviceReference(deployedService);
+        }
+    }
+
+
+}
+
+--- Called rule to create a IntermediateInfrastructureTechnologyReference instance
+rule IntermediateInfrastructureTechnologyReference(sourceTechnologyReference :
+   Operation!InfrastructureTechnologyReference, sourceEnvironment : Operation!OperationEnvironment){
+    to
+        t: Intermediate!IntermediateInfrastructureTechnologyReference(
+            technology <- thisModule.IntermediateInfrastructureTechnology(
+                sourceTechnologyReference.infrastructureTechnology, t)
+        )
+    do {
+        if(not sourceEnvironment.oclIsUndefined()) {
+            thisModule.IntermediateOperationEnvironment(sourceEnvironment,
+                t.technology);
+        }
+        t.import <- Intermediate!IntermediateImport.allInstances()
+                ->any(i | i.name = sourceTechnologyReference.import.name
+                and i.importUri = sourceTechnologyReference.import.importURI);
+        t;
+    }
+}
+
+--- Called rule to create a IntermediateDeploymentTechnology instance
+rule IntermediateInfrastructureTechnology(sourceTechnology : Operation!InfrastructureTechnology,
+    targetReference : Intermediate!IntermediateInfrastructureTechnologyReference) {
+    to
+        t: Intermediate!IntermediateInfrastructureTechnology(
+            name <- sourceTechnology.name,
+            reference <- targetReference
+        )
+    do {
+        for (technologySpecificProperty in sourceTechnology.serviceProperties){
+            t.properties.append(thisModule.IntermediateTechnologySpecificProperty(
+                technologySpecificProperty, t));
+        }
+        t;
+    }
+}
+
+--- Called rule to creade a IntermediateTechnologySpecificProperty instance
+rule IntermediateTechnologySpecificProperty(sourceTechnologySpecificProperty :
+    Operation!TechnologySpecificProperty,
+    deploymentTechnology : Intermediate!IntermediateDeploymentTechnology) {
+    to
+        t : Intermediate!IntermediateTechnologySpecificProperty(
+            name <- sourceTechnologySpecificProperty.name,
+            type <- sourceTechnologySpecificProperty.type.typeName,
+            operationTechnology <- deploymentTechnology
+        )
+
+    do {
+        -- Assign a DefaultValue to a TechnologySpecificProperty if available
+        if (not sourceTechnologySpecificProperty.defaultValue.oclIsUndefined()){
+            t.defaultValue <- sourceTechnologySpecificProperty.defaultValue.valueAsString();
+        }
+
+        -- Assign a Feature to a TechnologySpecificProperty
+        for (feature in sourceTechnologySpecificProperty.features){
+            t.featureNames <- feature.toString();
+        }
+        t;
+    }
+}
+
+--- Called rule to create a IntermediateTechnologySpecificPropertyValue instance
+rule IntermediateTechnologySpecificPropertyValue (deploymentSpecification :
+    Intermediate!IntermediateServiceDeploymentSpecification,
+    servicePropertyValue : Operation!TechnologySpecificPropertyValueAssignment) {
+    to
+        t : Intermediate!IntermediateTechnologySpecificPropertyValue(
+            value <- servicePropertyValue.value.valueAsString(),
+            technologySpecificProperty <- Intermediate!IntermediateTechnologySpecificProperty
+                .allInstances()->any(p | p.name = servicePropertyValue.property.name)
+        )
+    do {
+        t;
+    }
+}
+
+--- Called rule to create a IntermediateServiceDeploymentSpecification instance
+rule IntermediateServiceDeploymentSpecification(
+    targetContainer : Intermediate!IntermediateContainer,
+    sourceDeploymentSpecification :Operation!ServiceDeploymentSpecification) {
+        to
+            t : Intermediate!IntermediateServiceDeploymentSpecification(
+                operationNode <- targetContainer,
+                operationMicroserviceReference <- Intermediate!OperationMicroserviceReference
+                .allInstances()->any(p |
+                    (p.name = sourceDeploymentSpecification.service.microservice.name
+                        and p.name = sourceDeploymentSpecification.service.microservice.name))
+            )
+        do{
+            -- Assign a TechnologySpecificPropertyValue to a DeploymentSpecification
+            for (servicePropertyValue in sourceDeploymentSpecification.servicePropertyValues) {
+                t.propertyValues <- thisModule.IntermediateTechnologySpecificPropertyValue(t,
+                    servicePropertyValue);
+            }
+
+            -- Assign a BasicEndpoint to a DeploymentSpecification
+            for (basicEndpoint in sourceDeploymentSpecification.basicEndpoints) {
+                for (protocol in basicEndpoint.protocols) {
+                    t.endpoints <- thisModule.IntermediateOperationEndpoint(basicEndpoint,
+                        protocol);
+                }
+            }
+            t;
+        }
+}
+
+--- Called rule to create a IntermediateServiceDeploymentSpecification instance
+rule OperationMicroserviceReference(sourceMicroservice : Operation!ImportedMicroservice) {
+    to
+        t : Intermediate!OperationMicroserviceReference(
+            imported <- true,
+            name <- sourceMicroservice.microservice.name,
+            microserviceType <- sourceMicroservice.microservice.type.toString(),
+            effectivelyImplemented <- sourceMicroservice.microservice.effectivelyImplemented,
+            import <- Intermediate!IntermediateImport.allInstances()
+                -> any(p | p.name = sourceMicroservice.import.name),
+            version <- sourceMicroservice.microservice.version,
+            qualifiedName <- sourceMicroservice.microservice.buildQualifiedName('.'),
+            visibility <- sourceMicroservice.microservice.effectiveVisibility.name
+        )
+    do {
+        t.node <- Intermediate!IntermediateOperationNode.allInstances()
+            ->any(p | p.name = sourceMicroservice.operationNode.name);
+        t;
+    }
+}
+
+--- Called rule to create a IntermediateEndPoint instance
+rule IntermediateOperationEndpoint(sourceEndpoint : Operation!BasicEndpoint,
+    sourceProtocol : Operation!ProtocolAndDataFormat) {
+    using {
+        technology : Operation!Technology = sourceProtocol.protocol.technology;
+        intermediateTechnologyImport : Intermediate!IntermediateImport
+            = Intermediate!IntermediateImport.allInstances()->any(i |
+                i.name = sourceProtocol.technology.name
+        );
+    }
+    to
+        t : Intermediate!IntermediateOperationEndpoint(
+            addresses <- sourceEndpoint.addresses,
+            protocol <- sourceProtocol.protocol.name,
+            communicationType <- sourceProtocol.protocol.communicationType.toString()
+        )
+    do {
+        t.technology <- thisModule.IntermediateEndpointTechnology(
+                intermediateTechnologyImport, technology, t);
+
+        if(not sourceProtocol.dataFormat.oclIsUndefined()) {
+            t.dataFormat <- sourceProtocol.dataFormat;
+        }
+        if (not sourceProtocol.protocol.defaultFormat.oclIsUndefined()) {
+            t.dataFormat <- sourceProtocol.protocol.defaultFormat.formatName;
+        }
+        t;
+    }
+}
+
+--- Create an IntermediateImportedAspect from an ImportedServiceAspect instance
+rule IntermediateImportedAspect (operationNode : Intermediate!IntermediateOperationNode,
+sourceAspect : Operation!ImportedOperationAspect) {
+    to
+        t : Intermediate!IntermediateImportedAspect(
+            name <- sourceAspect.aspect.name,
+            import <- Intermediate!IntermediateImport.allInstances()
+                -> any(p | p.name = sourceAspect.technology.name)
+        )
+    do {
+        -- Aspect features
+        for (feature in sourceAspect.aspect.features) {
+            t.featureNames <- t.featureNames.append(feature.toString());
+        }
+
+        -- Create properties of aspect and link them with the aspect
+        for (property in sourceAspect.aspect.properties) {
+            t.properties <- t.properties->append(
+                thisModule.IntermediateAspectProperty(property, t)
+            );
+        }
+
+        -- Create values of aspect and link them with the aspect. Therefore, we consider both, the
+        -- syntactically shorter initialization of a single property aspect and the "normal" case of
+        -- "named" property initialization. Independent of how the aspect and its values were
+        -- specified, we map an aspect value to a an IntermediateAspectPropertyValue instance.
+        if (not sourceAspect.singlePropertyValue.oclIsUndefined())
+            thisModule.IntermediateAspectPropertyValue(sourceAspect.singlePropertyValue, t,
+                t.properties->first());
+        else
+            for (value in sourceAspect.values) {
+                thisModule.IntermediateAspectPropertyValue(value.value, t,
+                    t.properties->any(p | p.name = value.property.name));
+        }
+        t;
+    }
+}
+
+--- Called rule to create an IntermediateAspectProperty instance
+rule IntermediateAspectProperty(sourceProperty : Service!TechnologySpecificProperty,
+    aspect : Intermediate!IntermediateImportedAspect) {
+    to
+        i : Intermediate!IntermediateAspectProperty(
+            name <- sourceProperty.name,
+            type <- sourceProperty.type.typeName,
+            aspect <- aspect
+        )
+    do {
+        for (feature in sourceProperty.features) {
+            i.featureNames <- i.featureNames.append(feature.toString());
+        }
+
+        if (not sourceProperty.defaultValue.oclIsUndefined())
+            i.defaultValue <- sourceProperty.defaultValue.valueAsString();
+
+        aspect.properties <- aspect.properties->append(i);
+        i;
+    }
+}
+
+--- Called rule to create an IntermediateAspectPropertyValue instance
+rule IntermediateAspectPropertyValue(sourceValue : Service!PrimitiveValue,
+    aspect : Intermediate!IntermediateImportedAspect,
+    property : Intermediate!IntermediateAspectProperty) {
+    to
+        i : Intermediate!IntermediateAspectPropertyValue(
+            value <- sourceValue.valueAsString(),
+            aspect <- aspect,
+            property <- property
+        )
+    do {
+        aspect.propertyValues->append(i);
+        i;
+    }
+}
+
+--- Called rule to generate IntermediateTechnology instances
+rule IntermediateEndpointTechnology(
+    intermediateImport : Intermediate!IntermediateImport,
+    sourceTechnology : Operation!Technology,
+    operationEndpoint : Intermediate!IntermediateOperationEndpoint
+) {
+    to
+        t : Intermediate!IntermediateEndpointTechnology(
+            name <- sourceTechnology.name,
+            import <- intermediateImport,
+            endpoint <- operationEndpoint
+        )
+    do {
+        t;
+    }
+}
+
+--- Called rule to generate a PossiblyImportedOperationNode instances
+rule IntermediatePossiblyImportedInfrastructureNode(possiblyOperationNode :
+    Operation!PossiblyImportedOperationNode) {
+    to
+        p : Intermediate!IntermediateInfrastructureNode(
+            name <- possiblyOperationNode.node.name,
+            reference <- thisModule.IntermediateInfrastructureTechnologyReference(
+                possiblyOperationNode.node.infrastructureTechnology,
+                possiblyOperationNode.node.operationEnvironment)
+        )
+    do {
+        if (not possiblyOperationNode.import.oclIsUndefined()) {
+            p.imported <- true;
+            p.imports <- Intermediate!IntermediateImport.allInstances()
+                ->any(i | i.name = possiblyOperationNode.import.name);
+        }
+        thisModule.IntermediateInfrastructureNodeReferencesAssignment(p,
+            possiblyOperationNode.node);
+        p;
+    }
+}
+
+--- Called rule to generate a PossiblyImportedOperationNode instances
+rule IntermediatePossiblyImportedContainer(possiblyContainer :
+    Operation!PossiblyImportedOperationNode ) {
+    to
+        c : Intermediate!IntermediateContainer(
+            name <- possiblyContainer.node.name,
+            technologyReference <- thisModule.IntermediateDeploymentTechnologyReference(
+                possiblyContainer.node.deploymentTechnology,
+                possiblyContainer.node.operationEnvironment)
+        )
+    do {
+        if (not possiblyContainer.import.oclIsUndefined()) {
+            c.imported <- true;
+            c.imports <- Intermediate!IntermediateImport.allInstances()
+                ->any(i | i.name = possiblyContainer.import.name);
+        }
+        thisModule.IntermediateContainerReferencesAssignment(c, possiblyContainer.node);
+        c;
+    }
+}
