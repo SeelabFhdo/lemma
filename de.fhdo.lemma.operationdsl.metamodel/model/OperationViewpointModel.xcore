@@ -31,14 +31,6 @@ class OperationModel {
 }
 
 /**
- * Determines the allowed types of imports
- */
-enum ImportType {
-    TECHNOLOGY
-    MICROSERVICES
-}
-
-/**
  * An operation node is a node to which services may be deployed, e.g., a container or some
  * infrastructure component like a configuration provider
  */
@@ -150,8 +142,6 @@ class InfrastructureNode extends OperationNode {
      *          Ensured by: DSL validator.
      */
 
-    refers OperationNode[] usedByNodes
-    refers OperationNode[] dependsOnNodes
     contains InfrastructureTechnologyReference infrastructureTechnology opposite infrastructureNode
     contains BasicEndpoint[] endpoints opposite infrastructureNode
 

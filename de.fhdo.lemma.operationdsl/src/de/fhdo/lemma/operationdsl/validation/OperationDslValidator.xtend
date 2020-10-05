@@ -99,7 +99,7 @@ class OperationDslValidator extends AbstractOperationDslValidator {
         }
 
         if (!LemmaUtils.isImportOfType(import.eResource, import.importURI, expectedModelType))
-            error('''File does not contain an «expectedModelTypeName» model definition''', import,
+            error('''File does not contain a «expectedModelTypeName» model definition''', import,
                 ServicePackage::Literals.IMPORT__IMPORT_URI)
     }
 
@@ -547,22 +547,22 @@ class OperationDslValidator extends AbstractOperationDslValidator {
      * Check that node is used by unique nodes
      */
     @Check
-    def checkUsingNodesUniqueness(InfrastructureNode infrastructureNode) {
-        val duplicateIndex = LemmaUtils.getDuplicateIndex(infrastructureNode.usedByNodes, [name])
+    def checkUsingNodesUniqueness(OperationNode operationNode) {
+        val duplicateIndex = LemmaUtils.getDuplicateIndex(operationNode.usedByNodes, [node.name])
         if (duplicateIndex > -1)
-            error("Duplicate node", infrastructureNode,
-                OperationPackage::Literals.INFRASTRUCTURE_NODE__USED_BY_NODES, duplicateIndex)
+            error("Duplicate node", operationNode,
+                OperationPackage::Literals.OPERATION_NODE__USED_BY_NODES, duplicateIndex)
     }
 
     /**
      * Check that node depends on unique nodes
      */
     @Check
-    def checkDependingNodesUniqueness(InfrastructureNode infrastructureNode) {
-        val duplicateIndex = LemmaUtils.getDuplicateIndex(infrastructureNode.dependsOnNodes, [name])
+    def checkDependingNodesUniqueness(OperationNode operationNode) {
+        val duplicateIndex = LemmaUtils.getDuplicateIndex(operationNode.dependsOnNodes, [node.name])
         if (duplicateIndex > -1)
-            error("Duplicate node", infrastructureNode,
-                OperationPackage::Literals.INFRASTRUCTURE_NODE__DEPENDS_ON_NODES, duplicateIndex)
+            error("Duplicate node", operationNode,
+                OperationPackage::Literals.OPERATION_NODE__DEPENDS_ON_NODES, duplicateIndex)
     }
 
     /**

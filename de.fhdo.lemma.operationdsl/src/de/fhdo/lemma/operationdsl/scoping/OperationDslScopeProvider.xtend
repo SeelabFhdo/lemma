@@ -24,6 +24,7 @@ import de.fhdo.lemma.operation.ImportedOperationAspect
 import de.fhdo.lemma.operation.DeploymentTechnologyReference
 import de.fhdo.lemma.operation.InfrastructureTechnologyReference
 import de.fhdo.lemma.utils.LemmaUtils
+import de.fhdo.lemma.operation.PossiblyImportedOperationNode
 
 /**
  * This class implements a custom scope provider for the Operation DSL.
@@ -70,6 +71,9 @@ class OperationDslScopeProvider extends AbstractOperationDslScopeProvider {
 
             /* Imported operation aspects */
             ImportedOperationAspect: context.getScope(reference)
+
+            /* PossiblyImportedOperationNode */
+            PossiblyImportedOperationNode: context.getScope(reference)
         }
 
         if (scope !== null)
@@ -107,6 +111,12 @@ class OperationDslScopeProvider extends AbstractOperationDslScopeProvider {
             /* Deployment technology imports */
             case OperationPackage::Literals.DEPLOYMENT_TECHNOLOGY_REFERENCE__IMPORT:
                 return container.getScopeForAnnotatedTechnologies()
+
+            case OperationPackage::Literals.POSSIBLY_IMPORTED_OPERATION_NODE__IMPORT:
+                return container.getScopeForImportsOfType(OperationModel)
+
+            case OperationPackage::Literals.POSSIBLY_IMPORTED_OPERATION_NODE__NODE:
+                return container.getScopeForPossiblyImportedOperationNode()
         }
 
         // If the feature is not Container-specific, delegate scope resolution to superclass
@@ -243,12 +253,18 @@ class OperationDslScopeProvider extends AbstractOperationDslScopeProvider {
                 return infrastructureNode.getScopeForAnnotatedTechnologies()
 
             /* Other nodes using this node */
-            case OperationPackage::Literals.INFRASTRUCTURE_NODE__USED_BY_NODES:
+            case OperationPackage::Literals.OPERATION_NODE__USED_BY_NODES:
                 return infrastructureNode.getScopeForOtherNodes()
 
             /* Other nodes on which this node depends */
-            case OperationPackage::Literals.INFRASTRUCTURE_NODE__DEPENDS_ON_NODES:
+            case OperationPackage::Literals.OPERATION_NODE__DEPENDS_ON_NODES:
                 return infrastructureNode.getScopeForOtherNodes()
+
+            case OperationPackage::Literals.POSSIBLY_IMPORTED_OPERATION_NODE__IMPORT:
+                return infrastructureNode.getScopeForImportsOfType(OperationModel)
+
+            case OperationPackage::Literals.POSSIBLY_IMPORTED_OPERATION_NODE__NODE:
+                return infrastructureNode.getScopeForPossiblyImportedOperationNode()
         }
 
         // If the feature is not InfrastructureNode-specific, delegate scope resolution to

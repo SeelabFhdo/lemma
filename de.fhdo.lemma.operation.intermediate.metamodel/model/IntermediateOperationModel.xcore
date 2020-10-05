@@ -39,7 +39,11 @@ abstract class IntermediateOperationNode {
     contains IntermediateServiceDeploymentSpecification[] specifications opposite operationNode
     contains IntermediateTechnologySpecificPropertyValue[] defaultValues opposite operationNode
     contains IntermediateImportedAspect[] aspects
+    contains IntermediateOperationNode[] dependsOnNodes
+    contains IntermediateOperationNode[] usedByNodes
 
+    // This method forms based on the technology-specific configuration and the default values
+    // the effective configuration of the operation node.
     op IntermediateTechnologySpecificPropertyValue[] getEffectiveConfigurationValues(
         OperationMicroserviceReference deployedService) {
 
@@ -66,7 +70,7 @@ abstract class IntermediateOperationNode {
 }
 
 /**
- * A intermediate container is the central operation node. It enables service deployment
+ * An intermediate container is the central operation node. It enables service deployment
  * and operation.
  */
 class IntermediateContainer extends IntermediateOperationNode {
@@ -82,10 +86,6 @@ class IntermediateContainer extends IntermediateOperationNode {
 class IntermediateInfrastructureNode extends IntermediateOperationNode {
     // Intermediate operation nodes which the intermediate infrastructure node depends on, e.g.,
     // a service discovery or database
-    contains IntermediateOperationNode[] dependsOnNodes
-    // Intermediate operation nodes which are using functions of the intermediate infrastructure
-    // node, e.g., the provisioning of configuration parameters
-    contains IntermediateOperationNode[] usedByNodes
     contains IntermediateInfrastructureTechnologyReference reference opposite infrastructureNode
 
     container IntermediateOperationModel operationModel opposite infrastructureNodes
@@ -106,7 +106,7 @@ class IntermediateServiceDeploymentSpecification {
 
 /**
  * Intermediate operation environment of an intermediate operation technology, e.g., an image
- * of a deployment container
+ * of a container
  */
 class IntermediateOperationEnvironment {
     String environmentName
@@ -140,7 +140,7 @@ class IntermediateInfrastructureTechnology extends IntermediateOperationTechnolo
 }
 
 /**
- * Reference to a infrastructure technology
+ * Reference to an infrastructure technology
  */
 class IntermediateInfrastructureTechnologyReference {
     refers IntermediateImport ^import
@@ -151,7 +151,7 @@ class IntermediateInfrastructureTechnologyReference {
 }
 
 /**
- * Represents a reference to a intermediate technology
+ * Represents a reference to an intermediate technology
  */
 class IntermediateDeploymentTechnologyReference {
     refers IntermediateImport ^import
@@ -199,14 +199,14 @@ class OperationMicroserviceReference extends MicroserviceReference {
 }
 
 /**
- * EndpointTechnology
+ * Endpoint technology for assigning a specific technology to an endpoint
  */
 class IntermediateEndpointTechnology extends IntermediateTechnology {
     container IntermediateOperationEndpoint endpoint opposite endpointTechnology
 }
 
 /**
- * OperationEndpoint
+ * Intermediate operation endpoint containing technology specific information
  */
 class IntermediateOperationEndpoint extends IntermediateEndpoint {
     contains IntermediateEndpointTechnology endpointTechnology opposite endpoint

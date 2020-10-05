@@ -65,6 +65,7 @@ enum ImportType {
     DATATYPES
     TECHNOLOGY
     MICROSERVICES
+    OPERATION_NODES
 }
 
 /**

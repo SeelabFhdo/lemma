@@ -15,7 +15,7 @@ OperationModel returns OperationModel:
 
 @Override
 enum ImportType returns service::ImportType:
-    TECHNOLOGY='technology' | MICROSERVICES='microservices'
+    TECHNOLOGY='technology' | MICROSERVICES='microservices' | OPERATION_NODES='nodes'
 ;
 
 Container returns Container:
@@ -26,6 +26,14 @@ Container returns Container:
         operationEnvironment=[technology::OperationEnvironment|STRING]
     )?
     'deploys' deployedServices+=ImportedMicroservice (',' deployedServices+=ImportedMicroservice)*
+    (
+        'depends' 'on' 'nodes' dependsOnNodes+=PossiblyImportedOperationNode
+        (',' dependsOnNodes+=PossiblyImportedOperationNode)*
+    )?
+    (
+        'used' 'by' 'nodes' (usedByNodes+=PossiblyImportedOperationNode)*
+        (',' usedByNodes+=PossiblyImportedOperationNode)*
+    )?
     '{'
         ('aspects' '{'
             aspects+=ImportedOperationAspect+
@@ -65,12 +73,18 @@ InfrastructureNode returns InfrastructureNode:
     ('with' 'operation' 'environment'
         operationEnvironment=[technology::OperationEnvironment|STRING]
     )?
-    ('depends' 'on' 'nodes' dependsOnNodes+=[OperationNode] (',' dependsOnNodes+=[OperationNode])*)?
+     (
+        'depends' 'on' 'nodes' dependsOnNodes+=PossiblyImportedOperationNode
+        (',' dependsOnNodes+=PossiblyImportedOperationNode)*
+    )?
     (
         'used' 'by' 'services' deployedServices+=ImportedMicroservice
         (',' deployedServices+=ImportedMicroservice)*
     )?
-    ('used' 'by' 'nodes' usedByNodes+=[OperationNode] (',' usedByNodes+=[OperationNode])*)?
+    (
+        'used' 'by' 'nodes' (usedByNodes+=PossiblyImportedOperationNode)*
+        (',' usedByNodes+=PossiblyImportedOperationNode)*
+    )?
     '{'
         ('aspects' '{'
             aspects+=ImportedOperationAspect+
@@ -116,6 +130,10 @@ ServiceDeploymentSpecification returns ServiceDeploymentSpecification:
 ImportedMicroservice returns ImportedMicroservice:
     ^import=[service::Import] '::'
     microservice=[service::Microservice|QualifiedNameWithAtLeastOneLevel]
+;
+
+PossiblyImportedOperationNode returns PossiblyImportedOperationNode:
+    (^import=[service::Import] '::')? node=[OperationNode|QualifiedName]
 ;
 
 @Override
