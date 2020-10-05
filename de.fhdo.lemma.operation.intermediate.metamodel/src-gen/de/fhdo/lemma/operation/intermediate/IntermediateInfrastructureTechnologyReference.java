@@ -13,7 +13,7 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <!-- begin-model-doc -->
  * *
- * Reference to a infrastructure technology
+ * Reference to an infrastructure technology
  * <!-- end-model-doc -->
  *
  * <p>

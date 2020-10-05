@@ -10,7 +10,7 @@ package de.fhdo.lemma.operation.intermediate;
  *
  * <!-- begin-model-doc -->
  * *
- * A intermediate container is the central operation node. It enables service deployment
+ * An intermediate container is the central operation node. It enables service deployment
  * and operation.
  * <!-- end-model-doc -->
  *

@@ -13,7 +13,7 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <!-- begin-model-doc -->
  * *
- * Represents a reference to a intermediate technology
+ * Represents a reference to an intermediate technology
  * <!-- end-model-doc -->
  *
  * <p>

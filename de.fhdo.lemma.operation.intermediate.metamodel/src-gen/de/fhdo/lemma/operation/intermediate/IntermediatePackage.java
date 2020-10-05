@@ -213,13 +213,31 @@ public interface IntermediatePackage extends EPackage {
 	int INTERMEDIATE_OPERATION_NODE__ASPECTS = 8;
 
 	/**
+	 * The feature id for the '<em><b>Depends On Nodes</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INTERMEDIATE_OPERATION_NODE__DEPENDS_ON_NODES = 9;
+
+	/**
+	 * The feature id for the '<em><b>Used By Nodes</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INTERMEDIATE_OPERATION_NODE__USED_BY_NODES = 10;
+
+	/**
 	 * The number of structural features of the '<em>Operation Node</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int INTERMEDIATE_OPERATION_NODE_FEATURE_COUNT = 9;
+	int INTERMEDIATE_OPERATION_NODE_FEATURE_COUNT = 11;
 
 	/**
 	 * The operation id for the '<em>Get Effective Configuration Values</em>' operation.
@@ -329,6 +347,24 @@ public interface IntermediatePackage extends EPackage {
 	 * @ordered
 	 */
 	int INTERMEDIATE_CONTAINER__ASPECTS = INTERMEDIATE_OPERATION_NODE__ASPECTS;
+
+	/**
+	 * The feature id for the '<em><b>Depends On Nodes</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INTERMEDIATE_CONTAINER__DEPENDS_ON_NODES = INTERMEDIATE_OPERATION_NODE__DEPENDS_ON_NODES;
+
+	/**
+	 * The feature id for the '<em><b>Used By Nodes</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INTERMEDIATE_CONTAINER__USED_BY_NODES = INTERMEDIATE_OPERATION_NODE__USED_BY_NODES;
 
 	/**
 	 * The feature id for the '<em><b>Technology Reference</b></em>' containment reference.
@@ -473,7 +509,7 @@ public interface IntermediatePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int INTERMEDIATE_INFRASTRUCTURE_NODE__DEPENDS_ON_NODES = INTERMEDIATE_OPERATION_NODE_FEATURE_COUNT + 0;
+	int INTERMEDIATE_INFRASTRUCTURE_NODE__DEPENDS_ON_NODES = INTERMEDIATE_OPERATION_NODE__DEPENDS_ON_NODES;
 
 	/**
 	 * The feature id for the '<em><b>Used By Nodes</b></em>' containment reference list.
@@ -482,7 +518,7 @@ public interface IntermediatePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int INTERMEDIATE_INFRASTRUCTURE_NODE__USED_BY_NODES = INTERMEDIATE_OPERATION_NODE_FEATURE_COUNT + 1;
+	int INTERMEDIATE_INFRASTRUCTURE_NODE__USED_BY_NODES = INTERMEDIATE_OPERATION_NODE__USED_BY_NODES;
 
 	/**
 	 * The feature id for the '<em><b>Reference</b></em>' containment reference.
@@ -491,7 +527,7 @@ public interface IntermediatePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int INTERMEDIATE_INFRASTRUCTURE_NODE__REFERENCE = INTERMEDIATE_OPERATION_NODE_FEATURE_COUNT + 2;
+	int INTERMEDIATE_INFRASTRUCTURE_NODE__REFERENCE = INTERMEDIATE_OPERATION_NODE_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Operation Model</b></em>' container reference.
@@ -500,7 +536,7 @@ public interface IntermediatePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int INTERMEDIATE_INFRASTRUCTURE_NODE__OPERATION_MODEL = INTERMEDIATE_OPERATION_NODE_FEATURE_COUNT + 3;
+	int INTERMEDIATE_INFRASTRUCTURE_NODE__OPERATION_MODEL = INTERMEDIATE_OPERATION_NODE_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of structural features of the '<em>Infrastructure Node</em>' class.
@@ -509,7 +545,7 @@ public interface IntermediatePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int INTERMEDIATE_INFRASTRUCTURE_NODE_FEATURE_COUNT = INTERMEDIATE_OPERATION_NODE_FEATURE_COUNT + 4;
+	int INTERMEDIATE_INFRASTRUCTURE_NODE_FEATURE_COUNT = INTERMEDIATE_OPERATION_NODE_FEATURE_COUNT + 2;
 
 	/**
 	 * The operation id for the '<em>Get Effective Configuration Values</em>' operation.
@@ -1561,6 +1597,28 @@ public interface IntermediatePackage extends EPackage {
 	EReference getIntermediateOperationNode_Aspects();
 
 	/**
+	 * Returns the meta object for the containment reference list '{@link de.fhdo.lemma.operation.intermediate.IntermediateOperationNode#getDependsOnNodes <em>Depends On Nodes</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Depends On Nodes</em>'.
+	 * @see de.fhdo.lemma.operation.intermediate.IntermediateOperationNode#getDependsOnNodes()
+	 * @see #getIntermediateOperationNode()
+	 * @generated
+	 */
+	EReference getIntermediateOperationNode_DependsOnNodes();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link de.fhdo.lemma.operation.intermediate.IntermediateOperationNode#getUsedByNodes <em>Used By Nodes</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Used By Nodes</em>'.
+	 * @see de.fhdo.lemma.operation.intermediate.IntermediateOperationNode#getUsedByNodes()
+	 * @see #getIntermediateOperationNode()
+	 * @generated
+	 */
+	EReference getIntermediateOperationNode_UsedByNodes();
+
+	/**
 	 * Returns the meta object for the '{@link de.fhdo.lemma.operation.intermediate.IntermediateOperationNode#getEffectiveConfigurationValues(de.fhdo.lemma.operation.intermediate.OperationMicroserviceReference) <em>Get Effective Configuration Values</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1611,28 +1669,6 @@ public interface IntermediatePackage extends EPackage {
 	 * @generated
 	 */
 	EClass getIntermediateInfrastructureNode();
-
-	/**
-	 * Returns the meta object for the containment reference list '{@link de.fhdo.lemma.operation.intermediate.IntermediateInfrastructureNode#getDependsOnNodes <em>Depends On Nodes</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Depends On Nodes</em>'.
-	 * @see de.fhdo.lemma.operation.intermediate.IntermediateInfrastructureNode#getDependsOnNodes()
-	 * @see #getIntermediateInfrastructureNode()
-	 * @generated
-	 */
-	EReference getIntermediateInfrastructureNode_DependsOnNodes();
-
-	/**
-	 * Returns the meta object for the containment reference list '{@link de.fhdo.lemma.operation.intermediate.IntermediateInfrastructureNode#getUsedByNodes <em>Used By Nodes</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Used By Nodes</em>'.
-	 * @see de.fhdo.lemma.operation.intermediate.IntermediateInfrastructureNode#getUsedByNodes()
-	 * @see #getIntermediateInfrastructureNode()
-	 * @generated
-	 */
-	EReference getIntermediateInfrastructureNode_UsedByNodes();
 
 	/**
 	 * Returns the meta object for the containment reference '{@link de.fhdo.lemma.operation.intermediate.IntermediateInfrastructureNode#getReference <em>Reference</em>}'.
@@ -2298,6 +2334,22 @@ public interface IntermediatePackage extends EPackage {
 		EReference INTERMEDIATE_OPERATION_NODE__ASPECTS = eINSTANCE.getIntermediateOperationNode_Aspects();
 
 		/**
+		 * The meta object literal for the '<em><b>Depends On Nodes</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference INTERMEDIATE_OPERATION_NODE__DEPENDS_ON_NODES = eINSTANCE.getIntermediateOperationNode_DependsOnNodes();
+
+		/**
+		 * The meta object literal for the '<em><b>Used By Nodes</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference INTERMEDIATE_OPERATION_NODE__USED_BY_NODES = eINSTANCE.getIntermediateOperationNode_UsedByNodes();
+
+		/**
 		 * The meta object literal for the '<em><b>Get Effective Configuration Values</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -2340,22 +2392,6 @@ public interface IntermediatePackage extends EPackage {
 		 * @generated
 		 */
 		EClass INTERMEDIATE_INFRASTRUCTURE_NODE = eINSTANCE.getIntermediateInfrastructureNode();
-
-		/**
-		 * The meta object literal for the '<em><b>Depends On Nodes</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference INTERMEDIATE_INFRASTRUCTURE_NODE__DEPENDS_ON_NODES = eINSTANCE.getIntermediateInfrastructureNode_DependsOnNodes();
-
-		/**
-		 * The meta object literal for the '<em><b>Used By Nodes</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference INTERMEDIATE_INFRASTRUCTURE_NODE__USED_BY_NODES = eINSTANCE.getIntermediateInfrastructureNode_UsedByNodes();
 
 		/**
 		 * The meta object literal for the '<em><b>Reference</b></em>' containment reference feature.

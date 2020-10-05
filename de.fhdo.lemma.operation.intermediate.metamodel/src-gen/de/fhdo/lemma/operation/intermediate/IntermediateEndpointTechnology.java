@@ -11,7 +11,7 @@ import de.fhdo.lemma.service.intermediate.IntermediateTechnology;
  *
  * <!-- begin-model-doc -->
  * *
- * EndpointTechnology
+ * Endpoint technology for assigning a specific technology to an endpoint
  * <!-- end-model-doc -->
  *
  * <p>

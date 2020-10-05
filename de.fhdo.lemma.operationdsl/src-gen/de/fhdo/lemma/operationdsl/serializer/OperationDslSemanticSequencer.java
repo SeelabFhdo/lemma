@@ -38,6 +38,7 @@ import de.fhdo.lemma.operation.InfrastructureNode;
 import de.fhdo.lemma.operation.InfrastructureTechnologyReference;
 import de.fhdo.lemma.operation.OperationModel;
 import de.fhdo.lemma.operation.OperationPackage;
+import de.fhdo.lemma.operation.PossiblyImportedOperationNode;
 import de.fhdo.lemma.operation.ProtocolAndDataFormat;
 import de.fhdo.lemma.operation.ServiceDeploymentSpecification;
 import de.fhdo.lemma.operationdsl.services.OperationDslGrammarAccess;
@@ -204,6 +205,9 @@ public class OperationDslSemanticSequencer extends ServiceDslSemanticSequencer {
 			case OperationPackage.OPERATION_MODEL:
 				sequence_OperationModel(context, (OperationModel) semanticObject); 
 				return; 
+			case OperationPackage.POSSIBLY_IMPORTED_OPERATION_NODE:
+				sequence_PossiblyImportedOperationNode(context, (PossiblyImportedOperationNode) semanticObject); 
+				return; 
 			case OperationPackage.PROTOCOL_AND_DATA_FORMAT:
 				sequence_ProtocolAndDataFormat(context, (ProtocolAndDataFormat) semanticObject); 
 				return; 
@@ -359,6 +363,9 @@ public class OperationDslSemanticSequencer extends ServiceDslSemanticSequencer {
 	 *         operationEnvironment=[OperationEnvironment|STRING]? 
 	 *         deployedServices+=ImportedMicroservice 
 	 *         deployedServices+=ImportedMicroservice* 
+	 *         (dependsOnNodes+=PossiblyImportedOperationNode dependsOnNodes+=PossiblyImportedOperationNode*)? 
+	 *         usedByNodes+=PossiblyImportedOperationNode* 
+	 *         usedByNodes+=PossiblyImportedOperationNode* 
 	 *         aspects+=ImportedOperationAspect* 
 	 *         (
 	 *             defaultServicePropertyValues+=PropertyValueAssignment+ | 
@@ -441,9 +448,10 @@ public class OperationDslSemanticSequencer extends ServiceDslSemanticSequencer {
 	 *         name=ID 
 	 *         infrastructureTechnology=InfrastructureTechnologyReference 
 	 *         operationEnvironment=[OperationEnvironment|STRING]? 
-	 *         (dependsOnNodes+=[OperationNode|ID] dependsOnNodes+=[OperationNode|ID]*)? 
+	 *         (dependsOnNodes+=PossiblyImportedOperationNode dependsOnNodes+=PossiblyImportedOperationNode*)? 
 	 *         (deployedServices+=ImportedMicroservice deployedServices+=ImportedMicroservice*)? 
-	 *         (usedByNodes+=[OperationNode|ID] usedByNodes+=[OperationNode|ID]*)? 
+	 *         usedByNodes+=PossiblyImportedOperationNode* 
+	 *         usedByNodes+=PossiblyImportedOperationNode* 
 	 *         aspects+=ImportedOperationAspect* 
 	 *         defaultServicePropertyValues+=PropertyValueAssignment* 
 	 *         endpoints+=BasicEndpoint* 
@@ -484,6 +492,18 @@ public class OperationDslSemanticSequencer extends ServiceDslSemanticSequencer {
 	 *     (imports+=Import+ containers+=Container* infrastructureNodes+=InfrastructureNode*)
 	 */
 	protected void sequence_OperationModel(ISerializationContext context, OperationModel semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     PossiblyImportedOperationNode returns PossiblyImportedOperationNode
+	 *
+	 * Constraint:
+	 *     (import=[Import|ID]? node=[OperationNode|QualifiedName])
+	 */
+	protected void sequence_PossiblyImportedOperationNode(ISerializationContext context, PossiblyImportedOperationNode semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

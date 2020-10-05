@@ -2,7 +2,6 @@
  */
 package de.fhdo.lemma.operation.intermediate;
 
-import org.eclipse.emf.common.util.EList;
 
 /**
  * <!-- begin-user-doc -->
@@ -19,8 +18,6 @@ import org.eclipse.emf.common.util.EList;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link de.fhdo.lemma.operation.intermediate.IntermediateInfrastructureNode#getDependsOnNodes <em>Depends On Nodes</em>}</li>
- *   <li>{@link de.fhdo.lemma.operation.intermediate.IntermediateInfrastructureNode#getUsedByNodes <em>Used By Nodes</em>}</li>
  *   <li>{@link de.fhdo.lemma.operation.intermediate.IntermediateInfrastructureNode#getReference <em>Reference</em>}</li>
  *   <li>{@link de.fhdo.lemma.operation.intermediate.IntermediateInfrastructureNode#getOperationModel <em>Operation Model</em>}</li>
  * </ul>
@@ -30,30 +27,6 @@ import org.eclipse.emf.common.util.EList;
  * @generated
  */
 public interface IntermediateInfrastructureNode extends IntermediateOperationNode {
-	/**
-	 * Returns the value of the '<em><b>Depends On Nodes</b></em>' containment reference list.
-	 * The list contents are of type {@link de.fhdo.lemma.operation.intermediate.IntermediateOperationNode}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Depends On Nodes</em>' containment reference list.
-	 * @see de.fhdo.lemma.operation.intermediate.IntermediatePackage#getIntermediateInfrastructureNode_DependsOnNodes()
-	 * @model containment="true"
-	 * @generated
-	 */
-	EList<IntermediateOperationNode> getDependsOnNodes();
-
-	/**
-	 * Returns the value of the '<em><b>Used By Nodes</b></em>' containment reference list.
-	 * The list contents are of type {@link de.fhdo.lemma.operation.intermediate.IntermediateOperationNode}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Used By Nodes</em>' containment reference list.
-	 * @see de.fhdo.lemma.operation.intermediate.IntermediatePackage#getIntermediateInfrastructureNode_UsedByNodes()
-	 * @model containment="true"
-	 * @generated
-	 */
-	EList<IntermediateOperationNode> getUsedByNodes();
-
 	/**
 	 * Returns the value of the '<em><b>Reference</b></em>' containment reference.
 	 * It is bidirectional and its opposite is '{@link de.fhdo.lemma.operation.intermediate.IntermediateInfrastructureTechnologyReference#getInfrastructureNode <em>Infrastructure Node</em>}'.

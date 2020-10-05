@@ -41,7 +41,7 @@ public class MappingDslUiModule extends AbstractMappingDslUiModule {
     return HighlightingCalculator.class;
   }
   
-  public MappingDslUiModule(final AbstractUIPlugin arg0) {
-    super(arg0);
+  public MappingDslUiModule(final AbstractUIPlugin plugin) {
+    super(plugin);
   }
 }

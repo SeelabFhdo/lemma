@@ -5,24 +5,17 @@ package de.fhdo.lemma.operation.intermediate.impl;
 import de.fhdo.lemma.operation.intermediate.IntermediateInfrastructureNode;
 import de.fhdo.lemma.operation.intermediate.IntermediateInfrastructureTechnologyReference;
 import de.fhdo.lemma.operation.intermediate.IntermediateOperationModel;
-import de.fhdo.lemma.operation.intermediate.IntermediateOperationNode;
 import de.fhdo.lemma.operation.intermediate.IntermediatePackage;
-
-import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
-import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
-import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -32,8 +25,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.fhdo.lemma.operation.intermediate.impl.IntermediateInfrastructureNodeImpl#getDependsOnNodes <em>Depends On Nodes</em>}</li>
- *   <li>{@link de.fhdo.lemma.operation.intermediate.impl.IntermediateInfrastructureNodeImpl#getUsedByNodes <em>Used By Nodes</em>}</li>
  *   <li>{@link de.fhdo.lemma.operation.intermediate.impl.IntermediateInfrastructureNodeImpl#getReference <em>Reference</em>}</li>
  *   <li>{@link de.fhdo.lemma.operation.intermediate.impl.IntermediateInfrastructureNodeImpl#getOperationModel <em>Operation Model</em>}</li>
  * </ul>
@@ -41,26 +32,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * @generated
  */
 public class IntermediateInfrastructureNodeImpl extends IntermediateOperationNodeImpl implements IntermediateInfrastructureNode {
-	/**
-	 * The cached value of the '{@link #getDependsOnNodes() <em>Depends On Nodes</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getDependsOnNodes()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<IntermediateOperationNode> dependsOnNodes;
-
-	/**
-	 * The cached value of the '{@link #getUsedByNodes() <em>Used By Nodes</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getUsedByNodes()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<IntermediateOperationNode> usedByNodes;
-
 	/**
 	 * The cached value of the '{@link #getReference() <em>Reference</em>}' containment reference.
 	 * <!-- begin-user-doc -->
@@ -88,32 +59,6 @@ public class IntermediateInfrastructureNodeImpl extends IntermediateOperationNod
 	@Override
 	protected EClass eStaticClass() {
 		return IntermediatePackage.Literals.INTERMEDIATE_INFRASTRUCTURE_NODE;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EList<IntermediateOperationNode> getDependsOnNodes() {
-		if (dependsOnNodes == null) {
-			dependsOnNodes = new EObjectContainmentEList<IntermediateOperationNode>(IntermediateOperationNode.class, this, IntermediatePackage.INTERMEDIATE_INFRASTRUCTURE_NODE__DEPENDS_ON_NODES);
-		}
-		return dependsOnNodes;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EList<IntermediateOperationNode> getUsedByNodes() {
-		if (usedByNodes == null) {
-			usedByNodes = new EObjectContainmentEList<IntermediateOperationNode>(IntermediateOperationNode.class, this, IntermediatePackage.INTERMEDIATE_INFRASTRUCTURE_NODE__USED_BY_NODES);
-		}
-		return usedByNodes;
 	}
 
 	/**
@@ -242,10 +187,6 @@ public class IntermediateInfrastructureNodeImpl extends IntermediateOperationNod
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case IntermediatePackage.INTERMEDIATE_INFRASTRUCTURE_NODE__DEPENDS_ON_NODES:
-				return ((InternalEList<?>)getDependsOnNodes()).basicRemove(otherEnd, msgs);
-			case IntermediatePackage.INTERMEDIATE_INFRASTRUCTURE_NODE__USED_BY_NODES:
-				return ((InternalEList<?>)getUsedByNodes()).basicRemove(otherEnd, msgs);
 			case IntermediatePackage.INTERMEDIATE_INFRASTRUCTURE_NODE__REFERENCE:
 				return basicSetReference(null, msgs);
 			case IntermediatePackage.INTERMEDIATE_INFRASTRUCTURE_NODE__OPERATION_MODEL:
@@ -276,10 +217,6 @@ public class IntermediateInfrastructureNodeImpl extends IntermediateOperationNod
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case IntermediatePackage.INTERMEDIATE_INFRASTRUCTURE_NODE__DEPENDS_ON_NODES:
-				return getDependsOnNodes();
-			case IntermediatePackage.INTERMEDIATE_INFRASTRUCTURE_NODE__USED_BY_NODES:
-				return getUsedByNodes();
 			case IntermediatePackage.INTERMEDIATE_INFRASTRUCTURE_NODE__REFERENCE:
 				return getReference();
 			case IntermediatePackage.INTERMEDIATE_INFRASTRUCTURE_NODE__OPERATION_MODEL:
@@ -294,18 +231,9 @@ public class IntermediateInfrastructureNodeImpl extends IntermediateOperationNod
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case IntermediatePackage.INTERMEDIATE_INFRASTRUCTURE_NODE__DEPENDS_ON_NODES:
-				getDependsOnNodes().clear();
-				getDependsOnNodes().addAll((Collection<? extends IntermediateOperationNode>)newValue);
-				return;
-			case IntermediatePackage.INTERMEDIATE_INFRASTRUCTURE_NODE__USED_BY_NODES:
-				getUsedByNodes().clear();
-				getUsedByNodes().addAll((Collection<? extends IntermediateOperationNode>)newValue);
-				return;
 			case IntermediatePackage.INTERMEDIATE_INFRASTRUCTURE_NODE__REFERENCE:
 				setReference((IntermediateInfrastructureTechnologyReference)newValue);
 				return;
@@ -324,12 +252,6 @@ public class IntermediateInfrastructureNodeImpl extends IntermediateOperationNod
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case IntermediatePackage.INTERMEDIATE_INFRASTRUCTURE_NODE__DEPENDS_ON_NODES:
-				getDependsOnNodes().clear();
-				return;
-			case IntermediatePackage.INTERMEDIATE_INFRASTRUCTURE_NODE__USED_BY_NODES:
-				getUsedByNodes().clear();
-				return;
 			case IntermediatePackage.INTERMEDIATE_INFRASTRUCTURE_NODE__REFERENCE:
 				setReference((IntermediateInfrastructureTechnologyReference)null);
 				return;
@@ -348,10 +270,6 @@ public class IntermediateInfrastructureNodeImpl extends IntermediateOperationNod
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case IntermediatePackage.INTERMEDIATE_INFRASTRUCTURE_NODE__DEPENDS_ON_NODES:
-				return dependsOnNodes != null && !dependsOnNodes.isEmpty();
-			case IntermediatePackage.INTERMEDIATE_INFRASTRUCTURE_NODE__USED_BY_NODES:
-				return usedByNodes != null && !usedByNodes.isEmpty();
 			case IntermediatePackage.INTERMEDIATE_INFRASTRUCTURE_NODE__REFERENCE:
 				return reference != null;
 			case IntermediatePackage.INTERMEDIATE_INFRASTRUCTURE_NODE__OPERATION_MODEL:

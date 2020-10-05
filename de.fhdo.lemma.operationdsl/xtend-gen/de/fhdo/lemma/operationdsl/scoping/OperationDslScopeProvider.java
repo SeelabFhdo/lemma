@@ -14,6 +14,7 @@ import de.fhdo.lemma.operation.InfrastructureTechnologyReference;
 import de.fhdo.lemma.operation.OperationModel;
 import de.fhdo.lemma.operation.OperationNode;
 import de.fhdo.lemma.operation.OperationPackage;
+import de.fhdo.lemma.operation.PossiblyImportedOperationNode;
 import de.fhdo.lemma.operation.ProtocolAndDataFormat;
 import de.fhdo.lemma.operation.ServiceDeploymentSpecification;
 import de.fhdo.lemma.operationdsl.scoping.AbstractOperationDslScopeProvider;
@@ -120,6 +121,12 @@ public class OperationDslScopeProvider extends AbstractOperationDslScopeProvider
         _switchResult = this.getScope(((ImportedOperationAspect)context), reference);
       }
     }
+    if (!_matched) {
+      if (context instanceof PossiblyImportedOperationNode) {
+        _matched=true;
+        _switchResult = this.getScope(((PossiblyImportedOperationNode)context), reference);
+      }
+    }
     final IScope scope = _switchResult;
     if ((scope != null)) {
       return scope;
@@ -156,6 +163,18 @@ public class OperationDslScopeProvider extends AbstractOperationDslScopeProvider
       if (Objects.equal(reference, OperationPackage.Literals.DEPLOYMENT_TECHNOLOGY_REFERENCE__IMPORT)) {
         _matched=true;
         return this.getScopeForAnnotatedTechnologies(container);
+      }
+    }
+    if (!_matched) {
+      if (Objects.equal(reference, OperationPackage.Literals.POSSIBLY_IMPORTED_OPERATION_NODE__IMPORT)) {
+        _matched=true;
+        return this.getScopeForImportsOfType(container, OperationModel.class);
+      }
+    }
+    if (!_matched) {
+      if (Objects.equal(reference, OperationPackage.Literals.POSSIBLY_IMPORTED_OPERATION_NODE__NODE)) {
+        _matched=true;
+        return this.getScopeForPossiblyImportedOperationNode(container);
       }
     }
     return this.getScope(((OperationNode) container), reference);
@@ -317,15 +336,27 @@ public class OperationDslScopeProvider extends AbstractOperationDslScopeProvider
       }
     }
     if (!_matched) {
-      if (Objects.equal(reference, OperationPackage.Literals.INFRASTRUCTURE_NODE__USED_BY_NODES)) {
+      if (Objects.equal(reference, OperationPackage.Literals.OPERATION_NODE__USED_BY_NODES)) {
         _matched=true;
         return this.getScopeForOtherNodes(infrastructureNode);
       }
     }
     if (!_matched) {
-      if (Objects.equal(reference, OperationPackage.Literals.INFRASTRUCTURE_NODE__DEPENDS_ON_NODES)) {
+      if (Objects.equal(reference, OperationPackage.Literals.OPERATION_NODE__DEPENDS_ON_NODES)) {
         _matched=true;
         return this.getScopeForOtherNodes(infrastructureNode);
+      }
+    }
+    if (!_matched) {
+      if (Objects.equal(reference, OperationPackage.Literals.POSSIBLY_IMPORTED_OPERATION_NODE__IMPORT)) {
+        _matched=true;
+        return this.getScopeForImportsOfType(infrastructureNode, OperationModel.class);
+      }
+    }
+    if (!_matched) {
+      if (Objects.equal(reference, OperationPackage.Literals.POSSIBLY_IMPORTED_OPERATION_NODE__NODE)) {
+        _matched=true;
+        return this.getScopeForPossiblyImportedOperationNode(infrastructureNode);
       }
     }
     return this.getScope(((OperationNode) infrastructureNode), reference);
@@ -714,5 +745,90 @@ public class OperationDslScopeProvider extends AbstractOperationDslScopeProvider
     };
     final Iterable<Import> validImports = LemmaUtils.<Import>getImportsOfModelTypes(allImports, _function, types);
     return Scopes.scopeFor(validImports);
+  }
+  
+  /**
+   * Build scope for possibly imported operation node and the given reference
+   */
+  private IScope getScope(final PossiblyImportedOperationNode importedNode, final EReference reference) {
+    boolean _matched = false;
+    if (Objects.equal(reference, OperationPackage.Literals.POSSIBLY_IMPORTED_OPERATION_NODE__IMPORT)) {
+      _matched=true;
+      return this.getScopeForImportsOfType(importedNode, OperationModel.class);
+    }
+    if (!_matched) {
+      if (Objects.equal(reference, OperationPackage.Literals.POSSIBLY_IMPORTED_OPERATION_NODE__NODE)) {
+        _matched=true;
+        return this.getScopeForPossiblyImportedOperationNode(importedNode, importedNode.getImport());
+      }
+    }
+    return null;
+  }
+  
+  /**
+   * Convenience method for building a scope for a possibly imported microservice without an
+   * import specification
+   */
+  private IScope getScopeForPossiblyImportedOperationNode(final EObject context) {
+    return this.getScopeForPossiblyImportedOperationNode(context, null);
+  }
+  
+  /**
+   * Helper method to build a scope for possibly imported operation node, i.e., an operation node
+   * with or without import specifications. Operation nodes required by another operation node may
+   * possibly be imported.
+   */
+  private IScope getScopeForPossiblyImportedOperationNode(final EObject context, final Import import_) {
+    if ((!(((context instanceof InfrastructureNode) || 
+      (context instanceof Container)) || 
+      (context instanceof PossiblyImportedOperationNode)))) {
+      return IScope.NULLSCOPE;
+    }
+    OperationNode _switchResult = null;
+    boolean _matched = false;
+    if (context instanceof InfrastructureNode) {
+      _matched=true;
+      _switchResult = ((InfrastructureNode) context);
+    }
+    if (!_matched) {
+      if (context instanceof Container) {
+        _matched=true;
+        _switchResult = ((Container) context);
+      }
+    }
+    if (!_matched) {
+      if (context instanceof PossiblyImportedOperationNode) {
+        _matched=true;
+        _switchResult = EcoreUtil2.<OperationNode>getContainerOfType(context, 
+          OperationNode.class);
+      }
+    }
+    final OperationNode operatioNode = _switchResult;
+    String _xifexpression = null;
+    if ((import_ != null)) {
+      _xifexpression = import_.getImportURI();
+    } else {
+      _xifexpression = null;
+    }
+    final String importUri = _xifexpression;
+    final Function<OperationModel, List<InfrastructureNode>> _function = (OperationModel it) -> {
+      return IterableExtensions.<InfrastructureNode>toList(it.getInfrastructureNodes());
+    };
+    final Function<InfrastructureNode, List<String>> _function_1 = (InfrastructureNode it) -> {
+      return it.getQualifiedNameParts();
+    };
+    final IScope infrastructureNodeScope = LemmaUtils.<OperationNode, OperationModel, InfrastructureNode>getScopeForPossiblyImportedConcept(operatioNode, 
+      operatioNode.getQualifiedNameParts(), 
+      OperationModel.class, importUri, _function, _function_1);
+    final Function<OperationModel, List<Container>> _function_2 = (OperationModel it) -> {
+      return IterableExtensions.<Container>toList(it.getContainers());
+    };
+    final Function<Container, List<String>> _function_3 = (Container it) -> {
+      return it.getQualifiedNameParts();
+    };
+    final IScope containerScope = LemmaUtils.<OperationNode, OperationModel, Container>getScopeForPossiblyImportedConcept(operatioNode, 
+      operatioNode.getQualifiedNameParts(), 
+      OperationModel.class, importUri, _function_2, _function_3);
+    return LemmaUtils.mergeScopes(infrastructureNodeScope, containerScope);
   }
 }

@@ -12,7 +12,7 @@ import org.eclipse.emf.ecore.EObject;
  * <!-- begin-model-doc -->
  * *
  * Intermediate operation environment of an intermediate operation technology, e.g., an image
- * of a deployment container
+ * of a container
  * <!-- end-model-doc -->
  *
  * <p>

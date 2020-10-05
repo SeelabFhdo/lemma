@@ -33,6 +33,8 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.fhdo.lemma.operation.intermediate.IntermediateOperationNode#getSpecifications <em>Specifications</em>}</li>
  *   <li>{@link de.fhdo.lemma.operation.intermediate.IntermediateOperationNode#getDefaultValues <em>Default Values</em>}</li>
  *   <li>{@link de.fhdo.lemma.operation.intermediate.IntermediateOperationNode#getAspects <em>Aspects</em>}</li>
+ *   <li>{@link de.fhdo.lemma.operation.intermediate.IntermediateOperationNode#getDependsOnNodes <em>Depends On Nodes</em>}</li>
+ *   <li>{@link de.fhdo.lemma.operation.intermediate.IntermediateOperationNode#getUsedByNodes <em>Used By Nodes</em>}</li>
  * </ul>
  *
  * @see de.fhdo.lemma.operation.intermediate.IntermediatePackage#getIntermediateOperationNode()
@@ -186,6 +188,30 @@ public interface IntermediateOperationNode extends EObject {
 	 * @generated
 	 */
 	EList<IntermediateImportedAspect> getAspects();
+
+	/**
+	 * Returns the value of the '<em><b>Depends On Nodes</b></em>' containment reference list.
+	 * The list contents are of type {@link de.fhdo.lemma.operation.intermediate.IntermediateOperationNode}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Depends On Nodes</em>' containment reference list.
+	 * @see de.fhdo.lemma.operation.intermediate.IntermediatePackage#getIntermediateOperationNode_DependsOnNodes()
+	 * @model containment="true"
+	 * @generated
+	 */
+	EList<IntermediateOperationNode> getDependsOnNodes();
+
+	/**
+	 * Returns the value of the '<em><b>Used By Nodes</b></em>' containment reference list.
+	 * The list contents are of type {@link de.fhdo.lemma.operation.intermediate.IntermediateOperationNode}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Used By Nodes</em>' containment reference list.
+	 * @see de.fhdo.lemma.operation.intermediate.IntermediatePackage#getIntermediateOperationNode_UsedByNodes()
+	 * @model containment="true"
+	 * @generated
+	 */
+	EList<IntermediateOperationNode> getUsedByNodes();
 
 	/**
 	 * <!-- begin-user-doc -->

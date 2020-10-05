@@ -371,6 +371,26 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
 	 * @generated
 	 */
 	@Override
+	public EReference getIntermediateOperationNode_DependsOnNodes() {
+		return (EReference)intermediateOperationNodeEClass.getEStructuralFeatures().get(9);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EReference getIntermediateOperationNode_UsedByNodes() {
+		return (EReference)intermediateOperationNodeEClass.getEStructuralFeatures().get(10);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public EOperation getIntermediateOperationNode__GetEffectiveConfigurationValues__OperationMicroserviceReference() {
 		return intermediateOperationNodeEClass.getEOperations().get(0);
 	}
@@ -421,7 +441,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
 	 * @generated
 	 */
 	@Override
-	public EReference getIntermediateInfrastructureNode_DependsOnNodes() {
+	public EReference getIntermediateInfrastructureNode_Reference() {
 		return (EReference)intermediateInfrastructureNodeEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -431,28 +451,8 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
 	 * @generated
 	 */
 	@Override
-	public EReference getIntermediateInfrastructureNode_UsedByNodes() {
-		return (EReference)intermediateInfrastructureNodeEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EReference getIntermediateInfrastructureNode_Reference() {
-		return (EReference)intermediateInfrastructureNodeEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
 	public EReference getIntermediateInfrastructureNode_OperationModel() {
-		return (EReference)intermediateInfrastructureNodeEClass.getEStructuralFeatures().get(3);
+		return (EReference)intermediateInfrastructureNodeEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -960,6 +960,8 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
 		createEReference(intermediateOperationNodeEClass, INTERMEDIATE_OPERATION_NODE__SPECIFICATIONS);
 		createEReference(intermediateOperationNodeEClass, INTERMEDIATE_OPERATION_NODE__DEFAULT_VALUES);
 		createEReference(intermediateOperationNodeEClass, INTERMEDIATE_OPERATION_NODE__ASPECTS);
+		createEReference(intermediateOperationNodeEClass, INTERMEDIATE_OPERATION_NODE__DEPENDS_ON_NODES);
+		createEReference(intermediateOperationNodeEClass, INTERMEDIATE_OPERATION_NODE__USED_BY_NODES);
 		createEOperation(intermediateOperationNodeEClass, INTERMEDIATE_OPERATION_NODE___GET_EFFECTIVE_CONFIGURATION_VALUES__OPERATIONMICROSERVICEREFERENCE);
 
 		intermediateContainerEClass = createEClass(INTERMEDIATE_CONTAINER);
@@ -967,8 +969,6 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
 		createEReference(intermediateContainerEClass, INTERMEDIATE_CONTAINER__OPERATION_MODEL);
 
 		intermediateInfrastructureNodeEClass = createEClass(INTERMEDIATE_INFRASTRUCTURE_NODE);
-		createEReference(intermediateInfrastructureNodeEClass, INTERMEDIATE_INFRASTRUCTURE_NODE__DEPENDS_ON_NODES);
-		createEReference(intermediateInfrastructureNodeEClass, INTERMEDIATE_INFRASTRUCTURE_NODE__USED_BY_NODES);
 		createEReference(intermediateInfrastructureNodeEClass, INTERMEDIATE_INFRASTRUCTURE_NODE__REFERENCE);
 		createEReference(intermediateInfrastructureNodeEClass, INTERMEDIATE_INFRASTRUCTURE_NODE__OPERATION_MODEL);
 
@@ -1089,6 +1089,8 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
 		initEReference(getIntermediateOperationNode_Specifications(), this.getIntermediateServiceDeploymentSpecification(), this.getIntermediateServiceDeploymentSpecification_OperationNode(), "specifications", null, 0, -1, IntermediateOperationNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getIntermediateOperationNode_DefaultValues(), this.getIntermediateTechnologySpecificPropertyValue(), this.getIntermediateTechnologySpecificPropertyValue_OperationNode(), "defaultValues", null, 0, -1, IntermediateOperationNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getIntermediateOperationNode_Aspects(), theIntermediatePackage_1.getIntermediateImportedAspect(), null, "aspects", null, 0, -1, IntermediateOperationNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getIntermediateOperationNode_DependsOnNodes(), this.getIntermediateOperationNode(), null, "dependsOnNodes", null, 0, -1, IntermediateOperationNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getIntermediateOperationNode_UsedByNodes(), this.getIntermediateOperationNode(), null, "usedByNodes", null, 0, -1, IntermediateOperationNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		EOperation op = initEOperation(getIntermediateOperationNode__GetEffectiveConfigurationValues__OperationMicroserviceReference(), this.getIntermediateTechnologySpecificPropertyValue(), "getEffectiveConfigurationValues", 0, -1, !IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, this.getOperationMicroserviceReference(), "deployedService", 0, 1, !IS_UNIQUE, IS_ORDERED);
@@ -1098,8 +1100,6 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
 		initEReference(getIntermediateContainer_OperationModel(), this.getIntermediateOperationModel(), this.getIntermediateOperationModel_Containers(), "operationModel", null, 0, 1, IntermediateContainer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(intermediateInfrastructureNodeEClass, IntermediateInfrastructureNode.class, "IntermediateInfrastructureNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getIntermediateInfrastructureNode_DependsOnNodes(), this.getIntermediateOperationNode(), null, "dependsOnNodes", null, 0, -1, IntermediateInfrastructureNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getIntermediateInfrastructureNode_UsedByNodes(), this.getIntermediateOperationNode(), null, "usedByNodes", null, 0, -1, IntermediateInfrastructureNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getIntermediateInfrastructureNode_Reference(), this.getIntermediateInfrastructureTechnologyReference(), this.getIntermediateInfrastructureTechnologyReference_InfrastructureNode(), "reference", null, 0, 1, IntermediateInfrastructureNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getIntermediateInfrastructureNode_OperationModel(), this.getIntermediateOperationModel(), this.getIntermediateOperationModel_InfrastructureNodes(), "operationModel", null, 0, 1, IntermediateInfrastructureNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 

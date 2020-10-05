@@ -34,161 +34,161 @@ import org.eclipse.emf.ecore.EObject;
  * @generated
  */
 public interface InterfaceReference extends EObject {
-    /**
-     * Returns the value of the '<em><b>Name</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the value of the '<em>Name</em>' attribute.
-     * @see #setName(String)
-     * @see de.fhdo.lemma.service.intermediate.IntermediatePackage#getInterfaceReference_Name()
-     * @model unique="false"
-     * @generated
-     */
-    String getName();
+	/**
+	 * Returns the value of the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Name</em>' attribute.
+	 * @see #setName(String)
+	 * @see de.fhdo.lemma.service.intermediate.IntermediatePackage#getInterfaceReference_Name()
+	 * @model unique="false"
+	 * @generated
+	 */
+	String getName();
 
-    /**
-     * Sets the value of the '{@link de.fhdo.lemma.service.intermediate.InterfaceReference#getName <em>Name</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Name</em>' attribute.
-     * @see #getName()
-     * @generated
-     */
-    void setName(String value);
+	/**
+	 * Sets the value of the '{@link de.fhdo.lemma.service.intermediate.InterfaceReference#getName <em>Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Name</em>' attribute.
+	 * @see #getName()
+	 * @generated
+	 */
+	void setName(String value);
 
-    /**
-     * Returns the value of the '<em><b>Version</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the value of the '<em>Version</em>' attribute.
-     * @see #setVersion(String)
-     * @see de.fhdo.lemma.service.intermediate.IntermediatePackage#getInterfaceReference_Version()
-     * @model unique="false"
-     * @generated
-     */
-    String getVersion();
+	/**
+	 * Returns the value of the '<em><b>Version</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Version</em>' attribute.
+	 * @see #setVersion(String)
+	 * @see de.fhdo.lemma.service.intermediate.IntermediatePackage#getInterfaceReference_Version()
+	 * @model unique="false"
+	 * @generated
+	 */
+	String getVersion();
 
-    /**
-     * Sets the value of the '{@link de.fhdo.lemma.service.intermediate.InterfaceReference#getVersion <em>Version</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Version</em>' attribute.
-     * @see #getVersion()
-     * @generated
-     */
-    void setVersion(String value);
+	/**
+	 * Sets the value of the '{@link de.fhdo.lemma.service.intermediate.InterfaceReference#getVersion <em>Version</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Version</em>' attribute.
+	 * @see #getVersion()
+	 * @generated
+	 */
+	void setVersion(String value);
 
-    /**
-     * Returns the value of the '<em><b>Qualified Name</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the value of the '<em>Qualified Name</em>' attribute.
-     * @see #setQualifiedName(String)
-     * @see de.fhdo.lemma.service.intermediate.IntermediatePackage#getInterfaceReference_QualifiedName()
-     * @model unique="false"
-     * @generated
-     */
-    String getQualifiedName();
+	/**
+	 * Returns the value of the '<em><b>Qualified Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Qualified Name</em>' attribute.
+	 * @see #setQualifiedName(String)
+	 * @see de.fhdo.lemma.service.intermediate.IntermediatePackage#getInterfaceReference_QualifiedName()
+	 * @model unique="false"
+	 * @generated
+	 */
+	String getQualifiedName();
 
-    /**
-     * Sets the value of the '{@link de.fhdo.lemma.service.intermediate.InterfaceReference#getQualifiedName <em>Qualified Name</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Qualified Name</em>' attribute.
-     * @see #getQualifiedName()
-     * @generated
-     */
-    void setQualifiedName(String value);
+	/**
+	 * Sets the value of the '{@link de.fhdo.lemma.service.intermediate.InterfaceReference#getQualifiedName <em>Qualified Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Qualified Name</em>' attribute.
+	 * @see #getQualifiedName()
+	 * @generated
+	 */
+	void setQualifiedName(String value);
 
-    /**
-     * Returns the value of the '<em><b>Imported</b></em>' attribute.
-     * The default value is <code>"false"</code>.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the value of the '<em>Imported</em>' attribute.
-     * @see #setImported(boolean)
-     * @see de.fhdo.lemma.service.intermediate.IntermediatePackage#getInterfaceReference_Imported()
-     * @model default="false" unique="false"
-     * @generated
-     */
-    boolean isImported();
+	/**
+	 * Returns the value of the '<em><b>Imported</b></em>' attribute.
+	 * The default value is <code>"false"</code>.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Imported</em>' attribute.
+	 * @see #setImported(boolean)
+	 * @see de.fhdo.lemma.service.intermediate.IntermediatePackage#getInterfaceReference_Imported()
+	 * @model default="false" unique="false"
+	 * @generated
+	 */
+	boolean isImported();
 
-    /**
-     * Sets the value of the '{@link de.fhdo.lemma.service.intermediate.InterfaceReference#isImported <em>Imported</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Imported</em>' attribute.
-     * @see #isImported()
-     * @generated
-     */
-    void setImported(boolean value);
+	/**
+	 * Sets the value of the '{@link de.fhdo.lemma.service.intermediate.InterfaceReference#isImported <em>Imported</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Imported</em>' attribute.
+	 * @see #isImported()
+	 * @generated
+	 */
+	void setImported(boolean value);
 
-    /**
-     * Returns the value of the '<em><b>Import</b></em>' reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the value of the '<em>Import</em>' reference.
-     * @see #setImport(IntermediateImport)
-     * @see de.fhdo.lemma.service.intermediate.IntermediatePackage#getInterfaceReference_Import()
-     * @model
-     * @generated
-     */
-    IntermediateImport getImport();
+	/**
+	 * Returns the value of the '<em><b>Import</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Import</em>' reference.
+	 * @see #setImport(IntermediateImport)
+	 * @see de.fhdo.lemma.service.intermediate.IntermediatePackage#getInterfaceReference_Import()
+	 * @model
+	 * @generated
+	 */
+	IntermediateImport getImport();
 
-    /**
-     * Sets the value of the '{@link de.fhdo.lemma.service.intermediate.InterfaceReference#getImport <em>Import</em>}' reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Import</em>' reference.
-     * @see #getImport()
-     * @generated
-     */
-    void setImport(IntermediateImport value);
+	/**
+	 * Sets the value of the '{@link de.fhdo.lemma.service.intermediate.InterfaceReference#getImport <em>Import</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Import</em>' reference.
+	 * @see #getImport()
+	 * @generated
+	 */
+	void setImport(IntermediateImport value);
 
-    /**
-     * Returns the value of the '<em><b>Local Interface</b></em>' reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the value of the '<em>Local Interface</em>' reference.
-     * @see #setLocalInterface(IntermediateInterface)
-     * @see de.fhdo.lemma.service.intermediate.IntermediatePackage#getInterfaceReference_LocalInterface()
-     * @model
-     * @generated
-     */
-    IntermediateInterface getLocalInterface();
+	/**
+	 * Returns the value of the '<em><b>Local Interface</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Local Interface</em>' reference.
+	 * @see #setLocalInterface(IntermediateInterface)
+	 * @see de.fhdo.lemma.service.intermediate.IntermediatePackage#getInterfaceReference_LocalInterface()
+	 * @model
+	 * @generated
+	 */
+	IntermediateInterface getLocalInterface();
 
-    /**
-     * Sets the value of the '{@link de.fhdo.lemma.service.intermediate.InterfaceReference#getLocalInterface <em>Local Interface</em>}' reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Local Interface</em>' reference.
-     * @see #getLocalInterface()
-     * @generated
-     */
-    void setLocalInterface(IntermediateInterface value);
+	/**
+	 * Sets the value of the '{@link de.fhdo.lemma.service.intermediate.InterfaceReference#getLocalInterface <em>Local Interface</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Local Interface</em>' reference.
+	 * @see #getLocalInterface()
+	 * @generated
+	 */
+	void setLocalInterface(IntermediateInterface value);
 
-    /**
-     * Returns the value of the '<em><b>Requiring Microservice</b></em>' container reference.
-     * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.intermediate.IntermediateMicroservice#getRequiredInterfaces <em>Required Interfaces</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the value of the '<em>Requiring Microservice</em>' container reference.
-     * @see #setRequiringMicroservice(IntermediateMicroservice)
-     * @see de.fhdo.lemma.service.intermediate.IntermediatePackage#getInterfaceReference_RequiringMicroservice()
-     * @see de.fhdo.lemma.service.intermediate.IntermediateMicroservice#getRequiredInterfaces
-     * @model opposite="requiredInterfaces" transient="false"
-     * @generated
-     */
-    IntermediateMicroservice getRequiringMicroservice();
+	/**
+	 * Returns the value of the '<em><b>Requiring Microservice</b></em>' container reference.
+	 * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.intermediate.IntermediateMicroservice#getRequiredInterfaces <em>Required Interfaces</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Requiring Microservice</em>' container reference.
+	 * @see #setRequiringMicroservice(IntermediateMicroservice)
+	 * @see de.fhdo.lemma.service.intermediate.IntermediatePackage#getInterfaceReference_RequiringMicroservice()
+	 * @see de.fhdo.lemma.service.intermediate.IntermediateMicroservice#getRequiredInterfaces
+	 * @model opposite="requiredInterfaces" transient="false"
+	 * @generated
+	 */
+	IntermediateMicroservice getRequiringMicroservice();
 
-    /**
-     * Sets the value of the '{@link de.fhdo.lemma.service.intermediate.InterfaceReference#getRequiringMicroservice <em>Requiring Microservice</em>}' container reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Requiring Microservice</em>' container reference.
-     * @see #getRequiringMicroservice()
-     * @generated
-     */
-    void setRequiringMicroservice(IntermediateMicroservice value);
+	/**
+	 * Sets the value of the '{@link de.fhdo.lemma.service.intermediate.InterfaceReference#getRequiringMicroservice <em>Requiring Microservice</em>}' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Requiring Microservice</em>' container reference.
+	 * @see #getRequiringMicroservice()
+	 * @generated
+	 */
+	void setRequiringMicroservice(IntermediateMicroservice value);
 
 } // InterfaceReference

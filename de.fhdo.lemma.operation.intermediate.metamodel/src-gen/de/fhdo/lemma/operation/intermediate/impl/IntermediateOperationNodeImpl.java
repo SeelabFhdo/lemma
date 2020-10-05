@@ -60,6 +60,8 @@ import org.eclipse.xtext.xbase.lib.ListExtensions;
  *   <li>{@link de.fhdo.lemma.operation.intermediate.impl.IntermediateOperationNodeImpl#getSpecifications <em>Specifications</em>}</li>
  *   <li>{@link de.fhdo.lemma.operation.intermediate.impl.IntermediateOperationNodeImpl#getDefaultValues <em>Default Values</em>}</li>
  *   <li>{@link de.fhdo.lemma.operation.intermediate.impl.IntermediateOperationNodeImpl#getAspects <em>Aspects</em>}</li>
+ *   <li>{@link de.fhdo.lemma.operation.intermediate.impl.IntermediateOperationNodeImpl#getDependsOnNodes <em>Depends On Nodes</em>}</li>
+ *   <li>{@link de.fhdo.lemma.operation.intermediate.impl.IntermediateOperationNodeImpl#getUsedByNodes <em>Used By Nodes</em>}</li>
  * </ul>
  *
  * @generated
@@ -174,6 +176,26 @@ public abstract class IntermediateOperationNodeImpl extends MinimalEObjectImpl.C
 	 * @ordered
 	 */
 	protected EList<IntermediateImportedAspect> aspects;
+
+	/**
+	 * The cached value of the '{@link #getDependsOnNodes() <em>Depends On Nodes</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getDependsOnNodes()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<IntermediateOperationNode> dependsOnNodes;
+
+	/**
+	 * The cached value of the '{@link #getUsedByNodes() <em>Used By Nodes</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getUsedByNodes()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<IntermediateOperationNode> usedByNodes;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -364,6 +386,32 @@ public abstract class IntermediateOperationNodeImpl extends MinimalEObjectImpl.C
 	 * @generated
 	 */
 	@Override
+	public EList<IntermediateOperationNode> getDependsOnNodes() {
+		if (dependsOnNodes == null) {
+			dependsOnNodes = new EObjectContainmentEList<IntermediateOperationNode>(IntermediateOperationNode.class, this, IntermediatePackage.INTERMEDIATE_OPERATION_NODE__DEPENDS_ON_NODES);
+		}
+		return dependsOnNodes;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EList<IntermediateOperationNode> getUsedByNodes() {
+		if (usedByNodes == null) {
+			usedByNodes = new EObjectContainmentEList<IntermediateOperationNode>(IntermediateOperationNode.class, this, IntermediatePackage.INTERMEDIATE_OPERATION_NODE__USED_BY_NODES);
+		}
+		return usedByNodes;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public EList<IntermediateTechnologySpecificPropertyValue> getEffectiveConfigurationValues(final OperationMicroserviceReference deployedService) {
 		final IntermediateTechnologySpecificPropertyValue[] effectiveConfigurationValues = ((IntermediateTechnologySpecificPropertyValue[])org.eclipse.xtext.xbase.lib.Conversions.unwrapArray(this.getDefaultValues(), IntermediateTechnologySpecificPropertyValue.class));
 		final Function1<IntermediateServiceDeploymentSpecification, Boolean> _function = new Function1<IntermediateServiceDeploymentSpecification, Boolean>() {
@@ -443,6 +491,10 @@ public abstract class IntermediateOperationNodeImpl extends MinimalEObjectImpl.C
 				return ((InternalEList<?>)getDefaultValues()).basicRemove(otherEnd, msgs);
 			case IntermediatePackage.INTERMEDIATE_OPERATION_NODE__ASPECTS:
 				return ((InternalEList<?>)getAspects()).basicRemove(otherEnd, msgs);
+			case IntermediatePackage.INTERMEDIATE_OPERATION_NODE__DEPENDS_ON_NODES:
+				return ((InternalEList<?>)getDependsOnNodes()).basicRemove(otherEnd, msgs);
+			case IntermediatePackage.INTERMEDIATE_OPERATION_NODE__USED_BY_NODES:
+				return ((InternalEList<?>)getUsedByNodes()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -474,6 +526,10 @@ public abstract class IntermediateOperationNodeImpl extends MinimalEObjectImpl.C
 				return getDefaultValues();
 			case IntermediatePackage.INTERMEDIATE_OPERATION_NODE__ASPECTS:
 				return getAspects();
+			case IntermediatePackage.INTERMEDIATE_OPERATION_NODE__DEPENDS_ON_NODES:
+				return getDependsOnNodes();
+			case IntermediatePackage.INTERMEDIATE_OPERATION_NODE__USED_BY_NODES:
+				return getUsedByNodes();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -520,6 +576,14 @@ public abstract class IntermediateOperationNodeImpl extends MinimalEObjectImpl.C
 				getAspects().clear();
 				getAspects().addAll((Collection<? extends IntermediateImportedAspect>)newValue);
 				return;
+			case IntermediatePackage.INTERMEDIATE_OPERATION_NODE__DEPENDS_ON_NODES:
+				getDependsOnNodes().clear();
+				getDependsOnNodes().addAll((Collection<? extends IntermediateOperationNode>)newValue);
+				return;
+			case IntermediatePackage.INTERMEDIATE_OPERATION_NODE__USED_BY_NODES:
+				getUsedByNodes().clear();
+				getUsedByNodes().addAll((Collection<? extends IntermediateOperationNode>)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -559,6 +623,12 @@ public abstract class IntermediateOperationNodeImpl extends MinimalEObjectImpl.C
 			case IntermediatePackage.INTERMEDIATE_OPERATION_NODE__ASPECTS:
 				getAspects().clear();
 				return;
+			case IntermediatePackage.INTERMEDIATE_OPERATION_NODE__DEPENDS_ON_NODES:
+				getDependsOnNodes().clear();
+				return;
+			case IntermediatePackage.INTERMEDIATE_OPERATION_NODE__USED_BY_NODES:
+				getUsedByNodes().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -589,6 +659,10 @@ public abstract class IntermediateOperationNodeImpl extends MinimalEObjectImpl.C
 				return defaultValues != null && !defaultValues.isEmpty();
 			case IntermediatePackage.INTERMEDIATE_OPERATION_NODE__ASPECTS:
 				return aspects != null && !aspects.isEmpty();
+			case IntermediatePackage.INTERMEDIATE_OPERATION_NODE__DEPENDS_ON_NODES:
+				return dependsOnNodes != null && !dependsOnNodes.isEmpty();
+			case IntermediatePackage.INTERMEDIATE_OPERATION_NODE__USED_BY_NODES:
+				return usedByNodes != null && !usedByNodes.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

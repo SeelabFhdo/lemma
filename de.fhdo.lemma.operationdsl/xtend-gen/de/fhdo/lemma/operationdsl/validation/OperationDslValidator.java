@@ -13,11 +13,14 @@ import de.fhdo.lemma.operation.InfrastructureNode;
 import de.fhdo.lemma.operation.OperationModel;
 import de.fhdo.lemma.operation.OperationNode;
 import de.fhdo.lemma.operation.OperationPackage;
+import de.fhdo.lemma.operation.PossiblyImportedOperationNode;
 import de.fhdo.lemma.operation.ProtocolAndDataFormat;
 import de.fhdo.lemma.operation.ServiceDeploymentSpecification;
 import de.fhdo.lemma.operationdsl.validation.AbstractOperationDslValidator;
 import de.fhdo.lemma.service.Import;
+import de.fhdo.lemma.service.ImportType;
 import de.fhdo.lemma.service.Microservice;
+import de.fhdo.lemma.service.ServiceModel;
 import de.fhdo.lemma.service.ServicePackage;
 import de.fhdo.lemma.technology.DataFormat;
 import de.fhdo.lemma.technology.InfrastructureTechnology;
@@ -102,6 +105,47 @@ public class OperationDslValidator extends AbstractOperationDslValidator {
     _builder.append(_name);
     this.error(_builder.toString(), duplicate, 
       ServicePackage.Literals.IMPORT__NAME);
+  }
+  
+  /**
+   * Check that imported file defines a model that fits the given import type
+   */
+  @Check
+  @Override
+  public void checkImportType(final Import import_) {
+    Class<? extends EObject> expectedModelType = null;
+    String expectedModelTypeName = null;
+    ImportType _importType = import_.getImportType();
+    if (_importType != null) {
+      switch (_importType) {
+        case MICROSERVICES:
+          expectedModelType = ServiceModel.class;
+          expectedModelTypeName = "service";
+          break;
+        case TECHNOLOGY:
+          expectedModelType = Technology.class;
+          expectedModelTypeName = "technology";
+          break;
+        case OPERATION_NODES:
+          expectedModelType = OperationModel.class;
+          expectedModelTypeName = "operation";
+          break;
+        default:
+          return;
+      }
+    } else {
+      return;
+    }
+    boolean _isImportOfType = LemmaUtils.isImportOfType(import_.eResource(), import_.getImportURI(), expectedModelType);
+    boolean _not = (!_isImportOfType);
+    if (_not) {
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("File does not contain a ");
+      _builder.append(expectedModelTypeName);
+      _builder.append(" model definition");
+      this.error(_builder.toString(), import_, 
+        ServicePackage.Literals.IMPORT__IMPORT_URI);
+    }
   }
   
   /**
@@ -712,14 +756,14 @@ public class OperationDslValidator extends AbstractOperationDslValidator {
    * Check that node is used by unique nodes
    */
   @Check
-  public void checkUsingNodesUniqueness(final InfrastructureNode infrastructureNode) {
-    final Function<OperationNode, String> _function = (OperationNode it) -> {
-      return it.getName();
+  public void checkUsingNodesUniqueness(final OperationNode operationNode) {
+    final Function<PossiblyImportedOperationNode, String> _function = (PossiblyImportedOperationNode it) -> {
+      return it.getNode().getName();
     };
-    final Integer duplicateIndex = LemmaUtils.<OperationNode, String>getDuplicateIndex(infrastructureNode.getUsedByNodes(), _function);
+    final Integer duplicateIndex = LemmaUtils.<PossiblyImportedOperationNode, String>getDuplicateIndex(operationNode.getUsedByNodes(), _function);
     if (((duplicateIndex).intValue() > (-1))) {
-      this.error("Duplicate node", infrastructureNode, 
-        OperationPackage.Literals.INFRASTRUCTURE_NODE__USED_BY_NODES, (duplicateIndex).intValue());
+      this.error("Duplicate node", operationNode, 
+        OperationPackage.Literals.OPERATION_NODE__USED_BY_NODES, (duplicateIndex).intValue());
     }
   }
   
@@ -727,14 +771,14 @@ public class OperationDslValidator extends AbstractOperationDslValidator {
    * Check that node depends on unique nodes
    */
   @Check
-  public void checkDependingNodesUniqueness(final InfrastructureNode infrastructureNode) {
-    final Function<OperationNode, String> _function = (OperationNode it) -> {
-      return it.getName();
+  public void checkDependingNodesUniqueness(final OperationNode operationNode) {
+    final Function<PossiblyImportedOperationNode, String> _function = (PossiblyImportedOperationNode it) -> {
+      return it.getNode().getName();
     };
-    final Integer duplicateIndex = LemmaUtils.<OperationNode, String>getDuplicateIndex(infrastructureNode.getDependsOnNodes(), _function);
+    final Integer duplicateIndex = LemmaUtils.<PossiblyImportedOperationNode, String>getDuplicateIndex(operationNode.getDependsOnNodes(), _function);
     if (((duplicateIndex).intValue() > (-1))) {
-      this.error("Duplicate node", infrastructureNode, 
-        OperationPackage.Literals.INFRASTRUCTURE_NODE__DEPENDS_ON_NODES, (duplicateIndex).intValue());
+      this.error("Duplicate node", operationNode, 
+        OperationPackage.Literals.OPERATION_NODE__DEPENDS_ON_NODES, (duplicateIndex).intValue());
     }
   }
   

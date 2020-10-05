@@ -11,7 +11,7 @@ import de.fhdo.lemma.service.intermediate.IntermediateEndpoint;
  *
  * <!-- begin-model-doc -->
  * *
- * OperationEndpoint
+ * Intermediate operation endpoint containing technology specific information
  * <!-- end-model-doc -->
  *
  * <p>
