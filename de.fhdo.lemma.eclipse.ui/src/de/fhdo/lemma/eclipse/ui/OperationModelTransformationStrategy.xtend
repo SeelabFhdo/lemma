@@ -15,8 +15,8 @@ import java.util.Map
 import de.fhdo.lemma.intermediate.transformations.service.IntermediateServiceModelTransformation
 import de.fhdo.lemma.utils.LemmaUtils
 import de.fhdo.lemma.eclipse.ui.utils.LemmaUiUtils
-import de.fhdo.lemma.intermediate.transformations.service.IntermediateOperationModelTransformation
 import de.fhdo.lemma.operation.OperationModel
+import de.fhdo.lemma.intermediate.transformations.operation.IntermediateOperationModelTransformation
 
 /**
  * UI-specific intermediate model transformation strategy for models related to the Operation

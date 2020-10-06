@@ -1,4 +1,4 @@
-package de.fhdo.lemma.intermediate.transformations.service
+package de.fhdo.lemma.intermediate.transformations.operation
 
 import java.util.Map
 import de.fhdo.lemma.intermediate.transformations.TransformationModelDescription
