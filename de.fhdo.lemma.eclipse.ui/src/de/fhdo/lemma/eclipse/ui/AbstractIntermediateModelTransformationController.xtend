@@ -28,7 +28,7 @@ abstract class AbstractIntermediateModelTransformationController extends Abstrac
     String modelTypePrefix
 
     /**
-     * Get model specific transformation strategy
+     * Get transformation strategy of model type
      */
     abstract def AbstractUiModelTransformationStrategy getTransformationStrategy()
 
