@@ -25,26 +25,26 @@ package de.fhdo.lemma.data.intermediate;
  * @generated
  */
 public interface IntermediateImportedComplexType extends IntermediateComplexType {
-	/**
-	 * Returns the value of the '<em><b>Import</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Import</em>' reference.
-	 * @see #setImport(IntermediateImport)
-	 * @see de.fhdo.lemma.data.intermediate.IntermediatePackage#getIntermediateImportedComplexType_Import()
-	 * @model
-	 * @generated
-	 */
-	IntermediateImport getImport();
+    /**
+     * Returns the value of the '<em><b>Import</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Import</em>' reference.
+     * @see #setImport(IntermediateImport)
+     * @see de.fhdo.lemma.data.intermediate.IntermediatePackage#getIntermediateImportedComplexType_Import()
+     * @model
+     * @generated
+     */
+    IntermediateImport getImport();
 
-	/**
-	 * Sets the value of the '{@link de.fhdo.lemma.data.intermediate.IntermediateImportedComplexType#getImport <em>Import</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Import</em>' reference.
-	 * @see #getImport()
-	 * @generated
-	 */
-	void setImport(IntermediateImport value);
+    /**
+     * Sets the value of the '{@link de.fhdo.lemma.data.intermediate.IntermediateImportedComplexType#getImport <em>Import</em>}' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Import</em>' reference.
+     * @see #getImport()
+     * @generated
+     */
+    void setImport(IntermediateImport value);
 
 } // IntermediateImportedComplexType

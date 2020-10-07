@@ -55,711 +55,711 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * @generated
  */
 public class IntermediateInterfaceImpl extends MinimalEObjectImpl.Container implements IntermediateInterface {
-	/**
-	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getName()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String NAME_EDEFAULT = null;
+    /**
+     * The default value of the '{@link #getName() <em>Name</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getName()
+     * @generated
+     * @ordered
+     */
+    protected static final String NAME_EDEFAULT = null;
 
-	/**
-	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getName()
-	 * @generated
-	 * @ordered
-	 */
-	protected String name = NAME_EDEFAULT;
+    /**
+     * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getName()
+     * @generated
+     * @ordered
+     */
+    protected String name = NAME_EDEFAULT;
 
-	/**
-	 * The default value of the '{@link #getVersion() <em>Version</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getVersion()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String VERSION_EDEFAULT = null;
+    /**
+     * The default value of the '{@link #getVersion() <em>Version</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getVersion()
+     * @generated
+     * @ordered
+     */
+    protected static final String VERSION_EDEFAULT = null;
 
-	/**
-	 * The cached value of the '{@link #getVersion() <em>Version</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getVersion()
-	 * @generated
-	 * @ordered
-	 */
-	protected String version = VERSION_EDEFAULT;
+    /**
+     * The cached value of the '{@link #getVersion() <em>Version</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getVersion()
+     * @generated
+     * @ordered
+     */
+    protected String version = VERSION_EDEFAULT;
 
-	/**
-	 * The default value of the '{@link #getQualifiedName() <em>Qualified Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getQualifiedName()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String QUALIFIED_NAME_EDEFAULT = null;
+    /**
+     * The default value of the '{@link #getQualifiedName() <em>Qualified Name</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getQualifiedName()
+     * @generated
+     * @ordered
+     */
+    protected static final String QUALIFIED_NAME_EDEFAULT = null;
 
-	/**
-	 * The cached value of the '{@link #getQualifiedName() <em>Qualified Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getQualifiedName()
-	 * @generated
-	 * @ordered
-	 */
-	protected String qualifiedName = QUALIFIED_NAME_EDEFAULT;
+    /**
+     * The cached value of the '{@link #getQualifiedName() <em>Qualified Name</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getQualifiedName()
+     * @generated
+     * @ordered
+     */
+    protected String qualifiedName = QUALIFIED_NAME_EDEFAULT;
 
-	/**
-	 * The default value of the '{@link #getVisibility() <em>Visibility</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getVisibility()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String VISIBILITY_EDEFAULT = null;
+    /**
+     * The default value of the '{@link #getVisibility() <em>Visibility</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getVisibility()
+     * @generated
+     * @ordered
+     */
+    protected static final String VISIBILITY_EDEFAULT = null;
 
-	/**
-	 * The cached value of the '{@link #getVisibility() <em>Visibility</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getVisibility()
-	 * @generated
-	 * @ordered
-	 */
-	protected String visibility = VISIBILITY_EDEFAULT;
+    /**
+     * The cached value of the '{@link #getVisibility() <em>Visibility</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getVisibility()
+     * @generated
+     * @ordered
+     */
+    protected String visibility = VISIBILITY_EDEFAULT;
 
-	/**
-	 * The default value of the '{@link #isNotImplemented() <em>Not Implemented</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isNotImplemented()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final boolean NOT_IMPLEMENTED_EDEFAULT = false;
+    /**
+     * The default value of the '{@link #isNotImplemented() <em>Not Implemented</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isNotImplemented()
+     * @generated
+     * @ordered
+     */
+    protected static final boolean NOT_IMPLEMENTED_EDEFAULT = false;
 
-	/**
-	 * The cached value of the '{@link #isNotImplemented() <em>Not Implemented</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isNotImplemented()
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean notImplemented = NOT_IMPLEMENTED_EDEFAULT;
+    /**
+     * The cached value of the '{@link #isNotImplemented() <em>Not Implemented</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isNotImplemented()
+     * @generated
+     * @ordered
+     */
+    protected boolean notImplemented = NOT_IMPLEMENTED_EDEFAULT;
 
-	/**
-	 * The default value of the '{@link #isHasImplementedOperations() <em>Has Implemented Operations</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isHasImplementedOperations()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final boolean HAS_IMPLEMENTED_OPERATIONS_EDEFAULT = false;
+    /**
+     * The default value of the '{@link #isHasImplementedOperations() <em>Has Implemented Operations</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isHasImplementedOperations()
+     * @generated
+     * @ordered
+     */
+    protected static final boolean HAS_IMPLEMENTED_OPERATIONS_EDEFAULT = false;
 
-	/**
-	 * The cached value of the '{@link #isHasImplementedOperations() <em>Has Implemented Operations</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isHasImplementedOperations()
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean hasImplementedOperations = HAS_IMPLEMENTED_OPERATIONS_EDEFAULT;
+    /**
+     * The cached value of the '{@link #isHasImplementedOperations() <em>Has Implemented Operations</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isHasImplementedOperations()
+     * @generated
+     * @ordered
+     */
+    protected boolean hasImplementedOperations = HAS_IMPLEMENTED_OPERATIONS_EDEFAULT;
 
-	/**
-	 * The cached value of the '{@link #getEndpoints() <em>Endpoints</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getEndpoints()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<IntermediateEndpoint> endpoints;
+    /**
+     * The cached value of the '{@link #getEndpoints() <em>Endpoints</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getEndpoints()
+     * @generated
+     * @ordered
+     */
+    protected EList<IntermediateEndpoint> endpoints;
 
-	/**
-	 * The cached value of the '{@link #getProtocols() <em>Protocols</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getProtocols()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<IntermediateProtocolSpecification> protocols;
+    /**
+     * The cached value of the '{@link #getProtocols() <em>Protocols</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getProtocols()
+     * @generated
+     * @ordered
+     */
+    protected EList<IntermediateProtocolSpecification> protocols;
 
-	/**
-	 * The cached value of the '{@link #getOperations() <em>Operations</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getOperations()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<IntermediateOperation> operations;
+    /**
+     * The cached value of the '{@link #getOperations() <em>Operations</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getOperations()
+     * @generated
+     * @ordered
+     */
+    protected EList<IntermediateOperation> operations;
 
-	/**
-	 * The cached value of the '{@link #getReferredOperations() <em>Referred Operations</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getReferredOperations()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<IntermediateReferredOperation> referredOperations;
+    /**
+     * The cached value of the '{@link #getReferredOperations() <em>Referred Operations</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getReferredOperations()
+     * @generated
+     * @ordered
+     */
+    protected EList<IntermediateReferredOperation> referredOperations;
 
-	/**
-	 * The cached value of the '{@link #getAspects() <em>Aspects</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getAspects()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<IntermediateImportedAspect> aspects;
+    /**
+     * The cached value of the '{@link #getAspects() <em>Aspects</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getAspects()
+     * @generated
+     * @ordered
+     */
+    protected EList<IntermediateImportedAspect> aspects;
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected IntermediateInterfaceImpl() {
-		super();
-	}
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected IntermediateInterfaceImpl() {
+        super();
+    }
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	protected EClass eStaticClass() {
-		return IntermediatePackage.Literals.INTERMEDIATE_INTERFACE;
-	}
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    protected EClass eStaticClass() {
+        return IntermediatePackage.Literals.INTERMEDIATE_INTERFACE;
+    }
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public String getName() {
-		return name;
-	}
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public String getName() {
+        return name;
+    }
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void setName(String newName) {
-		String oldName = name;
-		name = newName;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, IntermediatePackage.INTERMEDIATE_INTERFACE__NAME, oldName, name));
-	}
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void setName(String newName) {
+        String oldName = name;
+        name = newName;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, IntermediatePackage.INTERMEDIATE_INTERFACE__NAME, oldName, name));
+    }
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public String getVersion() {
-		return version;
-	}
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public String getVersion() {
+        return version;
+    }
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void setVersion(String newVersion) {
-		String oldVersion = version;
-		version = newVersion;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, IntermediatePackage.INTERMEDIATE_INTERFACE__VERSION, oldVersion, version));
-	}
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void setVersion(String newVersion) {
+        String oldVersion = version;
+        version = newVersion;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, IntermediatePackage.INTERMEDIATE_INTERFACE__VERSION, oldVersion, version));
+    }
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public String getQualifiedName() {
-		return qualifiedName;
-	}
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public String getQualifiedName() {
+        return qualifiedName;
+    }
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void setQualifiedName(String newQualifiedName) {
-		String oldQualifiedName = qualifiedName;
-		qualifiedName = newQualifiedName;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, IntermediatePackage.INTERMEDIATE_INTERFACE__QUALIFIED_NAME, oldQualifiedName, qualifiedName));
-	}
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void setQualifiedName(String newQualifiedName) {
+        String oldQualifiedName = qualifiedName;
+        qualifiedName = newQualifiedName;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, IntermediatePackage.INTERMEDIATE_INTERFACE__QUALIFIED_NAME, oldQualifiedName, qualifiedName));
+    }
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public String getVisibility() {
-		return visibility;
-	}
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public String getVisibility() {
+        return visibility;
+    }
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void setVisibility(String newVisibility) {
-		String oldVisibility = visibility;
-		visibility = newVisibility;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, IntermediatePackage.INTERMEDIATE_INTERFACE__VISIBILITY, oldVisibility, visibility));
-	}
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void setVisibility(String newVisibility) {
+        String oldVisibility = visibility;
+        visibility = newVisibility;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, IntermediatePackage.INTERMEDIATE_INTERFACE__VISIBILITY, oldVisibility, visibility));
+    }
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public boolean isNotImplemented() {
-		return notImplemented;
-	}
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public boolean isNotImplemented() {
+        return notImplemented;
+    }
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void setNotImplemented(boolean newNotImplemented) {
-		boolean oldNotImplemented = notImplemented;
-		notImplemented = newNotImplemented;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, IntermediatePackage.INTERMEDIATE_INTERFACE__NOT_IMPLEMENTED, oldNotImplemented, notImplemented));
-	}
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void setNotImplemented(boolean newNotImplemented) {
+        boolean oldNotImplemented = notImplemented;
+        notImplemented = newNotImplemented;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, IntermediatePackage.INTERMEDIATE_INTERFACE__NOT_IMPLEMENTED, oldNotImplemented, notImplemented));
+    }
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public boolean isHasImplementedOperations() {
-		return hasImplementedOperations;
-	}
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public boolean isHasImplementedOperations() {
+        return hasImplementedOperations;
+    }
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void setHasImplementedOperations(boolean newHasImplementedOperations) {
-		boolean oldHasImplementedOperations = hasImplementedOperations;
-		hasImplementedOperations = newHasImplementedOperations;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, IntermediatePackage.INTERMEDIATE_INTERFACE__HAS_IMPLEMENTED_OPERATIONS, oldHasImplementedOperations, hasImplementedOperations));
-	}
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void setHasImplementedOperations(boolean newHasImplementedOperations) {
+        boolean oldHasImplementedOperations = hasImplementedOperations;
+        hasImplementedOperations = newHasImplementedOperations;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, IntermediatePackage.INTERMEDIATE_INTERFACE__HAS_IMPLEMENTED_OPERATIONS, oldHasImplementedOperations, hasImplementedOperations));
+    }
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EList<IntermediateEndpoint> getEndpoints() {
-		if (endpoints == null) {
-			endpoints = new EObjectContainmentWithInverseEList<IntermediateEndpoint>(IntermediateEndpoint.class, this, IntermediatePackage.INTERMEDIATE_INTERFACE__ENDPOINTS, IntermediatePackage.INTERMEDIATE_ENDPOINT__INTERFACE);
-		}
-		return endpoints;
-	}
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EList<IntermediateEndpoint> getEndpoints() {
+        if (endpoints == null) {
+            endpoints = new EObjectContainmentWithInverseEList<IntermediateEndpoint>(IntermediateEndpoint.class, this, IntermediatePackage.INTERMEDIATE_INTERFACE__ENDPOINTS, IntermediatePackage.INTERMEDIATE_ENDPOINT__INTERFACE);
+        }
+        return endpoints;
+    }
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EList<IntermediateProtocolSpecification> getProtocols() {
-		if (protocols == null) {
-			protocols = new EObjectContainmentEList<IntermediateProtocolSpecification>(IntermediateProtocolSpecification.class, this, IntermediatePackage.INTERMEDIATE_INTERFACE__PROTOCOLS);
-		}
-		return protocols;
-	}
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EList<IntermediateProtocolSpecification> getProtocols() {
+        if (protocols == null) {
+            protocols = new EObjectContainmentEList<IntermediateProtocolSpecification>(IntermediateProtocolSpecification.class, this, IntermediatePackage.INTERMEDIATE_INTERFACE__PROTOCOLS);
+        }
+        return protocols;
+    }
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EList<IntermediateOperation> getOperations() {
-		if (operations == null) {
-			operations = new EObjectContainmentWithInverseEList<IntermediateOperation>(IntermediateOperation.class, this, IntermediatePackage.INTERMEDIATE_INTERFACE__OPERATIONS, IntermediatePackage.INTERMEDIATE_OPERATION__INTERFACE);
-		}
-		return operations;
-	}
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EList<IntermediateOperation> getOperations() {
+        if (operations == null) {
+            operations = new EObjectContainmentWithInverseEList<IntermediateOperation>(IntermediateOperation.class, this, IntermediatePackage.INTERMEDIATE_INTERFACE__OPERATIONS, IntermediatePackage.INTERMEDIATE_OPERATION__INTERFACE);
+        }
+        return operations;
+    }
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EList<IntermediateReferredOperation> getReferredOperations() {
-		if (referredOperations == null) {
-			referredOperations = new EObjectContainmentWithInverseEList<IntermediateReferredOperation>(IntermediateReferredOperation.class, this, IntermediatePackage.INTERMEDIATE_INTERFACE__REFERRED_OPERATIONS, IntermediatePackage.INTERMEDIATE_REFERRED_OPERATION__REFERRING_INTERFACE);
-		}
-		return referredOperations;
-	}
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EList<IntermediateReferredOperation> getReferredOperations() {
+        if (referredOperations == null) {
+            referredOperations = new EObjectContainmentWithInverseEList<IntermediateReferredOperation>(IntermediateReferredOperation.class, this, IntermediatePackage.INTERMEDIATE_INTERFACE__REFERRED_OPERATIONS, IntermediatePackage.INTERMEDIATE_REFERRED_OPERATION__REFERRING_INTERFACE);
+        }
+        return referredOperations;
+    }
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EList<IntermediateImportedAspect> getAspects() {
-		if (aspects == null) {
-			aspects = new EObjectContainmentEList<IntermediateImportedAspect>(IntermediateImportedAspect.class, this, IntermediatePackage.INTERMEDIATE_INTERFACE__ASPECTS);
-		}
-		return aspects;
-	}
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EList<IntermediateImportedAspect> getAspects() {
+        if (aspects == null) {
+            aspects = new EObjectContainmentEList<IntermediateImportedAspect>(IntermediateImportedAspect.class, this, IntermediatePackage.INTERMEDIATE_INTERFACE__ASPECTS);
+        }
+        return aspects;
+    }
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public IntermediateMicroservice getMicroservice() {
-		if (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_INTERFACE__MICROSERVICE) return null;
-		return (IntermediateMicroservice)eContainer();
-	}
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public IntermediateMicroservice getMicroservice() {
+        if (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_INTERFACE__MICROSERVICE) return null;
+        return (IntermediateMicroservice)eContainer();
+    }
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public IntermediateMicroservice basicGetMicroservice() {
-		if (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_INTERFACE__MICROSERVICE) return null;
-		return (IntermediateMicroservice)eInternalContainer();
-	}
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public IntermediateMicroservice basicGetMicroservice() {
+        if (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_INTERFACE__MICROSERVICE) return null;
+        return (IntermediateMicroservice)eInternalContainer();
+    }
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public NotificationChain basicSetMicroservice(IntermediateMicroservice newMicroservice, NotificationChain msgs) {
-		msgs = eBasicSetContainer((InternalEObject)newMicroservice, IntermediatePackage.INTERMEDIATE_INTERFACE__MICROSERVICE, msgs);
-		return msgs;
-	}
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public NotificationChain basicSetMicroservice(IntermediateMicroservice newMicroservice, NotificationChain msgs) {
+        msgs = eBasicSetContainer((InternalEObject)newMicroservice, IntermediatePackage.INTERMEDIATE_INTERFACE__MICROSERVICE, msgs);
+        return msgs;
+    }
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void setMicroservice(IntermediateMicroservice newMicroservice) {
-		if (newMicroservice != eInternalContainer() || (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_INTERFACE__MICROSERVICE && newMicroservice != null)) {
-			if (EcoreUtil.isAncestor(this, newMicroservice))
-				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
-			NotificationChain msgs = null;
-			if (eInternalContainer() != null)
-				msgs = eBasicRemoveFromContainer(msgs);
-			if (newMicroservice != null)
-				msgs = ((InternalEObject)newMicroservice).eInverseAdd(this, IntermediatePackage.INTERMEDIATE_MICROSERVICE__INTERFACES, IntermediateMicroservice.class, msgs);
-			msgs = basicSetMicroservice(newMicroservice, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, IntermediatePackage.INTERMEDIATE_INTERFACE__MICROSERVICE, newMicroservice, newMicroservice));
-	}
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void setMicroservice(IntermediateMicroservice newMicroservice) {
+        if (newMicroservice != eInternalContainer() || (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_INTERFACE__MICROSERVICE && newMicroservice != null)) {
+            if (EcoreUtil.isAncestor(this, newMicroservice))
+                throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
+            NotificationChain msgs = null;
+            if (eInternalContainer() != null)
+                msgs = eBasicRemoveFromContainer(msgs);
+            if (newMicroservice != null)
+                msgs = ((InternalEObject)newMicroservice).eInverseAdd(this, IntermediatePackage.INTERMEDIATE_MICROSERVICE__INTERFACES, IntermediateMicroservice.class, msgs);
+            msgs = basicSetMicroservice(newMicroservice, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, IntermediatePackage.INTERMEDIATE_INTERFACE__MICROSERVICE, newMicroservice, newMicroservice));
+    }
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-		switch (featureID) {
-			case IntermediatePackage.INTERMEDIATE_INTERFACE__ENDPOINTS:
-				return ((InternalEList<InternalEObject>)(InternalEList<?>)getEndpoints()).basicAdd(otherEnd, msgs);
-			case IntermediatePackage.INTERMEDIATE_INTERFACE__OPERATIONS:
-				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOperations()).basicAdd(otherEnd, msgs);
-			case IntermediatePackage.INTERMEDIATE_INTERFACE__REFERRED_OPERATIONS:
-				return ((InternalEList<InternalEObject>)(InternalEList<?>)getReferredOperations()).basicAdd(otherEnd, msgs);
-			case IntermediatePackage.INTERMEDIATE_INTERFACE__MICROSERVICE:
-				if (eInternalContainer() != null)
-					msgs = eBasicRemoveFromContainer(msgs);
-				return basicSetMicroservice((IntermediateMicroservice)otherEnd, msgs);
-		}
-		return super.eInverseAdd(otherEnd, featureID, msgs);
-	}
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @SuppressWarnings("unchecked")
+    @Override
+    public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+        switch (featureID) {
+            case IntermediatePackage.INTERMEDIATE_INTERFACE__ENDPOINTS:
+                return ((InternalEList<InternalEObject>)(InternalEList<?>)getEndpoints()).basicAdd(otherEnd, msgs);
+            case IntermediatePackage.INTERMEDIATE_INTERFACE__OPERATIONS:
+                return ((InternalEList<InternalEObject>)(InternalEList<?>)getOperations()).basicAdd(otherEnd, msgs);
+            case IntermediatePackage.INTERMEDIATE_INTERFACE__REFERRED_OPERATIONS:
+                return ((InternalEList<InternalEObject>)(InternalEList<?>)getReferredOperations()).basicAdd(otherEnd, msgs);
+            case IntermediatePackage.INTERMEDIATE_INTERFACE__MICROSERVICE:
+                if (eInternalContainer() != null)
+                    msgs = eBasicRemoveFromContainer(msgs);
+                return basicSetMicroservice((IntermediateMicroservice)otherEnd, msgs);
+        }
+        return super.eInverseAdd(otherEnd, featureID, msgs);
+    }
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-		switch (featureID) {
-			case IntermediatePackage.INTERMEDIATE_INTERFACE__ENDPOINTS:
-				return ((InternalEList<?>)getEndpoints()).basicRemove(otherEnd, msgs);
-			case IntermediatePackage.INTERMEDIATE_INTERFACE__PROTOCOLS:
-				return ((InternalEList<?>)getProtocols()).basicRemove(otherEnd, msgs);
-			case IntermediatePackage.INTERMEDIATE_INTERFACE__OPERATIONS:
-				return ((InternalEList<?>)getOperations()).basicRemove(otherEnd, msgs);
-			case IntermediatePackage.INTERMEDIATE_INTERFACE__REFERRED_OPERATIONS:
-				return ((InternalEList<?>)getReferredOperations()).basicRemove(otherEnd, msgs);
-			case IntermediatePackage.INTERMEDIATE_INTERFACE__ASPECTS:
-				return ((InternalEList<?>)getAspects()).basicRemove(otherEnd, msgs);
-			case IntermediatePackage.INTERMEDIATE_INTERFACE__MICROSERVICE:
-				return basicSetMicroservice(null, msgs);
-		}
-		return super.eInverseRemove(otherEnd, featureID, msgs);
-	}
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+        switch (featureID) {
+            case IntermediatePackage.INTERMEDIATE_INTERFACE__ENDPOINTS:
+                return ((InternalEList<?>)getEndpoints()).basicRemove(otherEnd, msgs);
+            case IntermediatePackage.INTERMEDIATE_INTERFACE__PROTOCOLS:
+                return ((InternalEList<?>)getProtocols()).basicRemove(otherEnd, msgs);
+            case IntermediatePackage.INTERMEDIATE_INTERFACE__OPERATIONS:
+                return ((InternalEList<?>)getOperations()).basicRemove(otherEnd, msgs);
+            case IntermediatePackage.INTERMEDIATE_INTERFACE__REFERRED_OPERATIONS:
+                return ((InternalEList<?>)getReferredOperations()).basicRemove(otherEnd, msgs);
+            case IntermediatePackage.INTERMEDIATE_INTERFACE__ASPECTS:
+                return ((InternalEList<?>)getAspects()).basicRemove(otherEnd, msgs);
+            case IntermediatePackage.INTERMEDIATE_INTERFACE__MICROSERVICE:
+                return basicSetMicroservice(null, msgs);
+        }
+        return super.eInverseRemove(otherEnd, featureID, msgs);
+    }
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
-		switch (eContainerFeatureID()) {
-			case IntermediatePackage.INTERMEDIATE_INTERFACE__MICROSERVICE:
-				return eInternalContainer().eInverseRemove(this, IntermediatePackage.INTERMEDIATE_MICROSERVICE__INTERFACES, IntermediateMicroservice.class, msgs);
-		}
-		return super.eBasicRemoveFromContainerFeature(msgs);
-	}
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
+        switch (eContainerFeatureID()) {
+            case IntermediatePackage.INTERMEDIATE_INTERFACE__MICROSERVICE:
+                return eInternalContainer().eInverseRemove(this, IntermediatePackage.INTERMEDIATE_MICROSERVICE__INTERFACES, IntermediateMicroservice.class, msgs);
+        }
+        return super.eBasicRemoveFromContainerFeature(msgs);
+    }
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID) {
-			case IntermediatePackage.INTERMEDIATE_INTERFACE__NAME:
-				return getName();
-			case IntermediatePackage.INTERMEDIATE_INTERFACE__VERSION:
-				return getVersion();
-			case IntermediatePackage.INTERMEDIATE_INTERFACE__QUALIFIED_NAME:
-				return getQualifiedName();
-			case IntermediatePackage.INTERMEDIATE_INTERFACE__VISIBILITY:
-				return getVisibility();
-			case IntermediatePackage.INTERMEDIATE_INTERFACE__NOT_IMPLEMENTED:
-				return isNotImplemented();
-			case IntermediatePackage.INTERMEDIATE_INTERFACE__HAS_IMPLEMENTED_OPERATIONS:
-				return isHasImplementedOperations();
-			case IntermediatePackage.INTERMEDIATE_INTERFACE__ENDPOINTS:
-				return getEndpoints();
-			case IntermediatePackage.INTERMEDIATE_INTERFACE__PROTOCOLS:
-				return getProtocols();
-			case IntermediatePackage.INTERMEDIATE_INTERFACE__OPERATIONS:
-				return getOperations();
-			case IntermediatePackage.INTERMEDIATE_INTERFACE__REFERRED_OPERATIONS:
-				return getReferredOperations();
-			case IntermediatePackage.INTERMEDIATE_INTERFACE__ASPECTS:
-				return getAspects();
-			case IntermediatePackage.INTERMEDIATE_INTERFACE__MICROSERVICE:
-				if (resolve) return getMicroservice();
-				return basicGetMicroservice();
-		}
-		return super.eGet(featureID, resolve, coreType);
-	}
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Object eGet(int featureID, boolean resolve, boolean coreType) {
+        switch (featureID) {
+            case IntermediatePackage.INTERMEDIATE_INTERFACE__NAME:
+                return getName();
+            case IntermediatePackage.INTERMEDIATE_INTERFACE__VERSION:
+                return getVersion();
+            case IntermediatePackage.INTERMEDIATE_INTERFACE__QUALIFIED_NAME:
+                return getQualifiedName();
+            case IntermediatePackage.INTERMEDIATE_INTERFACE__VISIBILITY:
+                return getVisibility();
+            case IntermediatePackage.INTERMEDIATE_INTERFACE__NOT_IMPLEMENTED:
+                return isNotImplemented();
+            case IntermediatePackage.INTERMEDIATE_INTERFACE__HAS_IMPLEMENTED_OPERATIONS:
+                return isHasImplementedOperations();
+            case IntermediatePackage.INTERMEDIATE_INTERFACE__ENDPOINTS:
+                return getEndpoints();
+            case IntermediatePackage.INTERMEDIATE_INTERFACE__PROTOCOLS:
+                return getProtocols();
+            case IntermediatePackage.INTERMEDIATE_INTERFACE__OPERATIONS:
+                return getOperations();
+            case IntermediatePackage.INTERMEDIATE_INTERFACE__REFERRED_OPERATIONS:
+                return getReferredOperations();
+            case IntermediatePackage.INTERMEDIATE_INTERFACE__ASPECTS:
+                return getAspects();
+            case IntermediatePackage.INTERMEDIATE_INTERFACE__MICROSERVICE:
+                if (resolve) return getMicroservice();
+                return basicGetMicroservice();
+        }
+        return super.eGet(featureID, resolve, coreType);
+    }
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public void eSet(int featureID, Object newValue) {
-		switch (featureID) {
-			case IntermediatePackage.INTERMEDIATE_INTERFACE__NAME:
-				setName((String)newValue);
-				return;
-			case IntermediatePackage.INTERMEDIATE_INTERFACE__VERSION:
-				setVersion((String)newValue);
-				return;
-			case IntermediatePackage.INTERMEDIATE_INTERFACE__QUALIFIED_NAME:
-				setQualifiedName((String)newValue);
-				return;
-			case IntermediatePackage.INTERMEDIATE_INTERFACE__VISIBILITY:
-				setVisibility((String)newValue);
-				return;
-			case IntermediatePackage.INTERMEDIATE_INTERFACE__NOT_IMPLEMENTED:
-				setNotImplemented((Boolean)newValue);
-				return;
-			case IntermediatePackage.INTERMEDIATE_INTERFACE__HAS_IMPLEMENTED_OPERATIONS:
-				setHasImplementedOperations((Boolean)newValue);
-				return;
-			case IntermediatePackage.INTERMEDIATE_INTERFACE__ENDPOINTS:
-				getEndpoints().clear();
-				getEndpoints().addAll((Collection<? extends IntermediateEndpoint>)newValue);
-				return;
-			case IntermediatePackage.INTERMEDIATE_INTERFACE__PROTOCOLS:
-				getProtocols().clear();
-				getProtocols().addAll((Collection<? extends IntermediateProtocolSpecification>)newValue);
-				return;
-			case IntermediatePackage.INTERMEDIATE_INTERFACE__OPERATIONS:
-				getOperations().clear();
-				getOperations().addAll((Collection<? extends IntermediateOperation>)newValue);
-				return;
-			case IntermediatePackage.INTERMEDIATE_INTERFACE__REFERRED_OPERATIONS:
-				getReferredOperations().clear();
-				getReferredOperations().addAll((Collection<? extends IntermediateReferredOperation>)newValue);
-				return;
-			case IntermediatePackage.INTERMEDIATE_INTERFACE__ASPECTS:
-				getAspects().clear();
-				getAspects().addAll((Collection<? extends IntermediateImportedAspect>)newValue);
-				return;
-			case IntermediatePackage.INTERMEDIATE_INTERFACE__MICROSERVICE:
-				setMicroservice((IntermediateMicroservice)newValue);
-				return;
-		}
-		super.eSet(featureID, newValue);
-	}
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @SuppressWarnings("unchecked")
+    @Override
+    public void eSet(int featureID, Object newValue) {
+        switch (featureID) {
+            case IntermediatePackage.INTERMEDIATE_INTERFACE__NAME:
+                setName((String)newValue);
+                return;
+            case IntermediatePackage.INTERMEDIATE_INTERFACE__VERSION:
+                setVersion((String)newValue);
+                return;
+            case IntermediatePackage.INTERMEDIATE_INTERFACE__QUALIFIED_NAME:
+                setQualifiedName((String)newValue);
+                return;
+            case IntermediatePackage.INTERMEDIATE_INTERFACE__VISIBILITY:
+                setVisibility((String)newValue);
+                return;
+            case IntermediatePackage.INTERMEDIATE_INTERFACE__NOT_IMPLEMENTED:
+                setNotImplemented((Boolean)newValue);
+                return;
+            case IntermediatePackage.INTERMEDIATE_INTERFACE__HAS_IMPLEMENTED_OPERATIONS:
+                setHasImplementedOperations((Boolean)newValue);
+                return;
+            case IntermediatePackage.INTERMEDIATE_INTERFACE__ENDPOINTS:
+                getEndpoints().clear();
+                getEndpoints().addAll((Collection<? extends IntermediateEndpoint>)newValue);
+                return;
+            case IntermediatePackage.INTERMEDIATE_INTERFACE__PROTOCOLS:
+                getProtocols().clear();
+                getProtocols().addAll((Collection<? extends IntermediateProtocolSpecification>)newValue);
+                return;
+            case IntermediatePackage.INTERMEDIATE_INTERFACE__OPERATIONS:
+                getOperations().clear();
+                getOperations().addAll((Collection<? extends IntermediateOperation>)newValue);
+                return;
+            case IntermediatePackage.INTERMEDIATE_INTERFACE__REFERRED_OPERATIONS:
+                getReferredOperations().clear();
+                getReferredOperations().addAll((Collection<? extends IntermediateReferredOperation>)newValue);
+                return;
+            case IntermediatePackage.INTERMEDIATE_INTERFACE__ASPECTS:
+                getAspects().clear();
+                getAspects().addAll((Collection<? extends IntermediateImportedAspect>)newValue);
+                return;
+            case IntermediatePackage.INTERMEDIATE_INTERFACE__MICROSERVICE:
+                setMicroservice((IntermediateMicroservice)newValue);
+                return;
+        }
+        super.eSet(featureID, newValue);
+    }
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void eUnset(int featureID) {
-		switch (featureID) {
-			case IntermediatePackage.INTERMEDIATE_INTERFACE__NAME:
-				setName(NAME_EDEFAULT);
-				return;
-			case IntermediatePackage.INTERMEDIATE_INTERFACE__VERSION:
-				setVersion(VERSION_EDEFAULT);
-				return;
-			case IntermediatePackage.INTERMEDIATE_INTERFACE__QUALIFIED_NAME:
-				setQualifiedName(QUALIFIED_NAME_EDEFAULT);
-				return;
-			case IntermediatePackage.INTERMEDIATE_INTERFACE__VISIBILITY:
-				setVisibility(VISIBILITY_EDEFAULT);
-				return;
-			case IntermediatePackage.INTERMEDIATE_INTERFACE__NOT_IMPLEMENTED:
-				setNotImplemented(NOT_IMPLEMENTED_EDEFAULT);
-				return;
-			case IntermediatePackage.INTERMEDIATE_INTERFACE__HAS_IMPLEMENTED_OPERATIONS:
-				setHasImplementedOperations(HAS_IMPLEMENTED_OPERATIONS_EDEFAULT);
-				return;
-			case IntermediatePackage.INTERMEDIATE_INTERFACE__ENDPOINTS:
-				getEndpoints().clear();
-				return;
-			case IntermediatePackage.INTERMEDIATE_INTERFACE__PROTOCOLS:
-				getProtocols().clear();
-				return;
-			case IntermediatePackage.INTERMEDIATE_INTERFACE__OPERATIONS:
-				getOperations().clear();
-				return;
-			case IntermediatePackage.INTERMEDIATE_INTERFACE__REFERRED_OPERATIONS:
-				getReferredOperations().clear();
-				return;
-			case IntermediatePackage.INTERMEDIATE_INTERFACE__ASPECTS:
-				getAspects().clear();
-				return;
-			case IntermediatePackage.INTERMEDIATE_INTERFACE__MICROSERVICE:
-				setMicroservice((IntermediateMicroservice)null);
-				return;
-		}
-		super.eUnset(featureID);
-	}
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void eUnset(int featureID) {
+        switch (featureID) {
+            case IntermediatePackage.INTERMEDIATE_INTERFACE__NAME:
+                setName(NAME_EDEFAULT);
+                return;
+            case IntermediatePackage.INTERMEDIATE_INTERFACE__VERSION:
+                setVersion(VERSION_EDEFAULT);
+                return;
+            case IntermediatePackage.INTERMEDIATE_INTERFACE__QUALIFIED_NAME:
+                setQualifiedName(QUALIFIED_NAME_EDEFAULT);
+                return;
+            case IntermediatePackage.INTERMEDIATE_INTERFACE__VISIBILITY:
+                setVisibility(VISIBILITY_EDEFAULT);
+                return;
+            case IntermediatePackage.INTERMEDIATE_INTERFACE__NOT_IMPLEMENTED:
+                setNotImplemented(NOT_IMPLEMENTED_EDEFAULT);
+                return;
+            case IntermediatePackage.INTERMEDIATE_INTERFACE__HAS_IMPLEMENTED_OPERATIONS:
+                setHasImplementedOperations(HAS_IMPLEMENTED_OPERATIONS_EDEFAULT);
+                return;
+            case IntermediatePackage.INTERMEDIATE_INTERFACE__ENDPOINTS:
+                getEndpoints().clear();
+                return;
+            case IntermediatePackage.INTERMEDIATE_INTERFACE__PROTOCOLS:
+                getProtocols().clear();
+                return;
+            case IntermediatePackage.INTERMEDIATE_INTERFACE__OPERATIONS:
+                getOperations().clear();
+                return;
+            case IntermediatePackage.INTERMEDIATE_INTERFACE__REFERRED_OPERATIONS:
+                getReferredOperations().clear();
+                return;
+            case IntermediatePackage.INTERMEDIATE_INTERFACE__ASPECTS:
+                getAspects().clear();
+                return;
+            case IntermediatePackage.INTERMEDIATE_INTERFACE__MICROSERVICE:
+                setMicroservice((IntermediateMicroservice)null);
+                return;
+        }
+        super.eUnset(featureID);
+    }
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public boolean eIsSet(int featureID) {
-		switch (featureID) {
-			case IntermediatePackage.INTERMEDIATE_INTERFACE__NAME:
-				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case IntermediatePackage.INTERMEDIATE_INTERFACE__VERSION:
-				return VERSION_EDEFAULT == null ? version != null : !VERSION_EDEFAULT.equals(version);
-			case IntermediatePackage.INTERMEDIATE_INTERFACE__QUALIFIED_NAME:
-				return QUALIFIED_NAME_EDEFAULT == null ? qualifiedName != null : !QUALIFIED_NAME_EDEFAULT.equals(qualifiedName);
-			case IntermediatePackage.INTERMEDIATE_INTERFACE__VISIBILITY:
-				return VISIBILITY_EDEFAULT == null ? visibility != null : !VISIBILITY_EDEFAULT.equals(visibility);
-			case IntermediatePackage.INTERMEDIATE_INTERFACE__NOT_IMPLEMENTED:
-				return notImplemented != NOT_IMPLEMENTED_EDEFAULT;
-			case IntermediatePackage.INTERMEDIATE_INTERFACE__HAS_IMPLEMENTED_OPERATIONS:
-				return hasImplementedOperations != HAS_IMPLEMENTED_OPERATIONS_EDEFAULT;
-			case IntermediatePackage.INTERMEDIATE_INTERFACE__ENDPOINTS:
-				return endpoints != null && !endpoints.isEmpty();
-			case IntermediatePackage.INTERMEDIATE_INTERFACE__PROTOCOLS:
-				return protocols != null && !protocols.isEmpty();
-			case IntermediatePackage.INTERMEDIATE_INTERFACE__OPERATIONS:
-				return operations != null && !operations.isEmpty();
-			case IntermediatePackage.INTERMEDIATE_INTERFACE__REFERRED_OPERATIONS:
-				return referredOperations != null && !referredOperations.isEmpty();
-			case IntermediatePackage.INTERMEDIATE_INTERFACE__ASPECTS:
-				return aspects != null && !aspects.isEmpty();
-			case IntermediatePackage.INTERMEDIATE_INTERFACE__MICROSERVICE:
-				return basicGetMicroservice() != null;
-		}
-		return super.eIsSet(featureID);
-	}
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public boolean eIsSet(int featureID) {
+        switch (featureID) {
+            case IntermediatePackage.INTERMEDIATE_INTERFACE__NAME:
+                return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+            case IntermediatePackage.INTERMEDIATE_INTERFACE__VERSION:
+                return VERSION_EDEFAULT == null ? version != null : !VERSION_EDEFAULT.equals(version);
+            case IntermediatePackage.INTERMEDIATE_INTERFACE__QUALIFIED_NAME:
+                return QUALIFIED_NAME_EDEFAULT == null ? qualifiedName != null : !QUALIFIED_NAME_EDEFAULT.equals(qualifiedName);
+            case IntermediatePackage.INTERMEDIATE_INTERFACE__VISIBILITY:
+                return VISIBILITY_EDEFAULT == null ? visibility != null : !VISIBILITY_EDEFAULT.equals(visibility);
+            case IntermediatePackage.INTERMEDIATE_INTERFACE__NOT_IMPLEMENTED:
+                return notImplemented != NOT_IMPLEMENTED_EDEFAULT;
+            case IntermediatePackage.INTERMEDIATE_INTERFACE__HAS_IMPLEMENTED_OPERATIONS:
+                return hasImplementedOperations != HAS_IMPLEMENTED_OPERATIONS_EDEFAULT;
+            case IntermediatePackage.INTERMEDIATE_INTERFACE__ENDPOINTS:
+                return endpoints != null && !endpoints.isEmpty();
+            case IntermediatePackage.INTERMEDIATE_INTERFACE__PROTOCOLS:
+                return protocols != null && !protocols.isEmpty();
+            case IntermediatePackage.INTERMEDIATE_INTERFACE__OPERATIONS:
+                return operations != null && !operations.isEmpty();
+            case IntermediatePackage.INTERMEDIATE_INTERFACE__REFERRED_OPERATIONS:
+                return referredOperations != null && !referredOperations.isEmpty();
+            case IntermediatePackage.INTERMEDIATE_INTERFACE__ASPECTS:
+                return aspects != null && !aspects.isEmpty();
+            case IntermediatePackage.INTERMEDIATE_INTERFACE__MICROSERVICE:
+                return basicGetMicroservice() != null;
+        }
+        return super.eIsSet(featureID);
+    }
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public String toString() {
-		if (eIsProxy()) return super.toString();
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public String toString() {
+        if (eIsProxy()) return super.toString();
 
-		StringBuilder result = new StringBuilder(super.toString());
-		result.append(" (name: ");
-		result.append(name);
-		result.append(", version: ");
-		result.append(version);
-		result.append(", qualifiedName: ");
-		result.append(qualifiedName);
-		result.append(", visibility: ");
-		result.append(visibility);
-		result.append(", notImplemented: ");
-		result.append(notImplemented);
-		result.append(", hasImplementedOperations: ");
-		result.append(hasImplementedOperations);
-		result.append(')');
-		return result.toString();
-	}
+        StringBuilder result = new StringBuilder(super.toString());
+        result.append(" (name: ");
+        result.append(name);
+        result.append(", version: ");
+        result.append(version);
+        result.append(", qualifiedName: ");
+        result.append(qualifiedName);
+        result.append(", visibility: ");
+        result.append(visibility);
+        result.append(", notImplemented: ");
+        result.append(notImplemented);
+        result.append(", hasImplementedOperations: ");
+        result.append(hasImplementedOperations);
+        result.append(')');
+        return result.toString();
+    }
 
 } //IntermediateInterfaceImpl

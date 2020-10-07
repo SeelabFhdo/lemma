@@ -48,7 +48,7 @@ public abstract class AbstractIntermediateModelTransformationController extends 
   private String modelTypePrefix;
   
   /**
-   * Get model specific transformation strategy
+   * Get transformation strategy of model type
    */
   public abstract AbstractUiModelTransformationStrategy getTransformationStrategy();
   

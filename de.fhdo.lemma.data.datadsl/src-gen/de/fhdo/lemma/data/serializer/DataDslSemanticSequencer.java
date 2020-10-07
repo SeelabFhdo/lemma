@@ -242,7 +242,7 @@ public class DataDslSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *         name=ID 
 	 *         (features+=ComplexTypeFeature features+=ComplexTypeFeature*)? 
 	 *         super=[DataStructure|QualifiedName]? 
-	 *         ((dataFields+=DataField | operations+=DataOperation) operations+=DataOperation? (dataFields+=DataField? operations+=DataOperation?)*)?
+	 *         ((dataFields+=DataField | operations+=DataOperation) dataFields+=DataField? (operations+=DataOperation? dataFields+=DataField?)*)?
 	 *     )
 	 */
 	protected void sequence_DataStructure(ISerializationContext context, DataStructure semanticObject) {
