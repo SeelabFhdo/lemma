@@ -9,6 +9,11 @@ import org.eclipse.core.resources.IProject
 import org.eclipse.core.resources.IFile
 import org.eclipse.core.resources.IResource
 import org.eclipse.core.resources.IFolder
+import org.eclipse.ui.PlatformUI
+import de.fhdo.lemma.eclipse.ui.transformation_dialog.commands.TransformationDialogHandler
+import de.fhdo.lemma.eclipse.ui.specify_paths_dialog.commands.SpecifyPathsHandler
+import de.fhdo.lemma.eclipse.ui.select_models_dialog.commands.SelectModelsHandler
+import org.eclipse.jface.dialogs.MessageDialog
 
 /**
  * Abstract Controller for handling the intermediate model transformation in the UI.
@@ -16,17 +21,68 @@ import org.eclipse.core.resources.IFolder
  * @author <a href="mailto:philip.wizenty@fh-dortmund.de">Philip Wizenty</a>
  */
 abstract class AbstractIntermediateModelTransformationController extends AbstractHandler {
-     protected List<String> modelFileTypeExtensions
+    val SHELL = PlatformUI.workbench.activeWorkbenchWindow.shell
+
+    List<String> modelFileTypeExtensions
+    AbstractUiModelTransformationStrategy modelTransformationStrategy
+    String modelTypePrefix
+
+    /**
+     * Get model specific transformation strategy
+     */
+    abstract def AbstractUiModelTransformationStrategy getTransformationStrategy()
 
     /**
      * Execute controller handler
      */
-    abstract override execute(ExecutionEvent event) throws ExecutionException
+    override execute(ExecutionEvent event) throws ExecutionException {
+        try {
+            modelTransformationStrategy = getTransformationStrategy()
+            modelFileTypeExtensions = modelTransformationStrategy.modelFileTypeExtensions
+            modelTypePrefix = modelTransformationStrategy.modelTypePrefix
+        } catch (Exception ex) {
+            ex.printStackTrace
+        }
+
+        if (modelFileTypeExtensions === null || modelFileTypeExtensions.empty)
+            MessageDialog.openError(SHELL, '''No «modelTypePrefix» models found''', "No " +
+                '''«modelTypePrefix» model files could be found, because there were no editors ''' +
+                "associated with the respective file types. Do you have the editor plugins " +
+                '''for creating «modelTypePrefix» models installed?''')
+
+        /* Select models */
+        val selectModelsHandler = new SelectModelsHandler(modelTransformationStrategy,
+            getInputModelFiles(event))
+        val selectModelsHandlerResult = selectModelsHandler.execute(event)
+        if (selectModelsHandlerResult === null)
+            return null
+
+        /* Specify paths */
+        val selectedModelFiles = selectModelsHandlerResult as List<ModelFile>
+        val specifyPathsHandler = new SpecifyPathsHandler(selectedModelFiles,
+            modelTransformationStrategy)
+        val specifyPathsRawResult = specifyPathsHandler.execute(event)
+        if (specifyPathsRawResult === null)
+            return null
+
+        /* Execute model transformations */
+        val specifyPathsResult = specifyPathsRawResult as Pair<List<ModelFile>, Boolean>
+        val selectedModelFilesWithChildPaths = specifyPathsResult.key
+        val outputRefinementModels = specifyPathsResult.value
+        val transformationHandler = new TransformationDialogHandler(
+            selectedModelFilesWithChildPaths,
+            outputRefinementModels,
+            modelTransformationStrategy
+        )
+        transformationHandler.execute(event)
+
+        return null
+    }
 
     /**
      * Get input files for model transformations
      */
-    protected def getInputModelFiles(ExecutionEvent event) {
+    private def getInputModelFiles(ExecutionEvent event) {
         if (!transformationOnSelectedModelsOnly(event))
             return allWorkspaceModelFiles()
 
@@ -106,5 +162,4 @@ abstract class AbstractIntermediateModelTransformationController extends Abstrac
             else
                 emptyList
     }
-
 }

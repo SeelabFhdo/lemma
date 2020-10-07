@@ -6,7 +6,7 @@ import de.fhdo.lemma.eclipse.ui.ModelFile;
 import de.fhdo.lemma.eclipse.ui.ModelFileTypeDescription;
 import de.fhdo.lemma.eclipse.ui.utils.LemmaUiUtils;
 import de.fhdo.lemma.intermediate.transformations.AbstractIntermediateModelTransformationStrategy;
-import de.fhdo.lemma.intermediate.transformations.service.IntermediateOperationModelTransformation;
+import de.fhdo.lemma.intermediate.transformations.operation.IntermediateOperationModelTransformation;
 import de.fhdo.lemma.intermediate.transformations.service.IntermediateServiceModelTransformation;
 import de.fhdo.lemma.operation.OperationModel;
 import de.fhdo.lemma.service.Import;
