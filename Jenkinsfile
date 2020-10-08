@@ -79,7 +79,7 @@ pipeline {
                 }
 
                 failure {
-                    //dir("lemma") {
+                    dir(".") {
                         script {
                             def postMessageBranchUrl = "${env.BASE_BRANCH_URL}/tree/${env.BRANCH_NAME}"
                             def postMessageBranch = env.BRANCH_NAME ? "\n\tBranch: <${postMessageBranchUrl}|${env.BRANCH_NAME}>" : ""
@@ -100,7 +100,7 @@ pipeline {
                                 channel: MATTERMOST_CHANNEL
                             )
                         }
-                    //}
+                    }
                 }
             }
         }
