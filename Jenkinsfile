@@ -79,12 +79,12 @@ pipeline {
                 }
 
                 failure {
-                    dir(".") {
+                    //dir(".") {
                         script {
                             def postMessageBranchUrl = "${env.BASE_BRANCH_URL}/tree/${env.BRANCH_NAME}"
                             def postMessageBranch = env.BRANCH_NAME ? "\n\tBranch: <${postMessageBranchUrl}|${env.BRANCH_NAME}>" : ""
-                            def postMessageCommitAuthor = bat(script: "${WINDOWS_RUN_GIT_COMMAND} \"git --no-pager show -s --format='%an'\"", returnStdout: true).trim()
-                            def postMessageCommitMessage = bat(script: "${WINDOWS_RUN_GIT_COMMAND} \"git log --format=%B -n 1 ${GIT_COMMIT}\"", returnStdout: true).trim()
+                            def postMessageCommitAuthor = bat(script: "${WINDOWS_RUN_GIT_COMMAND} \"git --no-pager show -s --format='%%an'\"", returnStdout: true).trim()
+                            def postMessageCommitMessage = bat(script: "${WINDOWS_RUN_GIT_COMMAND} \"git log --format=%%B -n 1 ${GIT_COMMIT}\"", returnStdout: true).trim()
                             def postMessageCommitUrl = "${env.BASE_BRANCH_URL}/commit/${env.GIT_COMMIT}"
                             def postMessageCommitInfo = "(\"${postMessageCommitMessage}\") by *${postMessageCommitAuthor}*"
                             def postMessageCommit = env.GIT_COMMIT ? "\n\tCommit: <${postMessageCommitUrl}|${env.GIT_COMMIT}> ${postMessageCommitInfo}" : ""
@@ -100,7 +100,7 @@ pipeline {
                                 channel: MATTERMOST_CHANNEL
                             )
                         }
-                    }
+                    //}
                 }
             }
         }
