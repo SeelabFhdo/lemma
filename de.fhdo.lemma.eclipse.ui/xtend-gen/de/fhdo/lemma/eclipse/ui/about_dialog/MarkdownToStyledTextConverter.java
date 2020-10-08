@@ -181,8 +181,7 @@ public class MarkdownToStyledTextConverter {
         }
         try {
           final StyleRange clickedStyleRange = styledText.getStyleRangeAtOffset(offset);
-          boolean _hasLinkAtOffset = MarkdownToStyledTextConverter.this.hasLinkAtOffset(clickedStyleRange.start);
-          if (_hasLinkAtOffset) {
+          if (((clickedStyleRange != null) && MarkdownToStyledTextConverter.this.hasLinkAtOffset(clickedStyleRange.start))) {
             Program.launch(((String) clickedStyleRange.data));
           }
         } catch (final Throwable _t) {

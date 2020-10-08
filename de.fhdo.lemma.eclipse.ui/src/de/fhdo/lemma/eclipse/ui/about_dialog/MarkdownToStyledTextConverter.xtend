@@ -155,7 +155,7 @@ class MarkdownToStyledTextConverter {
 
                 try {
                     val clickedStyleRange = styledText.getStyleRangeAtOffset(offset)
-                    if (hasLinkAtOffset(clickedStyleRange.start))
+                    if (clickedStyleRange !== null && hasLinkAtOffset(clickedStyleRange.start))
                         Program.launch(clickedStyleRange.data as String)
                 } catch (IllegalArgumentException ex) {
                     // No character at (x, y)
