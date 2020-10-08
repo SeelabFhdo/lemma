@@ -46,7 +46,7 @@ pipeline {
                     }
                 }
 
-                stage("Clone LEMMA") {
+                /*stage("Clone LEMMA") {
                     steps {
                         bat WINDOWS_RUN_GIT_COMMAND +
                             " \"git clone ${GIT_URL}\""
@@ -55,7 +55,7 @@ pipeline {
                                 " \"git checkout ${GIT_BRANCH}\""
                         }
                     }
-                }
+                }*/
 
                 stage("Build in Windows") {
                     steps {
@@ -115,13 +115,13 @@ pipeline {
                     }
                 }
 
-                stage("Clone LEMMA") {
+                /*stage("Clone LEMMA") {
                     steps {
                         dir("lemma") {
                             git url: GIT_URL, branch: GIT_BRANCH
                         }
                     }
-                }
+                }*/
 
                 stage("Build: Build and Push Docker Build Image") {
                     steps {
