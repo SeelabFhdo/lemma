@@ -33,12 +33,6 @@ pipeline {
             agent { label "windows" }
 
             stages {
-                stage("Clean Workspace") {
-                    steps {
-                        cleanWs()
-                    }
-                }
-
                 stage("Remove Build Management Folders") {
                     steps {
                         bat "${WINDOWS_RUN_GIT_COMMAND} \"cd \$HOME && " +
@@ -46,20 +40,9 @@ pipeline {
                     }
                 }
 
-                stage("Clone LEMMA") {
-                    steps {
-                        bat WINDOWS_RUN_GIT_COMMAND +
-                            " \"git clone ${GIT_URL}\""
-                        dir("lemma") {
-                            bat WINDOWS_RUN_GIT_COMMAND +
-                                " \"git checkout ${GIT_BRANCH}\""
-                        }
-                    }
-                }
-
                 stage("Build in Windows") {
                     steps {
-                        dir("lemma/build") {
+                        dir("build") {
                             script {
                                 env.JAVA_HOME="${env.ProgramFiles}\\" +
                                     WINDOWS_JAVA_VERSION
@@ -79,27 +62,25 @@ pipeline {
                 }
 
                 failure {
-                    dir("lemma") {
-                        script {
-                            def postMessageBranchUrl = "${env.BASE_BRANCH_URL}/tree/${env.BRANCH_NAME}"
-                            def postMessageBranch = env.BRANCH_NAME ? "\n\tBranch: <${postMessageBranchUrl}|${env.BRANCH_NAME}>" : ""
-                            def postMessageCommitAuthor = bat(script: "${WINDOWS_RUN_GIT_COMMAND} \"git --no-pager show -s --format='%an'\"", returnStdout: true).trim()
-                            def postMessageCommitMessage = bat(script: "${WINDOWS_RUN_GIT_COMMAND} \"git log --format=%B -n 1 ${GIT_COMMIT}\"", returnStdout: true).trim()
-                            def postMessageCommitUrl = "${env.BASE_BRANCH_URL}/commit/${env.GIT_COMMIT}"
-                            def postMessageCommitInfo = "(\"${postMessageCommitMessage}\") by *${postMessageCommitAuthor}*"
-                            def postMessageCommit = env.GIT_COMMIT ? "\n\tCommit: <${postMessageCommitUrl}|${env.GIT_COMMIT}> ${postMessageCommitInfo}" : ""
-                            def postMessageBody = "\n\tJob: ${env.JOB_NAME}" +
-                                "${postMessageBranch}" +
-                                "${postMessageCommit}" +
-                                "\n\tStatus: ${currentBuild.result}" +
-                                "\n\tBuild: <${env.BUILD_URL}|#${env.BUILD_NUMBER}>"
+                    script {
+                        def postMessageBranchUrl = "${env.BASE_BRANCH_URL}/tree/${env.BRANCH_NAME}"
+                        def postMessageBranch = env.BRANCH_NAME ? "\n\tBranch: <${postMessageBranchUrl}|${env.BRANCH_NAME}>" : ""
+                        def postMessageCommitAuthor = bat(script: "${WINDOWS_RUN_GIT_COMMAND} \"git --no-pager show -s --format='%an'\"", returnStdout: true).trim()
+                        def postMessageCommitMessage = bat(script: "${WINDOWS_RUN_GIT_COMMAND} \"git log --format=%B -n 1 ${GIT_COMMIT}\"", returnStdout: true).trim()
+                        def postMessageCommitUrl = "${env.BASE_BRANCH_URL}/commit/${env.GIT_COMMIT}"
+                        def postMessageCommitInfo = "(\"${postMessageCommitMessage}\") by *${postMessageCommitAuthor}*"
+                        def postMessageCommit = env.GIT_COMMIT ? "\n\tCommit: <${postMessageCommitUrl}|${env.GIT_COMMIT}> ${postMessageCommitInfo}" : ""
+                        def postMessageBody = "\n\tJob: ${env.JOB_NAME}" +
+                            "${postMessageBranch}" +
+                            "${postMessageCommit}" +
+                            "\n\tStatus: ${currentBuild.result}" +
+                            "\n\tBuild: <${env.BUILD_URL}|#${env.BUILD_NUMBER}>"
 
-                            mattermostSend (
-                                color: "danger",
-                                message: "LEMMA Build FAILURE: ${postMessageBody}",
-                                channel: MATTERMOST_CHANNEL
-                            )
-                        }
+                        mattermostSend (
+                            color: "danger",
+                            message: "LEMMA Build FAILURE: ${postMessageBody}",
+                            channel: MATTERMOST_CHANNEL
+                        )
                     }
                 }
             }
@@ -109,25 +90,11 @@ pipeline {
             agent { label "master" }
 
             stages {
-                stage("Clean Workspace") {
-                    steps {
-                        cleanWs()
-                    }
-                }
-
-                stage("Clone LEMMA") {
-                    steps {
-                        dir("lemma") {
-                            git url: GIT_URL, branch: GIT_BRANCH
-                        }
-                    }
-                }
-
                 stage("Build: Build and Push Docker Build Image") {
                     steps {
                         script {
                             buildImage = docker.build BUILD_IMAGE,
-                                "./lemma/build/docker"
+                                "./build/docker"
                             docker.withRegistry(DOCKER_NEXUS_REGISTRY_URL,
                                 DOCKER_NEXUS_REGISTRY_CREDENTIALS) {
                                 buildImage.push()
@@ -149,7 +116,7 @@ pipeline {
                         }
                     }
                     steps {
-                        sh "cd lemma/build && ./lemma.sh"
+                        sh "cd build && ./lemma.sh"
                     }
                 }
 
@@ -157,7 +124,7 @@ pipeline {
                     steps {
                         script {
                             updatesiteImage = docker.build BUILD_UPDATESITE_IMAGE,
-                                "./lemma/build/updatesite/docker"
+                                "./build/updatesite/docker"
                             docker.withRegistry(DOCKER_NEXUS_REGISTRY_URL,
                                 DOCKER_NEXUS_REGISTRY_CREDENTIALS) {
                                 updatesiteImage.push()
@@ -179,7 +146,7 @@ pipeline {
                         }
                     }
                     steps {
-                        sh "cd lemma/build/updatesite/ && ./lemma-updatesite.sh"
+                        sh "cd build/updatesite/ && ./lemma-updatesite.sh"
                     }
                 }
 
@@ -189,10 +156,10 @@ pipeline {
                             // We need to build the image in any case, otherwise the subsequent stage will fail,
                             // because the image doesn't exist
                             deployImage = docker.build(DEPLOY_IMAGE,
-                                "--build-arg MAVEN_SETTINGS_XML=\"\$(cat ./lemma/build/docker/settings.xml)\" \
-                                --build-arg GRADLE_PROPERTIES=\"\$(cat ./lemma/build/docker/gradle.properties)\" \
+                                "--build-arg MAVEN_SETTINGS_XML=\"\$(cat ./build/docker/settings.xml)\" \
+                                --build-arg GRADLE_PROPERTIES=\"\$(cat ./build/docker/gradle.properties)\" \
                                 --build-arg JENKINS_UID=\"\$(id -u jenkins)\" \
-                                ./lemma/build/deploy/docker"
+                                ./build/deploy/docker"
                             )
 
                             if (env.BRANCH_NAME == 'master') {
@@ -233,7 +200,7 @@ pipeline {
                     }
 
                     steps {
-                        sh "cd lemma/build/deploy/ && ./lemma-deploy.sh /usr/share/maven/conf/settings.xml"
+                        sh "cd build/deploy/ && ./lemma-deploy.sh /usr/share/maven/conf/settings.xml"
                     }
                 }
             }
@@ -244,37 +211,35 @@ pipeline {
                 }
 
                 always {
-                    dir("lemma") {
-                        script {
-                            def postMessageBranchUrl = "${env.BASE_BRANCH_URL}/tree/${env.BRANCH_NAME}"
-                            def postMessageBranch = env.BRANCH_NAME ? "\n\tBranch: <${postMessageBranchUrl}|${env.BRANCH_NAME}>" : ""
-                            def postMessageCommitAuthor = sh(script: "git --no-pager show -s --format='%an'", returnStdout: true).trim()
-                            def postMessageCommitMessage = sh(script: "git log --format=%B -n 1 ${GIT_COMMIT}", returnStdout: true).trim()
-                            def postMessageCommitUrl = "${env.BASE_BRANCH_URL}/commit/${env.GIT_COMMIT}"
-                            def postMessageCommitInfo = "(\"${postMessageCommitMessage}\") by *${postMessageCommitAuthor}*"
-                            def postMessageCommit = env.GIT_COMMIT ? "\n\tCommit: <${postMessageCommitUrl}|${env.GIT_COMMIT}> ${postMessageCommitInfo}" : ""
-                            def postMessageBody = "\n\tJob: ${env.JOB_NAME}" +
-                                "${postMessageBranch}" +
-                                "${postMessageCommit}" +
-                                "\n\tStatus: ${currentBuild.result}" +
-                                "\n\tBuild: <${env.BUILD_URL}|#${env.BUILD_NUMBER}>"
+                    script {
+                        def postMessageBranchUrl = "${env.BASE_BRANCH_URL}/tree/${env.BRANCH_NAME}"
+                        def postMessageBranch = env.BRANCH_NAME ? "\n\tBranch: <${postMessageBranchUrl}|${env.BRANCH_NAME}>" : ""
+                        def postMessageCommitAuthor = sh(script: "git --no-pager show -s --format='%an'", returnStdout: true).trim()
+                        def postMessageCommitMessage = sh(script: "git log --format=%B -n 1 ${GIT_COMMIT}", returnStdout: true).trim()
+                        def postMessageCommitUrl = "${env.BASE_BRANCH_URL}/commit/${env.GIT_COMMIT}"
+                        def postMessageCommitInfo = "(\"${postMessageCommitMessage}\") by *${postMessageCommitAuthor}*"
+                        def postMessageCommit = env.GIT_COMMIT ? "\n\tCommit: <${postMessageCommitUrl}|${env.GIT_COMMIT}> ${postMessageCommitInfo}" : ""
+                        def postMessageBody = "\n\tJob: ${env.JOB_NAME}" +
+                            "${postMessageBranch}" +
+                            "${postMessageCommit}" +
+                            "\n\tStatus: ${currentBuild.result}" +
+                            "\n\tBuild: <${env.BUILD_URL}|#${env.BUILD_NUMBER}>"
 
-                            if(currentBuild.result != "FAILURE") {
-                                mattermostSend (
-                                    color: "good",
-                                    message: "LEMMA Build SUCCESS: ${postMessageBody}",
-                                    channel: MATTERMOST_CHANNEL
-                                )
+                        if(currentBuild.result != "FAILURE") {
+                            mattermostSend (
+                                color: "good",
+                                message: "LEMMA Build SUCCESS: ${postMessageBody}",
+                                channel: MATTERMOST_CHANNEL
+                            )
 
-                                // Clean workspace upon success
-                                cleanWs()
-                            } else {
-                                mattermostSend (
-                                    color: "danger",
-                                    message: "LEMMA Build FAILURE: ${postMessageBody}",
-                                    channel: MATTERMOST_CHANNEL
-                                )
-                            }
+                            // Clean workspace upon success
+                            cleanWs()
+                        } else {
+                            mattermostSend (
+                                color: "danger",
+                                message: "LEMMA Build FAILURE: ${postMessageBody}",
+                                channel: MATTERMOST_CHANNEL
+                            )
                         }
                     }
                 }
