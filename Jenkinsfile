@@ -33,11 +33,11 @@ pipeline {
             agent { label "windows" }
 
             stages {
-                stage("Clean Workspace") {
+                /*stage("Clean Workspace") {
                     steps {
                         cleanWs()
                     }
-                }
+                }*/
 
                 stage("Remove Build Management Folders") {
                     steps {
@@ -109,11 +109,11 @@ pipeline {
             agent { label "master" }
 
             stages {
-                stage("Clean Workspace") {
+                /*stage("Clean Workspace") {
                     steps {
                         cleanWs()
                     }
-                }
+                }*/
 
                 /*stage("Clone LEMMA") {
                     steps {
