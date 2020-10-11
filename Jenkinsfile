@@ -4,6 +4,11 @@ pipeline {
     environment {
         MATTERMOST_CHANNEL = credentials("lemma-builds-mattermost-channel")
         BASE_BRANCH_URL = "https://github.com/SeelabFhdo/lemma"
+        RELEASE_TAG_PATTERN = /^v[0-9]+\.[0-9]+(\.[0-9]+)?/
+
+        CODE_GENERATORS_FOLDER = "code generators"
+        JAVA_GENERATOR_IMAGE = "lemma/java_generator:latest"
+        VERSION_PATTERN = /version\s*=\s*(?<version>.+)/
 
         DOCKER_NEXUS_REGISTRY_CREDENTIALS = "seelab-nexus-docker-registry"
         DOCKER_NEXUS_REGISTRY_URL = "http://repository.seelab.fh-dortmund.de:51900"
@@ -214,6 +219,32 @@ pipeline {
                         sh "cd build/deploy/ && ./lemma-deploy.sh /usr/share/maven/conf/settings.xml"
                     }
                 }
+
+                stage("Build: Build and Push Java Generator Docker Image") {
+                    steps {
+                        script {
+                            def lemmaVersion = javaGeneratorVersion(CODE_GENERATORS_FOLDER)
+
+                            // We need to build the image in any case, otherwise the subsequent stage will fail,
+                            // because the image doesn't exist
+                            generatorImage = docker.build JAVA_GENERATOR_IMAGE,
+                                "--build-arg LEMMA_VERSION=\"${lemmaVersion}\" " +
+                                "-f \"./${CODE_GENERATORS_FOLDER}/docker/java/Dockerfile\" " +
+                                "\"${CODE_GENERATORS_FOLDER}\""
+
+                            if (env.BRANCH_NAME == 'master' && isRelease()) {
+                                docker.withRegistry(DOCKER_NEXUS_REGISTRY_URL,
+                                    DOCKER_NEXUS_REGISTRY_CREDENTIALS) {
+                                    generatorImage.push()
+                                }
+                                docker.withRegistry(DOCKER_RANCHER_REGISTRY_URL,
+                                    DOCKER_RANCHER_REGISTRY_CREDENTIALS) {
+                                    generatorImage.push()
+                                }
+                            }
+                        }
+                    }
+                }
             }
 
             post {
@@ -257,4 +288,52 @@ pipeline {
             }
         }
     }
+}
+
+/**
+ * Check if this a LEMMA release
+ */
+def isRelease() {
+    // Check if the last commit has a tag. Note: The subsequent call to "git
+    // describe" returns the STDOUT, while this call return the status code.
+    // We need to do the status code call, because otherwise the sh() command
+    // of Jenkins will fail, if no tag exists. That is, because sh() ignores
+    // piping STDERR to /dev/null via "2>/dev/null".
+    def hasTag = sh(
+        script: "git describe --exact-match --tags --abbrev=0 HEAD",
+        returnStatus: true
+    ) == 0
+    if (!hasTag)
+        return false
+
+    // Check if the tag of the last commit follows LEMMA's pattern for release
+    // tags
+    def tag = sh(
+        script: "git describe --exact-match --tags --abbrev=0 HEAD",
+        returnStdout: true
+    ).trim()
+    return tag ==~ RELEASE_TAG_PATTERN
+}
+
+/**
+ * Get the current version of LEMMA's Java Base Generator from its
+ * "gradle.properties" file
+ */
+def javaGeneratorVersion(String codeGeneratorsFolder) {
+    def folderPrefix = ""
+    if (codeGeneratorsFolder?.trim())
+        folderPrefix = "$codeGeneratorsFolder/"
+
+    // Read the contents of "gradle.properties"
+    def gradleProperties = sh(
+        script: "cat \"${folderPrefix}de.fhdo.lemma.model_processing.code_generation.java_base/gradle.properties\"",
+        returnStdout: true
+    ).trim()
+
+    // Find the line with the version identifier and get the version
+    def versionStr = gradleProperties.split('\n')
+        .find({l -> l ==~ VERSION_PATTERN})
+    def versionMatcher = (versionStr =~ VERSION_PATTERN)
+    versionMatcher.find()
+    return versionMatcher.group('version')
 }
