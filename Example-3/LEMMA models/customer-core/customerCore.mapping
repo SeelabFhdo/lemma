@@ -1,33 +1,33 @@
 import microservices from "customerCore.services" as customerCoreServices
-import technology from "../technology/spring.technology" as spring
+import technology from "../technology/javaWithSpring.technology" as java
 import technology from "../technology/eadr.technology" as eadr
 import technology from "../technology/lakesideMutual.technology" as lakesideMutual
 import technology from "../technology/map.technology" as map
 import technology from "../technology/eureka.technology" as eureka
 
-@technology(spring)
+@technology(java)
 type customerCoreServices::domain::customerCore.Address {
-	aspects { spring::_aspects.Table("addresses"); }
+	aspects { java::_aspects.Table("addresses"); }
 
-	id { aspects { spring::_aspects.GeneratedValue; } }
+	id { aspects { java::_aspects.GeneratedValue; } }
 }
 
-@technology(spring)
+@technology(java)
 type customerCoreServices::domain::customerCore.CustomerId {
-	op random { aspects { spring::_aspects.static; } }
+	op random { aspects { java::_aspects.static; } }
 }
 
-@technology(spring)
+@technology(java)
 type customerCoreServices::domain::customerCore.CustomerProfileEntity {
-	currentAddress { aspects { spring::_aspects.OneToOne; } }
+	currentAddress { aspects { java::_aspects.OneToOne; } }
 
-	moveHistory : spring::_types.Collection { aspects { spring::_aspects.OneToMany; } }
+	moveHistory : java::_types.Collection { aspects { java::_aspects.OneToMany; } }
 }
 
-@technology(spring)
+@technology(java)
 @technology(eadr)
 type customerCoreServices::domain::customerCore.CustomerAggregateRoot {
-	aspects { spring::_aspects.Table("customers"); }
+	aspects { java::_aspects.Table("customers"); }
 
 	op moveToAddress {
 		aspects {
@@ -54,60 +54,60 @@ type customerCoreServices::domain::customerCore.CustomerAggregateRoot {
 	}
 }
 
-@technology(spring)
+@technology(java)
 type customerCoreServices::domain::customerCore.CustomerFactory {
-	customerRepository { aspects { spring::_aspects.Autowired; } }
+	customerRepository { aspects { java::_aspects.Autowired; } }
 
-	op formatPhoneNumber { aspects { spring::_aspects.static; } }
+	op formatPhoneNumber { aspects { java::_aspects.static; } }
 }
 
-@technology(spring)
+@technology(java)
 type customerCoreServices::domain::customerCore.CityLookupService {
-	op loadLookupMap { return type : spring::_types.Multimap; }
+	op loadLookupMap { return type : java::_types.Multimap; }
 
-	op getLookupMap  { return type : spring::_types.Multimap; }
+	op getLookupMap  { return type : java::_types.Multimap; }
 }
 
-@technology(spring)
+@technology(java)
 @technology(map)
 type customerCoreServices::domain::customerCore.AddressDto {
 	aspects { map::_aspects.AtomicParameterList; }
 
-	op fromDomainObject { aspects { spring::_aspects.static; } }
+	op fromDomainObject { aspects { java::_aspects.static; } }
 }
 
-@technology(spring, typedef=true)
+@technology(java, typedef=true)
 @technology(lakesideMutual)
 type customerCoreServices::domain::customerCore.CustomerProfileUpdateRequestDto {
-	birthday { aspects { spring::_aspects.JsonFormat("yyyy-MM-dd"); } }
+	birthday { aspects { java::_aspects.JsonFormat("yyyy-MM-dd"); } }
 	phoneNumber { aspects { lakesideMutual::_aspects.PhoneNumber; } }
 }
 
-@technology(spring)
+@technology(java)
 @technology(map)
 type customerCoreServices::domain::customerCore.CustomerResponseDto {
 	aspects {
-		spring::_aspects.ResourceSupport;
+		java::_aspects.ResourceSupport;
 		map::_aspects.ParameterTree;
 	}
 
-	moveHistory : spring::_types.Collection;
+	moveHistory : java::_types.Collection;
 }
 
-@technology(spring)
+@technology(java)
 @technology(map)
 type customerCoreServices::domain::customerCore.CustomersResponseDto {
 	aspects {
-		spring::_aspects.ResourceSupport;
+		java::_aspects.ResourceSupport;
 		map::_aspects.ParameterForest;
 	}
 }
 
-@technology(spring)
+@technology(java)
 @technology(map)
 type customerCoreServices::domain::customerCore.PaginatedCustomerResponseDto {
 	aspects {
-		spring::_aspects.ResourceSupport;
+		java::_aspects.ResourceSupport;
 		map::_aspects.Pagination;
 	}
 }
@@ -117,97 +117,97 @@ type customerCoreServices::domain::customerCore.CitiesResponseDto {
 	aspects { map::_aspects.AtomicParameter; }
 }
 
-@technology(spring, typedef=true)
+@technology(java, typedef=true)
 @technology(lakesideMutual)
 type customerCoreServices::domain::customerCore.CustomerService {
-	customerRepository { aspects { spring::_aspects.Autowired; } }
+	customerRepository { aspects { java::_aspects.Autowired; } }
 
-	customerFactory { aspects { spring::_aspects.Autowired; } }
+	customerFactory { aspects { java::_aspects.Autowired; } }
 
-	op updateAddress { return type : spring::_types.Optional; }
+	op updateAddress { return type : java::_types.Optional; }
 
-	op updateCustomerProfile { return type : spring::_types.Optional; }
+	op updateCustomerProfile { return type : java::_types.Optional; }
 
 	op getCustomers { return type : lakesideMutual::_types.Page; }
 }
 
-@technology(spring)
+@technology(java)
 type customerCoreServices::domain::customerCore.GetCustomerRequest {
 	aspects {
-		spring::_aspects.XmlAccessorType;
-		spring::_aspects.XmlType(propOrder="id");
-		spring::_aspects.XmlRootElement("getCustomerRequest");
+		java::_aspects.XmlAccessorType;
+		java::_aspects.XmlType(propOrder="id");
+		java::_aspects.XmlRootElement("getCustomerRequest");
 	}
 
-	id { aspects { spring::_aspects.XmlElement(^required=true); } }
+	id { aspects { java::_aspects.XmlElement(^required=true); } }
 }
 
-@technology(spring)
+@technology(java)
 type customerCoreServices::domain::customerCore.GetCustomerResponse {
 	aspects {
-		spring::_aspects.XmlAccessorType;
-		spring::_aspects.XmlType(propOrder="customer");
-		spring::_aspects.XmlRootElement("getCustomerResponse");
+		java::_aspects.XmlAccessorType;
+		java::_aspects.XmlType(propOrder="customer");
+		java::_aspects.XmlRootElement("getCustomerResponse");
 	}
 
-	customer { aspects { spring::_aspects.XmlElement(^required=true); } }
+	customer { aspects { java::_aspects.XmlElement(^required=true); } }
 }
 
-@technology(spring)
+@technology(java)
 type customerCoreServices::domain::customerCore.Customer {
 	aspects {
-		spring::_aspects.XmlAccessorType;
-		spring::_aspects.XmlType(
+		java::_aspects.XmlAccessorType;
+		java::_aspects.XmlType(
 			name="customer",
 			propOrder="name,birthday,address,segment"
 		);
 	}
 
-	name { aspects { spring::_aspects.XmlElement(^required=true); } }
+	name { aspects { java::_aspects.XmlElement(^required=true); } }
 
-	birthday : spring::_types.XMLGregorianCalendar {
-		aspects { spring::_aspects.XmlElement(^required=true); }
+	birthday : java::_types.XMLGregorianCalendar {
+		aspects { java::_aspects.XmlElement(^required=true); }
 	}
 
-	address { aspects { spring::_aspects.XmlElement(^required=true); } }
+	address { aspects { java::_aspects.XmlElement(^required=true); } }
 
-	segment { aspects { spring::_aspects.XmlElement(^required=true); } }
+	segment { aspects { java::_aspects.XmlElement(^required=true); } }
 }
 
-@technology(spring)
+@technology(java)
 type customerCoreServices::domain::customerCore.Profile {
 	aspects {
-		spring::_aspects.EnumerationMethod("public static Profile fromValue(String v)");
-		spring::_aspects.XmlEnum;
-		spring::_aspects.XmlType(name="profile");
+		java::_aspects.EnumerationMethod("public static Profile fromValue(String v)");
+		java::_aspects.XmlEnum;
+		java::_aspects.XmlType(name="profile");
 	}
 
-	.N_A { aspects { spring::_aspects.XmlEnumValue("n/a"); } }
+	.N_A { aspects { java::_aspects.XmlEnumValue("n/a"); } }
 
-	.NORMAL { aspects { spring::_aspects.XmlEnumValue("normal"); } }
+	.NORMAL { aspects { java::_aspects.XmlEnumValue("normal"); } }
 }
 
 @technology(eureka)
 @technology(map)
-@technology(spring)
+@technology(java)
 customerCoreServices::com.lakesidemutual.customercore.CustomerCore {
 	aspects {
-		spring::_aspects.ApplicationName("customer-core");
-		spring::_aspects.JacksonConfiguration(INDENT_OUTPUT=true,
+		java::_aspects.ApplicationName("customer-core");
+		java::_aspects.JacksonConfiguration(INDENT_OUTPUT=true,
 			defaultPropertyInclusion="NON_NULL");
-		spring::_aspects.DatasourceConfiguration(
+		java::_aspects.DatasourceConfiguration(
 			url="jdbc:h2:file:./customercore",
 			username="sa",
 			password="sa",
 			driverClassName="org.h2.Driver"
 		);
-		spring::_aspects.HibernateConfiguration("create-drop");
-		spring::_aspects.Port(8110);
-		spring::_aspects.Management(property="endpoints.web.exposure.include", value="*");
-		spring::_aspects.Management(property="info.git.mode", value="full");
-		spring::_aspects.AllowBeanDefinitionOverriding;
-		spring::_aspects.CommonsRequestLoggingFilter("DEBUG");
-		spring::_aspects.AdminClientUrl("http://localhost:9000");
+		java::_aspects.HibernateConfiguration("create-drop");
+		java::_aspects.Port(8110);
+		java::_aspects.Management(property="endpoints.web.exposure.include", value="*");
+		java::_aspects.Management(property="info.git.mode", value="full");
+		java::_aspects.AllowBeanDefinitionOverriding;
+		java::_aspects.CommonsRequestLoggingFilter("DEBUG");
+		java::_aspects.AdminClientUrl("http://localhost:9000");
 		eureka::_aspects.EurekaConfiguration(
 			clientDefaultZone = "http://localhost:8761/eureka",
 			preferIpAddress = true
@@ -215,13 +215,13 @@ customerCoreServices::com.lakesidemutual.customercore.CustomerCore {
 	}
 
 	interface cityStaticDataHolder {
-		endpoints { spring::_protocols.rest: "/cities"; }
+		endpoints { java::_protocols.rest: "/cities"; }
 
 		aspects { map::_aspects.StaticDataHolder; }
 	}
 
 	interface customerInformationHolder {
-		endpoints { spring::_protocols.rest: "/customers"; }
+		endpoints { java::_protocols.rest: "/customers"; }
 
 		aspects {
 			map::_aspects.InformationHolderResource;
@@ -230,9 +230,9 @@ customerCoreServices::com.lakesidemutual.customercore.CustomerCore {
 	}
 
 	interface customerInformationHolderSOAPAdapter {
-		protocols { sync: spring::_protocols.soap }
+		protocols { sync: java::_protocols.soap }
 
-		endpoints { spring::_protocols.soap: "http://lm.com/ccore"; }
+		endpoints { java::_protocols.soap: "http://lm.com/ccore"; }
 
 		aspects {
 			map::_aspects.InformationHolderResource;
@@ -241,117 +241,117 @@ customerCoreServices::com.lakesidemutual.customercore.CustomerCore {
 	}
 
 	operation cityStaticDataHolder.getCitiesForPostalCode {
-		endpoints { spring::_protocols.rest: "/{postalCode}"; }
+		endpoints { java::_protocols.rest: "/{postalCode}"; }
 
-		aspects { spring::_aspects.GetMapping; }
+		aspects { java::_aspects.GetMapping; }
 
 		parameters {
-			primitive postalCode { aspects { spring::_aspects.PathVariable; } }
-			complex cities : spring::_types.ResponseEntity;
+			primitive postalCode { aspects { java::_aspects.PathVariable; } }
+			complex cities : java::_types.ResponseEntity;
 		}
 	}
 
 	operation customerInformationHolder.changeAddress {
-		endpoints { spring::_protocols.rest: "/{customerId}/address"; }
+		endpoints { java::_protocols.rest: "/{customerId}/address"; }
 
-		aspects { spring::_aspects.PutMapping; }
+		aspects { java::_aspects.PutMapping; }
 
 		parameters {
-			complex customerId { aspects { spring::_aspects.PathVariable; } }
-			complex requestDto { aspects { spring::_aspects.Valid; spring::_aspects.RequestBody; } }
-			complex responseDto : spring::_types.ResponseEntity;
-			primitive customerNotFound { aspects { spring::_aspects.ResponseStatus("NOT_FOUND"); } }
+			complex customerId { aspects { java::_aspects.PathVariable; } }
+			complex requestDto { aspects { java::_aspects.Valid; java::_aspects.RequestBody; } }
+			complex responseDto : java::_types.ResponseEntity;
+			primitive customerNotFound { aspects { java::_aspects.ResponseStatus("NOT_FOUND"); } }
 		}
 	}
 
 	operation customerInformationHolder.getIncludedFields {
-		parameters { complex result : spring::_types.Set; }
+		parameters { complex result : java::_types.Set; }
 	}
 
 	operation customerInformationHolder.getCustomer {
-		endpoints { spring::_protocols.rest: "/{ids}"; }
+		endpoints { java::_protocols.rest: "/{ids}"; }
 
 		aspects {
-			spring::_aspects.GetMapping;
+			java::_aspects.GetMapping;
 			map::_aspects.RequestBundle;
 			map::_aspects.WishList;
 		}
 
 		parameters {
-			primitive ids { aspects { spring::_aspects.PathVariable; } }
-			primitive ^fields { aspects { spring::_aspects.RequestParam(value="fields"); } }
-			complex customersResponseDto : spring::_types.ResponseEntity;
+			primitive ids { aspects { java::_aspects.PathVariable; } }
+			primitive ^fields { aspects { java::_aspects.RequestParam(value="fields"); } }
+			complex customersResponseDto : java::_types.ResponseEntity;
 		}
 	}
 
 	operation customerInformationHolder.updateCustomer {
-		endpoints { spring::_protocols.rest: "/{customerId}"; }
+		endpoints { java::_protocols.rest: "/{customerId}"; }
 
-		aspects { spring::_aspects.PutMapping; }
+		aspects { java::_aspects.PutMapping; }
 
 		parameters {
-			complex customerId { aspects { spring::_aspects.PathVariable; } }
-			complex requestDto { aspects { spring::_aspects.Valid; spring::_aspects.RequestBody; } }
-			complex customersResponseDto : spring::_types.ResponseEntity {
+			complex customerId { aspects { java::_aspects.PathVariable; } }
+			complex requestDto { aspects { java::_aspects.Valid; java::_aspects.RequestBody; } }
+			complex customersResponseDto : java::_types.ResponseEntity {
 				aspects {
-					spring::_aspects.Valid;
+					java::_aspects.Valid;
 				}
 			}
 			primitive customerToUpdateNotFound { aspects {
-				spring::_aspects.ResponseStatus("NOT_FOUND");
+				java::_aspects.ResponseStatus("NOT_FOUND");
 			} }
 		}
 	}
 
 	operation customerInformationHolder.getCustomers {
 		aspects {
-			spring::_aspects.GetMapping;
+			java::_aspects.GetMapping;
 			map::_aspects.Pagination;
 		}
 
 		parameters {
-			primitive filter { aspects { spring::_aspects.RequestParam(value="filter"); } }
+			primitive filter { aspects { java::_aspects.RequestParam(value="filter"); } }
 			primitive limit { aspects {
-				spring::_aspects.RequestParam(value="limit", defaultValue="10");
+				java::_aspects.RequestParam(value="limit", defaultValue="10");
 			} }
 			primitive offset { aspects {
-				spring::_aspects.RequestParam(value="offset", defaultValue="0");
+				java::_aspects.RequestParam(value="offset", defaultValue="0");
 			} }
-			primitive ^fields { aspects { spring::_aspects.RequestParam(value="fields"); } }
-			complex customersResponseDto : spring::_types.ResponseEntity;
+			primitive ^fields { aspects { java::_aspects.RequestParam(value="fields"); } }
+			complex customersResponseDto : java::_types.ResponseEntity;
 		}
 	}
 
 	operation customerInformationHolder.createCustomer {
-		aspects { spring::_aspects.PostMapping; }
+		aspects { java::_aspects.PostMapping; }
 
 		parameters {
-			complex requestDto { aspects { spring::_aspects.Valid; spring::_aspects.RequestBody; } }
-			complex customersResponseDto : spring::_types.ResponseEntity;
+			complex requestDto { aspects { java::_aspects.Valid; java::_aspects.RequestBody; } }
+			complex customersResponseDto : java::_types.ResponseEntity;
 		}
 	}
 
 	operation customerInformationHolderSOAPAdapter.changeAddress {
-		parameters { complex requestDto { aspects { spring::_aspects.Valid; } } }
+		parameters { complex requestDto { aspects { java::_aspects.Valid; } } }
 	}
 
 	operation customerInformationHolderSOAPAdapter.getIncludedFields {
-		parameters { complex result : spring::_types.Set; }
+		parameters { complex result : java::_types.Set; }
 	}
 
 	operation customerInformationHolderSOAPAdapter.getCustomer {
-		endpoints { spring::_protocols.soap: "http://lm.com/ccore/getCustomerRequest"; }
+		endpoints { java::_protocols.soap: "http://lm.com/ccore/getCustomerRequest"; }
 
-		aspects { spring::_aspects.ResponsePayload; }
+		aspects { java::_aspects.ResponsePayload; }
 
-		parameters { complex request { aspects { spring::_aspects.RequestPayload; } } }
+		parameters { complex request { aspects { java::_aspects.RequestPayload; } } }
 	}
 
 	operation customerInformationHolderSOAPAdapter.updateCustomer {
-		parameters { complex requestDto { aspects { spring::_aspects.Valid; } } }
+		parameters { complex requestDto { aspects { java::_aspects.Valid; } } }
 	}
 
 	operation customerInformationHolderSOAPAdapter.createCustomer {
-		parameters { complex requestDto { aspects { spring::_aspects.Valid; } } }
+		parameters { complex requestDto { aspects { java::_aspects.Valid; } } }
 	}
 }

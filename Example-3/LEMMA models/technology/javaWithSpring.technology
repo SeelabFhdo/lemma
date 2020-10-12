@@ -1,4 +1,4 @@
-technology spring {
+technology javaWithSpring {
 	types {
 		primitive type Boolean based on boolean default;
 		primitive type Byte based on byte default;
