@@ -3,6 +3,7 @@ package de.fhdo.lemma.model_processing.builtin_phases.intermediate_model_validat
 import de.fhdo.lemma.model_processing.annotations.After
 import de.fhdo.lemma.model_processing.annotations.Before
 import de.fhdo.lemma.model_processing.annotations.BeforeCheck
+import de.fhdo.lemma.model_processing.annotations.RethrowExceptions
 import de.fhdo.lemma.model_processing.annotations.findAnnotatedMethods
 import de.fhdo.lemma.model_processing.builtin_phases.ValidationResult
 import de.fhdo.lemma.model_processing.builtin_phases.ValidationResultType
@@ -115,7 +116,9 @@ abstract class AbstractIntermediateDeclarativeValidator : AbstractDeclarativeVal
                         if (checkMethod.callBeforeCheckMethods(this, beforeCheckMethods))
                             checkMethod.call(this, instance)
                     } catch (ex: Exception) {
-                        // Swallow exceptions
+                        // Exceptions are swallowed, except when the check method has the @RethrowExceptions annotation
+                        if (checkMethod.annotations.any { it.annotationClass == RethrowExceptions::class })
+                            throw(ex)
                     }
                 }
             }

@@ -16,3 +16,12 @@ annotation class IntermediateModelValidator
  */
 @Target(AnnotationTarget.FUNCTION)
 annotation class BeforeCheck
+
+/**
+ * Annotation for debugging purposes in intermediate model validators. If a validation  method throws an Exception,
+ * this annotation wil result in rethrowing the Exception to the validator implementation.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+@Target(AnnotationTarget.FUNCTION)
+annotation class RethrowExceptions
