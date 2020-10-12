@@ -185,7 +185,7 @@ internal fun Any.getMethod(name: String, returnTypeClass: KClass<*> = Unit::clas
             continue
 
         var parameterTypesMatch = true
-        for (n in 0 until valueParameters.size) {
+        for (n in valueParameters.indices) {
             val parameter = valueParameters[n]
             val expectedParameterType = parameterClasses[n].starProjectedType
             val parameterType = parameter.type.withNullability(expectedParameterType.isMarkedNullable)

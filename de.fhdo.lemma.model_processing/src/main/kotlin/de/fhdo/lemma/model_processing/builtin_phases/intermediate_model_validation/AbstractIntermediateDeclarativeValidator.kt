@@ -2,6 +2,7 @@ package de.fhdo.lemma.model_processing.builtin_phases.intermediate_model_validat
 
 import de.fhdo.lemma.model_processing.annotations.After
 import de.fhdo.lemma.model_processing.annotations.Before
+import de.fhdo.lemma.model_processing.annotations.BeforeCheck
 import de.fhdo.lemma.model_processing.annotations.findAnnotatedMethods
 import de.fhdo.lemma.model_processing.builtin_phases.ValidationResult
 import de.fhdo.lemma.model_processing.builtin_phases.ValidationResultType
@@ -100,6 +101,7 @@ abstract class AbstractIntermediateDeclarativeValidator : AbstractDeclarativeVal
         }
 
         /* Call the identified check methods on the model element instances */
+        val beforeCheckMethods = findBeforeCheckMethods()
         checkMethodsPerInstanceType.forEach { (instanceType, checkMethods) ->
             val instancesToCheck = modelElementInstances[instanceType]
             instancesToCheck?.forEach { instance ->
@@ -108,13 +110,44 @@ abstract class AbstractIntermediateDeclarativeValidator : AbstractDeclarativeVal
                         validatedObject = instance
                         // Enable invocation of private check methods
                         checkMethod.isAccessible = true
-                        checkMethod.call(this, instance)
+                        // Call before-check-methods on check method. If any of the before-check-methods returns false,
+                        // the check method will not be executed.
+                        if (checkMethod.callBeforeCheckMethods(this, beforeCheckMethods))
+                            checkMethod.call(this, instance)
                     } catch (ex: Exception) {
                         // Swallow exceptions
                     }
                 }
             }
         }
+    }
+
+    /**
+     * Find methods that are annotated with [BeforeCheck] and thus have to be executed prior to each call to a
+     * validation method annotated with [Check]. A [BeforeCheck] method must take a single parameter of type
+     * [KFunction], which receives the [Check] method to be invoked, and return a [Boolean], which indicates whether the
+     * [Check] method shall be invoked.
+     */
+    private fun findBeforeCheckMethods()
+        = this.findAnnotatedMethods(BeforeCheck::class).filter {
+            // First parameter is Validator instance
+            it.parameters.size == 2 &&
+            it.parameters[1].type == KFunction::class.starProjectedType &&
+            it.returnType == Boolean::class.starProjectedType
+        }
+
+    /**
+     * Call [BeforeCheck] methods on this [KFunction]. Returns false if any of the [BeforeCheck] methods returns false.
+     */
+    private fun KFunction<*>.callBeforeCheckMethods(validatorInstance: AbstractIntermediateDeclarativeValidator,
+        beforeCheckMethods: List<KFunction<*>>) : Boolean {
+        for (beforeCheckMethod in beforeCheckMethods) {
+            beforeCheckMethod.isAccessible = true
+            val callResult = beforeCheckMethod.call(validatorInstance, this) as Boolean
+            if (!callResult)
+                return false
+        }
+        return true
     }
 
     /*
