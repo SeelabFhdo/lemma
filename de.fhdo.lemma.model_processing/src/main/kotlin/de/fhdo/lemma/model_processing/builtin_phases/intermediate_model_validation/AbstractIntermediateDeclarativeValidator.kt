@@ -33,11 +33,24 @@ import kotlin.reflect.jvm.isAccessible
 abstract class AbstractIntermediateDeclarativeValidator : AbstractDeclarativeValidator() {
     // The currently validated object
     private lateinit var validatedObject: EObject
+    private lateinit var phaseArguments: Array<String>
 
     /**
      * Get namespace of intermediate model language
      */
     abstract fun getLanguageNamespace() : String
+
+    /**
+     * Internal setter for arguments that concern the phase
+     */
+    internal fun setPhaseArguments(phaseArguments: Array<String>) {
+        this.phaseArguments = phaseArguments
+    }
+
+    /**
+     * External getter for phase arguments. May be used by concrete implementers.
+     */
+    fun getPhaseArguments() = phaseArguments
 
     /**
      * Execute validator with the loaded model resource

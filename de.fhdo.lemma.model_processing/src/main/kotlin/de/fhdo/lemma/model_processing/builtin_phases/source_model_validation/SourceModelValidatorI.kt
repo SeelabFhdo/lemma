@@ -10,4 +10,6 @@ import de.fhdo.lemma.model_processing.builtin_phases.ValidationResult
 interface SourceModelValidatorI {
     fun getLanguageNamespace() : String
     operator fun invoke(fileToValidate: String) : List<ValidationResult>
+    fun setPhaseArguments(phaseArguments: Array<String>)
+    fun getPhaseArguments() : Array<String>
 }

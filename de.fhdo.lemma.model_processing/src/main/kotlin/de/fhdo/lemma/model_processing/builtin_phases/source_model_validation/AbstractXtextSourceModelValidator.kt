@@ -29,6 +29,20 @@ import kotlin.reflect.jvm.isAccessible
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 abstract class AbstractXtextSourceModelValidator : AbstractDeclarativeValidator(), SourceModelValidatorI {
+    private lateinit var phaseArguments: Array<String>
+
+    /**
+     * Setter for arguments that concern the phase
+     */
+    override fun setPhaseArguments(phaseArguments: Array<String>) {
+        this.phaseArguments = phaseArguments
+    }
+
+    /**
+     * Getter for phase arguments. May be used by concrete implementers.
+     */
+    override fun getPhaseArguments() = phaseArguments
+
     /**
      * Execute validator
      */

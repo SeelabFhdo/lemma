@@ -87,6 +87,7 @@ internal class IntermediateModelValidationPhase : AbstractModelProcessingPhase()
                 .loadClass(AbstractIntermediateDeclarativeValidator::class.java)
                 .getDeclaredConstructor()
                 .newInstance()
+            validatorInstance.setPhaseArguments(args)
 
             val languageNamespace = validatorInstance.getLanguageNamespace()
             if (languageNamespace in intermediateModelFileNamespaces) {

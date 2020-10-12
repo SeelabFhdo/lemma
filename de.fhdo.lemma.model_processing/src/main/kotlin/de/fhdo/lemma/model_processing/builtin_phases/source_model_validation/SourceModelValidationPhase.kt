@@ -41,6 +41,8 @@ internal class SourceModelValidationPhase : AbstractModelProcessingPhase() {
      * Static companion methods
      */
     companion object {
+        internal lateinit var phaseArguments: Array<String>
+
         /**
          * Execute validator targeting basic model validation. Compared to an Xtext-supporting source model validator, a
          * basic source model validator just gets passed the path to the source model file.
@@ -55,6 +57,7 @@ internal class SourceModelValidationPhase : AbstractModelProcessingPhase() {
                 .loadClass(SourceModelValidatorI::class.java)
                 .getDeclaredConstructor()
                 .newInstance()
+            validatorInstance.setPhaseArguments(phaseArguments)
 
             return validatorInstance(sourceModelFile)
         }
@@ -75,6 +78,7 @@ internal class SourceModelValidationPhase : AbstractModelProcessingPhase() {
                 .loadClass(AbstractXtextSourceModelValidator::class.java)
                 .getDeclaredConstructor()
                 .newInstance()
+            validatorInstance.setPhaseArguments(phaseArguments)
 
             return validatorInstance(documentUri, inputStream)
         }
@@ -100,6 +104,9 @@ internal class SourceModelValidationPhase : AbstractModelProcessingPhase() {
         // Find all source model validators on the classpath that are capable of handling the source model file's type
         // (identified by its extension)
         val validators = findSourceModelValidators(processorImplementationPackage, fileExtension)
+
+        // Set phase arguments for validators to pass them to implementers
+        phaseArguments = args
 
         // Execute the found source model validators depending on the validation mode they support
         val validationResults = mutableListOf<ValidationResult>()
