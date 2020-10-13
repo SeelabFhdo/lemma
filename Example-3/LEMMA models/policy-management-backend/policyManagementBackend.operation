@@ -1,6 +1,6 @@
 import microservices from "policyManagementBackend.services" as policyManagementBackendServices
 import technology from "../technology/docker.technology" as containerTechnology
-import technology from "../technology/spring.technology" as protocolTechnology
+import technology from "../technology/javaWithSpring.technology" as protocolTechnology
 
 @technology(containerTechnology)
 @technology(protocolTechnology)

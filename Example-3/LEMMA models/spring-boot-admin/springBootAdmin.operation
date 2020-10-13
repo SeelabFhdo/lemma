@@ -1,5 +1,5 @@
 import technology from "../technology/docker.technology" as containerTechnology
-import technology from "../technology/spring.technology" as springBootAdmin
+import technology from "../technology/javaWithSpring.technology" as springBootAdmin
 
 @technology(containerTechnology)
 @technology(springBootAdmin)
