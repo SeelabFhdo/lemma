@@ -198,6 +198,12 @@ rule IntermediateDeploymentTechnologyReference(
             thisModule.IntermediateOperationEnvironment(sourceEnvironment, reference.technology);
         }
 
+        if (sourceEnvironment.oclIsUndefined()) {
+            for (env in sourceTechnologyReference.deploymentTechnology.operationEnvironments) {
+                thisModule.IntermediateOperationEnvironment(env, reference.technology);
+            }
+        }
+
         reference.import <- Intermediate!IntermediateImport.allInstances()->any(i |
                 i.name = sourceTechnologyReference.import.name
                 and i.importUri = sourceTechnologyReference.import.importURI
@@ -380,6 +386,13 @@ rule IntermediateInfrastructureTechnologyReference(
         if(not sourceEnvironment.oclIsUndefined()) {
             thisModule.IntermediateOperationEnvironment(sourceEnvironment, reference.technology);
         }
+
+        if (sourceEnvironment.oclIsUndefined()) {
+            for (env in sourceTechnologyReference.infrastructureTechnology.operationEnvironments) {
+                thisModule.IntermediateOperationEnvironment(env, reference.technology);
+            }
+        }
+
         reference.import <- Intermediate!IntermediateImport.allInstances()
                 ->any(i | i.name = sourceTechnologyReference.import.name
                 and i.importUri = sourceTechnologyReference.import.importURI);
