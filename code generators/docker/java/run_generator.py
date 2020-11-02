@@ -28,13 +28,15 @@ import sys
 DEFAULT_PATTERN = 'extended-generation-gap'
 IMAGE_NAME = 'lemma/java_generator:latest'
 IMAGE_REPOSITORY = 'repository.seelab.fh-dortmund.de:51900'
+IMAGE_FULL_PATH = IMAGE_REPOSITORY + '/' + IMAGE_NAME
 JAVA_GENERATOR_PATH = '../../' \
     'de.fhdo.lemma.model_processing.code_generation.java_base'
 VERSION_REGEX = r'version\s*=\s*(?P<version>.+)'
 
 def exists_docker_image():
     """Verify if the Java generator Docker image is present."""
-    result = subprocess.check_output(['docker', 'images', '-q', IMAGE_NAME])
+    result = subprocess.check_output(['docker', 'images', '-q',
+        IMAGE_FULL_PATH])
     return len(result) > 0
 
 def build_image_locally(buildScript):
@@ -156,7 +158,7 @@ def build_docker_run_arguments(args):
     dockerArgs = ('-v "%s":"%s" ' % (args.basePath, args.basePath)) + \
         ('-v "%s":/home/target ' % targetFolderPath) + \
         '-u $(id -u ${USER}):$(id -g ${USER}) ' + \
-        ('%s ' % IMAGE_NAME) + \
+        ('%s ' % IMAGE_FULL_PATH) + \
         ('-s "%s" ' % smContainerPath) + \
         ('-i "%s" ' % imContainerPath) + \
         '-t /home/target ' + \
@@ -189,16 +191,17 @@ if __name__ == '__main__':
     # Make sure that the Docker image exists locally
     if not exists_docker_image():
         localBuildScript = './build_locally.sh'
-        remoteImage = IMAGE_REPOSITORY + '/' + IMAGE_NAME
         getDockerImage = input('Required docker image "%s" does not exist ' \
             'locally. Do you want to ' \
             '\n\t- build it locally via build script "%s" [b],' \
             '\n\t- pull it from the remote registry "%s" [p], or' \
-            '\n\t- abort [a]? ' % (IMAGE_NAME, localBuildScript, remoteImage))
+            '\n\t- abort [a]? ' % \
+                (IMAGE_NAME, localBuildScript, IMAGE_FULL_PATH)
+            )
         if getDockerImage == 'b':
             build_image_locally(localBuildScript)
         elif getDockerImage == 'p':
-            pull_image(remoteImage)
+            pull_image(IMAGE_FULL_PATH)
         else:
             print('Image retrieval aborted. Exiting.')
             sys.exit(0)
