@@ -114,12 +114,10 @@ class PropertyFile(val filePath: String, private val properties: SortablePropert
      * Two [PropertyFile] instances are equal, if their [filePath] values are equal
      */
     override fun equals(other: Any?)
-        = when {
-            this === other -> true
-            other == null -> false
-            other !is PropertyFile -> false
-            else -> filePath == other.filePath
-        }
+        = if (this === other) true
+            else if (other == null) false
+            else if (other is PropertyFile) filePath == other.filePath
+            else false
 
     /**
      * The hash code of a [PropertyFile] is equal to the hash code of its [filePath]

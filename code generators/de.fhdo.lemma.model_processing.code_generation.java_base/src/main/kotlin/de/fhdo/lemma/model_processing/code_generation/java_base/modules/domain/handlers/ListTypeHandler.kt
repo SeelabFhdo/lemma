@@ -167,12 +167,10 @@ private class JavaCollectionTypeDescription(val classname: String, val typeArgum
      * Two [JavaCollectionTypeDescription] instances are equal, if their [classname] values are equal
      */
     override fun equals(other : Any?)
-        = when {
-        this === other -> true
-        other == null -> false
-        other !is JavaCollectionTypeDescription -> false
-        else -> classname == other.classname
-    }
+        = if (this === other) true
+            else if (other == null) false
+            else if (other is JavaCollectionTypeDescription) classname == other.classname
+            else false
 
     /**
      * The hash code of a [JavaCollectionTypeDescription] is equal to the hash code of its [classname]

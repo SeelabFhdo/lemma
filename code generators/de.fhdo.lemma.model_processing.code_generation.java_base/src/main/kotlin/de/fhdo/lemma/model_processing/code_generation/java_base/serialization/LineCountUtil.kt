@@ -58,12 +58,10 @@ internal class LineCountInfo(var serializationTargetFilePath: String, var serial
      * Two [LineCountInfo] instances are equal, if their [serializationTargetFilePath] values are equal
      */
     override fun equals(other: Any?)
-        = when {
-            this === other -> true
-            other == null -> false
-            other !is LineCountInfo -> false
-            else -> serializationTargetFilePath == other.serializationTargetFilePath
-        }
+        = if (this === other) true
+            else if (other == null) false
+            else if (other is LineCountInfo) serializationTargetFilePath == other.serializationTargetFilePath
+            else false
 
     /**
      * The hash code of a [LineCountInfo] is equal to the hash code of its [serializationTargetFilePath]

@@ -193,12 +193,10 @@ internal class AsynchronousOperationInfo(val protocol: String, val operation: In
      * Two [AsynchronousOperationInfo] instance are equal when their [operation] instances' qualified names are equal
      */
     override fun equals(other: Any?)
-        = when {
-            this === other -> true
-            other == null -> false
-            other !is AsynchronousOperationInfo -> false
-            else -> operation.qualifiedName == operation.qualifiedName
-        }
+        = if (this === other) true
+            else if (other == null) false
+            else if (other is AsynchronousOperationInfo) operation.qualifiedName == other.operation.qualifiedName
+            else false
 
     /**
      * The hash code of an [AsynchronousOperationInfo] is equivalent to the hash code the qualified name of its
