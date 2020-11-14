@@ -820,6 +820,13 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
       }
     }
     if (!_matched) {
+      if (mapping instanceof DataOperationParameterMapping) {
+        _matched=true;
+        originalType = ((DataOperationParameterMapping)mapping).getParameter().getEffectiveType();
+        technology = ((DataOperationParameterMapping)mapping).getTechnology();
+      }
+    }
+    if (!_matched) {
       if (mapping instanceof DataOperationReturnTypeMapping) {
         _matched=true;
         originalType = ((DataOperationReturnTypeMapping)mapping).getOperationMapping().getDataOperation().getPrimitiveOrComplexReturnType();

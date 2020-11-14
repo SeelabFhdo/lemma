@@ -615,6 +615,10 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
                 originalType = mapping.dataField.effectiveType
                 technology = mapping.technology
             }
+            DataOperationParameterMapping: {
+                originalType = mapping.parameter.effectiveType
+                technology = mapping.technology
+            }
             DataOperationReturnTypeMapping: {
                 originalType = mapping.operationMapping.dataOperation.primitiveOrComplexReturnType
                 technology = mapping.technology
