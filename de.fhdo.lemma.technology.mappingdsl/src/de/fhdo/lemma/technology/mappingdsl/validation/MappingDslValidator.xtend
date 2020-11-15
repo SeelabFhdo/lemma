@@ -351,7 +351,7 @@ class MappingDslValidator extends AbstractMappingDslValidator {
                 case CommunicationType.SYNCHRONOUS: "synchronous"
             }
             error('''Ambiguous default protocol for «typeString» communication. The ''' +
-                '''mapping needs to explicitly specifiy a protocol for «typeString» ''' +
+                '''mapping needs to explicitly specify a protocol for «typeString» ''' +
                 '''communication.''', mapping,
                 MappingPackage::Literals.MICROSERVICE_MAPPING__MICROSERVICE)
         }

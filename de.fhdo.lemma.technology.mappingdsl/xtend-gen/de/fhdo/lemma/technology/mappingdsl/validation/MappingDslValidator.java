@@ -440,7 +440,7 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
         _builder.append(typeString);
         _builder.append(" communication. The ");
         StringConcatenation _builder_1 = new StringConcatenation();
-        _builder_1.append("mapping needs to explicitly specifiy a protocol for ");
+        _builder_1.append("mapping needs to explicitly specify a protocol for ");
         _builder_1.append(typeString);
         _builder_1.append(" ");
         String _plus = (_builder.toString() + _builder_1);
