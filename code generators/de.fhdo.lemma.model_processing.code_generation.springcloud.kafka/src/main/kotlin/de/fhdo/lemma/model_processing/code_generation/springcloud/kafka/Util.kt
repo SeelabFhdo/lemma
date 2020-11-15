@@ -9,6 +9,7 @@ import com.github.javaparser.ast.type.ClassOrInterfaceType
 import com.github.javaparser.ast.type.Type
 import com.github.javaparser.ast.type.WildcardType
 import de.fhdo.lemma.data.intermediate.IntermediateComplexType
+import de.fhdo.lemma.data.intermediate.IntermediateDataModel
 import de.fhdo.lemma.data.intermediate.IntermediateDataStructure
 import de.fhdo.lemma.data.intermediate.IntermediateType
 import de.fhdo.lemma.model_processing.asFile
@@ -303,3 +304,15 @@ internal fun IntermediateDataStructure.visibleFieldsAndTypes(mutableFieldsOnly: 
 
             field to type
         }
+
+/**
+ * Helper to find the data model that contains the [IntermediateComplexType].
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+internal fun IntermediateComplexType.getContainingDataModel() : IntermediateDataModel {
+    var container = eContainer()
+    while (container !is IntermediateDataModel)
+        container = container.eContainer()
+    return container
+}

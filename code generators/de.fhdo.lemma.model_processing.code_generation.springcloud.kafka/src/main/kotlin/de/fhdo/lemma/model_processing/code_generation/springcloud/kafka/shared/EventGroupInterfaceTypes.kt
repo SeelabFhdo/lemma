@@ -3,6 +3,7 @@ package de.fhdo.lemma.model_processing.code_generation.springcloud.kafka.shared
 import com.github.javaparser.ast.type.ClassOrInterfaceType
 import de.fhdo.lemma.data.intermediate.IntermediateDataStructure
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.getGenletNodeInfoOrElseNull
+import de.fhdo.lemma.model_processing.code_generation.springcloud.kafka.getContainingDataModel
 
 /**
  * Singleton that stores information about interface types of event groups.
@@ -36,7 +37,8 @@ internal object EventGroupInterfaceTypes {
      * Calculate unique identifier of a data structure consisting of the source model URI of its defining data model and
      * its qualified name
      */
-    private fun IntermediateDataStructure.identifier() = this.dataModel.sourceModelUri + "$" + this.qualifiedName
+    private fun IntermediateDataStructure.identifier()
+        = this.getContainingDataModel().sourceModelUri + "$" + this.qualifiedName
 
     /**
      * Get the event group of a data structure
