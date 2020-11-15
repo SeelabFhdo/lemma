@@ -61,6 +61,7 @@ private val primitiveTypeMappings = primitiveTypeMappings {
         "Object".mapsToSelf()
         "Short".mapsToSelf()
         "String".mapsToSelf()
+        "UUID" withImport "java.util.UUID"
     }
 }
 
