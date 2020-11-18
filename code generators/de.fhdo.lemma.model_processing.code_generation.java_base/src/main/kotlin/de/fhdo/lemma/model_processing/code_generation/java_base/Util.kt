@@ -29,10 +29,11 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.pr
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.services.ServicesContext.State as ServicesState
 import de.fhdo.lemma.model_processing.languages.registerLanguage
 import de.fhdo.lemma.model_processing.loadXtextResource
-import de.fhdo.lemma.model_processing.utils.loadModelRoot
+import de.fhdo.lemma.model_processing.utils.loadModelRootRelative
 import de.fhdo.lemma.model_processing.utils.mainInterface
 import de.fhdo.lemma.model_processing.utils.packageToPath
 import de.fhdo.lemma.model_processing.utils.putValue
+import de.fhdo.lemma.model_processing.utils.removeFileUri
 import de.fhdo.lemma.model_processing.utils.trimToSingleLine
 import de.fhdo.lemma.service.Interface
 import de.fhdo.lemma.service.Microservice
@@ -412,7 +413,11 @@ fun IntermediateDataField.hasFeature(feature: String) = featureNames.contains(fe
 fun IntermediateComplexType.resolve() : IntermediateComplexType {
     /* Determine the defining model and referencing parts (version name, context name, and simple name) of this type */
     val definingModelUri = if (this is IntermediateImportedComplexType) import.importUri else null
-    val definingModel = if (definingModelUri != null) loadModelRoot(definingModelUri) else getContainingDataModel()
+    val definingModel = if (definingModelUri != null) {
+            val importingModelFilePath = eResource().uri.toString().removeFileUri()
+            loadModelRootRelative(definingModelUri, importingModelFilePath)
+        } else
+            getContainingDataModel()
     val (versionName, contextName, simpleName) = getQualifiedNameParts()
 
     /* Determine sources of this type's referencing parts (version and context instances) */

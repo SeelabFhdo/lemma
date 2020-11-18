@@ -61,7 +61,8 @@ internal class DomainCodeGenerationSubModule : KoinComponent {
 
         while (urisTodo.isNotEmpty()) {
             val (currentUri, importingModelAbsolutePath) = urisTodo.pop()
-            val absoluteUri = LemmaUtils.convertToAbsoluteFileUri(currentUri, importingModelAbsolutePath)
+            val currentPath = currentUri.removeFileUri()
+            val absoluteUri = LemmaUtils.convertToAbsoluteFileUri(currentPath, importingModelAbsolutePath)
             resolvedModelUris.add(absoluteUri)
 
             val modelRoot = loadModelRoot<IntermediateDataModel>(absoluteUri.removeFileUri())

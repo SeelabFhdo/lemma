@@ -156,6 +156,16 @@ fun String.asXmiResource() : Resource = removeFileUri().asXmiResourceSimple()
 fun <T : EObject> Resource.modelRoot() : T = contents[0] as T
 
 /**
+ * Load the root of a model, whose URI or filepath is relative to the given [absoluteBasePath].
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+fun <T : EObject> loadModelRootRelative(fileUriOrPath: String, absoluteBasePath: String) : T {
+    val absolutePath = LemmaUtils.convertToAbsoluteFileUri(fileUriOrPath.removeFileUri(), absoluteBasePath)
+    return absolutePath.asXmiResource().modelRoot()
+}
+
+/**
  * Load the root of a model.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)

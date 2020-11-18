@@ -13,6 +13,7 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.co
 import de.fhdo.lemma.model_processing.phases.PhaseException
 import de.fhdo.lemma.model_processing.utils.filterByType
 import de.fhdo.lemma.model_processing.utils.loadModelRoot
+import de.fhdo.lemma.model_processing.utils.loadModelRootRelative
 import de.fhdo.lemma.model_processing.utils.removeFileUri
 import de.fhdo.lemma.service.ImportType
 import de.fhdo.lemma.utils.LemmaUtils
@@ -127,13 +128,14 @@ internal class SharedCodeGenerationModule : CodeGenerationModuleBase() {
      */
     private fun getImportedDomainModelUrisTransitively(startModelPath: String) : Set<String> {
         val startModel = loadModelRoot<IntermediateDataModel>(startModelPath)
+        val startModelAbsolutePath = startModel.eResource().uri.toString().removeFileUri()
         val resolvedModelUris = mutableSetOf<String>()
         val urisTodo = ArrayDeque(startModel.imports.filterByType(ImportType.DATATYPES).map { it.importUri })
 
         while (urisTodo.isNotEmpty()) {
             val currentUri = urisTodo.pop()
             resolvedModelUris.add(currentUri)
-            val modelRoot = loadModelRoot<IntermediateDataModel>(currentUri.removeFileUri())
+            val modelRoot = loadModelRootRelative<IntermediateDataModel>(currentUri, startModelAbsolutePath)
             modelRoot.imports.filterByType(ImportType.DATATYPES).forEach { urisTodo.push(it.importUri) }
         }
 
