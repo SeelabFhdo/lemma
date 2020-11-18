@@ -17,10 +17,12 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.xtend.lib.annotations.AccessorType;
+import org.eclipse.xtend.lib.annotations.Accessors;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.ListExtensions;
-import org.eclipse.xtext.xbase.lib.Pair;
+import org.eclipse.xtext.xbase.lib.Pure;
 
 /**
  * Handler for specifying paths on selected models.
@@ -29,6 +31,41 @@ import org.eclipse.xtext.xbase.lib.Pair;
  */
 @SuppressWarnings("all")
 public class SpecifyPathsHandler extends AbstractHandler {
+  /**
+   * Result of the invoked user dialog
+   */
+  public static class SpecifyPathsDialogResult {
+    @Accessors(AccessorType.PUBLIC_GETTER)
+    private List<ModelFile> selectedModelFiles;
+    
+    @Accessors(AccessorType.PUBLIC_GETTER)
+    private boolean convertToRelativeUris;
+    
+    @Accessors(AccessorType.PUBLIC_GETTER)
+    private boolean outputRefinementModels;
+    
+    public SpecifyPathsDialogResult(final List<ModelFile> selectedModelFiles, final boolean convertToRelativeUris, final boolean outputRefinementModels) {
+      this.selectedModelFiles = selectedModelFiles;
+      this.convertToRelativeUris = convertToRelativeUris;
+      this.outputRefinementModels = outputRefinementModels;
+    }
+    
+    @Pure
+    public List<ModelFile> getSelectedModelFiles() {
+      return this.selectedModelFiles;
+    }
+    
+    @Pure
+    public boolean isConvertToRelativeUris() {
+      return this.convertToRelativeUris;
+    }
+    
+    @Pure
+    public boolean isOutputRefinementModels() {
+      return this.outputRefinementModels;
+    }
+  }
+  
   private final Shell SHELL = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
   
   private List<ModelFile> inputModelFiles;
@@ -64,11 +101,12 @@ public class SpecifyPathsHandler extends AbstractHandler {
     final SpecifyPathsDialog dialog = new SpecifyPathsDialog(this.SHELL, this.strategy, _createModelTableFiles);
     dialog.create();
     final int dialogResult = dialog.open();
-    Pair<List<ModelFile>, Boolean> _xifexpression = null;
+    SpecifyPathsHandler.SpecifyPathsDialogResult _xifexpression = null;
     if ((dialogResult == Window.OK)) {
       List<ModelFile> _selectedModelFiles = dialog.getSelectedModelFiles();
+      boolean _isConvertToRelativeUris = dialog.isConvertToRelativeUris();
       boolean _isOutputRefinementModels = dialog.isOutputRefinementModels();
-      _xifexpression = Pair.<List<ModelFile>, Boolean>of(_selectedModelFiles, Boolean.valueOf(_isOutputRefinementModels));
+      _xifexpression = new SpecifyPathsHandler.SpecifyPathsDialogResult(_selectedModelFiles, _isConvertToRelativeUris, _isOutputRefinementModels);
     } else {
       _xifexpression = null;
     }

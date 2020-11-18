@@ -45,3 +45,6 @@ deselect
 avro
 namespaces
 sortable
+relativize
+filesystem
+relativizing

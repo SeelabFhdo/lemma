@@ -21,6 +21,8 @@ public class TransformationDialogHandler extends AbstractHandler {
   
   private List<ModelFile> inputModelFiles;
   
+  private boolean convertToRelativeUris;
+  
   private boolean outputRefinementModels;
   
   private AbstractUiModelTransformationStrategy strategy;
@@ -28,7 +30,7 @@ public class TransformationDialogHandler extends AbstractHandler {
   /**
    * Constructor
    */
-  public TransformationDialogHandler(final List<ModelFile> inputModelFiles, final boolean outputRefinementModels, final AbstractUiModelTransformationStrategy strategy) {
+  public TransformationDialogHandler(final List<ModelFile> inputModelFiles, final boolean convertToRelativeUris, final boolean outputRefinementModels, final AbstractUiModelTransformationStrategy strategy) {
     if ((inputModelFiles == null)) {
       throw new IllegalArgumentException("Model files must not be null");
     } else {
@@ -42,6 +44,7 @@ public class TransformationDialogHandler extends AbstractHandler {
       }
     }
     this.inputModelFiles = inputModelFiles;
+    this.convertToRelativeUris = convertToRelativeUris;
     this.outputRefinementModels = outputRefinementModels;
     this.strategy = strategy;
   }
@@ -52,7 +55,7 @@ public class TransformationDialogHandler extends AbstractHandler {
   @Override
   public Object execute(final ExecutionEvent event) throws ExecutionException {
     final TransformationDialog dialog = new TransformationDialog(this.SHELL, this.strategy, this.inputModelFiles, 
-      this.outputRefinementModels);
+      this.convertToRelativeUris, this.outputRefinementModels);
     dialog.create();
     dialog.openAndRunTransformations();
     return null;

@@ -27,6 +27,7 @@ import de.fhdo.lemma.technology.mapping.MicroserviceMapping
 import java.util.Set
 import de.fhdo.lemma.utils.LemmaUtils
 import de.fhdo.lemma.service.ImportType
+import org.eclipse.core.resources.IFile
 
 /**
  * Implementation of the ATL-based model-to-model transformation of mapping models to intermediate
@@ -45,7 +46,7 @@ import de.fhdo.lemma.service.ImportType
  */
 class MappingModelTransformation
     extends AbstractAtlInputOutputIntermediateModelTransformationStrategy {
-    String absoluteInputModelPath
+    String absoluteInputModelFilePath
     TechnologyMapping inputMappingModel
 
     /**
@@ -74,12 +75,14 @@ class MappingModelTransformation
     }
 
     /**
-     * Fetch path of input model prior to transformation execution
+     * Fetch input model and output model file prior to transformation execution
      */
     override beforeTransformationHook(
-        Map<TransformationModelDescription, String> absoluteInputModelPaths
+        Map<TransformationModelDescription, IFile> inputModelFiles,
+        Map<TransformationModelDescription, String> outputModelPaths,
+        boolean convertToRelativeUris
     ) {
-        this.absoluteInputModelPath = absoluteInputModelPaths.values.get(0)
+         absoluteInputModelFilePath = LemmaUtils.getAbsolutePath(inputModelFiles.values.get(0))
     }
 
     /**
@@ -89,7 +92,7 @@ class MappingModelTransformation
         inputMappingModel = modelRoot as TechnologyMapping
 
         // Convert import URIs to absolute URIs
-        convertImportUrisToAbsoluteFileUris(inputMappingModel.imports, absoluteInputModelPath)
+        convertImportUrisToAbsoluteFileUris(inputMappingModel.imports, absoluteInputModelFilePath)
 
         // Set source model URIs on complex type mappings so that the mapped fields are identifiable
         // by their fully-qualified names in the context of the data models that define them
@@ -270,7 +273,7 @@ class MappingModelTransformation
         return [
             results, warningCallback |
             MappingModelRefinementExecutor.executeRefinements(inputMappingModel,
-                absoluteInputModelPath, results, warningCallback)
+                absoluteInputModelFilePath, results, warningCallback)
         ]
     }
 
@@ -514,6 +517,7 @@ class MappingModelTransformation
                     inputModelResources,
                     outputModelPaths,
                     null,
+                    false,
                     warningCallback
                 ).get(IntermediateDataModelRefinement.IN_MODEL_DESCRIPTION)
 

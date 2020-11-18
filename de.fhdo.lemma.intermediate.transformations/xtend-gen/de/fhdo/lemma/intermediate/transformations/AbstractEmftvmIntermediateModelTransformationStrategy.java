@@ -4,11 +4,13 @@ import de.fhdo.lemma.intermediate.transformations.AbstractIntermediateModelTrans
 import de.fhdo.lemma.intermediate.transformations.TransformationModelDescription;
 import de.fhdo.lemma.intermediate.transformations.TransformationModelDirection;
 import de.fhdo.lemma.intermediate.transformations.TransformationModelType;
+import de.fhdo.lemma.utils.LemmaUtils;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
+import org.eclipse.core.resources.IFile;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -83,10 +85,14 @@ public abstract class AbstractEmftvmIntermediateModelTransformationStrategy exte
    * Prepare model transformation
    */
   @Override
-  protected void beforeTransformationHook(final Map<TransformationModelDescription, String> absoluteInputModelPaths) {
+  protected void beforeTransformationHook(final Map<TransformationModelDescription, IFile> inputModelFiles, final Map<TransformationModelDescription, String> outputModelPaths, final boolean convertToRelativeUris) {
+    final Function1<IFile, String> _function = (IFile it) -> {
+      return LemmaUtils.getAbsolutePath(it);
+    };
+    final Map<TransformationModelDescription, String> absoluteInputModelPaths = MapExtensions.<TransformationModelDescription, IFile, String>mapValues(inputModelFiles, _function);
     final Set<TransformationModelDescription> modelDescriptions = absoluteInputModelPaths.keySet();
     final HashSet<String> registeredMetamodels = CollectionLiterals.<String>newHashSet();
-    final Consumer<TransformationModelDescription> _function = (TransformationModelDescription it) -> {
+    final Consumer<TransformationModelDescription> _function_1 = (TransformationModelDescription it) -> {
       final TransformationModelType modelType = this.modelTypes.get(it);
       final String namespaceUri = modelType.getNamespaceUri();
       boolean _contains = registeredMetamodels.contains(namespaceUri);
@@ -98,7 +104,7 @@ public abstract class AbstractEmftvmIntermediateModelTransformationStrategy exte
         registeredMetamodels.add(namespaceUri);
       }
     };
-    modelDescriptions.forEach(_function);
+    modelDescriptions.forEach(_function_1);
   }
   
   /**

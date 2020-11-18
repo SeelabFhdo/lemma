@@ -10,6 +10,7 @@ import java.util.ArrayDeque
 import de.fhdo.lemma.eclipse.ui.specify_paths_dialog.SpecifyPathsDialog
 import org.eclipse.ui.PlatformUI
 import org.eclipse.jface.window.Window
+import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
  * Handler for specifying paths on selected models.
@@ -51,9 +52,29 @@ class SpecifyPathsHandler extends AbstractHandler {
         val dialogResult = dialog.open()
 
         return if (dialogResult === Window.OK)
-            dialog.selectedModelFiles -> dialog.outputRefinementModels
+            new SpecifyPathsDialogResult(dialog.selectedModelFiles, dialog.convertToRelativeUris,
+                dialog.outputRefinementModels)
         else
             null
+    }
+
+    /**
+     * Result of the invoked user dialog
+     */
+    static class SpecifyPathsDialogResult {
+        @Accessors(PUBLIC_GETTER)
+        List<ModelFile> selectedModelFiles
+        @Accessors(PUBLIC_GETTER)
+        boolean convertToRelativeUris
+        @Accessors(PUBLIC_GETTER)
+        boolean outputRefinementModels
+
+        new(List<ModelFile> selectedModelFiles, boolean convertToRelativeUris,
+            boolean outputRefinementModels) {
+            this.selectedModelFiles = selectedModelFiles
+            this.convertToRelativeUris = convertToRelativeUris
+            this.outputRefinementModels = outputRefinementModels
+        }
     }
 
     /**

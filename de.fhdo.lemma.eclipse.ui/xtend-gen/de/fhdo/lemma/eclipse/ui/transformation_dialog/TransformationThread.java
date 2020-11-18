@@ -39,6 +39,8 @@ import org.eclipse.xtext.xbase.lib.Pair;
 public class TransformationThread extends Thread {
   private List<ModelFile> modelFiles;
   
+  private boolean convertToRelativeUris;
+  
   private boolean outputRefinementModels;
   
   private volatile boolean stopTransformations;
@@ -60,12 +62,13 @@ public class TransformationThread extends Thread {
   /**
    * Constructor
    */
-  public TransformationThread(final LinkedList<ModelFile> modelFiles, final boolean outputRefinementModels, final Display display, final Predicate<ModelFile> nextTransformationCallback, final Predicate<IntermediateTransformationException> transformationWarningCallback, final Predicate<Exception> transformationExceptionCallback, final Predicate<Void> currentTransformationFinishedCallback, final Predicate<Void> transformationsFinishedCallback) {
+  public TransformationThread(final LinkedList<ModelFile> modelFiles, final boolean convertToRelativeUris, final boolean outputRefinementModels, final Display display, final Predicate<ModelFile> nextTransformationCallback, final Predicate<IntermediateTransformationException> transformationWarningCallback, final Predicate<Exception> transformationExceptionCallback, final Predicate<Void> currentTransformationFinishedCallback, final Predicate<Void> transformationsFinishedCallback) {
     super();
     if (((modelFiles == null) || modelFiles.isEmpty())) {
       throw new IllegalArgumentException("Input models must not be null or empty");
     }
     this.modelFiles = modelFiles;
+    this.convertToRelativeUris = convertToRelativeUris;
     this.outputRefinementModels = outputRefinementModels;
     this.nextTransformationCallback = nextTransformationCallback;
     this.transformationExceptionCallback = transformationExceptionCallback;
@@ -257,7 +260,8 @@ public class TransformationThread extends Thread {
     };
     Map _doTransformationFromFiles = strategy.doTransformationFromFiles(
       Collections.<Object>unmodifiableList(CollectionLiterals.<Object>newArrayList(inputFile)), 
-      Collections.<Object>unmodifiableList(CollectionLiterals.<Object>newArrayList(outputPath)), targetPathsOfImports, _function);
+      Collections.<Object>unmodifiableList(CollectionLiterals.<Object>newArrayList(outputPath)), targetPathsOfImports, 
+      this.convertToRelativeUris, _function);
     Collection _values = null;
     if (_doTransformationFromFiles!=null) {
       _values=_doTransformationFromFiles.values();

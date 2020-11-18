@@ -38,6 +38,7 @@ class TransformationDialog  extends TitleAreaDialog {
     static final Logger LOGGER = LoggerFactory.getLogger(TransformationDialog)
 
     LinkedList<ModelFile> filesToTransform
+    boolean convertToRelativeUris
     boolean outputRefinementModels
     ModelFile currentModelFile
     static val ResourceManager RESOURCE_MANAGER =
@@ -57,8 +58,13 @@ class TransformationDialog  extends TitleAreaDialog {
     /**
      * Constructor
      */
-    new(Shell parentShell, AbstractUiModelTransformationStrategy strategy,
-        List<ModelFile> inputModelFiles, boolean outputRefinementModels) {
+    new(
+        Shell parentShell,
+        AbstractUiModelTransformationStrategy strategy,
+        List<ModelFile> inputModelFiles,
+        boolean convertToRelativeUris,
+        boolean outputRefinementModels
+    ) {
         super(parentShell)
 
         if (parentShell === null)
@@ -69,6 +75,7 @@ class TransformationDialog  extends TitleAreaDialog {
             throw new IllegalArgumentException("Input models must not be null or empty")
 
         filesToTransform = inputModelFiles.filterAndOrderForTransformation(strategy)
+        this.convertToRelativeUris = convertToRelativeUris
         this.outputRefinementModels = outputRefinementModels
     }
 
@@ -109,9 +116,15 @@ class TransformationDialog  extends TitleAreaDialog {
         shell.open()
 
         /* Start transformation before event loop is started */
-        transformationThread = new TransformationThread(filesToTransform, outputRefinementModels,
-            shell.display, [nextTransformation], [transformationWarningOccurred],
-            [transformationExceptionOccurred], [currentTransformationFinished],
+        transformationThread = new TransformationThread(
+            filesToTransform,
+            convertToRelativeUris,
+            outputRefinementModels,
+            shell.display,
+            [nextTransformation],
+            [transformationWarningOccurred],
+            [transformationExceptionOccurred],
+            [currentTransformationFinished],
             [transformationsFinished]
         )
         transformationThread.start()

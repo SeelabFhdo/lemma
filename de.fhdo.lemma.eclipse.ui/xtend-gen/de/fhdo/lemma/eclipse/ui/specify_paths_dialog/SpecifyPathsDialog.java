@@ -91,6 +91,9 @@ public class SpecifyPathsDialog extends TitleAreaDialog {
   private List<ModelFile> selectedModelFiles = CollectionLiterals.<ModelFile>newArrayList();
   
   @Accessors(AccessorType.PUBLIC_GETTER)
+  private boolean convertToRelativeUris;
+  
+  @Accessors(AccessorType.PUBLIC_GETTER)
   private boolean outputRefinementModels;
   
   /**
@@ -155,6 +158,7 @@ public class SpecifyPathsDialog extends TitleAreaDialog {
     final GridLayout layout = new GridLayout(1, false);
     container.setLayout(layout);
     this.createModelTable(container);
+    this.createConvertToRelativeUrisCheckbox(container);
     this.createRefinementsOutputCheckbox(container);
     return area;
   }
@@ -636,6 +640,26 @@ public class SpecifyPathsDialog extends TitleAreaDialog {
   }
   
   /**
+   * Create checkbox for converting absolute import URIs in models to relative URIs
+   */
+  private void createConvertToRelativeUrisCheckbox(final Composite parent) {
+    final Button checkbox = new Button(parent, SWT.CHECK);
+    checkbox.setText("Convert absolute URIs in models to relative URIs");
+    checkbox.setSelection(this.convertToRelativeUris);
+    checkbox.addSelectionListener(new SelectionListener() {
+      @Override
+      public void widgetDefaultSelected(final SelectionEvent event) {
+        SpecifyPathsDialog.this.convertToRelativeUris = checkbox.getSelection();
+      }
+      
+      @Override
+      public void widgetSelected(final SelectionEvent event) {
+        SpecifyPathsDialog.this.convertToRelativeUris = checkbox.getSelection();
+      }
+    });
+  }
+  
+  /**
    * Create checkbox for outputting generated models of refining transformations
    */
   private void createRefinementsOutputCheckbox(final Composite parent) {
@@ -658,6 +682,11 @@ public class SpecifyPathsDialog extends TitleAreaDialog {
   @Pure
   public List<ModelFile> getSelectedModelFiles() {
     return this.selectedModelFiles;
+  }
+  
+  @Pure
+  public boolean isConvertToRelativeUris() {
+    return this.convertToRelativeUris;
   }
   
   @Pure

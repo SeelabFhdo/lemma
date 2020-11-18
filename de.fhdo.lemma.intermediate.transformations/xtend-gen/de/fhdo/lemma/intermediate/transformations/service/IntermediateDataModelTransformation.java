@@ -16,6 +16,7 @@ import de.fhdo.lemma.utils.LemmaUtils;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
+import org.eclipse.core.resources.IFile;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.xbase.lib.Conversions;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
@@ -30,7 +31,11 @@ import org.eclipse.xtext.xbase.lib.Pair;
  */
 @SuppressWarnings("all")
 public class IntermediateDataModelTransformation extends AbstractAtlInputOutputIntermediateModelTransformationStrategy {
-  private String absoluteInputModelPath;
+  private String absoluteInputModelFilePath;
+  
+  private String absoluteOutputModelFilePath;
+  
+  private boolean convertToRelativeUris;
   
   /**
    * Specify reference name and transformation model type of input model
@@ -60,11 +65,16 @@ public class IntermediateDataModelTransformation extends AbstractAtlInputOutputI
   }
   
   /**
-   * Fetch path of input model prior to transformation execution
+   * Fetch input model and output model file prior to transformation execution
    */
   @Override
-  public void beforeTransformationHook(final Map<TransformationModelDescription, String> absoluteInputModelPaths) {
-    this.absoluteInputModelPath = ((String[])Conversions.unwrapArray(absoluteInputModelPaths.values(), String.class))[0];
+  public void beforeTransformationHook(final Map<TransformationModelDescription, IFile> inputModelFiles, final Map<TransformationModelDescription, String> outputModelPaths, final boolean convertToRelativeUris) {
+    final IFile inputModelFile = ((IFile[])Conversions.unwrapArray(inputModelFiles.values(), IFile.class))[0];
+    this.absoluteInputModelFilePath = LemmaUtils.getAbsolutePath(inputModelFile);
+    final String projectRelativeOutputModelFilePath = ((String[])Conversions.unwrapArray(outputModelPaths.values(), String.class))[0];
+    this.absoluteOutputModelFilePath = LemmaUtils.convertProjectResourceToAbsoluteFilePath(projectRelativeOutputModelFilePath, 
+      inputModelFile.getProject());
+    this.convertToRelativeUris = convertToRelativeUris;
   }
   
   /**
@@ -73,17 +83,17 @@ public class IntermediateDataModelTransformation extends AbstractAtlInputOutputI
   @Override
   public void prepareInputModel(final TransformationModelDescription modelDescription, final EObject modelRoot) {
     final DataModel dataModel = ((DataModel) modelRoot);
-    boolean _isFileUri = LemmaUtils.isFileUri(this.absoluteInputModelPath);
+    boolean _isFileUri = LemmaUtils.isFileUri(this.absoluteInputModelFilePath);
     boolean _not = (!_isFileUri);
     if (_not) {
-      dataModel.setT_modelUri(LemmaUtils.convertToFileUri(this.absoluteInputModelPath));
+      dataModel.setT_modelUri(LemmaUtils.convertToFileUri(this.absoluteInputModelFilePath));
     }
     final Consumer<ComplexTypeImport> _function = (ComplexTypeImport it) -> {
       boolean _isFileUri_1 = LemmaUtils.isFileUri(it.getImportURI());
       boolean _not_1 = (!_isFileUri_1);
       if (_not_1) {
         it.setImportURI(LemmaUtils.convertToFileUri(
-          LemmaUtils.convertToAbsolutePath(it.getImportURI(), this.absoluteInputModelPath)));
+          LemmaUtils.convertToAbsolutePath(it.getImportURI(), this.absoluteInputModelFilePath)));
       }
     };
     dataModel.getComplexTypeImports().forEach(_function);
@@ -112,5 +122,25 @@ public class IntermediateDataModelTransformation extends AbstractAtlInputOutputI
       import_.setImportUri(LemmaUtils.convertProjectPathToAbsoluteFileUri(targetPath));
     };
     targetPaths.forEach(_function);
+  }
+  
+  /**
+   * Modify the given output model
+   */
+  @Override
+  public void modifyOutputModel(final TransformationModelDescription modelDescription, final EObject modelRoot) {
+    if ((!this.convertToRelativeUris)) {
+      return;
+    }
+    final IntermediateDataModel dataModel = ((IntermediateDataModel) modelRoot);
+    final String relativeInputModelFilePath = LemmaUtils.relativize(this.absoluteOutputModelFilePath, 
+      this.absoluteInputModelFilePath);
+    dataModel.setSourceModelUri(LemmaUtils.convertToFileUri(relativeInputModelFilePath));
+    final Consumer<IntermediateImport> _function = (IntermediateImport it) -> {
+      final String relativeImportModelFilePath = LemmaUtils.relativize(this.absoluteOutputModelFilePath, 
+        LemmaUtils.removeFileUri(it.getImportUri()));
+      it.setImportUri(LemmaUtils.convertToFileUri(relativeImportModelFilePath));
+    };
+    dataModel.getImports().forEach(_function);
   }
 }

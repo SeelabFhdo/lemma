@@ -343,6 +343,44 @@ final class LemmaUtils {
     }
 
     /**
+     * Convert the path of a workspace resource into a file path with adapted separators. The
+     * resource is considered to belong to the given project and the resulting file path is
+     * absolute.
+     */
+    def static convertProjectResourceToAbsoluteFilePath(String resourcePath, IProject project) {
+        val projectPath = project.fullPath.toString
+        val normalizedResourcePath = LemmaUtils.removePrefix(resourcePath, projectPath, false)
+        val resourceFilePath = normalizedResourcePath.replace('/', File.separator)
+        return project.location.makeAbsolute.toString + resourceFilePath
+    }
+
+    /**
+     * Relativize the given to-file from the given from-file. In fact, this utility method answers
+     * the question "How do I get from the given from-file to the given to-file by means of a
+     * relative path?"
+     *
+     * Example:
+     *      from-file = /foo/bar/baz/bing.txt
+     *      to-file   = /foo/bar/bay/bing2.txt
+     *      result    = ../bing2.txt
+     */
+    def static relativize(String fromFilePath, String toFilePath) {
+        val fromFolder = new File(fromFilePath).parent
+
+        val toFile = new File(toFilePath)
+        val toFolder = toFile.parent
+        val toName = toFile.name
+
+        // We use the folders of the files for relativizing, because otherwise Path.relativize()
+        // will not work as expected when it directly operates on filenames
+        val relativizedToFolder = Paths.get(fromFolder).relativize(Paths.get(toFolder)).toString
+        return if (!relativizedToFolder.empty)
+                relativizedToFolder + File.separator + toName
+            else
+                toName
+    }
+
+    /**
      * Remove prefix from String. If allOccurrences is set to true, remove all occurrences of a
      * prefix from String.
      */

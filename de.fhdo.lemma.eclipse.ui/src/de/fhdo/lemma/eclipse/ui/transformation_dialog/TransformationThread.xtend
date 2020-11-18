@@ -26,6 +26,7 @@ import java.util.LinkedList
  */
 class TransformationThread extends Thread {
     List<ModelFile> modelFiles
+    boolean convertToRelativeUris
     boolean outputRefinementModels
     volatile boolean stopTransformations
     volatile boolean continueTransformationAfterWarning
@@ -40,19 +41,22 @@ class TransformationThread extends Thread {
      * Constructor
      */
     new(LinkedList<ModelFile> modelFiles,
+        boolean convertToRelativeUris,
         boolean outputRefinementModels,
         Display display,
         Predicate<ModelFile> nextTransformationCallback,
         Predicate<IntermediateTransformationException> transformationWarningCallback,
         Predicate<Exception> transformationExceptionCallback,
         Predicate<Void> currentTransformationFinishedCallback,
-        Predicate<Void> transformationsFinishedCallback) {
+        Predicate<Void> transformationsFinishedCallback
+    ) {
         super()
 
         if (modelFiles === null || modelFiles.empty)
             throw new IllegalArgumentException("Input models must not be null or empty")
 
         this.modelFiles = modelFiles
+        this.convertToRelativeUris = convertToRelativeUris
         this.outputRefinementModels = outputRefinementModels
         this.nextTransformationCallback = nextTransformationCallback
         this.transformationExceptionCallback = transformationExceptionCallback
@@ -265,6 +269,7 @@ class TransformationThread extends Thread {
             #[inputFile],
             #[outputPath],
             targetPathsOfImports,
+            convertToRelativeUris,
             [internalTransformationWarningCallback]
         // We currently only support transformations with one output model
         )?.values?.get(0) as TransformationResult

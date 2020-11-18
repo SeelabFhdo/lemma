@@ -13,6 +13,8 @@ import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl
 import org.eclipse.m2m.atl.emftvm.util.DefaultModuleResolver
 import org.eclipse.m2m.atl.emftvm.util.TimingData
+import org.eclipse.core.resources.IFile
+import de.fhdo.lemma.utils.LemmaUtils
 
 /**
  * Abstract strategy for model-to-model transformations relying on ATL's EMFTVM.
@@ -71,12 +73,15 @@ abstract class AbstractEmftvmIntermediateModelTransformationStrategy
      * Prepare model transformation
      */
     override protected beforeTransformationHook(
-        Map<TransformationModelDescription, String> absoluteInputModelPaths
+        Map<TransformationModelDescription, IFile> inputModelFiles,
+        Map<TransformationModelDescription, String> outputModelPaths,
+        boolean convertToRelativeUris
     ) {
         /*
          * Register metamodels of a concrete transformation's model types to EMFTVM's execution
          * environment
          */
+        val absoluteInputModelPaths = inputModelFiles.mapValues[LemmaUtils.getAbsolutePath(it)]
         val modelDescriptions = absoluteInputModelPaths.keySet
         val registeredMetamodels = <String>newHashSet
         modelDescriptions.forEach[

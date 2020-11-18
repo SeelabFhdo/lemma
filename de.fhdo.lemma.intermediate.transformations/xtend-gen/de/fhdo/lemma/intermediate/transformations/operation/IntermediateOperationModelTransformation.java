@@ -5,17 +5,16 @@ import de.fhdo.lemma.data.intermediate.IntermediateImport;
 import de.fhdo.lemma.intermediate.transformations.AbstractAtlInputOutputIntermediateModelTransformationStrategy;
 import de.fhdo.lemma.intermediate.transformations.TransformationModelDescription;
 import de.fhdo.lemma.intermediate.transformations.TransformationModelType;
-import de.fhdo.lemma.operation.Container;
 import de.fhdo.lemma.operation.OperationModel;
 import de.fhdo.lemma.operation.OperationPackage;
 import de.fhdo.lemma.operation.intermediate.IntermediateOperationModel;
 import de.fhdo.lemma.operation.intermediate.IntermediatePackage;
 import de.fhdo.lemma.service.Import;
 import de.fhdo.lemma.utils.LemmaUtils;
-import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.xbase.lib.Conversions;
@@ -31,7 +30,13 @@ import org.eclipse.xtext.xbase.lib.Pair;
  */
 @SuppressWarnings("all")
 public class IntermediateOperationModelTransformation extends AbstractAtlInputOutputIntermediateModelTransformationStrategy {
-  private String absoluteInputModelPath;
+  private IFile inputModelFile;
+  
+  private String absoluteInputModelFilePath;
+  
+  private String absoluteOutputModelFilePath;
+  
+  private boolean convertToRelativeUris;
   
   /**
    * Specify reference name and transformation model type of input model
@@ -62,11 +67,16 @@ public class IntermediateOperationModelTransformation extends AbstractAtlInputOu
   }
   
   /**
-   * Fetch path of input model prior to transformation execution
+   * Fetch input model and output model file prior to transformation execution
    */
   @Override
-  public void beforeTransformationHook(final Map<TransformationModelDescription, String> absoluteInputModelPaths) {
-    this.absoluteInputModelPath = ((String[])Conversions.unwrapArray(absoluteInputModelPaths.values(), String.class))[0];
+  public void beforeTransformationHook(final Map<TransformationModelDescription, IFile> inputModelFiles, final Map<TransformationModelDescription, String> outputModelPaths, final boolean convertToRelativeUris) {
+    this.inputModelFile = ((IFile[])Conversions.unwrapArray(inputModelFiles.values(), IFile.class))[0];
+    this.absoluteInputModelFilePath = LemmaUtils.getAbsolutePath(this.inputModelFile);
+    final String projectRelativeOutputModelFilePath = ((String[])Conversions.unwrapArray(outputModelPaths.values(), String.class))[0];
+    this.absoluteOutputModelFilePath = LemmaUtils.convertProjectResourceToAbsoluteFilePath(projectRelativeOutputModelFilePath, 
+      this.inputModelFile.getProject());
+    this.convertToRelativeUris = convertToRelativeUris;
   }
   
   /**
@@ -75,23 +85,11 @@ public class IntermediateOperationModelTransformation extends AbstractAtlInputOu
   @Override
   public void prepareInputModel(final TransformationModelDescription modelDescription, final EObject modelRoot) {
     final OperationModel operationModel = ((OperationModel) modelRoot);
-    operationModel.setT_modelUri(LemmaUtils.convertToFileUri(this.absoluteInputModelPath));
+    operationModel.setT_modelUri(LemmaUtils.convertToFileUri(this.absoluteInputModelFilePath));
     final Consumer<Import> _function = (Import it) -> {
-      it.setImportURI(LemmaUtils.convertToAbsoluteFileUri(it.getImportURI(), this.absoluteInputModelPath));
+      it.setImportURI(LemmaUtils.convertToAbsoluteFileUri(it.getImportURI(), this.absoluteInputModelFilePath));
     };
     operationModel.getImports().forEach(_function);
-    this.linkTechnologyModels(operationModel.getContainers());
-  }
-  
-  /**
-   * Transformation preparation: Link technology models to operation model to prevent continuous
-   * disk accesses to model files during transformation. Note that this depends on absolute file
-   * URIs of the imported technology models.
-   */
-  private void linkTechnologyModels(final List<Container> containers) {
-    final Consumer<Container> _function = (Container container) -> {
-    };
-    containers.forEach(_function);
   }
   
   /**
@@ -110,5 +108,25 @@ public class IntermediateOperationModelTransformation extends AbstractAtlInputOu
       import_.setImportUri(LemmaUtils.convertToFileUri((workspacePath + targetPath)));
     };
     targetPaths.forEach(_function);
+  }
+  
+  /**
+   * Modify the given output model
+   */
+  @Override
+  public void modifyOutputModel(final TransformationModelDescription modelDescription, final EObject modelRoot) {
+    if ((!this.convertToRelativeUris)) {
+      return;
+    }
+    final IntermediateOperationModel operationModel = ((IntermediateOperationModel) modelRoot);
+    final String relativeInputModelFilePath = LemmaUtils.relativize(this.absoluteOutputModelFilePath, 
+      this.absoluteInputModelFilePath);
+    operationModel.setSourceModelUri(LemmaUtils.convertToFileUri(relativeInputModelFilePath));
+    final Consumer<IntermediateImport> _function = (IntermediateImport it) -> {
+      final String relativeImportModelFilePath = LemmaUtils.relativize(this.absoluteOutputModelFilePath, 
+        LemmaUtils.removeFileUri(it.getImportUri()));
+      it.setImportUri(LemmaUtils.convertToFileUri(relativeImportModelFilePath));
+    };
+    operationModel.getImports().forEach(_function);
   }
 }

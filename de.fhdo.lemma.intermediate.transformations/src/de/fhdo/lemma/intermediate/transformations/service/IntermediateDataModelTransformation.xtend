@@ -10,6 +10,7 @@ import org.eclipse.emf.ecore.EObject
 import de.fhdo.lemma.intermediate.transformations.TransformationModelType
 import de.fhdo.lemma.intermediate.transformations.AbstractAtlInputOutputIntermediateModelTransformationStrategy
 import de.fhdo.lemma.utils.LemmaUtils
+import org.eclipse.core.resources.IFile
 
 /**
  * Implementation of the ATL-based model-to-model transformation of data models to intermediate data
@@ -19,7 +20,9 @@ import de.fhdo.lemma.utils.LemmaUtils
  */
 class IntermediateDataModelTransformation
     extends AbstractAtlInputOutputIntermediateModelTransformationStrategy {
-    String absoluteInputModelPath
+    String absoluteInputModelFilePath
+    String absoluteOutputModelFilePath
+    boolean convertToRelativeUris
 
     /**
      * Specify reference name and transformation model type of input model
@@ -46,12 +49,23 @@ class IntermediateDataModelTransformation
     }
 
     /**
-     * Fetch path of input model prior to transformation execution
+     * Fetch input model and output model file prior to transformation execution
      */
     override beforeTransformationHook(
-        Map<TransformationModelDescription, String> absoluteInputModelPaths
+        Map<TransformationModelDescription, IFile> inputModelFiles,
+        Map<TransformationModelDescription, String> outputModelPaths,
+        boolean convertToRelativeUris
     ) {
-        this.absoluteInputModelPath = absoluteInputModelPaths.values.get(0)
+        val inputModelFile = inputModelFiles.values.get(0)
+        absoluteInputModelFilePath = LemmaUtils.getAbsolutePath(inputModelFile)
+
+        val projectRelativeOutputModelFilePath = outputModelPaths.values.get(0)
+        absoluteOutputModelFilePath = LemmaUtils.convertProjectResourceToAbsoluteFilePath(
+            projectRelativeOutputModelFilePath,
+            inputModelFile.project
+        )
+
+        this.convertToRelativeUris = convertToRelativeUris
     }
 
     /**
@@ -61,15 +75,15 @@ class IntermediateDataModelTransformation
         val dataModel = modelRoot as DataModel
 
         // Set URI of source model
-        if (!LemmaUtils.isFileUri(absoluteInputModelPath))
-            dataModel.t_modelUri = LemmaUtils.convertToFileUri(absoluteInputModelPath)
+        if (!LemmaUtils.isFileUri(absoluteInputModelFilePath))
+            dataModel.t_modelUri = LemmaUtils.convertToFileUri(absoluteInputModelFilePath)
 
         // Convert import URIs of imported model files to absolute file URIs. Otherwise the
         // transformation won't have access to them and the contained model elements.
         dataModel.complexTypeImports.forEach[
             if (!LemmaUtils.isFileUri(importURI))
                 importURI = LemmaUtils.convertToFileUri(
-                    LemmaUtils.convertToAbsolutePath(importURI, absoluteInputModelPath)
+                    LemmaUtils.convertToAbsolutePath(importURI, absoluteInputModelFilePath)
                 )
         ]
     }
@@ -93,6 +107,28 @@ class IntermediateDataModelTransformation
         targetPaths.forEach[importName, targetPath |
             val import = intermediateModelRoot.imports.findFirst[name == importName]
             import.importUri = LemmaUtils.convertProjectPathToAbsoluteFileUri(targetPath)
+        ]
+    }
+
+    /**
+     * Modify the given output model
+     */
+    override modifyOutputModel(TransformationModelDescription modelDescription, EObject modelRoot) {
+        if (!convertToRelativeUris)
+            return
+
+        /* Convert absolute URIs (default) to URIs being relative to the output model file */
+        // Convert source model URI
+        val dataModel = modelRoot as IntermediateDataModel
+        val relativeInputModelFilePath = LemmaUtils.relativize(absoluteOutputModelFilePath,
+            absoluteInputModelFilePath)
+        dataModel.sourceModelUri = LemmaUtils.convertToFileUri(relativeInputModelFilePath)
+
+        // Convert import URIs
+        dataModel.imports.forEach[
+            val relativeImportModelFilePath = LemmaUtils.relativize(absoluteOutputModelFilePath,
+                LemmaUtils.removeFileUri(importUri))
+            importUri = LemmaUtils.convertToFileUri(relativeImportModelFilePath)
         ]
     }
 }

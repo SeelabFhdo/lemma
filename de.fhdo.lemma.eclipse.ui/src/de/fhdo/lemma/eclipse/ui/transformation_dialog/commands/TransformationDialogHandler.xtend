@@ -18,14 +18,19 @@ class TransformationDialogHandler extends AbstractHandler {
     val SHELL = PlatformUI.workbench.activeWorkbenchWindow.shell
 
     List<ModelFile> inputModelFiles
+    boolean convertToRelativeUris
     boolean outputRefinementModels
     AbstractUiModelTransformationStrategy strategy
 
     /**
      * Constructor
      */
-    new(List<ModelFile> inputModelFiles, boolean outputRefinementModels,
-        AbstractUiModelTransformationStrategy strategy) {
+    new(
+        List<ModelFile> inputModelFiles,
+        boolean convertToRelativeUris,
+        boolean outputRefinementModels,
+        AbstractUiModelTransformationStrategy strategy
+    ) {
         if (inputModelFiles === null)
             throw new IllegalArgumentException("Model files must not be null")
         else if (inputModelFiles.empty)
@@ -34,6 +39,7 @@ class TransformationDialogHandler extends AbstractHandler {
             throw new IllegalArgumentException("Strategy must not be null")
 
         this.inputModelFiles = inputModelFiles
+        this.convertToRelativeUris = convertToRelativeUris
         this.outputRefinementModels = outputRefinementModels
         this.strategy = strategy
     }
@@ -44,7 +50,7 @@ class TransformationDialogHandler extends AbstractHandler {
     override execute(ExecutionEvent event) throws ExecutionException {
         /* Create dialog */
         val dialog = new TransformationDialog(SHELL, strategy, inputModelFiles,
-            outputRefinementModels)
+            convertToRelativeUris, outputRefinementModels)
         dialog.create()
         dialog.openAndRunTransformations()
 

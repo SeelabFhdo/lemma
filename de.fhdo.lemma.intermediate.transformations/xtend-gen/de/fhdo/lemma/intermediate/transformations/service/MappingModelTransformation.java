@@ -39,6 +39,7 @@ import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
+import org.eclipse.core.resources.IFile;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -290,7 +291,8 @@ public class MappingModelTransformation extends AbstractAtlInputOutputIntermedia
       final HashMap<TransformationModelDescription, String> outputModelPaths = CollectionLiterals.<TransformationModelDescription, String>newHashMap(_mappedTo_2);
       final IntermediateDataModelRefinement refiningTransformation = new IntermediateDataModelRefinement();
       final AbstractIntermediateModelTransformationStrategy.TransformationResult refiningResult = refiningTransformation.doTransformationFromResources(inputModelResources, outputModelPaths, 
-        null, warningCallback).get(IntermediateDataModelRefinement.IN_MODEL_DESCRIPTION);
+        null, 
+        false, warningCallback).get(IntermediateDataModelRefinement.IN_MODEL_DESCRIPTION);
       final Iterator<EObject> iter = refiningResult.getOutputModel().getResource().getContents().iterator();
       while (iter.hasNext()) {
         EObject _next = iter.next();
@@ -359,7 +361,7 @@ public class MappingModelTransformation extends AbstractAtlInputOutputIntermedia
     }
   }
   
-  private String absoluteInputModelPath;
+  private String absoluteInputModelFilePath;
   
   private TechnologyMapping inputMappingModel;
   
@@ -392,11 +394,11 @@ public class MappingModelTransformation extends AbstractAtlInputOutputIntermedia
   }
   
   /**
-   * Fetch path of input model prior to transformation execution
+   * Fetch input model and output model file prior to transformation execution
    */
   @Override
-  public void beforeTransformationHook(final Map<TransformationModelDescription, String> absoluteInputModelPaths) {
-    this.absoluteInputModelPath = ((String[])Conversions.unwrapArray(absoluteInputModelPaths.values(), String.class))[0];
+  public void beforeTransformationHook(final Map<TransformationModelDescription, IFile> inputModelFiles, final Map<TransformationModelDescription, String> outputModelPaths, final boolean convertToRelativeUris) {
+    this.absoluteInputModelFilePath = LemmaUtils.getAbsolutePath(((IFile[])Conversions.unwrapArray(inputModelFiles.values(), IFile.class))[0]);
   }
   
   /**
@@ -405,7 +407,7 @@ public class MappingModelTransformation extends AbstractAtlInputOutputIntermedia
   @Override
   public void prepareInputModel(final TransformationModelDescription modelDescription, final EObject modelRoot) {
     this.inputMappingModel = ((TechnologyMapping) modelRoot);
-    this.convertImportUrisToAbsoluteFileUris(this.inputMappingModel.getImports(), this.absoluteInputModelPath);
+    this.convertImportUrisToAbsoluteFileUris(this.inputMappingModel.getImports(), this.absoluteInputModelFilePath);
     this.setSourceModelUris(this.inputMappingModel);
   }
   
@@ -600,7 +602,7 @@ public class MappingModelTransformation extends AbstractAtlInputOutputIntermedia
   public BiFunction<List<AbstractIntermediateModelTransformationStrategy.TransformationResult>, Predicate<IntermediateTransformationException>, Void> registerTransformationsFinishedListener() {
     final BiFunction<List<AbstractIntermediateModelTransformationStrategy.TransformationResult>, Predicate<IntermediateTransformationException>, Void> _function = (List<AbstractIntermediateModelTransformationStrategy.TransformationResult> results, Predicate<IntermediateTransformationException> warningCallback) -> {
       return MappingModelTransformation.MappingModelRefinementExecutor.executeRefinements(this.inputMappingModel, 
-        this.absoluteInputModelPath, results, warningCallback);
+        this.absoluteInputModelFilePath, results, warningCallback);
     };
     return _function;
   }

@@ -12,6 +12,7 @@ import de.fhdo.lemma.service.Microservice;
 import de.fhdo.lemma.service.ServiceModel;
 import de.fhdo.lemma.service.ServicePackage;
 import de.fhdo.lemma.service.TechnologyReference;
+import de.fhdo.lemma.service.intermediate.IntermediateMicroservice;
 import de.fhdo.lemma.service.intermediate.IntermediatePackage;
 import de.fhdo.lemma.service.intermediate.IntermediateServiceModel;
 import de.fhdo.lemma.technology.CommunicationType;
@@ -22,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
+import org.eclipse.core.resources.IFile;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Conversions;
@@ -38,7 +40,15 @@ import org.eclipse.xtext.xbase.lib.Pair;
  */
 @SuppressWarnings("all")
 public class IntermediateServiceModelTransformation extends AbstractAtlInputOutputIntermediateModelTransformationStrategy {
-  private String absoluteInputModelPath;
+  private IFile inputModelFile;
+  
+  private String absoluteInputModelFilePath;
+  
+  private String absoluteOutputModelFilePath;
+  
+  private boolean isRefinementFromMappingModel;
+  
+  private boolean convertToRelativeUris;
   
   /**
    * Specify reference name and transformation model type of input model
@@ -69,11 +79,16 @@ public class IntermediateServiceModelTransformation extends AbstractAtlInputOutp
   }
   
   /**
-   * Fetch path of input model prior to transformation execution
+   * Fetch input model and output model file prior to transformation execution
    */
   @Override
-  public void beforeTransformationHook(final Map<TransformationModelDescription, String> absoluteInputModelPaths) {
-    this.absoluteInputModelPath = ((String[])Conversions.unwrapArray(absoluteInputModelPaths.values(), String.class))[0];
+  public void beforeTransformationHook(final Map<TransformationModelDescription, IFile> inputModelFiles, final Map<TransformationModelDescription, String> outputModelPaths, final boolean convertToRelativeUris) {
+    this.inputModelFile = ((IFile[])Conversions.unwrapArray(inputModelFiles.values(), IFile.class))[0];
+    this.absoluteInputModelFilePath = LemmaUtils.getAbsolutePath(this.inputModelFile);
+    final String projectRelativeOutputModelFilePath = ((String[])Conversions.unwrapArray(outputModelPaths.values(), String.class))[0];
+    this.absoluteOutputModelFilePath = LemmaUtils.convertProjectResourceToAbsoluteFilePath(projectRelativeOutputModelFilePath, 
+      this.inputModelFile.getProject());
+    this.convertToRelativeUris = convertToRelativeUris;
   }
   
   /**
@@ -85,10 +100,12 @@ public class IntermediateServiceModelTransformation extends AbstractAtlInputOutp
     String _t_modelUri = serviceModel.getT_modelUri();
     boolean _tripleEquals = (_t_modelUri == null);
     if (_tripleEquals) {
-      serviceModel.setT_modelUri(LemmaUtils.convertToFileUri(this.absoluteInputModelPath));
+      serviceModel.setT_modelUri(LemmaUtils.convertToFileUri(this.absoluteInputModelFilePath));
+    } else {
+      this.isRefinementFromMappingModel = true;
     }
     final Consumer<Import> _function = (Import it) -> {
-      it.setImportURI(LemmaUtils.convertToAbsoluteFileUri(it.getImportURI(), this.absoluteInputModelPath));
+      it.setImportURI(LemmaUtils.convertToAbsoluteFileUri(it.getImportURI(), this.absoluteInputModelFilePath));
     };
     serviceModel.getImports().forEach(_function);
     this.linkTechnologyModels(serviceModel.getMicroservices());
@@ -159,5 +176,33 @@ public class IntermediateServiceModelTransformation extends AbstractAtlInputOutp
       import_.setImportUri(LemmaUtils.convertProjectPathToAbsoluteFileUri(targetPath));
     };
     targetPaths.forEach(_function);
+  }
+  
+  /**
+   * Modify the given output model
+   */
+  @Override
+  public void modifyOutputModel(final TransformationModelDescription modelDescription, final EObject modelRoot) {
+    if ((!this.convertToRelativeUris)) {
+      return;
+    }
+    final IntermediateServiceModel outputModel = ((IntermediateServiceModel) modelRoot);
+    final Consumer<IntermediateImport> _function = (IntermediateImport it) -> {
+      final String relativeImportModelFilePath = LemmaUtils.relativize(this.absoluteOutputModelFilePath, 
+        LemmaUtils.removeFileUri(it.getImportUri()));
+      it.setImportUri(LemmaUtils.convertToFileUri(relativeImportModelFilePath));
+    };
+    outputModel.getImports().forEach(_function);
+    final Consumer<IntermediateMicroservice> _function_1 = (IntermediateMicroservice it) -> {
+      final String relativeImportModelFilePath = LemmaUtils.relativize(this.absoluteOutputModelFilePath, 
+        LemmaUtils.removeFileUri(it.getSourceModelUri()));
+      it.setSourceModelUri(LemmaUtils.convertToFileUri(relativeImportModelFilePath));
+    };
+    outputModel.getMicroservices().forEach(_function_1);
+    if ((!this.isRefinementFromMappingModel)) {
+      final String relativeInputModelFilePath = LemmaUtils.relativize(this.absoluteOutputModelFilePath, 
+        this.absoluteInputModelFilePath);
+      outputModel.setSourceModelUri(LemmaUtils.convertToFileUri(relativeInputModelFilePath));
+    }
   }
 }

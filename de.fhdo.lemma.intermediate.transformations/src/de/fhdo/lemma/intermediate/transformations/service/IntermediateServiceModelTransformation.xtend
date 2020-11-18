@@ -16,6 +16,7 @@ import de.fhdo.lemma.technology.CommunicationType
 import de.fhdo.lemma.intermediate.transformations.TransformationModelType
 import de.fhdo.lemma.intermediate.transformations.AbstractAtlInputOutputIntermediateModelTransformationStrategy
 import de.fhdo.lemma.utils.LemmaUtils
+import org.eclipse.core.resources.IFile
 
 /**
  * Implementation of the ATL-based model-to-model transformation of service models to intermediate
@@ -25,7 +26,11 @@ import de.fhdo.lemma.utils.LemmaUtils
  */
 class IntermediateServiceModelTransformation
     extends AbstractAtlInputOutputIntermediateModelTransformationStrategy {
-    String absoluteInputModelPath
+    IFile inputModelFile
+    String absoluteInputModelFilePath
+    String absoluteOutputModelFilePath
+    boolean isRefinementFromMappingModel
+    boolean convertToRelativeUris
 
     /**
      * Specify reference name and transformation model type of input model
@@ -53,12 +58,23 @@ class IntermediateServiceModelTransformation
     }
 
     /**
-     * Fetch path of input model prior to transformation execution
+     * Fetch input model and output model file prior to transformation execution
      */
     override beforeTransformationHook(
-        Map<TransformationModelDescription, String> absoluteInputModelPaths
+        Map<TransformationModelDescription, IFile> inputModelFiles,
+        Map<TransformationModelDescription, String> outputModelPaths,
+        boolean convertToRelativeUris
     ) {
-        this.absoluteInputModelPath = absoluteInputModelPaths.values.get(0)
+        inputModelFile = inputModelFiles.values.get(0)
+        absoluteInputModelFilePath = LemmaUtils.getAbsolutePath(inputModelFile)
+
+        val projectRelativeOutputModelFilePath = outputModelPaths.values.get(0)
+        absoluteOutputModelFilePath = LemmaUtils.convertProjectResourceToAbsoluteFilePath(
+            projectRelativeOutputModelFilePath,
+            inputModelFile.project
+        )
+
+        this.convertToRelativeUris = convertToRelativeUris
     }
 
     /**
@@ -71,11 +87,13 @@ class IntermediateServiceModelTransformation
         // refining transformation of a Mapping Model, in which case the model URI will be an
         // empty string on the root model level.
         if (serviceModel.t_modelUri === null)
-            serviceModel.t_modelUri = LemmaUtils.convertToFileUri(absoluteInputModelPath)
+            serviceModel.t_modelUri = LemmaUtils.convertToFileUri(absoluteInputModelFilePath)
+        else
+            isRefinementFromMappingModel = true
 
         // Convert import URIs to absolute URIs
         serviceModel.imports.forEach[
-            importURI = LemmaUtils.convertToAbsoluteFileUri(importURI, absoluteInputModelPath)
+            importURI = LemmaUtils.convertToAbsoluteFileUri(importURI, absoluteInputModelFilePath)
         ]
 
         // Populate the model's Microservices, which specify a technology, with Technology instances
@@ -132,5 +150,39 @@ class IntermediateServiceModelTransformation
             val import = serviceModelRoot.imports.findFirst[name == importName]
             import.importUri = LemmaUtils.convertProjectPathToAbsoluteFileUri(targetPath)
         ]
+    }
+
+    /**
+     * Modify the given output model
+     */
+    override modifyOutputModel(TransformationModelDescription modelDescription, EObject modelRoot) {
+        if (!convertToRelativeUris)
+            return
+
+        /* Convert absolute URIs (default) to URIs being relative to the output model file */
+        // Convert import URIs
+        val outputModel = modelRoot as IntermediateServiceModel
+        outputModel.imports.forEach[
+            val relativeImportModelFilePath = LemmaUtils.relativize(absoluteOutputModelFilePath,
+                LemmaUtils.removeFileUri(importUri))
+            importUri = LemmaUtils.convertToFileUri(relativeImportModelFilePath)
+        ]
+
+        // Convert microservice source model URIs
+        outputModel.microservices.forEach[
+            val relativeImportModelFilePath = LemmaUtils.relativize(absoluteOutputModelFilePath,
+                LemmaUtils.removeFileUri(sourceModelUri))
+            sourceModelUri = LemmaUtils.convertToFileUri(relativeImportModelFilePath)
+        ]
+
+        // In case this is not a refinement of a mapping (service) model, we also convert the
+        // source model URI. Since a mapping model may combine several microservices from different
+        // service models, the source model URI is not set during refinement of a mapping (service)
+        // model.
+        if (!isRefinementFromMappingModel) {
+            val relativeInputModelFilePath = LemmaUtils.relativize(absoluteOutputModelFilePath,
+                absoluteInputModelFilePath)
+            outputModel.sourceModelUri = LemmaUtils.convertToFileUri(relativeInputModelFilePath)
+        }
     }
 }

@@ -62,6 +62,9 @@ class SpecifyPathsDialog extends TitleAreaDialog {
     List<ModelFile> selectedModelFiles = <ModelFile> newArrayList
 
     @Accessors(PUBLIC_GETTER)
+    boolean convertToRelativeUris
+
+    @Accessors(PUBLIC_GETTER)
     boolean outputRefinementModels
 
     /**
@@ -111,6 +114,7 @@ class SpecifyPathsDialog extends TitleAreaDialog {
         container.setLayout(layout)
         createModelTable(container)
 
+        createConvertToRelativeUrisCheckbox(container)
         createRefinementsOutputCheckbox(container)
 
         return area
@@ -545,6 +549,24 @@ class SpecifyPathsDialog extends TitleAreaDialog {
         tableViewerColumnTransformationTargetPath.editingSupport =
             new ModelTableTransformationTargetPathColumnEditingSupport(tableViewer,
                 transformationTargetPathValidator)
+    }
+
+    /**
+     * Create checkbox for converting absolute import URIs in models to relative URIs
+     */
+    private def createConvertToRelativeUrisCheckbox(Composite parent) {
+        val checkbox = new Button(parent, SWT.CHECK)
+        checkbox.text = "Convert absolute URIs in models to relative URIs"
+        checkbox.selection = convertToRelativeUris
+        checkbox.addSelectionListener(new SelectionListener {
+            override widgetDefaultSelected(SelectionEvent event) {
+                convertToRelativeUris = checkbox.selection
+            }
+
+            override widgetSelected(SelectionEvent event) {
+                convertToRelativeUris = checkbox.selection
+            }
+        })
     }
 
     /**

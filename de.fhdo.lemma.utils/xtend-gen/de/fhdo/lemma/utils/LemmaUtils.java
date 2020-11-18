@@ -471,6 +471,46 @@ public final class LemmaUtils {
   }
   
   /**
+   * Convert the path of a workspace resource into a file path with adapted separators. The
+   * resource is considered to belong to the given project and the resulting file path is
+   * absolute.
+   */
+  public static String convertProjectResourceToAbsoluteFilePath(final String resourcePath, final IProject project) {
+    final String projectPath = project.getFullPath().toString();
+    final String normalizedResourcePath = LemmaUtils.removePrefix(resourcePath, projectPath, false);
+    final String resourceFilePath = normalizedResourcePath.replace("/", File.separator);
+    String _string = project.getLocation().makeAbsolute().toString();
+    return (_string + resourceFilePath);
+  }
+  
+  /**
+   * Relativize the given to-file from the given from-file. In fact, this utility method answers
+   * the question "How do I get from the given from-file to the given to-file by means of a
+   * relative path?"
+   * 
+   * Example:
+   *      from-file = /foo/bar/baz/bing.txt
+   *      to-file   = /foo/bar/bay/bing2.txt
+   *      result    = ../bing2.txt
+   */
+  public static String relativize(final String fromFilePath, final String toFilePath) {
+    final String fromFolder = new File(fromFilePath).getParent();
+    final File toFile = new File(toFilePath);
+    final String toFolder = toFile.getParent();
+    final String toName = toFile.getName();
+    final String relativizedToFolder = Paths.get(fromFolder).relativize(Paths.get(toFolder)).toString();
+    String _xifexpression = null;
+    boolean _isEmpty = relativizedToFolder.isEmpty();
+    boolean _not = (!_isEmpty);
+    if (_not) {
+      _xifexpression = ((relativizedToFolder + File.separator) + toName);
+    } else {
+      _xifexpression = toName;
+    }
+    return _xifexpression;
+  }
+  
+  /**
    * Remove prefix from String. If allOccurrences is set to true, remove all occurrences of a
    * prefix from String.
    */

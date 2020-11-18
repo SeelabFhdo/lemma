@@ -53,6 +53,8 @@ public class TransformationDialog extends TitleAreaDialog {
   
   private LinkedList<ModelFile> filesToTransform;
   
+  private boolean convertToRelativeUris;
+  
   private boolean outputRefinementModels;
   
   private ModelFile currentModelFile;
@@ -84,7 +86,7 @@ public class TransformationDialog extends TitleAreaDialog {
   /**
    * Constructor
    */
-  public TransformationDialog(final Shell parentShell, final AbstractUiModelTransformationStrategy strategy, final List<ModelFile> inputModelFiles, final boolean outputRefinementModels) {
+  public TransformationDialog(final Shell parentShell, final AbstractUiModelTransformationStrategy strategy, final List<ModelFile> inputModelFiles, final boolean convertToRelativeUris, final boolean outputRefinementModels) {
     super(parentShell);
     if ((parentShell == null)) {
       throw new IllegalArgumentException("Shell must not be null");
@@ -98,6 +100,7 @@ public class TransformationDialog extends TitleAreaDialog {
       }
     }
     this.filesToTransform = this.filterAndOrderForTransformation(inputModelFiles, strategy);
+    this.convertToRelativeUris = convertToRelativeUris;
     this.outputRefinementModels = outputRefinementModels;
   }
   
@@ -146,7 +149,10 @@ public class TransformationDialog extends TitleAreaDialog {
     final Predicate<Void> _function_4 = (Void it) -> {
       return this.transformationsFinished();
     };
-    TransformationThread _transformationThread = new TransformationThread(this.filesToTransform, this.outputRefinementModels, _display, _function, _function_1, _function_2, _function_3, _function_4);
+    TransformationThread _transformationThread = new TransformationThread(
+      this.filesToTransform, 
+      this.convertToRelativeUris, 
+      this.outputRefinementModels, _display, _function, _function_1, _function_2, _function_3, _function_4);
     this.transformationThread = _transformationThread;
     this.transformationThread.start();
     LemmaUiUtils.runEventLoop(this.getShell());

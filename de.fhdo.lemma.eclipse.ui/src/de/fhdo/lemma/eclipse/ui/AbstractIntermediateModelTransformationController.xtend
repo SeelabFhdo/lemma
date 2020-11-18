@@ -66,12 +66,12 @@ abstract class AbstractIntermediateModelTransformationController extends Abstrac
             return null
 
         /* Execute model transformations */
-        val specifyPathsResult = specifyPathsRawResult as Pair<List<ModelFile>, Boolean>
-        val selectedModelFilesWithChildPaths = specifyPathsResult.key
-        val outputRefinementModels = specifyPathsResult.value
+        val specifyPathsResult
+            = specifyPathsRawResult as SpecifyPathsHandler.SpecifyPathsDialogResult
         val transformationHandler = new TransformationDialogHandler(
-            selectedModelFilesWithChildPaths,
-            outputRefinementModels,
+            specifyPathsResult.selectedModelFiles,
+            specifyPathsResult.convertToRelativeUris,
+            specifyPathsResult.outputRefinementModels,
             modelTransformationStrategy
         )
         transformationHandler.execute(event)

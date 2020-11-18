@@ -100,10 +100,11 @@ public abstract class AbstractIntermediateModelTransformationController extends 
     if ((specifyPathsRawResult == null)) {
       return null;
     }
-    final Pair<List<ModelFile>, Boolean> specifyPathsResult = ((Pair<List<ModelFile>, Boolean>) specifyPathsRawResult);
-    final List<ModelFile> selectedModelFilesWithChildPaths = specifyPathsResult.getKey();
-    final Boolean outputRefinementModels = specifyPathsResult.getValue();
-    final TransformationDialogHandler transformationHandler = new TransformationDialogHandler(selectedModelFilesWithChildPaths, (outputRefinementModels).booleanValue(), 
+    final SpecifyPathsHandler.SpecifyPathsDialogResult specifyPathsResult = ((SpecifyPathsHandler.SpecifyPathsDialogResult) specifyPathsRawResult);
+    List<ModelFile> _selectedModelFiles = specifyPathsResult.getSelectedModelFiles();
+    boolean _isConvertToRelativeUris = specifyPathsResult.isConvertToRelativeUris();
+    boolean _isOutputRefinementModels = specifyPathsResult.isOutputRefinementModels();
+    final TransformationDialogHandler transformationHandler = new TransformationDialogHandler(_selectedModelFiles, _isConvertToRelativeUris, _isOutputRefinementModels, 
       this.modelTransformationStrategy);
     transformationHandler.execute(event);
     return null;

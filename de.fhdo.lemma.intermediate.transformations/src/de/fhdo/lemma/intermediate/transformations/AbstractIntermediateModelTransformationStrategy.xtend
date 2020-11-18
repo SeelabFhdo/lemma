@@ -42,7 +42,9 @@ abstract class AbstractIntermediateModelTransformationStrategy<TIM_TYPE, TOM_TYP
      * Before transformation hook (optional)
      */
     protected def void beforeTransformationHook(
-        Map<TransformationModelDescription, String> absoluteInputModelPaths
+        Map<TransformationModelDescription, IFile> inputModelFiles,
+        Map<TransformationModelDescription, String> outputModelPaths,
+        boolean convertToRelativeUris
     ) {}
 
     /**
@@ -183,11 +185,12 @@ abstract class AbstractIntermediateModelTransformationStrategy<TIM_TYPE, TOM_TYP
         Map<TransformationModelDescription, IFile> inputModelFiles,
         Map<TransformationModelDescription, String> outputModelPaths,
         Map<String, Map<String, String>> targetPathsOfImports,
+        boolean convertToRelativeUris,
         Predicate<IntermediateTransformationException> warningCallback
     ) {
         val inputModelResources = loadModelResources(inputModelFiles)
         return doTransformation(inputModelFiles, inputModelResources, outputModelPaths,
-            targetPathsOfImports, warningCallback)
+            targetPathsOfImports, convertToRelativeUris, warningCallback)
     }
 
     /**
@@ -252,6 +255,7 @@ abstract class AbstractIntermediateModelTransformationStrategy<TIM_TYPE, TOM_TYP
         List<IFile> inputModels,
         List<String> outputModelPaths,
         Map<String, Map<String, String>> targetPathsOfImports,
+        boolean convertToRelativeUris,
         Predicate<IntermediateTransformationException> warningCallback
     ) {
         val inputModelsWithDescriptions = mapValuesToModelTypeDescriptions(inputModels,
@@ -261,7 +265,7 @@ abstract class AbstractIntermediateModelTransformationStrategy<TIM_TYPE, TOM_TYP
             "output model", TransformationModelDirection.OUT, TransformationModelDirection.INOUT)
 
         return doTransformationFromFiles(inputModelsWithDescriptions, outputModelsWithDescriptions,
-            targetPathsOfImports, warningCallback)
+            targetPathsOfImports, convertToRelativeUris, warningCallback)
     }
 
     /**
@@ -295,11 +299,12 @@ abstract class AbstractIntermediateModelTransformationStrategy<TIM_TYPE, TOM_TYP
         Map<TransformationModelDescription, Resource> inputModelResources,
         Map<TransformationModelDescription, String> outputModelPaths,
         Map<String, Map<String, String>> targetPathsOfImports,
+        boolean convertToRelativeUris,
         Predicate<IntermediateTransformationException> warningCallback
     ) {
         val inputModelFiles = inputModelResources.mapValues[LemmaUtils.getFileForResource(it)]
         return doTransformation(inputModelFiles, inputModelResources, outputModelPaths,
-            targetPathsOfImports, warningCallback)
+            targetPathsOfImports, convertToRelativeUris, warningCallback)
     }
 
     /**
@@ -312,11 +317,12 @@ abstract class AbstractIntermediateModelTransformationStrategy<TIM_TYPE, TOM_TYP
         Map<TransformationModelDescription, Resource> inputModelResources,
         Map<TransformationModelDescription, String> outputModelPaths,
         Map<String, Map<String, String>> targetPathsOfImports,
+        boolean convertToRelativeUris,
         Predicate<IntermediateTransformationException> warningCallback
     ) {
         beforeTransformationChecks(inputModelFiles, outputModelPaths)
 
-        beforeTransformationHook(inputModelFiles.mapValues[LemmaUtils.getAbsolutePath(it)])
+        beforeTransformationHook(inputModelFiles, outputModelPaths, convertToRelativeUris)
 
         val preparedInputModels = prepareInputModels(inputModelResources)
 
