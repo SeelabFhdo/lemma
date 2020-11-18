@@ -9,7 +9,7 @@
 # all of its Genlets to have been built locally.
 
 docker build \
-    -t lemma/java_generator:latest \
+    -t repository.seelab.fh-dortmund.de:51900/lemma/java_generator:latest \
     --build-arg LEMMA_VERSION="$1" \
     -f ../../docker/java/Dockerfile \
     "../../../code generators"
