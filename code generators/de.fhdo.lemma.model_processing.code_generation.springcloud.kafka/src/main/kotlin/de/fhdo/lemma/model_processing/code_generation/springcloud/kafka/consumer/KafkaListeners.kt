@@ -200,8 +200,8 @@ internal object KafkaListeners {
 
         val parameter = Parameter(handlerType, handlerType.asString().decapitalize())
         method.addParameter(parameter)
-        method.getImports(setOf(ImportTargetElementType.METHOD)).forEach {
-            consumerMethod.addRelocatableImport(it, ImportTargetElementType.METHOD)
+        consumerMethod.getImports(setOf(ImportTargetElementType.METHOD)).forEach {
+            method.addRelocatableImport(it, ImportTargetElementType.METHOD)
         }
 
         /* Create KafkaListener annotation */
