@@ -155,6 +155,12 @@ this model was derived. Note that this might be an empty string, if the
 different Service Models. Model processors should then rely on the
 <a class="reference internal" href="#link-intermediatemicroservice-sourcemodeluri"><span class="std std-ref">eponymous attribute</span></a> in the
 <code class="docutils literal"><span class="pre">IntermediateMicroservice</span></code> concept.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Model processors must not depend on this URI being absolute or
+relative. Both cases may occur in practice and are totally up to the
+modeler.</p>
+</div>
 </dd></dl>
 
 <dl class="attribute">
@@ -187,6 +193,12 @@ source Service Model.</p>
 <code class="descname">String[1] sourceModelUri</code></dt>
 <dd><p><cite>“file”</cite> URI pointing to the source Service Model file from which
 this microservice originates.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Model processors must not depend on this URI being absolute or
+relative. Both cases may occur in practice and are totally up to the
+modeler.</p>
+</div>
 </dd></dl>
 
 <span class="target" id="link-intermediatemicroservice-name"></span><dl class="attribute">

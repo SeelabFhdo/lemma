@@ -152,6 +152,12 @@ default value in case it did not receive an explicit value.</p>
 <code class="descname">String[1] sourceModelUri</code></dt>
 <dd><p><cite>“file”</cite> URI pointing to the source Operation Model file from which
 this model was derived.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Model processors must not depend on this URI being absolute or
+relative. Both cases may occur in practice and are totally up to the
+modeler.</p>
+</div>
 </dd></dl>
 
 <dl class="attribute">

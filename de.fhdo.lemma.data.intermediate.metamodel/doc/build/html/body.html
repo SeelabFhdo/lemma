@@ -151,6 +151,12 @@ default value in case it did not receive an explicit value.</p>
 <code class="descname">String[1] sourceModelUri</code></dt>
 <dd><p><cite>“file”</cite> URI pointing to the source Data Model file from which this
 model was derived.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Model processors must not depend on this URI being absolute or
+relative. Both cases may occur in practice and are totally up to the
+modeler.</p>
+</div>
 </dd></dl>
 
 <dl class="attribute">
@@ -226,6 +232,12 @@ Domain Data Model.</p>
 <code class="descname">String[1] importUri</code></dt>
 <dd><p>Unique <cite>“file”</cite> URI that points to the location of the imported Data
 Model, which itself is an Intermediate Data Model instance.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Model processors must not depend on this URI being absolute or
+relative. Both cases may occur in practice and are totally up to the
+modeler.</p>
+</div>
 </dd></dl>
 
 <span class="target" id="link-intermediateimport-importtypename"></span><dl class="attribute">

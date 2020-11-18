@@ -116,6 +116,12 @@ Model Root
         `\"file\"` URI pointing to the source Operation Model file from which 
         this model was derived.
 
+        .. NOTE::
+
+            Model processors must not depend on this URI being absolute or
+            relative. Both cases may occur in practice and are totally up to the
+            modeler.
+
     .. py:attribute:: IntermediateImport[*] imports
 
         References to :java:type:`data_model:IntermediateDataModel` or

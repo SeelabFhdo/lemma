@@ -119,6 +119,12 @@ Model Root
         <link__IntermediateMicroservice_sourceModelUri>` in the 
         ``IntermediateMicroservice`` concept.
 
+        .. NOTE::
+
+            Model processors must not depend on this URI being absolute or
+            relative. Both cases may occur in practice and are totally up to the
+            modeler.
+
     .. py:attribute:: IntermediateImport[*] imports
 
         References to :java:type:`data_model:IntermediateDataModel`, Technology
@@ -144,6 +150,12 @@ Microservices
 
         `\"file\"` URI pointing to the source Service Model file from which 
         this microservice originates.
+
+        .. NOTE::
+
+            Model processors must not depend on this URI being absolute or
+            relative. Both cases may occur in practice and are totally up to the
+            modeler.
 
     .. _link__IntermediateMicroservice_name:
 

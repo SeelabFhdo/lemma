@@ -116,6 +116,12 @@ Model Root
         `\"file\"` URI pointing to the source Data Model file from which this
         model was derived.
 
+        .. NOTE::
+
+            Model processors must not depend on this URI being absolute or
+            relative. Both cases may occur in practice and are totally up to the
+            modeler.
+
     .. py:attribute:: IntermediateImport[*] imports
 
         References to Intermediate Data Model instances that were
@@ -179,6 +185,12 @@ structures.
 
         Unique `"file"` URI that points to the location of the imported Data
         Model, which itself is an Intermediate Data Model instance.
+
+        .. NOTE::
+
+            Model processors must not depend on this URI being absolute or
+            relative. Both cases may occur in practice and are totally up to the
+            modeler.
 
     .. _link__IntermediateImport_importTypeName:
 
