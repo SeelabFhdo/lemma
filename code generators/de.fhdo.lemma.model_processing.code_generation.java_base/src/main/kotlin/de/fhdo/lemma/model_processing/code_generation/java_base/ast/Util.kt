@@ -754,12 +754,14 @@ fun <P: Node> ClassOrInterfaceDeclaration.addPrivateAttribute(attributeName: Str
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-internal fun ClassOrInterfaceDeclaration.addAllAttributesConstructor() : ConstructorDeclaration? {
+internal fun ClassOrInterfaceDeclaration.addAllAttributesConstructor(
+    modifier: Modifier.Keyword = Modifier.Keyword.PUBLIC
+) : ConstructorDeclaration? {
     val mutableAttributes = attributes.filter { !(it.parentNode.get() as FieldDeclaration).isFinal }
     if (mutableAttributes.isEmpty())
         return null
 
-    val constructor = addConstructor(Modifier.Keyword.PUBLIC)
+    val constructor = addConstructor(modifier)
     val constructorBody = mutableListOf<String>()
     mutableAttributes.forEach {
         val parameter = Parameter()
@@ -910,7 +912,16 @@ fun FieldDeclaration.addImport(import: String, targetElementType: ImportTargetEl
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 fun MethodDeclaration.addImport(import: String, targetElementType: ImportTargetElementType,
-    vararg characteristics: SerializationCharacteristic)  {
+    vararg characteristics: SerializationCharacteristic)
+    = (this as CallableDeclaration<MethodDeclaration>).addImport(import, targetElementType, *characteristics)
+
+/**
+ * Convenience method in the context of a generic Java callable, which enables to add an import to its defining class.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+internal fun CallableDeclaration<*>.addImport(import: String, targetElementType: ImportTargetElementType,
+    vararg characteristics: SerializationCharacteristic) {
     addImportsInfo(import, targetElementType, *characteristics)
     findParentNode<ClassOrInterfaceDeclaration>()?.addImport(import, targetElementType, *characteristics)
 }

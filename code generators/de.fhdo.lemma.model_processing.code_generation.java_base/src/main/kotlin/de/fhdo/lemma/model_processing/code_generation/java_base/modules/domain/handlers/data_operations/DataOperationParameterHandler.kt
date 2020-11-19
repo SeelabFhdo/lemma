@@ -1,6 +1,6 @@
 package de.fhdo.lemma.model_processing.code_generation.java_base.modules.domain.handlers.data_operations
 
-import com.github.javaparser.ast.body.MethodDeclaration
+import com.github.javaparser.ast.body.CallableDeclaration
 import com.github.javaparser.ast.body.Parameter
 import de.fhdo.lemma.data.intermediate.IntermediateDataOperationParameter
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.ImportTargetElementType
@@ -16,24 +16,25 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.languages.setJav
  */
 @CodeGenerationHandler
 internal class DataOperationParameterHandler
-    : CallableCodeGenerationHandlerI<IntermediateDataOperationParameter, MethodDeclaration, MethodDeclaration> {
+    : CallableCodeGenerationHandlerI<IntermediateDataOperationParameter, CallableDeclaration<*>,
+        CallableDeclaration<*>> {
     override fun handlesEObjectsOfInstance() = IntermediateDataOperationParameter::class.java
-    override fun generatesNodesOfInstance() = MethodDeclaration::class.java
+    override fun generatesNodesOfInstance() = CallableDeclaration::class.java
     override fun getAspects(eObject: IntermediateDataOperationParameter) = eObject.aspects!!
 
     companion object {
         /**
          * Convenience companion method to invoke the handler
          */
-        fun invoke(parameter: IntermediateDataOperationParameter, method: MethodDeclaration)
+        fun invoke(parameter: IntermediateDataOperationParameter, method: CallableDeclaration<*>)
             = DataOperationParameterHandler().invoke(parameter, method)
     }
 
     /**
      * Execution logic of the handler
      */
-    override fun execute(eObject: IntermediateDataOperationParameter, context: MethodDeclaration?)
-        : Pair<MethodDeclaration, String?>? {
+    override fun execute(eObject: IntermediateDataOperationParameter, context: CallableDeclaration<*>?)
+        : Pair<CallableDeclaration<*>, String?>? {
         val generatedParameter = Parameter()
         generatedParameter.setName(eObject.name)
         generatedParameter.setJavaTypeFrom(eObject.type, context!!) {

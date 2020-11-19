@@ -14,6 +14,7 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.CodeGen
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.domain.handlers.data_operations.DataOperationHandler
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.domain.DomainContext.State as DomainState
 import de.fhdo.lemma.model_processing.code_generation.java_base.eObjectPackageName
+import de.fhdo.lemma.model_processing.code_generation.java_base.getAspectPropertyValue
 
 /**
  * Code generation handler for IntermediateDataStructure instances.
@@ -47,11 +48,33 @@ internal class DataStructureHandler
         /* Handle data fields */
         eObject.dataFields.forEach { DataFieldHandler.invoke(it, generatedClass) }
         // Add constructor for initializing all data fields
-        generatedClass.addAllAttributesConstructor()
+        if (eObject.shallHaveAttributesConstructor()) {
+            val attributesConstructorVisibility = eObject.attributesConstructorVisibility()
+            generatedClass.addAllAttributesConstructor(attributesConstructorVisibility)
+        }
 
         /* Handle data operations */
         eObject.operations.forEach { DataOperationHandler.invoke(it, generatedClass) }
 
         return generatedClass to eObject.fullyQualifiedClasspath()
+    }
+
+    /**
+     * Determine if generated class shall have a constructor for initializing all data fields. By default, this is the
+     * case. However, the modeler may deactivate it by means of technology aspects.
+     */
+    private fun IntermediateDataStructure.shallHaveAttributesConstructor()
+        = getAspectPropertyValue("java.constructor", "initializing")?.equals("true") ?: true
+
+    /**
+     * Determine visibility of a constructor for initializing all data fields. By default, such constructors are public.
+     * However, the modeler may constrain their visibility by means of technology aspects.
+     */
+    private fun IntermediateDataStructure.attributesConstructorVisibility() : Modifier.Keyword {
+        val protectAttributesConstructor = getAspectPropertyValue("java.constructor", "protectInitializing") == "true"
+        return if (protectAttributesConstructor)
+                Modifier.Keyword.PROTECTED
+            else
+                Modifier.Keyword.PUBLIC
     }
 }
