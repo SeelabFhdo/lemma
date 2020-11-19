@@ -248,10 +248,6 @@ pipeline {
             }
 
             post {
-                success {
-                    sh 'docker system prune -af --volumes'
-                }
-
                 always {
                     script {
                         def postMessageBranchUrl = "${env.BASE_BRANCH_URL}/tree/${env.BRANCH_NAME}"
