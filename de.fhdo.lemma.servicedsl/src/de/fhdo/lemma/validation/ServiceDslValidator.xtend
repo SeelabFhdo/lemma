@@ -971,7 +971,10 @@ class ServiceDslValidator extends AbstractServiceDslValidator {
                 val protocol = endpoint.protocols.get(i)
                 var protocolId = protocol.import.name + "::" + protocol.importedProtocol.name
                 if (protocol.dataFormat !== null)
-                    protocolId += "/" + protocol.dataFormat.formatName
+                    protocolId += '''(«protocol.dataFormat.formatName»)'''
+                else
+                    protocolId += '''(«protocol.importedProtocol.defaultFormat.formatName»)'''
+
                 val isDuplicate = !protocolSet.add(protocolId)
                 if (isDuplicate)
                     error('''Duplicate endpoint for protocol «protocolId»''', endpoint,
@@ -999,8 +1002,10 @@ class ServiceDslValidator extends AbstractServiceDslValidator {
                     val address = endpoint.addresses.get(i)
                     var protocolName = protocol.import.name + "::" + protocol.importedProtocol.name
                     val dataFormat = protocol.dataFormat
-                    if (dataFormat !== null && dataFormat.formatName !== null)
-                        protocolName += "/" + dataFormat.formatName
+                    if (dataFormat?.formatName !== null)
+                        protocolName += '''(«dataFormat.formatName»)'''
+                    else
+                        protocolName += '''(«protocol.importedProtocol.defaultFormat.formatName»)'''
                     val addressPrefixedByProtocol = protocolName + address
 
                     val valueMap = <String, Object> newHashMap

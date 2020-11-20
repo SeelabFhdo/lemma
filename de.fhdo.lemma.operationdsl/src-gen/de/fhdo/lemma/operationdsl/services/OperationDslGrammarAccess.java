@@ -856,18 +856,19 @@ public class OperationDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final CrossReference cProtocolProtocolCrossReference_2_0 = (CrossReference)cProtocolAssignment_2.eContents().get(0);
 		private final RuleCall cProtocolProtocolQualifiedNameParserRuleCall_2_0_1 = (RuleCall)cProtocolProtocolCrossReference_2_0.eContents().get(1);
 		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
-		private final Keyword cSolidusKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
+		private final Keyword cLeftParenthesisKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
 		private final Assignment cDataFormatAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
 		private final CrossReference cDataFormatDataFormatCrossReference_3_1_0 = (CrossReference)cDataFormatAssignment_3_1.eContents().get(0);
-		private final RuleCall cDataFormatDataFormatIDTerminalRuleCall_3_1_0_1 = (RuleCall)cDataFormatDataFormatCrossReference_3_1_0.eContents().get(1);
+		private final RuleCall cDataFormatDataFormatSTRINGTerminalRuleCall_3_1_0_1 = (RuleCall)cDataFormatDataFormatCrossReference_3_1_0.eContents().get(1);
+		private final Keyword cRightParenthesisKeyword_3_2 = (Keyword)cGroup_3.eContents().get(2);
 		
 		//ProtocolAndDataFormat:
 		//	technology=[service::Import] '::'
-		//	protocol=[technology::Protocol|QualifiedName] ('/' dataFormat=[technology::DataFormat])?;
+		//	protocol=[technology::Protocol|QualifiedName] ('(' dataFormat=[technology::DataFormat|STRING] ')')?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//technology=[service::Import] '::' protocol=[technology::Protocol|QualifiedName] ('/'
-		//dataFormat=[technology::DataFormat])?
+		//technology=[service::Import] '::' protocol=[technology::Protocol|QualifiedName] ('('
+		//dataFormat=[technology::DataFormat|STRING] ')')?
 		public Group getGroup() { return cGroup; }
 		
 		//technology=[service::Import]
@@ -891,20 +892,23 @@ public class OperationDslGrammarAccess extends AbstractGrammarElementFinder {
 		//QualifiedName
 		public RuleCall getProtocolProtocolQualifiedNameParserRuleCall_2_0_1() { return cProtocolProtocolQualifiedNameParserRuleCall_2_0_1; }
 		
-		//('/' dataFormat=[technology::DataFormat])?
+		//('(' dataFormat=[technology::DataFormat|STRING] ')')?
 		public Group getGroup_3() { return cGroup_3; }
 		
-		//'/'
-		public Keyword getSolidusKeyword_3_0() { return cSolidusKeyword_3_0; }
+		//'('
+		public Keyword getLeftParenthesisKeyword_3_0() { return cLeftParenthesisKeyword_3_0; }
 		
-		//dataFormat=[technology::DataFormat]
+		//dataFormat=[technology::DataFormat|STRING]
 		public Assignment getDataFormatAssignment_3_1() { return cDataFormatAssignment_3_1; }
 		
-		//[technology::DataFormat]
+		//[technology::DataFormat|STRING]
 		public CrossReference getDataFormatDataFormatCrossReference_3_1_0() { return cDataFormatDataFormatCrossReference_3_1_0; }
 		
-		//ID
-		public RuleCall getDataFormatDataFormatIDTerminalRuleCall_3_1_0_1() { return cDataFormatDataFormatIDTerminalRuleCall_3_1_0_1; }
+		//STRING
+		public RuleCall getDataFormatDataFormatSTRINGTerminalRuleCall_3_1_0_1() { return cDataFormatDataFormatSTRINGTerminalRuleCall_3_1_0_1; }
+		
+		//')'
+		public Keyword getRightParenthesisKeyword_3_2() { return cRightParenthesisKeyword_3_2; }
 	}
 	public class BasicEndpointElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.fhdo.lemma.operationdsl.OperationDsl.BasicEndpoint");
@@ -1549,7 +1553,7 @@ public class OperationDslGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//ProtocolAndDataFormat:
 	//	technology=[service::Import] '::'
-	//	protocol=[technology::Protocol|QualifiedName] ('/' dataFormat=[technology::DataFormat])?;
+	//	protocol=[technology::Protocol|QualifiedName] ('(' dataFormat=[technology::DataFormat|STRING] ')')?;
 	public ProtocolAndDataFormatElements getProtocolAndDataFormatAccess() {
 		return pProtocolAndDataFormat;
 	}
@@ -1672,7 +1676,7 @@ public class OperationDslGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//Microservice:
 	//	technologyReferences+=TechnologyReference* (protocols+=ProtocolSpecification protocols+=ProtocolSpecification?)? ('@'
-	//	'endpoints' '(' endpoints+=Endpoint+ ')')?
+	//	'endpoints' '(' endpoints+=Endpoint+ ')')? ('@' 'endpoints' '({' endpoints+=Endpoint+ '})')?
 	//	aspects+=ImportedServiceAspect*
 	//	visibility=Visibility?
 	//	type=MicroserviceType
@@ -1741,6 +1745,7 @@ public class OperationDslGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//Interface:
 	//	(protocols+=ProtocolSpecification protocols+=ProtocolSpecification?)? ('@' 'endpoints' '(' endpoints+=Endpoint+ ')')?
+	//	('@' 'endpoints' '({' endpoints+=Endpoint+ '})')?
 	//	aspects+=ImportedServiceAspect*
 	//	notImplemented?='noimpl'? visibility=Visibility? 'interface' name=ID ('version' version=ID)?
 	//	'{'
@@ -1780,7 +1785,7 @@ public class OperationDslGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//Operation:
 	//	apiOperationComment=ApiOperationComment? (protocols+=ProtocolSpecification protocols+=ProtocolSpecification?)? ('@'
-	//	'endpoints' '(' endpoints+=Endpoint+ ')')?
+	//	'endpoints' '(' endpoints+=Endpoint+ ')')? ('@' 'endpoints' '({' endpoints+=Endpoint+ '})')?
 	//	aspects+=ImportedServiceAspect*
 	//	notImplemented?='noimpl'? visibility=Visibility? name=ID '('
 	//	parameters+=Parameter? (',' parameters+=Parameter)*
@@ -1795,6 +1800,7 @@ public class OperationDslGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//ReferredOperation:
 	//	(protocols+=ProtocolSpecification protocols+=ProtocolSpecification?)? ('@' 'endpoints' '(' endpoints+=Endpoint+ ')')?
+	//	('@' 'endpoints' '({' endpoints+=Endpoint+ '})')?
 	//	aspects+=ImportedServiceAspect*
 	//	'refers' operation=[Operation|QualifiedName] ';';
 	public ServiceDslGrammarAccess.ReferredOperationElements getReferredOperationAccess() {
@@ -1844,8 +1850,8 @@ public class OperationDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//ImportedProtocolAndDataFormat:
-	//	^import=[Import] '::' importedProtocol=[technology::Protocol|QualifiedName] ('/'
-	//	dataFormat=[technology::DataFormat])?;
+	//	^import=[Import] '::' importedProtocol=[technology::Protocol|QualifiedName] ('('
+	//	dataFormat=[technology::DataFormat|super::STRING] ')')?;
 	public ServiceDslGrammarAccess.ImportedProtocolAndDataFormatElements getImportedProtocolAndDataFormatAccess() {
 		return gaServiceDsl.getImportedProtocolAndDataFormatAccess();
 	}
@@ -1979,7 +1985,7 @@ public class OperationDslGrammarAccess extends AbstractGrammarElementFinder {
 	//	communicationType=CommunicationType
 	//	name=ID
 	//	'data' 'formats' dataFormats+=DataFormat (',' dataFormats+=DataFormat)* (default?='default' 'with' 'format'
-	//	defaultFormat=[DataFormat])?
+	//	defaultFormat=[DataFormat|super::STRING])?
 	//	';';
 	public TechnologyDslGrammarAccess.ProtocolElements getProtocolAccess() {
 		return gaTechnologyDsl.getProtocolAccess();
@@ -2010,7 +2016,7 @@ public class OperationDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//DataFormat:
-	//	formatName=ID;
+	//	formatName=super::STRING;
 	public TechnologyDslGrammarAccess.DataFormatElements getDataFormatAccess() {
 		return gaTechnologyDsl.getDataFormatAccess();
 	}
@@ -2172,7 +2178,7 @@ public class OperationDslGrammarAccess extends AbstractGrammarElementFinder {
 	//ServiceAspectPointcut:
 	//	forExchangePattern?='exchange_pattern' '=' exchangePattern=ExchangePattern |
 	//	forCommunicationType?='communication_type' '=' communicationType=CommunicationType | forProtocol?='protocol' '='
-	//	protocol=[Protocol] | forDataFormat?='data_format' '=' dataFormat=[DataFormat];
+	//	protocol=[Protocol] | forDataFormat?='data_format' '=' dataFormat=[DataFormat|super::STRING];
 	public TechnologyDslGrammarAccess.ServiceAspectPointcutElements getServiceAspectPointcutAccess() {
 		return gaTechnologyDsl.getServiceAspectPointcutAccess();
 	}

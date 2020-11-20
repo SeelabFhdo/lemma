@@ -1,9 +1,10 @@
 '('=20
+'({'=141
 ')'=21
 ','=19
 '-'=24
 '--'=25
-'---'=141
+'---'=143
 '->'=62
 '.'=23
 '/'=26
@@ -18,7 +19,7 @@
 '?'=27
 '@'=29
 '@param'=14
-'@required'=145
+'@required'=147
 'aggregate'=82
 'applicationService'=83
 'architecture'=115
@@ -40,7 +41,7 @@
 'context'=81
 'data'=46
 'data_format'=76
-'datatypes'=143
+'datatypes'=145
 'date'=107
 'default'=48
 'depends'=134
@@ -106,7 +107,7 @@
 'refers'=124
 'repository'=89
 'required'=119
-'selector'=142
+'selector'=144
 'service'=37
 'services'=140
 'short'=112
@@ -121,7 +122,7 @@
 'type'=57
 'typedef'=120
 'types'=33
-'unspecified'=144
+'unspecified'=146
 'used'=135
 'utility'=127
 'validator'=101
@@ -131,6 +132,7 @@
 'with'=49
 '{'=15
 '}'=16
+'})'=142
 RULE_ANY_OTHER=8
 RULE_BIG_DECIMAL=5
 RULE_BOOLEAN=4
@@ -187,6 +189,8 @@ T__142=142
 T__143=143
 T__144=144
 T__145=145
+T__146=146
+T__147=147
 T__14=14
 T__15=15
 T__16=16

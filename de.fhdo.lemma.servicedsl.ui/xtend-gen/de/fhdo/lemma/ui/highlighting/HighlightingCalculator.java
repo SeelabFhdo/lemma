@@ -86,9 +86,8 @@ public class HighlightingCalculator implements ISemanticHighlightingCalculator {
           final Consumer<INode> _function_4 = (INode it_1) -> {
             INode nodeToHighlight = it_1;
             if ((!(highlightImmediately).booleanValue())) {
-              while ((((nodeToHighlight != null) && 
-                (nodeToHighlight.getNextSibling() != null)) && 
-                (!Objects.equal(nodeToHighlight.getNextSibling().getText(), "(")))) {
+              while ((this.hasNextNode(nodeToHighlight) && 
+                (!this.nextNodeIsOpeningAspectBracket(nodeToHighlight)))) {
                 nodeToHighlight = nodeToHighlight.getPreviousSibling();
               }
             }
@@ -107,6 +106,20 @@ public class HighlightingCalculator implements ISemanticHighlightingCalculator {
       IteratorExtensions.<EObject>forEach(IteratorExtensions.<EObject>filter(resource.getAllContents(), _function_1), _function_2);
     };
     annotatableConcepts.forEach(_function);
+  }
+  
+  /**
+   * Check if the given node has a next sibling
+   */
+  private boolean hasNextNode(final INode node) {
+    return ((node != null) && (node.getNextSibling() != null));
+  }
+  
+  /**
+   * Check if the next sibling of the given node is the opening bracket of an aspect string
+   */
+  private boolean nextNodeIsOpeningAspectBracket(final INode node) {
+    return (Objects.equal(node.getNextSibling().getText(), "(") || Objects.equal(node.getNextSibling().getText(), "({"));
   }
   
   /**

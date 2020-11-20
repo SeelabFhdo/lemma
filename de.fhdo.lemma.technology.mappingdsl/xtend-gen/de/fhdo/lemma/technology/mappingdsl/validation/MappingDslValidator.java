@@ -724,25 +724,36 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
         {
           final TechnologySpecificProtocol technologySpecificProtocol = endpoint.getTechnologySpecificProtocols().get((i).intValue());
           String protocolId = technologySpecificProtocol.getProtocol().getName();
-          if (((protocolId != null) && (technologySpecificProtocol.getDataFormat() != null))) {
+          if ((protocolId != null)) {
+            String _xifexpression = null;
+            DataFormat _dataFormat = technologySpecificProtocol.getDataFormat();
+            boolean _tripleNotEquals = (_dataFormat != null);
+            if (_tripleNotEquals) {
+              _xifexpression = technologySpecificProtocol.getDataFormat().getFormatName();
+            } else {
+              _xifexpression = technologySpecificProtocol.getProtocol().getDefaultFormat().getFormatName();
+            }
+            final String formatName = _xifexpression;
             String _protocolId = protocolId;
-            String _formatName = technologySpecificProtocol.getDataFormat().getFormatName();
-            String _plus = ("/" + _formatName);
-            protocolId = (_protocolId + _plus);
+            StringConcatenation _builder = new StringConcatenation();
+            _builder.append("(");
+            _builder.append(formatName);
+            _builder.append(")");
+            protocolId = (_protocolId + _builder);
           }
-          boolean _xifexpression = false;
+          boolean _xifexpression_1 = false;
           if ((protocolId != null)) {
             boolean _add = protocolSet.add(protocolId);
-            _xifexpression = (!_add);
+            _xifexpression_1 = (!_add);
           } else {
-            _xifexpression = false;
+            _xifexpression_1 = false;
           }
-          final boolean isDuplicate = _xifexpression;
+          final boolean isDuplicate = _xifexpression_1;
           if (isDuplicate) {
-            StringConcatenation _builder = new StringConcatenation();
-            _builder.append("Duplicate protocol specification for endpoint ");
-            _builder.append(protocolId);
-            this.error(_builder.toString(), endpoint, MappingPackage.Literals.TECHNOLOGY_SPECIFIC_ENDPOINT__TECHNOLOGY_SPECIFIC_PROTOCOLS, (i).intValue());
+            StringConcatenation _builder_1 = new StringConcatenation();
+            _builder_1.append("Duplicate protocol specification for endpoint ");
+            _builder_1.append(protocolId);
+            this.error(_builder_1.toString(), endpoint, MappingPackage.Literals.TECHNOLOGY_SPECIFIC_ENDPOINT__TECHNOLOGY_SPECIFIC_PROTOCOLS, (i).intValue());
           }
         }
       }
@@ -1011,28 +1022,44 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
           String _name_1 = protocol.getProtocol().getName();
           String protocolName = (_plus + _name_1);
           final DataFormat dataFormat = protocol.getDataFormat();
-          if (((dataFormat != null) && (dataFormat.getFormatName() != null))) {
+          String _formatName = null;
+          if (dataFormat!=null) {
+            _formatName=dataFormat.getFormatName();
+          }
+          boolean _tripleNotEquals = (_formatName != null);
+          if (_tripleNotEquals) {
             String _protocolName = protocolName;
-            String _formatName = dataFormat.getFormatName();
-            String _plus_1 = ("/" + _formatName);
-            protocolName = (_protocolName + _plus_1);
+            StringConcatenation _builder = new StringConcatenation();
+            _builder.append("(");
+            String _formatName_1 = dataFormat.getFormatName();
+            _builder.append(_formatName_1);
+            _builder.append(")");
+            protocolName = (_protocolName + _builder);
+          } else {
+            String _protocolName_1 = protocolName;
+            StringConcatenation _builder_1 = new StringConcatenation();
+            _builder_1.append("(");
+            String _formatName_2 = protocol.getProtocol().getDefaultFormat().getFormatName();
+            _builder_1.append(_formatName_2);
+            _builder_1.append(")");
+            protocolName = (_protocolName_1 + _builder_1);
           }
           final String addressPrefixedByProtocol = (protocolName + address);
           boolean _containsKey = mappedAddressesToEndpoints.containsKey(addressPrefixedByProtocol);
           if (_containsKey) {
             final String containerName = getContainerName.apply(endpoint);
-            StringConcatenation _builder = new StringConcatenation();
-            _builder.append("Address ");
-            _builder.append(address);
-            _builder.append(" is already specified for protocol ");
-            StringConcatenation _builder_1 = new StringConcatenation();
-            _builder_1.append(protocolName);
-            _builder_1.append(" on ");
-            _builder_1.append(containerTypeName);
-            _builder_1.append(" ");
-            _builder_1.append(containerName);
-            String _plus_2 = (_builder.toString() + _builder_1);
-            this.warning(_plus_2, endpoint, 
+            StringConcatenation _builder_2 = new StringConcatenation();
+            _builder_2.append("Address ");
+            _builder_2.append(address);
+            _builder_2.append(" is already specified for protocol ");
+            StringConcatenation _builder_3 = new StringConcatenation();
+            _builder_3.append(protocolName);
+            _builder_3.append(" on ");
+            _builder_3.append(containerTypeName);
+            _builder_3.append(" ");
+            _builder_3.append(containerName);
+            String _plus_1 = (_builder_2.toString() + _builder_3);
+            this.warning(_plus_1, endpoint, 
               MappingPackage.Literals.TECHNOLOGY_SPECIFIC_ENDPOINT__ADDRESSES, (i).intValue());
           } else {
             mappedAddressesToEndpoints.put(addressPrefixedByProtocol, endpoint);
@@ -1053,11 +1080,27 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
           String _name_1 = protocol.getImportedProtocol().getName();
           String protocolName = (_plus + _name_1);
           final DataFormat dataFormat = protocol.getDataFormat();
-          if (((dataFormat != null) && (dataFormat.getFormatName() != null))) {
+          String _formatName = null;
+          if (dataFormat!=null) {
+            _formatName=dataFormat.getFormatName();
+          }
+          boolean _tripleNotEquals = (_formatName != null);
+          if (_tripleNotEquals) {
             String _protocolName = protocolName;
-            String _formatName = dataFormat.getFormatName();
-            String _plus_1 = ("/" + _formatName);
-            protocolName = (_protocolName + _plus_1);
+            StringConcatenation _builder = new StringConcatenation();
+            _builder.append("(");
+            String _formatName_1 = dataFormat.getFormatName();
+            _builder.append(_formatName_1);
+            _builder.append(")");
+            protocolName = (_protocolName + _builder);
+          } else {
+            String _protocolName_1 = protocolName;
+            StringConcatenation _builder_1 = new StringConcatenation();
+            _builder_1.append("(");
+            String _formatName_2 = protocol.getImportedProtocol().getDefaultFormat().getFormatName();
+            _builder_1.append(_formatName_2);
+            _builder_1.append(")");
+            protocolName = (_protocolName_1 + _builder_1);
           }
           final String addressPrefixedByProtocol = (protocolName + address);
           final TechnologySpecificEndpoint duplicateMappedEndpoint = mappedAddressesToEndpoints.get(addressPrefixedByProtocol);
@@ -1067,21 +1110,21 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
             final String containerName = getContainerName.apply(nonMappedEndpoint);
             boolean _notEquals = (!Objects.equal(mappedContainerName, containerName));
             if (_notEquals) {
-              StringConcatenation _builder = new StringConcatenation();
-              _builder.append("Address ");
-              _builder.append(address);
-              _builder.append(" is already specified for protocol ");
-              StringConcatenation _builder_1 = new StringConcatenation();
-              _builder_1.append(protocolName);
-              _builder_1.append(" on ");
-              _builder_1.append(containerTypeName);
-              _builder_1.append(" ");
-              _builder_1.append(containerName);
-              _builder_1.append(" in ");
-              String _plus_2 = (_builder.toString() + _builder_1);
-              String _plus_3 = (_plus_2 + 
+              StringConcatenation _builder_2 = new StringConcatenation();
+              _builder_2.append("Address ");
+              _builder_2.append(address);
+              _builder_2.append(" is already specified for protocol ");
+              StringConcatenation _builder_3 = new StringConcatenation();
+              _builder_3.append(protocolName);
+              _builder_3.append(" on ");
+              _builder_3.append(containerTypeName);
+              _builder_3.append(" ");
+              _builder_3.append(containerName);
+              _builder_3.append(" in ");
+              String _plus_1 = (_builder_2.toString() + _builder_3);
+              String _plus_2 = (_plus_1 + 
                 "another service model");
-              this.warning(_plus_3, duplicateMappedEndpoint, 
+              this.warning(_plus_2, duplicateMappedEndpoint, 
                 MappingPackage.Literals.TECHNOLOGY_SPECIFIC_ENDPOINT__ADDRESSES, mappedAddressIndex);
             }
           }

@@ -356,7 +356,7 @@ public class ServiceDslSemanticSequencer extends TechnologyDslSemanticSequencer 
 	 *     ImportedProtocolAndDataFormat returns ImportedProtocolAndDataFormat
 	 *
 	 * Constraint:
-	 *     (import=[Import|ID] importedProtocol=[Protocol|QualifiedName] dataFormat=[DataFormat|ID]?)
+	 *     (import=[Import|ID] importedProtocol=[Protocol|QualifiedName] dataFormat=[DataFormat|STRING]?)
 	 */
 	protected void sequence_ImportedProtocolAndDataFormat(ISerializationContext context, ImportedProtocolAndDataFormat semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -408,6 +408,7 @@ public class ServiceDslSemanticSequencer extends TechnologyDslSemanticSequencer 
 	 *     (
 	 *         (protocols+=ProtocolSpecification protocols+=ProtocolSpecification?)? 
 	 *         endpoints+=Endpoint* 
+	 *         endpoints+=Endpoint* 
 	 *         aspects+=ImportedServiceAspect* 
 	 *         notImplemented?='noimpl'? 
 	 *         visibility=Visibility? 
@@ -430,6 +431,7 @@ public class ServiceDslSemanticSequencer extends TechnologyDslSemanticSequencer 
 	 *     (
 	 *         technologyReferences+=TechnologyReference* 
 	 *         (protocols+=ProtocolSpecification protocols+=ProtocolSpecification?)? 
+	 *         endpoints+=Endpoint* 
 	 *         endpoints+=Endpoint* 
 	 *         aspects+=ImportedServiceAspect* 
 	 *         visibility=Visibility? 
@@ -455,6 +457,7 @@ public class ServiceDslSemanticSequencer extends TechnologyDslSemanticSequencer 
 	 *     (
 	 *         apiOperationComment=ApiOperationComment? 
 	 *         (protocols+=ProtocolSpecification protocols+=ProtocolSpecification?)? 
+	 *         endpoints+=Endpoint* 
 	 *         endpoints+=Endpoint* 
 	 *         aspects+=ImportedServiceAspect* 
 	 *         notImplemented?='noimpl'? 
@@ -566,6 +569,7 @@ public class ServiceDslSemanticSequencer extends TechnologyDslSemanticSequencer 
 	 * Constraint:
 	 *     (
 	 *         (protocols+=ProtocolSpecification protocols+=ProtocolSpecification?)? 
+	 *         endpoints+=Endpoint* 
 	 *         endpoints+=Endpoint* 
 	 *         aspects+=ImportedServiceAspect* 
 	 *         operation=[Operation|QualifiedName]

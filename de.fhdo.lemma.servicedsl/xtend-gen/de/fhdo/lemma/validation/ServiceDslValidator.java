@@ -1354,17 +1354,28 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
           boolean _tripleNotEquals = (_dataFormat != null);
           if (_tripleNotEquals) {
             String _protocolId = protocolId;
+            StringConcatenation _builder = new StringConcatenation();
+            _builder.append("(");
             String _formatName = protocol.getDataFormat().getFormatName();
-            String _plus_1 = ("/" + _formatName);
-            protocolId = (_protocolId + _plus_1);
+            _builder.append(_formatName);
+            _builder.append(")");
+            protocolId = (_protocolId + _builder);
+          } else {
+            String _protocolId_1 = protocolId;
+            StringConcatenation _builder_1 = new StringConcatenation();
+            _builder_1.append("(");
+            String _formatName_1 = protocol.getImportedProtocol().getDefaultFormat().getFormatName();
+            _builder_1.append(_formatName_1);
+            _builder_1.append(")");
+            protocolId = (_protocolId_1 + _builder_1);
           }
           boolean _add = protocolSet.add(protocolId);
           final boolean isDuplicate = (!_add);
           if (isDuplicate) {
-            StringConcatenation _builder = new StringConcatenation();
-            _builder.append("Duplicate endpoint for protocol ");
-            _builder.append(protocolId);
-            this.error(_builder.toString(), endpoint, 
+            StringConcatenation _builder_2 = new StringConcatenation();
+            _builder_2.append("Duplicate endpoint for protocol ");
+            _builder_2.append(protocolId);
+            this.error(_builder_2.toString(), endpoint, 
               ServicePackage.Literals.ENDPOINT__PROTOCOLS, (i).intValue());
           }
         }
@@ -1389,11 +1400,27 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
           String _name_1 = protocol.getImportedProtocol().getName();
           String protocolName = (_plus + _name_1);
           final DataFormat dataFormat = protocol.getDataFormat();
-          if (((dataFormat != null) && (dataFormat.getFormatName() != null))) {
+          String _formatName = null;
+          if (dataFormat!=null) {
+            _formatName=dataFormat.getFormatName();
+          }
+          boolean _tripleNotEquals = (_formatName != null);
+          if (_tripleNotEquals) {
             String _protocolName = protocolName;
-            String _formatName = dataFormat.getFormatName();
-            String _plus_1 = ("/" + _formatName);
-            protocolName = (_protocolName + _plus_1);
+            StringConcatenation _builder = new StringConcatenation();
+            _builder.append("(");
+            String _formatName_1 = dataFormat.getFormatName();
+            _builder.append(_formatName_1);
+            _builder.append(")");
+            protocolName = (_protocolName + _builder);
+          } else {
+            String _protocolName_1 = protocolName;
+            StringConcatenation _builder_1 = new StringConcatenation();
+            _builder_1.append("(");
+            String _formatName_2 = protocol.getImportedProtocol().getDefaultFormat().getFormatName();
+            _builder_1.append(_formatName_2);
+            _builder_1.append(")");
+            protocolName = (_protocolName_1 + _builder_1);
           }
           final String addressPrefixedByProtocol = (protocolName + address);
           final HashMap<String, Object> valueMap = CollectionLiterals.<String, Object>newHashMap();
@@ -1413,18 +1440,18 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
             final List<String> currentEndpointContainerNameParts = getEndpointContainerNameParts.apply(endpoint);
             final String relativeDuplicateName = QualifiedName.create(
               LemmaUtils.<Endpoint, ServiceModel>calculateRelativeQualifiedNameParts(duplicateEndpoint, duplicateContainerNameParts, ServiceModel.class, endpoint, currentEndpointContainerNameParts, ServiceModel.class)).toString();
-            StringConcatenation _builder = new StringConcatenation();
-            _builder.append("Address is already specified for protocol ");
-            StringConcatenation _builder_1 = new StringConcatenation();
-            _builder_1.append(duplicateProtocolName);
-            _builder_1.append(" on ");
-            _builder_1.append(containerTypeName);
-            _builder_1.append(" ");
-            String _plus_2 = (_builder.toString() + _builder_1);
             StringConcatenation _builder_2 = new StringConcatenation();
-            _builder_2.append(relativeDuplicateName);
-            String _plus_3 = (_plus_2 + _builder_2);
-            this.warning(_plus_3, endpoint, 
+            _builder_2.append("Address is already specified for protocol ");
+            StringConcatenation _builder_3 = new StringConcatenation();
+            _builder_3.append(duplicateProtocolName);
+            _builder_3.append(" on ");
+            _builder_3.append(containerTypeName);
+            _builder_3.append(" ");
+            String _plus_1 = (_builder_2.toString() + _builder_3);
+            StringConcatenation _builder_4 = new StringConcatenation();
+            _builder_4.append(relativeDuplicateName);
+            String _plus_2 = (_plus_1 + _builder_4);
+            this.warning(_plus_2, endpoint, 
               ServicePackage.Literals.ENDPOINT__ADDRESSES, (i).intValue());
           }
         };

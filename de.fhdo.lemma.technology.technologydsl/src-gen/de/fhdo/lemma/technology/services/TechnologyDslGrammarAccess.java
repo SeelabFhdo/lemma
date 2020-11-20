@@ -365,19 +365,19 @@ public class TechnologyDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cFormatKeyword_6_2 = (Keyword)cGroup_6.eContents().get(2);
 		private final Assignment cDefaultFormatAssignment_6_3 = (Assignment)cGroup_6.eContents().get(3);
 		private final CrossReference cDefaultFormatDataFormatCrossReference_6_3_0 = (CrossReference)cDefaultFormatAssignment_6_3.eContents().get(0);
-		private final RuleCall cDefaultFormatDataFormatIDTerminalRuleCall_6_3_0_1 = (RuleCall)cDefaultFormatDataFormatCrossReference_6_3_0.eContents().get(1);
+		private final RuleCall cDefaultFormatDataFormatSTRINGTerminalRuleCall_6_3_0_1 = (RuleCall)cDefaultFormatDataFormatCrossReference_6_3_0.eContents().get(1);
 		private final Keyword cSemicolonKeyword_7 = (Keyword)cGroup.eContents().get(7);
 		
 		//Protocol:
 		//	communicationType=CommunicationType
 		//	name=ID
 		//	'data' 'formats' dataFormats+=DataFormat (',' dataFormats+=DataFormat)* (default?='default' 'with' 'format'
-		//	defaultFormat=[DataFormat])?
+		//	defaultFormat=[DataFormat|STRING])?
 		//	';';
 		@Override public ParserRule getRule() { return rule; }
 		
 		//communicationType=CommunicationType name=ID 'data' 'formats' dataFormats+=DataFormat (',' dataFormats+=DataFormat)*
-		//(default?='default' 'with' 'format' defaultFormat=[DataFormat])? ';'
+		//(default?='default' 'with' 'format' defaultFormat=[DataFormat|STRING])? ';'
 		public Group getGroup() { return cGroup; }
 		
 		//communicationType=CommunicationType
@@ -416,7 +416,7 @@ public class TechnologyDslGrammarAccess extends AbstractGrammarElementFinder {
 		//DataFormat
 		public RuleCall getDataFormatsDataFormatParserRuleCall_5_1_0() { return cDataFormatsDataFormatParserRuleCall_5_1_0; }
 		
-		//(default?='default' 'with' 'format' defaultFormat=[DataFormat])?
+		//(default?='default' 'with' 'format' defaultFormat=[DataFormat|STRING])?
 		public Group getGroup_6() { return cGroup_6; }
 		
 		//default?='default'
@@ -431,14 +431,14 @@ public class TechnologyDslGrammarAccess extends AbstractGrammarElementFinder {
 		//'format'
 		public Keyword getFormatKeyword_6_2() { return cFormatKeyword_6_2; }
 		
-		//defaultFormat=[DataFormat]
+		//defaultFormat=[DataFormat|STRING]
 		public Assignment getDefaultFormatAssignment_6_3() { return cDefaultFormatAssignment_6_3; }
 		
-		//[DataFormat]
+		//[DataFormat|STRING]
 		public CrossReference getDefaultFormatDataFormatCrossReference_6_3_0() { return cDefaultFormatDataFormatCrossReference_6_3_0; }
 		
-		//ID
-		public RuleCall getDefaultFormatDataFormatIDTerminalRuleCall_6_3_0_1() { return cDefaultFormatDataFormatIDTerminalRuleCall_6_3_0_1; }
+		//STRING
+		public RuleCall getDefaultFormatDataFormatSTRINGTerminalRuleCall_6_3_0_1() { return cDefaultFormatDataFormatSTRINGTerminalRuleCall_6_3_0_1; }
 		
 		//';'
 		public Keyword getSemicolonKeyword_7() { return cSemicolonKeyword_7; }
@@ -446,17 +446,17 @@ public class TechnologyDslGrammarAccess extends AbstractGrammarElementFinder {
 	public class DataFormatElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.fhdo.lemma.technology.TechnologyDsl.DataFormat");
 		private final Assignment cFormatNameAssignment = (Assignment)rule.eContents().get(1);
-		private final RuleCall cFormatNameIDTerminalRuleCall_0 = (RuleCall)cFormatNameAssignment.eContents().get(0);
+		private final RuleCall cFormatNameSTRINGTerminalRuleCall_0 = (RuleCall)cFormatNameAssignment.eContents().get(0);
 		
 		//DataFormat:
-		//	formatName=ID;
+		//	formatName=STRING;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//formatName=ID
+		//formatName=STRING
 		public Assignment getFormatNameAssignment() { return cFormatNameAssignment; }
 		
-		//ID
-		public RuleCall getFormatNameIDTerminalRuleCall_0() { return cFormatNameIDTerminalRuleCall_0; }
+		//STRING
+		public RuleCall getFormatNameSTRINGTerminalRuleCall_0() { return cFormatNameSTRINGTerminalRuleCall_0; }
 	}
 	public class TechnologySpecificPrimitiveTypeElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.fhdo.lemma.technology.TechnologyDsl.TechnologySpecificPrimitiveType");
@@ -1049,17 +1049,17 @@ public class TechnologyDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cEqualsSignKeyword_3_1 = (Keyword)cGroup_3.eContents().get(1);
 		private final Assignment cDataFormatAssignment_3_2 = (Assignment)cGroup_3.eContents().get(2);
 		private final CrossReference cDataFormatDataFormatCrossReference_3_2_0 = (CrossReference)cDataFormatAssignment_3_2.eContents().get(0);
-		private final RuleCall cDataFormatDataFormatIDTerminalRuleCall_3_2_0_1 = (RuleCall)cDataFormatDataFormatCrossReference_3_2_0.eContents().get(1);
+		private final RuleCall cDataFormatDataFormatSTRINGTerminalRuleCall_3_2_0_1 = (RuleCall)cDataFormatDataFormatCrossReference_3_2_0.eContents().get(1);
 		
 		//ServiceAspectPointcut:
 		//	forExchangePattern?='exchange_pattern' '=' exchangePattern=ExchangePattern |
 		//	forCommunicationType?='communication_type' '=' communicationType=CommunicationType | forProtocol?='protocol' '='
-		//	protocol=[Protocol] | forDataFormat?='data_format' '=' dataFormat=[DataFormat];
+		//	protocol=[Protocol] | forDataFormat?='data_format' '=' dataFormat=[DataFormat|STRING];
 		@Override public ParserRule getRule() { return rule; }
 		
 		//forExchangePattern?='exchange_pattern' '=' exchangePattern=ExchangePattern | forCommunicationType?='communication_type'
 		//'=' communicationType=CommunicationType | forProtocol?='protocol' '=' protocol=[Protocol] |
-		//forDataFormat?='data_format' '=' dataFormat=[DataFormat]
+		//forDataFormat?='data_format' '=' dataFormat=[DataFormat|STRING]
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
 		//forExchangePattern?='exchange_pattern' '=' exchangePattern=ExchangePattern
@@ -1119,7 +1119,7 @@ public class TechnologyDslGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getProtocolProtocolIDTerminalRuleCall_2_2_0_1() { return cProtocolProtocolIDTerminalRuleCall_2_2_0_1; }
 		
-		//forDataFormat?='data_format' '=' dataFormat=[DataFormat]
+		//forDataFormat?='data_format' '=' dataFormat=[DataFormat|STRING]
 		public Group getGroup_3() { return cGroup_3; }
 		
 		//forDataFormat?='data_format'
@@ -1131,14 +1131,14 @@ public class TechnologyDslGrammarAccess extends AbstractGrammarElementFinder {
 		//'='
 		public Keyword getEqualsSignKeyword_3_1() { return cEqualsSignKeyword_3_1; }
 		
-		//dataFormat=[DataFormat]
+		//dataFormat=[DataFormat|STRING]
 		public Assignment getDataFormatAssignment_3_2() { return cDataFormatAssignment_3_2; }
 		
-		//[DataFormat]
+		//[DataFormat|STRING]
 		public CrossReference getDataFormatDataFormatCrossReference_3_2_0() { return cDataFormatDataFormatCrossReference_3_2_0; }
 		
-		//ID
-		public RuleCall getDataFormatDataFormatIDTerminalRuleCall_3_2_0_1() { return cDataFormatDataFormatIDTerminalRuleCall_3_2_0_1; }
+		//STRING
+		public RuleCall getDataFormatDataFormatSTRINGTerminalRuleCall_3_2_0_1() { return cDataFormatDataFormatSTRINGTerminalRuleCall_3_2_0_1; }
 	}
 	public class ServiceAspectPointcutSelectorElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.fhdo.lemma.technology.TechnologyDsl.ServiceAspectPointcutSelector");
@@ -1940,7 +1940,7 @@ public class TechnologyDslGrammarAccess extends AbstractGrammarElementFinder {
 	//	communicationType=CommunicationType
 	//	name=ID
 	//	'data' 'formats' dataFormats+=DataFormat (',' dataFormats+=DataFormat)* (default?='default' 'with' 'format'
-	//	defaultFormat=[DataFormat])?
+	//	defaultFormat=[DataFormat|STRING])?
 	//	';';
 	public ProtocolElements getProtocolAccess() {
 		return pProtocol;
@@ -1971,7 +1971,7 @@ public class TechnologyDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//DataFormat:
-	//	formatName=ID;
+	//	formatName=STRING;
 	public DataFormatElements getDataFormatAccess() {
 		return pDataFormat;
 	}
@@ -2133,7 +2133,7 @@ public class TechnologyDslGrammarAccess extends AbstractGrammarElementFinder {
 	//ServiceAspectPointcut:
 	//	forExchangePattern?='exchange_pattern' '=' exchangePattern=ExchangePattern |
 	//	forCommunicationType?='communication_type' '=' communicationType=CommunicationType | forProtocol?='protocol' '='
-	//	protocol=[Protocol] | forDataFormat?='data_format' '=' dataFormat=[DataFormat];
+	//	protocol=[Protocol] | forDataFormat?='data_format' '=' dataFormat=[DataFormat|STRING];
 	public ServiceAspectPointcutElements getServiceAspectPointcutAccess() {
 		return pServiceAspectPointcut;
 	}

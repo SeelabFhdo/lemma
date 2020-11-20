@@ -221,7 +221,10 @@ class OperationDslValidator extends AbstractOperationDslValidator {
                 val protocolAndDataFormat = endpoint.protocols.get(i)
                 var protocolId = protocolAndDataFormat.protocol.name
                 if (protocolAndDataFormat.dataFormat !== null)
-                    protocolId += "/" + protocolAndDataFormat.dataFormat.formatName
+                    protocolId += '''(«protocolAndDataFormat.dataFormat.formatName»)'''
+                else
+                    protocolId += '''(«protocolAndDataFormat.protocol.defaultFormat.formatName»)'''
+
                 val isDuplicate = !protocolSet.add(protocolId)
                 if (isDuplicate)
                     error('''Duplicate endpoint for protocol «protocolId»''', protocolAndDataFormat,

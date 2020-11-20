@@ -234,7 +234,7 @@ public class TechnologyDslSemanticSequencer extends DataDslSemanticSequencer {
 	 *     DataFormat returns DataFormat
 	 *
 	 * Constraint:
-	 *     formatName=ID
+	 *     formatName=STRING
 	 */
 	protected void sequence_DataFormat(ISerializationContext context, DataFormat semanticObject) {
 		if (errorAcceptor != null) {
@@ -242,7 +242,7 @@ public class TechnologyDslSemanticSequencer extends DataDslSemanticSequencer {
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, TechnologyPackage.Literals.DATA_FORMAT__FORMAT_NAME));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getDataFormatAccess().getFormatNameIDTerminalRuleCall_0(), semanticObject.getFormatName());
+		feeder.accept(grammarAccess.getDataFormatAccess().getFormatNameSTRINGTerminalRuleCall_0(), semanticObject.getFormatName());
 		feeder.finish();
 	}
 	
@@ -352,7 +352,13 @@ public class TechnologyDslSemanticSequencer extends DataDslSemanticSequencer {
 	 *     Protocol returns Protocol
 	 *
 	 * Constraint:
-	 *     (communicationType=CommunicationType name=ID dataFormats+=DataFormat dataFormats+=DataFormat* (default?='default' defaultFormat=[DataFormat|ID])?)
+	 *     (
+	 *         communicationType=CommunicationType 
+	 *         name=ID 
+	 *         dataFormats+=DataFormat 
+	 *         dataFormats+=DataFormat* 
+	 *         (default?='default' defaultFormat=[DataFormat|STRING])?
+	 *     )
 	 */
 	protected void sequence_Protocol(ISerializationContext context, Protocol semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -380,7 +386,7 @@ public class TechnologyDslSemanticSequencer extends DataDslSemanticSequencer {
 	 *         (forExchangePattern?='exchange_pattern' exchangePattern=ExchangePattern) | 
 	 *         (forCommunicationType?='communication_type' communicationType=CommunicationType) | 
 	 *         (forProtocol?='protocol' protocol=[Protocol|ID]) | 
-	 *         (forDataFormat?='data_format' dataFormat=[DataFormat|ID])
+	 *         (forDataFormat?='data_format' dataFormat=[DataFormat|STRING])
 	 *     )
 	 */
 	protected void sequence_ServiceAspectPointcut(ISerializationContext context, ServiceAspectPointcut semanticObject) {

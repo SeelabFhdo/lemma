@@ -628,7 +628,7 @@ ruleProtocol returns [EObject current=null]
 							$current = createModelElement(grammarAccess.getProtocolRule());
 						}
 					}
-					otherlv_10=RULE_ID
+					otherlv_10=RULE_STRING
 					{
 						newLeafNode(otherlv_10, grammarAccess.getProtocolAccess().getDefaultFormatDataFormatCrossReference_6_3_0());
 					}
@@ -659,9 +659,9 @@ ruleDataFormat returns [EObject current=null]
 }:
 	(
 		(
-			lv_formatName_0_0=RULE_ID
+			lv_formatName_0_0=RULE_STRING
 			{
-				newLeafNode(lv_formatName_0_0, grammarAccess.getDataFormatAccess().getFormatNameIDTerminalRuleCall_0());
+				newLeafNode(lv_formatName_0_0, grammarAccess.getDataFormatAccess().getFormatNameSTRINGTerminalRuleCall_0());
 			}
 			{
 				if ($current==null) {
@@ -671,7 +671,7 @@ ruleDataFormat returns [EObject current=null]
 					$current,
 					"formatName",
 					lv_formatName_0_0,
-					"org.eclipse.xtext.common.Terminals.ID");
+					"org.eclipse.xtext.common.Terminals.STRING");
 			}
 		)
 	)
@@ -1681,7 +1681,7 @@ ruleServiceAspectPointcut returns [EObject current=null]
 							$current = createModelElement(grammarAccess.getServiceAspectPointcutRule());
 						}
 					}
-					otherlv_11=RULE_ID
+					otherlv_11=RULE_STRING
 					{
 						newLeafNode(otherlv_11, grammarAccess.getServiceAspectPointcutAccess().getDataFormatDataFormatCrossReference_3_2_0());
 					}

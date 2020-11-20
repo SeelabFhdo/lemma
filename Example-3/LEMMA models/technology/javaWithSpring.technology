@@ -38,9 +38,12 @@ technology javaWithSpring {
 	}
 
 	protocols {
-		sync rest data formats json default with format json;
-		sync soap data formats xml default with format xml;
-		async amqp data formats json default with format json;
+		sync rest data formats "application/json"
+			default with format "application/json";
+		sync soap data formats "application/xml"
+			default with format "application/xml";
+		async amqp data formats "application/json"
+			default with format "application/json";
 	}
 
 	service aspects {

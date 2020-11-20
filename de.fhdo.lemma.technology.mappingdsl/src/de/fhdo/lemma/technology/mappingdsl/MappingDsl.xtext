@@ -250,7 +250,7 @@ TechnologySpecificProtocolSpecification returns TechnologySpecificProtocolSpecif
 TechnologySpecificProtocol returns TechnologySpecificProtocol:
     technology=[service::Import] '::'
     protocol=[technology::Protocol|QualifiedName]
-    ('/' dataFormat=[technology::DataFormat])?
+    ('(' dataFormat=[technology::DataFormat|STRING] ')')?
 ;
 
 TechnologySpecificEndpoint returns TechnologySpecificEndpoint:

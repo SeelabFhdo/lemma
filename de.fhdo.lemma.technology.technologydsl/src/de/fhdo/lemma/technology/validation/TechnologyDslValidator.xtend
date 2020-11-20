@@ -258,7 +258,7 @@ class TechnologyDslValidator extends AbstractTechnologyDslValidator {
     }
 
     /**
-     * Check that data formats are unique _within_ a protocol (which is the reason why we do not
+     * Check that data formats are unique within a _protocol_ (which is the reason why we do not
      * consider data formats in the unique names validator, because we do not want them to be
      * globally unique within the whole technology model)
      */

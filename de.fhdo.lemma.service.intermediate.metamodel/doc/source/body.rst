@@ -985,6 +985,13 @@ between microservices.
 
         Name of the endpoint's data format.
 
+        .. HINT::
+
+            We do not prescribe the notation of data formats in their defining
+            technology models. For instance, two model processors may refer to
+            the JSON format by means of its simple name, e.g., \"json\", or its
+            MIME type, i.e., \"application/json\", within technology models.
+
     .. _link__IntermediateEndpoint_addresses:
 
     .. py:attribute:: String[*] addresses

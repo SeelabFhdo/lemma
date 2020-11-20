@@ -579,8 +579,15 @@ class MappingDslValidator extends AbstractMappingDslValidator {
             for (i : 0..<endpoint.technologySpecificProtocols.size) {
                 val technologySpecificProtocol = endpoint.technologySpecificProtocols.get(i)
                 var protocolId = technologySpecificProtocol.protocol.name
-                if (protocolId !== null && technologySpecificProtocol.dataFormat !== null)
-                    protocolId += "/" + technologySpecificProtocol.dataFormat.formatName
+                if (protocolId !== null) {
+                    val formatName = if (technologySpecificProtocol.dataFormat !== null)
+                            technologySpecificProtocol.dataFormat.formatName
+                        else
+                            technologySpecificProtocol.protocol.defaultFormat.formatName
+
+                    protocolId += '''(«formatName»)'''
+                }
+
                 val boolean isDuplicate = if (protocolId !== null)
                     !protocolSet.add(protocolId)
                 else
@@ -759,8 +766,10 @@ class MappingDslValidator extends AbstractMappingDslValidator {
                     val address = endpoint.addresses.get(i)
                     var protocolName = protocol.technology.name + "::" + protocol.protocol.name
                     val dataFormat = protocol.dataFormat
-                    if (dataFormat !== null && dataFormat.formatName !== null)
-                        protocolName += "/" + dataFormat.formatName
+                    if (dataFormat?.formatName !== null)
+                        protocolName += '''(«dataFormat.formatName»)'''
+                    else
+                        protocolName += '''(«protocol.protocol.defaultFormat.formatName»)'''
                     val addressPrefixedByProtocol = protocolName + address
 
                     if (mappedAddressesToEndpoints.containsKey(addressPrefixedByProtocol)) {
@@ -784,8 +793,10 @@ class MappingDslValidator extends AbstractMappingDslValidator {
                     val address = nonMappedEndpoint.addresses.get(i)
                     var protocolName = protocol.import.name + "::" + protocol.importedProtocol.name
                     val dataFormat = protocol.dataFormat
-                    if (dataFormat !== null && dataFormat.formatName !== null)
-                        protocolName += "/" + dataFormat.formatName
+                    if (dataFormat?.formatName !== null)
+                        protocolName += '''(«dataFormat.formatName»)'''
+                    else
+                        protocolName += '''(«protocol.importedProtocol.defaultFormat.formatName»)'''
                     val addressPrefixedByProtocol = protocolName + address
 
                     val duplicateMappedEndpoint =

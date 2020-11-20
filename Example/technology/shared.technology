@@ -1,8 +1,8 @@
 technology ^operation {
 	protocols {
-		sync rest data formats json default with format json;
-		sync soap data formats xml;
-		async amqp data formats json default with format json;
+		sync rest data formats "application/json" default with format "application/json";
+		sync soap data formats "application/xml";
+		async amqp data formats "application/json" default with format "application/json";
 	}
 
 	service aspects {

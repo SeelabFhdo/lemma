@@ -525,7 +525,7 @@ public class OperationDslSemanticSequencer extends ServiceDslSemanticSequencer {
 	 *     ProtocolAndDataFormat returns ProtocolAndDataFormat
 	 *
 	 * Constraint:
-	 *     (technology=[Import|ID] protocol=[Protocol|QualifiedName] dataFormat=[DataFormat|ID]?)
+	 *     (technology=[Import|ID] protocol=[Protocol|QualifiedName] dataFormat=[DataFormat|STRING]?)
 	 */
 	protected void sequence_ProtocolAndDataFormat(ISerializationContext context, ProtocolAndDataFormat semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

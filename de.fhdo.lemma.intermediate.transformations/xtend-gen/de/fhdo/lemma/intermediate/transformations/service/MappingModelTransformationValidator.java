@@ -183,11 +183,27 @@ public class MappingModelTransformationValidator extends AbstractInputModelValid
           String _name_1 = protocol.getImportedProtocol().getName();
           String protocolName = (_plus + _name_1);
           final DataFormat dataFormat = protocol.getDataFormat();
-          if (((dataFormat != null) && (dataFormat.getFormatName() != null))) {
+          String _formatName = null;
+          if (dataFormat!=null) {
+            _formatName=dataFormat.getFormatName();
+          }
+          boolean _tripleNotEquals = (_formatName != null);
+          if (_tripleNotEquals) {
             String _protocolName = protocolName;
-            String _formatName = dataFormat.getFormatName();
-            String _plus_1 = ("/" + _formatName);
-            protocolName = (_protocolName + _plus_1);
+            StringConcatenation _builder = new StringConcatenation();
+            _builder.append("(");
+            String _formatName_1 = dataFormat.getFormatName();
+            _builder.append(_formatName_1);
+            _builder.append(")");
+            protocolName = (_protocolName + _builder);
+          } else {
+            String _protocolName_1 = protocolName;
+            StringConcatenation _builder_1 = new StringConcatenation();
+            _builder_1.append("(");
+            String _formatName_2 = protocol.getImportedProtocol().getDefaultFormat().getFormatName();
+            _builder_1.append(_formatName_2);
+            _builder_1.append(")");
+            protocolName = (_protocolName_1 + _builder_1);
           }
           final String addressPrefixedByProtocol = (protocolName + address);
           final Endpoint duplicateEndpoint = endpointAddresses.get(addressPrefixedByProtocol);
@@ -197,21 +213,21 @@ public class MappingModelTransformationValidator extends AbstractInputModelValid
               Microservice.class);
             boolean _notEquals = (!Objects.equal(duplicateMicroservice, microservice));
             if (_notEquals) {
-              StringConcatenation _builder = new StringConcatenation();
-              _builder.append("Address ");
-              _builder.append(address);
-              _builder.append(" is already specified for microservice ");
-              StringConcatenation _builder_1 = new StringConcatenation();
-              String _buildQualifiedName = microservice.buildQualifiedName(".");
-              _builder_1.append(_buildQualifiedName);
-              _builder_1.append(" in  service model ");
-              String _plus_2 = (_builder.toString() + _builder_1);
               StringConcatenation _builder_2 = new StringConcatenation();
+              _builder_2.append("Address ");
+              _builder_2.append(address);
+              _builder_2.append(" is already specified for microservice ");
+              StringConcatenation _builder_3 = new StringConcatenation();
+              String _buildQualifiedName = microservice.buildQualifiedName(".");
+              _builder_3.append(_buildQualifiedName);
+              _builder_3.append(" in  service model ");
+              String _plus_1 = (_builder_2.toString() + _builder_3);
+              StringConcatenation _builder_4 = new StringConcatenation();
               String _get = allImportedServiceModels.get(microservice.getServiceModel());
-              _builder_2.append(_get);
-              _builder_2.append(".");
-              String _plus_3 = (_plus_2 + _builder_2);
-              this.warning(_plus_3);
+              _builder_4.append(_get);
+              _builder_4.append(".");
+              String _plus_2 = (_plus_1 + _builder_4);
+              this.warning(_plus_2);
             }
           } else {
             endpointAddresses.put(addressPrefixedByProtocol, endpoint);

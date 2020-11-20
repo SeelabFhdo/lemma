@@ -664,7 +664,7 @@ public class MappingDslSemanticSequencer extends ServiceDslSemanticSequencer {
 	 *     TechnologySpecificProtocol returns TechnologySpecificProtocol
 	 *
 	 * Constraint:
-	 *     (technology=[Import|ID] protocol=[Protocol|QualifiedName] dataFormat=[DataFormat|ID]?)
+	 *     (technology=[Import|ID] protocol=[Protocol|QualifiedName] dataFormat=[DataFormat|STRING]?)
 	 */
 	protected void sequence_TechnologySpecificProtocol(ISerializationContext context, TechnologySpecificProtocol semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

@@ -11493,9 +11493,9 @@ rule__Protocol__DefaultFormatAssignment_6_3
 	(
 		{ before(grammarAccess.getProtocolAccess().getDefaultFormatDataFormatCrossReference_6_3_0()); }
 		(
-			{ before(grammarAccess.getProtocolAccess().getDefaultFormatDataFormatIDTerminalRuleCall_6_3_0_1()); }
-			RULE_ID
-			{ after(grammarAccess.getProtocolAccess().getDefaultFormatDataFormatIDTerminalRuleCall_6_3_0_1()); }
+			{ before(grammarAccess.getProtocolAccess().getDefaultFormatDataFormatSTRINGTerminalRuleCall_6_3_0_1()); }
+			RULE_STRING
+			{ after(grammarAccess.getProtocolAccess().getDefaultFormatDataFormatSTRINGTerminalRuleCall_6_3_0_1()); }
 		)
 		{ after(grammarAccess.getProtocolAccess().getDefaultFormatDataFormatCrossReference_6_3_0()); }
 	)
@@ -11510,9 +11510,9 @@ rule__DataFormat__FormatNameAssignment
 	}
 :
 	(
-		{ before(grammarAccess.getDataFormatAccess().getFormatNameIDTerminalRuleCall_0()); }
-		RULE_ID
-		{ after(grammarAccess.getDataFormatAccess().getFormatNameIDTerminalRuleCall_0()); }
+		{ before(grammarAccess.getDataFormatAccess().getFormatNameSTRINGTerminalRuleCall_0()); }
+		RULE_STRING
+		{ after(grammarAccess.getDataFormatAccess().getFormatNameSTRINGTerminalRuleCall_0()); }
 	)
 ;
 finally {
@@ -12073,9 +12073,9 @@ rule__ServiceAspectPointcut__DataFormatAssignment_3_2
 	(
 		{ before(grammarAccess.getServiceAspectPointcutAccess().getDataFormatDataFormatCrossReference_3_2_0()); }
 		(
-			{ before(grammarAccess.getServiceAspectPointcutAccess().getDataFormatDataFormatIDTerminalRuleCall_3_2_0_1()); }
-			RULE_ID
-			{ after(grammarAccess.getServiceAspectPointcutAccess().getDataFormatDataFormatIDTerminalRuleCall_3_2_0_1()); }
+			{ before(grammarAccess.getServiceAspectPointcutAccess().getDataFormatDataFormatSTRINGTerminalRuleCall_3_2_0_1()); }
+			RULE_STRING
+			{ after(grammarAccess.getServiceAspectPointcutAccess().getDataFormatDataFormatSTRINGTerminalRuleCall_3_2_0_1()); }
 		)
 		{ after(grammarAccess.getServiceAspectPointcutAccess().getDataFormatDataFormatCrossReference_3_2_0()); }
 	)

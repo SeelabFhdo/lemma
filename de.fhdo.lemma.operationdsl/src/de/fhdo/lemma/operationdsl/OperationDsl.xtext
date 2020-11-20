@@ -109,7 +109,8 @@ InfrastructureTechnologyReference returns InfrastructureTechnologyReference:
 
 ProtocolAndDataFormat returns ProtocolAndDataFormat:
     technology=[service::Import] '::'
-    protocol=[technology::Protocol|QualifiedName] ('/' dataFormat=[technology::DataFormat])?
+    protocol=[technology::Protocol|QualifiedName]
+    ('(' dataFormat=[technology::DataFormat|STRING] ')')?
 ;
 
 BasicEndpoint returns BasicEndpoint:

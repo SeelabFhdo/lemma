@@ -101,15 +101,13 @@ class HighlightingCalculator implements ISemanticHighlightingCalculator {
                     NodeModelUtils.findNodesForFeature(it, feature).forEach[
                         // Determine node to start highlighting. In case highlighting shall not
                         // start on the feature node itself, i.e., immediately, find the opening
-                        // bracket of the aspect string (currently there are not built-in aspects
+                        // bracket of the aspect string (currently there are no built-in aspects
                         // without parameters, i.e., opening brackets).
                         var nodeToHighlight = it
-                        if (!highlightImmediately) {
-                            while (nodeToHighlight !== null &&
-                                nodeToHighlight.nextSibling !== null &&
-                                nodeToHighlight.nextSibling.text != "(")
+                        if (!highlightImmediately)
+                            while (nodeToHighlight.hasNextNode &&
+                                !nodeToHighlight.nextNodeIsOpeningAspectBracket)
                                 nodeToHighlight = nodeToHighlight.previousSibling
-                        }
 
                         // Highlight nodes including the "@" sign, which marks the beginning of an
                         // aspect's annotation string
@@ -119,6 +117,20 @@ class HighlightingCalculator implements ISemanticHighlightingCalculator {
                     ]
                 ]]
         ]
+    }
+
+    /**
+     * Check if the given node has a next sibling
+     */
+    private def hasNextNode(INode node) {
+        return node !== null && node.nextSibling !== null
+    }
+
+    /**
+     * Check if the next sibling of the given node is the opening bracket of an aspect string
+     */
+    private def nextNodeIsOpeningAspectBracket(INode node) {
+        return node.nextSibling.text == "(" || node.nextSibling.text == "({"
     }
 
     /**

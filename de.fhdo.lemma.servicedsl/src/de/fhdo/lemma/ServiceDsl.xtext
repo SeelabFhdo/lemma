@@ -29,6 +29,7 @@ Microservice returns Microservice:
     (technologyReferences+=TechnologyReference)*
     (protocols+=ProtocolSpecification (protocols+=ProtocolSpecification)?)?
     ('@' 'endpoints' '(' endpoints+=Endpoint+ ')')?
+    ('@' 'endpoints' '({' endpoints+=Endpoint+ '})')?
     aspects+=ImportedServiceAspect*
     visibility=Visibility?
     type=MicroserviceType
@@ -75,6 +76,7 @@ PossiblyImportedOperation returns PossiblyImportedOperation:
 Interface returns Interface:
     (protocols+=ProtocolSpecification (protocols+=ProtocolSpecification)?)?
     ('@' 'endpoints' '(' endpoints+=Endpoint+ ')')?
+    ('@' 'endpoints' '({' endpoints+=Endpoint+ '})')?
     aspects+=ImportedServiceAspect*
     (notImplemented?='noimpl')? visibility=Visibility? 'interface' name=ID ('version' version=ID)?
     '{'
@@ -100,6 +102,7 @@ Operation returns Operation:
     (apiOperationComment=ApiOperationComment)?
     (protocols+=ProtocolSpecification (protocols+=ProtocolSpecification)?)?
     ('@' 'endpoints' '(' endpoints+=Endpoint+ ')')?
+    ('@' 'endpoints' '({' endpoints+=Endpoint+ '})')?
     aspects+=ImportedServiceAspect*
     (notImplemented?='noimpl')? visibility=Visibility? name=ID '('
         parameters+=Parameter? (',' parameters+=Parameter)*
@@ -109,6 +112,7 @@ Operation returns Operation:
 ReferredOperation returns ReferredOperation:
     (protocols+=ProtocolSpecification (protocols+=ProtocolSpecification)?)?
     ('@' 'endpoints' '(' endpoints+=Endpoint+ ')')?
+    ('@' 'endpoints' '({' endpoints+=Endpoint+ '})')?
     aspects+=ImportedServiceAspect*
     'refers' operation=[Operation|QualifiedName] ';'
 ;
@@ -137,7 +141,7 @@ ProtocolSpecification returns ProtocolSpecification:
 
 ImportedProtocolAndDataFormat returns ImportedProtocolAndDataFormat:
     ^import=[Import] '::' importedProtocol=[technology::Protocol|QualifiedName]
-    ('/' dataFormat=[technology::DataFormat])?
+    ('(' dataFormat=[technology::DataFormat|STRING] ')')?
 ;
 
 Endpoint returns Endpoint:

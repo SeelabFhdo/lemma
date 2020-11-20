@@ -298,17 +298,28 @@ public class OperationDslValidator extends AbstractOperationDslValidator {
           boolean _tripleNotEquals = (_dataFormat != null);
           if (_tripleNotEquals) {
             String _protocolId = protocolId;
+            StringConcatenation _builder = new StringConcatenation();
+            _builder.append("(");
             String _formatName = protocolAndDataFormat.getDataFormat().getFormatName();
-            String _plus = ("/" + _formatName);
-            protocolId = (_protocolId + _plus);
+            _builder.append(_formatName);
+            _builder.append(")");
+            protocolId = (_protocolId + _builder);
+          } else {
+            String _protocolId_1 = protocolId;
+            StringConcatenation _builder_1 = new StringConcatenation();
+            _builder_1.append("(");
+            String _formatName_1 = protocolAndDataFormat.getProtocol().getDefaultFormat().getFormatName();
+            _builder_1.append(_formatName_1);
+            _builder_1.append(")");
+            protocolId = (_protocolId_1 + _builder_1);
           }
           boolean _add = protocolSet.add(protocolId);
           final boolean isDuplicate = (!_add);
           if (isDuplicate) {
-            StringConcatenation _builder = new StringConcatenation();
-            _builder.append("Duplicate endpoint for protocol ");
-            _builder.append(protocolId);
-            this.error(_builder.toString(), protocolAndDataFormat, 
+            StringConcatenation _builder_2 = new StringConcatenation();
+            _builder_2.append("Duplicate endpoint for protocol ");
+            _builder_2.append(protocolId);
+            this.error(_builder_2.toString(), protocolAndDataFormat, 
               OperationPackage.Literals.PROTOCOL_AND_DATA_FORMAT__PROTOCOL, (i).intValue());
           }
         }

@@ -136,8 +136,10 @@ class MappingModelTransformationValidator
             endpoint.protocols.forEach[protocol |
                 var protocolName = protocol.import.name + "::" + protocol.importedProtocol.name
                 val dataFormat = protocol.dataFormat
-                if (dataFormat !== null && dataFormat.formatName !== null)
-                    protocolName += "/" + dataFormat.formatName
+                if (dataFormat?.formatName !== null)
+                    protocolName += '''(«dataFormat.formatName»)'''
+                else
+                    protocolName += '''(«protocol.importedProtocol.defaultFormat.formatName»)'''
                 val addressPrefixedByProtocol = protocolName + address
 
                 val duplicateEndpoint = endpointAddresses.get(addressPrefixedByProtocol)

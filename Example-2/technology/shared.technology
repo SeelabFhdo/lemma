@@ -7,8 +7,8 @@
 technology Shared {
 	// Shared protocols
 	protocols {
-		sync rest data formats json default with format json;
-		async mqtt data formats json default with format json;
+		sync rest data formats "application/json" default with format "application/json";
+		async mqtt data formats "application/json" default with format "application/json";
 	}
 
 	service aspects {
@@ -19,7 +19,7 @@ technology Shared {
 		aspect post for operations {
 			selector(protocol = rest);
 		}
-	}	
+	}
 
 	deployment technologies {
 		docker {

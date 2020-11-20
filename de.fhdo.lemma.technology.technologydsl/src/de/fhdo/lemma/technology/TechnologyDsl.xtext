@@ -51,7 +51,7 @@ Protocol returns Protocol:
     communicationType=CommunicationType
     name=ID
     'data' 'formats' dataFormats+=DataFormat (',' dataFormats+=DataFormat)*
-    (default?='default' 'with' 'format' defaultFormat=[DataFormat])?
+    (default?='default' 'with' 'format' defaultFormat=[DataFormat|STRING])?
     ';'
 ;
 
@@ -64,7 +64,7 @@ enum CommunicationType returns CommunicationType:
 ;
 
 DataFormat returns DataFormat:
-    formatName=ID
+    formatName=STRING
 ;
 
 TechnologySpecificPrimitiveType returns TechnologySpecificPrimitiveType:
@@ -159,7 +159,7 @@ ServiceAspectPointcut returns ServiceAspectPointcut:
     forExchangePattern?='exchange_pattern' '=' exchangePattern=ExchangePattern |
     forCommunicationType?='communication_type' '=' communicationType=CommunicationType |
     forProtocol?='protocol' '=' protocol=[Protocol] |
-    forDataFormat?='data_format' '=' dataFormat=[DataFormat]
+    forDataFormat?='data_format' '=' dataFormat=[DataFormat|STRING]
 ;
 
 ServiceAspectPointcutSelector returns ServiceAspectPointcutSelector:
