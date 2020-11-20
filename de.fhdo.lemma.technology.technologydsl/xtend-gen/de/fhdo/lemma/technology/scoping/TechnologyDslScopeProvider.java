@@ -274,10 +274,14 @@ public class TechnologyDslScopeProvider extends AbstractTechnologyDslScopeProvid
     if ((protocol == null)) {
       return IScope.NULLSCOPE;
     }
-    final Function1<DataFormat, IEObjectDescription> _function = (DataFormat it) -> {
+    final Function1<DataFormat, Boolean> _function = (DataFormat it) -> {
+      String _formatName = it.getFormatName();
+      return Boolean.valueOf((_formatName != null));
+    };
+    final Function1<DataFormat, IEObjectDescription> _function_1 = (DataFormat it) -> {
       return EObjectDescription.create(it.getFormatName(), it);
     };
-    final List<IEObjectDescription> scopeElements = ListExtensions.<DataFormat, IEObjectDescription>map(protocol.getDataFormats(), _function);
+    final Iterable<IEObjectDescription> scopeElements = IterableExtensions.<DataFormat, IEObjectDescription>map(IterableExtensions.<DataFormat>filter(protocol.getDataFormats(), _function), _function_1);
     return MapBasedScope.createScope(IScope.NULLSCOPE, scopeElements);
   }
 }

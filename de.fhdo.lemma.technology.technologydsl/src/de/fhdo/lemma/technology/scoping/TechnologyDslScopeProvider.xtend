@@ -209,9 +209,10 @@ class TechnologyDslScopeProvider extends AbstractTechnologyDslScopeProvider {
             return IScope.NULLSCOPE
 
         // Only a data format defined for the protocol can also be its default protocol
-        val scopeElements = protocol.dataFormats.map[
-            EObjectDescription.create(it.formatName, it)
-        ]
+        val scopeElements = protocol.dataFormats
+            // Prevent NPE when model contains errors
+            .filter[ it.formatName !== null ]
+            .map [ EObjectDescription.create(it.formatName, it) ]
 
         // Note, that we use a map-based scope here, because the DataFormat metamodel element has
         // no "name" attribute, but a "formatName" attribute, to exclude it from being automatically
